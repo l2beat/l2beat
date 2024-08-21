@@ -1,15 +1,15 @@
-Generated with discovered.json: 0xc7a70cb5fc4c5218b2b7281154dea8b7b7718c54
+Generated with discovered.json: 0x6a38021bd085573f986e6fdb2c6fe583e4f5d431
 
-# Diff at Wed, 21 Aug 2024 14:43:11 GMT:
+# Diff at Wed, 21 Aug 2024 21:56:14 GMT:
 
-- author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: main@9ff9ee2b2fd37e2cdd4a4bcebdcefcb5e61b1e6c block: 229959335
-- current block number: 245214259
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@a84e39efa4f1e38eb52ca8ca005fb438919e951f block: 229959335
+- current block number: 245317770
 
 ## Description
 
 Xai upgraded to [ArbOS Version 20 "Atlas"](https://forum.arbitrum.foundation/t/aip-arbos-version-20-atlas/20957).
-This upgrade comes with blobs support (but Xai is an L3 on Arbitrum) and was reviewed thoroughly in `packages/backend/discovery/arbitrum/ethereum/diffHistory.md` at "Diff at Fri, 22 Mar 2024 07:51:09 GMT:".
+This upgrade comes with blobs support (but Xai is an L3 on Arbitrum, it is still posting calldata) and was reviewed thoroughly in `packages/backend/discovery/arbitrum/ethereum/diffHistory.md` at "Diff at Fri, 22 Mar 2024 07:51:09 GMT:".
 
 ## Watched changes
 
@@ -140,146 +140,10 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 229959335 (main branch discovery), not current.
 
 ```diff
-    contract ProxyAdmin (0x041F85dD87c46B941dc9b15c6628B19ee5358485) {
-    +++ description: None
-      receivedPermissions:
--        [{"permission":"upgrade","target":"0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F","via":[]},{"permission":"upgrade","target":"0x1E400568AD4840dbE50FB32f306B842e9ddeF726","via":[]},{"permission":"upgrade","target":"0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35","via":[]},{"permission":"upgrade","target":"0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8","via":[]},{"permission":"upgrade","target":"0x3a3f62034a42a35eA1686B199bB73006aa525eE4","via":[]},{"permission":"upgrade","target":"0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f","via":[]},{"permission":"upgrade","target":"0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1","via":[]},{"permission":"upgrade","target":"0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9","via":[]},{"permission":"upgrade","target":"0xb591cE747CF19cF30e11d656EB94134F523A9e77","via":[]}]
-      assignedPermissions:
-+        {"upgrade":["0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F","0x1E400568AD4840dbE50FB32f306B842e9ddeF726","0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35","0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8","0x3a3f62034a42a35eA1686B199bB73006aa525eE4","0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f","0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1","0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9","0xb591cE747CF19cF30e11d656EB94134F523A9e77"]}
-    }
-```
-
-```diff
-    contract UpgradeExecutor (0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F) {
-    +++ description: None
-      issuedPermissions:
--        [{"permission":"upgrade","target":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","via":[]}]
-      receivedPermissions:
--        [{"permission":"upgrade","target":"0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336","via":[]}]
-      assignedPermissions:
-+        {"upgrade":["0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336"]}
-    }
-```
-
-```diff
-    contract Outbox (0x1E400568AD4840dbE50FB32f306B842e9ddeF726) {
-    +++ description: None
-      issuedPermissions:
--        [{"permission":"upgrade","target":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","via":[]}]
-    }
-```
-
-```diff
-    contract L1GatewayRouter (0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35) {
-    +++ description: None
-      issuedPermissions:
--        [{"permission":"upgrade","target":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","via":[]}]
-    }
-```
-
-```diff
-    contract ERC20RollupEventInbox (0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8) {
-    +++ description: None
-      issuedPermissions:
--        [{"permission":"upgrade","target":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","via":[]}]
-    }
-```
-
-```diff
-    contract ChallengeManager (0x3a3f62034a42a35eA1686B199bB73006aa525eE4) {
-    +++ description: None
-      issuedPermissions:
--        [{"permission":"upgrade","target":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","via":[]}]
-    }
-```
-
-```diff
-    contract PoolProxyDeployer (0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD) {
-    +++ description: None
-      issuedPermissions:
--        [{"permission":"upgrade","target":"0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723","via":[]}]
-    }
-```
-
-```diff
-    contract Bridge (0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f) {
-    +++ description: None
-      issuedPermissions:
--        [{"permission":"upgrade","target":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","via":[]}]
-    }
-```
-
-```diff
-    contract GasSubsidy (0x94F4aBC83eae00b693286B6eDCa09e1D76183C97) {
-    +++ description: None
-      issuedPermissions:
--        [{"permission":"upgrade","target":"0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723","via":[]}]
-    }
-```
-
-```diff
     contract SequencerInbox (0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1) {
     +++ description: State batches / commitments get posted here.
-      issuedPermissions:
--        [{"permission":"upgrade","target":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","via":[]}]
-    }
-```
-
-```diff
-    contract Inbox (0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9) {
-    +++ description: None
-      issuedPermissions:
--        [{"permission":"upgrade","target":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","via":[]}]
-    }
-```
-
-```diff
-    contract L1ERC20Gateway (0xb591cE747CF19cF30e11d656EB94134F523A9e77) {
-    +++ description: None
-      issuedPermissions:
--        [{"permission":"upgrade","target":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","via":[]}]
-    }
-```
-
-```diff
-    contract NodeLicenseRegistry (0xbc14d8563b248B79689ECbc43bBa53290e0b6b66) {
-    +++ description: None
-      issuedPermissions:
--        [{"permission":"upgrade","target":"0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723","via":[]}]
-    }
-```
-
-```diff
-    contract RollupProxy (0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336) {
-    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
-      issuedPermissions:
--        [{"permission":"upgrade","target":"0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F","via":[]}]
-    }
-```
-
-```diff
-    contract StakingProxyAdmin (0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723) {
-    +++ description: None
-      receivedPermissions:
--        [{"permission":"upgrade","target":"0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD","via":[]},{"permission":"upgrade","target":"0x94F4aBC83eae00b693286B6eDCa09e1D76183C97","via":[]},{"permission":"upgrade","target":"0xbc14d8563b248B79689ECbc43bBa53290e0b6b66","via":[]},{"permission":"upgrade","target":"0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5","via":[]},{"permission":"upgrade","target":"0xfD41041180571C5D371BEA3D9550E55653671198","via":[]}]
-      assignedPermissions:
-+        {"upgrade":["0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD","0x94F4aBC83eae00b693286B6eDCa09e1D76183C97","0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5","0xbc14d8563b248B79689ECbc43bBa53290e0b6b66","0xfD41041180571C5D371BEA3D9550E55653671198"]}
-    }
-```
-
-```diff
-    contract PoolFactory (0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5) {
-    +++ description: None
-      issuedPermissions:
--        [{"permission":"upgrade","target":"0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723","via":[]}]
-    }
-```
-
-```diff
-    contract SentryReferee (0xfD41041180571C5D371BEA3D9550E55653671198) {
-    +++ description: None
-      issuedPermissions:
--        [{"permission":"upgrade","target":"0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723","via":[]}]
+      values.dacKeyset.blsSignatures:
++        ["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"]
     }
 ```
 
