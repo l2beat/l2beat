@@ -1,11 +1,11 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
+import { getCommonProjectColumns } from '~/app/_components/table/common-project-columns'
 import { getColumnHeaderUnderline } from '~/utils/table/get-column-header-underline'
 import { type ScalingTvlTableRow } from '../../_utils/to-table-rows'
 import { TotalValueLockedCell } from './total-value-locked-cell'
 import { ValueLockedCell } from './value-locked-cell'
-import { getCommonProjectColumns } from '~/app/_components/table/common-project-columns'
 
 const columnHelper = createColumnHelper<ScalingTvlTableRow>()
 

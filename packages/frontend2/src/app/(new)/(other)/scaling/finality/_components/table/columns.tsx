@@ -6,9 +6,9 @@ import {
   TypeCell,
   TypeExplanationTooltip,
 } from '~/app/_components/table/cells/type-cell'
+import { getCommonProjectColumns } from '~/app/_components/table/common-project-columns'
 import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/types'
 import { FinalityDurationCell } from './finality-duration-cell'
-import { getCommonProjectColumns } from '~/app/_components/table/common-project-columns'
 
 const sortFinality =
   (key: 'timeToInclusion' | 'stateUpdateDelay') =>

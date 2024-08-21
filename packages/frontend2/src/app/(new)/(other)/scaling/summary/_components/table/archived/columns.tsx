@@ -6,9 +6,9 @@ import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import { TypeExplanationTooltip } from '~/app/_components/table/cells/type-cell'
 import { TypeCell } from '~/app/_components/table/cells/type-cell'
+import { getCommonProjectColumns } from '~/app/_components/table/common-project-columns'
 import { formatNumber } from '~/utils/format-number'
 import { type ScalingSummaryTableRow } from '../../../_utils/to-table-rows'
-import { getCommonProjectColumns } from '~/app/_components/table/common-project-columns'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 

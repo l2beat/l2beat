@@ -4,6 +4,7 @@ import {
   TypeCell,
   TypeExplanationTooltip,
 } from '~/app/_components/table/cells/type-cell'
+import { getCommonProjectColumns } from '~/app/_components/table/common-project-columns'
 import {
   Tooltip,
   TooltipContent,
@@ -15,7 +16,6 @@ import { AnomalyIndicator } from '../anomaly-indicator'
 import { IntervalsHeader } from './intervals-header'
 import { LivenessIntervalCell } from './liveness-interval-cell'
 import { type ScalingLivenessTableEntry } from './to-table-entry'
-import { getCommonProjectColumns } from '~/app/_components/table/common-project-columns'
 
 const columnHelper = createColumnHelper<ScalingLivenessTableEntry>()
 

@@ -5,9 +5,9 @@ import {
   TypeCell,
   TypeExplanationTooltip,
 } from '~/app/_components/table/cells/type-cell'
+import { getCommonProjectColumns } from '~/app/_components/table/common-project-columns'
 import { type ScalingSummaryTableRow } from '../../../_utils/to-table-rows'
 import { TotalCell } from '../total-cell'
-import { getCommonProjectColumns } from '~/app/_components/table/common-project-columns'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 

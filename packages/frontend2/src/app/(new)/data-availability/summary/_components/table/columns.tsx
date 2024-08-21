@@ -1,13 +1,13 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { PentagonRosetteCell } from '~/app/_components/rosette/pentagon/pentagon-rosette-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
+import { getCommonProjectColumns } from '~/app/_components/table/common-project-columns'
 import { EM_DASH } from '~/consts/characters'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { formatNumber } from '~/utils/format-number'
 import { mapRisksToRosetteValues } from '../../../_utils/map-risks-to-rosette-values'
 import { DaEconomicSecurityCell } from './da-economic-security-cell'
 import { ProjectsUsedIn } from './projects-used-in'
-import { getCommonProjectColumns } from '~/app/_components/table/common-project-columns'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
 

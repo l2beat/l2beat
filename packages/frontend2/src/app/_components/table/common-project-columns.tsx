@@ -1,6 +1,6 @@
 import { ColumnHelper } from '@tanstack/react-table'
-import { IndexCell } from './cells/index-cell'
 import Image from 'next/image'
+import { IndexCell } from './cells/index-cell'
 import { ProjectNameCell } from './cells/project-name-cell'
 
 interface BaseProject {
