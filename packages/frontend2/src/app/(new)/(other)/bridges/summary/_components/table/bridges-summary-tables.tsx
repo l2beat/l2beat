@@ -42,6 +42,9 @@ export function BridgesSummaryTables({ entries }: Props) {
             desc: true,
           },
         ],
+        columnPinning: {
+          left: ['#', 'logo'],
+        },
       },
     }),
     [],

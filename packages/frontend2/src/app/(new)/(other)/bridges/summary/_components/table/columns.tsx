@@ -1,10 +1,9 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import Image from 'next/image'
-import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { NoInfoCell } from '~/app/_components/table/cells/no-info-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import { RiskCell } from '~/app/_components/table/cells/risk-cell'
 import { TypeCell } from '~/app/_components/table/cells/type-cell'
+import { getCommonProjectColumns } from '~/app/_components/table/common-project-columns'
 import { sortSentiments } from '~/app/_components/table/sorting/functions/sentiment-sorting'
 import { EM_DASH } from '~/consts/characters'
 import { type BridgesSummaryEntry } from '~/server/features/bridges/get-bridge-summary-entries'
@@ -14,32 +13,7 @@ import { formatPercent } from '~/utils/get-percentage-change'
 const columnHelper = createColumnHelper<BridgesSummaryEntry>()
 
 const firstHalf = [
-  columnHelper.accessor((_, index) => index + 1, {
-    header: '#',
-    cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
-    meta: {
-      headClassName: 'w-0',
-      cellClassName: 'flex items-center',
-    },
-    size: 44.55,
-  }),
-  columnHelper.display({
-    id: 'logo',
-    cell: (ctx) => (
-      <Image
-        className="min-h-[18px] min-w-[18px]"
-        src={`/icons/${ctx.row.original.slug}.png`}
-        width={18}
-        height={18}
-        alt={`${ctx.row.original.name} logo`}
-      />
-    ),
-    size: 26,
-    meta: {
-      headClassName: 'w-0',
-      cellClassName: 'lg:!pr-0 pl-2',
-    },
-  }),
+  ...getCommonProjectColumns(columnHelper),
   columnHelper.accessor('name', {
     cell: (ctx) => (
       <ProjectNameCell
