@@ -1,7 +1,7 @@
-import { assert, Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 
 import { Database } from '@l2beat/database'
-import { PriceConfigEntry, UnixTime } from '@l2beat/shared-pure'
+import { assert, PriceConfigEntry, UnixTime } from '@l2beat/shared-pure'
 import { Dictionary } from 'lodash'
 import { Clock } from '../../../../../tools/Clock'
 import { DataStatusService } from './DataStatusService'

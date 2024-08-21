@@ -1,5 +1,4 @@
-import { assert } from '@l2beat/backend-tools'
-
+import { assert } from '@l2beat/shared-pure'
 import { rlpDecodePartial } from '../../utils/rlpDecode'
 
 const BlobTxFieldElementsPerBlob = 4096

@@ -1,8 +1,6 @@
-import { assert } from '@l2beat/backend-tools'
-
 import { AmountRecord } from '@l2beat/database'
 import { CoingeckoQueryService } from '@l2beat/shared'
-import { CirculatingSupplyEntry, UnixTime } from '@l2beat/shared-pure'
+import { assert, CirculatingSupplyEntry, UnixTime } from '@l2beat/shared-pure'
 import { isInteger } from 'lodash'
 
 export interface CirculatingSupplyServiceDependencies {
