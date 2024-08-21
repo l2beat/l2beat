@@ -1,9 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
-
-const useTvlFromMap: Record<string, string> = {
-  astarzkevm: 'polygonzkevm',
-  xlayer: 'polygonzkevm',
-}
+import { type ProjectId } from '@l2beat/shared-pure'
 
 export function orderByTvl<
   T extends { id: ProjectId; isArchived?: boolean; isUpcoming?: boolean },
@@ -17,14 +12,7 @@ export function orderByTvl<
   const getTvl = (project: T) => {
     const tvl = tvls[project.id]
 
-    if (tvl) {
-      return tvl ?? 0
-    }
-
-    const useTvlFrom = useTvlFromMap[project.id.toString()]
-    if (!useTvlFrom) return 0
-    const useTvlFromValue = tvls[ProjectId(useTvlFrom)]
-    return useTvlFromValue ? useTvlFromValue - 1 : 0
+    return tvl ?? 0
   }
 
   const sortByTvl = (a: T, b: T) => getTvl(b) - getTvl(a)
