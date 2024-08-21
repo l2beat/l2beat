@@ -1,5 +1,4 @@
-import assert from 'node:assert'
-
+import { assert } from '@l2beat/shared-pure'
 import { IndexerState } from '../types/IndexerState'
 
 export function assertStatus(

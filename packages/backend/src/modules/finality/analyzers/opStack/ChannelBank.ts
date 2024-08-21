@@ -1,5 +1,5 @@
-import { assert, Logger } from '@l2beat/backend-tools'
-import { ProjectId } from '@l2beat/shared-pure'
+import { Logger } from '@l2beat/backend-tools'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 
 const ChannelTimeoutBlocks = 300
 

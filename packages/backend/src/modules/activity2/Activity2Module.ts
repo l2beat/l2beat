@@ -1,7 +1,7 @@
-import { assert, Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import { Database } from '@l2beat/database'
 import { BlockExplorerClient } from '@l2beat/shared'
-import { ProjectId } from '@l2beat/shared-pure'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 import { Config } from '../../config'
 import {
   Activity2Config,
@@ -119,15 +119,14 @@ function createActivityIndexers(
 
   const indexerService = new IndexerService(db)
 
+  const starkexClient = peripherals.getClient(StarkexClient, {
+    apiKey: activityConfig.starkexApiKey,
+    callsPerMinute: activityConfig.starkexCallsPerMinute,
+    timeout: undefined,
+  })
   const dayTargetIndexer = new DayTargetIndexer(logger, clock)
 
   const indexers: ActivityIndexer[] = [dayTargetIndexer]
-
-  const numberOfStarkexProjects =
-    activityConfig.projects.filter((p) => p.config.type === 'starkex').length ||
-    1
-  const singleStarkexCPM =
-    activityConfig.starkexCallsPerMinute / numberOfStarkexProjects
 
   activityConfig.projects.forEach((project) => {
     switch (project.config.type) {
@@ -254,11 +253,6 @@ function createActivityIndexers(
         break
       }
       case 'starkex': {
-        const starkexClient = peripherals.getClient(StarkexClient, {
-          apiKey: activityConfig.starkexApiKey,
-          callsPerMinute: activityConfig.starkexCallsPerMinute,
-          timeout: undefined,
-        })
         const txsCountProvider = new StarkexTxsCountProvider(
           starkexClient,
           project.id,
@@ -267,7 +261,7 @@ function createActivityIndexers(
         const activityIndexer = new DayActivityIndexer({
           logger,
           projectId: project.id,
-          batchSize: getBatchSizeFromCallsPerMinute(singleStarkexCPM),
+          batchSize: 10,
           minHeight:
             project.config.sinceTimestamp.toStartOf('day').toDays() ?? 0,
           uncertaintyBuffer: project.config.resyncLastDays,

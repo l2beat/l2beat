@@ -30,7 +30,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@l2beat/backend-tools": "*"
+    "@l2beat/backend-tools": "*",
+    "@l2beat/shared-pure": "*"
   },
   "devDependencies": {
     "@sinonjs/fake-timers": "^11.1.0",

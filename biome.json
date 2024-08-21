@@ -79,7 +79,10 @@
           "level": "error",
           "options": {
             "paths": {
-              "console": "Do not use console"
+              "console": "Do not use console",
+              "node:console": "Do not use console",
+              "assert": "Use assert from @l2beat/shared-pure",
+              "node:assert": "Use assert from @l2beat/shared-pure"
             }
           }
         },

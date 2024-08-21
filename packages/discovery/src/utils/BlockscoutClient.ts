@@ -1,5 +1,6 @@
-import { assert, Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import {
+  assert,
   EthereumAddress,
   Hash256,
   RateLimiter,

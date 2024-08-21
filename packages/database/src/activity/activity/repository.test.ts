@@ -74,6 +74,31 @@ describeDatabase(ActivityRepository.name, (db) => {
     })
   })
 
+  describe(
+    ActivityRepository.prototype.getSummedCountForProjectsAndTimeRange.name,
+    () => {
+      it('should return summed count grouped by projectId for given time range', async () => {
+        await repository.upsertMany([
+          record('a', START, 1),
+          record('a', START.add(1, 'days'), 3),
+          record('a', START.add(2, 'days'), 4),
+          record('b', START.add(1, 'days'), 2),
+          record('b', START.add(2, 'days'), 5),
+        ])
+
+        const result = await repository.getSummedCountForProjectsAndTimeRange(
+          [ProjectId('a'), ProjectId('b')],
+          [START, START.add(2, 'days')],
+        )
+
+        expect(result).toEqual([
+          { projectId: ProjectId('a'), count: 4 },
+          { projectId: ProjectId('b'), count: 2 },
+        ])
+      })
+    },
+  )
+
   describe(ActivityRepository.prototype.getByProjectAndTimeRange.name, () => {
     it('should return all rows in a given time range', async () => {
       await repository.upsertMany([

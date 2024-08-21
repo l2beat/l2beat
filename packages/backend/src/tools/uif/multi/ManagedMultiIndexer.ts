@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/backend-tools'
+import { assert } from '@l2beat/shared-pure'
 import { ChildIndexer, Indexer } from '@l2beat/uif'
 import { assertUniqueConfigId, assertUniqueIndexerId } from '../ids'
 import { ConfigurationsDiff, mergeConfigurations } from './mergeConfigurations'

@@ -16,7 +16,7 @@ export async function fetchActivityApi(
   if (backend.mock) {
     return getMockActivityApiResponse()
   }
-  const url = backend.apiUrl + '/api/activity'
+  const url = backend.apiUrl + '/api/activity2'
   const json = await http.fetchJson(url)
   return ActivityApiResponse.parse(json)
 }

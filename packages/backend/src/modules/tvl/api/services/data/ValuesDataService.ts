@@ -1,5 +1,5 @@
-import { assert, Logger } from '@l2beat/backend-tools'
-import { UnixTime } from '@l2beat/shared-pure'
+import { Logger } from '@l2beat/backend-tools'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 
 import { Database, ValueRecord } from '@l2beat/database'
 import { Dictionary, groupBy } from 'lodash'
