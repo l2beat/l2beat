@@ -3,7 +3,7 @@ import { useCallback, useMemo } from 'react'
 import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import { formatCurrency } from '~/utils/format'
 import { type SeriesStyle } from '../core/styles'
-import { mapMilestones } from '../utils/map-milestones'
+import { mapMilestones } from '../core/utils/map-milestones'
 
 export type TvlDataPoint = readonly [number, number, number, number, number]
 
