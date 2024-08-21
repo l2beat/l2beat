@@ -36,7 +36,7 @@ export function TvlChartHeader({
         </p>
       </div>
       <div className="flex flex-row items-baseline gap-2 md:flex-col md:items-end md:gap-1">
-        <p className="whitespace-nowrap text-right text-lg font-bold md:text-3xl">
+        <div className="whitespace-nowrap text-right text-lg font-bold md:text-3xl">
           {!value || loading ? (
             <Skeleton className="h-6 w-32" />
           ) : (
@@ -44,7 +44,7 @@ export function TvlChartHeader({
               showLessThanMinimum: false,
             })
           )}
-        </p>
+        </div>
         {loading ? (
           <Skeleton className="h-6 w-40" />
         ) : (

@@ -86,7 +86,7 @@ export const scalingLayer2sColumns = [
     id: 'total',
     header: 'Total',
     cell: (ctx) => {
-      const value = ctx.getValue()
+      const value = ctx.row.original.tvl
       if (!value.breakdown) {
         return <UpcomingBadge />
       }
@@ -100,7 +100,16 @@ export const scalingLayer2sColumns = [
         />
       )
     },
-    sortUndefined: 'last',
+    sortingFn: ({ original: a }, { original: b }) => {
+      const aTvl = a.tvl.breakdown?.total ?? 0
+      const bTvl = b.tvl.breakdown?.total ?? 0
+
+      if (aTvl === bTvl) {
+        return b.name.localeCompare(a.name)
+      }
+
+      return aTvl - bTvl
+    },
     meta: {
       tooltip:
         'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
