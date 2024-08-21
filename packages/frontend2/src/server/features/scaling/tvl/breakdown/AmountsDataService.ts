@@ -1,73 +1,15 @@
 import { type Database } from '@l2beat/database'
 import { type AmountConfigEntry, UnixTime } from '@l2beat/shared-pure'
-import { type Dictionary, groupBy } from 'lodash'
-import { type Clock } from './Clock'
+import { groupBy } from 'lodash'
 import { type DataStatusService } from './DataStatusService'
 
 interface Dependencies {
   readonly db: Database
   readonly dataStatusService: DataStatusService
-  readonly clock: Clock
 }
 
 export class AmountsDataService {
   constructor(private readonly $: Dependencies) {}
-
-  async getAggregatedAmounts(
-    configurations: (AmountConfigEntry & { configId: string })[],
-    targetTimestamp: UnixTime,
-  ) {
-    const minTimestamp = configurations.reduce(
-      (a, b) => UnixTime.min(a, b.sinceTimestamp),
-      UnixTime.now(),
-    )
-
-    const amountRecords = await this.$.db.amount.getByConfigIdsInRange(
-      configurations.map((c) => c.configId),
-      minTimestamp,
-      targetTimestamp,
-    )
-    const status = await this.$.dataStatusService.getAmountsStatus(
-      configurations,
-      targetTimestamp,
-    )
-
-    const amountsByTimestamp = groupBy(amountRecords, 'timestamp')
-
-    const timestamps = this.$.clock.getAllTimestampsForApi(targetTimestamp, {
-      minTimestampOverride: minTimestamp,
-    })
-
-    const aggregatedByTimestamp: Dictionary<bigint> = {}
-    for (const timestamp of timestamps) {
-      const amounts = amountsByTimestamp[timestamp.toString()] ?? []
-
-      const interpolatedRecords = status.lagging
-        .filter((l) => timestamp.gt(l.latestTimestamp))
-        .map((l) => {
-          const amount =
-            amountsByTimestamp[l.latestTimestamp.toString()]?.find(
-              (a) => a.configId === l.id,
-            )?.amount ?? 0n
-          return { amount }
-        })
-
-      const aggregatedAmount = [
-        ...amounts.filter((a) => !status.excluded.has(a.configId)),
-        ...interpolatedRecords,
-      ].reduce((acc, curr) => acc + curr.amount, 0n)
-
-      aggregatedByTimestamp[timestamp.toString()] = aggregatedAmount
-    }
-
-    return {
-      amounts: aggregatedByTimestamp,
-      laggingFrom: new Map<string, UnixTime>(
-        status.lagging.map((l) => [l.id, l.latestTimestamp]),
-      ),
-      excluded: status.excluded,
-    }
-  }
 
   async getLatestAmount(
     configurations: (AmountConfigEntry & { configId: string })[],

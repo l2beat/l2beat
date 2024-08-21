@@ -9,27 +9,27 @@ import {
   layer3ToBackendProject,
   layer3s,
 } from '@l2beat/config'
-import { ChainConverter, ChainId } from '@l2beat/shared-pure'
+import { ChainConverter, ChainId, type ProjectId } from '@l2beat/shared-pure'
 import { db } from '~/server/database'
 import { AmountsDataService } from './AmountsDataService'
 import { BreakdownService } from './BreakdownService'
-import { Clock } from './Clock'
 import { ConfigMapping } from './ConfigMapping'
 import { DataStatusService } from './DataStatusService'
 import { PricesDataService } from './PricesDataService'
-import { getEtherPriceConfig } from './getEtherPriceConfig'
 
-export function bootDepsForTvl() {
+export function bootDepsForTvl(projectId: ProjectId) {
   const projects = [
     ...layer2s.map(layer2ToBackendProject),
     ...layer3s.map(layer3ToBackendProject),
     ...bridges.map(bridgeToBackendProject),
   ]
 
-  const amountsConfigs = getTvlAmountsConfig(projects)
-  const priceConfigs = getTvlPricesConfig()
+  const filteredProjects = projects.filter((p) => p.projectId === projectId)
 
-  const clock = new Clock(getEthereumMinTimestamp(), 60 * 60, 7, 9)
+  const amountsConfigs = getTvlAmountsConfig(projects).filter(
+    (c) => c.project === projectId,
+  )
+  const priceConfigs = getTvlPricesConfig()
 
   const dataStatusService = new DataStatusService(db)
 
@@ -40,20 +40,17 @@ export function bootDepsForTvl() {
   const pricesDataService = new PricesDataService({
     db,
     dataStatusService,
-    clock,
-    etherPriceConfig: getEtherPriceConfig(priceConfigs),
   })
 
   const amountsDataService = new AmountsDataService({
     db,
     dataStatusService,
-    clock,
   })
 
   const configMapping = new ConfigMapping(
     priceConfigs,
     amountsConfigs,
-    projects.map((p) => p.projectId),
+    filteredProjects.map((p) => p.projectId),
   )
 
   const breakdownService = new BreakdownService({
@@ -64,14 +61,4 @@ export function bootDepsForTvl() {
   })
 
   return breakdownService
-}
-
-function getEthereumMinTimestamp() {
-  const minBlockTimestamp = chains.find(
-    (c) => c.name === 'ethereum',
-  )?.minTimestampForTvl
-  if (!minBlockTimestamp) {
-    throw new Error('Missing minBlockTimestamp for ethereum')
-  }
-  return minBlockTimestamp
 }
