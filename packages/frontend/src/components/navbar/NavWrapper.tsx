@@ -211,6 +211,11 @@ function MobileNavBar({ links }: { links: NavbarLinkGroups }) {
   const currentGroup = links.find((g) =>
     path.startsWith(`/${g.links[0].href.split('/')[1]}`),
   )
+
+  // Do not display the tabs if the current group is not found,
+  // or the current group does not have any links that match the current path.
+  const displayTabs = currentGroup?.links.some(({ href }) => href === path)
+
   return (
     <div className="xl:hidden">
       <div className="relative flex h-16 flex-row items-stretch justify-between gap-8 border-gray-200 border-b px-3.5 dark:border-gray-850">
@@ -241,10 +246,10 @@ function MobileNavBar({ links }: { links: NavbarLinkGroups }) {
           </button>
         </div>
       </div>
-      {currentGroup && (
+      {displayTabs ? (
         <OverflowWrapper>
           <div className="mx-auto flex w-fit flex-row gap-2 px-4 py-2">
-            {currentGroup.links
+            {currentGroup?.links
               .filter((link) => link.enabled)
               .map((link) => (
                 <a href={link.href} key={link.href}>
@@ -262,7 +267,7 @@ function MobileNavBar({ links }: { links: NavbarLinkGroups }) {
               ))}
           </div>
         </OverflowWrapper>
-      )}
+      ) : null}
     </div>
   )
 }
