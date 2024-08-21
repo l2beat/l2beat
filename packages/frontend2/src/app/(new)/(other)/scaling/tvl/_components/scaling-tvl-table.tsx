@@ -40,6 +40,9 @@ export function ScalingTvlTable({ projects }: Props) {
           desc: false,
         },
       ],
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
     },
   })
 

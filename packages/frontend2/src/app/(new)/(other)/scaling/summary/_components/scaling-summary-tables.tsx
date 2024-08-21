@@ -92,6 +92,9 @@ export function ScalingSummaryTables({ projects }: Props) {
           desc: true,
         },
       ],
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
     },
   })
 
@@ -108,6 +111,9 @@ export function ScalingSummaryTables({ projects }: Props) {
           desc: true,
         },
       ],
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
     },
   })
 
@@ -124,6 +130,9 @@ export function ScalingSummaryTables({ projects }: Props) {
           desc: true,
         },
       ],
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
     },
   })
 
@@ -140,6 +149,9 @@ export function ScalingSummaryTables({ projects }: Props) {
           desc: false,
         },
       ],
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
     },
   })
 
