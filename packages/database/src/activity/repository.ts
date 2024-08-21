@@ -1,5 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { BaseRepository } from '../../BaseRepository'
+import { BaseRepository } from '../BaseRepository'
 import { ActivityRecord, toRecord, toRow } from './entity'
 import { selectActivity } from './select'
 
@@ -69,6 +69,31 @@ export class ActivityRepository extends BaseRepository {
       .orderBy('timestamp', 'asc')
       .execute()
     return rows.map(toRecord)
+  }
+
+  async getSummedCountForProjectsAndTimeRange(
+    projectIds: ProjectId[],
+    timeRange: [UnixTime, UnixTime],
+  ): Promise<Omit<ActivityRecord, 'timestamp' | 'start' | 'end'>[]> {
+    const [from, to] = timeRange
+    const rows = await this.db
+      .selectFrom('public.activity')
+      .select(['project_id'])
+      .select((eb) => eb.fn.sum('count').as('count'))
+      .where(
+        'project_id',
+        'in',
+        projectIds.map((p) => p.toString()),
+      )
+      .where('timestamp', '>=', from.toDate())
+      .where('timestamp', '<', to.toDate())
+      .groupBy('project_id')
+      .execute()
+
+    return rows.map((row) => ({
+      projectId: ProjectId(row.project_id),
+      count: Number(row.count),
+    }))
   }
 
   /**

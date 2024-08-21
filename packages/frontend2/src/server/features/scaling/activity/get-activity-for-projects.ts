@@ -19,7 +19,7 @@ const getCachedLatestActivityForProjects = cache(
   async (projects: (Layer2 | Layer3)[], timeRange: TimeRange) => {
     const range = getFullySyncedActivityRange(timeRange)
     const summedCounts =
-      await db.activityView.getSummedCountForProjectsAndTimeRange(
+      await db.activity.getSummedCountForProjectsAndTimeRange(
         projects.map((p) => p.id),
         range,
       )
