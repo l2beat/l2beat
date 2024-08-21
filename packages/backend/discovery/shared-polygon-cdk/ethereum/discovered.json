@@ -17,13 +17,23 @@
     {
       "name": "SharedProxyAdmin",
       "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-          "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1679653103,
       "values": {
         "$immutable": true,
@@ -60,6 +70,13 @@
       "name": "Bridge",
       "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["getRoot"],
       "sinceTimestamp": 1679653127,
       "values": {
@@ -145,6 +162,13 @@
       "name": "PolygonRollupManager",
       "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "getRollupExitRoot",
         "lastAggregationTimestamp",
@@ -339,6 +363,13 @@
       "name": "GlobalExitRootV2",
       "address": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["getRoot", "depositCount"],
       "sinceTimestamp": 1679653151,
       "values": {

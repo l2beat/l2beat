@@ -10,12 +10,18 @@
       "address": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "assignedPermissions": {
-        "upgrade": [
-          "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
-          "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1710253012,
       "values": {
@@ -45,6 +51,13 @@
       "name": "L1ERC20Bridge",
       "address": "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1709296907,
       "values": {
         "$admin": "0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82",
@@ -60,6 +73,13 @@
       "address": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
       "template": "zklinknova/secondaryZkLink",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "getTotalBatchesExecuted",
         "getTotalPriorityTxs",
@@ -104,6 +124,13 @@
       "address": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
       "template": "zklinknova/secondaryGateway",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1709279398,
       "values": {
         "$admin": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
@@ -120,9 +147,13 @@
     {
       "name": "MantleProxyAdmin",
       "address": "0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82",
-      "assignedPermissions": {
-        "upgrade": ["0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1709296907,
       "values": {
         "$immutable": true,

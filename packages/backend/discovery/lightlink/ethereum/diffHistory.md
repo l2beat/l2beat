@@ -1,3 +1,79 @@
+Generated with discovered.json: 0xeedfb4ae7298c593a94252f1f8cb181c45cee40c
+
+# Diff at Wed, 21 Aug 2024 10:03:43 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 20117905
+- current block number: 20117905
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20117905 (main branch discovery), not current.
+
+```diff
+    contract Challenge (0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xcc90c738acfc1695D19336Bc3E392a46234112BF","via":[]}]
+    }
+```
+
+```diff
+    contract ChainOracle (0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xcc90c738acfc1695D19336Bc3E392a46234112BF","via":[]}]
+    }
+```
+
+```diff
+    contract LightLinkMultisig (0x3345702FeA1669Efa1e085610A62F89d159Bc0c8) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x3ca373F5ecB92ac762f9876f6e773082A4589995","0x624631881655a310adcF0d1336658Cc977609b72","0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x3ca373F5ecB92ac762f9876f6e773082A4589995","via":[]},{"permission":"upgrade","target":"0x624631881655a310adcF0d1336658Cc977609b72","via":[]},{"permission":"upgrade","target":"0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9","via":[]}]
+    }
+```
+
+```diff
+    contract LightLinkBridge (0x3ca373F5ecB92ac762f9876f6e773082A4589995) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x3345702FeA1669Efa1e085610A62F89d159Bc0c8","via":[]}]
+    }
+```
+
+```diff
+    contract L1BridgeRegistry (0x624631881655a310adcF0d1336658Cc977609b72) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x3345702FeA1669Efa1e085610A62F89d159Bc0c8","via":[]}]
+    }
+```
+
+```diff
+    contract LightLinkERC20Bridge (0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x3345702FeA1669Efa1e085610A62F89d159Bc0c8","via":[]}]
+    }
+```
+
+```diff
+    contract CanonicalStateChain (0x65E325A22c0F519041db69F5693EbAc3b4AE71bE) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xcc90c738acfc1695D19336Bc3E392a46234112BF","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xf9ba057c7ad16038bcecbd934f422fb7841592e2
 
 # Diff at Fri, 09 Aug 2024 12:00:06 GMT:

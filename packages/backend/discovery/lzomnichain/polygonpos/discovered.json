@@ -8,9 +8,13 @@
     {
       "name": "ProxyAdmin",
       "address": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
-      "assignedPermissions": {
-        "upgrade": ["0x75dC8e5F50C8221a82CA6aF64aF811caA983B65f"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x75dC8e5F50C8221a82CA6aF64aF811caA983B65f",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1647316991,
       "values": {
         "$immutable": true,
@@ -1317,6 +1321,13 @@
       "address": "0x5a54fe5234E811466D5366846283323c954310B2",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1661535854,
       "values": {
         "$admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
@@ -1351,6 +1362,13 @@
       "address": "0x75dC8e5F50C8221a82CA6aF64aF811caA983B65f",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1661531173,
       "values": {
         "$admin": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
@@ -1374,9 +1392,13 @@
     {
       "name": "ProxyAdmin",
       "address": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
-      "assignedPermissions": {
-        "upgrade": ["0x5a54fe5234E811466D5366846283323c954310B2"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x5a54fe5234E811466D5366846283323c954310B2",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1661448610,
       "values": {
         "$immutable": true,

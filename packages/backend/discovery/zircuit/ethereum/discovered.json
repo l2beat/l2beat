@@ -13,6 +13,13 @@
       "descriptions": [
         "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
       ],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1719936491,
       "values": {
@@ -55,6 +62,13 @@
         "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
       ],
       "categories": ["Core"],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1719936563,
       "values": {
@@ -108,6 +122,18 @@
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
+      ],
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
+          "via": []
+        }
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1719936527,
@@ -173,6 +199,13 @@
       "descriptions": [
         "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
       ],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1719936539,
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
@@ -199,19 +232,53 @@
       "descriptions": [
         "It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component."
       ],
-      "assignedPermissions": {
-        "upgrade": [
-          "0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1",
-          "0x2a721cBE81a128be0F01040e3353c3805A5EA091",
-          "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff",
-          "0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8",
-          "0x6BCe7408c0781dcE7b71494274302D4b75a1447c",
-          "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
-          "0x92Ef6Af472b39F1b363da45E35530c24619245A4",
-          "0x994eEb321F9cD79B077a5455fC248c77f30Dd244",
-          "0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x2a721cBE81a128be0F01040e3353c3805A5EA091",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x6BCe7408c0781dcE7b71494274302D4b75a1447c",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x92Ef6Af472b39F1b363da45E35530c24619245A4",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x994eEb321F9cD79B077a5455fC248c77f30Dd244",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1719936419,
       "values": {
         "$immutable": true,
@@ -222,6 +289,13 @@
       "name": "Verifier",
       "address": "0x6BCe7408c0781dcE7b71494274302D4b75a1447c",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1719936599,
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
@@ -235,6 +309,13 @@
       "address": "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
       "proxyType": "EIP1967 proxy",
       "categories": ["Upgrades&Governance"],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1719936443,
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
@@ -275,6 +356,13 @@
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
+      ],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
+          "via": []
+        }
       ],
       "ignoreInWatchMode": [
         "nextBlockNumber",
@@ -318,6 +406,13 @@
       "descriptions": [
         "Used to bridge ERC-721 tokens from host chain to this chain."
       ],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1719936587,
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
@@ -341,9 +436,13 @@
         "It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
       ],
       "roles": ["Challenger"],
-      "assignedPermissions": {
-        "configure": ["0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1719933659,
       "values": {
@@ -368,6 +467,13 @@
       "name": "OptimismMintableERC20Factory",
       "address": "0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1719936575,
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",

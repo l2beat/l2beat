@@ -1,3 +1,89 @@
+Generated with discovered.json: 0x1e865b081ae568f6f660461d15aa8f7e8934245a
+
+# Diff at Wed, 21 Aug 2024 10:08:42 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 74799516
+- current block number: 74799516
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 74799516 (main branch discovery), not current.
+
+```diff
+    contract L2GatewayRouter (0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xada790b026097BfB36a5ed696859b97a96CEd92C","via":[]}]
+    }
+```
+
+```diff
+    contract L2WethGateway (0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xada790b026097BfB36a5ed696859b97a96CEd92C","via":[]}]
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9","via":[]}]
+    }
+```
+
+```diff
+    contract L2GatewaysProxyAdmin (0xada790b026097BfB36a5ed696859b97a96CEd92C) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8","0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD","0xbf544970E6BD77b21C6492C281AB60d0770451F4","0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8","via":[]},{"permission":"upgrade","target":"0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD","via":[]},{"permission":"upgrade","target":"0xbf544970E6BD77b21C6492C281AB60d0770451F4","via":[]},{"permission":"upgrade","target":"0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257","via":[]}]
+    }
+```
+
+```diff
+    contract L2ARBGateway (0xbf544970E6BD77b21C6492C281AB60d0770451F4) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xada790b026097BfB36a5ed696859b97a96CEd92C","via":[]}]
+    }
+```
+
+```diff
+    contract L2ERC20Gateway (0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xada790b026097BfB36a5ed696859b97a96CEd92C","via":[]}]
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482","0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482","via":[]},{"permission":"upgrade","target":"0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD","via":[]}]
+    }
+```
+
+```diff
+    contract L2ArbitrumToken (0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x746d02ca9d79f0cecb2b59531037a0e814f67c08
 
 # Diff at Fri, 09 Aug 2024 12:04:50 GMT:

@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x1470d168745592d52efdfd26ca0cee7787aec31b
+
+# Diff at Wed, 21 Aug 2024 10:05:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 20475186
+- current block number: 20475186
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20475186 (main branch discovery), not current.
+
+```diff
+    contract MainchainBridgeManager (0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08"]}
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e","via":[]}]
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08","via":[]}]
+    }
+```
+
+```diff
+    contract GnosisSafe (0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB","via":[]}]
+    }
+```
+
+```diff
+    contract MainchainGateway (0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x9a019fb9140510909dd4fb3418872c6ca17cf19c
 
 # Diff at Fri, 09 Aug 2024 10:11:52 GMT:
