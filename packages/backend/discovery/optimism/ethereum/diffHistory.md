@@ -1,3 +1,115 @@
+Generated with discovered.json: 0x487f6245b7a3c916d3e5273dedb8454bb9da614a
+
+# Diff at Wed, 21 Aug 2024 10:04:39 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 20548226
+- current block number: 20548226
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20548226 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (0x18DAc71c228D1C32c99489B7323d441E1175e443) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","via":[]}]
+    }
+```
+
+```diff
+    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","via":[]}]
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.
+      assignedPermissions:
+-        {"upgrade":["0x18DAc71c228D1C32c99489B7323d441E1175e443","0x229047fed2591dbec1eF1118d64F7aF3dB9EB290","0x5a7749f83b81B301cAb5f48EB8516B986DAef23D","0x75505a97BD334E7BD3C476893285569C4136Fa0F","0x95703e0982140D16f8ebA6d158FccEde42f04a4C","0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1","0xE497B094d6DbB3D5E4CaAc9a14696D7572588d14","0xbEb5Fc579115071764c7423A4f12eDde41f106Ed","0xe5965Ab5962eDc7477C8520243A95517CD252fA9"]}
+      issuedPermissions:
++        [{"permission":"configure","target":"0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A","via":[]}]
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x18DAc71c228D1C32c99489B7323d441E1175e443","via":[]},{"permission":"upgrade","target":"0x229047fed2591dbec1eF1118d64F7aF3dB9EB290","via":[]},{"permission":"upgrade","target":"0x5a7749f83b81B301cAb5f48EB8516B986DAef23D","via":[]},{"permission":"upgrade","target":"0x75505a97BD334E7BD3C476893285569C4136Fa0F","via":[]},{"permission":"upgrade","target":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C","via":[]},{"permission":"upgrade","target":"0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1","via":[]},{"permission":"upgrade","target":"0xbEb5Fc579115071764c7423A4f12eDde41f106Ed","via":[]},{"permission":"upgrade","target":"0xE497B094d6DbB3D5E4CaAc9a14696D7572588d14","via":[]},{"permission":"upgrade","target":"0xe5965Ab5962eDc7477C8520243A95517CD252fA9","via":[]}]
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: It can act on behalf of 0x543bA4AADBAb8f9025686Bd03993043599c6fB04, inheriting its permissions.
+      assignedPermissions:
+-        {"configure":["0x543bA4AADBAb8f9025686Bd03993043599c6fB04"]}
+      receivedPermissions:
++        [{"permission":"configure","target":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","via":[]}]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x5a7749f83b81B301cAb5f48EB8516B986DAef23D) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","via":[]}]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x75505a97BD334E7BD3C476893285569C4136Fa0F) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","via":[]}]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","via":[]}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","via":[]}]
+    }
+```
+
+```diff
+    contract OptimismPortal (0xbEb5Fc579115071764c7423A4f12eDde41f106Ed) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","via":[]}]
+    }
+```
+
+```diff
+    contract DelayedWETH (0xE497B094d6DbB3D5E4CaAc9a14696D7572588d14) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","via":[]}]
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0xe5965Ab5962eDc7477C8520243A95517CD252fA9) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xc2ec99b57ae94852d03fff550a2bfb18454509b6
 
 # Diff at Sat, 17 Aug 2024 12:04:40 GMT:

@@ -43,6 +43,9 @@ export function ScalingLivenessTable({ entries }: Props) {
           desc: false,
         },
       ],
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
     },
   })
 

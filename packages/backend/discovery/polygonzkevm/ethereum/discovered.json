@@ -16,6 +16,13 @@
       "name": "daiBridge",
       "address": "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["totalBridgedDAI"],
       "sinceTimestamp": 1695199499,
       "values": {
@@ -89,6 +96,13 @@
       "name": "usdcBridge",
       "address": "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1700125979,
       "values": {
         "$admin": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
@@ -106,6 +120,13 @@
       "name": "wstETHBridge",
       "address": "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1703945135,
       "values": {
         "$admin": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
@@ -143,13 +164,23 @@
       "address": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
-          "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB",
-          "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1694792111,
       "values": {

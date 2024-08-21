@@ -39,6 +39,9 @@ export function BridgesRiskTables({ entries }: Props) {
             desc: false,
           },
         ],
+        columnPinning: {
+          left: ['#', 'logo'],
+        },
       },
     }),
     [],
@@ -74,7 +77,7 @@ export function BridgesRiskTables({ entries }: Props) {
   return (
     <div className="space-y-2">
       <BridgesFilters entries={filteredEntries} />
-      <Tabs defaultValue="active" className="w-full">
+      <Tabs storeInSearchParams defaultValue="active" className="w-full">
         <OverflowWrapper>
           <TabsList>
             <TabsTrigger value="active" className="gap-1.5">

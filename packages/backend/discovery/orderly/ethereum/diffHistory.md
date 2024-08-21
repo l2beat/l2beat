@@ -1,3 +1,91 @@
+Generated with discovered.json: 0x3ca55cefdcfe9adffcca7bfa15ab94ed5fead558
+
+# Diff at Wed, 21 Aug 2024 10:04:49 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 20389626
+- current block number: 20389626
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20389626 (main branch discovery), not current.
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: It can act on behalf of 0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9, inheriting its permissions.
+      assignedPermissions:
+-        {"configure":["0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9"]}
+      receivedPermissions:
++        [{"permission":"configure","target":"0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9","via":[]}]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x5e76821C3c1AbB9fD6E310224804556C61D860e0) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9","via":[]}]
+    }
+```
+
+```diff
+    contract AddressManager (0x87630a802a3789463eC4b00f89b27b1e9f6b92e9) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"configure","target":"0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9","via":[]}]
+    }
+```
+
+```diff
+    contract SystemConfig (0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9","via":[]}]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x91493a61ab83b62943E6dCAa5475Dd330704Cc84) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9","via":[]}]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x934Ab59Ef14b638653b1C0FEf7aB9a72186393DC) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9","via":[]}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x5e76821C3c1AbB9fD6E310224804556C61D860e0","0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664","0x91493a61ab83b62943E6dCAa5475Dd330704Cc84","0x934Ab59Ef14b638653b1C0FEf7aB9a72186393DC","0xe07eA0436100918F157DF35D01dCE5c11b16D1F1"],"configure":["0x87630a802a3789463eC4b00f89b27b1e9f6b92e9"]}
+      issuedPermissions:
++        [{"permission":"configure","target":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[]}]
+      receivedPermissions:
++        [{"permission":"configure","target":"0x87630a802a3789463eC4b00f89b27b1e9f6b92e9","via":[]},{"permission":"upgrade","target":"0x5e76821C3c1AbB9fD6E310224804556C61D860e0","via":[]},{"permission":"upgrade","target":"0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664","via":[]},{"permission":"upgrade","target":"0x91493a61ab83b62943E6dCAa5475Dd330704Cc84","via":[]},{"permission":"upgrade","target":"0x934Ab59Ef14b638653b1C0FEf7aB9a72186393DC","via":[]},{"permission":"upgrade","target":"0xe07eA0436100918F157DF35D01dCE5c11b16D1F1","via":[]}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xe07eA0436100918F157DF35D01dCE5c11b16D1F1) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x2caca61eaccc3a2c034c3dfe5527b5a76959d731
 
 # Diff at Fri, 09 Aug 2024 12:01:10 GMT:

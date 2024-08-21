@@ -2,9 +2,39 @@
 
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import * as React from 'react'
+import { useSearchParamState } from '~/hooks/use-search-param-state'
 import { cn } from '~/utils/cn'
 
-const Tabs = TabsPrimitive.Root
+/**
+ * This component is a wrapper around the Radix Tabs component that allows you
+ * to store the selected tab in the URL search params.
+ */
+const Tabs = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root> & {
+    storeInSearchParams?: boolean
+  }
+>(
+  (
+    { defaultValue: passedDefaultValue, storeInSearchParams = true, ...props },
+    ref,
+  ) => {
+    const state = useSearchParamState('tab', passedDefaultValue, {
+      shallow: true,
+    })
+    const [value, setValue] = storeInSearchParams ? state : [passedDefaultValue]
+
+    return (
+      <TabsPrimitive.Root
+        ref={ref}
+        defaultValue={value}
+        onValueChange={setValue}
+        {...props}
+      />
+    )
+  },
+)
+Tabs.displayName = TabsPrimitive.Root.displayName
 
 const TabsList = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.List>,

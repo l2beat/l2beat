@@ -1,3 +1,169 @@
+Generated with discovered.json: 0xa4cbb98e968bee9bd3889e21fc8aff629ca93211
+
+# Diff at Wed, 21 Aug 2024 10:06:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 20461688
+- current block number: 20461688
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20461688 (main branch discovery), not current.
+
+```diff
+    contract BridgeMultisig (0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x283751A21eafBFcD52297820D27C1f1963D9b5b4","0x66ba83ba3D3AD296424a2258145d9910E9E40B7C","0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B","0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb","0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816","0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419","0xbb3400F107804DFB482565FF1Ec8D8aE66747605","0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4","0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2","0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x283751A21eafBFcD52297820D27C1f1963D9b5b4","via":[]},{"permission":"upgrade","target":"0x66ba83ba3D3AD296424a2258145d9910E9E40B7C","via":[]},{"permission":"upgrade","target":"0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419","via":[]},{"permission":"upgrade","target":"0xbb3400F107804DFB482565FF1Ec8D8aE66747605","via":[]},{"permission":"upgrade","target":"0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B","via":[]},{"permission":"upgrade","target":"0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4","via":[]},{"permission":"upgrade","target":"0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2","via":[]},{"permission":"upgrade","target":"0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8","via":[]},{"permission":"upgrade","target":"0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb","via":[]},{"permission":"upgrade","target":"0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816","via":[]}]
+    }
+```
+
+```diff
+    contract StarkgateManager (0x0c5aE94f8939182F2D06097025324D1E537d5B60) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","via":[]}]
+    }
+```
+
+```diff
+    contract StarkgateRegistry (0x1268cc171c54F2000402DfF20E93E60DF4c96812) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","via":[]}]
+    }
+```
+
+```diff
+    contract WBTCBridge (0x283751A21eafBFcD52297820D27C1f1963D9b5b4) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}]
+    }
+```
+
+```diff
+    contract FXSBridge (0x66ba83ba3D3AD296424a2258145d9910E9E40B7C) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}]
+    }
+```
+
+```diff
+    contract ProxyMultisig (0x83C0A700114101D1283D1405E2c8f21D3F03e988) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4","via":[]}]
+    }
+```
+
+```diff
+    contract ETHBridge (0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]},{"permission":"upgrade","target":"0xC91EC49Ad0843E5Cca55b4c4e5f68de54F6cB2Ae","via":[]}]
+    }
+```
+
+```diff
+    contract USDTBridge (0xbb3400F107804DFB482565FF1Ec8D8aE66747605) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}]
+    }
+```
+
+```diff
+    contract wstETHBridge (0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}]
+    }
+```
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x83C0A700114101D1283D1405E2c8f21D3F03e988","via":[]},{"permission":"upgrade","target":"0xD5fB66CaEE881367Df4409B17Fd53a2Ef0D9B263","via":[]}]
+    }
+```
+
+```diff
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}]
+    }
+```
+
+```diff
+    contract rETHBridge (0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}]
+    }
+```
+
+```diff
+    contract sfrxETHBridge (0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}]
+    }
+```
+
+```diff
+    contract FRAXBridge (0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}]
+    }
+```
+
+```diff
+    contract LUSDBridge (0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","via":[]}]
+    }
+```
+
+```diff
+    contract MultiBridge (0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","via":[]}]
+    }
+```
+
+```diff
+    contract USDCBridge (0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}]
+    }
+```
+
+```diff
+    contract UNIBridge (0xf76e6bF9e2df09D0f854F045A3B724074dA1236B) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xF689688640E88160c07C6FC5cc63039F29EDe86b","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xbb05fc769a50c1da5187cb7501dafd8918e99bc5
 
 # Diff at Fri, 09 Aug 2024 12:02:36 GMT:

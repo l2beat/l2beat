@@ -1,6 +1,5 @@
-import { assert } from '@l2beat/backend-tools'
 import { AmountRecord } from '@l2beat/database'
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
 import { createAmountId } from '../utils/createAmountId'

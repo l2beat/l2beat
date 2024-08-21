@@ -88,10 +88,13 @@ export function ScalingSummaryTables({ entries }: Props) {
     initialState: {
       sorting: [
         {
-          id: '#',
-          desc: false,
+          id: 'total',
+          desc: true,
         },
       ],
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
     },
   })
 
@@ -108,6 +111,9 @@ export function ScalingSummaryTables({ entries }: Props) {
           desc: true,
         },
       ],
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
     },
   })
 
@@ -124,6 +130,9 @@ export function ScalingSummaryTables({ entries }: Props) {
           desc: true,
         },
       ],
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
     },
   })
 
@@ -140,13 +149,16 @@ export function ScalingSummaryTables({ entries }: Props) {
           desc: false,
         },
       ],
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
     },
   })
 
   return (
     <div className="space-y-2">
       <ScalingTvlFilters items={allProjects} />
-      <Tabs defaultValue="layer2s" className="w-full">
+      <Tabs storeInSearchParams defaultValue="layer2s" className="w-full">
         <OverflowWrapper>
           <TabsList>
             <TabsTrigger value="layer2s" className="gap-1.5">

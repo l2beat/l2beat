@@ -90,6 +90,13 @@
       "name": "Governance",
       "address": "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x38A43F4330f24fe920F943409709fc9A6084C939",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["totalTokens"],
       "sinceTimestamp": 1592218707,
       "values": {
@@ -121,13 +128,23 @@
     {
       "name": "UpgradeGatekeeper",
       "address": "0x38A43F4330f24fe920F943409709fc9A6084C939",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01",
-          "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D",
-          "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1592218707,
       "values": {
         "$immutable": true,
@@ -149,6 +166,13 @@
       "name": "Verifier",
       "address": "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x38A43F4330f24fe920F943409709fc9A6084C939",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1592218707,
       "values": {
         "$admin": "0x38A43F4330f24fe920F943409709fc9A6084C939",
@@ -174,6 +198,13 @@
       "name": "ZkSync",
       "address": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
       "proxyType": "zkSync Lite proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x38A43F4330f24fe920F943409709fc9A6084C939",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1592218707,
       "values": {
         "$admin": "0x38A43F4330f24fe920F943409709fc9A6084C939",

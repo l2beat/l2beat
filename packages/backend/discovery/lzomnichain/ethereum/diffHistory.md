@@ -1,3 +1,73 @@
+Generated with discovered.json: 0x7c01f2d993443a5fa5610e6d3a7e5bb66f860eba
+
+# Diff at Wed, 21 Aug 2024 10:03:56 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 20240876
+- current block number: 20240876
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20240876 (main branch discovery), not current.
+
+```diff
+    contract  (0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8","via":[]}]
+    }
+```
+
+```diff
+    contract TSS Oracle (0x5a54fe5234E811466D5366846283323c954310B2) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8","via":[]}]
+    }
+```
+
+```diff
+    contract  (0x6BD792911F4B3714E88FbDf32B351632e7d22c70) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9","via":[]}]
+    }
+```
+
+```diff
+    contract LayerZero Relayer (0x902F09715B6303d4173037652FA7377e5b98089E) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9","via":[]}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034","0x5a54fe5234E811466D5366846283323c954310B2"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034","via":[]},{"permission":"upgrade","target":"0x5a54fe5234E811466D5366846283323c954310B2","via":[]}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x6BD792911F4B3714E88FbDf32B351632e7d22c70","0x902F09715B6303d4173037652FA7377e5b98089E"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x6BD792911F4B3714E88FbDf32B351632e7d22c70","via":[]},{"permission":"upgrade","target":"0x902F09715B6303d4173037652FA7377e5b98089E","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xf4d19db2374533a1cf361613897f876cdf990cde
 
 # Diff at Fri, 09 Aug 2024 12:00:19 GMT:

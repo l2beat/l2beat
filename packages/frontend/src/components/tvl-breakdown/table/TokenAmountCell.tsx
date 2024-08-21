@@ -1,8 +1,7 @@
 import { safeGetTokenByAssetId } from '@l2beat/config'
-import { AssetId } from '@l2beat/shared-pure'
+import { assert, AssetId } from '@l2beat/shared-pure'
 import React from 'react'
 
-import { assert } from '@l2beat/backend-tools'
 import { TVLProjectBreakdown } from '../../../pages/scaling/projects-tvl-breakdown/props/getTvlBreakdownView'
 import { formatNumberWithCommas } from '../../../utils'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/Tooltip'

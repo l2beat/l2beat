@@ -1,6 +1,5 @@
-import { assert } from '@l2beat/backend-tools'
-
 import { Blob } from '@l2beat/shared'
+import { assert } from '@l2beat/shared-pure'
 import { byteArrFromHexStr } from './utils'
 
 const BLOB_SIZE = 4096 * 32

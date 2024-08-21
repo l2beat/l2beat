@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x25083660ffed581d9a0044fec9d4ec63fdf6a3d8
+
+# Diff at Wed, 21 Aug 2024 10:01:38 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 20532552
+- current block number: 20532552
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20532552 (main branch discovery), not current.
+
+```diff
+    contract Ethereum_SpokePool (0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xc186fA914353c44b2E33eBE05f21846F1048bEda","via":[]}]
+    }
+```
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xf27ee85934c0dc2fbfecd1d1d8da4503777c5497
 
 # Diff at Thu, 15 Aug 2024 07:31:34 GMT:

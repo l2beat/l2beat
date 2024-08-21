@@ -1,3 +1,121 @@
+Generated with discovered.json: 0xa18e92967da60de60ca8b04f516d152e40628390
+
+# Diff at Wed, 21 Aug 2024 10:02:49 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 19825321
+- current block number: 19825321
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825321 (main branch discovery), not current.
+
+```diff
+    contract MerkleDistributor (0x01d3348601968aB85b4bb028979006eac235a588) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0","via":[]}]
+    }
+```
+
+```diff
+    contract TreasuryProxyAdmin (0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x639192D54431F8c816368D3FB4107Bc168d0E871"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x639192D54431F8c816368D3FB4107Bc168d0E871","via":[]}]
+    }
+```
+
+```diff
+    contract LiquidityStaking (0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xAc5D8bCD13da463bea96c75f9085c4e40037F790","via":[]}]
+    }
+```
+
+```diff
+    contract TreasuryBridge (0x639192D54431F8c816368D3FB4107Bc168d0E871) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d","via":[]}]
+    }
+```
+
+```diff
+    contract SafetyModule (0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C","via":[]}]
+    }
+```
+
+```diff
+    contract SafetyModuleProxyAdmin (0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC","via":[]}]
+    }
+```
+
+```diff
+    contract MerkleDistributorProxyAdmin (0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x01d3348601968aB85b4bb028979006eac235a588"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x01d3348601968aB85b4bb028979006eac235a588","via":[]}]
+    }
+```
+
+```diff
+    contract PriorityExecutor (0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0xD54f502e184B6B739d7D27a6410a67dc462D69c8"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0xD54f502e184B6B739d7D27a6410a67dc462D69c8","via":[]}]
+    }
+```
+
+```diff
+    contract LiquidityStakingProxyAdmin (0xAc5D8bCD13da463bea96c75f9085c4e40037F790) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941","via":[]}]
+    }
+```
+
+```diff
+    contract StarkPerpetual (0xD54f502e184B6B739d7D27a6410a67dc462D69c8) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE","via":[]},{"permission":"upgrade","target":"0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0","via":[]}]
+    }
+```
+
+```diff
+    contract StarkExRemoverGovernorV2 (0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0xD54f502e184B6B739d7D27a6410a67dc462D69c8"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0xD54f502e184B6B739d7D27a6410a67dc462D69c8","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x01ddf9fb0521dd7cf449d64ab4fac456ef66eb69
 
 # Diff at Fri, 09 Aug 2024 10:09:26 GMT:

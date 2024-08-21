@@ -1,6 +1,6 @@
-import { assert } from '@l2beat/backend-tools'
 import { Database, IndexerStateRecord } from '@l2beat/database'
 import {
+  assert,
   AmountConfigEntry,
   CirculatingSupplyEntry,
   CoingeckoPriceConfigEntry,

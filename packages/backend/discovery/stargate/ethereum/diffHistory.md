@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x1bbf8fb145a459105e0f11d0b01e4f995f51a663
+
+# Diff at Wed, 21 Aug 2024 10:06:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 20240852
+- current block number: 20240852
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20240852 (main branch discovery), not current.
+
+```diff
+    contract TSS Oracle (0x5a54fe5234E811466D5366846283323c954310B2) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8","via":[]}]
+    }
+```
+
+```diff
+    contract LayerZero Relayer (0x902F09715B6303d4173037652FA7377e5b98089E) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9","via":[]}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x5a54fe5234E811466D5366846283323c954310B2"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x5a54fe5234E811466D5366846283323c954310B2","via":[]}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x902F09715B6303d4173037652FA7377e5b98089E"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x902F09715B6303d4173037652FA7377e5b98089E","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xb78dfc69c6dea378b4a4ba9baaed0ac40255cb55
 
 # Diff at Fri, 09 Aug 2024 10:12:27 GMT:

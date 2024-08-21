@@ -1,3 +1,127 @@
+Generated with discovered.json: 0xf165fc44a83c4d984c902d5760269e0bc33e6245
+
+# Diff at Wed, 21 Aug 2024 10:04:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 20475247
+- current block number: 20475247
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20475247 (main branch discovery), not current.
+
+```diff
+    contract OptimismMintableERC20Factory (0x1aaab4E20d2e4Bb992b5BCA2125e8bd3588c8730) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99","via":[]}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99) {
+    +++ description: It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.
+      assignedPermissions:
+-        {"upgrade":["0x1aaab4E20d2e4Bb992b5BCA2125e8bd3588c8730","0x3B1F7aDa0Fcc26B13515af752Dd07fB1CAc11426","0x3F37aBdE2C6b5B2ed6F8045787Df1ED1E3753956","0x50D700e97967F9115e3f999bDB263d69F6704680","0x6d0f65D59b55B0FEC5d2d15365154DcADC140BF3","0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA"],"configure":["0xd4b1EC0DEc3C7F12abD3ec27B7514880ae1C3a37"]}
+      issuedPermissions:
++        [{"permission":"configure","target":"0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A","via":[]}]
+      receivedPermissions:
++        [{"permission":"configure","target":"0xd4b1EC0DEc3C7F12abD3ec27B7514880ae1C3a37","via":[]},{"permission":"upgrade","target":"0x1aaab4E20d2e4Bb992b5BCA2125e8bd3588c8730","via":[]},{"permission":"upgrade","target":"0x3B1F7aDa0Fcc26B13515af752Dd07fB1CAc11426","via":[]},{"permission":"upgrade","target":"0x3F37aBdE2C6b5B2ed6F8045787Df1ED1E3753956","via":[]},{"permission":"upgrade","target":"0x50D700e97967F9115e3f999bDB263d69F6704680","via":[]},{"permission":"upgrade","target":"0x6d0f65D59b55B0FEC5d2d15365154DcADC140BF3","via":[]},{"permission":"upgrade","target":"0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA","via":[]}]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x3B1F7aDa0Fcc26B13515af752Dd07fB1CAc11426) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99","via":[]}]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x3F37aBdE2C6b5B2ed6F8045787Df1ED1E3753956) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99","via":[]}]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x50D700e97967F9115e3f999bDB263d69F6704680) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99","via":[]}]
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x95703e0982140D16f8ebA6d158FccEde42f04a4C"],"configure":["0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"]}
+      issuedPermissions:
++        [{"permission":"configure","target":"0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A","via":[]}]
+      receivedPermissions:
++        [{"permission":"configure","target":"0xdE1FCfB0851916CA5101820A69b13a4E276bd81F","via":[]},{"permission":"upgrade","target":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C","via":[]}]
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: It can act on behalf of 0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99, inheriting its permissions. It can act on behalf of 0x543bA4AADBAb8f9025686Bd03993043599c6fB04, inheriting its permissions.
+      assignedPermissions:
+-        {"configure":["0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99","0x543bA4AADBAb8f9025686Bd03993043599c6fB04"]}
+      receivedPermissions:
++        [{"permission":"configure","target":"0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99","via":[]},{"permission":"configure","target":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","via":[]}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x6d0f65D59b55B0FEC5d2d15365154DcADC140BF3) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99","via":[]}]
+    }
+```
+
+```diff
+    contract SystemConfig (0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99","via":[]}]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","via":[]}]
+    }
+```
+
+```diff
+    contract AddressManager (0xd4b1EC0DEc3C7F12abD3ec27B7514880ae1C3a37) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"configure","target":"0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99","via":[]}]
+    }
+```
+
+```diff
+    contract Lib_AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"configure","target":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x82f1bf4cffe09fef2be93ad95a768e03591b1ee6
 
 # Diff at Fri, 09 Aug 2024 12:00:28 GMT:

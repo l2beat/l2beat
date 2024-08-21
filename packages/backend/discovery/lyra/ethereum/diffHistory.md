@@ -1,3 +1,99 @@
+Generated with discovered.json: 0x9fd448ab838efb3dd0784aa9eda6406d195424a6
+
+# Diff at Wed, 21 Aug 2024 10:03:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 20331900
+- current block number: 20331900
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20331900 (main branch discovery), not current.
+
+```diff
+    contract OptimismMintableERC20Factory (0x08Dea366F26C25a08C8D1C3568ad07d1e587136d) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x35d5D43271548c984662d4879FBc8e041Bc1Ff93","via":[]}]
+    }
+```
+
+```diff
+    contract SystemConfig (0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x35d5D43271548c984662d4879FBc8e041Bc1Ff93","via":[]}]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x35d5D43271548c984662d4879FBc8e041Bc1Ff93","via":[]}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x35d5D43271548c984662d4879FBc8e041Bc1Ff93) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x08Dea366F26C25a08C8D1C3568ad07d1e587136d","0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e","0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba","0x61E44dC0dae6888B5a301887732217d5725B0bFf","0x6CC3268794c5d3E3d9d52adEfC748B59d536cb22","0x85eA9c11cf3D4786027F7FD08F4406b15777e5f8"],"configure":["0xC845F9C4004EB35a8bde8ad89C4760a9c0e65CAB"]}
+      issuedPermissions:
++        [{"permission":"configure","target":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[]}]
+      receivedPermissions:
++        [{"permission":"configure","target":"0xC845F9C4004EB35a8bde8ad89C4760a9c0e65CAB","via":[]},{"permission":"upgrade","target":"0x08Dea366F26C25a08C8D1C3568ad07d1e587136d","via":[]},{"permission":"upgrade","target":"0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e","via":[]},{"permission":"upgrade","target":"0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba","via":[]},{"permission":"upgrade","target":"0x61E44dC0dae6888B5a301887732217d5725B0bFf","via":[]},{"permission":"upgrade","target":"0x6CC3268794c5d3E3d9d52adEfC748B59d536cb22","via":[]},{"permission":"upgrade","target":"0x85eA9c11cf3D4786027F7FD08F4406b15777e5f8","via":[]}]
+    }
+```
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: It can act on behalf of 0x35d5D43271548c984662d4879FBc8e041Bc1Ff93, inheriting its permissions.
+      assignedPermissions:
+-        {"configure":["0x35d5D43271548c984662d4879FBc8e041Bc1Ff93"]}
+      receivedPermissions:
++        [{"permission":"configure","target":"0x35d5D43271548c984662d4879FBc8e041Bc1Ff93","via":[]}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x61E44dC0dae6888B5a301887732217d5725B0bFf) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x35d5D43271548c984662d4879FBc8e041Bc1Ff93","via":[]}]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x6CC3268794c5d3E3d9d52adEfC748B59d536cb22) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x35d5D43271548c984662d4879FBc8e041Bc1Ff93","via":[]}]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x85eA9c11cf3D4786027F7FD08F4406b15777e5f8) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x35d5D43271548c984662d4879FBc8e041Bc1Ff93","via":[]}]
+    }
+```
+
+```diff
+    contract AddressManager (0xC845F9C4004EB35a8bde8ad89C4760a9c0e65CAB) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"configure","target":"0x35d5D43271548c984662d4879FBc8e041Bc1Ff93","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xdfbedb7f8eb83676ac0e4df91ee3e68c94175b64
 
 # Diff at Fri, 09 Aug 2024 12:00:15 GMT:

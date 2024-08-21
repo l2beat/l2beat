@@ -1,6 +1,6 @@
-import { assert, Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
-import { CirculatingSupplyEntry, ProjectId } from '@l2beat/shared-pure'
+import { assert, CirculatingSupplyEntry, ProjectId } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 
 import { TvlConfig } from '../../../config/Config'
