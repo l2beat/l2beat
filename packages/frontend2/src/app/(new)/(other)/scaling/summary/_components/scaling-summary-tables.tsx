@@ -26,16 +26,16 @@ import { summaryLayer3sColumns } from './table/layer3s/columns'
 import { scalingUpcomingColumns } from './table/upcoming/columns'
 
 interface Props {
-  projects: ScalingSummaryEntry[]
+  entries: ScalingSummaryEntry[]
 }
 
-export function ScalingSummaryTables({ projects }: Props) {
+export function ScalingSummaryTables({ entries }: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
   const includeFilters = useScalingFilter()
 
   const allProjects = useMemo(
-    () => projects.filter(includeFilters),
-    [projects, includeFilters],
+    () => entries.filter(includeFilters),
+    [entries, includeFilters],
   )
 
   const layer2sProjects = useMemo(
@@ -92,6 +92,9 @@ export function ScalingSummaryTables({ projects }: Props) {
           desc: true,
         },
       ],
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
     },
   })
 
@@ -108,6 +111,9 @@ export function ScalingSummaryTables({ projects }: Props) {
           desc: true,
         },
       ],
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
     },
   })
 
@@ -124,6 +130,9 @@ export function ScalingSummaryTables({ projects }: Props) {
           desc: true,
         },
       ],
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
     },
   })
 
@@ -140,6 +149,9 @@ export function ScalingSummaryTables({ projects }: Props) {
           desc: false,
         },
       ],
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
     },
   })
 

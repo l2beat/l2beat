@@ -8,28 +8,28 @@ import { useScalingAssociatedTokensContext } from '../../../_components/scaling-
 import { useScalingFilter } from '../../../_components/scaling-filter-context'
 import { ScalingTvlFilters } from '../../../_components/scaling-tvl-filters'
 import { toTableRows } from '../_utils/to-table-rows'
-import { scalingTvlCokumns } from './table/columns'
+import { scalingTvlColumns } from './table/columns'
 
 interface Props {
-  projects: ScalingTvlEntry[]
+  entries: ScalingTvlEntry[]
 }
 
-export function ScalingTvlTable({ projects }: Props) {
+export function ScalingTvlTable({ entries }: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
   const includeFilters = useScalingFilter()
 
   const allProjects = useMemo(
     () =>
       toTableRows({
-        projects: projects.filter(includeFilters),
+        projects: entries.filter(includeFilters),
         excludeAssociatedTokens,
       }),
-    [projects, includeFilters, excludeAssociatedTokens],
+    [entries, includeFilters, excludeAssociatedTokens],
   )
 
   const table = useTable({
     data: allProjects,
-    columns: scalingTvlCokumns,
+    columns: scalingTvlColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
@@ -40,6 +40,9 @@ export function ScalingTvlTable({ projects }: Props) {
           desc: false,
         },
       ],
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
     },
   })
 
