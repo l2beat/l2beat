@@ -1,6 +1,4 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import Image from 'next/image'
-import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import {
   TypeCell,
@@ -17,35 +15,12 @@ import { AnomalyIndicator } from '../anomaly-indicator'
 import { IntervalsHeader } from './intervals-header'
 import { LivenessIntervalCell } from './liveness-interval-cell'
 import { type ScalingLivenessTableEntry } from './to-table-entry'
+import { getCommonProjectColumns } from '~/app/_components/table/common-project-columns'
 
 const columnHelper = createColumnHelper<ScalingLivenessTableEntry>()
 
 export const columns = [
-  columnHelper.accessor((_, index) => index + 1, {
-    header: '#',
-    cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
-    meta: {
-      headClassName: 'w-0',
-    },
-    size: 44.55,
-  }),
-  columnHelper.display({
-    id: 'logo',
-    cell: (ctx) => (
-      <Image
-        className="min-h-[18px] min-w-[18px]"
-        src={`/icons/${ctx.row.original.slug}.png`}
-        width={18}
-        height={18}
-        alt={`${ctx.row.original.name} logo`}
-      />
-    ),
-    meta: {
-      headClassName: 'w-0',
-      cellClassName: 'lg:!pr-0',
-    },
-    size: 26,
-  }),
+  ...getCommonProjectColumns(columnHelper),
   columnHelper.accessor('name', {
     cell: (ctx) => (
       <ProjectNameCell
