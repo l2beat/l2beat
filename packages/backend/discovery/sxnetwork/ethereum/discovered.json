@@ -1,7 +1,7 @@
 {
   "name": "sxnetwork",
   "chain": "ethereum",
-  "blockNumber": 20570434,
+  "blockNumber": 20575837,
   "configHash": "0xd6dd3b87391e0cce733eb631c3957a1a30094a20d5707ba136bc831b974b1e37",
   "version": 11,
   "contracts": [
@@ -59,12 +59,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 89,
+        "firstUnresolvedNode": 91,
         "inbox": "0xEa83E8907C89Bc0D9517632f0ba081972E328631",
         "isERC20Enabled": false,
         "lastStakeBlock": 20269009,
-        "latestConfirmed": 88,
-        "latestNodeCreated": 113,
+        "latestConfirmed": 90,
+        "latestNodeCreated": 116,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xB360b2f57c645E847148d7C479b7468AbF6F707d",
@@ -226,8 +226,8 @@
         "nativeToken": "0xbe9F61555F50DD6167f2772e9CF7519790d96624",
         "rollup": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
         "sequencerInbox": "0xD80a805c86C14c879420eC6acb366D04D318fC0C",
-        "sequencerMessageCount": 157,
-        "sequencerReportedSubMessageCount": 451974
+        "sequencerMessageCount": 160,
+        "sequencerReportedSubMessageCount": 465679
       },
       "derivedName": "ERC20Bridge"
     },
@@ -277,7 +277,7 @@
       "values": {
         "$admin": "0xe8606A55d105EF857F187C32Ae0E9a168aF8F497",
         "$implementation": "0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A",
-        "batchCount": 157,
+        "batchCount": 160,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x90906eA9eb38B6afC104bB761F493b2a78c85024"],
         "bridge": "0xa104C0426e95a5538e89131DbB4163d230C35f86",
