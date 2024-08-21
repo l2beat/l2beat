@@ -22,18 +22,23 @@ export function resolveAnalysis(analyses: Analysis[]): ResolvedPermission[] {
       threshold,
       edges: [],
     }
-
     if (analysis.combinedMeta === undefined) {
       continue
     }
 
-    graph[address.toString()]?.edges.push(
-      ...(analysis.combinedMeta.permissions ?? []).map((p) => ({
-        toNode: p.target,
-        delay: p.delay,
-        permission: p.type,
-      })),
-    )
+    for (const entry of analysis.combinedMeta.permissions ?? []) {
+      graph[entry.target.toString()] ??= {
+        address: entry.target,
+        delay: 0,
+        threshold,
+        edges: [],
+      }
+      graph[entry.target.toString()]?.edges.push({
+        toNode: address,
+        delay: entry.delay,
+        permission: entry.type,
+      })
+    }
   }
 
   return resolvePermissions(Object.values(graph))

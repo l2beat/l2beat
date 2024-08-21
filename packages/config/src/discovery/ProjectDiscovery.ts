@@ -694,11 +694,11 @@ export class ProjectDiscovery {
       upgrade: 'Admin',
     }
 
-    const permissions = contractOrEoa.issuedPermissions
+    const permissions = contractOrEoa.receivedPermissions
     return permissions === undefined
       ? undefined
       : Object.entries(
-          groupBy(contractOrEoa.issuedPermissions ?? [], 'permission'),
+          groupBy(contractOrEoa.receivedPermissions ?? [], 'permission'),
         )
           .map(([permission, entries]) => {
             const addressesString = entries
@@ -752,14 +752,14 @@ export class ProjectDiscovery {
             description,
           ),
         )
-      } else if (contract.issuedPermissions !== undefined) {
+      } else if (contract.receivedPermissions !== undefined) {
         result.push(this.contractAsPermissioned(contract, description))
       }
     }
 
     const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
     for (const eoa of eoas) {
-      if (eoa.issuedPermissions === undefined) {
+      if (eoa.receivedPermissions === undefined) {
         continue
       }
       const description = this.describeContractOrEoa(eoa)
@@ -788,7 +788,7 @@ export class ProjectDiscovery {
     )
     const result = contracts
       .filter((contract) => !gnosisModules.includes(contract.address))
-      .filter((contracts) => contracts.issuedPermissions === undefined)
+      .filter((contracts) => contracts.receivedPermissions === undefined)
       .filter((contracts) => contracts.proxyType !== 'gnosis safe')
       .map((contract) => {
         const admins = get$Admins(contract.values)
