@@ -16,7 +16,7 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
   )
 
   // Do not display the tabs if the current group is not found,
-  // or the current group does not have any links that match the current path.
+  // or the current group does not have a link that matche the current path.
   const display = currentGroup?.links.some(({ href }) => href === pathname)
   if (!display) return null
 

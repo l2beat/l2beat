@@ -213,7 +213,7 @@ function MobileNavBar({ links }: { links: NavbarLinkGroups }) {
   )
 
   // Do not display the tabs if the current group is not found,
-  // or the current group does not have any links that match the current path.
+  // or the current group does not have a link that matches the current path.
   const displayTabs = currentGroup?.links.some(({ href }) => href === path)
 
   return (
