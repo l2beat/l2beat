@@ -60,6 +60,16 @@ export const scalingArchivedColumns = [
         <span className="px-5">${formatNumber(value.breakdown.total)}</span>
       )
     },
+    sortingFn: ({ original: a }, { original: b }) => {
+      const aTvl = a.tvl.breakdown?.total ?? 0
+      const bTvl = b.tvl.breakdown?.total ?? 0
+
+      if (aTvl === bTvl) {
+        return b.name.localeCompare(a.name)
+      }
+
+      return aTvl - bTvl
+    },
     meta: {
       headClassName: 'justify-end',
       cellClassName: 'justify-end',
