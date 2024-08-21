@@ -38,8 +38,8 @@ export function BridgesSummaryTables({ entries }: Props) {
       initialState: {
         sorting: [
           {
-            id: '#',
-            desc: false,
+            id: 'tvl',
+            desc: true,
           },
         ],
       },
