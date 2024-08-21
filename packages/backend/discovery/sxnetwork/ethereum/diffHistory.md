@@ -7,7 +7,7 @@ Generated with discovered.json: 0xed925d7845c445e186ec969c286a8323b4c66ede
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Added initial discovery of the chain.
 
 ## Initial discovery
 
