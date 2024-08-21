@@ -1,6 +1,4 @@
 import { type Row, createColumnHelper } from '@tanstack/react-table'
-import Image from 'next/image'
-import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { NoInfoCell } from '~/app/_components/table/cells/no-info-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import { RiskCell } from '~/app/_components/table/cells/risk-cell'
