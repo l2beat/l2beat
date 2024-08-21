@@ -36,7 +36,7 @@ const totalColumn = columnHelper.accessor('tvl', {
   },
 })
 
-export const scalingTvlCokumns = [
+export const scalingTvlColumns = [
   ...getCommonProjectColumns(columnHelper),
   columnHelper.accessor('name', {
     cell: (ctx) => (
