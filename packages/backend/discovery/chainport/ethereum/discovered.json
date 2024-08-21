@@ -56,9 +56,13 @@
     {
       "name": "ProxyAdmin",
       "address": "0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F",
-      "assignedPermissions": {
-        "upgrade": ["0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1626949762,
       "values": {
         "$immutable": true,
@@ -70,6 +74,13 @@
       "address": "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1626949825,
       "values": {
         "$admin": "0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F",

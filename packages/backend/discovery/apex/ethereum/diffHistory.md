@@ -1,3 +1,47 @@
+Generated with discovered.json: 0x251e67e828f9dcf0c99c0988c655b21a58471782
+
+# Diff at Wed, 21 Aug 2024 10:01:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 19825348
+- current block number: 19825348
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825348 (main branch discovery), not current.
+
+```diff
+    contract StarkExchangeUSDC (0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xC532d2976209A56DdF4a99B844130f7c0daCa7B6","via":[]},{"permission":"upgrade","target":"0xef75e1199B0599BA823b7770AcE8eb34864a1D55","via":[]}]
+    }
+```
+
+```diff
+    contract PerpetualGovernanceMultisig (0xC532d2976209A56DdF4a99B844130f7c0daCa7B6) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb","via":[]}]
+    }
+```
+
+```diff
+    contract StarkExchangeUSDT (0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x53c6Ec9640761c669B800088F097E01A8207Ac8b","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xb43b38464018b222160218080718d20095921320
 
 # Diff at Fri, 09 Aug 2024 10:08:32 GMT:

@@ -9,9 +9,20 @@
       "name": "MainchainBridgeManager",
       "address": "0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB",
       "proxyType": "EIP1967 proxy",
-      "assignedPermissions": {
-        "upgrade": ["0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08"]
-      },
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e",
+          "via": []
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1722414335,
       "values": {
         "$admin": "0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e",
@@ -111,9 +122,13 @@
       "address": "0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "assignedPermissions": {
-        "upgrade": ["0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1722594755,
       "values": {
@@ -139,6 +154,13 @@
       "name": "MainchainGateway",
       "address": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["depositCount"],
       "sinceTimestamp": 1655883630,
       "values": {

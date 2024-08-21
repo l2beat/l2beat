@@ -1,3 +1,83 @@
+Generated with discovered.json: 0x98b95361b6a19b8d49a861ad2a039b3392df189b
+
+# Diff at Wed, 21 Aug 2024 10:04:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 20032860
+- current block number: 20032860
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20032860 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (0x2b3F201543adF73160bA42E1a5b7750024F30420) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF","via":[]}]
+    }
+```
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: It can act on behalf of 0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF, inheriting its permissions. It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.
+      assignedPermissions:
+-        {"configure":["0xC975862927797812371A9Fb631f83F8f5e2240D5","0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF"]}
+      receivedPermissions:
++        [{"permission":"configure","target":"0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF","via":[]},{"permission":"configure","target":"0xC975862927797812371A9Fb631f83F8f5e2240D5","via":[]}]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x59625d1FE0Eeb8114a4d13c863978F39b3471781) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF","via":[]}]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xB751A613f2Db932c6cdeF5048E6D2af05F9B98ED) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF","via":[]}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x2b3F201543adF73160bA42E1a5b7750024F30420","0x59625d1FE0Eeb8114a4d13c863978F39b3471781","0xB751A613f2Db932c6cdeF5048E6D2af05F9B98ED","0xC975862927797812371A9Fb631f83F8f5e2240D5"],"configure":["0xEa4165C5CDCA155779803A113d8391b741bA5228"]}
+      issuedPermissions:
++        [{"permission":"configure","target":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[]}]
+      receivedPermissions:
++        [{"permission":"configure","target":"0xEa4165C5CDCA155779803A113d8391b741bA5228","via":[]},{"permission":"upgrade","target":"0x2b3F201543adF73160bA42E1a5b7750024F30420","via":[]},{"permission":"upgrade","target":"0x59625d1FE0Eeb8114a4d13c863978F39b3471781","via":[]},{"permission":"upgrade","target":"0xB751A613f2Db932c6cdeF5048E6D2af05F9B98ED","via":[]},{"permission":"upgrade","target":"0xC975862927797812371A9Fb631f83F8f5e2240D5","via":[]}]
+    }
+```
+
+```diff
+    contract SystemConfig (0xC975862927797812371A9Fb631f83F8f5e2240D5) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions:
++        [{"permission":"configure","target":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[]},{"permission":"upgrade","target":"0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF","via":[]}]
+    }
+```
+
+```diff
+    contract AddressManager (0xEa4165C5CDCA155779803A113d8391b741bA5228) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"configure","target":"0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xffa2ec60da5474402f9060f965246766d95f3576
 
 # Diff at Fri, 09 Aug 2024 12:00:33 GMT:

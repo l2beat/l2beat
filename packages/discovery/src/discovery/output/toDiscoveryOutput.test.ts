@@ -8,7 +8,8 @@ import { processAnalysis, sortByKeys } from './toDiscoveryOutput'
 const emptyOutputMeta = {
   descriptions: undefined,
   roles: undefined,
-  assignedPermissions: undefined,
+  issuedPermissions: undefined,
+  receivedPermissions: undefined,
   categories: undefined,
   types: undefined,
   severity: undefined,

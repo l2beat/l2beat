@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x5c47390dff9b81fd1c7896a275d23a138a94cd06
+
+# Diff at Wed, 21 Aug 2024 10:08:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 122295641
+- current block number: 122295641
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 122295641 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x38dE71124f7a447a01D67945a51eDcE9FF491251) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x81E792e5a9003CC1C8BF5569A00f34b65d75b017"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x81E792e5a9003CC1C8BF5569A00f34b65d75b017","via":[]}]
+    }
+```
+
+```diff
+    contract  (0x81E792e5a9003CC1C8BF5569A00f34b65d75b017) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x38dE71124f7a447a01D67945a51eDcE9FF491251","via":[]}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f","via":[]}]
+    }
+```
+
+```diff
+    contract  (0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xa6bf5d69b71bdd6865a9d51c06a7d11ab6117db9
 
 # Diff at Fri, 09 Aug 2024 10:14:29 GMT:

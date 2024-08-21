@@ -1,3 +1,71 @@
+Generated with discovered.json: 0x4ddc94444b30e4de717b40d2aa458862856ca290
+
+# Diff at Wed, 21 Aug 2024 10:02:37 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 19531527
+- current block number: 19531527
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531527 (main branch discovery), not current.
+
+```diff
+    contract DeBridgeGate (0x43dE2d77BF8027e25dBD179B491e8d64f38398aA) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xE4427af3555CD9303D728C491364FAdFDD7494Fe","via":[]}]
+    }
+```
+
+```diff
+    contract DeBridgeTokenDeployer (0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xE4427af3555CD9303D728C491364FAdFDD7494Fe","via":[]}]
+    }
+```
+
+```diff
+    contract CallProxy (0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xE4427af3555CD9303D728C491364FAdFDD7494Fe","via":[]}]
+    }
+```
+
+```diff
+    contract SignatureVerifier (0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xE4427af3555CD9303D728C491364FAdFDD7494Fe","via":[]}]
+    }
+```
+
+```diff
+    contract SimpleFeeProxy (0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xE4427af3555CD9303D728C491364FAdFDD7494Fe","via":[]}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xE4427af3555CD9303D728C491364FAdFDD7494Fe) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x43dE2d77BF8027e25dBD179B491e8d64f38398aA","0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464","0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824","0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c","0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x43dE2d77BF8027e25dBD179B491e8d64f38398aA","via":[]},{"permission":"upgrade","target":"0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464","via":[]},{"permission":"upgrade","target":"0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824","via":[]},{"permission":"upgrade","target":"0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c","via":[]},{"permission":"upgrade","target":"0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x7a5b0751cc93b478d827595729c278e302cbf4b0
 
 # Diff at Fri, 09 Aug 2024 11:59:07 GMT:

@@ -9,6 +9,13 @@
       "name": "DeBridgeGate",
       "address": "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1637595390,
       "values": {
@@ -73,6 +80,13 @@
       "name": "DeBridgeTokenDeployer",
       "address": "0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1637613802,
       "values": {
         "$admin": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
@@ -89,6 +103,13 @@
       "name": "CallProxy",
       "address": "0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1637625277,
       "values": {
         "$admin": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
@@ -104,6 +125,13 @@
       "name": "SignatureVerifier",
       "address": "0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["currentBlock", "submissionsInBlock"],
       "sinceTimestamp": 1637621914,
       "values": {
@@ -163,6 +191,13 @@
       "name": "SimpleFeeProxy",
       "address": "0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1637651844,
       "values": {
         "$admin": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
@@ -196,15 +231,33 @@
     {
       "name": "ProxyAdmin",
       "address": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
-          "0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
-          "0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824",
-          "0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1637594986,
       "values": {
         "$immutable": true,

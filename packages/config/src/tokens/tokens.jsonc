@@ -1964,7 +1964,8 @@
       "address": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
       "category": "stablecoin",
       "source": "canonical",
-      "supply": "zero"
+      "supply": "zero",
+      "deploymentTimestamp": 1636665399
     },
     {
       "symbol": "USDT",

@@ -1,6 +1,5 @@
-import { getDefaultMetadata } from '~/utils/get-default-metadata'
-
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
+import { StackedTvlChart } from '~/app/_components/chart/tvl/stacked/stacked-tvl-chart'
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import { getImplementationChangeReport } from '~/server/features/implementation-change-report/get-implementation-change-report'
 import { getScalingTvlEntries } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
@@ -8,10 +7,10 @@ import { getDetailed7dTvlBreakdown } from '~/server/features/scaling/tvl/utils/g
 import { getProjectsVerificationStatuses } from '~/server/features/verification-status/get-projects-verification-statuses'
 import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
+import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { ScalingAssociatedTokensContextProvider } from '../../_components/scaling-associated-tokens-context'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
 import { ScalingTvlTable } from './_components/scaling-tvl-table'
-import { TvlChart } from './_components/tvl-chart'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -35,7 +34,7 @@ export default async function Page() {
       }),
     ])
 
-  const projects = getScalingTvlEntries({
+  const entries = getScalingTvlEntries({
     implementationChangeReport,
     projectsVerificationStatuses,
     tvl,
@@ -45,9 +44,9 @@ export default async function Page() {
     <HydrateClient>
       <ScalingFilterContextProvider>
         <ScalingAssociatedTokensContextProvider>
-          <TvlChart milestones={HOMEPAGE_MILESTONES} entries={projects} />
+          <StackedTvlChart milestones={HOMEPAGE_MILESTONES} entries={entries} />
           <HorizontalSeparator className="my-4 md:my-6" />
-          <ScalingTvlTable projects={projects} />
+          <ScalingTvlTable entries={entries} />
         </ScalingAssociatedTokensContextProvider>
       </ScalingFilterContextProvider>
     </HydrateClient>

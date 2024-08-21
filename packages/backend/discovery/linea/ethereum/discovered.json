@@ -9,6 +9,13 @@
       "name": "ERC20Bridge",
       "address": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1691067875,
       "values": {
         "$admin": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
@@ -51,9 +58,13 @@
     {
       "name": "USDCBridgeProxyAdmin",
       "address": "0x41fAD3Df1B07B647D120D055259E474fE8046eb5",
-      "assignedPermissions": {
-        "upgrade": ["0x504A330327A089d8364C4ab3811Ee26976d388ce"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x504A330327A089d8364C4ab3811Ee26976d388ce",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1691086259,
       "values": {
         "$immutable": true,
@@ -65,6 +76,13 @@
       "name": "USDCBridge",
       "address": "0x504A330327A089d8364C4ab3811Ee26976d388ce",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x41fAD3Df1B07B647D120D055259E474fE8046eb5",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["balance"],
       "sinceTimestamp": 1691086271,
       "values": {
@@ -137,6 +155,13 @@
       "name": "zkEVM",
       "address": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "currentPeriodAmountInWei",
         "currentL2StoredL1MessageNumber",
@@ -329,12 +354,18 @@
     {
       "name": "ProxyAdmin",
       "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1689158711,
       "values": {
         "$immutable": true,

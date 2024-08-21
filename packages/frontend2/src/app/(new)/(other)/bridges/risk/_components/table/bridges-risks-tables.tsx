@@ -12,11 +12,11 @@ import {
   TabsTrigger,
 } from '~/app/_components/tabs'
 import { useTable } from '~/hooks/use-table'
-import { type BridgesRiskEntry } from '~/server/features/bridges/types'
 import { bridgesRisksColumns } from './columns'
 
 import ActiveIcon from '~/icons/active.svg'
 import ArchivedIcon from '~/icons/archived.svg'
+import { type BridgesRiskEntry } from '~/server/features/bridges/get-bridge-risk-entries'
 import { useBridgesFilter } from '../../../_components/bridges-filter-context'
 import { BridgesFilters } from '../../../_components/bridges-filters'
 
@@ -39,6 +39,9 @@ export function BridgesRiskTables({ entries }: Props) {
             desc: false,
           },
         ],
+        columnPinning: {
+          left: ['#', 'logo'],
+        },
       },
     }),
     [],

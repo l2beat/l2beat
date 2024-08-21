@@ -9,6 +9,13 @@
       "name": "ReplicaBeaconProxy",
       "address": "0x049b51e531Fd8f90da6d92EA83dC4125002F20EF",
       "proxyType": "Optics Beacon proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["committedRoot"],
       "sinceTimestamp": 1641898337,
       "values": {
@@ -56,6 +63,13 @@
       "name": "GovernanceRouterBeaconProxy",
       "address": "0x3009C99D370B780304D2098196f1EBF779a4777a",
       "proxyType": "Optics Beacon proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1641898263,
       "values": {
         "$admin": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
@@ -86,6 +100,13 @@
       "name": "BridgeRouterBeaconProxy",
       "address": "0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3",
       "proxyType": "Optics Beacon proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1641899423,
       "values": {
         "$admin": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
@@ -114,6 +135,13 @@
       "name": "HomeBeaconProxy",
       "address": "0x92d3404a7E6c91455BbD81475Cd9fAd96ACFF4c8",
       "proxyType": "Optics Beacon proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1641898210,
       "values": {
         "$admin": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
@@ -209,14 +237,28 @@
     {
       "name": "UpgradeBeaconController",
       "address": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x049b51e531Fd8f90da6d92EA83dC4125002F20EF",
-          "0x3009C99D370B780304D2098196f1EBF779a4777a",
-          "0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3",
-          "0x92d3404a7E6c91455BbD81475Cd9fAd96ACFF4c8"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x049b51e531Fd8f90da6d92EA83dC4125002F20EF",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x3009C99D370B780304D2098196f1EBF779a4777a",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x92d3404a7E6c91455BbD81475Cd9fAd96ACFF4c8",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1641897946,
       "values": {
         "$immutable": true,
