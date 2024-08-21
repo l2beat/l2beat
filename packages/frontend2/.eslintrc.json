@@ -42,6 +42,29 @@
         }
       }
     ],
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "console",
+            "message": "Do not use console"
+          },
+          {
+            "name": "node:console",
+            "message": "Do not use console"
+          },
+          {
+            "name": "assert",
+            "message": "Use assert from @l2beat/shared-pure"
+          },
+          {
+            "name": "node:assert",
+            "message": "Use assert from @l2beat/shared-pure"
+          }
+        ]
+      }
+    ],
     "tailwindcss/classnames-order": ["error"],
     "tailwindcss/enforces-negative-arbitrary-values": ["error"],
     "tailwindcss/enforces-shorthand": ["error"],
