@@ -1,10 +1,9 @@
-import { assert } from '@l2beat/backend-tools'
 import {
   ContractParameters,
   ContractValue,
   FieldMeta,
 } from '@l2beat/discovery-types'
-import { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
+import { assert, EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
 
 import { get$Implementations } from '@l2beat/discovery-types'

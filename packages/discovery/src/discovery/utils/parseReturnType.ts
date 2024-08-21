@@ -1,7 +1,7 @@
-import { assert } from '@l2beat/backend-tools'
 import { utils } from 'ethers'
 import { ParamType } from 'ethers/lib/utils'
 import { toFunctionFragment } from '../handlers/utils/toFunctionFragment'
+import { assert } from '@l2beat/shared-pure'
 
 export type Type = BaseType | ArrayType | TupleType
 

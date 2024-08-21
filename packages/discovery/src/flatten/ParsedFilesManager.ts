@@ -1,5 +1,5 @@
 import * as posix from 'path'
-import { assert } from '@l2beat/backend-tools'
+import { assert } from '@l2beat/shared-pure'
 import type * as AST from '@mradomski/fast-solidity-parser'
 import { parse } from '@mradomski/fast-solidity-parser'
 import { getASTIdentifiers } from './getASTIdentifiers'

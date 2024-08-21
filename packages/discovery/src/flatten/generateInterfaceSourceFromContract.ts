@@ -1,6 +1,6 @@
-import { assert } from '@l2beat/backend-tools'
 import type * as AST from '@mradomski/fast-solidity-parser'
 import { TopLevelDeclaration } from './ParsedFilesManager'
+import { assert } from '@l2beat/shared-pure'
 
 export function generateInterfaceSourceFromContract(
   contract: TopLevelDeclaration,
