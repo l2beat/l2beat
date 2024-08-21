@@ -1,9 +1,8 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
-import Image from 'next/image'
 import { Skeleton } from '~/app/_components/skeleton'
-import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
+import { getCommonProjectColumns } from '~/app/_components/table/common-project-columns'
 import { EM_DASH } from '~/consts/characters'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { type SyncStatus } from '~/types/sync-status'
@@ -39,33 +38,7 @@ type CostsNotAvailableData = {
 const columnHelper = createColumnHelper<ScalingCostsTableEntry>()
 
 export const scalingCostsColumns = [
-  columnHelper.accessor((_, index) => index + 1, {
-    header: '#',
-    cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
-    meta: {
-      hash: 'onchain-costs',
-      headClassName: 'w-0',
-    },
-    size: 44.55,
-  }),
-  columnHelper.display({
-    id: 'logo',
-    cell: (ctx) => (
-      <Image
-        className="min-h-[18px] min-w-[18px]"
-        src={`/icons/${ctx.row.original.slug}.png`}
-        width={18}
-        height={18}
-        alt={`${ctx.row.original.name} logo`}
-      />
-    ),
-    size: 26,
-    meta: {
-      hash: 'onchain-costs',
-      headClassName: 'w-0',
-      cellClassName: 'lg:!pr-0',
-    },
-  }),
+  ...getCommonProjectColumns(columnHelper),
   columnHelper.accessor('name', {
     cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
   }),

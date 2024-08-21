@@ -12,19 +12,22 @@ import {
   TabsTrigger,
 } from '~/app/_components/tabs'
 import { useTable } from '~/hooks/use-table'
-import { bridgesRisksColumns } from './columns'
+import {
+  bridgesSummaryActiveColumns,
+  bridgesSummaryArchivedColumns,
+} from './columns'
 
 import ActiveIcon from '~/icons/active.svg'
 import ArchivedIcon from '~/icons/archived.svg'
-import { type BridgesRiskEntry } from '~/server/features/bridges/get-bridge-risk-entries'
+import { type BridgesSummaryEntry } from '~/server/features/bridges/get-bridge-summary-entries'
 import { useBridgesFilter } from '../../../_components/bridges-filter-context'
 import { BridgesFilters } from '../../../_components/bridges-filters'
 
 export interface Props {
-  entries: BridgesRiskEntry[]
+  entries: BridgesSummaryEntry[]
 }
 
-export function BridgesRiskTables({ entries }: Props) {
+export function BridgesSummaryTables({ entries }: Props) {
   const includeFilters = useBridgesFilter()
 
   const commonTableSettings = useMemo(
@@ -35,8 +38,8 @@ export function BridgesRiskTables({ entries }: Props) {
       initialState: {
         sorting: [
           {
-            id: '#',
-            desc: false,
+            id: 'tvl',
+            desc: true,
           },
         ],
         columnPinning: {
@@ -64,20 +67,20 @@ export function BridgesRiskTables({ entries }: Props) {
 
   const activeTable = useTable({
     data: activeProjects,
-    columns: bridgesRisksColumns,
+    columns: bridgesSummaryActiveColumns,
     ...commonTableSettings,
   })
 
   const archivedTable = useTable({
     data: archivedProjects,
-    columns: bridgesRisksColumns,
+    columns: bridgesSummaryArchivedColumns,
     ...commonTableSettings,
   })
 
   return (
     <div className="space-y-2">
       <BridgesFilters entries={filteredEntries} />
-      <Tabs storeInSearchParams defaultValue="active" className="w-full">
+      <Tabs defaultValue="active" className="w-full">
         <OverflowWrapper>
           <TabsList>
             <TabsTrigger value="active" className="gap-1.5">
