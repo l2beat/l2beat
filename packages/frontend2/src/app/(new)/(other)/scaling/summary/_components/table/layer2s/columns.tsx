@@ -101,10 +101,14 @@ export const scalingLayer2sColumns = [
       )
     },
     sortingFn: ({ original: a }, { original: b }) => {
-      const aTvl = a.tvl.breakdown
-      const bTvl = b.tvl.breakdown
+      const aTvl = a.tvl.breakdown?.total ?? 0
+      const bTvl = b.tvl.breakdown?.total ?? 0
 
-      return (aTvl?.total ?? 0) - (bTvl?.total ?? 0)
+      if (aTvl === bTvl) {
+        return b.name.localeCompare(a.name)
+      }
+
+      return aTvl - bTvl
     },
     meta: {
       tooltip:
