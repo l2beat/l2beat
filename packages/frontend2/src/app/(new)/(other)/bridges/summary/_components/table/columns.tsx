@@ -27,14 +27,14 @@ const firstHalf = [
     cell: (ctx) => {
       const entry = ctx.row.original
       return !entry.isUpcoming && entry.tvl !== undefined
-        ? formatCurrency(entry.tvl, 'usd')
+        ? formatCurrency(entry.tvl, 'usd', { showLessThanMinimum: false })
         : EM_DASH
     },
+    sortUndefined: 'last',
     meta: {
       tooltip:
         'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
     },
-    sortingFn: (a, b) => (a.original.tvl ?? 0) - (b.original.tvl ?? 0),
   }),
 ]
 

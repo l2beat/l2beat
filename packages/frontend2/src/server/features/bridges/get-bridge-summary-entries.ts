@@ -66,7 +66,7 @@ function getBridges(params: Params) {
       !!implementationChangeReport.projects[bridge.id.toString()]
 
     return {
-      href: `/bridges/${bridge.display.slug}`,
+      href: `/bridges/projects/${bridge.display.slug}`,
       type: bridge.type,
       shortName: bridge.display.shortName,
       name: bridge.display.name,
