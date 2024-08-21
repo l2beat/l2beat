@@ -12,9 +12,9 @@ import { useLocalStorage } from '~/hooks/use-local-storage'
 import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import { api } from '~/trpc/react'
 import { useChartLoading } from '../core/chart-loading-context'
-import { useCostChartRenderParams } from './use-cost-chart-render-params'
 import { CostsChartHover } from './costs-chart-hover'
 import { CostsChartTimeRangeControls } from './costs-chart-time-range-controls'
+import { useCostChartRenderParams } from './use-cost-chart-render-params'
 
 interface Props {
   milestones: Milestone[]

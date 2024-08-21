@@ -1,8 +1,8 @@
 import {
-  type SeriesStyleFill,
   FILL_STYLES,
-  type SeriesStyleLine,
   LINE_STYLES,
+  type SeriesStyleFill,
+  type SeriesStyleLine,
 } from '../styles'
 
 export function getFillStyle(

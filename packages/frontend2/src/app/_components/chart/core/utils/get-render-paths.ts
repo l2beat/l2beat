@@ -1,7 +1,7 @@
 import { assert } from '@l2beat/shared-pure'
-import { getSeriesGroups } from './get-series-groups'
 import { type ChartContextValue } from '../chart-context'
 import { FIRST_LABEL_HEIGHT_PX } from '../chart-labels'
+import { getSeriesGroups } from './get-series-groups'
 
 export function getRenderPaths<T>({
   chart,

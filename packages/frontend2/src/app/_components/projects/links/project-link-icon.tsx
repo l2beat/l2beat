@@ -8,8 +8,8 @@ import GlobeIcon from '~/icons/globe.svg'
 import RollupCodesIcon from '~/icons/products/rollup-codes.svg'
 import SearchIcon from '~/icons/search.svg'
 import UserIcon from '~/icons/user.svg'
-import { type LinkName } from './types'
 import { cn } from '~/utils/cn'
+import { type LinkName } from './types'
 
 export interface LinkNameIconProps {
   name: LinkName

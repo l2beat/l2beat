@@ -1,16 +1,16 @@
 import { type Layer2, type Layer3, badgesCompareFn } from '@l2beat/config'
+import { compact } from 'lodash'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getContractsVerificationStatuses } from '../../verification-status/get-contracts-verification-statuses'
 import { getManuallyVerifiedContracts } from '../../verification-status/get-manually-verified-contracts'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getActivityProjectStats } from '../activity/get-activity-project-stats'
-import { getL2ProjectDetails } from './utils/get-l2-project-details'
-import { getScalingRosetteValues } from './utils/get-scaling-rosette-values'
-import { getL3ProjectDetails } from './utils/get-l3-project-details'
 import { getTvlProjectData } from '../tvl/get-tvl-project-data'
-import { compact } from 'lodash'
 import { getAssociatedTokenWarning } from '../tvl/utils/get-associated-token-warning'
+import { getL2ProjectDetails } from './utils/get-l2-project-details'
+import { getL3ProjectDetails } from './utils/get-l3-project-details'
+import { getScalingRosetteValues } from './utils/get-scaling-rosette-values'
 
 type ScalingProject = Layer2 | Layer3
 

@@ -8,8 +8,8 @@ import {
 import { formatCurrency } from '~/utils/format'
 import { formatNumber } from '~/utils/format-number'
 import { type SeriesStyle } from '../core/styles'
-import { type CostsChartPointData } from './costs-chart-hover'
 import { mapMilestones } from '../core/utils/map-milestones'
+import { type CostsChartPointData } from './costs-chart-hover'
 
 const DENCUN_UPGRADE_TIMESTAMP = 1710288000
 

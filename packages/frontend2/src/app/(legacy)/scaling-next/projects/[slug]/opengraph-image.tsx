@@ -1,7 +1,7 @@
-import { ImageResponse } from 'next/og'
-import { readdir, readFile } from 'fs/promises'
 import { join } from 'path'
 import { layer2s, layer3s } from '@l2beat/config'
+import { readFile, readdir } from 'fs/promises'
+import { ImageResponse } from 'next/og'
 
 const websiteURL =
   process.env.NODE_ENV === 'production'

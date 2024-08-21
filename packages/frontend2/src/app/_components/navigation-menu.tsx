@@ -1,6 +1,6 @@
-import * as React from 'react'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { cva } from 'class-variance-authority'
+import * as React from 'react'
 import ChevronDown from '~/icons/chevron.svg'
 import { cn } from '~/utils/cn'
 

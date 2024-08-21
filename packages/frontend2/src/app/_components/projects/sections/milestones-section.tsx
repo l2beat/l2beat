@@ -3,18 +3,18 @@
 import { type Milestone } from '@l2beat/config'
 import React, { useState } from 'react'
 import { MilestoneIcon } from '~/icons/MilestoneIcon'
-import { CustomLink } from '../../link/custom-link'
-import { Markdown } from '../../markdown/markdown'
-import { ProjectSection } from './project-section'
-import { type ProjectSectionId } from './types'
+import ChevronDownIcon from '~/icons/chevron.svg'
+import { cn } from '~/utils/cn'
+import { Button } from '../../button'
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from '../../collapsible'
-import { Button } from '../../button'
-import ChevronDownIcon from '~/icons/chevron.svg'
-import { cn } from '~/utils/cn'
+import { CustomLink } from '../../link/custom-link'
+import { Markdown } from '../../markdown/markdown'
+import { ProjectSection } from './project-section'
+import { type ProjectSectionId } from './types'
 
 export interface MilestonesSectionProps {
   title: string

@@ -11,9 +11,9 @@ import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import { type CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
 import { api } from '~/trpc/react'
 import { useChartLoading } from '../core/chart-loading-context'
-import { useCostChartRenderParams } from './use-cost-chart-render-params'
-import { CostsChartHover } from './costs-chart-hover'
 import { ChartTimeRangeControls } from '../core/chart-time-range-controls'
+import { CostsChartHover } from './costs-chart-hover'
+import { useCostChartRenderParams } from './use-cost-chart-render-params'
 
 interface Props {
   milestones: Milestone[]
