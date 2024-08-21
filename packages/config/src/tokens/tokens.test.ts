@@ -1,5 +1,6 @@
 import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 import {
+  assert,
   AssetId,
   ChainId,
   CoingeckoId,
@@ -9,7 +10,6 @@ import {
 import { expect } from 'earl'
 import { Contract, providers, utils } from 'ethers'
 
-import { assert } from '@l2beat/backend-tools'
 import { chains } from '../chains'
 import { bridges } from '../projects'
 import { config } from '../test/config'
