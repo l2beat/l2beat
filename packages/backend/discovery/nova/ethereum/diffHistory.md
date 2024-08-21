@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x46fd535ec6ef9bb3ee4e22104ba4c211f2ad7502
+
+# Diff at Wed, 21 Aug 2024 13:25:51 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@63cb0bd5d55a6dfae0e2e22590983dd8344be4a3 block: 20406615
+- current block number: 20406615
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20406615 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b) {
+    +++ description: None
+      values.dacKeyset.blsSignatures:
++        ["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"]
+    }
+```
+
 Generated with discovered.json: 0xe79f128c4e4e55d1776dd7c67dc13695c56ed64f
 
 # Diff at Wed, 21 Aug 2024 10:04:25 GMT:
