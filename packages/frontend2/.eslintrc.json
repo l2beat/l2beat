@@ -46,6 +46,7 @@
     "tailwindcss/enforces-negative-arbitrary-values": ["error"],
     "tailwindcss/enforces-shorthand": ["error"],
     "tailwindcss/no-contradicting-classname": ["error"],
-    "tailwindcss/no-unnecessary-arbitrary-value": ["error"]
+    "tailwindcss/no-unnecessary-arbitrary-value": ["error"],
+    "no-restricted-imports": ["error", "next/router"]
   }
 }
