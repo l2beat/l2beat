@@ -1,7 +1,7 @@
 'use client'
 
 import { usePathname, useSearchParams } from 'next/navigation'
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/router'
 
 /**
  * Use state that is persisted in a search param.
@@ -11,12 +11,18 @@ import { useRouter } from 'next/navigation'
 export function useSearchParamState<T extends string | undefined = string>(
   key: string,
   defaultValue: T,
+  options: { shallow: boolean } = { shallow: false },
 ): [string | undefined, (value: T) => void] {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
   const value = searchParams.get(key) ?? defaultValue
+
+  const replaceRoute = (pathname: string) =>
+    options.shallow
+      ? window.history.replaceState(null, '', pathname)
+      : router.replace({ pathname })
 
   const setValue = (value: T) => {
     const search = new URLSearchParams(searchParams)
@@ -30,9 +36,9 @@ export function useSearchParamState<T extends string | undefined = string>(
     const stringified = search.toString()
 
     if (stringified) {
-      void router.replace(`${pathname}?${stringified}`)
+      void replaceRoute(`${pathname}?${stringified}`)
     } else {
-      void router.replace(pathname)
+      void replaceRoute(pathname)
     }
   }
 
