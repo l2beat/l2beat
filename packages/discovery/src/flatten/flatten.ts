@@ -1,5 +1,6 @@
 import { createHash } from 'crypto'
 
+import { assert } from '@l2beat/shared-pure'
 import {
   DeclarationFilePair,
   FileContent,
@@ -8,7 +9,6 @@ import {
 } from './ParsedFilesManager'
 import { generateInterfaceSourceFromContract } from './generateInterfaceSourceFromContract'
 import { FlattenOptions } from './types'
-import { assert } from '@l2beat/shared-pure'
 
 type EntryType = 'inheritance' | 'dynamic'
 

@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import chalk from 'chalk'
 
+import { assert } from '@l2beat/shared-pure'
 import {
   boolean,
   command,
@@ -18,7 +19,6 @@ import { dryRunDiscovery, runDiscovery } from '../discovery/runDiscovery'
 import { HttpClient } from '../utils/HttpClient'
 import { ChainValue } from './types'
 import { ZeroToOneValue } from './types'
-import { assert } from '@l2beat/shared-pure'
 
 export const DiscoverCommand = command({
   name: 'discover',
