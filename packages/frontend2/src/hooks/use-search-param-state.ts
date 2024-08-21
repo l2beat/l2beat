@@ -1,6 +1,7 @@
 'use client'
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useCallback } from 'react'
 
 /**
  * Use state that is persisted in a search param.
@@ -18,28 +19,34 @@ export function useSearchParamState<T extends string | undefined = string>(
 
   const value = searchParams.get(key) ?? defaultValue
 
-  const replaceRoute = (pathname: string) =>
-    options.shallow
-      ? window.history.replaceState(null, '', pathname)
-      : router.replace({ pathname })
+  const replaceRoute = useCallback(
+    (pathname: string) =>
+      options.shallow
+        ? window.history.replaceState(null, '', pathname)
+        : router.replace(pathname),
+    [options.shallow, router],
+  )
 
-  const setValue = (value: T) => {
-    const search = new URLSearchParams(searchParams)
+  const setValue = useCallback(
+    (value: T) => {
+      const search = new URLSearchParams(searchParams)
 
-    if (value !== defaultValue && value !== undefined) {
-      search.set(key, value)
-    } else {
-      search.delete(key)
-    }
+      if (value !== defaultValue && value !== undefined) {
+        search.set(key, value)
+      } else {
+        search.delete(key)
+      }
 
-    const stringified = search.toString()
+      const stringified = search.toString()
 
-    if (stringified) {
-      void replaceRoute(`${pathname}?${stringified}`)
-    } else {
-      void replaceRoute(pathname)
-    }
-  }
+      if (stringified) {
+        void replaceRoute(`${pathname}?${stringified}`)
+      } else {
+        void replaceRoute(pathname)
+      }
+    },
+    [defaultValue, key, pathname, replaceRoute, searchParams],
+  )
 
   return [value, setValue]
 }
