@@ -22,6 +22,11 @@ export const knownCookies = {
     CostsTimeRange,
     '30d',
   ),
+  bridgesSummaryChartRange: knownCookie(
+    'bridges-summary-chart-range',
+    TvlChartRange,
+    '1y',
+  ),
 } satisfies Record<string, KnownCookie>
 
 /**

@@ -1,4 +1,4 @@
-import { type Row, createColumnHelper } from '@tanstack/react-table'
+import { createColumnHelper } from '@tanstack/react-table'
 import Image from 'next/image'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { NoInfoCell } from '~/app/_components/table/cells/no-info-cell'
@@ -6,19 +6,14 @@ import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell
 import { RiskCell } from '~/app/_components/table/cells/risk-cell'
 import { TypeCell } from '~/app/_components/table/cells/type-cell'
 import { sortSentiments } from '~/app/_components/table/sorting/functions/sentiment-sorting'
-import { type BridgesRiskEntry } from '~/server/features/bridges/get-bridge-risk-entries'
+import { EM_DASH } from '~/consts/characters'
+import { type BridgesSummaryEntry } from '~/server/features/bridges/get-bridge-summary-entries'
+import { formatCurrency } from '~/utils/format'
+import { formatPercent } from '~/utils/get-percentage-change'
 
-const sortBridgeRisks =
-  (key: 'validatedBy' | 'sourceUpgradeability' | 'destinationToken') =>
-  (a: Row<BridgesRiskEntry>, b: Row<BridgesRiskEntry>) => {
-    return !a.original[key] || !b.original[key]
-      ? -1
-      : sortSentiments(a.original[key], b.original[key])
-  }
+const columnHelper = createColumnHelper<BridgesSummaryEntry>()
 
-const columnHelper = createColumnHelper<BridgesRiskEntry>()
-
-export const bridgesRisksColumns = [
+const firstHalf = [
   columnHelper.accessor((_, index) => index + 1, {
     header: '#',
     cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
@@ -26,6 +21,7 @@ export const bridgesRisksColumns = [
       headClassName: 'w-0',
       cellClassName: 'flex items-center',
     },
+    size: 44.55,
   }),
   columnHelper.display({
     id: 'logo',
@@ -52,17 +48,23 @@ export const bridgesRisksColumns = [
       />
     ),
   }),
-  columnHelper.accessor('destination', {
-    header: 'Destination',
+  columnHelper.accessor('tvl', {
+    header: 'Total',
     cell: (ctx) => {
-      const destination = ctx.getValue()
-
-      return destination ? <RiskCell risk={destination} /> : <NoInfoCell />
+      const entry = ctx.row.original
+      return !entry.isUpcoming && entry.tvl !== undefined
+        ? formatCurrency(entry.tvl, 'usd')
+        : EM_DASH
     },
     meta: {
-      tooltip: 'What chains can you get to using this bridge?',
+      tooltip:
+        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
     },
+    sortingFn: (a, b) => (a.original.tvl ?? 0) - (b.original.tvl ?? 0),
   }),
+]
+
+const secondHalf = [
   columnHelper.accessor('validatedBy', {
     header: 'Validated by',
     cell: (ctx) => {
@@ -74,7 +76,10 @@ export const bridgesRisksColumns = [
       tooltip: 'How are the messages sent via this bridge checked?',
     },
     sortUndefined: 'last',
-    sortingFn: sortBridgeRisks('validatedBy'),
+    sortingFn: (a, b) =>
+      !a.original.validatedBy || !b.original.validatedBy
+        ? -1
+        : sortSentiments(a.original.validatedBy, b.original.validatedBy),
   }),
   columnHelper.accessor('category', {
     header: 'Type',
@@ -86,39 +91,25 @@ export const bridgesRisksColumns = [
         'Token bridges use escrows and mint tokens. Liquidity Networks use pools and swap tokens. Hybrid do both.',
     },
   }),
-  columnHelper.accessor('sourceUpgradeability', {
-    header: 'Source\nUpgradeability',
-    cell: (ctx) => {
-      const sourceUpgradeability = ctx.getValue()
-
-      return sourceUpgradeability ? (
-        <RiskCell risk={sourceUpgradeability} />
-      ) : (
-        <NoInfoCell />
-      )
-    },
-    meta: {
-      tooltip:
-        'Are the Ethereum contracts upgradeable? Note that the delay itself might not be enough to ensure that users can withdraw their funds in the case of a malicious and censoring operator.',
-    },
-    sortUndefined: 'last',
-    sortingFn: sortBridgeRisks('sourceUpgradeability'),
-  }),
-  columnHelper.accessor('destinationToken', {
-    header: 'Destination Token',
-    cell: (ctx) => {
-      const destinationToken = ctx.getValue()
-
-      return destinationToken ? (
-        <RiskCell risk={destinationToken} />
-      ) : (
-        <NoInfoCell />
-      )
-    },
-    meta: {
-      tooltip: 'What is the token that you receive from this bridge?',
-    },
-    sortUndefined: 'last',
-    sortingFn: sortBridgeRisks('destinationToken'),
-  }),
 ]
+
+const marketShareColumn = columnHelper.accessor('bridgesMarketShare', {
+  header: 'MKT Share',
+  cell: (ctx) =>
+    ctx.row.original.bridgesMarketShare !== undefined ? (
+      <span>{formatPercent(ctx.row.original.bridgesMarketShare)}</span>
+    ) : (
+      EM_DASH
+    ),
+  meta: {
+    tooltip: 'Share of the sum of total value locked of all projects.',
+  },
+})
+
+export const bridgesSummaryActiveColumns = [
+  ...firstHalf,
+  marketShareColumn,
+  ...secondHalf,
+]
+
+export const bridgesSummaryArchivedColumns = [...firstHalf, ...secondHalf]

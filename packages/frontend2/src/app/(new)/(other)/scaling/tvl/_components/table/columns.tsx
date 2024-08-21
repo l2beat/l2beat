@@ -37,7 +37,7 @@ const totalColumn = columnHelper.accessor('tvl', {
   },
 })
 
-export const scalingTvlCokumns = [
+export const scalingTvlColumns = [
   columnHelper.accessor((_, index) => index + 1, {
     header: '#',
     cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
