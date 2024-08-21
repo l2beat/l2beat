@@ -1,5 +1,4 @@
-import assert from 'node:assert'
-
+import { assert } from '@l2beat/shared-pure'
 import { continueOperations } from '../helpers/continueOperations'
 import { RetryInvalidateAction } from '../types/IndexerAction'
 import { IndexerReducerResult } from '../types/IndexerReducerResult'

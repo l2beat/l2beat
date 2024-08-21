@@ -1,8 +1,8 @@
 import { existsSync, unlinkSync } from 'fs'
-import { assert } from '@l2beat/backend-tools'
 import { expect } from 'earl'
 import sqlite3 from 'sqlite3'
 
+import { assert } from '@l2beat/shared-pure'
 import { SQLiteCache } from './SQLiteCache'
 
 describe('SQLiteCache', () => {

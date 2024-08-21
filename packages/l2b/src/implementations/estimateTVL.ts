@@ -1,7 +1,12 @@
-import { assert } from '@l2beat/backend-tools'
 import { tokenList } from '@l2beat/config'
 import { CoingeckoClient, HttpClient } from '@l2beat/shared'
-import { Bytes, CoingeckoId, EthereumAddress, Token } from '@l2beat/shared-pure'
+import {
+  assert,
+  Bytes,
+  CoingeckoId,
+  EthereumAddress,
+  Token,
+} from '@l2beat/shared-pure'
 import { BigNumber, providers, utils } from 'ethers'
 
 export async function estimateTVL(rpcUrl: string, address: EthereumAddress) {

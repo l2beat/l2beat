@@ -1,5 +1,4 @@
-import { assert } from '@l2beat/backend-tools'
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 
 const SPAN_BATCH_VERSION = 1
 

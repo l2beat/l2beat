@@ -16,7 +16,7 @@ export function OtherSites() {
       <span className="text-center text-lg font-semibold md:text-left">
         Want to learn more about the different approaches to upgradeability?
       </span>
-      <Link className="text-lg font-bold" href="/multisig-report">
+      <Link className="text-lg font-bold underline" href="/multisig-report">
         Check our report
       </Link>
     </div>

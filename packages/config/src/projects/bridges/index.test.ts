@@ -1,7 +1,6 @@
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { assert, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { assert } from '@l2beat/backend-tools'
 import { get$Implementations } from '@l2beat/discovery-types'
 import { chains } from '../../chains'
 import {

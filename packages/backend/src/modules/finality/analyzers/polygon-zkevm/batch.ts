@@ -1,6 +1,6 @@
-import { assert } from '@l2beat/backend-tools'
 import { BigNumber, ethers } from 'ethers'
 
+import { assert } from '@l2beat/shared-pure'
 import { rlpDecode } from '../../utils/rlpDecode'
 import { constants } from './const'
 import { decodeUint32 } from './numerics'

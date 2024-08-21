@@ -1,7 +1,7 @@
-import assert from 'assert'
 import { Logger } from '@l2beat/backend-tools'
 import { EventTracker } from '@l2beat/shared'
 import {
+  assert,
   Retries,
   ShouldRetry,
   getErrorMessage,

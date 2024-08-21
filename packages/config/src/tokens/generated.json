@@ -1996,6 +1996,21 @@
       "supply": "zero"
     },
     {
+      "id": "g-gravity",
+      "name": "Gravity",
+      "coingeckoId": "g-token",
+      "address": "0x9C7BEBa8F6eF6643aBd725e45a4E8387eF260649",
+      "symbol": "G",
+      "decimals": 18,
+      "deploymentTimestamp": 1715576987,
+      "coingeckoListingTimestamp": 1721260800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39200/large/gravity.jpg?1721020647",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "gog-guild-of-guardians",
       "name": "Guild of Guardians",
       "coingeckoId": "guild-of-guardians",

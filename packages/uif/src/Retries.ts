@@ -1,4 +1,4 @@
-import assert from 'node:assert'
+import { assert } from '@l2beat/shared-pure'
 
 export interface RetryStrategy {
   /** Returns true if the operation should be retried */

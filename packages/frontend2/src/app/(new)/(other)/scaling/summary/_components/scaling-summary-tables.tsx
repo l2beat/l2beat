@@ -88,8 +88,8 @@ export function ScalingSummaryTables({ projects }: Props) {
     initialState: {
       sorting: [
         {
-          id: '#',
-          desc: false,
+          id: 'total',
+          desc: true,
         },
       ],
     },
@@ -146,7 +146,7 @@ export function ScalingSummaryTables({ projects }: Props) {
   return (
     <div className="space-y-2">
       <ScalingTvlFilters items={allProjects} />
-      <Tabs defaultValue="layer2s" className="w-full">
+      <Tabs storeInSearchParams defaultValue="layer2s" className="w-full">
         <OverflowWrapper>
           <TabsList>
             <TabsTrigger value="layer2s" className="gap-1.5">

@@ -1,8 +1,9 @@
-import { assert, Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 
 import { daEconomicSecurityMeta } from '@l2beat/config'
 import { Database } from '@l2beat/database'
 import { CoingeckoClient } from '@l2beat/shared'
+import { assert } from '@l2beat/shared-pure'
 import { z } from 'zod'
 import { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'

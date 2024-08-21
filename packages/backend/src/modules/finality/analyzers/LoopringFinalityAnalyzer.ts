@@ -1,5 +1,5 @@
-import assert from 'assert'
 import {
+  assert,
   ProjectId,
   TrackedTxsConfigSubtype,
   UnixTime,
