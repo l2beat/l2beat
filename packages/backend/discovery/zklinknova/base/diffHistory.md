@@ -1,3 +1,65 @@
+Generated with discovered.json: 0xc9e4ea4138df34eb0d2b8fb49cfc888beea54032
+
+# Diff at Wed, 21 Aug 2024 10:08:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 17596075
+- current block number: 17596075
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 17596075 (main branch discovery), not current.
+
+```diff
+    contract BaseL2Gateway (0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9","via":[]}]
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x80d12A78EfE7604F00ed07aB2f16F643301674D5) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE","via":[]}]
+    }
+```
+
+```diff
+    contract BaseProxyAdmin (0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x80d12A78EfE7604F00ed07aB2f16F643301674D5"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x80d12A78EfE7604F00ed07aB2f16F643301674D5","via":[]}]
+    }
+```
+
+```diff
+    contract zkLink (0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C","via":[]}]
+    }
+```
+
+```diff
+    contract BaseOwner (0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x4347b60465d4f469d7a829995eb1b4548deaf759
 
 # Diff at Fri, 09 Aug 2024 10:14:15 GMT:

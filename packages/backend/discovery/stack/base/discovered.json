@@ -9,15 +9,40 @@
       "name": "ProxyAdmin",
       "address": "0x25aBB510386A658c622280f488844BD3b485DC32",
       "template": "opstack/ProxyAdmin",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x52c901666Cfc8AeE9b46A3b7C101688351529B37",
-          "0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E",
-          "0xCC61c26901E719B73273C1484e337cBAB84369EF",
-          "0xbA256039AEdaD407692D8Deb366308BE6Bb2515C"
-        ],
-        "configure": ["0x31f09c4a4151EeBB1c0Ac10003bF3b06f4Aa5668"]
-      },
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104",
+          "via": []
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x31f09c4a4151EeBB1c0Ac10003bF3b06f4Aa5668",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x52c901666Cfc8AeE9b46A3b7C101688351529B37",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xbA256039AEdaD407692D8Deb366308BE6Bb2515C",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xCC61c26901E719B73273C1484e337cBAB84369EF",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1709680173,
       "values": {
         "$immutable": true,
@@ -30,6 +55,13 @@
       "name": "AddressManager",
       "address": "0x31f09c4a4151EeBB1c0Ac10003bF3b06f4Aa5668",
       "template": "opstack/AddressManager",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x25aBB510386A658c622280f488844BD3b485DC32",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1709680165,
       "values": {
         "$immutable": true,
@@ -40,6 +72,13 @@
       "name": "SystemConfig",
       "address": "0x52c901666Cfc8AeE9b46A3b7C101688351529B37",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x25aBB510386A658c622280f488844BD3b485DC32",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["scalar"],
       "sinceTimestamp": 1709680197,
       "values": {
@@ -101,6 +140,13 @@
       "name": "OptimismPortal",
       "address": "0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x25aBB510386A658c622280f488844BD3b485DC32",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1709680185,
       "values": {
@@ -128,9 +174,13 @@
       "descriptions": [
         "It can act on behalf of 0x25aBB510386A658c622280f488844BD3b485DC32, inheriting its permissions."
       ],
-      "assignedPermissions": {
-        "configure": ["0x25aBB510386A658c622280f488844BD3b485DC32"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x25aBB510386A658c622280f488844BD3b485DC32",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1708624405,
       "values": {
@@ -157,6 +207,13 @@
       "name": "L1StandardBridge",
       "address": "0xbA256039AEdaD407692D8Deb366308BE6Bb2515C",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x25aBB510386A658c622280f488844BD3b485DC32",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1709680203,
       "values": {
         "$admin": "0x25aBB510386A658c622280f488844BD3b485DC32",
@@ -173,6 +230,13 @@
       "name": "L2OutputOracle",
       "address": "0xCC61c26901E719B73273C1484e337cBAB84369EF",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x25aBB510386A658c622280f488844BD3b485DC32",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",

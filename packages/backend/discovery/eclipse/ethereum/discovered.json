@@ -10,9 +10,13 @@
       "address": "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "assignedPermissions": {
-        "upgrade": ["0xD7E4b67E735733aC98a88F13d087D8aac670E644"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1722018611,
       "values": {
@@ -39,6 +43,13 @@
       "address": "0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x0000000000000000000000000000000000000000",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1722141227,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
@@ -51,6 +62,13 @@
       "address": "0xb23B2492f7A9631104A5877F7FFA00633660968d",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x0000000000000000000000000000000000000000",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1722141467,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
@@ -63,6 +81,13 @@
       "address": "0xD7E4b67E735733aC98a88F13d087D8aac670E644",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1722140987,
       "values": {
         "$admin": "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC",
@@ -74,12 +99,18 @@
   "eoas": [
     {
       "address": "0x0000000000000000000000000000000000000000",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1",
-          "0xb23B2492f7A9631104A5877F7FFA00633660968d"
-        ]
-      }
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xb23B2492f7A9631104A5877F7FFA00633660968d",
+          "via": []
+        }
+      ]
     },
     { "address": "0x33440E53476B855A56B831e7924B5aa123981726" },
     { "address": "0x3392fd462d9710Fbf3A5703818b9920C119DC080" },

@@ -9,6 +9,13 @@
       "name": "L2OutputOracle",
       "address": "0x0a23342520Aa8Ca963c4201801F4D3E95e731637",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -44,17 +51,50 @@
       "name": "ProxyAdmin",
       "address": "0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C",
       "template": "opstack/ProxyAdmin",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x0a23342520Aa8Ca963c4201801F4D3E95e731637",
-          "0x622333688CC1878C7ff4205c89bDe051798788A7",
-          "0x952851CecB07705A5bb483C1CE080F97e1E7491E",
-          "0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3",
-          "0xF04a74899FF4c4410fAF3B5faa29B8Fd199C13DB",
-          "0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73"
-        ],
-        "configure": ["0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9"]
-      },
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x28A227d4faF0f4f75897438E24C43EF1CDABb920",
+          "via": []
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x0a23342520Aa8Ca963c4201801F4D3E95e731637",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x622333688CC1878C7ff4205c89bDe051798788A7",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x952851CecB07705A5bb483C1CE080F97e1E7491E",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xF04a74899FF4c4410fAF3B5faa29B8Fd199C13DB",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1703048687,
       "values": {
         "$immutable": true,
@@ -71,9 +111,13 @@
       "descriptions": [
         "It can act on behalf of 0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C, inheriting its permissions."
       ],
-      "assignedPermissions": {
-        "configure": ["0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1702960199,
       "values": {
@@ -100,6 +144,13 @@
       "name": "SystemConfig",
       "address": "0x622333688CC1878C7ff4205c89bDe051798788A7",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1703048687,
       "values": {
         "$admin": "0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C",
@@ -149,6 +200,13 @@
       "name": "L1ERC721Bridge",
       "address": "0x952851CecB07705A5bb483C1CE080F97e1E7491E",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1703048687,
       "values": {
         "$admin": "0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C",
@@ -191,6 +249,13 @@
       "name": "L1StandardBridge",
       "address": "0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1703048687,
       "values": {
         "$admin": "0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C",
@@ -208,6 +273,13 @@
       "name": "OptimismPortal",
       "address": "0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1703048687,
       "values": {
@@ -234,6 +306,13 @@
       "name": "OptimismMintableERC20Factory",
       "address": "0xF04a74899FF4c4410fAF3B5faa29B8Fd199C13DB",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1703048687,
       "values": {
         "$admin": "0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C",
@@ -247,6 +326,13 @@
       "name": "AddressManager",
       "address": "0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9",
       "template": "opstack/AddressManager",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1703048687,
       "values": {
         "$immutable": true,

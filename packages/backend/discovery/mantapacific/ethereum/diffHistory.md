@@ -1,3 +1,83 @@
+Generated with discovered.json: 0x97a1675162ec41cabf82b5f9462bdb065d32ce7c
+
+# Diff at Wed, 21 Aug 2024 10:03:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 19531966
+- current block number: 19531966
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531966 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x30c789674ad3B458886BBC9abf42EEe19EA05C1D) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xa2DCa85BB892De55D8B262d1806114733106e8D1","via":[]}]
+    }
+```
+
+```diff
+    contract AddressManager (0x3Ad319BB4872F8cB75a26Ac30CC4bD2d56b67b05) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"configure","target":"0xa2DCa85BB892De55D8B262d1806114733106e8D1","via":[]}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x3B95bC951EE0f553ba487327278cAc44f29715E5) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xa2DCa85BB892De55D8B262d1806114733106e8D1","via":[]}]
+    }
+```
+
+```diff
+    contract AdminMultisig (0x3c46C05c2eba8eDd0B0f0C8B1D2fBf9fc53ea01E) {
+    +++ description: It can act on behalf of 0xa2DCa85BB892De55D8B262d1806114733106e8D1, inheriting its permissions.
+      assignedPermissions:
+-        {"configure":["0xa2DCa85BB892De55D8B262d1806114733106e8D1"]}
+      receivedPermissions:
++        [{"permission":"configure","target":"0xa2DCa85BB892De55D8B262d1806114733106e8D1","via":[]}]
+    }
+```
+
+```diff
+    contract SystemConfig (0x895E00269A05848F3c9889EfA677D02fF7351a5D) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xa2DCa85BB892De55D8B262d1806114733106e8D1","via":[]}]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xa2DCa85BB892De55D8B262d1806114733106e8D1","via":[]}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xa2DCa85BB892De55D8B262d1806114733106e8D1) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x30c789674ad3B458886BBC9abf42EEe19EA05C1D","0x3B95bC951EE0f553ba487327278cAc44f29715E5","0x895E00269A05848F3c9889EfA677D02fF7351a5D","0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622"],"configure":["0x3Ad319BB4872F8cB75a26Ac30CC4bD2d56b67b05"]}
+      issuedPermissions:
++        [{"permission":"configure","target":"0x3c46C05c2eba8eDd0B0f0C8B1D2fBf9fc53ea01E","via":[]}]
+      receivedPermissions:
++        [{"permission":"configure","target":"0x3Ad319BB4872F8cB75a26Ac30CC4bD2d56b67b05","via":[]},{"permission":"upgrade","target":"0x30c789674ad3B458886BBC9abf42EEe19EA05C1D","via":[]},{"permission":"upgrade","target":"0x3B95bC951EE0f553ba487327278cAc44f29715E5","via":[]},{"permission":"upgrade","target":"0x895E00269A05848F3c9889EfA677D02fF7351a5D","via":[]},{"permission":"upgrade","target":"0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xeb52acb3dbf030c27907bcb03edebb606ca2bdee
 
 # Diff at Fri, 09 Aug 2024 12:00:21 GMT:

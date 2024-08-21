@@ -1,3 +1,57 @@
+Generated with discovered.json: 0xa61b7eed3c4f548f19043a311599895f4e12d72b
+
+# Diff at Wed, 21 Aug 2024 10:09:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 40563041
+- current block number: 40563041
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 40563041 (main branch discovery), not current.
+
+```diff
+    contract EraOwner (0x3334552599C9aA1FE08CfF276A02033FF37646ca) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A","via":[]}]
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98","via":[]}]
+    }
+```
+
+```diff
+    contract zkLink (0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x3334552599C9aA1FE08CfF276A02033FF37646ca","via":[]}]
+    }
+```
+
+```diff
+    contract EraProxyAdmin (0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x5a2da4664d1fdf7f031ace8c5c557531374754ab
 
 # Diff at Fri, 09 Aug 2024 10:15:12 GMT:

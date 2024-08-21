@@ -149,6 +149,13 @@
       "name": "Ethereum_SpokePool",
       "address": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["numberOfDeposits", "getCurrentTime"],
       "sinceTimestamp": 1682355155,
       "values": {
@@ -386,9 +393,13 @@
     {
       "name": "HubPool",
       "address": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
-      "assignedPermissions": {
-        "upgrade": ["0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["rootBundleProposal"],
       "sinceTimestamp": 1653167916,
       "values": {

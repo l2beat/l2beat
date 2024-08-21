@@ -25,6 +25,13 @@
       "name": "OptimismPortal",
       "address": "0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1708812875,
       "values": {
@@ -51,22 +58,68 @@
     {
       "name": "ProxyAdmin",
       "address": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb",
-          "0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115",
-          "0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
-          "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
-          "0x6B916DcCa661d23794e78509723A6f4348564847",
-          "0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76",
-          "0x98078db053902644191f93988341E31289E1C8FE",
-          "0xBbE2cd60BD30Ef2aaceFD74C3199282ee35fBBa6",
-          "0xa230285d5683C74935aD14c446e137c8c8828438",
-          "0xa45A0c7C47DB8C6e99b2d7C4939F7f7Cf69C8975",
-          "0xcFF70D7F37b1EBeE89c08E485f08ACAB5f6ff873"
-        ],
-        "configure": ["0xE064B565Cf2A312a3e66Fe4118890583727380C0"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xE064B565Cf2A312a3e66Fe4118890583727380C0",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x6B916DcCa661d23794e78509723A6f4348564847",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x98078db053902644191f93988341E31289E1C8FE",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xa230285d5683C74935aD14c446e137c8c8828438",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xa45A0c7C47DB8C6e99b2d7C4939F7f7Cf69C8975",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xBbE2cd60BD30Ef2aaceFD74C3199282ee35fBBa6",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xcFF70D7F37b1EBeE89c08E485f08ACAB5f6ff873",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1708812851,
       "values": {
         "$immutable": true,
@@ -79,6 +132,13 @@
       "name": "L1BlastBridge",
       "address": "0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1708812923,
       "values": {
         "$admin": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
@@ -143,6 +203,13 @@
       "name": "SystemConfig",
       "address": "0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["scalar"],
       "sinceTimestamp": 1708812899,
       "values": {
@@ -226,6 +293,13 @@
       "name": "LaunchBridge",
       "address": "0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "totalETHBalance",
         "totalETHShares",
@@ -261,9 +335,13 @@
       "address": "0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "assignedPermissions": {
-        "upgrade": ["0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1700012495,
       "values": {
@@ -290,6 +368,13 @@
       "name": "L1StandardBridge",
       "address": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1708812911,
       "values": {
         "$admin": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
@@ -307,6 +392,13 @@
       "name": "OptimismMintableERC20Factory",
       "address": "0x6B916DcCa661d23794e78509723A6f4348564847",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1708813007,
       "values": {
         "$admin": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
@@ -320,6 +412,13 @@
       "name": "L2OutputOracle",
       "address": "0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -355,6 +454,13 @@
       "name": "ETHYieldManager",
       "address": "0x98078db053902644191f93988341E31289E1C8FE",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["getLockedBalance"],
       "sinceTimestamp": 1708812935,
       "values": {
@@ -387,6 +493,13 @@
       "name": "USDYieldManager",
       "address": "0xa230285d5683C74935aD14c446e137c8c8828438",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["getLockedBalance"],
       "sinceTimestamp": 1708812947,
       "values": {
@@ -419,6 +532,13 @@
       "name": "L1ERC721Bridge",
       "address": "0xa45A0c7C47DB8C6e99b2d7C4939F7f7Cf69C8975",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1708813019,
       "values": {
         "$admin": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
@@ -434,6 +554,13 @@
       "name": "Insurance",
       "address": "0xBbE2cd60BD30Ef2aaceFD74C3199282ee35fBBa6",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1708812971,
       "values": {
         "$admin": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
@@ -446,6 +573,13 @@
       "name": "Insurance",
       "address": "0xcFF70D7F37b1EBeE89c08E485f08ACAB5f6ff873",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1708812959,
       "values": {
         "$admin": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
@@ -458,6 +592,13 @@
       "name": "AddressManager",
       "address": "0xE064B565Cf2A312a3e66Fe4118890583727380C0",
       "template": "opstack/AddressManager",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1708812839,
       "values": {
         "$immutable": true,

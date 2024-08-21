@@ -1,3 +1,55 @@
+Generated with discovered.json: 0xf08beb04559d5a4661c8efb1809292301a9910c4
+
+# Diff at Wed, 21 Aug 2024 10:07:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 20532597
+- current block number: 20532597
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20532597 (main branch discovery), not current.
+
+```diff
+    contract Governance (0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x38A43F4330f24fe920F943409709fc9A6084C939","via":[]}]
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (0x38A43F4330f24fe920F943409709fc9A6084C939) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01","0x5290E9582B4FB706EaDf87BB1c129e897e04d06D","0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01","via":[]},{"permission":"upgrade","target":"0x5290E9582B4FB706EaDf87BB1c129e897e04d06D","via":[]},{"permission":"upgrade","target":"0xaBEA9132b05A70803a4E85094fD0e1800777fBEF","via":[]}]
+    }
+```
+
+```diff
+    contract Verifier (0x5290E9582B4FB706EaDf87BB1c129e897e04d06D) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x38A43F4330f24fe920F943409709fc9A6084C939","via":[]}]
+    }
+```
+
+```diff
+    contract ZkSync (0xaBEA9132b05A70803a4E85094fD0e1800777fBEF) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x38A43F4330f24fe920F943409709fc9A6084C939","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x13dea30776c0b6c15c1c470dd6f5806ecdd4005c
 
 # Diff at Thu, 15 Aug 2024 07:40:27 GMT:
