@@ -34,7 +34,7 @@ export const eigenDAbridge = {
   id: 'eigenda-bridge',
   type: 'DAC',
   display: {
-    name: 'EigenDA Bridge',
+    name: 'Bridge',
     slug: 'bridge',
     description:
       'EigenDA DA attestations are bridged to Ethereum through the EigenDAServiceManager smart contract.',
@@ -80,14 +80,13 @@ export const eigenDAbridge = {
 
     ![EigenDA once stored](/images/da-layer-technology/eigenda/oncestored.png#center)
 
-    Current quorum thresholds are set to ${quorum1Threshold}% of registered stake for the ETH quorum and ${quorum2Threshold}% for the EIGEN token quorum. The quorum thresholds are set on the EigenDAServiceManager contract and can be changed by the contract owner.
+    Although thresholds are not enforced by the confirmBatch method, current quorum thresholds are set to ${quorum1Threshold}% of registered stake for the ETH quorum and ${quorum2Threshold}% for the EIGEN token quorum. The quorum thresholds are set on the EigenDAServiceManager contract and can be changed by the contract owner.
   `,
   permissions: [
-    // Commented out because it is not found, why?
-    // ...eigenDiscovery.getMultisigPermission(
-    //   'EigenLayerOperationsMultisig',
-    //   'This multisig is the owner of the EigenDAServiceManager contract. It holds the power to change the contract state and upgrade the bridge.',
-    // ),
+    ...eigenDiscovery.getMultisigPermission(
+      'EigenLayerOperationsMultisig',
+      'This multisig is the owner of the EigenDAServiceManager contract. It holds the power to change the contract state and upgrade the bridge.',
+    ),
     {
       name: 'batchConfirmers',
       description: `The list of addresses authorized to confirm the availability of blobs batches to the DA bridge.`,
@@ -98,12 +97,16 @@ export const eigenDAbridge = {
     },
     {
       name: 'pausers',
-      description: `The list of addresses authorized to pause and unpause the EigenDAServiceManager contract.`,
+      description: `The list of addresses authorized to pause the EigenDAServiceManager contract.`,
       accounts: pausers.map((pauser) => ({
         address: EthereumAddress(pauser),
         type: 'EOA',
       })),
     },
+    ...eigenDiscovery.getMultisigPermission(
+      'EigenLayerExecutorMultisig',
+      'The address authorized to unpause the EigenDAServiceManager contract.',
+    ),
   ],
   chain: ChainId.ETHEREUM,
   requiredMembers: 0, // currently 0 since threshold is not enforced

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xa825402aaad5d4da80aec944566c084f83e02ed8
+Generated with discovered.json: 0x208539bdcc602bf240b41d9930d6837db187fb9f
 
-# Diff at Tue, 20 Aug 2024 17:22:11 GMT:
+# Diff at Wed, 21 Aug 2024 09:12:13 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@db437cf269f77763075511701a7df3b61ea065d7 block: 19925898
-- current block number: 20571289
+- current block number: 20576020
 
 ## Description
 
@@ -73,6 +73,42 @@ discovery. Values are for block 19925898 (main branch discovery), not current.
     +++ description: None
       values.pausers:
 +        ["0xBE1685C81aA44FF9FB319dD389addd9374383e90","0x5050389572f2d220ad927CcbeA0D406831012390","0x369e6F597e22EaB55fFb173C6d9cD234BD699111"]
+    }
+```
+
+```diff
+    contract EigenLayerExecutorMultisig (0x369e6F597e22EaB55fFb173C6d9cD234BD699111) {
+    +++ description: None
+      name:
+-        "EigenlayerProxiedMultisig"
++        "EigenLayerExecutorMultisig"
+    }
+```
+
+```diff
+    contract EigenLayerTokenMultisig (0xbb00DDa2832850a43840A3A86515E3Fe226865F2) {
+    +++ description: None
+      name:
+-        "EigenlayerTokenMultisig"
++        "EigenLayerTokenMultisig"
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      name:
+-        "EigenlayerOperationsMultisig"
++        "EigenLayerOperationsMultisig"
+    }
+```
+
+```diff
+    contract EigenLayerCommunityMultisig (0xFEA47018D632A77bA579846c840d5706705Dc598) {
+    +++ description: None
+      name:
+-        "EigenlayerCommunityMultisig"
++        "EigenLayerCommunityMultisig"
     }
 ```
 

@@ -1,8 +1,8 @@
 {
   "name": "shared-eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 20571289,
-  "configHash": "0x308902449075a320e2aeb6d54ed6286fe2ab4b67aef907c24ab983b1a2058e77",
+  "blockNumber": 20576020,
+  "configHash": "0x2ae18387b95c3f1a0aabc2bf04ec0a6a4cabdf45b809d6d4a09dc97f70d35098",
   "version": 11,
   "contracts": [
     {
@@ -12,8 +12,8 @@
       "sinceTimestamp": 1602667372,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0xeb29190000000000",
-        "get_deposit_root": "0x10e7db9662f6421ab443ad0267b9013c434d1c4ac74824190376b1af21762bd9"
+        "get_deposit_count": "0x6e2c190000000000",
+        "get_deposit_root": "0x51eb073945157916aba31290cd66212ae296065bcf6b6a9f17c870c552537c8b"
       },
       "derivedName": "DepositContract"
     },
@@ -51,7 +51,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "99516759521244751457905",
+        "totalShares": "99462735517077181332084",
         "underlyingToken": "0xf951E335afb289353dc249e82926178EaC7DEd78"
       },
       "fieldMeta": {
@@ -131,7 +131,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "1063629556973606081499",
+        "totalShares": "1073629556973606081499",
         "underlyingToken": "0xE95A203B1a91a908F9B9CE46459d101078c2c3cb"
       },
       "fieldMeta": {
@@ -169,7 +169,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "38440545746132536746690",
+        "totalShares": "38425682515274327065932",
         "underlyingToken": "0xae78736Cd615f374D3085123A210448E74Fc6393"
       },
       "fieldMeta": {
@@ -269,7 +269,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "145891178144269808523623",
+        "totalShares": "145885178837877737408100",
         "underlyingToken": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa"
       },
       "fieldMeta": {
@@ -296,7 +296,7 @@
       "derivedName": "EigenLayerBeaconOracle"
     },
     {
-      "name": "EigenlayerProxiedMultisig",
+      "name": "EigenLayerExecutorMultisig",
       "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -410,7 +410,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "15632414591497829376187",
+        "totalShares": "15632161249287420622164",
         "underlyingToken": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
       },
       "fieldMeta": {
@@ -496,7 +496,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "44375074357865989644735",
+        "totalShares": "44374074357865989644735",
         "underlyingToken": "0xa2E3356610840701BDf5611a53974510Ae27E2e1"
       },
       "fieldMeta": {
@@ -681,7 +681,7 @@
         "denebForkTimestamp": 1710338135,
         "eigenPodBeacon": "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
-        "numPods": 31828,
+        "numPods": 31829,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
@@ -709,7 +709,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "873052078217015685375581",
+        "totalShares": "869193711330958942925395",
         "underlyingToken": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
       },
       "fieldMeta": {
@@ -747,7 +747,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "80131387571921806713131",
+        "totalShares": "80140974893197483368080",
         "underlyingToken": "0xA35b1B31Ce002FBF2058D22F30f95D405200A15b"
       },
       "fieldMeta": {
@@ -785,7 +785,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "10625930179722528592413",
+        "totalShares": "10625304553718706404694",
         "underlyingToken": "0x856c4Efb76C1D1AE02e20CEB03A2A6a08b0b8dC3"
       },
       "fieldMeta": {
@@ -832,7 +832,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "108866379771537133720612581",
+        "totalShares": "108840561848984199626373872",
         "underlyingToken": "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
       },
       "derivedName": "EigenStrategy"
@@ -888,7 +888,7 @@
       }
     },
     {
-      "name": "EigenlayerTokenMultisig",
+      "name": "EigenLayerTokenMultisig",
       "address": "0xbb00DDa2832850a43840A3A86515E3Fe226865F2",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -917,7 +917,7 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "EigenlayerOperationsMultisig",
+      "name": "EigenLayerOperationsMultisig",
       "address": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -1040,7 +1040,7 @@
       "derivedName": "Eigen"
     },
     {
-      "name": "EigenlayerCommunityMultisig",
+      "name": "EigenLayerCommunityMultisig",
       "address": "0xFEA47018D632A77bA579846c840d5706705Dc598",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",

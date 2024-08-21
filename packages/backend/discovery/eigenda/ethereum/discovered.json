@@ -1,7 +1,7 @@
 {
   "name": "eigenda",
   "chain": "ethereum",
-  "blockNumber": 20571459,
+  "blockNumber": 20576022,
   "configHash": "0x1ea0255006656163b1dc7a7458f955484caf72eed8bac24c282a9d0ac0b6dcf1",
   "version": 11,
   "contracts": [
@@ -104,7 +104,6 @@
           "0xab5716b1b46c8c1d6eef9e2ba828f33fbbee735966f0d0e449c77727808154ba",
           "0xfcc1afb1aadb7986d6482feb6cf5542fcca50d8bc92bf5e481a94d27374d24e2",
           "0x01d0d6d4276a88ba70ae6ef384288f846bab6d311716a4147111c7cf486b38c9",
-          "0x3278d7a1fc5f9f6a342007f6efd5fba9f8713169ed4c448f39884925422552f7",
           "0x45511e592e63f31ee9d590d400a88fea67d774959e8311c60e80c5dd8007821b",
           "0xcd20267af3ab10d4f8ba356d3b2ee2479d47214c981074ba8dd5852d10f67e37",
           "0x1b69dd1bd6075967241a19424bedf47abbd6e1c096757fa347b89b2bbd658cdb",
@@ -305,7 +304,12 @@
           "0xea0a4d9f9735dbd78e46e26120e10320f583a4dcaa93eedd292237451651c67e",
           "0x7a56a2226e44d5e4a2194d23f492a418bee9a3088e7809a239838b81c8a1a8d7",
           "0x8d4e5576c75115b4f0206d4af8bcbf5fb807607b9ad204a0884ad269981132f3",
-          "0x8f6ea0107f79f10ea0198872746c612f0878d26bc8f285199130d2d00a10e092"
+          "0x8f6ea0107f79f10ea0198872746c612f0878d26bc8f285199130d2d00a10e092",
+          "0xb21857944c5ea679ecc5c1296b8c1f2fe619890e35483a52df6958828b045e68",
+          "0x3f43ebd3d3b0021be632ace99c537b38cf85cfafe2eb6b1c3cb4f434160ae40b",
+          "0xa94dcd1d35774a42647fbf51d076d5d86e73769fb2e82521e576128f84f16eaa",
+          "0x209551d78479bc4815b40d95abdaeb74f7cdda75c55c9157ea1b6b7359460eba",
+          "0x35a6a837412fdc45a4e0bbaad8ad3e659d2bb5442b8ab99206de42a76e016413"
         ],
         "registries": [
           "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
@@ -422,7 +426,7 @@
           "0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED",
           "0x454Ef2f69f91527856E06659f92a66f464C1ca4e"
         ],
-        "batchId": 22993,
+        "batchId": 23084,
         "BLOCK_STALE_MEASURE": 300,
         "blsApkRegistry": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
@@ -453,7 +457,7 @@
         "stakeRegistry": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
         "staleStakesForbidden": false,
         "STORE_DURATION_BLOCKS": 100800,
-        "taskNumber": 22993,
+        "taskNumber": 23084,
         "THRESHOLD_DENOMINATOR": 100
       },
       "fieldMeta": {
