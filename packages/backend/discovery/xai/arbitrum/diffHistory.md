@@ -1,3 +1,293 @@
+Generated with discovered.json: 0xc7a70cb5fc4c5218b2b7281154dea8b7b7718c54
+
+# Diff at Wed, 21 Aug 2024 14:43:11 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@9ff9ee2b2fd37e2cdd4a4bcebdcefcb5e61b1e6c block: 229959335
+- current block number: 245214259
+
+## Description
+
+Xai upgraded to [ArbOS Version 20 "Atlas"](https://forum.arbitrum.foundation/t/aip-arbos-version-20-atlas/20957).
+This upgrade comes with blobs support (but Xai is an L3 on Arbitrum) and was reviewed thoroughly in `packages/backend/discovery/arbitrum/ethereum/diffHistory.md` at "Diff at Fri, 22 Mar 2024 07:51:09 GMT:".
+
+TLDR of changes:
+- SequencerInbox changes are related to blobs support
+- Critical values like maxTimeVariation in the SequencerInbox (self sequencing delay) stay the same
+- ChallengeManager is the same except for pointing to new OneStepProof contract
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract OneStepProver0 (0x1135265fE014D3FA32B3507E325642B92aFFeAEb)
+    +++ description: None
+```
+
+```diff
+    contract ChallengeManager (0x3a3f62034a42a35eA1686B199bB73006aa525eE4) {
+    +++ description: None
+      values.$implementation:
+-        "0x09824fe72BFF474d16D9c2774432E381BBD60662"
++        "0x5cA988F213EfbCB86ED7e2AACB0C15c91e648f8d"
+      values.osp:
+-        "0x99a2A31300816C1FA3f40818AC9280fe7271F878"
++        "0xb20107bfB36D3B5AcA534aCAfbd8857b10b402a8"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMath (0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverHostIo (0x89AF7C4C2198c426cFe6E86de0680A0850503e06)
+    +++ description: None
+```
+
+```diff
+    contract SequencerInbox (0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1) {
+    +++ description: State batches / commitments get posted here.
+      values.$implementation:
+-        "0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"
++        "0x7a299aD29499736994Aa3a9aFa3f476445FAEB2c"
++++ description: Struct: delayBlocks, futureBlocks, delaySeconds, futureSeconds. onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed.
+      values.maxTimeVariation:
+-        {"delayBlocks":5760,"futureBlocks":96,"delaySeconds":86400,"futureSeconds":3600}
++        [5760,96,86400,3600]
+      values.batchPosterManager:
++        "0x000d8C5A70B8805DF02f409F2715d05B9A63E871"
+      values.BROTLI_MESSAGE_HEADER_FLAG:
++        "0x00"
+      values.DAS_MESSAGE_HEADER_FLAG:
++        "0x80"
+      values.DATA_BLOB_HEADER_FLAG:
++        "0x50"
+      values.isUsingFeeToken:
++        true
+      values.reader4844:
++        "0x0000000000000000000000000000000000000000"
+      values.TREE_DAS_MESSAGE_HEADER_FLAG:
++        "0x08"
+      values.ZERO_HEAVY_MESSAGE_HEADER_FLAG:
++        "0x20"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProofEntry (0x99a2A31300816C1FA3f40818AC9280fe7271F878)
+    +++ description: None
+```
+
+```diff
+    contract RollupProxy (0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "0x68e4fe5023f792d4ef584796c84d710303a5e12ea02d6e37e2b5e9c4332507c4"
++        "0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMemory (0xDf94F0474F205D086dbc2e66D69a856FCf520622)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (0x526a6E634aD36bB0007c4422586c135F1F9B525a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (0x800dA62bE6626127F71B34E795286C34C04D6712)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProofEntry (0xb20107bfB36D3B5AcA534aCAfbd8857b10b402a8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (0xc555b2F1D559Fbb854569b33640990D178F94747)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMath (0xe8709022B9C9D7347856c75910fe07e10C904446)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ChallengeManager/ChallengeManager.sol          |   6 +
+ .../OneStepProverHostIo.sol                        | 107 +++-
+ .../SequencerInbox/SequencerInbox.sol              | 662 ++++++++++++++++-----
+ 3 files changed, 611 insertions(+), 164 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 229959335 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x041F85dD87c46B941dc9b15c6628B19ee5358485) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F","via":[]},{"permission":"upgrade","target":"0x1E400568AD4840dbE50FB32f306B842e9ddeF726","via":[]},{"permission":"upgrade","target":"0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35","via":[]},{"permission":"upgrade","target":"0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8","via":[]},{"permission":"upgrade","target":"0x3a3f62034a42a35eA1686B199bB73006aa525eE4","via":[]},{"permission":"upgrade","target":"0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f","via":[]},{"permission":"upgrade","target":"0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1","via":[]},{"permission":"upgrade","target":"0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9","via":[]},{"permission":"upgrade","target":"0xb591cE747CF19cF30e11d656EB94134F523A9e77","via":[]}]
+      assignedPermissions:
++        {"upgrade":["0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F","0x1E400568AD4840dbE50FB32f306B842e9ddeF726","0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35","0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8","0x3a3f62034a42a35eA1686B199bB73006aa525eE4","0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f","0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1","0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9","0xb591cE747CF19cF30e11d656EB94134F523A9e77"]}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","via":[]}]
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336","via":[]}]
+      assignedPermissions:
++        {"upgrade":["0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336"]}
+    }
+```
+
+```diff
+    contract Outbox (0x1E400568AD4840dbE50FB32f306B842e9ddeF726) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","via":[]}]
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","via":[]}]
+    }
+```
+
+```diff
+    contract ERC20RollupEventInbox (0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","via":[]}]
+    }
+```
+
+```diff
+    contract ChallengeManager (0x3a3f62034a42a35eA1686B199bB73006aa525eE4) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","via":[]}]
+    }
+```
+
+```diff
+    contract PoolProxyDeployer (0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723","via":[]}]
+    }
+```
+
+```diff
+    contract Bridge (0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","via":[]}]
+    }
+```
+
+```diff
+    contract GasSubsidy (0x94F4aBC83eae00b693286B6eDCa09e1D76183C97) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723","via":[]}]
+    }
+```
+
+```diff
+    contract SequencerInbox (0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1) {
+    +++ description: State batches / commitments get posted here.
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","via":[]}]
+    }
+```
+
+```diff
+    contract Inbox (0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","via":[]}]
+    }
+```
+
+```diff
+    contract L1ERC20Gateway (0xb591cE747CF19cF30e11d656EB94134F523A9e77) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x041F85dD87c46B941dc9b15c6628B19ee5358485","via":[]}]
+    }
+```
+
+```diff
+    contract NodeLicenseRegistry (0xbc14d8563b248B79689ECbc43bBa53290e0b6b66) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723","via":[]}]
+    }
+```
+
+```diff
+    contract RollupProxy (0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F","via":[]}]
+    }
+```
+
+```diff
+    contract StakingProxyAdmin (0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD","via":[]},{"permission":"upgrade","target":"0x94F4aBC83eae00b693286B6eDCa09e1D76183C97","via":[]},{"permission":"upgrade","target":"0xbc14d8563b248B79689ECbc43bBa53290e0b6b66","via":[]},{"permission":"upgrade","target":"0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5","via":[]},{"permission":"upgrade","target":"0xfD41041180571C5D371BEA3D9550E55653671198","via":[]}]
+      assignedPermissions:
++        {"upgrade":["0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD","0x94F4aBC83eae00b693286B6eDCa09e1D76183C97","0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5","0xbc14d8563b248B79689ECbc43bBa53290e0b6b66","0xfD41041180571C5D371BEA3D9550E55653671198"]}
+    }
+```
+
+```diff
+    contract PoolFactory (0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723","via":[]}]
+    }
+```
+
+```diff
+    contract SentryReferee (0xfD41041180571C5D371BEA3D9550E55653671198) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x9d1531a8a871919c7817c0327741c8f8d189e2b5
 
 # Diff at Wed, 21 Aug 2024 10:07:48 GMT:

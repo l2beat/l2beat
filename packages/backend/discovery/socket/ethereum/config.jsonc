@@ -40,7 +40,8 @@
     "0xa83B4006c16DAeAb2718294696c0122519195137",
     // Reya
     "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7",
-    "0x2344621d5aA6e784e8C6f4c54b0B29Dd9c3Ad4B6"
+    "0x2344621d5aA6e784e8C6f4c54b0B29Dd9c3Ad4B6",
+    "0xaA2f2B6cD33Eaabb795c6DB60AAec599C8450F35"
     // TO HERE ----------------------------------^
   ],
   // socket chainslugs: https://github.com/SocketDotTech/socket-docs/blob/fa14d4432b1e9acf1c1e011435523aad3cfffe14/src/components/Contracts/chainDetails.ts
@@ -94,7 +95,8 @@
     "0xa83B4006c16DAeAb2718294696c0122519195137": "LOOKS Vault Blast",
     // Reya
     "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7": "USDC Vault Reya",
-    "0x2344621d5aA6e784e8C6f4c54b0B29Dd9c3Ad4B6": "WBTC Vault Reya"
+    "0x2344621d5aA6e784e8C6f4c54b0B29Dd9c3Ad4B6": "WBTC Vault Reya",
+    "0xaA2f2B6cD33Eaabb795c6DB60AAec599C8450F35": "USDe Vault Reya"
     // TO HERE ----------------------------------^
   },
   "overrides": {
@@ -286,7 +288,8 @@
     "LOOKS Vault Blast": { "ignoreMethods": ["token", "token__", "hook__"] },
     // Reya
     "USDC Vault Reya": { "ignoreMethods": ["token", "token__", "hook__"] },
-    "WBTC Vault Reya": { "ignoreMethods": ["token", "token__", "hook__"] }
+    "WBTC Vault Reya": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "USDe Vault Reya": { "ignoreMethods": ["token", "token__", "hook__"] }
     // TO HERE ----------------------------------^
   }
 }

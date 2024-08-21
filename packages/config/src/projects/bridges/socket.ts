@@ -309,6 +309,12 @@ export const socket: Bridge = {
           'Socket Vault associated with Reya and owned by socketadmin.eth EOA.',
         tokens: ['WBTC'],
       }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xaA2f2B6cD33Eaabb795c6DB60AAec599C8450F35'),
+        name: 'USDe Vault Reya',
+        description: 'Socket Vault associated with Reya and owned by socketadmin.eth EOA.',
+        tokens: ['USDe'],
+      }),
     ],
   },
   contracts: {
