@@ -46,15 +46,13 @@ export function ScalingSummaryTvlChart({ entries, milestones }: Props) {
       type: 'projects',
       projectIds: entries.filter(includeFilter).map((project) => project.id),
     }
-  }, [entries, excludeAssociatedTokens, includeFilter, filters])
+  }, [entries, includeFilter, filters])
 
-  const scalingSummaryQuery = api.scaling.summary.chart.useQuery({
+  const { data } = api.scaling.summary.chart.useQuery({
     range: timeRange,
     excludeAssociatedTokens,
     ...chartDataType,
   })
-
-  const { data } = scalingSummaryQuery
 
   const {
     chartRange,

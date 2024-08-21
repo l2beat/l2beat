@@ -24,11 +24,9 @@ export function BridgesTvlChart() {
   )
   const [timeRange, setTimeRange] = useCookieState('bridgesSummaryChartRange')
 
-  const bridgesSummaryQuery = api.bridges.summary.chart.useQuery({
+  const { data } = api.bridges.summary.chart.useQuery({
     range: timeRange,
   })
-
-  const { data } = bridgesSummaryQuery
 
   const {
     chartRange,
