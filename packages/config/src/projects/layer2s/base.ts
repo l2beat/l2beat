@@ -30,7 +30,7 @@ export const base: Layer2 = opStackL2({
     warning:
       'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
-      'Base is an Optimistic Rollup that has been developed on the Ethereum network, utilizing OP Stack technology.',
+      'Base is an Optimistic Rollup built with the OP Stack. It offers a secure, low-cost, builder-friendly way for anyone, anywhere, to build onchain.',
     purposes: ['Universal'],
     links: {
       websites: ['https://base.org/'],
