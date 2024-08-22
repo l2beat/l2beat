@@ -1,7 +1,7 @@
 import React from 'react'
 
 import UnderReviewIcon from '~/icons/under-review.svg'
-import { cn } from '../../../utils/cn'
+import { cn } from '~/utils/cn'
 
 interface Props {
   small?: boolean

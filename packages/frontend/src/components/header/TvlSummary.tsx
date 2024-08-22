@@ -139,32 +139,30 @@ export function TvlSummary(props: TvlSummaryProps) {
       )}
 
       {props.stats ? (
-        <>
-          <div className="@container flex h-1/2 flex-wrap gap-3 md:gap-0">
-            {tvlStats.map((s, i) => (
-              <div
-                key={i}
-                className="flex w-full flex-nowrap items-center justify-between gap-1"
-              >
-                <div className="flex items-center gap-1">
-                  {s.icon}
-                  <span className="text-gray-500 text-xs leading-none dark:text-gray-600">
-                    <span className="inline md:hidden">{s.label}</span>
-                    <span className="hidden md:inline">{s.shortLabel}</span>
-                  </span>
-                </div>
-                <span className="whitespace-nowrap font-semibold text-base leading-none">
-                  {s.value}
-                  {props.stats && props.stats.tvl > 0 && (
-                    <span className="hidden font-normal text-gray-500 @[200px]:inline">
-                      {` (${s.usage}%)`}
-                    </span>
-                  )}
+        <div className="@container flex h-1/2 flex-wrap gap-3 md:gap-0">
+          {tvlStats.map((s, i) => (
+            <div
+              key={i}
+              className="flex w-full flex-nowrap items-center justify-between gap-1"
+            >
+              <div className="flex items-center gap-1">
+                {s.icon}
+                <span className="text-gray-500 text-xs leading-none dark:text-gray-600">
+                  <span className="inline md:hidden">{s.label}</span>
+                  <span className="hidden md:inline">{s.shortLabel}</span>
                 </span>
               </div>
-            ))}
-          </div>
-        </>
+              <span className="whitespace-nowrap font-semibold text-base leading-none">
+                {s.value}
+                {props.stats && props.stats.tvl > 0 && (
+                  <span className="hidden font-normal text-gray-500 @[200px]:inline">
+                    {` (${s.usage}%)`}
+                  </span>
+                )}
+              </span>
+            </div>
+          ))}
+        </div>
       ) : null}
       {props.showTvlBreakdown ? (
         <div className="mt-2 flex justify-center md:mt-0">

@@ -1,5 +1,5 @@
 import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
-import { ChartTimeRangeControls } from '../controls/chart-time-range-controls'
+import { ChartTimeRangeControls } from '../core/chart-time-range-controls'
 
 export interface Props {
   timeRange: TvlChartRange
