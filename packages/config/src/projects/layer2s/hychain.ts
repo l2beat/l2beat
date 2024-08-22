@@ -8,8 +8,6 @@ const discovery = new ProjectDiscovery('hychain', 'ethereum')
 export const hychain: Layer2 = orbitStackL2({
   badges: [Badge.DA.DAC, Badge.RaaS.Caldera],
   display: {
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     name: 'HYCHAIN',
     slug: 'hychain',
     description:

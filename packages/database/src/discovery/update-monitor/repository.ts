@@ -9,7 +9,7 @@ export class UpdateMonitorRepository extends BaseRepository {
     chainId: ChainId,
   ): Promise<UpdateMonitorRecord | undefined> {
     const row = await this.db
-      .selectFrom('public.update_monitor')
+      .selectFrom('update_monitor')
       .select(selectUpdateMonitor)
       .where('project_name', '=', name)
       .where('chain_id', '=', +chainId)
@@ -27,7 +27,7 @@ export class UpdateMonitorRepository extends BaseRepository {
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
       await this.db
-        .insertInto('public.update_monitor')
+        .insertInto('update_monitor')
         .values(batch)
         .onConflict((cb) =>
           cb.columns(['project_name', 'chain_id']).doUpdateSet((eb) => ({
@@ -45,7 +45,7 @@ export class UpdateMonitorRepository extends BaseRepository {
 
   async getAll(): Promise<UpdateMonitorRecord[]> {
     const rows = await this.db
-      .selectFrom('public.update_monitor')
+      .selectFrom('update_monitor')
       .select(selectUpdateMonitor)
       .execute()
 
@@ -53,9 +53,7 @@ export class UpdateMonitorRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
-      .deleteFrom('public.update_monitor')
-      .executeTakeFirst()
+    const result = await this.db.deleteFrom('update_monitor').executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 }
