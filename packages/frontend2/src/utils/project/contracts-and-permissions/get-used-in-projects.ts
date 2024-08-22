@@ -5,6 +5,7 @@ import {
   type Layer3,
   getCommonContractsIn,
 } from '@l2beat/config'
+import { uniqBy } from 'lodash'
 import { type TechnologyContractAddress } from '../../../app/_components/projects/sections/permissions/contract-entry'
 import { type UsedInProject } from '../../../app/_components/projects/sections/permissions/used-in-project'
 
@@ -38,7 +39,7 @@ export function getUsedInProjects(
     implementationAddresses,
     'implementation',
   )
-  return (asProxy ?? []).concat(asImplementation ?? [])
+  return uniqBy((asProxy ?? []).concat(asImplementation ?? []), JSON.stringify)
 }
 
 function evalUsedInProject(

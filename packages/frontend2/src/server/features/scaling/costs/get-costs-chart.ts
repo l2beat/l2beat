@@ -11,6 +11,13 @@ import { addIfDefined } from './utils/add-if-defined'
 import { getCostsProjects } from './utils/get-costs-projects'
 import { type CostsTimeRange, rangeToResolution } from './utils/range'
 
+type CostsChartFilter =
+  | { type: 'all' }
+  | {
+      type: 'projects'
+      projectIds: string[]
+    }
+
 export function getCostsChart(
   ...parameters: Parameters<typeof getCachedCostsChart>
 ) {
@@ -19,8 +26,14 @@ export function getCostsChart(
 }
 
 const getCachedCostsChart = cache(
-  async (timeRange: CostsTimeRange): Promise<CostsChartResponse> => {
-    const projects = getCostsProjects()
+  async (
+    timeRange: CostsTimeRange,
+    filter: CostsChartFilter,
+  ): Promise<CostsChartResponse> => {
+    const projects = getCostsProjects(filter)
+    if (projects.length === 0) {
+      return withTypes([])
+    }
     const resolution = rangeToResolution(timeRange)
     const range = getRange(timeRange, resolution)
 
