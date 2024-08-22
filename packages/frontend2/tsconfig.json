@@ -41,7 +41,8 @@
     "**/*.cjs",
     "**/*.mjs",
     "**/*.js",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "../config/src/tvl/ConfigMapping.ts"
   ],
   "exclude": ["node_modules"]
 }

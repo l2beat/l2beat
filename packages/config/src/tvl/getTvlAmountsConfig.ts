@@ -1,6 +1,6 @@
 import {
-  assert,
   AmountConfigEntry,
+  assert,
   ChainConverter,
   ChainId,
   ProjectId,
@@ -20,7 +20,15 @@ export function getTvlAmountsConfig(
 
   const nonZeroSupplyTokens = tokenList.filter((t) => t.supply !== 'zero')
   for (const token of nonZeroSupplyTokens) {
-    const { chain, project } = findProjectAndChain(token, projects)
+    const projectAndChain = findProjectAndChain(token, projects)
+
+    // We should have an options to throw on backend and skip on frontend
+    // Or at least phase out the common part
+    if (!projectAndChain) {
+      continue
+    }
+
+    const { chain, project } = projectAndChain
 
     switch (token.supply) {
       case 'totalSupply':
@@ -84,11 +92,19 @@ const chainConverter = new ChainConverter(
 
 function findProjectAndChain(token: Token, projects: BackendProject[]) {
   const projectId = chainToProject.get(chainConverter.toName(token.chainId))
-  assert(projectId, `Project is required for token ${token.symbol}`)
+  // assert(projectId, `Project is required for token ${token.symbol}`)
+  if (!projectId) {
+    return
+  }
+
   const project = projects.find((x) => x.projectId === projectId)
-  assert(project, `Project not found for token ${token.symbol}`)
+  // assert(project, `Project not found for token ${token.symbol}`)
+  if (!project) {
+    return
+  }
 
   const chain = chains.find((x) => x.chainId === +token.chainId)
+
   assert(chain, `Chain not found for token ${token.symbol}`)
   return { chain, project }
 }

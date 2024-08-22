@@ -1,39 +1,37 @@
-import { safeGetTokenByAssetId } from '@l2beat/config'
+import { type ConfigMapping, safeGetTokenByAssetId } from '@l2beat/config'
 import {
+  asNumber,
   assert,
   type AssetId,
   type CanonicalAssetBreakdownData,
-  type ChainConverter,
   type ExternalAssetBreakdownData,
   type NativeAssetBreakdownData,
   type ProjectAssetsBreakdownApiResponse,
-  type UnixTime,
+  UnixTime,
 } from '@l2beat/shared-pure'
-import { type AmountsDataService } from './AmountsDataService'
-import { type ConfigMapping } from './ConfigMapping'
-import { type PricesDataService } from './PricesDataService'
-import { asNumber } from './asNumber'
+import { chainConverter } from './chain-converter'
+import { getLatestAmountForConfigurations } from './get-latest-amount-for-configurations'
+import { getLatestPriceForConfigurations } from './get-latest-price-for-configurations'
 import { type CanonicalAssetBreakdown } from './types'
 
 interface Dependencies {
-  pricesDataService: PricesDataService
-  amountsDataService: AmountsDataService
-  chainConverter: ChainConverter
   configMapping: ConfigMapping
 }
 
-export class BreakdownService {
-  constructor(private readonly $: Dependencies) {}
-
-  async getTvlBreakdown(
-    targetTimestamp: UnixTime,
+export function getTvlBreakdown({ configMapping }: Dependencies) {
+  return async function (
+    target?: UnixTime,
   ): Promise<ProjectAssetsBreakdownApiResponse> {
-    const prices = await this.$.pricesDataService.getLatestPrice(
-      this.$.configMapping.prices,
+    const targetTimestamp =
+      target ?? UnixTime.now().toStartOf('hour').add(-1, 'hours')
+
+    const prices = await getLatestPriceForConfigurations(
+      configMapping.prices,
       targetTimestamp,
     )
-    const tokenAmounts = await this.$.amountsDataService.getLatestAmount(
-      this.$.configMapping.amounts,
+
+    const tokenAmounts = await getLatestAmountForConfigurations(
+      configMapping.amounts,
       targetTimestamp,
     )
 
@@ -50,7 +48,7 @@ export class BreakdownService {
       }
     > = {}
     for (const amount of tokenAmounts.amounts) {
-      const config = this.$.configMapping.getAmountConfig(amount.configId)
+      const config = configMapping.getAmountConfig(amount.configId)
       if (config.untilTimestamp?.lt(targetTimestamp)) {
         continue
       }
@@ -65,8 +63,7 @@ export class BreakdownService {
         breakdowns[config.project] = breakdown
       }
 
-      const priceConfig =
-        this.$.configMapping.getPriceConfigFromAmountConfig(config)
+      const priceConfig = configMapping.getPriceConfigFromAmountConfig(config)
       if (prices.excluded.has(priceConfig.configId)) {
         continue
       }
@@ -96,7 +93,7 @@ export class BreakdownService {
           } else {
             breakdown.canonical.set(priceConfig.assetId, {
               assetId: priceConfig.assetId,
-              chainId: this.$.chainConverter.toChainId(config.chain),
+              chainId: chainConverter.toChainId(config.chain),
               amount: amountAsNumber,
               usdValue: valueAsNumber,
               usdPrice: price.toString(),
@@ -117,7 +114,7 @@ export class BreakdownService {
 
           breakdown.external.push({
             assetId: priceConfig.assetId,
-            chainId: this.$.chainConverter.toChainId(config.chain),
+            chainId: chainConverter.toChainId(config.chain),
             amount: amountAsNumber.toString(),
             usdValue: valueAsNumber.toString(),
             usdPrice: price.toString(),
@@ -134,7 +131,7 @@ export class BreakdownService {
         case 'native':
           breakdown.native.push({
             assetId: priceConfig.assetId,
-            chainId: this.$.chainConverter.toChainId(config.chain),
+            chainId: chainConverter.toChainId(config.chain),
             amount: amountAsNumber.toString(),
             usdValue: valueAsNumber.toString(),
             usdPrice: price.toString(),
