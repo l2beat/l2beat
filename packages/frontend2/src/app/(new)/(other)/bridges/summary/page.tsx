@@ -5,7 +5,6 @@ import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { BridgesFilterContextProvider } from '../_components/bridges-filter-context'
-import { BridgesMvpWarning } from '../_components/bridges-mvp-warning'
 import { BridgesSummaryTables } from './_components/table/bridges-summary-tables'
 
 export const metadata = getDefaultMetadata({
@@ -26,7 +25,6 @@ export default async function Page() {
     <div className="mb-8">
       <HydrateClient>
         <BridgesFilterContextProvider>
-          <BridgesMvpWarning />
           <BridgesTvlChart />
           <HorizontalSeparator className="my-4 md:my-6" />
           <BridgesSummaryTables entries={entries} />

@@ -10,36 +10,34 @@ import { type ProjectSectionProps } from './types'
 export interface StateValidationSectionProps extends ProjectSectionProps {
   diagram: DiagramParams | undefined
   stateValidation: ScalingProjectStateValidation
-  isUnderReview: boolean | undefined
 }
 
-export function StateValidationSection(props: StateValidationSectionProps) {
+export function StateValidationSection({
+  diagram,
+  stateValidation,
+  ...sectionProps
+}: StateValidationSectionProps) {
   return (
-    <ProjectSection
-      title={props.title}
-      id={props.id}
-      sectionOrder={props.sectionOrder}
-      isUnderReview={props.isUnderReview}
-    >
-      {props.diagram && (
+    <ProjectSection {...sectionProps}>
+      {diagram && (
         <figure className="mb-8 mt-4 text-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className="inline max-w-full align-[unset] dark:invert"
-            src={props.diagram.src}
-            alt={props.diagram.caption}
+            src={diagram.src}
+            alt={diagram.caption}
           />
           <figcaption className="text-xs text-gray-500 dark:text-gray-600">
-            {props.diagram.caption}
+            {diagram.caption}
           </figcaption>
         </figure>
       )}
       <div className="flex flex-col gap-6">
         <Markdown className="leading-snug text-gray-850 dark:text-gray-400 md:text-lg">
-          {props.stateValidation.description}
+          {stateValidation.description}
         </Markdown>
         <HorizontalSeparator />
-        {props.stateValidation.categories.map((stateValidationCategory) => (
+        {stateValidation.categories.map((stateValidationCategory) => (
           <Item
             stateValidationCategory={stateValidationCategory}
             key={stateValidationCategory.title}
