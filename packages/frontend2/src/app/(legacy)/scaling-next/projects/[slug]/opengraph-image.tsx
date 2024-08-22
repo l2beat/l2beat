@@ -1,14 +1,9 @@
-import { join } from 'path'
 import { layer2s, layer3s } from '@l2beat/config'
-import { readFile, readdir } from 'fs/promises'
 import { ImageResponse } from 'next/og'
+import { NextResponse } from 'next/server'
+import { env } from '~/env'
 
 export const runtime = 'nodejs'
-
-const websiteURL =
-  process.env.NODE_ENV === 'production'
-    ? 'https://www.l2beat.com/'
-    : 'http://localhost:3000/'
 
 const size = {
   width: 1200,
@@ -42,16 +37,19 @@ interface Props {
 
 export default async function Image({ params }: Props) {
   const project = scalingProjects.find((p) => p.display.slug === params.slug)
-  if (!project) throw new Error('Project not found')
-  const root = await readdir(process.cwd())
-  console.log(root)
-  const next = await readdir(join(process.cwd(), '.next'))
-  console.log(next)
-  const [robotoMedium, robotoBold] = await Promise.all([
-    readFile(join(process.cwd(), `/src/fonts/Roboto-Medium.ttf`)),
-    readFile(join(process.cwd(), `/src/fonts/Roboto-Bold.ttf`)),
-  ])
+  if (!project) {
+    return NextResponse.json({ error: 'Project not found' }, { status: 404 })
+  }
 
+  const [robotoMedium, robotoBold] = [
+    fetch(new URL('/fonts/roboto/Roboto-Medium.ttf', env.VERCEL_URL)).then(
+      (res) => res.arrayBuffer(),
+    ),
+    fetch(new URL('/fonts/roboto/Roboto-Bold.ttf', env.VERCEL_URL)).then(
+      (res) => res.arrayBuffer(),
+    ),
+  ]
+  console.log(new URL('/fonts/Roboto-Medium.ttf', env.VERCEL_URL))
   return new ImageResponse(
     <div
       style={{
@@ -62,7 +60,10 @@ export default async function Image({ params }: Props) {
       }}
     >
       {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
-      <img src={`${websiteURL}/meta-images/projects/template.png`} {...size} />
+      <img
+        src={`${env.VERCEL_URL}/meta-images/projects/template.png`}
+        {...size}
+      />
 
       <div
         style={{
@@ -88,7 +89,7 @@ export default async function Image({ params }: Props) {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={`${websiteURL}/icons/${project.display.slug}.png`}
+            src={`${env.VERCEL_URL}/icons/${project.display.slug}.png`}
             alt={`${project.display.name} logo`}
             width={104}
             height={104}
@@ -123,12 +124,12 @@ export default async function Image({ params }: Props) {
       fonts: [
         {
           name: 'RobotoMedium',
-          data: robotoMedium,
+          data: await robotoMedium,
           weight: 500,
         },
         {
           name: 'RobotoBold',
-          data: robotoBold,
+          data: await robotoBold,
           weight: 700,
         },
       ],
