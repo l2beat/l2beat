@@ -45,10 +45,10 @@ export default async function Image({ params }: Props) {
     ? `https://${env.VERCEL_URL}`
     : 'http://localhost:3000'
   const [robotoMedium, robotoBold] = [
-    fetch(`${baseUrl}/fonts/roboto/Roboto-Medium.ttf`).then((res) =>
+    fetch(`${baseUrl}/fonts/roboto/roboto-latin-500.ttf`).then((res) =>
       res.arrayBuffer(),
     ),
-    fetch(`${baseUrl}/fonts/roboto/Roboto-Bold.ttf`).then((res) =>
+    fetch(`${baseUrl}/fonts/roboto/roboto-latin-700.ttf`).then((res) =>
       res.arrayBuffer(),
     ),
   ]
