@@ -1,9 +1,9 @@
 {
   "name": "edgeless",
   "chain": "ethereum",
-  "blockNumber": 20525344,
+  "blockNumber": 20583954,
   "configHash": "0x1f243a5e1d3277e8e7739a9e1d7b4a34603291801a7775009e8b3f14dc07e7d0",
-  "version": 11,
+  "version": 12,
   "contracts": [
     {
       "name": "OneStepProofEntry",
@@ -509,7 +509,7 @@
         "owner": "0xcB58d1142e53e37aDE44E1F125248FbfAc99352A",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "stakingManager": "0x1e6d08769be5Dc83d38C64C5776305Ad6F01c227",
-        "underlyingAssetAmount": "20392799085513298021",
+        "underlyingAssetAmount": "20402889282627454561",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "derivedName": "EthStrategy"
@@ -641,7 +641,13 @@
         "batchCount": 207,
         "batchPosters": ["0x4e4aC6F04106964b5B69FDA5EcC207295bCae81f"],
         "bridge": "0x6B595398152999bBc759D5D8ed8169793F915488",
-        "dacKeyset": { "requiredSignatures": 1, "membersCount": 1 },
+        "dacKeyset": {
+          "requiredSignatures": 1,
+          "membersCount": 1,
+          "blsSignatures": [
+            "YBL4joOU9aS9yzzZL/uE5mvNkreZ1bz331f4bv8mEqfsvCxuG47A9V5948qg/7skexRhdRYgoiIqMyuiIl0LeFyeUCmcD9BXhi7lco4q5PzJHaHHHxnJofKncKT5wMziqBkzFLoIWLXhoE6j8BOUfOX7EQqnOCSJjqq7hnj7o307gKWrNw63l9XD4Aulzw+MoxTzxDEL8CLA71jp+2d6r6lesVtk4+IAd4CLOgysC0hJhSyRajOlq/r0LKtgFs7NNwMuFf8pzp6DHy7QirCbP1KOtDE813xW3lt2tEL0tb3kWbQUasHSPdsPYFS8v21RXg7Htow2LF7asLJtYnKmzGEN2D4pJq5+hJbJxATrO7aq3XrctjBLSWhrtIwjIVcNwg=="
+          ]
+        },
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
         "keySetUpdates": 1,
