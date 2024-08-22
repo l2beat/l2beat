@@ -1,4 +1,5 @@
 import { HOMEPAGE_MILESTONES } from '../../common'
+import { abstract } from './abstract'
 import { aevo } from './aevo'
 import { aiechain } from './aiechain'
 import { alephzero } from './alephzero'
@@ -149,6 +150,7 @@ export * from './common'
 export * from './types'
 
 export const layer2s: Layer2[] = [
+  abstract,
   aevo,
   aiechain,
   alephzero,
