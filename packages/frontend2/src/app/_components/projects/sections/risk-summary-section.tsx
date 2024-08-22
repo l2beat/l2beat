@@ -4,7 +4,7 @@ import { WarningBar } from '~/app/_components/warning-bar'
 import ShieldIcon from '~/icons/shield.svg'
 import UnverifiedIcon from '~/icons/unverified.svg'
 import { ProjectSection } from './project-section'
-import { ProjectSectionProps } from './types'
+import { type ProjectSectionProps } from './types'
 
 export interface RiskSummarySectionProps extends ProjectSectionProps {
   riskGroups: RiskGroup[]

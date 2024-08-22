@@ -12,6 +12,7 @@ export function ProjectBadge({ id }: { id: BadgeId }) {
   return (
     <Tooltip>
       <TooltipTrigger className="shrink-0">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={`/images/badges/${id}.png`}
           alt={`${meta.display.name} badge`}

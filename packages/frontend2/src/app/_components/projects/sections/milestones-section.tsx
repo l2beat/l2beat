@@ -14,7 +14,7 @@ import {
 import { CustomLink } from '../../link/custom-link'
 import { Markdown } from '../../markdown/markdown'
 import { ProjectSection } from './project-section'
-import { type ProjectSectionId, ProjectSectionProps } from './types'
+import { type ProjectSectionProps } from './types'
 
 export interface MilestonesSectionProps extends ProjectSectionProps {
   milestones: Milestone[]

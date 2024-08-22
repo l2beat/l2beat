@@ -1,4 +1,4 @@
-import { Bridge, type Layer2, type Layer3 } from '@l2beat/config'
+import { type Bridge, type Layer2, type Layer3 } from '@l2beat/config'
 import { compact } from 'lodash'
 import { getTechnologySectionProps } from './get-technology-section-props'
 import { makeTechnologyChoice } from './make-technology-section'

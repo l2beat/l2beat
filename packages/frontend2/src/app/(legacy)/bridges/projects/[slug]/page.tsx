@@ -48,7 +48,7 @@ export default async function Page({ params }: Props) {
   return (
     <>
       {!isNavigationEmpty && (
-        <div className="z-100 sticky top-0 -mx-4 md:hidden">
+        <div className="sticky top-0 z-100 -mx-4 md:hidden">
           <MobileProjectNavigation sections={projectEntry.projectDetails} />
         </div>
       )}
