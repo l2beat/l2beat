@@ -6,15 +6,24 @@ import { procedure, router } from '../../trpc'
 export const summaryRouter = router({
   chart: procedure
     .input(
-      z.object({
-        range: TvlChartRange,
-      }),
+      z
+        .object({
+          range: TvlChartRange,
+        })
+        .and(
+          z.union([
+            z.object({ type: z.enum(['bridges']) }),
+            z.object({
+              type: z.literal('projects'),
+              projectIds: z.array(z.string()),
+            }),
+          ]),
+        ),
     )
     .query(async ({ input }) => {
       return getTvlChartData({
-        range: input.range,
         excludeAssociatedTokens: false,
-        type: 'bridges',
+        ...input,
       })
     }),
 })

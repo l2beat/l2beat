@@ -18,7 +18,6 @@ import { useCostChartRenderParams } from './use-cost-chart-render-params'
 interface Props {
   milestones: Milestone[]
   projectId: string
-  tag?: string
 }
 
 export function ProjectCostsChart({ milestones, projectId }: Props) {

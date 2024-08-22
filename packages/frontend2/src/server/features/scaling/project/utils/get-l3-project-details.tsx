@@ -68,8 +68,23 @@ export function getL3ProjectDetails({
   const operatorSection = getOperatorSection(project)
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
+  const sortedMilestones =
+    project.milestones?.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    ) ?? []
 
   const items: ProjectDetailsSection[] = []
+
+  items.push({
+    type: 'ChartSection',
+    props: {
+      id: 'tvl',
+      stacked: true,
+      title: 'Value locked',
+      projectId: project.id,
+      milestones: sortedMilestones,
+    },
+  })
 
   if (
     !project.isUpcoming &&

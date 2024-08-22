@@ -52,7 +52,15 @@ export function getBridgeProjectDetails(
 
   const items: ProjectDetailsSection[] = []
 
-  // TODO (bridges-project-page) add tvl chart
+  items.push({
+    type: 'ChartSection',
+    props: {
+      id: 'tvl',
+      title: 'Value locked',
+      projectId: bridge.id,
+      milestones: [],
+    },
+  })
 
   if (bridge.milestones && !isEmpty(bridge.milestones)) {
     items.push({

@@ -26,7 +26,7 @@ interface Props {
   entries: ScalingTvlEntry[]
 }
 
-export function StackedTvlChart({ milestones, entries }: Props) {
+export function ScalingStackedTvlChart({ milestones, entries }: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
 
   const filters = useScalingFilterValues()

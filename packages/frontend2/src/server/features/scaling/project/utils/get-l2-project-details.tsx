@@ -72,7 +72,22 @@ export async function getL2ProjectDetails({
     range: '1d',
     filter: { type: 'projects', projectIds: [project.id] },
   })
+  const sortedMilestones =
+    project.milestones?.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    ) ?? []
   const items: ProjectDetailsSection[] = []
+
+  items.push({
+    type: 'ChartSection',
+    props: {
+      id: 'tvl',
+      stacked: true,
+      title: 'Value locked',
+      projectId: project.id,
+      milestones: sortedMilestones,
+    },
+  })
 
   if (!isEmpty(costsChartData.data)) {
     items.push({
@@ -81,10 +96,7 @@ export async function getL2ProjectDetails({
         id: 'onchain-costs',
         title: 'Onchain costs',
         projectId: project.id,
-        milestones:
-          project.milestones?.sort(
-            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-          ) ?? [],
+        milestones: sortedMilestones,
       },
     })
   }
