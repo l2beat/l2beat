@@ -1,6 +1,6 @@
-import { assert } from '@l2beat/backend-tools'
 import { safeGetTokenByAssetId } from '@l2beat/config'
 import {
+  assert,
   AssetId,
   CanonicalAssetBreakdownData,
   ChainConverter,

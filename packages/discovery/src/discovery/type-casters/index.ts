@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/backend-tools'
+import { assert } from '@l2beat/shared-pure'
 import { BaseTypeCaster } from './BaseTypeCaster'
 import { FormatSeconds } from './FormatSeconds'
 import { GreaterThan } from './GreaterThan'

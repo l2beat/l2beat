@@ -2,11 +2,11 @@
 
 import { createContext, useContext } from 'react'
 import { useCookieState } from '~/hooks/use-cookie-state'
-import { type CostsTimeRange } from '~/server/features/costs/utils/range'
+import { type CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
 
 type CostsTimeRangeContextValue = {
   range: CostsTimeRange
-  setRange: React.Dispatch<React.SetStateAction<CostsTimeRange>>
+  setRange: (range: CostsTimeRange) => void
 }
 
 const CostsTimeRangeContext = createContext<CostsTimeRangeContextValue | null>(
@@ -18,7 +18,7 @@ interface Props {
 }
 
 export function CostsTimeRangeContextProvider({ children }: Props) {
-  const [range, setRange] = useCookieState('costsChartRange')
+  const [range, setRange] = useCookieState('scalingCostsChartRange')
   return (
     <CostsTimeRangeContext.Provider
       value={{

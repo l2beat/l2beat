@@ -1,3 +1,149 @@
+Generated with discovered.json: 0x71fee6329a04ca0a77fd7c6f70ad59ad5e7df866
+
+# Diff at Wed, 21 Aug 2024 14:24:32 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@9ff9ee2b2fd37e2cdd4a4bcebdcefcb5e61b1e6c block: 20532454
+- current block number: 20577574
+
+## Description
+
+New rollup was added (Silicon zkEVM). Not verifying batches yet.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1.
+      values.isVerifyingBatches.9:
++        [false]
+      values.rollupCount:
+-        9
++        10
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.9:
++        ["0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",2355,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4]
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20532454 (main branch discovery), not current.
+
+```diff
+    contract SharedProxyAdmin (0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","via":[]},{"permission":"upgrade","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","via":[]},{"permission":"upgrade","target":"0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb","via":[]}]
+      assignedPermissions:
++        {"upgrade":["0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"]}
+    }
+```
+
+```diff
+    contract Bridge (0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","via":[]}]
+    }
+```
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","via":[]}]
+    }
+```
+
+```diff
+    contract GlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0x64b8ffdf55ed2228b4d89471df908c120c09de3a
+
+# Diff at Wed, 21 Aug 2024 10:05:42 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 20532454
+- current block number: 20532454
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20532454 (main branch discovery), not current.
+
+```diff
+    contract SharedProxyAdmin (0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","via":[]},{"permission":"upgrade","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","via":[]},{"permission":"upgrade","target":"0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb","via":[]}]
+    }
+```
+
+```diff
+    contract Bridge (0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","via":[]}]
+    }
+```
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","via":[]}]
+    }
+```
+
+```diff
+    contract GlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0xcb4ecd76bd24c85fce589f137c6b5371214bffa7
+
+# Diff at Thu, 15 Aug 2024 07:11:51 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@9a07aead4b3726cc622f66fe9a15e06e63af7acd block: 20512764
+- current block number: 20532454
+
+## Description
+
+The batches for an unknown project are now being verified.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1.
+      values.isVerifyingBatches.8.0:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0xe954f2fce6af87cb2a645e83eb913f58270872ee
 
 # Diff at Mon, 12 Aug 2024 13:15:54 GMT:

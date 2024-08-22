@@ -15,18 +15,16 @@ import {
   useMemo,
   useState,
 } from 'react'
+import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
+import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
 import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/types'
-import { type ScalingCostsEntry } from '~/server/features/scaling/get-scaling-costs-entries'
-import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/get-scaling-da-entries'
-import { type ScalingRiskEntry } from '~/server/features/scaling/get-scaling-risk-entries'
-import {
-  type ScalingSummaryLayer2sEntry,
-  type ScalingSummaryLayer3sEntry,
-} from '~/server/features/scaling/types'
+import { type ScalingLivenessEntry } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
+import { type ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
+import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
+import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 
 export type ScalingFilterContextValue = {
   rollupsOnly: boolean
-  excludeAssociatedTokens: boolean
   category?: ScalingProjectCategory
   stack?: Layer2Provider | Layer3Provider
   stage?: StageConfig['stage']
@@ -36,6 +34,7 @@ export type ScalingFilterContextValue = {
 }
 
 export type MutableScalingFilterContextValue = ScalingFilterContextValue & {
+  isEmpty: boolean
   set: (value: Partial<ScalingFilterContextValue>) => void
   reset: () => void
 }
@@ -46,7 +45,6 @@ const ScalingFilterContext = createContext<
 
 const defaultValues: ScalingFilterContextValue = {
   rollupsOnly: false,
-  excludeAssociatedTokens: false,
   category: undefined,
   stack: undefined,
   stage: undefined,
@@ -62,16 +60,18 @@ export function useScalingFilterValues() {
       'useScalingFilterContext must be used within a ScalingFilterContextProvider',
     )
   }
+
   return context
 }
 
 type ScalingEntry =
-  | ScalingSummaryLayer2sEntry
-  | ScalingSummaryLayer3sEntry
   | ScalingRiskEntry
   | ScalingFinalityEntry
   | ScalingDataAvailabilityEntry
+  | ScalingSummaryEntry
   | ScalingCostsEntry
+  | ScalingTvlEntry
+  | ScalingLivenessEntry
 
 export function useScalingFilter() {
   const scalingFilters = useScalingFilterValues()
@@ -130,9 +130,15 @@ export function ScalingFilterContextProvider({
 
   const reset = useCallback(() => setValue(defaultValues), [setValue])
 
+  const isEmpty = useMemo(() => {
+    return (Object.keys(defaultValues) as (keyof typeof defaultValues)[]).every(
+      (key) => value[key] === defaultValues[key],
+    )
+  }, [value])
+
   const contextValue = useMemo(
-    () => ({ ...value, set, reset }),
-    [value, set, reset],
+    () => ({ ...value, set, reset, isEmpty }),
+    [value, set, reset, isEmpty],
   )
 
   return (

@@ -1,7 +1,7 @@
 {
   "name": "transporter",
   "chain": "ethereum",
-  "blockNumber": 20518122,
+  "blockNumber": 20576820,
   "configHash": "0xf391f2cbf95d4fb92da983d6f036a5b740c4de59baec4f13d9f56f06a92b5685",
   "version": 11,
   "contracts": [
@@ -333,179 +333,179 @@
               "group": 8
             },
             {
-              "addr": "0x14a8f3B302Bbfa7F2f2AC2F4515548370bc7bAdC",
+              "addr": "0x124BA7e2188074335A0e9b12B449AD5781A73D60",
               "index": 1,
+              "group": 7
+            },
+            {
+              "addr": "0x14a8f3B302Bbfa7F2f2AC2F4515548370bc7bAdC",
+              "index": 2,
               "group": 8
             },
             {
               "addr": "0x180159135c9b93C59d16eA1A690e465D22c5EB67",
-              "index": 2,
-              "group": 6
+              "index": 3,
+              "group": 5
             },
             {
               "addr": "0x1c6460cfe32916196f6977b5442b0F98A826D880",
-              "index": 3,
+              "index": 4,
               "group": 11
             },
             {
               "addr": "0x21Ac2a1d6ee437FB11a6F1933C5D1d22c714B922",
-              "index": 4,
+              "index": 5,
               "group": 12
             },
             {
               "addr": "0x2b73763722378AB2013CB0877946f69fC3727Fd8",
-              "index": 5,
-              "group": 5
+              "index": 6,
+              "group": 4
             },
             {
               "addr": "0x2B88575011C5E11389ddB50D28d31C7d06B352A0",
-              "index": 6,
-              "group": 1
-            },
-            {
-              "addr": "0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6",
               "index": 7,
               "group": 1
             },
             {
-              "addr": "0x326377a6B92eC69AcbbFe2De1eB1d7c9008E4C89",
+              "addr": "0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6",
               "index": 8,
-              "group": 10
+              "group": 1
+            },
+            {
+              "addr": "0x36FdBDA6085d4DFA63Da90839432dDe9373970F0",
+              "index": 9,
+              "group": 11
             },
             {
               "addr": "0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3",
-              "index": 9,
-              "group": 4
+              "index": 10,
+              "group": 3
             },
             {
               "addr": "0x41eAdbc688797a02bfaBE48472995833489ce69D",
-              "index": 10,
+              "index": 11,
               "group": 10
             },
             {
               "addr": "0x43640F208956c7D49e04F40FF95dF818643B76aA",
-              "index": 11,
+              "index": 12,
               "group": 1
             },
             {
               "addr": "0x480496c0884D61F2f56707Adb11697F8018898c2",
-              "index": 12,
-              "group": 12
+              "index": 13,
+              "group": 10
             },
             {
               "addr": "0x48A094F7A354d8faD7263EA2a82391d105DF6628",
-              "index": 13,
-              "group": 4
+              "index": 14,
+              "group": 3
             },
             {
               "addr": "0x4e509C60b3e916644dE441298595FeD12C4AC926",
-              "index": 14,
+              "index": 15,
               "group": 1
             },
             {
               "addr": "0x56B167deCD5fC4E3Bbc07B3B4e1F30e74534F9dd",
-              "index": 15,
+              "index": 16,
               "group": 8
             },
             {
               "addr": "0x570F41d83b1031d382F641B9a532A8D7CBd7a695",
-              "index": 16,
+              "index": 17,
               "group": 1
             },
             {
               "addr": "0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6",
-              "index": 17,
-              "group": 3
+              "index": 18,
+              "group": 2
             },
             {
               "addr": "0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8",
-              "index": 18,
-              "group": 3
+              "index": 19,
+              "group": 2
             },
             {
               "addr": "0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7",
-              "index": 19,
-              "group": 1
-            },
-            {
-              "addr": "0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae",
               "index": 20,
               "group": 1
             },
             {
-              "addr": "0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4",
+              "addr": "0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae",
               "index": 21,
+              "group": 7
+            },
+            {
+              "addr": "0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4",
+              "index": 22,
               "group": 8
             },
             {
               "addr": "0x7052cB84079905400ea52B635cAb6a275fDA8823",
-              "index": 22,
+              "index": 23,
               "group": 10
             },
             {
               "addr": "0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5",
-              "index": 23,
-              "group": 7
-            },
-            {
-              "addr": "0x745B9329ccF53556e3C5f1fD1E4e9D0E91Ad2514",
               "index": 24,
-              "group": 11
-            },
-            {
-              "addr": "0x7AF3C2b54eE2f170b8104222eB4EDf2511f5d9d0",
-              "index": 25,
-              "group": 2
-            },
-            {
-              "addr": "0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374",
-              "index": 26,
               "group": 6
             },
             {
-              "addr": "0x9079410666ED02725ee9d148398Cee26397c2A36",
-              "index": 27,
-              "group": 1
+              "addr": "0x745B9329ccF53556e3C5f1fD1E4e9D0E91Ad2514",
+              "index": 25,
+              "group": 11
             },
             {
-              "addr": "0x925d7Ea0ADe586DBFd56a942bb297286cE428C79",
+              "addr": "0x776D5B14ef1D5C58B0d48b53114f2Aa0faccB307",
+              "index": 26,
+              "group": 11
+            },
+            {
+              "addr": "0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374",
+              "index": 27,
+              "group": 5
+            },
+            {
+              "addr": "0x9079410666ED02725ee9d148398Cee26397c2A36",
               "index": 28,
               "group": 1
             },
             {
-              "addr": "0x9453E18f03A36E2A2c70598De520bD24434D2d1D",
+              "addr": "0x925d7Ea0ADe586DBFd56a942bb297286cE428C79",
               "index": 29,
-              "group": 7
+              "group": 1
+            },
+            {
+              "addr": "0x9453E18f03A36E2A2c70598De520bD24434D2d1D",
+              "index": 30,
+              "group": 6
             },
             {
               "addr": "0x9d0D65cd6e46B86f88fF021d8f5EE58fe8ce2882",
-              "index": 30,
-              "group": 12
-            },
-            {
-              "addr": "0x9E318D85D42F7e5b8B4fb2fB2d706C4c04D1549e",
               "index": 31,
               "group": 12
             },
             {
-              "addr": "0xA3177f64efE98422E782bC17BE7971F01187B7cF",
+              "addr": "0x9E318D85D42F7e5b8B4fb2fB2d706C4c04D1549e",
               "index": 32,
+              "group": 12
+            },
+            {
+              "addr": "0xA3177f64efE98422E782bC17BE7971F01187B7cF",
+              "index": 33,
               "group": 1
             },
             {
               "addr": "0xa35B7219521134cAF52DccAD44d604335b64a4fB",
-              "index": 33,
-              "group": 5
+              "index": 34,
+              "group": 4
             },
             {
               "addr": "0xa42c8570771240D1e2F3211064a7C7472Cc05b7D",
-              "index": 34,
-              "group": 8
-            },
-            {
-              "addr": "0xA4dBFFb1da5a05F715c822FCD262dB3E0031f00a",
               "index": 35,
-              "group": 2
+              "group": 8
             },
             {
               "addr": "0xA8030F40032E88552519EDFc448523d677B29661",
@@ -525,17 +525,17 @@
             {
               "addr": "0xc90788d9168f83dec518Ab7c0445Ad1Ec53554D7",
               "index": 39,
-              "group": 6
+              "group": 5
             },
             {
               "addr": "0xd3094f770579AFd66711847cE9E9C42D10BA2264",
               "index": 40,
-              "group": 5
+              "group": 4
             },
             {
               "addr": "0xd3E2da792E806556517124f03F12e557045951E7",
               "index": 41,
-              "group": 7
+              "group": 6
             },
             {
               "addr": "0xd844665361adBa29CD1259ebDe9b547ECe2ab0E7",
@@ -564,15 +564,15 @@
         },
         "getOpCount": 45,
         "getRoot": {
-          "root": "0x2e56114e572f2eb9d14c448c131e5e9d4d6b2b2f252000d5d855628c5c21fb94",
-          "validUntil": 1716865428
+          "root": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "validUntil": 0
         },
         "getRootMetadata": {
           "chainId": 1,
           "multiSig": "0x117ec8aD107976e1dBCc21717ff78407Bc36aADc",
-          "preOpCount": 36,
+          "preOpCount": 45,
           "postOpCount": 45,
-          "overridePreviousRoot": false
+          "overridePreviousRoot": true
         },
         "MAX_NUM_SIGNERS": 200,
         "NUM_GROUPS": 32,
@@ -595,7 +595,7 @@
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
         "getExpectedNextSequenceNumber": 7,
-        "getLatestPriceEpochAndRound": 6055937,
+        "getLatestPriceEpochAndRound": 21250,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "gnosis",
@@ -605,9 +605,9 @@
         "isARMHealthy": true,
         "isUnpausedAndARMHealthy": true,
         "latestConfigDetails": {
-          "configCount": 7,
-          "blockNumber": 19992884,
-          "configDigest": "0x0001a5c2251b87652560fb4349f8229e01a1729f3d9bbad8abfb2d67baa7bd31"
+          "configCount": 8,
+          "blockNumber": 20574583,
+          "configDigest": "0x0001e715ca2f468f73992b74aae8b611559b925318324a0228c35fc5ec68fd4a"
         },
         "latestConfigDigestAndEpoch": {
           "scanLogs": true,
@@ -925,8 +925,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 2623,
-        "getLatestPriceEpochAndRound": 6021889,
+        "getExpectedNextSequenceNumber": 2651,
+        "getLatestPriceEpochAndRound": 172803,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "avalanche",
@@ -936,9 +936,9 @@
         "isARMHealthy": true,
         "isUnpausedAndARMHealthy": true,
         "latestConfigDetails": {
-          "configCount": 8,
-          "blockNumber": 19992818,
-          "configDigest": "0x00018c33fe48784c2decbe5572c681bdeb706c4b05c3e1f367dec59d0c4e3780"
+          "configCount": 9,
+          "blockNumber": 20561894,
+          "configDigest": "0x0001b728806c50675d907f631fb922ee3658492327dfb556b5638ce5ac48a329"
         },
         "latestConfigDigestAndEpoch": {
           "scanLogs": true,
@@ -1159,8 +1159,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 1218,
-        "getLatestPriceEpochAndRound": 6021633,
+        "getExpectedNextSequenceNumber": 1238,
+        "getLatestPriceEpochAndRound": 20995,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "wemix",
@@ -1170,9 +1170,9 @@
         "isARMHealthy": true,
         "isUnpausedAndARMHealthy": true,
         "latestConfigDetails": {
-          "configCount": 8,
-          "blockNumber": 19992872,
-          "configDigest": "0x0001a5fb364dc20180c6b3dd2e3ce85a349ddac175a17e46dc3cd325153736be"
+          "configCount": 9,
+          "blockNumber": 20574569,
+          "configDigest": "0x0001d7dfed79176417f36611718848cc8bab61daa0cf833f837205a32cd982cb"
         },
         "latestConfigDigestAndEpoch": {
           "scanLogs": true,
@@ -1315,10 +1315,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 2477,
-        "getNopFeesJuels": "961471274443244823",
+        "getExpectedNextSequenceNumber": 2527,
+        "getNopFeesJuels": "3377267432532505334",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "8555849010618063366",
+        "linkAvailableForPayment": "6819411850465503932",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -1453,7 +1453,7 @@
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
         "getExpectedNextSequenceNumber": 25,
-        "getLatestPriceEpochAndRound": 1358849,
+        "getLatestPriceEpochAndRound": 26114,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "blast",
@@ -1463,9 +1463,9 @@
         "isARMHealthy": true,
         "isUnpausedAndARMHealthy": true,
         "latestConfigDetails": {
-          "configCount": 3,
-          "blockNumber": 20398840,
-          "configDigest": "0x00011b0feeb79956de5da44165457ab771a1a71a233c41b945038500a5c4356f"
+          "configCount": 4,
+          "blockNumber": 20574540,
+          "configDigest": "0x0001e9a7260f01e6ae5ae4039c10729defc3439209ff2afdbed77c0aa371690d"
         },
         "latestConfigDigestAndEpoch": {
           "scanLogs": true,
@@ -1575,8 +1575,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 18,
-        "getLatestPriceEpochAndRound": 1358082,
+        "getExpectedNextSequenceNumber": 20,
+        "getLatestPriceEpochAndRound": 24833,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "metis",
@@ -1586,9 +1586,9 @@
         "isARMHealthy": true,
         "isUnpausedAndARMHealthy": true,
         "latestConfigDetails": {
-          "configCount": 4,
-          "blockNumber": 20398823,
-          "configDigest": "0x00015794577c5ec58b806ca7715e3310c6ffb423253062cd303e02dd3feb8e9b"
+          "configCount": 5,
+          "blockNumber": 20574531,
+          "configDigest": "0x000158ac6ced3257fc9cee81f906d7cffeb8fab05c7f3882b179326ad6dd9755"
         },
         "latestConfigDigestAndEpoch": {
           "scanLogs": true,
@@ -1648,10 +1648,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 1999,
-        "getNopFeesJuels": "1361327167662864244",
+        "getExpectedNextSequenceNumber": 2022,
+        "getNopFeesJuels": "3150681743071416790",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "7331469508586904905",
+        "linkAvailableForPayment": "5797184429708235227",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -1991,10 +1991,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 72,
-        "getNopFeesJuels": "142511255806065726",
+        "getExpectedNextSequenceNumber": 73,
+        "getNopFeesJuels": "190534313513373274",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "1243982674750109941",
+        "linkAvailableForPayment": "1195959617042802393",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -2004,11 +2004,13 @@
         "staticConfigChains": ["ethereum", "mode"],
         "tokenAddresses": [
           "0x514910771AF9Ca656af840dff83E8264EcF986CA",
-          "0x83F20F44975D03b1b09e64809B757c47f942BEeA"
+          "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
+          "0xAe770d24ec1580A13392E0B71067571351029203"
         ],
         "tokenPools": [
           "0xC2291992A08eBFDfedfE248F2CCD34Da63570DF4",
-          "0xa904B9343632A6ca4f4a1b0C9eFa011cb319d000"
+          "0xa904B9343632A6ca4f4a1b0C9eFa011cb319d000",
+          "0xd72F7010f0Fa621aB0869e61e9bb4e3cC887c66c"
         ],
         "typeAndVersion": "EVM2EVMOnRamp 1.2.0"
       },
@@ -2048,8 +2050,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 1840,
-        "getLatestPriceEpochAndRound": 6011139,
+        "getExpectedNextSequenceNumber": 1868,
+        "getLatestPriceEpochAndRound": 26114,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "optimism",
@@ -2059,9 +2061,9 @@
         "isARMHealthy": true,
         "isUnpausedAndARMHealthy": true,
         "latestConfigDetails": {
-          "configCount": 8,
-          "blockNumber": 19992870,
-          "configDigest": "0x0001e913beffb46fc6e567324b90592e032e4890b9f8368fa9227350b3d5803a"
+          "configCount": 9,
+          "blockNumber": 20574559,
+          "configDigest": "0x00019ecf28229bd3f6e536b5a820a6c81e638b7904b4e3129d59624d5cd44e3d"
         },
         "latestConfigDigestAndEpoch": {
           "scanLogs": true,
@@ -2241,7 +2243,7 @@
         "getArmProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81",
         "getBridgeLimit": "20000000000000000000000000",
         "getBridgeLimitAdmin": "0x0000000000000000000000000000000000000000",
-        "getCurrentBridgedAmount": "2235391764455215842339705",
+        "getCurrentBridgedAmount": "1664652261702381658884051",
         "getLockReleaseInterfaceId": "0x98a47177",
         "getRateLimitAdmin": "0x0000000000000000000000000000000000000000",
         "getRebalancer": "0x0000000000000000000000000000000000000000",
@@ -2547,7 +2549,7 @@
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
         "getExpectedNextSequenceNumber": 7,
-        "getLatestPriceEpochAndRound": 278531,
+        "getLatestPriceEpochAndRound": 22273,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "mode",
@@ -2557,9 +2559,9 @@
         "isARMHealthy": true,
         "isUnpausedAndARMHealthy": true,
         "latestConfigDetails": {
-          "configCount": 3,
-          "blockNumber": 20493806,
-          "configDigest": "0x0001b1cfe8bb04fc64f8a2eaea578f95d8c80b17319e793a0beca378d0833dde"
+          "configCount": 4,
+          "blockNumber": 20574549,
+          "configDigest": "0x00012da522c4eb868a6396e5a3f26b12e29d3a68935341a418f613954fb6b34e"
         },
         "latestConfigDigestAndEpoch": {
           "scanLogs": true,
@@ -2965,8 +2967,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 8,
-        "getLatestPriceEpochAndRound": 6019842,
+        "getExpectedNextSequenceNumber": 9,
+        "getLatestPriceEpochAndRound": 25347,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "celo",
@@ -2976,9 +2978,9 @@
         "isARMHealthy": true,
         "isUnpausedAndARMHealthy": true,
         "latestConfigDetails": {
-          "configCount": 5,
-          "blockNumber": 19992835,
-          "configDigest": "0x000179263a4a130df5e4be4d20e7eb032024c3eb8e72d99093e09d089598c58a"
+          "configCount": 6,
+          "blockNumber": 20574530,
+          "configDigest": "0x0001163bb8e5e2a1be39c086ff1c53c480b69f5c1fa89bdef5655886551d5eea"
         },
         "latestConfigDigestAndEpoch": {
           "scanLogs": true,
@@ -3038,10 +3040,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 1361,
-        "getNopFeesJuels": "6417583665338237958",
+        "getExpectedNextSequenceNumber": 1389,
+        "getNopFeesJuels": "7810127983910117186",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "3843051149073110165",
+        "linkAvailableForPayment": "2515367036373494403",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -3114,8 +3116,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 2213,
-        "getLatestPriceEpochAndRound": 6022145,
+        "getExpectedNextSequenceNumber": 2243,
+        "getLatestPriceEpochAndRound": 25601,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "bnb",
@@ -3125,9 +3127,9 @@
         "isARMHealthy": true,
         "isUnpausedAndARMHealthy": true,
         "latestConfigDetails": {
-          "configCount": 8,
-          "blockNumber": 19992834,
-          "configDigest": "0x0001e5962ef720d1edb8a8e5cc3e267a8a6479748b6709f835e93bfe8fb28d41"
+          "configCount": 9,
+          "blockNumber": 20574522,
+          "configDigest": "0x0001e56a75372f894c177787f2df78efd743286c7420d76047d9ef113e36b21f"
         },
         "latestConfigDigestAndEpoch": {
           "scanLogs": true,
@@ -3334,8 +3336,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 3201,
-        "getLatestPriceEpochAndRound": 6011393,
+        "getExpectedNextSequenceNumber": 3280,
+        "getLatestPriceEpochAndRound": 21251,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "base",
@@ -3345,9 +3347,9 @@
         "isARMHealthy": true,
         "isUnpausedAndARMHealthy": true,
         "latestConfigDetails": {
-          "configCount": 8,
-          "blockNumber": 19992869,
-          "configDigest": "0x000173258584964bd15f9876bea21f3bfc961c025ad5b3e4356ae918393e3874"
+          "configCount": 9,
+          "blockNumber": 20574539,
+          "configDigest": "0x0001aca19ca6472b325da7ddcbfd76c8d2efd743b89fe3e010e38f791194de04"
         },
         "latestConfigDigestAndEpoch": {
           "scanLogs": true,
@@ -3408,10 +3410,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 2414,
-        "getNopFeesJuels": "2319072646821700637",
+        "getExpectedNextSequenceNumber": 2485,
+        "getNopFeesJuels": "7818480072589340395",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "3402520448966268554",
+        "linkAvailableForPayment": "9326228868243584290",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -3429,7 +3431,8 @@
           "0x54Df3076ac0CdC9bC97fA290AB9c5a88E3D23630",
           "0xa7a0B3Fe94121E366D774d60D075F6386F750884",
           "0x60b9C41d99FE3Eb64Ecc1344baD31D87f1bceD6D",
-          "0x01aaC2b594F7bdBeC740F0F1AA22910EbB4B74Ab"
+          "0x01aaC2b594F7bdBeC740F0F1AA22910EbB4B74Ab",
+          "0xAe770d24ec1580A13392E0B71067571351029203"
         ],
         "tokenPools": [
           "0xc43c01026128Aa758A65D12dB6a72CE4DD778dF2",
@@ -3441,7 +3444,8 @@
           "0x44622f4604353E4815A4212d5a3dD137A1C7FF14",
           "0x06f9817a91595E1B595F789Fb91529e8651da9B8",
           "0x4C3aEe10334461F1f33c0A8843424de3F8fb7709",
-          "0x8c6028e38391cfC2A1a28f4359EA5732E9422e56"
+          "0x8c6028e38391cfC2A1a28f4359EA5732E9422e56",
+          "0xd72F7010f0Fa621aB0869e61e9bb4e3cC887c66c"
         ],
         "typeAndVersion": "EVM2EVMOnRamp 1.2.0"
       },
@@ -3494,10 +3498,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 4161,
-        "getNopFeesJuels": "12449100252060236964",
+        "getExpectedNextSequenceNumber": 4384,
+        "getNopFeesJuels": "31302727246070163512",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "4954680093942358018",
+        "linkAvailableForPayment": "6865291796427708226",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -3652,8 +3656,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 2709,
-        "getLatestPriceEpochAndRound": 6015489,
+        "getExpectedNextSequenceNumber": 2975,
+        "getLatestPriceEpochAndRound": 20483,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "arbitrum",
@@ -3663,9 +3667,9 @@
         "isARMHealthy": true,
         "isUnpausedAndARMHealthy": true,
         "latestConfigDetails": {
-          "configCount": 8,
-          "blockNumber": 19992851,
-          "configDigest": "0x00016059e453c2ca94d0c2fad2be55e6548b0a0ebb25096b1962a18f9c93a594"
+          "configCount": 9,
+          "blockNumber": 20574532,
+          "configDigest": "0x0001370e23facc097f2c5f3bca6c9f17d68f1961e5f489ac13d0e7600332c1e1"
         },
         "latestConfigDigestAndEpoch": {
           "scanLogs": true,
@@ -3755,7 +3759,7 @@
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
         "getExpectedNextSequenceNumber": 4,
-        "getLatestPriceEpochAndRound": 1115650,
+        "getLatestPriceEpochAndRound": 20482,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "1562403441176082196",
@@ -3765,9 +3769,9 @@
         "isARMHealthy": true,
         "isUnpausedAndARMHealthy": true,
         "latestConfigDetails": {
-          "configCount": 4,
-          "blockNumber": 20421003,
-          "configDigest": "0x0001442c239e69bf2461192e40906b14d1d34fc9d2f193127ac07fae2dbb51c7"
+          "configCount": 5,
+          "blockNumber": 20574560,
+          "configDigest": "0x00018d8d4844a53c3d72bf9c7721684c1f21b6eb6976d0b1b83155181ed84823"
         },
         "latestConfigDigestAndEpoch": {
           "scanLogs": true,
@@ -3828,10 +3832,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 24,
-        "getNopFeesJuels": "52385427589556721",
+        "getExpectedNextSequenceNumber": 25,
+        "getNopFeesJuels": "103715964083309626",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "8478483234582067489",
+        "linkAvailableForPayment": "8427152698088314584",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -3988,11 +3992,11 @@
           "validUntil": 0
         },
         "getRootMetadata": {
-          "chainId": 0,
-          "multiSig": "0x0000000000000000000000000000000000000000",
+          "chainId": 1,
+          "multiSig": "0xa8D5E1daA6D8B94f11D77B7E09DE846292ef69FF",
           "preOpCount": 0,
           "postOpCount": 0,
-          "overridePreviousRoot": false
+          "overridePreviousRoot": true
         },
         "MAX_NUM_SIGNERS": 200,
         "NUM_GROUPS": 32,
@@ -4059,84 +4063,84 @@
         "getConfig": {
           "signers": [
             {
-              "addr": "0x180159135c9b93C59d16eA1A690e465D22c5EB67",
+              "addr": "0x124BA7e2188074335A0e9b12B449AD5781A73D60",
               "index": 0,
-              "group": 6
+              "group": 7
             },
             {
-              "addr": "0x2b73763722378AB2013CB0877946f69fC3727Fd8",
+              "addr": "0x180159135c9b93C59d16eA1A690e465D22c5EB67",
               "index": 1,
               "group": 5
             },
             {
-              "addr": "0x2B88575011C5E11389ddB50D28d31C7d06B352A0",
+              "addr": "0x2b73763722378AB2013CB0877946f69fC3727Fd8",
               "index": 2,
-              "group": 1
+              "group": 4
             },
             {
-              "addr": "0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6",
+              "addr": "0x2B88575011C5E11389ddB50D28d31C7d06B352A0",
               "index": 3,
               "group": 1
             },
             {
-              "addr": "0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3",
+              "addr": "0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6",
               "index": 4,
-              "group": 4
+              "group": 1
+            },
+            {
+              "addr": "0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3",
+              "index": 5,
+              "group": 3
             },
             {
               "addr": "0x43640F208956c7D49e04F40FF95dF818643B76aA",
-              "index": 5,
+              "index": 6,
               "group": 1
             },
             {
               "addr": "0x48A094F7A354d8faD7263EA2a82391d105DF6628",
-              "index": 6,
-              "group": 4
+              "index": 7,
+              "group": 3
             },
             {
               "addr": "0x4e509C60b3e916644dE441298595FeD12C4AC926",
-              "index": 7,
-              "group": 1
-            },
-            {
-              "addr": "0x570F41d83b1031d382F641B9a532A8D7CBd7a695",
               "index": 8,
               "group": 1
             },
             {
-              "addr": "0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6",
+              "addr": "0x570F41d83b1031d382F641B9a532A8D7CBd7a695",
               "index": 9,
-              "group": 3
-            },
-            {
-              "addr": "0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8",
-              "index": 10,
-              "group": 3
-            },
-            {
-              "addr": "0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7",
-              "index": 11,
               "group": 1
             },
             {
-              "addr": "0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae",
+              "addr": "0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6",
+              "index": 10,
+              "group": 2
+            },
+            {
+              "addr": "0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8",
+              "index": 11,
+              "group": 2
+            },
+            {
+              "addr": "0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7",
               "index": 12,
               "group": 1
             },
             {
-              "addr": "0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5",
+              "addr": "0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae",
               "index": 13,
               "group": 7
             },
             {
-              "addr": "0x7AF3C2b54eE2f170b8104222eB4EDf2511f5d9d0",
+              "addr": "0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5",
               "index": 14,
-              "group": 2
+              "group": 6
             },
             {
               "addr": "0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374",
               "index": 15,
-              "group": 6
+              "group": 5
             },
             {
               "addr": "0x9079410666ED02725ee9d148398Cee26397c2A36",
@@ -4151,7 +4155,7 @@
             {
               "addr": "0x9453E18f03A36E2A2c70598De520bD24434D2d1D",
               "index": 18,
-              "group": 7
+              "group": 6
             },
             {
               "addr": "0xA3177f64efE98422E782bC17BE7971F01187B7cF",
@@ -4161,27 +4165,22 @@
             {
               "addr": "0xa35B7219521134cAF52DccAD44d604335b64a4fB",
               "index": 20,
-              "group": 5
-            },
-            {
-              "addr": "0xA4dBFFb1da5a05F715c822FCD262dB3E0031f00a",
-              "index": 21,
-              "group": 2
+              "group": 4
             },
             {
               "addr": "0xc90788d9168f83dec518Ab7c0445Ad1Ec53554D7",
-              "index": 22,
-              "group": 6
-            },
-            {
-              "addr": "0xd3094f770579AFd66711847cE9E9C42D10BA2264",
-              "index": 23,
+              "index": 21,
               "group": 5
             },
             {
+              "addr": "0xd3094f770579AFd66711847cE9E9C42D10BA2264",
+              "index": 22,
+              "group": 4
+            },
+            {
               "addr": "0xd3E2da792E806556517124f03F12e557045951E7",
-              "index": 24,
-              "group": 7
+              "index": 23,
+              "group": 6
             }
           ],
           "groupQuorums": [
@@ -4457,7 +4456,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 17,
+        "nonce": 21,
         "VERSION": "1.3.0"
       }
     },
@@ -4490,7 +4489,8 @@
           "0xEd5bE9508ae56531cc0EDe6A3bD588Eb9E2e3cfa",
           "0x466a078d17e3706a9414ACc48029EE9Bae4C9b65",
           "0x4545F9a17DA50110632C14704a15d893BF9CBD27",
-          "0xa5ef33B57dD8B653F9A9EA7114f46376d18264aC"
+          "0xa5ef33B57dD8B653F9A9EA7114f46376d18264aC",
+          "0xD54C93A99CBCb8D865E13DA321B540171795A89f"
         ],
         "getToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"
@@ -4654,10 +4654,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 1658,
-        "getNopFeesJuels": 12,
+        "getExpectedNextSequenceNumber": 1678,
+        "getNopFeesJuels": "1036203436683872954",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "4069973047810615644",
+        "linkAvailableForPayment": "3033769611126742702",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -4967,8 +4967,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 1006,
-        "getLatestPriceEpochAndRound": 6012930,
+        "getExpectedNextSequenceNumber": 1039,
+        "getLatestPriceEpochAndRound": 25603,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "polygon",
@@ -4978,9 +4978,9 @@
         "isARMHealthy": true,
         "isUnpausedAndARMHealthy": true,
         "latestConfigDetails": {
-          "configCount": 7,
-          "blockNumber": 19992871,
-          "configDigest": "0x0001380ba240289ac40146b431a0dcd60a97af46d941e485e13e776015c51bc0"
+          "configCount": 8,
+          "blockNumber": 20574561,
+          "configDigest": "0x0001032f669d09a05e36d873e547a3009a05d8b30db4c0bca70564474fa7bf94"
         },
         "latestConfigDigestAndEpoch": {
           "scanLogs": true,
@@ -5112,8 +5112,8 @@
           "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
         ],
         "staticConfigChains": ["ethereum", "1562403441176082196"],
-        "tokenAddresses": [],
-        "tokenPools": [],
+        "tokenAddresses": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "tokenPools": ["0xC2291992A08eBFDfedfE248F2CCD34Da63570DF4"],
         "typeAndVersion": "EVM2EVMOnRamp 1.2.0"
       },
       "usedTypes": [
@@ -5183,7 +5183,13 @@
         "getAllowListEnabled": false,
         "getArmProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81",
         "getRouter": "0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
-        "getSupportedChains": ["3734403246176062136", "4949039107694359620"],
+        "getSupportedChains": [
+          "3734403246176062136",
+          "4949039107694359620",
+          "7264351850409363825",
+          "11344663589394136015",
+          "15971525489660198786"
+        ],
         "getToken": "0xAe770d24ec1580A13392E0B71067571351029203",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "typeAndVersion": "BurnMintTokenPool 1.4.0"
@@ -5363,10 +5369,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 6060,
-        "getNopFeesJuels": "5984679888274471379",
+        "getExpectedNextSequenceNumber": 6258,
+        "getNopFeesJuels": "15656339199774119400",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "6640142187406819611",
+        "linkAvailableForPayment": "7396231436598488535",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -5401,7 +5407,8 @@
           "0xc2e660C62F72c2ad35AcE6DB78a616215E2F2222",
           "0x20157DBAbb84e3BBFE68C349d0d44E48AE7B5AD2",
           "0xA544b3F0c46c15F0B2b00ba3D67b56C250287905",
-          "0x547213367cfB08ab418E7b54d7883b2C2AA27Fd7"
+          "0x547213367cfB08ab418E7b54d7883b2C2AA27Fd7",
+          "0xAe770d24ec1580A13392E0B71067571351029203"
         ],
         "tokenPools": [
           "0x57D3bb46aF4A9b210FAE046796013090D428475F",
@@ -5430,7 +5437,8 @@
           "0xa96787DCe9Df7BF7bB033E39777bd108E29D349b",
           "0xf5224EfD7Ea9edFa6b6e06964084b92426DCdE99",
           "0xC456EaE992e4f2925E3F75Ac4809dF387756CD29",
-          "0x82Df5c453e854CFaD64EA3f16497B5c5b9DB012B"
+          "0x82Df5c453e854CFaD64EA3f16497B5c5b9DB012B",
+          "0xd72F7010f0Fa621aB0869e61e9bb4e3cC887c66c"
         ],
         "typeAndVersion": "EVM2EVMOnRamp 1.2.0"
       },
@@ -5589,58 +5597,68 @@
               "group": 3
             },
             {
-              "addr": "0x41eAdbc688797a02bfaBE48472995833489ce69D",
+              "addr": "0x36FdBDA6085d4DFA63Da90839432dDe9373970F0",
               "index": 4,
-              "group": 1
+              "group": 2
             },
             {
-              "addr": "0x480496c0884D61F2f56707Adb11697F8018898c2",
+              "addr": "0x41eAdbc688797a02bfaBE48472995833489ce69D",
               "index": 5,
               "group": 1
             },
             {
-              "addr": "0x56B167deCD5fC4E3Bbc07B3B4e1F30e74534F9dd",
+              "addr": "0x480496c0884D61F2f56707Adb11697F8018898c2",
               "index": 6,
-              "group": 4
+              "group": 1
             },
             {
-              "addr": "0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4",
+              "addr": "0x56B167deCD5fC4E3Bbc07B3B4e1F30e74534F9dd",
               "index": 7,
               "group": 4
             },
             {
-              "addr": "0x7052cB84079905400ea52B635cAb6a275fDA8823",
+              "addr": "0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4",
               "index": 8,
+              "group": 4
+            },
+            {
+              "addr": "0x7052cB84079905400ea52B635cAb6a275fDA8823",
+              "index": 9,
               "group": 1
             },
             {
               "addr": "0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6",
-              "index": 9,
+              "index": 10,
               "group": 3
             },
             {
               "addr": "0x745B9329ccF53556e3C5f1fD1E4e9D0E91Ad2514",
-              "index": 10,
+              "index": 11,
+              "group": 2
+            },
+            {
+              "addr": "0x776D5B14ef1D5C58B0d48b53114f2Aa0faccB307",
+              "index": 12,
               "group": 2
             },
             {
               "addr": "0x803CBD1e4d722eCf8247c6c9CDab4fC87DBAf429",
-              "index": 11,
+              "index": 13,
               "group": 3
             },
             {
               "addr": "0xa42c8570771240D1e2F3211064a7C7472Cc05b7D",
-              "index": 12,
+              "index": 14,
               "group": 4
             },
             {
               "addr": "0xAe735fd5e74887064DFf99C637f291caE5485A75",
-              "index": 13,
+              "index": 15,
               "group": 2
             },
             {
               "addr": "0xE062e7D123AC8dF480C56147f911144F55C10f88",
-              "index": 14,
+              "index": 16,
               "group": 3
             }
           ],
@@ -5653,16 +5671,16 @@
             0, 0, 0, 0, 0, 0, 0, 0, 0
           ]
         },
-        "getOpCount": 943,
+        "getOpCount": 973,
         "getRoot": {
-          "root": "0x4752b1fad98b7c106108b25c27b2347ab7d0258a861d68b25097763304f9d78e",
-          "validUntil": 1723749863
+          "root": "0x271bf0045ec69bfc0ebb9d907474522a60d1bebd4c17def194ba0843d0caacea",
+          "validUntil": 1724358087
         },
         "getRootMetadata": {
           "chainId": 1,
           "multiSig": "0xE53289F32c8E690b7173aA33affE9B6B0CB0012F",
-          "preOpCount": 936,
-          "postOpCount": 943,
+          "preOpCount": 956,
+          "postOpCount": 973,
           "overridePreviousRoot": false
         },
         "MAX_NUM_SIGNERS": 200,
@@ -5866,10 +5884,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 24,
-        "getNopFeesJuels": "50479945040199030",
+        "getExpectedNextSequenceNumber": 25,
+        "getNopFeesJuels": "98577448937789015",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "9350911234319443024",
+        "linkAvailableForPayment": "9302813730421853039",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -6180,6 +6198,7 @@
     { "address": "0x0Bf40b034872D0b364f3DCec04C7434a4Da1C8d9" },
     { "address": "0x0c44E75A018d846C12CDcFFcD15C34aC0bd7eB60" },
     { "address": "0x0F246651F1c2275B4E14d8ae166D1fd3Af05c405" },
+    { "address": "0x124BA7e2188074335A0e9b12B449AD5781A73D60" },
     { "address": "0x14a8f3B302Bbfa7F2f2AC2F4515548370bc7bAdC" },
     { "address": "0x162A8E51E69D72a4bA462220aE9A2E94e44d753F" },
     { "address": "0x180159135c9b93C59d16eA1A690e465D22c5EB67" },
@@ -6195,6 +6214,7 @@
     { "address": "0x2E3f1E5A392366975A99744f95d06C28225b1e32" },
     { "address": "0x31e16F375531F8d77E027ff935e1114eD62D797b" },
     { "address": "0x326377a6B92eC69AcbbFe2De1eB1d7c9008E4C89" },
+    { "address": "0x36FdBDA6085d4DFA63Da90839432dDe9373970F0" },
     { "address": "0x3B80Fe300c9A611abA0496e2543B66Ff7bD4B9e9" },
     { "address": "0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3" },
     { "address": "0x3D3817270db2b89e9F68bA27297fb4672082f942" },
@@ -6219,7 +6239,7 @@
     { "address": "0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5" },
     { "address": "0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6" },
     { "address": "0x745B9329ccF53556e3C5f1fD1E4e9D0E91Ad2514" },
-    { "address": "0x7AF3C2b54eE2f170b8104222eB4EDf2511f5d9d0" },
+    { "address": "0x776D5B14ef1D5C58B0d48b53114f2Aa0faccB307" },
     { "address": "0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374" },
     { "address": "0x803CBD1e4d722eCf8247c6c9CDab4fC87DBAf429" },
     { "address": "0x9079410666ED02725ee9d148398Cee26397c2A36" },
@@ -6232,7 +6252,6 @@
     { "address": "0xA3177f64efE98422E782bC17BE7971F01187B7cF" },
     { "address": "0xa35B7219521134cAF52DccAD44d604335b64a4fB" },
     { "address": "0xa42c8570771240D1e2F3211064a7C7472Cc05b7D" },
-    { "address": "0xA4dBFFb1da5a05F715c822FCD262dB3E0031f00a" },
     { "address": "0xA8030F40032E88552519EDFc448523d677B29661" },
     { "address": "0xad1b1F2A6DD55627e3893B771A00Cd43F69DcE35" },
     { "address": "0xAE0e486Fa6577188d586A8e4c12360FB82E2a386" },

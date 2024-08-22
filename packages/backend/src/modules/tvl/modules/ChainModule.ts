@@ -1,10 +1,11 @@
-import { assert, Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import {
   BlockExplorerClient,
   CoingeckoClient,
   CoingeckoQueryService,
 } from '@l2beat/shared'
 import {
+  assert,
   AmountConfigEntry,
   EscrowEntry,
   PremintedEntry,

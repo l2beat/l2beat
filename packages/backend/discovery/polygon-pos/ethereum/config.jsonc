@@ -188,7 +188,8 @@
         "rewardPerStake",
         "totalRewardsLiquidated",
         "totalStaked",
-        "validatorState"
+        "validatorState",
+        "totalHeimdallFee"
       ]
     },
     "StakingInfo": {

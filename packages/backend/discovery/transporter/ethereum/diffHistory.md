@@ -1,3 +1,645 @@
+Generated with discovered.json: 0x900a1becf6288cb4994a4f86502ce337ea8651ba
+
+# Diff at Wed, 21 Aug 2024 11:53:00 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@a84e39efa4f1e38eb52ca8ca005fb438919e951f block: 20563543
+- current block number: 20576820
+
+## Description
+
+Configurations update. OffchainConfig changed.
+
+## Watched changes
+
+```diff
+    contract CommitStore2 (0x118a9389960F86390A4F14ce4C95D6ff076C6bFC) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        7
++        8
+      values.latestConfigDetails.blockNumber:
+-        19992884
++        20574583
+      values.latestConfigDetails.configDigest:
+-        "0x0001a5c2251b87652560fb4349f8229e01a1729f3d9bbad8abfb2d67baa7bd31"
++        "0x0001e715ca2f468f73992b74aae8b611559b925318324a0228c35fc5ec68fd4a"
+    }
+```
+
+```diff
+    contract CommitStore1 (0x31f6ab382DDeb9A316Ab61C3945a5292a50a89AB) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        8
++        9
+      values.latestConfigDetails.blockNumber:
+-        19992872
++        20574569
+      values.latestConfigDetails.configDigest:
+-        "0x0001a5fb364dc20180c6b3dd2e3ce85a349ddac175a17e46dc3cd325153736be"
++        "0x0001d7dfed79176417f36611718848cc8bab61daa0cf833f837205a32cd982cb"
+    }
+```
+
+```diff
+    contract CommitStore (0x3CB2A81bb8a188C5353CdFa9994ed8666556FC53) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        3
++        4
+      values.latestConfigDetails.blockNumber:
+-        20398840
++        20574540
+      values.latestConfigDetails.configDigest:
+-        "0x00011b0feeb79956de5da44165457ab771a1a71a233c41b945038500a5c4356f"
++        "0x0001e9a7260f01e6ae5ae4039c10729defc3439209ff2afdbed77c0aa371690d"
+    }
+```
+
+```diff
+    contract CommitStore (0x3d8a95adA63D406ee8232562AbD83CEdb0B90466) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        4
++        5
+      values.latestConfigDetails.blockNumber:
+-        20398823
++        20574531
+      values.latestConfigDetails.configDigest:
+-        "0x00015794577c5ec58b806ca7715e3310c6ffb423253062cd303e02dd3feb8e9b"
++        "0x000158ac6ced3257fc9cee81f906d7cffeb8fab05c7f3882b179326ad6dd9755"
+    }
+```
+
+```diff
+    contract CommitStore4 (0x4af4B497c998007eF83ad130318eB2b925a79dc8) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        8
++        9
+      values.latestConfigDetails.blockNumber:
+-        19992870
++        20574559
+      values.latestConfigDetails.configDigest:
+-        "0x0001e913beffb46fc6e567324b90592e032e4890b9f8368fa9227350b3d5803a"
++        "0x00019ecf28229bd3f6e536b5a820a6c81e638b7904b4e3129d59624d5cd44e3d"
+    }
+```
+
+```diff
+    contract CommitStore (0x76264869a3eBF51a59FCa5ABa84ee2867c7F190e) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        3
++        4
+      values.latestConfigDetails.blockNumber:
+-        20493806
++        20574549
+      values.latestConfigDetails.configDigest:
+-        "0x0001b1cfe8bb04fc64f8a2eaea578f95d8c80b17319e793a0beca378d0833dde"
++        "0x00012da522c4eb868a6396e5a3f26b12e29d3a68935341a418f613954fb6b34e"
+    }
+```
+
+```diff
+    contract CommitStore (0x831097033C88c82a7F1897b168Aa88cC44540C8f) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        5
++        6
+      values.latestConfigDetails.blockNumber:
+-        19992835
++        20574530
+      values.latestConfigDetails.configDigest:
+-        "0x000179263a4a130df5e4be4d20e7eb032024c3eb8e72d99093e09d089598c58a"
++        "0x0001163bb8e5e2a1be39c086ff1c53c480b69f5c1fa89bdef5655886551d5eea"
+    }
+```
+
+```diff
+    contract CommitStore3 (0x87c55D48DF6EF7B08153Ab079e76bFEcbb793D75) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        8
++        9
+      values.latestConfigDetails.blockNumber:
+-        19992834
++        20574522
+      values.latestConfigDetails.configDigest:
+-        "0x0001e5962ef720d1edb8a8e5cc3e267a8a6479748b6709f835e93bfe8fb28d41"
++        "0x0001e56a75372f894c177787f2df78efd743286c7420d76047d9ef113e36b21f"
+    }
+```
+
+```diff
+    contract CommitStore6 (0x8DC27D621c41a32140e22E2a4dAf1259639BAe04) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        8
++        9
+      values.latestConfigDetails.blockNumber:
+-        19992869
++        20574539
+      values.latestConfigDetails.configDigest:
+-        "0x000173258584964bd15f9876bea21f3bfc961c025ad5b3e4356ae918393e3874"
++        "0x0001aca19ca6472b325da7ddcbfd76c8d2efd743b89fe3e010e38f791194de04"
+    }
+```
+
+```diff
+    contract CommitStore8 (0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        8
++        9
+      values.latestConfigDetails.blockNumber:
+-        19992851
++        20574532
+      values.latestConfigDetails.configDigest:
+-        "0x00016059e453c2ca94d0c2fad2be55e6548b0a0ebb25096b1962a18f9c93a594"
++        "0x0001370e23facc097f2c5f3bca6c9f17d68f1961e5f489ac13d0e7600332c1e1"
+    }
+```
+
+```diff
+    contract CommitStore15 (0xa4d264470a67D9f6682EE12Bdc9c35Df44e3F194) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        4
++        5
+      values.latestConfigDetails.blockNumber:
+-        20421003
++        20574560
+      values.latestConfigDetails.configDigest:
+-        "0x0001442c239e69bf2461192e40906b14d1d34fc9d2f193127ac07fae2dbb51c7"
++        "0x00018d8d4844a53c3d72bf9c7721684c1f21b6eb6976d0b1b83155181ed84823"
+    }
+```
+
+```diff
+    contract CommitStore7 (0xD37a60E8C36E802D2E1a6321832Ee85556Beeb76) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        7
++        8
+      values.latestConfigDetails.blockNumber:
+-        19992871
++        20574561
+      values.latestConfigDetails.configDigest:
+-        "0x0001380ba240289ac40146b431a0dcd60a97af46d941e485e13e776015c51bc0"
++        "0x0001032f669d09a05e36d873e547a3009a05d8b30db4c0bca70564474fa7bf94"
+    }
+```
+
+Generated with discovered.json: 0x42131931c0d0c0ad4a42dce8b32030af275c9cd4
+
+# Diff at Mon, 19 Aug 2024 15:23:20 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@5417c4717b5cefeed17cd8419a7eb2dda22d4206 block: 20539694
+- current block number: 20563543
+
+## Description
+
+Added support for Mode, Base and BNB Chain on the wUSDx pool. Updated the CommitStore config due OffchainConfig params changes (e.g., MaxQueryLengthBytes, RequestCountLimit).
+
+## Watched changes
+
+```diff
+    contract CommitStore5 (0x2aa101BF99CaeF7fc1355D4c493a1fe187A007cE) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        8
++        9
+      values.latestConfigDetails.blockNumber:
+-        19992818
++        20561894
+      values.latestConfigDetails.configDigest:
+-        "0x00018c33fe48784c2decbe5572c681bdeb706c4b05c3e1f367dec59d0c4e3780"
++        "0x0001b728806c50675d907f631fb922ee3658492327dfb556b5638ce5ac48a329"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (0xd72F7010f0Fa621aB0869e61e9bb4e3cC887c66c) {
+    +++ description: None
+      values.getSupportedChains.4:
++        "15971525489660198786"
+      values.getSupportedChains.3:
++        "11344663589394136015"
+      values.getSupportedChains.2:
++        "7264351850409363825"
+    }
+```
+
+Generated with discovered.json: 0x6255d653535af932c7b0ee06b19ba0cf45732392
+
+# Diff at Fri, 16 Aug 2024 07:28:16 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@7273b1decf2b7a03e4f10ec7b42f94fa80b3c5ba block: 20518122
+- current block number: 20539694
+
+## Description
+
+As a summary - two signers were replaced and one new one added. The list with changes is long because signing groups are arranged in a tree. Each group is an interior node and has its own quorum. Signers are the leaves of the tree.
+
+## Watched changes
+
+```diff
+    contract ManyChainMultiSig (0x117ec8aD107976e1dBCc21717ff78407Bc36aADc) {
+    +++ description: None
+      values.getConfig.signers.41.group:
+-        7
++        6
+      values.getConfig.signers.40.group:
+-        5
++        4
+      values.getConfig.signers.39.group:
+-        6
++        5
+      values.getConfig.signers.35.addr:
+-        "0xA4dBFFb1da5a05F715c822FCD262dB3E0031f00a"
++        "0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"
+      values.getConfig.signers.35.group:
+-        2
++        8
+      values.getConfig.signers.34.addr:
+-        "0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"
++        "0xa35B7219521134cAF52DccAD44d604335b64a4fB"
+      values.getConfig.signers.34.group:
+-        8
++        4
+      values.getConfig.signers.33.addr:
+-        "0xa35B7219521134cAF52DccAD44d604335b64a4fB"
++        "0xA3177f64efE98422E782bC17BE7971F01187B7cF"
+      values.getConfig.signers.33.group:
+-        5
++        1
+      values.getConfig.signers.32.addr:
+-        "0xA3177f64efE98422E782bC17BE7971F01187B7cF"
++        "0x9E318D85D42F7e5b8B4fb2fB2d706C4c04D1549e"
+      values.getConfig.signers.32.group:
+-        1
++        12
+      values.getConfig.signers.31.addr:
+-        "0x9E318D85D42F7e5b8B4fb2fB2d706C4c04D1549e"
++        "0x9d0D65cd6e46B86f88fF021d8f5EE58fe8ce2882"
+      values.getConfig.signers.30.addr:
+-        "0x9d0D65cd6e46B86f88fF021d8f5EE58fe8ce2882"
++        "0x9453E18f03A36E2A2c70598De520bD24434D2d1D"
+      values.getConfig.signers.30.group:
+-        12
++        6
+      values.getConfig.signers.29.addr:
+-        "0x9453E18f03A36E2A2c70598De520bD24434D2d1D"
++        "0x925d7Ea0ADe586DBFd56a942bb297286cE428C79"
+      values.getConfig.signers.29.group:
+-        7
++        1
+      values.getConfig.signers.28.addr:
+-        "0x925d7Ea0ADe586DBFd56a942bb297286cE428C79"
++        "0x9079410666ED02725ee9d148398Cee26397c2A36"
+      values.getConfig.signers.27.addr:
+-        "0x9079410666ED02725ee9d148398Cee26397c2A36"
++        "0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374"
+      values.getConfig.signers.27.group:
+-        1
++        5
+      values.getConfig.signers.26.addr:
+-        "0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374"
++        "0x776D5B14ef1D5C58B0d48b53114f2Aa0faccB307"
+      values.getConfig.signers.26.group:
+-        6
++        11
+      values.getConfig.signers.25.addr:
+-        "0x7AF3C2b54eE2f170b8104222eB4EDf2511f5d9d0"
++        "0x745B9329ccF53556e3C5f1fD1E4e9D0E91Ad2514"
+      values.getConfig.signers.25.group:
+-        2
++        11
+      values.getConfig.signers.24.addr:
+-        "0x745B9329ccF53556e3C5f1fD1E4e9D0E91Ad2514"
++        "0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5"
+      values.getConfig.signers.24.group:
+-        11
++        6
+      values.getConfig.signers.23.addr:
+-        "0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5"
++        "0x7052cB84079905400ea52B635cAb6a275fDA8823"
+      values.getConfig.signers.23.group:
+-        7
++        10
+      values.getConfig.signers.22.addr:
+-        "0x7052cB84079905400ea52B635cAb6a275fDA8823"
++        "0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4"
+      values.getConfig.signers.22.group:
+-        10
++        8
+      values.getConfig.signers.21.addr:
+-        "0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4"
++        "0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae"
+      values.getConfig.signers.21.group:
+-        8
++        7
+      values.getConfig.signers.20.addr:
+-        "0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae"
++        "0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"
+      values.getConfig.signers.19.addr:
+-        "0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"
++        "0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"
+      values.getConfig.signers.19.group:
+-        1
++        2
+      values.getConfig.signers.18.addr:
+-        "0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"
++        "0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6"
+      values.getConfig.signers.18.group:
+-        3
++        2
+      values.getConfig.signers.17.addr:
+-        "0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6"
++        "0x570F41d83b1031d382F641B9a532A8D7CBd7a695"
+      values.getConfig.signers.17.group:
+-        3
++        1
+      values.getConfig.signers.16.addr:
+-        "0x570F41d83b1031d382F641B9a532A8D7CBd7a695"
++        "0x56B167deCD5fC4E3Bbc07B3B4e1F30e74534F9dd"
+      values.getConfig.signers.16.group:
+-        1
++        8
+      values.getConfig.signers.15.addr:
+-        "0x56B167deCD5fC4E3Bbc07B3B4e1F30e74534F9dd"
++        "0x4e509C60b3e916644dE441298595FeD12C4AC926"
+      values.getConfig.signers.15.group:
+-        8
++        1
+      values.getConfig.signers.14.addr:
+-        "0x4e509C60b3e916644dE441298595FeD12C4AC926"
++        "0x48A094F7A354d8faD7263EA2a82391d105DF6628"
+      values.getConfig.signers.14.group:
+-        1
++        3
+      values.getConfig.signers.13.addr:
+-        "0x48A094F7A354d8faD7263EA2a82391d105DF6628"
++        "0x480496c0884D61F2f56707Adb11697F8018898c2"
+      values.getConfig.signers.13.group:
+-        4
++        10
+      values.getConfig.signers.12.addr:
+-        "0x480496c0884D61F2f56707Adb11697F8018898c2"
++        "0x43640F208956c7D49e04F40FF95dF818643B76aA"
+      values.getConfig.signers.12.group:
+-        12
++        1
+      values.getConfig.signers.11.addr:
+-        "0x43640F208956c7D49e04F40FF95dF818643B76aA"
++        "0x41eAdbc688797a02bfaBE48472995833489ce69D"
+      values.getConfig.signers.11.group:
+-        1
++        10
+      values.getConfig.signers.10.addr:
+-        "0x41eAdbc688797a02bfaBE48472995833489ce69D"
++        "0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3"
+      values.getConfig.signers.10.group:
+-        10
++        3
+      values.getConfig.signers.9.addr:
+-        "0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3"
++        "0x36FdBDA6085d4DFA63Da90839432dDe9373970F0"
+      values.getConfig.signers.9.group:
+-        4
++        11
+      values.getConfig.signers.8.addr:
+-        "0x326377a6B92eC69AcbbFe2De1eB1d7c9008E4C89"
++        "0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6"
+      values.getConfig.signers.8.group:
+-        10
++        1
+      values.getConfig.signers.7.addr:
+-        "0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6"
++        "0x2B88575011C5E11389ddB50D28d31C7d06B352A0"
+      values.getConfig.signers.6.addr:
+-        "0x2B88575011C5E11389ddB50D28d31C7d06B352A0"
++        "0x2b73763722378AB2013CB0877946f69fC3727Fd8"
+      values.getConfig.signers.6.group:
+-        1
++        4
+      values.getConfig.signers.5.addr:
+-        "0x2b73763722378AB2013CB0877946f69fC3727Fd8"
++        "0x21Ac2a1d6ee437FB11a6F1933C5D1d22c714B922"
+      values.getConfig.signers.5.group:
+-        5
++        12
+      values.getConfig.signers.4.addr:
+-        "0x21Ac2a1d6ee437FB11a6F1933C5D1d22c714B922"
++        "0x1c6460cfe32916196f6977b5442b0F98A826D880"
+      values.getConfig.signers.4.group:
+-        12
++        11
+      values.getConfig.signers.3.addr:
+-        "0x1c6460cfe32916196f6977b5442b0F98A826D880"
++        "0x180159135c9b93C59d16eA1A690e465D22c5EB67"
+      values.getConfig.signers.3.group:
+-        11
++        5
+      values.getConfig.signers.2.addr:
+-        "0x180159135c9b93C59d16eA1A690e465D22c5EB67"
++        "0x14a8f3B302Bbfa7F2f2AC2F4515548370bc7bAdC"
+      values.getConfig.signers.2.group:
+-        6
++        8
+      values.getConfig.signers.1.addr:
+-        "0x14a8f3B302Bbfa7F2f2AC2F4515548370bc7bAdC"
++        "0x124BA7e2188074335A0e9b12B449AD5781A73D60"
+      values.getConfig.signers.1.group:
+-        8
++        7
+    }
+```
+
+```diff
+    contract ManyChainMultiSig (0xAD97C0270a243270136E40278155C12ce7C7F87B) {
+    +++ description: None
+      values.getConfig.signers.24:
+-        {"addr":"0xd3E2da792E806556517124f03F12e557045951E7","index":24,"group":7}
+      values.getConfig.signers.23.addr:
+-        "0xd3094f770579AFd66711847cE9E9C42D10BA2264"
++        "0xd3E2da792E806556517124f03F12e557045951E7"
+      values.getConfig.signers.23.group:
+-        5
++        6
+      values.getConfig.signers.22.addr:
+-        "0xc90788d9168f83dec518Ab7c0445Ad1Ec53554D7"
++        "0xd3094f770579AFd66711847cE9E9C42D10BA2264"
+      values.getConfig.signers.22.group:
+-        6
++        4
+      values.getConfig.signers.21.addr:
+-        "0xA4dBFFb1da5a05F715c822FCD262dB3E0031f00a"
++        "0xc90788d9168f83dec518Ab7c0445Ad1Ec53554D7"
+      values.getConfig.signers.21.group:
+-        2
++        5
+      values.getConfig.signers.20.group:
+-        5
++        4
+      values.getConfig.signers.18.group:
+-        7
++        6
+      values.getConfig.signers.15.group:
+-        6
++        5
+      values.getConfig.signers.14.addr:
+-        "0x7AF3C2b54eE2f170b8104222eB4EDf2511f5d9d0"
++        "0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5"
+      values.getConfig.signers.14.group:
+-        2
++        6
+      values.getConfig.signers.13.addr:
+-        "0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5"
++        "0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae"
+      values.getConfig.signers.12.addr:
+-        "0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae"
++        "0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"
+      values.getConfig.signers.11.addr:
+-        "0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"
++        "0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"
+      values.getConfig.signers.11.group:
+-        1
++        2
+      values.getConfig.signers.10.addr:
+-        "0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"
++        "0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6"
+      values.getConfig.signers.10.group:
+-        3
++        2
+      values.getConfig.signers.9.addr:
+-        "0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6"
++        "0x570F41d83b1031d382F641B9a532A8D7CBd7a695"
+      values.getConfig.signers.9.group:
+-        3
++        1
+      values.getConfig.signers.8.addr:
+-        "0x570F41d83b1031d382F641B9a532A8D7CBd7a695"
++        "0x4e509C60b3e916644dE441298595FeD12C4AC926"
+      values.getConfig.signers.7.addr:
+-        "0x4e509C60b3e916644dE441298595FeD12C4AC926"
++        "0x48A094F7A354d8faD7263EA2a82391d105DF6628"
+      values.getConfig.signers.7.group:
+-        1
++        3
+      values.getConfig.signers.6.addr:
+-        "0x48A094F7A354d8faD7263EA2a82391d105DF6628"
++        "0x43640F208956c7D49e04F40FF95dF818643B76aA"
+      values.getConfig.signers.6.group:
+-        4
++        1
+      values.getConfig.signers.5.addr:
+-        "0x43640F208956c7D49e04F40FF95dF818643B76aA"
++        "0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3"
+      values.getConfig.signers.5.group:
+-        1
++        3
+      values.getConfig.signers.4.addr:
+-        "0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3"
++        "0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6"
+      values.getConfig.signers.4.group:
+-        4
++        1
+      values.getConfig.signers.3.addr:
+-        "0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6"
++        "0x2B88575011C5E11389ddB50D28d31C7d06B352A0"
+      values.getConfig.signers.2.addr:
+-        "0x2B88575011C5E11389ddB50D28d31C7d06B352A0"
++        "0x2b73763722378AB2013CB0877946f69fC3727Fd8"
+      values.getConfig.signers.2.group:
+-        1
++        4
+      values.getConfig.signers.1.addr:
+-        "0x2b73763722378AB2013CB0877946f69fC3727Fd8"
++        "0x180159135c9b93C59d16eA1A690e465D22c5EB67"
+      values.getConfig.signers.0.addr:
+-        "0x180159135c9b93C59d16eA1A690e465D22c5EB67"
++        "0x124BA7e2188074335A0e9b12B449AD5781A73D60"
+      values.getConfig.signers.0.group:
+-        6
++        7
+    }
+```
+
+```diff
+    contract ManyChainMultiSig (0xE53289F32c8E690b7173aA33affE9B6B0CB0012F) {
+    +++ description: None
+      values.getConfig.signers.16:
++        {"addr":"0xE062e7D123AC8dF480C56147f911144F55C10f88","index":16,"group":3}
+      values.getConfig.signers.15:
++        {"addr":"0xAe735fd5e74887064DFf99C637f291caE5485A75","index":15,"group":2}
+      values.getConfig.signers.14.addr:
+-        "0xE062e7D123AC8dF480C56147f911144F55C10f88"
++        "0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"
+      values.getConfig.signers.14.group:
+-        3
++        4
+      values.getConfig.signers.13.addr:
+-        "0xAe735fd5e74887064DFf99C637f291caE5485A75"
++        "0x803CBD1e4d722eCf8247c6c9CDab4fC87DBAf429"
+      values.getConfig.signers.13.group:
+-        2
++        3
+      values.getConfig.signers.12.addr:
+-        "0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"
++        "0x776D5B14ef1D5C58B0d48b53114f2Aa0faccB307"
+      values.getConfig.signers.12.group:
+-        4
++        2
+      values.getConfig.signers.11.addr:
+-        "0x803CBD1e4d722eCf8247c6c9CDab4fC87DBAf429"
++        "0x745B9329ccF53556e3C5f1fD1E4e9D0E91Ad2514"
+      values.getConfig.signers.11.group:
+-        3
++        2
+      values.getConfig.signers.10.addr:
+-        "0x745B9329ccF53556e3C5f1fD1E4e9D0E91Ad2514"
++        "0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
+      values.getConfig.signers.10.group:
+-        2
++        3
+      values.getConfig.signers.9.addr:
+-        "0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
++        "0x7052cB84079905400ea52B635cAb6a275fDA8823"
+      values.getConfig.signers.9.group:
+-        3
++        1
+      values.getConfig.signers.8.addr:
+-        "0x7052cB84079905400ea52B635cAb6a275fDA8823"
++        "0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4"
+      values.getConfig.signers.8.group:
+-        1
++        4
+      values.getConfig.signers.7.addr:
+-        "0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4"
++        "0x56B167deCD5fC4E3Bbc07B3B4e1F30e74534F9dd"
+      values.getConfig.signers.6.addr:
+-        "0x56B167deCD5fC4E3Bbc07B3B4e1F30e74534F9dd"
++        "0x480496c0884D61F2f56707Adb11697F8018898c2"
+      values.getConfig.signers.6.group:
+-        4
++        1
+      values.getConfig.signers.5.addr:
+-        "0x480496c0884D61F2f56707Adb11697F8018898c2"
++        "0x41eAdbc688797a02bfaBE48472995833489ce69D"
+      values.getConfig.signers.4.addr:
+-        "0x41eAdbc688797a02bfaBE48472995833489ce69D"
++        "0x36FdBDA6085d4DFA63Da90839432dDe9373970F0"
+      values.getConfig.signers.4.group:
+-        1
++        2
+    }
+```
+
 Generated with discovered.json: 0x9e2eba074a93d6771d86f2ac05e78ce927597cca
 
 # Diff at Tue, 13 Aug 2024 07:10:39 GMT:

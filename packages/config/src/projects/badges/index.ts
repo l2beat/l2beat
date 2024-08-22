@@ -172,6 +172,14 @@ export const badges = {
     },
     type: BadgeType.VM,
   },
+  CartesiVM: {
+    display: {
+      name: 'CartesiVM',
+      description:
+        'This project uses the Cartesi Machine to run its smart contracts and supports any programming language that can be ported to RISC-V architecture',
+    },
+    type: BadgeType.VM,
+  },
   FuelVM: {
     display: {
       name: 'FuelVM',
@@ -360,6 +368,13 @@ export const badges = {
     display: {
       name: 'Built on top of Arbitrum Nova',
       description: 'The project has Arbitrum Nova as its host chain',
+    },
+    type: BadgeType.L3ParentChain,
+  },
+  Optimism: {
+    display: {
+      name: 'Built on top of OP Mainnet',
+      description: 'The project has OP Mainnet as its host chain',
     },
     type: BadgeType.L3ParentChain,
   },

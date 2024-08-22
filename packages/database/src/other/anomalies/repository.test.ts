@@ -106,6 +106,17 @@ describeDatabase(AnomaliesRepository.name, (db) => {
     })
   })
 
+  describe(AnomaliesRepository.prototype.getByProjectIdsFrom.name, () => {
+    it('should return all rows for projects from timestamp', async () => {
+      const results = await repository.getByProjectIdsFrom(
+        [PROJECT_B],
+        START.add(-2, 'hours'),
+      )
+
+      expect(results).toEqualUnsorted(DATA.slice(1, 2))
+    })
+  })
+
   describe(AnomaliesRepository.prototype.deleteAll.name, () => {
     it('should delete all rows', async () => {
       await repository.deleteAll()

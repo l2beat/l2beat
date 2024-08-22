@@ -6,15 +6,17 @@ import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
 import { CostsBreakdown } from '~/app/_components/breakdown/costs-breakdown'
 import { Callout } from '~/app/_components/callout'
 import { DetailedOnHover } from '~/app/_components/detailed-on-hover'
-import { EM_DASH } from '~/app/_components/nav/consts'
 import { Skeleton } from '~/app/_components/skeleton'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/app/_components/tooltip/tooltip'
+import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { formatCostValue } from '../_utils/format-cost-value'
+import { useCostsMetricContext } from './costs-metric-context'
+import { useCostsUnitContext } from './costs-unit-context'
 import { type CostsData } from './table/columns'
 
 interface CellProps {
@@ -23,6 +25,9 @@ interface CellProps {
 }
 
 export function CostsTotalCell({ data, warning }: CellProps) {
+  const { metric } = useCostsMetricContext()
+  const { unit } = useCostsUnitContext()
+
   if (data.type === 'not-available') {
     switch (data.reason) {
       case 'loading':
@@ -38,7 +43,7 @@ export function CostsTotalCell({ data, warning }: CellProps) {
     }
   }
 
-  const formatted = formatCostValue(data.total, data.unit)
+  const formatted = formatCostValue(data.total, unit, metric)
 
   return (
     <div>

@@ -9,7 +9,7 @@ generator kysely {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  schemas  = ["activity", "public"]
+  schemas  = ["public"]
 }
 
 model CurrentPrice {
@@ -443,37 +443,6 @@ model VerifierStatus {
   @@id([address, chainId])
   @@map("verifier_status")
   @@schema("public")
-}
-
-model Block {
-  projectId     String   @map("project_id") @db.VarChar(255)
-  unixTimestamp DateTime @map("unix_timestamp") @db.Timestamp(6)
-  count         Int
-  blockNumber   Int      @map("block_number")
-
-  @@id([projectId, blockNumber])
-  @@map("block")
-  @@schema("activity")
-}
-
-model Starkex {
-  projectId     String   @map("project_id") @db.VarChar(255)
-  unixTimestamp DateTime @map("unix_timestamp") @db.Timestamp(6)
-  count         Int
-
-  @@id([projectId, unixTimestamp])
-  @@map("starkex")
-  @@schema("activity")
-}
-
-model ZkSync {
-  blockNumber   Int      @map("block_number")
-  blockIndex    Int      @map("block_index")
-  unixTimestamp DateTime @map("unix_timestamp") @db.Timestamp(6)
-
-  @@id([blockNumber, blockIndex])
-  @@map("zksync")
-  @@schema("activity")
 }
 
 model AggregatedLiveness {

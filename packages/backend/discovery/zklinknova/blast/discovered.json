@@ -10,6 +10,13 @@
       "address": "0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD",
       "template": "zklinknova/secondaryZkLink",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "getTotalBatchesExecuted",
         "getTotalPriorityTxs",
@@ -55,6 +62,13 @@
       "address": "0x3f64e2e09732969813904a8473074CFADeE66AF1",
       "template": "zklinknova/secondaryGateway",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1710418385,
       "values": {
         "$admin": "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E",
@@ -71,12 +85,18 @@
       "address": "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD",
-          "0x3f64e2e09732969813904a8473074CFADeE66AF1"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x3f64e2e09732969813904a8473074CFADeE66AF1",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1710486067,
       "values": {
@@ -106,6 +126,13 @@
       "name": "L1ERC20Bridge",
       "address": "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1710427013,
       "values": {
         "$admin": "0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19",
@@ -119,9 +146,13 @@
     {
       "name": "BlastProxyAdmin",
       "address": "0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19",
-      "assignedPermissions": {
-        "upgrade": ["0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1710427013,
       "values": {
         "$immutable": true,

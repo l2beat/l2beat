@@ -89,8 +89,8 @@ function TableFilterSelect<T extends string>({
 
   return (
     <Select
-      open={open}
       value={value ?? ''}
+      open={open}
       onOpenChange={setOpen}
       onValueChange={(v) => {
         const mappedValue = (v === UNDEFINED_VALUE ? undefined : v) as

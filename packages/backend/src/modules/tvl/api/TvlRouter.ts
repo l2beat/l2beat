@@ -1,5 +1,6 @@
 import Router from '@koa/router'
 import {
+  assert,
   EthereumAddress,
   ProjectId,
   stringAs,
@@ -7,7 +8,6 @@ import {
 } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
-import { assert } from '@l2beat/backend-tools'
 import { withTypedContext } from '../../../api/types'
 import { Clock } from '../../../tools/Clock'
 import { AggregatedService } from './services/AggregatedService'

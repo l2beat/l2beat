@@ -1,6 +1,5 @@
-import { assert } from '@l2beat/backend-tools'
 import { ContractValue } from '@l2beat/discovery-types'
-import { formatSeconds } from '@l2beat/shared-pure'
+import { assert, formatSeconds } from '@l2beat/shared-pure'
 import { ArgType, BaseTypeCaster } from './BaseTypeCaster'
 
 export const FormatSeconds: BaseTypeCaster = {

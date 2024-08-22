@@ -1,7 +1,7 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import { CostsChart } from '~/app/_components/chart/costs-chart'
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
-import { getScalingCostsEntries } from '~/server/features/scaling/get-scaling-costs-entries'
+import { getScalingCostsEntries } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
@@ -19,7 +19,7 @@ export const metadata = getDefaultMetadata({
 
 export default async function Page() {
   const entries = await getScalingCostsEntries()
-  const range = getCookie('costsChartRange')
+  const range = getCookie('scalingCostsChartRange')
   await api.scaling.costs.chart.prefetch({ range })
   await api.scaling.costs.table.prefetch({ range })
 

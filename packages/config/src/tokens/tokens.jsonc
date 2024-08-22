@@ -526,6 +526,10 @@
       "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0"
     },
     {
+      "symbol": "G",
+      "address": "0x9C7BEBa8F6eF6643aBd725e45a4E8387eF260649"
+    },
+    {
       "symbol": "GAINS",
       "address": "0x056C1D42Fb1326f57da7f19eBB7dDA4673f1FF55"
     },
@@ -853,6 +857,10 @@
     {
       "symbol": "OMI",
       "address": "0xeD35af169aF46a02eE13b9d79Eb57d6D68C1749e"
+    },
+    {
+      "symbol": "OPAI",
+      "address": "0xf8e57ac2730d3088d98b79209739b0d5ba085a03"
     },
     {
       "symbol": "ORBS",
@@ -1956,7 +1964,8 @@
       "address": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
       "category": "stablecoin",
       "source": "canonical",
-      "supply": "zero"
+      "supply": "zero",
+      "deploymentTimestamp": 1636665399
     },
     {
       "symbol": "USDT",

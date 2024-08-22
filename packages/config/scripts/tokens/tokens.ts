@@ -9,6 +9,7 @@ import {
   ChainId,
   CoingeckoId,
   EthereumAddress,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
@@ -133,6 +134,7 @@ async function main() {
         chainConfig,
         token.address,
         token.symbol,
+        token.deploymentTimestamp,
       )
 
       const assetId = getAssetId(chainConfig, token, info.name)
@@ -248,6 +250,7 @@ async function fetchTokenInfo(
   chain: ChainConfig,
   address: EthereumAddress,
   symbol: string,
+  deploymentTimestampOverride?: UnixTime,
 ) {
   const env = getEnv()
   const rpcUrl = env.optionalString(`${chain.name.toUpperCase()}_RPC_URL`)
@@ -264,6 +267,7 @@ async function fetchTokenInfo(
     address,
     symbol,
     coingeckoId,
+    deploymentTimestampOverride,
   )
 
   return {

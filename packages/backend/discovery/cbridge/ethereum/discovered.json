@@ -22,6 +22,13 @@
       "name": "MessageBus",
       "address": "0x4066D196A423b2b3B8B054f4F40efB47a74E200C",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x520d812604E7b2ce71819FDBFE9aC40E56327F8f",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1649432556,
       "values": {
         "$admin": "0x520d812604E7b2ce71819FDBFE9aC40E56327F8f",
@@ -41,9 +48,13 @@
     {
       "name": "ProxyAdmin",
       "address": "0x520d812604E7b2ce71819FDBFE9aC40E56327F8f",
-      "assignedPermissions": {
-        "upgrade": ["0x4066D196A423b2b3B8B054f4F40efB47a74E200C"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4066D196A423b2b3B8B054f4F40efB47a74E200C",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1649432377,
       "values": {
         "$immutable": true,
@@ -136,9 +147,13 @@
     {
       "name": "SentinelProxyAdmin",
       "address": "0x8E339115b295DeD49880eA62C1F06d1dbec3496b",
-      "assignedPermissions": {
-        "upgrade": ["0xF140024969F6c76494a78518D9a99c8776B55f70"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xF140024969F6c76494a78518D9a99c8776B55f70",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1690520231,
       "values": {
         "$immutable": true,
@@ -188,6 +203,13 @@
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "The Sentinel is itself a Governor and Pauser in the bridge contracts. It allows additional Sentinel-Governors to make changes in its name that can be restricted by Guards changing the Sentinel's relaxed state."
+      ],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8E339115b295DeD49880eA62C1F06d1dbec3496b",
+          "via": []
+        }
       ],
       "sinceTimestamp": 1691384579,
       "values": {

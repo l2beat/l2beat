@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x2f5a06fc86d39de1707c614e8f662e8aedfd57b6
+
+# Diff at Wed, 21 Aug 2024 10:08:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 7681920
+- current block number: 7681920
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 7681920 (main branch discovery), not current.
+
+```diff
+    contract LineaOwner (0x0Bff4B38792a95314b3463E1Bf9831BDa1995391) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB","via":[]}]
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x62cE247f34dc316f93D3830e4Bf10959FCe630f8) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec","via":[]}]
+    }
+```
+
+```diff
+    contract LineaL2Gateway (0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x0Bff4B38792a95314b3463E1Bf9831BDa1995391","via":[]}]
+    }
+```
+
+```diff
+    contract Governance (0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x62cE247f34dc316f93D3830e4Bf10959FCe630f8"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x62cE247f34dc316f93D3830e4Bf10959FCe630f8","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x2089e3eb3876579f2d95597b91f2ebd5d89feef2
 
 # Diff at Fri, 09 Aug 2024 10:14:26 GMT:

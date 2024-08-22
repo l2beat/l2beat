@@ -1996,6 +1996,21 @@
       "supply": "zero"
     },
     {
+      "id": "g-gravity",
+      "name": "Gravity",
+      "coingeckoId": "g-token",
+      "address": "0x9C7BEBa8F6eF6643aBd725e45a4E8387eF260649",
+      "symbol": "G",
+      "decimals": 18,
+      "deploymentTimestamp": 1715576987,
+      "coingeckoListingTimestamp": 1721260800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39200/large/gravity.jpg?1721020647",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "gog-guild-of-guardians",
       "name": "Guild of Guardians",
       "coingeckoId": "guild-of-guardians",
@@ -2996,6 +3011,21 @@
       "coingeckoListingTimestamp": 1657152000,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/26098/large/256x256_OLE_Token_Logo.png?1696525189",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "opai-optopia-ai",
+      "name": "Optopia AI",
+      "coingeckoId": "optopia-ai",
+      "address": "0xF8e57AC2730D3088D98B79209739b0D5Ba085a03",
+      "symbol": "OPAI",
+      "decimals": 18,
+      "deploymentTimestamp": 1715594603,
+      "coingeckoListingTimestamp": 1721692800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39332/large/OPAI.jpg?1721777150",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"

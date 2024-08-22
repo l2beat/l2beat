@@ -3,6 +3,7 @@ import { z } from 'zod'
 const Response = z.object({
   results: z.array(
     z.object({
+      id: z.number(),
       text_signature: z.string(),
     }),
   ),
@@ -14,6 +15,8 @@ export class FourByteClient {
     const res = await fetch(url)
     const data = await res.json()
     const parsed = Response.parse(data)
-    return parsed.results[0]?.text_signature
+
+    const lowestIdResult = parsed.results.sort((a, b) => a.id - b.id)[0]
+    return lowestIdResult?.text_signature
   }
 }

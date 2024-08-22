@@ -10,9 +10,13 @@
       "address": "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "assignedPermissions": {
-        "upgrade": ["0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1692605961,
       "values": {
@@ -42,6 +46,13 @@
       "address": "0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b",
       "template": "zklinknova/secondaryZkLink",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "getTotalBatchesExecuted",
         "getTotalPriorityTxs",
@@ -86,6 +97,13 @@
       "name": "L1ERC20Bridge",
       "address": "0x5Bd51296423A9079b931414C1De65e7057326EaA",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1711095511,
       "values": {
         "$admin": "0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4",
@@ -99,9 +117,13 @@
     {
       "name": "OptimismProxyAdmin",
       "address": "0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4",
-      "assignedPermissions": {
-        "upgrade": ["0x5Bd51296423A9079b931414C1De65e7057326EaA"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x5Bd51296423A9079b931414C1De65e7057326EaA",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1711095511,
       "values": {
         "$immutable": true,
@@ -115,6 +137,13 @@
       "address": "0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c",
       "template": "zklinknova/secondaryGateway",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1711092577,
       "values": {
         "$admin": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -132,9 +161,13 @@
     { "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9" },
     {
       "address": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
-      "assignedPermissions": {
-        "upgrade": ["0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c"]
-      }
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c",
+          "via": []
+        }
+      ]
     },
     { "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5" },
     { "address": "0x6aAdaA7Bf9F5283cAF3eb2E40573D1A4d02C8B15" },

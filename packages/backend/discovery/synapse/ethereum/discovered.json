@@ -9,6 +9,13 @@
       "name": "SynapseBridge",
       "address": "0x2796317b0fF8538F253012862c06787Adfb8cEb6",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1629082107,
       "values": {
         "$admin": "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2",
@@ -96,9 +103,13 @@
     {
       "name": "ProxyAdmin",
       "address": "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2",
-      "assignedPermissions": {
-        "upgrade": ["0x2796317b0fF8538F253012862c06787Adfb8cEb6"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x2796317b0fF8538F253012862c06787Adfb8cEb6",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1629075985,
       "values": {
         "$immutable": true,

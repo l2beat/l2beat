@@ -1,8 +1,8 @@
 import { brotliDecompressSync } from 'node:zlib'
-import { assert } from '@l2beat/backend-tools'
 import { DecompressionStream } from 'stream/web'
 
-import { rlpDecode } from '../../utils/rlpDecode'
+import { assert } from '@l2beat/shared-pure'
+import { rlpDecodePartial } from '../../utils/rlpDecode'
 
 const CHANNEL_VERSION_BROTLI = 1
 const CHANNEL_VERSION_ZLIB_LOWER_NIBBLE_DEFALTE = 0x08
@@ -29,11 +29,17 @@ export function hexStrFromByteArr(byteArr: Uint8Array) {
 
 export async function getBatchFromChannel(channel: Uint8Array) {
   const decompressed = await decompressToByteArray(channel)
-  const decoded = rlpDecode(decompressed)
+  const batches = []
 
-  assert(decoded instanceof Uint8Array, 'Invalid decoded type')
+  let input = decompressed
+  while (input.length > 0) {
+    const [decoded, rest] = rlpDecodePartial(input)
+    assert(decoded instanceof Uint8Array, 'Invalid decoded type')
+    batches.push(decoded)
+    input = rest
+  }
 
-  return decoded
+  return batches
 }
 
 export function decompressToByteArray(compressedData: Uint8Array) {

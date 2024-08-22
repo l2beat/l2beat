@@ -1,7 +1,7 @@
-import { assert, Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 
 import { chains } from '@l2beat/config'
-import { ChainConverter, ChainId, UnixTime } from '@l2beat/shared-pure'
+import { assert, ChainConverter, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { Config, TvlConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { Clock } from '../../../tools/Clock'
