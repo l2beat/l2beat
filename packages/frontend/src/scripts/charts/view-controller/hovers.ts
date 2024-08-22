@@ -353,17 +353,17 @@ function renderNameRow(name: string, type?: MilestoneType) {
       type === 'incident'
         ? `
       <svg
-      width="14"
-      height="14"
-      viewBox="0 0 24 24"
-      class="absolute mt-[2px] md:mt-1"
-      role="img">
-      <path
-        d="M2.11842 14.4966L9.13637 2.46527C9.52224 1.80374 10.4781 1.80375 10.864 2.46528L17.882 14.497C18.2708 15.1637 17.7899 16.0008 17.0182 16.0008L10.0003 16.0008L10.0002 16.0008L2.98214 16.0004C2.21039 16.0004 1.72956 15.1632 2.11842 14.4966Z"
-        stroke-width="2"
-        stroke="#DF0004"
-        fill="#8C0002"
-      />
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        class="absolute mt-[2px] md:mt-1"
+        role="img">
+        <path
+          d="M2.11842 14.4966L9.13637 2.46527C9.52224 1.80374 10.4781 1.80375 10.864 2.46528L17.882 14.497C18.2708 15.1637 17.7899 16.0008 17.0182 16.0008L10.0003 16.0008L10.0002 16.0008L2.98214 16.0004C2.21039 16.0004 1.72956 15.1632 2.11842 14.4966Z"
+          stroke-width="2"
+          stroke="#DF0004"
+          fill="#8C0002"
+        />
       </svg>
       `
         : '<div class="absolute mt-[2px] md:mt-1 size-2.5 rotate-45 border-2 border-green-500 bg-green-700 bg-red"></div>'
