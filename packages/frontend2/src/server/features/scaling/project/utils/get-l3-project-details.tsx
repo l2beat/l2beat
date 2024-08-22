@@ -217,7 +217,7 @@ export function getL3ProjectDetails({
       props: {
         ...contractsSection,
         id: 'contracts',
-        title: 'Contracts',
+        title: 'Smart contracts',
       },
     })
   }

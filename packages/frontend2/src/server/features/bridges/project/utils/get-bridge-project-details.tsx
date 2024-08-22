@@ -115,7 +115,7 @@ export function getBridgeProjectDetails(
       type: 'ContractsSection',
       props: {
         id: 'contracts',
-        title: 'Contracts',
+        title: 'Smart contracts',
         ...contractsSection,
       },
     })

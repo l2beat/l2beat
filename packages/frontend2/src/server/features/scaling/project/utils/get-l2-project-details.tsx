@@ -271,7 +271,7 @@ export async function getL2ProjectDetails({
       props: {
         ...contractsSection,
         id: 'contracts',
-        title: 'Contracts',
+        title: 'Smart contracts',
       },
     })
   }
