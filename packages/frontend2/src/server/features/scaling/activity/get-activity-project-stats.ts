@@ -17,10 +17,7 @@ export async function getActivityProjectStats(projectId: ProjectId) {
 const getCachedActivityProjectStats = cache(
   async (projectId: ProjectId) => {
     const range = getFullySyncedActivityRange('30d')
-    const counts = await db.activityView.getDailyCountsPerProjectAndTimeRange(
-      projectId,
-      range,
-    )
+    const counts = await db.activity.getByProjectAndTimeRange(projectId, range)
     if (counts.length === 0) {
       return
     }
