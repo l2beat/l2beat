@@ -190,7 +190,7 @@ describe(resolvePermissions.name, () => {
     ])
   })
 
-  it('A->B->A->C->A (ignore loop - a upgrade b, b act a, a act c, c act a)', () => {
+  it('A->B->A->C->A (ignore deadlock/loop - a upgrade b, b act a, a act c, c act a)', () => {
     const graph: Node<string>[] = [
       node('A', [edge('upgrade', 'B'), edge('act', 'C')]),
       node('B', [edge('act', 'A')]),
@@ -200,7 +200,7 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqualUnsorted([])
   })
 
-  it('A->B->A->C->(A,D) (ignore loop - preserve actual path)', () => {
+  it('A->B->A->C->(A,D) (ignore deadlock/loop - preserve actual path)', () => {
     const graph: Node<string>[] = [
       node('A', [edge('upgrade', 'B'), edge('act', 'C')]),
       node('B', [edge('act', 'A')]),
