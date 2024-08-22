@@ -4,19 +4,21 @@ const Response = z.object({
   ok: z.boolean(),
   result: z.object({
     function: z.record(
-      z.array(
-        z.object({
-          name: z.string(),
-          filtered: z.boolean(),
-        }),
-      ),
+      z
+        .array(
+          z.object({
+            name: z.string(),
+            filtered: z.boolean(),
+          }),
+        )
+        .nullable(),
     ),
   }),
 })
 
 const API_URL = 'https://api.openchain.xyz/signature-database/v1/lookup'
 
-export async function getOpenChainSignatures(
+export async function getManyOpenChainSignatures(
   selectors: string[],
 ): Promise<Record<string, string[]>> {
   const query = new URLSearchParams({ function: selectors.join(',') })
@@ -29,7 +31,14 @@ export async function getOpenChainSignatures(
 
   const results: Record<string, string[]> = {}
   for (const [selector, functions] of Object.entries(parsed.result.function)) {
-    results[selector] = functions.map((f) => f.name)
+    results[selector] = functions?.map((f) => f.name) ?? []
   }
   return results
+}
+
+export async function getOpenChainSignatures(
+  selector: string,
+): Promise<string[]> {
+  const results = await getManyOpenChainSignatures([selector])
+  return results[selector] ?? []
 }

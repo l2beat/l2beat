@@ -1,12 +1,19 @@
 import { useState } from 'react'
+import { Decoded } from './Decoded'
 
 export function App() {
-  const [count, setCount] = useState(0)
+  const [encoded, setEncoded] = useState('')
+  const [toDecode, setToDecode] = useState('')
 
   return (
-    <>
-      <button onClick={() => setCount(count + 1)}>Increment</button>
-      <div>Value: {count}</div>
-    </>
+    <div className="p-20">
+      <textarea
+        className="block bg-black"
+        value={encoded}
+        onChange={(e) => setEncoded(e.target.value)}
+      />
+      <button onClick={() => setToDecode(encoded)}>Decode</button>
+      <div>{toDecode && <Decoded encoded={toDecode as `0x${string}`} />}</div>
+    </div>
   )
 }

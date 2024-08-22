@@ -16,5 +16,5 @@ export async function get4ByteSignatures(selector: string): Promise<string[]> {
   const res = await fetch(`${API_URL}?${query}`)
   const data = await res.json()
   const parsed = Response.parse(data)
-  return parsed.results.sort((a, b) => b.id - a.id).map((r) => r.text_signature)
+  return parsed.results.sort((a, b) => a.id - b.id).map((r) => r.text_signature)
 }
