@@ -1,9 +1,5 @@
 import { PoolConfig } from 'pg'
-import { BlockTransactionCountRepository } from './activity/activity-block/repository'
-import { StarkExTransactionCountRepository } from './activity/activity-starkex/repository'
-import { ActivityViewRepository } from './activity/activity-view/repository'
-import { ZkSyncTransactionRepository } from './activity/activity-zksync/repository'
-import { ActivityRepository } from './activity/activity/repository'
+import { ActivityRepository } from './activity/repository'
 import { CurrentPriceRepository } from './da-beat/current-price/repository'
 import { StakeRepository } from './da-beat/stake/repository'
 import { DailyDiscoveryRepository } from './discovery/daily-discovery/repository'
@@ -48,10 +44,6 @@ export function createDatabase(config?: PoolConfig) {
 
     // #region Activity
     activity: new ActivityRepository(db),
-    activityView: new ActivityViewRepository(db),
-    blockTransactionCount: new BlockTransactionCountRepository(db),
-    starkExTransactionCount: new StarkExTransactionCountRepository(db),
-    zkSyncTransactionCount: new ZkSyncTransactionRepository(db),
     // #endregion
 
     // #region DA BEAT

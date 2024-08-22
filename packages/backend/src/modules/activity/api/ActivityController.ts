@@ -1,4 +1,3 @@
-import { Layer2, Layer3, layer2s, layer3s } from '@l2beat/config'
 import {
   ActivityApiChart,
   ActivityApiChartPoint,
@@ -10,9 +9,9 @@ import {
   json,
 } from '@l2beat/shared-pure'
 
+import { Layer2, Layer3, layer2s, layer3s } from '@l2beat/config'
 import { Database } from '@l2beat/database'
 import { Clock } from '../../../tools/Clock'
-import { SequenceProcessor } from '../SequenceProcessor'
 import { formatActivityChart } from './formatActivityChart'
 import { postprocessCounts } from './postprocessCounts'
 import { toCombinedActivity } from './toCombinedActivity'
@@ -39,7 +38,6 @@ export type MapSlugsToProjectIdsResult = Result<
 export class ActivityController {
   constructor(
     private readonly projectIds: ProjectId[],
-    private readonly processors: SequenceProcessor[],
     private readonly db: Database,
     private readonly clock: Clock,
   ) {}
@@ -104,10 +102,10 @@ export class ActivityController {
     projects: ProjectId[],
   ): Promise<AggregatedActivityResult> {
     const [aggregatedDailyCounts, ethereumCounts] = await Promise.all([
-      await this.db.activityView.getProjectsAggregatedDailyCount(projects),
-      await this.db.activityView.getDailyCountsPerProject(ProjectId.ETHEREUM),
+      await this.db.activity.getProjectsAggregatedDailyCount(projects),
+      await this.db.activity.getDailyCountsPerProject(ProjectId.ETHEREUM),
     ])
-    const now = this.clock.getLastHour()
+    const now = this.clock.getLastHour().toStartOf('day')
 
     const processedCounts = postprocessCounts(aggregatedDailyCounts, true, now)
     const processedEthereumCounts = postprocessCounts(ethereumCounts, true, now)
@@ -205,14 +203,20 @@ export class ActivityController {
     }
   }
 
-  getStatus(): json {
-    const projects = this.processors.map((processor) => {
+  async getStatus() {
+    const configurations = await this.db.indexerState.getAll()
+    const activityConfigurations = configurations.filter((c) =>
+      c.indexerId.includes('activity'),
+    )
+    const projects = activityConfigurations.map((c) => {
+      const projectId = c.indexerId.split('::')[1]
       return {
-        projectId: processor.projectId.toString(),
-        includedInApi: this.projectIds.includes(processor.projectId),
-        ...processor.getStatus(),
+        projectId,
+        includedInApi: this.projectIds.includes(ProjectId(projectId)),
+        currentHeight: c.safeHeight,
       }
     })
+
     return projects.reduce<Record<string, json>>((result, project) => {
       result[project.projectId] = project
       return result
@@ -220,20 +224,20 @@ export class ActivityController {
   }
 
   private async getPostprocessedDailyCounts(): Promise<DailyTransactionCountProjectsMap> {
-    const counts = await this.db.activityView.getDailyCounts()
+    const counts = await this.db.activity.getDailyCounts()
     const result: DailyTransactionCountProjectsMap = new Map()
-    const now = this.clock.getLastHour()
-    for (const processor of this.processors) {
-      // Exclude projects that have not been fully synced yet
-      if (!processor.getStatus().syncedOnce) continue
+    const today = this.clock.getLastHour().toStartOf('day')
 
-      const projectId = processor.projectId
+    for (const projectId of this.projectIds) {
       if (!this.projectIds.includes(projectId)) continue
+
       const projectCounts = counts.filter((c) => c.projectId === projectId)
+      if (projectCounts.at(-1)?.timestamp.lt(today.add(-7, 'days'))) continue
+
       const postprocessedCounts = postprocessCounts(
         projectCounts,
-        processor.hasProcessedAll(),
-        now,
+        projectCounts.at(-1)?.timestamp.equals(today) ?? false,
+        today,
       )
 
       // This is needed because currently there is a window between the project being
