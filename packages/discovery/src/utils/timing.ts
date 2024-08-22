@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/backend-tools'
+import { assert } from '@l2beat/shared-pure'
 
 export function timed<R>(fn: () => R): { value: R; executionTime: number } {
   const start = performance.now()

@@ -1,4 +1,4 @@
-import { assert, Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import {
   ChildIndexer,
   Indexer,
@@ -6,6 +6,7 @@ import {
   RetryStrategy,
 } from '@l2beat/uif'
 
+import { assert } from '@l2beat/shared-pure'
 import { IndexerService } from './IndexerService'
 import { assertUniqueIndexerId } from './ids'
 

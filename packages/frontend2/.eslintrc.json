@@ -30,7 +30,8 @@
     "@typescript-eslint/no-unused-vars": [
       "warn",
       {
-        "argsIgnorePattern": "^_"
+        "argsIgnorePattern": "^_",
+        "destructuredArrayIgnorePattern": "^_"
       }
     ],
     "@typescript-eslint/require-await": "off",
@@ -40,6 +41,33 @@
         "checksVoidReturn": {
           "attributes": false
         }
+      }
+    ],
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "console",
+            "message": "Do not use console"
+          },
+          {
+            "name": "node:console",
+            "message": "Do not use console"
+          },
+          {
+            "name": "assert",
+            "message": "Use assert from @l2beat/shared-pure"
+          },
+          {
+            "name": "node:assert",
+            "message": "Use assert from @l2beat/shared-pure"
+          },
+          {
+            "name": "next/router",
+            "message": "Use router from next/navigation"
+          }
+        ]
       }
     ],
     "tailwindcss/classnames-order": ["error"],

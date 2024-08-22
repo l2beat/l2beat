@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/backend-tools'
+import { assert } from '@l2beat/shared-pure'
 
 const sizeUInt32 = 4 // Size of a uint32 in bytes
 

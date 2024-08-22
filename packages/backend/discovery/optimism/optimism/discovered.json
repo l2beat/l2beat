@@ -36,6 +36,13 @@
       "name": "DeployerWhitelist",
       "address": "0x4200000000000000000000000000000000000002",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000018",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1636665399,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
@@ -48,6 +55,13 @@
       "name": "L2CrossDomainMessenger",
       "address": "0x4200000000000000000000000000000000000007",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000018",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1636665399,
       "values": {
@@ -72,6 +86,13 @@
       "name": "GasPriceOracle",
       "address": "0x420000000000000000000000000000000000000F",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000018",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["l1BaseFee", "blobBaseFee"],
       "sinceTimestamp": 1636665399,
       "values": {
@@ -95,6 +116,13 @@
       "name": "L2StandardBridge",
       "address": "0x4200000000000000000000000000000000000010",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000018",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1636665399,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
@@ -111,6 +139,13 @@
       "name": "SequencerFeeVault",
       "address": "0x4200000000000000000000000000000000000011",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000018",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1636665399,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
@@ -126,6 +161,13 @@
       "name": "OptimismMintableERC20Factory",
       "address": "0x4200000000000000000000000000000000000012",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000018",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1636665399,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
@@ -138,6 +180,13 @@
       "name": "L1BlockNumber",
       "address": "0x4200000000000000000000000000000000000013",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000018",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1636665399,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
@@ -150,6 +199,13 @@
       "name": "L2ERC721Bridge",
       "address": "0x4200000000000000000000000000000000000014",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000018",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1664918265,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
@@ -165,6 +221,13 @@
       "name": "L1Block",
       "address": "0x4200000000000000000000000000000000000015",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000018",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "basefee",
         "hash",
@@ -197,6 +260,13 @@
       "name": "L2ToL1MessagePasser",
       "address": "0x4200000000000000000000000000000000000016",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000018",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1636665399,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
@@ -210,6 +280,13 @@
       "name": "OptimismMintableERC721Factory",
       "address": "0x4200000000000000000000000000000000000017",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000018",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1636665399,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
@@ -224,26 +301,100 @@
       "address": "0x4200000000000000000000000000000000000018",
       "template": "opstack/ProxyAdmin",
       "proxyType": "EIP1967 proxy",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x4200000000000000000000000000000000000002",
-          "0x4200000000000000000000000000000000000007",
-          "0x420000000000000000000000000000000000000F",
-          "0x4200000000000000000000000000000000000010",
-          "0x4200000000000000000000000000000000000011",
-          "0x4200000000000000000000000000000000000012",
-          "0x4200000000000000000000000000000000000013",
-          "0x4200000000000000000000000000000000000014",
-          "0x4200000000000000000000000000000000000015",
-          "0x4200000000000000000000000000000000000016",
-          "0x4200000000000000000000000000000000000017",
-          "0x4200000000000000000000000000000000000018",
-          "0x4200000000000000000000000000000000000019",
-          "0x420000000000000000000000000000000000001A",
-          "0x4200000000000000000000000000000000000020",
-          "0x4200000000000000000000000000000000000021"
-        ]
-      },
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000018",
+          "via": []
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000002",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000007",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x420000000000000000000000000000000000000F",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000010",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000011",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000012",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000013",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000014",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000015",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000016",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000017",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000018",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000019",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x420000000000000000000000000000000000001A",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000020",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000021",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1636665399,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
@@ -258,6 +409,13 @@
       "name": "BaseFeeVault",
       "address": "0x4200000000000000000000000000000000000019",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000018",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1636665399,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
@@ -272,6 +430,13 @@
       "name": "L1FeeVault",
       "address": "0x420000000000000000000000000000000000001A",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000018",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1636665399,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
@@ -286,6 +451,13 @@
       "name": "SchemaRegistry",
       "address": "0x4200000000000000000000000000000000000020",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000018",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1636665399,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
@@ -297,6 +469,13 @@
       "name": "EAS",
       "address": "0x4200000000000000000000000000000000000021",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4200000000000000000000000000000000000018",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1636665399,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
@@ -362,9 +541,13 @@
       "descriptions": [
         "It can act on behalf of 0x4200000000000000000000000000000000000018, inheriting its permissions."
       ],
-      "assignedPermissions": {
-        "configure": ["0x4200000000000000000000000000000000000018"]
-      }
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x4200000000000000000000000000000000000018",
+          "via": []
+        }
+      ]
     },
     { "address": "0x7cB07FE039a92B3D784f284D919503A381BEC54f" },
     { "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1" },

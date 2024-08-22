@@ -10,9 +10,13 @@
       "address": "0x3334552599C9aA1FE08CfF276A02033FF37646ca",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "assignedPermissions": {
-        "upgrade": ["0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1692606473,
       "values": {
@@ -43,6 +47,13 @@
       "address": "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1709297079,
       "values": {
         "$admin": "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98",
@@ -55,6 +66,13 @@
       "address": "0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x3334552599C9aA1FE08CfF276A02033FF37646ca",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1709280624,
       "values": {
         "$admin": "0x3334552599C9aA1FE08CfF276A02033FF37646ca",
@@ -65,9 +83,13 @@
     {
       "name": "EraProxyAdmin",
       "address": "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98",
-      "assignedPermissions": {
-        "upgrade": ["0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1709297074,
       "values": {
         "$immutable": true,

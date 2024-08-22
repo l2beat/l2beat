@@ -6,7 +6,7 @@ import { selectUpdateNotifier } from './select'
 export class UpdateNotifierRepository extends BaseRepository {
   async findLatestId(): Promise<number | undefined> {
     const row = await this.db
-      .selectFrom('public.update_notifier')
+      .selectFrom('update_notifier')
       .select(['id'])
       .orderBy('id', 'desc')
       .limit(1)
@@ -31,7 +31,7 @@ export class UpdateNotifierRepository extends BaseRepository {
     const ids: number[] = []
     await this.batch(rows, 1_000, async (batch) => {
       const results = await this.db
-        .insertInto('public.update_notifier')
+        .insertInto('update_notifier')
         .values(batch)
         .returning('id')
         .execute()
@@ -42,7 +42,7 @@ export class UpdateNotifierRepository extends BaseRepository {
 
   async getAll(): Promise<UpdateNotifierRecord[]> {
     const rows = await this.db
-      .selectFrom('public.update_notifier')
+      .selectFrom('update_notifier')
       .select(selectUpdateNotifier)
       .execute()
 
@@ -55,7 +55,7 @@ export class UpdateNotifierRepository extends BaseRepository {
     chainId: ChainId,
   ): Promise<UpdateNotifierRecord[]> {
     const rows = await this.db
-      .selectFrom('public.update_notifier')
+      .selectFrom('update_notifier')
       .select(selectUpdateNotifier)
       .where('created_at', '>=', from.toDate())
       .where('project_name', '=', projectName)
@@ -66,7 +66,7 @@ export class UpdateNotifierRepository extends BaseRepository {
 
   async deleteAll(): Promise<number> {
     const result = await this.db
-      .deleteFrom('public.update_notifier')
+      .deleteFrom('update_notifier')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }

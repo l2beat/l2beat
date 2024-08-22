@@ -123,6 +123,18 @@
       "name": "StarkExchangeUSDC",
       "address": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
       "proxyType": "StarkWare diamond",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xC532d2976209A56DdF4a99B844130f7c0daCa7B6",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xef75e1199B0599BA823b7770AcE8eb34864a1D55",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "getLastBatchId",
         "getOrderRoot",
@@ -216,9 +228,13 @@
       "address": "0xC532d2976209A56DdF4a99B844130f7c0daCa7B6",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "assignedPermissions": {
-        "upgrade": ["0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1672216439,
       "values": {
@@ -242,6 +258,13 @@
       "name": "StarkExchangeUSDT",
       "address": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
       "proxyType": "StarkWare diamond",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x53c6Ec9640761c669B800088F097E01A8207Ac8b",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "getLastBatchId",
         "getOrderRoot",
@@ -355,9 +378,13 @@
     { "address": "0x4F753A937318A64b2867b16a55f5aea83A4C44dB" },
     {
       "address": "0x53c6Ec9640761c669B800088F097E01A8207Ac8b",
-      "assignedPermissions": {
-        "upgrade": ["0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b"]
-      }
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+          "via": []
+        }
+      ]
     },
     { "address": "0x552aA2EBA4B0c5b9B8b4b22507189a7af4198169" },
     { "address": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A" },
@@ -371,9 +398,13 @@
     { "address": "0xb557219DC53Af7Da9777540426DEe9c196842420" },
     {
       "address": "0xef75e1199B0599BA823b7770AcE8eb34864a1D55",
-      "assignedPermissions": {
-        "upgrade": ["0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"]
-      }
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "via": []
+        }
+      ]
     },
     { "address": "0xfA85BEA9B0F2D9540040118BeacbaD7258f45d81" }
   ],

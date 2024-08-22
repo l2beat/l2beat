@@ -1,3 +1,141 @@
+Generated with discovered.json: 0xb39bef3c35391edda9446e65d14c1a5acebc4ab3
+
+# Diff at Wed, 21 Aug 2024 13:25:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@63cb0bd5d55a6dfae0e2e22590983dd8344be4a3 block: 225981159
+- current block number: 225981159
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 225981159 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2) {
+    +++ description: None
+      values.dacKeyset.blsSignatures:
++        ["YAqQTw4ByRTsc9900Jqz1uF86NCR0qf4Qorr6m+4UMuebljjJmkm9ao1wgU9YMVsiAQiJZW5V0wv3eSEoHEOfpL4KesBDWtj3Dxlie526tY8MGcEruvE+/+yWenFV64DjgSIEgMvQWcMEnYuBeuIcPq3iFWoPlZ5xjrFq3TC3pg/4vNdHyraTaGAoSE1kpr95QJjp3pjuOh8EpCD1i4skjJP4YVjtsui7a8t3s8TTwTo3QYk/HTPLAJ8e15iBTin/xcbxa8wfNTBespH4pXgIQBYT/M2kyNWURyaJGz/Uk0ecJPEVtTwNPedztrARTHgkAiCDWd63/ekdUN0plGc8G4aWWg/MJN1X3UZwSUf5Z6PIG/9qtBgtijcxx2UvCjvyw=="]
+    }
+```
+
+Generated with discovered.json: 0x0fbfa465bbc1eba2c39fe107cabcbe8b0672d5d5
+
+# Diff at Wed, 21 Aug 2024 10:07:35 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 225981159
+- current block number: 225981159
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 225981159 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x92ff91308F5f1036435f23c2F4F136Bb7475425d","via":[]}]
+    }
+```
+
+```diff
+    contract SequencerInbox (0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238","via":[]}]
+    }
+```
+
+```diff
+    contract Inbox (0x235000876bd58336C802B3546Fc0250f285fCc79) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238","via":[]}]
+    }
+```
+
+```diff
+    contract L1OrbitERC20Gateway (0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238","via":[]}]
+    }
+```
+
+```diff
+    contract ChallengeManager (0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238","via":[]}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2","0x235000876bd58336C802B3546Fc0250f285fCc79","0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80","0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1","0x92ff91308F5f1036435f23c2F4F136Bb7475425d","0x9676D55Ccd46ce72235b16bA645008D1D3350B14","0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF","0xE1d32C985825562edAa906fAC39295370Db72195","0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2","via":[]},{"permission":"upgrade","target":"0x235000876bd58336C802B3546Fc0250f285fCc79","via":[]},{"permission":"upgrade","target":"0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80","via":[]},{"permission":"upgrade","target":"0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1","via":[]},{"permission":"upgrade","target":"0x92ff91308F5f1036435f23c2F4F136Bb7475425d","via":[]},{"permission":"upgrade","target":"0x9676D55Ccd46ce72235b16bA645008D1D3350B14","via":[]},{"permission":"upgrade","target":"0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF","via":[]},{"permission":"upgrade","target":"0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B","via":[]},{"permission":"upgrade","target":"0xE1d32C985825562edAa906fAC39295370Db72195","via":[]}]
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x92ff91308F5f1036435f23c2F4F136Bb7475425d) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0"]}
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238","via":[]}]
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0","via":[]}]
+    }
+```
+
+```diff
+    contract ERC20RollupEventInbox (0x9676D55Ccd46ce72235b16bA645008D1D3350B14) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238","via":[]}]
+    }
+```
+
+```diff
+    contract L1OrbitGatewayRouter (0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238","via":[]}]
+    }
+```
+
+```diff
+    contract Outbox (0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238","via":[]}]
+    }
+```
+
+```diff
+    contract Bridge (0xE1d32C985825562edAa906fAC39295370Db72195) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x0c198c0def2d92502a576841ad8a5c77b78a0363
 
 # Diff at Fri, 09 Aug 2024 12:03:41 GMT:

@@ -15,6 +15,13 @@
       "name": "RootAxelarBridgeAdaptor",
       "address": "0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1702962623,
       "values": {
         "$admin": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8",
@@ -68,6 +75,13 @@
       "name": "Bridge",
       "address": "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["withdrawalQueueActivated"],
       "sinceTimestamp": 1702962563,
       "values": {
@@ -140,12 +154,18 @@
     {
       "name": "ProxyAdmin",
       "address": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932",
-          "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1702962527,
       "values": {
         "$immutable": true,

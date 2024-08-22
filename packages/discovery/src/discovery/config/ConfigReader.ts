@@ -1,10 +1,9 @@
 import { readdirSync } from 'fs'
 import { readFileSync } from 'fs'
 import path from 'path'
-import { assert } from '@l2beat/backend-tools'
 import { DiscoveryOutput } from '@l2beat/discovery-types'
 
-import { stripAnsiEscapeCodes } from '@l2beat/shared-pure'
+import { assert, stripAnsiEscapeCodes } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { ZodError } from 'zod'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'

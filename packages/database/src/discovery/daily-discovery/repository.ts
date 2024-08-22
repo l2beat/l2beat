@@ -9,7 +9,7 @@ export class DailyDiscoveryRepository extends BaseRepository {
     chainId: ChainId,
   ): Promise<DailyDiscoveryRecord | undefined> {
     const row = await this.db
-      .selectFrom('public.daily_discovery')
+      .selectFrom('daily_discovery')
       .select(selectDailyDiscovery)
       .where('project_name', '=', name)
       .where('chain_id', '=', +chainId)
@@ -24,7 +24,7 @@ export class DailyDiscoveryRepository extends BaseRepository {
     chainId: ChainId,
   ): Promise<UnixTime[]> {
     const rows = await this.db
-      .selectFrom('public.daily_discovery')
+      .selectFrom('daily_discovery')
       .select('unix_timestamp')
       .where('project_name', '=', projectName)
       .where('chain_id', '=', +chainId)
@@ -42,7 +42,7 @@ export class DailyDiscoveryRepository extends BaseRepository {
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
       await this.db
-        .insertInto('public.daily_discovery')
+        .insertInto('daily_discovery')
         .values(batch)
         .onConflict((cb) =>
           cb
@@ -63,7 +63,7 @@ export class DailyDiscoveryRepository extends BaseRepository {
     { projectName: string; chainId: ChainId }[]
   > {
     const rows = await this.db
-      .selectFrom('public.daily_discovery')
+      .selectFrom('daily_discovery')
       .select(['project_name', 'chain_id'])
       .groupBy(['project_name', 'chain_id'])
       .execute()
@@ -80,7 +80,7 @@ export class DailyDiscoveryRepository extends BaseRepository {
     configHash: Hash256,
   ): Promise<number> {
     const result = await this.db
-      .deleteFrom('public.daily_discovery')
+      .deleteFrom('daily_discovery')
       .where('project_name', '=', projectName)
       .where('chain_id', '=', +chainId)
       .where('config_hash', '!=', configHash.toString())
@@ -93,7 +93,7 @@ export class DailyDiscoveryRepository extends BaseRepository {
     chainId: ChainId,
   ): Promise<DailyDiscoveryRecord[]> {
     const rows = await this.db
-      .selectFrom('public.daily_discovery')
+      .selectFrom('daily_discovery')
       .select(selectDailyDiscovery)
       .where('project_name', '=', projectName)
       .where('chain_id', '=', +chainId)
@@ -103,7 +103,7 @@ export class DailyDiscoveryRepository extends BaseRepository {
 
   async getAll() {
     const rows = await this.db
-      .selectFrom('public.daily_discovery')
+      .selectFrom('daily_discovery')
       .select(selectDailyDiscovery)
       .execute()
 
@@ -112,7 +112,7 @@ export class DailyDiscoveryRepository extends BaseRepository {
 
   async deleteAll(): Promise<number> {
     const result = await this.db
-      .deleteFrom('public.daily_discovery')
+      .deleteFrom('daily_discovery')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }

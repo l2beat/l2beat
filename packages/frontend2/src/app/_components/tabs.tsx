@@ -19,7 +19,9 @@ const Tabs = React.forwardRef<
     { defaultValue: passedDefaultValue, storeInSearchParams = true, ...props },
     ref,
   ) => {
-    const state = useSearchParamState('tab', passedDefaultValue)
+    const state = useSearchParamState('tab', passedDefaultValue, {
+      shallow: true,
+    })
     const [value, setValue] = storeInSearchParams ? state : [passedDefaultValue]
 
     return (

@@ -1,6 +1,5 @@
-import { assert } from '@l2beat/backend-tools'
 import { ContractValue } from '@l2beat/discovery-types'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { providers, utils } from 'ethers'
 import { z } from 'zod'
 

@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xa610117c4e98864ec5f2a26ea80b01407f38a86d
+
+# Diff at Wed, 21 Aug 2024 10:05:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 19825381
+- current block number: 19825381
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825381 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0xF5C9F957705bea56a7e806943f98F7777B995826"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0xF5C9F957705bea56a7e806943f98F7777B995826","via":[]}]
+    }
+```
+
+```diff
+    contract StarkExchange (0xF5C9F957705bea56a7e806943f98F7777B995826) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x5918481F777dBe437De249492B90AffB4e655de4","via":[]},{"permission":"upgrade","target":"0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xe5ece2e9f5ffb282153154a14ce8ec8b44dfdc3c
 
 # Diff at Fri, 09 Aug 2024 10:12:23 GMT:

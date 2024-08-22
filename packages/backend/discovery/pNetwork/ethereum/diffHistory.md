@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x4218a10b8cb4ba7c36a13b9db8942e46bbcabac2
+
+# Diff at Wed, 21 Aug 2024 10:04:51 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 20420398
+- current block number: 20420398
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20420398 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0xB6D14DdFBE01AC537accBe35cCd771C30D53c535) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2","via":[]}]
+    }
+```
+
+```diff
+    contract PProxyAdmin (0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8","via":[]}]
+    }
+```
+
+```diff
+    contract ERC20 Vault V2 (0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a","via":[]}]
+    }
+```
+
+```diff
+    contract EthPntv2 (0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xB6D14DdFBE01AC537accBe35cCd771C30D53c535","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x2a11fac8f34a9d7f6b7ca2645e2cdf3d82b25359
 
 # Diff at Fri, 09 Aug 2024 10:11:15 GMT:

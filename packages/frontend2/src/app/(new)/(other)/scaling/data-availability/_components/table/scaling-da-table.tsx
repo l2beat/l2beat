@@ -34,6 +34,9 @@ export function ScalingDataAvailabilityTable({ entries }: Props) {
           desc: false,
         },
       ],
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
     },
   })
 

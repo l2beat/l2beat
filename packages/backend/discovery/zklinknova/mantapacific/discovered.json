@@ -8,9 +8,13 @@
     {
       "name": "MantaProxyAdmin",
       "address": "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05",
-      "assignedPermissions": {
-        "upgrade": ["0x44a65dc12865A1e5249b45b4868f32b0E37168FF"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1709295839,
       "values": {
         "$immutable": true,
@@ -23,6 +27,13 @@
       "name": "L1ERC20Bridge",
       "address": "0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1709295839,
       "values": {
         "$admin": "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05",
@@ -38,12 +49,18 @@
       "address": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
       "unverified": true,
       "proxyType": "gnosis safe",
-      "assignedPermissions": {
-        "upgrade": [
-          "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
-          "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1710253339,
       "values": {
         "$immutable": false,
@@ -69,6 +86,13 @@
       "address": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
       "template": "zklinknova/secondaryZkLink",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "getTotalBatchesExecuted",
         "getTotalPriorityTxs",
@@ -114,6 +138,13 @@
       "address": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
       "template": "zklinknova/secondaryGateway",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1709279189,
       "values": {
         "$admin": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",

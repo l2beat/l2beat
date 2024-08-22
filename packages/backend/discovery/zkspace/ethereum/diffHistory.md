@@ -1,3 +1,79 @@
+Generated with discovered.json: 0xc28f08d411615cb59d491c644eaf66871e4a34da
+
+# Diff at Wed, 21 Aug 2024 10:06:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 20432700
+- current block number: 20432700
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20432700 (main branch discovery), not current.
+
+```diff
+    contract VerifierExit (0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390","via":[]}]
+    }
+```
+
+```diff
+    contract ZkSync (0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390","via":[]}]
+    }
+```
+
+```diff
+    contract Governance (0x83Cb1531Ec8447366501aE440478da245EcffB89) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390","via":[]}]
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81","0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8","0x83Cb1531Ec8447366501aE440478da245EcffB89","0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af","0xc07f850b60E0EEd49a09E455b01a869C25963735","0xc632347cc96A4400653E3514eA148630455295b5"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81","via":[]},{"permission":"upgrade","target":"0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8","via":[]},{"permission":"upgrade","target":"0x83Cb1531Ec8447366501aE440478da245EcffB89","via":[]},{"permission":"upgrade","target":"0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af","via":[]},{"permission":"upgrade","target":"0xc07f850b60E0EEd49a09E455b01a869C25963735","via":[]},{"permission":"upgrade","target":"0xc632347cc96A4400653E3514eA148630455295b5","via":[]}]
+    }
+```
+
+```diff
+    contract Verifier (0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390","via":[]}]
+    }
+```
+
+```diff
+    contract UniswapV2Factory (0xc07f850b60E0EEd49a09E455b01a869C25963735) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390","via":[]}]
+    }
+```
+
+```diff
+    contract ZkSeaNFT (0xc632347cc96A4400653E3514eA148630455295b5) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x7a89a61b5eae1b93ecc0a9701bbc4dd4f4e743c1
 
 # Diff at Fri, 09 Aug 2024 12:03:11 GMT:

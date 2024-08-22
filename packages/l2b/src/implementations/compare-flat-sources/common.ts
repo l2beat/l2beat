@@ -1,5 +1,4 @@
 import { resolve } from 'path'
-import { assert } from '@l2beat/backend-tools'
 import {
   Layer2Provider,
   Layer3Provider,
@@ -12,6 +11,7 @@ import {
   estimateSimilarity,
   removeComments,
 } from '@l2beat/discovery'
+import { assert } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { readFile, readdir } from 'fs/promises'
 

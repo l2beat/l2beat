@@ -51,6 +51,7 @@ export const SourceEntry = z.object({
       warning: z.string().optional(),
     })
     .optional(),
+  deploymentTimestamp: numberAs((n) => new UnixTime(n)).optional(),
 })
 
 export type Source = z.infer<typeof Source>

@@ -10,6 +10,13 @@
       "address": "0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011",
       "template": "zklinknova/secondaryGateway",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1711095783,
       "values": {
         "$admin": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -25,6 +32,13 @@
       "name": "L1ERC20Bridge",
       "address": "0x80d12A78EfE7604F00ed07aB2f16F643301674D5",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1711098033,
       "values": {
         "$admin": "0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE",
@@ -38,9 +52,13 @@
     {
       "name": "BaseProxyAdmin",
       "address": "0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE",
-      "assignedPermissions": {
-        "upgrade": ["0x80d12A78EfE7604F00ed07aB2f16F643301674D5"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x80d12A78EfE7604F00ed07aB2f16F643301674D5",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1711098033,
       "values": {
         "$immutable": true,
@@ -54,6 +72,13 @@
       "address": "0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd",
       "template": "zklinknova/secondaryZkLink",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "getTotalBatchesExecuted",
         "getTotalPriorityTxs",
@@ -99,9 +124,13 @@
       "address": "0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "assignedPermissions": {
-        "upgrade": ["0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1692606269,
       "values": {
@@ -133,9 +162,13 @@
     { "address": "0x2f4EE4c9737916bBF9E6a29Bb9DFEae3348c5eE9" },
     {
       "address": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
-      "assignedPermissions": {
-        "upgrade": ["0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011"]
-      }
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011",
+          "via": []
+        }
+      ]
     },
     { "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5" },
     { "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10" },
