@@ -99,6 +99,7 @@ export default async function Image({ params }: Props) {
             style={{
               color: 'white',
               fontSize: 96,
+              lineHeight: 1,
               whiteSpace: 'pre',
               fontFamily: 'roboto',
               fontWeight: 700,
