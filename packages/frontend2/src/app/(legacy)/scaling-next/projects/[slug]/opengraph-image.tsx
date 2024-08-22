@@ -94,7 +94,7 @@ export default async function Image({ params }: Props) {
               color: 'white',
               fontSize: 96,
               whiteSpace: 'pre',
-              fontFamily: 'RobotoBold',
+              fontFamily: 'roboto',
               fontWeight: 700,
             }}
           >
@@ -104,7 +104,7 @@ export default async function Image({ params }: Props) {
         <div
           style={{
             color: '#db8bf7',
-            fontFamily: 'RobotoMedium',
+            fontFamily: 'roboto',
             fontWeight: 500,
             fontSize: 32,
             whiteSpace: 'pre',
@@ -118,13 +118,15 @@ export default async function Image({ params }: Props) {
       ...size,
       fonts: [
         {
-          name: 'RobotoMedium',
+          name: 'roboto',
           data: await robotoMedium,
+          style: 'normal',
           weight: 500,
         },
         {
-          name: 'RobotoBold',
+          name: 'roboto',
           data: await robotoBold,
+          style: 'normal',
           weight: 700,
         },
       ],
