@@ -3,12 +3,12 @@ import React from 'react'
 
 import { Link } from '../../../../../components/Link'
 import { Markdown } from '../../../../../components/Markdown'
+import { IncidentIcon } from '../../../../../components/icons/symbols/IncidentIcon'
 import { MilestoneIcon } from '../../../../../components/icons/symbols/MilestoneIcon'
+import { cn } from '../../../../../utils/cn'
 import { ProjectSection } from '../common/ProjectSection'
 import { ProjectSectionId } from '../common/sectionId'
 import { ExpandableContainer } from './ExpandableContainer'
-import { IncidentIcon } from '../../../../../components/icons/symbols/IncidentIcon'
-import { cn } from '../../../../../utils/cn'
 
 export interface MilestonesSectionProps {
   title: string
@@ -56,13 +56,13 @@ export function MilestonesSection(props: MilestonesSectionProps) {
                       'bg-red-700 dark:bg-red-700',
                     oldMilestoneType === 'incident' &&
                       milestoneType === 'general' &&
-                      'bg-gradient-to-b from-green-400 dark:from-green-500 to-red-700 dark:to-red-700',
+                      'bg-gradient-to-b from-green-400 to-red-700 dark:from-green-500 dark:to-red-700',
                     oldMilestoneType === 'general' &&
                       milestoneType === 'incident' &&
-                      'bg-gradient-to-b from-red-700 dark:from-red-700 to-green-400 dark:to-green-500',
+                      'bg-gradient-to-b from-red-700 to-green-400 dark:from-red-700 dark:to-green-500',
                   )
                 : cn(
-                    'bg-gradient-to-b h-3/4',
+                    'h-3/4 bg-gradient-to-b',
                     milestoneType === 'incident' &&
                       'from-red-700 dark:from-red-700',
                     milestoneType === 'general' &&
@@ -70,14 +70,14 @@ export function MilestonesSection(props: MilestonesSectionProps) {
                   )
 
               return (
-                <div key={i} className="pb-7 relative">
+                <div key={i} className='relative pb-7'>
                   <div
                     className={cn(
-                      'absolute w-[1.7px] top-3 -left-[1.445rem] dark:w-px h-full',
+                      '-left-[1.445rem] absolute top-3 h-full w-[1.7px] dark:w-px',
                       milestoneLineClassName,
                     )}
                   />
-                  <Icon className="absolute -left-8" />
+                  <Icon className='-left-8 absolute' />
                   <p className="font-bold text-lg leading-none">
                     {milestone.name}
                   </p>
