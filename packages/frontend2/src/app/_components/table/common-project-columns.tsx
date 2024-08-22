@@ -1,4 +1,4 @@
-import { ColumnHelper } from '@tanstack/react-table'
+import { type ColumnHelper } from '@tanstack/react-table'
 import Image from 'next/image'
 import { IndexCell } from './cells/index-cell'
 
@@ -32,7 +32,7 @@ export function getCommonProjectColumns<T extends BaseProject>(
       ),
       meta: {
         headClassName: 'w-0',
-        cellClassName: 'lg:!pr-0',
+        cellClassName: 'lg:!pr-1.5',
       },
       size: 26,
     }),

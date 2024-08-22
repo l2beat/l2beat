@@ -1,3 +1,197 @@
+Generated with discovered.json: 0x900a1becf6288cb4994a4f86502ce337ea8651ba
+
+# Diff at Wed, 21 Aug 2024 11:53:00 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@a84e39efa4f1e38eb52ca8ca005fb438919e951f block: 20563543
+- current block number: 20576820
+
+## Description
+
+Configurations update. OffchainConfig changed.
+
+## Watched changes
+
+```diff
+    contract CommitStore2 (0x118a9389960F86390A4F14ce4C95D6ff076C6bFC) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        7
++        8
+      values.latestConfigDetails.blockNumber:
+-        19992884
++        20574583
+      values.latestConfigDetails.configDigest:
+-        "0x0001a5c2251b87652560fb4349f8229e01a1729f3d9bbad8abfb2d67baa7bd31"
++        "0x0001e715ca2f468f73992b74aae8b611559b925318324a0228c35fc5ec68fd4a"
+    }
+```
+
+```diff
+    contract CommitStore1 (0x31f6ab382DDeb9A316Ab61C3945a5292a50a89AB) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        8
++        9
+      values.latestConfigDetails.blockNumber:
+-        19992872
++        20574569
+      values.latestConfigDetails.configDigest:
+-        "0x0001a5fb364dc20180c6b3dd2e3ce85a349ddac175a17e46dc3cd325153736be"
++        "0x0001d7dfed79176417f36611718848cc8bab61daa0cf833f837205a32cd982cb"
+    }
+```
+
+```diff
+    contract CommitStore (0x3CB2A81bb8a188C5353CdFa9994ed8666556FC53) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        3
++        4
+      values.latestConfigDetails.blockNumber:
+-        20398840
++        20574540
+      values.latestConfigDetails.configDigest:
+-        "0x00011b0feeb79956de5da44165457ab771a1a71a233c41b945038500a5c4356f"
++        "0x0001e9a7260f01e6ae5ae4039c10729defc3439209ff2afdbed77c0aa371690d"
+    }
+```
+
+```diff
+    contract CommitStore (0x3d8a95adA63D406ee8232562AbD83CEdb0B90466) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        4
++        5
+      values.latestConfigDetails.blockNumber:
+-        20398823
++        20574531
+      values.latestConfigDetails.configDigest:
+-        "0x00015794577c5ec58b806ca7715e3310c6ffb423253062cd303e02dd3feb8e9b"
++        "0x000158ac6ced3257fc9cee81f906d7cffeb8fab05c7f3882b179326ad6dd9755"
+    }
+```
+
+```diff
+    contract CommitStore4 (0x4af4B497c998007eF83ad130318eB2b925a79dc8) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        8
++        9
+      values.latestConfigDetails.blockNumber:
+-        19992870
++        20574559
+      values.latestConfigDetails.configDigest:
+-        "0x0001e913beffb46fc6e567324b90592e032e4890b9f8368fa9227350b3d5803a"
++        "0x00019ecf28229bd3f6e536b5a820a6c81e638b7904b4e3129d59624d5cd44e3d"
+    }
+```
+
+```diff
+    contract CommitStore (0x76264869a3eBF51a59FCa5ABa84ee2867c7F190e) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        3
++        4
+      values.latestConfigDetails.blockNumber:
+-        20493806
++        20574549
+      values.latestConfigDetails.configDigest:
+-        "0x0001b1cfe8bb04fc64f8a2eaea578f95d8c80b17319e793a0beca378d0833dde"
++        "0x00012da522c4eb868a6396e5a3f26b12e29d3a68935341a418f613954fb6b34e"
+    }
+```
+
+```diff
+    contract CommitStore (0x831097033C88c82a7F1897b168Aa88cC44540C8f) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        5
++        6
+      values.latestConfigDetails.blockNumber:
+-        19992835
++        20574530
+      values.latestConfigDetails.configDigest:
+-        "0x000179263a4a130df5e4be4d20e7eb032024c3eb8e72d99093e09d089598c58a"
++        "0x0001163bb8e5e2a1be39c086ff1c53c480b69f5c1fa89bdef5655886551d5eea"
+    }
+```
+
+```diff
+    contract CommitStore3 (0x87c55D48DF6EF7B08153Ab079e76bFEcbb793D75) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        8
++        9
+      values.latestConfigDetails.blockNumber:
+-        19992834
++        20574522
+      values.latestConfigDetails.configDigest:
+-        "0x0001e5962ef720d1edb8a8e5cc3e267a8a6479748b6709f835e93bfe8fb28d41"
++        "0x0001e56a75372f894c177787f2df78efd743286c7420d76047d9ef113e36b21f"
+    }
+```
+
+```diff
+    contract CommitStore6 (0x8DC27D621c41a32140e22E2a4dAf1259639BAe04) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        8
++        9
+      values.latestConfigDetails.blockNumber:
+-        19992869
++        20574539
+      values.latestConfigDetails.configDigest:
+-        "0x000173258584964bd15f9876bea21f3bfc961c025ad5b3e4356ae918393e3874"
++        "0x0001aca19ca6472b325da7ddcbfd76c8d2efd743b89fe3e010e38f791194de04"
+    }
+```
+
+```diff
+    contract CommitStore8 (0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        8
++        9
+      values.latestConfigDetails.blockNumber:
+-        19992851
++        20574532
+      values.latestConfigDetails.configDigest:
+-        "0x00016059e453c2ca94d0c2fad2be55e6548b0a0ebb25096b1962a18f9c93a594"
++        "0x0001370e23facc097f2c5f3bca6c9f17d68f1961e5f489ac13d0e7600332c1e1"
+    }
+```
+
+```diff
+    contract CommitStore15 (0xa4d264470a67D9f6682EE12Bdc9c35Df44e3F194) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        4
++        5
+      values.latestConfigDetails.blockNumber:
+-        20421003
++        20574560
+      values.latestConfigDetails.configDigest:
+-        "0x0001442c239e69bf2461192e40906b14d1d34fc9d2f193127ac07fae2dbb51c7"
++        "0x00018d8d4844a53c3d72bf9c7721684c1f21b6eb6976d0b1b83155181ed84823"
+    }
+```
+
+```diff
+    contract CommitStore7 (0xD37a60E8C36E802D2E1a6321832Ee85556Beeb76) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        7
++        8
+      values.latestConfigDetails.blockNumber:
+-        19992871
++        20574561
+      values.latestConfigDetails.configDigest:
+-        "0x0001380ba240289ac40146b431a0dcd60a97af46d941e485e13e776015c51bc0"
++        "0x0001032f669d09a05e36d873e547a3009a05d8b30db4c0bca70564474fa7bf94"
+    }
+```
+
 Generated with discovered.json: 0x42131931c0d0c0ad4a42dce8b32030af275c9cd4
 
 # Diff at Mon, 19 Aug 2024 15:23:20 GMT:
