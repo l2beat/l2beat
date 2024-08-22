@@ -2,7 +2,7 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
 import { PizzaRosetteCell } from '~/app/_components/rosette/pizza/pizza-rosette-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
-import { StageCell } from '~/app/_components/table/cells/stage-cell'
+import { StageCell } from '~/app/_components/table/cells/stage/stage-cell'
 import {
   TypeCell,
   TypeExplanationTooltip,
