@@ -1,29 +1,24 @@
 import React from 'react'
 import { Markdown } from '../../markdown/markdown'
 import { ProjectSection } from './project-section'
-import { type ProjectSectionId } from './types'
+import { type ProjectSectionProps } from './types'
 
-export interface DetailedDescriptionSectionProps {
-  id: ProjectSectionId
-  title: string
-  sectionOrder: number
+export interface DetailedDescriptionSectionProps extends ProjectSectionProps {
   description: string
   detailedDescription: string | undefined
 }
 
-export function DetailedDescriptionSection(
-  props: DetailedDescriptionSectionProps,
-) {
+export function DetailedDescriptionSection({
+  description,
+  detailedDescription,
+  ...sectionProps
+}: DetailedDescriptionSectionProps) {
   return (
-    <ProjectSection
-      title={props.title}
-      id={props.id}
-      sectionOrder={props.sectionOrder}
-    >
+    <ProjectSection {...sectionProps}>
       <div className="mt-4 leading-snug text-gray-850 dark:text-gray-400">
-        <Markdown>{props.description}</Markdown>
-        {props.detailedDescription && (
-          <Markdown className="mt-2">{props.detailedDescription}</Markdown>
+        <Markdown>{description}</Markdown>
+        {detailedDescription && (
+          <Markdown className="mt-2">{detailedDescription}</Markdown>
         )}
       </div>
     </ProjectSection>

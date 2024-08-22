@@ -25,16 +25,15 @@ export function TokenBreakdownStat({ breakdown }: Props) {
     breakdown
 
   const isAnyWarningBad = warnings.some((w) => w.sentiment === 'bad')
-  const other = total - associated - ether - stablecoin
 
   return (
     <Tooltip>
       <TooltipTrigger className="flex items-center gap-1">
         <TokenBreakdown
+          total={total}
           associated={associated}
           ether={ether}
           stablecoin={stablecoin}
-          other={other}
         />
         {warnings.length > 0 && (
           <RoundedWarningIcon sentiment={isAnyWarningBad ? 'bad' : 'warning'} />
@@ -42,10 +41,10 @@ export function TokenBreakdownStat({ breakdown }: Props) {
       </TooltipTrigger>
       <TooltipContent>
         <TokenBreakdownTooltipContent
+          total={total}
           associated={associated}
           ether={ether}
           stablecoin={stablecoin}
-          other={other}
           associatedTokenSymbols={associatedTokens}
           tvlWarnings={warnings}
         />

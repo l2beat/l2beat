@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { layer2s, layer3s } from '@l2beat/config'
+import { bridges } from '@l2beat/config'
 import { ImageResponse } from 'next/og'
 import { NextResponse } from 'next/server'
 import { ProjectOpengraphImage } from '~/app/_components/opengraph-image/project'
@@ -12,10 +12,8 @@ const size = {
   height: 630,
 }
 
-const scalingProjects = [...layer2s, ...layer3s]
-
 export async function generateStaticParams() {
-  return scalingProjects.map((project) => ({
+  return bridges.map((project) => ({
     slug: project.display.slug,
   }))
 }
@@ -38,13 +36,11 @@ interface Props {
 }
 
 export default async function Image({ params }: Props) {
-  const project = scalingProjects.find((p) => p.display.slug === params.slug)
+  const project = bridges.find((p) => p.display.slug === params.slug)
   if (!project) {
     return NextResponse.json({ error: 'Project not found' }, { status: 404 })
   }
-  const baseUrl = env.VERCEL_URL
-    ? `https://${env.VERCEL_URL}`
-    : 'http://localhost:3000'
+  const baseUrl = env.VERCEL_URL ?? 'http://localhost:3000'
   const [robotoMedium, robotoBold] = [
     fetch(`${baseUrl}/fonts/roboto/roboto-latin-500.ttf`).then((res) =>
       res.arrayBuffer(),
