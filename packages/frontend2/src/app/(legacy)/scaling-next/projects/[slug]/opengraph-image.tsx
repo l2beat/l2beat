@@ -43,11 +43,11 @@ export default async function Image({ params }: Props) {
   }
 
   const [robotoMedium, robotoBold] = [
-    fetch(new URL('/fonts/roboto/Roboto-Medium.ttf', env.VERCEL_URL)).then(
-      (res) => res.arrayBuffer(),
+    fetch(`${env.VERCEL_URL}/fonts/roboto/Roboto-Medium.ttf`).then((res) =>
+      res.arrayBuffer(),
     ),
-    fetch(new URL('/fonts/roboto/Roboto-Bold.ttf', env.VERCEL_URL)).then(
-      (res) => res.arrayBuffer(),
+    fetch(`${env.VERCEL_URL}/fonts/roboto/Roboto-Bold.ttf`).then((res) =>
+      res.arrayBuffer(),
     ),
   ]
   return new ImageResponse(
