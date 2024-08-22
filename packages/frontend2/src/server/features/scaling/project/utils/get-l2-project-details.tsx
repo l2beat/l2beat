@@ -67,11 +67,6 @@ export async function getL2ProjectDetails({
   const operatorSection = getOperatorSection(project)
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
-  // Do I need to prefetch this?
-  await api.scaling.costs.chart.prefetch({
-    range: '1d',
-    filter: { type: 'projects', projectIds: [project.id] },
-  })
   const costsChartData = await api.scaling.costs.chart({
     range: '1d',
     filter: { type: 'projects', projectIds: [project.id] },
