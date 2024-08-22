@@ -41,12 +41,14 @@ export default async function Image({ params }: Props) {
   if (!project) {
     return NextResponse.json({ error: 'Project not found' }, { status: 404 })
   }
-  const base = env.VERCEL_URL ?? 'http://localhost:3000'
+  const baseUrl = env.VERCEL_URL
+    ? `https://${env.VERCEL_URL}`
+    : 'http://localhost:3000'
   const [robotoMedium, robotoBold] = [
-    fetch(`${base}/fonts/roboto/Roboto-Medium.ttf`).then((res) =>
+    fetch(`${baseUrl}/fonts/roboto/Roboto-Medium.ttf`).then((res) =>
       res.arrayBuffer(),
     ),
-    fetch(`${base}/fonts/roboto/Roboto-Bold.ttf`).then((res) =>
+    fetch(`${baseUrl}/fonts/roboto/Roboto-Bold.ttf`).then((res) =>
       res.arrayBuffer(),
     ),
   ]
@@ -59,7 +61,11 @@ export default async function Image({ params }: Props) {
         alignItems: 'center',
       }}
     >
-      <img src={`${base}/meta-images/projects/template.png`} alt="" {...size} />
+      <img
+        src={`${baseUrl}/meta-images/projects/template.png`}
+        alt=""
+        {...size}
+      />
 
       <div
         style={{
@@ -84,7 +90,7 @@ export default async function Image({ params }: Props) {
           }}
         >
           <img
-            src={`${base}/icons/${project.display.slug}.png`}
+            src={`${baseUrl}/icons/${project.display.slug}.png`}
             alt={`${project.display.name} logo`}
             width={104}
             height={104}
