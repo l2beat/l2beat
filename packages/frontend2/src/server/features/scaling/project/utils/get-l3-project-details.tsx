@@ -5,16 +5,16 @@ import {
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
 import { isEmpty } from 'lodash'
-import { getRiskSummarySection } from '~/app/_components/projects/sections/risk-summary/get-risk-summary'
-import { getOperatorSection } from '~/app/_components/projects/sections/technology/get-operator-section'
-import { getOtherConsiderationsSection } from '~/app/_components/projects/sections/technology/get-other-considerations-section'
-import { getTechnologySection } from '~/app/_components/projects/sections/technology/get-technology-section'
-import { getWithdrawalsSection } from '~/app/_components/projects/sections/technology/get-withdrawals-section'
 import { type ProjectDetailsSection } from '~/app/_components/projects/sections/types'
 import { type RosetteValue } from '~/app/_components/rosette/types'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
+import { getScalingRiskSummarySection } from '~/utils/project/risk-summary/get-scaling-risk-summary'
+import { getOperatorSection } from '~/utils/project/technology/get-operator-section'
+import { getOtherConsiderationsSection } from '~/utils/project/technology/get-other-considerations-section'
+import { getScalingTechnologySection } from '~/utils/project/technology/get-technology-section'
+import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawals-section'
 
 interface Params {
   project: Layer3
@@ -63,8 +63,8 @@ export function getL3ProjectDetails({
     manuallyVerifiedContracts,
     implementationChangeReport,
   )
-  const riskSummary = getRiskSummarySection(project, isVerified)
-  const technologySection = getTechnologySection(project)
+  const riskSummary = getScalingRiskSummarySection(project, isVerified)
+  const technologySection = getScalingTechnologySection(project)
   const operatorSection = getOperatorSection(project)
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
@@ -101,7 +101,11 @@ export function getL3ProjectDetails({
   if (riskSummary.riskGroups.length > 0) {
     items.push({
       type: 'RiskSummarySection',
-      props: riskSummary,
+      props: {
+        ...riskSummary,
+        id: 'risk-summary',
+        title: 'Risk summary',
+      },
     })
   }
 
@@ -213,7 +217,7 @@ export function getL3ProjectDetails({
       props: {
         ...contractsSection,
         id: 'contracts',
-        title: 'Contracts',
+        title: 'Smart contracts',
       },
     })
   }

@@ -4,7 +4,7 @@ import { getTvlBreakdown } from './utils/get-tvl-breakdown'
 import { getTvlProjects } from './utils/get-tvl-projects'
 import { getTvlValuesForProjects } from './utils/get-tvl-values-for-projects'
 
-export async function getTvlProjectData(id: ProjectId) {
+export async function getTvlProjectStats(id: ProjectId) {
   const projects = getTvlProjects().filter((project) => project.id === id)
   const tvlValues = await getTvlValuesForProjects(projects, '7d')
   const projectTvlValues = tvlValues[id]

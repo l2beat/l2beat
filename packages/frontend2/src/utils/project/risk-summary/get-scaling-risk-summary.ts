@@ -6,13 +6,14 @@ import {
 } from '@l2beat/config'
 import isArray from 'lodash/isArray'
 
+import { type RiskSummarySectionProps } from '../../../app/_components/projects/sections/risk-summary-section'
+import { type ProjectSectionProps } from '../../../app/_components/projects/sections/types'
 import { groupRisks } from './group-risks'
-import { type RiskSummarySectionProps } from './risk-summary-section'
 
-export function getRiskSummarySection(
+export function getScalingRiskSummarySection(
   project: Layer2 | Layer3,
   isVerified: boolean,
-): Omit<RiskSummarySectionProps, 'sectionOrder'> {
+): Omit<RiskSummarySectionProps, keyof ProjectSectionProps> {
   const sections = [
     {
       id: 'state-correctness',
@@ -55,8 +56,6 @@ export function getRiskSummarySection(
   }
 
   return {
-    id: 'risk-summary',
-    title: 'Risk summary',
     riskGroups: groupRisks(risks),
     warning: project.display.warning,
     isVerified,

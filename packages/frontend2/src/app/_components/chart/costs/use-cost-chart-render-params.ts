@@ -91,7 +91,6 @@ function getValues(
   unit: CostsUnit,
 ) {
   const [
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _,
     overheadGas,
     overheadEth,

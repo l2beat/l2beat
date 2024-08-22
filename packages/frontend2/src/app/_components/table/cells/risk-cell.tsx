@@ -11,6 +11,7 @@ import { UnderReviewBadge } from '../../badge/under-review-badge'
 import { SentimentText } from '../../sentiment-text'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/tooltip'
 import { WarningBar } from '../../warning-bar'
+import { NoInfoCell } from './no-info-cell'
 
 interface Risk {
   value: string
@@ -22,10 +23,14 @@ interface Risk {
 }
 
 interface Props {
-  risk: Risk
+  risk: Risk | undefined
 }
 
 export function RiskCell({ risk }: Props) {
+  if (!risk) {
+    return <NoInfoCell />
+  }
+
   if (risk.sentiment === 'UnderReview') {
     return <UnderReviewBadge />
   }

@@ -28,27 +28,31 @@ export interface StageSectionProps extends ProjectSectionProps {
   stageConfig: UsableStageConfig
 }
 
-export function StageSection(props: StageSectionProps) {
-  if (props.stageConfig.stage === 'UnderReview' || props.isUnderReview) {
+export function StageSection({
+  icon,
+  name,
+  type,
+  stageConfig,
+  ...sectionProps
+}: StageSectionProps) {
+  if (stageConfig.stage === 'UnderReview' || sectionProps.isUnderReview) {
     return (
       <ProjectSection
-        title={props.title}
-        id={props.id}
-        sectionOrder={props.sectionOrder}
+        {...sectionProps}
         isUnderReview
         includeChildrenIfUnderReview
       >
         <div className="mb-6 font-medium">
           <Image
-            src={props.icon}
-            alt={props.name}
+            src={icon}
+            alt={name}
             width={18}
             height={18}
             className="relative -top-0.5 mr-2 inline-block"
           />
-          {props.name} is currently
+          {name} is currently
           <StageBadge
-            stage={props.stageConfig.stage}
+            stage={stageConfig.stage}
             big
             className="mx-1 md:mx-1.5"
           />
@@ -59,43 +63,39 @@ export function StageSection(props: StageSectionProps) {
   }
 
   const warningBarIcon =
-    props.stageConfig.message?.type === 'warning'
+    stageConfig.message?.type === 'warning'
       ? RoundedWarningIcon
       : UnderReviewIcon
 
   return (
-    <ProjectSection
-      title={props.title}
-      id={props.id}
-      sectionOrder={props.sectionOrder}
-    >
+    <ProjectSection {...sectionProps}>
       <div className="mb-6 font-medium">
         <Image
-          src={props.icon}
-          alt={props.name}
+          src={icon}
+          alt={name}
           width={18}
           height={18}
           className="relative -top-0.5 mr-2 inline-block"
         />
-        {props.name} is a{' '}
+        {name} is a{' '}
         <StageBadge
-          stage={props.stageConfig.stage}
-          icon={props.stageConfig.message?.type}
+          stage={stageConfig.stage}
+          icon={stageConfig.message?.type}
           big
           className="mx-1"
         />
-        <span className="lowercase"> {props.type}</span>.
+        <span className="lowercase"> {type}</span>.
       </div>
-      {props.stageConfig.message && (
+      {stageConfig.message && (
         <WarningBar
           color="yellow"
           className="mb-6"
           icon={warningBarIcon}
-          text={props.stageConfig.message.text}
+          text={stageConfig.message.text}
         />
       )}
       <Accordion type="multiple">
-        {props.stageConfig.summary.map((stage) => {
+        {stageConfig.summary.map((stage) => {
           const satisfied = stage.requirements.filter(
             (r) => r.satisfied === true,
           )

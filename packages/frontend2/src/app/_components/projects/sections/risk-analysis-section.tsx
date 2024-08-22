@@ -18,23 +18,24 @@ export interface RiskAnalysisSectionProps extends ProjectSectionProps {
   warning: string | undefined
   isVerified: boolean | undefined
   redWarning: string | undefined
-  isUnderReview?: boolean
 }
 
-export function RiskAnalysisSection(props: RiskAnalysisSectionProps) {
+export function RiskAnalysisSection({
+  rosetteType,
+  rosetteValues,
+  warning,
+  isVerified,
+  redWarning,
+  ...sectionProps
+}: RiskAnalysisSectionProps) {
   const isUnderReview =
-    !!props.isUnderReview ||
-    Object.values(props.rosetteValues).some(
+    !!sectionProps.isUnderReview ||
+    Object.values(rosetteValues).some(
       ({ sentiment }) => sentiment === 'UnderReview',
     )
   return (
-    <ProjectSection
-      title={props.title}
-      id={props.id}
-      sectionOrder={props.sectionOrder}
-      isUnderReview={isUnderReview}
-    >
-      {props.isVerified === false && (
+    <ProjectSection {...sectionProps} isUnderReview={isUnderReview}>
+      {isVerified === false && (
         <WarningBar
           text="This project includes unverified contracts."
           color="red"
@@ -43,35 +44,32 @@ export function RiskAnalysisSection(props: RiskAnalysisSectionProps) {
           icon={UnverifiedIcon}
         />
       )}
-      {props.redWarning && (
+      {redWarning && (
         <WarningBar
-          text={props.redWarning}
+          text={redWarning}
           color="red"
           className="mt-4"
           icon={ShieldIcon}
         />
       )}
-      {props.warning && (
+      {warning && (
         <WarningBar
-          text={props.warning}
+          text={warning}
           color="yellow"
           isCritical={false}
           className="mt-4"
         />
       )}
 
-      {props.rosetteType === 'pizza' ? (
-        <BigPizzaRosette
-          values={props.rosetteValues}
-          className="mx-auto my-6"
-        />
+      {rosetteType === 'pizza' ? (
+        <BigPizzaRosette values={rosetteValues} className="mx-auto my-6" />
       ) : (
         <BigPentagonRosette
-          values={props.rosetteValues}
+          values={rosetteValues}
           className="mx-auto my-6 lg:hidden"
         />
       )}
-      {Object.values(props.rosetteValues).map((value) => (
+      {Object.values(rosetteValues).map((value) => (
         <SingleRisk key={value.name} value={value} />
       ))}
     </ProjectSection>
