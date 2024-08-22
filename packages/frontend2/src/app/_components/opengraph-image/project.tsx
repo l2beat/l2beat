@@ -57,10 +57,11 @@ export function ProjectOpengraphImage({ baseUrl, slug, name, size }: Props) {
           <div
             style={{
               color: 'white',
-              fontSize: 96,
               whiteSpace: 'pre',
               fontFamily: 'roboto',
               fontWeight: 700,
+              fontSize: 96,
+              lineHeight: 1,
             }}
           >
             {name}

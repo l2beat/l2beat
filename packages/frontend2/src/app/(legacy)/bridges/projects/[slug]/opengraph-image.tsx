@@ -40,18 +40,18 @@ export default async function Image({ params }: Props) {
   if (!project) {
     return NextResponse.json({ error: 'Project not found' }, { status: 404 })
   }
-  const base = env.VERCEL_URL ?? 'http://localhost:3000'
+  const baseUrl = env.VERCEL_URL ?? 'http://localhost:3000'
   const [robotoMedium, robotoBold] = [
-    fetch(`${base}/fonts/roboto/Roboto-Medium.ttf`).then((res) =>
+    fetch(`${baseUrl}/fonts/roboto/roboto-latin-500.ttf`).then((res) =>
       res.arrayBuffer(),
     ),
-    fetch(`${base}/fonts/roboto/Roboto-Bold.ttf`).then((res) =>
+    fetch(`${baseUrl}/fonts/roboto/roboto-latin-700.ttf`).then((res) =>
       res.arrayBuffer(),
     ),
   ]
   return new ImageResponse(
     <ProjectOpengraphImage
-      baseUrl={base}
+      baseUrl={baseUrl}
       slug={project.display.slug}
       name={project.display.name}
       size={size}
