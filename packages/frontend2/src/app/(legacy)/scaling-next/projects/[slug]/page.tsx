@@ -29,6 +29,9 @@ export async function generateMetadata({ params }: Props) {
     openGraph: {
       url: `/scaling/projects/${project.display.slug}`,
     },
+    robots: {
+      index: false,
+    },
   })
 }
 
@@ -52,7 +55,7 @@ export default async function Page({ params }: Props) {
   return (
     <>
       {!isNavigationEmpty && (
-        <div className="sticky top-0 z-100 -mx-4 md:hidden">
+        <div className="z-100 sticky top-0 -mx-4 md:hidden">
           <MobileProjectNavigation sections={projectEntry.projectDetails} />
         </div>
       )}
