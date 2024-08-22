@@ -22,7 +22,10 @@ export const env = createEnv({
       .enum(['development', 'test', 'production'])
       .default('development'),
     VERCEL_GIT_COMMIT_SHA: z.string().default('local'),
-    VERCEL_URL: z.string().default('localhost:3000'),
+    VERCEL_URL: z
+      .string()
+      .transform((val) => `https://${val}`)
+      .optional(),
   },
 
   /**
