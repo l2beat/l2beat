@@ -1,5 +1,9 @@
 import { type ReactNode } from 'react'
 import { NoDataBadge } from '~/app/_components/badge/no-data-badge'
+import {
+  TokenBreakdown,
+  TokenBreakdownTooltipContent,
+} from '~/app/_components/breakdown/token-breakdown'
 import { PercentChange } from '~/app/_components/percent-change'
 import { RiskCell } from '~/app/_components/table/cells/risk-cell'
 import {
@@ -8,6 +12,7 @@ import {
   TooltipTrigger,
 } from '~/app/_components/tooltip/tooltip'
 import InfoIcon from '~/icons/info.svg'
+import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { type BridgesProjectEntry } from '~/server/features/bridges/project/get-bridges-project-entry'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/format'
@@ -17,6 +22,10 @@ interface Props {
 }
 
 export function BridgesProjectStats({ project }: Props) {
+  const isAnyTokenWarningBad = project.header.tvl?.tokenBreakdown.warnings.some(
+    (warning) => warning.sentiment === 'bad',
+  )
+
   return (
     <div className="grid grid-cols-1 gap-3 rounded-lg bg-gray-100 md:grid-cols-4 md:px-6 md:py-5 dark:bg-zinc-900">
       <ProjectStat
@@ -24,17 +33,46 @@ export function BridgesProjectStats({ project }: Props) {
         tooltip="Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago."
         value={
           !project.isUpcoming && project.header.tvl ? (
-            <span className="flex items-center gap-2">
-              <span className="font-bold">
-                {formatCurrency(project.header.tvl.tvlBreakdown.total, 'usd', {
-                  showLessThanMinimum: false,
-                })}
-              </span>
-              <PercentChange
-                className="text-base font-semibold"
-                value={project.header.tvl.tvlBreakdown.totalChange}
-              />
-            </span>
+            <Tooltip>
+              <TooltipTrigger>
+                <div>
+                  <span className="flex items-center gap-2">
+                    <span className="font-bold">
+                      {formatCurrency(
+                        project.header.tvl.tvlBreakdown.total,
+                        'usd',
+                        {
+                          showLessThanMinimum: false,
+                        },
+                      )}
+                    </span>
+                    <PercentChange
+                      className="text-base font-semibold"
+                      value={project.header.tvl.tvlBreakdown.totalChange}
+                    />
+                    {project.header.tvl.tokenBreakdown.warnings.length > 0 && (
+                      <RoundedWarningIcon
+                        sentiment={isAnyTokenWarningBad ? 'bad' : 'warning'}
+                        className="size-4"
+                      />
+                    )}
+                  </span>
+                  <TokenBreakdown
+                    {...project.header.tvl.tokenBreakdown}
+                    className="h-[3px] w-full"
+                  />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <TokenBreakdownTooltipContent
+                  {...project.header.tvl.tokenBreakdown}
+                  associatedTokenSymbols={
+                    project.header.tvl.tokenBreakdown.associatedTokens
+                  }
+                  tvlWarnings={project.header.tvl.tokenBreakdown.warnings}
+                />
+              </TooltipContent>
+            </Tooltip>
           ) : (
             <NoDataBadge />
           )

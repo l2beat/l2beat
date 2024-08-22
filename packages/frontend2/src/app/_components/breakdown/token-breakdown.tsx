@@ -7,10 +7,10 @@ import { WarningBar } from '../warning-bar'
 import { Breakdown } from './breakdown'
 
 export interface TokenBreakdownProps {
+  total: number
   associated: number
   ether: number
   stablecoin: number
-  other: number
   className?: string
 }
 
@@ -20,6 +20,7 @@ export interface TokenBreakdownTooltipContentProps extends TokenBreakdownProps {
 }
 
 export function TokenBreakdown(props: TokenBreakdownProps) {
+  const other = props.total - props.associated - props.ether - props.stablecoin
   const values = [
     {
       value: props.associated,
@@ -30,7 +31,7 @@ export function TokenBreakdown(props: TokenBreakdownProps) {
       className: 'dark:bg-green-200 bg-green-900',
     },
     { value: props.stablecoin, className: 'dark:bg-teal-400 bg-teal-500' },
-    { value: props.other, className: 'bg-sky-600' },
+    { value: other, className: 'bg-sky-600' },
   ]
 
   return (
@@ -39,13 +40,14 @@ export function TokenBreakdown(props: TokenBreakdownProps) {
 }
 
 export function TokenBreakdownTooltipContent({
+  total,
   associated,
   ether,
   stablecoin,
-  other,
   associatedTokenSymbols,
   tvlWarnings,
 }: TokenBreakdownTooltipContentProps) {
+  const other = total - associated - ether - stablecoin
   const values = [
     {
       title: languageJoin(associatedTokenSymbols) ?? 'Associated',
@@ -64,7 +66,6 @@ export function TokenBreakdownTooltipContent({
     },
     { title: 'Other', value: other, variant: 'other' as const },
   ]
-  const total = associated + ether + stablecoin + other
 
   if (total === 0) {
     return 'No tokens'

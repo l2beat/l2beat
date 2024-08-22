@@ -1,7 +1,9 @@
 import { type Bridge, type ScalingProjectRiskViewEntry } from '@l2beat/config'
+import compact from 'lodash/compact'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getTvlProjectStats } from '../../scaling/tvl/get-tvl-project-stats'
+import { getAssociatedTokenWarning } from '../../scaling/tvl/utils/get-associated-token-warning'
 import { getContractsVerificationStatuses } from '../../verification-status/get-contracts-verification-statuses'
 import { getManuallyVerifiedContracts } from '../../verification-status/get-manually-verified-contracts'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
@@ -52,11 +54,31 @@ export async function getBridgesProjectEntry(project: Bridge) {
 async function getHeader(project: Bridge) {
   const tvlProjectStats = await getTvlProjectStats(project.id)
 
+  const associatedTokens = project.config.associatedTokens ?? []
+
   return {
     description: project.display.description,
     warning: project.display.warning,
     links: getProjectLinks(project.display.links),
-    tvl: tvlProjectStats,
+    tvl: tvlProjectStats
+      ? {
+          tokenBreakdown: {
+            ...tvlProjectStats.tokenBreakdown,
+            warnings: compact([
+              tvlProjectStats.tokenBreakdown.total > 0 &&
+                getAssociatedTokenWarning({
+                  associatedRatio:
+                    tvlProjectStats.tokenBreakdown.associated /
+                    tvlProjectStats.tokenBreakdown.total,
+                  name: project.display.name,
+                  associatedTokens,
+                }),
+            ]),
+            associatedTokens,
+          },
+          tvlBreakdown: tvlProjectStats.tvlBreakdown,
+        }
+      : undefined,
     destination: getDestination(project.technology.destination),
     category: project.display.category,
     validatedBy: project.riskView?.validatedBy,
