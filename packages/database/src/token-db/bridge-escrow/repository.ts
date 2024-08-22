@@ -12,7 +12,7 @@ export class BridgeEscrowRepository extends BaseRepository {
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
       await this.db
-        .insertInto('public.BridgeEscrow')
+        .insertInto('BridgeEscrow')
         .values(batch)
         .onConflict((cb) =>
           cb.columns(['networkId', 'address']).doUpdateSet((eb) => ({

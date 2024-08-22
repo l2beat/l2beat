@@ -14,7 +14,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
     const rows = record.map(toRow)
     await this.batch(rows, 5_000, async (batch) => {
       await this.db
-        .insertInto('public.indexer_configurations')
+        .insertInto('indexer_configurations')
         .values(batch)
         .onConflict((cb) =>
           cb.column('id').doUpdateSet((eb) => ({
@@ -36,10 +36,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
 
     const rows = records.map(toRow)
     await this.batch(rows, 5_000, async (batch) => {
-      await this.db
-        .insertInto('public.indexer_configurations')
-        .values(batch)
-        .execute()
+      await this.db.insertInto('indexer_configurations').values(batch).execute()
     })
     return records.length
   }
@@ -48,7 +45,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
     indexerId: string,
   ): Promise<IndexerConfigurationRecord[]> {
     const rows = await this.db
-      .selectFrom('public.indexer_configurations')
+      .selectFrom('indexer_configurations')
       .select(selectIndexerConfiguration)
       .where('indexer_id', '=', indexerId)
       .execute()
@@ -59,7 +56,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
     if (indexerIds.length === 0) return []
 
     const rows = await this.db
-      .selectFrom('public.indexer_configurations')
+      .selectFrom('indexer_configurations')
       .select(selectIndexerConfiguration)
       .where('indexer_id', 'in', indexerIds)
       .execute()
@@ -70,7 +67,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
     indexerId: string,
   ): Promise<Omit<IndexerConfigurationRecord, 'indexerId'>[]> {
     const rows = await this.db
-      .selectFrom('public.indexer_configurations')
+      .selectFrom('indexer_configurations')
       .select([
         'id',
         'max_height',
@@ -88,7 +85,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
     if (configurationIds.length === 0) return []
 
     const rows = await this.db
-      .selectFrom('public.indexer_configurations')
+      .selectFrom('indexer_configurations')
       .select(selectIndexerConfiguration)
       .where('id', 'in', configurationIds)
       .execute()
@@ -97,7 +94,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
 
   async getIdsByIndexer(indexerId: string): Promise<string[]> {
     const rows = await this.db
-      .selectFrom('public.indexer_configurations')
+      .selectFrom('indexer_configurations')
       .select('id')
       .where('indexer_id', '=', indexerId)
       .execute()
@@ -109,7 +106,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
     currentHeight: number | null,
   ): Promise<void> {
     await this.db
-      .updateTable('public.indexer_configurations')
+      .updateTable('indexer_configurations')
       .set('current_height', currentHeight)
       .where('indexer_id', '=', indexerId)
       .where('min_height', '<=', currentHeight)
@@ -136,7 +133,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
 
     await this.batch(ids, 10_000, async (batch) => {
       await this.db
-        .deleteFrom('public.indexer_configurations')
+        .deleteFrom('indexer_configurations')
         .where('indexer_id', '=', indexerId)
         .where('id', 'in', batch)
         .executeTakeFirst()
@@ -147,7 +144,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
 
   async getAll(): Promise<IndexerConfigurationRecord[]> {
     const rows = await this.db
-      .selectFrom('public.indexer_configurations')
+      .selectFrom('indexer_configurations')
       .select(selectIndexerConfiguration)
       .execute()
     return rows.map(toRecord)
@@ -155,7 +152,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
 
   async deleteAll(): Promise<number> {
     const result = await this.db
-      .deleteFrom('public.indexer_configurations')
+      .deleteFrom('indexer_configurations')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }

@@ -16,7 +16,7 @@ export class AmountRepository extends BaseRepository {
     if (configIds.length === 0) return []
 
     const rows = await this.db
-      .selectFrom('public.amounts')
+      .selectFrom('amounts')
       .select(selectAmount)
       .where('configuration_id', 'in', configIds)
       .where('timestamp', '=', timestamp.toDate())
@@ -33,7 +33,7 @@ export class AmountRepository extends BaseRepository {
     if (configIds.length === 0) return []
 
     const rows = await this.db
-      .selectFrom('public.amounts')
+      .selectFrom('amounts')
       .select(selectAmount)
       .where('configuration_id', 'in', configIds)
       .where('timestamp', '>=', fromInclusive.toDate())
@@ -47,7 +47,7 @@ export class AmountRepository extends BaseRepository {
     if (timestamps.length === 0) return []
 
     const rows = await this.db
-      .selectFrom('public.amounts')
+      .selectFrom('amounts')
       .select(selectAmount)
       .where(
         'timestamp',
@@ -64,7 +64,7 @@ export class AmountRepository extends BaseRepository {
 
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
-      await this.db.insertInto('public.amounts').values(batch).execute()
+      await this.db.insertInto('amounts').values(batch).execute()
     })
     return rows.length
   }
@@ -75,7 +75,7 @@ export class AmountRepository extends BaseRepository {
     toInclusive: UnixTime,
   ): Promise<number> {
     const result = await this.db
-      .deleteFrom('public.amounts')
+      .deleteFrom('amounts')
       .where('configuration_id', '=', configId)
       .where('timestamp', '>=', fromInclusive.toDate())
       .where('timestamp', '<=', toInclusive.toDate())
@@ -88,7 +88,7 @@ export class AmountRepository extends BaseRepository {
     fromExclusive: UnixTime,
   ): Promise<number> {
     const result = await this.db
-      .deleteFrom('public.amounts')
+      .deleteFrom('amounts')
       .where('configuration_id', '=', configId)
       .where('timestamp', '>', fromExclusive.toDate())
       .executeTakeFirst()
@@ -97,23 +97,23 @@ export class AmountRepository extends BaseRepository {
 
   // #region methods used only in TvlCleaner
   deleteHourlyUntil(dateRange: CleanDateRange): Promise<number> {
-    return deleteHourlyUntil(this.db, 'public.amounts', dateRange)
+    return deleteHourlyUntil(this.db, 'amounts', dateRange)
   }
 
   deleteSixHourlyUntil(dateRange: CleanDateRange): Promise<number> {
-    return deleteSixHourlyUntil(this.db, 'public.amounts', dateRange)
+    return deleteSixHourlyUntil(this.db, 'amounts', dateRange)
   }
 
   async getAll(): Promise<AmountRecord[]> {
     const rows = await this.db
-      .selectFrom('public.amounts')
+      .selectFrom('amounts')
       .select(selectAmount)
       .execute()
     return rows.map(toRecord)
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db.deleteFrom('public.amounts').executeTakeFirst()
+    const result = await this.db.deleteFrom('amounts').executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 }

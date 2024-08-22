@@ -7,7 +7,7 @@ export class NetworkExplorerRepository extends BaseRepository {
 
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
-      await this.db.insertInto('public.NetworkExplorer').values(batch).execute()
+      await this.db.insertInto('NetworkExplorer').values(batch).execute()
     })
     return records.length
   }
