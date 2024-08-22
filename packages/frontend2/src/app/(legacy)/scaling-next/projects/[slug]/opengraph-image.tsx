@@ -3,6 +3,8 @@ import { layer2s, layer3s } from '@l2beat/config'
 import { readFile, readdir } from 'fs/promises'
 import { ImageResponse } from 'next/og'
 
+export const runtime = 'nodejs'
+
 const websiteURL =
   process.env.NODE_ENV === 'production'
     ? 'https://www.l2beat.com/'
@@ -28,7 +30,6 @@ export async function generateImageMetadata({ params }: Props) {
       size,
       alt: `Project page for ${params.slug}`,
       contentType: 'image/png',
-      runtime: 'nodejs',
     },
   ]
 }
@@ -44,6 +45,8 @@ export default async function Image({ params }: Props) {
   if (!project) throw new Error('Project not found')
   const root = await readdir(process.cwd())
   console.log(root)
+  const next = await readdir(join(process.cwd(), '.next'))
+  console.log(next)
   const [robotoMedium, robotoBold] = await Promise.all([
     readFile(join(process.cwd(), `/src/fonts/Roboto-Medium.ttf`)),
     readFile(join(process.cwd(), `/src/fonts/Roboto-Bold.ttf`)),
