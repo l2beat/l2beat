@@ -152,7 +152,7 @@ function getEscrowTokenInfo(
   return {
     sinceTimestamp,
     untilTimestamp,
-    includeInTotal,
+    includeInTotal: token.excludeFromTotal ? false : includeInTotal,
     isAssociated,
     bridge,
     source,
