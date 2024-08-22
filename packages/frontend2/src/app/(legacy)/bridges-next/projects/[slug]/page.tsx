@@ -25,6 +25,9 @@ export async function generateMetadata({ params }: Props) {
     openGraph: {
       url: `/bridges/projects/${project.display.slug}`,
     },
+    robots: {
+      index: false,
+    },
   })
 }
 
