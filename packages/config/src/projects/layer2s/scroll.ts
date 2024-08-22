@@ -708,7 +708,7 @@ export const scroll: Layer2 = {
       link: 'https://scroll.io/blog/proof-recursion-scrolls-darwin-upgrade',
       date: '2024-08-21T00:00:00.00Z',
       description:
-        'Introduces a reduction in gas fees on Scroll through proof recursion, bundling multiple batches into a single validity proof for optimized costs.',
+        'Introduces a reduction in gas fees through bundling multiple batches into a single validity proof.',
     },
     {
       name: 'Curie upgrade',
