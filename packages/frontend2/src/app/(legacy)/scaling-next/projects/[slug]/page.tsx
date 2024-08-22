@@ -5,7 +5,7 @@ import { DesktopProjectNavigation } from '~/app/_components/projects/navigation/
 import { MobileProjectNavigation } from '~/app/_components/projects/navigation/mobile-project-navigation'
 import { ProjectDetails } from '~/app/_components/projects/project-details'
 import { getScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
-import { getDefaultMetadata } from '~/utils/get-default-metadata'
+import { getProjectMetadata } from '~/utils/metadata'
 import { ScalingProjectSummary } from './_components/scaling-project-summary'
 
 const scalingProjects = [...layer2s, ...layer3s]
@@ -23,14 +23,18 @@ export async function generateMetadata({ params }: Props) {
   if (!project) {
     notFound()
   }
-  return getDefaultMetadata({
-    title: `${project.display.name} - L2BEAT`,
-    description: project.display.description,
-    openGraph: {
-      url: `/scaling/projects/${project.display.slug}`,
+  return getProjectMetadata({
+    project: {
+      name: project.display.name,
+      description: project.display.description,
     },
-    robots: {
-      index: false,
+    metadata: {
+      openGraph: {
+        url: `/scaling/projects/${project.display.slug}`,
+      },
+      robots: {
+        index: false,
+      },
     },
   })
 }
@@ -55,7 +59,7 @@ export default async function Page({ params }: Props) {
   return (
     <>
       {!isNavigationEmpty && (
-        <div className="z-100 sticky top-0 -mx-4 md:hidden">
+        <div className="sticky top-0 z-100 -mx-4 md:hidden">
           <MobileProjectNavigation sections={projectEntry.projectDetails} />
         </div>
       )}

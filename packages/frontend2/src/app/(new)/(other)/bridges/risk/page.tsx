@@ -1,6 +1,6 @@
 import { SimplePageHeader } from '~/app/_components/simple-page-header'
 import { getBridgeRiskEntries } from '~/server/features/bridges/get-bridge-risk-entries'
-import { getDefaultMetadata } from '~/utils/get-default-metadata'
+import { getDefaultMetadata } from '~/utils/metadata'
 import { BridgesFilterContextProvider } from '../_components/bridges-filter-context'
 import { BridgesRiskTables } from './_components/table/bridges-risks-tables'
 

@@ -26,3 +26,17 @@ export function getDefaultMetadata(metadata?: Metadata): Metadata {
     ...rest,
   }
 }
+
+export function getProjectMetadata(opts: {
+  project: {
+    name: string
+    description: string
+  }
+  metadata?: Metadata
+}): Metadata {
+  return getDefaultMetadata({
+    title: `${opts.project.name} - L2BEAT`,
+    description: opts.project.description,
+    ...opts.metadata,
+  })
+}

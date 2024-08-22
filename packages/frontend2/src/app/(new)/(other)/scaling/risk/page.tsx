@@ -1,4 +1,4 @@
-import { getDefaultMetadata } from '~/utils/get-default-metadata'
+import { getDefaultMetadata } from '~/utils/metadata'
 
 import { SimplePageHeader } from '~/app/_components/simple-page-header'
 import { getScalingRiskEntries } from '~/server/features/scaling/risks/get-scaling-risk-entries'

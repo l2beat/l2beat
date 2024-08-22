@@ -3,7 +3,7 @@ import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import { getBridgesSummaryEntries } from '~/server/features/bridges/get-bridge-summary-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
-import { getDefaultMetadata } from '~/utils/get-default-metadata'
+import { getDefaultMetadata } from '~/utils/metadata'
 import { BridgesFilterContextProvider } from '../_components/bridges-filter-context'
 import { BridgesSummaryTables } from './_components/table/bridges-summary-tables'
 

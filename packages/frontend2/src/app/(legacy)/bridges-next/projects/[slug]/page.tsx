@@ -5,7 +5,7 @@ import { DesktopProjectNavigation } from '~/app/_components/projects/navigation/
 import { MobileProjectNavigation } from '~/app/_components/projects/navigation/mobile-project-navigation'
 import { ProjectDetails } from '~/app/_components/projects/project-details'
 import { getBridgesProjectEntry } from '~/server/features/bridges/project/get-bridges-project-entry'
-import { getDefaultMetadata } from '~/utils/get-default-metadata'
+import { getProjectMetadata } from '~/utils/metadata'
 import { BridgesProjectSummary } from './_components/bridges-project-summary'
 
 export async function generateStaticParams() {
@@ -19,14 +19,18 @@ export async function generateMetadata({ params }: Props) {
   if (!project) {
     notFound()
   }
-  return getDefaultMetadata({
-    title: `${project.display.name} - L2BEAT`,
-    description: project.display.description,
-    openGraph: {
-      url: `/bridges/projects/${project.display.slug}`,
+  return getProjectMetadata({
+    project: {
+      name: project.display.name,
+      description: project.display.description,
     },
-    robots: {
-      index: false,
+    metadata: {
+      openGraph: {
+        url: `/bridges/projects/${project.display.slug}`,
+      },
+      robots: {
+        index: false,
+      },
     },
   })
 }

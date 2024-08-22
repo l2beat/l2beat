@@ -7,7 +7,7 @@ import { get7dTvlBreakdown } from '~/server/features/scaling/tvl/utils/get-7d-tv
 import { getProjectsVerificationStatuses } from '~/server/features/verification-status/get-projects-verification-statuses'
 import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
-import { getDefaultMetadata } from '~/utils/get-default-metadata'
+import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingAssociatedTokensContextProvider } from '../../_components/scaling-associated-tokens-context'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
 import { ScalingTvlTable } from './_components/scaling-tvl-table'
