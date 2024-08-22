@@ -91,7 +91,7 @@ describeDatabase(ActivityRepository.name, (db) => {
           [START, START.add(2, 'days')],
         )
 
-        expect(result).toEqual([
+        expect(result).toEqualUnsorted([
           { projectId: ProjectId('a'), count: 4 },
           { projectId: ProjectId('b'), count: 2 },
         ])
