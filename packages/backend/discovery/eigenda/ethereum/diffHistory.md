@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x5ef665d2b885a0b73f04d3767a9f82f44ed1f801
+Generated with discovered.json: 0x80eebe8bc7b0bf60e20d072f84ea43b63b5afb6c
 
-# Diff at Wed, 21 Aug 2024 09:12:39 GMT:
+# Diff at Thu, 22 Aug 2024 14:31:43 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@db437cf269f77763075511701a7df3b61ea065d7 block: 20482509
-- current block number: 20576022
+- comparing to: main@bf2d0ebf21a279d76dfafc24de12b751244afaf6 block: 20482509
+- current block number: 20584757
 
 ## Description
 
@@ -17,17 +17,69 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 20482509 (main branch discovery), not current.
 
 ```diff
+    contract StakeRegistry (0x006124Ae7976137266feeBFb3F4D2BE4C073139D) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x8247EF5705d3345516286B72bFE6D690197C2E99","via":[]}]
+    }
+```
+
+```diff
+    contract BLSApkRegistry (0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x8247EF5705d3345516286B72bFE6D690197C2E99","via":[]}]
+    }
+```
+
+```diff
+    contract RegistryCoordinator (0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x8247EF5705d3345516286B72bFE6D690197C2E99","via":[]}]
+    }
+```
+
+```diff
+    contract EjectionManager (0x130d8EA0052B45554e4C99079B84df292149Bd5E) {
+    +++ description: Contract used for ejection of operators from the RegistryCoordinator.
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x8247EF5705d3345516286B72bFE6D690197C2E99","via":[]}]
+    }
+```
+
+```diff
+    contract eigenDAProxyAdmin (0x8247EF5705d3345516286B72bFE6D690197C2E99) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x006124Ae7976137266feeBFb3F4D2BE4C073139D","via":[]},{"permission":"upgrade","target":"0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505","via":[]},{"permission":"upgrade","target":"0x0BAAc79acD45A023E19345c352d8a7a83C4e5656","via":[]},{"permission":"upgrade","target":"0x130d8EA0052B45554e4C99079B84df292149Bd5E","via":[]},{"permission":"upgrade","target":"0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","via":[]},{"permission":"upgrade","target":"0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030","via":[]}]
+      assignedPermissions:
++        {"upgrade":["0x006124Ae7976137266feeBFb3F4D2BE4C073139D","0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505","0x0BAAc79acD45A023E19345c352d8a7a83C4e5656","0x130d8EA0052B45554e4C99079B84df292149Bd5E","0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"]}
+    }
+```
+
+```diff
     contract EigenDAServiceManager (0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
     +++ description: None
       name:
 -        "eigenDAServiceManager"
 +        "EigenDAServiceManager"
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x8247EF5705d3345516286B72bFE6D690197C2E99","via":[]}]
 +++ description: The list of addresses authorized to confirm the availability of blobs batches to the DA bridge.
 +++ severity: MEDIUM
       values.batchConfirmers:
 +        ["0x8ED83c6Bb12E441Ca2C3a544F525d4a3Fb6484D8","0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED","0x454Ef2f69f91527856E06659f92a66f464C1ca4e"]
       fieldMeta.batchConfirmers:
 +        {"severity":"MEDIUM","description":"The list of addresses authorized to confirm the availability of blobs batches to the DA bridge."}
+    }
+```
+
+```diff
+    contract IndexRegistry (0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x8247EF5705d3345516286B72bFE6D690197C2E99","via":[]}]
     }
 ```
 
