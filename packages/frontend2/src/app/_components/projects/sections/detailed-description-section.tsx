@@ -1,7 +1,7 @@
 import React from 'react'
 import { Markdown } from '../../markdown/markdown'
 import { ProjectSection } from './project-section'
-import { ProjectSectionProps, type ProjectSectionId } from './types'
+import { type ProjectSectionId, ProjectSectionProps } from './types'
 
 export interface DetailedDescriptionSectionProps extends ProjectSectionProps {
   description: string

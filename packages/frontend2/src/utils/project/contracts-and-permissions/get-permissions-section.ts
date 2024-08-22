@@ -12,6 +12,7 @@ import {
   notUndefined,
 } from '@l2beat/shared-pure'
 import { concat } from 'lodash'
+import { PermissionsSectionProps } from '~/app/_components/projects/sections/permissions/permissions-section'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
 import {
@@ -23,7 +24,6 @@ import { ProjectSectionProps } from '../../../app/_components/projects/sections/
 import { getChain } from './get-chain'
 import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
-import { PermissionsSectionProps } from '~/app/_components/projects/sections/permissions/permissions-section'
 
 type ProjectParams = {
   id: string

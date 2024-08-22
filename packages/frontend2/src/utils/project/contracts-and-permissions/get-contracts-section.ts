@@ -19,6 +19,7 @@ import {
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
 import { concat } from 'lodash'
+import { ProjectSectionProps } from '~/app/_components/projects/sections/types'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
@@ -31,7 +32,6 @@ import { type TechnologyReference } from '../../../app/_components/projects/sect
 import { getChain } from './get-chain'
 import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
-import { ProjectSectionProps } from '~/app/_components/projects/sections/types'
 
 type ProjectParams = {
   id: string
