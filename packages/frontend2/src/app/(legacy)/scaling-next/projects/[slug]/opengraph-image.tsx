@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { layer2s, layer3s } from '@l2beat/config'
 import { ImageResponse } from 'next/og'
 import { NextResponse } from 'next/server'
@@ -49,7 +50,6 @@ export default async function Image({ params }: Props) {
       (res) => res.arrayBuffer(),
     ),
   ]
-  console.log(new URL('/fonts/Roboto-Medium.ttf', env.VERCEL_URL))
   return new ImageResponse(
     <div
       style={{
@@ -59,9 +59,9 @@ export default async function Image({ params }: Props) {
         alignItems: 'center',
       }}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
       <img
         src={`${env.VERCEL_URL}/meta-images/projects/template.png`}
+        alt=""
         {...size}
       />
 
@@ -87,7 +87,6 @@ export default async function Image({ params }: Props) {
             gap: 32,
           }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={`${env.VERCEL_URL}/icons/${project.display.slug}.png`}
             alt={`${project.display.name} logo`}
