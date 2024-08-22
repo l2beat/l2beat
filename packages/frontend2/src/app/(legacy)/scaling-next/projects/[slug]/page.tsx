@@ -1,5 +1,4 @@
 import { layer2s, layer3s } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
 import { notFound } from 'next/navigation'
 import { HighlightableLinkContextProvider } from '~/app/_components/link/highlightable/highlightable-link-context'
 import { DesktopProjectNavigation } from '~/app/_components/projects/navigation/desktop-project-navigation'
@@ -21,7 +20,9 @@ export async function generateMetadata({ params }: Props) {
   const project = scalingProjects.find(
     (layer) => layer.display.slug === params.slug,
   )
-  assert(project, 'Project not found')
+  if (!project) {
+    notFound()
+  }
   return getDefaultMetadata({
     title: `${project.display.name} - L2BEAT`,
     description: project.display.description,
