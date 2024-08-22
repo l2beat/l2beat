@@ -69,7 +69,7 @@ export function getProjectDetails(
       props: {
         milestones: bridge.milestones,
         id: 'milestones',
-        title: 'Milestones',
+        title: 'Milestones & Incidents',
       },
     })
   }

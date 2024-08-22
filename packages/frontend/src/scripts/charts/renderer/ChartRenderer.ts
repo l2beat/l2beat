@@ -226,6 +226,7 @@ export class ChartRenderer {
           ? renderMilestone(
               (width / (points.length - 1)) * i,
               point.milestone.link,
+              point.milestone.type ?? 'general',
             )
           : '',
       )

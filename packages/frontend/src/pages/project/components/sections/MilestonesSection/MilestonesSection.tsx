@@ -7,6 +7,8 @@ import { MilestoneIcon } from '../../../../../components/icons/symbols/Milestone
 import { ProjectSection } from '../common/ProjectSection'
 import { ProjectSectionId } from '../common/sectionId'
 import { ExpandableContainer } from './ExpandableContainer'
+import { IncidentIcon } from '../../../../../components/icons/symbols/IncidentIcon'
+import { cn } from '../../../../../utils/cn'
 
 export interface MilestonesSectionProps {
   title: string
@@ -26,36 +28,75 @@ export function MilestonesSection(props: MilestonesSectionProps) {
         className="relative"
         gradientClassName="from-white dark:from-neutral-900 md:from-gray-100 md:dark:from-zinc-900"
       >
-        <div className="absolute left-[15.4px] mt-2 h-full">
-          <div className="h-3/5 w-[1.7px] bg-green-400 dark:w-px dark:bg-green-500" />
+        {/*<div className="absolute left-[15.4px] mt-2 h-full">
           <div className="h-2/5 w-[1.7px] bg-gradient-to-b from-green-400 dark:w-px dark:from-green-500" />
-        </div>
+        </div>*/}
         <div className="ml-10">
           {props.milestones
             .sort(
               (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
             )
-            .map((milestone, i) => (
-              <div key={i} className="pb-7">
-                <MilestoneIcon className="absolute left-1.5" />
-                <p className="font-bold text-lg leading-none">
-                  {milestone.name}
-                </p>
-                <p className="text-sm dark:text-gray-400">
-                  {formatDate(milestone.date)}
-                </p>
-                <div className="mt-3">
-                  {milestone.description && (
-                    <Markdown className="text-sm leading-none dark:text-gray-400">
-                      {milestone.description}
-                    </Markdown>
-                  )}
-                  <Link className="text-sm" href={milestone.link} showArrow>
-                    Learn more
-                  </Link>
+            .map((milestone, i) => {
+              // Milestones may have a type of 'general' or 'incident'
+              // When the type is undefined, it is considered 'general'
+
+              const milestoneType = milestone.type || 'general'
+              const oldMilestone = props.milestones.at(i + 1)
+              const oldMilestoneType =
+                oldMilestone && (oldMilestone.type || 'general')
+
+              const Icon =
+                milestoneType === 'incident' ? IncidentIcon : MilestoneIcon
+
+              const milestoneLineClassName = oldMilestoneType
+                ? cn(
+                    milestoneType === 'general' &&
+                      'bg-green-400 dark:bg-green-500',
+                    milestoneType === 'incident' &&
+                      'bg-red-700 dark:bg-red-700',
+                    oldMilestoneType === 'incident' &&
+                      milestoneType === 'general' &&
+                      'bg-gradient-to-b from-green-400 dark:from-green-500 to-red-700 dark:to-red-700',
+                    oldMilestoneType === 'general' &&
+                      milestoneType === 'incident' &&
+                      'bg-gradient-to-b from-red-700 dark:from-red-700 to-green-400 dark:to-green-500',
+                  )
+                : cn(
+                    'bg-gradient-to-b h-3/4',
+                    milestoneType === 'incident' &&
+                      'from-red-700 dark:from-red-700',
+                    milestoneType === 'general' &&
+                      'from-green-400 dark:from-green-500',
+                  )
+
+              return (
+                <div key={i} className="pb-7 relative">
+                  <div
+                    className={cn(
+                      'absolute w-[1.7px] top-3 -left-[1.445rem] dark:w-px h-full',
+                      milestoneLineClassName,
+                    )}
+                  />
+                  <Icon className="absolute -left-8" />
+                  <p className="font-bold text-lg leading-none">
+                    {milestone.name}
+                  </p>
+                  <p className="text-sm dark:text-gray-400">
+                    {formatDate(milestone.date)}
+                  </p>
+                  <div className="mt-3">
+                    {milestone.description && (
+                      <Markdown className="text-sm leading-none dark:text-gray-400">
+                        {milestone.description}
+                      </Markdown>
+                    )}
+                    <Link className="text-sm" href={milestone.link} showArrow>
+                      Learn more
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
         </div>
       </ExpandableContainer>
     </ProjectSection>

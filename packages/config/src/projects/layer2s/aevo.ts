@@ -72,6 +72,8 @@ export const aevo: Layer2 = opStackL2({
       link: 'https://twitter.com/aevoxyz/status/1750013642278633510',
       date: '2024-01-16T00:00:00.00Z',
       description: 'Aevo starts using Celestia for data availability.',
+      // TODO: for testing purposes, remove this type later
+      type: 'incident',
     },
     {
       name: 'AEVO Token Airdrop',

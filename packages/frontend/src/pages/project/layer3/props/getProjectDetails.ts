@@ -86,7 +86,7 @@ export function getProjectDetails(
       props: {
         milestones: project.milestones,
         id: 'milestones',
-        title: 'Milestones',
+        title: 'Milestones & Incidents',
       },
     })
   }

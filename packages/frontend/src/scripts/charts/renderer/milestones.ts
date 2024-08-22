@@ -1,8 +1,9 @@
+import { MilestoneType } from '@l2beat/config'
 import { isMobile } from '../../utils/isMobile'
 
 const MILESTONE_SIZE = 20
 
-export function renderMilestone(x: number, url: string) {
+export function renderMilestone(x: number, url: string, type: MilestoneType) {
   const left = x - MILESTONE_SIZE / 2
   const top = -MILESTONE_SIZE / 2
   return `
@@ -14,7 +15,11 @@ export function renderMilestone(x: number, url: string) {
         view-box="0 0 ${MILESTONE_SIZE} ${MILESTONE_SIZE}"
         role="img"
         aria-label="Milestone icon"
-        class="fill-green-700 stroke-green-500"
+        class="${
+          type === 'incident'
+            ? 'fill-red-700 stroke-red-300'
+            : 'fill-green-700 stroke-green-500'
+        }"
       >
         <rect
           x="9.89941"
