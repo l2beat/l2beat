@@ -5,7 +5,7 @@ import { ContentWrapper } from '~/app/_components/content-wrapper'
 import { OutLink } from '~/app/_components/out-link'
 import { env } from '~/env'
 import OutLinkIcon from '~/icons/outlink.svg'
-import { getDefaultMetadata } from '~/utils/get-default-metadata'
+import { getDefaultMetadata } from '~/utils/metadata'
 import { fundingSources } from './funding-sources'
 
 export const metadata: Metadata = getDefaultMetadata({
