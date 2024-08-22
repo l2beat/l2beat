@@ -8,7 +8,7 @@ Generated with discovered.json: 0xa78d0dfbe50014a7f18693014e9aa908aa232e31
 
 ## Description
 
-New handler now fetching BLS signature keys of DAC members.
+New handler now fetching BLS signature keys of DAC members. EOA that can upgrade is removed.
 
 ## Watched changes
 
