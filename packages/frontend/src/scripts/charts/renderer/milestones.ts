@@ -17,7 +17,7 @@ export function renderMilestone(x: number, url: string, type: MilestoneType) {
         aria-label="Milestone icon"
         class="${
           type === 'incident'
-            ? 'stroke-[#DF0004] fill-[#8C0002]'
+            ? 'stroke-red-700 fill-red-800'
             : 'fill-green-700 stroke-green-500'
         }"
       >

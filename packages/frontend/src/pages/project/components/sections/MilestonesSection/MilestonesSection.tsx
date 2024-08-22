@@ -70,14 +70,14 @@ export function MilestonesSection(props: MilestonesSectionProps) {
                   )
 
               return (
-                <div key={i} className='relative pb-7'>
+                <div key={i} className="relative pb-7">
                   <div
                     className={cn(
                       '-left-[1.445rem] absolute top-3 h-full w-[1.7px] dark:w-px',
                       milestoneLineClassName,
                     )}
                   />
-                  <Icon className='-left-8 absolute' />
+                  <Icon className="-left-8 absolute" />
                   <p className="font-bold text-lg leading-none">
                     {milestone.name}
                   </p>

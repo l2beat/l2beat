@@ -76,7 +76,7 @@ export const POINT_CLASS_NAMES: PointClassNames = {
   },
   incident: {
     type: 'div',
-    className: 'size-2 rotate-45 border-2 border-[#DF0004] bg-[#8C0002]',
+    className: 'size-2 rotate-45 border-2 border-red-700 bg-red-800',
   },
 }
 
