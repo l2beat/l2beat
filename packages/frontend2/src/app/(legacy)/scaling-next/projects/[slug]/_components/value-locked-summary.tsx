@@ -1,6 +1,7 @@
 import { type WarningWithSentiment } from '@l2beat/config'
 import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
 import { ValueLockedBreakdown } from '~/app/_components/breakdown/value-locked-breakdown'
+import { CustomLink } from '~/app/_components/link/custom-link'
 import { PercentChange } from '~/app/_components/percent-change'
 import { Square } from '~/app/_components/square'
 import {
@@ -26,10 +27,10 @@ export interface ValueLockedSummaryProps {
   breakdown:
     | NonNullable<ScalingProjectEntry['header']['tvl']>['tvlBreakdown']
     | undefined
+  detailedBreakdownHref: string
   isArchived?: boolean
 }
 
-// TODO (scaling-project-page): Add tvl breakdown link
 export function ValueLockedSummary(props: ValueLockedSummaryProps) {
   const params = getParams(props.breakdown)
 
@@ -151,6 +152,13 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
           </div>
         ))}
       </div>
+      {params.breakdown.total > 0 ? (
+        <div className="mt-2 flex justify-center md:mt-0">
+          <CustomLink href={props.detailedBreakdownHref} className="text-xs">
+            View TVL Breakdown
+          </CustomLink>
+        </div>
+      ) : null}
     </div>
   )
 }
