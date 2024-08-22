@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x087ca83faaa7bd2b28e9b1196e8275034badbc7e
+
+# Diff at Thu, 22 Aug 2024 11:00:15 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@bf2d0ebf21a279d76dfafc24de12b751244afaf6 block: 20177361
+- current block number: 20583702
+
+## Description
+
+New handler now fetching BLS signature keys of DAC members.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20177361 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0) {
+    +++ description: State batches / commitments get posted here.
+      values.dacKeyset.blsSignatures:
++        ["YAWa/w4rq6sHO4ozBBwPL3un0A6NDa3V163lAXaJmPZmihk4ntRlBqwcjz3Hq2NJWgcMOYyZicf+cyzYzT33XiJRcNMidWZ04qP6b7ZRHZh7R0p+YycNLqBxfRdNtllWJglg7ynQO4Suel9bqlzc+0Yq8ZuoHTHJXVVd4psJariQ/dNE16NqExPpV/jfJdFVThaAoNqowj5K/bl0VWEKPzxnf4ttwFM38wnUOIvmNHvVOREbkiWzus6H/6B7Cl7BygWo5cs97lUTeMuatpIqR/yNw352EkRLOLrmFTrg36zV9F8jebStSVDZ3M002mBH1gpxq5pQFaCb0lpXE0vmB08dfg7jS6KWU/OMlLZzVPk2DVKhkqtpDC5JAMkRNxrwfQ=="]
+    }
+```
+
 Generated with discovered.json: 0x5cb8daed8dec2a3d20c721b8c5162895bd4f6215
 
 # Diff at Wed, 21 Aug 2024 10:05:19 GMT:

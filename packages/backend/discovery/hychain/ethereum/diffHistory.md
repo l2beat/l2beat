@@ -1,3 +1,42 @@
+Generated with discovered.json: 0xa78d0dfbe50014a7f18693014e9aa908aa232e31
+
+# Diff at Thu, 22 Aug 2024 11:47:04 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@bf2d0ebf21a279d76dfafc24de12b751244afaf6 block: 20177349
+- current block number: 20583935
+
+## Description
+
+New handler now fetching BLS signature keys of DAC members.
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881) {
+    +++ description: None
+      values.accessControl.EXECUTOR_ROLE.members.1:
+-        "0x798Fa726f0B4DF564681446D051b344E3FE4a6ca"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0x42875471D43d54B538B333F041E75a9a45Bf3Aa0"
++        "0x798Fa726f0B4DF564681446D051b344E3FE4a6ca"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20177349 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0xaF5800ADF22301968613c37DA9C3C2a486eA915A) {
+    +++ description: State batches / commitments get posted here.
+      values.dacKeyset.blsSignatures:
++        ["YBW51S21zw469kP9ztjGZG61FtnLVawzRnntDkNwhMaUIo8nNAU/FcH4LgPayQ60cQtu1MiKT+Vd2p0a0czxeoy4tLpnskmTMxhtCmxYNHNoQCmPW92k7OEnUnu84140NQmLidPlrteSkBwZeQVbOkNqMRkvGw6OCb2QmMk6cmqtxVmAvUeTKdM98+TqdJXuwwxR8YtxeKR4EI5ErnhcNRXpgNUpATc1o+aRjy1TvZZgE1FhIcKmOQSSly1JdiDYAQD3sYcPPX4ywtlJgDz723s71zVCSkJ7l/uFLH6M4HJbaMFCgv+bdf+cu5ZNEKPgpRIPtNWxMLXi/rE8o3H+0JZCs1B3LZsWBbfOtc4bhvvCkxBzdJI1ddqoVxbdzdkzDg=="]
+    }
+```
+
 Generated with discovered.json: 0x4d122288ae295fc07f06e793fca6cfbe7e019162
 
 # Diff at Wed, 21 Aug 2024 10:03:12 GMT:
