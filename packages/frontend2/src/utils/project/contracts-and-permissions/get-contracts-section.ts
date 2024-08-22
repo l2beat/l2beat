@@ -31,6 +31,7 @@ import { type TechnologyReference } from '../../../app/_components/projects/sect
 import { getChain } from './get-chain'
 import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
+import { ProjectSectionProps } from '~/app/_components/projects/sections/types'
 
 type ProjectParams = {
   id: string
@@ -50,12 +51,17 @@ type ProjectParams = {
     }
 )
 
+type ContractsSection = Omit<
+  ContractsSectionProps,
+  keyof Omit<ProjectSectionProps, 'isUnderReview'>
+>
+
 export function getContractsSection(
   projectParams: ProjectParams,
   contractsVerificationStatuses: ContractsVerificationStatuses,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
   implementationChange: ImplementationChangeReportApiResponse | undefined,
-): Omit<ContractsSectionProps, 'sectionOrder' | 'id' | 'title'> | undefined {
+): ContractsSection | undefined {
   if (projectParams.contracts.addresses.length === 0) {
     return undefined
   }

@@ -6,25 +6,24 @@ import { type ProjectSectionProps } from './types'
 
 export interface StateDerivationSectionProps
   extends ScalingProjectStateDerivation,
-    ProjectSectionProps {
-  isUnderReview: boolean | undefined
-}
+    ProjectSectionProps {}
 
-export function StateDerivationSection(props: StateDerivationSectionProps) {
+export function StateDerivationSection({
+  nodeSoftware,
+  compressionScheme,
+  genesisState,
+  dataFormat,
+  ...sectionProps
+}: StateDerivationSectionProps) {
   return (
-    <ProjectSection
-      title={props.title}
-      id={props.id}
-      sectionOrder={props.sectionOrder}
-      isUnderReview={props.isUnderReview}
-    >
+    <ProjectSection {...sectionProps}>
       <div className="flex flex-col gap-6">
-        <Item title="Node software">{props.nodeSoftware}</Item>
-        {props.compressionScheme && (
-          <Item title="Compression scheme">{props.compressionScheme}</Item>
+        <Item title="Node software">{nodeSoftware}</Item>
+        {compressionScheme && (
+          <Item title="Compression scheme">{compressionScheme}</Item>
         )}
-        <Item title="Genesis state">{props.genesisState}</Item>
-        <Item title="Data format">{props.dataFormat}</Item>
+        <Item title="Genesis state">{genesisState}</Item>
+        <Item title="Data format">{dataFormat}</Item>
       </div>
     </ProjectSection>
   )

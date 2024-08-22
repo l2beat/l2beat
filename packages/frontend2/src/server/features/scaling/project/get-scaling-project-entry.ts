@@ -6,7 +6,7 @@ import { getContractsVerificationStatuses } from '../../verification-status/get-
 import { getManuallyVerifiedContracts } from '../../verification-status/get-manually-verified-contracts'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getActivityProjectStats } from '../activity/get-activity-project-stats'
-import { getTvlProjectData } from '../tvl/get-tvl-project-data'
+import { getTvlProjectStats } from '../tvl/get-tvl-project-stats'
 import { getAssociatedTokenWarning } from '../tvl/utils/get-associated-token-warning'
 import { getL2ProjectDetails } from './utils/get-l2-project-details'
 import { getL3ProjectDetails } from './utils/get-l3-project-details'
@@ -76,37 +76,37 @@ export async function getScalingProjectEntry(project: ScalingProject) {
 }
 
 async function getHeader(project: ScalingProject) {
-  const projectStats = await getActivityProjectStats(project.id)
-  const tvlProjectData = await getTvlProjectData(project.id)
-
-  const associatedTokens = project.config.associatedTokens ?? []
+  const [activityProjectStats, tvlProjectStats] = await Promise.all([
+    getActivityProjectStats(project.id),
+    getTvlProjectStats(project.id),
+  ])
 
   return {
     description: project.display.description,
     warning: project.display.headerWarning,
     category: project.display.category,
     purposes: project.display.purposes,
-    activity: projectStats,
+    activity: activityProjectStats,
     rosetteValues: getScalingRosetteValues(project.riskView),
     links: getProjectLinks(project.display.links),
-    tvl: tvlProjectData
+    tvl: tvlProjectStats
       ? {
           tokenBreakdown: {
-            ...tvlProjectData.tokenBreakdown,
+            ...tvlProjectStats.tokenBreakdown,
             warnings: compact([
-              tvlProjectData.tokenBreakdown.total > 0 &&
+              tvlProjectStats.tokenBreakdown.total > 0 &&
                 getAssociatedTokenWarning({
                   associatedRatio:
-                    tvlProjectData.tokenBreakdown.associated /
-                    tvlProjectData.tokenBreakdown.total,
+                    tvlProjectStats.tokenBreakdown.associated /
+                    tvlProjectStats.tokenBreakdown.total,
                   name: project.display.name,
-                  associatedTokens,
+                  associatedTokens: project.config.associatedTokens ?? [],
                 }),
             ]),
-            associatedTokens,
+            associatedTokens: project.config.associatedTokens,
           },
           tvlBreakdown: {
-            ...tvlProjectData.tvlBreakdown,
+            ...tvlProjectStats.tvlBreakdown,
             warning: project.display.tvlWarning,
           },
         }

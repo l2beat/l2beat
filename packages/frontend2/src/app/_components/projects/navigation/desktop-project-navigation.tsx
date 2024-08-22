@@ -12,8 +12,8 @@ import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import { useCurrentSection } from '~/hooks/use-current-section'
 import SummaryIcon from '~/icons/pages/summary.svg'
 import { cn } from '~/utils/cn'
-import { UnderReviewCallout } from '../../under-review-callout'
-import { type ProjectDetailsSection } from '../types'
+import { UnderReviewCallout } from '../under-review-callout'
+import { type ProjectDetailsSection } from '../sections/types'
 
 interface Project {
   title: string

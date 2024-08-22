@@ -14,33 +14,26 @@ import {
 import { CustomLink } from '../../link/custom-link'
 import { Markdown } from '../../markdown/markdown'
 import { ProjectSection } from './project-section'
-import { type ProjectSectionId } from './types'
+import { ProjectSectionProps, type ProjectSectionId } from './types'
 
-export interface MilestonesSectionProps {
-  title: string
-  id: ProjectSectionId
-  sectionOrder: number
+export interface MilestonesSectionProps extends ProjectSectionProps {
   milestones: Milestone[]
 }
 
-export function MilestonesSection(props: MilestonesSectionProps) {
+export function MilestonesSection({
+  milestones,
+  ...sectionProps
+}: MilestonesSectionProps) {
   const [isOpen, setIsOpen] = useState(false)
   return (
-    <ProjectSection
-      title={props.title}
-      id={props.id}
-      sectionOrder={props.sectionOrder}
-    >
-      {props.milestones.length < 3 ? (
-        <MilestonesBase milestones={props.milestones} />
+    <ProjectSection {...sectionProps}>
+      {milestones.length < 3 ? (
+        <MilestonesBase milestones={milestones} />
       ) : (
         <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-          <MilestonesBase
-            milestones={props.milestones.slice(0, 2)}
-            isOpen={isOpen}
-          />
+          <MilestonesBase milestones={milestones.slice(0, 2)} isOpen={isOpen} />
           <CollapsibleContent>
-            <MilestonesBase milestones={props.milestones.slice(2)} />
+            <MilestonesBase milestones={milestones.slice(2)} />
           </CollapsibleContent>
           <CollapsibleTrigger asChild>
             <Button

@@ -3,13 +3,10 @@ import React from 'react'
 import { WarningBar } from '~/app/_components/warning-bar'
 import ShieldIcon from '~/icons/shield.svg'
 import UnverifiedIcon from '~/icons/unverified.svg'
-import { ProjectSection } from '../project-section'
-import { type ProjectSectionId } from '../types'
+import { ProjectSection } from './project-section'
+import { ProjectSectionProps } from './types'
 
-export interface RiskSummarySectionProps {
-  title: string
-  id: ProjectSectionId
-  sectionOrder: number
+export interface RiskSummarySectionProps extends ProjectSectionProps {
   riskGroups: RiskGroup[]
   warning: string | undefined
   isVerified: boolean | undefined
@@ -29,19 +26,17 @@ export interface RiskItem {
 }
 
 export function RiskSummarySection({
-  title,
-  id,
-  sectionOrder,
   riskGroups,
   isVerified,
   redWarning,
   warning,
+  ...sectionProps
 }: RiskSummarySectionProps) {
   if (riskGroups.length === 0) {
     return null
   }
   return (
-    <ProjectSection title={title} id={id} sectionOrder={sectionOrder}>
+    <ProjectSection {...sectionProps}>
       {isVerified === false && (
         <WarningBar
           text="This project includes unverified contracts."

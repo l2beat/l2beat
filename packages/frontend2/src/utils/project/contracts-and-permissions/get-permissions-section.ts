@@ -19,10 +19,11 @@ import {
   type TechnologyContractAddress,
 } from '../../../app/_components/projects/sections/permissions/contract-entry'
 import { type UsedInProject } from '../../../app/_components/projects/sections/permissions/used-in-project'
-import { type ProjectDetailsPermissionsSection } from '../../../app/_components/projects/sections/types'
+import { ProjectSectionProps } from '../../../app/_components/projects/sections/types'
 import { getChain } from './get-chain'
 import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
+import { PermissionsSectionProps } from '~/app/_components/projects/sections/permissions/permissions-section'
 
 type ProjectParams = {
   id: string
@@ -37,11 +38,16 @@ type ProjectParams = {
   | { type: Layer3['type']; hostChain: string }
 )
 
+type PermissionSection = Omit<
+  PermissionsSectionProps,
+  keyof Omit<ProjectSectionProps, 'isUnderReview'>
+>
+
 export function getPermissionsSection(
   projectParams: ProjectParams,
   contractsVerificationStatuses: ContractsVerificationStatuses,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
-): ProjectDetailsPermissionsSection['props'] | undefined {
+): PermissionSection | undefined {
   if (
     projectParams.permissions.length === 0 &&
     (!projectParams.nativePermissions ||
@@ -50,9 +56,7 @@ export function getPermissionsSection(
     return undefined
   }
 
-  const section: ProjectDetailsPermissionsSection['props'] = {
-    id: 'permissions',
-    title: 'DA Bridge permissions',
+  const section: PermissionSection = {
     isUnderReview: projectParams.isUnderReview,
     permissions: [],
     nativePermissions: {},

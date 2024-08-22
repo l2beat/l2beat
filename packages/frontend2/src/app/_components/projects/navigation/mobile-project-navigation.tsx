@@ -6,7 +6,7 @@ import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
 import { useCurrentSection } from '~/hooks/use-current-section'
 import { cn } from '~/utils/cn'
 import { scrollHorizontallyToItem } from '~/utils/scroll-to-item'
-import { type ProjectDetailsSection } from '../types'
+import { type ProjectDetailsSection } from '../sections/types'
 
 interface Props {
   sections: ProjectDetailsSection[]
