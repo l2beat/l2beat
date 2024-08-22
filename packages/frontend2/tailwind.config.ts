@@ -164,6 +164,7 @@ const config: Config = {
       60: '60', // Hoverable dropdown menu, Chart "Coming soon" disclaimer
       100: '100', // Mobile project navigation
       110: '110', // Tooltip
+      120: '110', // Top-view banner
       999: '999', // Mobile side menu
     },
     extend: {
