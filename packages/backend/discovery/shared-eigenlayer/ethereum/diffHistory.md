@@ -8,7 +8,7 @@ Generated with discovered.json: 0x208539bdcc602bf240b41d9930d6837db187fb9f
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Added Pausers addresses discovery from PauserRegistry (which manages pausing of EigenLayer contracts), changed multisigs name capitalisation for consistency with EigenDA.
 
 ## Watched changes
 

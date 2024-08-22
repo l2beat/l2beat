@@ -8,7 +8,7 @@ Generated with discovered.json: 0x5ef665d2b885a0b73f04d3767a9f82f44ed1f801
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Added batch confirmers discovery (addresses allowed to call confirmBatch method).
 
 ## Config/verification related changes
 
