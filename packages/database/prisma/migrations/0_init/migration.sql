@@ -1,7 +1,4 @@
 -- CreateSchema
-CREATE SCHEMA IF NOT EXISTS "activity";
-
--- CreateSchema
 CREATE SCHEMA IF NOT EXISTS "public";
 
 -- CreateEnum
@@ -388,34 +385,6 @@ CREATE TABLE "public"."verifier_status" (
     "last_updated" TIMESTAMP(6) NOT NULL,
 
     CONSTRAINT "verifier_status_pkey" PRIMARY KEY ("address","chain_id")
-);
-
--- CreateTable
-CREATE TABLE "activity"."block" (
-    "project_id" VARCHAR(255) NOT NULL,
-    "unix_timestamp" TIMESTAMP(6) NOT NULL,
-    "count" INTEGER NOT NULL,
-    "block_number" INTEGER NOT NULL,
-
-    CONSTRAINT "block_pkey" PRIMARY KEY ("project_id","block_number")
-);
-
--- CreateTable
-CREATE TABLE "activity"."starkex" (
-    "project_id" VARCHAR(255) NOT NULL,
-    "unix_timestamp" TIMESTAMP(6) NOT NULL,
-    "count" INTEGER NOT NULL,
-
-    CONSTRAINT "starkex_pkey" PRIMARY KEY ("project_id","unix_timestamp")
-);
-
--- CreateTable
-CREATE TABLE "activity"."zksync" (
-    "block_number" INTEGER NOT NULL,
-    "block_index" INTEGER NOT NULL,
-    "unix_timestamp" TIMESTAMP(6) NOT NULL,
-
-    CONSTRAINT "zksync_pkey" PRIMARY KEY ("block_number","block_index")
 );
 
 -- CreateTable
