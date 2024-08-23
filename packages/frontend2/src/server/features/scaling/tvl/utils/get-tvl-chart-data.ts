@@ -4,55 +4,36 @@ import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
+import { z } from 'zod'
 import { getEthPrices } from './get-eth-prices'
-import { type TvlProject, getTvlProjects } from './get-tvl-projects'
+import { getTvlProjects } from './get-tvl-projects'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
-import { type TvlChartRange } from './range'
+import {
+  TvlProjectFilter,
+  createTvlProjectsFilter,
+} from './project-filter-utils'
+import { TvlChartRange } from './range'
 import { sumValuesPerSource } from './sum-values-per-source'
 
+export const TvlChartDataParams = z
+  .object({
+    range: TvlChartRange,
+    excludeAssociatedTokens: z.boolean().optional(),
+  })
+  .and(TvlProjectFilter)
+
+export type TvlChartDataParams = z.infer<typeof TvlChartDataParams>
+
 export async function getTvlChartData(
-  ...args: Parameters<typeof getCachedScalingChartData>
+  ...args: Parameters<typeof getCachedTvlChartData>
 ) {
   noStore()
-  return getCachedScalingChartData(...args)
+  return getCachedTvlChartData(...args)
 }
 
-type CommonOptions = {
-  range: TvlChartRange
-  excludeAssociatedTokens?: boolean
-}
-
-type DataType =
-  | {
-      type: 'layer2'
-    }
-  | {
-      type: 'bridges'
-    }
-  | {
-      type: 'projects'
-      projectIds: string[]
-    }
-
-export const getCachedScalingChartData = cache(
-  async ({
-    range,
-    excludeAssociatedTokens,
-    ...rest
-  }: CommonOptions & DataType) => {
-    const projectsFilter = (() => {
-      if (rest.type === 'layer2') {
-        return (project: TvlProject) =>
-          project.type === 'layer2' || project.type === 'layer3'
-      }
-
-      if (rest.type === 'bridges') {
-        return (project: TvlProject) => project.type === 'bridge'
-      }
-
-      const projectIds = new Set(rest.projectIds)
-      return (project: TvlProject) => projectIds.has(project.id)
-    })()
+export const getCachedTvlChartData = cache(
+  async ({ range, excludeAssociatedTokens, ...filter }: TvlChartDataParams) => {
+    const projectsFilter = createTvlProjectsFilter(filter)
 
     const tvlProjects = getTvlProjects().filter(projectsFilter)
 
@@ -90,5 +71,5 @@ export const getCachedScalingChartData = cache(
 )
 
 export type ScalingSummaryData = Awaited<
-  ReturnType<typeof getCachedScalingChartData>
+  ReturnType<typeof getCachedTvlChartData>
 >

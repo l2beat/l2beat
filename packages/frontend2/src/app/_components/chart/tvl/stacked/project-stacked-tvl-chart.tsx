@@ -27,7 +27,7 @@ export function ProjectStackedTvlChart({ milestones, projectId }: Props) {
   )
   const [scale, setScale] = useState('lin')
 
-  const { data } = api.scaling.summary.chart.useQuery({
+  const { data } = api.tvl.chart.useQuery({
     type: 'projects',
     projectIds: [projectId],
     range: timeRange,

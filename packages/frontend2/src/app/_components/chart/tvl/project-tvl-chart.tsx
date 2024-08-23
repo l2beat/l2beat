@@ -21,7 +21,7 @@ export function ProjectTvlChart({ projectId, milestones }: Props) {
 
   const [timeRange, setTimeRange] = useState<TvlChartRange>('7d')
 
-  const { data } = api.bridges.summary.chart.useQuery({
+  const { data } = api.tvl.chart.useQuery({
     range: timeRange,
     type: 'projects',
     projectIds: [projectId],

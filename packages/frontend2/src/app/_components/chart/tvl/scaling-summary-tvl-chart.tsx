@@ -12,7 +12,7 @@ import { ChartProvider } from '~/app/_components/chart/core/chart-provider'
 import { useCookieState } from '~/hooks/use-cookie-state'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
-import { type TvlLayer2ProjectFilter } from '~/server/features/scaling/tvl/utils/project-filter-utils'
+import { type TvlProjectFilter } from '~/server/features/scaling/tvl/utils/project-filter-utils'
 import { api } from '~/trpc/react'
 import { TvlChartHeader } from './tvl-chart-header'
 import { TvlChartHover } from './tvl-chart-hover'
@@ -37,7 +37,7 @@ export function ScalingSummaryTvlChart({ entries, milestones }: Props) {
   )
   const [timeRange, setTimeRange] = useCookieState('scalingSummaryChartRange')
 
-  const chartDataType = useMemo<TvlLayer2ProjectFilter>(() => {
+  const chartDataType = useMemo<TvlProjectFilter>(() => {
     if (filters.isEmpty) {
       return { type: 'layer2' }
     }
@@ -48,7 +48,7 @@ export function ScalingSummaryTvlChart({ entries, milestones }: Props) {
     }
   }, [entries, includeFilter, filters])
 
-  const { data } = api.scaling.summary.chart.useQuery({
+  const { data } = api.tvl.chart.useQuery({
     range: timeRange,
     excludeAssociatedTokens,
     ...chartDataType,

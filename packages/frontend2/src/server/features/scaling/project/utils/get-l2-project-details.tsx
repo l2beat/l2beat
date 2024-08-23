@@ -68,7 +68,7 @@ export async function getL2ProjectDetails({
   const operatorSection = getOperatorSection(project)
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
-  const costsChartData = await api.scaling.costs.chart({
+  const costsChartData = await api.costs.chart({
     range: '1d',
     filter: { type: 'projects', projectIds: [project.id] },
   })

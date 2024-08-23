@@ -21,10 +21,9 @@ export const metadata = getDefaultMetadata({
 export default async function Page() {
   const entries = await getScalingSummaryEntries()
 
-  await api.scaling.summary.chart.prefetch({
-    excludeAssociatedTokens: false,
-    range: getCookie('scalingSummaryChartRange'),
+  await api.tvl.chart.prefetch({
     type: 'layer2',
+    range: getCookie('scalingSummaryChartRange'),
   })
 
   return (

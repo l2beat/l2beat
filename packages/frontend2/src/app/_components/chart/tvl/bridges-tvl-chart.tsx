@@ -24,9 +24,9 @@ export function BridgesTvlChart() {
   )
   const [timeRange, setTimeRange] = useCookieState('bridgesSummaryChartRange')
 
-  const { data } = api.bridges.summary.chart.useQuery({
+  const { data } = api.tvl.chart.useQuery({
     range: timeRange,
-    type: 'bridges',
+    type: 'bridge',
   })
 
   const {
@@ -95,7 +95,7 @@ function BridgesChartHeader({
     <header className="flex flex-col justify-between text-base md:flex-row">
       <div>
         <h1 className="mb-1 text-3xl font-bold">Value Locked</h1>
-        <p className="hidden text-gray-500 md:block dark:text-gray-600">
+        <p className="hidden text-gray-500 dark:text-gray-600 md:block">
           Sum of all funds locked on Ethereum converted to {unit.toUpperCase()}
         </p>
       </div>
@@ -117,7 +117,7 @@ function BridgesChartHeader({
           </p>
         )}
       </div>
-      <hr className="mt-2 w-full border-gray-200 md:hidden md:border-t dark:border-zinc-700" />
+      <hr className="mt-2 w-full border-gray-200 dark:border-zinc-700 md:hidden md:border-t" />
     </header>
   )
 }
