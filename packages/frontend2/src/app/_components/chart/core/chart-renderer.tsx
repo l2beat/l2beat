@@ -1,3 +1,4 @@
+'use client'
 import { useTheme } from 'next-themes'
 import { useCallback, useEffect, useRef } from 'react'
 import { useEventListener } from '~/hooks/use-event-listener'
@@ -10,6 +11,7 @@ import { getFillStyle, getStrokeStyle } from './utils/get-style'
 
 export function ChartRenderer() {
   const ref = useRef<HTMLCanvasElement>(null)
+  const width = useRef(0)
   const setLoading = useChartSetLoading()
   const { setRect } = useChartRect()
   const context = useChartContext()
@@ -79,8 +81,11 @@ export function ChartRenderer() {
   }, [render, setupCanvas])
 
   useEventListener('resize', () => {
-    setupCanvas()
-    render()
+    if (width.current !== window.outerWidth) {
+      setupCanvas()
+      render()
+    }
+    width.current = window.outerWidth
   })
 
   return (
