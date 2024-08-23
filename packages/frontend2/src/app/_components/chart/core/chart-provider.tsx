@@ -1,3 +1,4 @@
+import { useIsClient } from '~/hooks/use-is-client'
 import {
   ChartContextProvider,
   type ChartContextProviderParams,
@@ -23,9 +24,10 @@ export function ChartProvider<T>({
   isLoading,
   ...rest
 }: ChartProviderProps<T>) {
+  const isClient = useIsClient()
   return (
     <ChartContextProvider {...rest}>
-      <ChartLoadingContextProvider isLoading={isLoading}>
+      <ChartLoadingContextProvider isLoading={isLoading || !isClient}>
         <ChartHoverContextProvider renderHoverContents={renderHoverContents}>
           <ChartRectContextProvider>{children}</ChartRectContextProvider>
         </ChartHoverContextProvider>
