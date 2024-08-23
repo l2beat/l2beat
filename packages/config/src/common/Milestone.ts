@@ -5,5 +5,5 @@ export interface Milestone {
   link: string
   date: string
   description?: string
-  type?: MilestoneType
+  type: MilestoneType
 }

@@ -78,34 +78,28 @@ function MilestonesBase(props: {
               return null
             }
 
-            // Milestones may have a type of 'general' or 'incident'
-            // When the type is undefined, it is considered 'general'
-
-            const milestoneType = milestone.type ?? 'general'
             const previousMilestone = props.milestones.at(i + 1)
-            const previousMilestoneType =
-              previousMilestone && (previousMilestone.type ?? 'general')
 
             const Icon =
-              milestoneType === 'incident' ? IncidentIcon : MilestoneIcon
+              milestone.type === 'incident' ? IncidentIcon : MilestoneIcon
 
-            const milestoneLineClassName = previousMilestoneType
+            const milestoneLineClassName = previousMilestone?.type
               ? cn(
-                  milestoneType === 'general' &&
+                  milestone.type === 'general' &&
                     'bg-green-400 dark:bg-green-500',
-                  milestoneType === 'incident' && 'bg-red-700 dark:bg-red-700',
-                  previousMilestoneType === 'incident' &&
-                    milestoneType === 'general' &&
+                  milestone.type === 'incident' && 'bg-red-700 dark:bg-red-700',
+                  previousMilestone.type === 'incident' &&
+                    milestone.type === 'general' &&
                     'bg-gradient-to-b from-green-400 to-red-700 dark:from-green-500 dark:to-red-700',
-                  previousMilestoneType === 'general' &&
-                    milestoneType === 'incident' &&
+                  previousMilestone.type === 'general' &&
+                    milestone.type === 'incident' &&
                     'bg-gradient-to-b from-red-700 to-green-400 dark:from-red-700 dark:to-green-500',
                 )
               : cn(
                   'h-3/4 bg-gradient-to-b',
-                  milestoneType === 'incident' &&
+                  milestone.type === 'incident' &&
                     'from-red-700 dark:from-red-700',
-                  milestoneType === 'general' &&
+                  milestone.type === 'general' &&
                     'from-green-400 dark:from-green-500',
                 )
 

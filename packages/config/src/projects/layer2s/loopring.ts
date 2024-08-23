@@ -431,6 +431,7 @@ export const loopring: Layer2 = {
       date: '2019-12-04T00:00:00Z',
       description:
         'Loopring Protocol 3.0 is fully operational with support for orderbook trading on WeDex.',
+      type: 'general',
     },
     {
       name: 'Loopring Protocol 3.6 Pre-release',
@@ -438,6 +439,7 @@ export const loopring: Layer2 = {
       date: '2020-09-22T00:00:00Z',
       description:
         'Enhancements in transfers, order-book trading and AMM swap.',
+      type: 'general',
     },
     {
       name: 'Loopring’s ZK Rollup AMM is Live',
@@ -445,12 +447,14 @@ export const loopring: Layer2 = {
       date: '2020-12-02T00:00:00Z',
       description:
         'Improved implementation, enabling gas-free instant swaps and liquidity changes.',
+      type: 'general',
     },
     {
       name: 'Loopring Supports Payments',
       link: 'https://medium.loopring.io/loopring-pay-is-live-zkrollup-transfers-on-ethereum-770d35213408',
       date: '2020-06-06T00:00:00Z',
       description: 'Support for ERC20 transfers is live on Loopring.',
+      type: 'general',
     },
     {
       name: 'DeFi Port is Live on Loopring',
@@ -458,12 +462,14 @@ export const loopring: Layer2 = {
       date: '2022-09-27T00:00:00Z',
       description:
         'Dutch auctions, lending, and other DeFi functions can be performed on Loopring.',
+      type: 'general',
     },
     {
       name: 'Loopring Supports NFTs',
       link: 'https://medium.loopring.io/loopring-now-supports-nfts-on-l2-29174a343d0d',
       date: '2021-08-24T00:00:00Z',
       description: 'Loopring supports NFT minting, trading, and transfers.',
+      type: 'general',
     },
     {
       name: 'Loopring DEX is online',
@@ -471,6 +477,7 @@ export const loopring: Layer2 = {
       date: '2020-02-27T00:00:00Z',
       description:
         'ZK Rollup trading is live, as Loopring launches their order book based exchange.',
+      type: 'general',
     },
   ],
 }

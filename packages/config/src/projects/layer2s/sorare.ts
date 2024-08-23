@@ -189,6 +189,7 @@ export const sorare: Layer2 = {
       link: 'https://medium.com/sorare/were-live-on-our-scaling-solution-starkware-62438abee9a8',
       description:
         'Layer 2 scaling solution powered by Starkware, is live on Ethereum.',
+      type: 'general',
     },
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],

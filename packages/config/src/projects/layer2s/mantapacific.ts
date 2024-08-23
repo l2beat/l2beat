@@ -93,6 +93,7 @@ export const mantapacific: Layer2 = opStackL2({
       link: 'https://mantanetwork.medium.com/manta-pacific-mainnet-alpha-launch-743c6bc2b95e',
       date: '2023-09-12T00:00:00Z',
       description: 'Manta Pacific is live on mainnet.',
+      type: 'general',
     },
   ],
   badges: [Badge.DA.Celestia, Badge.RaaS.Caldera],

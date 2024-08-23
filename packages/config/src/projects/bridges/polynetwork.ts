@@ -238,11 +238,13 @@ export const polynetwork: Bridge = {
       name: 'Contracts hacked for $611M',
       date: '2021-08-10T00:00:00.00Z',
       link: 'https://en.wikipedia.org/wiki/Poly_Network_exploit',
+      type: 'general',
     },
     {
       name: 'Compromised multisig steals funds',
       date: '2023-07-03T00:00:00.00Z',
       link: 'https://rekt.news/poly-network-rekt2/',
+      type: 'general',
     },
   ],
 }

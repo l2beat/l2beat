@@ -306,6 +306,7 @@ export const aztecV1: Layer2 = {
       link: 'https://github.com/AztecProtocol/aztec-v2-ejector/',
       description:
         'Aztec stops their rollup operators. Users now have to run the Rollup manually.',
+      type: 'general',
     },
     {
       name: 'Aztec 2.0',
@@ -313,6 +314,7 @@ export const aztecV1: Layer2 = {
       link: 'https://medium.com/aztec-protocol/launching-aztec-2-0-rollup-ac7db8012f4b',
       description:
         'Private Rollup is live on mainnet, allowing user to access DeFi.',
+      type: 'general',
     },
   ],
 }
