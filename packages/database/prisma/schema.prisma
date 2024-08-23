@@ -42,7 +42,6 @@ model Stake {
 //   createdAt          DateTime        @default(now())
 
 //   @@unique([networkId, address])
-//   @@schema("public")
 // }
 
 // enum ExternalBridgeType {
@@ -50,8 +49,6 @@ model Stake {
 //   LayerZeroV1
 //   Orbit
 //   Wormhole
-
-//   @@schema("public")
 // }
 
 // model ExternalBridge {
@@ -62,8 +59,6 @@ model Stake {
 //   escrows   BridgeEscrow[]
 //   updatedAt DateTime           @default(now()) @updatedAt
 //   createdAt DateTime           @default(now())
-
-//   @@schema("public")
 // }
 
 // model Deployment {
@@ -79,14 +74,10 @@ model Stake {
 //   sourceAvailable Boolean
 //   updatedAt       DateTime  @default(now()) @updatedAt
 //   createdAt       DateTime  @default(now())
-
-//   @@schema("public")
 // }
 
 // enum ExplorerType {
 //   Etherscan
-
-//   @@schema("public")
 // }
 
 // model NetworkRpc {
@@ -96,8 +87,6 @@ model Stake {
 //   url       String
 //   updatedAt DateTime @default(now()) @updatedAt
 //   createdAt DateTime @default(now())
-
-//   @@schema("public")
 // }
 
 // model NetworkExplorer {
@@ -112,7 +101,6 @@ model Stake {
 
 //   @@unique(networkId)
 //   @@unique([networkId, type])
-//   @@schema("public")
 // }
 
 // model Network {
@@ -133,7 +121,6 @@ model Stake {
 //   updatedAt                  DateTime         @default(now()) @updatedAt
 //   createdAt                  DateTime         @default(now())
 
-//   @@schema("public")
 // }
 
 // model TokenBridge {
@@ -146,8 +133,6 @@ model Stake {
 //   externalBridge   ExternalBridge? @relation(fields: [externalBridgeId], references: [id])
 //   updatedAt        DateTime        @default(now()) @updatedAt
 //   createdAt        DateTime        @default(now())
-
-//   @@schema("public")
 // }
 
 // model TokenMeta {
@@ -165,7 +150,6 @@ model Stake {
 //   createdAt    DateTime @default(now())
 
 //   @@unique([tokenId, source])
-//   @@schema("public")
 // }
 
 // model Token {
@@ -182,7 +166,6 @@ model Stake {
 //   createdAt   DateTime       @default(now())
 
 //   @@unique([networkId, address])
-//   @@schema("public")
 // }
 
 // model Cache {
@@ -192,8 +175,6 @@ model Stake {
 //   blockNumber Int?
 //   updatedAt   DateTime @default(now()) @updatedAt
 //   createdAt   DateTime @default(now())
-
-//   @@schema("public")
 // }
 
 model Activity {
