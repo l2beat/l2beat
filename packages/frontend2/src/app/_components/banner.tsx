@@ -27,7 +27,7 @@ export function Banner() {
       </div>
       <div className="flex gap-1 text-sm">
         <span>New release:</span>
-        <span className="font-medium">Fraud-proof wars</span>
+        <span className="font-medium">Fraud Proof Wars</span>
       </div>
       <BannerActionButton />
     </div>
