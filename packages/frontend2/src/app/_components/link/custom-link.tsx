@@ -23,8 +23,6 @@ const linkVariants = cva(
           'hover:text-blue-550 dark:hover:text-blue-550 text-blue-700 dark:text-blue-500',
         danger: 'text-red-300 hover:text-red-700',
         plain: 'text-black dark:text-white',
-        banner:
-          'text-white hover:text-white/70 dark:text-white dark:hover:text-white/70',
       },
       underline: {
         true: 'underline',
