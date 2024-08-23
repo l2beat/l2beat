@@ -32,9 +32,13 @@ export function MilestonesSection({
         <MilestonesBase milestones={milestones} />
       ) : (
         <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-          <MilestonesBase milestones={milestones.slice(0, 2)} isOpen={isOpen} />
+          <MilestonesBase
+            milestones={milestones}
+            isOpen={isOpen}
+            range={[0, 2]}
+          />
           <CollapsibleContent>
-            <MilestonesBase milestones={milestones.slice(2)} />
+            <MilestonesBase milestones={milestones} range={[2]} />
           </CollapsibleContent>
           <CollapsibleTrigger asChild>
             <Button
@@ -53,7 +57,11 @@ export function MilestonesSection({
   )
 }
 
-function MilestonesBase(props: { milestones: Milestone[]; isOpen?: boolean }) {
+function MilestonesBase(props: {
+  milestones: Milestone[]
+  range?: [number, number?]
+  isOpen?: boolean
+}) {
   return (
     <div className="relative">
       <div className="ml-10">
@@ -62,6 +70,13 @@ function MilestonesBase(props: { milestones: Milestone[]; isOpen?: boolean }) {
             (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
           )
           .map((milestone, i) => {
+            if (
+              i < (props.range?.[0] ?? 0) ||
+              (props.range?.[1] && i >= props.range[1])
+            ) {
+              return null
+            }
+
             // Milestones may have a type of 'general' or 'incident'
             // When the type is undefined, it is considered 'general'
 
