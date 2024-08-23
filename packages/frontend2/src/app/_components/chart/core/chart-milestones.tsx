@@ -1,6 +1,7 @@
 import { type Milestone } from '@l2beat/config'
 import { useCallback, useMemo, useRef } from 'react'
 import { useEventListener } from '~/hooks/use-event-listener'
+import { useIsClient } from '~/hooks/use-is-client'
 import { useBreakpoint } from '~/hooks/use-is-mobile'
 import { useChartContext } from './chart-context'
 import { useChartHoverContext } from './chart-hover-context'
@@ -16,6 +17,7 @@ export function ChartMilestones() {
   const breakpoint = useBreakpoint()
   const { rect } = useChartRect()
   const isMobile = breakpoint === 'mobile'
+  const isClient = useIsClient()
 
   const onCanvasMoveEvent = useCallback(
     (event: MouseEvent | Touch) => {
@@ -54,7 +56,7 @@ export function ChartMilestones() {
 
   return (
     <div ref={ref} className="absolute bottom-0 z-40 w-full">
-      {!loading
+      {!loading && isClient
         ? chartContext.columns.map(
             (c, i) =>
               c.milestone && (
@@ -89,6 +91,11 @@ function ChartMilestone({ x, milestone }: Props) {
         : undefined,
     [rect, x],
   )
+
+  // Prevent rendering of milestones without a style (all of them would render on the left bottom side of the chart)
+  if (!style) {
+    return null
+  }
 
   return (
     <div
