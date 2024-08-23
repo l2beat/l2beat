@@ -2,7 +2,6 @@
 
 import { type Milestone } from '@l2beat/config'
 import { useState } from 'react'
-import React from 'react'
 import { Chart } from '~/app/_components/chart/core/chart'
 import { ChartProvider } from '~/app/_components/chart/core/chart-provider'
 import { RadioGroup, RadioGroupItem } from '~/app/_components/radio-group'
@@ -25,7 +24,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
   const [scale, setScale] = useState('lin')
   const [range, setRange] = useState<CostsTimeRange>('1d')
   const [unit, setUnit] = useState<CostsUnit>('usd')
-  const { data: chart } = api.scaling.costs.chart.useQuery({
+  const { data: chart, isLoading } = api.scaling.costs.chart.useQuery({
     range,
     filter: { type: 'projects', projectIds: [projectId] },
   })
@@ -45,6 +44,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
         formatYAxisLabel={formatYAxisLabel}
         range={chartRange}
         useLogScale={scale === 'log'}
+        isLoading={isLoading}
         renderHoverContents={(data) => (
           <CostsChartHover data={data} unit={unit} />
         )}
