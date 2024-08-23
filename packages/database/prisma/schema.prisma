@@ -19,10 +19,8 @@ model CurrentPrice {
 
 model Stake {
   id             String @id @db.VarChar(255)
-  totalStake     Float    @db.Real
-  thresholdStake Float    @db.Real
-
-  @@schema("public")
+  totalStake     Float  @db.Real
+  thresholdStake Float  @db.Real
 }
 
 // TODO: when adding back token db models below
@@ -202,8 +200,8 @@ model Activity {
   projectId String   @map("project_id") @db.VarChar(255)
   timestamp DateTime @map("timestamp") @db.Timestamp(6)
   count     Int      @map("count")
-  start     Int      @map("start") @default(0)
-  end       Int      @map("end") @default(0)
+  start     Int      @default(0) @map("start")
+  end       Int      @default(0) @map("end")
 
   @@id([projectId, timestamp])
   @@map("activity")
