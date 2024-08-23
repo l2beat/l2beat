@@ -1,31 +1,24 @@
-import { type ReactNode, createContext, useContext, useState } from 'react'
+import { type ReactNode, createContext, useContext } from 'react'
+
+export interface ChartLoadingContextProviderParams {
+  isLoading: boolean
+  children?: ReactNode
+}
 
 const ChartLoadingContext = createContext<boolean>(false)
-const ChartSetLoadingContext = createContext<(loading: boolean) => void>(
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  () => {},
-)
 
 export function ChartLoadingContextProvider({
   children,
-}: { children?: ReactNode }) {
-  const [loading, setLoading] = useState<boolean>(true)
-
+  isLoading,
+}: ChartLoadingContextProviderParams) {
   return (
-    <ChartLoadingContext.Provider value={loading}>
-      <ChartSetLoadingContext.Provider value={setLoading}>
-        {children}
-      </ChartSetLoadingContext.Provider>
+    <ChartLoadingContext.Provider value={isLoading}>
+      {children}
     </ChartLoadingContext.Provider>
   )
 }
 
 export function useChartLoading() {
   const context = useContext(ChartLoadingContext)
-  return context
-}
-
-export function useChartSetLoading() {
-  const context = useContext(ChartSetLoadingContext)
   return context
 }
