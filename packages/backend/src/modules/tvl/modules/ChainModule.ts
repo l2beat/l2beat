@@ -1,10 +1,11 @@
-import { assert, Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import {
   BlockExplorerClient,
   CoingeckoClient,
   CoingeckoQueryService,
 } from '@l2beat/shared'
 import {
+  assert,
   AmountConfigEntry,
   EscrowEntry,
   PremintedEntry,
@@ -236,6 +237,7 @@ function createPeripherals(
   const rpcClient = peripherals.getClient(RpcClient, {
     url: chainConfig.config.providerUrl,
     callsPerMinute: chainConfig.config.providerCallsPerMinute,
+    chain: chainConfig.chain,
   })
 
   const options =

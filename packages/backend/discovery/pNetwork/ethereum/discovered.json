@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20420398,
   "configHash": "0xacfacf9c84c23dfb644b1f84136823f08cbe72513fc45dcf9218995c9c893637",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "ERC20 Vault V1",
@@ -201,9 +201,13 @@
     {
       "name": "ProxyAdmin",
       "address": "0xB6D14DdFBE01AC537accBe35cCd771C30D53c535",
-      "assignedPermissions": {
-        "upgrade": ["0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1664208791,
       "values": {
         "$immutable": true,
@@ -242,9 +246,13 @@
     {
       "name": "PProxyAdmin",
       "address": "0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a",
-      "assignedPermissions": {
-        "upgrade": ["0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1640866403,
       "values": {
         "$immutable": true,
@@ -255,10 +263,18 @@
       "name": "ERC20 Vault V2",
       "address": "0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1640867581,
       "values": {
         "$admin": "0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a",
         "$implementation": "0x34D085516f9D7794192aDB10C995d9c532E335aF",
+        "$upgradeCount": 6,
         "ETHPNT_TOKEN_ADDRESS": "0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2",
         "ORIGIN_CHAIN_ID": "0x005fe7f9",
         "PNETWORK": "0x341aA660fD5c280F5a9501E3822bB4a98E816D1b",
@@ -291,6 +307,13 @@
       "name": "EthPntv2",
       "address": "0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xB6D14DdFBE01AC537accBe35cCd771C30D53c535",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "currentMonthWithdrawnAmount",
         "currentYearWithdrawnAmount",
@@ -303,6 +326,7 @@
       "values": {
         "$admin": "0xB6D14DdFBE01AC537accBe35cCd771C30D53c535",
         "$implementation": "0xd88a13c72443D069Fc0d44A4989AC8dd132Ac38b",
+        "$upgradeCount": 2,
         "currentMonthNumber": 6,
         "currentMonthWithdrawnAmount": "700000000000000000000000",
         "currentYearNumber": 0,

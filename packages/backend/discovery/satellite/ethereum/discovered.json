@@ -3,16 +3,24 @@
   "chain": "ethereum",
   "blockNumber": 20017695,
   "configHash": "0x17d2f88caa79b904561d5c3444555097dbf22c906defb717b2e8eaf887ea96fd",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "AxelarGasService",
       "address": "0x2d5d7d31F671F86C782533cc367F14109a082712",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1661972207,
       "values": {
         "$admin": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
         "$implementation": "0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b",
+        "$upgradeCount": 2,
         "contractId": "0xfaa2f015f2ce5aee225904728de2def86eb8837491efd21f1a04fc20d8e923f6",
         "gasCollector": "0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC",
         "implementation": "0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b",
@@ -110,9 +118,13 @@
     { "address": "0x3f5876a2b06E54949aB106651Ab6694d0289b2b4" },
     {
       "address": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
-      "assignedPermissions": {
-        "upgrade": ["0x2d5d7d31F671F86C782533cc367F14109a082712"]
-      }
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x2d5d7d31F671F86C782533cc367F14109a082712",
+          "via": []
+        }
+      ]
     },
     { "address": "0x9256Fd872118ed3a97754B0fB42c15015d17E0CC" },
     { "address": "0xf505462A29E36E26f25Ef0175Ca1eCBa09CC118f" }

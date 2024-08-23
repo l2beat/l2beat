@@ -3,16 +3,24 @@
   "chain": "ethereum",
   "blockNumber": 20331900,
   "configHash": "0xb054397b11aa00d2891531ffcd51382503645937e8dd928600b01bd5835322b9",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "OptimismMintableERC20Factory",
       "address": "0x08Dea366F26C25a08C8D1C3568ad07d1e587136d",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1700021675,
       "values": {
         "$admin": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
         "$implementation": "0x81C2645D347a67c089169a4Da074aF7788650955",
+        "$upgradeCount": 1,
         "BRIDGE": "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
         "version": "1.1.1"
       }
@@ -21,11 +29,19 @@
       "name": "SystemConfig",
       "address": "0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["scalar"],
       "sinceTimestamp": 1700021675,
       "values": {
         "$admin": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
         "$implementation": "0x81CCFC10CB55B58449A3FEE870D63C4D61941DaC",
+        "$upgradeCount": 1,
         "batcherHash": "0x14e4E97bDc195d399Ad8E7FC14451C279FE04c8e",
         "gasLimit": 120000000,
         "minimumGasLimit": 21000000,
@@ -56,6 +72,13 @@
       "name": "L2OutputOracle",
       "address": "0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -66,6 +89,7 @@
       "values": {
         "$admin": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
         "$implementation": "0xad206309916Fe08A27221133dde05a8F30f75e29",
+        "$upgradeCount": 1,
         "CHALLENGER": "0x91F4be0C264FAFA1fEd75c4440910Cba2cAd98e8",
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
@@ -86,17 +110,50 @@
       "name": "ProxyAdmin",
       "address": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
       "template": "opstack/ProxyAdmin",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x08Dea366F26C25a08C8D1C3568ad07d1e587136d",
-          "0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e",
-          "0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba",
-          "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
-          "0x6CC3268794c5d3E3d9d52adEfC748B59d536cb22",
-          "0x85eA9c11cf3D4786027F7FD08F4406b15777e5f8"
-        ],
-        "configure": ["0xC845F9C4004EB35a8bde8ad89C4760a9c0e65CAB"]
-      },
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+          "via": []
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xC845F9C4004EB35a8bde8ad89C4760a9c0e65CAB",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x08Dea366F26C25a08C8D1C3568ad07d1e587136d",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x6CC3268794c5d3E3d9d52adEfC748B59d536cb22",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x85eA9c11cf3D4786027F7FD08F4406b15777e5f8",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1700021675,
       "values": {
         "$immutable": true,
@@ -113,9 +170,13 @@
       "descriptions": [
         "It can act on behalf of 0x35d5D43271548c984662d4879FBc8e041Bc1Ff93, inheriting its permissions."
       ],
-      "assignedPermissions": {
-        "configure": ["0x35d5D43271548c984662d4879FBc8e041Bc1Ff93"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1680797639,
       "values": {
@@ -170,10 +231,18 @@
       "name": "L1StandardBridge",
       "address": "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1700021675,
       "values": {
         "$admin": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
         "$implementation": "0xff7E236F171131cCB7a5149cE4645aBc92E0D8fb",
+        "$upgradeCount": 0,
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x5456f02c08e9A018E42C39b351328E5AA864174A",
         "MESSENGER": "0x5456f02c08e9A018E42C39b351328E5AA864174A",
@@ -186,10 +255,18 @@
       "name": "L1ERC721Bridge",
       "address": "0x6CC3268794c5d3E3d9d52adEfC748B59d536cb22",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1700021675,
       "values": {
         "$admin": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
         "$implementation": "0x4f993d43f697Cb4c63D719Bb8Dc762dcbbB11476",
+        "$upgradeCount": 1,
         "messenger": "0x5456f02c08e9A018E42C39b351328E5AA864174A",
         "MESSENGER": "0x5456f02c08e9A018E42C39b351328E5AA864174A",
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000014",
@@ -201,11 +278,19 @@
       "name": "OptimismPortal",
       "address": "0x85eA9c11cf3D4786027F7FD08F4406b15777e5f8",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1700021675,
       "values": {
         "$admin": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
         "$implementation": "0x4Ec5C80Fa12d04DB3A208DD0Fa5C01178FF5a16e",
+        "$upgradeCount": 1,
         "GUARDIAN": "0x91F4be0C264FAFA1fEd75c4440910Cba2cAd98e8",
         "L2_ORACLE": "0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
@@ -252,6 +337,13 @@
       "name": "AddressManager",
       "address": "0xC845F9C4004EB35a8bde8ad89C4760a9c0e65CAB",
       "template": "opstack/AddressManager",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1700021663,
       "values": {
         "$immutable": true,

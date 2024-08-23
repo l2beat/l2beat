@@ -3,7 +3,7 @@
   "chain": "optimism",
   "blockNumber": 122295641,
   "configHash": "0xef4a8d9fc64cd6cb4841c2f2a5a158c30e7d525c846e6834ae078ffc5521512d",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "FPValidator",
@@ -64,9 +64,13 @@
     {
       "name": "ProxyAdmin",
       "address": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
-      "assignedPermissions": {
-        "upgrade": ["0x81E792e5a9003CC1C8BF5569A00f34b65d75b017"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x81E792e5a9003CC1C8BF5569A00f34b65d75b017",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1647317044,
       "values": {
         "$immutable": true,
@@ -1420,18 +1424,30 @@
       "address": "0x81E792e5a9003CC1C8BF5569A00f34b65d75b017",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1661531054,
       "values": {
         "$admin": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
-        "$implementation": "0x9A4DF6D81309c8a583C28eD8e449E320043e7A97"
+        "$implementation": "0x9A4DF6D81309c8a583C28eD8e449E320043e7A97",
+        "$upgradeCount": 6
       }
     },
     {
       "name": "ProxyAdmin",
       "address": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
-      "assignedPermissions": {
-        "upgrade": ["0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1661447982,
       "values": {
         "$immutable": true,
@@ -1443,10 +1459,18 @@
       "address": "0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1661535679,
       "values": {
         "$admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
-        "$implementation": "0x81855cd82374C3700ee579Ad1fF0760ae039a19B"
+        "$implementation": "0x81855cd82374C3700ee579Ad1fF0760ae039a19B",
+        "$upgradeCount": 2
       }
     },
     {

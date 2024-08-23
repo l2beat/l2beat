@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20225285,
   "configHash": "0x4d61691a42ad106313ec274f92462885c512ac1e1e893cc7f99ea5866028ea0f",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "SlashingManager",
@@ -115,6 +115,13 @@
       "name": "StakeManager",
       "address": "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908",
       "proxyType": "Polygon Extension proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "currentEpoch",
         "currentValidatorSetTotalStake",
@@ -196,6 +203,13 @@
       "name": "EventsHub",
       "address": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
       "proxyType": "Polygon proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1616774452,
       "values": {
         "$admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
@@ -299,12 +313,18 @@
     {
       "name": "Timelock",
       "address": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908",
-          "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1630059303,
       "values": {
         "$immutable": true,

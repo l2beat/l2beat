@@ -1,3 +1,185 @@
+Generated with discovered.json: 0xfe5c799e8aaa1c765702a2269a9f47a1088fb4a0
+
+# Diff at Fri, 23 Aug 2024 07:26:48 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@08f0832a5dea29e7c493cd50bda4bf1729aa03ae block: 20568367
+- current block number: 20589800
+
+## Description
+
+Verified the bridge proxy contract.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20568367 (main branch discovery), not current.
+
+```diff
+    contract CronosZkEvm (0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc) {
+    +++ description: None
+      unverified:
+-        true
+    }
+```
+
+Generated with discovered.json: 0x0c856d0648b71a8d06b5926a3ea8934df46b90ee
+
+# Diff at Tue, 20 Aug 2024 07:33:17 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@5417c4717b5cefeed17cd8419a7eb2dda22d4206 block: 20532448
+- current block number: 20568367
+
+## Description
+
+Added discovery of DA mode.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20532448 (main branch discovery), not current.
+
+```diff
+    contract CronosZkEvm (0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc) {
+    +++ description: None
+      values.daMode:
++        1
+    }
+```
+
+Generated with discovered.json: 0xa58f80eeae7359035a0c626cbe9fb22ebc0858be
+
+# Diff at Thu, 15 Aug 2024 07:10:34 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@9a07aead4b3726cc622f66fe9a15e06e63af7acd block: 20525613
+- current block number: 20532448
+
+## Description
+
+The pending owner now became an actual owner. No pending owner currently.
+
+## Watched changes
+
+```diff
+    contract TransactionFiltererDenyList (0xA8998F231a660Eca365B382943c71ad9b7619139) {
+    +++ description: None
+      values.owner:
+-        "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137"
++        "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b"
+      values.pendingOwner:
+-        "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+Generated with discovered.json: 0xf60327b26a1b02b58bfd289f249ed0d4831ec61f
+
+# Diff at Wed, 14 Aug 2024 08:16:16 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@e32dcc268a9af9f45ad205490c9d650c487e04f1 block: 20512726
+- current block number: 20525613
+
+## Description
+
+All roles have been revoked from the EOA and a multisig (2/3) has been granted those roles.
+A pending owner is added to TransactionFiltererDenyList, which is just a step in their ownership transfer process, it will become the actual owner once the entire process is completed.
+
+## Watched changes
+
+```diff
+    contract CronosZkEVMAdmin (0x66eF951aEC26987915582340bCAA569E5Be67cDC) {
+    +++ description: None
+      values.accessControl.ADMIN.members.1:
+-        "0xfD7a03Cdb68E6488F950108A4d24f15519b87339"
++        "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce"
+      values.accessControl.ADMIN.members.0:
+-        "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137"
++        "0xfD7a03Cdb68E6488F950108A4d24f15519b87339"
+      values.accessControl.ORACLE.members.1:
+-        "0xfD7a03Cdb68E6488F950108A4d24f15519b87339"
++        "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce"
+      values.accessControl.ORACLE.members.0:
+-        "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137"
++        "0xfD7a03Cdb68E6488F950108A4d24f15519b87339"
+      values.accessControl.UPGRADER.members.1:
+-        "0xfD7a03Cdb68E6488F950108A4d24f15519b87339"
++        "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce"
+      values.accessControl.UPGRADER.members.0:
+-        "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137"
++        "0xfD7a03Cdb68E6488F950108A4d24f15519b87339"
+      values.accessControl.FEE_ADMIN.members.1:
+-        "0xfD7a03Cdb68E6488F950108A4d24f15519b87339"
++        "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce"
+      values.accessControl.FEE_ADMIN.members.0:
+-        "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137"
++        "0xfD7a03Cdb68E6488F950108A4d24f15519b87339"
+    }
+```
+
+```diff
+    contract TransactionFiltererDenyList (0xA8998F231a660Eca365B382943c71ad9b7619139) {
+    +++ description: None
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract AdminMultisig (0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DenyListOwnerMultisig (0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/AdminMultisig/GnosisSafe.sol    | 952 +++++++++++++++++++++
+ .../.flat/AdminMultisig/GnosisSafeProxy.p.sol      |  34 +
+ .../.flat/DenyListOwnerMultisig/GnosisSafe.sol     | 952 +++++++++++++++++++++
+ .../DenyListOwnerMultisig/GnosisSafeProxy.p.sol    |  34 +
+ 4 files changed, 1972 insertions(+)
+```
+
+Generated with discovered.json: 0xce3cf2924b53d3ff2bfa12c6d3eacfed4b824720
+
+# Diff at Mon, 12 Aug 2024 13:07:34 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@bafa261ae877bba9966845f4d250f5cbb9d4f6d2 block: 20482316
+- current block number: 20512726
+
+## Description
+
+A second EOA is given multiple roles, now there are two EOAs with those.
+
+## Watched changes
+
+```diff
+    contract CronosZkEVMAdmin (0x66eF951aEC26987915582340bCAA569E5Be67cDC) {
+    +++ description: None
+      values.accessControl.ADMIN.members.1:
++        "0xfD7a03Cdb68E6488F950108A4d24f15519b87339"
+      values.accessControl.ORACLE.members.1:
++        "0xfD7a03Cdb68E6488F950108A4d24f15519b87339"
+      values.accessControl.UPGRADER.members.1:
++        "0xfD7a03Cdb68E6488F950108A4d24f15519b87339"
+      values.accessControl.FEE_ADMIN.members.1:
++        "0xfD7a03Cdb68E6488F950108A4d24f15519b87339"
+    }
+```
+
 Generated with discovered.json: 0x5a8ff11be549135c8b8b49f5bff96cb47ab97132
 
 # Diff at Thu, 08 Aug 2024 07:17:33 GMT:

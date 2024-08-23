@@ -3,16 +3,24 @@
   "chain": "ethereum",
   "blockNumber": 20311131,
   "configHash": "0x651914ce661d79a29f4959d5466bfd8b5c975114bf075b964500a1fc70ee5547",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "Governance",
       "address": "0x02ecef526f806f06357659fFD14834fe82Ef4B04",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1613135194,
       "values": {
         "$admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
         "$implementation": "0x9d3fdf9b4782753d12f6262bf22B6322608962b8",
+        "$upgradeCount": 0,
         "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
         "getTarget": "0x9d3fdf9b4782753d12f6262bf22B6322608962b8",
         "networkGovernor": "0x7D1a14eeD7af8e26f24bf08BA6eD7A339AbcF037",
@@ -25,10 +33,18 @@
       "address": "0x27C229937745d697d28FC7853d1bFEA7331Edf56",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1613135194,
       "values": {
         "$admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
         "$implementation": "0x165dFA76DFD3F6ad6Ad614aE4566C2E9262E532F",
+        "$upgradeCount": 0,
         "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
         "getTarget": "0x165dFA76DFD3F6ad6Ad614aE4566C2E9262E532F"
       },
@@ -61,10 +77,18 @@
       "address": "0x661121AE41edE3f6FECDed922c59acC19A3ea9B3",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1613135194,
       "values": {
         "$admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
         "$implementation": "0x65Fab217f1948af2D7A8eEB11fF111B0993C5Df8",
+        "$upgradeCount": 0,
         "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
         "getTarget": "0x65Fab217f1948af2D7A8eEB11fF111B0993C5Df8"
       },
@@ -73,15 +97,33 @@
     {
       "name": "UpgradeGatekeeper",
       "address": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x02ecef526f806f06357659fFD14834fe82Ef4B04",
-          "0x27C229937745d697d28FC7853d1bFEA7331Edf56",
-          "0x661121AE41edE3f6FECDed922c59acC19A3ea9B3",
-          "0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad",
-          "0x961369d347EF7A6896BDD39cBE2B89e3911f521f"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x02ecef526f806f06357659fFD14834fe82Ef4B04",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x27C229937745d697d28FC7853d1bFEA7331Edf56",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x661121AE41edE3f6FECDed922c59acC19A3ea9B3",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x961369d347EF7A6896BDD39cBE2B89e3911f521f",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1613135194,
       "values": {
         "$immutable": true,
@@ -111,6 +153,13 @@
       "name": "ZkSync",
       "address": "0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "firstPendingWithdrawalIndex",
         "numberOfPendingWithdrawals",
@@ -122,6 +171,7 @@
       "values": {
         "$admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
         "$implementation": "0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f",
+        "$upgradeCount": 0,
         "EMPTY_STRING_KECCAK": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
         "exodusMode": false,
         "firstPendingWithdrawalIndex": 37174,
@@ -149,10 +199,18 @@
       "address": "0x961369d347EF7A6896BDD39cBE2B89e3911f521f",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1613135194,
       "values": {
         "$admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
         "$implementation": "0xd12F4D8329584F36aEd67f807F42D9a02bEb9534",
+        "$upgradeCount": 0,
         "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
         "getTarget": "0xd12F4D8329584F36aEd67f807F42D9a02bEb9534"
       },

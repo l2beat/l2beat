@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19925898,
   "configHash": "0xc23e741729cca75ecb7c0995d99dee62c5adaaa0f0fd1168cc77b702dbe85ae4",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "DepositContract",
@@ -30,11 +30,19 @@
       "name": "swETH-Strategy",
       "address": "0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1701791243,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -68,11 +76,19 @@
       "name": "AVSDirectory",
       "address": "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["avs"],
       "sinceTimestamp": 1711141931,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdAbdB3Cd346B7D5F5779b0B614EdE1CC9DcBA5b7",
+        "$upgradeCount": 1,
         "avs": [
           "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "0xD25c2c5802198CB8541987b73A8db4c9BCaE5cC7",
@@ -101,11 +117,19 @@
       "name": "ankrETH-Strategy",
       "address": "0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1701791243,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -139,11 +163,19 @@
       "name": "rETH-Strategy",
       "address": "0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1686349019,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -239,11 +271,19 @@
       "name": "METH-Strategy",
       "address": "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1704485723,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -308,10 +348,18 @@
       "name": "DelegationManager",
       "address": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1686348935,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x1784BE6401339Fc0Fedf7E9379409f5c1BfE9dda",
+        "$upgradeCount": 3,
         "beaconChainETHStrategy": "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0",
         "DELEGATION_APPROVAL_TYPEHASH": "0x14bde674c9f64b2ad00eaaee4a8bed1fabef35c7507e3c5b9cfc9436909a2dad",
         "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
@@ -332,9 +380,13 @@
     {
       "name": "ProxyAdmin",
       "address": "0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9",
-      "assignedPermissions": {
-        "upgrade": ["0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1710958955,
       "values": {
         "$immutable": true,
@@ -345,11 +397,19 @@
       "name": "cbETH-Strategy",
       "address": "0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1686349019,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -383,11 +443,19 @@
       "name": "osETH-Strategy",
       "address": "0x57ba429517c3473B6d34CA9aCd56c0e735b94c02",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1701791243,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -431,11 +499,19 @@
       "name": "wBETH-Strategy",
       "address": "0x7CA911E83dabf90C90dD3De5411a10F1A6112184",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1701791243,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -469,10 +545,18 @@
       "name": "DelayedWithdrawalRouter",
       "address": "0x7Fe7E9CC0F274d2435AD5d56D5fa73E47F6A23D8",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1686348959,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x4bB6731B02314d40aBbfFBC4540f508874014226",
+        "$upgradeCount": 3,
         "eigenPodManager": "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
         "MAX_WITHDRAWAL_DELAY_BLOCKS": 216000,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
@@ -485,10 +569,18 @@
       "name": "bEIGEN token",
       "address": "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1710958955,
       "values": {
         "$admin": "0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9",
         "$implementation": "0xB91c69Af3eE022bd0a59Da082945914BFDcEFFE3",
+        "$upgradeCount": 1,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x5dd88b27402a52ec3e227839f0f448d699f04c912202aa0d2b25bb86127a6e96",
@@ -514,10 +606,18 @@
       "name": "StrategyManager",
       "address": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1686348947,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x70f44C13944d49a236E3cD7a94f48f5daB6C619b",
+        "$upgradeCount": 3,
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "DEPOSIT_TYPEHASH": "0x4337f82d142e41f2a8c10547cd8c859bddb92262a61058e77842e24d9dea9224",
         "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
@@ -549,29 +649,103 @@
     {
       "name": "ProxyAdmin",
       "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6",
-          "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
-          "0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff",
-          "0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2",
-          "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2",
-          "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
-          "0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc",
-          "0x57ba429517c3473B6d34CA9aCd56c0e735b94c02",
-          "0x7CA911E83dabf90C90dD3De5411a10F1A6112184",
-          "0x7Fe7E9CC0F274d2435AD5d56D5fa73E47F6A23D8",
-          "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-          "0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
-          "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
-          "0x93c4b944D05dfe6df7645A86cd2206016c51564D",
-          "0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d",
-          "0xAe60d8180437b5C34bB956822ac2710972584473",
-          "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd",
-          "0xa4C637e0F704745D182e4D38cAb7E7485321d059",
-          "0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x57ba429517c3473B6d34CA9aCd56c0e735b94c02",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x7CA911E83dabf90C90dD3De5411a10F1A6112184",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x7Fe7E9CC0F274d2435AD5d56D5fa73E47F6A23D8",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x93c4b944D05dfe6df7645A86cd2206016c51564D",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xa4C637e0F704745D182e4D38cAb7E7485321d059",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xAe60d8180437b5C34bB956822ac2710972584473",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1686348935,
       "values": {
         "$immutable": true,
@@ -582,11 +756,19 @@
       "name": "sfrxETH-Strategy",
       "address": "0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1704485723,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -620,11 +802,19 @@
       "name": "EigenPodManager",
       "address": "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["numPods"],
       "sinceTimestamp": 1686348947,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xe4297e3DaDBc7D99e26a2954820f514CB50C5762",
+        "$upgradeCount": 3,
         "beaconChainETHStrategy": "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0",
         "beaconChainOracle": "0x343907185b71aDF0eBa9567538314396aa985442",
         "delegationManager": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
@@ -644,11 +834,19 @@
       "name": "stETH-Strategy",
       "address": "0x93c4b944D05dfe6df7645A86cd2206016c51564D",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1686349019,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -682,11 +880,19 @@
       "name": "ETHx-Strategy",
       "address": "0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1701791243,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -720,11 +926,19 @@
       "name": "OETH-Strategy",
       "address": "0xa4C637e0F704745D182e4D38cAb7E7485321d059",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1701791243,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -772,11 +986,19 @@
       "name": "bEIGEN-Strategy",
       "address": "0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1713414611,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x27e7a3A81741B9fcc5Ad7edCBf9F8a72a5c00428",
+        "$upgradeCount": 1,
         "EIGEN": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "paused": 0,
@@ -791,11 +1013,19 @@
       "name": "RiverV1-Strategy",
       "address": "0xAe60d8180437b5C34bB956822ac2710972584473",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1704485723,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -828,9 +1058,13 @@
     {
       "name": "ProxyAdmin",
       "address": "0xB8915E195121f2B5D989Ec5727fd47a5259F1CEC",
-      "assignedPermissions": {
-        "upgrade": ["0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1697499563,
       "values": {
         "$immutable": true,
@@ -948,10 +1182,18 @@
       "name": "Slasher",
       "address": "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1686348947,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xF3234220163a757edf1E11a8a085638D9B236614",
+        "$upgradeCount": 3,
         "delegation": "0x0000000000000000000000000000000000000000",
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -964,10 +1206,18 @@
       "name": "EIGEN token",
       "address": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xB8915E195121f2B5D989Ec5727fd47a5259F1CEC",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1697499563,
       "values": {
         "$admin": "0xB8915E195121f2B5D989Ec5727fd47a5259F1CEC",
         "$implementation": "0x7EC354C84680112d3cfF1544ec1Eb19ca583700b",
+        "$upgradeCount": 3,
         "bEIGEN": "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,

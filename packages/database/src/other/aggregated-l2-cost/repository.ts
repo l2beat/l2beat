@@ -6,7 +6,7 @@ import { selectAggregatedL2Costs } from './select'
 export class AggregatedL2CostRepository extends BaseRepository {
   async getAll(): Promise<AggregatedL2CostRecord[]> {
     const rows = await this.db
-      .selectFrom('public.aggregated_l2_costs')
+      .selectFrom('aggregated_l2_costs')
       .select(selectAggregatedL2Costs)
       .execute()
     return rows.map(toRecord)
@@ -18,7 +18,7 @@ export class AggregatedL2CostRepository extends BaseRepository {
     const rows = records.map(toRow)
     await this.batch(rows, 5_000, async (batch) => {
       await this.db
-        .insertInto('public.aggregated_l2_costs')
+        .insertInto('aggregated_l2_costs')
         .values(batch)
         .onConflict((cb) =>
           cb.columns(['timestamp', 'project_id']).doUpdateSet((eb) => ({
@@ -46,7 +46,7 @@ export class AggregatedL2CostRepository extends BaseRepository {
 
   async deleteAfter(from: UnixTime): Promise<number> {
     const result = await this.db
-      .deleteFrom('public.aggregated_l2_costs')
+      .deleteFrom('aggregated_l2_costs')
       .where('timestamp', '>', from.toDate())
       .executeTakeFirst()
     return Number(result.numDeletedRows)
@@ -54,7 +54,7 @@ export class AggregatedL2CostRepository extends BaseRepository {
 
   async deleteAll(): Promise<number> {
     const result = await this.db
-      .deleteFrom('public.aggregated_l2_costs')
+      .deleteFrom('aggregated_l2_costs')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
@@ -65,7 +65,7 @@ export class AggregatedL2CostRepository extends BaseRepository {
   ): Promise<AggregatedL2CostRecord[]> {
     const [from, to] = timeRange
     const rows = await this.db
-      .selectFrom('public.aggregated_l2_costs')
+      .selectFrom('aggregated_l2_costs')
       .select(selectAggregatedL2Costs)
       .where('project_id', '=', projectId.toString())
       .where('timestamp', '>=', from.toDate())
@@ -79,9 +79,10 @@ export class AggregatedL2CostRepository extends BaseRepository {
     projectIds: ProjectId[],
     timeRange: [UnixTime, UnixTime],
   ): Promise<AggregatedL2CostRecord[]> {
+    if (projectIds.length === 0) return []
     const [from, to] = timeRange
     const rows = await this.db
-      .selectFrom('public.aggregated_l2_costs')
+      .selectFrom('aggregated_l2_costs')
       .select(selectAggregatedL2Costs)
       .where(
         'project_id',

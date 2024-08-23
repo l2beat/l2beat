@@ -3,7 +3,7 @@ import { Configuration } from './types'
 
 import * as fs from 'fs'
 import * as path from 'path'
-import { assert } from '@l2beat/backend-tools'
+import { assert } from '@l2beat/shared-pure'
 import { ASTNode, parse } from '@mradomski/fast-solidity-parser'
 import { LeftRightPair } from '../powerdiff'
 

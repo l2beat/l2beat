@@ -3,16 +3,20 @@
   "chain": "ethereum",
   "blockNumber": 20420390,
   "configHash": "0x762971154db7098aa282de45a263463872ec729b207c21c5002056300a160230",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "ParadexImplementationGovernorMultisig",
       "address": "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "assignedPermissions": {
-        "upgrade": ["0xF338cad020D506e8e3d9B4854986E0EcE6C23640"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1704291371,
       "values": {
@@ -39,6 +43,13 @@
       "name": "USDC Bridge",
       "address": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
       "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1692341159,
       "values": {
         "$admin": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
@@ -104,6 +115,18 @@
       "name": "Paradex",
       "address": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
       "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "l1ToL2MessageNonce",
         "stateBlockNumber",
@@ -159,9 +182,13 @@
     { "address": "0x2871B956bC19D25961E9a7519f32D7fDaA21B403" },
     {
       "address": "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f",
-      "assignedPermissions": {
-        "upgrade": ["0xF338cad020D506e8e3d9B4854986E0EcE6C23640"]
-      }
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+          "via": []
+        }
+      ]
     },
     { "address": "0x59232aC80E6d403b6381393e52f4665ECA328558" },
     { "address": "0x64F4396bb0669C72858Cc50C779b48EB25F45770" },
@@ -169,9 +196,13 @@
     { "address": "0x8Cef438c3e363e15F9619e32D9b5D04ff777D670" },
     {
       "address": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
-      "assignedPermissions": {
-        "upgrade": ["0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"]
-      }
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+          "via": []
+        }
+      ]
     },
     { "address": "0xBF6aAc7Ae78B351180AD42b3dc5087eAd886B4A6" },
     { "address": "0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2" }

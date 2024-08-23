@@ -14,7 +14,7 @@ export class AnomaliesRepository extends BaseRepository {
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
       await this.db
-        .insertInto('public.anomalies')
+        .insertInto('anomalies')
         .values(batch)
         .onConflict((cb) =>
           cb
@@ -29,15 +29,13 @@ export class AnomaliesRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
-      .deleteFrom('public.anomalies')
-      .executeTakeFirst()
+    const result = await this.db.deleteFrom('anomalies').executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 
   async getAll(): Promise<AnomalyRecord[]> {
     const rows = await this.db
-      .selectFrom('public.anomalies')
+      .selectFrom('anomalies')
       .select(selectAnomaly)
       .execute()
 
@@ -49,9 +47,22 @@ export class AnomaliesRepository extends BaseRepository {
     from: UnixTime,
   ): Promise<AnomalyRecord[]> {
     const rows = await this.db
-      .selectFrom('public.anomalies')
+      .selectFrom('anomalies')
       .select(selectAnomaly)
       .where('project_id', '=', projectId)
+      .where('timestamp', '>=', from.toDate())
+      .execute()
+    return rows.map(toRecord)
+  }
+
+  async getByProjectIdsFrom(
+    projectIds: ProjectId[],
+    from: UnixTime,
+  ): Promise<AnomalyRecord[]> {
+    const rows = await this.db
+      .selectFrom('anomalies')
+      .select(selectAnomaly)
+      .where('project_id', 'in', projectIds)
       .where('timestamp', '>=', from.toDate())
       .execute()
     return rows.map(toRecord)

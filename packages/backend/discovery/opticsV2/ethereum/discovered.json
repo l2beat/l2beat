@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20311133,
   "configHash": "0xd6335c5406db7a8838e31ff78c6edbbfc4df448e47a48c802e2545aa4064004b",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "HomeUpgradeBeacon",
@@ -17,6 +17,13 @@
       "name": "ReplicaBeaconProxy",
       "address": "0x27658c5556A9a57f96E69Bbf6d3B8016f001a785",
       "proxyType": "Optics Beacon proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4F50a7081792063693F46A6402390b9647562457",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["committedRoot"],
       "sinceTimestamp": 1637962173,
       "values": {
@@ -77,14 +84,28 @@
     {
       "name": "UpgradeBeaconController",
       "address": "0x4F50a7081792063693F46A6402390b9647562457",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x27658c5556A9a57f96E69Bbf6d3B8016f001a785",
-          "0x4fc16De11deAc71E8b2Db539d82d93BE4b486892",
-          "0xa73a3a74C7044B5411bD61E1990618A1400DA379",
-          "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x27658c5556A9a57f96E69Bbf6d3B8016f001a785",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x4fc16De11deAc71E8b2Db539d82d93BE4b486892",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xa73a3a74C7044B5411bD61E1990618A1400DA379",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1637960876,
       "values": {
         "$immutable": true,
@@ -96,6 +117,13 @@
       "name": "BridgeRouterBeaconProxy",
       "address": "0x4fc16De11deAc71E8b2Db539d82d93BE4b486892",
       "proxyType": "Optics Beacon proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4F50a7081792063693F46A6402390b9647562457",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1637963549,
       "values": {
         "$admin": "0x4F50a7081792063693F46A6402390b9647562457",
@@ -144,6 +172,13 @@
       "name": "HomeBeaconProxy",
       "address": "0xa73a3a74C7044B5411bD61E1990618A1400DA379",
       "proxyType": "Optics Beacon proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4F50a7081792063693F46A6402390b9647562457",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["committedRoot", "count", "root", "tree"],
       "sinceTimestamp": 1637961283,
       "values": {
@@ -183,6 +218,13 @@
       "name": "GovernanceRouterBeaconProxy",
       "address": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94",
       "proxyType": "Optics Beacon proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4F50a7081792063693F46A6402390b9647562457",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1637961347,
       "values": {
         "$admin": "0x4F50a7081792063693F46A6402390b9647562457",

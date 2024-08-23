@@ -123,6 +123,8 @@ export function BasicTable<T extends BasicEntry>({
                         groupParams.isLastInGroup &&
                         'rounded-tr-lg',
                     ],
+                    header.column.getIsPinned() &&
+                      getRowTypeClassNamesWithoutOpacity(null),
                     header.column.columnDef.meta?.headClassName,
                   )}
                   align={header.column.columnDef.meta?.align}
@@ -222,7 +224,13 @@ function RowFiller<T, V>(props: { headers: Header<T, V>[] }) {
         <td
           key={header.id}
           colSpan={header.colSpan}
-          className={cn('h-4', !header.isPlaceholder && 'rounded-b-lg')}
+          className={cn(
+            'h-4',
+            !header.isPlaceholder && 'rounded-b-lg',
+            header.column.getIsPinned() &&
+              getRowTypeClassNamesWithoutOpacity(null),
+          )}
+          style={getCommonPinningStyles(header.column)}
         />
       ))}
     </tr>
@@ -307,16 +315,16 @@ export function getRowTypeClassNames(rowType: RowType) {
       return 'dark:hover:bg-white/[0.1] hover:bg-black/[0.05] hover:shadow-sm'
   }
 }
-export function getRowTypeClassNamesWithoutOpacity(rowType: RowType) {
+export function getRowTypeClassNamesWithoutOpacity(rowType: RowType | null) {
   switch (rowType) {
     case 'ethereum':
-      return 'bg-blue-400 hover:bg-blue-400 group-hover/row:bg-blue-400 border-b border-b-blue-600 dark:bg-blue-900 dark:border-b-blue-500 dark:hover:bg-blue-900 dark:group-hover/row:bg-blue-900'
+      return 'bg-blue-400 group-hover/row:bg-blue-400 dark:bg-blue-900 dark:border-b-blue-500 dark:group-hover/row:bg-blue-900'
     case 'unverified':
-      return 'bg-[#FDDDDD] dark:bg-[#311413] hover:bg-[#FDDDDD] group-hover/row:bg-[#FDDDDD] dark:hover:bg-[#391612] dark:group-hover/row:bg-[#391612]'
+      return 'bg-[#FDDDDD] dark:bg-[#311413] group-hover/row:bg-[#FDDDDD] dark:group-hover/row:bg-[#3F1111]'
     case 'under-review':
     case 'implementation-changed':
-      return 'bg-[#faf5e6] dark:bg-[#2a2418] hover:!bg-[#eee5c8] group-hover/row:!bg-[#eee5c8] dark:hover:!bg-[#3f351b] dark:group-hover/row:!bg-[#3f351b]'
+      return 'bg-[#faf5e6] dark:bg-[#2a2418] group-hover/row:!bg-[#FBEFC9] dark:group-hover/row:!bg-[#3f351b]'
     default:
-      return 'bg-white dark:bg-neutral-900 group-hover/row:shadow-sm hover:bg-[#EEEEEE] group-hover/row:bg-[#EEEEEE] dark:hover:bg-[#2a292c] dark:group-hover/row:bg-[#2a292c]'
+      return 'bg-white dark:bg-neutral-900 group-hover/row:shadow-sm group-hover/row:bg-[#EEEEEE] dark:group-hover/row:bg-[#2a292c]'
   }
 }

@@ -2,7 +2,10 @@ import type { Config } from 'tailwindcss'
 import plugin from 'tailwindcss/plugin'
 
 const config: Config = {
-  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
+  content: [
+    './src/**/*.{js,ts,jsx,tsx,mdx}',
+    './.storybook/**/*.{js,ts,jsx,tsx}',
+  ],
   darkMode: 'class',
   future: {
     hoverOnlyWhenSupported: true,
@@ -193,11 +196,21 @@ const config: Config = {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
         },
+        'collapsible-down': {
+          from: { height: '0' },
+          to: { height: 'var(--radix-collapsible-content-height)' },
+        },
+        'collapsible-up': {
+          from: { height: 'var(--radix-collapsible-content-height)' },
+          to: { height: '0' },
+        },
       },
       animation: {
         beat: 'beat 5s ease-in-out infinite forwards',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'collapsible-down': 'collapsible-down 0.3s ease-out',
+        'collapsible-up': 'collapsible-up 0.3s ease-out',
       },
       fontFamily: {
         sans: ['var(--font-roboto)', 'Roboto', 'Arial', 'sans-serif'],
@@ -226,6 +239,7 @@ const config: Config = {
       addVariant('sidenav-collapsed', '.sidenav-collapsed &')
     }),
     require('tailwindcss-animate'),
+    require('@tailwindcss/container-queries'),
   ],
 }
 

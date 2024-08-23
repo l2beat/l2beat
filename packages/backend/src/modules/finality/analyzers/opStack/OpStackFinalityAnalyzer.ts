@@ -55,16 +55,21 @@ export class OpStackFinalityAnalyzer extends BaseAnalyzer {
         return []
       }
       const assembledChannel = channel.assemble()
-      const encodedBatch = await getBatchFromChannel(assembledChannel)
-      // We only support span batches
-      const blocksWithTimestamps = decodeSpanBatch(encodedBatch, this.opts)
-      assert(blocksWithTimestamps.length > 0, 'No blocks in the batch')
+      const encodedBatches = await getBatchFromChannel(assembledChannel)
 
-      const delays = blocksWithTimestamps.map(
-        (block) => l1Timestamp.toNumber() - block.timestamp,
-      )
+      const result = []
+      for (const encodedBatch of encodedBatches) {
+        // We only support span batches
+        const blocksWithTimestamps = decodeSpanBatch(encodedBatch, this.opts)
+        assert(blocksWithTimestamps.length > 0, 'No blocks in the batch')
 
-      return delays
+        const delays = blocksWithTimestamps.map(
+          (block) => l1Timestamp.toNumber() - block.timestamp,
+        )
+        result.push(...delays)
+      }
+
+      return result
     } catch (error) {
       this.logger.error('Error while getting finality', {
         transaction: transaction.txHash,

@@ -1,6 +1,5 @@
 import { dirname, posix } from 'path'
-import { assert } from '@l2beat/backend-tools'
-import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import { assert, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { writeFile } from 'fs/promises'
 import { mkdirp } from 'mkdirp'
 import { rimraf } from 'rimraf'

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20367491,
   "configHash": "0xe4e0c6fd03b9c9ec903e56fbea2b9b1029b8ba7e8af2de80d87a9adf173f478c",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "PEMCertChainLib",
@@ -18,6 +18,13 @@
       "descriptions": [
         "This contract provides functionalities for proposing, proving, and verifying blocks."
       ],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "getStateVariables",
         "getLastSyncedBlock",
@@ -28,6 +35,7 @@
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0xBA1d90BCfA74163bFE09e8eF609b346507D83231",
+        "$upgradeCount": 12,
         "addressManager": "0x579f40D0BE111b823962043702cabe6Aaa290780",
         "assignment_hook": "0x0000000000000000000000000000000000000000",
         "automata_dcap_attestation": "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
@@ -127,11 +135,19 @@
       "name": "TaikoToken",
       "address": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1714033799,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0xcfe803378D79d1180EbF030455040EA6513869dF",
+        "$upgradeCount": 5,
         "addressManager": "0x0000000000000000000000000000000000000000",
         "clock": 1721716751,
         "CLOCK_MODE": "mode=timestamp",
@@ -248,10 +264,18 @@
       "descriptions": [
         "Verifier contract for blocks proven by Guardian minority."
       ],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1714550627,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0x3c40CC51e78B4a622622F9A4Df1b40068bc8Df98",
+        "$upgradeCount": 6,
         "addressManager": "0x579f40D0BE111b823962043702cabe6Aaa290780",
         "guardians": [
           "0x000012dd12a6D9Dd2045f5E2594f4996b99A5d33",
@@ -281,10 +305,18 @@
       "name": "L1RollupAddressManager",
       "address": "0x579f40D0BE111b823962043702cabe6Aaa290780",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1714550615,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0x4f6D5D3109C07E77035B410602996e445b18E8E9",
+        "$upgradeCount": 6,
         "addressManager": "0x579f40D0BE111b823962043702cabe6Aaa290780",
         "impl": "0x4f6D5D3109C07E77035B410602996e445b18E8E9",
         "inNonReentrant": false,
@@ -303,10 +335,18 @@
       "descriptions": [
         "A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO."
       ],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1716217559,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0xCE5a119479337a153CA3bd1b2bF9755c78F2B15A",
+        "$upgradeCount": 8,
         "addressManager": "0x579f40D0BE111b823962043702cabe6Aaa290780",
         "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "impl": "0xCE5a119479337a153CA3bd1b2bF9755c78F2B15A",
@@ -333,10 +373,18 @@
       "name": "AutomataDcapV3Attestation",
       "address": "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1714550639,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0x5f73f0AdC7dAA6134Fe751C4a78d524f9384e0B5",
+        "$upgradeCount": 3,
         "addressManager": "0x0000000000000000000000000000000000000000",
         "checkLocalEnclaveReport": true,
         "impl": "0x5f73f0AdC7dAA6134Fe751C4a78d524f9384e0B5",
@@ -363,10 +411,18 @@
       "name": "SharedERC20Vault",
       "address": "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1714550603,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0x7ACFBb369a552C45d402448A4d64b9da54C3FF30",
+        "$upgradeCount": 7,
         "addressManager": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
         "impl": "0x7ACFBb369a552C45d402448A4d64b9da54C3FF30",
         "inNonReentrant": false,
@@ -385,22 +441,68 @@
       "address": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
-          "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
-          "0x579A8d63a2Db646284CBFE31FE5082c9989E985c",
-          "0x579f40D0BE111b823962043702cabe6Aaa290780",
-          "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
-          "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
-          "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab",
-          "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
-          "0xE3D777143Ea25A6E031d1e921F396750885f43aC",
-          "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
-          "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81",
-          "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x579A8d63a2Db646284CBFE31FE5082c9989E985c",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x579f40D0BE111b823962043702cabe6Aaa290780",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xE3D777143Ea25A6E031d1e921F396750885f43aC",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1714192631,
       "values": {
@@ -426,10 +528,18 @@
       "name": "SignalService",
       "address": "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1714550603,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0xDF8642a1FBFc2014de27E8E87283D6f3eEF315DF",
+        "$upgradeCount": 5,
         "addressManager": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
         "impl": "0xDF8642a1FBFc2014de27E8E87283D6f3eEF315DF",
         "inNonReentrant": false,
@@ -446,11 +556,19 @@
       "address": "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81",
       "proxyType": "EIP1967 proxy",
       "descriptions": ["Verifier contract for SGX proven blocks."],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["instances", "nextInstanceId"],
       "sinceTimestamp": 1714550627,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0x7EE4CEF8a945639e09DDf3032e9d95c8d90f07f3",
+        "$upgradeCount": 5,
         "addressManager": "0x579f40D0BE111b823962043702cabe6Aaa290780",
         "impl": "0x7EE4CEF8a945639e09DDf3032e9d95c8d90f07f3",
         "inNonReentrant": false,
@@ -568,11 +686,19 @@
       "name": "TaikoBridge",
       "address": "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nextMessageId"],
       "sinceTimestamp": 1714550603,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0xAc96FF285158bceBB8573D20d853e86BB2915aF3",
+        "$upgradeCount": 11,
         "addressManager": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
         "GAS_OVERHEAD": 120000,
         "GAS_RESERVE": 800000,
@@ -593,10 +719,18 @@
       "address": "0xE3D777143Ea25A6E031d1e921F396750885f43aC",
       "proxyType": "EIP1967 proxy",
       "descriptions": ["Verifier contract for Guardian proven blocks."],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1714550627,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0x3c40CC51e78B4a622622F9A4Df1b40068bc8Df98",
+        "$upgradeCount": 6,
         "addressManager": "0x579f40D0BE111b823962043702cabe6Aaa290780",
         "guardians": [
           "0x000012dd12a6D9Dd2045f5E2594f4996b99A5d33",
@@ -626,10 +760,18 @@
       "name": "L1SharedAddressManager",
       "address": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1714550603,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0x2f7126f78365AD54EAB26fD7faEc60435008E2fD",
+        "$upgradeCount": 4,
         "addressManager": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
         "impl": "0x2f7126f78365AD54EAB26fD7faEc60435008E2fD",
         "inNonReentrant": false,

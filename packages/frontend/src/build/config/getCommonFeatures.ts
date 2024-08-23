@@ -3,9 +3,9 @@ import { Config, ConfigFeatures } from './Config'
 const backendFeaturesToConfigFeatures: Partial<
   Record<keyof ConfigFeatures, string>
 > = {
-  liveness: 'tracked-txs.liveness',
   implementationChange: 'implementationChangeReporter',
   tvlBreakdown: 'tvl',
+  l2costs: 'tracked-txs.l2costs',
 }
 
 export function getCommonFeatures(

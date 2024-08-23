@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825363,
   "configHash": "0x19ddeca30a70f486e371b6ec9d33ee69634c48c8e3064a3a5de8bfe1bb713263",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "GpsFactRegistryAdapter",
@@ -21,6 +21,13 @@
       "name": "StarkExchange",
       "address": "0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
       "proxyType": "StarkWare diamond",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xc7C731AF62Cd43eB158ad3Ac0fC5d2dd32648C7A",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "getLastBatchId",
         "getOrderRoot",
@@ -119,9 +126,13 @@
     { "address": "0x7e1BBDbE450e9f5988AE3d10a99911A20C138063" },
     {
       "address": "0xc7C731AF62Cd43eB158ad3Ac0fC5d2dd32648C7A",
-      "assignedPermissions": {
-        "upgrade": ["0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d"]
-      }
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
+          "via": []
+        }
+      ]
     },
     { "address": "0xE00A7D799A60495ce50f188348498E500C9016ea" }
   ],

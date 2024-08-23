@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19719123,
   "configHash": "0x0dd5bab61ec77857fe1c60af951691b7e98a6e3c42494d257ff554f15a42c5e8",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "ProxyAdminOwner",
@@ -36,10 +36,18 @@
       "name": "DepositBoxERC1155",
       "address": "0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1626720238,
       "values": {
         "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
         "$implementation": "0xE8d18a64e5bD3C3e96e7c163Dc67FF97296b6304",
+        "$upgradeCount": 8,
         "contractManagerOfSkaleManager": "0xC04A10Fd5e6513242558f47331568aBD6185a310",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DEPOSIT_BOX_MANAGER_ROLE": "0xadc0611617a946881d948c7506bdf0975adbe0cfb172896a62eb6a75f21f2ff9",
@@ -53,10 +61,18 @@
       "name": "DepositBoxEth",
       "address": "0x49F583d263e4Ef938b9E09772D3394c71605Df94",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1626719733,
       "values": {
         "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
         "$implementation": "0x2f90BeD90fa0Cc605B86b8623612a2638EB4019a",
+        "$upgradeCount": 8,
         "contractManagerOfSkaleManager": "0xC04A10Fd5e6513242558f47331568aBD6185a310",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DEPOSIT_BOX_MANAGER_ROLE": "0xadc0611617a946881d948c7506bdf0975adbe0cfb172896a62eb6a75f21f2ff9",
@@ -70,6 +86,13 @@
       "name": "CommunityPool",
       "address": "0x588801cA36558310D91234aFC2511502282b1621",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "minTransactionGas",
         "multiplierDivider",
@@ -79,6 +102,7 @@
       "values": {
         "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
         "$implementation": "0xffC647d4Cef8FB8b365e6B11a0156972e9343f6A",
+        "$upgradeCount": 7,
         "CONSTANT_SETTER_ROLE": "0x96e3fc3be15159903e053027cff8a23f39a990e0194abcd8ac1cf1b355b8b93c",
         "contractManagerOfSkaleManager": "0xC04A10Fd5e6513242558f47331568aBD6185a310",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -94,10 +118,18 @@
       "name": "Linker",
       "address": "0x6ef406953bac772C2146389ED37846BA3b6086D1",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1626719338,
       "values": {
         "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
         "$implementation": "0x676FAFCE73F5a304988C519407AAc06bD117CdD0",
+        "$upgradeCount": 6,
         "contractManagerOfSkaleManager": "0xC04A10Fd5e6513242558f47331568aBD6185a310",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "LINKER_ROLE": "0x733bac3dca102687aa08c854c5f9067fc424f98fd8e90e41ad6b73aecc59a4fd",
@@ -109,10 +141,18 @@
       "name": "DepositBoxERC721",
       "address": "0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1626720065,
       "values": {
         "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
         "$implementation": "0xAD64712a9F3F7Ca4e7064381135082AAA68F56d5",
+        "$upgradeCount": 8,
         "contractManagerOfSkaleManager": "0xC04A10Fd5e6513242558f47331568aBD6185a310",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DEPOSIT_BOX_MANAGER_ROLE": "0xadc0611617a946881d948c7506bdf0975adbe0cfb172896a62eb6a75f21f2ff9",
@@ -126,6 +166,13 @@
       "name": "MessageProxyForMainnet",
       "address": "0x8629703a9903515818C2FeB45a6f6fA5df8Da404",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "gasLimit",
         "headerMessageGasCost",
@@ -138,6 +185,7 @@
       "values": {
         "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
         "$implementation": "0x64e4cd4Fe42eAB98AcD15fddaC657B1537aa5190",
+        "$upgradeCount": 9,
         "CHAIN_CONNECTOR_ROLE": "0x2785f35fe7d8743aa971942d8474737bb31895d396eff2cc688a481e0221e191",
         "communityPool": "0x588801cA36558310D91234aFC2511502282b1621",
         "CONSTANT_SETTER_ROLE": "0x96e3fc3be15159903e053027cff8a23f39a990e0194abcd8ac1cf1b355b8b93c",
@@ -160,10 +208,18 @@
       "name": "DepositBoxERC20",
       "address": "0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1626719900,
       "values": {
         "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
         "$implementation": "0xc616EaF17c5e3349c1Fa493459494BB4DD0FD788",
+        "$upgradeCount": 9,
         "ARBITER_ROLE": "0xbb08418a67729a078f87bbc8d02a770929bb68f5bfdf134ae2ead6ed38e2f4ae",
         "contractManagerOfSkaleManager": "0xC04A10Fd5e6513242558f47331568aBD6185a310",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -178,10 +234,18 @@
       "name": "DepositBoxERC721WithMetadata",
       "address": "0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1650021217,
       "values": {
         "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
         "$implementation": "0xF99F446340483C5d9D63697a60232ECb9274E1e7",
+        "$upgradeCount": 4,
         "contractManagerOfSkaleManager": "0xe8c7E5C70B8a8c9C3896e59062EA3A879270AB4A",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DEPOSIT_BOX_MANAGER_ROLE": "0xadc0611617a946881d948c7506bdf0975adbe0cfb172896a62eb6a75f21f2ff9",
@@ -194,18 +258,48 @@
     {
       "name": "ProxyAdmin",
       "address": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a",
-          "0x49F583d263e4Ef938b9E09772D3394c71605Df94",
-          "0x588801cA36558310D91234aFC2511502282b1621",
-          "0x6ef406953bac772C2146389ED37846BA3b6086D1",
-          "0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d",
-          "0x8629703a9903515818C2FeB45a6f6fA5df8Da404",
-          "0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669",
-          "0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x49F583d263e4Ef938b9E09772D3394c71605Df94",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x588801cA36558310D91234aFC2511502282b1621",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x6ef406953bac772C2146389ED37846BA3b6086D1",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x8629703a9903515818C2FeB45a6f6fA5df8Da404",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1626716630,
       "values": {
         "$immutable": true,

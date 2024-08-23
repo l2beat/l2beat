@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20327427,
   "configHash": "0x6204667bcd6d0206ba6f768d6cd11bb3c85ae3234d5aec6c2df112049ba7eb72",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "PreimageOracle",
@@ -26,10 +26,18 @@
       "name": "DelayedWETH",
       "address": "0x0eCe16401A80551345bB672f177f51A8755FF775",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1716540467,
       "values": {
         "$admin": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
         "$implementation": "0x911465C106e5AB1EC11BEd89247Aa3DaF62Ec4Fa",
+        "$upgradeCount": 1,
         "config": "0xcbF423525a5471Fc5037a5397F99f6F09fe41379",
         "decimals": 18,
         "delay": 604800,
@@ -78,10 +86,18 @@
       "name": "DataAvailabilityChallenge",
       "address": "0x16193e14197c10109F3e81b938153A04A2a00190",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1716540311,
       "values": {
         "$admin": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
         "$implementation": "0x36b9F31874b8790d4caf341168A95FE165bA3C91",
+        "$upgradeCount": 1,
         "bondSize": "103486250000000000",
         "challengeWindow": 3600,
         "fixedResolutionCost": 72925,
@@ -113,10 +129,18 @@
       "descriptions": [
         "Used to bridge ERC-721 tokens from host chain to this chain."
       ],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1716540431,
       "values": {
         "$admin": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
         "$implementation": "0x53699fbA16599c1425D2637B839bA59c121a2e6a",
+        "$upgradeCount": 1,
         "messenger": "0x702dF90E92A6841c9013faE6D724ddFA8F141d5C",
         "MESSENGER": "0x702dF90E92A6841c9013faE6D724ddFA8F141d5C",
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000014",
@@ -136,10 +160,18 @@
         "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
       ],
       "categories": ["Gateways&Escrows"],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1716540383,
       "values": {
         "$admin": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
         "$implementation": "0xC2AbCf1dDADA750936a168334fD14D66fCa931e0",
+        "$upgradeCount": 0,
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x702dF90E92A6841c9013faE6D724ddFA8F141d5C",
         "MESSENGER": "0x702dF90E92A6841c9013faE6D724ddFA8F141d5C",
@@ -155,10 +187,18 @@
       "name": "DisputeGameFactory",
       "address": "0x443164F044D8840479234e00E7aD5bb06b85fC78",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1716540443,
       "values": {
         "$admin": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
         "$implementation": "0x0a3D54e40093044296Ee9F2077f26a13337757Eb",
+        "$upgradeCount": 1,
         "gameCount": 0,
         "gameImpls": [
           "0x56c7D88ee46BfD6cab37508E2e39e985a68007a4",
@@ -181,10 +221,18 @@
       "descriptions": [
         "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."
       ],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1716540419,
       "values": {
         "$admin": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
         "$implementation": "0x78Bd7b48E74669Dd6709C111200c6B862505Fc4A",
+        "$upgradeCount": 1,
         "bridge": "0x2AD84AbD52050956AcC9c490D024b821A59e3FB6",
         "BRIDGE": "0x2AD84AbD52050956AcC9c490D024b821A59e3FB6",
         "version": "1.9.0"
@@ -232,6 +280,13 @@
       "descriptions": [
         "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
       ],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -242,6 +297,7 @@
       "values": {
         "$admin": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
         "$implementation": "0x48Ef83Cf812f291EDB00C2D48440Ee90cD12be1a",
+        "$upgradeCount": 1,
         "challenger": "0xfA8d42bDE52C2B8B05fE5EeCbAdEa6CB698A0Bc5",
         "CHALLENGER": "0xfA8d42bDE52C2B8B05fE5EeCbAdEa6CB698A0Bc5",
         "deletedOutputs": [],
@@ -271,11 +327,24 @@
       "descriptions": [
         "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
       ],
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xCf06c459AE59d4f47469BcE535afC3485Ce89dBf",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1716540371,
       "values": {
         "$admin": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
         "$implementation": "0x42557f7920a257C7be82C2dfafcEd7aC1CCDb43F",
+        "$upgradeCount": 1,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "0x7d6251D49A102a330CfB46d132982781620700Cb",
         "batchInbox": "0xfF00000000000000000000000000000000293b30",
@@ -366,21 +435,70 @@
       "descriptions": [
         "It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component."
       ],
-      "assignedPermissions": {
-        "upgrade": [
-          "0x0eCe16401A80551345bB672f177f51A8755FF775",
-          "0x16193e14197c10109F3e81b938153A04A2a00190",
-          "0x28d56C3BBbe4807c19Cc81E6D5207Fb681C3726b",
-          "0x2AD84AbD52050956AcC9c490D024b821A59e3FB6",
-          "0x443164F044D8840479234e00E7aD5bb06b85fC78",
-          "0x515A0c8b1d9574C65EA1924eCd767B1d9b6AC32f",
-          "0x5A0492D20D984eE904E46E6Ff24572bc755abb28",
-          "0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C",
-          "0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A",
-          "0xcbF423525a5471Fc5037a5397F99f6F09fe41379"
-        ],
-        "configure": ["0xBdF852e2cc26Ea3C2dee7b493B1Fc12dA406175a"]
-      },
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574",
+          "via": []
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xBdF852e2cc26Ea3C2dee7b493B1Fc12dA406175a",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x0eCe16401A80551345bB672f177f51A8755FF775",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x16193e14197c10109F3e81b938153A04A2a00190",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x28d56C3BBbe4807c19Cc81E6D5207Fb681C3726b",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x2AD84AbD52050956AcC9c490D024b821A59e3FB6",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x443164F044D8840479234e00E7aD5bb06b85fC78",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x515A0c8b1d9574C65EA1924eCd767B1d9b6AC32f",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x5A0492D20D984eE904E46E6Ff24572bc755abb28",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xcbF423525a5471Fc5037a5397F99f6F09fe41379",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1716540191,
       "values": {
         "$immutable": true,
@@ -397,11 +515,19 @@
       "descriptions": [
         "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
       ],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1716540359,
       "values": {
         "$admin": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
         "$implementation": "0xb6a5DCc244EfAbE3194cf5e5590a463f44eD5784",
+        "$upgradeCount": 1,
         "guardian": "0xdF3700a9Cf9c7506Ca3B41E6ba991476677A8787",
         "GUARDIAN": "0xdF3700a9Cf9c7506Ca3B41E6ba991476677A8787",
         "L2_ORACLE": "0x5A0492D20D984eE904E46E6Ff24572bc755abb28",
@@ -424,6 +550,13 @@
       "name": "AddressManager",
       "address": "0xBdF852e2cc26Ea3C2dee7b493B1Fc12dA406175a",
       "template": "opstack/AddressManager",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1716540179,
       "values": {
         "$immutable": true,
@@ -439,10 +572,18 @@
         "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
       ],
       "categories": ["Upgrades&Governance"],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1716540227,
       "values": {
         "$admin": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
         "$implementation": "0x17bcBF2A2CF8156cf4603f8aFAAB27Ec4e998888",
+        "$upgradeCount": 1,
         "guardian": "0xdF3700a9Cf9c7506Ca3B41E6ba991476677A8787",
         "GUARDIAN_SLOT": "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68",
         "paused": false,
@@ -458,9 +599,13 @@
       "descriptions": [
         "It can act on behalf of 0x9e48d6bBca781c23392Ec459BfB3657C40a794A8, inheriting its permissions."
       ],
-      "assignedPermissions": {
-        "configure": ["0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1716540167,
       "values": {
@@ -504,9 +649,13 @@
       "descriptions": [
         "It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
       ],
-      "assignedPermissions": {
-        "configure": ["0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C"]
-      }
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C",
+          "via": []
+        }
+      ]
     },
     {
       "address": "0xdF3700a9Cf9c7506Ca3B41E6ba991476677A8787",

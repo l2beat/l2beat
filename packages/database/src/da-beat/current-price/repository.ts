@@ -5,7 +5,7 @@ import { selectCurrentPrice } from './select'
 export class CurrentPriceRepository extends BaseRepository {
   async getAll(): Promise<CurrentPriceRecord[]> {
     const rows = await this.db
-      .selectFrom('public.CurrentPrice')
+      .selectFrom('CurrentPrice')
       .select(selectCurrentPrice)
       .execute()
     return rows.map(toRecord)
@@ -15,7 +15,7 @@ export class CurrentPriceRepository extends BaseRepository {
     coingeckoId: string,
   ): Promise<CurrentPriceRecord | undefined> {
     const row = await this.db
-      .selectFrom('public.CurrentPrice')
+      .selectFrom('CurrentPrice')
       .select(selectCurrentPrice)
       .where('coingeckoId', '=', coingeckoId)
       .limit(1)
@@ -29,7 +29,7 @@ export class CurrentPriceRepository extends BaseRepository {
     if (coingeckoIds.length === 0) return []
 
     const rows = await this.db
-      .selectFrom('public.CurrentPrice')
+      .selectFrom('CurrentPrice')
       .select(selectCurrentPrice)
       .where('coingeckoId', 'in', coingeckoIds)
       .execute()
@@ -43,7 +43,7 @@ export class CurrentPriceRepository extends BaseRepository {
 
     const rows = records.map(toRow)
     await this.db
-      .insertInto('public.CurrentPrice')
+      .insertInto('CurrentPrice')
       .values(rows)
       .onConflict((oc) =>
         oc.column('coingeckoId').doUpdateSet((eb) => ({
@@ -56,9 +56,7 @@ export class CurrentPriceRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
-      .deleteFrom('public.CurrentPrice')
-      .executeTakeFirst()
+    const result = await this.db.deleteFrom('CurrentPrice').executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 }

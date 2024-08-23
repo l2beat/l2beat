@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20454449,
   "configHash": "0x722bdc74afa4186d83f17ede56db3b5fde5f89d6a296169858d275ccc239df59",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "ChainportCongressMembersRegistry",
@@ -56,9 +56,13 @@
     {
       "name": "ProxyAdmin",
       "address": "0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F",
-      "assignedPermissions": {
-        "upgrade": ["0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1626949762,
       "values": {
         "$immutable": true,
@@ -70,10 +74,18 @@
       "address": "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1626949825,
       "values": {
         "$admin": "0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F",
-        "$implementation": "0x118cbd7a4769846AD4928598D1f805a509Cc8c0d"
+        "$implementation": "0x118cbd7a4769846AD4928598D1f805a509Cc8c0d",
+        "$upgradeCount": 12
       },
       "derivedName": ""
     },

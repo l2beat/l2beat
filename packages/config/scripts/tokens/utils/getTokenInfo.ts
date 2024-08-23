@@ -1,5 +1,10 @@
 import { CoingeckoClient } from '@l2beat/shared'
-import { CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  CoingeckoId,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { providers, utils } from 'ethers'
 
 import { ethereum } from '../../../src/chains/ethereum'
@@ -13,6 +18,7 @@ export async function getTokenInfo(
   address: EthereumAddress,
   symbolFromConfig: string,
   coingeckoId: CoingeckoId,
+  deploymentTimestampOverride?: UnixTime,
 ) {
   const [
     name,
@@ -26,7 +32,12 @@ export async function getTokenInfo(
     getSymbol(provider, logger, address),
     getDecimals(provider, logger, address),
     getImageUrl(coingeckoClient, logger, coingeckoId),
-    getDeploymentTimestamp(logger, provider, address),
+    getDeploymentTimestamp(
+      logger,
+      provider,
+      address,
+      deploymentTimestampOverride,
+    ),
     getCoingeckoListingTimestamp(logger, coingeckoClient, coingeckoId),
   ])
 
@@ -119,12 +130,23 @@ async function getDeploymentTimestamp(
   logger: ScriptLogger,
   provider: providers.JsonRpcProvider,
   address: EthereumAddress,
+  override?: UnixTime,
 ) {
+  if (override) {
+    return override
+  }
+
   logger.fetching('sinceTimestamp (this will take a while)')
 
   const contractCreationTimestamp = await getContractCreationTimestamp(
     provider,
     address,
+  )
+
+  assert(
+    ethereum.minTimestampForTvl &&
+      contractCreationTimestamp.gt(ethereum.minTimestampForTvl),
+    'Deployment timestamp looks odd, provide manual override in tokens.jsonc',
   )
 
   return contractCreationTimestamp

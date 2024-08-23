@@ -1,3 +1,241 @@
+Generated with discovered.json: 0xa1cd04bcf941483cd187dfc6487b692918dcd7b2
+
+# Diff at Fri, 23 Aug 2024 09:56:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 20367491
+- current block number: 20367491
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20367491 (main branch discovery), not current.
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      values.$upgradeCount:
++        12
+    }
+```
+
+```diff
+    contract TaikoToken (0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800) {
+    +++ description: None
+      values.$upgradeCount:
++        5
+    }
+```
+
+```diff
+    contract GuardianMinorityProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c) {
+    +++ description: Verifier contract for blocks proven by Guardian minority.
+      values.$upgradeCount:
++        6
+    }
+```
+
+```diff
+    contract L1RollupAddressManager (0x579f40D0BE111b823962043702cabe6Aaa290780) {
+    +++ description: None
+      values.$upgradeCount:
++        6
+    }
+```
+
+```diff
+    contract ProverSetProxy (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9) {
+    +++ description: A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO.
+      values.$upgradeCount:
++        8
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) {
+    +++ description: None
+      values.$upgradeCount:
++        3
+    }
+```
+
+```diff
+    contract SharedERC20Vault (0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab) {
+    +++ description: None
+      values.$upgradeCount:
++        7
+    }
+```
+
+```diff
+    contract SignalService (0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) {
+    +++ description: None
+      values.$upgradeCount:
++        5
+    }
+```
+
+```diff
+    contract SgxVerifier (0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81) {
+    +++ description: Verifier contract for SGX proven blocks.
+      values.$upgradeCount:
++        5
+    }
+```
+
+```diff
+    contract TaikoBridge (0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) {
+    +++ description: None
+      values.$upgradeCount:
++        11
+    }
+```
+
+```diff
+    contract GuardianProver (0xE3D777143Ea25A6E031d1e921F396750885f43aC) {
+    +++ description: Verifier contract for Guardian proven blocks.
+      values.$upgradeCount:
++        6
+    }
+```
+
+```diff
+    contract L1SharedAddressManager (0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa) {
+    +++ description: None
+      values.$upgradeCount:
++        4
+    }
+```
+
+Generated with discovered.json: 0x501fc3cc7a3f8189eebc64405060e1ce4a97c04a
+
+# Diff at Wed, 21 Aug 2024 10:06:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 20367491
+- current block number: 20367491
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20367491 (main branch discovery), not current.
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F","via":[]}]
+    }
+```
+
+```diff
+    contract TaikoToken (0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F","via":[]}]
+    }
+```
+
+```diff
+    contract GuardianMinorityProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c) {
+    +++ description: Verifier contract for blocks proven by Guardian minority.
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F","via":[]}]
+    }
+```
+
+```diff
+    contract L1RollupAddressManager (0x579f40D0BE111b823962043702cabe6Aaa290780) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F","via":[]}]
+    }
+```
+
+```diff
+    contract ProverSetProxy (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9) {
+    +++ description: A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO.
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F","via":[]}]
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F","via":[]}]
+    }
+```
+
+```diff
+    contract SharedERC20Vault (0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F","via":[]}]
+    }
+```
+
+```diff
+    contract TaikoAdmin (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800","0x579A8d63a2Db646284CBFE31FE5082c9989E985c","0x579f40D0BE111b823962043702cabe6Aaa290780","0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9","0x8d7C954960a36a7596d7eA4945dDf891967ca8A3","0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab","0x9e0a24964e5397B566c1ed39258e21aB5E35C77C","0xE3D777143Ea25A6E031d1e921F396750885f43aC","0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa","0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81","0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","via":[]},{"permission":"upgrade","target":"0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800","via":[]},{"permission":"upgrade","target":"0x579A8d63a2Db646284CBFE31FE5082c9989E985c","via":[]},{"permission":"upgrade","target":"0x579f40D0BE111b823962043702cabe6Aaa290780","via":[]},{"permission":"upgrade","target":"0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9","via":[]},{"permission":"upgrade","target":"0x8d7C954960a36a7596d7eA4945dDf891967ca8A3","via":[]},{"permission":"upgrade","target":"0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab","via":[]},{"permission":"upgrade","target":"0x9e0a24964e5397B566c1ed39258e21aB5E35C77C","via":[]},{"permission":"upgrade","target":"0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81","via":[]},{"permission":"upgrade","target":"0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC","via":[]},{"permission":"upgrade","target":"0xE3D777143Ea25A6E031d1e921F396750885f43aC","via":[]},{"permission":"upgrade","target":"0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa","via":[]}]
+    }
+```
+
+```diff
+    contract SignalService (0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F","via":[]}]
+    }
+```
+
+```diff
+    contract SgxVerifier (0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81) {
+    +++ description: Verifier contract for SGX proven blocks.
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F","via":[]}]
+    }
+```
+
+```diff
+    contract TaikoBridge (0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F","via":[]}]
+    }
+```
+
+```diff
+    contract GuardianProver (0xE3D777143Ea25A6E031d1e921F396750885f43aC) {
+    +++ description: Verifier contract for Guardian proven blocks.
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F","via":[]}]
+    }
+```
+
+```diff
+    contract L1SharedAddressManager (0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xada8e10c7620e6341a1aa18d79161004c8a45df7
 
 # Diff at Fri, 09 Aug 2024 12:02:49 GMT:

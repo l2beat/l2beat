@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20340229,
   "configHash": "0xcfafca102a8fef0c60f0d35d20956b99c39d79582a1d98d1f869dddfa3a2538e",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "Treasurer",
@@ -22,10 +22,18 @@
       "address": "0x173272739Bd7Aa6e4e214714048a9fE699453059",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1706308043,
       "values": {
         "$admin": "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
-        "$implementation": "0xDaC2d26317C42ae3CB21357B73404120E1dA4232"
+        "$implementation": "0xDaC2d26317C42ae3CB21357B73404120E1dA4232",
+        "$upgradeCount": 2
       },
       "derivedName": ""
     },
@@ -325,9 +333,13 @@
     {
       "name": "ProxyAdmin",
       "address": "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
-      "assignedPermissions": {
-        "upgrade": ["0x173272739Bd7Aa6e4e214714048a9fE699453059"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x173272739Bd7Aa6e4e214714048a9fE699453059",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1706307875,
       "values": {
         "$immutable": true,

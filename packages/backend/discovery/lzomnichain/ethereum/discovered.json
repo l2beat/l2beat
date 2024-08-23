@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20240876,
   "configHash": "0x9d96b20a841797ca5d2e377b9c244b1781d5c5b56faf0686676a0c3d77c5503a",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "FPValidator",
@@ -53,10 +53,18 @@
       "address": "0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1669425971,
       "values": {
         "$admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
-        "$implementation": "0x154c7B3Eee18ABCFaede98fae00e58e7737d96dE"
+        "$implementation": "0x154c7B3Eee18ABCFaede98fae00e58e7737d96dE",
+        "$upgradeCount": 0
       }
     },
     {
@@ -1469,10 +1477,18 @@
       "address": "0x5a54fe5234E811466D5366846283323c954310B2",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1661536020,
       "values": {
         "$admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
-        "$implementation": "0x3eEA8d627ab6983fFFc7027ee623Fd7699343fc1"
+        "$implementation": "0x3eEA8d627ab6983fFFc7027ee623Fd7699343fc1",
+        "$upgradeCount": 2
       },
       "derivedName": ""
     },
@@ -1519,10 +1535,18 @@
       "address": "0x6BD792911F4B3714E88FbDf32B351632e7d22c70",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1669420643,
       "values": {
         "$admin": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
-        "$implementation": "0x61Ab01Ce58D1dFf3562bb25870020d555e39D849"
+        "$implementation": "0x61Ab01Ce58D1dFf3562bb25870020d555e39D849",
+        "$upgradeCount": 0
       }
     },
     {
@@ -1530,22 +1554,36 @@
       "address": "0x902F09715B6303d4173037652FA7377e5b98089E",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1661531835,
       "values": {
         "$admin": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
-        "$implementation": "0xB830a5AfCBEBb936c30C607a18BbbA9f5B0a592f"
+        "$implementation": "0xB830a5AfCBEBb936c30C607a18BbbA9f5B0a592f",
+        "$upgradeCount": 6
       },
       "derivedName": ""
     },
     {
       "name": "ProxyAdmin",
       "address": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034",
-          "0x5a54fe5234E811466D5366846283323c954310B2"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x5a54fe5234E811466D5366846283323c954310B2",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1661448939,
       "values": {
         "$immutable": true,
@@ -1555,12 +1593,18 @@
     {
       "name": "ProxyAdmin",
       "address": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x6BD792911F4B3714E88FbDf32B351632e7d22c70",
-          "0x902F09715B6303d4173037652FA7377e5b98089E"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x6BD792911F4B3714E88FbDf32B351632e7d22c70",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x902F09715B6303d4173037652FA7377e5b98089E",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1647317012,
       "values": {
         "$immutable": true,

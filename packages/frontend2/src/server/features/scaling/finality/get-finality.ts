@@ -1,6 +1,6 @@
-import { assert } from '@l2beat/backend-tools'
 import { type Layer2FinalityConfig } from '@l2beat/config'
 import {
+  assert,
   type ProjectId,
   type TrackedTxsConfigSubtype,
   UnixTime,
@@ -11,10 +11,10 @@ import {
   unstable_noStore as noStore,
 } from 'next/cache'
 import { db } from '~/server/database'
-import { calcAvgsPerProject } from './calc-avgs-per-project'
-import { divideAndAddLag } from './divide-and-add-lag'
-import { getLivenessByTypeSince } from './get-liveness-by-type-since'
 import { FinalityData, type SerializableFinalityData } from './schema'
+import { calcAvgsPerProject } from './utils/calc-avgs-per-project'
+import { divideAndAddLag } from './utils/divide-and-add-lag'
+import { getLivenessByTypeSince } from './utils/get-liveness-by-type-since'
 
 export type FinalityProjectConfig = {
   projectId: ProjectId
@@ -28,7 +28,7 @@ export async function getFinality(projects: FinalityProjectConfig[]) {
 }
 
 const getCachedFinalityData = cache(getFinalityData, ['finality'], {
-  revalidate: 60 * 60,
+  revalidate: UnixTime.HOUR,
 })
 
 export async function getFinalityData(

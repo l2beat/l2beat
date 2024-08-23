@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20440714,
   "configHash": "0x899e53b29b077d1af0417c2dcf901f5a4bfdb20a2598939c95c06827ec471499",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "EcdsaPointsXColumn",
@@ -159,9 +159,13 @@
       "address": "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "assignedPermissions": {
-        "upgrade": ["0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678120703,
       "values": {
@@ -382,6 +386,18 @@
       "name": "SHARPVerifierProxy",
       "address": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
       "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1635077695,
       "values": {
         "$admin": [
@@ -2701,9 +2717,13 @@
   "eoas": [
     {
       "address": "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
-      "assignedPermissions": {
-        "upgrade": ["0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"]
-      }
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+          "via": []
+        }
+      ]
     },
     { "address": "0x59232aC80E6d403b6381393e52f4665ECA328558" },
     { "address": "0x955B978F3ee7818dA71fA25c676062E6BC462Fec" },

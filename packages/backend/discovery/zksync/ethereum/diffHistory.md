@@ -1,3 +1,138 @@
+Generated with discovered.json: 0xd2de767f061bd11047842dfb113f66896a9893bb
+
+# Diff at Fri, 23 Aug 2024 09:56:47 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 20532597
+- current block number: 20532597
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20532597 (main branch discovery), not current.
+
+```diff
+    contract Governance (0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01) {
+    +++ description: None
+      values.$upgradeCount:
++        0
+    }
+```
+
+```diff
+    contract Verifier (0x5290E9582B4FB706EaDf87BB1c129e897e04d06D) {
+    +++ description: None
+      values.$upgradeCount:
++        0
+    }
+```
+
+Generated with discovered.json: 0xf08beb04559d5a4661c8efb1809292301a9910c4
+
+# Diff at Wed, 21 Aug 2024 10:07:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 20532597
+- current block number: 20532597
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20532597 (main branch discovery), not current.
+
+```diff
+    contract Governance (0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x38A43F4330f24fe920F943409709fc9A6084C939","via":[]}]
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (0x38A43F4330f24fe920F943409709fc9A6084C939) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01","0x5290E9582B4FB706EaDf87BB1c129e897e04d06D","0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01","via":[]},{"permission":"upgrade","target":"0x5290E9582B4FB706EaDf87BB1c129e897e04d06D","via":[]},{"permission":"upgrade","target":"0xaBEA9132b05A70803a4E85094fD0e1800777fBEF","via":[]}]
+    }
+```
+
+```diff
+    contract Verifier (0x5290E9582B4FB706EaDf87BB1c129e897e04d06D) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x38A43F4330f24fe920F943409709fc9A6084C939","via":[]}]
+    }
+```
+
+```diff
+    contract ZkSync (0xaBEA9132b05A70803a4E85094fD0e1800777fBEF) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x38A43F4330f24fe920F943409709fc9A6084C939","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0x13dea30776c0b6c15c1c470dd6f5806ecdd4005c
+
+# Diff at Thu, 15 Aug 2024 07:40:27 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@9a07aead4b3726cc622f66fe9a15e06e63af7acd block: 20525384
+- current block number: 20532597
+
+## Description
+
+Two members of the ZkSync Multisig were replaced.
+
+## Watched changes
+
+```diff
+    contract ZkSync Multisig (0xE24f4870Ab85DE8E356C5fC56138587206c70d99) {
+    +++ description: None
+      values.$members.5:
+-        "0x9dF8bc0918F357c766A5697E031fF5237c05747A"
++        "0xD613b3a3924D0dE9B4a352ca0669e743cBC3C4AA"
+      values.$members.3:
+-        "0x84298D79ad2CD4eC0d9Ca1959F9d9f40Bc07152f"
++        "0xfB42eb487835B01cbF266f66750a7a89a7247F06"
+    }
+```
+
+Generated with discovered.json: 0x5772fd09bd8af1263c7960d0da910a71bcca5f78
+
+# Diff at Wed, 14 Aug 2024 07:30:30 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@e32dcc268a9af9f45ad205490c9d650c487e04f1 block: 20432768
+- current block number: 20525384
+
+## Description
+
+One ZKsync Multisig member address is replaced with another.
+
+## Watched changes
+
+```diff
+    contract ZkSync Multisig (0xE24f4870Ab85DE8E356C5fC56138587206c70d99) {
+    +++ description: None
+      values.$members.1:
+-        "0x1567AC0764142e91aB0A9C65C568f0DbE9E168BF"
++        "0x37A71E0C1A5808343D893Db40e12A74e0A387908"
+    }
+```
+
 Generated with discovered.json: 0xf835b3fbe50281f5386c981c6991da4be2560615
 
 # Diff at Fri, 09 Aug 2024 12:03:21 GMT:

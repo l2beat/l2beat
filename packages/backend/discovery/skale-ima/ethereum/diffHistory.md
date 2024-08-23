@@ -1,3 +1,177 @@
+Generated with discovered.json: 0x16e7408422bca316783c317c0aa2c4af91276bdb
+
+# Diff at Fri, 23 Aug 2024 09:55:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 19719123
+- current block number: 19719123
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19719123 (main branch discovery), not current.
+
+```diff
+    contract DepositBoxERC1155 (0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a) {
+    +++ description: None
+      values.$upgradeCount:
++        8
+    }
+```
+
+```diff
+    contract DepositBoxEth (0x49F583d263e4Ef938b9E09772D3394c71605Df94) {
+    +++ description: None
+      values.$upgradeCount:
++        8
+    }
+```
+
+```diff
+    contract CommunityPool (0x588801cA36558310D91234aFC2511502282b1621) {
+    +++ description: None
+      values.$upgradeCount:
++        7
+    }
+```
+
+```diff
+    contract Linker (0x6ef406953bac772C2146389ED37846BA3b6086D1) {
+    +++ description: None
+      values.$upgradeCount:
++        6
+    }
+```
+
+```diff
+    contract DepositBoxERC721 (0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d) {
+    +++ description: None
+      values.$upgradeCount:
++        8
+    }
+```
+
+```diff
+    contract MessageProxyForMainnet (0x8629703a9903515818C2FeB45a6f6fA5df8Da404) {
+    +++ description: None
+      values.$upgradeCount:
++        9
+    }
+```
+
+```diff
+    contract DepositBoxERC20 (0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669) {
+    +++ description: None
+      values.$upgradeCount:
++        9
+    }
+```
+
+```diff
+    contract DepositBoxERC721WithMetadata (0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986) {
+    +++ description: None
+      values.$upgradeCount:
++        4
+    }
+```
+
+Generated with discovered.json: 0x2af0e37e151a5833828163fc67664c36d74a74b2
+
+# Diff at Wed, 21 Aug 2024 10:05:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 19719123
+- current block number: 19719123
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19719123 (main branch discovery), not current.
+
+```diff
+    contract DepositBoxERC1155 (0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627","via":[]}]
+    }
+```
+
+```diff
+    contract DepositBoxEth (0x49F583d263e4Ef938b9E09772D3394c71605Df94) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627","via":[]}]
+    }
+```
+
+```diff
+    contract CommunityPool (0x588801cA36558310D91234aFC2511502282b1621) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627","via":[]}]
+    }
+```
+
+```diff
+    contract Linker (0x6ef406953bac772C2146389ED37846BA3b6086D1) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627","via":[]}]
+    }
+```
+
+```diff
+    contract DepositBoxERC721 (0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627","via":[]}]
+    }
+```
+
+```diff
+    contract MessageProxyForMainnet (0x8629703a9903515818C2FeB45a6f6fA5df8Da404) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627","via":[]}]
+    }
+```
+
+```diff
+    contract DepositBoxERC20 (0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627","via":[]}]
+    }
+```
+
+```diff
+    contract DepositBoxERC721WithMetadata (0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627","via":[]}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a","0x49F583d263e4Ef938b9E09772D3394c71605Df94","0x588801cA36558310D91234aFC2511502282b1621","0x6ef406953bac772C2146389ED37846BA3b6086D1","0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d","0x8629703a9903515818C2FeB45a6f6fA5df8Da404","0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669","0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a","via":[]},{"permission":"upgrade","target":"0x49F583d263e4Ef938b9E09772D3394c71605Df94","via":[]},{"permission":"upgrade","target":"0x588801cA36558310D91234aFC2511502282b1621","via":[]},{"permission":"upgrade","target":"0x6ef406953bac772C2146389ED37846BA3b6086D1","via":[]},{"permission":"upgrade","target":"0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d","via":[]},{"permission":"upgrade","target":"0x8629703a9903515818C2FeB45a6f6fA5df8Da404","via":[]},{"permission":"upgrade","target":"0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669","via":[]},{"permission":"upgrade","target":"0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x37c24f07a5e6946d1fc644313da74ff45102e221
 
 # Diff at Fri, 09 Aug 2024 12:02:18 GMT:

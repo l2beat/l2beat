@@ -5,14 +5,15 @@ import { useScalingFilter } from '~/app/(new)/(other)/_components/scaling-filter
 import { ScalingFilters } from '~/app/(new)/(other)/_components/scaling-filters'
 import { BasicTable } from '~/app/_components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
-import { COSTS_UPCOMING_PROJECTS } from '~/server/features/costs/consts'
-import { type CostsTableData } from '~/server/features/costs/get-costs-table-data'
-import {
-  type CostsUnit,
-  type ScalingCostsEntry,
-} from '~/server/features/scaling/get-scaling-costs-entries'
+import { COSTS_UPCOMING_PROJECTS } from '~/server/features/scaling/costs/consts'
+import { type CostsTableData } from '~/server/features/scaling/costs/get-costs-table-data'
+import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
+import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import { api } from '~/trpc/react'
-import { useCostsMetricContext } from '../costs-metric-context'
+import {
+  type CostsMetric,
+  useCostsMetricContext,
+} from '../costs-metric-context'
 import { useCostsTimeRangeContext } from '../costs-time-range-context'
 import { CostsMetricControls } from '../costs-type-controls'
 import { useCostsUnitContext } from '../costs-unit-context'
@@ -61,9 +62,9 @@ export function ScalingCostsTable(props: Props) {
     },
   })
 
-  const onMetricChange = (type: 'total' | 'per-l2-tx') => {
-    setMetric(type)
-    if (type === 'per-l2-tx' && (range === '1d' || range === '7d')) {
+  const onMetricChange = (metric: CostsMetric) => {
+    setMetric(metric)
+    if (metric === 'per-l2-tx' && (range === '1d' || range === '7d')) {
       setRange('30d')
     }
   }
@@ -116,16 +117,15 @@ function mapToTableEntry(
       blobs: projectData[unit].blobs,
       compute: projectData[unit].compute,
       overhead: projectData[unit].overhead,
-      unit,
     },
   }
 }
 
 function calculateDataByType(
   entries: ScalingCostsTableEntry[],
-  type: 'total' | 'per-l2-tx',
+  metric: CostsMetric,
 ): ScalingCostsTableEntry[] {
-  if (type === 'total') {
+  if (metric === 'total') {
     return entries
   }
 

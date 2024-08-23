@@ -1,3 +1,133 @@
+Generated with discovered.json: 0x94eeecd4df2b0048ab44f039ea142fb980a4eb9e
+
+# Diff at Fri, 23 Aug 2024 09:54:32 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 19927728
+- current block number: 19927728
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19927728 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xA38d0c4E6319F9045F20318BA5f04CDe94208608) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract OptimismPortal (0xb26Fd985c5959bBB382BAFdD0b879E149e48116c) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b) {
+    +++ description: None
+      values.$upgradeCount:
++        0
+    }
+```
+
+Generated with discovered.json: 0x5f699be0a8d5eb5b06d9d59e455e8037f12fd2da
+
+# Diff at Wed, 21 Aug 2024 10:05:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 19927728
+- current block number: 19927728
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19927728 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"configure","target":"0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4","via":[]}]
+    }
+```
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: It can act on behalf of 0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4, inheriting its permissions.
+      assignedPermissions:
+-        {"configure":["0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4"]}
+      receivedPermissions:
++        [{"permission":"configure","target":"0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4","via":[]}]
+    }
+```
+
+```diff
+    contract SystemConfig (0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4","via":[]}]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xA38d0c4E6319F9045F20318BA5f04CDe94208608) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4","via":[]}]
+    }
+```
+
+```diff
+    contract OptimismPortal (0xb26Fd985c5959bBB382BAFdD0b879E149e48116c) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4","via":[]}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9","0xA38d0c4E6319F9045F20318BA5f04CDe94208608","0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b","0xb26Fd985c5959bBB382BAFdD0b879E149e48116c"],"configure":["0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e"]}
+      issuedPermissions:
++        [{"permission":"configure","target":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[]}]
+      receivedPermissions:
++        [{"permission":"configure","target":"0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e","via":[]},{"permission":"upgrade","target":"0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9","via":[]},{"permission":"upgrade","target":"0xA38d0c4E6319F9045F20318BA5f04CDe94208608","via":[]},{"permission":"upgrade","target":"0xb26Fd985c5959bBB382BAFdD0b879E149e48116c","via":[]},{"permission":"upgrade","target":"0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b","via":[]}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x0c82b153ac9329e004dc15fd4291b1a2d2eedb2e
 
 # Diff at Fri, 09 Aug 2024 12:01:38 GMT:

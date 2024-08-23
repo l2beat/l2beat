@@ -1,3 +1,405 @@
+Generated with discovered.json: 0x05067bdd06f8705936f975ff1b16d3cc5a2b2c11
+
+# Diff at Fri, 23 Aug 2024 09:55:17 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 19925898
+- current block number: 19925898
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19925898 (main branch discovery), not current.
+
+```diff
+    contract swETH-Strategy (0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract ankrETH-Strategy (0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract rETH-Strategy (0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract METH-Strategy (0x298aFB19A105D59E74658C4C334Ff360BadE6dd2) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A) {
+    +++ description: None
+      values.$upgradeCount:
++        3
+    }
+```
+
+```diff
+    contract cbETH-Strategy (0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract osETH-Strategy (0x57ba429517c3473B6d34CA9aCd56c0e735b94c02) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract wBETH-Strategy (0x7CA911E83dabf90C90dD3De5411a10F1A6112184) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract DelayedWithdrawalRouter (0x7Fe7E9CC0F274d2435AD5d56D5fa73E47F6A23D8) {
+    +++ description: None
+      values.$upgradeCount:
++        3
+    }
+```
+
+```diff
+    contract bEIGEN token (0x83E9115d334D248Ce39a6f36144aEaB5b3456e75) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
+    +++ description: None
+      values.$upgradeCount:
++        3
+    }
+```
+
+```diff
+    contract sfrxETH-Strategy (0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
+    +++ description: None
+      values.$upgradeCount:
++        3
+    }
+```
+
+```diff
+    contract stETH-Strategy (0x93c4b944D05dfe6df7645A86cd2206016c51564D) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract ETHx-Strategy (0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract OETH-Strategy (0xa4C637e0F704745D182e4D38cAb7E7485321d059) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract bEIGEN-Strategy (0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract RiverV1-Strategy (0xAe60d8180437b5C34bB956822ac2710972584473) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract Slasher (0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd) {
+    +++ description: None
+      values.$upgradeCount:
++        3
+    }
+```
+
+```diff
+    contract EIGEN token (0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83) {
+    +++ description: None
+      values.$upgradeCount:
++        3
+    }
+```
+
+Generated with discovered.json: 0xa40397a7ac1578e18da61c7b90e844f6ed89b363
+
+# Diff at Wed, 21 Aug 2024 10:05:40 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 19925898
+- current block number: 19925898
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19925898 (main branch discovery), not current.
+
+```diff
+    contract swETH-Strategy (0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444","via":[]}]
+    }
+```
+
+```diff
+    contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444","via":[]}]
+    }
+```
+
+```diff
+    contract ankrETH-Strategy (0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444","via":[]}]
+    }
+```
+
+```diff
+    contract rETH-Strategy (0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444","via":[]}]
+    }
+```
+
+```diff
+    contract METH-Strategy (0x298aFB19A105D59E74658C4C334Ff360BadE6dd2) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444","via":[]}]
+    }
+```
+
+```diff
+    contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444","via":[]}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x83E9115d334D248Ce39a6f36144aEaB5b3456e75","via":[]}]
+    }
+```
+
+```diff
+    contract cbETH-Strategy (0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444","via":[]}]
+    }
+```
+
+```diff
+    contract osETH-Strategy (0x57ba429517c3473B6d34CA9aCd56c0e735b94c02) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444","via":[]}]
+    }
+```
+
+```diff
+    contract wBETH-Strategy (0x7CA911E83dabf90C90dD3De5411a10F1A6112184) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444","via":[]}]
+    }
+```
+
+```diff
+    contract DelayedWithdrawalRouter (0x7Fe7E9CC0F274d2435AD5d56D5fa73E47F6A23D8) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444","via":[]}]
+    }
+```
+
+```diff
+    contract bEIGEN token (0x83E9115d334D248Ce39a6f36144aEaB5b3456e75) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9","via":[]}]
+    }
+```
+
+```diff
+    contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444","via":[]}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6","0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF","0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff","0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2","0x298aFB19A105D59E74658C4C334Ff360BadE6dd2","0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A","0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc","0x57ba429517c3473B6d34CA9aCd56c0e735b94c02","0x7CA911E83dabf90C90dD3De5411a10F1A6112184","0x7Fe7E9CC0F274d2435AD5d56D5fa73E47F6A23D8","0x858646372CC42E1A627fcE94aa7A7033e7CF075A","0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6","0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338","0x93c4b944D05dfe6df7645A86cd2206016c51564D","0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d","0xAe60d8180437b5C34bB956822ac2710972584473","0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd","0xa4C637e0F704745D182e4D38cAb7E7485321d059","0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6","via":[]},{"permission":"upgrade","target":"0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF","via":[]},{"permission":"upgrade","target":"0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff","via":[]},{"permission":"upgrade","target":"0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2","via":[]},{"permission":"upgrade","target":"0x298aFB19A105D59E74658C4C334Ff360BadE6dd2","via":[]},{"permission":"upgrade","target":"0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A","via":[]},{"permission":"upgrade","target":"0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc","via":[]},{"permission":"upgrade","target":"0x57ba429517c3473B6d34CA9aCd56c0e735b94c02","via":[]},{"permission":"upgrade","target":"0x7CA911E83dabf90C90dD3De5411a10F1A6112184","via":[]},{"permission":"upgrade","target":"0x7Fe7E9CC0F274d2435AD5d56D5fa73E47F6A23D8","via":[]},{"permission":"upgrade","target":"0x858646372CC42E1A627fcE94aa7A7033e7CF075A","via":[]},{"permission":"upgrade","target":"0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6","via":[]},{"permission":"upgrade","target":"0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338","via":[]},{"permission":"upgrade","target":"0x93c4b944D05dfe6df7645A86cd2206016c51564D","via":[]},{"permission":"upgrade","target":"0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d","via":[]},{"permission":"upgrade","target":"0xa4C637e0F704745D182e4D38cAb7E7485321d059","via":[]},{"permission":"upgrade","target":"0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7","via":[]},{"permission":"upgrade","target":"0xAe60d8180437b5C34bB956822ac2710972584473","via":[]},{"permission":"upgrade","target":"0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd","via":[]}]
+    }
+```
+
+```diff
+    contract sfrxETH-Strategy (0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444","via":[]}]
+    }
+```
+
+```diff
+    contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444","via":[]}]
+    }
+```
+
+```diff
+    contract stETH-Strategy (0x93c4b944D05dfe6df7645A86cd2206016c51564D) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444","via":[]}]
+    }
+```
+
+```diff
+    contract ETHx-Strategy (0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444","via":[]}]
+    }
+```
+
+```diff
+    contract OETH-Strategy (0xa4C637e0F704745D182e4D38cAb7E7485321d059) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444","via":[]}]
+    }
+```
+
+```diff
+    contract bEIGEN-Strategy (0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444","via":[]}]
+    }
+```
+
+```diff
+    contract RiverV1-Strategy (0xAe60d8180437b5C34bB956822ac2710972584473) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444","via":[]}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xB8915E195121f2B5D989Ec5727fd47a5259F1CEC) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83","via":[]}]
+    }
+```
+
+```diff
+    contract Slasher (0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444","via":[]}]
+    }
+```
+
+```diff
+    contract EIGEN token (0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xB8915E195121f2B5D989Ec5727fd47a5259F1CEC","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xe3a717f59d55c90b543a66e5ca966f1515243cfa
 
 # Diff at Fri, 09 Aug 2024 12:02:06 GMT:

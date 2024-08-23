@@ -20,7 +20,7 @@ import {
   notUndefined,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { isArray, isString, uniq } from 'lodash'
+import { groupBy, isArray, isString, uniq } from 'lodash'
 
 import { join } from 'path'
 import {
@@ -694,13 +694,16 @@ export class ProjectDiscovery {
       upgrade: 'Admin',
     }
 
-    const permissions = contractOrEoa.assignedPermissions
+    const permissions = contractOrEoa.receivedPermissions
     return permissions === undefined
       ? undefined
-      : Object.entries(contractOrEoa.assignedPermissions ?? {})
-          .map(([permission, addresses]) => {
-            const addressesString = addresses
-              .map((address) => this.getContract(address.toString()).name)
+      : Object.entries(
+          groupBy(contractOrEoa.receivedPermissions ?? [], 'permission'),
+        )
+          .map(([permission, entries]) => {
+            const addressesString = entries
+              .filter((entry) => !this.isEOA(entry.target))
+              .map((entry) => this.getContract(entry.target.toString()).name)
               .join(', ')
             return `${
               permissionToRole[permission as keyof typeof permissionToRole]
@@ -749,14 +752,14 @@ export class ProjectDiscovery {
             description,
           ),
         )
-      } else if (contract.assignedPermissions !== undefined) {
+      } else if (contract.receivedPermissions !== undefined) {
         result.push(this.contractAsPermissioned(contract, description))
       }
     }
 
     const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
     for (const eoa of eoas) {
-      if (eoa.assignedPermissions === undefined) {
+      if (eoa.receivedPermissions === undefined) {
         continue
       }
       const description = this.describeContractOrEoa(eoa)
@@ -785,7 +788,7 @@ export class ProjectDiscovery {
     )
     const result = contracts
       .filter((contract) => !gnosisModules.includes(contract.address))
-      .filter((contracts) => contracts.assignedPermissions === undefined)
+      .filter((contracts) => contracts.receivedPermissions === undefined)
       .filter((contracts) => contracts.proxyType !== 'gnosis safe')
       .map((contract) => {
         const admins = get$Admins(contract.values)

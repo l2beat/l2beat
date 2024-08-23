@@ -3,14 +3,18 @@
   "chain": "ethereum",
   "blockNumber": 18939732,
   "configHash": "0x59b272da0d65b6f780237f55503b40da0033b0c88e28c75b7a041282560cb8e3",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "TimeLock1",
       "address": "0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d",
-      "assignedPermissions": {
-        "upgrade": ["0x9C07A72177c5A05410cA338823e790876E79D73B"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x9C07A72177c5A05410cA338823e790876E79D73B",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1699753175,
       "values": {
         "$immutable": true,
@@ -48,6 +52,13 @@
       "name": "DefaultDepositContract",
       "address": "0x54D7aE423Edb07282645e740C046B9373970a168",
       "proxyType": "ZeppelinOS proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xf2991507952d9594E71A44A54fb19f3109D213A5",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1699746983,
       "values": {
         "$admin": "0xf2991507952d9594E71A44A54fb19f3109D213A5",
@@ -117,6 +128,13 @@
       "name": "ExchangeV3",
       "address": "0x9C07A72177c5A05410cA338823e790876E79D73B",
       "proxyType": "ZeppelinOS proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "getBlockHeight",
         "getMerkleRoot",
@@ -217,9 +235,13 @@
     {
       "name": "TimeLock2",
       "address": "0xf2991507952d9594E71A44A54fb19f3109D213A5",
-      "assignedPermissions": {
-        "upgrade": ["0x54D7aE423Edb07282645e740C046B9373970a168"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x54D7aE423Edb07282645e740C046B9373970a168",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1699753451,
       "values": {
         "$immutable": true,

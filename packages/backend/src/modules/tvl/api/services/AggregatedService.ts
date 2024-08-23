@@ -1,5 +1,4 @@
-import { assert } from '@l2beat/backend-tools'
-import { TvlApiCharts, UnixTime } from '@l2beat/shared-pure'
+import { assert, TvlApiCharts, UnixTime } from '@l2beat/shared-pure'
 import { Clock } from '../../../../tools/Clock'
 import {
   ValuesForSource,

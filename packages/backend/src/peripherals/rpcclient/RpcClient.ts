@@ -20,13 +20,17 @@ export class RpcClient {
 
   static create(
     services: { logger: Logger },
-    options: { url: string; callsPerMinute: number | undefined },
+    options: { url: string; callsPerMinute: number | undefined; chain: string },
   ) {
     const provider = new providers.StaticJsonRpcProvider({
       url: options.url,
       timeout: 15_000,
     })
-    return new RpcClient(provider, services.logger, options.callsPerMinute)
+    return new RpcClient(
+      provider,
+      services.logger.tag(options.chain),
+      options.callsPerMinute,
+    )
   }
 
   async getBlockNumber() {

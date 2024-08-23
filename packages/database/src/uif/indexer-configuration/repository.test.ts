@@ -92,6 +92,22 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
   })
 
   it(
+    IndexerConfigurationRepository.prototype.getByIndexerIds.name,
+    async () => {
+      const records = CONFIGURATIONS
+
+      await repository.upsertMany(records)
+
+      const result = await repository.getByIndexerIds([
+        'indexer-1',
+        'indexer-2',
+      ])
+
+      expect(result).toEqualUnsorted(records.slice(0, 3))
+    },
+  )
+
+  it(
     IndexerConfigurationRepository.prototype.getConfigurationsWithoutIndexerId
       .name,
     async () => {

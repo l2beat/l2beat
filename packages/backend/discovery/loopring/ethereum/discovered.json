@@ -3,12 +3,19 @@
   "chain": "ethereum",
   "blockNumber": 20059608,
   "configHash": "0x4e88d6fb0be4958e0b30fdd0f2ec80cb14364904a842304176a12cf8fb7fbbe9",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "ExchangeV3",
       "address": "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4",
       "proxyType": "ZeppelinOS proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "getBlockHeight",
         "getMerkleRoot",
@@ -329,9 +336,13 @@
       "address": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "assignedPermissions": {
-        "upgrade": ["0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1606289169,
       "values": {

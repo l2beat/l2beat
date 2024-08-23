@@ -3,27 +3,65 @@
   "chain": "ethereum",
   "blockNumber": 20461688,
   "configHash": "0x9d1beed8f80f0e5c226a167bc517f6809ef5cdccdfe3fe32a3a141fcfa133a87",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "BridgeMultisig",
       "address": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
-          "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
-          "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
-          "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
-          "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
-          "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
-          "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
-          "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
-          "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1692867743,
       "values": {
@@ -68,6 +106,13 @@
       "name": "StarkgateManager",
       "address": "0x0c5aE94f8939182F2D06097025324D1E537d5B60",
       "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1707308579,
       "values": {
         "$admin": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
@@ -121,6 +166,13 @@
       "name": "StarkgateRegistry",
       "address": "0x1268cc171c54F2000402DfF20E93E60DF4c96812",
       "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1707322595,
       "values": {
         "$admin": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
@@ -167,6 +219,13 @@
       "name": "WBTCBridge",
       "address": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
       "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1657137600,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
@@ -216,6 +275,13 @@
       "name": "FXSBridge",
       "address": "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
       "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1692689267,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
@@ -284,9 +350,13 @@
       "address": "0x83C0A700114101D1283D1405E2c8f21D3F03e988",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "assignedPermissions": {
-        "upgrade": ["0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1672587635,
       "values": {
@@ -357,6 +427,18 @@
       "name": "ETHBridge",
       "address": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
       "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xC91EC49Ad0843E5Cca55b4c4e5f68de54F6cB2Ae",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1647857148,
       "values": {
         "$admin": [
@@ -413,6 +495,13 @@
       "name": "USDTBridge",
       "address": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
       "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1657137615,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
@@ -462,6 +551,13 @@
       "name": "wstETHBridge",
       "address": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
       "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1685452751,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
@@ -511,6 +607,18 @@
       "name": "Starknet",
       "address": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
       "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x83C0A700114101D1283D1405E2c8f21D3F03e988",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xD5fB66CaEE881367Df4409B17Fd53a2Ef0D9B263",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "l1ToL2MessageNonce",
         "stateBlockNumber",
@@ -575,6 +683,13 @@
       "name": "STRKBridge",
       "address": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
       "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1704905879,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
@@ -623,6 +738,13 @@
       "name": "rETHBridge",
       "address": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
       "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1685880791,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
@@ -673,6 +795,13 @@
       "name": "sfrxETHBridge",
       "address": "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
       "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1692689279,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
@@ -724,6 +853,13 @@
       "name": "FRAXBridge",
       "address": "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
       "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1692689255,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
@@ -775,6 +911,13 @@
       "name": "LUSDBridge",
       "address": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
       "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1688046071,
       "values": {
         "$admin": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
@@ -825,6 +968,13 @@
       "name": "MultiBridge",
       "address": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
       "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1707322643,
       "values": {
         "$admin": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
@@ -882,6 +1032,13 @@
       "name": "USDCBridge",
       "address": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
       "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1657137639,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
@@ -931,6 +1088,13 @@
       "name": "UNIBridge",
       "address": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
       "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xF689688640E88160c07C6FC5cc63039F29EDe86b",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1698061847,
       "values": {
         "$admin": "0xF689688640E88160c07C6FC5cc63039F29EDe86b",
@@ -987,38 +1151,64 @@
     { "address": "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7" },
     {
       "address": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x0c5aE94f8939182F2D06097025324D1E537d5B60",
-          "0x1268cc171c54F2000402DfF20E93E60DF4c96812",
-          "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
-          "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
-        ]
-      }
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x0c5aE94f8939182F2D06097025324D1E537d5B60",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x1268cc171c54F2000402DfF20E93E60DF4c96812",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
+          "via": []
+        }
+      ]
     },
     { "address": "0x59232aC80E6d403b6381393e52f4665ECA328558" },
     { "address": "0x64F4396bb0669C72858Cc50C779b48EB25F45770" },
     { "address": "0x804d60CB1ade94511f7915A2062948685Ca8C81f" },
     {
       "address": "0xC91EC49Ad0843E5Cca55b4c4e5f68de54F6cB2Ae",
-      "assignedPermissions": {
-        "upgrade": ["0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"]
-      }
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "via": []
+        }
+      ]
     },
     { "address": "0xCe958D997F4a5824D4d503A128216322C6C223a0" },
     { "address": "0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8" },
     { "address": "0xd4C972C4e0A9946bEF9dabF4EF84EDa8EF542b82" },
     {
       "address": "0xD5fB66CaEE881367Df4409B17Fd53a2Ef0D9B263",
-      "assignedPermissions": {
-        "upgrade": ["0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"]
-      }
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "via": []
+        }
+      ]
     },
     {
       "address": "0xF689688640E88160c07C6FC5cc63039F29EDe86b",
-      "assignedPermissions": {
-        "upgrade": ["0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"]
-      }
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
+          "via": []
+        }
+      ]
     },
     { "address": "0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591" }
   ],

@@ -1,14 +1,14 @@
-import { assert, Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 
 import { Database } from '@l2beat/database'
-import { PriceConfigEntry, UnixTime } from '@l2beat/shared-pure'
+import { assert, PriceConfigEntry, UnixTime } from '@l2beat/shared-pure'
 import { Dictionary } from 'lodash'
 import { Clock } from '../../../../../tools/Clock'
-import { IndexerService } from '../../../../../tools/uif/IndexerService'
+import { DataStatusService } from './DataStatusService'
 
 interface Dependencies {
   readonly db: Database
-  readonly indexerService: IndexerService
+  readonly dataStatusService: DataStatusService
   readonly clock: Clock
   etherPriceConfig: PriceConfigEntry & { configId: string }
   logger: Logger
@@ -28,7 +28,7 @@ export class PricesDataService {
       configuration.sinceTimestamp,
       targetTimestamp,
     )
-    const status = await this.$.indexerService.getConfigurationsStatus(
+    const status = await this.$.dataStatusService.getConfigurationsStatus(
       [configuration],
       targetTimestamp,
     )
@@ -83,7 +83,7 @@ export class PricesDataService {
     targetTimestamp: UnixTime,
   ) {
     const prices = await this.$.db.price.getByTimestamp(targetTimestamp)
-    const status = await this.$.indexerService.getConfigurationsStatus(
+    const status = await this.$.dataStatusService.getConfigurationsStatus(
       configurations,
       targetTimestamp,
     )

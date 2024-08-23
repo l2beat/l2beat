@@ -1,6 +1,7 @@
-import { assert, Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import { DiscoveryDiff } from '@l2beat/discovery'
 import {
+  assert,
   ChainConverter,
   ChainId,
   EthereumAddress,

@@ -3,16 +3,24 @@
   "chain": "ethereum",
   "blockNumber": 20484220,
   "configHash": "0xfda975ff4d7fb1537d006da87a93d93959da79d210f4c6881c3bee7f322439bb",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "Bridger",
       "address": "0x0f1b7bd7762662B23486320AA91F30312184f70C",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1710248135,
       "values": {
         "$admin": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
         "$implementation": "0x47e28e296BE2EE69b4579d5eecbABA38217a2b03",
+        "$upgradeCount": 10,
         "angleSwapper": "0xD253b62108d1831aEd298Fc2434A5A8e4E418053",
         "DAI": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "ETH": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
@@ -93,6 +101,13 @@
       "descriptions": [
         "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
       ],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",
@@ -155,10 +170,18 @@
       "name": "RollupEventInbox",
       "address": "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1702607855,
       "values": {
         "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
         "$implementation": "0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494",
+        "$upgradeCount": 1,
         "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11"
       }
@@ -167,13 +190,25 @@
       "name": "UpgradeExecutor",
       "address": "0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a",
       "proxyType": "EIP1967 proxy",
-      "assignedPermissions": {
-        "upgrade": ["0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11"]
-      },
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
+          "via": []
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1702607855,
       "values": {
         "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
         "$implementation": "0x6c21303F5986180B1394d2C89f3e883890E2867b",
+        "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -198,10 +233,18 @@
       "name": "ChallengeManager",
       "address": "0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1702607855,
       "values": {
         "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
         "$implementation": "0x122B88885F1f365B69CAd38B167B039fEd0Ba096",
+        "$upgradeCount": 2,
         "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
         "osp": "0x8B02a8B985a81f96e49B8289FF60847FC6020e51",
         "resultReceiver": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
@@ -214,10 +257,18 @@
       "name": "Outbox",
       "address": "0x655761AD5FC251F414D6993A73184B0669F278c8",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1702607855,
       "values": {
         "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
         "$implementation": "0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC",
+        "$upgradeCount": 1,
         "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
         "l2ToL1BatchNum": 0,
         "l2ToL1Block": 0,
@@ -239,19 +290,53 @@
     {
       "name": "ProxyAdmin",
       "address": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F",
-          "0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a",
-          "0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F",
-          "0x655761AD5FC251F414D6993A73184B0669F278c8",
-          "0x7870D5398DB488c669B406fBE57b8d05b6A35e42",
-          "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
-          "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
-          "0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60",
-          "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x655761AD5FC251F414D6993A73184B0669F278c8",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x7870D5398DB488c669B406fBE57b8d05b6A35e42",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1702607855,
       "values": {
         "$immutable": true,
@@ -269,10 +354,18 @@
       "name": "L1ERC20Gateway",
       "address": "0x7870D5398DB488c669B406fBE57b8d05b6A35e42",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1702609595,
       "values": {
         "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
         "$implementation": "0xf43bce5D32742FFC862eA182b0b5544CbDBB0F02",
+        "$upgradeCount": 1,
         "cloneableProxyHash": "0xce61ab08155a3a368bfd165ba9e1151d023608a155fce1ec0d87bba89a59cb4d",
         "counterpartGateway": "0x87799989341A07F495287B1433eea98398FD73aA",
         "inbox": "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
@@ -285,6 +378,13 @@
       "name": "Bridge",
       "address": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "delayedMessageCount",
         "sequencerMessageCount",
@@ -294,6 +394,7 @@
       "values": {
         "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
         "$implementation": "0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F",
+        "$upgradeCount": 1,
         "activeOutbox": "0x0000000000000000000000000000000000000000",
         "allowedDelayedInboxList": [
           "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
@@ -340,10 +441,18 @@
       "name": "Inbox",
       "address": "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1702607855,
       "values": {
         "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
         "$implementation": "0xc235c5194f2404234fc7C99b4dd15289BB735Cf5",
+        "$upgradeCount": 3,
         "allowListEnabled": false,
         "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
         "getProxyAdmin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
@@ -356,10 +465,18 @@
       "name": "L1GatewayRouter",
       "address": "0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1702609595,
       "values": {
         "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
         "$implementation": "0x6525137BfF366fbc0A89E3e5A4d244B5A0090a6D",
+        "$upgradeCount": 1,
         "counterpartGateway": "0x340487b92808B84c2bd97C87B590EE81267E04a7",
         "defaultGateway": "0x7870D5398DB488c669B406fBE57b8d05b6A35e42",
         "inbox": "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
@@ -379,9 +496,13 @@
       "address": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "assignedPermissions": {
-        "upgrade": ["0x0f1b7bd7762662B23486320AA91F30312184f70C"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x0f1b7bd7762662B23486320AA91F30312184f70C",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678700303,
       "values": {
@@ -409,11 +530,19 @@
       "name": "SequencerInbox",
       "address": "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
       "sinceTimestamp": 1702607855,
       "values": {
         "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
         "$implementation": "0x57411f5BA52531e8199066bC8EC650470A744883",
+        "$upgradeCount": 2,
         "batchCount": 2973,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xe27f3f6db6824def1738b2aACe2672aC59046a39"],

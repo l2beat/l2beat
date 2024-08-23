@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x65d0556fcac240a27d3265cc50da97e98f8a9c77
+
+# Diff at Wed, 21 Aug 2024 10:05:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 20440714
+- current block number: 20440714
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20440714 (main branch discovery), not current.
+
+```diff
+    contract SHARPVerifierGovernorMultisig (0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60","via":[]}]
+    }
+```
+
+```diff
+    contract SHARPVerifierProxy (0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4","via":[]},{"permission":"upgrade","target":"0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x86e2a6fc9a2b8c94699e05c077c90d8bf04f6370
 
 # Diff at Fri, 09 Aug 2024 10:12:10 GMT:

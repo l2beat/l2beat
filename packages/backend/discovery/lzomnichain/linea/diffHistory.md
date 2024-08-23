@@ -1,3 +1,65 @@
+Generated with discovered.json: 0x14a0a28049c7fb5ae616e65a38d145a8b76b6822
+
+# Diff at Fri, 23 Aug 2024 09:57:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 6393468
+- current block number: 6393468
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 6393468 (main branch discovery), not current.
+
+```diff
+    contract  (0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9) {
+    +++ description: None
+      values.$upgradeCount:
++        3
+    }
+```
+
+Generated with discovered.json: 0x47e95690c38d24c6fb5342f699be8f43adb55e92
+
+# Diff at Wed, 21 Aug 2024 10:08:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 6393468
+- current block number: 6393468
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 6393468 (main branch discovery), not current.
+
+```diff
+    contract  (0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xFe7C30860D01e28371D40434806F4A8fcDD3A098","via":[]}]
+    }
+```
+
+```diff
+    contract  (0xFe7C30860D01e28371D40434806F4A8fcDD3A098) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x6a4f7822cedaff44c544402377597c2345331cd9
 
 # Diff at Fri, 09 Aug 2024 10:14:22 GMT:

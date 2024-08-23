@@ -1,3 +1,107 @@
+Generated with discovered.json: 0x63c3f20c04bdcea530fb8d4de42b603f056595eb
+
+# Diff at Fri, 23 Aug 2024 10:02:50 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 7788134
+- current block number: 7788134
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 7788134 (main branch discovery), not current.
+
+```diff
+    contract zkLink (0x119B9459D9119D07c23aD06778AeaBec804Fd1a2) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract ScrollL2Gateway (0xd8428A59B60Df2d81514D429D57DF23293f1bCe7) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+Generated with discovered.json: 0xba17e846374d11726b45eed293ba3894a17344ac
+
+# Diff at Wed, 21 Aug 2024 10:08:56 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 7788134
+- current block number: 7788134
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 7788134 (main branch discovery), not current.
+
+```diff
+    contract zkLink (0x119B9459D9119D07c23aD06778AeaBec804Fd1a2) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77","via":[]}]
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xC4673dAbfAf04D2A430e244B63F040D27199102f","via":[]}]
+    }
+```
+
+```diff
+    contract ScrollProxyAdmin (0xC4673dAbfAf04D2A430e244B63F040D27199102f) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c","via":[]}]
+    }
+```
+
+```diff
+    contract ScrollL2Gateway (0xd8428A59B60Df2d81514D429D57DF23293f1bCe7) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77","via":[]}]
+    }
+```
+
+```diff
+    contract AdminMultisig (0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x119B9459D9119D07c23aD06778AeaBec804Fd1a2","0xd8428A59B60Df2d81514D429D57DF23293f1bCe7"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x119B9459D9119D07c23aD06778AeaBec804Fd1a2","via":[]},{"permission":"upgrade","target":"0xd8428A59B60Df2d81514D429D57DF23293f1bCe7","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x8b58f760dcebb2fbffdb7b03c378922d1f540983
 
 # Diff at Fri, 09 Aug 2024 10:15:03 GMT:

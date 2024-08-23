@@ -3,16 +3,20 @@
   "chain": "zksync2",
   "blockNumber": 40563041,
   "configHash": "0x04bcea5ee3d1dbb85b9f4514ecd0cd9710c3e155a03fd4f908d1e8e6824410bc",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "EraOwner",
       "address": "0x3334552599C9aA1FE08CfF276A02033FF37646ca",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "assignedPermissions": {
-        "upgrade": ["0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1692606473,
       "values": {
@@ -43,10 +47,18 @@
       "address": "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1709297079,
       "values": {
         "$admin": "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98",
-        "$implementation": "0xdBA32e62e929a7e2Fa65782F812416CA65208E40"
+        "$implementation": "0xdBA32e62e929a7e2Fa65782F812416CA65208E40",
+        "$upgradeCount": 2
       },
       "derivedName": ""
     },
@@ -55,19 +67,31 @@
       "address": "0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x3334552599C9aA1FE08CfF276A02033FF37646ca",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1709280624,
       "values": {
         "$admin": "0x3334552599C9aA1FE08CfF276A02033FF37646ca",
-        "$implementation": "0xC9bBbdCf1778A4aA86544F02CccBf09fd3A0706E"
+        "$implementation": "0xC9bBbdCf1778A4aA86544F02CccBf09fd3A0706E",
+        "$upgradeCount": 3
       },
       "derivedName": ""
     },
     {
       "name": "EraProxyAdmin",
       "address": "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98",
-      "assignedPermissions": {
-        "upgrade": ["0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1709297074,
       "values": {
         "$immutable": true,

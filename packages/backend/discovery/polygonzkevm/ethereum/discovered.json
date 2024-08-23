@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19976289,
   "configHash": "0x8660573ec3e06fd6350670ae40ed0bd1067e4751b1b00a633cbc91f86ec05fde",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "PolygonzkEVMVerifier",
@@ -16,11 +16,19 @@
       "name": "daiBridge",
       "address": "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["totalBridgedDAI"],
       "sinceTimestamp": 1695199499,
       "values": {
         "$admin": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
         "$implementation": "0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b",
+        "$upgradeCount": 1,
         "beneficiary": "0xF29Ff96aaEa6C9A1fBa851f74737f3c069d4f1a9",
         "dai": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -52,6 +60,7 @@
       "values": {
         "$admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "$implementation": "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
+        "$upgradeCount": 3,
         "admin": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
         "calculatePolPerForceBatch": 0,
@@ -89,10 +98,18 @@
       "name": "usdcBridge",
       "address": "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1700125979,
       "values": {
         "$admin": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
         "$implementation": "0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6",
+        "$upgradeCount": 1,
         "bridge": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
         "l1USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "owner": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
@@ -106,10 +123,18 @@
       "name": "wstETHBridge",
       "address": "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1703945135,
       "values": {
         "$admin": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
         "$implementation": "0x18FED1E19dC564DC917D203be9d40790472D22e9",
+        "$upgradeCount": 1,
         "counterpartContract": "0xDB5D9c10FD2a92692DB51853e06058EE0436d69B",
         "counterpartNetwork": 1,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -143,13 +168,23 @@
       "address": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
-          "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB",
-          "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1694792111,
       "values": {

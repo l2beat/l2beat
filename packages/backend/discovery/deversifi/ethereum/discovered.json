@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825372,
   "configHash": "0xec73bf7b47e1c44e88f45136b1cdd18abc4541fb1f612fcbcab34490c60deff7",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "Committee",
@@ -62,6 +62,18 @@
       "name": "StarkExchange",
       "address": "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b",
       "proxyType": "StarkWare diamond",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x3a74010f2b37C02A249bd539EaE6b90Ba7CcD8aA",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "getLastBatchId",
         "getOrderRoot",
@@ -130,9 +142,13 @@
       "descriptions": [
         "This Multisig itself is one of the two Governors, the other being an EOA, both equally permissioned to upgrade the bridge."
       ],
-      "assignedPermissions": {
-        "upgrade": ["0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1683214307,
       "values": {
@@ -172,9 +188,13 @@
     { "address": "0x2b6593FcFbfdeD663D7a6448d45b12C16DF6B648" },
     {
       "address": "0x3a74010f2b37C02A249bd539EaE6b90Ba7CcD8aA",
-      "assignedPermissions": {
-        "upgrade": ["0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b"]
-      }
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b",
+          "via": []
+        }
+      ]
     },
     { "address": "0x3Bf2562178eA0CeF6B3F66D971494d65561EFD36" },
     { "address": "0x445EEDE2681116Dd94C8D5Bfab73283B3ef1f6f3" },

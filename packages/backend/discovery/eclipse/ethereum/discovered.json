@@ -1,0 +1,340 @@
+{
+  "name": "eclipse",
+  "chain": "ethereum",
+  "blockNumber": 20590601,
+  "configHash": "0x701f558bb792de6bc1f32e31a010af993f7d5349d1db0dbac567b98a6b3aa2a3",
+  "version": 13,
+  "contracts": [
+    {
+      "name": "EclipseMultisig",
+      "address": "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC",
+      "template": "GnosisSafe",
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+          "via": []
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1722018611,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0x33440E53476B855A56B831e7924B5aa123981726",
+          "0xDecF20b9213f5d7f16196420377d37ef5f8F9686",
+          "0xEe058D13A0c25a1ce2f68eb02dE4CE7E621982D9",
+          "0x3392fd462d9710Fbf3A5703818b9920C119DC080"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xe1fdfda67b202d80f38e8de79b720e0604176ff551ca60ce5476a8f0c3de9764",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 4 (50%)",
+        "nonce": 4,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "Contract3",
+      "address": "0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1",
+      "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x0000000000000000000000000000000000000000",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1722141227,
+      "values": {
+        "$admin": "0x0000000000000000000000000000000000000000",
+        "$implementation": "0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9",
+        "$upgradeCount": 1,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "ETHER_BRIDGE_ID": "0x0bcb6b0b9168c058e28754b0255038028ff8515b5755d989d746fdd8b8f11d7e",
+        "getVersionComponents": { "major": 1, "minor": 0, "patch": 0 },
+        "MIN_DEPOSIT": 2000000000000000,
+        "paused": false,
+        "proxiableUUID": "EXPECT_REVERT",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "derivedName": "EtherBridge"
+    },
+    {
+      "name": "Contract1",
+      "address": "0xb23B2492f7A9631104A5877F7FFA00633660968d",
+      "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x0000000000000000000000000000000000000000",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1722141467,
+      "values": {
+        "$admin": "0x0000000000000000000000000000000000000000",
+        "$implementation": "0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B",
+        "$upgradeCount": 1,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "getVersionComponents": { "major": 1, "minor": 0, "patch": 0 },
+        "MODULE_ROLE": "0x5098275140f5753db46c42f6e139939968848633a1298402189fdfdafa69b453",
+        "proxiableUUID": "EXPECT_REVERT",
+        "TRUSTED_RELAYER_ROLE": "0xe8a0628d2ba937241981f34311d9db59dd5cf223365e8b6132bca13fc7ae519c",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "derivedName": "Mailbox"
+    },
+    {
+      "name": "Contract2",
+      "address": "0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+      "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1722140987,
+      "values": {
+        "$admin": "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC",
+        "$implementation": "0xa8E15d2B1bf6B0Fd3Bc9Ead06323c0730b67f8d4",
+        "$upgradeCount": 1,
+        "getVersionComponents": { "major": 1, "minor": 0, "patch": 0 },
+        "owner": "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC",
+        "paused": false,
+        "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "proxiableUUID": "EXPECT_REVERT",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "derivedName": "Treasury"
+    }
+  ],
+  "eoas": [
+    {
+      "address": "0x0000000000000000000000000000000000000000",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xb23B2492f7A9631104A5877F7FFA00633660968d",
+          "via": []
+        }
+      ]
+    },
+    { "address": "0x33440E53476B855A56B831e7924B5aa123981726" },
+    { "address": "0x3392fd462d9710Fbf3A5703818b9920C119DC080" },
+    { "address": "0xDecF20b9213f5d7f16196420377d37ef5f8F9686" },
+    { "address": "0xEe058D13A0c25a1ce2f68eb02dE4CE7E621982D9" }
+  ],
+  "abis": {
+    "0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9": [
+      "constructor()",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error ReentrancyGuardReentrantCall()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event Deposited(address indexed sender, bytes32 indexed recipient, uint256 amountWei)",
+      "event Initialized(uint64 version)",
+      "event Paused(address account)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function ETHER_BRIDGE_ID() view returns (bytes32)",
+      "function MIN_DEPOSIT() view returns (uint256)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function deposit(bytes32 recipient, uint256 amountWei) payable",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getVersionComponents() pure returns (tuple(uint8 major, uint8 minor, uint8 patch))",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address owner_, address mailboxAddress_, address treasuryAddress_)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function unpause()",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B": [
+      "constructor()",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error ReentrancyGuardReentrantCall()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event Initialized(uint64 version)",
+      "event MessageReceived(bytes from, bytes fromChainId, bytes message, bytes extraData)",
+      "event MessageSent(bytes to, bytes toChainId, bytes message, bytes extraData)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Upgraded(address indexed implementation)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function MODULE_ROLE() view returns (bytes32)",
+      "function TRUSTED_RELAYER_ROLE() view returns (bytes32)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function addModule(bytes32 moduleId, address module)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getVersionComponents() pure returns (tuple(uint8 major, uint8 minor, uint8 patch))",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(tuple(address initialOwner, address trustedRelayer, bytes32[] ids, address[] modules, string ethereumChainId, string eclipseChainId) params)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function receiveMessage(bytes eclipseChainId_, bytes sender_, bytes message_, bytes data_) payable returns (bool)",
+      "function removeModule(bytes32 moduleId, address module)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function sendMessage(bytes, bytes receiver_, bytes message_, bytes) payable returns (bool)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC": [
+      "constructor(address _singleton)"
+    ],
+    "0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0xa8E15d2B1bf6B0Fd3Bc9Ead06323c0730b67f8d4": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error ReentrancyGuardReentrantCall()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event EmergencyTreasuryWithdraw(address indexed to, uint256 amount)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event TreasuryDeposit(address indexed from, uint256 amount)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function acceptOwnership()",
+      "function emergencyWithdraw(uint256 amount)",
+      "function getVersionComponents() pure returns (tuple(uint8 major, uint8 minor, uint8 patch))",
+      "function initialize(address owner_, address etherBridgeAddress_)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xb23B2492f7A9631104A5877F7FFA00633660968d": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0xD7E4b67E735733aC98a88F13d087D8aac670E644": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ]
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
+  },
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+}

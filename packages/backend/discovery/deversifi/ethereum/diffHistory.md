@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x7b68025e5a9b3890af9387a25144eda5f8e9ec59
+
+# Diff at Wed, 21 Aug 2024 10:02:45 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 19825372
+- current block number: 19825372
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825372 (main branch discovery), not current.
+
+```diff
+    contract StarkExchange (0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x3a74010f2b37C02A249bd539EaE6b90Ba7CcD8aA","via":[]},{"permission":"upgrade","target":"0xCCa5De1e10c05c50C51ac551D9182cd31aca1889","via":[]}]
+    }
+```
+
+```diff
+    contract GovernanceMultisig (0xCCa5De1e10c05c50C51ac551D9182cd31aca1889) {
+    +++ description: This Multisig itself is one of the two Governors, the other being an EOA, both equally permissioned to upgrade the bridge.
+      assignedPermissions:
+-        {"upgrade":["0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x178744cd356eb31e7b50a829cd9c0849148680ce
 
 # Diff at Fri, 09 Aug 2024 10:09:23 GMT:

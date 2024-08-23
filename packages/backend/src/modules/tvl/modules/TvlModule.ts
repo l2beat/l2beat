@@ -1,7 +1,7 @@
-import { assert, Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 
 import { chains } from '@l2beat/config'
-import { ChainConverter, ChainId, UnixTime } from '@l2beat/shared-pure'
+import { assert, ChainConverter, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { Config, TvlConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { Clock } from '../../../tools/Clock'
@@ -13,6 +13,7 @@ import { BreakdownService } from '../api/services/BreakdownService'
 import { TokenService } from '../api/services/TokenService'
 import { TvlService } from '../api/services/TvlService'
 import { AmountsDataService } from '../api/services/data/AmountsDataService'
+import { DataStatusService } from '../api/services/data/DataStatusService'
 import { PricesDataService } from '../api/services/data/PricesDataService'
 import { ValuesDataService } from '../api/services/data/ValuesDataService'
 import { ApiProject, AssociatedToken } from '../api/utils/types'
@@ -79,9 +80,11 @@ export function createTvlModule(
     configMapping,
   )
 
+  const dataStatusService = new DataStatusService(peripherals.database)
+
   const pricesDataService = new PricesDataService({
     db: peripherals.database,
-    indexerService,
+    dataStatusService,
     clock,
     etherPriceConfig: getEtherPriceConfig(config.tvl),
     logger,
@@ -89,7 +92,7 @@ export function createTvlModule(
 
   const amountsDataService = new AmountsDataService({
     db: peripherals.database,
-    indexerService,
+    dataStatusService,
     clock,
     logger,
   })

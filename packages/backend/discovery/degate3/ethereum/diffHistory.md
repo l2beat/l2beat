@@ -1,3 +1,57 @@
+Generated with discovered.json: 0xa39b752f64ddd182ee60a0f233fb4a905d5f476a
+
+# Diff at Wed, 21 Aug 2024 10:02:44 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 18939732
+- current block number: 18939732
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18939732 (main branch discovery), not current.
+
+```diff
+    contract TimeLock1 (0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x9C07A72177c5A05410cA338823e790876E79D73B"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x9C07A72177c5A05410cA338823e790876E79D73B","via":[]}]
+    }
+```
+
+```diff
+    contract DefaultDepositContract (0x54D7aE423Edb07282645e740C046B9373970a168) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xf2991507952d9594E71A44A54fb19f3109D213A5","via":[]}]
+    }
+```
+
+```diff
+    contract ExchangeV3 (0x9C07A72177c5A05410cA338823e790876E79D73B) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d","via":[]}]
+    }
+```
+
+```diff
+    contract TimeLock2 (0xf2991507952d9594E71A44A54fb19f3109D213A5) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x54D7aE423Edb07282645e740C046B9373970a168"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x54D7aE423Edb07282645e740C046B9373970a168","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xa0bf6f1e7cabe7313c5d6074abd9e954b94bb880
 
 # Diff at Fri, 09 Aug 2024 10:09:21 GMT:

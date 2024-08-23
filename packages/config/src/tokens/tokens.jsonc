@@ -80,7 +80,8 @@
     },
     {
       "symbol": "ARB",
-      "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1"
+      "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
+      "excludeFromTotal": true
     },
     {
       "symbol": "EKUBO",
@@ -526,6 +527,10 @@
       "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0"
     },
     {
+      "symbol": "G",
+      "address": "0x9C7BEBa8F6eF6643aBd725e45a4E8387eF260649"
+    },
+    {
       "symbol": "GAINS",
       "address": "0x056C1D42Fb1326f57da7f19eBB7dDA4673f1FF55"
     },
@@ -853,6 +858,10 @@
     {
       "symbol": "OMI",
       "address": "0xeD35af169aF46a02eE13b9d79Eb57d6D68C1749e"
+    },
+    {
+      "symbol": "OPAI",
+      "address": "0xf8e57ac2730d3088d98b79209739b0d5ba085a03"
     },
     {
       "symbol": "ORBS",
@@ -1956,7 +1965,8 @@
       "address": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
       "category": "stablecoin",
       "source": "canonical",
-      "supply": "zero"
+      "supply": "zero",
+      "deploymentTimestamp": 1636665399
     },
     {
       "symbol": "USDT",
@@ -2409,6 +2419,28 @@
       "address": "0x95CeF13441Be50d20cA4558CC0a27B601aC544E5",
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "mETH",
+      "address": "0xaccbc418a994a27a75644d8d591afc22faba594e",
+      "category": "ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "symbol": "mUSD",
+      "address": "0x649d4524897ce85a864dc2a2d5a11adb3044f44a",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
     },
     {
       "symbol": "STONE",

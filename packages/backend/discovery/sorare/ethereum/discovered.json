@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825381,
   "configHash": "0x9d4f44fb464f4b174f5fc4dac5f0ace6b6fd0aeac99acb870a2ba5686cc52899",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "OrderRegistry",
@@ -53,9 +53,13 @@
       "address": "0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "assignedPermissions": {
-        "upgrade": ["0xF5C9F957705bea56a7e806943f98F7777B995826"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xF5C9F957705bea56a7e806943f98F7777B995826",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678893035,
       "values": {
@@ -79,6 +83,18 @@
       "name": "StarkExchange",
       "address": "0xF5C9F957705bea56a7e806943f98F7777B995826",
       "proxyType": "StarkWare diamond",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x5918481F777dBe437De249492B90AffB4e655de4",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "getLastBatchId",
         "getOrderRoot",
@@ -149,9 +165,13 @@
     { "address": "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6" },
     {
       "address": "0x5918481F777dBe437De249492B90AffB4e655de4",
-      "assignedPermissions": {
-        "upgrade": ["0xF5C9F957705bea56a7e806943f98F7777B995826"]
-      }
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xF5C9F957705bea56a7e806943f98F7777B995826",
+          "via": []
+        }
+      ]
     },
     { "address": "0x59232aC80E6d403b6381393e52f4665ECA328558" },
     { "address": "0x63881ac44293E22F3c3183a0C4113586ABb3e653" },

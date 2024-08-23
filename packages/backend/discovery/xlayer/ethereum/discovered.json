@@ -3,16 +3,24 @@
   "chain": "ethereum",
   "blockNumber": 20325087,
   "configHash": "0x1faa6e35d2bc7ed2a0ebe00bbb2796abcb918b5266d117b92e441acd4aded7bf",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "XLayerValidiumDAC",
       "address": "0x05652Ec92366F3C2255991a265c499E01Ba58e6a",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x1e37EA18e9515db29b3E94A00eD31484A3130204",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1711787327,
       "values": {
         "$admin": "0x1e37EA18e9515db29b3E94A00eD31484A3130204",
         "$implementation": "0xd620Ca1ad5c3888e4521c3374cE4088Cb78079b8",
+        "$upgradeCount": 1,
         "committeeHash": "0xfa0cdb192e4e3d5bda14ab176fe857843eda35d462548ac406f8e2be43d29ec7",
         "getAmountOfMembers": 2,
         "getProcotolName": "DataAvailabilityCommittee",
@@ -41,9 +49,13 @@
     {
       "name": "ProxyAdmin",
       "address": "0x1e37EA18e9515db29b3E94A00eD31484A3130204",
-      "assignedPermissions": {
-        "upgrade": ["0x05652Ec92366F3C2255991a265c499E01Ba58e6a"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x05652Ec92366F3C2255991a265c499E01Ba58e6a",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1711787315,
       "values": {
         "$immutable": true,
@@ -59,6 +71,7 @@
       "values": {
         "$admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "$implementation": "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
+        "$upgradeCount": 1,
         "admin": "0x491619874b866c3cDB7C8553877da223525ead01",
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
         "calculatePolPerForceBatch": 0,
@@ -98,6 +111,13 @@
       "name": "OKBImplementation",
       "address": "0x75231F58b43240C9718Dd58B4967c5114342a86c",
       "proxyType": "ZeppelinOS proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4A164CA582D169f7caad471250991Dd861ddA981",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1556264879,
       "values": {
         "$admin": "0x4A164CA582D169f7caad471250991Dd861ddA981",
@@ -123,9 +143,13 @@
     { "address": "0x4a11078a99b118BbFee78a5c187D98D264360433" },
     {
       "address": "0x4A164CA582D169f7caad471250991Dd861ddA981",
-      "assignedPermissions": {
-        "upgrade": ["0x75231F58b43240C9718Dd58B4967c5114342a86c"]
-      }
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x75231F58b43240C9718Dd58B4967c5114342a86c",
+          "via": []
+        }
+      ]
     },
     { "address": "0x5B27e98516fD2Bd5001D4dfE3f5a2263f702f634" },
     { "address": "0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA" },

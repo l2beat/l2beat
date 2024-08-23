@@ -10,7 +10,7 @@ export type EventCountHandlerDefinition = z.infer<
 >
 export const EventCountHandlerDefinition = z.strictObject({
   type: z.literal('eventCount'),
-  topics: z.array(z.string()),
+  topics: z.array(z.union([z.string(), z.null()])),
 })
 
 export class EventCountHandler implements Handler {

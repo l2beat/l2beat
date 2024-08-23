@@ -3,13 +3,20 @@
   "chain": "blast",
   "blockNumber": 5983401,
   "configHash": "0x32517fe35fe5f51b8d393c0d11eb086f45be0b1c8322d9652a82517aa24e8294",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "zkLink",
       "address": "0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD",
       "template": "zklinknova/secondaryZkLink",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "getTotalBatchesExecuted",
         "getTotalPriorityTxs",
@@ -22,6 +29,7 @@
       "values": {
         "$admin": "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E",
         "$implementation": "0xDe4Be50Bfe9503180231357Eab19d709F8F73C66",
+        "$upgradeCount": 2,
         "feeParams": {
           "pubdataPricingMode": 0,
           "batchOverheadL1Gas": 1000000,
@@ -55,10 +63,18 @@
       "address": "0x3f64e2e09732969813904a8473074CFADeE66AF1",
       "template": "zklinknova/secondaryGateway",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1710418385,
       "values": {
         "$admin": "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E",
         "$implementation": "0xd1dCd063A4e650DCECd8BD211fe6D18a934ecCaD",
+        "$upgradeCount": 1,
         "getRemoteGateway": "0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158",
         "MESSAGE_SERVICE": "0x4200000000000000000000000000000000000007",
         "owner": "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E",
@@ -71,12 +87,18 @@
       "address": "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD",
-          "0x3f64e2e09732969813904a8473074CFADeE66AF1"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x3f64e2e09732969813904a8473074CFADeE66AF1",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1710486067,
       "values": {
@@ -106,10 +128,18 @@
       "name": "L1ERC20Bridge",
       "address": "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1710427013,
       "values": {
         "$admin": "0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19",
         "$implementation": "0xc24864769346073f5fEf0386A18734F0eF5503F5",
+        "$upgradeCount": 2,
         "l2Bridge": "0x17887788E01A1192a26F636Cfcfc033c7Bb42348",
         "l2TokenBeacon": "0xf7866c804932c93BFcc6f6f8B965bF52a2377bd9",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
@@ -119,9 +149,13 @@
     {
       "name": "BlastProxyAdmin",
       "address": "0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19",
-      "assignedPermissions": {
-        "upgrade": ["0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1710427013,
       "values": {
         "$immutable": true,

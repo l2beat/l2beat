@@ -1,3 +1,47 @@
+Generated with discovered.json: 0xd5cc157e69ce6b3e0ed1db41e96eeb1707d6d0e1
+
+# Diff at Wed, 21 Aug 2024 10:04:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 20420390
+- current block number: 20420390
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20420390 (main branch discovery), not current.
+
+```diff
+    contract ParadexImplementationGovernorMultisig (0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0xF338cad020D506e8e3d9B4854986E0EcE6C23640"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0xF338cad020D506e8e3d9B4854986E0EcE6C23640","via":[]}]
+    }
+```
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c","via":[]}]
+    }
+```
+
+```diff
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x0a64d3D7747549aF6d65C225D56ac8f71e436B93","via":[]},{"permission":"upgrade","target":"0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x10f525307b98b5fe66ef9ce9c3a491523cb6e8bc
 
 # Diff at Fri, 09 Aug 2024 10:11:17 GMT:

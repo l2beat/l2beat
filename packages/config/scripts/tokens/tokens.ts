@@ -9,6 +9,7 @@ import {
   ChainId,
   CoingeckoId,
   EthereumAddress,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
@@ -72,6 +73,7 @@ async function main() {
           category,
           source,
           supply,
+          excludeFromTotal: token.excludeFromTotal,
         }
         for (const [key, value] of Object.entries(overrides)) {
           const existing = existingToken[key as keyof typeof existingToken]
@@ -81,7 +83,7 @@ async function main() {
               'from',
               existing?.toString() ?? 'undefined',
               'to',
-              value.toString(),
+              value?.toString() ?? 'undefined',
             )
           }
         }
@@ -133,6 +135,7 @@ async function main() {
         chainConfig,
         token.address,
         token.symbol,
+        token.deploymentTimestamp,
       )
 
       const assetId = getAssetId(chainConfig, token, info.name)
@@ -152,6 +155,7 @@ async function main() {
         source,
         supply,
         bridgedUsing: token.bridgedUsing,
+        excludeFromTotal: token.excludeFromTotal,
       })
 
       tokenLogger.processed()
@@ -248,6 +252,7 @@ async function fetchTokenInfo(
   chain: ChainConfig,
   address: EthereumAddress,
   symbol: string,
+  deploymentTimestampOverride?: UnixTime,
 ) {
   const env = getEnv()
   const rpcUrl = env.optionalString(`${chain.name.toUpperCase()}_RPC_URL`)
@@ -264,6 +269,7 @@ async function fetchTokenInfo(
     address,
     symbol,
     coingeckoId,
+    deploymentTimestampOverride,
   )
 
   return {

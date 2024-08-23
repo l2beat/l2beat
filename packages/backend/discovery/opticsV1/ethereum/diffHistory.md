@@ -1,3 +1,63 @@
+Generated with discovered.json: 0x9d12416891d2e15e426454389a21638d27046293
+
+# Diff at Wed, 21 Aug 2024 10:04:33 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 19532023
+- current block number: 19532023
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19532023 (main branch discovery), not current.
+
+```diff
+    contract GovernanceRouterBeaconProxy (0x42303634F37956687fB7ff2c6146AC842481A052) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B","via":[]}]
+    }
+```
+
+```diff
+    contract BridgeRouterBeaconProxy (0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B","via":[]}]
+    }
+```
+
+```diff
+    contract ReplicaBeaconProxy (0x7725EadaC5Ee986CAc8317a1d2fB16e59e079E8b) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B","via":[]}]
+    }
+```
+
+```diff
+    contract UpgradeBeaconController (0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x42303634F37956687fB7ff2c6146AC842481A052","0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47","0x7725EadaC5Ee986CAc8317a1d2fB16e59e079E8b","0xf25C5932bb6EFc7afA4895D9916F2abD7151BF97"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x42303634F37956687fB7ff2c6146AC842481A052","via":[]},{"permission":"upgrade","target":"0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47","via":[]},{"permission":"upgrade","target":"0x7725EadaC5Ee986CAc8317a1d2fB16e59e079E8b","via":[]},{"permission":"upgrade","target":"0xf25C5932bb6EFc7afA4895D9916F2abD7151BF97","via":[]}]
+    }
+```
+
+```diff
+    contract HomeBeaconProxy (0xf25C5932bb6EFc7afA4895D9916F2abD7151BF97) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x4967742811d227dceb18c71f7100d39e7b0ff7a6
 
 # Diff at Fri, 09 Aug 2024 12:00:54 GMT:

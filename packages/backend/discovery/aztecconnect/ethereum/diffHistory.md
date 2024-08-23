@@ -1,3 +1,65 @@
+Generated with discovered.json: 0x087d03a086d807b24d6bd37993400755412c4ae6
+
+# Diff at Fri, 23 Aug 2024 09:51:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 19816414
+- current block number: 19816414
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19816414 (main branch discovery), not current.
+
+```diff
+    contract RollupProcessorV3 (0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455) {
+    +++ description: None
+      values.$upgradeCount:
++        3
+    }
+```
+
+Generated with discovered.json: 0x747b28f962c7a6fd65af13b35c07447a4d76707e
+
+# Diff at Wed, 21 Aug 2024 10:02:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 19816414
+- current block number: 19816414
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19816414 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0xC5b735d05c26579B701Be9bED253Bb588503B26B) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455","via":[]}]
+    }
+```
+
+```diff
+    contract RollupProcessorV3 (0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xC5b735d05c26579B701Be9bED253Bb588503B26B","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x39fc71387a47587540725472d60544e040a382ac
 
 # Diff at Fri, 09 Aug 2024 10:08:43 GMT:

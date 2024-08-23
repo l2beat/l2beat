@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20491123,
   "configHash": "0x6b6dab3cd65839582c4908c86c7f3aa050e752f18bffbf700efbcfad069ade2e",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "AxelarGatewayProxyMultisig",
@@ -15,10 +15,18 @@
       "name": "RootAxelarBridgeAdaptor",
       "address": "0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1702962623,
       "values": {
         "$admin": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8",
         "$implementation": "0xE2E91C1Ae2873720C3b975a8034e887A35323345",
+        "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -68,11 +76,19 @@
       "name": "Bridge",
       "address": "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["withdrawalQueueActivated"],
       "sinceTimestamp": 1702962563,
       "values": {
         "$admin": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8",
         "$implementation": "0x177EaFe0f1F3359375B1728dae0530a75C83E154",
+        "$upgradeCount": 1,
         "ADAPTOR_MANAGER_ROLE": "0xa6d0b532cacea090bc411482cd491720e2eac14d48ce5d0402b8851e0bb2aec1",
         "childERC20Bridge": "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
         "childETHToken": "0x52A6c53869Ce09a731CD772f245b97A4401d3348",
@@ -140,12 +156,18 @@
     {
       "name": "ProxyAdmin",
       "address": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932",
-          "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1702962527,
       "values": {
         "$immutable": true,

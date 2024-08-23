@@ -15,7 +15,7 @@ import {
 import { useTable } from '~/hooks/use-table'
 import ActiveIcon from '~/icons/active.svg'
 import ArchivedIcon from '~/icons/archived.svg'
-import { type ScalingRiskEntry } from '~/server/features/scaling/get-scaling-risk-entries'
+import { type ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
 import { ScalingFilters } from '../../../../_components/scaling-filters'
 import { scalingRiskColumns } from './columns'
 
@@ -80,7 +80,7 @@ export function ScalingRiskTables({
   return (
     <div className="space-y-2">
       <ScalingFilters items={allProjects} />
-      <Tabs defaultValue="active" className="w-full">
+      <Tabs storeInSearchParams defaultValue="active" className="w-full">
         <OverflowWrapper>
           <TabsList>
             <TabsTrigger value="active" className="gap-1.5">

@@ -1,3 +1,73 @@
+Generated with discovered.json: 0xde613ba738048f3624b819f6a69fbb987fab6e49
+
+# Diff at Fri, 23 Aug 2024 09:51:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 20325048
+- current block number: 20325048
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20325048 (main branch discovery), not current.
+
+```diff
+    contract AstarValidium (0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80) {
+    +++ description: None
+      values.$upgradeCount:
++        2
+    }
+```
+
+```diff
+    contract AstarValidiumDAC (0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+Generated with discovered.json: 0x02a62722b1880efb5bcb0348fe18989f5bb3ec76
+
+# Diff at Wed, 21 Aug 2024 10:02:00 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 20325048
+- current block number: 20325048
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20325048 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0","via":[]}]
+    }
+```
+
+```diff
+    contract AstarValidiumDAC (0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x665a7b1228f03991f8f70fbd27e5883123c84527
 
 # Diff at Fri, 09 Aug 2024 10:08:39 GMT:

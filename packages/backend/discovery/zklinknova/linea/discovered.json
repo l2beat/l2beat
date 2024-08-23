@@ -3,16 +3,20 @@
   "chain": "linea",
   "blockNumber": 7681920,
   "configHash": "0x6c55b858b842e046139e5aa87fd8f201e2b06d85311095d9aec21c8711b5ab0e",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "LineaOwner",
       "address": "0x0Bff4B38792a95314b3463E1Bf9831BDa1995391",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "assignedPermissions": {
-        "upgrade": ["0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1692606393,
       "values": {
@@ -224,10 +228,18 @@
       "name": "L1ERC20Bridge",
       "address": "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1709218113,
       "values": {
         "$admin": "0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec",
         "$implementation": "0xDe1d7311d3eb7bc94f7EBAEd86978d3a82d5328A",
+        "$upgradeCount": 2,
         "l2Bridge": "0x01c3f51294494e350AD69B999Db6B382b3B510b9",
         "l2TokenBeacon": "0x45A4e87354154EB95c2896A43B65bf1148F34908",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
@@ -239,10 +251,18 @@
       "address": "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB",
       "template": "zklinknova/secondaryGateway",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x0Bff4B38792a95314b3463E1Bf9831BDa1995391",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1709279545,
       "values": {
         "$admin": "0x0Bff4B38792a95314b3463E1Bf9831BDa1995391",
         "$implementation": "0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518",
+        "$upgradeCount": 2,
         "getRemoteGateway": "0x803460416C2682Ac54FccF03eF77b10A12f2809b",
         "MESSAGE_SERVICE": "0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
         "owner": "0x0Bff4B38792a95314b3463E1Bf9831BDa1995391",
@@ -262,9 +282,13 @@
     {
       "name": "Governance",
       "address": "0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec",
-      "assignedPermissions": {
-        "upgrade": ["0x62cE247f34dc316f93D3830e4Bf10959FCe630f8"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1709218009,
       "values": {
         "$immutable": true,

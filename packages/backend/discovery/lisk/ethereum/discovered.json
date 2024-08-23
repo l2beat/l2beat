@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20368673,
   "configHash": "0x54b600f138a147f390a890b238a88a803b26d43d59f30b55edf592f85fcc7e87",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "SystemConfig",
@@ -13,11 +13,24 @@
       "descriptions": [
         "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
       ],
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1714730039,
       "values": {
         "$admin": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
         "$implementation": "0xc6cF1149d23F2788AC94312E68EB52a74F288ebe",
+        "$upgradeCount": 1,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "0xa6Ea2f3299b63c53143c993d2d5E60A69Cd6Fe24",
         "batchInbox": "0xFf00000000000000000000000000000000001135",
@@ -73,6 +86,13 @@
       "descriptions": [
         "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
       ],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -83,6 +103,7 @@
       "values": {
         "$admin": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
         "$implementation": "0xe8912070277Dd5D9473904b7F4e6C71290F2AE90",
+        "$upgradeCount": 3,
         "challenger": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
         "CHALLENGER": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
         "deletedOutputs": [],
@@ -112,10 +133,18 @@
         "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
       ],
       "categories": ["Gateways&Escrows"],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1714730063,
       "values": {
         "$admin": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
         "$implementation": "0x5BFC7acc740D2E19c290167052F69947e19475F3",
+        "$upgradeCount": 0,
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x31B72D76FB666844C41EdF08dF0254875Dbb7edB",
         "MESSENGER": "0x31B72D76FB666844C41EdF08dF0254875Dbb7edB",
@@ -135,10 +164,18 @@
         "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
       ],
       "categories": ["Upgrades&Governance"],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1714729811,
       "values": {
         "$admin": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
         "$implementation": "0xd637dc6d7DA9151b5069a4bFB74a12E67a532CC3",
+        "$upgradeCount": 3,
         "guardian": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
         "GUARDIAN_SLOT": "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68",
         "paused": false,
@@ -154,11 +191,19 @@
       "descriptions": [
         "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
       ],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1714730003,
       "values": {
         "$admin": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
         "$implementation": "0x3Ff11Cde41a5f7c791eFfcd6AeEA05dd2df5e21e",
+        "$upgradeCount": 1,
         "guardian": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
         "GUARDIAN": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
         "L2_ORACLE": "0x113cB99283AF242Da0A0C54347667edF531Aa7d6",
@@ -180,6 +225,13 @@
       "name": "AddressManager",
       "address": "0x2dF7057d3F25212E51aFEA8dA628668229Ea423f",
       "template": "opstack/AddressManager",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1714729739,
       "values": {
         "$immutable": true,
@@ -228,10 +280,18 @@
       "descriptions": [
         "Used to bridge ERC-721 tokens from host chain to this chain."
       ],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1714730147,
       "values": {
         "$admin": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
         "$implementation": "0xefBDff012170ae592A3d197bf9Ac10eBF313233a",
+        "$upgradeCount": 1,
         "messenger": "0x31B72D76FB666844C41EdF08dF0254875Dbb7edB",
         "MESSENGER": "0x31B72D76FB666844C41EdF08dF0254875Dbb7edB",
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000014",
@@ -250,9 +310,13 @@
         "It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
       ],
       "roles": ["Challenger", "Guardian"],
-      "assignedPermissions": {
-        "configure": ["0x05f23282FFDCA8286E4738C1aF79079f3d843750"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x05f23282FFDCA8286E4738C1aF79079f3d843750",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1711489163,
       "values": {
@@ -288,10 +352,18 @@
       "descriptions": [
         "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."
       ],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1714730111,
       "values": {
         "$admin": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
         "$implementation": "0xD00e38514d66bf1B761a8937559c6b2854A5B3ad",
+        "$upgradeCount": 1,
         "bridge": "0x2658723Bf70c7667De6B25F99fcce13A16D25d08",
         "BRIDGE": "0x2658723Bf70c7667De6B25F99fcce13A16D25d08",
         "version": "1.9.0"
@@ -304,18 +376,55 @@
       "descriptions": [
         "It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component."
       ],
-      "assignedPermissions": {
-        "upgrade": [
-          "0x05f23282FFDCA8286E4738C1aF79079f3d843750",
-          "0x113cB99283AF242Da0A0C54347667edF531Aa7d6",
-          "0x2658723Bf70c7667De6B25F99fcce13A16D25d08",
-          "0x26C7bFB430d68Bf74d2d52497836d4336b555dE7",
-          "0x26dB93F8b8b4f7016240af62F7730979d353f9A7",
-          "0x3A44A3b263FB631cdbf25f339e2D29497511A81f",
-          "0xc1dA06CC5DD5cE23bABa924463de7F762039252d"
-        ],
-        "configure": ["0x2dF7057d3F25212E51aFEA8dA628668229Ea423f"]
-      },
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45",
+          "via": []
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x2dF7057d3F25212E51aFEA8dA628668229Ea423f",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x05f23282FFDCA8286E4738C1aF79079f3d843750",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x113cB99283AF242Da0A0C54347667edF531Aa7d6",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x2658723Bf70c7667De6B25F99fcce13A16D25d08",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x26C7bFB430d68Bf74d2d52497836d4336b555dE7",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x26dB93F8b8b4f7016240af62F7730979d353f9A7",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x3A44A3b263FB631cdbf25f339e2D29497511A81f",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xc1dA06CC5DD5cE23bABa924463de7F762039252d",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1714729775,
       "values": {
         "$immutable": true,
@@ -332,9 +441,13 @@
       "descriptions": [
         "It can act on behalf of 0xeC432c4F1d0E12737f3a42a459B84848Af979b2d, inheriting its permissions."
       ],
-      "assignedPermissions": {
-        "configure": ["0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1714729715,
       "values": {

@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState } from 'react'
 
-type CostsMetric = 'total' | 'per-l2-tx'
+export type CostsMetric = 'total' | 'per-l2-tx'
 
 type CostsMetricContextValue = {
   metric: CostsMetric

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20089055,
   "configHash": "0x195ddce914e9f413f3a0b36e6718ae330961a2e3419eab147ab0fb6cec090d8b",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "TokenImplementation",
@@ -35,10 +35,18 @@
       "name": "WormholeRelayer",
       "address": "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x0000000000000000000000000000000000000000",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1686938183,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x90995DBd1aae85872451b50A569dE947D34ac4ee",
+        "$upgradeCount": 3,
         "getDefaultDeliveryProvider": "0x7A0a53847776f7e94Cc35742971aCb2217b0Db81"
       }
     },
@@ -46,10 +54,18 @@
       "name": "TokenBridge",
       "address": "0x3ee18B2214AFF97000D974cf647E7C347E8fa585",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x0000000000000000000000000000000000000000",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1631535967,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x381752f5458282d317d12C30D2Bd4D6E1FD8841e",
+        "$upgradeCount": 10,
         "chainId": 2,
         "evmChainId": 1,
         "finality": 1,
@@ -67,10 +83,18 @@
       "name": "NFTBridge",
       "address": "0x6FFd7EdE62328b3Af38FCD61461Bbfc52F5651fE",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x0000000000000000000000000000000000000000",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1632219043,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x3e41904B3766F4cCEb145Cc53D75fEB61722a96C",
+        "$upgradeCount": 5,
         "chainId": 2,
         "evmChainId": 1,
         "finality": 15,
@@ -87,10 +111,18 @@
       "name": "DeliveryProviderImplementation",
       "address": "0x7A0a53847776f7e94Cc35742971aCb2217b0Db81",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x59278F587D4cFcDCbbc08019060be7231c37ddc2",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1686937559,
       "values": {
         "$admin": "0x59278F587D4cFcDCbbc08019060be7231c37ddc2",
         "$implementation": "0x0b89ccD6b803CCEC4f0E0fBeFAeE1f7d16e734e2",
+        "$upgradeCount": 3,
         "chainId": 2,
         "coreRelayer": "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
         "getRewardAddress": "0x53207E216540125e322CdA8A693b0b89576DEb46",
@@ -105,10 +137,18 @@
       "name": "WormholeCore",
       "address": "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x0000000000000000000000000000000000000000",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1628093444,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0",
+        "$upgradeCount": 3,
         "chainId": 2,
         "evmChainId": 1,
         "getCurrentGuardianSetIndex": 4,
@@ -152,10 +192,18 @@
       "name": "CircleIntegration",
       "address": "0xAaDA05BD399372f0b0463744C09113c137636f6a",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x0000000000000000000000000000000000000000",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1682018903,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x37f26277B1927c6bEDbD94e5C21C337A706af31c",
+        "$upgradeCount": 2,
         "chainId": 2,
         "circleBridge": "0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
         "circleIntegrationImplementation": "0xa55315b5310bf674eccfe6b1537c17f7ef4a55b90365ed70e8fbff08e4f1c35e",
@@ -190,15 +238,33 @@
   "eoas": [
     {
       "address": "0x0000000000000000000000000000000000000000",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
-          "0x3ee18B2214AFF97000D974cf647E7C347E8fa585",
-          "0x6FFd7EdE62328b3Af38FCD61461Bbfc52F5651fE",
-          "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "0xAaDA05BD399372f0b0463744C09113c137636f6a"
-        ]
-      }
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x3ee18B2214AFF97000D974cf647E7C347E8fa585",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x6FFd7EdE62328b3Af38FCD61461Bbfc52F5651fE",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xAaDA05BD399372f0b0463744C09113c137636f6a",
+          "via": []
+        }
+      ]
     },
     { "address": "0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e" },
     { "address": "0x107A0086b32d7A0977926A205131d8731D39cbEB" },
@@ -211,9 +277,13 @@
     { "address": "0x5893B5A76c3f739645648885bDCcC06cd70a3Cd3" },
     {
       "address": "0x59278F587D4cFcDCbbc08019060be7231c37ddc2",
-      "assignedPermissions": {
-        "upgrade": ["0x7A0a53847776f7e94Cc35742971aCb2217b0Db81"]
-      }
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x7A0a53847776f7e94Cc35742971aCb2217b0Db81",
+          "via": []
+        }
+      ]
     },
     { "address": "0x5E1487F35515d02A92753504a8D75471b9f49EdB" },
     { "address": "0x6FbEBc898F403E4773E95feB15E80C9A99c8348d" },

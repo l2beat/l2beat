@@ -1,3 +1,107 @@
+Generated with discovered.json: 0xc6a57a74888bec5bfd5711e822644f1288c9ee3a
+
+# Diff at Fri, 23 Aug 2024 10:04:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 2775705
+- current block number: 2775705
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 2775705 (main branch discovery), not current.
+
+```diff
+    contract L1ERC20Bridge (0x44a65dc12865A1e5249b45b4868f32b0E37168FF) {
+    +++ description: None
+      values.$upgradeCount:
++        2
+    }
+```
+
+```diff
+    contract zkLink (0xD784d7128B46B60Ca7d8BdC17dCEC94917455657) {
+    +++ description: None
+      values.$upgradeCount:
++        3
+    }
+```
+
+```diff
+    contract MantaL2Gateway (0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0) {
+    +++ description: None
+      values.$upgradeCount:
++        4
+    }
+```
+
+Generated with discovered.json: 0xfd83ed71bd8a078fd622c1de22d19854c253cf0a
+
+# Diff at Wed, 21 Aug 2024 10:09:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 2775705
+- current block number: 2775705
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 2775705 (main branch discovery), not current.
+
+```diff
+    contract MantaProxyAdmin (0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x44a65dc12865A1e5249b45b4868f32b0E37168FF"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x44a65dc12865A1e5249b45b4868f32b0E37168FF","via":[]}]
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x44a65dc12865A1e5249b45b4868f32b0E37168FF) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05","via":[]}]
+    }
+```
+
+```diff
+    contract MantaOwner (0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0xD784d7128B46B60Ca7d8BdC17dCEC94917455657","0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0xD784d7128B46B60Ca7d8BdC17dCEC94917455657","via":[]},{"permission":"upgrade","target":"0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0","via":[]}]
+    }
+```
+
+```diff
+    contract zkLink (0xD784d7128B46B60Ca7d8BdC17dCEC94917455657) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3","via":[]}]
+    }
+```
+
+```diff
+    contract MantaL2Gateway (0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x4d5d69268c2ca065474e71d7ff199b2301573618
 
 # Diff at Fri, 09 Aug 2024 10:15:08 GMT:

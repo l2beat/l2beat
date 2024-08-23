@@ -3,14 +3,18 @@
   "chain": "polygonpos",
   "blockNumber": 58991670,
   "configHash": "0xce744ee7bc25cb5f9f0d45db11af4edfd1f88023463e53fc1c4ea11f4bc426b5",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "ProxyAdmin",
       "address": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
-      "assignedPermissions": {
-        "upgrade": ["0x75dC8e5F50C8221a82CA6aF64aF811caA983B65f"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x75dC8e5F50C8221a82CA6aF64aF811caA983B65f",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1647316991,
       "values": {
         "$immutable": true,
@@ -1317,10 +1321,18 @@
       "address": "0x5a54fe5234E811466D5366846283323c954310B2",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1661535854,
       "values": {
         "$admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
-        "$implementation": "0x674875DB7a89C7676188DCB590498DEC7AED7881"
+        "$implementation": "0x674875DB7a89C7676188DCB590498DEC7AED7881",
+        "$upgradeCount": 2
       }
     },
     {
@@ -1351,10 +1363,18 @@
       "address": "0x75dC8e5F50C8221a82CA6aF64aF811caA983B65f",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1661531173,
       "values": {
         "$admin": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
-        "$implementation": "0x6963Cc1424FCAa13356cE04be0AC5ddf03E3e3B9"
+        "$implementation": "0x6963Cc1424FCAa13356cE04be0AC5ddf03E3e3B9",
+        "$upgradeCount": 5
       }
     },
     {
@@ -1374,9 +1394,13 @@
     {
       "name": "ProxyAdmin",
       "address": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
-      "assignedPermissions": {
-        "upgrade": ["0x5a54fe5234E811466D5366846283323c954310B2"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x5a54fe5234E811466D5366846283323c954310B2",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1661448610,
       "values": {
         "$immutable": true,

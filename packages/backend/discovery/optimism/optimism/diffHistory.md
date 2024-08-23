@@ -1,3 +1,299 @@
+Generated with discovered.json: 0x04aa3170a52d4239e2644a885e2090b83ff30f5c
+
+# Diff at Fri, 23 Aug 2024 09:58:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 122593187
+- current block number: 122593187
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 122593187 (main branch discovery), not current.
+
+```diff
+    contract DeployerWhitelist (0x4200000000000000000000000000000000000002) {
+    +++ description: None
+      values.$upgradeCount:
++        0
+    }
+```
+
+```diff
+    contract L2CrossDomainMessenger (0x4200000000000000000000000000000000000007) {
+    +++ description: None
+      values.$upgradeCount:
++        0
+    }
+```
+
+```diff
+    contract GasPriceOracle (0x420000000000000000000000000000000000000F) {
+    +++ description: None
+      values.$upgradeCount:
++        2
+    }
+```
+
+```diff
+    contract L2StandardBridge (0x4200000000000000000000000000000000000010) {
+    +++ description: None
+      values.$upgradeCount:
++        0
+    }
+```
+
+```diff
+    contract SequencerFeeVault (0x4200000000000000000000000000000000000011) {
+    +++ description: None
+      values.$upgradeCount:
++        0
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x4200000000000000000000000000000000000012) {
+    +++ description: None
+      values.$upgradeCount:
++        0
+    }
+```
+
+```diff
+    contract L1BlockNumber (0x4200000000000000000000000000000000000013) {
+    +++ description: None
+      values.$upgradeCount:
++        0
+    }
+```
+
+```diff
+    contract L2ERC721Bridge (0x4200000000000000000000000000000000000014) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract L1Block (0x4200000000000000000000000000000000000015) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (0x4200000000000000000000000000000000000016) {
+    +++ description: None
+      values.$upgradeCount:
++        0
+    }
+```
+
+```diff
+    contract OptimismMintableERC721Factory (0x4200000000000000000000000000000000000017) {
+    +++ description: None
+      values.$upgradeCount:
++        0
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0x4200000000000000000000000000000000000018) {
+    +++ description: None
+      values.$upgradeCount:
++        0
+    }
+```
+
+```diff
+    contract BaseFeeVault (0x4200000000000000000000000000000000000019) {
+    +++ description: None
+      values.$upgradeCount:
++        0
+    }
+```
+
+```diff
+    contract L1FeeVault (0x420000000000000000000000000000000000001A) {
+    +++ description: None
+      values.$upgradeCount:
++        0
+    }
+```
+
+```diff
+    contract SchemaRegistry (0x4200000000000000000000000000000000000020) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract EAS (0x4200000000000000000000000000000000000021) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+Generated with discovered.json: 0xd085c9f1c61827b17645b6775951134a35698f7d
+
+# Diff at Wed, 21 Aug 2024 10:08:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 122593187
+- current block number: 122593187
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 122593187 (main branch discovery), not current.
+
+```diff
+    contract DeployerWhitelist (0x4200000000000000000000000000000000000002) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x4200000000000000000000000000000000000018","via":[]}]
+    }
+```
+
+```diff
+    contract L2CrossDomainMessenger (0x4200000000000000000000000000000000000007) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x4200000000000000000000000000000000000018","via":[]}]
+    }
+```
+
+```diff
+    contract GasPriceOracle (0x420000000000000000000000000000000000000F) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x4200000000000000000000000000000000000018","via":[]}]
+    }
+```
+
+```diff
+    contract L2StandardBridge (0x4200000000000000000000000000000000000010) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x4200000000000000000000000000000000000018","via":[]}]
+    }
+```
+
+```diff
+    contract SequencerFeeVault (0x4200000000000000000000000000000000000011) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x4200000000000000000000000000000000000018","via":[]}]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x4200000000000000000000000000000000000012) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x4200000000000000000000000000000000000018","via":[]}]
+    }
+```
+
+```diff
+    contract L1BlockNumber (0x4200000000000000000000000000000000000013) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x4200000000000000000000000000000000000018","via":[]}]
+    }
+```
+
+```diff
+    contract L2ERC721Bridge (0x4200000000000000000000000000000000000014) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x4200000000000000000000000000000000000018","via":[]}]
+    }
+```
+
+```diff
+    contract L1Block (0x4200000000000000000000000000000000000015) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x4200000000000000000000000000000000000018","via":[]}]
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (0x4200000000000000000000000000000000000016) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x4200000000000000000000000000000000000018","via":[]}]
+    }
+```
+
+```diff
+    contract OptimismMintableERC721Factory (0x4200000000000000000000000000000000000017) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x4200000000000000000000000000000000000018","via":[]}]
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0x4200000000000000000000000000000000000018) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x4200000000000000000000000000000000000002","0x4200000000000000000000000000000000000007","0x420000000000000000000000000000000000000F","0x4200000000000000000000000000000000000010","0x4200000000000000000000000000000000000011","0x4200000000000000000000000000000000000012","0x4200000000000000000000000000000000000013","0x4200000000000000000000000000000000000014","0x4200000000000000000000000000000000000015","0x4200000000000000000000000000000000000016","0x4200000000000000000000000000000000000017","0x4200000000000000000000000000000000000018","0x4200000000000000000000000000000000000019","0x420000000000000000000000000000000000001A","0x4200000000000000000000000000000000000020","0x4200000000000000000000000000000000000021"]}
+      issuedPermissions:
++        [{"permission":"configure","target":"0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b","via":[]},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000018","via":[]}]
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x4200000000000000000000000000000000000002","via":[]},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000007","via":[]},{"permission":"upgrade","target":"0x420000000000000000000000000000000000000F","via":[]},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000010","via":[]},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000011","via":[]},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000012","via":[]},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000013","via":[]},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000014","via":[]},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000015","via":[]},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000016","via":[]},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000017","via":[]},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000018","via":[]},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000019","via":[]},{"permission":"upgrade","target":"0x420000000000000000000000000000000000001A","via":[]},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000020","via":[]},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000021","via":[]}]
+    }
+```
+
+```diff
+    contract BaseFeeVault (0x4200000000000000000000000000000000000019) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x4200000000000000000000000000000000000018","via":[]}]
+    }
+```
+
+```diff
+    contract L1FeeVault (0x420000000000000000000000000000000000001A) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x4200000000000000000000000000000000000018","via":[]}]
+    }
+```
+
+```diff
+    contract SchemaRegistry (0x4200000000000000000000000000000000000020) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x4200000000000000000000000000000000000018","via":[]}]
+    }
+```
+
+```diff
+    contract EAS (0x4200000000000000000000000000000000000021) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x4200000000000000000000000000000000000018","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x11c5d304eee079e826c09a6ecd7d7e7a37dc2150
 
 # Diff at Fri, 09 Aug 2024 12:04:33 GMT:

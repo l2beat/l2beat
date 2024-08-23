@@ -1,3 +1,97 @@
+Generated with discovered.json: 0x9d16f40288e4ef64aea185e5a0b2481228e6d8e6
+
+# Diff at Fri, 23 Aug 2024 09:52:29 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 20138492
+- current block number: 20138492
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20138492 (main branch discovery), not current.
+
+```diff
+    contract LiquidityPool (0x2A5c2568b10A0E826BfA892Cf21BA7218310180b) {
+    +++ description: None
+      values.$upgradeCount:
++        5
+    }
+```
+
+```diff
+    contract TokenManager (0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract LiquidityProviders (0xebaB24F13de55789eC1F3fFe99A285754e15F7b9) {
+    +++ description: None
+      values.$upgradeCount:
++        3
+    }
+```
+
+Generated with discovered.json: 0x4d887d0e9fec6480e83e095b5414037fff5b864f
+
+# Diff at Wed, 21 Aug 2024 10:03:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 20138492
+- current block number: 20138492
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20138492 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x13a4cC0750296bB72Eb0006febec306551A4f472) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x2A5c2568b10A0E826BfA892Cf21BA7218310180b","0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168","0xebaB24F13de55789eC1F3fFe99A285754e15F7b9"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x2A5c2568b10A0E826BfA892Cf21BA7218310180b","via":[]},{"permission":"upgrade","target":"0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168","via":[]},{"permission":"upgrade","target":"0xebaB24F13de55789eC1F3fFe99A285754e15F7b9","via":[]}]
+    }
+```
+
+```diff
+    contract LiquidityPool (0x2A5c2568b10A0E826BfA892Cf21BA7218310180b) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x13a4cC0750296bB72Eb0006febec306551A4f472","via":[]}]
+    }
+```
+
+```diff
+    contract TokenManager (0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x13a4cC0750296bB72Eb0006febec306551A4f472","via":[]}]
+    }
+```
+
+```diff
+    contract LiquidityProviders (0xebaB24F13de55789eC1F3fFe99A285754e15F7b9) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x13a4cC0750296bB72Eb0006febec306551A4f472","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xf2e32dc2eccc06b39b37157c31c1cdd8b989de1e
 
 # Diff at Fri, 09 Aug 2024 11:59:39 GMT:

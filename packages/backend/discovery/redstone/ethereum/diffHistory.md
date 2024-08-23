@@ -1,3 +1,217 @@
+Generated with discovered.json: 0xb2dc5858819a071d0f96a8aaea006ddab7f899fc
+
+# Diff at Fri, 23 Aug 2024 09:54:43 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 19831040
+- current block number: 19831040
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19831040 (main branch discovery), not current.
+
+```diff
+    contract SuperchainConfig (0x4b5b41c240173191425F5928bc6bdd0d439331BB) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x4FFB98dBC3086bA85d5E626a6EbC3D0d08533fF4) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x5f962474834Cf1981Df6232e4b6431d3d10cb71D) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract SystemConfig (0x8f2428F7189c0d92D1c4a5358903A8c80Ec6a69D) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0x8f68E849eaf8EB943536F9d1D49Ea9C9b5868b98) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract DataAvailabilityChallenge (0x97A2dA87d3439b172e6DD027220e01c9Cb565B80) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract DelayedWETH (0xa130523fD22e2a9D78F8aB232b01ff552845B4A9) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xa426A052f657AEEefc298b3B5c35a470e4739d69) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xc473ca7E02af24c129c2eEf51F2aDf0411c1Df69) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      values.$upgradeCount:
++        0
+    }
+```
+
+```diff
+    contract OptimismPortal (0xC7bCb0e8839a28A1cFadd1CF716de9016CdA51ae) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.$upgradeCount:
++        1
+    }
+```
+
+Generated with discovered.json: 0x7a956280c2a98972735887b98527cbd54c123f04
+
+# Diff at Wed, 21 Aug 2024 10:05:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 19831040
+- current block number: 19831040
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19831040 (main branch discovery), not current.
+
+```diff
+    contract SuperchainConfig (0x4b5b41c240173191425F5928bc6bdd0d439331BB) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xCC53b447aFe07926423aB96D5496b1af30485ED2","via":[]}]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x4FFB98dBC3086bA85d5E626a6EbC3D0d08533fF4) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xCC53b447aFe07926423aB96D5496b1af30485ED2","via":[]}]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x5f962474834Cf1981Df6232e4b6431d3d10cb71D) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xCC53b447aFe07926423aB96D5496b1af30485ED2","via":[]}]
+    }
+```
+
+```diff
+    contract SystemConfig (0x8f2428F7189c0d92D1c4a5358903A8c80Ec6a69D) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xCC53b447aFe07926423aB96D5496b1af30485ED2","via":[]}]
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0x8f68E849eaf8EB943536F9d1D49Ea9C9b5868b98) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xCC53b447aFe07926423aB96D5496b1af30485ED2","via":[]}]
+    }
+```
+
+```diff
+    contract DataAvailabilityChallenge (0x97A2dA87d3439b172e6DD027220e01c9Cb565B80) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xCC53b447aFe07926423aB96D5496b1af30485ED2","via":[]}]
+    }
+```
+
+```diff
+    contract DelayedWETH (0xa130523fD22e2a9D78F8aB232b01ff552845B4A9) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xCC53b447aFe07926423aB96D5496b1af30485ED2","via":[]}]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xa426A052f657AEEefc298b3B5c35a470e4739d69) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xCC53b447aFe07926423aB96D5496b1af30485ED2","via":[]}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xc473ca7E02af24c129c2eEf51F2aDf0411c1Df69) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xCC53b447aFe07926423aB96D5496b1af30485ED2","via":[]}]
+    }
+```
+
+```diff
+    contract OptimismPortal (0xC7bCb0e8839a28A1cFadd1CF716de9016CdA51ae) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xCC53b447aFe07926423aB96D5496b1af30485ED2","via":[]}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xCC53b447aFe07926423aB96D5496b1af30485ED2) {
+    +++ description: It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.
+      assignedPermissions:
+-        {"upgrade":["0x4FFB98dBC3086bA85d5E626a6EbC3D0d08533fF4","0x4b5b41c240173191425F5928bc6bdd0d439331BB","0x5f962474834Cf1981Df6232e4b6431d3d10cb71D","0x8f2428F7189c0d92D1c4a5358903A8c80Ec6a69D","0x8f68E849eaf8EB943536F9d1D49Ea9C9b5868b98","0x97A2dA87d3439b172e6DD027220e01c9Cb565B80","0xC7bCb0e8839a28A1cFadd1CF716de9016CdA51ae","0xa130523fD22e2a9D78F8aB232b01ff552845B4A9","0xa426A052f657AEEefc298b3B5c35a470e4739d69","0xc473ca7E02af24c129c2eEf51F2aDf0411c1Df69"],"configure":["0xFe27f187A9E46104a932189dDF229871E06B22F8"]}
+      receivedPermissions:
++        [{"permission":"configure","target":"0xFe27f187A9E46104a932189dDF229871E06B22F8","via":[]},{"permission":"upgrade","target":"0x4b5b41c240173191425F5928bc6bdd0d439331BB","via":[]},{"permission":"upgrade","target":"0x4FFB98dBC3086bA85d5E626a6EbC3D0d08533fF4","via":[]},{"permission":"upgrade","target":"0x5f962474834Cf1981Df6232e4b6431d3d10cb71D","via":[]},{"permission":"upgrade","target":"0x8f2428F7189c0d92D1c4a5358903A8c80Ec6a69D","via":[]},{"permission":"upgrade","target":"0x8f68E849eaf8EB943536F9d1D49Ea9C9b5868b98","via":[]},{"permission":"upgrade","target":"0x97A2dA87d3439b172e6DD027220e01c9Cb565B80","via":[]},{"permission":"upgrade","target":"0xa130523fD22e2a9D78F8aB232b01ff552845B4A9","via":[]},{"permission":"upgrade","target":"0xa426A052f657AEEefc298b3B5c35a470e4739d69","via":[]},{"permission":"upgrade","target":"0xc473ca7E02af24c129c2eEf51F2aDf0411c1Df69","via":[]},{"permission":"upgrade","target":"0xC7bCb0e8839a28A1cFadd1CF716de9016CdA51ae","via":[]}]
+    }
+```
+
+```diff
+    contract AddressManager (0xFe27f187A9E46104a932189dDF229871E06B22F8) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"configure","target":"0xCC53b447aFe07926423aB96D5496b1af30485ED2","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x33dc285c032ae58e69afa1c98a32724786bb2663
 
 # Diff at Fri, 09 Aug 2024 12:01:48 GMT:

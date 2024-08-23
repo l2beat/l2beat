@@ -1,3 +1,107 @@
+Generated with discovered.json: 0x4fb288a3d6eccd2f8d0f1933ef73cb56b5a01660
+
+# Diff at Fri, 23 Aug 2024 09:57:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 236183206
+- current block number: 236183206
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 236183206 (main branch discovery), not current.
+
+```diff
+    contract ArbitrumL2Gateway (0x7bd79DEd935B542fb22c74305a4d2A293C18483a) {
+    +++ description: None
+      values.$upgradeCount:
++        2
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585) {
+    +++ description: None
+      values.$upgradeCount:
++        2
+    }
+```
+
+```diff
+    contract zkLink (0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A) {
+    +++ description: None
+      values.$upgradeCount:
++        3
+    }
+```
+
+Generated with discovered.json: 0xf5ed5654a4bf603d5d83fd21c51942d132645e0c
+
+# Diff at Wed, 21 Aug 2024 10:07:50 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 236183206
+- current block number: 236183206
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 236183206 (main branch discovery), not current.
+
+```diff
+    contract ArbitrumProxyAdmin (0x48698A17D193bFc882395AC06a1DEdbb222F2917) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585","via":[]}]
+    }
+```
+
+```diff
+    contract ArbitrumL2Gateway (0x7bd79DEd935B542fb22c74305a4d2A293C18483a) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F","via":[]}]
+    }
+```
+
+```diff
+    contract ArbitrumOwner (0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x7bd79DEd935B542fb22c74305a4d2A293C18483a","0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x7bd79DEd935B542fb22c74305a4d2A293C18483a","via":[]},{"permission":"upgrade","target":"0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A","via":[]}]
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x48698A17D193bFc882395AC06a1DEdbb222F2917","via":[]}]
+    }
+```
+
+```diff
+    contract zkLink (0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xd0c699fa1ecd3ab39127652bf279e28e11fb35e4
 
 # Diff at Fri, 09 Aug 2024 12:03:57 GMT:

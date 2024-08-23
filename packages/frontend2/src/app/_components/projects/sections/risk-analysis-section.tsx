@@ -5,6 +5,7 @@ import UnverifiedIcon from '~/icons/unverified.svg'
 import { UnderReviewBadge } from '../../badge/under-review-badge'
 import { Markdown } from '../../markdown/markdown'
 import { BigPentagonRosette } from '../../rosette/pentagon/big-pentagon-rosette'
+import { BigPizzaRosette } from '../../rosette/pizza/big-pizza-rosette'
 import { type RosetteValue } from '../../rosette/types'
 import { SentimentText } from '../../sentiment-text'
 import { WarningBar } from '../../warning-bar'
@@ -12,27 +13,29 @@ import { ProjectSection } from './project-section'
 import { type ProjectSectionProps } from './types'
 
 export interface RiskAnalysisSectionProps extends ProjectSectionProps {
-  riskValues: RosetteValue[]
+  rosetteType: 'pizza' | 'pentagon'
+  rosetteValues: RosetteValue[]
   warning: string | undefined
   isVerified: boolean | undefined
   redWarning: string | undefined
-  isUnderReview?: boolean
 }
 
-export function RiskAnalysisSection(props: RiskAnalysisSectionProps) {
+export function RiskAnalysisSection({
+  rosetteType,
+  rosetteValues,
+  warning,
+  isVerified,
+  redWarning,
+  ...sectionProps
+}: RiskAnalysisSectionProps) {
   const isUnderReview =
-    !!props.isUnderReview ||
-    Object.values(props.riskValues).some(
+    !!sectionProps.isUnderReview ||
+    Object.values(rosetteValues).some(
       ({ sentiment }) => sentiment === 'UnderReview',
     )
   return (
-    <ProjectSection
-      title={props.title}
-      id={props.id}
-      sectionOrder={props.sectionOrder}
-      isUnderReview={isUnderReview}
-    >
-      {props.isVerified === false && (
+    <ProjectSection {...sectionProps} isUnderReview={isUnderReview}>
+      {isVerified === false && (
         <WarningBar
           text="This project includes unverified contracts."
           color="red"
@@ -41,27 +44,32 @@ export function RiskAnalysisSection(props: RiskAnalysisSectionProps) {
           icon={UnverifiedIcon}
         />
       )}
-      {props.redWarning && (
+      {redWarning && (
         <WarningBar
-          text={props.redWarning}
+          text={redWarning}
           color="red"
           className="mt-4"
           icon={ShieldIcon}
         />
       )}
-      {props.warning && (
+      {warning && (
         <WarningBar
-          text={props.warning}
+          text={warning}
           color="yellow"
           isCritical={false}
           className="mt-4"
         />
       )}
-      <BigPentagonRosette
-        values={props.riskValues}
-        className="mx-auto my-6 lg:hidden"
-      />
-      {Object.values(props.riskValues).map((value) => (
+
+      {rosetteType === 'pizza' ? (
+        <BigPizzaRosette values={rosetteValues} className="mx-auto my-6" />
+      ) : (
+        <BigPentagonRosette
+          values={rosetteValues}
+          className="mx-auto my-6 lg:hidden"
+        />
+      )}
+      {Object.values(rosetteValues).map((value) => (
         <SingleRisk key={value.name} value={value} />
       ))}
     </ProjectSection>

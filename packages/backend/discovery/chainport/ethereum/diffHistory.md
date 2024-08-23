@@ -1,3 +1,65 @@
+Generated with discovered.json: 0xec05527dd927375c581973617e9fe96166652249
+
+# Diff at Fri, 23 Aug 2024 09:51:43 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 20454449
+- current block number: 20454449
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20454449 (main branch discovery), not current.
+
+```diff
+    contract Vault6 (0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a) {
+    +++ description: None
+      values.$upgradeCount:
++        12
+    }
+```
+
+Generated with discovered.json: 0x7eccdf69b9a5cc73bc79a62857325b90d1407c47
+
+# Diff at Wed, 21 Aug 2024 10:02:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 20454449
+- current block number: 20454449
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20454449 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a","via":[]}]
+    }
+```
+
+```diff
+    contract Vault6 (0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xf9cca159c6aa8db8ff592035d9b5a35fe7c86a10
 
 # Diff at Fri, 09 Aug 2024 10:09:05 GMT:

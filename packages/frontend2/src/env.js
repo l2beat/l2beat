@@ -22,6 +22,7 @@ export const env = createEnv({
       .enum(['development', 'test', 'production'])
       .default('development'),
     VERCEL_GIT_COMMIT_SHA: z.string().default('local'),
+    VERCEL_URL: z.string().optional(),
     EXCLUDED_ACTIVITY_PROJECTS: z.string().array().optional(),
   },
 
@@ -48,6 +49,7 @@ export const env = createEnv({
     ETHEREUM_RPC_URL: process.env.ETHEREUM_RPC_URL,
     NODE_ENV: process.env.NODE_ENV,
     VERCEL_GIT_COMMIT_SHA: process.env.VERCEL_GIT_COMMIT_SHA,
+    VERCEL_URL: process.env.VERCEL_URL,
     EXCLUDED_ACTIVITY_PROJECTS: process.env.EXCLUDED_ACTIVITY_PROJECTS,
     // Client
     NEXT_PUBLIC_FEATURE_FLAG_ASSET_RISKS:

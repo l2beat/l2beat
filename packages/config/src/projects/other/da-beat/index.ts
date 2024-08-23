@@ -9,6 +9,7 @@ import { edgelessLayer } from './dac/edgeless'
 import { hychainLayer } from './dac/hychain'
 import { immutableXLayer } from './dac/immutablex'
 import { l3xLayer } from './dac/l3x'
+import { mantleDA } from './dac/mantleDA'
 import { moltenLayer } from './dac/molten'
 import { myriaLayer } from './dac/myria'
 import { playblockLayer } from './dac/playblock'
@@ -57,4 +58,5 @@ export const daLayers: DaLayer[] = [
   moltenLayer,
   l3xLayer,
   playblockLayer,
+  mantleDA,
 ]

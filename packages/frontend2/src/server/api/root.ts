@@ -1,4 +1,5 @@
 import { createCallerFactory, router } from '~/server/api/trpc'
+import { bridgesRouter } from './routers/bridges'
 import { scalingRouter } from './routers/scaling'
 
 /**
@@ -8,6 +9,7 @@ import { scalingRouter } from './routers/scaling'
  */
 export const appRouter = router({
   scaling: scalingRouter,
+  bridges: bridgesRouter,
 })
 
 // export type definition of API

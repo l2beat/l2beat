@@ -1,3 +1,165 @@
+Generated with discovered.json: 0x3e44b7b760ebbbb0e0eab78ba7bae4c80dd025ff
+
+# Diff at Fri, 23 Aug 2024 09:52:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 19927696
+- current block number: 19927696
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19927696 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (0x1bBde518ad01BaABFE30020407A7630FB17B545d) {
+    +++ description: None
+      values.$upgradeCount:
++        0
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x2e5687010b5f62Ad0ef84370325bC91DED2724fe) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x3E4F4Eb77a9c1f88c0e1F5aDCc9d3521Ce157FdD) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x5F67587FB3f1736a5a91C10E3EeB7cA92117177B) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract OptimismPortal (0xba1ac896F3b7cB273daE94bF9A6291A432e826c7) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract SystemConfig (0xBB08cf90DEb93492b463f1Ee5DA9453e51643586) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+Generated with discovered.json: 0x431079c7869c8fe0d5c7e072fbc3902adce8d20a
+
+# Diff at Wed, 21 Aug 2024 10:03:17 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 19927696
+- current block number: 19927696
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19927696 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (0x1bBde518ad01BaABFE30020407A7630FB17B545d) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x20D697b63d7747cF78C94ad9ee75C1436781E27E","via":[]}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x20D697b63d7747cF78C94ad9ee75C1436781E27E) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x1bBde518ad01BaABFE30020407A7630FB17B545d","0x2e5687010b5f62Ad0ef84370325bC91DED2724fe","0x3E4F4Eb77a9c1f88c0e1F5aDCc9d3521Ce157FdD","0x5F67587FB3f1736a5a91C10E3EeB7cA92117177B","0xBB08cf90DEb93492b463f1Ee5DA9453e51643586","0xba1ac896F3b7cB273daE94bF9A6291A432e826c7"],"configure":["0xeA078231B0ED94F816E57960423af6d028529b09"]}
+      issuedPermissions:
++        [{"permission":"configure","target":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[]}]
+      receivedPermissions:
++        [{"permission":"configure","target":"0xeA078231B0ED94F816E57960423af6d028529b09","via":[]},{"permission":"upgrade","target":"0x1bBde518ad01BaABFE30020407A7630FB17B545d","via":[]},{"permission":"upgrade","target":"0x2e5687010b5f62Ad0ef84370325bC91DED2724fe","via":[]},{"permission":"upgrade","target":"0x3E4F4Eb77a9c1f88c0e1F5aDCc9d3521Ce157FdD","via":[]},{"permission":"upgrade","target":"0x5F67587FB3f1736a5a91C10E3EeB7cA92117177B","via":[]},{"permission":"upgrade","target":"0xba1ac896F3b7cB273daE94bF9A6291A432e826c7","via":[]},{"permission":"upgrade","target":"0xBB08cf90DEb93492b463f1Ee5DA9453e51643586","via":[]}]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x2e5687010b5f62Ad0ef84370325bC91DED2724fe) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x20D697b63d7747cF78C94ad9ee75C1436781E27E","via":[]}]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x3E4F4Eb77a9c1f88c0e1F5aDCc9d3521Ce157FdD) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x20D697b63d7747cF78C94ad9ee75C1436781E27E","via":[]}]
+    }
+```
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: It can act on behalf of 0x20D697b63d7747cF78C94ad9ee75C1436781E27E, inheriting its permissions.
+      assignedPermissions:
+-        {"configure":["0x20D697b63d7747cF78C94ad9ee75C1436781E27E"]}
+      receivedPermissions:
++        [{"permission":"configure","target":"0x20D697b63d7747cF78C94ad9ee75C1436781E27E","via":[]}]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x5F67587FB3f1736a5a91C10E3EeB7cA92117177B) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x20D697b63d7747cF78C94ad9ee75C1436781E27E","via":[]}]
+    }
+```
+
+```diff
+    contract OptimismPortal (0xba1ac896F3b7cB273daE94bF9A6291A432e826c7) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x20D697b63d7747cF78C94ad9ee75C1436781E27E","via":[]}]
+    }
+```
+
+```diff
+    contract SystemConfig (0xBB08cf90DEb93492b463f1Ee5DA9453e51643586) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x20D697b63d7747cF78C94ad9ee75C1436781E27E","via":[]}]
+    }
+```
+
+```diff
+    contract AddressManager (0xeA078231B0ED94F816E57960423af6d028529b09) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"configure","target":"0x20D697b63d7747cF78C94ad9ee75C1436781E27E","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xc27c5a49b0c3924d7a714f6bbff805d68ca632cb
 
 # Diff at Fri, 09 Aug 2024 11:59:41 GMT:

@@ -1,6 +1,6 @@
 import round from 'lodash/round'
 
-import { assert } from '@l2beat/shared-pure'
+import { assert, type StringWithAutocomplete } from '@l2beat/shared-pure'
 import { formatNumber } from './format-number'
 
 const currencyToSymbol: Record<string, string> = {
@@ -15,8 +15,7 @@ interface FormatCurrencyOptions {
 
 export function formatCurrency(
   value: number,
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  currency: 'usd' | 'eth' | (string & {}),
+  currency: StringWithAutocomplete<'usd' | 'eth'>,
   opts?: FormatCurrencyOptions,
 ) {
   const symbol = currencyToSymbol[currency.toLowerCase()]
