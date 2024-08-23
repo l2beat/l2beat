@@ -3,38 +3,13 @@ import Image from 'next/image'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { NumberCell } from '~/app/_components/table/cells/number-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
+import { EM_DASH } from '~/consts/characters'
 import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
 import { formatNumber } from '~/utils/format-number'
-import { Skeleton } from '~/app/_components/skeleton'
-import { EM_DASH } from '~/app/_components/nav/consts'
 import { formatTps } from '~/utils/format-tps'
-import { type SyncStatus } from '~/types/SyncStatus'
 import { MaxTpsCell } from './max-tps-cell'
 
-export type ScalingActivityTableEntry = ScalingActivityEntry & {
-  data: ActivityData
-}
-
-export type ActivityData = AvailableActivityData | NotAvailableActivityData
-
-type AvailableActivityData = {
-  type: 'available'
-  change: number
-  summedCount: number
-  pastDayTps: number
-  maxTps: {
-    value: number
-    timestamp: number
-  }
-  syncStatus: SyncStatus
-}
-type NotAvailableActivityData = {
-  type: 'not-available'
-  reason: 'missing-data' | 'loading'
-  syncStatus?: never
-}
-
-const columnHelper = createColumnHelper<ScalingActivityTableEntry>()
+const columnHelper = createColumnHelper<ScalingActivityEntry>()
 
 export const scalingActivityColumns = [
   columnHelper.accessor((_, index) => index + 1, {
@@ -74,13 +49,8 @@ export const scalingActivityColumns = [
     header: 'Past day TPS',
     cell: (ctx) => {
       const data = ctx.row.original.data
-      if (data.type === 'not-available') {
-        switch (data.reason) {
-          case 'missing-data':
-            return EM_DASH
-          case 'loading':
-            return <Skeleton className="h-4 w-10" />
-        }
+      if (!data) {
+        return EM_DASH
       }
       return formatTps(data.pastDayTps)
     },
@@ -94,13 +64,8 @@ export const scalingActivityColumns = [
     sortUndefined: 'last',
     cell: (ctx) => {
       const data = ctx.row.original.data
-      if (data.type === 'not-available') {
-        switch (data.reason) {
-          case 'missing-data':
-            return EM_DASH
-          case 'loading':
-            return <Skeleton className="h-4 w-10" />
-        }
+      if (!data) {
+        return EM_DASH
       }
       return (
         <MaxTpsCell
@@ -113,21 +78,17 @@ export const scalingActivityColumns = [
   columnHelper.accessor('data.summedCount', {
     header: 'Count',
     cell: (ctx) => {
-      if (ctx.row.original.data.type === 'not-available') {
-        switch (ctx.row.original.data.reason) {
-          case 'missing-data':
-            return EM_DASH
-          case 'loading':
-            return <Skeleton className="h-4 w-10" />
-        }
+      const data = ctx.row.original.data
+      if (!data) {
+        return EM_DASH
       }
       return (
         <div className="flex items-center">
           <NumberCell className="font-bold">
-            {formatNumber(ctx.row.original.data.summedCount)}
+            {formatNumber(data.summedCount)}
           </NumberCell>
           <NumberCell signed className="ml-1 !text-base font-medium">
-            {ctx.row.original.data.change}
+            {data.change}
           </NumberCell>
         </div>
       )

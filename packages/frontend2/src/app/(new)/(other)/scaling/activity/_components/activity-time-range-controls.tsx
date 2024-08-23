@@ -1,7 +1,7 @@
 'use client'
 
 import { RadioGroup, RadioGroupItem } from '~/app/_components/radio-group'
-import { type ActivityTimeRange } from '~/server/features/activity/utils/range'
+import { type ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 
 interface Props {
   timeRange: ActivityTimeRange

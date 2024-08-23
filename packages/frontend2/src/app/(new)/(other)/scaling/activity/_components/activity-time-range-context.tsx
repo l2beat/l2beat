@@ -2,11 +2,11 @@
 
 import { createContext, useContext } from 'react'
 import { useCookieState } from '~/hooks/use-cookie-state'
-import { type ActivityTimeRange } from '~/server/features/activity/utils/range'
+import { type ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 
 type ActivityTimeRangeContextValue = {
   timeRange: ActivityTimeRange
-  setTimeRange: React.Dispatch<React.SetStateAction<ActivityTimeRange>>
+  setTimeRange: (range: ActivityTimeRange) => void
 }
 
 const ActivityTimeRangeContext =

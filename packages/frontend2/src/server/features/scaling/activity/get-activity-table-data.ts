@@ -1,33 +1,34 @@
-import { type DailyTransactionCountRecord } from '@l2beat/database'
+import { type Layer2, type Layer3 } from '@l2beat/config'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { db } from '~/server/database'
-import {
-  type ActivityTimeRange,
-  getFullySyncedActivityRange,
-} from './utils/range'
-import { getActivityProjects } from './get-activity-projects'
+import { countToTps } from './utils/count-to-tps'
+import { getLastDayTps } from './utils/get-last-day-tps'
+import { getTpsWeeklyChange } from './utils/get-tps-weekly-change'
+import { getFullySyncedActivityRange } from './utils/range'
+import { sumActivityCount } from './utils/sum-activity-count'
 
-export async function getActivityTableData(timeRange: ActivityTimeRange) {
-  const projects = getActivityProjects()
-  const [start, end] = getFullySyncedActivityRange(timeRange)
+export type ActivityTableData = NonNullable<
+  Awaited<ReturnType<typeof getActivityTableData>>[string]
+>
+
+export async function getActivityTableData(projects: (Layer2 | Layer3)[]) {
+  const [start, end] = getFullySyncedActivityRange('30d')
   // We subtract 1 day from the start to get data for change calculation
   const adjustedRange: [UnixTime, UnixTime] = [start.add(-1, 'days'), end]
-  const records = await db.activityView.getDailyCountsForProjectsAndTimeRange(
+  const records = await db.activity.getByProjectsAndTimeRange(
     [ProjectId.ETHEREUM, ...projects.map((p) => p.id)],
     adjustedRange,
   )
-  const maxCounts = await db.activityView.getMaxCountForProjects()
+  const maxCounts = await db.activity.getMaxCountForProjects()
 
   const grouped = groupBy(records, (r) => r.projectId)
 
   const data = Object.fromEntries(
     Object.entries(grouped).map(([projectId, records]) => {
-      const toCompareForChange = records.at(0)
-      const actualRecords = timeRange === 'max' ? records : records.slice(1)
       const lastRecord = records.at(-1)
 
-      if (!lastRecord || !toCompareForChange) {
+      if (!lastRecord) {
         return [projectId, undefined]
       }
       const maxCount = maxCounts[projectId]
@@ -39,15 +40,13 @@ export async function getActivityTableData(timeRange: ActivityTimeRange) {
       return [
         projectId,
         {
-          change:
-            (lastRecord.count - toCompareForChange.count) /
-            toCompareForChange.count,
-          pastDayTps: countToTps(lastRecord.count),
+          change: getTpsWeeklyChange(records),
+          pastDayTps: getLastDayTps(records),
           maxTps: {
             value: countToTps(maxCount.count),
             timestamp: maxCount.timestamp.toNumber(),
           },
-          summedCount: sumCounts(actualRecords),
+          summedCount: sumActivityCount(records),
           syncStatus: getSyncStatus(lastRecord.timestamp),
         },
       ]
@@ -59,15 +58,7 @@ export async function getActivityTableData(timeRange: ActivityTimeRange) {
   )
 }
 
-function countToTps(count: number) {
-  return count / UnixTime.DAY
-}
-
-function sumCounts(records: DailyTransactionCountRecord[]) {
-  return records.reduce((acc, r) => acc + r.count, 0)
-}
-
 function getSyncStatus(syncedUntil: UnixTime) {
-  const isSynced = UnixTime.now().add(-2, 'days').lte(syncedUntil)
+  const isSynced = UnixTime.now().add(-2, 'days').gte(syncedUntil)
   return { isSynced, syncedUntil: syncedUntil.toNumber() }
 }
