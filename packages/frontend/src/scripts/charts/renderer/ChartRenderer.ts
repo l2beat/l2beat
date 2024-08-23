@@ -226,6 +226,7 @@ export class ChartRenderer {
           ? renderMilestone(
               (width / (points.length - 1)) * i,
               point.milestone.link,
+              point.milestone.type ?? 'general',
             )
           : '',
       )
@@ -336,7 +337,9 @@ export class ChartRenderer {
         const pointStyle = this.renderParams.seriesStyle[i].point
         pointElement.className = `absolute z-40 ${
           milestone
-            ? POINT_CLASS_NAMES.milestone.className
+            ? POINT_CLASS_NAMES[
+                milestone.type === 'incident' ? 'incident' : 'milestone'
+              ].className
             : pointStyle
               ? POINT_CLASS_NAMES[pointStyle].className
               : ''
@@ -350,9 +353,11 @@ export class ChartRenderer {
     }
 
     if (milestone) {
-      this.hoverLine.classList.add('bg-green-500')
+      this.hoverLine.classList.add(
+        milestone.type === 'incident' ? 'bg-red-300' : 'bg-green-500',
+      )
     } else {
-      this.hoverLine.classList.remove('bg-green-500')
+      this.hoverLine.classList.remove('bg-green-500', 'bg-red-300')
     }
 
     this.hoverLine.style.left = `${left - 1}px`

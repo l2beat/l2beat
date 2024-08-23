@@ -1,17 +1,17 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import { MilestonesSection } from './MilestonesSection'
+import { MilestonesAndIncidentsSection } from './MilestonesAndIncidentsSection'
 
-const meta: Meta<typeof MilestonesSection> = {
-  component: MilestonesSection,
+const meta: Meta<typeof MilestonesAndIncidentsSection> = {
+  component: MilestonesAndIncidentsSection,
   args: {
-    id: 'milestones',
-    title: 'Milestones',
+    id: 'milestones-and-incidents',
+    title: 'Milestones & Incidents',
     sectionOrder: 1,
   },
 }
 export default meta
-type Story = StoryObj<typeof MilestonesSection>
+type Story = StoryObj<typeof MilestonesAndIncidentsSection>
 
 export const Collapsed: Story = {
   args: {

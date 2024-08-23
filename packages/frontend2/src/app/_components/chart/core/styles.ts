@@ -33,6 +33,7 @@ interface PointClassNames {
   roundedLightYellowSquare: PointShapeDefinition
   roundedPinkSquare: PointShapeDefinition
   milestone: PointShapeDefinition
+  incident: PointShapeDefinition
 }
 
 export const POINT_CLASS_NAMES: PointClassNames = {
@@ -72,6 +73,10 @@ export const POINT_CLASS_NAMES: PointClassNames = {
   milestone: {
     type: 'div',
     className: 'size-2 rotate-45 border-2 border-green-500 bg-green-700',
+  },
+  incident: {
+    type: 'div',
+    className: 'size-2 rotate-45 border-2 border-red-700 bg-red-800',
   },
 }
 
