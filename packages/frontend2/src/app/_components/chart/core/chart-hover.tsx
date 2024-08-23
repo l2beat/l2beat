@@ -59,6 +59,7 @@ export function ChartHover() {
         className={cn(
           'absolute top-0 z-30 block h-full w-0.5 bg-current',
           milestone && 'bg-green-500',
+          milestone?.type === 'incident' && 'bg-red-300',
         )}
         style={lineStyle}
       >
@@ -70,7 +71,7 @@ export function ChartHover() {
               key={index}
               className={cn(
                 'absolute left-[-3px] z-40',
-                milestone && POINT_CLASS_NAMES.milestone.className,
+                milestone && POINT_CLASS_NAMES.[milestone?.type === "incident" ? "incident" : "milestone"].className,
                 !milestone && POINT_CLASS_NAMES[style].className,
               )}
               style={{ bottom: bottom - 4 }}
