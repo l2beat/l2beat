@@ -1,4 +1,5 @@
 'use client'
+import { useIsClient } from '~/hooks/use-is-client'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import ArrowRightIcon from '../../icons/arrow-right.svg'
 import CloseIcon from '../../icons/close.svg'
@@ -8,12 +9,13 @@ const localStorageTag = 'top-banner'
 const purpose = 'fraud-proof-wars'
 
 export function Banner() {
+  const isClient = useIsClient()
   const [isHidden, setIsHidden] = useLocalStorage(
     `${localStorageTag}-${purpose}-is-hidden`,
     false,
   )
 
-  if (isHidden) {
+  if (isHidden || !isClient) {
     return null
   }
 
