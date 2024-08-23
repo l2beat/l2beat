@@ -6,7 +6,7 @@
   "types": "src/index.ts",
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "tsc",
+    "build": "yarn clean && tsc",
     "format": "prisma format && biome format .",
     "format:fix": "prisma format && biome format --write .",
     "lint:fix": "biome check --formatter-enabled=false --apply .",
