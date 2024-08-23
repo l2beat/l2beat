@@ -8,7 +8,7 @@ export const alephzero: Layer2 = underReviewL2({
     name: 'Aleph Zero EVM',
     slug: 'aleph-zero',
     description:
-      'Aleph Zero is an Optimium on Ethereum, built on the Orbit stack. It aims to enable you to build and use unique privacy apps with speed and a great UX.',
+      'Aleph Zero is an Optimium on Ethereum, built on the Orbit stack. It aims at enabling developers to build privacy-enhancing applications through zkOS, and provide advanced account abstraction capabilities.',
     purposes: ['Privacy'],
     category: 'Optimium',
     provider: 'Arbitrum',
