@@ -3,7 +3,7 @@
   "chain": "mantle",
   "blockNumber": 66927056,
   "configHash": "0xba99224e212c7eb632ba06c519a466724d98fb22fad4fc880458e49a59f4dbad",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "MantleOwner",
@@ -62,6 +62,7 @@
       "values": {
         "$admin": "0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82",
         "$implementation": "0x7769C18828569692Dfb65affa0856533613ea458",
+        "$upgradeCount": 2,
         "l2Bridge": "0x321Ce902eDFC6466B224ce5D9A7Bc16858855272",
         "l2TokenBeacon": "0x21194Efd1D913Bc8D62F1ED9467aA0cA2a257FCe",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
@@ -92,6 +93,7 @@
       "values": {
         "$admin": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "$implementation": "0x0C04046546C46652969Aa9eB4BFB758cFDf1e821",
+        "$upgradeCount": 4,
         "feeParams": {
           "pubdataPricingMode": 0,
           "batchOverheadL1Gas": 1000000,
@@ -135,6 +137,7 @@
       "values": {
         "$admin": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "$implementation": "0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D",
+        "$upgradeCount": 3,
         "ethToken": "0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111",
         "getRemoteGateway": "0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269",
         "isEthGasToken": false,

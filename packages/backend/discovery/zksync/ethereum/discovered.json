@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20532597,
   "configHash": "0x3d998b8628d34dc5825d501ad6778e24924b2742b447a4efaa1617f47e42367b",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "Multisig 1",
@@ -102,6 +102,7 @@
       "values": {
         "$admin": "0x38A43F4330f24fe920F943409709fc9A6084C939",
         "$implementation": "0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8",
+        "$upgradeCount": 0,
         "defaultFactory": "0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D",
         "networkGovernor": "0xE24f4870Ab85DE8E356C5fC56138587206c70d99",
         "tokenGovernance": "0x35cc31f63deef017c38d51B038891bAE7d614e86",
@@ -176,7 +177,8 @@
       "sinceTimestamp": 1592218707,
       "values": {
         "$admin": "0x38A43F4330f24fe920F943409709fc9A6084C939",
-        "$implementation": "0x6e95812C432F293b8045811F4B1758285EBDB206"
+        "$implementation": "0x6e95812C432F293b8045811F4B1758285EBDB206",
+        "$upgradeCount": 0
       },
       "derivedName": "Verifier"
     },

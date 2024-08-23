@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20532565,
   "configHash": "0xdf8d903153f00ab5c11cced94c598d51921ebd93469ef07a741b26ec201d16d0",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "LivenessModule",
@@ -104,6 +104,7 @@
       "values": {
         "$admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
         "$implementation": "0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846",
+        "$upgradeCount": 3,
         "bridge": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "BRIDGE": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "version": "1.9.0"
@@ -208,6 +209,7 @@
       "values": {
         "$admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
         "$implementation": "0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF",
+        "$upgradeCount": 0,
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "MESSENGER": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
@@ -262,6 +264,7 @@
       "values": {
         "$admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
         "$implementation": "0x2D778797049FE9259d947D1ED8e5442226dFB589",
+        "$upgradeCount": 3,
         "guardian": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
         "GUARDIAN": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
         "L2_ORACLE": "0x56315b90c40730925ec5485cf004d835058518A0",
@@ -337,6 +340,7 @@
       "values": {
         "$admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
         "$implementation": "0xF243BEd163251380e78068d317ae10f26042B292",
+        "$upgradeCount": 4,
         "challenger": "0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824",
         "CHALLENGER": "0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824",
         "deletedOutputs": [
@@ -430,6 +434,7 @@
       "values": {
         "$admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
         "$implementation": "0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d",
+        "$upgradeCount": 3,
         "messenger": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "MESSENGER": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000014",
@@ -477,6 +482,7 @@
       "values": {
         "$admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
         "$implementation": "0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1",
+        "$upgradeCount": 3,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "0x5050F69a9786F081509234F1a7F4684b5E5b76C9",
         "batchInbox": "0xFf00000000000000000000000000000000008453",
@@ -663,6 +669,7 @@
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0x53c165169401764778F780a69701385eb0FF19B7",
+        "$upgradeCount": 3,
         "guardian": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
         "GUARDIAN_SLOT": "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68",
         "paused": false,
@@ -739,6 +746,7 @@
       "values": {
         "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "$implementation": "0x313819736457910aC1Dd21a712a37f3d7595645A",
+        "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20461688,
   "configHash": "0x9d1beed8f80f0e5c226a167bc517f6809ef5cdccdfe3fe32a3a141fcfa133a87",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "BridgeMultisig",

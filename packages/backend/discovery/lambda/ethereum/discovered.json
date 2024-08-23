@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20111587,
   "configHash": "0xf40621ba52d032772863ef72d1755b0e07f65f39fab7b97ef138b43c34fa60db",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "SuperchainConfig",
@@ -25,6 +25,7 @@
       "values": {
         "$admin": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f",
         "$implementation": "0x527021A71d6E76Bb4243A0BabAd4e160245b8aAE",
+        "$upgradeCount": 1,
         "guardian": "0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40",
         "GUARDIAN_SLOT": "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68",
         "paused": false,
@@ -152,6 +153,7 @@
       "values": {
         "$admin": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f",
         "$implementation": "0x850DFdB4035db757e49eCF997ef051290959167A",
+        "$upgradeCount": 1,
         "challenger": "0x864A02Ca4a40616f8995709D1B26CDe588709043",
         "CHALLENGER": "0x864A02Ca4a40616f8995709D1B26CDe588709043",
         "deletedOutputs": [],
@@ -192,6 +194,7 @@
       "values": {
         "$admin": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f",
         "$implementation": "0x4CA20D48C87129Df90A3cAd73000568331548316",
+        "$upgradeCount": 1,
         "bridge": "0xEEBd256da18d0BF20c3CEb785a0946D41A7F408F",
         "BRIDGE": "0xEEBd256da18d0BF20c3CEb785a0946D41A7F408F",
         "version": "1.9.0"
@@ -234,6 +237,7 @@
       "values": {
         "$admin": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f",
         "$implementation": "0x5865A0BCf08dd24A0691Dc746F181EDc6821bea9",
+        "$upgradeCount": 1,
         "guardian": "0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40",
         "GUARDIAN": "0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40",
         "L2_ORACLE": "0x2297eB8DC91f532C91c57b3fb33C06b782e9594A",
@@ -306,6 +310,7 @@
       "values": {
         "$admin": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f",
         "$implementation": "0x5121000767198Ad7D60fe8e47458F556B7B51aa0",
+        "$upgradeCount": 1,
         "messenger": "0x78B5818884929d7A930edADD03a0fCD9Dd068EB7",
         "MESSENGER": "0x78B5818884929d7A930edADD03a0fCD9Dd068EB7",
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000014",
@@ -340,6 +345,7 @@
       "values": {
         "$admin": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f",
         "$implementation": "0x781dAB53cC9d9870a96A84f4AE3130c084a2fAfD",
+        "$upgradeCount": 1,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "0xDeC273BF31AD79ad00D619c52662f724176A12Fb",
         "batchInbox": "0xfF00000000000000000000000000000000056026",
@@ -408,6 +414,7 @@
       "values": {
         "$admin": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f",
         "$implementation": "0x3aF70e7103d29a9466663514DE3C421769b30382",
+        "$upgradeCount": 0,
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x78B5818884929d7A930edADD03a0fCD9Dd068EB7",
         "MESSENGER": "0x78B5818884929d7A930edADD03a0fCD9Dd068EB7",
