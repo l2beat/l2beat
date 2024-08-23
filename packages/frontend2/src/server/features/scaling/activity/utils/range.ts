@@ -26,5 +26,5 @@ export function getFullySyncedActivityRange(
 
   const end = startOfDay
   const start = end.add(-days, 'days')
-  return [start, end]
+  return [start, end.add(-1, 'seconds')]
 }

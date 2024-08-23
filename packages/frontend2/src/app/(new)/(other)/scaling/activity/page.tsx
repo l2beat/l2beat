@@ -4,9 +4,10 @@ import { getScalingActivityEntries } from '~/server/features/scaling/get-scaling
 import { HydrateClient } from '~/trpc/server'
 import { ActivityTimeRangeContextProvider } from './_components/activity-time-range-context'
 import { ScalingActivityTable } from './_components/table/scaling-activity-table'
+import { getCookie } from '~/utils/cookies/server'
 
 export default async function Page() {
-  // const timeRange = getCookie('activityTimeRange')
+  const timeRange = getCookie('activityTimeRange')
   const entries = await getScalingActivityEntries()
   return (
     <HydrateClient>

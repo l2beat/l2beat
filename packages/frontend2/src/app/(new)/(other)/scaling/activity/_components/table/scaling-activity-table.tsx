@@ -6,11 +6,11 @@ import { useTable } from '~/hooks/use-table'
 import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
 import { scalingActivityColumns } from './columns'
 
-export function ScalingActivityTable({
-  entries,
-}: {
+interface Props {
   entries: ScalingActivityEntry[]
-}) {
+}
+
+export function ScalingActivityTable({ entries }: Props) {
   const table = useTable({
     columns: scalingActivityColumns,
     data: entries,

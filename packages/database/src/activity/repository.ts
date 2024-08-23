@@ -84,7 +84,7 @@ export class ActivityRepository extends BaseRepository {
       )
       .where('timestamp', '>=', from.toDate())
       .where('timestamp', '<=', to.toDate())
-      .orderBy('timestamp', 'desc')
+      .orderBy('timestamp', 'asc')
       .execute()
     return rows.map(toRecord)
   }

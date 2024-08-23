@@ -15,7 +15,7 @@ export type ActivityTableData = NonNullable<
 export async function getActivityTableData(projects: (Layer2 | Layer3)[]) {
   const [start, end] = getFullySyncedActivityRange('30d')
   // We subtract 1 day from the start to get data for change calculation
-  const adjustedRange: [UnixTime, UnixTime] = [start.add(-1, 'days'), end]
+  const adjustedRange: [UnixTime, UnixTime] = [start, end]
   const records = await db.activity.getByProjectsAndTimeRange(
     [ProjectId.ETHEREUM, ...projects.map((p) => p.id)],
     adjustedRange,
@@ -30,6 +30,9 @@ export async function getActivityTableData(projects: (Layer2 | Layer3)[]) {
 
       if (!lastRecord) {
         return [projectId, undefined]
+      }
+      if (projectId === 'xai') {
+        console.log(records)
       }
       const maxCount = maxCounts[projectId]
       assert(
@@ -59,6 +62,6 @@ export async function getActivityTableData(projects: (Layer2 | Layer3)[]) {
 }
 
 function getSyncStatus(syncedUntil: UnixTime) {
-  const isSynced = UnixTime.now().add(-2, 'days').gte(syncedUntil)
+  const isSynced = UnixTime.now().add(-2, 'days').lte(syncedUntil)
   return { isSynced, syncedUntil: syncedUntil.toNumber() }
 }

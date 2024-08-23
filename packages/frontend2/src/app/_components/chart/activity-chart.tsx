@@ -5,7 +5,7 @@ import { ActivityTimeRangeControls } from '~/app/(new)/(other)/scaling/activity/
 
 export function ActivityChart() {
   const { timeRange, setTimeRange } = useActivityTimeRangeContext()
-
+  // TODO: add chart here
   return (
     <ActivityTimeRangeControls
       timeRange={timeRange}
