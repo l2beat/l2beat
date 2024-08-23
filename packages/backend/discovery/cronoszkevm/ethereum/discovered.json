@@ -1,9 +1,9 @@
 {
   "name": "cronoszkevm",
   "chain": "ethereum",
-  "blockNumber": 20568367,
+  "blockNumber": 20589800,
   "configHash": "0x9d7cf5e188a3dea65e5afc7c94d39bb64d6a816d32f7cb9818a931d99415b5da",
-  "version": 11,
+  "version": 12,
   "contracts": [
     {
       "name": "AdminMultisig",
@@ -90,7 +90,6 @@
     {
       "name": "CronosZkEvm",
       "address": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
-      "unverified": true,
       "proxyType": "EIP2535 diamond proxy",
       "ignoreInWatchMode": [
         "getPriorityQueueSize",
@@ -206,26 +205,26 @@
         "getBaseToken": "0x28Ff2E4dD1B58efEB0fC138602A28D5aE81e44e2",
         "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 1742,
+        "getFirstUnprocessedPriorityTx": 2039,
         "getL2BootloaderBytecodeHash": "0x010008e742608b21bf7eb23c1a9d0602047e3618b464c9b59c0fba3b3d7ab66e",
         "getL2DefaultAccountBytecodeHash": "0x01000563374c277a2c1e34659a2a1e87371bb6d852ce142022d497bfb50b9e32",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 139,
+        "getPriorityQueueSize": 60,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 103079215105,
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 24, 1],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 30,
-        "getTotalBatchesExecuted": 28,
-        "getTotalBatchesVerified": 30,
-        "getTotalBlocksCommitted": 30,
-        "getTotalBlocksExecuted": 28,
-        "getTotalBlocksVerified": 30,
-        "getTotalPriorityTxs": 1881,
+        "getTotalBatchesCommitted": 36,
+        "getTotalBatchesExecuted": 35,
+        "getTotalBatchesVerified": 36,
+        "getTotalBlocksCommitted": 36,
+        "getTotalBlocksExecuted": 35,
+        "getTotalBlocksVerified": 36,
+        "getTotalPriorityTxs": 2099,
         "getVerifier": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
@@ -234,8 +233,8 @@
         },
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": {
-          "canonicalTxHash": "0x6a5f13063cca0b2ae61acc16900284ebaba6f1f3d96ee8352b1101107c9e97d2",
-          "expirationTimestamp": 1724015531,
+          "canonicalTxHash": "0x847a156d2dfc2ac28519fd150035a185e7405c2845c110e10256c2a367f5e438",
+          "expirationTimestamp": 1724304791,
           "layer2Tip": 0
         },
         "txFilterer": [
@@ -260,7 +259,7 @@
           "description": "Verifier parameters used for proving batches"
         }
       },
-      "derivedName": ""
+      "derivedName": "DiamondProxy"
     },
     {
       "name": "TransactionFiltererDenyList",
@@ -351,6 +350,10 @@
     "0x70F3FBf8a427155185Ec90BED8a3434203de9604": [
       "function verificationKeyHash() pure returns (bytes32 vkHash)",
       "function verify(uint256[], uint256[], uint256[]) view returns (bool)"
+    ],
+    "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc": [
+      "constructor(uint256 _chainId, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)",
+      "event DiamondCut(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata)"
     ],
     "0xA8998F231a660Eca365B382943c71ad9b7619139": [
       "constructor(address _owner, address[] list)",

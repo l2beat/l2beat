@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x4b2e685ef993190e0f70b24d1fff6b671ce3cfda
+
+# Diff at Fri, 23 Aug 2024 07:26:48 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@08f0832a5dea29e7c493cd50bda4bf1729aa03ae block: 20568367
+- current block number: 20589800
+
+## Description
+
+Verified the bridge proxy contract.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20568367 (main branch discovery), not current.
+
+```diff
+    contract CronosZkEvm (0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc) {
+    +++ description: None
+      unverified:
+-        true
+    }
+```
+
 Generated with discovered.json: 0x0c856d0648b71a8d06b5926a3ea8934df46b90ee
 
 # Diff at Tue, 20 Aug 2024 07:33:17 GMT:
