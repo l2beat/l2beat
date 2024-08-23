@@ -2,7 +2,6 @@
 
 import { type Milestone } from '@l2beat/config'
 import React, { useState } from 'react'
-import { MilestoneIcon } from '~/icons/MilestoneIcon'
 import ChevronDownIcon from '~/icons/chevron.svg'
 import { cn } from '~/utils/cn'
 import { Button } from '../../button'
@@ -15,6 +14,8 @@ import { CustomLink } from '../../link/custom-link'
 import { Markdown } from '../../markdown/markdown'
 import { ProjectSection } from './project-section'
 import { type ProjectSectionProps } from './types'
+import { IncidentIcon } from '~/icons/incident'
+import { MilestoneIcon } from '~/icons/milestone'
 
 export interface MilestonesSectionProps extends ProjectSectionProps {
   milestones: Milestone[]
@@ -55,37 +56,71 @@ export function MilestonesSection({
 function MilestonesBase(props: { milestones: Milestone[]; isOpen?: boolean }) {
   return (
     <div className="relative">
-      <div className="absolute left-[15.4px] mt-2 h-full">
-        <div
-          className={cn(
-            'h-[calc(100%_-_100px)] w-[1.7px] bg-green-400 dark:w-px dark:bg-green-500',
-            props.isOpen && 'h-full',
-          )}
-        />
-        {!props.isOpen && (
-          <div className="h-[100px] w-[1.7px] bg-gradient-to-b from-green-400 dark:w-px dark:from-green-500" />
-        )}
-      </div>
       <div className="ml-10">
-        {props.milestones.map((milestone, i) => (
-          <div key={i} className="pb-7">
-            <MilestoneIcon className="absolute left-1.5" />
-            <p className="text-lg font-bold leading-none">{milestone.name}</p>
-            <p className="text-sm dark:text-gray-400">
-              {formatDate(milestone.date)}
-            </p>
-            <div className="mt-3">
-              {milestone.description && (
-                <Markdown className="text-sm leading-none dark:text-gray-400">
-                  {milestone.description}
-                </Markdown>
-              )}
-              <CustomLink className="text-sm" href={milestone.link}>
-                Learn more
-              </CustomLink>
-            </div>
-          </div>
-        ))}
+        {props.milestones
+          .sort(
+            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+          )
+          .map((milestone, i) => {
+            // Milestones may have a type of 'general' or 'incident'
+            // When the type is undefined, it is considered 'general'
+
+            const milestoneType = milestone.type ?? 'general'
+            const oldMilestone = props.milestones.at(i + 1)
+            const oldMilestoneType =
+              oldMilestone && (oldMilestone.type ?? 'general')
+
+            const Icon =
+              milestoneType === 'incident' ? IncidentIcon : MilestoneIcon
+
+            const milestoneLineClassName = oldMilestoneType
+              ? cn(
+                  milestoneType === 'general' &&
+                    'bg-green-400 dark:bg-green-500',
+                  milestoneType === 'incident' && 'bg-red-700 dark:bg-red-700',
+                  oldMilestoneType === 'incident' &&
+                    milestoneType === 'general' &&
+                    'bg-gradient-to-b from-green-400 to-red-700 dark:from-green-500 dark:to-red-700',
+                  oldMilestoneType === 'general' &&
+                    milestoneType === 'incident' &&
+                    'bg-gradient-to-b from-red-700 to-green-400 dark:from-red-700 dark:to-green-500',
+                )
+              : cn(
+                  'h-3/4 bg-gradient-to-b',
+                  milestoneType === 'incident' &&
+                    'from-red-700 dark:from-red-700',
+                  milestoneType === 'general' &&
+                    'from-green-400 dark:from-green-500',
+                )
+
+            return (
+              <div key={i} className="relative pb-7">
+                <div
+                  className={cn(
+                    'absolute left-[-1.445rem] top-3 h-full w-[1.7px] dark:w-px',
+                    milestoneLineClassName,
+                  )}
+                />
+                <Icon className="absolute left-1.5" />
+                <p className="text-lg font-bold leading-none">
+                  {milestone.name}
+                </p>
+                <p className="text-sm dark:text-gray-400">
+                  {formatDate(milestone.date)}
+                </p>
+                <div className="mt-3">
+                  {milestone.description && (
+                    <Markdown className="text-sm leading-none dark:text-gray-400">
+                      {milestone.description}
+                    </Markdown>
+                  )}
+                  <CustomLink className="text-sm" href={milestone.link}>
+                    Learn more
+                  </CustomLink>
+                </div>
+              </div>
+            )
+          })}
       </div>
     </div>
   )

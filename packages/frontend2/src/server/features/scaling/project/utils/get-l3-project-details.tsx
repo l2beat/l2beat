@@ -80,7 +80,7 @@ export function getL3ProjectDetails({
       type: 'MilestonesSection',
       props: {
         id: 'milestones',
-        title: 'Milestones',
+        title: 'Milestones & Incidents',
         milestones: project.milestones,
       },
     })

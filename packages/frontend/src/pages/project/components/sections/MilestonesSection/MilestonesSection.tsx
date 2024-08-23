@@ -28,9 +28,6 @@ export function MilestonesSection(props: MilestonesSectionProps) {
         className="relative"
         gradientClassName="from-white dark:from-neutral-900 md:from-gray-100 md:dark:from-zinc-900"
       >
-        {/*<div className="absolute left-[15.4px] mt-2 h-full">
-          <div className="h-2/5 w-[1.7px] bg-gradient-to-b from-green-400 dark:w-px dark:from-green-500" />
-        </div>*/}
         <div className="ml-10">
           {props.milestones
             .sort(
