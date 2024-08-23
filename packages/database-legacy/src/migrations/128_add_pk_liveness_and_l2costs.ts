@@ -16,11 +16,11 @@ import { Knex } from 'knex'
 export async function up(knex: Knex) {
   await knex.schema.alterTable('l2_costs', function (table) {
     table.dropUnique(['tx_hash'])
-    table.primary(['tx_hash', 'configuration_id'])
+    table.primary(['configuration_id', 'tx_hash'])
   })
 
   await knex.schema.alterTable('liveness', function (table) {
-    table.primary(['tx_hash', 'configuration_id'])
+    table.primary(['configuration_id', 'tx_hash'])
   })
 }
 
