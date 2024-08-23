@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x1f48b58d220b819d850857bc29b7feb58dd71bc2
+
+# Diff at Fri, 23 Aug 2024 07:24:11 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@08f0832a5dea29e7c493cd50bda4bf1729aa03ae block: 20575837
+- current block number: 20589788
+
+## Description
+
+Ignored the token's total supply.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20575837 (main branch discovery), not current.
+
+```diff
+    contract SXNetwork (0xbe9F61555F50DD6167f2772e9CF7519790d96624) {
+    +++ description: None
+      values.totalSupply:
+-        "97216642899192381828100000"
+    }
+```
+
 Generated with discovered.json: 0xda775f3da176d73f47a0378b875b6b8cfedacfbd
 
 # Diff at Wed, 21 Aug 2024 13:25:38 GMT:

@@ -5,7 +5,7 @@ export class DeploymentRepository extends BaseRepository {
   async upsert(record: DeploymentRecord): Promise<void> {
     const row = toRow(record)
     await this.db
-      .insertInto('public.Deployment')
+      .insertInto('Deployment')
       .values(row)
       .onConflict((cb) =>
         cb.column('tokenId').doUpdateSet((eb) => ({

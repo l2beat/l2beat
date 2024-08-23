@@ -7,7 +7,7 @@ import { TRPCReactProvider } from '~/trpc/react'
 import { restoreCollapsibleNavStateScript } from './_components/nav/consts'
 
 import { getCollection } from '~/content/get-collection'
-import { getDefaultMetadata } from '~/utils/get-default-metadata'
+import { getDefaultMetadata } from '~/utils/metadata'
 import { roboto } from '../fonts'
 import '../styles/globals.css'
 import { GlossaryContextProvider } from './_components/markdown/glossary-context'

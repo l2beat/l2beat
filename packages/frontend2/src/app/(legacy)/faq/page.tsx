@@ -3,7 +3,7 @@ import { type Metadata } from 'next'
 import { ContentWrapper } from '~/app/_components/content-wrapper'
 import { Markdown } from '~/app/_components/markdown/markdown'
 import { ScrollToTopButton } from '~/app/_components/scroll-to-top-button'
-import { getDefaultMetadata } from '~/utils/get-default-metadata'
+import { getDefaultMetadata } from '~/utils/metadata'
 import { faqItems } from './faq-items'
 
 export const metadata: Metadata = getDefaultMetadata({
