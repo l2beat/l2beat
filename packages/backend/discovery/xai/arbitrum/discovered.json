@@ -3,7 +3,7 @@
   "chain": "arbitrum",
   "blockNumber": 245317770,
   "configHash": "0xe38e1d366aded9704f1e4a02d314bb4ce09bc4d1c5f07edbe0c6980f3a69a8c4",
-  "version": 12,
+  "version": 13,
   "contracts": [
     {
       "name": "GnosisSafeAdminMember",
@@ -108,6 +108,7 @@
       "values": {
         "$admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
         "$implementation": "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1",
+        "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -160,6 +161,7 @@
       "values": {
         "$admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
         "$implementation": "0x302275067251F5FcdB9359Bda735fD8f7A4A54c0",
+        "$upgradeCount": 1,
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
         "l2ToL1BatchNum": 0,
         "l2ToL1Block": 0,
@@ -188,6 +190,7 @@
       "values": {
         "$admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
         "$implementation": "0xd106EC93D2c1adaA65C4B17ffc7bB166Ce30DDAe",
+        "$upgradeCount": 1,
         "counterpartGateway": "0xd096e8dE90D34de758B0E0bA4a796eA2e1e272cF",
         "defaultGateway": "0xb591cE747CF19cF30e11d656EB94134F523A9e77",
         "inbox": "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
@@ -222,6 +225,7 @@
       "values": {
         "$admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
         "$implementation": "0x18FD37A4FB9E1F06d9383958aFd236771F15A8cb",
+        "$upgradeCount": 1,
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336"
       }
@@ -241,6 +245,7 @@
       "values": {
         "$admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
         "$implementation": "0x5cA988F213EfbCB86ED7e2AACB0C15c91e648f8d",
+        "$upgradeCount": 2,
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
         "osp": "0xb20107bfB36D3B5AcA534aCAfbd8857b10b402a8",
         "resultReceiver": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
@@ -336,6 +341,7 @@
       "values": {
         "$admin": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723",
         "$implementation": "0xb6773d5bF5b908B58ff5B7Bd36A7F06Da2EeeEc7",
+        "$upgradeCount": 1,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "esXaiBeacon": "0x6Bc4e6B2c13Ba42e933b23AFAb8a58bbbBa5D02B",
         "keyBucketBeacon": "0xfB93c2e5E41BD0ffd2E99A88e6d2A8D4F542d39a",
@@ -378,6 +384,7 @@
       "values": {
         "$admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
         "$implementation": "0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC",
+        "$upgradeCount": 1,
         "activeOutbox": "0x0000000000000000000000000000000000000000",
         "allowedDelayedInboxList": [
           "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
@@ -421,6 +428,7 @@
       "values": {
         "$admin": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723",
         "$implementation": "0xF208798482F0b12c8767Bc03cC0F145D18BeCe6A",
+        "$upgradeCount": 1,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TRANSFER_ROLE": "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c"
       }
@@ -443,6 +451,7 @@
       "values": {
         "$admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
         "$implementation": "0x7a299aD29499736994Aa3a9aFa3f476445FAEB2c",
+        "$upgradeCount": 2,
         "batchCount": 65908,
         "batchPosterManager": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871",
         "batchPosters": ["0x7F68dba68E72a250004812fe04F1123Fca89aBa9"],
@@ -518,6 +527,7 @@
       "values": {
         "$admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
         "$implementation": "0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab",
+        "$upgradeCount": 1,
         "allowListEnabled": false,
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
         "getProxyAdmin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
@@ -554,6 +564,7 @@
       "values": {
         "$admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
         "$implementation": "0x8b73Ef238ADaB31EBC7c05423d243c345241a22f",
+        "$upgradeCount": 1,
         "cloneableProxyHash": "0xce61ab08155a3a368bfd165ba9e1151d023608a155fce1ec0d87bba89a59cb4d",
         "counterpartGateway": "0x0c71417917D24F4A6A6A55559B98c5cCEcb33F7a",
         "inbox": "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
@@ -579,6 +590,7 @@
       "values": {
         "$admin": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723",
         "$implementation": "0xfD6Bb931D2Ee134E70568ca36584c043cB278734",
+        "$upgradeCount": 8,
         "claimable": true,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "fundsReceiver": "0xFCF7248C495d6fd3641eE43F861c48Ebe402c878",
@@ -730,6 +742,7 @@
       "values": {
         "$admin": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723",
         "$implementation": "0x21EEC6626f15d02A8896ebB7EDD68ff3CB61e89E",
+        "$upgradeCount": 1,
         "bucketshareMaxValues": [100000, 950000, 850000],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "deployerAddress": "0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD",
@@ -807,6 +820,7 @@
       "values": {
         "$admin": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723",
         "$implementation": "0x609152cb742916E0F7FBC4391Be750C458b049fe",
+        "$upgradeCount": 8,
         "calculateChallengeEmissionAndTier": [
           "35673515981735159817351",
           "625000000000000000000000000"

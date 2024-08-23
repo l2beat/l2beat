@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20589788,
   "configHash": "0x6961ee388780e33b2e1c770f5c76c6d04f0bc028919dc74eeec2a964eb234dc5",
-  "version": 12,
+  "version": 13,
   "contracts": [
     {
       "name": "OneStepProverHostIo",
@@ -126,6 +126,7 @@
       "values": {
         "$admin": "0xe8606A55d105EF857F187C32Ae0E9a168aF8F497",
         "$implementation": "0x6c21303F5986180B1394d2C89f3e883890E2867b",
+        "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -179,6 +180,7 @@
       "values": {
         "$admin": "0xe8606A55d105EF857F187C32Ae0E9a168aF8F497",
         "$implementation": "0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43",
+        "$upgradeCount": 1,
         "bridge": "0xa104C0426e95a5538e89131DbB4163d230C35f86",
         "osp": "0x57EA090Ac0554d174AE0e2855B460e84A1A7C221",
         "resultReceiver": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
@@ -231,6 +233,7 @@
       "values": {
         "$admin": "0xe8606A55d105EF857F187C32Ae0E9a168aF8F497",
         "$implementation": "0x302275067251F5FcdB9359Bda735fD8f7A4A54c0",
+        "$upgradeCount": 1,
         "bridge": "0xa104C0426e95a5538e89131DbB4163d230C35f86",
         "rollup": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F"
       }
@@ -255,6 +258,7 @@
       "values": {
         "$admin": "0xe8606A55d105EF857F187C32Ae0E9a168aF8F497",
         "$implementation": "0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab",
+        "$upgradeCount": 1,
         "activeOutbox": "0x0000000000000000000000000000000000000000",
         "allowedDelayedInboxList": [
           "0xEa83E8907C89Bc0D9517632f0ba081972E328631",
@@ -285,6 +289,7 @@
       "values": {
         "$admin": "0xe8606A55d105EF857F187C32Ae0E9a168aF8F497",
         "$implementation": "0x19431dc37098877486532250FB3158140717C00C",
+        "$upgradeCount": 1,
         "bridge": "0xa104C0426e95a5538e89131DbB4163d230C35f86",
         "l2ToL1BatchNum": 0,
         "l2ToL1Block": 0,
@@ -330,6 +335,7 @@
       "values": {
         "$admin": "0xe8606A55d105EF857F187C32Ae0E9a168aF8F497",
         "$implementation": "0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A",
+        "$upgradeCount": 1,
         "batchCount": 168,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x90906eA9eb38B6afC104bB761F493b2a78c85024"],
@@ -423,6 +429,7 @@
       "values": {
         "$admin": "0xe8606A55d105EF857F187C32Ae0E9a168aF8F497",
         "$implementation": "0x31fAAAB44e74eB408d1FC69A14806B4b9cA09da2",
+        "$upgradeCount": 1,
         "allowListEnabled": false,
         "bridge": "0xa104C0426e95a5538e89131DbB4163d230C35f86",
         "getProxyAdmin": "0xe8606A55d105EF857F187C32Ae0E9a168aF8F497",

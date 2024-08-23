@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20389671,
   "configHash": "0x311143ae4848e97520f64a30bb9922830c881232fba2b4ba5205492f3e5e951e",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "ERC20Bridge",
@@ -20,6 +20,7 @@
       "values": {
         "$admin": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
         "$implementation": "0xd52c09E67aF3BE0977B52b4817366e9BaB5dCFA2",
+        "$upgradeCount": 2,
         "messageService": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
         "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
         "paused": false,
@@ -88,6 +89,7 @@
       "values": {
         "$admin": "0x41fAD3Df1B07B647D120D055259E474fE8046eb5",
         "$implementation": "0x0eC393209674090368C592A591B25811e490BF36",
+        "$upgradeCount": 2,
         "balance": 40788560818546,
         "messageService": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
         "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
@@ -173,6 +175,7 @@
       "values": {
         "$admin": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
         "$implementation": "0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562",
+        "$upgradeCount": 7,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",

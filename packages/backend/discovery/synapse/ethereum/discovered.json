@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19876012,
   "configHash": "0xc5323f647a9ea9322c162facb56fb967aeeda5e72064249d3a787e7cde4d646a",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "SynapseBridge",
@@ -20,6 +20,7 @@
       "values": {
         "$admin": "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2",
         "$implementation": "0x31fe393815822edacBd81C2262467402199EFD0D",
+        "$upgradeCount": 11,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20491472,
   "configHash": "0xb7055c80cbad157609938410529e9cd3df380055c0f402a834c492918f2cba62",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "BridgeAdminMultiSig",
@@ -47,6 +47,7 @@
         "_HALT_AGGREGATION_TIMEOUT": 604800,
         "$admin": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3",
         "$implementation": "0x668965757127549f8755D2eEd10494B06420213b",
+        "$upgradeCount": 1,
         "admin": "0x0110B1B231aA3b96a94c900eb3056297526AB725",
         "bridgeAddress": "0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
         "chainID": 42766,
@@ -122,6 +123,7 @@
       "values": {
         "$admin": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3",
         "$implementation": "0xC4CD3D0b31904969a397A98AcE8bDF2A94ba8615",
+        "$upgradeCount": 1,
         "bridgeAddress": "0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
         "rollupAddress": "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"
       },
@@ -177,6 +179,7 @@
       "values": {
         "$admin": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3",
         "$implementation": "0x63150fA72c1c9fF8Fe4438f8355927D3415b0FDc",
+        "$upgradeCount": 1,
         "committeeHash": "0xba409e01b8959e09c11202ce45dd3e4ac8aa7e21440e86c1e9dc924369151fca",
         "getAmountOfMembers": 5,
         "members": [
@@ -224,6 +227,7 @@
       "values": {
         "$admin": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3",
         "$implementation": "0xEb80283EBc508CF6AaC5E054118954a2BD7fA006",
+        "$upgradeCount": 1,
         "admin": "0xcd14BE1959928BB8c160D11817E2BE2129e2F25F",
         "bridgeFee": 2500000000000000,
         "feeAddress": "0xfED4D68744115A50ed22a6DA32DBA42eCaB5CF8D",

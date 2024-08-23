@@ -3,7 +3,7 @@
   "chain": "base",
   "blockNumber": 16561766,
   "configHash": "0x70ed7eed88e27304ac55e4b99893ad867e55a5cd4973f10754619dd8d3bf116f",
-  "version": 12,
+  "version": 13,
   "contracts": [
     {
       "name": "Inbox",
@@ -20,6 +20,7 @@
       "values": {
         "$admin": "0xFB48D385Fa3da33762B350e1d705b9E46054E677",
         "$implementation": "0xcA00Db0289131B71A6624f62666bd54305697BB2",
+        "$upgradeCount": 1,
         "allowListEnabled": false,
         "bridge": "0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C",
         "getProxyAdmin": "0xFB48D385Fa3da33762B350e1d705b9E46054E677",
@@ -74,6 +75,7 @@
       "values": {
         "$admin": "0xFB48D385Fa3da33762B350e1d705b9E46054E677",
         "$implementation": "0x98DB769A9E15D66EA04665da0dF616596c296BA8",
+        "$upgradeCount": 2,
         "batchCount": 31433,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xa3582189403F67a9CDB1CE0Ac066c954FFd3f205"],
@@ -129,6 +131,7 @@
       "values": {
         "$admin": "0xFB48D385Fa3da33762B350e1d705b9E46054E677",
         "$implementation": "0x377A5b786E94cAcdcB2B309451C373c8F2166A79",
+        "$upgradeCount": 2,
         "bridge": "0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C",
         "osp": "0xC17A41629Cd100c74B1Bed7b49D2E0517EfDeaeb",
         "resultReceiver": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
@@ -158,6 +161,7 @@
       "values": {
         "$admin": "0xFB48D385Fa3da33762B350e1d705b9E46054E677",
         "$implementation": "0x4326B3755539d35b0A8846bF9b33982A8eA42c93",
+        "$upgradeCount": 1,
         "bridge": "0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C",
         "rollup": "0xD34F3a11F10DB069173b32d84F02eDA578709143"
       }
@@ -211,6 +215,7 @@
       "values": {
         "$admin": "0xFB48D385Fa3da33762B350e1d705b9E46054E677",
         "$implementation": "0x3C4DF76De31816443C207E49F9fE48737C8F2746",
+        "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -361,6 +366,7 @@
       "values": {
         "$admin": "0xFB48D385Fa3da33762B350e1d705b9E46054E677",
         "$implementation": "0x20fA6358f89Ed16d48F6588a8f500887354Ff56c",
+        "$upgradeCount": 1,
         "bridge": "0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C",
         "l2ToL1BatchNum": 0,
         "l2ToL1Block": 0,
@@ -394,6 +400,7 @@
       "values": {
         "$admin": "0xFB48D385Fa3da33762B350e1d705b9E46054E677",
         "$implementation": "0xc00336Cdf86AE7AD58D8773B0114082C190D28D5",
+        "$upgradeCount": 1,
         "activeOutbox": "0x0000000000000000000000000000000000000000",
         "allowedDelayedInboxList": [
           "0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7",

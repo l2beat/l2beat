@@ -3,7 +3,7 @@
   "chain": "arbitrum",
   "blockNumber": 237006565,
   "configHash": "0x3969a51ee4560bb977a179bd6a5b4f810748bd02772b21381d3be4a481c19e81",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "L2ERC20Gateway",
@@ -21,6 +21,7 @@
       "values": {
         "$admin": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86",
         "$implementation": "0x1DCf7D03574fbC7C205F41f2e116eE094a652e93",
+        "$upgradeCount": 4,
         "beaconProxyFactory": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
@@ -69,6 +70,7 @@
       "values": {
         "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
         "$implementation": "0x41740588b86B4e0629b83A4e28786FF94361c3A3",
+        "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -194,6 +196,7 @@
       "values": {
         "$admin": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86",
         "$implementation": "0xe80eb0238029333e368e0bDDB7acDf1b9cb28278",
+        "$upgradeCount": 3,
         "counterpartGateway": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
         "defaultGateway": "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
         "router": "0x0000000000000000000000000000000000000000"
@@ -215,6 +218,7 @@
       "values": {
         "$admin": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86",
         "$implementation": "0x806421D09cDb253aa9d128a658e60c0B95eFFA01",
+        "$upgradeCount": 5,
         "counterpartGateway": "0xd92023E9d9911199a6711321D1277285e6d4e2db",
         "l1Weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "l2Weth": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
@@ -268,6 +272,7 @@
       "values": {
         "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
         "$implementation": "0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9",
+        "$upgradeCount": 1,
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "EXCLUDE_ADDRESS": "0x00000000000000000000000000000000000A4B86",
@@ -302,6 +307,7 @@
       "values": {
         "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
         "$implementation": "0xC4ed0A9Ea70d5bCC69f748547650d32cC219D882",
+        "$upgradeCount": 1,
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x81e28e6f37e32d4756bbeaf3c057b82178ac53398af819adfc680fad31b2ecd5",
         "l1Address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
@@ -391,6 +397,7 @@
       "values": {
         "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
         "$implementation": "0x41740588b86B4e0629b83A4e28786FF94361c3A3",
+        "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -438,6 +445,7 @@
       "values": {
         "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
         "$implementation": "0x5D96786d3Eb13CAd05c9Fd7d0f7bb9560b4E5056",
+        "$upgradeCount": 1,
         "counterpartGateway": "0xbbcE8aA77782F13D4202a230d978F361B011dB27",
         "exitNum": 1720,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
@@ -459,6 +467,7 @@
       "values": {
         "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
         "$implementation": "0x7A013834D54e9B22d1978aAe3aaDDC909Aa79115",
+        "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -497,6 +506,7 @@
       "values": {
         "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
         "$implementation": "0x468dA0eE5570Bdb1Dd81bFd925BAf028A93Dce64",
+        "$upgradeCount": 1,
         "COHORT_REPLACER_ROLE": "0x1b3e51262cf8f48cf0dc9fdd7d86c0378cf467608e72e72cd4da66efe423f195",
         "cohortSize": 6,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -675,6 +685,7 @@
       "values": {
         "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
         "$implementation": "0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9",
+        "$upgradeCount": 1,
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "EXCLUDE_ADDRESS": "0x00000000000000000000000000000000000A4B86",
