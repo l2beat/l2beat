@@ -3,7 +3,7 @@ export type ProjectSectionId =
   | 'activity'
   | 'onchain-costs'
   | 'detailed-description'
-  | 'milestones'
+  | 'milestones-and-incidents'
   | 'knowledge-nuggets'
   | 'risk-summary'
   | 'risk-analysis'

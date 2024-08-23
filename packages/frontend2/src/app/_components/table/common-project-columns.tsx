@@ -17,7 +17,7 @@ export function getCommonProjectColumns<T extends BaseProject>(
       meta: {
         headClassName: 'w-0',
       },
-      size: 44.55,
+      size: 44,
     }),
     columnHelper.display({
       id: 'logo',

@@ -24,7 +24,7 @@ export function BridgesTvlChart() {
   )
   const [timeRange, setTimeRange] = useCookieState('bridgesSummaryChartRange')
 
-  const { data } = api.bridges.summary.chart.useQuery({
+  const { data, isLoading } = api.bridges.summary.chart.useQuery({
     range: timeRange,
   })
 
@@ -43,6 +43,7 @@ export function BridgesTvlChart() {
       valuesStyle={valuesStyle}
       formatYAxisLabel={formatYAxisLabel}
       range={chartRange}
+      isLoading={isLoading}
       useLogScale={scale === 'log'}
       renderHoverContents={(data) => <TvlChartHover data={data} />}
     >

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19719123,
   "configHash": "0x0dd5bab61ec77857fe1c60af951691b7e98a6e3c42494d257ff554f15a42c5e8",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "ProxyAdminOwner",
@@ -47,6 +47,7 @@
       "values": {
         "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
         "$implementation": "0xE8d18a64e5bD3C3e96e7c163Dc67FF97296b6304",
+        "$upgradeCount": 8,
         "contractManagerOfSkaleManager": "0xC04A10Fd5e6513242558f47331568aBD6185a310",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DEPOSIT_BOX_MANAGER_ROLE": "0xadc0611617a946881d948c7506bdf0975adbe0cfb172896a62eb6a75f21f2ff9",
@@ -71,6 +72,7 @@
       "values": {
         "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
         "$implementation": "0x2f90BeD90fa0Cc605B86b8623612a2638EB4019a",
+        "$upgradeCount": 8,
         "contractManagerOfSkaleManager": "0xC04A10Fd5e6513242558f47331568aBD6185a310",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DEPOSIT_BOX_MANAGER_ROLE": "0xadc0611617a946881d948c7506bdf0975adbe0cfb172896a62eb6a75f21f2ff9",
@@ -100,6 +102,7 @@
       "values": {
         "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
         "$implementation": "0xffC647d4Cef8FB8b365e6B11a0156972e9343f6A",
+        "$upgradeCount": 7,
         "CONSTANT_SETTER_ROLE": "0x96e3fc3be15159903e053027cff8a23f39a990e0194abcd8ac1cf1b355b8b93c",
         "contractManagerOfSkaleManager": "0xC04A10Fd5e6513242558f47331568aBD6185a310",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -126,6 +129,7 @@
       "values": {
         "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
         "$implementation": "0x676FAFCE73F5a304988C519407AAc06bD117CdD0",
+        "$upgradeCount": 6,
         "contractManagerOfSkaleManager": "0xC04A10Fd5e6513242558f47331568aBD6185a310",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "LINKER_ROLE": "0x733bac3dca102687aa08c854c5f9067fc424f98fd8e90e41ad6b73aecc59a4fd",
@@ -148,6 +152,7 @@
       "values": {
         "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
         "$implementation": "0xAD64712a9F3F7Ca4e7064381135082AAA68F56d5",
+        "$upgradeCount": 8,
         "contractManagerOfSkaleManager": "0xC04A10Fd5e6513242558f47331568aBD6185a310",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DEPOSIT_BOX_MANAGER_ROLE": "0xadc0611617a946881d948c7506bdf0975adbe0cfb172896a62eb6a75f21f2ff9",
@@ -180,6 +185,7 @@
       "values": {
         "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
         "$implementation": "0x64e4cd4Fe42eAB98AcD15fddaC657B1537aa5190",
+        "$upgradeCount": 9,
         "CHAIN_CONNECTOR_ROLE": "0x2785f35fe7d8743aa971942d8474737bb31895d396eff2cc688a481e0221e191",
         "communityPool": "0x588801cA36558310D91234aFC2511502282b1621",
         "CONSTANT_SETTER_ROLE": "0x96e3fc3be15159903e053027cff8a23f39a990e0194abcd8ac1cf1b355b8b93c",
@@ -213,6 +219,7 @@
       "values": {
         "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
         "$implementation": "0xc616EaF17c5e3349c1Fa493459494BB4DD0FD788",
+        "$upgradeCount": 9,
         "ARBITER_ROLE": "0xbb08418a67729a078f87bbc8d02a770929bb68f5bfdf134ae2ead6ed38e2f4ae",
         "contractManagerOfSkaleManager": "0xC04A10Fd5e6513242558f47331568aBD6185a310",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -238,6 +245,7 @@
       "values": {
         "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
         "$implementation": "0xF99F446340483C5d9D63697a60232ECb9274E1e7",
+        "$upgradeCount": 4,
         "contractManagerOfSkaleManager": "0xe8c7E5C70B8a8c9C3896e59062EA3A879270AB4A",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DEPOSIT_BOX_MANAGER_ROLE": "0xadc0611617a946881d948c7506bdf0975adbe0cfb172896a62eb6a75f21f2ff9",

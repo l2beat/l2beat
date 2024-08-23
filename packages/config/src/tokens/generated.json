@@ -359,7 +359,8 @@
       "iconUrl": "https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg?1721358242",
       "chainId": 1,
       "source": "canonical",
-      "supply": "zero"
+      "supply": "zero",
+      "excludeFromTotal": true
     },
     {
       "id": "arpa-arpa-token",

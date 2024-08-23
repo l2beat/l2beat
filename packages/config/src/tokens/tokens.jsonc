@@ -80,7 +80,8 @@
     },
     {
       "symbol": "ARB",
-      "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1"
+      "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
+      "excludeFromTotal": true
     },
     {
       "symbol": "EKUBO",

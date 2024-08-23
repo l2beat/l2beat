@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825372,
   "configHash": "0xec73bf7b47e1c44e88f45136b1cdd18abc4541fb1f612fcbcab34490c60deff7",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "Committee",

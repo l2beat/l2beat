@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20218838,
   "configHash": "0xcf8eb56d57080d480c766eda217b523305fd0fa54653550aace47ce9679209ad",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "FunctionVerifier",
@@ -78,6 +78,7 @@
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x41a87C543EBcbD93706CF5260AD057D9eCBA1caE",
+        "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",

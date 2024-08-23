@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20389275,
   "configHash": "0x926c1d4f92efc3c362c193fa5a34b633e505eab448e99c54080049146daa7591",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "Arbitrator",
@@ -20,6 +20,7 @@
       "values": {
         "$admin": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
         "$implementation": "0x7a0Bb4805EcB7fD3C8DAbbE4AFa0E91cB1761E34",
+        "$upgradeCount": 3,
         "owner": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
         "primaryChainGateway": "0x803460416C2682Ac54FccF03eF77b10A12f2809b",
         "primaryChainMessageHashQueue": { "_begin": 80, "_end": 80 }
@@ -42,6 +43,7 @@
       "values": {
         "$admin": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
         "$implementation": "0xF69302b6fF21116F9266bFA2fbE4ee23f6292875",
+        "$upgradeCount": 2,
         "ARBITRATOR": "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
         "getRemoteGateway": "0x7bd79DEd935B542fb22c74305a4d2A293C18483a",
         "INBOX": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
@@ -83,6 +85,7 @@
       "values": {
         "$admin": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
         "$implementation": "0x01334Df58feE28db184ae9D11467F38F7437FD80",
+        "$upgradeCount": 2,
         "ARBITRATOR": "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
         "getRemoteGateway": "0x3f64e2e09732969813904a8473074CFADeE66AF1",
         "MESSAGE_SERVICE": "0x5D4472f31Bd9385709ec61305AFc749F0fA8e9d0",
@@ -106,6 +109,7 @@
       "values": {
         "$admin": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
         "$implementation": "0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518",
+        "$upgradeCount": 1,
         "ARBITRATOR": "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
         "getRemoteGateway": "0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011",
         "MESSAGE_SERVICE": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
@@ -137,6 +141,7 @@
       "values": {
         "$admin": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
         "$implementation": "0xeaC8E6c1acBabC7135Fc8357FF2D718a36177Ab7",
+        "$upgradeCount": 3,
         "feeParams": {
           "pubdataPricingMode": 0,
           "batchOverheadL1Gas": 1000000,
@@ -181,6 +186,7 @@
       "values": {
         "$admin": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
         "$implementation": "0x6d6Ce5A491cC2BE2f56AA02aa68AaE8acE927962",
+        "$upgradeCount": 2,
         "ARBITRATOR": "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
         "getRemoteGateway": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
         "MESSAGE_SERVICE": "0x635ba609680c55C3bDd0B3627b4c5dB21b13c310",
@@ -204,6 +210,7 @@
       "values": {
         "$admin": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
         "$implementation": "0x2e8AD1434663b209EE59eF1a6612114239F4a190",
+        "$upgradeCount": 1,
         "ARBITRATOR": "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
         "getRemoteGateway": "0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c",
         "MESSAGE_SERVICE": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
@@ -227,6 +234,7 @@
       "values": {
         "$admin": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
         "$implementation": "0xD2ED3FA35be899fe850075946Fc7320bB4c18C29",
+        "$upgradeCount": 2,
         "ARBITRATOR": "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
         "getRemoteGateway": "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB",
         "MESSAGE_SERVICE": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
@@ -250,6 +258,7 @@
       "values": {
         "$admin": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
         "$implementation": "0x65c7B3E1B877131986247B49474834b0347eF332",
+        "$upgradeCount": 3,
         "ARBITRATOR": "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
         "getRemoteGateway": "0x83Bc7394738A7A084081aF22EEC0051908c0055c",
         "owner": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
@@ -273,6 +282,7 @@
       "values": {
         "$admin": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
         "$implementation": "0xdB97dBF9c0A20aA8B4787563B6bE04e83E7ECDFB",
+        "$upgradeCount": 1,
         "ARBITRATOR": "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
         "getRemoteGateway": "0xd8428A59B60Df2d81514D429D57DF23293f1bCe7",
         "MESSAGE_SERVICE": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
@@ -295,6 +305,7 @@
       "values": {
         "$admin": "0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2",
         "$implementation": "0x3203E813930bD710043c1d899fE38dD359307352",
+        "$upgradeCount": 2,
         "l2Bridge": "0x36CaABbAbfB9C09B722d9C3697C3Cb4A93650ea7",
         "l2TokenBeacon": "0x3b9dCbfD8Dab466A700B4d247e30D56C37d8D08d",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
@@ -399,6 +410,7 @@
       "values": {
         "$admin": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
         "$implementation": "0xe98EDDAd1f49abc7586eE516d019D834FBDc2951",
+        "$upgradeCount": 2,
         "ARBITRATOR": "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
         "getRemoteGateway": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
         "MESSAGE_SERVICE": "0x676A795fe6E43C17c668de16730c3F690FEB7120",
@@ -422,6 +434,7 @@
       "values": {
         "$admin": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
         "$implementation": "0x59Ad3580c9e0992D474954327f5879AF5B3e4a22",
+        "$upgradeCount": 4,
         "ARBITRATOR": "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
         "getRemoteGateway": "0xC203a2DF4DDFF9eDE2200F1F02054fD721182535",
         "MESSAGE_SERVICE": "0x32400084C286CF3E17e7B677ea9583e60a000324",

@@ -1,6 +1,7 @@
-import { ProxyDetails } from '@l2beat/discovery-types'
+import { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 
+import { utils } from 'ethers'
 import { IProvider } from '../../provider/IProvider'
 
 // keccak256('eip1967.proxy.implementation') - 1)
@@ -39,6 +40,20 @@ export async function getOwner(
   return result ?? EthereumAddress.ZERO
 }
 
+export async function getUpgradeCount(
+  provider: IProvider,
+  address: EthereumAddress,
+): Promise<ContractValue> {
+  const abi = new utils.Interface([
+    'event Upgraded(address indexed implementation)',
+  ])
+  const logs = await provider.getLogs(address, [
+    [abi.getEventTopic('Upgraded')],
+  ])
+
+  return logs.length
+}
+
 export async function detectEip1967Proxy(
   provider: IProvider,
   address: EthereumAddress,
@@ -57,6 +72,7 @@ export async function detectEip1967Proxy(
     values: {
       $admin: admin,
       $implementation: implementation,
+      $upgradeCount: await getUpgradeCount(provider, address),
     },
   }
 }
