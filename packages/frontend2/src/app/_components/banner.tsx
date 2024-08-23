@@ -1,9 +1,30 @@
-import ArrowRight from '../../icons/arrow-right.svg'
+'use client'
+import { useLocalStorage } from '~/hooks/use-local-storage'
+import ArrowRightIcon from '../../icons/arrow-right.svg'
+import CloseIcon from '../../icons/close.svg'
 import { OutLink } from './out-link'
 
+const localStorageTag = 'top-banner'
+const purpose = 'fraud-proof-wars'
+
 export function Banner() {
+  const [isHidden, setIsHidden] = useLocalStorage(
+    `${localStorageTag}-${purpose}-is-hidden`,
+    false,
+  )
+
+  if (isHidden) {
+    return null
+  }
+
   return (
     <div className="flex w-full flex-col items-center justify-center gap-1 bg-gradient-to-r from-[#7F39B6] to-[#CD1BD3] py-1.5 text-white md:flex-row md:gap-3 dark:text-white">
+      <div className="absolute right-3">
+        <CloseIcon
+          onClick={() => setIsHidden(true)}
+          className="size-[12px] cursor-pointer fill-white transition-colors duration-200 hover:fill-white/90 md:size-[16px]"
+        />
+      </div>
       <div className="flex gap-1 text-sm">
         <span>New release:</span>
         <span className="font-medium">Fraud-proof wars</span>
@@ -23,7 +44,7 @@ function BannerActionButton() {
     >
       <div className="flex items-center justify-center gap-1 rounded-lg border border-[#9360BC] bg-[#53227A] px-5 py-1 transition-colors duration-200 hover:bg-[#53227A]/80">
         <span className="text-xs font-medium">Give it a read</span>
-        <ArrowRight fill="white" width={12} height={12} />
+        <ArrowRightIcon fill="white" width={12} height={12} />
       </div>
     </OutLink>
   )
