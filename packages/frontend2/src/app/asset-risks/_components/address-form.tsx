@@ -32,12 +32,7 @@ export function AddressForm() {
   }
 
   return (
-    <div className="flex w-full flex-col gap-2">
-      <div className="flex w-full flex-row items-center">
-        <div className="h-px flex-1 bg-gray-50" />
-        <div className="px-2 text-xs text-gray-50">OR</div>
-        <div className="h-px flex-1 bg-gray-50" />
-      </div>
+    <div className="flex w-full flex-col">
       <div className="relative">
         <input
           type="text"
