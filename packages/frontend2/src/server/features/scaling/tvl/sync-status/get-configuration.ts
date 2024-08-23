@@ -4,7 +4,6 @@ import { type MultiIndexerEntry, toIndexerId } from './to-indexer-entry'
 const MAX_CONFIGURATIONS_LENGTH_FOR_QUERY = 100
 
 export async function getConfigurations(
-  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   entries: (MultiIndexerEntry & { configId: string })[],
 ) {
   if (entries.length <= MAX_CONFIGURATIONS_LENGTH_FOR_QUERY) {
