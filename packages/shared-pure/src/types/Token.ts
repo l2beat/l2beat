@@ -18,6 +18,7 @@ export interface Token {
   chainId: ChainId
   source: 'canonical' | 'external' | 'native'
   supply: 'totalSupply' | 'circulatingSupply' | 'zero'
+  excludeFromTotal?: true
   bridgedUsing?: {
     bridge: string
     slug?: string

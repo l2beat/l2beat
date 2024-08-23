@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20475186,
   "configHash": "0x24d40701ac57a1ca7d34bbfc1580f7dd67c0366e4e570f9fa3f302e7ad9b48be",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "MainchainBridgeManager",
@@ -27,6 +27,7 @@
       "values": {
         "$admin": "0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e",
         "$implementation": "0x0ac26945032143f6196d4bb5Ae03592BfAf822FD",
+        "$upgradeCount": 3,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -167,6 +168,7 @@
         "_MAX_PERCENTAGE": 1000000,
         "$admin": "0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB",
         "$implementation": "0xfc274EC92bBb1A1472884558d1B5CaaC6F8220Ee",
+        "$upgradeCount": 5,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",

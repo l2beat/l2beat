@@ -1,3 +1,93 @@
+Generated with discovered.json: 0xe9be18e14677ae9bcdff86d79534c490f09bb6bf
+
+# Diff at Fri, 23 Aug 2024 09:57:11 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 225981159
+- current block number: 225981159
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 225981159 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract Inbox (0x235000876bd58336C802B3546Fc0250f285fCc79) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract L1OrbitERC20Gateway (0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract ChallengeManager (0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x92ff91308F5f1036435f23c2F4F136Bb7475425d) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract ERC20RollupEventInbox (0x9676D55Ccd46ce72235b16bA645008D1D3350B14) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract L1OrbitGatewayRouter (0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract Outbox (0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract Bridge (0xE1d32C985825562edAa906fAC39295370Db72195) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
 Generated with discovered.json: 0xb39bef3c35391edda9446e65d14c1a5acebc4ab3
 
 # Diff at Wed, 21 Aug 2024 13:25:09 GMT:

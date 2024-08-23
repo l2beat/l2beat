@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20568363,
   "configHash": "0x0ad84142dd4e79a6db01ea065ec0f792ac66011581e37506bc2a8a80aa13a63f",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "ZKsync",
@@ -182,6 +182,7 @@
       "values": {
         "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "$implementation": "0x9a810469F4a451Ebb7ef53672142053b4971587c",
+        "$upgradeCount": 1,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DEPOSITS_DISABLER_ROLE": "0x63f736f21cb2943826cd50b191eb054ebbea670e4e962d0527611f830cd399d6",
         "DEPOSITS_ENABLER_ROLE": "0x4b43b36766bde12c5e9cbbc37d15f8d1f769f08f54720ab370faeb4ce893753a",
@@ -208,6 +209,7 @@
       "values": {
         "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
         "$implementation": "0x8191975d8B0851C7f0740918896Cf298c09aA05E",
+        "$upgradeCount": 8,
         "l2Bridge": "0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102",
         "l2TokenBeacon": "0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6",
         "l2TokenProxyBytecodeHash": "0x01000121a363b3fbec270986067c1b553bf540c30a6f186f45313133ff1a1019",

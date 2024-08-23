@@ -29,7 +29,7 @@ const daResolveWindow = formatSeconds(
 export const cyber: Layer2 = opStackL2({
   associatedTokens: ['CYBER'],
   discovery,
-  badges: [Badge.DA.CustomDA],
+  badges: [Badge.DA.CustomDA, Badge.Infra.Superchain],
   display: {
     name: 'Cyber',
     slug: 'cyber',

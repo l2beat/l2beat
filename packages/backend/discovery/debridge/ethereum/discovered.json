@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19531527,
   "configHash": "0xda2ff96fd6b62e3e863cfa2a09f32c1024251fbb46b4a150e1db5ed44869d008",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "DeBridgeGate",
@@ -21,6 +21,7 @@
       "values": {
         "$admin": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
         "$implementation": "0x797161BCC625155D2302251404ccB93c2632658e",
+        "$upgradeCount": 6,
         "BPS_DENOMINATOR": 10000,
         "callProxy": "0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824",
         "deBridgeTokenDeployer": "0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
@@ -91,6 +92,7 @@
       "values": {
         "$admin": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
         "$implementation": "0x4c7CA8fcFFE77281A8B81D4580CFf8257d785491",
+        "$upgradeCount": 1,
         "debridgeAddress": "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
         "deBridgeTokenAdmin": "0x6bec1faF33183e1Bc316984202eCc09d46AC92D5",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -114,6 +116,7 @@
       "values": {
         "$admin": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
         "$implementation": "0xBd3d657AE87671eC6f8D6272A9f431a7c4a9B6f8",
+        "$upgradeCount": 6,
         "DEBRIDGE_GATE_ROLE": "0xd5a6101e940ba33e226d2395b16238ab3063d7ee83d7b3ff59cb92988b395437",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "submissionChainIdFrom": 0,
@@ -137,6 +140,7 @@
       "values": {
         "$admin": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
         "$implementation": "0xfE7De3c1e1BD252C67667B56347cABFC6df08dF4",
+        "$upgradeCount": 2,
         "confirmationThreshold": 3,
         "currentBlock": 19531339,
         "debridgeAddress": "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
@@ -202,6 +206,7 @@
       "values": {
         "$admin": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
         "$implementation": "0x37a52ddb753c924f8C914de65ef00b5210Caa83C",
+        "$upgradeCount": 2,
         "debridgeGate": "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getChainId": 1,

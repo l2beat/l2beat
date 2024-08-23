@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x2c06eeec5c27656ca558d100c206b541febcb129
+
+# Diff at Fri, 23 Aug 2024 09:56:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 20325087
+- current block number: 20325087
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20325087 (main branch discovery), not current.
+
+```diff
+    contract XLayerValidiumDAC (0x05652Ec92366F3C2255991a265c499E01Ba58e6a) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract XLayerValidium (0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
 Generated with discovered.json: 0x1b167fa7de69394f47c613b41710d3732c805fe1
 
 # Diff at Wed, 21 Aug 2024 10:06:35 GMT:

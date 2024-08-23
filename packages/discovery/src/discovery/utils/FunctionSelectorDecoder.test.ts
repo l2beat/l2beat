@@ -82,6 +82,7 @@ describe(FunctionSelectorDecoder.name, () => {
           .returnsOnce(implementation)
           .returns(EthereumAddress.ZERO),
         callMethod: mockFn().executes(callMethodStub),
+        getLogs: mockFn().returns([]),
         getSource: mockFn().resolvesTo({
           name: 'name',
           isVerified: true,
@@ -138,6 +139,7 @@ describe(FunctionSelectorDecoder.name, () => {
           .returnsOnce(implementation2)
           .resolvesTo(EthereumAddress.ZERO),
         callMethod: mockFn().executes(callMethodStub),
+        getLogs: mockFn().returns([]),
         getSource: mockFn().resolvesTo({
           name: 'name',
           isVerified: true,
@@ -206,6 +208,7 @@ describe(FunctionSelectorDecoder.name, () => {
           .given(target2, EIP2535_METHOD, [])
           .resolvesToOnce([implementation2, implementation3])
           .executes(callMethodStub),
+        getLogs: mockFn().returns([]),
         getSource: mockFn().resolvesTo({
           name: 'name',
           isVerified: true,
@@ -338,6 +341,7 @@ describe(FunctionSelectorDecoder.name, () => {
           .given(target2, EIP2535_METHOD, [])
           .resolvesToOnce([implementation2, implementation3])
           .executes(callMethodStub),
+        getLogs: mockFn().returns([]),
         getSource: mockFn()
           .given(target1)
           .resolvesToOnce({

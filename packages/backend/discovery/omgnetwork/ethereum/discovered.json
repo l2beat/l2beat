@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 16154924,
   "configHash": "0x1ec97603db98dffdb993ea79f846aa206fad37e514741e0ee5d3f1d9bbfae717",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "Erc20Vault",

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20240876,
   "configHash": "0x9d96b20a841797ca5d2e377b9c244b1781d5c5b56faf0686676a0c3d77c5503a",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "FPValidator",
@@ -63,7 +63,8 @@
       "sinceTimestamp": 1669425971,
       "values": {
         "$admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
-        "$implementation": "0x154c7B3Eee18ABCFaede98fae00e58e7737d96dE"
+        "$implementation": "0x154c7B3Eee18ABCFaede98fae00e58e7737d96dE",
+        "$upgradeCount": 0
       }
     },
     {
@@ -1486,7 +1487,8 @@
       "sinceTimestamp": 1661536020,
       "values": {
         "$admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
-        "$implementation": "0x3eEA8d627ab6983fFFc7027ee623Fd7699343fc1"
+        "$implementation": "0x3eEA8d627ab6983fFFc7027ee623Fd7699343fc1",
+        "$upgradeCount": 2
       },
       "derivedName": ""
     },
@@ -1543,7 +1545,8 @@
       "sinceTimestamp": 1669420643,
       "values": {
         "$admin": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
-        "$implementation": "0x61Ab01Ce58D1dFf3562bb25870020d555e39D849"
+        "$implementation": "0x61Ab01Ce58D1dFf3562bb25870020d555e39D849",
+        "$upgradeCount": 0
       }
     },
     {
@@ -1561,7 +1564,8 @@
       "sinceTimestamp": 1661531835,
       "values": {
         "$admin": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
-        "$implementation": "0xB830a5AfCBEBb936c30C607a18BbbA9f5B0a592f"
+        "$implementation": "0xB830a5AfCBEBb936c30C607a18BbbA9f5B0a592f",
+        "$upgradeCount": 6
       },
       "derivedName": ""
     },

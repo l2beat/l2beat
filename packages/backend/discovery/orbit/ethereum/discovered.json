@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20362600,
   "configHash": "0x2eec4bf11f15af3314b396b1fca83a67a70e09cd7b429a0be66f522678b530db",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "",
@@ -20,7 +20,8 @@
       "sinceTimestamp": 1708655927,
       "values": {
         "$admin": "0xc045b35d1cf9501B2fc95e7c489FDA96345A4D70",
-        "$implementation": "0xb4D37E8f6e970344c1cc99F65D8D1Afd5F7590D9"
+        "$implementation": "0xb4D37E8f6e970344c1cc99F65D8D1Afd5F7590D9",
+        "$upgradeCount": 3
       }
     },
     {
@@ -92,6 +93,7 @@
       "values": {
         "$admin": "0xFb504CD4eD46024B83c4337044995CF112205f18",
         "$implementation": "0xdbF3C7e0a1493B81B295547ae3D0711417481A55",
+        "$upgradeCount": 0,
         "getAdmin": "0xFb504CD4eD46024B83c4337044995CF112205f18",
         "getImplementation": "0xdbF3C7e0a1493B81B295547ae3D0711417481A55"
       },
@@ -113,6 +115,7 @@
       "values": {
         "$admin": "0xFb504CD4eD46024B83c4337044995CF112205f18",
         "$implementation": "0xdbF3C7e0a1493B81B295547ae3D0711417481A55",
+        "$upgradeCount": 0,
         "getAdmin": "0xFb504CD4eD46024B83c4337044995CF112205f18",
         "getImplementation": "0xdbF3C7e0a1493B81B295547ae3D0711417481A55"
       },
@@ -134,6 +137,7 @@
       "values": {
         "$admin": "0xFb504CD4eD46024B83c4337044995CF112205f18",
         "$implementation": "0xdbF3C7e0a1493B81B295547ae3D0711417481A55",
+        "$upgradeCount": 0,
         "getAdmin": "0xFb504CD4eD46024B83c4337044995CF112205f18",
         "getImplementation": "0xdbF3C7e0a1493B81B295547ae3D0711417481A55"
       },
@@ -169,6 +173,7 @@
       "values": {
         "$admin": "0xFb504CD4eD46024B83c4337044995CF112205f18",
         "$implementation": "0xdbF3C7e0a1493B81B295547ae3D0711417481A55",
+        "$upgradeCount": 0,
         "getAdmin": "0xFb504CD4eD46024B83c4337044995CF112205f18",
         "getImplementation": "0xdbF3C7e0a1493B81B295547ae3D0711417481A55"
       },

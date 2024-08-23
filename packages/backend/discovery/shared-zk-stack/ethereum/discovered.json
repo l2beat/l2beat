@@ -1,9 +1,9 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 20577647,
+  "blockNumber": 20585030,
   "configHash": "0x897fdb6fb1f6c34118d11c2f55033666c8e47e8e3754543e6a1ed8ea5e286ced",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "Governance",
@@ -7703,10 +7703,18 @@
       "name": "BridgeHub",
       "address": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1717520639,
       "values": {
         "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
         "$implementation": "0x12f893689f9603991a8c22C249FFd0509Be95661",
+        "$upgradeCount": 1,
         "admin": "0x2cf3bD6a9056b39999F3883955E183F655345063",
         "chainsCreated": [
           {
@@ -7818,13 +7826,23 @@
     {
       "name": "ProxyAdmin",
       "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-          "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
-          "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1717520627,
       "values": {
         "$immutable": true,
@@ -7835,10 +7853,18 @@
       "name": "StateTransitionManager",
       "address": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1717520663,
       "values": {
         "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
         "$implementation": "0xed1Dc7F0Be2B19cb02a2476150C8ea24A37c5274",
+        "$upgradeCount": 2,
         "admin": "0x2cf3bD6a9056b39999F3883955E183F655345063",
         "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
         "genesisUpgrade": "0x3dDD7ED2AeC0758310A4C6596522FCAeD108DdA2",
@@ -7863,10 +7889,18 @@
       "name": "L1SharedBridge",
       "address": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1717521479,
       "values": {
         "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
         "$implementation": "0xCba1aF8f0bB223b2544F8eB8f69d1c7960f788dB",
+        "$upgradeCount": 1,
         "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
         "ERA_CHAIN_ID": 324,
         "ERA_DIAMOND_PROXY": "0x32400084C286CF3E17e7B677ea9583e60a000324",

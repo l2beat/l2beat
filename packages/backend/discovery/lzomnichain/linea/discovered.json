@@ -3,7 +3,7 @@
   "chain": "linea",
   "blockNumber": 6393468,
   "configHash": "0xabb838a05984fe6db9b4ec1b011a4bcaa5a8f259cfca75d63e191bcecaf86051",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "MPTValidator01",
@@ -922,7 +922,8 @@
       "sinceTimestamp": 1689351828,
       "values": {
         "$admin": "0xFe7C30860D01e28371D40434806F4A8fcDD3A098",
-        "$implementation": "0xC614E9C511a5149f1969F2CB0199d508bBB5b915"
+        "$implementation": "0xC614E9C511a5149f1969F2CB0199d508bBB5b915",
+        "$upgradeCount": 3
       }
     },
     {
