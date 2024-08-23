@@ -142,24 +142,28 @@ export const bobanetwork: Layer2 = opStackL2({
       link: 'https://forum.boba.network/t/upgrade-boba-network-to-the-anchorage-framework/442',
       description:
         'Boba upgrades to Bedrock (OP Stack) and to EIP-4844 data blobs for L1 data availability.',
+      type: 'general',
     },
     {
       name: 'Boba launches L2 on BNB',
       date: '2022-11-01T00:00:00Z',
       link: 'https://boba.network/education/multichain/bobabnb/',
       description: 'Boba launches on BnB.',
+      type: 'general',
     },
     {
       name: 'Boba launches L2 on Avalanche',
       date: '2022-09-21T00:00:00Z',
       link: 'https://boba.network/blog/an-avalanche-of-boba-is-coming/',
       description: 'Boba launches on Avalanche.',
+      type: 'general',
     },
     {
       name: 'Boba launches L2 on Moonbeam and Fantom',
       date: '2022-06-02T00:00:00Z',
       link: 'https://boba.network/education/boba-basics/multichain/',
       description: 'Boba launches on Moonbeam and Fantom.',
+      type: 'general',
     },
     {
       name: 'Call data compression',
@@ -167,6 +171,7 @@ export const bobanetwork: Layer2 = opStackL2({
       link: 'https://boba.network/blog/boba-call-data-compression/',
       description:
         'The Boba Tree From (v0.1.0) release introduces Brotli compression for call data.',
+      type: 'general',
     },
     {
       name: 'Hybrid Compute',
@@ -174,6 +179,7 @@ export const bobanetwork: Layer2 = opStackL2({
       link: 'https://boba.network/education/boba-basics/hybrid-compute/',
       description:
         'Boba’s proprietary technology enables dApps that trigger code executed on web-scale infrastructure.',
+      type: 'general',
     },
     {
       name: 'Mainnet launch',
@@ -181,12 +187,14 @@ export const bobanetwork: Layer2 = opStackL2({
       link: 'https://www.enya.ai/press/public-mainnet',
       description:
         'Layer 2 Optimistic Rollup based on the Optimism codebase is live on Ethereum.',
+      type: 'general',
     },
     {
       name: 'BOBA Token launched',
       date: '2021-11-18T00:00:00Z',
       link: 'https://boba.network/Boba-airdrop-live/',
       description: 'BOBA token launched by OMG Foundation.',
+      type: 'general',
     },
   ],
   chainConfig: {

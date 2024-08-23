@@ -44,6 +44,7 @@ export const hypr: Layer2 = opStackL2({
       link: 'https://x.com/hypr_network/status/1750251802451378528',
       date: '2024-01-24T00:00:00Z',
       description: 'Hypr launches on mainnet.',
+      type: 'general',
     },
   ],
   // rpcUrl: 'https://rpc.hypr.network',

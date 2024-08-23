@@ -554,12 +554,14 @@ export const kroma: Layer2 = {
       date: '2024-04-25T00:00:00.00Z',
       description:
         'Introduces EIP-4844 data blobs for L1 data availability and more L2 opcodes.',
+      type: 'general',
     },
     {
       name: 'Kroma Mainnet Launch',
       link: 'https://twitter.com/kroma_network/status/1699267271968055305?s=20',
       date: '2023-09-06T00:00:00Z',
       description: 'Kroma is live on mainnet.',
+      type: 'general',
     },
   ],
   knowledgeNuggets: [

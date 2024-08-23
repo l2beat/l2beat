@@ -341,12 +341,14 @@ export const metis: Layer2 = {
       date: '2021-11-19T00:00:00Z',
       description:
         'Public launch of Metis Layer 2 Andromeda, based on the Optimism codebase.',
+      type: 'general',
     },
     {
       name: 'Data availability change',
       link: 'https://metisdao.medium.com/decentralized-storage-goes-live-da876dc6eb70',
       date: '2022-04-12T00:00:00Z',
       description: 'Update moving data to an off-chain committee.',
+      type: 'general',
     },
     {
       name: 'Data hashes posted to EOA',
@@ -354,6 +356,7 @@ export const metis: Layer2 = {
       date: '2023-03-15T00:00:00Z',
       description:
         'Hashes to data blobs are now posted to EOA address instead of CanonicalTransactionChain contract.',
+      type: 'general',
     },
   ],
 }

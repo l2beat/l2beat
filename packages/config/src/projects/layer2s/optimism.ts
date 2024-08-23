@@ -689,30 +689,35 @@ export const optimism: Layer2 = {
       date: '2024-06-10T00:00:00Z',
       description:
         'OP Mainnet introduces fraud proofs and updates permissions.',
+      type: 'general',
     },
     {
       name: 'OP Mainnet starts using blobs',
       link: 'https://twitter.com/Optimism/status/1768235284494450922',
       date: '2024-03-14T00:00:00Z',
       description: 'OP Mainnet starts publishing data to blobs.',
+      type: 'general',
     },
     {
       name: 'Network Upgrade #5: Ecotone',
       link: 'https://vote.optimism.io/proposals/95119698597711750186734377984697814101707190887694311194110013874163880701970',
       date: '2024-03-14T00:00:00Z',
       description: 'Optimism adopts EIP-4844.',
+      type: 'general',
     },
     {
       name: 'Fault Proof System is live on OP Goerli',
       link: 'https://blog.oplabs.co/op-stack-fault-proof-alpha/',
       date: '2023-10-03T00:00:00Z',
       description: 'Fraud Proof system is live on Goerli.',
+      type: 'general',
     },
     {
       name: 'Mainnet migration to Bedrock',
       link: 'https://oplabs.notion.site/Bedrock-Mission-Control-EXTERNAL-fca344b1f799447cb1bcf3aae62157c5',
       date: '2023-06-06T00:00:00Z',
       description: 'OP Mainnet, since Jun 2023 is running Bedrock.',
+      type: 'general',
     },
     {
       name: 'OP Stack Introduced',
@@ -720,6 +725,7 @@ export const optimism: Layer2 = {
       date: '2022-10-17T00:00:00Z',
       description:
         'OP Stack, modular, open-sourced blueprint on how to build scalable blockchains.',
+      type: 'general',
     },
     {
       ...MILESTONES.MAINNET_OPEN,
@@ -727,12 +733,14 @@ export const optimism: Layer2 = {
       date: '2021-12-16T00:00:00Z',
       description:
         'Whitelist got removed, there are no restrictions on who can transact with the network.',
+      type: 'general',
     },
     {
       name: 'OP token airdrop',
       link: 'https://optimism.mirror.xyz/qvd0WfuLKnePm1Gxb9dpGchPf5uDz5NSMEFdgirDS4c',
       date: '2022-05-31T00:00:00Z',
       description: 'The first round of OP token airdrop.',
+      type: 'general',
     },
     {
       name: 'OVM 2.0 is live',
@@ -740,6 +748,7 @@ export const optimism: Layer2 = {
       date: '2021-11-12T00:00:00Z',
       description:
         'Network upgrade to OVM 2.0 and removal of fraud-proof system.',
+      type: 'general',
     },
     {
       name: 'Mainnet Soft Launch',
@@ -747,12 +756,14 @@ export const optimism: Layer2 = {
       date: '2021-01-16T00:00:00Z',
       description:
         'Only selected contracts like Synthetix and Uniswap are available.',
+      type: 'general',
     },
     {
       name: 'Community Launch',
       link: 'https://medium.com/ethereum-optimism/community-launch-7c9a2a9d3e84',
       date: '2021-08-19T00:00:00Z',
       description: 'All smart contracts allowed after prior approval.',
+      type: 'general',
     },
   ],
   knowledgeNuggets: [

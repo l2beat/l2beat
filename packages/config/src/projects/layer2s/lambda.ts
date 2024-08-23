@@ -47,6 +47,7 @@ export const lambda: Layer2 = opStackL2({
       link: 'https://lambdanetwork.medium.com/lambda-is-about-to-launch-a-permanent-storage-da-network-leveraging-das-technology-to-provide-data-cdc80c8f69d1',
       date: '2024-04-17T00:00:00.00Z',
       description: 'Lambda Chain is live on mainnet.',
+      type: 'general',
     },
   ],
   chainConfig: {
