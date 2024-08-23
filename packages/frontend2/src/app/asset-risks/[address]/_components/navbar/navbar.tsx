@@ -1,11 +1,11 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { DrawerTrigger } from '~/app/asset-risks/_components/drawer'
 import ScannerName from '../../_assets/scanner-name.svg?url'
 import SmallLogo from '../../_assets/small-logo.svg?url'
 import { InputWallet } from '../input-wallet'
 import { WalletDrawer } from '../wallet-drawer'
-import { DrawerTrigger } from '~/app/asset-risks/_components/drawer'
 
 export function Navbar() {
   return (
