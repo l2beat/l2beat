@@ -101,7 +101,7 @@ function MilestonesBase(props: { milestones: Milestone[]; isOpen?: boolean }) {
                     milestoneLineClassName,
                   )}
                 />
-                <Icon className="absolute left-1.5" />
+                <Icon className="absolute -left-8" />
                 <p className="text-lg font-bold leading-none">
                   {milestone.name}
                 </p>
