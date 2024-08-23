@@ -3,6 +3,8 @@
 import { type Milestone } from '@l2beat/config'
 import React, { useState } from 'react'
 import ChevronDownIcon from '~/icons/chevron.svg'
+import { IncidentIcon } from '~/icons/incident'
+import { MilestoneIcon } from '~/icons/milestone'
 import { cn } from '~/utils/cn'
 import { Button } from '../../button'
 import {
@@ -14,8 +16,6 @@ import { CustomLink } from '../../link/custom-link'
 import { Markdown } from '../../markdown/markdown'
 import { ProjectSection } from './project-section'
 import { type ProjectSectionProps } from './types'
-import { IncidentIcon } from '~/icons/incident'
-import { MilestoneIcon } from '~/icons/milestone'
 
 export interface MilestonesSectionProps extends ProjectSectionProps {
   milestones: Milestone[]
