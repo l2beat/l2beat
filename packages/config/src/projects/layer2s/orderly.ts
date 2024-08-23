@@ -110,6 +110,7 @@ export const orderly: Layer2 = opStackL2({
       link: 'https://twitter.com/OrderlyNetwork/status/1749419001913237526',
       date: '2024-01-22T00:00:00Z',
       description: 'Orderly Network is live on mainnet.',
+      type: 'general',
     },
   ],
   nonTemplatePermissions: [

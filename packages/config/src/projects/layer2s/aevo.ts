@@ -66,18 +66,21 @@ export const aevo: Layer2 = opStackL2({
       date: '2023-06-14T00:00:00.00Z',
       description:
         'Aevo removes the whitelist and opens the mainnet to the public.',
+      type: 'general',
     },
     {
       name: 'Aevo switches to Celestia',
       link: 'https://twitter.com/aevoxyz/status/1750013642278633510',
       date: '2024-01-16T00:00:00.00Z',
       description: 'Aevo starts using Celestia for data availability.',
+      type: 'general',
     },
     {
       name: 'AEVO Token Airdrop',
       link: 'https://aevo.mirror.xyz/5LfLIxt_lfdoVBUTtdofAVU6YXioBzGkbhtUWnaRT-U',
       date: '2024-03-13T00:00:00.00Z',
       description: 'AEVO token launches.',
+      type: 'general',
     },
   ],
   nonTemplatePermissions: [
