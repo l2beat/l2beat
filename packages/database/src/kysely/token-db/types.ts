@@ -112,15 +112,15 @@ export type TokenMeta = {
 
 export type TokenDB = {
   _BridgeEscrowToToken: BridgeEscrowToToken
-  'public.BridgeEscrow': BridgeEscrow
-  'public.Cache': Cache
-  'public.Deployment': Deployment
-  'public.discovery_cache': DiscoveryCache
-  'public.ExternalBridge': ExternalBridge
-  'public.Network': Network
-  'public.NetworkExplorer': NetworkExplorer
-  'public.NetworkRpc': NetworkRpc
-  'public.Token': Token
-  'public.TokenBridge': TokenBridge
-  'public.TokenMeta': TokenMeta
+  BridgeEscrow: BridgeEscrow
+  Cache: Cache
+  Deployment: Deployment
+  discovery_cache: DiscoveryCache
+  ExternalBridge: ExternalBridge
+  Network: Network
+  NetworkExplorer: NetworkExplorer
+  NetworkRpc: NetworkRpc
+  Token: Token
+  TokenBridge: TokenBridge
+  TokenMeta: TokenMeta
 }
