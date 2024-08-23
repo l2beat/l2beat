@@ -1,3 +1,291 @@
+Generated with discovered.json: 0x73a6a55ef68c5e1d572120c21790df5cccc84ec8
+
+# Diff at Fri, 23 Aug 2024 15:16:23 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@bf2d0ebf21a279d76dfafc24de12b751244afaf6 block: 19925898
+- current block number: 20592132
+
+## Description
+
+Added Pausers addresses discovery from PauserRegistry (which manages pausing of EigenLayer contracts), changed multisigs name capitalisation for consistency with EigenDA.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (0x5050389572f2d220ad927CcbeA0D406831012390) {
+    +++ description: None
+      values.$members.13:
++        "0x57af860e3a1C16641CDDDa92898266D2df7Dfa71"
+      values.$members.12:
+-        "0x57af860e3a1C16641CDDDa92898266D2df7Dfa71"
++        "0xEb94033d1331931cC0539C480Ca39Bf5f6916E89"
+      values.$members.11:
+-        "0xEb94033d1331931cC0539C480Ca39Bf5f6916E89"
++        "0xcf09EA5E7625E6E3F3345CACa1d288CcD1F39084"
+      values.$members.10:
+-        "0xcf09EA5E7625E6E3F3345CACa1d288CcD1F39084"
++        "0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256"
+      values.$members.9:
+-        "0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256"
++        "0xcC82E76106647C921Ed3a6Af869740cce98EC0C7"
+      values.$members.8:
+-        "0xcC82E76106647C921Ed3a6Af869740cce98EC0C7"
++        "0x726b2EF6a771f452Cb1b1ac3C3acF5A46b99c02B"
+      values.$members.7:
+-        "0x726b2EF6a771f452Cb1b1ac3C3acF5A46b99c02B"
++        "0x82328b7Cd136296bac5c56079A64E58a44d790e2"
+      values.$members.6:
+-        "0x82328b7Cd136296bac5c56079A64E58a44d790e2"
++        "0x3C20b05f44ef008A5b848761e58e5Ca9594163e9"
+      values.$members.5:
+-        "0x3C20b05f44ef008A5b848761e58e5Ca9594163e9"
++        "0x34D64c402cA43C1c4B368e16130C64aC245718C6"
+      values.$members.4:
+-        "0x34D64c402cA43C1c4B368e16130C64aC245718C6"
++        "0xA935b0d2a529abb7F048CB56dd8B876ed5d8bD99"
+      values.$members.3:
+-        "0xA935b0d2a529abb7F048CB56dd8B876ed5d8bD99"
++        "0x4a3CD82B73821d075799680AcDff3e884B726777"
+      values.$members.2:
+-        "0x4a3CD82B73821d075799680AcDff3e884B726777"
++        "0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4"
+      values.$members.1:
+-        "0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4"
++        "0x2E158da11961426E2A1Cc9e79f40244486b6845C"
+      values.$members.0:
+-        "0x2E158da11961426E2A1Cc9e79f40244486b6845C"
++        "0xEFca484E497a9de170Da32abfa11650957dD2a95"
+      values.multisigThreshold:
+-        "1 of 13 (8%)"
++        "1 of 14 (7%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19925898 (main branch discovery), not current.
+
+```diff
+    contract PauserRegistry (0x0c431C66F4dE941d089625E5B423D00707977060) {
+    +++ description: None
+      values.pausers:
++        ["0xBE1685C81aA44FF9FB319dD389addd9374383e90","0x5050389572f2d220ad927CcbeA0D406831012390","0x369e6F597e22EaB55fFb173C6d9cD234BD699111"]
+    }
+```
+
+```diff
+    contract swETH-Strategy (0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract ankrETH-Strategy (0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract rETH-Strategy (0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract METH-Strategy (0x298aFB19A105D59E74658C4C334Ff360BadE6dd2) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract EigenLayerExecutorMultisig (0x369e6F597e22EaB55fFb173C6d9cD234BD699111) {
+    +++ description: None
+      name:
+-        "EigenlayerProxiedMultisig"
++        "EigenLayerExecutorMultisig"
+    }
+```
+
+```diff
+    contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A) {
+    +++ description: None
+      values.$upgradeCount:
++        3
+    }
+```
+
+```diff
+    contract cbETH-Strategy (0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract osETH-Strategy (0x57ba429517c3473B6d34CA9aCd56c0e735b94c02) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract wBETH-Strategy (0x7CA911E83dabf90C90dD3De5411a10F1A6112184) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract DelayedWithdrawalRouter (0x7Fe7E9CC0F274d2435AD5d56D5fa73E47F6A23D8) {
+    +++ description: None
+      values.$upgradeCount:
++        3
+    }
+```
+
+```diff
+    contract bEIGEN token (0x83E9115d334D248Ce39a6f36144aEaB5b3456e75) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
+    +++ description: None
+      values.$upgradeCount:
++        3
+    }
+```
+
+```diff
+    contract sfrxETH-Strategy (0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
+    +++ description: None
+      values.$upgradeCount:
++        3
+    }
+```
+
+```diff
+    contract stETH-Strategy (0x93c4b944D05dfe6df7645A86cd2206016c51564D) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract ETHx-Strategy (0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract OETH-Strategy (0xa4C637e0F704745D182e4D38cAb7E7485321d059) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract bEIGEN-Strategy (0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract RiverV1-Strategy (0xAe60d8180437b5C34bB956822ac2710972584473) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract EigenLayerTokenMultisig (0xbb00DDa2832850a43840A3A86515E3Fe226865F2) {
+    +++ description: None
+      name:
+-        "EigenlayerTokenMultisig"
++        "EigenLayerTokenMultisig"
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      name:
+-        "EigenlayerOperationsMultisig"
++        "EigenLayerOperationsMultisig"
+    }
+```
+
+```diff
+    contract Slasher (0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd) {
+    +++ description: None
+      values.$upgradeCount:
++        3
+    }
+```
+
+```diff
+    contract EIGEN token (0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83) {
+    +++ description: None
+      values.$upgradeCount:
++        3
+    }
+```
+
+```diff
+    contract EigenLayerCommunityMultisig (0xFEA47018D632A77bA579846c840d5706705Dc598) {
+    +++ description: None
+      name:
+-        "EigenlayerCommunityMultisig"
++        "EigenLayerCommunityMultisig"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x5050389572f2d220ad927CcbeA0D406831012390)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x05067bdd06f8705936f975ff1b16d3cc5a2b2c11
 
 # Diff at Fri, 23 Aug 2024 09:55:17 GMT:

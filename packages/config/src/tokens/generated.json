@@ -122,6 +122,21 @@
       "supply": "zero"
     },
     {
+      "id": "azero-aleph-zero",
+      "name": "Aleph Zero",
+      "coingeckoId": "aleph-zero",
+      "address": "0xdD0ae774F7E300CdAA4EA371cD55169665Ee6AFe",
+      "symbol": "AZERO",
+      "decimals": 18,
+      "deploymentTimestamp": 1721400911,
+      "coingeckoListingTimestamp": 1643328000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/17212/large/azero-logo_coingecko.png?1698147162",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "aleph-aleph.im-v2",
       "name": "aleph.im v2",
       "coingeckoId": "aleph",
