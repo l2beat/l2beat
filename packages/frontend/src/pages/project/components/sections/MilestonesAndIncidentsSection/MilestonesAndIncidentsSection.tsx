@@ -10,14 +10,16 @@ import { ProjectSection } from '../common/ProjectSection'
 import { ProjectSectionId } from '../common/sectionId'
 import { ExpandableContainer } from './ExpandableContainer'
 
-export interface MilestonesSectionProps {
+export interface MilestonesAndIncidentsSectionProps {
   title: string
   id: ProjectSectionId
   sectionOrder: number
   milestones: Milestone[]
 }
 
-export function MilestonesSection(props: MilestonesSectionProps) {
+export function MilestonesAndIncidentsSection(
+  props: MilestonesAndIncidentsSectionProps,
+) {
   return (
     <ProjectSection
       title={props.title}
@@ -38,23 +40,23 @@ export function MilestonesSection(props: MilestonesSectionProps) {
               // When the type is undefined, it is considered 'general'
 
               const milestoneType = milestone.type || 'general'
-              const oldMilestone = props.milestones.at(i + 1)
-              const oldMilestoneType =
-                oldMilestone && (oldMilestone.type || 'general')
+              const previousMilestone = props.milestones.at(i + 1)
+              const previousMilestoneType =
+                previousMilestone && (previousMilestone.type || 'general')
 
               const Icon =
                 milestoneType === 'incident' ? IncidentIcon : MilestoneIcon
 
-              const milestoneLineClassName = oldMilestoneType
+              const milestoneLineClassName = previousMilestoneType
                 ? cn(
                     milestoneType === 'general' &&
                       'bg-green-400 dark:bg-green-500',
                     milestoneType === 'incident' &&
                       'bg-red-700 dark:bg-red-700',
-                    oldMilestoneType === 'incident' &&
+                    previousMilestoneType === 'incident' &&
                       milestoneType === 'general' &&
                       'bg-gradient-to-b from-green-400 to-red-700 dark:from-green-500 dark:to-red-700',
-                    oldMilestoneType === 'general' &&
+                    previousMilestoneType === 'general' &&
                       milestoneType === 'incident' &&
                       'bg-gradient-to-b from-red-700 to-green-400 dark:from-red-700 dark:to-green-500',
                   )

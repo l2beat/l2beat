@@ -77,9 +77,9 @@ export function getL3ProjectDetails({
     !isEmpty(project.milestones)
   ) {
     items.push({
-      type: 'MilestonesSection',
+      type: 'MilestonesAndIncidentsSection',
       props: {
-        id: 'milestones',
+        id: 'milestones-and-incidents',
         title: 'Milestones & Incidents',
         milestones: project.milestones,
       },

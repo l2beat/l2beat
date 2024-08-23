@@ -17,14 +17,15 @@ import { Markdown } from '../../markdown/markdown'
 import { ProjectSection } from './project-section'
 import { type ProjectSectionProps } from './types'
 
-export interface MilestonesSectionProps extends ProjectSectionProps {
+export interface MilestonesAndIncidentsSectionProps
+  extends ProjectSectionProps {
   milestones: Milestone[]
 }
 
-export function MilestonesSection({
+export function MilestonesAndIncidentsSection({
   milestones,
   ...sectionProps
-}: MilestonesSectionProps) {
+}: MilestonesAndIncidentsSectionProps) {
   const [isOpen, setIsOpen] = useState(false)
   return (
     <ProjectSection {...sectionProps}>
@@ -81,22 +82,22 @@ function MilestonesBase(props: {
             // When the type is undefined, it is considered 'general'
 
             const milestoneType = milestone.type ?? 'general'
-            const oldMilestone = props.milestones.at(i + 1)
-            const oldMilestoneType =
-              oldMilestone && (oldMilestone.type ?? 'general')
+            const previousMilestone = props.milestones.at(i + 1)
+            const previousMilestoneType =
+              previousMilestone && (previousMilestone.type ?? 'general')
 
             const Icon =
               milestoneType === 'incident' ? IncidentIcon : MilestoneIcon
 
-            const milestoneLineClassName = oldMilestoneType
+            const milestoneLineClassName = previousMilestoneType
               ? cn(
                   milestoneType === 'general' &&
                     'bg-green-400 dark:bg-green-500',
                   milestoneType === 'incident' && 'bg-red-700 dark:bg-red-700',
-                  oldMilestoneType === 'incident' &&
+                  previousMilestoneType === 'incident' &&
                     milestoneType === 'general' &&
                     'bg-gradient-to-b from-green-400 to-red-700 dark:from-green-500 dark:to-red-700',
-                  oldMilestoneType === 'general' &&
+                  previousMilestoneType === 'general' &&
                     milestoneType === 'incident' &&
                     'bg-gradient-to-b from-red-700 to-green-400 dark:from-red-700 dark:to-green-500',
                 )
