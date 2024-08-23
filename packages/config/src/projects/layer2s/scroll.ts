@@ -704,6 +704,13 @@ export const scroll: Layer2 = {
   ],
   milestones: [
     {
+      name: 'Darwin upgrade',
+      link: 'https://scroll.io/blog/proof-recursion-scrolls-darwin-upgrade',
+      date: '2024-08-21T00:00:00.00Z',
+      description:
+        'Introduces a reduction in gas fees through bundling multiple batches into a single validity proof.',
+    },
+    {
       name: 'Curie upgrade',
       link: 'https://scroll.io/blog/compressing-the-gas-scrolls-curie-upgrade',
       date: '2024-07-03T00:00:00.00Z',
