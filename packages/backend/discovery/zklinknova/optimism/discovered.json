@@ -3,7 +3,7 @@
   "chain": "optimism",
   "blockNumber": 122588960,
   "configHash": "0xce10e15afb33d1b6e6810a19bcb0420abc52bc5646c858e42dda06270610dec1",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "OptimismOwner",
@@ -65,6 +65,7 @@
       "values": {
         "$admin": "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9",
         "$implementation": "0xe71A6Cfb42D0398f6d6aeD8a19987C83bbE3B86E",
+        "$upgradeCount": 2,
         "feeParams": {
           "pubdataPricingMode": 0,
           "batchOverheadL1Gas": 1000000,
@@ -108,6 +109,7 @@
       "values": {
         "$admin": "0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4",
         "$implementation": "0x21Fe89FfB96d4092b42c8ab35dcFEee50a86C3B8",
+        "$upgradeCount": 2,
         "l2Bridge": "0x6aAdaA7Bf9F5283cAF3eb2E40573D1A4d02C8B15",
         "l2TokenBeacon": "0xC9c41965710Dcc1434A7B7d44dAf6A4418E2C27d",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
@@ -148,6 +150,7 @@
       "values": {
         "$admin": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
         "$implementation": "0x3C3f4b866f8c6F0D2c912feE36D5Ad337a9AA98e",
+        "$upgradeCount": 1,
         "getRemoteGateway": "0x668e8F67adB8219e1816C2E5bBEa055A78AF3026",
         "MESSAGE_SERVICE": "0x4200000000000000000000000000000000000007",
         "owner": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",

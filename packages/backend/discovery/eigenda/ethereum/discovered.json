@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20482509,
   "configHash": "0x42228c2828298f02436f5667f44151d72647810ec8c962bdf5e229f847ad6516",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "StakeRegistry",
@@ -20,6 +20,7 @@
       "values": {
         "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
         "$implementation": "0x1C468cf7089D263c2f53e2579b329B16aBc4dd96",
+        "$upgradeCount": 2,
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "MAX_WEIGHING_FUNCTION_LENGTH": 32,
         "registryCoordinator": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
@@ -41,6 +42,7 @@
       "values": {
         "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
         "$implementation": "0x5d0B9cE2e277Daf508528E9f6Bf6314E79e4eD2b",
+        "$upgradeCount": 2,
         "registryCoordinator": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
       }
     },
@@ -63,6 +65,7 @@
       "values": {
         "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
         "$implementation": "0xdcabf0bE991d4609096CCe316df08d091356E03F",
+        "$upgradeCount": 3,
         "blsApkRegistry": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "churnApprover": "0xe0550117Cb066D3b330eBd764B0d75D3BA378734",
         "ejectionCooldown": 604800,
@@ -368,6 +371,7 @@
       "values": {
         "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
         "$implementation": "0x33A517608999DF5CEfFa2b2EbA88B4461c26Af6f",
+        "$upgradeCount": 3,
         "ejectableStakePercent": [3333],
         "ejectionRateLimitWindow": [604800],
         "ejectors": ["0xD2Ee81Cf07B12140C793FcE5B26313CDd9d78eA8"],
@@ -469,6 +473,7 @@
       "values": {
         "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
         "$implementation": "0x0D2C5FD4Bb956cDD48A23fC3Ef77a768a5cDbAf7",
+        "$upgradeCount": 5,
         "avsDirectory": "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
         "batchId": 21206,
         "BLOCK_STALE_MEASURE": 300,
@@ -535,6 +540,7 @@
       "values": {
         "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
         "$implementation": "0x1ae0b73118906f39D5ED30Ae4A484ce2F479a14c",
+        "$upgradeCount": 2,
         "OPERATOR_DOES_NOT_EXIST_ID": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "registryCoordinator": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
       }

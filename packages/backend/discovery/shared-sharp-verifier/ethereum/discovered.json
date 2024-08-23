@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20440714,
   "configHash": "0x899e53b29b077d1af0417c2dcf901f5a4bfdb20a2598939c95c06827ec471499",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "EcdsaPointsXColumn",

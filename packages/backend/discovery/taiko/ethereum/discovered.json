@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20367491,
   "configHash": "0xe4e0c6fd03b9c9ec903e56fbea2b9b1029b8ba7e8af2de80d87a9adf173f478c",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "PEMCertChainLib",
@@ -35,6 +35,7 @@
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0xBA1d90BCfA74163bFE09e8eF609b346507D83231",
+        "$upgradeCount": 12,
         "addressManager": "0x579f40D0BE111b823962043702cabe6Aaa290780",
         "assignment_hook": "0x0000000000000000000000000000000000000000",
         "automata_dcap_attestation": "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
@@ -146,6 +147,7 @@
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0xcfe803378D79d1180EbF030455040EA6513869dF",
+        "$upgradeCount": 5,
         "addressManager": "0x0000000000000000000000000000000000000000",
         "clock": 1721716751,
         "CLOCK_MODE": "mode=timestamp",
@@ -273,6 +275,7 @@
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0x3c40CC51e78B4a622622F9A4Df1b40068bc8Df98",
+        "$upgradeCount": 6,
         "addressManager": "0x579f40D0BE111b823962043702cabe6Aaa290780",
         "guardians": [
           "0x000012dd12a6D9Dd2045f5E2594f4996b99A5d33",
@@ -313,6 +316,7 @@
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0x4f6D5D3109C07E77035B410602996e445b18E8E9",
+        "$upgradeCount": 6,
         "addressManager": "0x579f40D0BE111b823962043702cabe6Aaa290780",
         "impl": "0x4f6D5D3109C07E77035B410602996e445b18E8E9",
         "inNonReentrant": false,
@@ -342,6 +346,7 @@
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0xCE5a119479337a153CA3bd1b2bF9755c78F2B15A",
+        "$upgradeCount": 8,
         "addressManager": "0x579f40D0BE111b823962043702cabe6Aaa290780",
         "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "impl": "0xCE5a119479337a153CA3bd1b2bF9755c78F2B15A",
@@ -379,6 +384,7 @@
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0x5f73f0AdC7dAA6134Fe751C4a78d524f9384e0B5",
+        "$upgradeCount": 3,
         "addressManager": "0x0000000000000000000000000000000000000000",
         "checkLocalEnclaveReport": true,
         "impl": "0x5f73f0AdC7dAA6134Fe751C4a78d524f9384e0B5",
@@ -416,6 +422,7 @@
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0x7ACFBb369a552C45d402448A4d64b9da54C3FF30",
+        "$upgradeCount": 7,
         "addressManager": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
         "impl": "0x7ACFBb369a552C45d402448A4d64b9da54C3FF30",
         "inNonReentrant": false,
@@ -532,6 +539,7 @@
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0xDF8642a1FBFc2014de27E8E87283D6f3eEF315DF",
+        "$upgradeCount": 5,
         "addressManager": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
         "impl": "0xDF8642a1FBFc2014de27E8E87283D6f3eEF315DF",
         "inNonReentrant": false,
@@ -560,6 +568,7 @@
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0x7EE4CEF8a945639e09DDf3032e9d95c8d90f07f3",
+        "$upgradeCount": 5,
         "addressManager": "0x579f40D0BE111b823962043702cabe6Aaa290780",
         "impl": "0x7EE4CEF8a945639e09DDf3032e9d95c8d90f07f3",
         "inNonReentrant": false,
@@ -689,6 +698,7 @@
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0xAc96FF285158bceBB8573D20d853e86BB2915aF3",
+        "$upgradeCount": 11,
         "addressManager": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
         "GAS_OVERHEAD": 120000,
         "GAS_RESERVE": 800000,
@@ -720,6 +730,7 @@
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0x3c40CC51e78B4a622622F9A4Df1b40068bc8Df98",
+        "$upgradeCount": 6,
         "addressManager": "0x579f40D0BE111b823962043702cabe6Aaa290780",
         "guardians": [
           "0x000012dd12a6D9Dd2045f5E2594f4996b99A5d33",
@@ -760,6 +771,7 @@
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0x2f7126f78365AD54EAB26fD7faEc60435008E2fD",
+        "$upgradeCount": 4,
         "addressManager": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
         "impl": "0x2f7126f78365AD54EAB26fD7faEc60435008E2fD",
         "inNonReentrant": false,

@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xbd36d8b3d06a28ea5000ddc93956324414aefe42
+
+# Diff at Fri, 23 Aug 2024 09:53:11 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 20240876
+- current block number: 20240876
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20240876 (main branch discovery), not current.
+
+```diff
+    contract  (0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034) {
+    +++ description: None
+      values.$upgradeCount:
++        0
+    }
+```
+
+```diff
+    contract TSS Oracle (0x5a54fe5234E811466D5366846283323c954310B2) {
+    +++ description: None
+      values.$upgradeCount:
++        2
+    }
+```
+
+```diff
+    contract  (0x6BD792911F4B3714E88FbDf32B351632e7d22c70) {
+    +++ description: None
+      values.$upgradeCount:
++        0
+    }
+```
+
+```diff
+    contract LayerZero Relayer (0x902F09715B6303d4173037652FA7377e5b98089E) {
+    +++ description: None
+      values.$upgradeCount:
++        6
+    }
+```
+
 Generated with discovered.json: 0x7c01f2d993443a5fa5610e6d3a7e5bb66f860eba
 
 # Diff at Wed, 21 Aug 2024 10:03:56 GMT:

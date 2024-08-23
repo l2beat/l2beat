@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19927693,
   "configHash": "0x40ef5e7ec6070e99fc0753c31b29859c9086903a0d48af264137629c2d536643",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -46,6 +46,7 @@
       "values": {
         "$admin": "0x75a223Fb459461B9Fa61dd25109EA05522b4b492",
         "$implementation": "0x188370729584052260214A6e0847B9810e3a120d",
+        "$upgradeCount": 1,
         "batcherHash": "0x6079e9c37b87fE06D0bDe2431a0fa309826c9b67",
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
@@ -87,6 +88,7 @@
       "values": {
         "$admin": "0x75a223Fb459461B9Fa61dd25109EA05522b4b492",
         "$implementation": "0x2362ff553A9E66bf378E971b2AAa631A4570b53d",
+        "$upgradeCount": 0,
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x012c341506ee1939e56084F43Ae5dbCe224Ce2af",
         "MESSENGER": "0x012c341506ee1939e56084F43Ae5dbCe224Ce2af",
@@ -196,6 +198,7 @@
       "values": {
         "$admin": "0x75a223Fb459461B9Fa61dd25109EA05522b4b492",
         "$implementation": "0x9FC6A608B45c6F129650c26a34bbe5d26959E75e",
+        "$upgradeCount": 1,
         "GUARDIAN": "0x1B1ecDdbd5F9601b34262Aa3Ca346209E61aA68f",
         "L2_ORACLE": "0xB09DC08428C8b4EFB4ff9C0827386CDF34277996",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
@@ -282,6 +285,7 @@
       "values": {
         "$admin": "0x75a223Fb459461B9Fa61dd25109EA05522b4b492",
         "$implementation": "0x1F61619E8c228fb67204cD157A3e50Aa6690FbF6",
+        "$upgradeCount": 1,
         "CHALLENGER": "0x1B1ecDdbd5F9601b34262Aa3Ca346209E61aA68f",
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
@@ -313,6 +317,7 @@
       "values": {
         "$admin": "0x75a223Fb459461B9Fa61dd25109EA05522b4b492",
         "$implementation": "0x132b3456300332d488f946B818eB9512931eBCAa",
+        "$upgradeCount": 1,
         "messenger": "0x012c341506ee1939e56084F43Ae5dbCe224Ce2af",
         "MESSENGER": "0x012c341506ee1939e56084F43Ae5dbCe224Ce2af",
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000014",
