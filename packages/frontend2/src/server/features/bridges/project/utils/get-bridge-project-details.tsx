@@ -6,12 +6,13 @@ import {
 } from '@l2beat/shared-pure'
 import isEmpty from 'lodash/isEmpty'
 import { type ProjectDetailsSection } from '~/app/_components/projects/sections/types'
+import { api } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { getBridgesRiskSummarySection } from '~/utils/project/risk-summary/get-bridges-risk-summary'
 import { getBridgeTechnologySection } from '~/utils/project/technology/get-technology-section'
 
-export function getBridgeProjectDetails(
+export async function getBridgeProjectDetails(
   bridge: Bridge,
   isVerified: boolean,
   contractsVerificationStatuses: ContractsVerificationStatuses,
@@ -49,18 +50,24 @@ export function getBridgeProjectDetails(
     : undefined
   const riskSummary = getBridgesRiskSummarySection(bridge, isVerified)
   const technologySection = getBridgeTechnologySection(bridge)
+  const tvlChartData = await api.tvl.chart({
+    range: '7d',
+    filter: { type: 'projects', projectIds: [bridge.id] },
+  })
 
   const items: ProjectDetailsSection[] = []
 
-  items.push({
-    type: 'ChartSection',
-    props: {
-      id: 'tvl',
-      title: 'Value locked',
-      projectId: bridge.id,
-      milestones: [],
-    },
-  })
+  if (!bridge.isUpcoming && tvlChartData.length > 0) {
+    items.push({
+      type: 'ChartSection',
+      props: {
+        id: 'tvl',
+        title: 'Value locked',
+        projectId: bridge.id,
+        milestones: [],
+      },
+    })
+  }
 
   if (bridge.milestones && !isEmpty(bridge.milestones)) {
     items.push({

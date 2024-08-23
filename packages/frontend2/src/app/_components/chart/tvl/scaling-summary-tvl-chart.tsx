@@ -37,7 +37,7 @@ export function ScalingSummaryTvlChart({ entries, milestones }: Props) {
   )
   const [timeRange, setTimeRange] = useCookieState('scalingSummaryChartRange')
 
-  const chartDataType = useMemo<TvlProjectFilter>(() => {
+  const filter = useMemo<TvlProjectFilter>(() => {
     if (filters.isEmpty) {
       return { type: 'layer2' }
     }
@@ -51,7 +51,7 @@ export function ScalingSummaryTvlChart({ entries, milestones }: Props) {
   const { data } = api.tvl.chart.useQuery({
     range: timeRange,
     excludeAssociatedTokens,
-    ...chartDataType,
+    filter,
   })
 
   const {

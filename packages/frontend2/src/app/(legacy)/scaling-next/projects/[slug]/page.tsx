@@ -7,6 +7,7 @@ import { ProjectDetails } from '~/app/_components/projects/project-details'
 import { getScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { getProjectMetadata } from '~/utils/metadata'
 import { ScalingProjectSummary } from './_components/scaling-project-summary'
+import { HydrateClient } from '~/trpc/server'
 
 const scalingProjects = [...layer2s, ...layer3s]
 
@@ -57,7 +58,7 @@ export default async function Page({ params }: Props) {
     projectEntry.projectDetails.filter((s) => !s.excludeFromNavigation)
       .length === 0
   return (
-    <>
+    <HydrateClient>
       {!isNavigationEmpty && (
         <div className="sticky top-0 z-100 -mx-4 md:hidden">
           <MobileProjectNavigation sections={projectEntry.projectDetails} />
@@ -85,6 +86,6 @@ export default async function Page({ params }: Props) {
           </div>
         </div>
       )}
-    </>
+    </HydrateClient>
   )
 }

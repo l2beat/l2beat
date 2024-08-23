@@ -26,7 +26,7 @@ export function BridgesTvlChart() {
 
   const { data } = api.tvl.chart.useQuery({
     range: timeRange,
-    type: 'bridge',
+    filter: { type: 'bridge' },
   })
 
   const {

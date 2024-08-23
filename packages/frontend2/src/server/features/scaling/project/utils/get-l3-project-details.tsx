@@ -7,6 +7,7 @@ import {
 import { isEmpty } from 'lodash'
 import { type ProjectDetailsSection } from '~/app/_components/projects/sections/types'
 import { type RosetteValue } from '~/app/_components/rosette/types'
+import { api } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
@@ -25,7 +26,7 @@ interface Params {
   rosetteValues: RosetteValue[]
 }
 
-export function getL3ProjectDetails({
+export async function getL3ProjectDetails({
   project,
   isVerified,
   contractsVerificationStatuses,
@@ -68,6 +69,10 @@ export function getL3ProjectDetails({
   const operatorSection = getOperatorSection(project)
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
+  const tvlChartData = await api.tvl.chart({
+    range: '7d',
+    filter: { type: 'projects', projectIds: [project.id] },
+  })
   const sortedMilestones =
     project.milestones?.sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
@@ -75,16 +80,18 @@ export function getL3ProjectDetails({
 
   const items: ProjectDetailsSection[] = []
 
-  items.push({
-    type: 'ChartSection',
-    props: {
-      id: 'tvl',
-      stacked: true,
-      title: 'Value locked',
-      projectId: project.id,
-      milestones: sortedMilestones,
-    },
-  })
+  if (!project.isUpcoming && tvlChartData.length > 0) {
+    items.push({
+      type: 'ChartSection',
+      props: {
+        id: 'tvl',
+        stacked: true,
+        title: 'Value locked',
+        projectId: project.id,
+        milestones: sortedMilestones,
+      },
+    })
+  }
 
   if (
     !project.isUpcoming &&

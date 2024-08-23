@@ -22,7 +22,7 @@ export default async function Page() {
   const entries = await getScalingSummaryEntries()
 
   await api.tvl.chart.prefetch({
-    type: 'layer2',
+    filter: { type: 'layer2' },
     range: getCookie('scalingSummaryChartRange'),
   })
 

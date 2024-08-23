@@ -69,7 +69,11 @@ export async function getL2ProjectDetails({
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
   const costsChartData = await api.costs.chart({
-    range: '1d',
+    range: '7d',
+    filter: { type: 'projects', projectIds: [project.id] },
+  })
+  const tvlChartData = await api.tvl.chart({
+    range: '7d',
     filter: { type: 'projects', projectIds: [project.id] },
   })
   const sortedMilestones =
@@ -78,18 +82,20 @@ export async function getL2ProjectDetails({
     ) ?? []
   const items: ProjectDetailsSection[] = []
 
-  items.push({
-    type: 'ChartSection',
-    props: {
-      id: 'tvl',
-      stacked: true,
-      title: 'Value locked',
-      projectId: project.id,
-      milestones: sortedMilestones,
-    },
-  })
+  if (!project.isUpcoming && tvlChartData.length > 0) {
+    items.push({
+      type: 'ChartSection',
+      props: {
+        id: 'tvl',
+        stacked: true,
+        title: 'Value locked',
+        projectId: project.id,
+        milestones: sortedMilestones,
+      },
+    })
+  }
 
-  if (!isEmpty(costsChartData.data)) {
+  if (!project.isUpcoming && !isEmpty(costsChartData.data)) {
     items.push({
       type: 'ChartSection',
       props: {

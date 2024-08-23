@@ -5,6 +5,7 @@ import { DesktopProjectNavigation } from '~/app/_components/projects/navigation/
 import { MobileProjectNavigation } from '~/app/_components/projects/navigation/mobile-project-navigation'
 import { ProjectDetails } from '~/app/_components/projects/project-details'
 import { getBridgesProjectEntry } from '~/server/features/bridges/project/get-bridges-project-entry'
+import { HydrateClient } from '~/trpc/server'
 import { getProjectMetadata } from '~/utils/metadata'
 import { BridgesProjectSummary } from './_components/bridges-project-summary'
 
@@ -53,7 +54,7 @@ export default async function Page({ params }: Props) {
     projectEntry.projectDetails.filter((s) => !s.excludeFromNavigation)
       .length === 0
   return (
-    <>
+    <HydrateClient>
       {!isNavigationEmpty && (
         <div className="sticky top-0 z-100 -mx-4 md:hidden">
           <MobileProjectNavigation sections={projectEntry.projectDetails} />
@@ -81,6 +82,6 @@ export default async function Page({ params }: Props) {
           </div>
         </div>
       )}
-    </>
+    </HydrateClient>
   )
 }

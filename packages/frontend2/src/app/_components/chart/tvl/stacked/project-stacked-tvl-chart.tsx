@@ -28,14 +28,16 @@ export function ProjectStackedTvlChart({ milestones, projectId }: Props) {
   const [scale, setScale] = useState('lin')
 
   const { data } = api.tvl.chart.useQuery({
-    type: 'projects',
-    projectIds: [projectId],
+    filter: { type: 'projects', projectIds: [projectId] },
     range: timeRange,
     excludeAssociatedTokens: false,
   })
 
-  const { columns, chartRange, lastValue, change, valuesStyle } =
-    useStackedTvlChartRenderParams({ milestones, unit, data })
+  const { columns, chartRange, valuesStyle } = useStackedTvlChartRenderParams({
+    milestones,
+    unit,
+    data,
+  })
 
   return (
     <ChartProvider

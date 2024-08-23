@@ -39,7 +39,7 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
   )
   const [scale, setScale] = useLocalStorage('scaling-tvl-scale', 'lin')
 
-  const chartDataType = useMemo<TvlProjectFilter>(() => {
+  const filter = useMemo<TvlProjectFilter>(() => {
     if (filters.isEmpty) {
       return { type: 'layer2' }
     }
@@ -53,7 +53,7 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
   const { data } = api.tvl.chart.useQuery({
     range: timeRange,
     excludeAssociatedTokens,
-    ...chartDataType,
+    filter,
   })
 
   const { columns, chartRange, lastValue, change, valuesStyle } =

@@ -15,12 +15,11 @@ import {
 import { TvlChartRange } from './range'
 import { sumValuesPerSource } from './sum-values-per-source'
 
-export const TvlChartDataParams = z
-  .object({
-    range: TvlChartRange,
-    excludeAssociatedTokens: z.boolean().optional(),
-  })
-  .and(TvlProjectFilter)
+export const TvlChartDataParams = z.object({
+  range: TvlChartRange,
+  filter: TvlProjectFilter,
+  excludeAssociatedTokens: z.boolean().optional(),
+})
 
 export type TvlChartDataParams = z.infer<typeof TvlChartDataParams>
 
@@ -32,7 +31,7 @@ export async function getTvlChartData(
 }
 
 export const getCachedTvlChartData = cache(
-  async ({ range, excludeAssociatedTokens, ...filter }: TvlChartDataParams) => {
+  async ({ range, excludeAssociatedTokens, filter }: TvlChartDataParams) => {
     const projectsFilter = createTvlProjectsFilter(filter)
 
     const tvlProjects = getTvlProjects().filter(projectsFilter)

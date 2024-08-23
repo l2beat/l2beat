@@ -23,8 +23,7 @@ export function ProjectTvlChart({ projectId, milestones }: Props) {
 
   const { data } = api.tvl.chart.useQuery({
     range: timeRange,
-    type: 'projects',
-    projectIds: [projectId],
+    filter: { type: 'projects', projectIds: [projectId] },
   })
 
   const { chartRange, formatYAxisLabel, valuesStyle, columns } =

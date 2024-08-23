@@ -21,7 +21,7 @@ interface Props {
 
 export function ProjectCostsChart({ milestones, projectId }: Props) {
   const [scale, setScale] = useState('lin')
-  const [range, setRange] = useState<CostsTimeRange>('1d')
+  const [range, setRange] = useState<CostsTimeRange>('7d')
   const [unit, setUnit] = useState<CostsUnit>('usd')
   const { data: chart } = api.costs.chart.useQuery({
     range,

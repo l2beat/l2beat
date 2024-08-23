@@ -28,7 +28,7 @@ export default async function Page() {
       getProjectsVerificationStatuses(),
       get7dTvlBreakdown(),
       api.tvl.chart.prefetch({
-        type: 'layer2',
+        filter: { type: 'layer2' },
         range: getCookie('scalingTvlChartRange'),
       }),
     ])

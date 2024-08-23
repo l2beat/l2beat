@@ -17,8 +17,6 @@ export interface ChartSectionProps extends ProjectSectionProps {
   milestones: Milestone[]
 }
 
-
-
 export function ChartSection({
   projectId,
   milestones,
