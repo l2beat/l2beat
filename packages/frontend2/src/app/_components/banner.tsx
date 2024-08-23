@@ -20,7 +20,7 @@ export function Banner() {
   }
 
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-1 bg-gradient-to-r from-[#7F39B6] to-[#CD1BD3] py-1.5 text-white md:flex-row md:gap-3 dark:text-white">
+    <div className="flex w-full flex-col items-center justify-center gap-1 bg-gradient-to-r from-[#7F39B6] to-[#CD1BD3] py-1.5 text-white dark:text-white md:flex-row md:gap-3">
       <div className="absolute right-3">
         <CloseIcon
           onClick={() => setIsHidden(true)}
