@@ -5,8 +5,7 @@ import ScannerName from '../../_assets/scanner-name.svg?url'
 import SmallLogo from '../../_assets/small-logo.svg?url'
 import { InputWallet } from '../input-wallet'
 import { WalletDrawer } from '../wallet-drawer'
-import { NavbarDrawerTrigger } from './navbar-drawer-trigger'
-import { WalletInfo } from './wallet-info'
+import { DrawerTrigger } from '~/app/asset-risks/_components/drawer'
 
 export function Navbar() {
   return (
@@ -31,11 +30,14 @@ export function Navbar() {
           </ul>
           <div className="hidden items-center gap-3 md:flex">
             <InputWallet />
-            <WalletInfo />
           </div>
           <div className="inline-block md:hidden">
             <WalletDrawer>
-              <NavbarDrawerTrigger />
+              <DrawerTrigger>
+                <button className="rounded bg-pink-900 px-6 py-2 text-xs font-bold text-white">
+                  Scan assets
+                </button>
+              </DrawerTrigger>
             </WalletDrawer>
           </div>
         </nav>
