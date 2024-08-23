@@ -9,7 +9,7 @@ import {
 } from './chart-hover-context'
 import {
   ChartLoadingContextProvider,
-  ChartLoadingContextProviderParams,
+  type ChartLoadingContextProviderParams,
 } from './chart-loading-context'
 import { ChartRectContextProvider } from './chart-rect-context'
 
