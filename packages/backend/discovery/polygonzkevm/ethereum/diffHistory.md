@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xb8ebb36c10a462b3828a207f6ce26e0f4764f292
+
+# Diff at Fri, 23 Aug 2024 09:54:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 19976289
+- current block number: 19976289
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19976289 (main branch discovery), not current.
+
+```diff
+    contract daiBridge (0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract PolygonZkEVMEtrog (0x519E42c24163192Dca44CD3fBDCEBF6be9130987) {
+    +++ description: None
+      values.$upgradeCount:
++        3
+    }
+```
+
+```diff
+    contract usdcBridge (0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract wstETHBridge (0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
 Generated with discovered.json: 0xb79a429b56b8f47389871952082996dfa58b20b8
 
 # Diff at Wed, 21 Aug 2024 10:05:07 GMT:

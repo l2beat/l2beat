@@ -704,11 +704,20 @@ export const scroll: Layer2 = {
   ],
   milestones: [
     {
+      name: 'Darwin upgrade',
+      link: 'https://scroll.io/blog/proof-recursion-scrolls-darwin-upgrade',
+      date: '2024-08-21T00:00:00.00Z',
+      description:
+        'Introduces a reduction in gas fees through bundling multiple batches into a single validity proof.',
+      type: 'general',
+    },
+    {
       name: 'Curie upgrade',
       link: 'https://scroll.io/blog/compressing-the-gas-scrolls-curie-upgrade',
       date: '2024-07-03T00:00:00.00Z',
       description:
         'Introduces data compression, new opcodes, dynamic block time, and new transaction types.',
+      type: 'general',
     },
     {
       name: 'Bernoulli upgrade',
@@ -716,18 +725,21 @@ export const scroll: Layer2 = {
       date: '2024-04-29T00:00:00.00Z',
       description:
         'Introduces EIP-4844 data blobs for L1 data availability, and the SHA2-256 precompile on L2.',
+      type: 'general',
     },
     {
       name: 'Scroll official launch',
       link: 'https://x.com/Scroll_ZKP/status/1714286874020528554',
       date: '2023-10-17T00:00:00.00Z',
       description: 'Scroll announces its official launch.',
+      type: 'general',
     },
     {
       name: 'Scroll Alpha testnet launch',
       link: 'https://scroll.io/blog/alphaTestnet',
       date: '2023-02-27T00:00:00.00Z',
       description: 'Scroll launches its Alpha testnet on Goerli.',
+      type: 'general',
     },
   ],
 }

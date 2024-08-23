@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20532676,
   "configHash": "0x277093917a19cb593525834be9535ae172ac12062cb4362faa029339bc191408",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "SlashingManager",

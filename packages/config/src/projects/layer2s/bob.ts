@@ -61,6 +61,7 @@ export const bob: Layer2 = opStackL2({
       link: 'https://docs.gobob.xyz/docs/learn/bob-stack/op-stack',
       date: '2024-05-01T00:00:00Z',
       description: 'BOB bootstrapping as an Optimistic Rollup on Ethereum.',
+      type: 'general',
     },
   ],
   rpcUrl: 'https://rpc.gobob.xyz/',

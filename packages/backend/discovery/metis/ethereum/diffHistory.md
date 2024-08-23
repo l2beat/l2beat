@@ -1,3 +1,77 @@
+Generated with discovered.json: 0x5fbf6a2b5d9a2a0956c6939ffdbce796e6a1638d
+
+# Diff at Fri, 23 Aug 2024 09:53:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 20211335
+- current block number: 20211335
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20211335 (main branch discovery), not current.
+
+```diff
+    contract LockingInfo (0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48) {
+    +++ description: None
+      values.$upgradeCount:
++        2
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b) {
+    +++ description: None
+      values.$upgradeCount:
++        0
+    }
+```
+
+```diff
+    contract MVM_CanonicalTransaction (0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a) {
+    +++ description: None
+      values.$upgradeCount:
++        0
+    }
+```
+
+```diff
+    contract StateCommitmentChain (0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6) {
+    +++ description: None
+      values.$upgradeCount:
++        0
+    }
+```
+
+```diff
+    contract LockingPool (0xD54c868362C2098E0E46F12E7D924C6A332952Dd) {
+    +++ description: None
+      values.$upgradeCount:
++        2
+    }
+```
+
+```diff
+    contract MVM_Verifier (0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb) {
+    +++ description: None
+      values.$upgradeCount:
++        0
+    }
+```
+
+```diff
+    contract MVM_L2ChainManagerOnL1 (0xf3d58D1794f2634d6649a978f2dc093898FEEBc0) {
+    +++ description: None
+      values.$upgradeCount:
++        0
+    }
+```
+
 Generated with discovered.json: 0xb23695bb53308f9952d1308824fe405e1d092e00
 
 # Diff at Wed, 21 Aug 2024 10:04:08 GMT:

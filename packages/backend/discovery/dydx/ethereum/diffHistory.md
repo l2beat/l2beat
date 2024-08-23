@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x0794ca23bd2d6a3c4675bf3c358b89f0cff77214
+
+# Diff at Fri, 23 Aug 2024 09:52:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 19825321
+- current block number: 19825321
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825321 (main branch discovery), not current.
+
+```diff
+    contract MerkleDistributor (0x01d3348601968aB85b4bb028979006eac235a588) {
+    +++ description: None
+      values.$upgradeCount:
++        0
+    }
+```
+
+```diff
+    contract LiquidityStaking (0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941) {
+    +++ description: None
+      values.$upgradeCount:
++        0
+    }
+```
+
+```diff
+    contract TreasuryBridge (0x639192D54431F8c816368D3FB4107Bc168d0E871) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract SafetyModule (0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC) {
+    +++ description: None
+      values.$upgradeCount:
++        2
+    }
+```
+
 Generated with discovered.json: 0xa18e92967da60de60ca8b04f516d152e40628390
 
 # Diff at Wed, 21 Aug 2024 10:02:49 GMT:

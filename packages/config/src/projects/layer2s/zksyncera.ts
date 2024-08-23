@@ -728,24 +728,28 @@ export const zksyncera: Layer2 = {
       date: '2024-06-06T00:00:00Z',
       description:
         'A protocol upgrade that introduces a shared bridge and the foundation for other ZK stack chains.',
+      type: 'general',
     },
     {
       name: 'ZKsync Era starts using blobs',
       link: 'https://twitter.com/zksync/status/1767983026443579448',
       date: '2024-03-13T00:00:00Z',
       description: 'ZKsync Era starts publishing data to blobs.',
+      type: 'general',
     },
     {
       name: 'Introduction of Boojum prover',
       link: 'https://zksync.mirror.xyz/HJ2Pj45EJkRdt5Pau-ZXwkV2ctPx8qFL19STM5jdYhc',
       date: '2023-07-17T00:00:00Z',
       description: 'Deployment of Boojum - new high-performance proof system.',
+      type: 'general',
     },
     {
       name: 'ZKsync 2.0 baby alpha launch',
       link: 'https://blog.matter-labs.io/baby-alpha-has-arrived-5b10798bc623',
       date: '2022-10-28T00:00:00Z',
       description: 'ZKsync 2.0 baby alpha is launched on mainnet.',
+      type: 'general',
     },
     {
       name: 'Fair Onboarding Alpha and Rebranding',
@@ -753,12 +757,14 @@ export const zksyncera: Layer2 = {
       date: '2023-02-16T00:00:00Z',
       description:
         'ZKsync 2.0 rebrands to ZKsync Era and lets registered projects and developers deploy on mainnet.',
+      type: 'general',
     },
     {
       name: 'Full Launch Alpha',
       link: 'https://blog.matter-labs.io/gm-zkevm-171b12a26b36',
       date: '2023-03-24T00:00:00Z',
       description: 'ZKsync Era is now permissionless and open for everyone.',
+      type: 'general',
     },
   ],
   knowledgeNuggets: [

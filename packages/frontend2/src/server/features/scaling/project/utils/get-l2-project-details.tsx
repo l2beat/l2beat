@@ -95,10 +95,10 @@ export async function getL2ProjectDetails({
     !isEmpty(project.milestones)
   ) {
     items.push({
-      type: 'MilestonesSection',
+      type: 'MilestonesAndIncidentsSection',
       props: {
-        id: 'milestones',
-        title: 'Milestones',
+        id: 'milestones-and-incidents',
+        title: 'Milestones & Incidents',
         milestones: project.milestones,
       },
     })

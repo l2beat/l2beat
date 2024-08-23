@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19816414,
   "configHash": "0x79ab0e953135f51ef67edee8308d7def1f7b57f24e77fe39d6d60da30592bd08",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "DefiBridgeProxy",
@@ -61,6 +61,7 @@
       "values": {
         "$admin": "0xC5b735d05c26579B701Be9bED253Bb588503B26B",
         "$implementation": "0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728",
+        "$upgradeCount": 3,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",

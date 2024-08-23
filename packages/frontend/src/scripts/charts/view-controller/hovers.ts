@@ -1,4 +1,4 @@
-import { Milestone } from '@l2beat/config'
+import { Milestone, MilestoneType } from '@l2beat/config'
 
 import { formatDate } from '../../../utils'
 import { formatCurrency, formatCurrencyExactValue } from '../../../utils/format'
@@ -12,7 +12,7 @@ const horizontalSeparator = `<hr class="w-full border-gray-200 dark:border-gray-
 export function renderMilestoneHover(milestone: Milestone) {
   return renderHover([
     renderDateRow(formatDate(milestone.date.slice(0, 10))),
-    renderNameRow(milestone.name),
+    renderNameRow(milestone.name, milestone.type),
     milestone.description &&
       renderDescriptionRow({ description: milestone.description }),
     isMobile() && renderMilestoneLink(milestone.link),
@@ -339,7 +339,7 @@ function renderIcon(icon?: PointStyle | 'gap') {
         height="${point.height}"
         width="${point.width}"
         >
-          ${point.svgShape}>
+          ${point.svgShape}
       </svg>
     </div>
   `
@@ -347,9 +347,25 @@ function renderIcon(icon?: PointStyle | 'gap') {
   return `<div class="inline-block relative -top-px ${point.className}"></div>`
 }
 
-function renderNameRow(name: string) {
+function renderNameRow(name: string, type?: MilestoneType) {
   return `<div class="max-w-[216px] mb-2 font-bold flex flex-wrap">
-    <div class="absolute mt-[2px] md:mt-1 size-2.5 rotate-45 border-2 border-green-500 bg-green-700"></div>
+    ${
+      type === 'incident'
+        ? `
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        class="absolute mt-[2px] md:mt-1 stroke-red-700 fill-red-800"
+        role="img">
+        <path
+          d="M2.11842 14.4966L9.13637 2.46527C9.52224 1.80374 10.4781 1.80375 10.864 2.46528L17.882 14.497C18.2708 15.1637 17.7899 16.0008 17.0182 16.0008L10.0003 16.0008L10.0002 16.0008L2.98214 16.0004C2.21039 16.0004 1.72956 15.1632 2.11842 14.4966Z"
+          stroke-width="2"
+        />
+      </svg>
+      `
+        : '<div class="absolute mt-[2px] md:mt-1 size-2.5 rotate-45 border-2 border-green-500 bg-green-700 bg-red"></div>'
+    }
   <span class='ml-4 text-left'>${name}</span></div>`
 }
 

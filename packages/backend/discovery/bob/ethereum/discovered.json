@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20016201,
   "configHash": "0xa703089081ef30a3fd1b4acef291868581ef007690cb07321cd53ee16bfb795b",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "L1ERC20TokenBridge",
@@ -13,6 +13,7 @@
       "values": {
         "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "$implementation": "0xB531445401926029B1647669cFAc8b4e5d8C7777",
+        "$upgradeCount": 1,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DEPOSITS_DISABLER_ROLE": "0x63f736f21cb2943826cd50b191eb054ebbea670e4e962d0527611f830cd399d6",
         "DEPOSITS_ENABLER_ROLE": "0x4b43b36766bde12c5e9cbbc37d15f8d1f769f08f54720ab370faeb4ce893753a",
@@ -93,6 +94,7 @@
       "values": {
         "$admin": "0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0",
         "$implementation": "0xEEAfA156A5dd3811Ee0D9F91db57A77eA53A8d31",
+        "$upgradeCount": 0,
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0xE3d981643b806FB8030CDB677D6E60892E547EdA",
         "MESSENGER": "0xE3d981643b806FB8030CDB677D6E60892E547EdA",
@@ -116,6 +118,7 @@
       "values": {
         "$admin": "0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194",
         "$implementation": "0x3C3b95e46DD24C5c85A49A4D7029D0ceA0fEe1D9",
+        "$upgradeCount": 0,
         "burner": "0x0000000000000000000000000000000000000000",
         "l1Usdc": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "l2TokenBridge": "0xe497788F8Fcc30B773C9A181a0FFE2e60645cE90",
@@ -166,6 +169,7 @@
       "values": {
         "$admin": "0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0",
         "$implementation": "0x994e3B01D130944a3E67BFd3B8Fc73069b959FEc",
+        "$upgradeCount": 1,
         "GUARDIAN": "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E",
         "L2_ORACLE": "0xdDa53E23f8a32640b04D7256e651C1db98dB11C1",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
@@ -196,6 +200,7 @@
       "values": {
         "$admin": "0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0",
         "$implementation": "0xaa0A1EfD35d6578ea6B5704dbc2c40B36A55B590",
+        "$upgradeCount": 1,
         "batcherHash": "0x08F9F14fF43E112B18c96f0986F28Cb1878f1D11",
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
@@ -316,6 +321,7 @@
       "values": {
         "$admin": "0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0",
         "$implementation": "0x59191bD38EBA4a642C9FEc308dc188731b229822",
+        "$upgradeCount": 1,
         "CHALLENGER": "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,

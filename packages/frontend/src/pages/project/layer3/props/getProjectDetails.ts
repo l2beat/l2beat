@@ -17,7 +17,7 @@ import {
   ProjectDetailsContractsSection,
   ProjectDetailsDetailedDescriptionSection,
   ProjectDetailsKnowledgeNuggetsSection,
-  ProjectDetailsMilestonesSection,
+  ProjectDetailsMilestonesAndIncidentsSection,
   ProjectDetailsPermissionsSection,
   ProjectDetailsRiskAnalysisSection,
   ProjectDetailsRiskSection,
@@ -82,11 +82,11 @@ export function getProjectDetails(
   }
   if (!isUpcoming && project.milestones && !isEmpty(project.milestones)) {
     items.push({
-      type: 'MilestonesSection',
+      type: 'MilestonesAndIncidentsSection',
       props: {
         milestones: project.milestones,
-        id: 'milestones',
-        title: 'Milestones',
+        id: 'milestones-and-incidents',
+        title: 'Milestones & Incidents',
       },
     })
   }
@@ -232,7 +232,7 @@ export type ScalingDetailsItem = { excludeFromNavigation?: boolean } & (
 export type ScalingDetailsSection =
   | ProjectDetailsChartSection
   | ProjectDetailsDetailedDescriptionSection
-  | ProjectDetailsMilestonesSection
+  | ProjectDetailsMilestonesAndIncidentsSection
   | ProjectDetailsKnowledgeNuggetsSection
   | ProjectDetailsRiskAnalysisSection
   | ProjectDetailsRiskSection

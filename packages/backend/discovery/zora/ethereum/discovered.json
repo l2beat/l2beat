@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20475242,
   "configHash": "0x4f504880274f99c9783e5ed09c9ab707e056c1de0fa410a99b7139474a1dad7f",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "LivenessModule",
@@ -67,6 +67,7 @@
       "values": {
         "$admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49",
         "$implementation": "0x2D778797049FE9259d947D1ED8e5442226dFB589",
+        "$upgradeCount": 3,
         "guardian": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
         "GUARDIAN": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
         "L2_ORACLE": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
@@ -117,6 +118,7 @@
       "values": {
         "$admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49",
         "$implementation": "0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF",
+        "$upgradeCount": 0,
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0xdC40a14d9abd6F410226f1E6de71aE03441ca506",
         "MESSENGER": "0xdC40a14d9abd6F410226f1E6de71aE03441ca506",
@@ -257,6 +259,7 @@
       "values": {
         "$admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49",
         "$implementation": "0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d",
+        "$upgradeCount": 3,
         "messenger": "0xdC40a14d9abd6F410226f1E6de71aE03441ca506",
         "MESSENGER": "0xdC40a14d9abd6F410226f1E6de71aE03441ca506",
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000014",
@@ -318,6 +321,7 @@
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0x53c165169401764778F780a69701385eb0FF19B7",
+        "$upgradeCount": 3,
         "guardian": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
         "GUARDIAN_SLOT": "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68",
         "paused": false,
@@ -383,6 +387,7 @@
       "values": {
         "$admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49",
         "$implementation": "0xF243BEd163251380e78068d317ae10f26042B292",
+        "$upgradeCount": 5,
         "challenger": "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72",
         "CHALLENGER": "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72",
         "deletedOutputs": [],
@@ -428,6 +433,7 @@
       "values": {
         "$admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49",
         "$implementation": "0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1",
+        "$upgradeCount": 3,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "0x625726c858dBF78c0125436C943Bf4b4bE9d9033",
         "batchInbox": "0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf",
@@ -529,6 +535,7 @@
       "values": {
         "$admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49",
         "$implementation": "0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846",
+        "$upgradeCount": 3,
         "bridge": "0x3e2Ea9B92B7E48A52296fD261dc26fd995284631",
         "BRIDGE": "0x3e2Ea9B92B7E48A52296fD261dc26fd995284631",
         "version": "1.9.0"

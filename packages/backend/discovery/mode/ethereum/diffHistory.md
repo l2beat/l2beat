@@ -1,3 +1,77 @@
+Generated with discovered.json: 0x8bee1837830b4925e6a6f63d8059186a50f12531
+
+# Diff at Fri, 23 Aug 2024 09:53:27 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 20475234
+- current block number: 20475234
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20475234 (main branch discovery), not current.
+
+```diff
+    contract L1ERC721Bridge (0x2901dA832a4D0297FF0691100A8E496626cc626D) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.$upgradeCount:
++        3
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x4317ba146D4933D889518a3e5E11Fe7a53199b04) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$upgradeCount:
++        3
+    }
+```
+
+```diff
+    contract SystemConfig (0x5e6432F18Bc5d497B1Ab2288a025Fbf9D69E2221) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.$upgradeCount:
++        3
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x69216395A62dFb243C05EF4F1C27AF8655096a95) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      values.$upgradeCount:
++        3
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x735aDBbE72226BD52e818E7181953f42E3b0FF21) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      values.$upgradeCount:
++        0
+    }
+```
+
+```diff
+    contract OptimismPortal (0x8B34b14c7c7123459Cf3076b8Cb929BE097d0C07) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.$upgradeCount:
++        7
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      values.$upgradeCount:
++        3
+    }
+```
+
 Generated with discovered.json: 0xc6f095cb396951462001e142d81600fdd2ffcfbe
 
 # Diff at Wed, 21 Aug 2024 10:04:13 GMT:

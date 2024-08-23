@@ -25,7 +25,7 @@ export function ScalingCostsChart({ milestones, tag = 'costs' }: Props) {
   const [scale, setScale] = useLocalStorage(`${tag}-scale`, 'lin')
   const { range, setRange } = useCostsTimeRangeContext()
   const { unit, setUnit } = useCostsUnitContext()
-  const { data: chart } = api.scaling.costs.chart.useQuery({
+  const { data: chart, isLoading } = api.scaling.costs.chart.useQuery({
     range,
     filter: { type: 'all' },
   })
@@ -46,6 +46,7 @@ export function ScalingCostsChart({ milestones, tag = 'costs' }: Props) {
         formatYAxisLabel={formatYAxisLabel}
         range={chartRange}
         useLogScale={scale === 'log'}
+        isLoading={isLoading}
         renderHoverContents={(data) => (
           <CostsChartHover data={data} unit={unit} />
         )}

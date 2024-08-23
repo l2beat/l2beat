@@ -1,8 +1,9 @@
+import { MilestoneType } from '@l2beat/config'
 import { isMobile } from '../../utils/isMobile'
 
 const MILESTONE_SIZE = 20
 
-export function renderMilestone(x: number, url: string) {
+export function renderMilestone(x: number, url: string, type: MilestoneType) {
   const left = x - MILESTONE_SIZE / 2
   const top = -MILESTONE_SIZE / 2
   return `
@@ -14,8 +15,20 @@ export function renderMilestone(x: number, url: string) {
         view-box="0 0 ${MILESTONE_SIZE} ${MILESTONE_SIZE}"
         role="img"
         aria-label="Milestone icon"
-        class="fill-green-700 stroke-green-500"
+        class="${
+          type === 'incident'
+            ? 'stroke-red-700 fill-red-800'
+            : 'fill-green-700 stroke-green-500'
+        }"
       >
+        ${
+          type === 'incident'
+            ? `
+        <path 
+          d="M2.11842 14.4966L9.13637 2.46527C9.52224 1.80374 10.4781 1.80375 10.864 2.46528L17.882 14.497C18.2708 15.1637 17.7899 16.0008 17.0182 16.0008L10.0003 16.0008L10.0002 16.0008L2.98214 16.0004C2.21039 16.0004 1.72956 15.1632 2.11842 14.4966Z"
+          stroke-width="2"
+        />`
+            : `
         <rect
           x="9.89941"
           y="1.41421"
@@ -25,7 +38,8 @@ export function renderMilestone(x: number, url: string) {
           transform="rotate(45 9.89941 1.41421)"
           stroke-width="2"
         />
-      <svg>
-    ${isMobile() ? '' : '</a>'}
+        `
+        }
+        ${isMobile() ? '' : '</a>'}
   </div>`
 }
