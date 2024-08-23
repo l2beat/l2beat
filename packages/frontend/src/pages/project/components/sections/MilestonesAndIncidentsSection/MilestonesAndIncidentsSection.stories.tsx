@@ -6,7 +6,7 @@ const meta: Meta<typeof MilestonesAndIncidentsSection> = {
   component: MilestonesAndIncidentsSection,
   args: {
     id: 'milestones-and-incidents',
-    title: 'Milestones',
+    title: 'Milestones & Incidents',
     sectionOrder: 1,
   },
 }
