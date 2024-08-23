@@ -3,7 +3,7 @@
   "chain": "base",
   "blockNumber": 17596075,
   "configHash": "0x49f7bf7640f2f567471dbb7179bf811af73dcafa29f1fb7e91dce5adda9dc2db",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "BaseL2Gateway",
@@ -21,6 +21,7 @@
       "values": {
         "$admin": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
         "$implementation": "0x7f00134427437b2883F59EF3880597FDc836E356",
+        "$upgradeCount": 1,
         "getRemoteGateway": "0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E",
         "MESSAGE_SERVICE": "0x4200000000000000000000000000000000000007",
         "owner": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -43,6 +44,7 @@
       "values": {
         "$admin": "0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE",
         "$implementation": "0xA89aa7e3D34516EAB7129E401215d5d1239Ce715",
+        "$upgradeCount": 2,
         "l2Bridge": "0xa03248B029b4e348F156f4b1d93CB433a4e1361e",
         "l2TokenBeacon": "0x2f4EE4c9737916bBF9E6a29Bb9DFEae3348c5eE9",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
@@ -91,6 +93,7 @@
       "values": {
         "$admin": "0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C",
         "$implementation": "0x08Ca9154DA9318323D3f6DFd872f5cDC4C85E388",
+        "$upgradeCount": 2,
         "feeParams": {
           "pubdataPricingMode": 0,
           "batchOverheadL1Gas": 1000000,

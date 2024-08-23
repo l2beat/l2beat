@@ -6,7 +6,7 @@ import { selectActivity } from './select'
 export class ActivityRepository extends BaseRepository {
   async getAll(): Promise<ActivityRecord[]> {
     const rows = await this.db
-      .selectFrom('public.activity')
+      .selectFrom('activity')
       .select(selectActivity)
       .execute()
     return rows.map(toRecord)
@@ -18,7 +18,7 @@ export class ActivityRepository extends BaseRepository {
     const rows = records.map(toRow)
     await this.batch(rows, 5_000, async (batch) => {
       await this.db
-        .insertInto('public.activity')
+        .insertInto('activity')
         .values(batch)
         .onConflict((cb) =>
           cb.columns(['timestamp', 'project_id']).doUpdateSet((eb) => ({
@@ -37,7 +37,7 @@ export class ActivityRepository extends BaseRepository {
     fromInclusive: UnixTime,
   ): Promise<number> {
     const result = await this.db
-      .deleteFrom('public.activity')
+      .deleteFrom('activity')
       .where((eb) =>
         eb.and([
           eb('project_id', '=', projectId.toString()),
@@ -49,9 +49,7 @@ export class ActivityRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
-      .deleteFrom('public.activity')
-      .executeTakeFirst()
+    const result = await this.db.deleteFrom('activity').executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 
@@ -61,7 +59,7 @@ export class ActivityRepository extends BaseRepository {
   ): Promise<ActivityRecord[]> {
     const [from, to] = timeRange
     const rows = await this.db
-      .selectFrom('public.activity')
+      .selectFrom('activity')
       .select(selectActivity)
       .where('project_id', '=', projectId.toString())
       .where('timestamp', '>=', from.toDate())
@@ -77,7 +75,7 @@ export class ActivityRepository extends BaseRepository {
   ): Promise<Omit<ActivityRecord, 'timestamp' | 'start' | 'end'>[]> {
     const [from, to] = timeRange
     const rows = await this.db
-      .selectFrom('public.activity')
+      .selectFrom('activity')
       .select(['project_id'])
       .select((eb) => eb.fn.sum('count').as('count'))
       .where(
@@ -106,7 +104,7 @@ export class ActivityRepository extends BaseRepository {
     dataPoint: number,
   ): Promise<ActivityRecord[]> {
     const rows = await this.db
-      .selectFrom('public.activity')
+      .selectFrom('activity')
       .select(selectActivity)
       .where('project_id', '=', projectId.toString())
       .where('start', '<=', dataPoint)
@@ -118,7 +116,7 @@ export class ActivityRepository extends BaseRepository {
 
   async getDailyCounts(): Promise<ActivityRecord[]> {
     const rows = await this.db
-      .selectFrom('public.activity')
+      .selectFrom('activity')
       .select(selectActivity)
       .orderBy('timestamp', 'asc')
       .execute()
@@ -129,7 +127,7 @@ export class ActivityRepository extends BaseRepository {
     projectId: ProjectId,
   ): Promise<ActivityRecord[]> {
     const rows = await this.db
-      .selectFrom('public.activity')
+      .selectFrom('activity')
       .select(selectActivity)
       .where('project_id', '=', projectId.toString())
       .orderBy('timestamp', 'asc')
@@ -143,7 +141,7 @@ export class ActivityRepository extends BaseRepository {
     if (projectIds.length === 0) return []
 
     const rows = await this.db
-      .selectFrom('public.activity')
+      .selectFrom('activity')
       .where(
         'project_id',
         'in',

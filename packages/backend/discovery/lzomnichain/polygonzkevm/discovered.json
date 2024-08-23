@@ -3,7 +3,7 @@
   "chain": "polygonzkevm",
   "blockNumber": 14728552,
   "configHash": "0x710026b5135b5d108b40faf49d9063aa0102a28e3c1346da5da9851d474cdc27",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "",
@@ -133,7 +133,8 @@
       "sinceTimestamp": 1679974072,
       "values": {
         "$admin": "0x3c2269811836af69497E5F486A85D7316753cf62",
-        "$implementation": "0xF622DFb40bf7340DBCf1e5147D6CFD95d7c5cF1F"
+        "$implementation": "0xF622DFb40bf7340DBCf1e5147D6CFD95d7c5cF1F",
+        "$upgradeCount": 2
       }
     },
     {
@@ -151,7 +152,8 @@
       "sinceTimestamp": 1679975953,
       "values": {
         "$admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
-        "$implementation": "0x0cA22b3dB505E13a9F40e6AB6DAf33B37D98Cf2f"
+        "$implementation": "0x0cA22b3dB505E13a9F40e6AB6DAf33B37D98Cf2f",
+        "$upgradeCount": 1
       }
     },
     {

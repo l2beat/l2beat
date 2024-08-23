@@ -13,7 +13,7 @@ import { selectNetwork } from './select'
 export class NetworkRepository extends BaseRepository {
   async getAll(): Promise<NetworkRecord[]> {
     const rows = await this.db
-      .selectFrom('public.Network')
+      .selectFrom('Network')
       .select(selectNetwork)
       .execute()
     return rows.map(toRecord)
@@ -26,7 +26,7 @@ export class NetworkRepository extends BaseRepository {
     })[]
   > {
     const allNetworks = await this.db
-      .selectFrom('public.Network')
+      .selectFrom('Network')
       .select([...selectNetwork])
       .execute()
 
@@ -34,14 +34,14 @@ export class NetworkRepository extends BaseRepository {
 
     const [explorers, rpcs] = await Promise.all([
       this.db
-        .selectFrom('public.NetworkExplorer')
+        .selectFrom('NetworkExplorer')
         .select(selectNetworkExplorer)
-        .where('public.NetworkExplorer.networkId', 'in', networkIds)
+        .where('NetworkExplorer.networkId', 'in', networkIds)
         .execute(),
       this.db
-        .selectFrom('public.NetworkRpc')
+        .selectFrom('NetworkRpc')
         .select(selectNetworkRpc)
-        .where('public.NetworkRpc.networkId', 'in', networkIds)
+        .where('NetworkRpc.networkId', 'in', networkIds)
         .execute(),
     ])
 
@@ -58,8 +58,8 @@ export class NetworkRepository extends BaseRepository {
     SetRequired<NetworkRecord, 'coingeckoId'>[]
   > {
     const rows = await this.db
-      .selectFrom('public.Network')
-      .where('public.Network.coingeckoId', 'is not', null)
+      .selectFrom('Network')
+      .where('Network.coingeckoId', 'is not', null)
       .select(selectNetwork)
       .$narrowType<{ coingeckoId: string }>()
       .execute()
@@ -72,7 +72,7 @@ export class NetworkRepository extends BaseRepository {
     const rows = networks.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
       await this.db
-        .insertInto('public.Network')
+        .insertInto('Network')
         .values(batch)
         .onConflict((cb) =>
           cb.column('coingeckoId').doUpdateSet((eb) => ({
@@ -90,7 +90,7 @@ export class NetworkRepository extends BaseRepository {
   ): Promise<void> {
     const row = toRow(record)
     await this.db
-      .updateTable('public.Network')
+      .updateTable('Network')
       .set(row)
       .where('coingeckoId', '=', coingeckoId)
       .execute()

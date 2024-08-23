@@ -15,7 +15,7 @@ export class ValueRepository extends BaseRepository {
     if (projectIds.length === 0) return []
 
     const rows = await this.db
-      .selectFrom('public.values')
+      .selectFrom('values')
       .select(selectValue)
       .where(
         'project_id',
@@ -34,7 +34,7 @@ export class ValueRepository extends BaseRepository {
     if (projectIds.length === 0) return []
 
     const rows = await this.db
-      .selectFrom('public.values')
+      .selectFrom('values')
       .select(selectValue)
       .where(
         'project_id',
@@ -52,7 +52,7 @@ export class ValueRepository extends BaseRepository {
     if (projectIds?.length === 0) return []
     const maxTimestampsQuery = (cb: QueryCreator<DB>) => {
       let query = cb
-        .selectFrom('public.values')
+        .selectFrom('values')
         .select(({ fn }) => [
           'project_id',
           'data_source',
@@ -72,17 +72,13 @@ export class ValueRepository extends BaseRepository {
 
     const rows = await this.db
       .with('max_timestamps', maxTimestampsQuery)
-      .selectFrom('public.values')
-      .select(selectValueWithPrefix('public.values'))
+      .selectFrom('values')
+      .select(selectValueWithPrefix('values'))
       .innerJoin('max_timestamps', (join) =>
         join
-          .onRef('public.values.project_id', '=', 'max_timestamps.project_id')
-          .onRef('public.values.data_source', '=', 'max_timestamps.data_source')
-          .onRef(
-            'public.values.timestamp',
-            '=',
-            'max_timestamps.max_timestamp',
-          ),
+          .onRef('values.project_id', '=', 'max_timestamps.project_id')
+          .onRef('values.data_source', '=', 'max_timestamps.data_source')
+          .onRef('values.timestamp', '=', 'max_timestamps.max_timestamp'),
       )
       .execute()
 
@@ -95,7 +91,7 @@ export class ValueRepository extends BaseRepository {
     const rows = records.map(toRow)
     await this.batch(rows, 2_000, async (batch) => {
       await this.db
-        .insertInto('public.values')
+        .insertInto('values')
         .values(batch)
         .onConflict((cb) =>
           cb
@@ -133,7 +129,7 @@ export class ValueRepository extends BaseRepository {
 
     const rows = records.map(toRow)
     await this.batch(rows, 2_000, async (batch) => {
-      await this.db.insertInto('public.values').values(batch).execute()
+      await this.db.insertInto('values').values(batch).execute()
     })
     return records.length
   }
@@ -141,11 +137,11 @@ export class ValueRepository extends BaseRepository {
   // #region methods used only in TvlCleaner
 
   deleteHourlyUntil(dateRange: CleanDateRange): Promise<number> {
-    return deleteHourlyUntil(this.db, 'public.values', dateRange)
+    return deleteHourlyUntil(this.db, 'values', dateRange)
   }
 
   deleteSixHourlyUntil(dateRange: CleanDateRange): Promise<number> {
-    return deleteSixHourlyUntil(this.db, 'public.values', dateRange)
+    return deleteSixHourlyUntil(this.db, 'values', dateRange)
   }
 
   // #endregion
@@ -154,14 +150,14 @@ export class ValueRepository extends BaseRepository {
 
   async getAll(): Promise<ValueRecord[]> {
     const rows = await this.db
-      .selectFrom('public.values')
+      .selectFrom('values')
       .select(selectValue)
       .execute()
     return rows.map(toRecord)
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db.deleteFrom('public.values').executeTakeFirst()
+    const result = await this.db.deleteFrom('values').executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 

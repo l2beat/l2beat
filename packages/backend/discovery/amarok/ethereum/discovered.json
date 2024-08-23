@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20569082,
   "configHash": "0xa8586a9cc9764821729519efbbdaac1754212cb07e84c4c373f9caedbd6b83d9",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "MainnetSpokeConnector",

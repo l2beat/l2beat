@@ -1,8 +1,8 @@
 export function getPercentageChange(now: number, then: number) {
   if (now === then || then === 0) {
-    return '+0.00%'
+    return 0
   }
-  return formatPercent(now / then - 1, true)
+  return now / then - 1
 }
 
 export function formatPercent(value: number, addPlus = false) {

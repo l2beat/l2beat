@@ -1,3 +1,103 @@
+Generated with discovered.json: 0x279e6568db2d1a94f26e5b0e0c4347fd2b9b1119
+
+# Diff at Fri, 23 Aug 2024 09:55:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 20589788
+- current block number: 20589788
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20589788 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract ChallengeManager (0x73cfa0F6ae141212115657ad91Ad918E5d34d882) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract ERC20RollupEventInbox (0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract Bridge (0xa104C0426e95a5538e89131DbB4163d230C35f86) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract Outbox (0xB360b2f57c645E847148d7C479b7468AbF6F707d) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract SequencerInbox (0xD80a805c86C14c879420eC6acb366D04D318fC0C) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract Inbox (0xEa83E8907C89Bc0D9517632f0ba081972E328631) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+Generated with discovered.json: 0x1f48b58d220b819d850857bc29b7feb58dd71bc2
+
+# Diff at Fri, 23 Aug 2024 07:24:11 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@08f0832a5dea29e7c493cd50bda4bf1729aa03ae block: 20575837
+- current block number: 20589788
+
+## Description
+
+Ignored the token's total supply.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20575837 (main branch discovery), not current.
+
+```diff
+    contract SXNetwork (0xbe9F61555F50DD6167f2772e9CF7519790d96624) {
+    +++ description: None
+      values.totalSupply:
+-        "97216642899192381828100000"
+    }
+```
+
 Generated with discovered.json: 0xda775f3da176d73f47a0378b875b6b8cfedacfbd
 
 # Diff at Wed, 21 Aug 2024 13:25:38 GMT:

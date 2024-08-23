@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x1cd332563f7ac0219d2424e09c991ff8def76cb8
+
+# Diff at Fri, 23 Aug 2024 09:53:13 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 19531966
+- current block number: 19531966
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531966 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x30c789674ad3B458886BBC9abf42EEe19EA05C1D) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x3B95bC951EE0f553ba487327278cAc44f29715E5) {
+    +++ description: None
+      values.$upgradeCount:
++        0
+    }
+```
+
+```diff
+    contract SystemConfig (0x895E00269A05848F3c9889EfA677D02fF7351a5D) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract OptimismPortal (0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
 Generated with discovered.json: 0x97a1675162ec41cabf82b5f9462bdb065d32ce7c
 
 # Diff at Wed, 21 Aug 2024 10:03:59 GMT:

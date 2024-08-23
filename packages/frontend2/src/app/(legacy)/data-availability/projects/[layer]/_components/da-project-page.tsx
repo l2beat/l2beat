@@ -3,9 +3,9 @@ import {
   type DaLayer,
 } from '@l2beat/config/build/src/projects/other/da-beat'
 import { HighlightableLinkContextProvider } from '~/app/_components/link/highlightable/highlightable-link-context'
-import { DesktopProjectNavigation } from '~/app/_components/projects/sections/navigation/desktop-project-navigation'
-import { MobileProjectNavigation } from '~/app/_components/projects/sections/navigation/mobile-project-navigation'
-import { ProjectDetails } from '~/app/_components/projects/sections/project-details'
+import { DesktopProjectNavigation } from '~/app/_components/projects/navigation/desktop-project-navigation'
+import { MobileProjectNavigation } from '~/app/_components/projects/navigation/mobile-project-navigation'
+import { ProjectDetails } from '~/app/_components/projects/project-details'
 import { getDaProjectEntry } from '~/server/features/data-availability/project/get-da-project-entry'
 import { DaProjectSummary } from '../_components/da-project-summary'
 
@@ -18,7 +18,9 @@ interface Props {
 export async function DaProjectPage({ header, daLayer, daBridge }: Props) {
   const daProjectEntry = await getDaProjectEntry(daLayer, daBridge)
 
-  const isNavigationEmpty = daProjectEntry.projectDetails.length === 0
+  const isNavigationEmpty =
+    daProjectEntry.projectDetails.filter((s) => !s.excludeFromNavigation)
+      .length === 0
 
   return (
     <>
@@ -37,7 +39,7 @@ export async function DaProjectPage({ header, daLayer, daBridge }: Props) {
             <DesktopProjectNavigation
               project={{
                 title: daProjectEntry.name,
-                icon: daProjectEntry.iconSrc,
+                slug: daLayer.display.slug,
                 showProjectUnderReview: daProjectEntry.isUnderReview,
               }}
               sections={daProjectEntry.projectDetails}

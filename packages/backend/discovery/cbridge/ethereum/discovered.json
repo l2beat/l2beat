@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20512741,
   "configHash": "0x5eadf9aa619337518b920086c1bf5de662fa19fa8d3cdd00051e2b9d178534f5",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "PeggedTokenBridge",
@@ -33,6 +33,7 @@
       "values": {
         "$admin": "0x520d812604E7b2ce71819FDBFE9aC40E56327F8f",
         "$implementation": "0x479ec366ae4EC016cE25B918BdEa8f78d4fa5dd8",
+        "$upgradeCount": 2,
         "feeBase": 15000000000000,
         "feePerByte": 150000000000,
         "liquidityBridge": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820",
@@ -215,6 +216,7 @@
       "values": {
         "$admin": "0x8E339115b295DeD49880eA62C1F06d1dbec3496b",
         "$implementation": "0xaE41e6a597f4c65646e94E330D8BAd218Bec7896",
+        "$upgradeCount": 1,
         "governors": [
           "0xED9fdF5B16F9F254bec5Ad389B80B48225186655",
           "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",

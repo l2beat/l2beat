@@ -48,7 +48,7 @@ export function ScalingSummaryTvlChart({ entries, milestones }: Props) {
     }
   }, [entries, includeFilter, filters])
 
-  const { data } = api.scaling.summary.chart.useQuery({
+  const { data, isLoading } = api.scaling.summary.chart.useQuery({
     range: timeRange,
     excludeAssociatedTokens,
     ...chartDataType,
@@ -69,6 +69,7 @@ export function ScalingSummaryTvlChart({ entries, milestones }: Props) {
       valuesStyle={valuesStyle}
       formatYAxisLabel={formatYAxisLabel}
       range={chartRange}
+      isLoading={isLoading}
       useLogScale={scale === 'log'}
       renderHoverContents={(data) => <TvlChartHover data={data} />}
     >

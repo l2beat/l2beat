@@ -1,15 +1,17 @@
 'use client'
-
-import { PlainLink } from '~/app/_components/plain-link'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '~/app/_components/popover'
-import ChevronIcon from '~/icons/chevron.svg'
 import OutlinkIcon from '~/icons/outlink.svg'
 import { ProductIcon } from '~/icons/products/SocialIcon'
+import { cn } from '~/utils/cn'
 import { formatLink } from '~/utils/format-link'
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from '../../navigation-menu'
 import { parseSocial } from './parse-social'
 import { ProjectLinkIcon } from './project-link-icon'
 import { type ProjectLink } from './types'
@@ -20,10 +22,14 @@ interface Props {
 
 export function DesktopProjectLinks({ projectLinks }: Props) {
   return (
-    <div className="flex flex-row flex-wrap gap-1.5">
-      {projectLinks.map((link) => (
-        <ProjectLinkItem key={link.name} projectLink={link} />
-      ))}
+    <div>
+      <NavigationMenu>
+        <NavigationMenuList>
+          {projectLinks.map((link) => (
+            <ProjectLinkItem key={link.name} projectLink={link} />
+          ))}
+        </NavigationMenuList>
+      </NavigationMenu>
     </div>
   )
 }
@@ -31,15 +37,20 @@ export function DesktopProjectLinks({ projectLinks }: Props) {
 function ProjectLinkItem({ projectLink }: { projectLink: ProjectLink }) {
   if (projectLink.links.length === 1 && projectLink.name !== 'Social') {
     return (
-      <div className="flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-gray-100 px-2 py-1.5 text-xs font-medium transition-colors hover:bg-gray-200 dark:bg-zinc-900 dark:hover:bg-zinc-700">
-        <PlainLink
+      <NavigationMenuItem>
+        <NavigationMenuLink
           href={projectLink.links[0]}
-          className="flex flex-row items-center gap-1.5"
+          rel="noopener noreferrer"
+          target="_blank"
+          className={cn(
+            navigationMenuTriggerStyle(),
+            'flex flex-row items-center gap-1.5',
+          )}
         >
           <ProjectLinkIcon name={projectLink.name} />
-          {projectLink.name} <OutlinkIcon className="fill-current" />
-        </PlainLink>
-      </div>
+          {projectLink.name}
+        </NavigationMenuLink>
+      </NavigationMenuItem>
     )
   }
 
@@ -48,21 +59,25 @@ function ProjectLinkItem({ projectLink }: { projectLink: ProjectLink }) {
 
 function MultiProjectLink({ projectLink }: { projectLink: ProjectLink }) {
   return (
-    <Popover>
-      <PopoverTrigger className="group bg-gray-100 text-xs font-medium data-[state=open]:bg-gray-200 dark:bg-zinc-900 dark:data-[state=open]:bg-zinc-700">
+    <NavigationMenuItem>
+      <NavigationMenuTrigger>
         <ProjectLinkIcon name={projectLink.name} />
-        {projectLink.name}{' '}
-        <ChevronIcon className="fill-current transition-transform duration-200 ease-out group-data-[state=open]:-rotate-180" />
-      </PopoverTrigger>
-      <PopoverContent align="start" className="bg-gray-100 dark:bg-zinc-900">
+        {projectLink.name}
+      </NavigationMenuTrigger>
+      <NavigationMenuContent>
         {projectLink.links.map((link) => {
           const parsedSocial =
             projectLink.name === 'Social' ? parseSocial(link) : undefined
           return (
-            <PlainLink
+            <NavigationMenuLink
               key={link}
               href={link}
-              className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors hover:bg-gray-200 dark:hover:bg-zinc-700"
+              rel="noopener noreferrer"
+              target="_blank"
+              className={cn(
+                navigationMenuTriggerStyle(),
+                'flex w-full justify-start gap-1.5',
+              )}
             >
               {parsedSocial?.platform && (
                 <ProductIcon
@@ -72,11 +87,11 @@ function MultiProjectLink({ projectLink }: { projectLink: ProjectLink }) {
                 />
               )}
               {parsedSocial ? parsedSocial.text : formatLink(link)}
-              <OutlinkIcon className="fill-current" />
-            </PlainLink>
+              <OutlinkIcon className="size-4 fill-current" />
+            </NavigationMenuLink>
           )
         })}
-      </PopoverContent>
-    </Popover>
+      </NavigationMenuContent>
+    </NavigationMenuItem>
   )
 }
