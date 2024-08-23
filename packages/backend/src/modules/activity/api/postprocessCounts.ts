@@ -10,15 +10,15 @@ import { DailyTransactionCount } from './types'
  * - unfinished days (we haven't finished processing)
  *
  * @param counts sorted in ascending order by timestamp. Timestamps are start of days
+ * @param today timestamp for start of the day
  */
 export function postprocessCounts(
   counts: DailyTransactionCount[],
   processedAll: boolean,
-  now: UnixTime,
+  today: UnixTime,
 ): DailyTransactionCount[] {
   if (counts.length === 0) return []
 
-  const today = now.toStartOf('day')
   const yesterday = today.add(-1, 'days')
 
   // fill holes before last processed

@@ -67,7 +67,8 @@ export function getProjectDetails({
     props: {
       id: 'risk-analysis',
       title: 'Risk analysis',
-      riskValues: rosetteValues,
+      rosetteType: 'pentagon',
+      rosetteValues: rosetteValues,
       isUnderReview: !!daLayer.isUnderReview || daBridge.isUnderReview,
       warning: daBridge.display.warning,
       redWarning: daBridge.display.redWarning,
@@ -84,7 +85,7 @@ export function getProjectDetails({
         type: 'da-layer-technology',
         slug: daLayer.display.slug,
       },
-      children: daLayer.technology,
+      content: daLayer.technology,
     },
   })
 
@@ -97,7 +98,7 @@ export function getProjectDetails({
         type: 'da-bridge-technology',
         slug: `${daLayer.display.slug}-${daBridge.display.slug}`,
       },
-      children: daBridge.technology,
+      content: daBridge.technology,
     },
   })
 
@@ -106,7 +107,7 @@ export function getProjectDetails({
       type: 'PermissionsSection',
       props: {
         ...permissionsSection,
-        id: 'da-bridge-permissions',
+        id: 'permissions',
         title: 'DA Bridge permissions',
       },
     })
@@ -117,7 +118,7 @@ export function getProjectDetails({
       type: 'ContractsSection',
       props: {
         ...contractsSection,
-        id: 'da-bridge-contracts',
+        id: 'contracts',
         title: 'DA Bridge contracts',
       },
     })

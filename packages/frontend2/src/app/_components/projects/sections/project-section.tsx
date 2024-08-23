@@ -4,7 +4,7 @@ import { cn } from '~/utils/cn'
 import { UnderReviewCallout } from '../under-review-callout'
 import { type ProjectSectionId } from './types'
 
-interface Props {
+export interface ExtendedProjectSectionProps {
   title: string
   id: ProjectSectionId
   sectionOrder: number | undefined
@@ -14,7 +14,7 @@ interface Props {
   includeChildrenIfUnderReview?: boolean
 }
 
-export function ProjectSection(props: Props) {
+export function ProjectSection(props: ExtendedProjectSectionProps) {
   return (
     <section
       id={props.id}

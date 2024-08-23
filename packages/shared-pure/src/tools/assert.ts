@@ -7,6 +7,8 @@ export function assert(
   }
 }
 
-export function assertUnreachable(_: never): never {
-  throw new Error('There are more values to handle.')
+export function assertUnreachable(unhandled: never): never {
+  throw new Error(
+    `There are more values to handle.\n${JSON.stringify(unhandled)}`,
+  )
 }

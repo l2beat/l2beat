@@ -1,33 +1,20 @@
 import React from 'react'
 import { ProjectSection } from '../project-section'
-import { type ProjectSectionId } from '../types'
+import { type ProjectSectionProps } from '../types'
 import { ContractEntry, type TechnologyContract } from './contract-entry'
 
-export interface PermissionsSectionProps {
-  id: ProjectSectionId
-  title: string
-  sectionOrder: number
-  isUnderReview: boolean | undefined
+export interface PermissionsSectionProps extends ProjectSectionProps {
   permissions: TechnologyContract[]
   nativePermissions: Record<string, TechnologyContract[]>
 }
 
 export function PermissionsSection({
-  id,
-  title,
-  sectionOrder,
   permissions,
   nativePermissions,
-  isUnderReview,
+  ...sectionProps
 }: PermissionsSectionProps) {
   return (
-    <ProjectSection
-      title={title}
-      id={id}
-      isUnderReview={isUnderReview}
-      sectionOrder={sectionOrder}
-      includeChildrenIfUnderReview
-    >
+    <ProjectSection {...sectionProps} includeChildrenIfUnderReview>
       <h3 className="mt-4 font-bold">
         The system uses the following set of permissioned addresses:
       </h3>

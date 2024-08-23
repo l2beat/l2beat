@@ -1,10 +1,10 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
-import { CostsChart } from '~/app/_components/chart/costs-chart'
+import { ScalingCostsChart } from '~/app/_components/chart/costs/scaling-costs-chart'
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import { getScalingCostsEntries } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
-import { getDefaultMetadata } from '~/utils/get-default-metadata'
+import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
 import { CostsMetricContextProvider } from './_components/costs-metric-context'
 import { CostsTimeRangeContextProvider } from './_components/costs-time-range-context'
@@ -20,7 +20,7 @@ export const metadata = getDefaultMetadata({
 export default async function Page() {
   const entries = await getScalingCostsEntries()
   const range = getCookie('scalingCostsChartRange')
-  await api.scaling.costs.chart.prefetch({ range })
+  await api.scaling.costs.chart.prefetch({ range, filter: { type: 'all' } })
   await api.scaling.costs.table.prefetch({ range })
 
   return (
@@ -29,7 +29,7 @@ export default async function Page() {
         <CostsTimeRangeContextProvider>
           <CostsUnitContextProvider>
             <CostsMetricContextProvider>
-              <CostsChart milestones={HOMEPAGE_MILESTONES} />
+              <ScalingCostsChart milestones={HOMEPAGE_MILESTONES} />
               <HorizontalSeparator className="my-4 md:my-6" />
               <ScalingCostsTable entries={entries} />
             </CostsMetricContextProvider>
