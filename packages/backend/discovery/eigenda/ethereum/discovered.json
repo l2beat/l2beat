@@ -1,18 +1,26 @@
 {
   "name": "eigenda",
   "chain": "ethereum",
-  "blockNumber": 20584757,
+  "blockNumber": 20592130,
   "configHash": "0x1ea0255006656163b1dc7a7458f955484caf72eed8bac24c282a9d0ac0b6dcf1",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "StakeRegistry",
       "address": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1712353799,
       "values": {
         "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
         "$implementation": "0x1C468cf7089D263c2f53e2579b329B16aBc4dd96",
+        "$upgradeCount": 2,
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "MAX_WEIGHING_FUNCTION_LENGTH": 32,
         "registryCoordinator": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
@@ -23,10 +31,18 @@
       "name": "BLSApkRegistry",
       "address": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1712353799,
       "values": {
         "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
         "$implementation": "0x5d0B9cE2e277Daf508528E9f6Bf6314E79e4eD2b",
+        "$upgradeCount": 2,
         "registryCoordinator": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
       }
     },
@@ -37,11 +53,19 @@
       "descriptions": [
         "Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum"
       ],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["registeredOperators"],
       "sinceTimestamp": 1712353787,
       "values": {
         "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
         "$implementation": "0xdcabf0bE991d4609096CCe316df08d091356E03F",
+        "$upgradeCount": 3,
         "blsApkRegistry": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "churnApprover": "0xe0550117Cb066D3b330eBd764B0d75D3BA378734",
         "ejectionCooldown": 604800,
@@ -135,7 +159,6 @@
           "0x8e53a9bf983911f8ea131d50cbd06e7a576610078b406b3cb49b1c74c990283a",
           "0x0a65b09f4cc1527b6dcf4dbf071cd42b941a1aa634d1a02c6a47c5324b345654",
           "0x55f105d6dfe2844e16072e5e2b41e98c58629d170019dfab872b9f4edd31c8e1",
-          "0x36f3614be86db370c71cc818ec361c07c73d6921bf8fe24c34bfeb789c700811",
           "0xe8f5cbf6ef8179b14b6378206d1006a38d9f749351955d4738cd515aa8559e5e",
           "0x8c116c11dd8d60869c764125e296cb1d748dc0faf65010403e2df0b051de267f",
           "0x868845a1b9759e9f71a105e63204843f8875ed2b6a6d7bde5ccf68b774682552",
@@ -181,7 +204,6 @@
           "0x7ee42eee614da955e57379a55d1c3ef72f7c8d3248da68d37d274114a2d9bc38",
           "0x5a6c57fe19c3f923dcdebe7d5dd4c0e84a3354f96e666a2dd7e6b9900637defc",
           "0x0bab77e7b94af273411482782c1999adfc91b7d76af43eb60b4802278b8204d0",
-          "0xb2b2fd3feebc12a678f120f4b24c0c67b14185d26424598123e256be0ac40c23",
           "0xd5d5d417ae12d402526167deb97cd834a1a7d6fe6f389d181d0d4f0bc520073a",
           "0x47c79721f29f6e14e5151f984c4ad05f63674b077738d62ae0b70682a8610383",
           "0x460d0bfd622fb41d5fdd278ecea6195623d846ff998a9492ce1008f3300e8085",
@@ -212,7 +234,6 @@
           "0x5afa813d654699eb460f9830ec9ccc27d530a2847ab438efa2067cc04fce73f2",
           "0x3d27c4a144b4627134658fedd9753faeedd9e738276360a2d1566587f165a5bc",
           "0xe02eb821060cd7b07b2f998d5409117190a38200eff09700ffaa322c5819008d",
-          "0xffc5d9a66c2f8567e2754c8b4f4f284077deb335662dfda92cec44fea09efe7e",
           "0xd5ac66f0f85bdc83babf9dd7c1d9bf27f25013ab59744e9ecf679f7269fcb319",
           "0xb559334f7a014a93c4cce1bb02e57d5752b23a00cae3e1e14880df5337b51856",
           "0xf3879d1954d75c69f17b02216d7495d82be50c7ab0be425c2a6dc94a74a7cf06",
@@ -304,23 +325,24 @@
           "0x7a56a2226e44d5e4a2194d23f492a418bee9a3088e7809a239838b81c8a1a8d7",
           "0x8d4e5576c75115b4f0206d4af8bcbf5fb807607b9ad204a0884ad269981132f3",
           "0x8f6ea0107f79f10ea0198872746c612f0878d26bc8f285199130d2d00a10e092",
-          "0x059126736636a39e137c22bac705b8809d18bb16cfcb260834a53c779ba97644",
-          "0x727096b14c103ca0b5771fe160e6aaa6172186591bc30cbd97929126fd2e0c74",
-          "0x245ed6901df931d36d01181879f015d42dd8347bfe47ee5fef2366b8e1df9b38",
-          "0x6762287d8b646b7a38492f4955a341364b8856d0f2c9963317d296d21cd41d94",
-          "0x6d0ddebd5b56bd7c9072cbb10d8a8c9db9b9520ae285b7f7bb87dd6a6d669cc7",
-          "0x4dee171f5105414f8973c6b805da488102425fce4cce6c0483f7379e845ad56e",
-          "0xf9f856ccf96d801ccfbc6760cb6469a0a726771e8f80508934a5f407894dc322",
-          "0x16f15741904bbaec19f6308984fad8d5ce055ab575f5f38f0b70e8fff242a632",
-          "0x0a89683d06dd0c89506bb30b9f276fc4b4842377a56e67390f33c3bdf736d9b8",
-          "0x38f0ebc4525c9f29322941166b0ee2909008ad8d569534b120f087d2347aa6fe",
-          "0x3505fb97d8c27055991f76ff784a79e20f1d634c7ac7e56a60f52fed1251eaac",
-          "0x0a87b935e45d786ed88d5e93b9ffeafc384c9893ca9b842ca4728e3dfbcbebdd",
-          "0x8bff89a91b17dca577f6be5ffb8b513ffd28a495b2554de141f0b924897cc0e2",
-          "0x55fcd6e48d4f754a512d16a21360b7ba8382bf4262cd1321a8ec881d3099c59c",
-          "0xe7ab3f4625ffbcf6c81eee9c6585af338907e8fd64b9d92c560b55bf892ef4fa",
-          "0x7823a4aa798b188d6fe8b9ca0e9948462304d3c1a039792bcf3e353f6c4628a0",
-          "0x6ac9c51f774bd8f631c77445eda8f331e315a229bf2e7509762dab0f2dac0a30"
+          "0x999946bb7ebc8acf699df7bcaa5f7d521d5369ca719e2d34da7cd8067a1524e0",
+          "0x83299cdb7b2d2272059fc36c10b66beb2643fc21b2ac7b45339f1c013a151b24",
+          "0x0c8d2498f5985de8f544715ea6a51b79ec15e11d4e7d58dc4387c7cfbd680371",
+          "0x1d2159404a2dff63f7a7bf72056af8b10d5c9c5edcd4c6dcd91108a8b302746e",
+          "0xc5d23f9734a70c2c56601c9c486776b284d2eaa075877eb6b5637581282d453d",
+          "0x87a62ec704c7e52c2870b0324bac255b8a3447e456ef61d878fc1eb687862411",
+          "0xa1250a21b0c8aeb415bea235c60458b0a121066e5e85ca9fbc8445bc90545984",
+          "0x7cff3f2f71317e6786d5303b744aeae1444d343a2cabc861a683dc9506add11f",
+          "0x12b92dad62022863ea2487b944ef80aba746a8c60e2181944776a0c77623ae27",
+          "0xf45293f5f1729ee674566827ae134461d3385a130ba35a32c83b995f064e774c",
+          "0xca42d4bfc816254c8b148da9aa384c5dab3627f6aa3978955adc65f1fd265df7",
+          "0x63e90788b88cc39c5e1323984e266cab75de866c900467c5d5c1b78d65334a16",
+          "0x92b62e8cd47a082a162392e0ef7da5d4b7069244ce48b01e4aa2498cebe7c2b5",
+          "0x3291bcc90a6cade442cc23e57778e0d5824af2d726a5e5141dd5f63f75ce016e",
+          "0x5616db29d436bac6db73998e7446d06b35e8efe91dd43cf2bbf27818ef9fd656",
+          "0x92822de59bcebc2035c9d48332db643d4b9814d9ee88bbc75e353aa05efc7f32",
+          "0xb37cb302266a34bc1c2dac0a9e608dc30d61dd79c7f33ff2f9586723b98c902e",
+          "0x9abb76fa3fbb9d9b0702923bcc1fefd83dd216a8a7549dd45d820b97d19dd3bd"
         ],
         "registries": [
           "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
@@ -355,10 +377,18 @@
       "descriptions": [
         "Contract used for ejection of operators from the RegistryCoordinator."
       ],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1715347895,
       "values": {
         "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
         "$implementation": "0x33A517608999DF5CEfFa2b2EbA88B4461c26Af6f",
+        "$upgradeCount": 3,
         "ejectableStakePercent": [3333],
         "ejectionRateLimitWindow": [604800],
         "ejectors": ["0xD2Ee81Cf07B12140C793FcE5B26313CDd9d78eA8"],
@@ -405,16 +435,38 @@
     {
       "name": "eigenDAProxyAdmin",
       "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
-          "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
-          "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
-          "0x130d8EA0052B45554e4C99079B84df292149Bd5E",
-          "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
-          "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x130d8EA0052B45554e4C99079B84df292149Bd5E",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1712353787,
       "values": {
         "$immutable": true,
@@ -426,18 +478,26 @@
       "name": "EigenDAServiceManager",
       "address": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["batchId", "taskNumber"],
       "sinceTimestamp": 1712353787,
       "values": {
         "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
         "$implementation": "0x0D2C5FD4Bb956cDD48A23fC3Ef77a768a5cDbAf7",
+        "$upgradeCount": 5,
         "avsDirectory": "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
         "batchConfirmers": [
           "0x8ED83c6Bb12E441Ca2C3a544F525d4a3Fb6484D8",
           "0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED",
           "0x454Ef2f69f91527856E06659f92a66f464C1ca4e"
         ],
-        "batchId": 23260,
+        "batchId": 23409,
         "BLOCK_STALE_MEASURE": 300,
         "blsApkRegistry": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
@@ -468,7 +528,7 @@
         "stakeRegistry": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
         "staleStakesForbidden": false,
         "STORE_DURATION_BLOCKS": 100800,
-        "taskNumber": 23260,
+        "taskNumber": 23409,
         "THRESHOLD_DENOMINATOR": 100
       },
       "fieldMeta": {
@@ -495,10 +555,18 @@
       "name": "IndexRegistry",
       "address": "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1712353799,
       "values": {
         "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
         "$implementation": "0x1ae0b73118906f39D5ED30Ae4A484ce2F479a14c",
+        "$upgradeCount": 2,
         "OPERATOR_DOES_NOT_EXIST_ID": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "registryCoordinator": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
       }

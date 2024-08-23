@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x80eebe8bc7b0bf60e20d072f84ea43b63b5afb6c
+Generated with discovered.json: 0xd78fc12619af80fee0e879c766ffb9a240a1d06a
 
-# Diff at Thu, 22 Aug 2024 14:31:43 GMT:
+# Diff at Fri, 23 Aug 2024 15:15:42 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@bf2d0ebf21a279d76dfafc24de12b751244afaf6 block: 20482509
-- current block number: 20584757
+- current block number: 20592130
 
 ## Description
 
@@ -19,42 +19,32 @@ discovery. Values are for block 20482509 (main branch discovery), not current.
 ```diff
     contract StakeRegistry (0x006124Ae7976137266feeBFb3F4D2BE4C073139D) {
     +++ description: None
-      issuedPermissions:
--        [{"permission":"upgrade","target":"0x8247EF5705d3345516286B72bFE6D690197C2E99","via":[]}]
+      values.$upgradeCount:
++        2
     }
 ```
 
 ```diff
     contract BLSApkRegistry (0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505) {
     +++ description: None
-      issuedPermissions:
--        [{"permission":"upgrade","target":"0x8247EF5705d3345516286B72bFE6D690197C2E99","via":[]}]
+      values.$upgradeCount:
++        2
     }
 ```
 
 ```diff
     contract RegistryCoordinator (0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
     +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum
-      issuedPermissions:
--        [{"permission":"upgrade","target":"0x8247EF5705d3345516286B72bFE6D690197C2E99","via":[]}]
+      values.$upgradeCount:
++        3
     }
 ```
 
 ```diff
     contract EjectionManager (0x130d8EA0052B45554e4C99079B84df292149Bd5E) {
     +++ description: Contract used for ejection of operators from the RegistryCoordinator.
-      issuedPermissions:
--        [{"permission":"upgrade","target":"0x8247EF5705d3345516286B72bFE6D690197C2E99","via":[]}]
-    }
-```
-
-```diff
-    contract eigenDAProxyAdmin (0x8247EF5705d3345516286B72bFE6D690197C2E99) {
-    +++ description: None
-      receivedPermissions:
--        [{"permission":"upgrade","target":"0x006124Ae7976137266feeBFb3F4D2BE4C073139D","via":[]},{"permission":"upgrade","target":"0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505","via":[]},{"permission":"upgrade","target":"0x0BAAc79acD45A023E19345c352d8a7a83C4e5656","via":[]},{"permission":"upgrade","target":"0x130d8EA0052B45554e4C99079B84df292149Bd5E","via":[]},{"permission":"upgrade","target":"0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","via":[]},{"permission":"upgrade","target":"0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030","via":[]}]
-      assignedPermissions:
-+        {"upgrade":["0x006124Ae7976137266feeBFb3F4D2BE4C073139D","0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505","0x0BAAc79acD45A023E19345c352d8a7a83C4e5656","0x130d8EA0052B45554e4C99079B84df292149Bd5E","0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"]}
+      values.$upgradeCount:
++        3
     }
 ```
 
@@ -64,8 +54,8 @@ discovery. Values are for block 20482509 (main branch discovery), not current.
       name:
 -        "eigenDAServiceManager"
 +        "EigenDAServiceManager"
-      issuedPermissions:
--        [{"permission":"upgrade","target":"0x8247EF5705d3345516286B72bFE6D690197C2E99","via":[]}]
+      values.$upgradeCount:
++        5
 +++ description: The list of addresses authorized to confirm the availability of blobs batches to the DA bridge.
 +++ severity: MEDIUM
       values.batchConfirmers:
@@ -78,8 +68,8 @@ discovery. Values are for block 20482509 (main branch discovery), not current.
 ```diff
     contract IndexRegistry (0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030) {
     +++ description: None
-      issuedPermissions:
--        [{"permission":"upgrade","target":"0x8247EF5705d3345516286B72bFE6D690197C2E99","via":[]}]
+      values.$upgradeCount:
++        2
     }
 ```
 
