@@ -1,8 +1,8 @@
 {
   "name": "sxnetwork",
   "chain": "ethereum",
-  "blockNumber": 20575837,
-  "configHash": "0xd6dd3b87391e0cce733eb631c3957a1a30094a20d5707ba136bc831b974b1e37",
+  "blockNumber": 20589788,
+  "configHash": "0x6961ee388780e33b2e1c770f5c76c6d04f0bc028919dc74eeec2a964eb234dc5",
   "version": 12,
   "contracts": [
     {
@@ -66,12 +66,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 91,
+        "firstUnresolvedNode": 99,
         "inbox": "0xEa83E8907C89Bc0D9517632f0ba081972E328631",
         "isERC20Enabled": false,
         "lastStakeBlock": 20269009,
-        "latestConfirmed": 90,
-        "latestNodeCreated": 116,
+        "latestConfirmed": 98,
+        "latestNodeCreated": 124,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xB360b2f57c645E847148d7C479b7468AbF6F707d",
@@ -261,12 +261,12 @@
           "0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3"
         ],
         "allowedOutboxList": ["0xB360b2f57c645E847148d7C479b7468AbF6F707d"],
-        "delayedMessageCount": 68,
+        "delayedMessageCount": 70,
         "nativeToken": "0xbe9F61555F50DD6167f2772e9CF7519790d96624",
         "rollup": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
         "sequencerInbox": "0xD80a805c86C14c879420eC6acb366D04D318fC0C",
-        "sequencerMessageCount": 160,
-        "sequencerReportedSubMessageCount": 465679
+        "sequencerMessageCount": 168,
+        "sequencerReportedSubMessageCount": 502399
       },
       "derivedName": "ERC20Bridge"
     },
@@ -310,9 +310,9 @@
         "name": "SX Network",
         "symbol": "SX",
         "tokenName": "SX Network",
-        "tokenSymbol": "SX",
-        "totalSupply": "97216642899192381828100000"
-      }
+        "tokenSymbol": "SX"
+      },
+      "derivedName": "SXNetwork"
     },
     {
       "name": "SequencerInbox",
@@ -330,7 +330,7 @@
       "values": {
         "$admin": "0xe8606A55d105EF857F187C32Ae0E9a168aF8F497",
         "$implementation": "0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A",
-        "batchCount": 160,
+        "batchCount": 168,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x90906eA9eb38B6afC104bB761F493b2a78c85024"],
         "bridge": "0xa104C0426e95a5538e89131DbB4163d230C35f86",
@@ -356,7 +356,7 @@
         "rollup": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 68,
+        "totalDelayedMessagesRead": 70,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },

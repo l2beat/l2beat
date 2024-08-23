@@ -1,9 +1,9 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 20577647,
+  "blockNumber": 20585030,
   "configHash": "0x897fdb6fb1f6c34118d11c2f55033666c8e47e8e3754543e6a1ed8ea5e286ced",
-  "version": 11,
+  "version": 12,
   "contracts": [
     {
       "name": "Governance",
@@ -7703,6 +7703,13 @@
       "name": "BridgeHub",
       "address": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1717520639,
       "values": {
         "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
@@ -7818,13 +7825,23 @@
     {
       "name": "ProxyAdmin",
       "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-          "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
-          "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1717520627,
       "values": {
         "$immutable": true,
@@ -7835,6 +7852,13 @@
       "name": "StateTransitionManager",
       "address": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1717520663,
       "values": {
         "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
@@ -7863,6 +7887,13 @@
       "name": "L1SharedBridge",
       "address": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1717521479,
       "values": {
         "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
