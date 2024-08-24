@@ -95,6 +95,7 @@ export const metis: Layer2 = {
         sinceTimestamp: new UnixTime(1637077208),
         tokens: '*',
         chain: 'ethereum',
+        premintedTokens: ['Metis'],
       },
     ],
     transactionApi: {
