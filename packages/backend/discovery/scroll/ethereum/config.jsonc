@@ -20,7 +20,7 @@
     "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367": "L1ScrollMessenger",
     "0x987e300fDfb06093859358522a79098848C33852": "OLD_L2GasPriceOracle",
     "0xa13BAF47339d63B743e7Da8741db5456DAc1E556": "ScrollChain",
-    "0xf94AfBD9370E25Dd6Ca557d5D67634aeFDA2416B": "MultipleVersionRollupVerifier",
+    "0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F": "MultipleVersionRollupVerifier",
     "0x798576400F7D662961BA15C6b3F3d813447a26a6": "ScrollOwner",
     "0x1A658B88fD0a3c82fa1a0609fCDbD32e7dd4aB9C": "TimelockSlow",
     "0xDC1d1189Da69Ae2016E4976A43De20972D349B1b": "TimelockMid",
@@ -52,6 +52,8 @@
     "0x2293cd12e8564e8219d314b075867c2f66ac6941": "PlonkVerifierV1",
     "0x63FB51C55d9605a75F8872C80De260a00fACfaA2": "ZkEvmVerifierV1-1",
     "0x03a72B00D036C479105fF98A1953b15d9c510110": "PlonkVerifierV2",
+    "0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB": "ZkEvmVerifierV2",
+    "0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9": "PlonkVerifierV3",
     "0x6625C6332c9F91F2D27c304E729B86db87A3f504": "wstETHescrowLido",
     "0xCC2C53556Bc75217cf698721b29071d6f12628A9": "wstETHescrowLidoProxyAdmin",
     "0xA033Ff09f2da45f0e9ae495f525363722Df42b2a": "pufEthEscrow",
@@ -76,7 +78,8 @@
       "ignoreInWatchMode": [
         "nextCrossDomainMessageIndex",
         "pendingQueueIndex",
-        "l2BaseFee"
+        "l2BaseFee",
+        "nextUnfinalizedQueueIndex"
       ]
     },
     "L1ScrollMessenger": {
@@ -124,16 +127,26 @@
       "description": "Used to update the verifier and keep track of current and old versions.",
       "ignoreMethods": ["getVerifier"],
       "fields": {
+        "verifierVersions": {
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "UpdateVerifier",
+            "valueKey": "version"
+          }
+        },
         "latestVerifier": {
           "handler": {
             "type": "array",
-            "length": 5
-          }
+            "maxLength": 20,
+            "indices": "{{ verifierVersions }}"
+          },
+          "returnType": "((uint64 startBatchIndex, address verifier)[])"
         },
         "legacyVerifiersLength": {
           "handler": {
             "type": "array",
-            "length": 5
+            "maxLength": 20,
+            "indices": "{{ verifierVersions }}"
           }
         }
       }
