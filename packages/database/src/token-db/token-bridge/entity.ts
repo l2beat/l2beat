@@ -1,5 +1,5 @@
 import { Insertable, Selectable } from 'kysely'
-import { TokenBridge } from '../../kysely/generated/types'
+import { TokenBridge } from '../../kysely/token-db/types'
 
 export interface TokenBridgeRecord {
   id: string
