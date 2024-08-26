@@ -1,12 +1,34 @@
 import { layer2s, layer3s } from '@l2beat/config'
 import { notFound } from 'next/navigation'
 import { getTvlBreakdownForProject } from '~/server/features/scaling/tvl/breakdown/get-tvl-breakdown-for-project'
-import { getDetailed7dTvlBreakdown } from '~/server/features/scaling/tvl/utils/get-detailed-7d-tvl-breakdown'
+import { getDetailed7dTvlBreakdown } from '~/server/features/scaling/tvl/utils/get-7d-tvl-breakdown'
+import { getDefaultMetadata } from '~/utils/metadata'
 import { BreakdownPageWrapper } from './_components/breakdown-page-wrapper'
 import { TvlBreakdownPageHeader } from './_components/tvl-breakdown-page-header'
 import { TvlBreakdownSummaryBox } from './_components/tvl-breakdown-summary-box'
 
 const scalingProjects = [...layer2s, ...layer3s]
+
+export async function generateStaticParams() {
+  return scalingProjects.map((layer) => ({
+    slug: layer.display.slug,
+  }))
+}
+
+export async function generateMetadata({ params }: Props) {
+  const project = scalingProjects.find(
+    (layer) => layer.display.slug === params.slug,
+  )
+
+  if (!project) {
+    notFound()
+  }
+
+  return getDefaultMetadata({
+    title: `${project.display.name} | TVL Breakdown`,
+    description: project.display.description,
+  })
+}
 
 interface Props {
   params: {
