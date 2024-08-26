@@ -100,6 +100,7 @@ export const reya: Layer2 = orbitStackL2({
       date: '2024-05-21T00:00:00Z',
       description:
         'Reya DEX launches with Perpetual trading available for ETH and BTC.',
+      type: 'general',
     },
     {
       name: 'Reya LGE',
@@ -107,6 +108,7 @@ export const reya: Layer2 = orbitStackL2({
       date: '2024-04-22T00:00:00Z',
       description:
         'Reya launches with a Liquidity Generation Event (LGE) where users can provide USDC to the network.',
+      type: 'general',
     },
   ],
 })

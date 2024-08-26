@@ -45,6 +45,28 @@ export const methods: Method[] = [
       return [{ type: 'recursive', calldata }]
     },
   ),
+  defineMethod(
+    parseAbiItem(
+      'function executeBatch((address to, uint256 value, bytes data)[] calls)',
+    ),
+    ([calls]) => {
+      return calls.map((call) => ({
+        type: 'recursive',
+        calldata: call.data,
+      }))
+    },
+  ),
+  defineMethod(
+    parseAbiItem(
+      'function executeBatch(address[] targets, uint256[] values, bytes[] inputs)',
+    ),
+    ([, , inputs]) => {
+      return inputs.map((input: string) => ({
+        type: 'recursive',
+        calldata: input,
+      }))
+    },
+  ),
 ]
 
 function defineMethod<T extends AbiFunction>(

@@ -17,7 +17,7 @@ import { shouldSkip } from './shouldSkip'
 // causing a difference in discovery output
 
 // Last change: Merge upgradeability and values
-export const DISCOVERY_LOGIC_VERSION = 11
+export const DISCOVERY_LOGIC_VERSION = 13
 export class DiscoveryEngine {
   constructor(
     private readonly addressAnalyzer: AddressAnalyzer,
@@ -100,7 +100,7 @@ export class DiscoveryEngine {
             provider,
             address,
             config.overrides.get(address),
-            config.types,
+            config.typesFor(address.toString()),
             bufferedLogger,
             templates,
           )

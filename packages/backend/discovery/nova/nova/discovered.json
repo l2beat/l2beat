@@ -3,7 +3,7 @@
   "chain": "nova",
   "blockNumber": 74799516,
   "configHash": "0x0ae7a253225fd679b78cc06f5169ffccebb37cfa8c00f2d23027e6649a7e25c2",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "L2GatewayRouter",
@@ -20,6 +20,7 @@
       "values": {
         "$admin": "0xada790b026097BfB36a5ed696859b97a96CEd92C",
         "$implementation": "0x8f377770289863DF73Fe665B74460579F82321fb",
+        "$upgradeCount": 2,
         "counterpartGateway": "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48",
         "defaultGateway": "0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257",
         "router": "0x0000000000000000000000000000000000000000"
@@ -71,6 +72,7 @@
       "values": {
         "$admin": "0xada790b026097BfB36a5ed696859b97a96CEd92C",
         "$implementation": "0xbe04Ab2728c924D678f9FC833E379688c6eFA317",
+        "$upgradeCount": 4,
         "counterpartGateway": "0xE4E2121b479017955Be0b175305B35f312330BaE",
         "l1Weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "l2Weth": "0x722E8BdD2ce80A4422E880164f2079488e115365",
@@ -93,6 +95,7 @@
       "values": {
         "$admin": "0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9",
         "$implementation": "0x3096EAEdcb3A3B665552660F4d921E565D0073cB",
+        "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -178,6 +181,7 @@
       "values": {
         "$admin": "0xada790b026097BfB36a5ed696859b97a96CEd92C",
         "$implementation": "0x554e12DBAa0fBeB8A35583a6Fd9D04BaA4ff597f",
+        "$upgradeCount": 3,
         "counterpartGateway": "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
         "exitNum": 2238,
         "router": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
@@ -234,6 +238,7 @@
       "values": {
         "$admin": "0xada790b026097BfB36a5ed696859b97a96CEd92C",
         "$implementation": "0x466155FD6d8BbF1c0d5ca32818814cB28b6884d8",
+        "$upgradeCount": 2,
         "beaconProxyFactory": "0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3",
         "cloneableProxyHash": "0xe95e7b13b0b76934e55320c0f1a812918ec818f61a9b36660d64d803eeecb91a",
         "counterpartGateway": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
@@ -299,6 +304,7 @@
       "values": {
         "$admin": "0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9",
         "$implementation": "0x099bC495EA4Fd828FEe7C636F0Ab84d0f501B96d",
+        "$upgradeCount": 1,
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x06fe5e8dad7d7e879ce7a65a8304da45a102356b02ff9533af1c8251672513c5",
         "l1Address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",

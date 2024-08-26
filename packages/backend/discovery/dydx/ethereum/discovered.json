@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825321,
   "configHash": "0x847ede6a024e5b92079594fdc9dc23cdb1b71bfe3a16bd0235f77ffed4ab6ecb",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "MerkleDistributor",
@@ -30,6 +30,7 @@
       "values": {
         "$admin": "0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0",
         "$implementation": "0xFE1d5439625a9524a80F66670733129E80E0C112",
+        "$upgradeCount": 0,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -465,6 +466,7 @@
       "values": {
         "$admin": "0xAc5D8bCD13da463bea96c75f9085c4e40037F790",
         "$implementation": "0xBE607a58206180fef691bf1B5aE9670174284388",
+        "$upgradeCount": 0,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -565,6 +567,7 @@
       "values": {
         "$admin": "0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d",
         "$implementation": "0x8d0051943D4c72aF12D638c6b7253C71929A910A",
+        "$upgradeCount": 1,
         "BRIDGE": "0x46b2DeAe6eFf3011008EA27EA36b7c27255ddFA9",
         "BURN_ADDRESS": "0x0000000000000000000000000000000000000001",
         "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc",
@@ -608,6 +611,7 @@
       "values": {
         "$admin": "0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C",
         "$implementation": "0x31D76F5Db8F40D28886Bf00F3be5F157472Bf77A",
+        "$upgradeCount": 2,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",

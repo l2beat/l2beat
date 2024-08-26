@@ -6,10 +6,7 @@ import { selectLiveness } from './select'
 
 export class LivenessRepository extends BaseRepository {
   async getAll(): Promise<LivenessRecord[]> {
-    const rows = await this.db
-      .selectFrom('public.liveness')
-      .selectAll()
-      .execute()
+    const rows = await this.db.selectFrom('liveness').selectAll().execute()
     return rows.map(toRecord)
   }
 
@@ -20,7 +17,7 @@ export class LivenessRepository extends BaseRepository {
     if (configurationIds.length === 0) return []
 
     const rows = await this.db
-      .selectFrom('public.liveness')
+      .selectFrom('liveness')
       .select(selectLiveness)
       .where('configuration_id', 'in', configurationIds)
       .where('timestamp', '>=', since.toDate())
@@ -37,7 +34,7 @@ export class LivenessRepository extends BaseRepository {
     if (configurationIds.length === 0) return []
 
     const rows = await this.db
-      .selectFrom('public.liveness')
+      .selectFrom('liveness')
       .select(selectLiveness)
       .where('configuration_id', 'in', configurationIds)
       .where('timestamp', '<', to.toDate())
@@ -56,7 +53,7 @@ export class LivenessRepository extends BaseRepository {
 
     assert(from.toNumber() < to.toNumber(), 'From must be less than to')
     const rows = await this.db
-      .selectFrom('public.liveness')
+      .selectFrom('liveness')
       .select(selectLiveness)
       .where('configuration_id', 'in', configurationIds)
       .where('timestamp', '>=', from.toDate())
@@ -72,7 +69,7 @@ export class LivenessRepository extends BaseRepository {
 
     const rows = records.map(toRow)
     await this.batch(rows, 10_000, async (batch) => {
-      await this.db.insertInto('public.liveness').values(batch).execute()
+      await this.db.insertInto('liveness').values(batch).execute()
     })
     return rows.length
   }
@@ -82,7 +79,7 @@ export class LivenessRepository extends BaseRepository {
     deleteFromInclusive: UnixTime,
   ): Promise<number> {
     const result = await this.db
-      .deleteFrom('public.liveness')
+      .deleteFrom('liveness')
       .where('configuration_id', '=', id.toString())
       .where('timestamp', '>=', deleteFromInclusive.toDate())
       .executeTakeFirst()
@@ -95,7 +92,7 @@ export class LivenessRepository extends BaseRepository {
     toInclusive: UnixTime,
   ): Promise<number> {
     const result = await this.db
-      .deleteFrom('public.liveness')
+      .deleteFrom('liveness')
       .where('configuration_id', '=', id)
       .where('timestamp', '>=', fromInclusive.toDate())
       .where('timestamp', '<=', toInclusive.toDate())
@@ -104,15 +101,13 @@ export class LivenessRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
-      .deleteFrom('public.liveness')
-      .executeTakeFirst()
+    const result = await this.db.deleteFrom('liveness').executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 
   async getUsedConfigsIds(): Promise<string[]> {
     const rows = await this.db
-      .selectFrom('public.liveness')
+      .selectFrom('liveness')
       .select('configuration_id')
       .distinctOn('configuration_id')
       .execute()

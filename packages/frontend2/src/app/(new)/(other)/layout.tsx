@@ -1,4 +1,5 @@
 import { About } from '~/app/_components/about'
+import { Banner } from '~/app/_components/banner'
 import { ContentWrapper } from '~/app/_components/content-wrapper'
 import { Footer } from '~/app/_components/footer'
 import { NavLayout } from '~/app/_components/nav/nav-layout'
@@ -8,6 +9,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <NavLayout logoLink="/scaling/summary">
       <div className="min-h-screen">
+        <Banner />
         <ContentWrapper className="mt-4 md:mt-12">
           <div className="mb-20">
             {children}

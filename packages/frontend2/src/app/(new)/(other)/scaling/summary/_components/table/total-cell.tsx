@@ -30,11 +30,6 @@ export function TotalCell(data: TotalCellProps) {
   const anyBadWarnings = tvlWarnings.some((w) => w?.sentiment === 'bad')
 
   const totalTvl = data.breakdown.total
-  const breakdownOther =
-    data.breakdown.total -
-    data.breakdown.associated -
-    data.breakdown.ether -
-    data.breakdown.stablecoin
 
   if (totalTvl === 0) {
     return (
@@ -66,20 +61,20 @@ export function TotalCell(data: TotalCellProps) {
             )}
           </div>
           <TokenBreakdown
+            total={data.breakdown.total}
             associated={data.breakdown.associated}
             ether={data.breakdown.ether}
             stablecoin={data.breakdown.stablecoin}
-            other={breakdownOther}
             className="h-[3px] w-[180px]"
           />
         </div>
       </TooltipTrigger>
       <TooltipContent>
         <TokenBreakdownTooltipContent
+          total={data.breakdown.total}
           associated={data.breakdown.associated}
           ether={data.breakdown.ether}
           stablecoin={data.breakdown.stablecoin}
-          other={breakdownOther}
           tvlWarnings={tvlWarnings}
           associatedTokenSymbols={data.associatedTokenSymbols}
         />

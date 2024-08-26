@@ -1,3 +1,91 @@
+Generated with discovered.json: 0xdd2c762dc5afedea76043bf6696c0f669b419d60
+
+# Diff at Wed, 21 Aug 2024 14:23:46 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@9ff9ee2b2fd37e2cdd4a4bcebdcefcb5e61b1e6c block: 20490738
+- current block number: 20577569
+
+## Description
+
+New plugs, one new USDe vault found for Reya and added.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.88:
++        "0xA07EB173d58F7aF2b0267F2B5f6a091E01c17f85"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.87:
++        "0x56705F7F12D4e0433e26a20298fCd3532226d744"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.86:
++        "0x42F23C6d344d0322e13f254B9a8E187335AFB409"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.85:
++        "0x3F0dAfEB6386c710617180b376c118D7EcD6aC89"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.84:
++        "0x1b882b9E87ABd7DD9B9b689Bee10Ed6a040033D0"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.83:
++        "0x49d446506D0f2db507AB4804563be9331BBc80E7"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.82:
++        "0xaDA48ab8705Eb3904e5FA65D5622cd237a2341FF"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.81:
++        "0x00CE54B988D8C44bFCae4026C17c37c69C490A12"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.80:
++        "0x7Eee3241eC98ED0B47c8Bc0e9E3327B541BCDc1D"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.79:
++        "0x50D46c3BB529276aDe59a6678C14302D6B61C853"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.78:
++        "0x37C24e7081eb7f2B16bde81b556d082c0839F754"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.77:
++        "0x254691C06Da387c1050C726cF498eFdA89083820"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.76:
++        "0x083Add2A9afa97Efb6412b293145ce965eCE3600"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.75:
++        "0xa1D11b141bb47eDb2c69B8ced4EFe80f62D1C276"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20490738 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract USDe Vault Reya (0xaA2f2B6cD33Eaabb795c6DB60AAec599C8450F35)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xf576c14ed1fb7a13f001a95c7bc07a11394f3b41
 
 # Diff at Fri, 09 Aug 2024 11:27:23 GMT:

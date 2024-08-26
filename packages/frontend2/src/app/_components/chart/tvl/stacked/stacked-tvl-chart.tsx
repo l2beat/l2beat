@@ -50,7 +50,7 @@ export function StackedTvlChart({ milestones, entries }: Props) {
     }
   }, [entries, filters, includeFilter])
 
-  const { data } = api.scaling.summary.chart.useQuery({
+  const { data, isLoading } = api.scaling.summary.chart.useQuery({
     range: timeRange,
     excludeAssociatedTokens,
     ...chartDataType,
@@ -68,6 +68,7 @@ export function StackedTvlChart({ milestones, entries }: Props) {
       }
       range={chartRange}
       useLogScale={scale === 'log'}
+      isLoading={isLoading}
       renderHoverContents={(data) => (
         <StackedTvlChartHover {...data} currency={unit} />
       )}

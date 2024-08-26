@@ -1,3 +1,85 @@
+Generated with discovered.json: 0x16e7408422bca316783c317c0aa2c4af91276bdb
+
+# Diff at Fri, 23 Aug 2024 09:55:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 19719123
+- current block number: 19719123
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19719123 (main branch discovery), not current.
+
+```diff
+    contract DepositBoxERC1155 (0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a) {
+    +++ description: None
+      values.$upgradeCount:
++        8
+    }
+```
+
+```diff
+    contract DepositBoxEth (0x49F583d263e4Ef938b9E09772D3394c71605Df94) {
+    +++ description: None
+      values.$upgradeCount:
++        8
+    }
+```
+
+```diff
+    contract CommunityPool (0x588801cA36558310D91234aFC2511502282b1621) {
+    +++ description: None
+      values.$upgradeCount:
++        7
+    }
+```
+
+```diff
+    contract Linker (0x6ef406953bac772C2146389ED37846BA3b6086D1) {
+    +++ description: None
+      values.$upgradeCount:
++        6
+    }
+```
+
+```diff
+    contract DepositBoxERC721 (0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d) {
+    +++ description: None
+      values.$upgradeCount:
++        8
+    }
+```
+
+```diff
+    contract MessageProxyForMainnet (0x8629703a9903515818C2FeB45a6f6fA5df8Da404) {
+    +++ description: None
+      values.$upgradeCount:
++        9
+    }
+```
+
+```diff
+    contract DepositBoxERC20 (0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669) {
+    +++ description: None
+      values.$upgradeCount:
++        9
+    }
+```
+
+```diff
+    contract DepositBoxERC721WithMetadata (0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986) {
+    +++ description: None
+      values.$upgradeCount:
++        4
+    }
+```
+
 Generated with discovered.json: 0x2af0e37e151a5833828163fc67664c36d74a74b2
 
 # Diff at Wed, 21 Aug 2024 10:05:52 GMT:

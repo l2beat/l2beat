@@ -1,3 +1,183 @@
+Generated with discovered.json: 0x6c69cb852e3e0c2dbec68fa598d5458299317858
+
+# Diff at Fri, 23 Aug 2024 09:53:37 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 20406615
+- current block number: 20406615
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20406615 (main branch discovery), not current.
+
+```diff
+    contract ValidatorWallet (0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract SequencerInbox (0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b) {
+    +++ description: None
+      values.$upgradeCount:
++        6
+    }
+```
+
+```diff
+    contract L1CustomGateway (0x23122da8C581AA7E0d07A36Ff1f16F799650232f) {
+    +++ description: None
+      values.$upgradeCount:
++        2
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract RollupEventInbox (0x304807A7ed6c1296df2128E6ff3836e477329CD2) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract Validator (0x3B0369CAD35d257793F51c28213a4Cf4001397AC) {
+    +++ description: None
+      values.$upgradeCount:
++        0
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x658e8123722462F888b6fa01a7dbcEFe1D6DD709) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract ChallengeManager (0xA59075221b50C598aED0Eae0bB9869639513af0D) {
+    +++ description: None
+      values.$upgradeCount:
++        2
+    }
+```
+
+```diff
+    contract L1ERC20Gateway (0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf) {
+    +++ description: None
+      values.$upgradeCount:
++        2
+    }
+```
+
+```diff
+    contract Bridge (0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd) {
+    +++ description: None
+      values.$upgradeCount:
++        2
+    }
+```
+
+```diff
+    contract Inbox (0xc4448b71118c9071Bcb9734A0EAc55D18A153949) {
+    +++ description: None
+      values.$upgradeCount:
++        4
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48) {
+    +++ description: None
+      values.$upgradeCount:
++        3
+    }
+```
+
+```diff
+    contract Outbox (0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58) {
+    +++ description: None
+      values.$upgradeCount:
++        2
+    }
+```
+
+```diff
+    contract ValidatorWallet (0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract L1Timelock (0xE6841D92B0C345144506576eC13ECf5103aC7f49) {
+    +++ description: None
+      values.$upgradeCount:
++        2
+    }
+```
+
+Generated with discovered.json: 0x46fd535ec6ef9bb3ee4e22104ba4c211f2ad7502
+
+# Diff at Wed, 21 Aug 2024 13:25:51 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@63cb0bd5d55a6dfae0e2e22590983dd8344be4a3 block: 20406615
+- current block number: 20406615
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20406615 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b) {
+    +++ description: None
+      values.dacKeyset.blsSignatures:
++        ["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"]
+    }
+```
+
 Generated with discovered.json: 0xe79f128c4e4e55d1776dd7c67dc13695c56ed64f
 
 # Diff at Wed, 21 Aug 2024 10:04:25 GMT:

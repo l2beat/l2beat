@@ -72,6 +72,9 @@ export const DiscoveryContract = z.object({
   usedTypes: z.optional(z.array(DiscoveryCustomType)),
 })
 
+export type GlobalTypes = z.infer<typeof GlobalTypes>
+export const GlobalTypes = z.record(z.string(), DiscoveryCustomType)
+
 export type RawDiscoveryConfig = z.infer<typeof RawDiscoveryConfig>
 export const RawDiscoveryConfig = z.object({
   name: z.string().min(1),

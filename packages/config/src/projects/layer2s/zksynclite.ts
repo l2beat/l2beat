@@ -482,12 +482,14 @@ export const zksynclite: Layer2 = {
       date: '2020-06-18T00:00:00Z',
       description:
         'ZKsync is live, bringing scalable payments to Ethereum using ZK Rollup technology.',
+      type: 'general',
     },
     {
       name: 'Rebranding',
       link: 'https://blog.matter-labs.io/all-aboard-zksync-era-mainnet-8b8964ba7c59#:~:text=ZKsync%201.0%20is%20now%20zkSync%20Lite',
       date: '2023-02-16T00:00:00Z',
       description: 'ZKsync becomes ZKsync Lite.',
+      type: 'general',
     },
   ],
 }

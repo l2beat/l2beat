@@ -20,6 +20,7 @@ export class DiscoveryConfig {
   constructor(
     private readonly config: RawDiscoveryConfig,
     private readonly commonAddressNames: Record<string, string> = {},
+    private readonly globalTypes: Record<string, DiscoveryCustomType> = {},
     configReader: ConfigReader = new ConfigReader(),
   ) {
     this.overrides = new DiscoveryOverrides(config, commonAddressNames)
@@ -64,8 +65,15 @@ export class DiscoveryConfig {
       : []
   }
 
-  get types(): Record<string, DiscoveryCustomType> | undefined {
-    return this.config.types
+  // NOTE(radomski): name is for contract local types
+  typesFor(_name: string): Record<string, DiscoveryCustomType> {
+    const result = structuredClone(this.globalTypes)
+    for (const key of Object.keys(this.config.types ?? {})) {
+      // biome-ignore lint/style/noNonNullAssertion: we know it's there
+      result[key] = (this.config.types ?? {})[key]!
+    }
+
+    return result
   }
 
   get hash(): Hash256 {
