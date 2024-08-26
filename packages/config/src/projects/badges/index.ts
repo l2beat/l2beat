@@ -231,7 +231,8 @@ export const badges = {
   Superchain: {
     display: {
       name: 'Part of the Superchain',
-      description: "The project is part of the Superchain, meaning it's included in the Superchain registry and uses the Superchain config",
+      description:
+        "The project is part of the Superchain, meaning it's included in the Superchain registry and uses the Superchain config",
     },
     type: BadgeType.Infra,
   },
@@ -252,7 +253,8 @@ export const badges = {
   ElasticChain: {
     display: {
       name: 'Part of the Elastic Chain',
-      description: "The project is part of the Elastic Chain, meaning it's based on the ZK stack and uses the shared contracts",
+      description:
+        "The project is part of the Elastic Chain, meaning it's based on the ZK stack and uses the shared contracts",
     },
     type: BadgeType.Infra,
   },
