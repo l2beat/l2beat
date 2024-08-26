@@ -117,6 +117,7 @@ jobs:
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
       COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
       TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/postgres
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
       CONFIG_ALCHEMY_API_KEY: ${{ secrets.CONFIG_ALCHEMY_API_KEY }}
     services:
       postgres:
