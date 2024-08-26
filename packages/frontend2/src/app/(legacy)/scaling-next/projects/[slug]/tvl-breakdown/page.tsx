@@ -9,12 +9,6 @@ import { TvlBreakdownSummaryBox } from './_components/tvl-breakdown-summary-box'
 
 const scalingProjects = [...layer2s, ...layer3s]
 
-export async function generateStaticParams() {
-  return scalingProjects.map((layer) => ({
-    slug: layer.display.slug,
-  }))
-}
-
 export async function generateMetadata({ params }: Props) {
   const project = scalingProjects.find(
     (layer) => layer.display.slug === params.slug,
@@ -25,8 +19,8 @@ export async function generateMetadata({ params }: Props) {
   }
 
   return getDefaultMetadata({
-    title: `${project.display.name} | TVL Breakdown`,
-    description: project.display.description,
+    title: `${project.display.name} | TVL Breakdown – L2BEAT`,
+    description: `${project.display.name} project TVL Breakdown overview on L2BEAT. In depth scaling protocol analysis. Ethereum scaling analytics and research.`,
   })
 }
 
