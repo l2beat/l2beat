@@ -10,7 +10,11 @@ import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import { TemplateService } from '../analysis/TemplateService'
 import { readJsonc } from '../utils/readJsonc'
 import { DiscoveryConfig } from './DiscoveryConfig'
-import { RawDiscoveryConfig } from './RawDiscoveryConfig'
+import {
+  DiscoveryCustomType,
+  GlobalTypes,
+  RawDiscoveryConfig,
+} from './RawDiscoveryConfig'
 
 export class ConfigReader {
   public templateService: TemplateService
@@ -44,19 +48,14 @@ export class ConfigReader {
 
     this.templateService.inlineTemplates(rawConfig.data)
 
-    const commonAddressNamesPath = path.join(
-      this.rootPath,
-      'discovery',
-      'commonAddressNames.jsonc',
+    const globalTypes = this.readGlobalTypes()
+    const commonAddressNames = this.readCommonAddressNames()
+    const config = new DiscoveryConfig(
+      rawConfig.data,
+      commonAddressNames,
+      globalTypes,
+      this,
     )
-    assert(
-      fileExistsCaseSensitive(commonAddressNamesPath),
-      `${commonAddressNamesPath} not found`,
-    )
-    const commonAddressNames = readJsonc(
-      commonAddressNamesPath,
-    ) as unknown as Record<string, string>
-    const config = new DiscoveryConfig(rawConfig.data, commonAddressNames, this)
 
     assert(config.chain === chain, 'Chain mismatch in config.jsonc')
 
@@ -153,6 +152,36 @@ export class ConfigReader {
     }
 
     return projects
+  }
+
+  private readCommonAddressNames(): Record<string, string> {
+    const commonAddressNamesPath = path.join(
+      this.rootPath,
+      'discovery',
+      'commonAddressNames.jsonc',
+    )
+    assert(
+      fileExistsCaseSensitive(commonAddressNamesPath),
+      `${commonAddressNamesPath} not found`,
+    )
+
+    return readJsonc(commonAddressNamesPath) as unknown as Record<
+      string,
+      string
+    >
+  }
+
+  private readGlobalTypes(): Record<string, DiscoveryCustomType> {
+    const globalTypesPath = path.join(
+      this.rootPath,
+      'discovery',
+      'globalTypes.jsonc',
+    )
+    assert(
+      fileExistsCaseSensitive(globalTypesPath),
+      `${globalTypesPath} not found`,
+    )
+    return GlobalTypes.parse(readJsonc(globalTypesPath))
   }
 }
 
