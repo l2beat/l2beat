@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE "public"."CurrentPrice" (
+CREATE TABLE "CurrentPrice" (
     "coingeckoId" VARCHAR(255) NOT NULL,
     "priceUsd" REAL NOT NULL,
     "updatedAt" TIMESTAMP(6) NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE "public"."CurrentPrice" (
 );
 
 -- CreateTable
-CREATE TABLE "public"."Stake" (
+CREATE TABLE "Stake" (
     "id" VARCHAR(255) NOT NULL,
     "totalStake" REAL NOT NULL,
     "thresholdStake" REAL NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE "public"."Stake" (
 );
 
 -- CreateTable
-CREATE TABLE "public"."activity" (
+CREATE TABLE "activity" (
     "project_id" VARCHAR(255) NOT NULL,
     "timestamp" TIMESTAMP(6) NOT NULL,
     "count" INTEGER NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE "public"."activity" (
 );
 
 -- CreateTable
-CREATE TABLE "public"."aggregated_l2_costs" (
+CREATE TABLE "aggregated_l2_costs" (
     "timestamp" TIMESTAMP(6) NOT NULL,
     "project_id" VARCHAR(255) NOT NULL,
     "total_gas" INTEGER NOT NULL,
@@ -51,7 +51,7 @@ CREATE TABLE "public"."aggregated_l2_costs" (
 );
 
 -- CreateTable
-CREATE TABLE "public"."amounts" (
+CREATE TABLE "amounts" (
     "timestamp" TIMESTAMP(6) NOT NULL,
     "amount" DECIMAL(80,0) NOT NULL,
     "configuration_id" CHAR(12) NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE "public"."amounts" (
 );
 
 -- CreateTable
-CREATE TABLE "public"."block_timestamps" (
+CREATE TABLE "block_timestamps" (
     "chain" VARCHAR(255) NOT NULL,
     "timestamp" TIMESTAMP(6) NOT NULL,
     "block_number" INTEGER NOT NULL,
@@ -69,7 +69,7 @@ CREATE TABLE "public"."block_timestamps" (
 );
 
 -- CreateTable
-CREATE TABLE "public"."daily_discovery" (
+CREATE TABLE "daily_discovery" (
     "project_name" VARCHAR(255) NOT NULL,
     "chain_id" INTEGER NOT NULL,
     "unix_timestamp" TIMESTAMP(6) NOT NULL,
@@ -82,7 +82,7 @@ CREATE TABLE "public"."daily_discovery" (
 );
 
 -- CreateTable
-CREATE TABLE "public"."discovery_cache" (
+CREATE TABLE "discovery_cache" (
     "key" TEXT NOT NULL,
     "value" TEXT NOT NULL,
     "block_number" INTEGER NOT NULL,
@@ -92,7 +92,7 @@ CREATE TABLE "public"."discovery_cache" (
 );
 
 -- CreateTable
-CREATE TABLE "public"."finality" (
+CREATE TABLE "finality" (
     "project_id" VARCHAR(255) NOT NULL,
     "timestamp" TIMESTAMP(6) NOT NULL,
     "minimum_time_to_inclusion" INTEGER NOT NULL,
@@ -104,7 +104,7 @@ CREATE TABLE "public"."finality" (
 );
 
 -- CreateTable
-CREATE TABLE "public"."indexer_configurations" (
+CREATE TABLE "indexer_configurations" (
     "id" CHAR(12) NOT NULL,
     "indexer_id" VARCHAR(255) NOT NULL,
     "current_height" INTEGER,
@@ -116,7 +116,7 @@ CREATE TABLE "public"."indexer_configurations" (
 );
 
 -- CreateTable
-CREATE TABLE "public"."indexer_state" (
+CREATE TABLE "indexer_state" (
     "indexer_id" VARCHAR(255) NOT NULL,
     "safe_height" INTEGER NOT NULL,
     "min_timestamp" TIMESTAMP(6),
@@ -126,7 +126,7 @@ CREATE TABLE "public"."indexer_state" (
 );
 
 -- CreateTable
-CREATE TABLE "public"."l2_costs" (
+CREATE TABLE "l2_costs" (
     "configuration_id" VARCHAR(12) NOT NULL,
     "tx_hash" VARCHAR(255) NOT NULL,
     "timestamp" TIMESTAMP(6) NOT NULL,
@@ -141,7 +141,7 @@ CREATE TABLE "public"."l2_costs" (
 );
 
 -- CreateTable
-CREATE TABLE "public"."l2_costs_prices" (
+CREATE TABLE "l2_costs_prices" (
     "timestamp" TIMESTAMP(6) NOT NULL,
     "price_usd" REAL NOT NULL,
 
@@ -149,7 +149,7 @@ CREATE TABLE "public"."l2_costs_prices" (
 );
 
 -- CreateTable
-CREATE TABLE "public"."liveness" (
+CREATE TABLE "liveness" (
     "timestamp" TIMESTAMP(6) NOT NULL,
     "block_number" INTEGER NOT NULL,
     "tx_hash" VARCHAR(255) NOT NULL,
@@ -159,7 +159,7 @@ CREATE TABLE "public"."liveness" (
 );
 
 -- CreateTable
-CREATE TABLE "public"."prices" (
+CREATE TABLE "prices" (
     "timestamp" TIMESTAMP(6) NOT NULL,
     "price_usd" REAL NOT NULL,
     "configuration_id" CHAR(12) NOT NULL,
@@ -168,7 +168,7 @@ CREATE TABLE "public"."prices" (
 );
 
 -- CreateTable
-CREATE TABLE "public"."sequence_processor" (
+CREATE TABLE "sequence_processor" (
     "id" VARCHAR(255) NOT NULL,
     "last_processed" INTEGER NOT NULL,
     "updated_at" TIMESTAMP(6) NOT NULL,
@@ -179,7 +179,7 @@ CREATE TABLE "public"."sequence_processor" (
 );
 
 -- CreateTable
-CREATE TABLE "public"."tvl_cleaner" (
+CREATE TABLE "tvl_cleaner" (
     "repository_name" VARCHAR(255) NOT NULL,
     "hourly_cleaned_until" TIMESTAMP(6),
     "six_hourly_cleaned_until" TIMESTAMP(6),
@@ -188,7 +188,7 @@ CREATE TABLE "public"."tvl_cleaner" (
 );
 
 -- CreateTable
-CREATE TABLE "public"."update_monitor" (
+CREATE TABLE "update_monitor" (
     "project_name" VARCHAR(255) NOT NULL,
     "block_number" INTEGER NOT NULL,
     "unix_timestamp" TIMESTAMP(6),
@@ -201,7 +201,7 @@ CREATE TABLE "public"."update_monitor" (
 );
 
 -- CreateTable
-CREATE TABLE "public"."update_notifier" (
+CREATE TABLE "update_notifier" (
     "id" SERIAL NOT NULL,
     "created_at" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -214,7 +214,7 @@ CREATE TABLE "public"."update_notifier" (
 );
 
 -- CreateTable
-CREATE TABLE "public"."values" (
+CREATE TABLE "values" (
     "timestamp" TIMESTAMP(6) NOT NULL,
     "project_id" VARCHAR(255) NOT NULL,
     "data_source" VARCHAR(255) NOT NULL,
@@ -237,7 +237,7 @@ CREATE TABLE "public"."values" (
 );
 
 -- CreateTable
-CREATE TABLE "public"."verifier_status" (
+CREATE TABLE "verifier_status" (
     "address" VARCHAR(255) NOT NULL,
     "chain_id" INTEGER NOT NULL,
     "last_used" TIMESTAMP(6) NOT NULL,
@@ -247,7 +247,7 @@ CREATE TABLE "public"."verifier_status" (
 );
 
 -- CreateTable
-CREATE TABLE "public"."aggregated_liveness" (
+CREATE TABLE "aggregated_liveness" (
     "project_id" VARCHAR(255) NOT NULL,
     "subtype" VARCHAR(255) NOT NULL,
     "range" VARCHAR(255) NOT NULL,
@@ -260,7 +260,7 @@ CREATE TABLE "public"."aggregated_liveness" (
 );
 
 -- CreateTable
-CREATE TABLE "public"."anomalies" (
+CREATE TABLE "anomalies" (
     "timestamp" TIMESTAMP(6) NOT NULL,
     "project_id" VARCHAR(255) NOT NULL,
     "subtype" VARCHAR(255) NOT NULL,
@@ -270,16 +270,16 @@ CREATE TABLE "public"."anomalies" (
 );
 
 -- CreateIndex
-CREATE INDEX "aggregated_l2_costs_project_id_index" ON "public"."aggregated_l2_costs"("project_id");
+CREATE INDEX "aggregated_l2_costs_project_id_index" ON "aggregated_l2_costs"("project_id");
 
 -- CreateIndex
-CREATE INDEX "aggregated_l2_costs_timestamp_index" ON "public"."aggregated_l2_costs"("timestamp");
+CREATE INDEX "aggregated_l2_costs_timestamp_index" ON "aggregated_l2_costs"("timestamp");
 
 -- CreateIndex
-CREATE INDEX "indexer_configurations_indexer_id_index" ON "public"."indexer_configurations"("indexer_id");
+CREATE INDEX "indexer_configurations_indexer_id_index" ON "indexer_configurations"("indexer_id");
 
 -- CreateIndex
-CREATE INDEX "update_notifier_block_number_index" ON "public"."update_notifier"("block_number");
+CREATE INDEX "update_notifier_block_number_index" ON "update_notifier"("block_number");
 
 -- CreateIndex
-CREATE INDEX "update_notifier_project_name_index" ON "public"."update_notifier"("project_name");
+CREATE INDEX "update_notifier_project_name_index" ON "update_notifier"("project_name");
