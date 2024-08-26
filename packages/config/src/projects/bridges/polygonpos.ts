@@ -1,9 +1,4 @@
-import {
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-  formatSeconds,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS, NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -11,15 +6,6 @@ import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('polygon-pos')
-
-const delayString = formatSeconds(
-  discovery.getContractValue('Timelock', 'getMinDelay'),
-)
-
-const upgrades = {
-  upgradableBy: ['PolygonMultisig'],
-  upgradeDelay: delayString,
-}
 
 export const polygonpos: Bridge = {
   type: 'bridge',
@@ -53,28 +39,24 @@ export const polygonpos: Bridge = {
         address: EthereumAddress('0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf'),
         sinceTimestamp: new UnixTime(1598436664),
         tokens: '*',
-        ...upgrades,
       }),
       discovery.getEscrowDetails({
         // MintableERC20Predicate
         address: EthereumAddress('0x9923263fA127b3d1484cFD649df8f1831c2A74e4'),
         sinceTimestamp: new UnixTime(1613100720),
         tokens: '*',
-        ...upgrades,
       }),
       discovery.getEscrowDetails({
         // EtherPredicate
         address: EthereumAddress('0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30'),
         sinceTimestamp: new UnixTime(1598437971),
         tokens: ['ETH'],
-        ...upgrades,
       }),
       discovery.getEscrowDetails({
         // ERC20EscrowPredicate for TOWER token
         address: EthereumAddress('0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4'),
         sinceTimestamp: new UnixTime(1598437971),
         tokens: '*',
-        ...upgrades,
       }),
       // ERC20MintBurnablePredicate is not used
     ],
@@ -87,9 +69,9 @@ export const polygonpos: Bridge = {
       sentiment: 'warning',
     },
     sourceUpgradeability: {
-      value: `${delayString}`,
-      description: `The bridge can be upgraded by 5/9 MSig after ${delayString} hour delay.`,
-      sentiment: 'warning',
+      value: `Yes`,
+      description: `The bridge can be upgraded by 5/9 MSig.`,
+      sentiment: 'bad',
     },
     destinationToken: {
       ...RISK_VIEW.CANONICAL_OR_WRAPPED,
@@ -152,7 +134,6 @@ export const polygonpos: Bridge = {
       discovery.getContractDetails('RootChain', {
         description:
           'Contract storing Polygon PoS chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the Polygon Validators.',
-        ...upgrades,
       }),
       discovery.getContractDetails(
         'StateSender',
@@ -162,28 +143,21 @@ export const polygonpos: Bridge = {
         description:
           'Main configuration contract to manage tokens, token types, escrows (predicates) for given token types.\
           It also serves as an entry point for deposits and withdrawals effectively acting as a token router.',
-        ...upgrades,
       }),
       discovery.getContractDetails('StakeManager', {
         description:
           'Main configuration contract to manage stakers and their voting power.',
-        ...upgrades,
       }),
       discovery.getContractDetails('Registry', {
         description: 'A registry of different system components.',
-        ...upgrades,
       }),
-      discovery.getContractDetails(
-        'Timelock',
-        `Contract enforcing delay on code upgrades. The current delay is ${delayString}.`,
-      ),
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(`${delayString}`)],
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
     ...discovery.getMultisigPermission(
       'PolygonMultisig',
-      'Can propose and execute code upgrades via Timelock contract.',
+      'Can propose and execute code upgrades.',
     ),
   ],
   knowledgeNuggets: [
