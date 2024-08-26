@@ -1,8 +1,8 @@
 name: Migrate DB
 on:
   push:
-    paths:
-      - packages/database/prisma/migrations/**
+    # paths:
+    #   - packages/database/prisma/migrations/**
     branches:
       - prisma-test
 
