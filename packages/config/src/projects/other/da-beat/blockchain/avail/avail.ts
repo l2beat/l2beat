@@ -17,22 +17,30 @@ export const celestia: DaLayer = {
     description:
       'Avail is a data availability network.',
     links: {
-      websites: ['https://celestia.org/'],
-      documentation: ['https://docs.celestia.org/'],
-      repositories: ['https://github.com/celestiaorg'],
-      apps: [],
-      explorers: ['https://celenium.io/'],
+      websites: ['https://www.availproject.org/'],
+      documentation: ['https://docs.availproject.org/'],
+      repositories: ['https://github.com/availproject/'],
+      apps: ['https://bridge.availproject.org/'],
+      explorers: ['https://explorer.avail.so/#/explorer','https://avail.subscan.io/'],
       socialMedia: [
-        'https://x.com/CelestiaOrg',
-        'https://discord.com/invite/YsnTPcSfWQ',
-        'https://t.me/CelestiaCommunity',
+        'https://x.com/AvailProject',
+        "https://t.me/AvailCommunity",
+        "https://discord.com/invite/y6fHnxZQX8",
+        "https://www.linkedin.com/company/availproject/"
       ],
     },
   },
   technology: `
     ## Consensus
-
+    Avail implements a Nominated Proof-of-Stake (NPoS) consensus mechanism, specifically the BABE/GRANDPA protocol. 
+    BABE handles block production by assigning block production slots according to stake and using a Verifiable Random Function (VRF). 
+    At the start of each epoch, nodes run the Block-Production-Lottery algorithm to assign block production slots and share the results with other nodes. 
+    Slots are randomly assigned, meaning multiple validators might be selected for the same slot (starting a 'race') or some slots may remain empty. 
+    To ensure liveness, secondary block producers are pre-determined and can step in if necessary, preventing any slot from being skipped. 
+    Finality is achieved through GRANDPA, a GHOST-based finality gadget that provides finality through consecutive rounds of validators voting.
+    
     ## Blobs
+    Data can be submitted to the Avail blockchain in the form of blobs. 
 
     ## Data Availability Sampling (DAS)
 
