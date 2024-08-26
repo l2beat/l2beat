@@ -283,3 +283,4 @@ CREATE INDEX "update_notifier_block_number_index" ON "update_notifier"("block_nu
 
 -- CreateIndex
 CREATE INDEX "update_notifier_project_name_index" ON "update_notifier"("project_name");
+
