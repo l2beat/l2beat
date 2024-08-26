@@ -34,7 +34,6 @@ export const galxegravity: Layer2 = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  associatedTokens: ['SX'],
   rpcUrl: 'https://rpc.gravity.xyz',
   transactionApi: {
     type: 'rpc',
