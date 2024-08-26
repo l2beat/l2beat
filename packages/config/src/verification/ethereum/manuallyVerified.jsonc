@@ -12,5 +12,6 @@
   "0xFd234971881a7c72965175fA8E438c97B2Dcd273": "https://github.com/iden3/circomlibjs/blob/main/src/poseidon_gencontract.js", // Kroma's Poseidon2 contract, deployed using Circomlibjs,
   "0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.9.5/evm_verifier.yul", // Scroll's PlonkVerifierV0 (calldata) written in Yul+
   "0x2293cd12e8564e8219d314b075867c2f66ac6941": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.10.3/evm_verifier.yul", // Scroll's PlonkVerifierV1 (blobs) written in Yul+
-  "0x03a72B00D036C479105fF98A1953b15d9c510110": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.11.4/evm_verifier.yul" // Scroll's PlonkVerifierV2 (blobs, Curie upgrade) written in Yul+
+  "0x03a72B00D036C479105fF98A1953b15d9c510110": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.11.4/evm_verifier.yul", // Scroll's PlonkVerifierV2 (blobs, Curie upgrade) written in Yul+
+  "0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9": "https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.12.0/evm_verifier.yul" // Scroll's PlonkVerifierV3 (bundles, Darwin upgrade) written in Yul+
 }

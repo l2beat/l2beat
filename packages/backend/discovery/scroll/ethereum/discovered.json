@@ -1,8 +1,8 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "blockNumber": 20369470,
-  "configHash": "0x16d08149a3169a7f934f3c943ab8f5108b8cf15e4a7a577b5ab7e6a11ca76859",
+  "blockNumber": 20590985,
+  "configHash": "0xe99134b8a69470e0aa38a9dd215eeb107a715c31c5c15da37aa20ae29f355d18",
   "version": 13,
   "contracts": [
     {
@@ -27,21 +27,23 @@
       "ignoreInWatchMode": [
         "nextCrossDomainMessageIndex",
         "pendingQueueIndex",
-        "l2BaseFee"
+        "l2BaseFee",
+        "nextUnfinalizedQueueIndex"
       ],
       "sinceTimestamp": 1696782311,
       "values": {
         "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
-        "$implementation": "0xeBaed7A81c298B24EE6d59c22698A951dc448E01",
-        "$upgradeCount": 2,
+        "$implementation": "0x137CC585F607EDeBBc3CA6360AffCFeab507B374",
+        "$upgradeCount": 3,
         "enforcedTxGateway": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "gasOracle": "0x987e300fDfb06093859358522a79098848C33852",
-        "l2BaseFee": 79079032,
+        "l2BaseFee": 39168975,
         "maxGasLimit": 10000000,
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 911294,
+        "nextCrossDomainMessageIndex": 928387,
+        "nextUnfinalizedQueueIndex": 928366,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-        "pendingQueueIndex": 911220,
+        "pendingQueueIndex": 928383,
         "scrollChain": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "whitelistChecker": "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37"
       },
@@ -149,7 +151,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 5 (20%)",
-        "nonce": 9,
+        "nonce": 10,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -174,6 +176,17 @@
       "derivedName": "Whitelist"
     },
     {
+      "name": "ZkEvmVerifierV2",
+      "address": "0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB",
+      "sinceTimestamp": 1722833039,
+      "values": {
+        "$immutable": true,
+        "plonkVerifier": "0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9",
+        "verifierDigest": "0x30513ba1873ce1b9598c4faf101dccd32498e93c39e1f31a423390cbb1f81f7a"
+      },
+      "derivedName": "ZkEvmVerifierV2"
+    },
+    {
       "name": "ZkEvmVerifierV1",
       "address": "0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247",
       "sinceTimestamp": 1712907539,
@@ -190,6 +203,39 @@
       "sinceTimestamp": 1696780751,
       "values": { "$immutable": true },
       "derivedName": ""
+    },
+    {
+      "name": "MultipleVersionRollupVerifier",
+      "address": "0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F",
+      "descriptions": [
+        "Used to update the verifier and keep track of current and old versions."
+      ],
+      "sinceTimestamp": 1722833675,
+      "values": {
+        "$immutable": true,
+        "latestVerifier": [
+          {
+            "startBatchIndex": 0,
+            "verifier": "0x585DfaD7bF4099E011D185E266907A8ab60DAD2D"
+          },
+          {
+            "startBatchIndex": 0,
+            "verifier": "0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247"
+          },
+          {
+            "startBatchIndex": 0,
+            "verifier": "0x63FB51C55d9605a75F8872C80De260a00fACfaA2"
+          },
+          {
+            "startBatchIndex": 0,
+            "verifier": "0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB"
+          }
+        ],
+        "legacyVerifiersLength": [0, 0, 0, 0],
+        "owner": "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
+        "verifierVersions": [0, 1, 2, 3]
+      },
+      "derivedName": "MultipleVersionRollupVerifier"
     },
     {
       "name": "ZkEvmVerifierV0",
@@ -458,7 +504,7 @@
               ]
             },
             "0xa13BAF47339d63B743e7Da8741db5456DAc1E556": {
-              "revertBatch(bytes,uint256)": [
+              "0x10d44583": [
                 "SCROLL_MULTISIG_NO_DELAY_ROLE",
                 "EMERGENCY_MULTISIG_NO_DELAY_ROLE"
               ],
@@ -552,6 +598,11 @@
               "setBatchConfig(address,(uint96,uint96,uint16,uint24,uint24))": [
                 "TIMELOCK_1DAY_DELAY_TOLE"
               ]
+            },
+            "0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F": {
+              "updateVerifier(uint256,uint64,address)": [
+                "TIMELOCK_7DAY_DELAY_ROLE"
+              ]
             }
           }
         },
@@ -614,6 +665,14 @@
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       }
+    },
+    {
+      "name": "PlonkVerifierV3",
+      "address": "0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9",
+      "unverified": true,
+      "sinceTimestamp": 1722833027,
+      "values": { "$immutable": true },
+      "derivedName": ""
     },
     {
       "name": "FeeVaultMultisig",
@@ -724,9 +783,9 @@
       "sinceTimestamp": 1696782323,
       "values": {
         "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
-        "$implementation": "0x4F250B05262240C787a1eE222687C6eC395C628A",
-        "$upgradeCount": 4,
-        "lastFinalizedBatchIndex": 296639,
+        "$implementation": "0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f",
+        "$upgradeCount": 5,
+        "lastFinalizedBatchIndex": 309309,
         "layer2ChainId": 534352,
         "maxNumTxInChunk": 100,
         "messageQueue": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
@@ -797,7 +856,7 @@
           "0xcF2898225ED05Be911D3709d9417e86E0b4Cfc8f",
           "0x2ce8B4A516ebBc8B425764a867B742F76C2244c7"
         ],
-        "verifier": "0xf94AfBD9370E25Dd6Ca557d5D67634aeFDA2416B"
+        "verifier": "0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F"
       },
       "derivedName": "ScrollChain"
     },
@@ -869,7 +928,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 132,
+        "nonce": 136,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -899,7 +958,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 146,
+        "nonce": 173,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1108,7 +1167,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 5 (80%)",
-        "nonce": 12,
+        "nonce": 13,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1137,7 +1196,7 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 105624099784094,
+        "totalBridgedUSDC": 86720207344596,
         "withdrawPaused": false
       },
       "derivedName": "L1USDCGateway"
@@ -1164,27 +1223,6 @@
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6"
       },
       "derivedName": "L1GatewayRouter"
-    },
-    {
-      "name": "MultipleVersionRollupVerifier",
-      "address": "0xf94AfBD9370E25Dd6Ca557d5D67634aeFDA2416B",
-      "descriptions": [
-        "Used to update the verifier and keep track of current and old versions."
-      ],
-      "sinceTimestamp": 1718183819,
-      "values": {
-        "$immutable": true,
-        "latestVerifier": [
-          [0, "0x585DfaD7bF4099E011D185E266907A8ab60DAD2D"],
-          [0, "0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247"],
-          [0, "0x63FB51C55d9605a75F8872C80De260a00fACfaA2"],
-          [0, "0x0000000000000000000000000000000000000000"],
-          [0, "0x0000000000000000000000000000000000000000"]
-        ],
-        "legacyVerifiersLength": [0, 0, 0, 0, 0],
-        "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6"
-      },
-      "derivedName": "MultipleVersionRollupVerifier"
     }
   ],
   "eoas": [
@@ -1294,6 +1332,55 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
     ],
+    "0x137CC585F607EDeBBc3CA6360AffCFeab507B374": [
+      "constructor(address _messenger, address _scrollChain, address _enforcedTxGateway)",
+      "error ErrorNotWhitelistedSender()",
+      "error ErrorZeroAddress()",
+      "event DequeueTransaction(uint256 startIndex, uint256 count, uint256 skippedBitmap)",
+      "event DropTransaction(uint256 index)",
+      "event FinalizedDequeuedTransaction(uint256 finalizedIndex)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event QueueTransaction(address indexed sender, address indexed target, uint256 value, uint64 queueIndex, uint256 gasLimit, bytes data)",
+      "event ResetDequeuedTransaction(uint256 startIndex)",
+      "event UpdateGasOracle(address indexed _oldGasOracle, address indexed _newGasOracle)",
+      "event UpdateL2BaseFee(uint256 oldL2BaseFee, uint256 newL2BaseFee)",
+      "event UpdateMaxGasLimit(uint256 _oldMaxGasLimit, uint256 _newMaxGasLimit)",
+      "event UpdateWhitelistChecker(address indexed _oldWhitelistChecker, address indexed _newWhitelistChecker)",
+      "function appendCrossDomainMessage(address _target, uint256 _gasLimit, bytes _data)",
+      "function appendEnforcedTransaction(address _sender, address _target, uint256 _value, uint256 _gasLimit, bytes _data)",
+      "function calculateIntrinsicGasFee(bytes _calldata) pure returns (uint256)",
+      "function computeTransactionHash(address _sender, uint256 _queueIndex, uint256 _value, address _target, uint256 _gasLimit, bytes _data) pure returns (bytes32)",
+      "function dropCrossDomainMessage(uint256 _index)",
+      "function enforcedTxGateway() view returns (address)",
+      "function estimateCrossDomainMessageFee(uint256 _gasLimit) view returns (uint256)",
+      "function finalizePoppedCrossDomainMessage(uint256 _newFinalizedQueueIndexPlusOne)",
+      "function gasOracle() view returns (address)",
+      "function getCrossDomainMessage(uint256 _queueIndex) view returns (bytes32)",
+      "function initialize(address _messenger, address _scrollChain, address _enforcedTxGateway, address _gasOracle, uint256 _maxGasLimit)",
+      "function initializeV2()",
+      "function initializeV3()",
+      "function isMessageDropped(uint256 _queueIndex) view returns (bool)",
+      "function isMessageSkipped(uint256 _queueIndex) view returns (bool)",
+      "function l2BaseFee() view returns (uint256)",
+      "function maxGasLimit() view returns (uint256)",
+      "function messageQueue(uint256) view returns (bytes32)",
+      "function messenger() view returns (address)",
+      "function nextCrossDomainMessageIndex() view returns (uint256)",
+      "function nextUnfinalizedQueueIndex() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pendingQueueIndex() view returns (uint256)",
+      "function popCrossDomainMessage(uint256 _startIndex, uint256 _count, uint256 _skippedBitmap)",
+      "function renounceOwnership()",
+      "function resetPoppedCrossDomainMessage(uint256 _startIndex)",
+      "function scrollChain() view returns (address)",
+      "function setL2BaseFee(uint256 _newL2BaseFee)",
+      "function transferOwnership(address newOwner)",
+      "function updateGasOracle(address _newGasOracle)",
+      "function updateMaxGasLimit(uint256 _newMaxGasLimit)",
+      "function updateWhitelistChecker(address _newWhitelistChecker)",
+      "function whitelistChecker() view returns (address)"
+    ],
     "0x1A658B88fD0a3c82fa1a0609fCDbD32e7dd4aB9C": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
       "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
@@ -1381,6 +1468,13 @@
       "function transferOwnership(address _newOwner)",
       "function updateWhitelistStatus(address[] _accounts, bool _status)"
     ],
+    "0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB": [
+      "constructor(address _verifier, bytes32 _verifierDigest)",
+      "error VerificationFailed()",
+      "function plonkVerifier() view returns (address)",
+      "function verifierDigest() view returns (bytes32)",
+      "function verify(bytes bundleProof, bytes publicInput) view"
+    ],
     "0x4015Fc868C06689ABEba4a9dC8FA43B804F6239c": [
       "constructor(address _counterpart, address _router, address _messenger, address _l2TokenImplementation, address _l2TokenFactory)",
       "error ErrorCallerIsNotCounterpartGateway()",
@@ -1414,81 +1508,23 @@
       "function plonkVerifier() view returns (address)",
       "function verify(bytes aggrProof, bytes32 publicInputHash) view"
     ],
-    "0x4F250B05262240C787a1eE222687C6eC395C628A": [
-      "constructor(uint64 _chainId, address _messageQueue, address _verifier)",
-      "error ErrorAccountIsNotEOA()",
-      "error ErrorBatchHeaderLengthTooSmall()",
-      "error ErrorBatchHeaderLengthTooSmall()",
-      "error ErrorBatchIsAlreadyCommitted()",
-      "error ErrorBatchIsAlreadyVerified()",
-      "error ErrorBatchIsEmpty()",
-      "error ErrorCallPointEvaluationPrecompileFailed()",
-      "error ErrorCallerIsNotProver()",
-      "error ErrorCallerIsNotSequencer()",
-      "error ErrorFoundMultipleBlob()",
-      "error ErrorGenesisBatchHasNonZeroField()",
-      "error ErrorGenesisBatchImported()",
-      "error ErrorGenesisDataHashIsZero()",
-      "error ErrorGenesisParentBatchHashIsNonZero()",
-      "error ErrorIncompleteL2TransactionData()",
-      "error ErrorIncorrectBatchHash()",
-      "error ErrorIncorrectBatchIndex()",
-      "error ErrorIncorrectBitmapLength()",
-      "error ErrorIncorrectBitmapLength()",
-      "error ErrorIncorrectBitmapLength()",
-      "error ErrorIncorrectChunkLength()",
-      "error ErrorIncorrectChunkLength()",
-      "error ErrorIncorrectPreviousStateRoot()",
-      "error ErrorLastL1MessageSkipped()",
-      "error ErrorNoBlobFound()",
-      "error ErrorNoBlockInChunk()",
-      "error ErrorNoBlockInChunk()",
-      "error ErrorNumTxsLessThanNumL1Msgs()",
-      "error ErrorPreviousStateRootIsZero()",
-      "error ErrorRevertFinalizedBatch()",
-      "error ErrorRevertNotStartFromEnd()",
-      "error ErrorRevertZeroBatches()",
-      "error ErrorStateRootIsZero()",
-      "error ErrorTooManyTxsInOneChunk()",
-      "error ErrorUnexpectedPointEvaluationPrecompileOutput()",
+    "0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F": [
+      "constructor(uint256[] _versions, address[] _verifiers)",
+      "error ErrorStartBatchIndexTooSmall()",
       "error ErrorZeroAddress()",
-      "event CommitBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
-      "event FinalizeBatch(uint256 indexed batchIndex, bytes32 indexed batchHash, bytes32 stateRoot, bytes32 withdrawRoot)",
-      "event Initialized(uint8 version)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event RevertBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
-      "event Unpaused(address account)",
-      "event UpdateMaxNumTxInChunk(uint256 oldMaxNumTxInChunk, uint256 newMaxNumTxInChunk)",
-      "event UpdateProver(address indexed account, bool status)",
-      "event UpdateSequencer(address indexed account, bool status)",
-      "function addProver(address _account)",
-      "function addSequencer(address _account)",
-      "function commitBatch(uint8 _version, bytes _parentBatchHeader, bytes[] _chunks, bytes _skippedL1MessageBitmap)",
-      "function committedBatches(uint256) view returns (bytes32)",
-      "function finalizeBatchWithProof(bytes _batchHeader, bytes32 _prevStateRoot, bytes32 _postStateRoot, bytes32 _withdrawRoot, bytes _aggrProof)",
-      "function finalizeBatchWithProof4844(bytes _batchHeader, bytes32 _prevStateRoot, bytes32 _postStateRoot, bytes32 _withdrawRoot, bytes _blobDataProof, bytes _aggrProof)",
-      "function finalizedStateRoots(uint256) view returns (bytes32)",
-      "function importGenesisBatch(bytes _batchHeader, bytes32 _stateRoot)",
-      "function initialize(address _messageQueue, address _verifier, uint256 _maxNumTxInChunk)",
-      "function isBatchFinalized(uint256 _batchIndex) view returns (bool)",
-      "function isProver(address) view returns (bool)",
-      "function isSequencer(address) view returns (bool)",
-      "function lastFinalizedBatchIndex() view returns (uint256)",
-      "function layer2ChainId() view returns (uint64)",
-      "function maxNumTxInChunk() view returns (uint256)",
-      "function messageQueue() view returns (address)",
+      "event UpdateVerifier(uint256 version, uint256 startBatchIndex, address verifier)",
+      "function getVerifier(uint256 _version, uint256 _batchIndex) view returns (address)",
+      "function latestVerifier(uint256) view returns (uint64 startBatchIndex, address verifier)",
+      "function legacyVerifiers(uint256, uint256) view returns (uint64 startBatchIndex, address verifier)",
+      "function legacyVerifiersLength(uint256 _version) view returns (uint256)",
       "function owner() view returns (address)",
-      "function paused() view returns (bool)",
-      "function removeProver(address _account)",
-      "function removeSequencer(address _account)",
       "function renounceOwnership()",
-      "function revertBatch(bytes _batchHeader, uint256 _count)",
-      "function setPause(bool _status)",
       "function transferOwnership(address newOwner)",
-      "function updateMaxNumTxInChunk(uint256 _maxNumTxInChunk)",
-      "function verifier() view returns (address)",
-      "function withdrawRoots(uint256) view returns (bytes32)"
+      "function updateVerifier(uint256 _version, uint64 _startBatchIndex, address _verifier)",
+      "function verifyAggregateProof(uint256 _version, uint256 _batchIndex, bytes _aggrProof, bytes32 _publicInputHash) view",
+      "function verifyAggregateProof(uint256 _batchIndex, bytes _aggrProof, bytes32 _publicInputHash) view",
+      "function verifyBundleProof(uint256 _version, uint256 _batchIndex, bytes _bundleProof, bytes _publicInput) view"
     ],
     "0x546E0bF31FB6e7babD493452e4e6999191367B42": [
       "constructor(address _counterpart, address _router, address _messenger)",
@@ -1816,6 +1852,81 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f": [
+      "constructor(uint64 _chainId, address _messageQueue, address _verifier)",
+      "error ErrorAccountIsNotEOA()",
+      "error ErrorBatchHeaderV0LengthTooSmall()",
+      "error ErrorBatchHeaderV1LengthTooSmall()",
+      "error ErrorBatchHeaderV3LengthMismatch()",
+      "error ErrorBatchIsAlreadyCommitted()",
+      "error ErrorBatchIsAlreadyVerified()",
+      "error ErrorBatchIsEmpty()",
+      "error ErrorCallPointEvaluationPrecompileFailed()",
+      "error ErrorCallerIsNotProver()",
+      "error ErrorCallerIsNotSequencer()",
+      "error ErrorFoundMultipleBlobs()",
+      "error ErrorGenesisBatchHasNonZeroField()",
+      "error ErrorGenesisBatchImported()",
+      "error ErrorGenesisDataHashIsZero()",
+      "error ErrorGenesisParentBatchHashIsNonZero()",
+      "error ErrorIncompleteL2TransactionData()",
+      "error ErrorIncorrectBatchHash()",
+      "error ErrorIncorrectBatchIndex()",
+      "error ErrorIncorrectBatchVersion()",
+      "error ErrorIncorrectBitmapLength()",
+      "error ErrorIncorrectBitmapLengthV0()",
+      "error ErrorIncorrectBitmapLengthV1()",
+      "error ErrorIncorrectChunkLengthV1()",
+      "error ErrorLastL1MessageSkipped()",
+      "error ErrorNoBlobFound()",
+      "error ErrorNoBlockInChunkV1()",
+      "error ErrorNumTxsLessThanNumL1Msgs()",
+      "error ErrorRevertFinalizedBatch()",
+      "error ErrorRevertNotStartFromEnd()",
+      "error ErrorRevertZeroBatches()",
+      "error ErrorStateRootIsZero()",
+      "error ErrorTooManyTxsInOneChunk()",
+      "error ErrorUnexpectedPointEvaluationPrecompileOutput()",
+      "error ErrorZeroAddress()",
+      "event CommitBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
+      "event FinalizeBatch(uint256 indexed batchIndex, bytes32 indexed batchHash, bytes32 stateRoot, bytes32 withdrawRoot)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event RevertBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
+      "event Unpaused(address account)",
+      "event UpdateMaxNumTxInChunk(uint256 oldMaxNumTxInChunk, uint256 newMaxNumTxInChunk)",
+      "event UpdateProver(address indexed account, bool status)",
+      "event UpdateSequencer(address indexed account, bool status)",
+      "function addProver(address _account)",
+      "function addSequencer(address _account)",
+      "function commitBatch(uint8 _version, bytes _parentBatchHeader, bytes[] _chunks, bytes _skippedL1MessageBitmap)",
+      "function commitBatchWithBlobProof(uint8 _version, bytes _parentBatchHeader, bytes[] _chunks, bytes _skippedL1MessageBitmap, bytes _blobDataProof)",
+      "function committedBatches(uint256) view returns (bytes32)",
+      "function finalizeBatchWithProof4844(bytes _batchHeader, bytes32, bytes32 _postStateRoot, bytes32 _withdrawRoot, bytes _blobDataProof, bytes _aggrProof)",
+      "function finalizeBundleWithProof(bytes _batchHeader, bytes32 _postStateRoot, bytes32 _withdrawRoot, bytes _aggrProof)",
+      "function finalizedStateRoots(uint256) view returns (bytes32)",
+      "function importGenesisBatch(bytes _batchHeader, bytes32 _stateRoot)",
+      "function initialize(address _messageQueue, address _verifier, uint256 _maxNumTxInChunk)",
+      "function isBatchFinalized(uint256 _batchIndex) view returns (bool)",
+      "function isProver(address) view returns (bool)",
+      "function isSequencer(address) view returns (bool)",
+      "function lastFinalizedBatchIndex() view returns (uint256)",
+      "function layer2ChainId() view returns (uint64)",
+      "function maxNumTxInChunk() view returns (uint256)",
+      "function messageQueue() view returns (address)",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function removeProver(address _account)",
+      "function removeSequencer(address _account)",
+      "function renounceOwnership()",
+      "function revertBatch(bytes _firstBatchHeader, bytes _lastBatchHeader)",
+      "function setPause(bool _status)",
+      "function transferOwnership(address newOwner)",
+      "function updateMaxNumTxInChunk(uint256 _maxNumTxInChunk)",
+      "function verifier() view returns (address)",
+      "function withdrawRoots(uint256) view returns (bytes32)"
+    ],
     "0x9eBf2f33526CD571f8b2ad312492cb650870CFd6": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -2085,49 +2196,6 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0xeBaed7A81c298B24EE6d59c22698A951dc448E01": [
-      "constructor(address _messenger, address _scrollChain, address _enforcedTxGateway)",
-      "error ErrorNotWhitelistedSender()",
-      "error ErrorZeroAddress()",
-      "event DequeueTransaction(uint256 startIndex, uint256 count, uint256 skippedBitmap)",
-      "event DropTransaction(uint256 index)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event QueueTransaction(address indexed sender, address indexed target, uint256 value, uint64 queueIndex, uint256 gasLimit, bytes data)",
-      "event UpdateGasOracle(address indexed _oldGasOracle, address indexed _newGasOracle)",
-      "event UpdateL2BaseFee(uint256 oldL2BaseFee, uint256 newL2BaseFee)",
-      "event UpdateMaxGasLimit(uint256 _oldMaxGasLimit, uint256 _newMaxGasLimit)",
-      "event UpdateWhitelistChecker(address indexed _oldWhitelistChecker, address indexed _newWhitelistChecker)",
-      "function appendCrossDomainMessage(address _target, uint256 _gasLimit, bytes _data)",
-      "function appendEnforcedTransaction(address _sender, address _target, uint256 _value, uint256 _gasLimit, bytes _data)",
-      "function calculateIntrinsicGasFee(bytes _calldata) pure returns (uint256)",
-      "function computeTransactionHash(address _sender, uint256 _queueIndex, uint256 _value, address _target, uint256 _gasLimit, bytes _data) pure returns (bytes32)",
-      "function dropCrossDomainMessage(uint256 _index)",
-      "function enforcedTxGateway() view returns (address)",
-      "function estimateCrossDomainMessageFee(uint256 _gasLimit) view returns (uint256)",
-      "function gasOracle() view returns (address)",
-      "function getCrossDomainMessage(uint256 _queueIndex) view returns (bytes32)",
-      "function initialize(address _messenger, address _scrollChain, address _enforcedTxGateway, address _gasOracle, uint256 _maxGasLimit)",
-      "function initializeV2()",
-      "function isMessageDropped(uint256 _queueIndex) view returns (bool)",
-      "function isMessageSkipped(uint256 _queueIndex) view returns (bool)",
-      "function l2BaseFee() view returns (uint256)",
-      "function maxGasLimit() view returns (uint256)",
-      "function messageQueue(uint256) view returns (bytes32)",
-      "function messenger() view returns (address)",
-      "function nextCrossDomainMessageIndex() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function pendingQueueIndex() view returns (uint256)",
-      "function popCrossDomainMessage(uint256 _startIndex, uint256 _count, uint256 _skippedBitmap)",
-      "function renounceOwnership()",
-      "function scrollChain() view returns (address)",
-      "function setL2BaseFee(uint256 _newL2BaseFee)",
-      "function transferOwnership(address newOwner)",
-      "function updateGasOracle(address _newGasOracle)",
-      "function updateMaxGasLimit(uint256 _newMaxGasLimit)",
-      "function updateWhitelistChecker(address _newWhitelistChecker)",
-      "function whitelistChecker() view returns (address)"
-    ],
     "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe": [
       "constructor(address _singleton)"
     ],
@@ -2205,23 +2273,6 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
-    ],
-    "0xf94AfBD9370E25Dd6Ca557d5D67634aeFDA2416B": [
-      "constructor(uint256[] _versions, address[] _verifiers)",
-      "error ErrorStartBatchIndexTooSmall()",
-      "error ErrorZeroAddress()",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event UpdateVerifier(uint256 version, uint256 startBatchIndex, address verifier)",
-      "function getVerifier(uint256 _version, uint256 _batchIndex) view returns (address)",
-      "function latestVerifier(uint256) view returns (uint64 startBatchIndex, address verifier)",
-      "function legacyVerifiers(uint256, uint256) view returns (uint64 startBatchIndex, address verifier)",
-      "function legacyVerifiersLength(uint256 _version) view returns (uint256)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function updateVerifier(uint256 _version, uint64 _startBatchIndex, address _verifier)",
-      "function verifyAggregateProof(uint256 _version, uint256 _batchIndex, bytes _aggrProof, bytes32 _publicInputHash) view",
-      "function verifyAggregateProof(uint256 _batchIndex, bytes _aggrProof, bytes32 _publicInputHash) view"
     ],
     "0xfDF1eE0098168eaa61BF87Db68C39c85151a4E9E": [
       "constructor()",
