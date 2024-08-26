@@ -408,7 +408,6 @@ model AggregatedLiveness {
   projectId String   @map("project_id") @db.VarChar(255)
   subtype   String   @db.VarChar(255)
   range     String   @db.VarChar(255)
-  min       Int
   avg       Int
   max       Int
   updatedAt DateTime @map("updated_at") @db.Timestamp(6)
