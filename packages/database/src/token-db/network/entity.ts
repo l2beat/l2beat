@@ -1,5 +1,5 @@
 import { Insertable, Selectable } from 'kysely'
-import { Network } from '../../kysely/generated/types'
+import { Network } from '../../kysely/token-db/types'
 
 export interface NetworkRecord {
   id: string
