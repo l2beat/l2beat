@@ -232,7 +232,7 @@ export const badges = {
     display: {
       name: 'Part of the Superchain',
       description:
-        "The project is part of the Superchain, meaning it's included in the Superchain registry and uses the Superchain config",
+        "The project is part of the Superchain, meaning it's included in the Superchain registry or uses the Superchain config",
     },
     type: BadgeType.Infra,
   },
