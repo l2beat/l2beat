@@ -27,10 +27,12 @@ import { xaiLayer } from './dac/xai'
 import { xlayerLayer } from './dac/xlayer'
 import { zkfairLayer } from './dac/zkfair'
 import { DaLayer } from './types/DaLayer'
+import { avail } from './blockchain/avail/avail'
 
 export * from './types'
 
 export const daLayers: DaLayer[] = [
+  avail,
   rhinofiLayer,
   zkfairLayer,
   arbitrumnovaLayer,
