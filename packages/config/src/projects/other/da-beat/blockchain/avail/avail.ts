@@ -15,19 +15,21 @@ export const avail: DaLayer = {
   display: {
     name: 'Avail',
     slug: 'avail',
-    description:
-      'Avail is a data availability network.',
+    description: 'Avail is a data availability network.',
     links: {
       websites: ['https://www.availproject.org/'],
       documentation: ['https://docs.availproject.org/'],
       repositories: ['https://github.com/availproject/'],
       apps: ['https://bridge.availproject.org/'],
-      explorers: ['https://explorer.avail.so/#/explorer','https://avail.subscan.io/'],
+      explorers: [
+        'https://explorer.avail.so/#/explorer',
+        'https://avail.subscan.io/',
+      ],
       socialMedia: [
         'https://x.com/AvailProject',
-        "https://t.me/AvailCommunity",
-        "https://discord.com/invite/y6fHnxZQX8",
-        "https://www.linkedin.com/company/availproject/"
+        'https://t.me/AvailCommunity',
+        'https://discord.com/invite/y6fHnxZQX8',
+        'https://www.linkedin.com/company/availproject/',
       ],
     },
   },
@@ -71,7 +73,7 @@ export const avail: DaLayer = {
         'The risk profile in this page refers to scaling solutions that do not integrate with a data availability bridge.',
       technology: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
     }),
-    vectorX
+    vectorX,
   ],
   usedIn: linkByDA({
     layer: (layer) => layer === 'Avail',
@@ -83,7 +85,7 @@ export const avail: DaLayer = {
     name: 'BABE/GRANDPA',
     description: `Avail uses the BABE/GRANDPA consensus algorithm. BABE is a block production mechanism that is used to create new blocks in the Avail blockchain. GRANDPA is a finality gadget that is used to finalize blocks.`,
     blockTime: 20, // seconds
-    consensusFinality: 60,  //seconds
+    consensusFinality: 60, //seconds
     unbondingPeriod: UnixTime.DAY * 21, // staking.UnbondingTime
   },
   dataAvailabilitySampling: {
@@ -93,9 +95,9 @@ export const avail: DaLayer = {
   pruningWindow: 0, // unknown
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
-    fraudDetection: DaFraudDetectionRisk.DasWithNoBlobsReconstruction(true)
+    fraudDetection: DaFraudDetectionRisk.DasWithNoBlobsReconstruction(true),
   },
   economicSecurity: {
-    type: 'Ethereum', // Avail
+    type: 'Avail',
   },
 }
