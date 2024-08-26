@@ -1,8 +1,8 @@
 {
   "name": "shared-eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 20613324,
-  "configHash": "0x2ae18387b95c3f1a0aabc2bf04ec0a6a4cabdf45b809d6d4a09dc97f70d35098",
+  "blockNumber": 20613684,
+  "configHash": "0x0580622efd9e13f5947b3c235955a9e2a80d9a781b3fda85e84e53c8cfa7cf35",
   "version": 13,
   "contracts": [
     {
@@ -12,8 +12,8 @@
       "sinceTimestamp": 1602667372,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0x7240190000000000",
-        "get_deposit_root": "0x27aef34d3cd5aee08533d3462ca525ebdb501baeb21bae4a8b4c9f112824b6ad"
+        "get_deposit_count": "0xae40190000000000",
+        "get_deposit_root": "0x52b917494155a77e47a9e05420794296fcb488dad34c2b21d6dd40c4e17c2a01"
       },
       "derivedName": "DepositContract"
     },
@@ -45,7 +45,11 @@
     {
       "name": "swETH-Strategy",
       "address": "0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6",
+      "template": "eigenlayer/Strategy",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -69,7 +73,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "97946888456827977095989",
+        "totalShares": "97946583314684146136286",
         "underlyingToken": "0xf951E335afb289353dc249e82926178EaC7DEd78"
       },
       "fieldMeta": {
@@ -141,7 +145,11 @@
     {
       "name": "ankrETH-Strategy",
       "address": "0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff",
+      "template": "eigenlayer/Strategy",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -187,7 +195,11 @@
     {
       "name": "rETH-Strategy",
       "address": "0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2",
+      "template": "eigenlayer/Strategy",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -295,7 +307,11 @@
     {
       "name": "METH-Strategy",
       "address": "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2",
+      "template": "eigenlayer/Strategy",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -456,7 +472,11 @@
     {
       "name": "cbETH-Strategy",
       "address": "0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc",
+      "template": "eigenlayer/Strategy",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -502,7 +522,11 @@
     {
       "name": "osETH-Strategy",
       "address": "0x57ba429517c3473B6d34CA9aCd56c0e735b94c02",
+      "template": "eigenlayer/Strategy",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -579,11 +603,31 @@
       }
     },
     {
-      "name": "",
+      "name": "reALT-Strategy",
       "address": "0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4",
       "unverified": true,
+      "template": "eigenlayer/Strategy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
+      "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1724651639,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "fieldMeta": {
+        "getTVLLimits": {
+          "severity": "LOW",
+          "description": "Maximum TVL of the strategy."
+        },
+        "maxPerDeposit": {
+          "severity": "LOW",
+          "description": "Maximum value of one deposit transaction"
+        },
+        "maxTotalDeposits": {
+          "severity": "LOW",
+          "description": "Same as TVL limit"
+        }
+      },
+      "derivedName": ""
     },
     {
       "name": "",
@@ -595,7 +639,11 @@
     {
       "name": "wBETH-Strategy",
       "address": "0x7CA911E83dabf90C90dD3De5411a10F1A6112184",
+      "template": "eigenlayer/Strategy",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -860,7 +908,11 @@
     {
       "name": "sfrxETH-Strategy",
       "address": "0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
+      "template": "eigenlayer/Strategy",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -904,11 +956,31 @@
       "derivedName": "StrategyBaseTVLLimits"
     },
     {
-      "name": "",
+      "name": "sUSDe-Strategy",
       "address": "0x8fEb56C8802Bda01F3cC1802D44f6Cb469Ac9B22",
       "unverified": true,
+      "template": "eigenlayer/Strategy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
+      "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1724508563,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "fieldMeta": {
+        "getTVLLimits": {
+          "severity": "LOW",
+          "description": "Maximum TVL of the strategy."
+        },
+        "maxPerDeposit": {
+          "severity": "LOW",
+          "description": "Maximum value of one deposit transaction"
+        },
+        "maxTotalDeposits": {
+          "severity": "LOW",
+          "description": "Same as TVL limit"
+        }
+      },
+      "derivedName": ""
     },
     {
       "name": "EigenPodManager",
@@ -945,7 +1017,11 @@
     {
       "name": "stETH-Strategy",
       "address": "0x93c4b944D05dfe6df7645A86cd2206016c51564D",
+      "template": "eigenlayer/Strategy",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -991,7 +1067,11 @@
     {
       "name": "ETHx-Strategy",
       "address": "0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d",
+      "template": "eigenlayer/Strategy",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1037,7 +1117,11 @@
     {
       "name": "OETH-Strategy",
       "address": "0xa4C637e0F704745D182e4D38cAb7E7485321d059",
+      "template": "eigenlayer/Strategy",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1097,7 +1181,11 @@
     {
       "name": "bEIGEN-Strategy",
       "address": "0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
+      "template": "eigenlayer/Strategy",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1116,15 +1204,33 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "121352330509217004082897692",
+        "totalShares": "121343125370038825653364076",
         "underlyingToken": "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
+      },
+      "fieldMeta": {
+        "getTVLLimits": {
+          "severity": "LOW",
+          "description": "Maximum TVL of the strategy."
+        },
+        "maxPerDeposit": {
+          "severity": "LOW",
+          "description": "Maximum value of one deposit transaction"
+        },
+        "maxTotalDeposits": {
+          "severity": "LOW",
+          "description": "Same as TVL limit"
+        }
       },
       "derivedName": "EigenStrategy"
     },
     {
       "name": "RiverV1-Strategy",
       "address": "0xAe60d8180437b5C34bB956822ac2710972584473",
+      "template": "eigenlayer/Strategy",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -2482,6 +2588,7 @@
     ]
   },
   "usedTemplates": {
+    "eigenlayer/Strategy": "0x9c6bfc5483a4d980895089345ce5607d422a8a656b3ec1f630257081474a2526",
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"

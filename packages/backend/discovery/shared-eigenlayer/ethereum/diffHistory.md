@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x877799d872a5acb6a7fd4892a429d608acc616e2
+Generated with discovered.json: 0x2421d802d26affd1c543688c234ade5e0f58a051
 
-# Diff at Mon, 26 Aug 2024 14:20:53 GMT:
+# Diff at Mon, 26 Aug 2024 15:33:19 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@16dab914d3f53144841d384494d3e18d88c515c1 block: 20592132
-- current block number: 20613324
+- current block number: 20613684
 
 ## Description
 
@@ -86,8 +86,8 @@ Deployed strategies for sUSDe (0x8fEb56C8802Bda01F3cC1802D44f6Cb469Ac9B22), reAL
 
 ```diff
 +   Status: CREATED
-    contract  (0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4)
-    +++ description: None
+    contract reALT-Strategy (0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
 ```
 
 ```diff
@@ -98,8 +98,8 @@ Deployed strategies for sUSDe (0x8fEb56C8802Bda01F3cC1802D44f6Cb469Ac9B22), reAL
 
 ```diff
 +   Status: CREATED
-    contract  (0x8fEb56C8802Bda01F3cC1802D44f6Cb469Ac9B22)
-    +++ description: None
+    contract sUSDe-Strategy (0x8fEb56C8802Bda01F3cC1802D44f6Cb469Ac9B22)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
 ```
 
 ```diff
@@ -117,6 +117,144 @@ Deployed strategies for sUSDe (0x8fEb56C8802Bda01F3cC1802D44f6Cb469Ac9B22), reAL
  ...0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9.sol} |    0
  ...-0x5a2a4F2F3C18f09179B6703e63D9eDD165909073.sol |  351 ++++++
  5 files changed, 2837 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20592132 (main branch discovery), not current.
+
+```diff
+    contract swETH-Strategy (0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      template:
++        "eigenlayer/Strategy"
+      descriptions:
++        ["A strategy implementation allowing to deposit a specific token as a restakable asset."]
+    }
+```
+
+```diff
+    contract ankrETH-Strategy (0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      template:
++        "eigenlayer/Strategy"
+      descriptions:
++        ["A strategy implementation allowing to deposit a specific token as a restakable asset."]
+    }
+```
+
+```diff
+    contract rETH-Strategy (0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      template:
++        "eigenlayer/Strategy"
+      descriptions:
++        ["A strategy implementation allowing to deposit a specific token as a restakable asset."]
+    }
+```
+
+```diff
+    contract METH-Strategy (0x298aFB19A105D59E74658C4C334Ff360BadE6dd2) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      template:
++        "eigenlayer/Strategy"
+      descriptions:
++        ["A strategy implementation allowing to deposit a specific token as a restakable asset."]
+    }
+```
+
+```diff
+    contract cbETH-Strategy (0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      template:
++        "eigenlayer/Strategy"
+      descriptions:
++        ["A strategy implementation allowing to deposit a specific token as a restakable asset."]
+    }
+```
+
+```diff
+    contract osETH-Strategy (0x57ba429517c3473B6d34CA9aCd56c0e735b94c02) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      template:
++        "eigenlayer/Strategy"
+      descriptions:
++        ["A strategy implementation allowing to deposit a specific token as a restakable asset."]
+    }
+```
+
+```diff
+    contract wBETH-Strategy (0x7CA911E83dabf90C90dD3De5411a10F1A6112184) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      template:
++        "eigenlayer/Strategy"
+      descriptions:
++        ["A strategy implementation allowing to deposit a specific token as a restakable asset."]
+    }
+```
+
+```diff
+    contract sfrxETH-Strategy (0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      template:
++        "eigenlayer/Strategy"
+      descriptions:
++        ["A strategy implementation allowing to deposit a specific token as a restakable asset."]
+    }
+```
+
+```diff
+    contract stETH-Strategy (0x93c4b944D05dfe6df7645A86cd2206016c51564D) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      template:
++        "eigenlayer/Strategy"
+      descriptions:
++        ["A strategy implementation allowing to deposit a specific token as a restakable asset."]
+    }
+```
+
+```diff
+    contract ETHx-Strategy (0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      template:
++        "eigenlayer/Strategy"
+      descriptions:
++        ["A strategy implementation allowing to deposit a specific token as a restakable asset."]
+    }
+```
+
+```diff
+    contract OETH-Strategy (0xa4C637e0F704745D182e4D38cAb7E7485321d059) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      template:
++        "eigenlayer/Strategy"
+      descriptions:
++        ["A strategy implementation allowing to deposit a specific token as a restakable asset."]
+    }
+```
+
+```diff
+    contract bEIGEN-Strategy (0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      template:
++        "eigenlayer/Strategy"
+      descriptions:
++        ["A strategy implementation allowing to deposit a specific token as a restakable asset."]
+      fieldMeta:
++        {"getTVLLimits":{"severity":"LOW","description":"Maximum TVL of the strategy."},"maxPerDeposit":{"severity":"LOW","description":"Maximum value of one deposit transaction"},"maxTotalDeposits":{"severity":"LOW","description":"Same as TVL limit"}}
+    }
+```
+
+```diff
+    contract RiverV1-Strategy (0xAe60d8180437b5C34bB956822ac2710972584473) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      template:
++        "eigenlayer/Strategy"
+      descriptions:
++        ["A strategy implementation allowing to deposit a specific token as a restakable asset."]
+    }
 ```
 
 Generated with discovered.json: 0x73a6a55ef68c5e1d572120c21790df5cccc84ec8
