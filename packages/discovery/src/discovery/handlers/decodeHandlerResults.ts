@@ -7,7 +7,7 @@ import {
 import { TypeApplier } from '../type-casters/TypeApplier'
 import { HandlerResult } from './Handler'
 
-export function getValuesAndErrors(
+export function decodeHandlerResults(
   results: HandlerResult[],
   fieldOverrides?: DiscoveryContract['fields'],
   types?: Record<string, DiscoveryCustomType>,
