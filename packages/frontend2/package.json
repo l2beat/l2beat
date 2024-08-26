@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "cd ../database && yarn db:migrate && cd - && next dev",
+    "dev": "next dev",
     "build": "next build",
     "build:dependencies": "cd ../.. && yarn build:dependencies",
     "start": "next start",
@@ -12,7 +12,7 @@
     "lint:fix": "next lint --fix",
     "format": "biome check .",
     "format:fix": "biome check --apply .",
-    "test": "yarn db:migrate && mocha",
+    "test": "mocha",
     "typecheck": "tsc --noEmit",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
