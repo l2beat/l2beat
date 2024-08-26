@@ -4,6 +4,7 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
+    "test": "mocha",
     "clean": "rm -rf dist",
     "prebuild": "yarn clean",
     "build": "vite build",
