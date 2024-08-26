@@ -28,7 +28,7 @@ describe(postprocessCounts.name, () => {
           },
         ],
         false,
-        startOfDay.add(1, 'hours'),
+        startOfDay,
       )
 
       expect(result).toEqual([
@@ -72,7 +72,7 @@ describe(postprocessCounts.name, () => {
           },
         ],
         false,
-        startOfDay.add(1, 'hours'),
+        startOfDay,
       )
 
       expect(result).toEqual([
@@ -114,7 +114,7 @@ describe(postprocessCounts.name, () => {
           },
         ],
         true,
-        startOfDay.add(1, 'hours'),
+        startOfDay,
       )
 
       expect(result).toEqual([
@@ -158,7 +158,7 @@ describe(postprocessCounts.name, () => {
           },
         ],
         true,
-        startOfDay.add(1, 'hours'),
+        startOfDay,
       )
 
       expect(result).toEqual([

@@ -1,9 +1,9 @@
 {
   "name": "zircuit",
   "chain": "ethereum",
-  "blockNumber": 20563605,
+  "blockNumber": 20584587,
   "configHash": "0xad6d5e3bcf485d6dfca75ad1d5d919010760a5a1e78e71ba496385b903defcd7",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "OptimismPortal",
@@ -25,6 +25,7 @@
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0xde8B916B972cE3c27C21157Fc2b107c413062b9d",
+        "$upgradeCount": 3,
         "ethThrottleDeposits": {
           "maxAmountPerPeriod": 0,
           "periodLength": 0,
@@ -43,7 +44,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 287624,
-          "prevBlockNum": 20563424,
+          "prevBlockNum": 20584544,
           "prevTxCount": 1
         },
         "paused": false,
@@ -74,8 +75,9 @@
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0x6c01D349d3010Cc2953fFA0A5e8d176fc273B834",
+        "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621429",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621533",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -104,13 +106,19 @@
       "values": {
         "$immutable": false,
         "$implementation": "0x69f4D1788e39c87893C980c06EdF4b7f686e2938",
-        "$members": ["0x38809210f69ed6204E276d2Be6b15cd530698679"],
-        "$threshold": 1,
+        "$members": [
+          "0x5E2a81d611e973C2ab1A4cAa71DD4E4Cdb2617d4",
+          "0x63cbB9fA540F6249AE4A3576f48BF07609b3a355",
+          "0x62C688FCa995e07632D64A9586896BB7EcD68567",
+          "0x0D5edFC67Ae336eddC91031FD6402EeAD6350CAb",
+          "0x38809210f69ed6204E276d2Be6b15cd530698679"
+        ],
+        "$threshold": 2,
         "domainSeparator": "0x2f5a11412426a5c8d31f741f163ead381cc22d989644b0397df78d087004170c",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 5,
+        "multisigThreshold": "2 of 5 (40%)",
+        "nonce": 6,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -140,6 +148,7 @@
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0xA03E2f3Ee6dBa20411A2326D7FA9CCCc6a9A53de",
+        "$upgradeCount": 1,
         "basefeeScalar": 1368,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "0xAF1E4f6a47af647F87C0Ec814d8032C4a4bFF145",
@@ -210,6 +219,7 @@
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0xA4ba8bd753695B6121722CBB7cd81c71BCFBCA28",
+        "$upgradeCount": 4,
         "accessController": "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
         "ethThrottleDeposits": {
           "maxAmountPerPeriod": "50000000000000000000",
@@ -300,6 +310,7 @@
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0x13A06FF21E46BCCd4B03E5Cb04372bB7aE7f2168",
+        "$upgradeCount": 3,
         "version": "0c13cfbb19b823f524a346e7ff5b352e24b8d79b"
       },
       "derivedName": "Verifier"
@@ -320,6 +331,7 @@
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0xA47314C96ab9572af656788e15143B459F99AE0f",
+        "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -374,6 +386,7 @@
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0xaaF7FCc7252eb739E0001D8727800deAE04A84f1",
+        "$upgradeCount": 1,
         "challenger": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "CHALLENGER": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "deletedOutputs": [],
@@ -381,10 +394,10 @@
         "finalizationPeriodSeconds": 18000,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 2071464,
-        "latestOutputIndex": 5111,
-        "nextBlockNumber": 2071465,
-        "nextOutputIndex": 5112,
+        "latestBlockNumber": 2198172,
+        "latestOutputIndex": 5433,
+        "nextBlockNumber": 2198173,
+        "nextOutputIndex": 5434,
         "proposer": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "PROPOSER": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "startingBlockNumber": 0,
@@ -417,6 +430,7 @@
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0x3B21dC86c412aC34fF4c679497b274509D73cDcC",
+        "$upgradeCount": 1,
         "messenger": "0x2a721cBE81a128be0F01040e3353c3805A5EA091",
         "MESSENGER": "0x2a721cBE81a128be0F01040e3353c3805A5EA091",
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000014",
@@ -449,16 +463,21 @@
         "$immutable": false,
         "$implementation": "0x69f4D1788e39c87893C980c06EdF4b7f686e2938",
         "$members": [
+          "0xD8399320cF3a6C7068DaC0C35ea5e74ddd650BD4",
+          "0xC1Ea584f696ABF39044c18D510067f0Ce2cC8966",
+          "0x63cbB9fA540F6249AE4A3576f48BF07609b3a355",
+          "0x5E2a81d611e973C2ab1A4cAa71DD4E4Cdb2617d4",
+          "0x2F9072d5A8118a60ce41611AEe3e393D107f8Cec",
           "0x0D5edFC67Ae336eddC91031FD6402EeAD6350CAb",
           "0x62C688FCa995e07632D64A9586896BB7EcD68567",
           "0x38809210f69ed6204E276d2Be6b15cd530698679"
         ],
-        "$threshold": 1,
+        "$threshold": 6,
         "domainSeparator": "0xe753a06679d8fe2168fab8f34f0dc5e26b01b6eda11e4be92246bd7687e7a436",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 5,
+        "multisigThreshold": "6 of 8 (75%)",
+        "nonce": 6,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -478,6 +497,7 @@
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0xf885DA6A3B4c93905b02f36f9a13680922A554b0",
+        "$upgradeCount": 1,
         "bridge": "0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8",
         "BRIDGE": "0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8",
         "version": "1.9.0"
@@ -489,13 +509,18 @@
     { "address": "0x000000000000000000000000000000000000dEaD" },
     { "address": "0x0C13CFBB19b823f524a346e7fF5B352e24b8d79B" },
     { "address": "0x0D5edFC67Ae336eddC91031FD6402EeAD6350CAb" },
+    { "address": "0x2F9072d5A8118a60ce41611AEe3e393D107f8Cec" },
     { "address": "0x38809210f69ed6204E276d2Be6b15cd530698679" },
+    { "address": "0x5E2a81d611e973C2ab1A4cAa71DD4E4Cdb2617d4" },
     { "address": "0x62C688FCa995e07632D64A9586896BB7EcD68567" },
+    { "address": "0x63cbB9fA540F6249AE4A3576f48BF07609b3a355" },
     { "address": "0xAE8f771E297AAbfDE7ff35a33FB6D558f4E0a679" },
     {
       "address": "0xAF1E4f6a47af647F87C0Ec814d8032C4a4bFF145",
       "roles": ["Sequencer"]
     },
+    { "address": "0xC1Ea584f696ABF39044c18D510067f0Ce2cC8966" },
+    { "address": "0xD8399320cF3a6C7068DaC0C35ea5e74ddd650BD4" },
     {
       "address": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
       "roles": ["Proposer"]

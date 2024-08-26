@@ -161,12 +161,14 @@ export const parallel: Layer2 = orbitStackL2({
       date: '2024-04-10T00:00:00.00Z',
       description:
         'Introduces EIP-4844 data blobs for L1 data availability and Dencun-related opcodes on L2.',
+      type: 'general',
     },
     {
       name: 'Parallel Mainnet closed launch',
       link: 'https://twitter.com/ParallelFi/status/1743048283684237574',
       date: '2024-01-05T00:00:00Z',
       description: 'Parallel Mainnet is open for developers.',
+      type: 'general',
     },
   ],
 })

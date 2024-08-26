@@ -6,7 +6,9 @@ export function clamp(value: number, min: number, max: number) {
   return Math.max(min, Math.min(max, value))
 }
 
-export function unifyPercentagesAsIntegers(percentages: number[]): number[] {
+export function unifyPercentagesAsIntegers<T extends number[]>(
+  percentages: T,
+): T {
   if (percentages.length < 2) {
     throw new Error(`Array has to contain at least two elements`)
   }
@@ -28,5 +30,5 @@ export function unifyPercentagesAsIntegers(percentages: number[]): number[] {
     decimalParts[largestIndex] = 0
   }
 
-  return intParts
+  return intParts as T
 }

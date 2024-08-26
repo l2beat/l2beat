@@ -6,7 +6,7 @@ import { Article } from '~/app/_components/markdown/article'
 import { getCollection, getCollectionEntry } from '~/content/get-collection'
 import { roboto_serif } from '~/fonts'
 import { cn } from '~/utils/cn'
-import { getDefaultMetadata } from '~/utils/get-default-metadata'
+import { getDefaultMetadata } from '~/utils/metadata'
 import {
   type GovernancePublicationEntry,
   getGovernancePublicationEntry,

@@ -8,13 +8,13 @@ import { getTvlProjects } from './get-tvl-projects'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
 
 export function get7dTvlBreakdown(
-  ...parameters: Parameters<typeof getCached7dTvlBreakdown>
+  ...parameters: Parameters<typeof getDetailed7dTvlBreakdown>
 ) {
   noStore()
-  return getCached7dTvlBreakdown(...parameters)
+  return getDetailed7dTvlBreakdown(...parameters)
 }
 
-export const getCached7dTvlBreakdown = cache(
+export const getDetailed7dTvlBreakdown = cache(
   async () => {
     const tvlValues = await getTvlValuesForProjects(
       getTvlProjects().filter(
@@ -31,23 +31,43 @@ export const getCached7dTvlBreakdown = cache(
         const oldestValues = values[oldestTimestamp] ?? []
         const breakdown = getTvlBreakdown(latestValues)
         const oldBreakdown = getTvlBreakdown(oldestValues)
+        const total =
+          breakdown.native + breakdown.canonical + breakdown.external
+        const oldTotal =
+          oldBreakdown.native + oldBreakdown.canonical + oldBreakdown.external
         return [
           projectId,
           {
+            total: total / 100,
+            totalChange: (total - oldTotal) / total,
             breakdown: {
-              total: breakdown.total / 100,
-              ether: breakdown.ether / 100,
-              stablecoin: breakdown.stablecoin / 100,
-              associated: breakdown.associated / 100,
+              native: breakdown.native / 100,
+              canonical: breakdown.canonical / 100,
+              external: breakdown.external / 100,
+              associated: {
+                native: breakdown.associated.native / 100,
+                canonical: breakdown.associated.canonical / 100,
+                external: breakdown.associated.external / 100,
+              },
             },
-            change: (breakdown.total - oldBreakdown.total) / breakdown.total,
+            change: {
+              native:
+                (breakdown.native - oldBreakdown.native) / breakdown.native,
+              canonical:
+                (breakdown.canonical - oldBreakdown.canonical) /
+                breakdown.canonical,
+              external:
+                (breakdown.external - oldBreakdown.external) /
+                breakdown.external,
+            },
           },
         ]
       }),
     )
 
     const total = Object.values(projects).reduce(
-      (acc, { breakdown }) => acc + breakdown.total,
+      (acc, { breakdown }) =>
+        acc + breakdown.native + breakdown.canonical + breakdown.external,
       0,
     )
 
@@ -56,10 +76,10 @@ export const getCached7dTvlBreakdown = cache(
       projects,
     }
   },
-  ['get7dTvlBreakdown'],
+  ['getCached7dTokenBreakdown'],
   {
     revalidate: 10 * UnixTime.MINUTE,
   },
 )
 
-export type LatestTvl = Awaited<ReturnType<typeof getCached7dTvlBreakdown>>
+export type DetailedLatestTvl = Awaited<ReturnType<typeof get7dTvlBreakdown>>

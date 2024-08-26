@@ -13,7 +13,7 @@ export class SequenceProcessorRepository extends BaseRepository {
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
       await this.db
-        .insertInto('public.sequence_processor')
+        .insertInto('sequence_processor')
         .values(batch)
         .onConflict((cb) =>
           cb.column('id').doUpdateSet((eb) => ({
@@ -30,7 +30,7 @@ export class SequenceProcessorRepository extends BaseRepository {
 
   async findById(id: string): Promise<SequenceProcessorRecord | undefined> {
     const row = await this.db
-      .selectFrom('public.sequence_processor')
+      .selectFrom('sequence_processor')
       .select(selectSequenceProcessor)
       .where('id', '=', id)
       .limit(1)
@@ -40,7 +40,7 @@ export class SequenceProcessorRepository extends BaseRepository {
 
   async deleteAll(): Promise<number> {
     const result = await this.db
-      .deleteFrom('public.sequence_processor')
+      .deleteFrom('sequence_processor')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }

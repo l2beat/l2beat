@@ -30,7 +30,8 @@
     "@typescript-eslint/no-unused-vars": [
       "warn",
       {
-        "argsIgnorePattern": "^_"
+        "argsIgnorePattern": "^_",
+        "destructuredArrayIgnorePattern": "^_"
       }
     ],
     "@typescript-eslint/require-await": "off",
@@ -61,6 +62,10 @@
           {
             "name": "node:assert",
             "message": "Use assert from @l2beat/shared-pure"
+          },
+          {
+            "name": "next/router",
+            "message": "Use router from next/navigation"
           }
         ]
       }
@@ -69,7 +74,6 @@
     "tailwindcss/enforces-negative-arbitrary-values": ["error"],
     "tailwindcss/enforces-shorthand": ["error"],
     "tailwindcss/no-contradicting-classname": ["error"],
-    "tailwindcss/no-unnecessary-arbitrary-value": ["error"],
-    "no-restricted-imports": ["error", "next/router"]
+    "tailwindcss/no-unnecessary-arbitrary-value": ["error"]
   }
 }

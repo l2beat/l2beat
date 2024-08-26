@@ -1035,6 +1035,7 @@ At present, the StarkNet Foundation hosts voting for STRK token holders (or thei
       link: 'https://twitter.com/Starknet/status/1767915153700290839',
       date: '2024-03-13T00:00:00Z',
       description: 'Starknet starts publishing data to blobs.',
+      type: 'general',
     },
     {
       name: 'Starknet Provisions',
@@ -1042,6 +1043,7 @@ At present, the StarkNet Foundation hosts voting for STRK token holders (or thei
       date: '2024-02-14T00:00:00Z',
       description:
         'Starknet begins allocating $STRK to early contributors and users.',
+      type: 'general',
     },
     {
       name: 'Starknet Alpha',
@@ -1049,6 +1051,7 @@ At present, the StarkNet Foundation hosts voting for STRK token holders (or thei
       date: '2021-11-29T00:00:00Z',
       description:
         'Rollup is live on mainnet, enabling general computation using ZK Rollup technology.',
+      type: 'general',
     },
     {
       name: 'StarkGate Alpha',
@@ -1056,6 +1059,7 @@ At present, the StarkNet Foundation hosts voting for STRK token holders (or thei
       date: '2022-05-09T00:00:00Z',
       description:
         'Bridge is live on mainnet, serving as gateway between Ethereum and Starknet.',
+      type: 'general',
     },
   ],
   badges: [

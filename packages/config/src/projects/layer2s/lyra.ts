@@ -53,11 +53,13 @@ export const lyra: Layer2 = opStackL2({
       link: 'https://x.com/lyrafinance/status/1735516929341980748',
       date: '2023-12-15T00:00:00Z',
       description: 'Lyra V2 launches on Mainnet.',
+      type: 'general',
     },
     {
       name: 'Lyra switches to Celestia',
       link: 'https://x.com/lyrafinance/status/1750235026136965260',
       date: '2024-01-16T00:00:00.00Z',
+      type: 'general',
     },
   ],
   nonTemplatePermissions: [

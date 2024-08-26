@@ -5,7 +5,7 @@ const backendFeaturesToConfigFeatures: Partial<
 > = {
   implementationChange: 'implementationChangeReporter',
   tvlBreakdown: 'tvl',
-  activity: 'activity2',
+  l2costs: 'tracked-txs.l2costs',
 }
 
 export function getCommonFeatures(

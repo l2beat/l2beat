@@ -7,13 +7,8 @@ import { Pool, PoolConfig, defaults, types } from 'pg'
 import { DB as GeneratedDB } from './generated/types'
 
 import { AsyncLocalStorage } from 'node:async_hooks'
-import { DailyTransactionCountRow } from '../activity/activity-view/entity'
 
-export type DB = GeneratedDB & {
-  // TODO: (sz-piotr) This is temporary!
-  'activity.daily_count_view': DailyTransactionCountRow
-}
-
+export type DB = GeneratedDB
 // Interpret `timestamp without time zone` as UTC
 defaults.parseInputDatesAsUTC = true
 types.setTypeParser(types.builtins.TIMESTAMP, (value) => new Date(value + 'Z'))

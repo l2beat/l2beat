@@ -183,6 +183,7 @@ export const pNetwork: Bridge = {
       date: '2022-10-18T00:00:00Z',
       description:
         'Whitelist got removed, there are no restrictions on who can transact with the network.',
+      type: 'general',
     },
     {
       name: 'pGALA token on BSC exploit',
@@ -190,6 +191,7 @@ export const pNetwork: Bridge = {
       date: '2022-11-05T00:00:00Z',
       description:
         'Due to the misconfiguration of BSC the exploiter took over the control of pGALA tokens.',
+      type: 'general',
     },
     {
       name: 'pBTC token on BSC exploit',
@@ -197,6 +199,7 @@ export const pNetwork: Bridge = {
       date: '2021-09-21T00:00:00Z',
       description:
         'Due to the bug in the validators code, unauthorized token transfers were processed on BTC.',
+      type: 'general',
     },
     {
       name: 'pNetwork rebranding',
@@ -204,12 +207,14 @@ export const pNetwork: Bridge = {
       date: '2020-09-16T00:00:00Z',
       description:
         'Provable Things, pTokens and Eidoo gets rebranded as pNetwork.',
+      type: 'general',
     },
     {
       name: 'pBTC launch on Ethereum',
       link: 'https://www.coindesk.com/tech/2020/03/05/new-cross-chain-network-plans-to-bring-bitcoins-liquidity-to-the-defi-space/',
       date: '2020-03-05T00:00:00Z',
       description: 'Launch of the first pToken, pBTC on Ethereum.',
+      type: 'general',
     },
   ],
 }

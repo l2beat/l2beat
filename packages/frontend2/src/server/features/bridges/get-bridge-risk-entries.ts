@@ -35,7 +35,7 @@ function getBridgesRiskEntry(
   isVerified: boolean,
 ) {
   return {
-    href: `/bridges/${project.display.slug}`,
+    href: `/bridges/projects/${project.display.slug}`,
     type: project.type,
     name: project.display.name,
     shortName: project.display.shortName,

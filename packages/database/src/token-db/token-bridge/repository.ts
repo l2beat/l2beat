@@ -8,7 +8,7 @@ export class TokenBridgeRepository extends BaseRepository {
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
       await this.db
-        .insertInto('public.TokenBridge')
+        .insertInto('TokenBridge')
         .values(batch)
         .onConflict((cb) =>
           cb.doUpdateSet((eb) => ({

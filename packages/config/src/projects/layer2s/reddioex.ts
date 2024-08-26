@@ -191,6 +191,7 @@ export const reddioex: Layer2 = {
       link: 'https://blog.reddio.com/announces-layer2-zkrollup-mainnet-launch/',
       date: '2022-09-29T00:00:00Z',
       description: 'Reddio announces its Validium Mainnet launch.',
+      type: 'general',
     },
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],

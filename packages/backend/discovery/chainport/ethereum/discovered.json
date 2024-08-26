@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20454449,
   "configHash": "0x722bdc74afa4186d83f17ede56db3b5fde5f89d6a296169858d275ccc239df59",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "ChainportCongressMembersRegistry",
@@ -84,7 +84,8 @@
       "sinceTimestamp": 1626949825,
       "values": {
         "$admin": "0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F",
-        "$implementation": "0x118cbd7a4769846AD4928598D1f805a509Cc8c0d"
+        "$implementation": "0x118cbd7a4769846AD4928598D1f805a509Cc8c0d",
+        "$upgradeCount": 12
       },
       "derivedName": ""
     },
