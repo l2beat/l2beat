@@ -1,4 +1,4 @@
-import { ExtendedProjectTvlBreakdown } from '../../_utils/assign-token-meta-to-breakdown'
+import { type ExtendedProjectTvlBreakdown } from '../../_utils/assign-token-meta-to-breakdown'
 import { TableSum } from './table-sum'
 
 interface Props {

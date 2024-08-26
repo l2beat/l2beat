@@ -28,14 +28,14 @@ export function TokenTable<T>({ table }: Props<T>) {
       <TableHeader>
         <TableHeaderRow
           key={headers.id}
-          className="border-b-black/10 md:border-b-0 md:bg-black/10 dark:border-b-white/25 dark:md:border-b-0 dark:md:bg-white/10"
+          className="border-b-black/10 dark:border-b-white/25 md:border-b-0 md:bg-black/10 dark:md:border-b-0 dark:md:bg-white/10"
         >
           {headers.headers.map((header) => (
             <TableHead
               key={header.id}
               colSpan={header.colSpan}
               className={cn(
-                'whitespace-pre align-middle text-sm font-medium uppercase text-gray-500 first:rounded-l first:pl-2 last:rounded-r last:pr-2 first:md:pl-6 last:md:pr-6 dark:text-gray-50',
+                'whitespace-pre align-middle text-sm font-medium uppercase text-gray-500 first:rounded-l first:pl-2 last:rounded-r last:pr-2 dark:text-gray-50 first:md:pl-6 last:md:pr-6',
                 header.column.columnDef.meta?.headClassName,
               )}
               align={header.column.columnDef.meta?.align}
@@ -54,7 +54,7 @@ export function TokenTable<T>({ table }: Props<T>) {
         {table.getRowModel().rows.map((row) => (
           <TableRow
             key={row.id}
-            className="border-b border-b-black/10 hover:bg-black/5 hover:shadow-sm md:border-b-0 dark:border-b-zinc-700 dark:hover:bg-white/5"
+            className="border-b border-b-black/10 hover:bg-black/5 hover:shadow-sm dark:border-b-zinc-700 dark:hover:bg-white/5 md:border-b-0"
           >
             {row.getVisibleCells().map((cell) => {
               return (

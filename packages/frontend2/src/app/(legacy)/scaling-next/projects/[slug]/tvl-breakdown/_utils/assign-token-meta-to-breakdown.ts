@@ -1,5 +1,5 @@
 import { safeGetTokenByAssetId } from '@l2beat/config'
-import { ProjectTvlBreakdown } from '~/server/features/scaling/tvl/breakdown/get-tvl-breakdown-for-project'
+import { type ProjectTvlBreakdown } from '~/server/features/scaling/tvl/breakdown/get-tvl-breakdown-for-project'
 import { getExplorerUrlByChainId } from '~/utils/get-explorer-url'
 
 export type ExtendedProjectTvlBreakdown = ReturnType<

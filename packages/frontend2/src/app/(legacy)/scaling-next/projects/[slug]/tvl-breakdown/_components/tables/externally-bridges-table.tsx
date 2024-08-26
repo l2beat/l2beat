@@ -2,7 +2,7 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { TokenTable } from '~/app/_components/table/token-breakdown-table'
 import { useTable } from '~/hooks/use-table'
-import { ExtendedProjectTvlBreakdown } from '../../_utils/assign-token-meta-to-breakdown'
+import { type ExtendedProjectTvlBreakdown } from '../../_utils/assign-token-meta-to-breakdown'
 import { externallyBridgedColumns } from './columns/externally-bridged-columns'
 import { TableSum } from './table-sum'
 
