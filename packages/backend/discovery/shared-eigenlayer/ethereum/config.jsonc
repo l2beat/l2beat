@@ -115,15 +115,16 @@
     "bEIGEN-Strategy": {
       "extends": "eigenlayer/Strategy"
     },
-    "sUSDe-Strategy": {
-      "extends": "eigenlayer/Strategy"
-    },
-    "reALT-Strategy": {
-      "extends": "eigenlayer/Strategy"
-    },
-    "ALT-Strategy": {
-      "extends": "eigenlayer/Strategy"
-    },
+    // Unverified contracts - fail tests for missing methods
+    // "sUSDe-Strategy": {
+    //   "extends": "eigenlayer/Strategy"
+    // },
+    // "reALT-Strategy": {
+    //   "extends": "eigenlayer/Strategy"
+    // },
+    // "ALT-Strategy": {
+    //   "extends": "eigenlayer/Strategy"
+    // },
     "DepositContract": {
       "ignoreInWatchMode": ["get_deposit_count", "get_deposit_root"]
     },

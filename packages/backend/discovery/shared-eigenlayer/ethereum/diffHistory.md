@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x2421d802d26affd1c543688c234ade5e0f58a051
+Generated with discovered.json: 0x162b87c99b024b368882ca8a96c08b4888cc8b0c
 
-# Diff at Mon, 26 Aug 2024 15:33:19 GMT:
+# Diff at Mon, 26 Aug 2024 15:55:43 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@16dab914d3f53144841d384494d3e18d88c515c1 block: 20592132
-- current block number: 20613684
+- current block number: 20613796
 
 ## Description
 
@@ -87,7 +87,7 @@ Deployed strategies for sUSDe (0x8fEb56C8802Bda01F3cC1802D44f6Cb469Ac9B22), reAL
 ```diff
 +   Status: CREATED
     contract reALT-Strategy (0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4)
-    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+    +++ description: None
 ```
 
 ```diff
@@ -99,7 +99,7 @@ Deployed strategies for sUSDe (0x8fEb56C8802Bda01F3cC1802D44f6Cb469Ac9B22), reAL
 ```diff
 +   Status: CREATED
     contract sUSDe-Strategy (0x8fEb56C8802Bda01F3cC1802D44f6Cb469Ac9B22)
-    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+    +++ description: None
 ```
 
 ```diff
