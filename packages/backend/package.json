@@ -19,7 +19,7 @@
     "lint:fix": "biome check --formatter-enabled=false --apply .",
     "run-kroma-propose-script": "ts-node ./discovery/kroma/ethereum/script-ts/propose.ts",
     "start": "node -r source-map-support/register build/src/index.js",
-    "start:dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "start:dev": "cd ../database && yarn db:migrate && cd - && ts-node-dev --respawn --transpile-only src/index.ts",
     "start:profile": "node --inspect -r esbuild-register src/index.ts",
     "test": "./scripts/run_tests.sh",
     "test:config": "mocha --config .mocharc-smoke.json",
