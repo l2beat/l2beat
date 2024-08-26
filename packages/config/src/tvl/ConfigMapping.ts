@@ -1,6 +1,6 @@
 import {
-  type AmountConfigEntry,
   assert,
+  type AmountConfigEntry,
   type EthereumAddress,
   type PriceConfigEntry,
   ProjectId,

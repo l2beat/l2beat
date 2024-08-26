@@ -1,10 +1,10 @@
 import { AmountId, AssetId, PriceId, createAssetId } from '@l2beat/config'
 import { Database, ValueRecord } from '@l2beat/database'
 import {
+  assert,
   AmountConfigEntry,
   ProjectId,
   UnixTime,
-  assert,
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { calculateValue } from '../utils/calculateValue'

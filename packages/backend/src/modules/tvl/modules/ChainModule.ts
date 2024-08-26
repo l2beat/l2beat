@@ -6,12 +6,12 @@ import {
   CoingeckoQueryService,
 } from '@l2beat/shared'
 import {
+  assert,
   AmountConfigEntry,
   EscrowEntry,
   PremintedEntry,
   ProjectId,
   TotalSupplyEntry,
-  assert,
   notUndefined,
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
