@@ -5,9 +5,5 @@ type Props = {
 }
 
 export function BreakdownPageWrapper({ children }: Props) {
-  return (
-    <div className={'mx-auto h-full max-w-[928px] px-4 md:px-12'}>
-      {children}
-    </div>
-  )
+  return <div className={'mx-auto h-full max-w-[928px]'}>{children}</div>
 }

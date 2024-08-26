@@ -22,7 +22,7 @@ type Props = {
 
 export function TvlBreakdownSummaryBox(props: Props) {
   return (
-    <div className="flex flex-col justify-between gap-[7px] bg-purple-300 px-4 py-5 md:flex-row md:gap-2 md:rounded-lg md:border md:border-pink-200 md:p-6 dark:bg-purple-700 md:dark:border-pink-900">
+    <div className="flex flex-col justify-between gap-[7px] bg-purple-300 px-4 py-5 dark:bg-purple-700 md:flex-row md:gap-2 md:rounded-lg md:border md:border-pink-200 md:p-6 md:dark:border-pink-900">
       <StatsItem
         title="Total Value Locked"
         tooltip="Total value locked displayed together with a percentage change compared to 7D ago."
@@ -74,7 +74,7 @@ function StatsItem(props: StatsItemProps) {
       )}
     >
       <div className="flex items-center gap-1">
-        <span className="hidden text-xs font-medium text-gray-500 md:inline dark:text-gray-600">
+        <span className="hidden text-xs font-medium text-gray-500 dark:text-gray-600 md:inline">
           {props.title}
         </span>
         <span
@@ -94,7 +94,7 @@ function StatsItem(props: StatsItemProps) {
               className={cn(
                 'md:size-3.5',
                 props.big
-                  ? 'fill-black md:fill-gray-500 dark:fill-white md:dark:fill-gray-600'
+                  ? 'fill-black dark:fill-white md:fill-gray-500 md:dark:fill-gray-600'
                   : 'fill-gray-500 dark:fill-gray-600',
               )}
             />
@@ -105,7 +105,7 @@ function StatsItem(props: StatsItemProps) {
       <div className="flex items-center gap-1">
         <span
           className={cn(
-            'font-bold text-black md:text-lg dark:text-white',
+            'font-bold text-black dark:text-white md:text-lg',
             props.big ? 'text-lg' : 'text-base',
           )}
         >

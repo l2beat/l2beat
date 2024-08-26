@@ -1,5 +1,5 @@
 import { type IndexerStateRecord } from '@l2beat/database'
-import { assert, UnixTime, type AmountConfigEntry } from '@l2beat/shared-pure'
+import { assert, type AmountConfigEntry, UnixTime } from '@l2beat/shared-pure'
 import { db } from '~/server/database'
 import { getExclusionBoundary } from './get-exclusion-boundary'
 

@@ -7,12 +7,7 @@ export async function getAmountsStatus(
   entries: (AmountConfigEntry & { configId: string })[],
   targetTimestamp: UnixTime,
 ) {
-
-  const [
-    configurations,
-    preminted,
-    circulating,
-  ] = await Promise.all([
+  const [configurations, preminted, circulating] = await Promise.all([
     getConfigurationsStatus(entries, targetTimestamp),
     getPremintedStatus(entries, targetTimestamp),
     getCirculatingSupplyStatus(entries, targetTimestamp),

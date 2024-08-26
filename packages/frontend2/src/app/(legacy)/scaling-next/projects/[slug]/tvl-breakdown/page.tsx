@@ -4,6 +4,10 @@ import { getTvlBreakdownForProject } from '~/server/features/scaling/tvl/breakdo
 import { getDetailed7dTvlBreakdown } from '~/server/features/scaling/tvl/utils/get-7d-tvl-breakdown'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { BreakdownPageWrapper } from './_components/breakdown-page-wrapper'
+import { RequestTokenBox } from './_components/request-token-box'
+import { CanonicallyBridgedTable } from './_components/tables/canonically-bridged-table'
+import { ExternallyBridgedTable } from './_components/tables/externally-bridges-table'
+import { NativelyMintedTable } from './_components/tables/natively-minted-table'
 import { TvlBreakdownPageHeader } from './_components/tvl-breakdown-page-header'
 import { TvlBreakdownSummaryBox } from './_components/tvl-breakdown-summary-box'
 
@@ -38,7 +42,9 @@ export default async function Page({ params }: Props) {
   }
 
   const detailedBreakdown = await getDetailed7dTvlBreakdown()
-  const tokenBreakdown = await getTvlBreakdownForProject(project.id)
+  const breakdowns = await getTvlBreakdownForProject(project.id)
+  const projectTokenBreakdown = breakdowns.breakdowns[project.id.toString()]!
+
   const projectBreakdown = detailedBreakdown.projects[project.id.toString()]!
 
   return (
@@ -46,7 +52,7 @@ export default async function Page({ params }: Props) {
       <TvlBreakdownPageHeader
         title={project.display.name}
         slug={project.display.slug}
-        tvlBreakdownDate={tokenBreakdown.dataTimestamp}
+        tvlBreakdownDate={breakdowns.dataTimestamp}
       />
       <TvlBreakdownSummaryBox
         tvl={{
@@ -66,6 +72,11 @@ export default async function Page({ params }: Props) {
           change: projectBreakdown.change.native,
         }}
       />
+      <NativelyMintedTable tokens={projectTokenBreakdown.native} />
+      <ExternallyBridgedTable tokens={projectTokenBreakdown.external} />
+      <CanonicallyBridgedTable tokens={projectTokenBreakdown.canonical} />
+
+      <RequestTokenBox />
     </BreakdownPageWrapper>
   )
 }
