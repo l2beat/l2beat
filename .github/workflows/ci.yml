@@ -144,6 +144,9 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
+      - name: Migrate database
+        run: cd packages/database && yarn db:migrate && cd -
+
       - name: Test
         run: yarn test --reporter min
 
