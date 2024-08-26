@@ -1,7 +1,8 @@
-import { layer2s, layer3s } from '@l2beat/config'
+import { layer2s, layer3s, safeGetTokenByAssetId } from '@l2beat/config'
 import { notFound } from 'next/navigation'
 import { getTvlBreakdownForProject } from '~/server/features/scaling/tvl/breakdown/get-tvl-breakdown-for-project'
 import { getDetailed7dTvlBreakdown } from '~/server/features/scaling/tvl/utils/get-7d-tvl-breakdown'
+import { getExplorerUrlByChainId } from '~/utils/get-explorer-url'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { BreakdownPageWrapper } from './_components/breakdown-page-wrapper'
 import { RequestTokenBox } from './_components/request-token-box'
@@ -43,7 +44,25 @@ export default async function Page({ params }: Props) {
 
   const detailedBreakdown = await getDetailed7dTvlBreakdown()
   const breakdowns = await getTvlBreakdownForProject(project.id)
-  const projectTokenBreakdown = breakdowns.breakdowns[project.id.toString()]!
+  const p = breakdowns.breakdowns[project.id.toString()]!
+
+  const projectTokenBreakdown = {
+    ...p,
+    native: p.native.map((token) => ({
+      ...token,
+      iconUrl: safeGetTokenByAssetId(token.assetId)!.iconUrl!,
+      symbol: safeGetTokenByAssetId(token.assetId)!.symbol,
+      explorerUrl: getExplorerUrlByChainId(token.chainId)!,
+      supply: safeGetTokenByAssetId(token.assetId)!.supply,
+    })),
+    external: p.external.map((token) => ({
+      ...token,
+      iconUrl: safeGetTokenByAssetId(token.assetId)!.iconUrl!,
+      symbol: safeGetTokenByAssetId(token.assetId)!.symbol,
+      explorerUrl: getExplorerUrlByChainId(token.chainId)!,
+      supply: safeGetTokenByAssetId(token.assetId)!.supply,
+    })),
+  }
 
   const projectBreakdown = detailedBreakdown.projects[project.id.toString()]!
 

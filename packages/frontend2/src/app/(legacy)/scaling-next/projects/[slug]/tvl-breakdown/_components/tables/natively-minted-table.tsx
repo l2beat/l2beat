@@ -1,14 +1,37 @@
+'use client'
+import { type Token } from '@l2beat/shared-pure'
+import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { TokenTable } from '~/app/_components/table/token-breakdown-table'
+import { useTable } from '~/hooks/use-table'
 import { type TvlProjectBreakdown } from '~/server/features/scaling/tvl/breakdown/get-tvl-breakdown-for-project'
+import { nativelyMintedColumns } from './columns/natively-minted-columns'
 import { TableSum } from './table-sum'
 
-interface NativelyMintedTableProps {
-  tokens: TvlProjectBreakdown['breakdowns'][number]['native']
+type NativeToken = TvlProjectBreakdown['breakdowns'][number]['native'][number]
+type Meta = {
+  symbol: string
+  iconUrl: string
+  explorerUrl: string
+  supply: Token['supply']
 }
 
-export function NativelyMintedTable(props: NativelyMintedTableProps) {
+export type NativelyMintedTokenEntry = NativeToken & Meta
+
+interface Props {
+  tokens: NativelyMintedTokenEntry[]
+}
+
+export function NativelyMintedTable(props: Props) {
   const sum = props.tokens.reduce((acc, token) => {
     return acc + Number(token.usdValue)
   }, 0)
+
+  const table = useTable({
+    data: props.tokens,
+    columns: nativelyMintedColumns,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+  })
 
   if (props.tokens.length === 0) {
     return null
@@ -19,7 +42,7 @@ export function NativelyMintedTable(props: NativelyMintedTableProps) {
       <h2 className="mb-3 ml-1 mt-12 text-xl font-bold md:mb-4 md:ml-2 md:text-2xl">
         Natively Minted Value
       </h2>
-
+      <TokenTable table={table} />
       <TableSum amount={sum} />
     </div>
   )
