@@ -12,6 +12,8 @@ import {
 import { type ProjectId } from '@l2beat/shared-pure'
 import { getTvlBreakdown } from './get-tvl-breakdown'
 
+export type TvlProjectBreakdown = ReturnType<ReturnType<typeof getTvlBreakdown>>
+
 export function getTvlBreakdownForProject(projectId: ProjectId) {
   // Try to filter single project for the data view
   const projects = [
