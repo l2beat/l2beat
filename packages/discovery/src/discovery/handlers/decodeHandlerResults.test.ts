@@ -1,10 +1,10 @@
 import { expect } from 'earl'
 
-import { getValuesAndErrors } from './getValuesAndErrors'
+import { decodeHandlerResults } from './decodeHandlerResults'
 
-describe(getValuesAndErrors.name, () => {
+describe(decodeHandlerResults.name, () => {
   it('returns empty values and errors', () => {
-    expect(getValuesAndErrors([])).toEqual({
+    expect(decodeHandlerResults([])).toEqual({
       values: {},
       errors: {},
       usedTypes: [],
@@ -13,7 +13,7 @@ describe(getValuesAndErrors.name, () => {
 
   it('returns values and errors', () => {
     expect(
-      getValuesAndErrors([
+      decodeHandlerResults([
         { field: 'a', value: 1 },
         { field: 'b', value: 2 },
         { field: 'c', value: 3 },
@@ -36,7 +36,7 @@ describe(getValuesAndErrors.name, () => {
 
   it('returns only errors', () => {
     expect(
-      getValuesAndErrors([
+      decodeHandlerResults([
         { field: 'd', error: 'Error 1' },
         { field: 'e', error: 'Error 2' },
       ]),
@@ -52,7 +52,7 @@ describe(getValuesAndErrors.name, () => {
 
   it('returns only values', () => {
     expect(
-      getValuesAndErrors([
+      decodeHandlerResults([
         { field: 'a', value: 1 },
         { field: 'b', value: 2 },
         { field: 'c', value: 3 },
