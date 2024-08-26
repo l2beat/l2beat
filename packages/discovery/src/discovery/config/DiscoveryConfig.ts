@@ -66,11 +66,17 @@ export class DiscoveryConfig {
   }
 
   // NOTE(radomski): name is for contract local types
-  typesFor(_name: string): Record<string, DiscoveryCustomType> {
+  typesFor(name: string): Record<string, DiscoveryCustomType> {
     const result = structuredClone(this.globalTypes)
     for (const key of Object.keys(this.config.types ?? {})) {
       // biome-ignore lint/style/noNonNullAssertion: we know it's there
       result[key] = (this.config.types ?? {})[key]!
+    }
+
+    const contractLocal = this.overrides.get(name)?.types ?? {}
+    for (const key of Object.keys(contractLocal)) {
+      // biome-ignore lint/style/noNonNullAssertion: we know it's there
+      result[key] = contractLocal[key]!
     }
 
     return result

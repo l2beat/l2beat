@@ -69,7 +69,7 @@ export const DiscoveryContract = z.object({
   description: z.optional(z.string()),
   // TODO: in fields?
   methods: z.optional(z.record(z.string(), z.string())),
-  usedTypes: z.optional(z.array(DiscoveryCustomType)),
+  types: z.optional(z.record(z.string(), DiscoveryCustomType)),
 })
 
 export type GlobalTypes = z.infer<typeof GlobalTypes>
