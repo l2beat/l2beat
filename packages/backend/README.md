@@ -222,7 +222,7 @@ You can configure the log level by setting the `LOG_LEVEL` variable. The possibl
 - `yarn start` - run the backend server from built js
 - `yarn test` - run tests
 - `yarn typecheck` - check if the code satisfies the typescript compiler
-- `yarn dev:migrate` - apply the latest migration
+- `yarn db:migrate` - apply the latest migration
 
 - `scripts/rediscoverRawDevAll.sh` - re-runs raw discovery --dev on all existing projects
 
