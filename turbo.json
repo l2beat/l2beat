@@ -3,22 +3,22 @@
   "globalDependencies": ["tsconfig.json"],
   "tasks": {
     "build": {
-      "dependsOn": ["^build", "db:generate"],
+      "dependsOn": ["^build", "db:generate-types"],
       "outputs": ["build/**", ".next/**", "!.next/cache/**", "dist/**"]
     },
-    "db:generate": {
+    "db:generate-types": {
       "outputs": ["src/kysely/generated/**"]
     },
     "typecheck": {
-      "dependsOn": ["^build", "db:generate"],
+      "dependsOn": ["^build", "db:generate-types"],
       "inputs": ["**/*.ts", "**/*.tsx"]
     },
     "test": {
-      "dependsOn": ["^build", "db:generate"],
+      "dependsOn": ["^build", "db:generate-types"],
       "inputs": ["**/*.ts", "**/*.test.ts", "**/*.json", "**/*.jsonc"]
     },
     "lint": {
-      "dependsOn": ["^build", "db:generate"]
+      "dependsOn": ["^build", "db:generate-types"]
     },
     "format": {},
     "clean": {

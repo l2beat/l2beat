@@ -1,0 +1,6 @@
+{
+  "Undecimal18": {
+    "typeCaster": "Undecimal",
+    "arg": { "decimals": 18 }
+  }
+}
