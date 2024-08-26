@@ -9,6 +9,7 @@ const discovery = new ProjectDiscovery('galxegravity', 'ethereum')
 export const galxegravity: Layer2 = orbitStackL2({
   discovery,
   badges: [Badge.DA.DAC, Badge.RaaS.Conduit],
+  associatedTokens: ['G'],
   nativeToken: 'G',
   display: {
     name: 'Gravity Alpha',
