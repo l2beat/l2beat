@@ -14,7 +14,7 @@ export const galxegravity: Layer2 = orbitStackL2({
   display: {
     name: 'Gravity Alpha',
     slug: 'galxegravity',
-    description: 'Gravity is an Optimium built on the Orbit stack.',
+    description: 'Gravity is an Optimium built on the Orbit stack. It features onchain questing and has its own gas token - G. Once complete, Alpha Mainnet is supposed to get merged into Gravity Mainnet (a Proof-of-Stake Layer 1 blockchain).',
     purposes: ['Social'],
     links: {
       websites: ['https://gravity.xyz'],
