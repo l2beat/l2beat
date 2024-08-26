@@ -17,6 +17,8 @@
     "invert": "discovery invert",
     "lint": "biome check --formatter-enabled=false .",
     "lint:fix": "biome check --formatter-enabled=false --apply .",
+
+    "dev:migrate": "cd ../database && prisma migrate dev",
     "run-kroma-propose-script": "ts-node ./discovery/kroma/ethereum/script-ts/propose.ts",
     "start": "node -r source-map-support/register build/src/index.js",
     "start:dev": "ts-node-dev --respawn --transpile-only src/index.ts",

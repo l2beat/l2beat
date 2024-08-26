@@ -6,7 +6,8 @@ L2BEAT backend server.
 
 ### Dependencies
 
-To run or develop the backend you need to install and build its dependencies. You can do it by running the following commands in the repository root:
+To run or develop the backend you need to install and build its dependencies. You can do it by
+running the following commands in the repository root:
 
 ```
 yarn
@@ -15,7 +16,8 @@ yarn build
 
 ### Database
 
-After the nodejs dependencies have been installed you should also install a Postgres database (v14). The recommended way is through docker using the commands below.
+After the nodejs dependencies have been installed you should also install a Postgres database (v14).
+The recommended way is through docker using the commands below.
 
 ```
 docker run -d --name=l2beat_postgres -p 5432:5432 -e POSTGRES_PASSWORD=password postgres:14
@@ -23,9 +25,13 @@ docker exec -it l2beat_postgres psql -U postgres -c 'CREATE DATABASE l2beat_loca
 docker exec -it l2beat_postgres psql -U postgres -c 'CREATE DATABASE l2beat_test'
 ```
 
-If you restart your system running `docker start l2beat_postgres` will bring the database back online.
+If you restart your system running `docker start l2beat_postgres` will bring the database back
+online.
 
 Alternatively you can simply run `./scripts/start_db.sh` which will always do what's needed.
+
+To update database schema to the latest version run `yarn dev:migrate`. That way you will have the
+lastest schema in your local database.
 
 ### Third party services
 
@@ -40,8 +46,8 @@ Optionally if you want to speed up the price collection obtain an api key from:
 
 ### Environment variables
 
-Once you have everything create a `.env` file that configures the app's
-environment variables. One variable per line `KEY=value`.
+Once you have everything create a `.env` file that configures the app's environment variables. One
+variable per line `KEY=value`.
 
 ### Database
 
@@ -52,16 +58,17 @@ LOCAL_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_local
 TEST_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_test
 ```
 
-If you used a different database setup modify those values accordingly. The
-`TEST_DB_URL` is used by only the test suite. Omitting this variable will cause
-the database tests to be skipped.
+If you used a different database setup modify those values accordingly. The `TEST_DB_URL` is used by
+only the test suite. Omitting this variable will cause the database tests to be skipped.
 
-You might want to clear the database before running the backend. You can do it
-by setting `FRESH_START=true` env variable.
+You might want to clear the database before running the backend. You can do it by setting
+`FRESH_START=true` env variable.
 
 ### Features
 
-The backend can do a lot of things and you most likely don't want to run it all locally. You can enable/disable features by using the feature flag system configured via the `FEATURES` environment variable.
+The backend can do a lot of things and you most likely don't want to run it all locally. You can
+enable/disable features by using the feature flag system configured via the `FEATURES` environment
+variable.
 
 Below are some examples of possible configurations:
 
@@ -87,14 +94,18 @@ FEATURES=tvl,!tvl.*,tvl.ethereum
 
 ### Common env variables
 
-- `COINGECKO_API_KEY` - Optional. Speeds up price collection. See https://www.coingecko.com/en/api/pricing
+- `COINGECKO_API_KEY` - Optional. Speeds up price collection. See
+  https://www.coingecko.com/en/api/pricing
 
 - `<CHAIN>_RPC_URL` - RPC url for the chain, for example from Alchemy
-- `<CHAIN>_RPC_CALLS_PER_MINUTE` - Optional. Rate limits the number of calls to the RPC. Defaults to 60
+- `<CHAIN>_RPC_CALLS_PER_MINUTE` - Optional. Rate limits the number of calls to the RPC. Defaults to
+  60
 - `<CHAIN>_RPC_GETLOGS_MAX_RANGE` - Optional. Limits the range of getLogs calls
-- `<CHAIN>_ETHERSCAN_API_KEY` - Etherscan API key. Only needed if the chain uses Etherscan. Blockscout doesn't need it.
+- `<CHAIN>_ETHERSCAN_API_KEY` - Etherscan API key. Only needed if the chain uses Etherscan.
+  Blockscout doesn't need it.
 
-You can also append the feature name to the environment variables if you'd like a specific feature to use a different endpoint. For example:
+You can also append the feature name to the environment variables if you'd like a specific feature
+to use a different endpoint. For example:
 
 ```
 ETHEREUM_RPC_URL=https://example.provider/ethereum
@@ -142,7 +153,8 @@ The activity feature is configured via the following environment variables:
 
 - `STARKEX_API_KEY`
 - `STARKEX_CALLS_PER_MINUTE` - Optional. Rate limits the number of calls to the RPC. Defaults to 600
-- `ACTIVITY_PROJECTS_EXCLUDED_FROM_API` - Optional. Space separated list of project ids to exclude from the API.
+- `ACTIVITY_PROJECTS_EXCLUDED_FROM_API` - Optional. Space separated list of project ids to exclude
+  from the API.
 
 **Feature flags:**
 
@@ -171,7 +183,8 @@ The updateMonitor feature is configured via the following environment variables:
 
 ### `tvlCleaner` feature
 
-The tvlCleaner feature is designed to remove redundant data kept in database. It will only keep the sixHourly data 93 days to the past and hourly data 10 days to the past.
+The tvlCleaner feature is designed to remove redundant data kept in database. It will only keep the
+sixHourly data 93 days to the past and hourly data 10 days to the past.
 
 **Feature flags:**
 
@@ -209,6 +222,7 @@ You can configure the log level by setting the `LOG_LEVEL` variable. The possibl
 - `yarn start` - run the backend server from built js
 - `yarn test` - run tests
 - `yarn typecheck` - check if the code satisfies the typescript compiler
+- `yarn dev:migrate` - apply the latest migration
 
 - `scripts/rediscoverRawDevAll.sh` - re-runs raw discovery --dev on all existing projects
 
