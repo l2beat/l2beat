@@ -1,9 +1,9 @@
 {
   "name": "shared-eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 20612170,
+  "blockNumber": 20613324,
   "configHash": "0x2ae18387b95c3f1a0aabc2bf04ec0a6a4cabdf45b809d6d4a09dc97f70d35098",
-  "version": 12,
+  "version": 13,
   "contracts": [
     {
       "name": "DepositContract",
@@ -12,8 +12,8 @@
       "sinceTimestamp": 1602667372,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0x603f190000000000",
-        "get_deposit_root": "0x0122dcd4e5c1da6057c7b7f2db63edf0f86017467cb883253d1b326018bf1bcd"
+        "get_deposit_count": "0x7240190000000000",
+        "get_deposit_root": "0x27aef34d3cd5aee08533d3462ca525ebdb501baeb21bae4a8b4c9f112824b6ad"
       },
       "derivedName": "DepositContract"
     },
@@ -58,6 +58,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -68,7 +69,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "97986474681590319737785",
+        "totalShares": "97946888456827977095989",
         "underlyingToken": "0xf951E335afb289353dc249e82926178EaC7DEd78"
       },
       "fieldMeta": {
@@ -103,6 +104,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdAbdB3Cd346B7D5F5779b0B614EdE1CC9DcBA5b7",
+        "$upgradeCount": 1,
         "avs": [
           "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "0xD25c2c5802198CB8541987b73A8db4c9BCaE5cC7",
@@ -152,6 +154,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -197,6 +200,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -207,7 +211,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "38029081476661997616679",
+        "totalShares": "38028181483822690358223",
         "underlyingToken": "0xae78736Cd615f374D3085123A210448E74Fc6393"
       },
       "fieldMeta": {
@@ -304,6 +308,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -314,7 +319,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "145575746783040082948865",
+        "totalShares": "145535746783040082948865",
         "underlyingToken": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa"
       },
       "fieldMeta": {
@@ -379,6 +384,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x1784BE6401339Fc0Fedf7E9379409f5c1BfE9dda",
+        "$upgradeCount": 3,
         "beaconChainETHStrategy": "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0",
         "DELEGATION_APPROVAL_TYPEHASH": "0x14bde674c9f64b2ad00eaaee4a8bed1fabef35c7507e3c5b9cfc9436909a2dad",
         "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
@@ -463,6 +469,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -473,7 +480,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "15530038119968998897162",
+        "totalShares": "15526172953943229530104",
         "underlyingToken": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
       },
       "fieldMeta": {
@@ -508,6 +515,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -562,6 +570,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x3e07cc2D34C8E0965f5BA45Ac1E960e535155c74",
+        "$upgradeCount": 1,
         "owner": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
@@ -599,6 +608,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -643,6 +653,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x4bB6731B02314d40aBbfFBC4540f508874014226",
+        "$upgradeCount": 3,
         "eigenPodManager": "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
         "MAX_WITHDRAWAL_DELAY_BLOCKS": 216000,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
@@ -666,6 +677,7 @@
       "values": {
         "$admin": "0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9",
         "$implementation": "0xB91c69Af3eE022bd0a59Da082945914BFDcEFFE3",
+        "$upgradeCount": 1,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x5dd88b27402a52ec3e227839f0f448d699f04c912202aa0d2b25bb86127a6e96",
@@ -702,6 +714,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x70f44C13944d49a236E3cD7a94f48f5daB6C619b",
+        "$upgradeCount": 3,
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "DEPOSIT_TYPEHASH": "0x4337f82d142e41f2a8c10547cd8c859bddb92262a61058e77842e24d9dea9224",
         "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
@@ -860,6 +873,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -912,13 +926,14 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xe4297e3DaDBc7D99e26a2954820f514CB50C5762",
+        "$upgradeCount": 3,
         "beaconChainETHStrategy": "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0",
         "beaconChainOracle": "0x343907185b71aDF0eBa9567538314396aa985442",
         "delegationManager": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "denebForkTimestamp": 1710338135,
         "eigenPodBeacon": "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
-        "numPods": 31910,
+        "numPods": 31912,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
@@ -943,6 +958,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -953,7 +969,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "864884416979220179431972",
+        "totalShares": "864884616285256063440036",
         "underlyingToken": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
       },
       "fieldMeta": {
@@ -988,6 +1004,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -1033,6 +1050,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -1092,12 +1110,13 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x27e7a3A81741B9fcc5Ad7edCBf9F8a72a5c00428",
+        "$upgradeCount": 1,
         "EIGEN": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "121394585721498764808890340",
+        "totalShares": "121352330509217004082897692",
         "underlyingToken": "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
       },
       "derivedName": "EigenStrategy"
@@ -1118,6 +1137,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -1285,6 +1305,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xF3234220163a757edf1E11a8a085638D9B236614",
+        "$upgradeCount": 3,
         "delegation": "0x0000000000000000000000000000000000000000",
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -1326,6 +1347,7 @@
       "values": {
         "$admin": "0xB8915E195121f2B5D989Ec5727fd47a5259F1CEC",
         "$implementation": "0x7EC354C84680112d3cfF1544ec1Eb19ca583700b",
+        "$upgradeCount": 3,
         "bEIGEN": "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
