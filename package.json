@@ -26,7 +26,7 @@
     "lint:fix": "wsrun -ecam lint:fix",
     "start": "cd packages/backend && yarn start",
     "test": "turbo run test -- --reporter progress",
-    "test:exclude-backend": "turbo run test --filter=!@l2beat/backend",
+    "test:exclude-backend": "turbo run test --filter=!@l2beat/backend --filter=!@l2beat/database",
     "typecheck": "turbo run typecheck",
     "ci:check": "turbo run ci:check",
     "heroku-postbuild": "yarn build:backend && yarn install --production",
