@@ -7,6 +7,11 @@ import { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('polygon-pos')
 
+const upgrades = {
+  upgradableBy: ['PolygonMultisig'],
+  upgradeDelay: 'No delay'
+}
+
 export const polygonpos: Bridge = {
   type: 'bridge',
   id: ProjectId('polygon-pos'),
@@ -39,24 +44,28 @@ export const polygonpos: Bridge = {
         address: EthereumAddress('0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf'),
         sinceTimestamp: new UnixTime(1598436664),
         tokens: '*',
+        ...upgrades
       }),
       discovery.getEscrowDetails({
         // MintableERC20Predicate
         address: EthereumAddress('0x9923263fA127b3d1484cFD649df8f1831c2A74e4'),
         sinceTimestamp: new UnixTime(1613100720),
         tokens: '*',
+        ...upgrades
       }),
       discovery.getEscrowDetails({
         // EtherPredicate
         address: EthereumAddress('0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30'),
         sinceTimestamp: new UnixTime(1598437971),
         tokens: ['ETH'],
+        ...upgrades
       }),
       discovery.getEscrowDetails({
         // ERC20EscrowPredicate for TOWER token
         address: EthereumAddress('0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4'),
         sinceTimestamp: new UnixTime(1598437971),
         tokens: '*',
+        ...upgrades
       }),
       // ERC20MintBurnablePredicate is not used
     ],
@@ -134,6 +143,7 @@ export const polygonpos: Bridge = {
       discovery.getContractDetails('RootChain', {
         description:
           'Contract storing Polygon PoS chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the Polygon Validators.',
+          ...upgrades
       }),
       discovery.getContractDetails(
         'StateSender',
@@ -143,13 +153,16 @@ export const polygonpos: Bridge = {
         description:
           'Main configuration contract to manage tokens, token types, escrows (predicates) for given token types.\
           It also serves as an entry point for deposits and withdrawals effectively acting as a token router.',
-      }),
+          ...upgrades
+        }),
       discovery.getContractDetails('StakeManager', {
         description:
           'Main configuration contract to manage stakers and their voting power.',
+          ...upgrades
       }),
       discovery.getContractDetails('Registry', {
         description: 'A registry of different system components.',
+        ...upgrades
       }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
