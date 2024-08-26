@@ -1,9 +1,8 @@
 generator kysely {
-  provider        = "prisma-kysely"
-  output          = "../src/kysely/generated"
-  previewFeatures = ["multiSchema"]
-  enumFileName    = "enums.ts"
-  fileName        = "types.ts"
+  provider     = "prisma-kysely"
+  output       = "../src/kysely/generated"
+  enumFileName = "enums.ts"
+  fileName     = "types.ts"
 }
 
 datasource db {
