@@ -144,7 +144,7 @@ jobs:
         run: yarn --frozen-lockfile
 
       - name: Migrate database
-        run: cd packages/database && db:migrate && cd -
+        run: cd packages/database && yarn db:migrate && cd -
 
       - name: Test
         run: yarn test --reporter min
