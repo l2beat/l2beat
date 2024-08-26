@@ -6,7 +6,8 @@ import {
 } from 'viem'
 
 export function decode(data: `0x${string}`, abi: string[]) {
-  const signature = data.slice(0, 10).toLowerCase()
+  const selector = data.slice(0, 10).toLowerCase()
+
   for (const fn of abi) {
     try {
       const abiItem = parseAbiItem(fn)
@@ -27,7 +28,7 @@ export function decode(data: `0x${string}`, abi: string[]) {
       const values = mix(abiItem.inputs, decoded.args)
       if (extra.length > 0) {
         values.push({
-          stack: ['extra'],
+          stack: ['unexpected extra data'],
           type: 'bytes',
           value: `0x${extra}`,
         })
@@ -35,11 +36,10 @@ export function decode(data: `0x${string}`, abi: string[]) {
 
       return {
         name: abiItem.name,
-        signature,
+        selector,
         values,
       }
-    } catch (e) {
-      console.error(e)
+    } catch {
       continue
     }
   }

@@ -1,7 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
-import clsx from 'clsx'
+import { useState } from 'react'
 import { get4ByteSignatures } from './api/FourByte'
 import { getOpenChainSignatures } from './api/OpenChain'
+import { SimpleValue } from './components/SimpleValue'
+import { ValueHeading } from './components/ValueHeading'
 import { Value, decode } from './decode'
 
 interface DecodedProps {
@@ -12,11 +14,13 @@ export function Decoded(props: DecodedProps) {
   const selector = props.encoded.slice(0, 10)
 
   const q1 = useQuery({
+    enabled: isValidSelector(selector),
     queryKey: ['openchain', selector],
     queryFn: () => getOpenChainSignatures(selector),
   })
 
   const q2 = useQuery({
+    enabled: isValidSelector(selector),
     queryKey: ['4byte', selector],
     queryFn: () => get4ByteSignatures(selector),
   })
@@ -39,21 +43,19 @@ export function Decoded(props: DecodedProps) {
     return <div>Error: {error.message}</div>
   }
 
-  if (!decoded) {
-    return <div>Unknown</div>
-  }
-
   return (
     <>
-      <h2 className="mb-4">
-        <span className="font-bold text-lg">{decoded.name}</span>{' '}
-        <span className="pl-2 font-mono text-sm">{decoded.signature}</span>
+      <h2 className="mb-1">
+        <span className="font-bold text-lg">{decoded?.name ?? 'Unknown'}</span>{' '}
+        <span className="pl-2 font-mono text-sm">{selector}</span>
       </h2>
-      <ol>
-        {decoded.values.map((v, i) => (
-          <DecodedValue key={i} value={v} />
-        ))}
-      </ol>
+      {decoded && (
+        <ol>
+          {decoded.values.map((v, i) => (
+            <DecodedValue key={i} value={v} />
+          ))}
+        </ol>
+      )}
     </>
   )
 }
@@ -63,19 +65,39 @@ interface DecodedValueProps {
 }
 
 function DecodedValue({ value }: DecodedValueProps) {
+  let options: string[] | undefined
+  if (value.type === 'bytes') {
+    options = ['raw', 'decoded']
+  }
+  if (value.type.includes('int')) {
+    options = ['decimal', '18', '9', '6', 'time', 'date']
+  }
+
+  const [selected, setSelected] = useState(options?.[0])
+
   return (
     <li className="mb-4 last:mb-0">
-      <div>
-        <span className="text-blue-400">{value.stack.join('.')}</span>
-        <span className="pl-2 font-mono text-orange-500 text-sm">
-          {value.type}
-        </span>
-      </div>
-      {!Array.isArray(value.value) && (
-        <SimpleValue type={value.type} value={value.value} />
+      <ValueHeading
+        stack={value.stack}
+        type={value.type}
+        options={options}
+        selectedOption={selected}
+        onSelect={setSelected}
+      />
+      {selected === 'decoded' && (
+        <div className="my-1 rounded-sm border-zinc-700 border-l-[8px] px-5 py-1">
+          <Decoded encoded={value.value as `0x${string}`} />
+        </div>
       )}
-      {Array.isArray(value.value) && (
-        <ol className="my-1 rounded-sm bg-white bg-opacity-5 px-2.5 py-1">
+      {!Array.isArray(value.value) && selected !== 'decoded' && (
+        <SimpleValue
+          type={value.type}
+          value={value.value}
+          transform={selected}
+        />
+      )}
+      {Array.isArray(value.value) && selected !== 'decoded' && (
+        <ol className="my-1 rounded-sm border-zinc-700 border-l px-5 py-1">
           {value.value.map((v, i) => (
             <DecodedValue key={i} value={v} />
           ))}
@@ -85,94 +107,6 @@ function DecodedValue({ value }: DecodedValueProps) {
   )
 }
 
-interface SimpleValueProps {
-  type: string
-  value: string | bigint | boolean
-}
-
-function SimpleValue({ type, value }: SimpleValueProps) {
-  if (typeof value === 'boolean') {
-    return <div className="font-mono">{value.toString()}</div>
-  }
-  if (type === 'string') {
-    return (
-      <div className="w-full break-words">
-        <span className="select-none text-white text-opacity-40">
-          {'\u201C'}
-        </span>
-        <span className="font-serif text-lg">{value.toString()}</span>
-        <span className="select-none text-white text-opacity-40">
-          {'\u201D'}
-        </span>
-      </div>
-    )
-  }
-  if (type === 'bytes' && typeof value === 'string') {
-    const data = toTxData(value)
-    return (
-      <div className="font-mono">
-        {data && <div>{data.selector}</div>}
-        <Parts value={data?.bytes ?? value.slice(2)} />
-      </div>
-    )
-  }
-  return <div className="font-mono">{value.toString()}</div>
-}
-
-function Parts({ value }: { value: string }) {
-  const bytes = toParts(value)
-  return (
-    <>
-      {bytes.map((parts, i) => (
-        <div key={i}>
-          {parts.map((p, j) => (
-            <span
-              className={clsx(p.isZero && 'text-white text-opacity-40')}
-              key={j}
-            >
-              {p.value}
-            </span>
-          ))}
-        </div>
-      ))}
-    </>
-  )
-}
-
-function toTxData(value: string) {
-  if (value.length < 10 || (value.length - 10) % 64 !== 0) {
-    return undefined
-  }
-  return {
-    selector: value.slice(2, 10),
-    bytes: value.slice(10),
-  }
-}
-
-function toParts(value: string) {
-  const length = Math.ceil(value.length / 64)
-  return Array.from({ length }).map((_, i) => {
-    const slice = value.slice(i * 64, (i + 1) * 64)
-    interface Part {
-      value: string
-      isZero: boolean
-    }
-    let part: Part = {
-      value: '',
-      isZero: false,
-    }
-    const parts: Part[] = [part]
-    for (let i = 0; i < 64; i += 2) {
-      const byte = slice.slice(i, i + 2)
-      const isZero = byte === '00'
-      if (i === 0 || isZero === part.isZero) {
-        part.value += byte
-        part.isZero = isZero
-      } else {
-        part = { value: byte, isZero }
-        parts.push(part)
-      }
-    }
-    return parts
-  })
+function isValidSelector(selector: string) {
+  return selector.length === 10 && selector !== '0x00000000'
 }
