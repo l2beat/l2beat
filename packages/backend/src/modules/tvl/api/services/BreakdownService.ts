@@ -1,4 +1,4 @@
-import { safeGetTokenByAssetId } from '@l2beat/config'
+import { ConfigMapping, safeGetTokenByAssetId } from '@l2beat/config'
 import {
   assert,
   AssetId,
@@ -9,7 +9,6 @@ import {
   ProjectAssetsBreakdownApiResponse,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { ConfigMapping } from '../../utils/ConfigMapping'
 import { asNumber } from '../../utils/asNumber'
 import { CanonicalAssetBreakdown } from '../utils/types'
 import { AmountsDataService } from './data/AmountsDataService'

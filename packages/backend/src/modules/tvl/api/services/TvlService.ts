@@ -6,18 +6,18 @@ import {
   TvlApiResponse,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { ConfigMapping } from '../../utils/ConfigMapping'
 import { asNumber } from '../../utils/asNumber'
 import { calculateValue } from '../../utils/calculateValue'
 
+import { ConfigMapping } from '@l2beat/config'
 import { Clock } from '../../../../tools/Clock'
 import {
-  ValuesForSource,
   getChart,
   getChartData,
   subtractTokenCharts,
   sumCharts,
   sumValuesPerSource,
+  ValuesForSource,
 } from '../utils/chartsUtils'
 import { ApiProject, AssociatedToken } from '../utils/types'
 import { TokenService } from './TokenService'
