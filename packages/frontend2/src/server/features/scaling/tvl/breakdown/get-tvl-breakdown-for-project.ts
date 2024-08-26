@@ -1,42 +1,27 @@
 import {
   ConfigMapping,
-  bridgeToBackendProject,
-  bridges,
+  type Layer2,
+  type Layer3,
   getTvlAmountsConfig,
   getTvlPricesConfig,
-  layer2ToBackendProject,
-  layer2s,
-  layer3ToBackendProject,
-  layer3s,
+  toBackendProject,
 } from '@l2beat/config'
-import { type ProjectId } from '@l2beat/shared-pure'
 import { getTvlBreakdown } from './get-tvl-breakdown'
 
 export type ProjectTvlBreakdown = Awaited<
   ReturnType<ReturnType<typeof getTvlBreakdown>>
 >
 
-export function getTvlBreakdownForProject(projectId: ProjectId) {
-  // Try to filter single project for the data view
-  const projects = [
-    ...layer2s.map(layer2ToBackendProject),
-    ...layer3s.map(layer3ToBackendProject),
-    ...bridges.map(bridgeToBackendProject),
-  ]
+export function getTvlBreakdownForProject(project: Layer2 | Layer3) {
+  const backendProject = toBackendProject(project)
 
-  const filteredProjects = projects.filter((p) => p.projectId === projectId)
-
-  // Phase this out
-  const amountsConfigs = getTvlAmountsConfig(filteredProjects).filter(
-    (c) => c.project === projectId,
-  )
+  // Phase this out - two variants - one hard for backend and one soft for frontend
+  const amountsConfigs = getTvlAmountsConfig([backendProject])
   const priceConfigs = getTvlPricesConfig()
 
-  const configMapping = new ConfigMapping(
-    priceConfigs,
-    amountsConfigs,
-    filteredProjects.map((p) => p.projectId),
-  )
+  const configMapping = new ConfigMapping(priceConfigs, amountsConfigs, [
+    backendProject.projectId,
+  ])
 
-  return getTvlBreakdown({ configMapping })(projectId)
+  return getTvlBreakdown({ configMapping })(backendProject.projectId)
 }
