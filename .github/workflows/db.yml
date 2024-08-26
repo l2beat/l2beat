@@ -4,7 +4,7 @@ on:
     paths:
       - packages/database/prisma/migrations/**
     branches:
-      - main
+      - prisma-test
 
 jobs:
   deploy:
