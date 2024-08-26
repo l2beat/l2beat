@@ -12,7 +12,7 @@ import {
 import { type ProjectId } from '@l2beat/shared-pure'
 import { getTvlBreakdown } from './get-tvl-breakdown'
 
-export type TvlProjectBreakdown = Awaited<
+export type ProjectTvlBreakdown = Awaited<
   ReturnType<ReturnType<typeof getTvlBreakdown>>
 >
 
@@ -38,5 +38,5 @@ export function getTvlBreakdownForProject(projectId: ProjectId) {
     filteredProjects.map((p) => p.projectId),
   )
 
-  return getTvlBreakdown({ configMapping })()
+  return getTvlBreakdown({ configMapping })(projectId)
 }

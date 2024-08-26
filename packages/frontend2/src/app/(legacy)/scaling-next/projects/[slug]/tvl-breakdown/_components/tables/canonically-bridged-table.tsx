@@ -1,11 +1,11 @@
-import { type TvlProjectBreakdown } from '~/server/features/scaling/tvl/breakdown/get-tvl-breakdown-for-project'
+import { ExtendedProjectTvlBreakdown } from '../../_utils/assign-token-meta-to-breakdown'
 import { TableSum } from './table-sum'
 
-interface CanonicallyBridgedTableProps {
-  tokens: TvlProjectBreakdown['breakdowns'][number]['canonical']
+interface Props {
+  tokens: ExtendedProjectTvlBreakdown['breakdown']['canonical']
 }
 
-export function CanonicallyBridgedTable(props: CanonicallyBridgedTableProps) {
+export function CanonicallyBridgedTable(props: Props) {
   const sum = props.tokens.reduce((acc, token) => {
     return acc + Number(token.usdValue)
   }, 0)

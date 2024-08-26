@@ -1,21 +1,13 @@
 'use client'
-import { type Token } from '@l2beat/shared-pure'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { TokenTable } from '~/app/_components/table/token-breakdown-table'
 import { useTable } from '~/hooks/use-table'
-import { type TvlProjectBreakdown } from '~/server/features/scaling/tvl/breakdown/get-tvl-breakdown-for-project'
+import { ExtendedProjectTvlBreakdown } from '../../_utils/assign-token-meta-to-breakdown'
 import { nativelyMintedColumns } from './columns/natively-minted-columns'
 import { TableSum } from './table-sum'
 
-type NativeToken = TvlProjectBreakdown['breakdowns'][number]['native'][number]
-type Meta = {
-  symbol: string
-  iconUrl: string
-  explorerUrl: string
-  supply: Token['supply']
-}
-
-export type NativelyMintedTokenEntry = NativeToken & Meta
+export type NativelyMintedTokenEntry =
+  ExtendedProjectTvlBreakdown['breakdown']['native'][number]
 
 interface Props {
   tokens: NativelyMintedTokenEntry[]

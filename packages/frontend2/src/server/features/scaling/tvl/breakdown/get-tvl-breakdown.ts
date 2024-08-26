@@ -5,7 +5,7 @@ import {
   type CanonicalAssetBreakdownData,
   type ExternalAssetBreakdownData,
   type NativeAssetBreakdownData,
-  type ProjectAssetsBreakdownApiResponse,
+  type ProjectId,
   UnixTime,
   asNumber,
 } from '@l2beat/shared-pure'
@@ -19,9 +19,7 @@ interface Dependencies {
 }
 
 export function getTvlBreakdown({ configMapping }: Dependencies) {
-  return async function (
-    target?: UnixTime,
-  ): Promise<ProjectAssetsBreakdownApiResponse> {
+  return async function (projectId: ProjectId, target?: UnixTime) {
     const targetTimestamp =
       target ?? UnixTime.now().toStartOf('hour').add(-1, 'hours')
 
@@ -39,28 +37,27 @@ export function getTvlBreakdown({ configMapping }: Dependencies) {
       prices.prices.map((x) => [x.configId, x.priceUsd]),
     )
 
-    const breakdowns: Record<
-      string,
-      {
-        canonical: Map<AssetId, CanonicalAssetBreakdown>
-        external: ExternalAssetBreakdownData[]
-        native: NativeAssetBreakdownData[]
-      }
-    > = {}
+    const breakdown: {
+      canonical: Map<AssetId, CanonicalAssetBreakdown>
+      external: ExternalAssetBreakdownData[]
+      native: NativeAssetBreakdownData[]
+    } = {
+      canonical: new Map<AssetId, CanonicalAssetBreakdown>(),
+      external: [],
+      native: [],
+    }
+
     for (const amount of tokenAmounts.amounts) {
       const config = configMapping.getAmountConfig(amount.configId)
-      if (config.untilTimestamp?.lt(targetTimestamp)) {
-        continue
+
+      if (config.project !== projectId) {
+        throw new Error(
+          `Project id mismatch. Expected ${projectId}, got ${config.project}. Double check amounts mappings.`,
+        )
       }
 
-      let breakdown = breakdowns[config.project]
-      if (!breakdown) {
-        breakdown = {
-          canonical: new Map<AssetId, CanonicalAssetBreakdown>(),
-          external: [],
-          native: [],
-        }
-        breakdowns[config.project] = breakdown
+      if (config.untilTimestamp?.lt(targetTimestamp)) {
+        continue
       }
 
       const priceConfig = configMapping.getPriceConfigFromAmountConfig(config)
@@ -141,31 +138,32 @@ export function getTvlBreakdown({ configMapping }: Dependencies) {
           })
       }
     }
-    const result: Record<
-      string,
-      {
-        canonical: CanonicalAssetBreakdownData[]
-        external: ExternalAssetBreakdownData[]
-        native: NativeAssetBreakdownData[]
-      }
-    > = {}
-    for (const [project, breakdown] of Object.entries(breakdowns)) {
-      const canonical = [...breakdown.canonical.values()].sort(
-        (a, b) => +b.usdValue - +a.usdValue,
-      )
-
-      result[project] = {
-        canonical: canonical.map((x) => ({
-          ...x,
-          escrows: x.escrows.sort((a, b) => +b.amount - +a.amount),
-          amount: x.amount.toString(),
-          usdValue: x.usdValue.toString(),
-        })),
-        external: breakdown.external.sort((a, b) => +b.usdValue - +a.usdValue),
-        native: breakdown.native.sort((a, b) => +b.usdValue - +a.usdValue),
-      }
+    const result: {
+      canonical: CanonicalAssetBreakdownData[]
+      external: ExternalAssetBreakdownData[]
+      native: NativeAssetBreakdownData[]
+    } = {
+      canonical: [],
+      external: [],
+      native: [],
     }
 
-    return { dataTimestamp: targetTimestamp, breakdowns: result }
+    const canonical = [...breakdown.canonical.values()].sort(
+      (a, b) => +b.usdValue - +a.usdValue,
+    )
+
+    result.canonical = canonical.map((x) => ({
+      ...x,
+      escrows: x.escrows.sort((a, b) => +b.amount - +a.amount),
+      amount: x.amount.toString(),
+      usdValue: x.usdValue.toString(),
+    }))
+
+    result.external = breakdown.external.sort(
+      (a, b) => +b.usdValue - +a.usdValue,
+    )
+
+    result.native = breakdown.native.sort((a, b) => +b.usdValue - +a.usdValue)
+    return { dataTimestamp: targetTimestamp, breakdown: result }
   }
 }

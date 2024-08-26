@@ -1,8 +1,7 @@
-import { layer2s, layer3s, safeGetTokenByAssetId } from '@l2beat/config'
+import { layer2s, layer3s } from '@l2beat/config'
 import { notFound } from 'next/navigation'
 import { getTvlBreakdownForProject } from '~/server/features/scaling/tvl/breakdown/get-tvl-breakdown-for-project'
 import { getDetailed7dTvlBreakdown } from '~/server/features/scaling/tvl/utils/get-7d-tvl-breakdown'
-import { getExplorerUrlByChainId } from '~/utils/get-explorer-url'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { BreakdownPageWrapper } from './_components/breakdown-page-wrapper'
 import { RequestTokenBox } from './_components/request-token-box'
@@ -11,6 +10,7 @@ import { ExternallyBridgedTable } from './_components/tables/externally-bridges-
 import { NativelyMintedTable } from './_components/tables/natively-minted-table'
 import { TvlBreakdownPageHeader } from './_components/tvl-breakdown-page-header'
 import { TvlBreakdownSummaryBox } from './_components/tvl-breakdown-summary-box'
+import { assignTokenMetaToBreakdown } from './_utils/assign-token-meta-to-breakdown'
 
 const scalingProjects = [...layer2s, ...layer3s]
 
@@ -43,35 +43,17 @@ export default async function Page({ params }: Props) {
   }
 
   const detailedBreakdown = await getDetailed7dTvlBreakdown()
-  const breakdowns = await getTvlBreakdownForProject(project.id)
-  const p = breakdowns.breakdowns[project.id.toString()]!
-
-  const projectTokenBreakdown = {
-    ...p,
-    native: p.native.map((token) => ({
-      ...token,
-      iconUrl: safeGetTokenByAssetId(token.assetId)!.iconUrl!,
-      symbol: safeGetTokenByAssetId(token.assetId)!.symbol,
-      explorerUrl: getExplorerUrlByChainId(token.chainId)!,
-      supply: safeGetTokenByAssetId(token.assetId)!.supply,
-    })),
-    external: p.external.map((token) => ({
-      ...token,
-      iconUrl: safeGetTokenByAssetId(token.assetId)!.iconUrl!,
-      symbol: safeGetTokenByAssetId(token.assetId)!.symbol,
-      explorerUrl: getExplorerUrlByChainId(token.chainId)!,
-      supply: safeGetTokenByAssetId(token.assetId)!.supply,
-    })),
-  }
-
   const projectBreakdown = detailedBreakdown.projects[project.id.toString()]!
+
+  const tokenBreakdown = await getTvlBreakdownForProject(project.id)
+  const extendedBreakdown = assignTokenMetaToBreakdown(tokenBreakdown)
 
   return (
     <BreakdownPageWrapper>
       <TvlBreakdownPageHeader
         title={project.display.name}
         slug={project.display.slug}
-        tvlBreakdownDate={breakdowns.dataTimestamp}
+        tvlBreakdownDate={tokenBreakdown.dataTimestamp}
       />
       <TvlBreakdownSummaryBox
         tvl={{
@@ -91,9 +73,9 @@ export default async function Page({ params }: Props) {
           change: projectBreakdown.change.native,
         }}
       />
-      <NativelyMintedTable tokens={projectTokenBreakdown.native} />
-      <ExternallyBridgedTable tokens={projectTokenBreakdown.external} />
-      <CanonicallyBridgedTable tokens={projectTokenBreakdown.canonical} />
+      <NativelyMintedTable tokens={extendedBreakdown.breakdown.native} />
+      <ExternallyBridgedTable tokens={extendedBreakdown.breakdown.external} />
+      <CanonicallyBridgedTable tokens={extendedBreakdown.breakdown.canonical} />
 
       <RequestTokenBox />
     </BreakdownPageWrapper>

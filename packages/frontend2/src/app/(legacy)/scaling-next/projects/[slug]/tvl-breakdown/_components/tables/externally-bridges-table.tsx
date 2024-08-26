@@ -1,23 +1,13 @@
 'use client'
-import { type Token } from '@l2beat/shared-pure'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { TokenTable } from '~/app/_components/table/token-breakdown-table'
 import { useTable } from '~/hooks/use-table'
-import { type TvlProjectBreakdown } from '~/server/features/scaling/tvl/breakdown/get-tvl-breakdown-for-project'
+import { ExtendedProjectTvlBreakdown } from '../../_utils/assign-token-meta-to-breakdown'
 import { externallyBridgedColumns } from './columns/externally-bridged-columns'
 import { TableSum } from './table-sum'
 
-type ExternallyBridgedToken =
-  TvlProjectBreakdown['breakdowns'][number]['external'][number]
-
-type Meta = {
-  symbol: string
-  iconUrl: string
-  explorerUrl: string
-  supply: Token['supply']
-}
-
-export type ExternallyBridgedTokenEntry = ExternallyBridgedToken & Meta
+export type ExternallyBridgedTokenEntry =
+  ExtendedProjectTvlBreakdown['breakdown']['external'][number]
 
 interface Props {
   tokens: ExternallyBridgedTokenEntry[]
