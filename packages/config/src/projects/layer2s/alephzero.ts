@@ -21,6 +21,7 @@ export const alephzero: Layer2 = underReviewL2({
       socialMedia: ['https://x.com/Aleph__Zero'],
     },
   },
+  associatedTokens: ['AZERO'],
   escrows: [
     {
       chain: 'ethereum',

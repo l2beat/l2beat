@@ -93,8 +93,18 @@
       "enum": ["Sequencer", "Proposer", "Challenger", "Guardian", "Validator"]
     },
     "permission": {
-      "type": ["string", "null"],
-      "enum": ["admin", "owner"]
+      "type": "object",
+      "unevaluatedProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["configure", "upgrade", "act"]
+        },
+        "delay": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
     },
     "stackCategory": {
       "type": ["string", "null"],
@@ -124,14 +134,9 @@
             }
           ]
         },
-        "permission": {
-          "anyOf": [
-            { "$ref": "#/$defs/permission" },
-            {
-              "type": "array",
-              "items": { "$ref": "#/$defs/permission" }
-            }
-          ]
+        "permissions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/permission" }
         }
       }
     }

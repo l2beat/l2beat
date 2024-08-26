@@ -100,7 +100,7 @@ export class DiscoveryEngine {
             provider,
             address,
             config.overrides.get(address),
-            config.types,
+            config.typesFor(address.toString()),
             bufferedLogger,
             templates,
           )

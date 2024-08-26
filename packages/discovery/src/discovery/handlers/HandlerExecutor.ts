@@ -6,9 +6,9 @@ import { ContractOverrides } from '../config/DiscoveryOverrides'
 import { DiscoveryCustomType } from '../config/RawDiscoveryConfig'
 import { IProvider } from '../provider/IProvider'
 import { HandlerResult } from './Handler'
+import { decodeHandlerResults } from './decodeHandlerResults'
 import { executeHandlers } from './executeHandlers'
 import { getHandlers } from './getHandlers'
-import { getValuesAndErrors } from './getValuesAndErrors'
 
 export class HandlerExecutor {
   async execute(
@@ -26,7 +26,7 @@ export class HandlerExecutor {
   }> {
     const handlers = getHandlers(abi, overrides, logger)
     const results = await executeHandlers(provider, handlers, address, logger)
-    const { values, errors, usedTypes } = getValuesAndErrors(
+    const { values, errors, usedTypes } = decodeHandlerResults(
       results,
       overrides?.fields,
       types,
