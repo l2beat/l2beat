@@ -1,3 +1,151 @@
+Generated with discovered.json: 0xc6d1b2ef7754362e62254f4fe6ad79cb730cfe7d
+
+# Diff at Mon, 26 Aug 2024 14:13:07 GMT:
+
+- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
+- comparing to: main@e6837bdeaeb7bd525b1927d5a90bd54e7deefdf9 block: 20225285
+- current block number: 20613284
+
+## Description
+
+- TimeLock removed
+- WithdrawManager implementation changed. New implementation is the same but broken into multiple files
+- ERC20PredicateBurnOnly and ERC721PredicateBurnOnly implementation changed. New implementation is the same but broken into multiple files
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract ERC20PredicateBurnOnly (0x158d5fa3Ef8e4dDA8a5367deCF76b94E7efFCe95)
+    +++ description: None
+```
+
+```diff
+    contract WithdrawManager (0x2A88696e0fFA76bAA1338F2C74497cC013495922) {
+    +++ description: None
+      values.$implementation:
+-        "0x4ef5123a30e4CFeC02B3E2F5Ce97F1328B29f7de"
++        "0xA376680d32Cece9756D9f1087318400DA2fd83dF"
+      values.implementation:
+-        "0x4ef5123a30e4CFeC02B3E2F5Ce97F1328B29f7de"
++        "0xA376680d32Cece9756D9f1087318400DA2fd83dF"
+      values.owner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+    }
+```
+
+```diff
+    contract Registry (0x33a02E6cC863D393d6Bf231B697b82F6e499cA71) {
+    +++ description: None
+      values.erc20Predicate:
+-        "0x158d5fa3Ef8e4dDA8a5367deCF76b94E7efFCe95"
++        "0x626fb210bf50e201ED62cA2705c16DE2a53DC966"
+      values.erc721Predicate:
+-        "0x54150f44c785D412Ec262fe895Cc3B689c72F49B"
++        "0x36C2503d53C6948331144b85D1e74a3B96731d1b"
+    }
+```
+
+```diff
+    contract DepositManager (0x401F6c983eA34274ec46f84D70b31C151321188b) {
+    +++ description: None
+      values.owner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ERC721PredicateBurnOnly (0x54150f44c785D412Ec262fe895Cc3B689c72F49B)
+    +++ description: None
+```
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      values.$admin:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      values.owner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+    }
+```
+
+```diff
+    contract EventsHub (0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      values.$admin:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      values.owner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+    }
+```
+
+```diff
+    contract Governance (0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48) {
+    +++ description: None
+      values.owner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+    }
+```
+
+```diff
+    contract RootChain (0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287) {
+    +++ description: None
+      values.owner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Timelock (0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf)
+    +++ description: None
+```
+
+```diff
+    contract PolygonMultisig (0xFa7D2a996aC6350f4b56C043112Da0366a59b74c) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908","via":[]},{"permission":"upgrade","target":"0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b","via":[]}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ERC721PredicateBurnOnly (0x36C2503d53C6948331144b85D1e74a3B96731d1b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC20PredicateBurnOnly (0x626fb210bf50e201ED62cA2705c16DE2a53DC966)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ERC20PredicateBurnOnly.sol                     | 248 ++++----
+ .../ERC721PredicateBurnOnly.sol                    | 248 ++++----
+ .../.flat@20225285/Timelock.sol => /dev/null       | 675 ---------------------
+ .../WithdrawManager/WithdrawManager.sol            | 250 ++++----
+ 4 files changed, 440 insertions(+), 981 deletions(-)
+```
+
 Generated with discovered.json: 0xe81ad4d54530e669f2658e5e9f14d93720cdc4d6
 
 # Diff at Wed, 21 Aug 2024 10:05:00 GMT:

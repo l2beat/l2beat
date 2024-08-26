@@ -68,7 +68,7 @@ export const polygonpos: Bridge = {
         sinceTimestamp: new UnixTime(1598437971),
         tokens: ['ETH'],
         ...upgrades,
-      }),
+      }),a
       discovery.getEscrowDetails({
         // ERC20EscrowPredicate for TOWER token
         address: EthereumAddress('0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4'),
