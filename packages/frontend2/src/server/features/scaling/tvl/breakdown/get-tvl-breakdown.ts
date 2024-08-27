@@ -1,10 +1,10 @@
 import { type ConfigMapping, safeGetTokenByAssetId } from '@l2beat/config'
 import {
-  asNumber,
   assert,
   type AssetId,
   type ProjectId,
   UnixTime,
+  asNumber,
 } from '@l2beat/shared-pure'
 import { chainConverter } from './chain-converter'
 import { getLatestAmountForConfigurations } from './get-latest-amount-for-configurations'
