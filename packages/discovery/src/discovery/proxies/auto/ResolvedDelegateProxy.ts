@@ -83,8 +83,8 @@ export async function detectResolvedDelegateProxy(
     type: 'resolved delegate proxy',
     values: {
       $immutable: false,
-      $implementation: implementation,
-      ResolvedDelegateProxy_addressManager: addressManager,
+      $implementation: implementation.toString(),
+      ResolvedDelegateProxy_addressManager: addressManager.toString(),
       ResolvedDelegateProxy_implementationName: implementationName,
     },
   }
