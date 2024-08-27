@@ -5,8 +5,8 @@ import { db } from '~/server/database'
 import { countToTps } from './utils/count-to-tps'
 import { getLastDayTps } from './utils/get-last-day-tps'
 import { getTpsWeeklyChange } from './utils/get-tps-weekly-change'
-import { getFullySyncedActivityRange } from './utils/range'
 import { sumActivityCount } from './utils/sum-activity-count'
+import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 
 export type ActivityTableData = NonNullable<
   Awaited<ReturnType<typeof getActivityTableData>>[string]

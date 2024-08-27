@@ -1,22 +1,31 @@
 'use client'
 
-import { RadioGroup, RadioGroupItem } from '~/app/_components/radio-group'
+import { ChartTimeRangeControls } from '~/app/_components/chart/core/chart-time-range-controls'
 import { type ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 
 interface Props {
   timeRange: ActivityTimeRange
   setTimeRange: (timeRange: ActivityTimeRange) => void
+  range: [number, number]
 }
 
-export function ActivityTimeRangeControls({ timeRange, setTimeRange }: Props) {
+export function ActivityTimeRangeControls({
+  timeRange,
+  setTimeRange,
+  range,
+}: Props) {
   return (
-    <RadioGroup value={timeRange} onValueChange={setTimeRange}>
-      <RadioGroupItem value="7d">7D</RadioGroupItem>
-      <RadioGroupItem value="30d">30D</RadioGroupItem>
-      <RadioGroupItem value="90d">90D</RadioGroupItem>
-      <RadioGroupItem value="180d">180D</RadioGroupItem>
-      <RadioGroupItem value="1y">1Y</RadioGroupItem>
-      <RadioGroupItem value="max">MAX</RadioGroupItem>
-    </RadioGroup>
+    <ChartTimeRangeControls
+      value={timeRange}
+      setValue={setTimeRange}
+      options={[
+        { value: '30d', label: '30D' },
+        { value: '90d', label: '90D' },
+        { value: '180d', label: '180D' },
+        { value: '1y', label: '1Y' },
+        { value: 'max', label: 'MAX' },
+      ]}
+      range={range}
+    />
   )
 }

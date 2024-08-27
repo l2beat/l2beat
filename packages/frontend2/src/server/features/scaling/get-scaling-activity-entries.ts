@@ -2,16 +2,15 @@ import { type Layer2, type Layer3 } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
 import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
-import { getActivityProjects } from './activity/get-activity-projects'
 import {
   type ActivityTableData,
   getActivityTableData,
 } from './activity/get-activity-table-data'
 import { getCommonScalingEntry } from './get-common-scaling-entry'
+import { getActivityProjects } from './activity/utils/get-activity-projects'
 
-export type ScalingActivityEntry =
-  | ScalingActivityProjectEntry
-  | ScalingActivityEthereumEntry
+export type ScalingActivityEntry = ScalingActivityProjectEntry
+
 type ActivityProject = Layer2 | Layer3
 
 export async function getScalingActivityEntries() {
@@ -61,7 +60,9 @@ function getScalingProjectActivityEntry(
 }
 
 export type ScalingActivityEthereumEntry = ReturnType<typeof getEthereumEntry>
-function getEthereumEntry(data: ActivityTableData) {
+function getEthereumEntry(
+  data: ActivityTableData,
+): ReturnType<typeof getScalingProjectActivityEntry> {
   return {
     id: ProjectId.ETHEREUM,
     name: 'Ethereum',
@@ -71,7 +72,7 @@ function getEthereumEntry(data: ActivityTableData) {
     dataSource: 'Blockchain RPC',
     category: undefined,
     provider: undefined,
-    purposes: undefined,
+    purposes: [],
     warning: undefined,
     redWarning: undefined,
     isVerified: true,
