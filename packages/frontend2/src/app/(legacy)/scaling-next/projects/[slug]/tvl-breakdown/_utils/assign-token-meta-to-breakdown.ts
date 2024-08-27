@@ -7,6 +7,8 @@ export type ExtendedProjectTvlBreakdown = ReturnType<
   typeof assignTokenMetaToBreakdown
 >
 
+// TODO: Maybe should be part of get-tvl-breakdown-for-project out of the box
+// so we do not need ExtendedProjectTvlBreakdown type
 export function assignTokenMetaToBreakdown({
   dataTimestamp,
   breakdown: { native, canonical, external },
