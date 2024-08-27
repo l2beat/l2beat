@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 
-import { chains, ConfigMapping, createPriceId } from '@l2beat/config'
+import { ConfigMapping, chains, createPriceId } from '@l2beat/config'
 import { assert, ChainConverter, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { Config, TvlConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'

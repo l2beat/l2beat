@@ -1,6 +1,6 @@
 import {
-  AmountConfigEntry,
   assert,
+  AmountConfigEntry,
   ChainConverter,
   ChainId,
   ProjectId,
