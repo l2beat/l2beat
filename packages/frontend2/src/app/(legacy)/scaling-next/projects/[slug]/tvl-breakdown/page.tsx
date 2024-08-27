@@ -45,7 +45,7 @@ export default async function Page({ params }: Props) {
   const detailedBreakdown = await getDetailed7dTvlBreakdown()
   const projectBreakdown = detailedBreakdown.projects[project.id.toString()]!
 
-  const tokenBreakdown = await getTvlBreakdownForProject(project.id)
+  const tokenBreakdown = await getTvlBreakdownForProject(project)
   const extendedBreakdown = assignTokenMetaToBreakdown(tokenBreakdown)
 
   return (

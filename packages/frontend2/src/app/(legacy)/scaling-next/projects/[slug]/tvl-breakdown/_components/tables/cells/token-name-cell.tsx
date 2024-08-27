@@ -7,7 +7,7 @@ interface Props {
 
 export function TokenNameCell({ iconUrl, symbol }: Props) {
   return (
-    <div className="flex items-center justify-start gap-2">
+    <div className="flex items-center justify-start gap-2 pr-4 md:pr-2">
       <Image
         width={16}
         height={16}

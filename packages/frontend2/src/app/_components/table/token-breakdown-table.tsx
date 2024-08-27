@@ -28,7 +28,7 @@ export function TokenTable<T>({ table }: Props<T>) {
       <TableHeader>
         <TableHeaderRow
           key={headers.id}
-          className="border-b-black/10 dark:border-b-white/25 md:border-b-0 md:bg-black/10 dark:md:border-b-0 dark:md:bg-white/10"
+          className="!border-0 md:bg-black/10 dark:md:bg-white/10"
         >
           {headers.headers.map((header) => (
             <TableHead
@@ -39,6 +39,7 @@ export function TokenTable<T>({ table }: Props<T>) {
                 header.column.columnDef.meta?.headClassName,
               )}
               align={header.column.columnDef.meta?.align}
+              tooltip={header.column.columnDef.meta?.tooltip}
             >
               {header.isPlaceholder
                 ? null
@@ -54,7 +55,11 @@ export function TokenTable<T>({ table }: Props<T>) {
         {table.getRowModel().rows.map((row) => (
           <TableRow
             key={row.id}
-            className="border-b border-b-black/10 hover:bg-black/5 hover:shadow-sm dark:border-b-zinc-700 dark:hover:bg-white/5 md:border-b-0"
+            className={cn(
+              'border-b border-b-black/10 hover:bg-black/5 hover:shadow-sm dark:border-b-zinc-700 dark:hover:bg-white/5 md:border-b-0',
+              (row.getIsExpanded() || row.getParentRow()?.getIsExpanded()) &&
+                'bg-[#CB980029]/20 hover:bg-black/[0.1] dark:hover:bg-white/[0.1]',
+            )}
           >
             {row.getVisibleCells().map((cell) => {
               return (
@@ -62,7 +67,7 @@ export function TokenTable<T>({ table }: Props<T>) {
                   key={cell.id}
                   align={cell.column.columnDef.meta?.align}
                   className={cn(
-                    'h-9 py-2 first:rounded-l first:pl-2 last:rounded-r last:pr-2 md:h-10 first:md:pl-6 last:md:pr-6',
+                    'h-9 py-2 pr-2  first:pl-2 last:pr-2 md:h-10 first:md:pl-6 last:md:pr-6',
                     cell.column.columnDef.meta?.cellClassName,
                   )}
                 >
