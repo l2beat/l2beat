@@ -229,13 +229,13 @@ model BlockTimestamp {
 model DailyDiscovery {
   projectName       String   @db.VarChar(255)
   chainId           Int
-  unixTimestamp     DateTime @db.Timestamp(6)
+  timestamp         DateTime @db.Timestamp(6)
   blockNumber       Int
   version           Int
   configHash        String   @db.VarChar(255)
   discoveryJsonBlob Json
 
-  @@id([projectName, chainId, unixTimestamp])
+  @@id([projectName, chainId, timestamp])
 }
 
 model DiscoveryCache {
@@ -327,7 +327,7 @@ model TvlCleaner {
 model UpdateMonitor {
   projectName       String    @db.VarChar(255)
   blockNumber       Int
-  unixTimestamp     DateTime? @db.Timestamp(6)
+  timestamp         DateTime? @db.Timestamp(6)
   discoveryJsonBlob Json
   configHash        String    @default("") @db.VarChar(255)
   version           Int       @default(0)

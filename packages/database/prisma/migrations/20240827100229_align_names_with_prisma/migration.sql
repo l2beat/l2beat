@@ -75,7 +75,7 @@ ALTER TABLE "BlockTimestamp" RENAME COLUMN "block_number" TO "blockNumber";
 
 ALTER TABLE "DailyDiscovery" RENAME COLUMN "project_name" TO "projectName";
 ALTER TABLE "DailyDiscovery" RENAME COLUMN "chain_id" TO "chainId";
-ALTER TABLE "DailyDiscovery" RENAME COLUMN "unix_timestamp" TO "unixTimestamp";
+ALTER TABLE "DailyDiscovery" RENAME COLUMN "unix_timestamp" TO "timestamp";
 ALTER TABLE "DailyDiscovery" RENAME COLUMN "block_number" TO "blockNumber";
 ALTER TABLE "DailyDiscovery" RENAME COLUMN "config_hash" TO "configHash";
 ALTER TABLE "DailyDiscovery" RENAME COLUMN "discovery_json_blob" TO "discoveryJsonBlob";
@@ -126,7 +126,7 @@ ALTER TABLE "TvlCleaner" RENAME COLUMN "six_hourly_cleaned_until" TO "sixHourlyC
 
 ALTER TABLE "UpdateMonitor" RENAME COLUMN "project_name" TO "projectName";
 ALTER TABLE "UpdateMonitor" RENAME COLUMN "block_number" TO "blockNumber";
-ALTER TABLE "UpdateMonitor" RENAME COLUMN "unix_timestamp" TO "unixTimestamp";
+ALTER TABLE "UpdateMonitor" RENAME COLUMN "unix_timestamp" TO "timestamp";
 ALTER TABLE "UpdateMonitor" RENAME COLUMN "discovery_json_blob" TO "discoveryJsonBlob";
 ALTER TABLE "UpdateMonitor" RENAME COLUMN "config_hash" TO "configHash";
 ALTER TABLE "UpdateMonitor" RENAME COLUMN "chain_id" TO "chainId";

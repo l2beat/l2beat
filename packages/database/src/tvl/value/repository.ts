@@ -98,21 +98,21 @@ export class ValueRepository extends BaseRepository {
             .columns(['projectId', 'timestamp', 'dataSource'])
             .doUpdateSet((eb) => ({
               external: eb.ref('excluded.external'),
-              external_associated: eb.ref('excluded.externalAssociated'),
-              external_for_total: eb.ref('excluded.externalForTotal'),
-              external_associated_for_total: eb.ref(
+              externalAssociated: eb.ref('excluded.externalAssociated'),
+              externalForTotal: eb.ref('excluded.externalForTotal'),
+              externalAssociatedForTotal: eb.ref(
                 'excluded.externalAssociatedForTotal',
               ),
               canonical: eb.ref('excluded.canonical'),
-              canonical_associated: eb.ref('excluded.canonicalAssociated'),
-              canonical_for_total: eb.ref('excluded.canonicalForTotal'),
-              canonical_associated_for_total: eb.ref(
+              canonicalAssociated: eb.ref('excluded.canonicalAssociated'),
+              canonicalForTotal: eb.ref('excluded.canonicalForTotal'),
+              canonicalAssociatedForTotal: eb.ref(
                 'excluded.canonicalAssociatedForTotal',
               ),
               native: eb.ref('excluded.native'),
-              native_associated: eb.ref('excluded.nativeAssociated'),
-              native_for_total: eb.ref('excluded.nativeForTotal'),
-              native_associated_for_total: eb.ref(
+              nativeAssociated: eb.ref('excluded.nativeAssociated'),
+              nativeForTotal: eb.ref('excluded.nativeForTotal'),
+              nativeAssociatedForTotal: eb.ref(
                 'excluded.nativeAssociatedForTotal',
               ),
               ether: eb.ref('excluded.ether'),

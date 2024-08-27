@@ -19,11 +19,11 @@ export class IndexerConfigurationRepository extends BaseRepository {
         .onConflict((cb) =>
           cb.column('id').doUpdateSet((eb) => ({
             id: eb.ref('excluded.id'),
-            indexer_id: eb.ref('excluded.indexerId'),
+            indexerId: eb.ref('excluded.indexerId'),
             properties: eb.ref('excluded.properties'),
-            current_height: eb.ref('excluded.currentHeight'),
-            min_height: eb.ref('excluded.minHeight'),
-            max_height: eb.ref('excluded.maxHeight'),
+            currentHeight: eb.ref('excluded.currentHeight'),
+            minHeight: eb.ref('excluded.minHeight'),
+            maxHeight: eb.ref('excluded.maxHeight'),
           })),
         )
         .execute()
