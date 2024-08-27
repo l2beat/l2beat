@@ -5,6 +5,11 @@ import { DaAttestationSecurityRisk } from '../../../types/DaAttestationSecurityR
 import { DaBridge } from '../../../types/DaBridge'
 import { DaExitWindowRisk } from '../../../types/DaExitWindowRisk'
 
+const validation = {
+  type: 'zk-proof',
+  relayer: 'SuccinctGateway'
+}
+
 export const vectorX = {
   id: 'vectorX',
   type: 'OnChainBridge',
@@ -17,15 +22,13 @@ export const vectorX = {
     links: {
       websites: [],
       documentation: [],
-      repositories: [],
+      repositories: ['https://github.com/succinctlabs/vectorx'],
       apps: [],
       explorers: [],
       socialMedia: [],
     },
   },
-  validation: {
-    type: 'zk-proof',
-  },
+  validation: validation,
   contracts: {
     addresses: [
       {
@@ -38,6 +41,7 @@ export const vectorX = {
     risks: [],
   },
   technology: ` 
+   VectorX is an implementation of zero-knowledge proof circuits for Vector, Avail's Data Attestation Bridge.
     `,
   permissions: [],
   usedIn: [],
