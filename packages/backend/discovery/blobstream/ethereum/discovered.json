@@ -1,8 +1,8 @@
 {
   "name": "blobstream",
   "chain": "ethereum",
-  "blockNumber": 20621174,
-  "configHash": "0xb09b65e18607899fb1967197aa5f205f60a89827f2516ade1d21a3cca25c33e4",
+  "blockNumber": 20621356,
+  "configHash": "0x1f843a29cfaeba668b2bf786c37510d121e399383d10239d84a405b07cd63812",
   "version": 13,
   "contracts": [
     {
@@ -77,8 +77,9 @@
       "derivedName": "SuccinctGateway"
     },
     {
-      "name": "BlobstreamX",
+      "name": "SP1Blobstream",
       "address": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
+      "template": "blobstream/SP1Blobstream",
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -460,6 +461,7 @@
     ]
   },
   "usedTemplates": {
+    "blobstream/SP1Blobstream": "0x3a4adc99f82e5a2fb23520d26f2b98e4c473ed2ff5bf4708977a893b5c7ef6f0",
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"

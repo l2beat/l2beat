@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x6dd6ff459188123aec69f01afc0ed625bce57831
+Generated with discovered.json: 0x4f2012cce7d515467df0778be1d455f46a6755f8
 
-# Diff at Tue, 27 Aug 2024 16:39:51 GMT:
+# Diff at Tue, 27 Aug 2024 17:16:54 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@cf2dd34fdc5bce846ae811aa246ba203fc03f637 block: 20218838
-- current block number: 20621174
+- current block number: 20621356
 
 ## Description
 
@@ -19,7 +19,7 @@ Generated with discovered.json: 0x6dd6ff459188123aec69f01afc0ed625bce57831
 ## Watched changes
 
 ```diff
-    contract BlobstreamX (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) {
+    contract SP1Blobstream (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) {
     +++ description: None
       values.$implementation:
 -        "0x41a87C543EBcbD93706CF5260AD057D9eCBA1caE"
@@ -76,7 +76,7 @@ Generated with discovered.json: 0x6dd6ff459188123aec69f01afc0ed625bce57831
 ## Source code changes
 
 ```diff
-.../BlobstreamX/SP1Blobstream.sol}                 |  431 +++---
+.../SP1Blobstream/SP1Blobstream.sol}               |  431 +++---
  .../blobstream/ethereum/.flat/SP1Verifier.sol      | 1429 ++++++++++++++++++++
  .../ethereum/.flat/SP1VerifierGateway.sol          |  230 ++++
  3 files changed, 1902 insertions(+), 188 deletions(-)
@@ -89,8 +89,13 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 20218838 (main branch discovery), not current.
 
 ```diff
-    contract BlobstreamX (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) {
+    contract SP1Blobstream (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) {
     +++ description: None
+      name:
+-        "BlobstreamX"
++        "SP1Blobstream"
+      template:
++        "blobstream/SP1Blobstream"
       errors:
 +        {"isRelayerApproved":"Execution reverted"}
     }

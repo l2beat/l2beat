@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x8d63d4cac83c53c3e644a8b1be821cf911adc8ae
+Generated with discovered.json: 0x06a58576abdf777e8a04c3710883048702d17152
 
-# Diff at Tue, 27 Aug 2024 10:13:33 GMT:
+# Diff at Tue, 27 Aug 2024 17:17:15 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@cf2dd34fdc5bce846ae811aa246ba203fc03f637 block: 14061228
-- current block number: 18982124
+- current block number: 18994841
 
 ## Description
 
@@ -18,11 +18,14 @@ Generated with discovered.json: 0x8d63d4cac83c53c3e644a8b1be821cf911adc8ae
 ## Watched changes
 
 ```diff
-    contract BlobstreamX (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    contract SP1Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
     +++ description: None
       values.$implementation:
 -        "0xfb19439fBa9f16aA720be6bE0e53465a9733C964"
 +        "0x47fd660D5252Bd6F9D2c71507E46aa1d6e957c23"
+      values.$upgradeCount:
+-        2
++        3
       values.DATA_COMMITMENT_MAX:
 -        10000
 +        1000
@@ -43,10 +46,14 @@ Generated with discovered.json: 0x8d63d4cac83c53c3e644a8b1be821cf911adc8ae
 +        "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776"
       values.headerRangeFunctionId_deprecated:
 +        "0x46132c86ed84fdc655528f80f9291dd3116b04902036b96925edc78bbf52b8ca"
+      values.isRelayerApproved:
++        true
       values.nextHeaderFunctionId_depcrecated:
 +        "0x2ce8ca4f509cb09415b5a6ca6afa265571dac0b9f6ddb46f487e017fec71cf25"
       values.verifier:
 +        "0x3B6041173B80E77f038f3F2C0f9744f04837185e"
+      errors:
+-        {"isRelayerApproved":"Execution reverted"}
       derivedName:
 -        "BlobstreamX"
 +        "SP1Blobstream"
@@ -62,7 +69,7 @@ Generated with discovered.json: 0x8d63d4cac83c53c3e644a8b1be821cf911adc8ae
 ## Source code changes
 
 ```diff
-.../BlobstreamX/SP1Blobstream.sol}                 | 431 ++++++++++++---------
+.../SP1Blobstream/SP1Blobstream.sol}               | 431 ++++++++++++---------
  .../blobstream/base/.flat/SP1VerifierGateway.sol   | 230 +++++++++++
  2 files changed, 473 insertions(+), 188 deletions(-)
 ```
@@ -74,10 +81,15 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 14061228 (main branch discovery), not current.
 
 ```diff
-    contract BlobstreamX (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    contract SP1Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
     +++ description: None
-      values.$upgradeCount:
--        2
+      name:
+-        "BlobstreamX"
++        "SP1Blobstream"
+      template:
++        "blobstream/SP1Blobstream"
+      errors:
++        {"isRelayerApproved":"Execution reverted"}
     }
 ```
 
