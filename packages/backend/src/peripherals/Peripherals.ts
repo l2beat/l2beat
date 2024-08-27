@@ -3,8 +3,6 @@ import { HttpClient } from '@l2beat/shared'
 import { isEqual } from 'lodash'
 
 import { Database } from '@l2beat/database'
-import { LegacyDatabase } from '@l2beat/database-legacy'
-
 export interface ClientClass<T, O> {
   create(services: { httpClient: HttpClient; logger: Logger }, options: O): T
 }
@@ -20,7 +18,6 @@ export class Peripherals {
   > = new Map()
 
   constructor(
-    public readonly legacyDatabase: LegacyDatabase,
     public readonly database: Database,
     private readonly httpClient: HttpClient,
     private readonly logger: Logger,
