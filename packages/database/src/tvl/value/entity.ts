@@ -50,17 +50,23 @@ export function toRecord(row: Selectable<Value>): ValueRecord {
     projectId: ProjectId(row.project_id),
     timestamp: UnixTime.fromDate(row.timestamp),
     dataSource: row.data_source,
-    native: BigInt(row.native),
+    native: row.native ? BigInt(row.native) : BigInt(0),
     nativeAssociated: BigInt(row.native_associated),
-    nativeForTotal: BigInt(row.native_for_total),
+    nativeForTotal: row.native_for_total
+      ? BigInt(row.native_for_total)
+      : BigInt(0),
     nativeAssociatedForTotal: BigInt(row.native_associated_for_total),
-    canonical: BigInt(row.canonical),
+    canonical: row.canonical ? BigInt(row.canonical) : BigInt(0),
     canonicalAssociated: BigInt(row.canonical_associated),
-    canonicalForTotal: BigInt(row.canonical_for_total),
+    canonicalForTotal: row.canonical_for_total
+      ? BigInt(row.canonical_for_total)
+      : BigInt(0),
     canonicalAssociatedForTotal: BigInt(row.canonical_associated_for_total),
-    external: BigInt(row.external),
+    external: row.external ? BigInt(row.external) : BigInt(0),
     externalAssociated: BigInt(row.external_associated),
-    externalForTotal: BigInt(row.external_for_total),
+    externalForTotal: row.external_for_total
+      ? BigInt(row.external_for_total)
+      : BigInt(0),
     externalAssociatedForTotal: BigInt(row.external_associated_for_total),
     ether: BigInt(row.ether),
     stablecoin: BigInt(row.stablecoin),

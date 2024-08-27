@@ -269,12 +269,14 @@ export const zkspace: Layer2 = {
       date: '2021-12-20T00:00:00Z',
       description:
         'All-in-One Layer2 Platform ZKSpace, Featuring ZKSwap v3.0, NFTs, & Payments is launched.',
+      type: 'general',
     },
     {
       name: 'Token Deposit Campaign started',
       link: 'https://medium.com/@zkspaceofficial/zkspace-releases-token-deposit-campaign-with-fascinating-zks-rewards-151e2492549e',
       date: '2022-02-21T00:00:00Z',
       description: 'Incentives program to onboard new users has started.',
+      type: 'general',
     },
   ],
 }

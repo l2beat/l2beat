@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20532552,
   "configHash": "0xf486b63f8ed759517c43e689f34697eacc9d82deefc356f0c99a4c61f56a36bd",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "Zora_Adapter",
@@ -161,6 +161,7 @@
       "values": {
         "$admin": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "$implementation": "0x08C21b200eD06D2e32cEC91a770C3FcA8aD5F877",
+        "$upgradeCount": 6,
         "chainId": 1,
         "crossDomainAdmin": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "depositQuoteTimeBuffer": 3600,

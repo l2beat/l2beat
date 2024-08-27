@@ -7,7 +7,9 @@
   "scripts": {
     "clean": "rm -rf dist",
     "build": "tsc -p tsconfig.build.json",
-    "db:generate": "prisma generate",
+    "db:generate-types": "prisma generate",
+    "db:create-migration": "prisma migrate dev --create-only --name",
+    "db:migrate": "prisma migrate deploy",
     "format": "prisma format && biome format .",
     "format:fix": "prisma format && biome format --write .",
     "lint:fix": "biome check --formatter-enabled=false --apply .",

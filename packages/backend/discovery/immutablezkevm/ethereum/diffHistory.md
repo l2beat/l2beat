@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xd7a8d47fe04471712dceff60477b77e901ff2530
+
+# Diff at Fri, 23 Aug 2024 09:52:35 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 20491123
+- current block number: 20491123
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20491123 (main branch discovery), not current.
+
+```diff
+    contract RootAxelarBridgeAdaptor (0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract Bridge (0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
 Generated with discovered.json: 0xaeee44682470a79377c17b1cb73c8b3f04ba252d
 
 # Diff at Wed, 21 Aug 2024 10:03:21 GMT:

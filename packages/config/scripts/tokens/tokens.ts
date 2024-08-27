@@ -73,6 +73,7 @@ async function main() {
           category,
           source,
           supply,
+          excludeFromTotal: token.excludeFromTotal,
         }
         for (const [key, value] of Object.entries(overrides)) {
           const existing = existingToken[key as keyof typeof existingToken]
@@ -82,7 +83,7 @@ async function main() {
               'from',
               existing?.toString() ?? 'undefined',
               'to',
-              value.toString(),
+              value?.toString() ?? 'undefined',
             )
           }
         }
@@ -154,6 +155,7 @@ async function main() {
         source,
         supply,
         bridgedUsing: token.bridgedUsing,
+        excludeFromTotal: token.excludeFromTotal,
       })
 
       tokenLogger.processed()

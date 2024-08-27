@@ -78,6 +78,9 @@ function followThrough<T>(
   resolved: ResolvedPermission<T>,
 ): ResolvedPermission<T>[] {
   if (visited.includes(address)) {
+    // A cycle in the graph of "act" permissions has been encountered.
+    // This is a deadlock (e.g only B can act on A, but only A can act on B),
+    // the path can't be triggered, so return an empty array.
     return []
   }
 

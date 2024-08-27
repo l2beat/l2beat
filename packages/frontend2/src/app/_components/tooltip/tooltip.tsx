@@ -2,6 +2,7 @@
 
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import React, { useRef, useState } from 'react'
+import { useBreakpoint } from '~/hooks/use-is-mobile'
 import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { cn } from '~/utils/cn'
 import { mergeRefs } from '~/utils/merge-refs'
@@ -34,6 +35,8 @@ const TooltipTrigger = React.forwardRef<
   }
 >(({ disabledOnMobile, ...props }, ref) => {
   const localRef = useRef(null)
+  const breakpoint = useBreakpoint()
+  const isMobile = breakpoint === 'mobile'
   const { setOpen } = useTooltipTriggerContext()
   useOnClickOutside(localRef, () => setOpen(false), 'touchend')
 
@@ -42,16 +45,17 @@ const TooltipTrigger = React.forwardRef<
     return <TooltipPrimitive.Trigger ref={ref} {...props} />
   }
 
+  const onClick = isMobile
+    ? (e: React.MouseEvent) => {
+        e.preventDefault()
+        setOpen(true)
+      }
+    : undefined
+
   return (
     <TooltipPrimitive.Trigger
       ref={mergeRefs(ref, localRef)}
-      onClick={() => {
-        setOpen(true)
-      }}
-      onTouchEnd={(e) => {
-        e.preventDefault()
-        setOpen(true)
-      }}
+      onClick={onClick}
       {...props}
     />
   )

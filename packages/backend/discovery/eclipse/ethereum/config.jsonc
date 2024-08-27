@@ -13,5 +13,43 @@
     "0xD7E4b67E735733aC98a88F13d087D8aac670E644": "Contract2",
     "0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1": "Contract3",
     "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC": "EclipseMultisig"
+  },
+  "overrides": {
+    "Contract1": {
+      "fields": {
+        "proxiableUUID": {
+          "handler": {
+            "type": "call",
+            "method": "function proxiableUUID() view returns (bytes32)",
+            "args": [],
+            "expectRevert": true
+          }
+        }
+      }
+    },
+    "Contract2": {
+      "fields": {
+        "proxiableUUID": {
+          "handler": {
+            "type": "call",
+            "method": "function proxiableUUID() view returns (bytes32)",
+            "args": [],
+            "expectRevert": true
+          }
+        }
+      }
+    },
+    "Contract3": {
+      "fields": {
+        "proxiableUUID": {
+          "handler": {
+            "type": "call",
+            "method": "function proxiableUUID() view returns (bytes32)",
+            "args": [],
+            "expectRevert": true
+          }
+        }
+      }
+    }
   }
 }

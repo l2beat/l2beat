@@ -1,14 +1,10 @@
 export { createDatabase, type Database } from './database'
 export { type Transaction } from './kysely'
-export * from './kysely/generated/enums'
+export * from './kysely/token-db/enums'
 
 // Records
 
-export type { BlockTransactionCountRecord } from './activity/activity-block/entity'
-export type { StarkExTransactionCountRecord } from './activity/activity-starkex/entity'
-export type { DailyTransactionCountRecord } from './activity/activity-view/entity'
-export type { ActivityRecord } from './activity/activity/entity'
-export type { ZkSyncTransactionRecord } from './activity/activity-zksync/entity'
+export type { ActivityRecord } from './activity/entity'
 export type { CurrentPriceRecord } from './da-beat/current-price/entity'
 export type { StakeRecord } from './da-beat/stake/entity'
 export type { DailyDiscoveryRecord } from './discovery/daily-discovery/entity'

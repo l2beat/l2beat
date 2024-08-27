@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20032860,
   "configHash": "0x9fae0ffe49eb46bfbb62ec000ea9e814154bce498694f0c2c22e5ec33dde4612",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "L1StandardBridge",
@@ -20,6 +20,7 @@
       "values": {
         "$admin": "0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF",
         "$implementation": "0xCf95526b7a5DCc029e2f45bB3B4625e36cc7371b",
+        "$upgradeCount": 0,
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0xf80be9f7a74ab776b69d3F0dC5C08c39b3A0bA19",
         "MESSENGER": "0xf80be9f7a74ab776b69d3F0dC5C08c39b3A0bA19",
@@ -93,6 +94,7 @@
       "values": {
         "$admin": "0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF",
         "$implementation": "0x9Cb8F5CBD26d7843a6043EcaB3C12246F8F47FBA",
+        "$upgradeCount": 1,
         "GUARDIAN": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "L2_ORACLE": "0xB751A613f2Db932c6cdeF5048E6D2af05F9B98ED",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
@@ -132,6 +134,7 @@
       "values": {
         "$admin": "0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF",
         "$implementation": "0xaBA3C0FCe72122750D71d4739D7E5Fc7c8a355d4",
+        "$upgradeCount": 1,
         "CHALLENGER": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
@@ -219,6 +222,7 @@
       "values": {
         "$admin": "0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF",
         "$implementation": "0x08C033C6859093b2803e54DE715077bd400D5f6a",
+        "$upgradeCount": 1,
         "batcherHash": "0x68bdFecE01535090c8f3C27ec3b1AE97E83fA4aA",
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,

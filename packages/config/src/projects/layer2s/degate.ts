@@ -348,6 +348,7 @@ export const degate: Layer2 = {
       date: '2023-05-03T00:00:00Z',
       description:
         'DeGate launches mainnet beta with a deposit cap and a program to recover eventual user losses.',
+      type: 'general',
     },
   ],
 }

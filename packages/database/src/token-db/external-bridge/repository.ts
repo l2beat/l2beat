@@ -5,7 +5,7 @@ export class ExternalBridgeRepository extends BaseRepository {
   async upsert(record: ExternalBridgeRecord): Promise<void> {
     const row = toRow(record)
     await this.db
-      .insertInto('public.ExternalBridge')
+      .insertInto('ExternalBridge')
       .values(row)
       .onConflict((cb) => cb.doNothing())
       .execute()

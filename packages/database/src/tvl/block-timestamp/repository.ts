@@ -18,7 +18,7 @@ export class BlockTimestampRepository extends BaseRepository {
     timestamp: UnixTime,
   ): Promise<number | undefined> {
     const row = await this.db
-      .selectFrom('public.block_timestamps')
+      .selectFrom('block_timestamps')
       .select('block_number')
       .where('chain', '=', chain)
       .where('timestamp', '=', timestamp.toDate())
@@ -32,7 +32,7 @@ export class BlockTimestampRepository extends BaseRepository {
     timestamp: UnixTime,
   ): Promise<number> {
     const result = await this.db
-      .deleteFrom('public.block_timestamps')
+      .deleteFrom('block_timestamps')
       .where('chain', '=', chain)
       .where('timestamp', '>', timestamp.toDate())
       .executeTakeFirst()
@@ -41,17 +41,17 @@ export class BlockTimestampRepository extends BaseRepository {
 
   // #region methods used only in TvlCleaner
   deleteHourlyUntil(dateRange: CleanDateRange): Promise<number> {
-    return deleteHourlyUntil(this.db, 'public.block_timestamps', dateRange)
+    return deleteHourlyUntil(this.db, 'block_timestamps', dateRange)
   }
 
   deleteSixHourlyUntil(dateRange: CleanDateRange): Promise<number> {
-    return deleteSixHourlyUntil(this.db, 'public.block_timestamps', dateRange)
+    return deleteSixHourlyUntil(this.db, 'block_timestamps', dateRange)
   }
   // #endregion
 
   async getAll(): Promise<BlockTimestampRecord[]> {
     const rows = await this.db
-      .selectFrom('public.block_timestamps')
+      .selectFrom('block_timestamps')
       .select(selectBlockTimestamp)
       .execute()
     return rows.map(toRecord)
@@ -62,17 +62,14 @@ export class BlockTimestampRepository extends BaseRepository {
 
     const rows = records.map(toRow)
     await this.batch(rows, 2_000, async (batch) => {
-      await this.db
-        .insertInto('public.block_timestamps')
-        .values(batch)
-        .execute()
+      await this.db.insertInto('block_timestamps').values(batch).execute()
     })
     return rows.length
   }
 
   async deleteAll(): Promise<number> {
     const result = await this.db
-      .deleteFrom('public.block_timestamps')
+      .deleteFrom('block_timestamps')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
