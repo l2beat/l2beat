@@ -1,9 +1,4 @@
-import {
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-  formatSeconds,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -13,13 +8,9 @@ import { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('polygon-plasma')
 
-const delayString = formatSeconds(
-  discovery.getContractValue('Timelock', 'getMinDelay'),
-)
-
 const upgrades = {
   upgradableBy: ['PolygonMultisig'],
-  upgradeDelay: delayString,
+  upgradeDelay: 'No delay',
 }
 
 export const polygonplasma: Bridge = {
@@ -54,9 +45,9 @@ export const polygonplasma: Bridge = {
       sentiment: 'warning',
     },
     sourceUpgradeability: {
-      value: `${delayString} delay`,
-      description: `The bridge can be upgraded by the PolygonMultisig after a delay of ${delayString}.`,
-      sentiment: 'warning',
+      value: `Yes`,
+      description: `The bridge can be upgraded by the PolygonMultisig.`,
+      sentiment: 'bad',
     },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('MATIC'),
   },
@@ -166,7 +157,7 @@ export const polygonplasma: Bridge = {
       discovery.getContractDetails('SlashingManager'),
       discovery.getContractDetails('ChildChain'),
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('48 hours')],
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
     ...discovery.getMultisigPermission(
