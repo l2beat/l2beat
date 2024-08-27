@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x9dee45a9016fdf88dac1a804411cee3af763fd49
+Generated with discovered.json: 0xd82b149d9ec3b1e2bba8ed2294c15c8f88ada06c
 
-# Diff at Tue, 27 Aug 2024 17:17:38 GMT:
+# Diff at Tue, 27 Aug 2024 17:20:40 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@cf2dd34fdc5bce846ae811aa246ba203fc03f637 block: 208089280
-- current block number: 247317627
+- current block number: 247318335
 
 ## Description
 
@@ -18,7 +18,7 @@ Generated with discovered.json: 0x9dee45a9016fdf88dac1a804411cee3af763fd49
 ## Watched changes
 
 ```diff
-    contract SP1Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    contract BlobstreamX (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
     +++ description: None
       values.$implementation:
 -        "0xfb19439fBa9f16aA720be6bE0e53465a9733C964"
@@ -69,7 +69,7 @@ Generated with discovered.json: 0x9dee45a9016fdf88dac1a804411cee3af763fd49
 ## Source code changes
 
 ```diff
-.../SP1Blobstream/SP1Blobstream.sol}               | 431 ++++++++++++---------
+.../BlobstreamX/SP1Blobstream.sol}                 | 431 ++++++++++++---------
  .../arbitrum/.flat/SP1VerifierGateway.sol          | 230 +++++++++++
  2 files changed, 473 insertions(+), 188 deletions(-)
 ```
@@ -81,11 +81,8 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 208089280 (main branch discovery), not current.
 
 ```diff
-    contract SP1Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    contract BlobstreamX (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
     +++ description: None
-      name:
--        "BlobstreamX"
-+        "SP1Blobstream"
       template:
 +        "blobstream/SP1Blobstream"
       errors:

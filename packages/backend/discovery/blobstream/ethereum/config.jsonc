@@ -4,14 +4,14 @@
   "name": "blobstream",
   "initialAddresses": ["0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"],
   "names": {
-    "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe": "SP1Blobstream",
+    "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe": "BlobstreamX",
     "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776": "SuccinctGateway",
     "0xd1999B562e74d9fbf57b4479b3fe8748BDF4e4A0": "SuccinctMultisig",
     "0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway",
     "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6": "BlobstreamXMultisig"
   },
   "overrides": {
-    "SP1Blobstream": {
+    "BlobstreamX": {
       "extends": "blobstream/SP1Blobstream"
     },
     "SP1VerifierGateway": {

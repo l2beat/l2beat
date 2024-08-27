@@ -1,8 +1,8 @@
 {
   "name": "blobstream",
   "chain": "arbitrum",
-  "blockNumber": 247317627,
-  "configHash": "0x6da4ca19192b54022c93e80b96d30fe083fbb56929a9614a6ee12ab18db4b68d",
+  "blockNumber": 247318335,
+  "configHash": "0x4bf17e1e50d29de110dc08815e087bd6e1d4d8bd64453a1e16ac9df35f860afb",
   "version": 13,
   "contracts": [
     {
@@ -100,7 +100,7 @@
       "derivedName": "GnosisSafeL2"
     },
     {
-      "name": "SP1Blobstream",
+      "name": "BlobstreamX",
       "address": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
       "template": "blobstream/SP1Blobstream",
       "proxyType": "EIP1967 proxy",

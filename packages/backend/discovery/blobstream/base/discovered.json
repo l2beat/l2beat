@@ -1,8 +1,8 @@
 {
   "name": "blobstream",
   "chain": "base",
-  "blockNumber": 18994841,
-  "configHash": "0x8e4ae725419c13cf09423100f8ec3a0c44da86201e57bb442e09cc3cc50ec11f",
+  "blockNumber": 18994948,
+  "configHash": "0x21d6b899e2acef853af8954dd9cdcbb622da3d7697fefce727e32f3eaf15cdbb",
   "version": 13,
   "contracts": [
     {
@@ -91,7 +91,7 @@
       "derivedName": "SuccinctGateway"
     },
     {
-      "name": "SP1Blobstream",
+      "name": "BlobstreamX",
       "address": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
       "template": "blobstream/SP1Blobstream",
       "proxyType": "EIP1967 proxy",
