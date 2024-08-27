@@ -1,3 +1,81 @@
+Generated with discovered.json: 0x2e18ed83e939239d8073ec3300593eebea754c80
+
+# Diff at Tue, 27 Aug 2024 10:09:33 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@cf2dd34fdc5bce846ae811aa246ba203fc03f637 block: 20218838
+- current block number: 20619228
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract BlobstreamX (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) {
+    +++ description: None
+      values.$implementation:
+-        "0x41a87C543EBcbD93706CF5260AD057D9eCBA1caE"
++        "0x47fd660D5252Bd6F9D2c71507E46aa1d6e957c23"
+      values.DATA_COMMITMENT_MAX:
+-        10000
++        1000
+      values.gateway:
+-        "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776"
+      values.headerRangeFunctionId:
+-        "0xdb3232748ba9f2906d9d2ce97d2fac3963d4346de23c30521f346e10ddad82f7"
+      values.nextHeaderFunctionId:
+-        "0xf7ab2ac6f5ccf2da79050efcc0dbdb06d5ae05a332f58076aeac7fc8c73811fe"
+      values.VERSION:
+-        "0.1.0"
++        "1.1.0"
+      values.blobstreamProgramVkey:
++        "0x0038c5c5568fe5e1ae267efb1298a7792d1cda00bccc2d1d4bfa4c1511e06380"
+      values.checkRelayer:
++        true
+      values.gateway_deprecated:
++        "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776"
+      values.headerRangeFunctionId_deprecated:
++        "0xdb3232748ba9f2906d9d2ce97d2fac3963d4346de23c30521f346e10ddad82f7"
+      values.nextHeaderFunctionId_depcrecated:
++        "0xf7ab2ac6f5ccf2da79050efcc0dbdb06d5ae05a332f58076aeac7fc8c73811fe"
+      values.verifier:
++        "0x3B6041173B80E77f038f3F2C0f9744f04837185e"
+      derivedName:
+-        "BlobstreamX"
++        "SP1Blobstream"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../BlobstreamX/SP1Blobstream.sol}                 | 431 ++++++++++++---------
+ .../ethereum/.flat/SP1VerifierGateway.sol          | 230 +++++++++++
+ 2 files changed, 473 insertions(+), 188 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20218838 (main branch discovery), not current.
+
+```diff
+    contract BlobstreamX (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) {
+    +++ description: None
+      values.$upgradeCount:
+-        1
+    }
+```
+
 Generated with discovered.json: 0xdff2e689e46248cfd5fbc9cdc194a60b93a1bf8c
 
 # Diff at Fri, 23 Aug 2024 09:51:30 GMT:
