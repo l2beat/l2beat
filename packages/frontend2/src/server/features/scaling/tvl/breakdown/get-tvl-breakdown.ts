@@ -1,18 +1,19 @@
 import { type ConfigMapping, safeGetTokenByAssetId } from '@l2beat/config'
 import {
+  asNumber,
   assert,
   type AssetId,
-  type CanonicalAssetBreakdownData,
-  type ExternalAssetBreakdownData,
-  type NativeAssetBreakdownData,
   type ProjectId,
   UnixTime,
-  asNumber,
 } from '@l2beat/shared-pure'
 import { chainConverter } from './chain-converter'
 import { getLatestAmountForConfigurations } from './get-latest-amount-for-configurations'
 import { getLatestPriceForConfigurations } from './get-latest-price-for-configurations'
-import { type CanonicalAssetBreakdown } from './types'
+import {
+  type CanonicalAssetBreakdownData,
+  type ExternalAssetBreakdownData,
+  type NativeAssetBreakdownData,
+} from './types'
 
 interface Dependencies {
   configMapping: ConfigMapping
@@ -38,11 +39,11 @@ export function getTvlBreakdown({ configMapping }: Dependencies) {
     )
 
     const breakdown: {
-      canonical: Map<AssetId, CanonicalAssetBreakdown>
+      canonical: Map<AssetId, CanonicalAssetBreakdownData>
       external: ExternalAssetBreakdownData[]
       native: NativeAssetBreakdownData[]
     } = {
-      canonical: new Map<AssetId, CanonicalAssetBreakdown>(),
+      canonical: new Map<AssetId, CanonicalAssetBreakdownData>(),
       external: [],
       native: [],
     }
@@ -82,8 +83,8 @@ export function getTvlBreakdown({ configMapping }: Dependencies) {
             asset.usdValue += valueAsNumber
             asset.amount += amountAsNumber
             asset.escrows.push({
-              amount: amountAsNumber.toString(),
-              usdValue: valueAsNumber.toString(),
+              amount: amountAsNumber,
+              usdValue: valueAsNumber,
               escrowAddress: config.escrowAddress,
               ...(config.type === 'preminted' ? { isPreminted: true } : {}),
             })
@@ -96,8 +97,8 @@ export function getTvlBreakdown({ configMapping }: Dependencies) {
               usdPrice: price.toString(),
               escrows: [
                 {
-                  amount: amountAsNumber.toString(),
-                  usdValue: valueAsNumber.toString(),
+                  amount: amountAsNumber,
+                  usdValue: valueAsNumber,
                   escrowAddress: config.escrowAddress,
                   ...(config.type === 'preminted' ? { isPreminted: true } : {}),
                 },
@@ -112,8 +113,8 @@ export function getTvlBreakdown({ configMapping }: Dependencies) {
           breakdown.external.push({
             assetId: priceConfig.assetId,
             chainId: chainConverter.toChainId(config.chain),
-            amount: amountAsNumber.toString(),
-            usdValue: valueAsNumber.toString(),
+            amount: amountAsNumber,
+            usdValue: valueAsNumber,
             usdPrice: price.toString(),
             tokenAddress:
               config.address === 'native' ? undefined : config.address,
@@ -129,8 +130,8 @@ export function getTvlBreakdown({ configMapping }: Dependencies) {
           breakdown.native.push({
             assetId: priceConfig.assetId,
             chainId: chainConverter.toChainId(config.chain),
-            amount: amountAsNumber.toString(),
-            usdValue: valueAsNumber.toString(),
+            amount: amountAsNumber,
+            usdValue: valueAsNumber,
             usdPrice: price.toString(),
             // TODO: force fe to accept "native"
             tokenAddress:
@@ -155,8 +156,8 @@ export function getTvlBreakdown({ configMapping }: Dependencies) {
     result.canonical = canonical.map((x) => ({
       ...x,
       escrows: x.escrows.sort((a, b) => +b.amount - +a.amount),
-      amount: x.amount.toString(),
-      usdValue: x.usdValue.toString(),
+      amount: x.amount,
+      usdValue: x.usdValue,
     }))
 
     result.external = breakdown.external.sort(

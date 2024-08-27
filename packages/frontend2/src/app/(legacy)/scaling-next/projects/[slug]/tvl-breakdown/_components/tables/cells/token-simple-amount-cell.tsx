@@ -7,7 +7,7 @@ import {
 import { formatNumberWithCommas } from '~/utils/format-number'
 
 interface Props {
-  amount: string
+  amount: number
   supply: Token['supply']
 }
 

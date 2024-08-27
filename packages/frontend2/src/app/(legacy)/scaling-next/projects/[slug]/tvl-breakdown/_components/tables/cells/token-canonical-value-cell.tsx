@@ -7,7 +7,7 @@ import { cn } from '~/utils/cn'
 import { formatNumberWithCommas } from '~/utils/format-number'
 
 interface Props {
-  usdValue: string
+  usdValue: number
   isDescendant: boolean
 }
 

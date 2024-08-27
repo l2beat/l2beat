@@ -9,7 +9,7 @@ import { formatNumberWithCommas } from '~/utils/format-number'
 interface Props {
   isDescendant: boolean
   isPreminted: boolean
-  amount: string
+  amount: number
 }
 
 export function TokenCanonicalAmountCell({

@@ -8,7 +8,7 @@ import { formatNumberWithCommas } from '~/utils/format-number'
 
 interface Props {
   supply: Token['supply']
-  usdValue: string
+  usdValue: number
 }
 
 export function TokenSimpleValueCell({ supply, usdValue }: Props) {

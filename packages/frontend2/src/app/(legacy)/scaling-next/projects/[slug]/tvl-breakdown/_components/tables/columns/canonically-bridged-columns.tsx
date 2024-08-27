@@ -1,5 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { formatNumberWithCommas } from '~/utils/format'
+import { formatNumberWithCommas } from '~/utils/format-number'
 import { type CanonicallyBridgedTokenEntry } from '../canonically-bridged-table'
 import { MultipleEscrowsCell } from '../cells/multiple-escrows-cell'
 import { TokenAddressCell } from '../cells/token-address-cell'

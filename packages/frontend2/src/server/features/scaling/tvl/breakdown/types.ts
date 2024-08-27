@@ -1,14 +1,35 @@
 import {
   type AssetId,
-  type CanonicalAssetBreakdownData,
   type ChainId,
+  type EthereumAddress,
 } from '@l2beat/shared-pure'
 
-export interface CanonicalAssetBreakdown {
+type BaseAssetBreakdownData = {
   assetId: AssetId
   chainId: ChainId
   amount: number
   usdValue: number
   usdPrice: string
-  escrows: CanonicalAssetBreakdownData['escrows']
+}
+
+export type CanonicalAssetBreakdownData = BaseAssetBreakdownData & {
+  escrows: {
+    amount: number
+    usdValue: number
+    escrowAddress: EthereumAddress
+    isPreminted?: boolean
+  }[]
+}
+
+export type ExternalAssetBreakdownData = BaseAssetBreakdownData & {
+  tokenAddress?: EthereumAddress
+  bridge?: {
+    name: string
+    slug?: string
+    warning?: string
+  }
+}
+
+export type NativeAssetBreakdownData = BaseAssetBreakdownData & {
+  tokenAddress?: EthereumAddress
 }

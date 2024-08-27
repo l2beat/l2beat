@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 
-import { ConfigMapping, chains, createPriceId } from '@l2beat/config'
+import { chains, ConfigMapping, createPriceId } from '@l2beat/config'
 import { assert, ChainConverter, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { Config, TvlConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
@@ -9,7 +9,6 @@ import { IndexerService } from '../../../tools/uif/IndexerService'
 import { ApplicationModule } from '../../ApplicationModule'
 import { createTvlRouter } from '../api/TvlRouter'
 import { AggregatedService } from '../api/services/AggregatedService'
-import { BreakdownService } from '../api/services/BreakdownService'
 import { TokenService } from '../api/services/TokenService'
 import { TvlService } from '../api/services/TvlService'
 import { AmountsDataService } from '../api/services/data/AmountsDataService'
@@ -120,13 +119,6 @@ export function createTvlModule(
     tokenService,
   })
 
-  const breakdownService = new BreakdownService({
-    pricesDataService,
-    amountsDataService,
-    configMapping,
-    chainConverter,
-  })
-
   const tvlService = new TvlService({
     valuesDataService,
     pricesDataService,
@@ -141,7 +133,6 @@ export function createTvlModule(
     tvlService,
     aggregatedService,
     tokenService,
-    breakdownService,
     getApiProjects(config.tvl, configMapping),
     getAssociatedTokens(config.tvl, configMapping),
     clock,
