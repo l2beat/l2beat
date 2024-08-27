@@ -11,21 +11,11 @@ export interface DiscoveryCacheRecord {
 export function toRecord(
   row: Selectable<DiscoveryCache>,
 ): DiscoveryCacheRecord {
-  return {
-    key: row.key,
-    value: row.value,
-    chain: row.chain,
-    blockNumber: row.block_number,
-  }
+  return row
 }
 
 export function toRow(
   record: DiscoveryCacheRecord,
 ): Insertable<DiscoveryCache> {
-  return {
-    key: record.key,
-    value: record.value,
-    chain: record.chain,
-    block_number: record.blockNumber,
-  }
+  return record
 }

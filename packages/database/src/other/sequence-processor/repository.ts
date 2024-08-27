@@ -13,14 +13,14 @@ export class SequenceProcessorRepository extends BaseRepository {
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
       await this.db
-        .insertInto('sequence_processor')
+        .insertInto('SequenceProcessor')
         .values(batch)
         .onConflict((cb) =>
           cb.column('id').doUpdateSet((eb) => ({
-            last_processed: eb.ref('excluded.last_processed'),
+            last_processed: eb.ref('excluded.lastProcessed'),
             latest: eb.ref('excluded.latest'),
-            synced_once: eb.ref('excluded.synced_once'),
-            updated_at: eb.ref('excluded.updated_at'),
+            synced_once: eb.ref('excluded.syncedOnce'),
+            updated_at: eb.ref('excluded.updatedAt'),
           })),
         )
         .execute()
@@ -30,7 +30,7 @@ export class SequenceProcessorRepository extends BaseRepository {
 
   async findById(id: string): Promise<SequenceProcessorRecord | undefined> {
     const row = await this.db
-      .selectFrom('sequence_processor')
+      .selectFrom('SequenceProcessor')
       .select(selectSequenceProcessor)
       .where('id', '=', id)
       .limit(1)
@@ -40,7 +40,7 @@ export class SequenceProcessorRepository extends BaseRepository {
 
   async deleteAll(): Promise<number> {
     const result = await this.db
-      .deleteFrom('sequence_processor')
+      .deleteFrom('SequenceProcessor')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }

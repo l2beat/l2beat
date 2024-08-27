@@ -12,7 +12,7 @@ export function toRecord(entity: Selectable<Amount>): AmountRecord {
   return {
     timestamp: UnixTime.fromDate(entity.timestamp),
     amount: BigInt(entity.amount),
-    configId: entity.configuration_id,
+    configId: entity.configurationId,
   }
 }
 
@@ -20,6 +20,6 @@ export function toRow(amounts: AmountRecord): Insertable<Amount> {
   return {
     timestamp: amounts.timestamp.toDate(),
     amount: amounts.amount.toString(),
-    configuration_id: amounts.configId,
+    configurationId: amounts.configId,
   }
 }

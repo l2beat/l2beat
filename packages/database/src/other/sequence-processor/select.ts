@@ -2,8 +2,8 @@ import { SequenceProcessor } from '../../kysely/generated/types'
 
 export const selectSequenceProcessor = [
   'id',
-  'last_processed',
+  'lastProcessed',
   'latest',
-  'synced_once',
-  'updated_at',
+  'syncedOnce',
+  'updatedAt',
 ] as const satisfies (keyof SequenceProcessor)[]

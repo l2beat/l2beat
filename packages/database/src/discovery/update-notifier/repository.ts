@@ -6,7 +6,7 @@ import { selectUpdateNotifier } from './select'
 export class UpdateNotifierRepository extends BaseRepository {
   async findLatestId(): Promise<number | undefined> {
     const row = await this.db
-      .selectFrom('update_notifier')
+      .selectFrom('UpdateNotifier')
       .select(['id'])
       .orderBy('id', 'desc')
       .limit(1)
@@ -31,7 +31,7 @@ export class UpdateNotifierRepository extends BaseRepository {
     const ids: number[] = []
     await this.batch(rows, 1_000, async (batch) => {
       const results = await this.db
-        .insertInto('update_notifier')
+        .insertInto('UpdateNotifier')
         .values(batch)
         .returning('id')
         .execute()
@@ -42,7 +42,7 @@ export class UpdateNotifierRepository extends BaseRepository {
 
   async getAll(): Promise<UpdateNotifierRecord[]> {
     const rows = await this.db
-      .selectFrom('update_notifier')
+      .selectFrom('UpdateNotifier')
       .select(selectUpdateNotifier)
       .execute()
 
@@ -55,19 +55,17 @@ export class UpdateNotifierRepository extends BaseRepository {
     chainId: ChainId,
   ): Promise<UpdateNotifierRecord[]> {
     const rows = await this.db
-      .selectFrom('update_notifier')
+      .selectFrom('UpdateNotifier')
       .select(selectUpdateNotifier)
-      .where('created_at', '>=', from.toDate())
-      .where('project_name', '=', projectName)
-      .where('chain_id', '=', +chainId)
+      .where('createdAt', '>=', from.toDate())
+      .where('projectName', '=', projectName)
+      .where('chainId', '=', +chainId)
       .execute()
     return rows.map(toRecord)
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
-      .deleteFrom('update_notifier')
-      .executeTakeFirst()
+    const result = await this.db.deleteFrom('UpdateNotifier').executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 }

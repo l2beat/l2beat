@@ -1,8 +1,8 @@
 import { Liveness } from '../../kysely/generated/types'
 
 export const selectLiveness = [
-  'configuration_id',
-  'tx_hash',
-  'block_number',
+  'configurationId',
+  'txHash',
+  'blockNumber',
   'timestamp',
 ] as const satisfies (keyof Liveness)[]

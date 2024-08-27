@@ -12,7 +12,7 @@ describeDatabase(IndexerStateRepository.name, (db) => {
   })
 
   describe(IndexerStateRepository.prototype.findByIndexerId.name, () => {
-    it('returns undefined if no record exists', async () => {
+    it.only('returns undefined if no record exists', async () => {
       const indexerState = await repository.findByIndexerId('indexer')
       expect(indexerState).toEqual(undefined)
     })

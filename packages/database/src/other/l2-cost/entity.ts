@@ -17,29 +17,20 @@ export interface L2CostRecord {
 
 export function toRecord(row: Selectable<L2Cost>): L2CostRecord {
   return {
+    ...row,
     timestamp: UnixTime.fromDate(row.timestamp),
-    txHash: row.tx_hash,
-    configurationId: row.configuration_id,
-    gasUsed: row.gas_used,
-    gasPrice: BigInt(row.gas_price),
-    calldataLength: row.calldata_length,
-    calldataGasUsed: row.calldata_gas_used,
-    blobGasUsed: row.blob_gas_used,
-    blobGasPrice: row.blob_gas_price ? BigInt(row.blob_gas_price) : null,
+    gasPrice: BigInt(row.gasPrice),
+    blobGasPrice: row.blobGasPrice ? BigInt(row.blobGasPrice) : null,
   }
 }
 
 export function toRow(record: L2CostRecord): Insertable<L2Cost> {
   return {
+    ...record,
     timestamp: record.timestamp.toDate(),
-    tx_hash: record.txHash,
-    configuration_id: record.configurationId.toString(),
-    gas_used: record.gasUsed,
-    gas_price: record.gasPrice.toString(),
-    calldata_length: record.calldataLength,
-    calldata_gas_used: record.calldataGasUsed,
-    blob_gas_used: record.blobGasUsed,
-    blob_gas_price: record.blobGasPrice?.toString() ?? null,
+    configurationId: record.configurationId.toString(),
+    gasPrice: record.gasPrice.toString(),
+    blobGasPrice: record.blobGasPrice?.toString() ?? null,
   }
 }
 

@@ -17,9 +17,9 @@ export class PriceRepository extends BaseRepository {
     if (configIds.length === 0) return []
 
     const rows = await this.db
-      .selectFrom('prices')
+      .selectFrom('Price')
       .select(selectPrice)
-      .where('configuration_id', 'in', configIds)
+      .where('configurationId', 'in', configIds)
       .where('timestamp', '>=', fromInclusive.toDate())
       .where('timestamp', '<=', toInclusive.toDate())
       .orderBy('timestamp')
@@ -29,7 +29,7 @@ export class PriceRepository extends BaseRepository {
 
   async getByTimestamp(timestamp: UnixTime): Promise<PriceRecord[]> {
     const rows = await this.db
-      .selectFrom('prices')
+      .selectFrom('Price')
       .select(selectPrice)
       .where('timestamp', '=', timestamp.toDate())
       .orderBy('timestamp')
@@ -42,9 +42,9 @@ export class PriceRepository extends BaseRepository {
     timestamp: UnixTime,
   ): Promise<PriceRecord | undefined> {
     const row = await this.db
-      .selectFrom('prices')
+      .selectFrom('Price')
       .select(selectPrice)
-      .where('configuration_id', '=', configId)
+      .where('configurationId', '=', configId)
       .where('timestamp', '=', timestamp.toDate())
       .limit(1)
       .executeTakeFirst()
@@ -56,7 +56,7 @@ export class PriceRepository extends BaseRepository {
 
     const rows = records.map(toRow)
     await this.batch(rows, 10_000, async (batch) => {
-      await this.db.insertInto('prices').values(batch).execute()
+      await this.db.insertInto('Price').values(batch).execute()
     })
     return rows.length
   }
@@ -67,8 +67,8 @@ export class PriceRepository extends BaseRepository {
     toInclusive: UnixTime,
   ): Promise<number> {
     const result = await this.db
-      .deleteFrom('prices')
-      .where('configuration_id', '=', configId)
+      .deleteFrom('Price')
+      .where('configurationId', '=', configId)
       .where('timestamp', '>=', fromInclusive.toDate())
       .where('timestamp', '<=', toInclusive.toDate())
       .executeTakeFirst()
@@ -76,20 +76,20 @@ export class PriceRepository extends BaseRepository {
   }
 
   deleteHourlyUntil(dateRange: CleanDateRange): Promise<number> {
-    return deleteHourlyUntil(this.db, 'prices', dateRange)
+    return deleteHourlyUntil(this.db, 'Price', dateRange)
   }
 
   deleteSixHourlyUntil(dateRange: CleanDateRange): Promise<number> {
-    return deleteSixHourlyUntil(this.db, 'prices', dateRange)
+    return deleteSixHourlyUntil(this.db, 'Price', dateRange)
   }
 
   async getAll(): Promise<PriceRecord[]> {
-    const rows = await this.db.selectFrom('prices').selectAll().execute()
+    const rows = await this.db.selectFrom('Price').selectAll().execute()
     return rows.map(toRecord)
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db.deleteFrom('prices').executeTakeFirst()
+    const result = await this.db.deleteFrom('Price').executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 }

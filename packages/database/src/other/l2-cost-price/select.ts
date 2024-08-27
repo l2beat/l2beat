@@ -1,6 +1,6 @@
 import { L2CostPrice } from '../../kysely/generated/types'
 
 export const selectL2CostPrice = [
-  'price_usd',
+  'priceUsd',
   'timestamp',
 ] as const satisfies (keyof L2CostPrice)[]
