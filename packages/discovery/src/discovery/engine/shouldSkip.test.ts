@@ -58,6 +58,7 @@ describe(shouldSkip.name, () => {
         },
       },
       {},
+      {},
       configReader,
     )
     const result = shouldSkip(address, config, 0, 1)
