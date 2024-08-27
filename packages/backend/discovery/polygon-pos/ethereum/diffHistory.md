@@ -1,3 +1,411 @@
+Generated with discovered.json: 0x56953e56a39e1e3fb701ecb601d4eda075c91bb0
+
+# Diff at Mon, 26 Aug 2024 11:36:43 GMT:
+
+- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
+- comparing to: main@c6cddecec9c1434aa3f47c8b7a73acab7954bc66 block: 20532676
+- current block number: 20612504
+
+## Description
+
+- Timlock has been removed - now Polygon MultiSig is a direct owner
+- ERC20PredicateBurnOnly and ERC1155Predicate contracts have been replaced
+  by new implementation. We don't track these as escrows (they are burn-only)
+  so ignored
+- WithdrawManager is only used by the Plasma bridge, so its implementation
+  upgrade is ignored here
+
+## Watched changes
+
+```diff
+    contract ERC1155Predicate (0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f) {
+    +++ description: None
+      values.$admin:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      values.$implementation:
+-        "0x62D7e87677ac7e3bd02c198e3FABeFFdBc5eB2A3"
++        "0xb86357daD9c3567dD70862a5b49fFFaFb0F094Ac"
+      values.implementation:
+-        "0x62D7e87677ac7e3bd02c198e3FABeFFdBc5eB2A3"
++        "0xb86357daD9c3567dD70862a5b49fFFaFb0F094Ac"
+      values.proxyOwner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ERC20PredicateBurnOnly (0x158d5fa3Ef8e4dDA8a5367deCF76b94E7efFCe95)
+    +++ description: None
+```
+
+```diff
+    contract WithdrawManager (0x2A88696e0fFA76bAA1338F2C74497cC013495922) {
+    +++ description: None
+      values.$implementation:
+-        "0x4ef5123a30e4CFeC02B3E2F5Ce97F1328B29f7de"
++        "0xA376680d32Cece9756D9f1087318400DA2fd83dF"
+      values.implementation:
+-        "0x4ef5123a30e4CFeC02B3E2F5Ce97F1328B29f7de"
++        "0xA376680d32Cece9756D9f1087318400DA2fd83dF"
+      values.owner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+    }
+```
+
+```diff
+    contract MintableERC1155Predicate (0x2d641867411650cd05dB93B59964536b1ED5b1B7) {
+    +++ description: None
+      values.$admin:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      values.$implementation:
+-        "0xDb161A896Be50a020B636D6B60DA7c59817412a5"
++        "0x985Dbac75cf625dD6baB03Da784CF0D51B4bEcef"
+      values.implementation:
+-        "0xDb161A896Be50a020B636D6B60DA7c59817412a5"
++        "0x985Dbac75cf625dD6baB03Da784CF0D51B4bEcef"
+      values.proxyOwner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+    }
+```
+
+```diff
+    contract Registry (0x33a02E6cC863D393d6Bf231B697b82F6e499cA71) {
+    +++ description: None
+      values.erc20Predicate:
+-        "0x158d5fa3Ef8e4dDA8a5367deCF76b94E7efFCe95"
++        "0x626fb210bf50e201ED62cA2705c16DE2a53DC966"
+      values.erc721Predicate:
+-        "0x54150f44c785D412Ec262fe895Cc3B689c72F49B"
++        "0x36C2503d53C6948331144b85D1e74a3B96731d1b"
+    }
+```
+
+```diff
+    contract ERC20Predicate (0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf) {
+    +++ description: None
+      values.$admin:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      values.$implementation:
+-        "0x608669d4914Eec1E20408Bc4c9eFFf27BB8cBdE5"
++        "0xb774EBbeF817390483FEA5bEd0F0cB0EDEBE4065"
+      values.implementation:
+-        "0x608669d4914Eec1E20408Bc4c9eFFf27BB8cBdE5"
++        "0xb774EBbeF817390483FEA5bEd0F0cB0EDEBE4065"
+      values.proxyOwner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ERC721PredicateBurnOnly (0x54150f44c785D412Ec262fe895Cc3B689c72F49B)
+    +++ description: None
+```
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.$admin:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      values.owner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+    }
+```
+
+```diff
+    contract EventsHub (0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b) {
+    +++ description: None
+      values.$admin:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      values.owner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+    }
+```
+
+```diff
+    contract Governance (0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48) {
+    +++ description: None
+      values.owner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+    }
+```
+
+```diff
+    contract EtherPredicate (0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30) {
+    +++ description: None
+      values.$admin:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      values.$implementation:
+-        "0x54006763154c764da4AF42a8c3cfc25Ea29765D5"
++        "0x3129B90fB7bF58A0B36226f2e6547B89C0BbdE42"
+      values.implementation:
+-        "0x54006763154c764da4AF42a8c3cfc25Ea29765D5"
++        "0x3129B90fB7bF58A0B36226f2e6547B89C0BbdE42"
+      values.proxyOwner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+    }
+```
+
+```diff
+    contract RootChain (0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287) {
+    +++ description: None
+      values.owner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+    }
+```
+
+```diff
+    contract MintableERC721Predicate (0x932532aA4c0174b8453839A6E44eE09Cc615F2b7) {
+    +++ description: None
+      values.$admin:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      values.$implementation:
+-        "0x7FBd00c577cAA70318BCF1c6c11e23732823b387"
++        "0x34AF15A166def1d89D38a70120Ea33CD8cc10C45"
+      values.implementation:
+-        "0x7FBd00c577cAA70318BCF1c6c11e23732823b387"
++        "0x34AF15A166def1d89D38a70120Ea33CD8cc10C45"
+      values.proxyOwner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      values.TRANSFER_WITH_METADATA_EVENT_SIG:
++        "0xf94915c6d1fd521cee85359239227480c7e8776d7caf1fc3bacad5c269b66a14"
+      values.WITHDRAW_BATCH_EVENT_SIG:
++        "0xf871896b17e9cb7a64941c62c188a4f5c621b86800e3d15452ece01ce56073df"
+    }
+```
+
+```diff
+    contract MintableERC20Predicate (0x9923263fA127b3d1484cFD649df8f1831c2A74e4) {
+    +++ description: None
+      values.$admin:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      values.$implementation:
+-        "0x0f92D459B20D21F6bf9E02056EA9165d3f78bA62"
++        "0xab00328234bC22430c78847094A68a6836574fFB"
+      values.implementation:
+-        "0x0f92D459B20D21F6bf9E02056EA9165d3f78bA62"
++        "0xab00328234bC22430c78847094A68a6836574fFB"
+      values.proxyOwner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+    }
+```
+
+```diff
+    contract RootChainManager (0xA0c68C638235ee32657e8f720a23ceC1bFc77C77) {
+    +++ description: None
+      values.$admin:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      values.$implementation:
+-        "0x37D26DC2890b35924b40574BAc10552794771997"
++        "0x1633012a2cB27eFBC2944f2E43b9197Bc3964359"
+      values.implementation:
+-        "0x37D26DC2890b35924b40574BAc10552794771997"
++        "0x1633012a2cB27eFBC2944f2E43b9197Bc3964359"
+      values.proxyOwner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Timelock (0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf)
+    +++ description: None
+```
+
+```diff
+    contract ChainExitERC1155Predicate (0xDB2382413bCb9c2F1B6b62B52238558266361D68) {
+    +++ description: None
+      values.$admin:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      values.proxyOwner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+    }
+```
+
+```diff
+    contract ERC721Predicate (0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD) {
+    +++ description: None
+      values.$admin:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      values.$implementation:
+-        "0xd515C8fF03eC79e7d5B3410c036f738e7f396C90"
++        "0x9F5B43C0d6d57a76E5B24CE05E11b70C3C7eA8Ec"
+      values.implementation:
+-        "0xd515C8fF03eC79e7d5B3410c036f738e7f396C90"
++        "0x9F5B43C0d6d57a76E5B24CE05E11b70C3C7eA8Ec"
+      values.proxyOwner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+    }
+```
+
+```diff
+    contract PolygonMultisig (0xFa7D2a996aC6350f4b56C043112Da0366a59b74c) {
+    +++ description: None
+      assignedPermissions:
++        {"upgrade":["0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f","0x2d641867411650cd05dB93B59964536b1ED5b1B7","0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf","0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908","0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b","0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30","0x932532aA4c0174b8453839A6E44eE09Cc615F2b7","0x9923263fA127b3d1484cFD649df8f1831c2A74e4","0xA0c68C638235ee32657e8f720a23ceC1bFc77C77","0xDB2382413bCb9c2F1B6b62B52238558266361D68","0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD"]}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ERC721PredicateBurnOnly (0x36C2503d53C6948331144b85D1e74a3B96731d1b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC20PredicateBurnOnly (0x626fb210bf50e201ED62cA2705c16DE2a53DC966)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ERC1155Predicate/ERC1155Predicate.sol          | 338 +++++++----
+ .../ERC20Predicate/ERC20Predicate.sol              | 331 ++++++----
+ .../ERC20PredicateBurnOnly.sol                     | 248 ++++----
+ .../ERC721Predicate/ERC721Predicate.sol            |  23 +-
+ .../ERC721PredicateBurnOnly.sol                    | 248 ++++----
+ .../EtherPredicate/EtherPredicate.sol              |  17 +-
+ .../MintableERC1155Predicate.sol                   |  39 +-
+ .../MintableERC20Predicate.sol                     |  25 +-
+ .../MintableERC721Predicate.sol                    | 142 ++++-
+ .../RootChainManager/RootChainManager.sol          |  51 +-
+ .../.flat@20532676/Timelock.sol => /dev/null       | 675 ---------------------
+ .../WithdrawManager/WithdrawManager.sol            | 250 ++++----
+ 12 files changed, 1112 insertions(+), 1275 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20532676 (main branch discovery), not current.
+
+```diff
+    contract ERC1155Predicate (0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","via":[]}]
+    }
+```
+
+```diff
+    contract MintableERC1155Predicate (0x2d641867411650cd05dB93B59964536b1ED5b1B7) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","via":[]}]
+    }
+```
+
+```diff
+    contract ERC20Predicate (0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","via":[]}]
+    }
+```
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","via":[]}]
+    }
+```
+
+```diff
+    contract EventsHub (0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","via":[]}]
+    }
+```
+
+```diff
+    contract EtherPredicate (0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","via":[]}]
+    }
+```
+
+```diff
+    contract MintableERC721Predicate (0x932532aA4c0174b8453839A6E44eE09Cc615F2b7) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","via":[]}]
+    }
+```
+
+```diff
+    contract MintableERC20Predicate (0x9923263fA127b3d1484cFD649df8f1831c2A74e4) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","via":[]}]
+    }
+```
+
+```diff
+    contract RootChainManager (0xA0c68C638235ee32657e8f720a23ceC1bFc77C77) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","via":[]}]
+    }
+```
+
+```diff
+    contract Timelock (0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f","via":[]},{"permission":"upgrade","target":"0x2d641867411650cd05dB93B59964536b1ED5b1B7","via":[]},{"permission":"upgrade","target":"0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf","via":[]},{"permission":"upgrade","target":"0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908","via":[]},{"permission":"upgrade","target":"0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b","via":[]},{"permission":"upgrade","target":"0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30","via":[]},{"permission":"upgrade","target":"0x932532aA4c0174b8453839A6E44eE09Cc615F2b7","via":[]},{"permission":"upgrade","target":"0x9923263fA127b3d1484cFD649df8f1831c2A74e4","via":[]},{"permission":"upgrade","target":"0xA0c68C638235ee32657e8f720a23ceC1bFc77C77","via":[]},{"permission":"upgrade","target":"0xDB2382413bCb9c2F1B6b62B52238558266361D68","via":[]},{"permission":"upgrade","target":"0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD","via":[]}]
+      assignedPermissions:
++        {"upgrade":["0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f","0x2d641867411650cd05dB93B59964536b1ED5b1B7","0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf","0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908","0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b","0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30","0x932532aA4c0174b8453839A6E44eE09Cc615F2b7","0x9923263fA127b3d1484cFD649df8f1831c2A74e4","0xA0c68C638235ee32657e8f720a23ceC1bFc77C77","0xDB2382413bCb9c2F1B6b62B52238558266361D68","0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD"]}
+    }
+```
+
+```diff
+    contract ChainExitERC1155Predicate (0xDB2382413bCb9c2F1B6b62B52238558266361D68) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","via":[]}]
+    }
+```
+
+```diff
+    contract ERC721Predicate (0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x01458911ac13541e146efb27aa563c6ac7b285d0
 
 # Diff at Wed, 21 Aug 2024 10:05:04 GMT:
