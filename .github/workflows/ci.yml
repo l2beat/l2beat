@@ -145,6 +145,7 @@ jobs:
 
       - name: Test
         run: yarn test --reporter min
+        shell: bash
 
   biome:
     name: Lint & Format
