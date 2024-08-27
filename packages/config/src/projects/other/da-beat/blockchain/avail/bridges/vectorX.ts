@@ -7,7 +7,7 @@ import { DaExitWindowRisk } from '../../../types/DaExitWindowRisk'
 
 const validation = {
   type: 'zk-proof',
-  relayer: 'SuccinctGateway'
+  relayer: 'SuccinctGateway',
 }
 
 export const vectorX = {
