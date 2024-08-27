@@ -155,7 +155,6 @@ export const polygonplasma: Bridge = {
         'NFTs used to represent an exit.',
       ),
       discovery.getContractDetails('SlashingManager'),
-      discovery.getContractDetails('ChildChain'),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },

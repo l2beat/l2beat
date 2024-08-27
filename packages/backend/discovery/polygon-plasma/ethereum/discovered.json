@@ -2,7 +2,7 @@
   "name": "polygon-plasma",
   "chain": "ethereum",
   "blockNumber": 20613284,
-  "configHash": "0x4d61691a42ad106313ec274f92462885c512ac1e1e893cc7f99ea5866028ea0f",
+  "configHash": "0xdbf91bb3b652d94da8848f524345e25da26ed3778a3b0bae00e729542355995d",
   "version": 13,
   "contracts": [
     {
@@ -309,14 +309,6 @@
       "address": "0xc4FA447A0e77Eff9717b09C057B40570813bb642",
       "sinceTimestamp": 1593189596,
       "values": { "$immutable": true }
-    },
-    {
-      "name": "ChildChain",
-      "address": "0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861",
-      "unverified": true,
-      "sinceTimestamp": 1590839660,
-      "values": { "$immutable": true },
-      "derivedName": ""
     },
     {
       "name": "ExitNFT",

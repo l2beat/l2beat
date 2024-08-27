@@ -38,6 +38,9 @@
     "PolygonMultisig": {
       "ignoreInWatchMode": ["nonce"]
     },
+    "ChildChain": {
+      "ignoreDiscovery": true // L2 contract
+    },
     "InstaAaveV2": {
       "ignoreDiscovery": true
     },

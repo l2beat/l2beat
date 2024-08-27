@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xc6d1b2ef7754362e62254f4fe6ad79cb730cfe7d
+Generated with discovered.json: 0x81c85ae94b97e0da6cd7dc97b386fe48aeeeccfa
 
-# Diff at Mon, 26 Aug 2024 14:13:07 GMT:
+# Diff at Tue, 27 Aug 2024 07:19:26 GMT:
 
 - author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
 - comparing to: main@e6837bdeaeb7bd525b1927d5a90bd54e7deefdf9 block: 20225285
@@ -144,6 +144,18 @@ Generated with discovered.json: 0xc6d1b2ef7754362e62254f4fe6ad79cb730cfe7d
  .../.flat@20225285/Timelock.sol => /dev/null       | 675 ---------------------
  .../WithdrawManager/WithdrawManager.sol            | 250 ++++----
  4 files changed, 440 insertions(+), 981 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20225285 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract ChildChain (0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861)
+    +++ description: None
 ```
 
 Generated with discovered.json: 0xe81ad4d54530e669f2658e5e9f14d93720cdc4d6
