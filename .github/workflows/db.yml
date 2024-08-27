@@ -19,8 +19,8 @@ jobs:
       - name: Apply migrations to STAGING
         run: npx prisma migrate deploy --schema=packages/database/prisma/schema.prisma
         env:
-          DATABASE_URL: ${{ secrets.STAGING_DATABASE_URL }}
+          PRISMA_DB_URL: ${{ secrets.STAGING_DATABASE_URL }}
       - name: Apply migrations to PRODUCTION
         run: npx prisma migrate deploy --schema=packages/database/prisma/schema.prisma
         env:
-          DATABASE_URL: ${{ secrets.PRODUCTION_DATABASE_URL }}
+          PRISMA_DB_URL: ${{ secrets.PRODUCTION_DATABASE_URL }}
