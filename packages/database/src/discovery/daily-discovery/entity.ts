@@ -18,9 +18,11 @@ export function toRecord(
   entity: Selectable<DailyDiscovery>,
 ): DailyDiscoveryRecord {
   return {
-    ...entity,
+    projectName: entity.projectName,
     chainId: ChainId(entity.chainId),
-    timestamp: UnixTime.fromDate(entity.unixTimestamp),
+    timestamp: UnixTime.fromDate(entity.timestamp),
+    blockNumber: entity.blockNumber,
+    version: entity.version,
     configHash: Hash256(entity.configHash),
     // NOTE(radomski): This has to be here, otherwise the risk of exposing our
     // API keys goes way up. Putting this in the database gives us the highest
@@ -36,9 +38,12 @@ export function toRow(
   dailyDiscovery: DailyDiscoveryRecord,
 ): Insertable<DailyDiscovery> {
   return {
-    ...dailyDiscovery,
+    projectName: dailyDiscovery.projectName,
     chainId: +dailyDiscovery.chainId,
-    unixTimestamp: dailyDiscovery.timestamp.toDate(),
+    timestamp: dailyDiscovery.timestamp.toDate(),
+    blockNumber: dailyDiscovery.blockNumber,
+    version: dailyDiscovery.version,
     configHash: dailyDiscovery.configHash.toString(),
+    discoveryJsonBlob: dailyDiscovery.discovery,
   }
 }

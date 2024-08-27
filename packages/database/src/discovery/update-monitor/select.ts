@@ -4,7 +4,7 @@ export const selectUpdateMonitor = [
   'projectName',
   'chainId',
   'blockNumber',
-  'unixTimestamp',
+  'timestamp',
   'discoveryJsonBlob',
   'configHash',
   'version',

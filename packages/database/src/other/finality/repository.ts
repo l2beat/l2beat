@@ -3,6 +3,7 @@ import { BaseRepository } from '../../BaseRepository'
 import {
   FinalityRecord,
   ProjectFinalityRecord,
+  toProjectFinalityRecord,
   toRecord,
   toRow,
 } from './entity'
@@ -41,7 +42,7 @@ export class FinalityRepository extends BaseRepository {
       .where('projectId', '=', projectId.toString())
       .limit(1)
       .executeTakeFirst()
-    return row
+    return row && toProjectFinalityRecord(row)
   }
 
   async getLatestGroupedByProjectId(projectIds: string[]) {

@@ -6,6 +6,6 @@ export const selectDailyDiscovery = [
   'configHash',
   'discoveryJsonBlob',
   'projectName',
-  'unixTimestamp',
+  'timestamp',
   'version',
 ] as const satisfies (keyof DailyDiscoveryRow)[]

@@ -17,7 +17,8 @@ export function toRow(
   record: Omit<UpdateNotifierRecord, 'id' | 'createdAt' | 'updatedAt'>,
 ): Insertable<Omit<UpdateNotifier, 'id' | 'created_at' | 'updated_at'>> {
   return {
-    ...record,
+    projectName: record.projectName,
+    blockNumber: record.blockNumber,
     diffJsonBlob: JSON.stringify(record.diff),
     chainId: +record.chainId,
   }
@@ -27,9 +28,11 @@ export function toRecord(
   row: Selectable<UpdateNotifier>,
 ): UpdateNotifierRecord {
   return {
-    ...row,
+    id: row.id,
     createdAt: UnixTime.fromDate(row.createdAt),
     updatedAt: UnixTime.fromDate(row.updatedAt),
+    projectName: row.projectName,
+    blockNumber: row.blockNumber,
     diff: row.diffJsonBlob as unknown as DiscoveryDiff[],
     chainId: ChainId(row.chainId),
   }

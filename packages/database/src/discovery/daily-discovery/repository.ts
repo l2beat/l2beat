@@ -13,7 +13,7 @@ export class DailyDiscoveryRepository extends BaseRepository {
       .select(selectDailyDiscovery)
       .where('projectName', '=', name)
       .where('chainId', '=', +chainId)
-      .orderBy('unixTimestamp', 'desc')
+      .orderBy('timestamp', 'desc')
       .limit(1)
       .executeTakeFirst()
     return row && toRecord(row)
@@ -25,11 +25,11 @@ export class DailyDiscoveryRepository extends BaseRepository {
   ): Promise<UnixTime[]> {
     const rows = await this.db
       .selectFrom('DailyDiscovery')
-      .select('unixTimestamp')
+      .select('timestamp')
       .where('projectName', '=', projectName)
       .where('chainId', '=', +chainId)
       .execute()
-    return rows.map((row) => UnixTime.fromDate(row.unixTimestamp))
+    return rows.map((row) => UnixTime.fromDate(row.timestamp))
   }
 
   async upsert(record: DailyDiscoveryRecord): Promise<void> {
@@ -46,12 +46,12 @@ export class DailyDiscoveryRepository extends BaseRepository {
         .values(batch)
         .onConflict((cb) =>
           cb
-            .columns(['projectName', 'chainId', 'unixTimestamp'])
+            .columns(['projectName', 'chainId', 'timestamp'])
             .doUpdateSet((eb) => ({
               version: eb.ref('excluded.version'),
-              block_number: eb.ref('excluded.blockNumber'),
-              config_hash: eb.ref('excluded.configHash'),
-              discovery_json_blob: eb.ref('excluded.discoveryJsonBlob'),
+              blockNumber: eb.ref('excluded.blockNumber'),
+              configHash: eb.ref('excluded.configHash'),
+              discoveryJsonBlob: eb.ref('excluded.discoveryJsonBlob'),
             })),
         )
         .execute()

@@ -33,3 +33,13 @@ export function toRow(record: FinalityRecord): Insertable<Finality> {
     timestamp: record.timestamp.toDate(),
   }
 }
+
+export function toProjectFinalityRecord(
+  row: Selectable<Finality>,
+): ProjectFinalityRecord {
+  return {
+    minimumTimeToInclusion: row.minimumTimeToInclusion,
+    maximumTimeToInclusion: row.maximumTimeToInclusion,
+    averageTimeToInclusion: row.averageTimeToInclusion,
+  }
+}
