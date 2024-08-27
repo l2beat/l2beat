@@ -1,5 +1,5 @@
 'use client'
-import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { getCoreRowModel } from '@tanstack/react-table'
 import { TokenTable } from '~/app/_components/table/token-breakdown-table'
 import { useTable } from '~/hooks/use-table'
 import { type ExtendedProjectTvlBreakdown } from '../../_utils/assign-token-meta-to-breakdown'
@@ -22,7 +22,6 @@ export function ExternallyBridgedTable(props: Props) {
     data: props.tokens,
     columns: externallyBridgedColumns,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
   })
 
   if (props.tokens.length === 0) {
