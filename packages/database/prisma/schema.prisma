@@ -184,7 +184,6 @@ model Activity {
   end       Int      @default(0) @map("end")
 
   @@id([projectId, timestamp])
-  @@map("activity")
 }
 
 model AggregatedL2Cost {
@@ -209,7 +208,6 @@ model AggregatedL2Cost {
   @@id([projectId, timestamp])
   @@index([projectId], map: "aggregated_l2_costs_project_id_index")
   @@index([timestamp], map: "aggregated_l2_costs_timestamp_index")
-  @@map("aggregated_l2_costs")
 }
 
 model Amount {
@@ -218,7 +216,6 @@ model Amount {
   configurationId String   @map("configuration_id") @db.Char(12)
 
   @@id([configurationId, timestamp])
-  @@map("amounts")
 }
 
 model BlockTimestamp {
@@ -227,7 +224,6 @@ model BlockTimestamp {
   blockNumber Int      @map("block_number")
 
   @@id([chain, timestamp])
-  @@map("block_timestamps")
 }
 
 model DailyDiscovery {
@@ -240,7 +236,6 @@ model DailyDiscovery {
   discoveryJsonBlob Json     @map("discovery_json_blob")
 
   @@id([projectName, chainId, unixTimestamp])
-  @@map("daily_discovery")
 }
 
 model DiscoveryCache {
@@ -248,8 +243,6 @@ model DiscoveryCache {
   value       String @map("value")
   blockNumber Int    @map("block_number")
   chain       String @map("chain") @db.VarChar(255)
-
-  @@map("discovery_cache")
 }
 
 model Finality {
@@ -261,7 +254,6 @@ model Finality {
   averageStateUpdate     Int?     @map("average_state_update")
 
   @@id([projectId, timestamp])
-  @@map("finality")
 }
 
 model IndexerConfiguration {
@@ -273,7 +265,6 @@ model IndexerConfiguration {
   properties    String @map("properties")
 
   @@index([indexerId], map: "indexer_configurations_indexer_id_index")
-  @@map("indexer_configurations")
 }
 
 model IndexerState {
@@ -281,8 +272,6 @@ model IndexerState {
   safeHeight   Int       @map("safe_height")
   minTimestamp DateTime? @map("min_timestamp") @db.Timestamp(6)
   configHash   String?   @map("config_hash")
-
-  @@map("indexer_state")
 }
 
 model L2Cost {
@@ -297,14 +286,11 @@ model L2Cost {
   blobGasPrice    BigInt?  @map("blob_gas_price")
 
   @@id([configurationId, txHash])
-  @@map("l2_costs")
 }
 
 model L2CostPrice {
   timestamp DateTime @id @map("timestamp") @db.Timestamp(6)
   priceUsd  Float    @map("price_usd") @db.Real
-
-  @@map("l2_costs_prices")
 }
 
 model Liveness {
@@ -314,7 +300,6 @@ model Liveness {
   configurationId String   @map("configuration_id") @db.VarChar(12)
 
   @@id([configurationId, txHash])
-  @@map("liveness")
 }
 
 model Price {
@@ -323,7 +308,6 @@ model Price {
   configurationId String   @map("configuration_id") @db.Char(12)
 
   @@id([configurationId, timestamp])
-  @@map("prices")
 }
 
 model SequenceProcessor {
@@ -332,16 +316,12 @@ model SequenceProcessor {
   updatedAt     DateTime @map("updated_at") @db.Timestamp(6)
   latest        Int      @map("latest")
   syncedOnce    Boolean  @default(false) @map("synced_once")
-
-  @@map("sequence_processor")
 }
 
 model TvlCleaner {
   repositoryName        String    @id @map("repository_name") @db.VarChar(255)
   hourlyCleanedUntil    DateTime? @map("hourly_cleaned_until") @db.Timestamp(6)
   sixHourlyCleanedUntil DateTime? @map("six_hourly_cleaned_until") @db.Timestamp(6)
-
-  @@map("tvl_cleaner")
 }
 
 model UpdateMonitor {
@@ -354,7 +334,6 @@ model UpdateMonitor {
   chainId           Int       @default(1) @map("chain_id")
 
   @@id([projectName, chainId])
-  @@map("update_monitor")
 }
 
 model UpdateNotifier {
@@ -368,7 +347,6 @@ model UpdateNotifier {
 
   @@index([blockNumber], map: "update_notifier_block_number_index")
   @@index([projectName], map: "update_notifier_project_name_index")
-  @@map("update_notifier")
 }
 
 model Value {
@@ -391,7 +369,6 @@ model Value {
   stablecoin                  BigInt   @default(0)
 
   @@id([timestamp, projectId, dataSource])
-  @@map("values")
 }
 
 model VerifierStatus {
@@ -401,7 +378,6 @@ model VerifierStatus {
   lastUpdated DateTime @map("last_updated") @db.Timestamp(6)
 
   @@id([address, chainId])
-  @@map("verifier_status")
 }
 
 model AggregatedLiveness {
@@ -414,7 +390,6 @@ model AggregatedLiveness {
   updatedAt DateTime @map("updated_at") @db.Timestamp(6)
 
   @@id([projectId, subtype, range])
-  @@map("aggregated_liveness")
 }
 
 model Anomaly {
@@ -424,5 +399,4 @@ model Anomaly {
   duration  Int
 
   @@id([timestamp, projectId, subtype])
-  @@map("anomalies")
 }
