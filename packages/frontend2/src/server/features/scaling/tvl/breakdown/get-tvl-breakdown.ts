@@ -1,5 +1,6 @@
 import { type ConfigMapping, safeGetTokenByAssetId } from '@l2beat/config'
 import {
+  asNumber,
   assert,
   type AssetId,
   type CanonicalAssetBreakdownData,
@@ -7,7 +8,6 @@ import {
   type NativeAssetBreakdownData,
   type ProjectId,
   UnixTime,
-  asNumber,
 } from '@l2beat/shared-pure'
 import { chainConverter } from './chain-converter'
 import { getLatestAmountForConfigurations } from './get-latest-amount-for-configurations'
@@ -21,7 +21,7 @@ interface Dependencies {
 export function getTvlBreakdown({ configMapping }: Dependencies) {
   return async function (projectId: ProjectId, target?: UnixTime) {
     const targetTimestamp =
-      target ?? UnixTime.now().toStartOf('hour').add(-1, 'hours')
+      target ?? UnixTime.now().toStartOf('hour').add(-2, 'hours')
 
     const prices = await getLatestPriceForConfigurations(
       configMapping.prices,
