@@ -20,6 +20,7 @@ export function NativelyMintedTable(props: Props) {
 
   const table = useTable({
     data: props.tokens,
+    initialState: {},
     columns: nativelyMintedColumns,
     getCoreRowModel: getCoreRowModel(),
   })

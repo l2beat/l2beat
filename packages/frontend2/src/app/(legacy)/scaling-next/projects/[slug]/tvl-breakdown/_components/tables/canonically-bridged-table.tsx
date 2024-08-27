@@ -32,6 +32,7 @@ export function CanonicallyBridgedTable(props: Props) {
     state: {
       expanded,
     },
+    initialState: {},
     onExpandedChange: setExpanded,
     getSubRows: (row) =>
       row.escrows.length > 1
@@ -58,7 +59,6 @@ export function CanonicallyBridgedTable(props: Props) {
       </h2>
 
       <TokenTable table={table} />
-
       <TableSum amount={sum} />
     </div>
   )

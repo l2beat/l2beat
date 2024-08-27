@@ -20,6 +20,7 @@ export function ExternallyBridgedTable(props: Props) {
 
   const table = useTable({
     data: props.tokens,
+    initialState: {},
     columns: externallyBridgedColumns,
     getCoreRowModel: getCoreRowModel(),
   })
