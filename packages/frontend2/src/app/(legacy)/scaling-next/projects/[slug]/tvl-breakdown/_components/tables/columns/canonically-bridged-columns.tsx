@@ -32,7 +32,6 @@ export const canonicallyBridgedColumns = [
       const toggleExpandedHandler = ctx.row.getToggleExpandedHandler()
 
       if (value.escrows.length > 1) {
-        console.log(ctx.row)
         return (
           <MultipleEscrowsCell
             setIsExpanded={toggleExpandedHandler}
