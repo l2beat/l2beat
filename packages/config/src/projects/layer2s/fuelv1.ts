@@ -174,6 +174,7 @@ export const fuelv1: Layer2 = {
       link: 'https://twitter.com/fuellabs_/status/1344707195250896899',
       date: '2020-12-31T00:00:00Z',
       description: 'First trustless Optimistic Rollup is live on Mainnet.',
+      type: 'general',
     },
   ],
   knowledgeNuggets: [

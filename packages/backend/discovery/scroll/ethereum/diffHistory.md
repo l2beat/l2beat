@@ -1,3 +1,106 @@
+Generated with discovered.json: 0x04b22e7cd5dcc1270057a5de114bb00e998fb6d1
+
+# Diff at Fri, 23 Aug 2024 11:25:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1505b6595f98344175251e27ce434d0a44eeefa4 block: 20369470
+- current block number: 20590985
+
+## Description
+
+Scroll can now prove bundles (i.e. multiple DA submissions) in a single proof. Full changelog: <https://scroll.io/blog/proof-recursion-scrolls-darwin-upgrade>. It also seems to have forgotten to update a permission for the new `revertBatch` function sig, they have been notified.
+
+## Watched changes
+
+```diff
+    contract L1MessageQueue (0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B) {
+    +++ description: None
+      values.$implementation:
+-        "0xeBaed7A81c298B24EE6d59c22698A951dc448E01"
++        "0x137CC585F607EDeBBc3CA6360AffCFeab507B374"
+      values.$upgradeCount:
+-        2
++        3
+    }
+```
+
+```diff
+    contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.revertBatch(bytes,uint256):
+-        ["SCROLL_MULTISIG_NO_DELAY_ROLE","EMERGENCY_MULTISIG_NO_DELAY_ROLE"]
+      values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.0x10d44583:
++        ["SCROLL_MULTISIG_NO_DELAY_ROLE","EMERGENCY_MULTISIG_NO_DELAY_ROLE"]
+      values.accessControl.targets.0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F:
++        {"updateVerifier(uint256,uint64,address)":["TIMELOCK_7DAY_DELAY_ROLE"]}
+    }
+```
+
+```diff
+    contract ScrollChain (0xa13BAF47339d63B743e7Da8741db5456DAc1E556) {
+    +++ description: None
+      values.$implementation:
+-        "0x4F250B05262240C787a1eE222687C6eC395C628A"
++        "0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f"
+      values.$upgradeCount:
+-        4
++        5
+      values.verifier:
+-        "0xf94AfBD9370E25Dd6Ca557d5D67634aeFDA2416B"
++        "0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MultipleVersionRollupVerifier (0xf94AfBD9370E25Dd6Ca557d5D67634aeFDA2416B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierV2 (0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MultipleVersionRollupVerifier (0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F)
+    +++ description: Used to update the verifier and keep track of current and old versions.
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierV3 (0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../L1MessageQueueWithGasPriceOracle.sol           |  91 +-
+ .../MultipleVersionRollupVerifier.sol              |  28 +-
+ .../ScrollChain/ScrollChain.sol                    | 982 +++++++++++++--------
+ .../scroll/ethereum/.flat/ZkEvmVerifierV2.sol      | 108 +++
+ 4 files changed, 812 insertions(+), 397 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20369470 (main branch discovery), not current.
+
+```diff
+    contract MultipleVersionRollupVerifier (0xf94AfBD9370E25Dd6Ca557d5D67634aeFDA2416B) {
+    +++ description: None
+      descriptions:
+-        ["Used to update the verifier and keep track of current and old versions."]
+      errors:
++        {"latestVerifier":"Too many values. Update configuration to explore fully","legacyVerifiersLength":"Too many values. Update configuration to explore fully"}
+    }
+```
+
 Generated with discovered.json: 0x95207ea1348314a8bec2c992ec6b27e54c1107cc
 
 # Diff at Fri, 23 Aug 2024 09:55:13 GMT:

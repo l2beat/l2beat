@@ -17,6 +17,7 @@ const meta: Meta<typeof Chart> = {
         link: 'https://medium.loopring.io/loopring-deployed-protocol-3-0-on-ethereum-a33103c9e5bf',
         description:
           'Loopring is live, bringing the first DEX protocol on zkRollup technology.',
+        type: 'general',
       },
       {
         name: 'First StarkEx Validium',
@@ -24,6 +25,7 @@ const meta: Meta<typeof Chart> = {
         link: 'https://medium.com/starkware/starks-over-mainnet-b83e63db04c0',
         description:
           'DeversiFi is live, bringing first STARKex Validium for spot trading.',
+        type: 'general',
       },
       {
         name: 'First zkRollup (for payments)',
@@ -31,6 +33,7 @@ const meta: Meta<typeof Chart> = {
         link: 'https://blog.matter-labs.io/zksync-is-live-bringing-trustless-scalable-payments-to-ethereum-9c634b3e6823',
         description:
           'ZKsync 1.0 is live, bringing first zkRollup for payments.',
+        type: 'general',
       },
       {
         name: 'Ethereum Rollup centric future',
@@ -38,6 +41,7 @@ const meta: Meta<typeof Chart> = {
         link: 'https://ethereum-magicians.org/t/a-rollup-centric-ethereum-roadmap/4698',
         description:
           'Rollups are considered a scaling solution for the near and mid-term future of Ethereum.',
+        type: 'general',
       },
       {
         name: 'First Optimistic Rollup (for payments)',
@@ -45,6 +49,7 @@ const meta: Meta<typeof Chart> = {
         link: 'https://twitter.com/fuellabs_/status/1344707195250896899',
         description:
           'Fuel v1 is live, bringing first trustless Optimistic Rollup for payments.',
+        type: 'general',
       },
       {
         name: 'First Optimistic Rollup (universal)',
@@ -52,6 +57,7 @@ const meta: Meta<typeof Chart> = {
         date: '2021-01-16T00:00:00Z',
         description:
           'Optimism is live, bringing first permissioned universal Optimistic Rollup with fraud proofs.',
+        type: 'general',
       },
       {
         name: 'First private zkRollup (for payments)',
@@ -59,6 +65,7 @@ const meta: Meta<typeof Chart> = {
         date: '2021-03-15T00:00:00Z',
         description:
           'Aztec is live, bringing first private zkRollup for payments.',
+        type: 'general',
       },
       {
         name: 'First StarkEx Rollup (perpetuals)',
@@ -66,6 +73,7 @@ const meta: Meta<typeof Chart> = {
         link: 'https://dydx.exchange/blog/public',
         description:
           'dYdX is live, bringing first STARKex Rollup for perpetuals trading.',
+        type: 'general',
       },
       {
         name: 'First public Optimistic Rollup (universal)',
@@ -73,6 +81,7 @@ const meta: Meta<typeof Chart> = {
         date: '2021-08-31T00:00:00Z',
         description:
           'Arbitrum removed whitelist, becoming first publicly open universal Optimistic Rollup.',
+        type: 'general',
       },
       {
         name: 'First STARK-based Rollup (universal)',
@@ -80,6 +89,7 @@ const meta: Meta<typeof Chart> = {
         date: '2021-11-29T00:00:00Z',
         description:
           'Starknet Alpha is live, bringing first universal rollup based on zkRollup technology.',
+        type: 'general',
       },
       {
         name: 'Hybrid Computation introduced',
@@ -87,6 +97,7 @@ const meta: Meta<typeof Chart> = {
         date: '2022-03-05T00:00:00Z',
         description:
           'Hybrid Compute is live on Boba Network, bringing off-chain computation to smart contracts.',
+        type: 'general',
       },
       {
         name: 'First Optimium (universal)',
@@ -94,6 +105,7 @@ const meta: Meta<typeof Chart> = {
         date: '2022-04-12T00:00:00Z',
         description:
           'Metis starts storing data off-chain, becoming first Optimium.',
+        type: 'general',
       },
       {
         name: 'First Optimium with fallback (universal)',
@@ -101,6 +113,7 @@ const meta: Meta<typeof Chart> = {
         date: '2022-08-09T00:00:00Z',
         description:
           'Arbitrum Nova is live, becoming first Optimium with fallback to Rollup mode.',
+        type: 'general',
       },
       {
         name: 'First zkRollup with universal Solidity support',
@@ -108,6 +121,7 @@ const meta: Meta<typeof Chart> = {
         link: 'https://blog.matter-labs.io/gm-zkevm-171b12a26b36',
         description:
           'ZKsync Era is now permissionless and open for everyone bringing first zkEVM to mainnet.',
+        type: 'general',
       },
     ],
   },

@@ -576,12 +576,14 @@ export const linea: Layer2 = {
       link: 'https://twitter.com/LineaBuild/status/1772711269159567483',
       date: '2024-03-26T00:00:00Z',
       description: 'Linea starts publishing data to blobs.',
+      type: 'general',
     },
     {
       name: 'Alpha v2 is released',
       date: '2024-02-13',
       description: 'This release reduces L1 costs and fees for users.',
       link: 'https://docs.linea.build/build-on-linea/linea-version#alpha-v2-release-notes',
+      type: 'general',
     },
     {
       name: 'Open Testnet is Live',
@@ -589,12 +591,14 @@ export const linea: Layer2 = {
       description:
         'Linea has launched on the Goerli testnet, allowing users and developers to test the platform.',
       link: 'https://linea.mirror.xyz/6G30hwV2wPs_wPv0VEgHYaIdghMkIQaad-OI_0br1hM',
+      type: 'general',
     },
     {
       name: 'Mainnet Alpha Launch',
       date: '2023-07-12',
       description: 'Linea has launched on the Ethereum mainnet.',
       link: 'https://linea.mirror.xyz/7l9gKzYzKVOxEOnReavov467Ss_fsrkGzABvbRISPMY',
+      type: 'general',
     },
   ],
   badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs, Badge.Other.L3HostChain],

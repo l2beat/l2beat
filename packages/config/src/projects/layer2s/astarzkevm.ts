@@ -130,6 +130,7 @@ export const astarzkevm: Layer2 = polygonCDKStack({
       date: '2024-03-06',
       description:
         'Astar Network launched Astar zkEVM, integrated with Polygon AggLayer.',
+      type: 'general',
     },
   ],
   knowledgeNuggets: [],

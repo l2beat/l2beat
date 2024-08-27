@@ -66,6 +66,7 @@ export const rari: Layer3 = orbitStackL3({
       link: 'https://x.com/RariChain/status/1750157295466824066',
       date: '2024-01-24T00:00:00.00Z',
       description: 'RARI Chain launches on Arbitrum One.',
+      type: 'general',
     },
   ],
 })

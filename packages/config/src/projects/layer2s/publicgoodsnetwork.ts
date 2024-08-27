@@ -53,11 +53,13 @@ export const publicgoodsnetwork: Layer2 = opStackL2({
       link: 'https://twitter.com/pgn_eth/status/1676972199423668228',
       date: '2023-07-06T00:00:00.00Z',
       description: 'The Public Goods Network is live on mainnet.',
+      type: 'general',
     },
     {
       name: 'PGN switches to Celestia',
       link: 'https://x.com/conduitxyz/status/1750596065609572398',
       date: '2024-01-26T00:00:00.00Z',
+      type: 'general',
     },
   ],
   nonTemplatePermissions: [
