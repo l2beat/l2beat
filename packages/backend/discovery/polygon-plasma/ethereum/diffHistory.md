@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x81c85ae94b97e0da6cd7dc97b386fe48aeeeccfa
+Generated with discovered.json: 0x4511c010f4011c8b7965deb4c991013dcfb79431
 
-# Diff at Tue, 27 Aug 2024 07:19:26 GMT:
+# Diff at Wed, 28 Aug 2024 19:13:34 GMT:
 
 - author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
-- comparing to: main@e6837bdeaeb7bd525b1927d5a90bd54e7deefdf9 block: 20225285
+- comparing to: main@ec0c665426c9791ef4860f527c8da5a8193eb4c2 block: 20225285
 - current block number: 20613284
 
 ## Description
@@ -151,6 +151,14 @@ Generated with discovered.json: 0x81c85ae94b97e0da6cd7dc97b386fe48aeeeccfa
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 20225285 (main branch discovery), not current.
+
+```diff
+    contract Timelock (0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf) {
+    +++ description: None
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"TIMELOCK_ADMIN_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"]},"PROPOSER_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]},"EXECUTOR_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]}}
+    }
+```
 
 ```diff
 -   Status: DELETED
