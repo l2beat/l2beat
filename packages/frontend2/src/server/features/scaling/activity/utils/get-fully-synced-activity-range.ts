@@ -12,8 +12,7 @@ export function getFullySyncedActivityRange(
 ): [UnixTime, UnixTime] {
   const end = UnixTime.now().toStartOf('day')
 
-  // NOTE(piotradamczyk): Using `new UnixTime(1)` to skip records with timestamp 0 (we have some of them in the DB).
-  if (range === 'max') return [new UnixTime(1), end.add(-1, 'seconds')]
+  if (range === 'max') return [new UnixTime(0), end.add(-1, 'seconds')]
 
   const days = rangeToDays(range)
 
