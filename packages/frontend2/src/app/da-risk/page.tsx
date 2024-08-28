@@ -2,8 +2,8 @@ import { type Metadata } from 'next'
 import { getDefaultMetadata } from '~/utils/metadata'
 
 export const metadata: Metadata = getDefaultMetadata({
-  title: 'L2BEAT – Data Availability Risk Framework',
-  description: 'L2BEAT – Data Availability Risk Framework',
+  title: 'L2BEAT - Data Availability Risk Framework',
+  description: 'L2BEAT - Data Availability Risk Framework',
 })
 
 export default function Page() {
