@@ -7,8 +7,8 @@ import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
 import {
-  ScopeVariables,
-  generateScopeVariables,
+  ReferenceInput,
+  generateReferenceInput,
   getReferencedName,
   resolveReference,
 } from '../reference'
@@ -50,12 +50,12 @@ export class DynamicArrayHandler implements Handler {
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, ['Reading dynamic array storage'])
-    const scopeVariables = generateScopeVariables(provider, address)
-    const resolved = resolveDependencies(
-      this.definition,
+    const referenceInput = generateReferenceInput(
       previousResults,
-      scopeVariables,
+      provider,
+      address,
     )
+    const resolved = resolveDependencies(this.definition, referenceInput)
 
     const elementStorages: Bytes[] = []
     try {
@@ -95,17 +95,12 @@ function getDependencies(definition: DynamicArrayHandlerDefinition): string[] {
 
 function resolveDependencies(
   definition: DynamicArrayHandlerDefinition,
-  previousResults: Record<string, HandlerResult | undefined>,
-  scopeVariables: ScopeVariables,
+  referenceInput: ReferenceInput,
 ): {
   slot: bigint
   returnType: 'number' | 'address' | 'bytes'
 } {
-  const resolved = resolveReference(
-    definition.slot,
-    previousResults,
-    scopeVariables,
-  )
+  const resolved = resolveReference(definition.slot, referenceInput)
   const slot = valueToBigInt(resolved)
 
   const returnType = definition.returnType ?? 'address'

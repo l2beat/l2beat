@@ -18,7 +18,7 @@ export async function getCallImplementationProxy(
   return {
     type: 'call implementation proxy',
     values: {
-      $implementation: implementation,
+      $implementation: implementation.toString(),
     },
   }
 }

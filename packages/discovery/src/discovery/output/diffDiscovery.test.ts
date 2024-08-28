@@ -22,8 +22,8 @@ describe(diffDiscovery.name, () => {
         proxyType: 'EIP1967 proxy',
         ignoreInWatchMode: ['B'],
         values: {
-          $admin: ADMIN,
-          $implementation: IMPLEMENTATION,
+          $admin: ADMIN.toString(),
+          $implementation: IMPLEMENTATION.toString(),
           A: true,
           //ignores fields included in ignore in watch mode
           B: 'thisWillChange',
@@ -35,8 +35,8 @@ describe(diffDiscovery.name, () => {
         address: ADDRESS_B,
         proxyType: 'EIP1967 proxy',
         values: {
-          $admin: ADMIN,
-          $implementation: IMPLEMENTATION,
+          $admin: ADMIN.toString(),
+          $implementation: IMPLEMENTATION.toString(),
         },
       },
       //skips unchanged contracts
@@ -45,8 +45,8 @@ describe(diffDiscovery.name, () => {
         address: ADDRESS_D,
         proxyType: 'EIP1967 proxy',
         values: {
-          $admin: ADMIN,
-          $implementation: IMPLEMENTATION,
+          $admin: ADMIN.toString(),
+          $implementation: IMPLEMENTATION.toString(),
         },
       },
       {
@@ -55,8 +55,8 @@ describe(diffDiscovery.name, () => {
         unverified: true,
         proxyType: 'EIP1967 proxy',
         values: {
-          $admin: ADMIN,
-          $implementation: IMPLEMENTATION,
+          $admin: ADMIN.toString(),
+          $implementation: IMPLEMENTATION.toString(),
         },
       },
     ]
@@ -67,8 +67,8 @@ describe(diffDiscovery.name, () => {
         proxyType: 'EIP1967 proxy',
         ignoreInWatchMode: ['B'],
         values: {
-          $admin: ADMIN,
-          $implementation: IMPLEMENTATION,
+          $admin: ADMIN.toString(),
+          $implementation: IMPLEMENTATION.toString(),
           A: false,
           B: 'itChanged',
         },
@@ -79,8 +79,8 @@ describe(diffDiscovery.name, () => {
         address: ADDRESS_C,
         proxyType: 'EIP1967 proxy',
         values: {
-          $admin: ADMIN,
-          $implementation: IMPLEMENTATION,
+          $admin: ADMIN.toString(),
+          $implementation: IMPLEMENTATION.toString(),
         },
       },
       {
@@ -88,8 +88,8 @@ describe(diffDiscovery.name, () => {
         address: ADDRESS_D,
         proxyType: 'EIP1967 proxy',
         values: {
-          $admin: ADMIN,
-          $implementation: IMPLEMENTATION,
+          $admin: ADMIN.toString(),
+          $implementation: IMPLEMENTATION.toString(),
         },
       },
       {
@@ -98,8 +98,8 @@ describe(diffDiscovery.name, () => {
         unverified: true,
         proxyType: 'EIP1967 proxy',
         values: {
-          $admin: ADMIN,
-          $implementation: IMPLEMENTATION,
+          $admin: ADMIN.toString(),
+          $implementation: IMPLEMENTATION.toString(),
         },
       },
     ]

@@ -8,7 +8,7 @@ export const contractStub: ContractParameters = {
   roles: ['Sequencer'],
   values: {
     $immutable: false,
-    $implementation: EthereumAddress.random(),
+    $implementation: EthereumAddress.random().toString(),
     StarkWareDiamond_upgradeDelay: 0,
     authority: '0x22405c1782913fb676bc74Ef54a60727B0e1026F',
     CHILD_BLOCK_INTERVAL: 1000,
@@ -96,10 +96,8 @@ export const discoveredOpStackJsonStub: DiscoveryOutput = {
       address: EthereumAddress('0x0a2CCDbBD00f61724C485518B940Ab25abe832aA'),
       proxyType: 'EIP1967 proxy',
       values: {
-        $implementation: EthereumAddress(
-          '0x1b927019071A2a9C2b852Fd36f7238D2376B82FA',
-        ),
-        $admin: EthereumAddress('0x543bA4AADBAb8f9025686Bd03993043599c6fB04'),
+        $implementation: '0x1b927019071A2a9C2b852Fd36f7238D2376B82FA',
+        $admin: '0x543bA4AADBAb8f9025686Bd03993043599c6fB04',
       },
     },
     {
@@ -107,10 +105,9 @@ export const discoveredOpStackJsonStub: DiscoveryOutput = {
       address: EthereumAddress('0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3'),
       proxyType: 'EIP1967 proxy',
       values: {
-        $implementation: EthereumAddress(
-          '0x29510c3ac0248bBE92FDb57bd2cBAF7216cC217a',
-        ),
-        $admin: EthereumAddress('0x543bA4AADBAb8f9025686Bd03993043599c6fB04'),
+        $implementation: '0x29510c3ac0248bBE92FDb57bd2cBAF7216cC217a',
+
+        $admin: '0x543bA4AADBAb8f9025686Bd03993043599c6fB04',
       },
     },
     {
@@ -118,13 +115,10 @@ export const discoveredOpStackJsonStub: DiscoveryOutput = {
       address: EthereumAddress('0x17bFa0561d9Ae73e05EcEAEB6663aDc85fA1d3E2'),
       proxyType: 'resolved delegate proxy',
       values: {
-        ResolvedDelegateProxy_addressManager: EthereumAddress(
+        ResolvedDelegateProxy_addressManager:
           '0xdE1FCfB0851916CA5101820A69b13a4E276bd81F',
-        ),
         ResolvedDelegateProxy_implementationName: 'OVM_L1CrossDomainMessenger',
-        $implementation: EthereumAddress(
-          '0x2150Bc3c64cbfDDbaC9815EF615D6AB8671bfe43',
-        ),
+        $implementation: '0x2150Bc3c64cbfDDbaC9815EF615D6AB8671bfe43',
       },
     },
     {
@@ -132,10 +126,8 @@ export const discoveredOpStackJsonStub: DiscoveryOutput = {
       address: EthereumAddress('0x6Dda3a70B9946fA8C015904d9E2BEC86ecE4E745'),
       proxyType: 'EIP1967 proxy',
       values: {
-        $implementation: EthereumAddress(
-          '0xeba2dc4CC210e885F60b5feA41FDEab0C6527fdc',
-        ),
-        $admin: EthereumAddress('0x543bA4AADBAb8f9025686Bd03993043599c6fB04'),
+        $implementation: '0xeba2dc4CC210e885F60b5feA41FDEab0C6527fdc',
+        $admin: '0x543bA4AADBAb8f9025686Bd03993043599c6fB04',
       },
     },
     {
@@ -143,10 +135,8 @@ export const discoveredOpStackJsonStub: DiscoveryOutput = {
       address: EthereumAddress('0xeBec795c9c8bBD61FFc14A6662944748F299cAcf'),
       proxyType: 'EIP1967 proxy',
       values: {
-        $implementation: EthereumAddress(
-          '0xC70dcb11c0673b0BBE2F415105fA2B15Ac58339f',
-        ),
-        $admin: EthereumAddress('0x543bA4AADBAb8f9025686Bd03993043599c6fB04'),
+        $implementation: '0xC70dcb11c0673b0BBE2F415105fA2B15Ac58339f',
+        $admin: '0x543bA4AADBAb8f9025686Bd03993043599c6fB04',
       },
     },
   ],
