@@ -179,6 +179,7 @@ model Stake {
 model Activity {
   projectId String   @map("project_id") @db.VarChar(255)
   timestamp DateTime @map("timestamp") @db.Timestamp(6)
+  count     Int      @map("count")
   start     Int      @default(0) @map("start")
   end       Int      @default(0) @map("end")
 
