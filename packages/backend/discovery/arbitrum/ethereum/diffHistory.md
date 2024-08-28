@@ -10,6 +10,8 @@ Generated with discovered.json: 0x51c5044d558c3ee3a826ba7879e12f568c285426
 
 Scheduled transactions related to ArbOS 31 "Bianca" are executed. The release notes [in the docs](https://docs.arbitrum.io/run-arbitrum-node/arbos-releases/arbos31) and [on Github](https://github.com/OffchainLabs/nitro/releases/tag/v3.1.1) give a good overview over the changes: Stylus, Passkeys, Fast Withdrawals for AnyTrust chains.
 
+The default wasmModuleRoot is upgraded to ArbOS 31.
+
 ### ChallengeManager.sol
 
 - new mapping `ospCond` (conditional OSP, and `function getOsp()`) is introduced to keep compatibility with non-stylus OneStepProvers (OSPs). They are mapped by their old `wasmModuleRoot`'s.
