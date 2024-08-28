@@ -20,21 +20,23 @@ export function getSummaryPage(config: Config, pagesData: PagesData) {
     slug: '/scaling/summary',
     page: (
       <div>
-        <h1>Index</h1>
+        <h1>Index of L2BEAT's legacy frontend</h1>
         <h2>Scaling detail pages</h2>
         <ul>
-          {[...config.layer2s, ...config.layer3s].map((project) => (
-            <a
-              href={`/scaling/projects/${project.display.slug}`}
-              key={project.display.slug}
-            >
-              <li key={project.display.slug}>{project.display.name}</li>
-            </a>
-          ))}
+          {[...config.layer2s, ...config.layer3s]
+            .sort(byName)
+            .map((project) => (
+              <a
+                href={`/scaling/projects/${project.display.slug}`}
+                key={project.display.slug}
+              >
+                <li key={project.display.slug}>{project.display.name}</li>
+              </a>
+            ))}
         </ul>
         <h2>Scaling TVL breakdown pages</h2>
         <ul>
-          {tvlBreakdownProjects.map((project) => (
+          {tvlBreakdownProjects.sort(byName).map((project) => (
             <a
               href={`/scaling/projects/${project.display.slug}/tvl-breakdown`}
               key={project.display.slug}
@@ -45,7 +47,7 @@ export function getSummaryPage(config: Config, pagesData: PagesData) {
         </ul>
         <h2>Bridges detail pages</h2>
         <ul>
-          {config.bridges.map((project) => (
+          {config.bridges.sort(byName).map((project) => (
             <a
               href={`/bridges/projects/${project.display.slug}`}
               key={project.display.slug}
@@ -57,4 +59,11 @@ export function getSummaryPage(config: Config, pagesData: PagesData) {
       </div>
     ),
   }
+}
+
+function byName(
+  a: { display: { name: string } },
+  b: { display: { name: string } },
+) {
+  return a.display.name.localeCompare(b.display.name)
 }
