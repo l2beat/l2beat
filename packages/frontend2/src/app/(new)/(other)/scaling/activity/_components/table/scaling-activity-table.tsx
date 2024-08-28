@@ -1,12 +1,12 @@
 'use client'
 
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { useMemo } from 'react'
+import { useScalingFilter } from '~/app/(new)/(other)/_components/scaling-filter-context'
 import { BasicTable } from '~/app/_components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
 import { scalingActivityColumns } from './columns'
-import { useScalingFilter } from '~/app/(new)/(other)/_components/scaling-filter-context'
-import { useMemo } from 'react'
 
 interface Props {
   entries: ScalingActivityEntry[]
