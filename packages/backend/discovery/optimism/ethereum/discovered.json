@@ -2049,14 +2049,14 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
-    "gnosisSafeModules/DeputyGuardianModule": "0xaf5b0d62e72a14151b44a22d48bafb364c7a48b955581e4d6170558da9355712",
-    "gnosisSafeModules/LivenessModule": "0xd75d1e4e8d40e200f67ee9e7ad3d207c223529d0012960d395b78e88adeef410",
+    "gnosisSafeModules/DeputyGuardianModule": "0x609d56c883a67fb1b7cc98e2b71c1a4014a7cafe743a970ece9aa8dd742b4bf2",
+    "gnosisSafeModules/LivenessModule": "0x8162081df0fcb97a9f284af7abf967750d51b78f421e00d5ceafb3c0dc425164",
     "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0xbe6430c1d141cd6be787d53b6de6e682a9a4edf082b18775a615ecf043365319",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
-    "opstack/ProxyAdmin": "0x33b1f6469b9b5eb1761afba4083878f499aa61a2bd78de0d0c7731f5e13640e0",
+    "opstack/ProxyAdmin": "0x3731e451e123b81ff581a6795a991123ea030fa0841313746edc4ee05e01f0a7",
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"

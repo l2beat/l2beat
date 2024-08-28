@@ -19,8 +19,8 @@ describe(diffContracts.name, () => {
       address: OLD_ADDRESS,
       proxyType: 'EIP1967 proxy',
       values: {
-        $implementation: IMPLEMENTATION,
-        $admin: OLD_ADMIN,
+        $implementation: IMPLEMENTATION.toString(),
+        $admin: OLD_ADMIN.toString(),
         A: true,
         B: true,
         C: 1,
@@ -34,8 +34,8 @@ describe(diffContracts.name, () => {
       proxyType: 'EIP1967 proxy',
       ignoreInWatchMode: ['E', 'F'],
       values: {
-        $admin: NEW_ADMIN,
-        $implementation: IMPLEMENTATION,
+        $admin: NEW_ADMIN.toString(),
+        $implementation: IMPLEMENTATION.toString(),
         A: false,
         C: 1,
         D: [1, 2, 3, 4],

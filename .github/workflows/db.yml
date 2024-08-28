@@ -1,0 +1,26 @@
+name: Migrate DB
+on:
+  push:
+    paths:
+      - packages/database/prisma/migrations/**
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Apply migrations to STAGING
+        run: yarn prisma migrate deploy --schema=packages/database/prisma/schema.prisma
+        env:
+          PRISMA_DB_URL: ${{ secrets.STAGING_DATABASE_URL }}
+      - name: Apply migrations to PRODUCTION
+        run: yarn prisma migrate deploy --schema=packages/database/prisma/schema.prisma
+        env:
+          PRISMA_DB_URL: ${{ secrets.PRODUCTION_DATABASE_URL }}

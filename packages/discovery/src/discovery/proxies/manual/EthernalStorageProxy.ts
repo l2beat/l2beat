@@ -23,8 +23,8 @@ export async function getEternalStorageProxy(
   return {
     type: 'Eternal Storage proxy',
     values: {
-      $admin: admin,
-      $implementation: implementation,
+      $admin: admin.toString(),
+      $implementation: implementation.toString(),
     },
   }
 }
