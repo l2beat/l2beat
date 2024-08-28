@@ -1,9 +1,9 @@
 import React from 'react'
 
-import { Config } from '../../../build/config'
-import { PagesData } from '../../Page'
-import { getIncludedProjectsTvlBreakdown } from '../../../utils/getIncludedProjectsTvlBreakdown'
 import { assert } from '@l2beat/shared-pure'
+import { Config } from '../../../build/config'
+import { getIncludedProjectsTvlBreakdown } from '../../../utils/getIncludedProjectsTvlBreakdown'
+import { PagesData } from '../../Page'
 
 export function getSummaryPage(config: Config, pagesData: PagesData) {
   assert(pagesData.tvlBreakdownApiResponse, 'Missing tvlBreakdownApiResponse')
