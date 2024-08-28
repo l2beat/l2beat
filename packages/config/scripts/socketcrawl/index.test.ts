@@ -8,7 +8,7 @@ import { SocketVaults } from './schema'
 describe('socket', () => {
   it('plugs should be up to date with the discovery output', async () => {
     const file = await readFile(
-      'scripts/socket/outfiles/socket-crawl-result.json',
+      'scripts/socketcrawl/outfiles/socket-crawl-result.json',
       'utf-8',
     )
     const socketData = SocketVaults.parse(JSON.parse(file))

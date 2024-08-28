@@ -73,8 +73,8 @@ export function interpolateDescription(
   description: string,
   analysis: Omit<AnalyzedContract, 'selfMeta' | 'targetsMeta'>,
 ): string {
-  return description.replace(/\{\{\s*(#?\w+)\s*\}\}/g, (_match, key) => {
-    const value = key === '#address' ? analysis.address : analysis.values[key]
+  return description.replace(/\{\{\s*((\$\.?)?\w+)\s*\}\}/g, (_match, key) => {
+    const value = key === '$.address' ? analysis.address : analysis.values[key]
     if (value === undefined) {
       throw new Error(
         `Value for variable "{{ ${key} }}" in contract description not found in contract analysis`,

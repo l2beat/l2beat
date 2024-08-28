@@ -5,7 +5,7 @@ import pLimit from 'p-limit'
 import { ProjectDiscovery } from '../../src/discovery/ProjectDiscovery'
 /**
  *
- * TLDR: Run socket discovery, then this with 'yarn update-socket' and copy the results to the config.jsonc and socket.ts files.
+ * TLDR: Run socket discovery, then this with 'yarn socket-crawl' and copy the results to the config.jsonc and socket.ts files.
  *
  * This script reads the socket plugs list from discovery and creates two files of the discovery results:
  * 1) socket-crawl-result.json: The discovery results grouped by sibling chain slug and ranked by TVL, including non-standard plugs and vaults and vault owners
@@ -66,6 +66,7 @@ const chainSlugToName: Record<string, string> = {
 const ownerAddressToName: Record<string, string> = {
   '0x246d38588b16Dd877c558b245e6D5a711C649fCF': 'LyraMultisig',
   '0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82': 'KintoMultisig',
+  '0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c': 'KintoEOA',
   '0x3B88D6a4CCBD93c22c211C7f6e3ea8b1D30f81BF': 'HookOwnerEOA',
   '0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34': 'socketadmin.eth EOA',
   '0xC8C57e4C73c71f72cA0a7e043E5D2D144F98ef13': 'LooksRareMultisig',
@@ -301,7 +302,7 @@ async function main(): Promise<void> {
 
   console.log('Writing results to socket-crawl-result.json')
   fs.writeFileSync(
-    'scripts/socket/outfiles/socket-crawl-result.json',
+    'scripts/socketcrawl/outfiles/socket-crawl-result.json',
     JSON.stringify(groupedResults, null, 2),
   )
   console.log('Results written to socket-crawl-result.json')
@@ -397,7 +398,7 @@ async function main(): Promise<void> {
   copypasta.push(`escrows: [\n${escrowsSection}\n],`)
 
   fs.writeFileSync(
-    'scripts/socket/outfiles/socket-crawl-copypasta.txt',
+    'scripts/socketcrawl/outfiles/socket-crawl-copypasta.txt',
     copypasta.join('\n\n'),
   )
   console.log('Results written to socket-crawl-copypasta.txt')
