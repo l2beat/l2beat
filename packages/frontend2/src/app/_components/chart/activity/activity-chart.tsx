@@ -15,7 +15,7 @@ import { Checkbox } from '../../checkbox'
 import { formatTpsWithUnit } from '~/utils/format-tps'
 import { ActivityChartHeader } from './activity-chart-header'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
-import { ScalingFilters } from '~/app/(new)/(other)/_components/scaling-filters'
+import { RadioGroup, RadioGroupItem } from '../../radio-group'
 
 export function ActivityChart() {
   const { timeRange, setTimeRange } = useActivityTimeRangeContext()
@@ -62,15 +62,21 @@ export function ActivityChart() {
           range={chartRange}
         />
         <Chart />
-        <Checkbox
-          id={'show-mainnet'}
-          onCheckedChange={(state) => setShowMainnet(!!state)}
-        >
-          <div className="flex flex-row items-center gap-2">
-            <EthereumLineIcon className="hidden h-1.5 w-2.5 sm:inline-block" />
-            ETH Mainnet Transactions
-          </div>
-        </Checkbox>
+        <div className="flex justify-between gap-4">
+          <Checkbox
+            id={'show-mainnet'}
+            onCheckedChange={(state) => setShowMainnet(!!state)}
+          >
+            <div className="flex flex-row items-center gap-2">
+              <EthereumLineIcon className="hidden h-1.5 w-2.5 sm:inline-block" />
+              ETH Mainnet Transactions
+            </div>
+          </Checkbox>
+          <RadioGroup value={scale} onValueChange={setScale}>
+            <RadioGroupItem value="log">LOG</RadioGroupItem>
+            <RadioGroupItem value="lin">LIN</RadioGroupItem>
+          </RadioGroup>
+        </div>
       </section>
     </ChartProvider>
   )
