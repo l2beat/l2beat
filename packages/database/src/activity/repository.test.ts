@@ -74,6 +74,45 @@ describeDatabase(ActivityRepository.name, (db) => {
     })
   })
 
+  describe(ActivityRepository.prototype.getByProjectAndTimeRange.name, () => {
+    it('should return all rows in a given time range for a project', async () => {
+      const records = [
+        record('a', START),
+        record('a', START.add(1, 'days')),
+        record('a', START.add(2, 'days')),
+        record('a', START.add(3, 'days')),
+      ]
+
+      await repository.upsertMany(records)
+
+      const results = await repository.getByProjectAndTimeRange(
+        ProjectId('a'),
+        [START.add(1, 'days'), START.add(2, 'days')],
+      )
+
+      expect(results).toEqual(records.slice(1, 3))
+    })
+  })
+
+  describe(ActivityRepository.prototype.getMaxCountForProjects.name, () => {
+    it('should return max count for each project', async () => {
+      await repository.upsertMany([
+        record('a', START, 1),
+        record('a', START.add(1, 'days'), 3),
+        record('a', START.add(2, 'days'), 4),
+        record('b', START.add(1, 'days'), 2),
+        record('b', START.add(2, 'days'), 5),
+      ])
+
+      const result = await repository.getMaxCountForProjects()
+
+      expect(result).toEqual({
+        [ProjectId('a')]: { count: 4, timestamp: START.add(2, 'days') },
+        [ProjectId('b')]: { count: 5, timestamp: START.add(2, 'days') },
+      })
+    })
+  })
+
   describe(
     ActivityRepository.prototype.getSummedCountForProjectsAndTimeRange.name,
     () => {
