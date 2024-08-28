@@ -53,6 +53,19 @@ export function ActivityChart({ milestones, entries }: Props) {
     showMainnet,
   })
 
+  const totalTxs = data?.data.reduce(
+    (acc, curr) => {
+      acc.ethereum += curr[2]
+      acc.rest += curr[1]
+      return acc
+    },
+    { ethereum: 0, rest: 0 },
+  )
+
+  const scalingFactor =
+    ((totalTxs?.rest ?? 0) + (totalTxs?.ethereum ?? 0)) /
+    (totalTxs?.ethereum ?? 1)
+
   return (
     <ChartProvider
       columns={columns}
@@ -64,12 +77,7 @@ export function ActivityChart({ milestones, entries }: Props) {
       renderHoverContents={(data) => JSON.stringify(data)}
     >
       <section className="flex flex-col gap-4">
-        <ActivityChartHeader
-          unit={scale}
-          value={265}
-          change={0.1}
-          range={timeRange}
-        />
+        <ActivityChartHeader scalingFactor={scalingFactor} range={timeRange} />
         <ActivityTimeRangeControls
           timeRange={timeRange}
           setTimeRange={setTimeRange}

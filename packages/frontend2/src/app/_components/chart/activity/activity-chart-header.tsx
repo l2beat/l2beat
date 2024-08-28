@@ -1,32 +1,14 @@
-import { INFINITY } from '~/consts/characters'
 import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
-import { formatCurrency } from '~/utils/format'
-import { PercentChange } from '../../percent-change'
-import { Skeleton } from '../../skeleton'
-import { useChartLoading } from '../core/chart-loading-context'
 import InfoIcon from '~/icons/info.svg'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/tooltip'
 
 export function ActivityChartHeader({
-  unit,
-  value,
-  change,
+  scalingFactor,
   range,
 }: {
-  unit: string
-  value?: number
-  change?: number
+  scalingFactor: number | undefined
   range: TvlChartRange
 }) {
-  const loading = useChartLoading()
-
-  const changeOverTime =
-    range === 'max' ? (
-      INFINITY
-    ) : change ? (
-      <PercentChange value={change} />
-    ) : null
-
   return (
     <header className="mb-4" data-role="chart-header">
       <div className="flex items-baseline justify-between">
@@ -35,7 +17,7 @@ export function ActivityChartHeader({
           <span className="hidden text-sm md:inline md:text-2xl">
             Scaling factor:{' '}
           </span>
-          <span data-role="chart-header-value">28.03x</span>
+          <span>{scalingFactor?.toFixed(2)}x</span>
         </p>
       </div>
       <div className="flex items-baseline justify-between text-xs md:text-base">
@@ -43,7 +25,7 @@ export function ActivityChartHeader({
           Transactions per second
         </p>
         <div className="flex w-full items-center gap-1.5 text-right text-gray-500 group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0 dark:text-gray-600 md:w-auto">
-          Observed over the last 7 days
+          Observed over the last {range}
           <Tooltip>
             <TooltipTrigger>
               <InfoIcon className="fill-current" />
@@ -57,7 +39,7 @@ export function ActivityChartHeader({
                 <div className="flex flex-col gap-1">
                   <div className="text-xs font-bold">Exact formula:</div>
                   <div className="text-xs">
-                    (project txs/7d + ETH txs/7d) / ETH txs/7d
+                    (project txs/{range} + ETH txs/{range}) / ETH txs/{range}
                   </div>
                 </div>
               </div>

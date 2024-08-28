@@ -21,6 +21,7 @@ export function BaseScalingFilters({
   const filter = useScalingFilterValues()
   const typeOptions = uniq(items.map((item) => item.category))
     .sort()
+    .filter((value) => !!value)
     .map((value) => ({
       label: value,
       value,
@@ -55,7 +56,9 @@ export function BaseScalingFilters({
       value,
     }))
 
-  const isRollupInItems = items.some((item) => item.category.includes('Rollup'))
+  const isRollupInItems = items.some((item) =>
+    item.category?.includes('Rollup'),
+  )
 
   return (
     <OverflowWrapper>

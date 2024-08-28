@@ -12,15 +12,16 @@ import { ZKStackIcon } from '~/icons/providers/zkstack-icon'
 import { ZkSyncLiteIcon } from '~/icons/providers/zksync-lite-icon'
 import { cn } from '~/utils/cn'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/tooltip'
+import { EM_DASH } from '~/consts/characters'
 
 export interface TypeCellProps {
-  children: string
+  children: string | undefined
   disableColors?: boolean
   provider?: Layer2Provider | Layer3Provider
 }
 
 export function TypeCell({ provider, children, disableColors }: TypeCellProps) {
-  const isRollup = children.includes('Rollup')
+  const isRollup = children?.includes('Rollup')
   const providerProps = provider ? providerMap[provider] : undefined
 
   return (
@@ -29,7 +30,7 @@ export function TypeCell({ provider, children, disableColors }: TypeCellProps) {
         isRollup && !disableColors && 'text-green-300 dark:text-green-450',
       )}
     >
-      {children}
+      {children ?? EM_DASH}
       {providerProps ? (
         <TypeTooltip
           Icon={providerProps.Icon}
