@@ -5,6 +5,7 @@ on:
       - packages/database/prisma/**
     branches:
       - main
+      - add-ci-step-to-verify-migartions
 
 jobs:
   validate-migrations:
