@@ -1,7 +1,6 @@
 'use client'
-import { getCoreRowModel } from '@tanstack/react-table'
+import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { TokenTable } from '~/app/_components/table/token-breakdown-table'
-import { useTable } from '~/hooks/use-table'
 import { type ExtendedProjectTvlBreakdown } from '../../_utils/assign-token-meta-to-breakdown'
 import { nativelyMintedColumns } from './columns/natively-minted-columns'
 import { TableSum } from './table-sum'
@@ -18,9 +17,10 @@ export function NativelyMintedTable(props: Props) {
     return acc + Number(token.usdValue)
   }, 0)
 
-  const table = useTable({
+  const table = useReactTable({
+    enableSortingRemoval: false,
+    sortDescFirst: true,
     data: props.tokens,
-    initialState: {},
     columns: nativelyMintedColumns,
     getCoreRowModel: getCoreRowModel(),
   })
