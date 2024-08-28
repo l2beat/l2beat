@@ -10,11 +10,12 @@ import { rangeToDays } from '~/utils/range/range-to-days'
 export function getFullySyncedActivityRange(
   range: TimeRange,
 ): [UnixTime, UnixTime] {
+  const end = UnixTime.now().toStartOf('day')
+
+  if (range === 'max') return [new UnixTime(1), end.add(-1, 'seconds')]
+
   const days = rangeToDays(range)
 
-  const startOfDay = UnixTime.now().toStartOf('day')
-
-  const end = startOfDay
   const start = end.add(-days, 'days')
   return [start, end.add(-1, 'seconds')]
 }

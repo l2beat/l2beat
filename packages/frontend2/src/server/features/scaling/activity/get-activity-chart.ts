@@ -73,6 +73,6 @@ const getCachedActivityChart = cache(
       data: result,
     }
   },
-  ['activityChart'],
+  ['activityChartV2'],
   { revalidate: UnixTime.HOUR },
 )

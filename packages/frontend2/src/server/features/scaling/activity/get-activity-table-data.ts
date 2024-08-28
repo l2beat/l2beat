@@ -31,9 +31,7 @@ export async function getActivityTableData(projects: (Layer2 | Layer3)[]) {
       if (!lastRecord) {
         return [projectId, undefined]
       }
-      if (projectId === 'xai') {
-        console.log(records)
-      }
+
       const maxCount = maxCounts[projectId]
       assert(
         maxCount !== undefined,

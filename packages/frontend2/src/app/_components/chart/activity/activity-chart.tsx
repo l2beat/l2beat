@@ -17,6 +17,7 @@ import { RadioGroup, RadioGroupItem } from '../../radio-group'
 import { Chart } from '../core/chart'
 import { ChartProvider } from '../core/chart-provider'
 import { ActivityChartHeader } from './activity-chart-header'
+import { ActivityChartHover } from './activity-chart-hover'
 import { useActivityChartRenderParams } from './use-activity-chart-render-params'
 
 interface Props {
@@ -63,8 +64,8 @@ export function ActivityChart({ milestones, entries }: Props) {
   )
 
   const scalingFactor =
-    ((totalTxs?.rest ?? 0) + (totalTxs?.ethereum ?? 0)) /
-    (totalTxs?.ethereum ?? 1)
+    totalTxs &&
+    ((totalTxs.rest ?? 0) + (totalTxs.ethereum ?? 0)) / (totalTxs.ethereum ?? 1)
 
   return (
     <ChartProvider
@@ -74,7 +75,9 @@ export function ActivityChart({ milestones, entries }: Props) {
       range={chartRange}
       useLogScale={scale === 'log'}
       isLoading={isLoading}
-      renderHoverContents={(data) => JSON.stringify(data)}
+      renderHoverContents={(data) => (
+        <ActivityChartHover {...data} showEthereum={showMainnet} />
+      )}
     >
       <section className="flex flex-col gap-4">
         <ActivityChartHeader scalingFactor={scalingFactor} range={timeRange} />
@@ -87,6 +90,7 @@ export function ActivityChart({ milestones, entries }: Props) {
         <div className="flex justify-between gap-4">
           <Checkbox
             id={'show-mainnet'}
+            checked={showMainnet}
             onCheckedChange={(state) => setShowMainnet(!!state)}
           >
             <div className="flex flex-row items-center gap-2">
