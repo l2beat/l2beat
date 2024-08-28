@@ -1,3 +1,262 @@
+Generated with discovered.json: 0x162b87c99b024b368882ca8a96c08b4888cc8b0c
+
+# Diff at Mon, 26 Aug 2024 15:55:43 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@16dab914d3f53144841d384494d3e18d88c515c1 block: 20592132
+- current block number: 20613796
+
+## Description
+
+Create strategyWhitelister contract to manage strategies. The owner of the strategyWhitelister contract is the old strategyWhitelister (EigenLayerOperationsMultisig). 
+
+strategyWhitelister contract: Factory contract for deploying BeaconProxies of a Strategy contract implementation for arbitrary ERC20 tokens. Allows for ERC20 blacklisting, preventing deploying strategies for the token. Only the owner can blacklist token. The owner can also remove strategies from the whitelist of strategies that stakers can deposit into. The contract allows deploying only one strategy per token. The PauserRegistry manages the pause/unpase of this contract.
+
+Deployed strategies for sUSDe (0x8fEb56C8802Bda01F3cC1802D44f6Cb469Ac9B22), reALT (0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4), and ALT (0x8457CA5040ad67fdebbCC8EdCE889A335Bc0fbFB).
+
+## Watched changes
+
+```diff
+    contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
+    +++ description: None
+      values.strategies.15:
++        "0x73a18a6304D05B495ecb161Dbf1ab496461bBf2e"
+      values.strategies.14:
++        "0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4"
+      values.strategies.13:
++        "0x8fEb56C8802Bda01F3cC1802D44f6Cb469Ac9B22"
+      values.strategyWhitelister:
+-        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
++        "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444) {
+    +++ description: None
+      receivedPermissions.19:
++        {"permission":"upgrade","target":"0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd","via":[]}
+      receivedPermissions.18.target:
+-        "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd"
++        "0xAe60d8180437b5C34bB956822ac2710972584473"
+      receivedPermissions.17.target:
+-        "0xAe60d8180437b5C34bB956822ac2710972584473"
++        "0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7"
+      receivedPermissions.16.target:
+-        "0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7"
++        "0xa4C637e0F704745D182e4D38cAb7E7485321d059"
+      receivedPermissions.15.target:
+-        "0xa4C637e0F704745D182e4D38cAb7E7485321d059"
++        "0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d"
+      receivedPermissions.14.target:
+-        "0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d"
++        "0x93c4b944D05dfe6df7645A86cd2206016c51564D"
+      receivedPermissions.13.target:
+-        "0x93c4b944D05dfe6df7645A86cd2206016c51564D"
++        "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
+      receivedPermissions.12.target:
+-        "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
++        "0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6"
+      receivedPermissions.11.target:
+-        "0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6"
++        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
+      receivedPermissions.10.target:
+-        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
++        "0x7Fe7E9CC0F274d2435AD5d56D5fa73E47F6A23D8"
+      receivedPermissions.9.target:
+-        "0x7Fe7E9CC0F274d2435AD5d56D5fa73E47F6A23D8"
++        "0x7CA911E83dabf90C90dD3De5411a10F1A6112184"
+      receivedPermissions.8.target:
+-        "0x7CA911E83dabf90C90dD3De5411a10F1A6112184"
++        "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeableBeacon (0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StrategyFactory (0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract reALT-Strategy (0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x73a18a6304D05B495ecb161Dbf1ab496461bBf2e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract sUSDe-Strategy (0x8fEb56C8802Bda01F3cC1802D44f6Cb469Ac9B22)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StrategyBase (0xe9FA8F904d97854C7389b68923262ADCC6C27827)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/StrategyBase.sol                | 1131 ++++++++++++++++++++
+ .../.flat/StrategyFactory/StrategyFactory.sol      |  725 +++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  630 +++++++++++
+ ...0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9.sol} |    0
+ ...-0x5a2a4F2F3C18f09179B6703e63D9eDD165909073.sol |  351 ++++++
+ 5 files changed, 2837 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20592132 (main branch discovery), not current.
+
+```diff
+    contract swETH-Strategy (0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      template:
++        "eigenlayer/Strategy"
+      descriptions:
++        ["A strategy implementation allowing to deposit a specific token as a restakable asset."]
+    }
+```
+
+```diff
+    contract ankrETH-Strategy (0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      template:
++        "eigenlayer/Strategy"
+      descriptions:
++        ["A strategy implementation allowing to deposit a specific token as a restakable asset."]
+    }
+```
+
+```diff
+    contract rETH-Strategy (0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      template:
++        "eigenlayer/Strategy"
+      descriptions:
++        ["A strategy implementation allowing to deposit a specific token as a restakable asset."]
+    }
+```
+
+```diff
+    contract METH-Strategy (0x298aFB19A105D59E74658C4C334Ff360BadE6dd2) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      template:
++        "eigenlayer/Strategy"
+      descriptions:
++        ["A strategy implementation allowing to deposit a specific token as a restakable asset."]
+    }
+```
+
+```diff
+    contract cbETH-Strategy (0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      template:
++        "eigenlayer/Strategy"
+      descriptions:
++        ["A strategy implementation allowing to deposit a specific token as a restakable asset."]
+    }
+```
+
+```diff
+    contract osETH-Strategy (0x57ba429517c3473B6d34CA9aCd56c0e735b94c02) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      template:
++        "eigenlayer/Strategy"
+      descriptions:
++        ["A strategy implementation allowing to deposit a specific token as a restakable asset."]
+    }
+```
+
+```diff
+    contract wBETH-Strategy (0x7CA911E83dabf90C90dD3De5411a10F1A6112184) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      template:
++        "eigenlayer/Strategy"
+      descriptions:
++        ["A strategy implementation allowing to deposit a specific token as a restakable asset."]
+    }
+```
+
+```diff
+    contract sfrxETH-Strategy (0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      template:
++        "eigenlayer/Strategy"
+      descriptions:
++        ["A strategy implementation allowing to deposit a specific token as a restakable asset."]
+    }
+```
+
+```diff
+    contract stETH-Strategy (0x93c4b944D05dfe6df7645A86cd2206016c51564D) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      template:
++        "eigenlayer/Strategy"
+      descriptions:
++        ["A strategy implementation allowing to deposit a specific token as a restakable asset."]
+    }
+```
+
+```diff
+    contract ETHx-Strategy (0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      template:
++        "eigenlayer/Strategy"
+      descriptions:
++        ["A strategy implementation allowing to deposit a specific token as a restakable asset."]
+    }
+```
+
+```diff
+    contract OETH-Strategy (0xa4C637e0F704745D182e4D38cAb7E7485321d059) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      template:
++        "eigenlayer/Strategy"
+      descriptions:
++        ["A strategy implementation allowing to deposit a specific token as a restakable asset."]
+    }
+```
+
+```diff
+    contract bEIGEN-Strategy (0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      template:
++        "eigenlayer/Strategy"
+      descriptions:
++        ["A strategy implementation allowing to deposit a specific token as a restakable asset."]
+      fieldMeta:
++        {"getTVLLimits":{"severity":"LOW","description":"Maximum TVL of the strategy."},"maxPerDeposit":{"severity":"LOW","description":"Maximum value of one deposit transaction"},"maxTotalDeposits":{"severity":"LOW","description":"Same as TVL limit"}}
+    }
+```
+
+```diff
+    contract RiverV1-Strategy (0xAe60d8180437b5C34bB956822ac2710972584473) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      template:
++        "eigenlayer/Strategy"
+      descriptions:
++        ["A strategy implementation allowing to deposit a specific token as a restakable asset."]
+    }
+```
+
 Generated with discovered.json: 0x73a6a55ef68c5e1d572120c21790df5cccc84ec8
 
 # Diff at Fri, 23 Aug 2024 15:16:23 GMT:
