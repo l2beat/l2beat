@@ -47,7 +47,7 @@ export async function detectEip897Proxy(
     type: 'EIP897 proxy',
     values: {
       $immutable: type !== 2,
-      $implementation: implementation,
+      $implementation: implementation.toString(),
     },
   }
 }

@@ -1,3 +1,118 @@
+Generated with discovered.json: 0x324bfd28aa5c957c43a8191866f766899657ef17
+
+# Diff at Wed, 28 Aug 2024 14:29:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0fa673a678e6e769a295956285789968836b97a6 block: 20406615
+- current block number: 20627688
+
+## Description
+
+Scheduled transactions related to ArbOS 31 "Bianca" are executed. The release notes [in the docs](https://docs.arbitrum.io/run-arbitrum-node/arbos-releases/arbos31) and [on Github](https://github.com/OffchainLabs/nitro/releases/tag/v3.1.1) give a good overview over the changes: Stylus, Passkeys, Fast Withdrawals for AnyTrust chains.
+
+The default wasmModuleRoot is upgraded to ArbOS 31.
+
+Nova shares its new implementation contracts with Arbitrum One.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMath (0x221CCc45985Fdd24e33c3f19c6b7D48C02d5DCAa)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProver0 (0xA174e12Ff8C6b18B37fecA77d6d350D89379A58C)
+    +++ description: None
+```
+
+```diff
+    contract ChallengeManager (0xA59075221b50C598aED0Eae0bB9869639513af0D) {
+    +++ description: None
+      values.$implementation:
+-        "0xE129b8Aa61dF65cBDbAE4345eE3fb40168DfD566"
++        "0x914B7b3053B35B84A24df08D7c9ceBCaEA4E2948"
+      values.$upgradeCount:
+-        2
++        3
+      values.osp:
+-        "0xC6E1E6dB03c3F475bC760FE20ed93401EC5c4F7e"
++        "0xa328BAF257A937b7934429a5d8458d98693C6FC7"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMemory (0xb602D056BD6BA78c3A320660d1a45D1cc8bbD3ED)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProofEntry (0xC6E1E6dB03c3F475bC760FE20ed93401EC5c4F7e)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverHostIo (0xd7f12E7418B007Ad7A5c7ACBbF460D3Cfe92A63e)
+    +++ description: None
+```
+
+```diff
+    contract RollupProxy (0xFb209827c58283535b744575e11953DCC4bEAD88) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4"
++        "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMath (0x2c785E954c376be0CEfF4a7Db92E053B0830F7c9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (0x5C9F8663583Ad0A1c0009c871f8253DBF4767A18)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (0x8D78382913467Cd25374C75BA918b0A723Bc2544)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProofEntry (0xa328BAF257A937b7934429a5d8458d98693C6FC7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (0xD0465e3356213869f1Fae38b3E67CBF4E873c5B6)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ChallengeManager/ChallengeManager.sol          | 404 ++++++----
+ .../OneStepProofEntry.sol                          | 485 +++++++++--
+ .../{.flat@20406615 => .flat}/OneStepProver0.sol   | 765 +++++++++++++-----
+ .../OneStepProverHostIo.sol                        | 892 +++++++++++++++++----
+ .../OneStepProverMath.sol                          |  65 +-
+ .../OneStepProverMemory.sol                        | 315 ++++++--
+ 6 files changed, 2246 insertions(+), 680 deletions(-)
+```
+
 Generated with discovered.json: 0x6c69cb852e3e0c2dbec68fa598d5458299317858
 
 # Diff at Fri, 23 Aug 2024 09:53:37 GMT:

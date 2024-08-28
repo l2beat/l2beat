@@ -10,6 +10,7 @@ const chainMapping: Record<string, string> = {
   deri: 'arbitrum',
   rari: 'arbitrum',
   sxnetwork: 'ethereum',
+  galxegravity: 'ethereum',
 }
 
 function getArbOSVersion(wasmModuleRoot: string): string {
@@ -46,6 +47,7 @@ function getChainName(chainId: number | undefined): string {
     1380012617: 'rari',
     7887: 'kinto',
     4162: 'sxnetwork',
+    1625: 'galxegravity',
   }
   if (chainId === undefined) {
     return 'Unknown chainId'

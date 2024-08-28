@@ -41,9 +41,9 @@ export async function getZkSpaceProxy(
     type: 'zkSpace proxy',
     values: {
       $admin: detection.values.$admin,
-      $implementation: get$Implementations(detection.values).concat(
-        additional as EthereumAddress[],
-      ),
+      $implementation: get$Implementations(detection.values)
+        .concat((additional ?? []) as EthereumAddress[])
+        .map((i) => i.toString()),
     },
   }
 }
