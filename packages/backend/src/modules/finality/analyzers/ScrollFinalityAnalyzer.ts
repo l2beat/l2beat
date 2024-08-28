@@ -38,8 +38,9 @@ export class ScrollFinalityAnalyzer extends BaseAnalyzer {
 }
 
 function decodeTransaction(data: string) {
+  // https://docs.scroll.io/en/technology/overview/scroll-upgrades/#darwin-upgrade
   const signature =
-    'commitBatch(uint8 _version, bytes _parentBatchHeader, bytes[] _chunks, bytes _skippedL1MessageBitmap)'
+    'commitBatchWithBlobProof(uint8 _version,bytes _parentBatchHeader,bytes[] _chunks,bytes _skippedL1MessageBitmap,bytes _blobDataProof)'
   const iface = new utils.Interface([`function ${signature}`])
 
   const decodedInput = iface.decodeFunctionData(signature, data)

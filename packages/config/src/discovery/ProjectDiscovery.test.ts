@@ -266,6 +266,17 @@ describe(ProjectDiscovery.name, () => {
       ])
     })
   })
+
+  describe(ProjectDiscovery.prototype.replaceAddressesWithNames.name, () => {
+    it('should replace addresses with names', () => {
+      const replaced = discovery.replaceAddressesWithNames(
+        'Can be updated by 0x0D4C1222f5e839a911e2053860e45F18921D72ac, 0x787A0ACaB02437c60Aafb1a29167A3609801e320',
+      )
+      expect(replaced).toEqual(
+        'Can be updated by MockedContract, 0x787A0ACaB02437c60Aafb1a29167A3609801e320',
+      )
+    })
+  })
 })
 
 function mockConfig(

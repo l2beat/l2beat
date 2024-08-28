@@ -10,7 +10,7 @@ echo "Clearing local TVL tables" &&
 psql $DEV_LOCAL_DB_URL -f reset-local.sql &&
 
 echo "Migrating DB to latest" &&
-node -r esbuild-register migrateDb.ts &&
+yarn db:migrate &&
 
 echo "Fetching TVL tables from remote DB" &&
 psql $DEV_REMOTE_DB_URL_READ_ONLY -f export.sql &&
