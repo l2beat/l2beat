@@ -10,6 +10,7 @@ import { useState } from 'react'
 import { TokenTable } from '~/app/_components/table/token-breakdown-table'
 import { type ExtendedProjectTvlBreakdown } from '../../_utils/assign-token-meta-to-breakdown'
 import { canonicallyBridgedColumns } from './columns/canonically-bridged-columns'
+import { sumTokensValue } from './sum-tokens-value'
 import { TableSum } from './table-sum'
 
 export type CanonicallyBridgedTokenEntry =
@@ -20,9 +21,7 @@ interface Props {
 }
 
 export function CanonicallyBridgedTable(props: Props) {
-  const sum = props.tokens.reduce((acc, token) => {
-    return acc + Number(token.usdValue)
-  }, 0)
+  const usdSum = sumTokensValue(props.tokens)
 
   const [expanded, setExpanded] = useState<ExpandedState>({})
 
@@ -60,7 +59,7 @@ export function CanonicallyBridgedTable(props: Props) {
       </h2>
 
       <TokenTable table={table} />
-      <TableSum amount={sum} />
+      <TableSum amount={usdSum} />
     </div>
   )
 }

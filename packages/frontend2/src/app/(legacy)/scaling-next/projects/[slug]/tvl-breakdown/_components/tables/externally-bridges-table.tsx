@@ -3,6 +3,7 @@ import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { TokenTable } from '~/app/_components/table/token-breakdown-table'
 import { type ExtendedProjectTvlBreakdown } from '../../_utils/assign-token-meta-to-breakdown'
 import { externallyBridgedColumns } from './columns/externally-bridged-columns'
+import { sumTokensValue } from './sum-tokens-value'
 import { TableSum } from './table-sum'
 
 export type ExternallyBridgedTokenEntry =
@@ -13,9 +14,7 @@ interface Props {
 }
 
 export function ExternallyBridgedTable(props: Props) {
-  const sum = props.tokens.reduce((acc, token) => {
-    return acc + Number(token.usdValue)
-  }, 0)
+  const usdSum = sumTokensValue(props.tokens)
 
   const table = useReactTable({
     enableSortingRemoval: false,
@@ -35,7 +34,7 @@ export function ExternallyBridgedTable(props: Props) {
         Externally Bridged Value
       </h2>
       <TokenTable table={table} />
-      <TableSum amount={sum} />
+      <TableSum amount={usdSum} />
     </div>
   )
 }
