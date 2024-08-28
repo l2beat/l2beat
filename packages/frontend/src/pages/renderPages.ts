@@ -1,6 +1,5 @@
 import { Config } from '../build/config'
 import { Page, PagesData } from './Page'
-import { getDARiskPage } from './da-risk'
 import { outputPages } from './output'
 import { getBridgeProjectPages } from './project/bridge'
 import { getProjectPages } from './project/layer2'
@@ -21,7 +20,6 @@ export function renderPages(config: Config, pagesData: PagesData) {
     implementationChange,
   } = pagesData
 
-  pages.push(getDARiskPage())
   pages.push(getSummaryPage(config, pagesData))
   pages.push(...getProjectPages(config, pagesData))
   pages.push(...getL3sProjectPages(config, pagesData))
