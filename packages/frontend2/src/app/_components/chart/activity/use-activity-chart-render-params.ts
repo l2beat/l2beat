@@ -1,20 +1,18 @@
 import { type Milestone } from '@l2beat/config'
 import { useCallback, useMemo } from 'react'
 import { type RouterOutputs } from '~/trpc/react'
-import { formatCurrency } from '~/utils/format'
 import { type SeriesStyle } from '../core/styles'
 import { mapMilestones } from '../core/utils/map-milestones'
+import { formatTpsWithUnit } from '~/utils/format-tps'
 
 interface Params {
   milestones: Milestone[]
-  unit: 'usd' | 'eth'
   chart: RouterOutputs['scaling']['activity']['chart']['data'] | undefined
   showMainnet: boolean
 }
 
 export function useActivityChartRenderParams({
   milestones,
-  unit,
   chart,
   showMainnet,
 }: Params) {
@@ -24,9 +22,8 @@ export function useActivityChartRenderParams({
   )
 
   const formatYAxisLabel = useCallback(
-    (value: number) =>
-      formatCurrency(value, unit, { showLessThanMinimum: false }),
-    [unit],
+    (value: number) => formatTpsWithUnit(value),
+    [],
   )
 
   const columns = useMemo(

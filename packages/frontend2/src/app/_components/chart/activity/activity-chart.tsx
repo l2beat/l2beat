@@ -11,7 +11,6 @@ import { useLocalStorage } from '~/hooks/use-local-storage'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
 import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
 import { api } from '~/trpc/react'
-import { formatTpsWithUnit } from '~/utils/format-tps'
 import { Checkbox } from '../../checkbox'
 import { RadioGroup, RadioGroupItem } from '../../radio-group'
 import { Chart } from '../core/chart'
@@ -47,12 +46,12 @@ export function ActivityChart({ milestones, entries }: Props) {
         },
   })
 
-  const { columns, valuesStyle, chartRange } = useActivityChartRenderParams({
-    milestones,
-    unit: 'usd',
-    chart: data?.data,
-    showMainnet,
-  })
+  const { columns, valuesStyle, chartRange, formatYAxisLabel } =
+    useActivityChartRenderParams({
+      milestones,
+      chart: data?.data,
+      showMainnet,
+    })
 
   const totalTxs = data?.data.reduce(
     (acc, curr) => {
@@ -71,7 +70,7 @@ export function ActivityChart({ milestones, entries }: Props) {
     <ChartProvider
       columns={columns}
       valuesStyle={valuesStyle}
-      formatYAxisLabel={(value: number) => formatTpsWithUnit(value)}
+      formatYAxisLabel={formatYAxisLabel}
       range={chartRange}
       useLogScale={scale === 'log'}
       isLoading={isLoading}
@@ -89,7 +88,7 @@ export function ActivityChart({ milestones, entries }: Props) {
         <Chart />
         <div className="flex justify-between gap-4">
           <Checkbox
-            id={'show-mainnet'}
+            id="show-mainnet"
             checked={showMainnet}
             onCheckedChange={(state) => setShowMainnet(!!state)}
           >
