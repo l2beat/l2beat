@@ -13,11 +13,15 @@ export const soneium: Layer2 = upcomingL2({
     provider: 'OP Stack',
     links: {
       websites: ['https://soneium.org/en/'],
-      apps: [],
+      apps: ['https://bridge.soneium.org/en/testnet'],
       documentation: ['https://soneium.org/en/docs/'],
       explorers: [],
       repositories: [],
-      socialMedia: ['https://x.com/soneium'],
+      socialMedia: [
+        'https://x.com/soneium',
+        'https://t.me/SoneiumOfficial',
+        'https://discord.gg/rWWPBHug9w',
+      ],
     },
   },
 })
