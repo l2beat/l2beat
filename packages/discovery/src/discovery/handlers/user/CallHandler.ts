@@ -7,7 +7,9 @@ import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
 import {
+  ReferenceInput,
   ScopeVariables,
+  generateReferenceInput,
   generateScopeVariables,
   getReferencedName,
   resolveReference,
@@ -63,15 +65,12 @@ export class CallHandler implements Handler {
     currentContractAddress: EthereumAddress,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
-    const scopeVariables = generateScopeVariables(
+    const referenceInput = generateReferenceInput(
+      previousResults,
       provider,
       currentContractAddress,
     )
-    const resolved = resolveDependencies(
-      this.definition,
-      previousResults,
-      scopeVariables,
-    )
+    const resolved = resolveDependencies(this.definition, referenceInput)
     this.logger.logExecution(this.field, [
       'Calling ',
       `${this.fragment.name}(${resolved.args
@@ -104,21 +103,14 @@ export class CallHandler implements Handler {
 
 function resolveDependencies(
   definition: CallHandlerDefinition,
-  previousResults: Record<string, HandlerResult | undefined>,
-  scopeVariables: ScopeVariables,
+  referenceInput: ReferenceInput,
 ): {
   method: string | undefined
   args: ContractValue[]
   address: EthereumAddress | undefined
 } {
-  const args = definition.args.map((x) =>
-    resolveReference(x, previousResults, scopeVariables),
-  )
-  const address = resolveReference(
-    definition.address,
-    previousResults,
-    scopeVariables,
-  )
+  const args = definition.args.map((x) => resolveReference(x, referenceInput))
+  const address = resolveReference(definition.address, referenceInput)
   return {
     method: definition.method,
     args,
