@@ -4,7 +4,7 @@ import {
   unstable_noStore as noStore,
 } from 'next/cache'
 import { getTokenBreakdown } from './get-token-breakdown'
-import { getTvlProjects } from './get-tvl-projects'
+import { type TvlProject, getTvlProjects } from './get-tvl-projects'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
 
 export function get7dTokenBreakdown(
@@ -15,13 +15,16 @@ export function get7dTokenBreakdown(
 }
 
 export const getCached7dTokenBreakdown = cache(
-  async () => {
-    const tvlValues = await getTvlValuesForProjects(
-      getTvlProjects().filter(
-        (project) => project.type === 'layer2' || project.type === 'layer3',
-      ),
-      '7d',
-    )
+  async ({ type }: { type: 'layer2' | 'bridge' }) => {
+    const filter =
+      type === 'layer2'
+        ? (project: TvlProject) =>
+            project.type === 'layer2' || project.type === 'layer3'
+        : (project: TvlProject) => project.type === 'bridge'
+
+    const projectsToQuery = getTvlProjects().filter(filter)
+
+    const tvlValues = await getTvlValuesForProjects(projectsToQuery, '7d')
 
     const projects = Object.fromEntries(
       Object.entries(tvlValues).map(([projectId, values]) => {
