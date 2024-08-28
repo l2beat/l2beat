@@ -2,6 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 import { ReadMore } from './read-more'
 
 const meta = {
+  title: 'UI/Misc/Read More',
   component: ReadMore,
 } satisfies Meta<typeof ReadMore>
 export default meta

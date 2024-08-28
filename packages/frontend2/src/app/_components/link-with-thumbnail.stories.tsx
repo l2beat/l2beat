@@ -2,6 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 import { LinkWithThumbnail } from './link-with-thumbnail'
 
 const meta = {
+  title: 'UI/Misc/Link With Thumbnail',
   component: LinkWithThumbnail,
   args: {
     href: 'https://l2beat.com',

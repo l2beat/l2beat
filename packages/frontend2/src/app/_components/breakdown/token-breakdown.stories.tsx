@@ -2,6 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 import { TokenBreakdown } from './token-breakdown'
 
 const meta = {
+  title: 'UI/Misc/Breakdown/Token',
   component: TokenBreakdown,
 } satisfies Meta<typeof TokenBreakdown>
 export default meta

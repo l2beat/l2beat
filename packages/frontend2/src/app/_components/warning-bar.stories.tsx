@@ -2,6 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 import { WarningBar } from './warning-bar'
 
 const meta = {
+  title: 'UI/Misc/Bars/Warning',
   component: WarningBar,
   args: {
     text: 'This is an example text for the warning.',

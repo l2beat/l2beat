@@ -2,6 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 import { KnowledgeNuggetsSection } from './knowledge-nuggets-section'
 
 const meta = {
+  title: 'UI/Projects/Sections/Knowledge Nuggets',
   component: KnowledgeNuggetsSection,
   args: {
     title: 'Knowledge nuggets',

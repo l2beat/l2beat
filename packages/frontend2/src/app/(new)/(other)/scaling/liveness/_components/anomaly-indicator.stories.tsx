@@ -3,6 +3,7 @@ import { userEvent, within } from '@storybook/test'
 import { AnomalyIndicator } from './anomaly-indicator'
 
 const meta = {
+  title: 'UI/Misc/Anomaly Indicator',
   component: AnomalyIndicator,
   args: {
     anomalyEntries: [

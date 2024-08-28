@@ -3,6 +3,7 @@ import { CopyButton } from './copy-button'
 import { userEvent, within } from '@storybook/test'
 
 const meta = {
+  title: 'UI/Misc/Copy Button',
   component: CopyButton,
   args: {
     toCopy: 'some url',

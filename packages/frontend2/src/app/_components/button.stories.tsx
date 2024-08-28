@@ -2,6 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 import { Button } from './button'
 
 const meta = {
+  title: 'UI/Atoms/Button',
   component: Button,
 } satisfies Meta<typeof Button>
 export default meta

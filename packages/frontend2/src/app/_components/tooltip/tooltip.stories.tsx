@@ -3,6 +3,7 @@ import { userEvent, within } from '@storybook/test'
 import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip'
 
 const meta = {
+  title: 'UI/Atoms/Tooltip',
   component: Tooltip,
 } satisfies Meta<typeof Tooltip>
 export default meta

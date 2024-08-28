@@ -7,7 +7,7 @@ import { type StoryObj } from '@storybook/react'
 import { ProjectBadge } from './project-badge'
 
 const meta = {
-  title: 'UI/Projects/Badges',
+  title: 'UI/Projects/Project Badge',
 }
 export default meta
 

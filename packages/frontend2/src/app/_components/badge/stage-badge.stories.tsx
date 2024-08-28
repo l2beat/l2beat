@@ -3,6 +3,7 @@ import { onlyDesktopModes } from '~/../.storybook/modes'
 import { StageBadge } from './stage-badge'
 
 const meta = {
+  title: 'UI/Atoms/Badge/Stage',
   component: StageBadge,
   args: {
     stage: 'Stage 0',

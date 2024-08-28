@@ -2,6 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 import { ReferenceList } from './reference-list'
 
 const meta = {
+  title: 'UI/Projects/Sections/Permissions/Reference List',
   component: ReferenceList,
 } satisfies Meta<typeof ReferenceList>
 export default meta

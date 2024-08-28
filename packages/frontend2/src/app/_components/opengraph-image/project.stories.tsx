@@ -2,7 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 import { ProjectOpengraphImage } from './project'
 
 const meta = {
-  title: 'Opengraph/project',
+  title: 'OG Images/Project',
   component: ProjectOpengraphImage,
 } satisfies Meta<typeof ProjectOpengraphImage>
 export default meta

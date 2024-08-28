@@ -2,6 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 import { MilestonesAndIncidentsSection } from './milestones-and-incidents-section'
 
 const meta = {
+  title: 'UI/Projects/Sections/Milestones & Incidents',
   component: MilestonesAndIncidentsSection,
   args: {
     id: 'milestones-and-incidents',
