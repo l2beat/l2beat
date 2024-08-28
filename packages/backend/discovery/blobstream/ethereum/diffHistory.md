@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x76be647028fad2b05f9e66604d3a85a337236438
+Generated with discovered.json: 0x3725a540f3d65fc15b13e07824fa3e767b4ba59e
 
-# Diff at Wed, 28 Aug 2024 10:46:08 GMT:
+# Diff at Wed, 28 Aug 2024 14:37:22 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@cf2dd34fdc5bce846ae811aa246ba203fc03f637 block: 20218838
-- current block number: 20626576
+- current block number: 20627728
 
 ## Description
 
@@ -102,6 +102,10 @@ discovery. Values are for block 20218838 (main branch discovery), not current.
       name:
 -        "BlobstreamX"
 +        "Blobstream"
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]},"TIMELOCK_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]},"GUARDIAN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]}}
+      values.relayers:
++        ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"]
       template:
 +        "blobstream/SP1Blobstream"
       errors:
