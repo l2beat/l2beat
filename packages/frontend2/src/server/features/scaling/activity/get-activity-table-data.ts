@@ -14,7 +14,7 @@ export type ActivityTableData = NonNullable<
 
 export async function getActivityTableData(projects: (Layer2 | Layer3)[]) {
   const [start, end] = getFullySyncedActivityRange('30d')
-  // We subtract 1 day from the start to get data for change calculation
+  // We already subtract 1 day from the start to get data for change calculation in `getFullySyncedActivityRange`
   const adjustedRange: [UnixTime, UnixTime] = [start, end]
   const records = await db.activity.getByProjectsAndTimeRange(
     [ProjectId.ETHEREUM, ...projects.map((p) => p.id)],
