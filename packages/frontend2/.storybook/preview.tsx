@@ -1,20 +1,13 @@
 import { type Preview } from '@storybook/react'
-import React, { ReactNode } from 'react'
+import React from 'react'
 
 import { withThemeByClassName } from '@storybook/addon-themes'
 
+import { TooltipProvider } from '../src/app/_components/tooltip/tooltip'
 import { roboto } from '../src/fonts'
 import '../src/styles/globals.css'
 import { allModes } from './modes'
 import { viewports } from './viewports'
-
-const withFonts = () => (Story: () => ReactNode) => {
-  return (
-    <main className={`font-sans ${roboto.variable}`}>
-      <Story />
-    </main>
-  )
-}
 
 const preview: Preview = {
   parameters: {
@@ -41,7 +34,15 @@ const preview: Preview = {
       },
       defaultTheme: 'light',
     }),
-    withFonts(),
+    (Story) => {
+      return (
+        <main className={`p-4 font-sans ${roboto.variable}`}>
+          <TooltipProvider>
+            <Story />
+          </TooltipProvider>
+        </main>
+      )
+    },
   ],
 }
 
