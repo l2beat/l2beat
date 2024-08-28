@@ -313,7 +313,7 @@ model Liveness {
   txHash          String   @map("tx_hash") @db.VarChar(255)
   configurationId String   @map("configuration_id") @db.VarChar(12)
 
-  @@id([configurationId, timestamp, txHash])
+  @@id([configurationId, txHash])
   @@map("liveness")
 }
 
