@@ -33,10 +33,9 @@ export async function getNewArbitrumProxy(
     type: 'new Arbitrum proxy',
     values: {
       $admin: detection.values.$admin,
-      $implementation: get$Implementations(detection.values).concat(
-        adminFacet,
-        userFacet,
-      ),
+      $implementation: get$Implementations(detection.values)
+        .concat(adminFacet, userFacet)
+        .map((i) => i.toString()),
     },
   }
 }

@@ -1,5 +1,6 @@
 {
   "=nil;": true,
+  "abstract": true,
   "across-v3": true,
   "aevo": true,
   "aiechain": true,
@@ -49,6 +50,7 @@
   "cheese": true,
   "connext": true,
   "coti": true,
+  "creator": true,
   "cronoszkevm": true,
   "cyber": true,
   "dac-mantleDABridge": true,
@@ -233,7 +235,6 @@
   "ten": true,
   "termstructure": true,
   "teva": true,
-  "tradable": true,
   "transporter": true,
   "treasure": true,
   "unite": true,

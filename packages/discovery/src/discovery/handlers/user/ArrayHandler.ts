@@ -8,8 +8,8 @@ import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
 import {
   Reference,
-  ScopeVariables,
-  generateScopeVariables,
+  ReferenceInput,
+  generateReferenceInput,
   getReferencedName,
   resolveReference,
 } from '../reference'
@@ -69,12 +69,12 @@ export class ArrayHandler implements Handler {
       'Calling array ',
       this.fragment.name + '(i)',
     ])
-    const scopeVariables = generateScopeVariables(provider, address)
-    const resolved = resolveDependencies(
-      this.definition,
+    const referenceInput = generateReferenceInput(
       previousResults,
-      scopeVariables,
+      provider,
+      address,
     )
+    const resolved = resolveDependencies(this.definition, referenceInput)
 
     const value: ContractValue[] = []
     const startIndex = resolved.startIndex
@@ -152,8 +152,7 @@ function createCallIndex(
 
 function resolveDependencies(
   definition: ArrayHandlerDefinition,
-  previousResults: Record<string, HandlerResult | undefined>,
-  scopeVariables: ScopeVariables,
+  referenceInput: ReferenceInput,
 ): {
   method: string | undefined
   length: number | undefined
@@ -164,11 +163,7 @@ function resolveDependencies(
 } {
   let length: number | undefined
   if (definition.length !== undefined) {
-    const resolved = resolveReference(
-      definition.length,
-      previousResults,
-      scopeVariables,
-    )
+    const resolved = resolveReference(definition.length, referenceInput)
     length = valueToNumber(resolved)
   }
 
@@ -177,11 +172,7 @@ function resolveDependencies(
     definition.indices !== undefined &&
     typeof definition.indices === 'string'
   ) {
-    const resolved = resolveReference(
-      definition.indices,
-      previousResults,
-      scopeVariables,
-    )
+    const resolved = resolveReference(definition.indices, referenceInput)
     if (!Array.isArray(resolved)) {
       throw new Error('Expected array of indices')
     }
