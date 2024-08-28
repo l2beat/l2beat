@@ -19,7 +19,7 @@ export const galxegravity: Layer2 = orbitStackL2({
     purposes: ['Social'],
     links: {
       websites: ['https://gravity.xyz'],
-      apps: [],
+      apps: ['https://bridge.gravity.xyz/'],
       documentation: ['https://docs.gravity.xyz/'],
       explorers: ['https://explorer.gravity.xyz/'],
       repositories: ['https://github.com/Galxe'],
