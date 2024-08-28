@@ -21,6 +21,15 @@ export function getSummaryPage(config: Config, pagesData: PagesData) {
     page: (
       <div>
         <h1>Index of L2BEAT's legacy frontend</h1>
+        <h2>Misc. pages</h2>
+        <ul>
+          <a href="/da-risk">
+            <li>Data Availability Risk Framework</li>
+          </a>
+          <a href="/multisig-report">
+            <li>Multisig report</li>
+          </a>
+        </ul>
         <h2>Scaling detail pages</h2>
         <ul>
           {[...config.layer2s, ...config.layer3s]
