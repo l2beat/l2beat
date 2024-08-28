@@ -33,13 +33,9 @@ export function MilestonesAndIncidentsSection({
         <MilestonesBase milestones={milestones} />
       ) : (
         <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-          <MilestonesBase
-            milestones={milestones}
-            isOpen={isOpen}
-            range={[0, 2]}
-          />
+          <MilestonesBase milestones={milestones.slice(0, 2)} isOpen={isOpen} />
           <CollapsibleContent>
-            <MilestonesBase milestones={milestones} range={[2]} />
+            <MilestonesBase milestones={milestones.slice(2)} />
           </CollapsibleContent>
           <CollapsibleTrigger asChild>
             <Button
@@ -60,7 +56,6 @@ export function MilestonesAndIncidentsSection({
 
 function MilestonesBase(props: {
   milestones: Milestone[]
-  range?: [number, number?]
   isOpen?: boolean
 }) {
   return (
@@ -71,27 +66,21 @@ function MilestonesBase(props: {
             (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
           )
           .map((milestone, i) => {
-            if (
-              i < (props.range?.[0] ?? 0) ||
-              (props.range?.[1] && i >= props.range[1])
-            ) {
-              return null
-            }
-
-            const previousMilestone = props.milestones.at(i + 1)
+            // It's next when you are looking from top to bottom
+            const nextMilestone = props.milestones.at(i + 1)
 
             const Icon =
               milestone.type === 'incident' ? IncidentIcon : MilestoneIcon
 
-            const milestoneLineClassName = previousMilestone?.type
+            const milestoneLineClassName = nextMilestone
               ? cn(
                   milestone.type === 'general' &&
                     'bg-green-400 dark:bg-green-500',
                   milestone.type === 'incident' && 'bg-red-700 dark:bg-red-700',
-                  previousMilestone.type === 'incident' &&
+                  nextMilestone.type === 'incident' &&
                     milestone.type === 'general' &&
                     'bg-gradient-to-b from-green-400 to-red-700 dark:from-green-500 dark:to-red-700',
-                  previousMilestone.type === 'general' &&
+                  nextMilestone.type === 'general' &&
                     milestone.type === 'incident' &&
                     'bg-gradient-to-b from-red-700 to-green-400 dark:from-red-700 dark:to-green-500',
                 )
@@ -99,8 +88,14 @@ function MilestonesBase(props: {
                   'h-3/4 bg-gradient-to-b',
                   milestone.type === 'incident' &&
                     'from-red-700 dark:from-red-700',
+                  props.isOpen &&
+                    milestone.type === 'incident' &&
+                    'h-full bg-red-700 dark:bg-red-700',
                   milestone.type === 'general' &&
                     'from-green-400 dark:from-green-500',
+                  props.isOpen &&
+                    milestone.type === 'general' &&
+                    'h-full bg-green-400 dark:bg-green-500',
                 )
 
             return (
