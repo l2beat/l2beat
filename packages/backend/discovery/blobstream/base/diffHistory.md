@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x6a6dc2d939e1f253ec61ef7cf0dcf1fe616c12aa
+Generated with discovered.json: 0x987fd631d4a43be005a15d7730f712a1edecefcf
 
-# Diff at Wed, 28 Aug 2024 14:37:15 GMT:
+# Diff at Wed, 28 Aug 2024 15:41:51 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@cf2dd34fdc5bce846ae811aa246ba203fc03f637 block: 14061228
-- current block number: 19033241
+- current block number: 19035179
 
 ## Description
 
@@ -68,6 +68,12 @@ Generated with discovered.json: 0x6a6dc2d939e1f253ec61ef7cf0dcf1fe616c12aa
 
 ```diff
 +   Status: CREATED
+    contract SP1Verifier (0xc350F063C13a3Ca21331610fe159E697a5c9c2FB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878)
     +++ description: None
 ```
@@ -75,11 +81,12 @@ Generated with discovered.json: 0x6a6dc2d939e1f253ec61ef7cf0dcf1fe616c12aa
 ## Source code changes
 
 ```diff
-.../Blobstream/SP1Blobstream.sol}                  | 431 ++++++----
- .../blobstream/base/.flat/SuccinctGatewaySP1.sol   | 230 +++++
- .../SuccinctGatewaySP1Multisig/GnosisSafe.sol      | 952 +++++++++++++++++++++
- .../GnosisSafeProxy.p.sol                          |  34 +
- 4 files changed, 1459 insertions(+), 188 deletions(-)
+.../Blobstream/SP1Blobstream.sol}                  |  431 +++---
+ .../blobstream/base/.flat/SP1Verifier.sol          | 1429 ++++++++++++++++++++
+ .../blobstream/base/.flat/SuccinctGatewaySP1.sol   |  230 ++++
+ .../SuccinctGatewaySP1Multisig/GnosisSafe.sol      |  952 +++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   34 +
+ 5 files changed, 2888 insertions(+), 188 deletions(-)
 ```
 
 ## Config/verification related changes

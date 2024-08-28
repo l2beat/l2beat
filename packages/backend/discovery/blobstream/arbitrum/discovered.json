@@ -1,8 +1,8 @@
 {
   "name": "blobstream",
   "chain": "arbitrum",
-  "blockNumber": 247622633,
-  "configHash": "0x5177b39b9c1ee2302bba9b12271ef29dc6286d889ba16d218cef51a9e5bfdbbb",
+  "blockNumber": 247638023,
+  "configHash": "0xb241c4e5e324034045bff1dfb03ceed260317b772787189fd848bcf95093f9af",
   "version": 13,
   "contracts": [
     {
@@ -20,6 +20,10 @@
       "sinceTimestamp": 1719523665,
       "values": {
         "$immutable": true,
+        "blobstreamVerifier": [
+          "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",
+          false
+        ],
         "owner": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878"
       },
       "derivedName": "SP1VerifierGateway"
@@ -127,15 +131,25 @@
         "GUARDIAN_ROLE": "0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041",
         "headerRangeFunctionId_deprecated": "0x949dc389c82c63394889813be437513ebc5d06f43bbc9c1e2eb4b791faade1a0",
         "isRelayerApproved": true,
-        "latestBlock": 2217240,
+        "latestBlock": 2217600,
         "nextHeaderFunctionId_depcrecated": "0x044611c8d01cf88e09811f3270a654e7faf319e96b38f3dd7f9d218c8bb4d0ef",
         "relayers": ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"],
-        "state_proofNonce": 3977,
+        "state_proofNonce": 3978,
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "1.1.0"
       },
       "derivedName": "SP1Blobstream"
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",
+      "sinceTimestamp": 1722645816,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0xc430ff7f31a22c5f7607f3ed2a2f5621af340bc45a44179319cba5761664e1f0",
+        "VERSION": "v1.1.0"
+      }
     },
     {
       "name": "SuccinctGatewaySP1Multisig",
@@ -449,6 +463,15 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB": [
+      "error InvalidProof()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": [
       "constructor(address _singleton)"
