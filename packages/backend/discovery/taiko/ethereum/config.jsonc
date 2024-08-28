@@ -387,7 +387,7 @@
           "handler": {
             "type": "call",
             "method": "function getProvider(uint256 blockId) view returns (address)",
-            "args": ["{{ #blockNumber }}"]
+            "args": ["{{ $$.blockNumber }}"]
           }
         }
       }
