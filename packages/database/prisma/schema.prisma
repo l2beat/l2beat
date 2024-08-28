@@ -326,16 +326,6 @@ model Price {
   @@map("prices")
 }
 
-model SequenceProcessor {
-  id            String   @id @map("id") @db.VarChar(255)
-  lastProcessed Int      @map("last_processed")
-  updatedAt     DateTime @map("updated_at") @db.Timestamp(6)
-  latest        Int      @map("latest")
-  syncedOnce    Boolean  @default(false) @map("synced_once")
-
-  @@map("sequence_processor")
-}
-
 model TvlCleaner {
   repositoryName        String    @id @map("repository_name") @db.VarChar(255)
   hourlyCleanedUntil    DateTime? @map("hourly_cleaned_until") @db.Timestamp(6)
