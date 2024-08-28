@@ -1,11 +1,15 @@
-import { type Bridge, bridges } from '@l2beat/config'
+import { bridges } from '@l2beat/config'
 import {
   type ImplementationChangeReportApiResponse,
-  type ProjectId,
   type ProjectsVerificationStatuses,
 } from '@l2beat/shared-pure'
+import { compact } from 'lodash'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
-import { getLatestTvlUsd } from '../scaling/tvl/utils/get-latest-tvl-usd'
+import {
+  type LatestTvl,
+  get7dTokenBreakdown,
+} from '../scaling/tvl/utils/get-7d-token-breakdown'
+import { getAssociatedTokenWarning } from '../scaling/tvl/utils/get-associated-token-warning'
 import { orderByTvl } from '../scaling/tvl/utils/order-by-tvl'
 import { isAnySectionUnderReview } from '../scaling/utils/is-any-section-under-review'
 import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
@@ -13,59 +17,53 @@ import { getDestination } from './get-destination'
 
 export async function getBridgesSummaryEntries() {
   const [
-    latestTvlUsd,
+    tvl7dBreakdown,
     implementationChangeReport,
     projectsVerificationStatuses,
   ] = await Promise.all([
-    getLatestTvlUsd(),
+    get7dTokenBreakdown({ type: 'bridge' }),
     getImplementationChangeReport(),
     getProjectsVerificationStatuses(),
   ])
 
-  const orderedBridges = orderByTvl(bridges, latestTvlUsd)
-
   return getBridges({
-    projects: orderedBridges,
-    tvl: latestTvlUsd,
+    tvl7dBreakdown,
     implementationChangeReport,
     projectsVerificationStatuses,
   })
 }
 
 interface Params {
-  projects: Bridge[]
-  tvl: Record<ProjectId, number>
+  tvl7dBreakdown: LatestTvl
   implementationChangeReport: ImplementationChangeReportApiResponse
   projectsVerificationStatuses: ProjectsVerificationStatuses
 }
 
 function getBridges(params: Params) {
   const {
-    projects,
-    tvl,
+    tvl7dBreakdown,
     implementationChangeReport,
     projectsVerificationStatuses,
   } = params
-  const entries = projects.map((bridge) => {
-    // getLatestTvl is mostly likely cached at this point
-    const bridgesOnlyTotal = Object.entries(tvl).reduce(
-      (acc, [projectId, value]) => {
-        const isBridge = bridges.find((bridge) => bridge.id === projectId)
+  const entries = bridges.map((bridge) => {
+    const bridgeTvl = tvl7dBreakdown.projects[bridge.id.toString()]
 
-        const valueToAdd = isBridge ? value : 0
-
-        return acc + valueToAdd
-      },
-      0,
-    )
-
-    const bridgeTvl = tvl[bridge.id]
+    const associatedTokenWarning =
+      bridgeTvl && bridgeTvl.breakdown.total > 0
+        ? getAssociatedTokenWarning({
+            associatedRatio:
+              bridgeTvl.breakdown.associated / bridgeTvl.breakdown.total,
+            name: bridge.display.name,
+            associatedTokens: bridge.config.associatedTokens ?? [],
+          })
+        : undefined
 
     const isVerified = !!projectsVerificationStatuses[bridge.id.toString()]
     const hasImplementationChanged =
       !!implementationChangeReport.projects[bridge.id.toString()]
 
     return {
+      id: bridge.id,
       href: `/bridges/projects/${bridge.display.slug}`,
       type: bridge.type,
       shortName: bridge.display.shortName,
@@ -81,15 +79,33 @@ function getBridges(params: Params) {
       ),
       hasImplementationChanged,
       showProjectUnderReview: isAnySectionUnderReview(bridge),
-      tvl: bridgeTvl,
-      bridgesMarketShare: bridgeTvl ? bridgeTvl / bridgesOnlyTotal : undefined,
+      tvl: {
+        breakdown: bridgeTvl?.breakdown,
+        change: bridgeTvl?.change,
+        associatedTokens: bridge.config.associatedTokens ?? [],
+        associatedTokenWarning,
+        warnings: compact([
+          associatedTokenWarning?.sentiment === 'bad' && associatedTokenWarning,
+        ]),
+      },
+      marketShare: bridgeTvl
+        ? bridgeTvl.breakdown.total / tvl7dBreakdown.total
+        : undefined,
       validatedBy: bridge.riskView?.validatedBy,
       category: bridge.display.category,
       warning: bridge.display.warning,
     }
   })
 
-  return entries
+  // Use data we already pulled instead of fetching it again
+  const remappedForOrdering = Object.fromEntries(
+    Object.entries(tvl7dBreakdown.projects).map(([k, v]) => [
+      k,
+      v.breakdown.total,
+    ]),
+  )
+
+  return orderByTvl(entries, remappedForOrdering)
 }
 
 export type BridgesSummaryEntry = Awaited<

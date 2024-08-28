@@ -31,7 +31,7 @@ export const reya: Layer2 = orbitStackL2({
         'https://medium.com/reya-labs',
       ],
     },
-    // activityDataSource: 'Blockchain RPC',
+    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'reya',
@@ -79,14 +79,7 @@ export const reya: Layer2 = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  // Activity data would be inaccurate since reya uses AA and batches user ops in one tx each block (each block has 2 tx before subtraction)
-  //   transactionApi: {
-  //     type: 'rpc',
-  //     defaultUrl: 'https://rpc.reya.network',
-  //     defaultCallsPerMinute: 1500,
-  //     assessCount: subtractOne,
-  //     startBlock: 1,
-  //   },
+  rpcUrl: 'https://rpc.reya.network',
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'GelatoMultisig',

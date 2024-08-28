@@ -267,6 +267,7 @@ export const scroll: Layer2 = {
           functionSignature:
             'function commitBatch(uint8 _version,bytes _parentBatchHeader,bytes[] _chunks,bytes _skippedL1MessageBitmap)',
           sinceTimestamp: new UnixTime(1696782323),
+          untilTimestamp: new UnixTime(1724227247),
         },
       },
       {

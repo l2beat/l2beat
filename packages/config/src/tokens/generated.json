@@ -8073,6 +8073,21 @@
       "supply": "circulatingSupply"
     },
     {
+      "id": "linea:clip-clip-finance",
+      "name": "Clip Finance",
+      "coingeckoId": "clip-finance",
+      "address": "0x4Ea77a86d6E70FfE8Bb947FC86D68a7F086f198a",
+      "symbol": "CLIP",
+      "decimals": 18,
+      "deploymentTimestamp": 1722503987,
+      "coingeckoListingTimestamp": 1723075200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38090/large/2pNT21dw_400x400.jpg?1716483837",
+      "chainId": 59144,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "id": "linea:eth-ether",
       "name": "Ether",
       "coingeckoId": "ethereum",

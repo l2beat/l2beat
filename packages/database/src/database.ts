@@ -14,7 +14,6 @@ import { FinalityRepository } from './other/finality/repository'
 import { L2CostPriceRepository } from './other/l2-cost-price/repository'
 import { L2CostRepository } from './other/l2-cost/repository'
 import { LivenessRepository } from './other/liveness/repository'
-import { SequenceProcessorRepository } from './other/sequence-processor/repository'
 import { VerifierStatusRepository } from './other/verifier-status/repository'
 import { BridgeEscrowRepository } from './token-db/bridge-escrow/repository'
 import { CacheRepository } from './token-db/cache/repository'
@@ -92,7 +91,6 @@ export function createDatabase(config?: PoolConfig) {
     l2Cost: new L2CostRepository(db),
     l2CostPrice: new L2CostPriceRepository(db),
     liveness: new LivenessRepository(db),
-    sequenceProcessor: new SequenceProcessorRepository(db),
     verifierStatus: new VerifierStatusRepository(db),
     // #endregion
   }
