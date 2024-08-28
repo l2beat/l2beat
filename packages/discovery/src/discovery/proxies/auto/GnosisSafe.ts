@@ -73,12 +73,12 @@ export async function detectGnosisSafe(
     values: {
       // TODO: (sz-piotr) Is it always the case for safes?
       $immutable: false,
-      $implementation: masterCopy,
+      $implementation: masterCopy.toString(),
       // TODO: (sz-piotr) Why here, and not in the template?
       multisigThreshold: thresholdString,
       $threshold: Number(threshold),
-      $members: owners,
-      GnosisSafe_modules: modules,
+      $members: owners.map((o) => o.toString()),
+      GnosisSafe_modules: modules.map((m) => m.toString()),
     },
   }
 }

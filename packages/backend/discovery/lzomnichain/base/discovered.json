@@ -3,7 +3,7 @@
   "chain": "base",
   "blockNumber": 16700316,
   "configHash": "0x489ee895d4bd7a38439afd393b89ea7e8a7d6a413f919925b9c3a2cf0a79bfcc",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "LayerZero Multisig",
@@ -1100,7 +1100,8 @@
       "sinceTimestamp": 1689301749,
       "values": {
         "$admin": "0xFe7C30860D01e28371D40434806F4A8fcDD3A098",
-        "$implementation": "0x6BD792911F4B3714E88FbDf32B351632e7d22c70"
+        "$implementation": "0x6BD792911F4B3714E88FbDf32B351632e7d22c70",
+        "$upgradeCount": 3
       }
     },
     {

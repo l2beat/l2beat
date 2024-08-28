@@ -191,6 +191,7 @@ export const immutablex: Layer2 = {
       date: '2021-04-08T00:00:00Z',
       description:
         'Immutable has launched the first phase of its Layer 2 scaling protocol.',
+      type: 'general',
     },
     {
       name: 'IMX Token introduced',
@@ -198,6 +199,7 @@ export const immutablex: Layer2 = {
       date: '2022-06-29T00:00:00Z',
       description:
         'Immutable announce IMX, the native ERC-20 utility token of Immutable X.',
+      type: 'general',
     },
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],

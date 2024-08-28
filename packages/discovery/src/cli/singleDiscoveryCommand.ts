@@ -33,6 +33,7 @@ export const SingleDiscoveryCommand = command({
         initialAddresses: [address],
       },
       {},
+      {},
       configReader,
     )
     const http = new HttpClient()

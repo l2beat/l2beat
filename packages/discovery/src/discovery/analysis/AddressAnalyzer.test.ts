@@ -102,8 +102,8 @@ describe(AddressAnalyzer.name, () => {
           detectProxy: async () => ({
             type: 'EIP1967 proxy',
             values: {
-              $implementation: implementation,
-              $admin: admin,
+              $implementation: implementation.toString(),
+              $admin: admin.toString(),
             },
           }),
         }),
@@ -142,8 +142,8 @@ describe(AddressAnalyzer.name, () => {
         proxyType: 'EIP1967 proxy',
         implementations: [implementation],
         values: {
-          $implementation: implementation,
-          $admin: admin,
+          $implementation: implementation.toString(),
+          $admin: admin.toString(),
           owner: owner.toString(),
         },
         abis: sources.abis,
@@ -224,8 +224,8 @@ describe(AddressAnalyzer.name, () => {
           detectProxy: async () => ({
             type: 'EIP1967 proxy',
             values: {
-              $implementation: implementation,
-              $admin: admin,
+              $implementation: implementation.toString(),
+              $admin: admin.toString(),
             },
           }),
         }),
@@ -264,8 +264,8 @@ describe(AddressAnalyzer.name, () => {
         proxyType: 'EIP1967 proxy',
         implementations: [implementation],
         values: {
-          $implementation: implementation,
-          $admin: admin,
+          $implementation: implementation.toString(),
+          $admin: admin.toString(),
           owner: owner.toString(),
         },
         abis: sources.abis,
@@ -342,8 +342,8 @@ describe(AddressAnalyzer.name, () => {
           detectProxy: async () => ({
             type: 'EIP1967 proxy',
             values: {
-              $implementation: implementation,
-              $admin: admin,
+              $implementation: implementation.toString(),
+              $admin: admin.toString(),
             },
           }),
         }),
@@ -382,8 +382,8 @@ describe(AddressAnalyzer.name, () => {
         proxyType: 'EIP1967 proxy',
         implementations: [implementation],
         values: {
-          $implementation: implementation,
-          $admin: admin,
+          $implementation: implementation.toString(),
+          $admin: admin.toString(),
           owner: owner.toString(),
         },
         abis: sources.abis,
@@ -626,8 +626,8 @@ describe(AddressAnalyzer.name, () => {
         address,
         proxyType: 'EIP1967 proxy',
         values: {
-          $implementation: implementation,
-          $admin: EthereumAddress.random(),
+          $implementation: implementation.toString(),
+          $admin: EthereumAddress.random().toString(),
         },
         unverified: true,
       }

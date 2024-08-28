@@ -3,7 +3,7 @@
   "chain": "base",
   "blockNumber": 14061228,
   "configHash": "0xb9a699dc3638010b7b06fbf9da1dc1ffed4abf642060175f050881214908537d",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "SuccinctFeeVault",
@@ -96,6 +96,7 @@
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0xfb19439fBa9f16aA720be6bE0e53465a9733C964",
+        "$upgradeCount": 2,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",

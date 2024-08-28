@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20532565,
   "configHash": "0xdf8d903153f00ab5c11cced94c598d51921ebd93469ef07a741b26ec201d16d0",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "LivenessModule",
@@ -104,6 +104,7 @@
       "values": {
         "$admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
         "$implementation": "0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846",
+        "$upgradeCount": 3,
         "bridge": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "BRIDGE": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "version": "1.9.0"
@@ -208,6 +209,7 @@
       "values": {
         "$admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
         "$implementation": "0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF",
+        "$upgradeCount": 0,
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "MESSENGER": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
@@ -262,6 +264,7 @@
       "values": {
         "$admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
         "$implementation": "0x2D778797049FE9259d947D1ED8e5442226dFB589",
+        "$upgradeCount": 3,
         "guardian": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
         "GUARDIAN": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
         "L2_ORACLE": "0x56315b90c40730925ec5485cf004d835058518A0",
@@ -337,6 +340,7 @@
       "values": {
         "$admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
         "$implementation": "0xF243BEd163251380e78068d317ae10f26042B292",
+        "$upgradeCount": 4,
         "challenger": "0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824",
         "CHALLENGER": "0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824",
         "deletedOutputs": [
@@ -430,6 +434,7 @@
       "values": {
         "$admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
         "$implementation": "0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d",
+        "$upgradeCount": 3,
         "messenger": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "MESSENGER": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000014",
@@ -477,6 +482,7 @@
       "values": {
         "$admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
         "$implementation": "0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1",
+        "$upgradeCount": 3,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "0x5050F69a9786F081509234F1a7F4684b5E5b76C9",
         "batchInbox": "0xFf00000000000000000000000000000000008453",
@@ -663,6 +669,7 @@
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0x53c165169401764778F780a69701385eb0FF19B7",
+        "$upgradeCount": 3,
         "guardian": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
         "GUARDIAN_SLOT": "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68",
         "paused": false,
@@ -739,6 +746,7 @@
       "values": {
         "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "$implementation": "0x313819736457910aC1Dd21a712a37f3d7595645A",
+        "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -1473,8 +1481,8 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
-    "gnosisSafeModules/DeputyGuardianModule": "0xaf5b0d62e72a14151b44a22d48bafb364c7a48b955581e4d6170558da9355712",
-    "gnosisSafeModules/LivenessModule": "0xd75d1e4e8d40e200f67ee9e7ad3d207c223529d0012960d395b78e88adeef410",
+    "gnosisSafeModules/DeputyGuardianModule": "0x609d56c883a67fb1b7cc98e2b71c1a4014a7cafe743a970ece9aa8dd742b4bf2",
+    "gnosisSafeModules/LivenessModule": "0x8162081df0fcb97a9f284af7abf967750d51b78f421e00d5ceafb3c0dc425164",
     "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
@@ -1482,7 +1490,7 @@
     "opstack/L2OutputOracle": "0x1d833a9768af12de67d65ad7dd09fc4b96db543bde5f5fdc2ff0ea0c571ceadf",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
     "opstack/OptimismPortal": "0xcc1b405a2bf545f58a88bb104ba298351e252fc507b40d0e1ef40bf6bbe34152",
-    "opstack/ProxyAdmin": "0x33b1f6469b9b5eb1761afba4083878f499aa61a2bd78de0d0c7731f5e13640e0",
+    "opstack/ProxyAdmin": "0x3731e451e123b81ff581a6795a991123ea030fa0841313746edc4ee05e01f0a7",
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
     "opstack/SystemConfig": "0x64961a217667137a899a8042e685df30318be47b0a07f69792414fb528d3ffc0"
   },

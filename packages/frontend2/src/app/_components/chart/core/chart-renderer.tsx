@@ -1,8 +1,8 @@
+'use client'
 import { useTheme } from 'next-themes'
 import { useCallback, useEffect, useRef } from 'react'
 import { useEventListener } from '~/hooks/use-event-listener'
 import { useChartContext } from './chart-context'
-import { useChartSetLoading } from './chart-loading-context'
 import { useChartRect } from './chart-rect-context'
 import { getLineDashSegments } from './utils/get-line-dash-segments'
 import { getRenderPaths } from './utils/get-render-paths'
@@ -10,7 +10,6 @@ import { getFillStyle, getStrokeStyle } from './utils/get-style'
 
 export function ChartRenderer() {
   const ref = useRef<HTMLCanvasElement>(null)
-  const setLoading = useChartSetLoading()
   const { setRect } = useChartRect()
   const context = useChartContext()
   const { theme: rawTheme } = useTheme()
@@ -33,7 +32,6 @@ export function ChartRenderer() {
   const render = useCallback(() => {
     const chart = ref.current
     const ctx = chart?.getContext('2d')
-    setLoading(true)
     if (!chart || !ctx || context.columns.length < 1) return
 
     requestAnimationFrame(() => {
@@ -69,9 +67,8 @@ export function ChartRenderer() {
           }
         }
       }
-      setLoading(false)
     })
-  }, [context, theme, setLoading])
+  }, [context, theme])
 
   useEffect(() => {
     setupCanvas()

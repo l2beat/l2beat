@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 16767881,
   "configHash": "0xb33bb13da4f7489364453f4b54700cdb74c636e6841d42f3d517f17c181225ad",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "UpgradeGatekeeper",
@@ -66,6 +66,7 @@
       "values": {
         "$admin": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
         "$implementation": "0x94b9401945a9bc06CE5B69e6dB3c6B671aABc829",
+        "$upgradeCount": 0,
         "getMaster": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
         "getTarget": "0x94b9401945a9bc06CE5B69e6dB3c6B671aABc829"
       }
@@ -95,6 +96,7 @@
       "values": {
         "$admin": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
         "$implementation": "0xf2c351f22b148A9fF583a0F81701471a74E7338e",
+        "$upgradeCount": 0,
         "EMPTY_STRING_KECCAK": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
         "exodusMode": false,
         "firstPendingWithdrawalIndex": 1770,
@@ -135,6 +137,7 @@
       "values": {
         "$admin": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
         "$implementation": "0x95269f9E76540459c797089034dc74b48dF780a2",
+        "$upgradeCount": 0,
         "getMaster": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
         "getTarget": "0x95269f9E76540459c797089034dc74b48dF780a2",
         "networkGovernor": "0x9D7397204F32e0Ee919Ea3475630cdf131086255",
@@ -178,6 +181,7 @@
       "values": {
         "$admin": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
         "$implementation": "0x17e51B3659884d70a306906B5BDD73D1c64a3892",
+        "$upgradeCount": 0,
         "getMaster": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
         "getTarget": "0x17e51B3659884d70a306906B5BDD73D1c64a3892"
       },
@@ -206,6 +210,7 @@
       "values": {
         "$admin": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
         "$implementation": "0xB2639bA16c7A5b0C55cA22D77CdA3D7ED88A5c89",
+        "$upgradeCount": 0,
         "allPairsLength": 72,
         "getMaster": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
         "getTarget": "0xB2639bA16c7A5b0C55cA22D77CdA3D7ED88A5c89",

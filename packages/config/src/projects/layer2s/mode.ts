@@ -61,18 +61,21 @@ export const mode: Layer2 = opStackL2({
       link: 'https://twitter.com/Optimism/status/1768235284494450922',
       date: '2024-03-14T00:00:00Z',
       description: 'Mode starts publishing data to blobs.',
+      type: 'general',
     },
     {
       name: 'Mode Network Mainnet Launch',
       link: 'https://twitter.com/modenetwork/status/1752760726907760933',
       date: '2024-01-31T00:00:00Z',
       description: 'Mode Network is live on mainnet.',
+      type: 'general',
     },
     {
       name: 'MODE token airdrop',
       link: 'https://mode.mirror.xyz/2Aom53lrot8KQ143u8lCfyYvTOkR7LJcIChoyP1Q4wI',
       date: '2024-05-07T00:00:00Z',
       description: 'MODE token launched.',
+      type: 'general',
     },
   ],
   finality: {

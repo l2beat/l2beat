@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20177364,
   "configHash": "0x173054a778ca1e3aff72a367f1fd26191bb31e85d3bb380cda8e3f4ca1dfeca1",
-  "version": 12,
+  "version": 13,
   "contracts": [
     {
       "name": "UpgradeExecutor",
@@ -27,6 +27,7 @@
       "values": {
         "$admin": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9",
         "$implementation": "0x6c21303F5986180B1394d2C89f3e883890E2867b",
+        "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -96,6 +97,7 @@
       "values": {
         "$admin": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9",
         "$implementation": "0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F",
+        "$upgradeCount": 1,
         "activeOutbox": "0x0000000000000000000000000000000000000000",
         "allowedDelayedInboxList": [
           "0x672109752635177ebcb17F2C7e04575A709014BD",
@@ -125,6 +127,7 @@
       "values": {
         "$admin": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9",
         "$implementation": "0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC",
+        "$upgradeCount": 1,
         "bridge": "0x383c03c4EfF819E73409DbC690755a9992393814",
         "l2ToL1BatchNum": 0,
         "l2ToL1Block": 0,
@@ -231,6 +234,7 @@
       "values": {
         "$admin": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9",
         "$implementation": "0x1162084C3C6575121146582Db5BE43189e8CEe6b",
+        "$upgradeCount": 1,
         "allowListEnabled": false,
         "bridge": "0x383c03c4EfF819E73409DbC690755a9992393814",
         "getProxyAdmin": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9",
@@ -255,6 +259,7 @@
       "values": {
         "$admin": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9",
         "$implementation": "0x873484Ba63353C8b71210ce123B465512d408B27",
+        "$upgradeCount": 1,
         "batchCount": 8051,
         "batchPosters": ["0xf5636Df6f86f31668aeAe9bB8a1C4F0ED147926a"],
         "bridge": "0x383c03c4EfF819E73409DbC690755a9992393814",
@@ -298,6 +303,7 @@
       "values": {
         "$admin": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9",
         "$implementation": "0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754",
+        "$upgradeCount": 1,
         "bridge": "0x383c03c4EfF819E73409DbC690755a9992393814",
         "osp": "0x09824fe72BFF474d16D9c2774432E381BBD60662",
         "resultReceiver": "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
@@ -439,6 +445,7 @@
       "values": {
         "$admin": "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9",
         "$implementation": "0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494",
+        "$upgradeCount": 1,
         "bridge": "0x383c03c4EfF819E73409DbC690755a9992393814",
         "rollup": "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A"
       }

@@ -1,3 +1,77 @@
+Generated with discovered.json: 0x8820e1df46deadbe8dc596af1bed82d9a9531578
+
+# Diff at Fri, 23 Aug 2024 09:54:57 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@67597c7d6c810bc726594446890178150240711e block: 19918622
+- current block number: 19918622
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19918622 (main branch discovery), not current.
+
+```diff
+    contract OptimismMintableERC20Factory (0x1D89222C28C3ba471be822203998f27Df4727C0b) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x3e5FaB39eD4eFB4fc29A5201059AE819f2f0418A) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x4cbab69108Aa72151EDa5A3c164eA86845f18438) {
+    +++ description: None
+      values.$upgradeCount:
++        0
+    }
+```
+
+```diff
+    contract OptimismPortal (0x6A12432491bbbE8d3babf75F759766774C778Db4) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract SystemConfig (0x80e73D6BfC73c567032304C3891a06c2d9954d09) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x938D0Bb4B584d4F6f793fCB7808cA2Eea15B69A8) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xE6f24d2C32B3109B18ed33cF08eFb490b1e09C10) {
+    +++ description: None
+      values.$upgradeCount:
++        1
+    }
+```
+
 Generated with discovered.json: 0xa155401972955992bb59a29a1611b9066d037e29
 
 # Diff at Wed, 21 Aug 2024 10:05:30 GMT:

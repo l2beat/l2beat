@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20117905,
   "configHash": "0xbd532d50aee921cf92fede7bc5de97f9045a0e13b17f1abb4df7a6affca962a8",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "Challenge",
@@ -20,6 +20,7 @@
       "values": {
         "$admin": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
         "$implementation": "0x2785D4Af59bf299C1f2DBC5132E72B2eE015B3aC",
+        "$upgradeCount": 1,
         "chain": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE",
         "chainOracle": "0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04",
         "challengeFee": "1500000000000000000",
@@ -57,6 +58,7 @@
       "values": {
         "$admin": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
         "$implementation": "0x79B3E839333a74137e78b0DaF84FC12512a8c704",
+        "$upgradeCount": 1,
         "canonicalStateChain": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE",
         "daOracle": "0x0000000000000000000000000000000000000000",
         "owner": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
@@ -195,6 +197,7 @@
       "values": {
         "$admin": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
         "$implementation": "0xd8C81A0CB0044fC45B51531A8dcc48Ed385937B5",
+        "$upgradeCount": 1,
         "chainHead": 60,
         "challenge": "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd",
         "getHead": {

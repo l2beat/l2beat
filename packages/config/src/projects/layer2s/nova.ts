@@ -348,6 +348,7 @@ export const nova: Layer2 = orbitStackL2({
       ...MILESTONES.MAINNET_OPEN,
       date: '2022-08-09T00:00:00Z',
       link: 'https://medium.com/offchainlabs/its-time-for-a-new-dawn-nova-is-open-to-the-public-a081df1e4ad2',
+      type: 'general',
     },
   ],
   knowledgeNuggets: [

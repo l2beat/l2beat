@@ -1,9 +1,9 @@
 {
   "name": "shared-eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 19925898,
-  "configHash": "0xc23e741729cca75ecb7c0995d99dee62c5adaaa0f0fd1168cc77b702dbe85ae4",
-  "version": 11,
+  "blockNumber": 20613796,
+  "configHash": "0x953356aa385c74d4d9ced1be95d0dcccebf2f0bb8de92877276ed2e8de1a8f33",
+  "version": 13,
   "contracts": [
     {
       "name": "DepositContract",
@@ -12,8 +12,8 @@
       "sinceTimestamp": 1602667372,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0xe4ad160000000000",
-        "get_deposit_root": "0x06f233033a25ed568dec05605644d102da64692d643dc91ff8ccdf8286d70b9f"
+        "get_deposit_count": "0xea40190000000000",
+        "get_deposit_root": "0x8ebb046c4c11f71164eafa7c5b72468cab255b82b1f8e04f805a11439175da71"
       },
       "derivedName": "DepositContract"
     },
@@ -23,13 +23,33 @@
       "sinceTimestamp": 1686348935,
       "values": {
         "$immutable": true,
+        "pausers": [
+          "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+          "0x5050389572f2d220ad927CcbeA0D406831012390",
+          "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+        ],
         "unpauser": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      },
+      "derivedName": "PauserRegistry"
+    },
+    {
+      "name": "UpgradeableBeacon",
+      "address": "0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9",
+      "sinceTimestamp": 1723232219,
+      "values": {
+        "$immutable": true,
+        "implementation": "0xe9FA8F904d97854C7389b68923262ADCC6C27827",
+        "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
       }
     },
     {
       "name": "swETH-Strategy",
       "address": "0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6",
+      "template": "eigenlayer/Strategy",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -42,6 +62,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -52,7 +73,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "140776257791085499899479",
+        "totalShares": "97946583314684146136286",
         "underlyingToken": "0xf951E335afb289353dc249e82926178EaC7DEd78"
       },
       "fieldMeta": {
@@ -87,6 +108,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdAbdB3Cd346B7D5F5779b0B614EdE1CC9DcBA5b7",
+        "$upgradeCount": 1,
         "avs": [
           "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "0xD25c2c5802198CB8541987b73A8db4c9BCaE5cC7",
@@ -99,7 +121,16 @@
           "0xE5445838C475A2980e6a88054ff1514230b83aEb",
           "0xd50E0931703302B080880C45148F5D83ea66aE2a",
           "0xF7fcff55d5FDAf2C3Bbeb140Be5e62a2c7D26Db3",
-          "0xB6827E919b55B45290cf54F006EE4a231e06F088"
+          "0xB6827E919b55B45290cf54F006EE4a231e06F088",
+          "0x1DE75EaAb2df55d467494A172652579E6FA4540E",
+          "0x07E26BF8060e33fA3771d88128b75493750515c1",
+          "0x1F2c296448f692af840843d993fFC0546619Dcdb",
+          "0x22CAc0e6A1465F043428e8AeF737b3cb09D0eEDa",
+          "0xe8E59c6C8B56F2c178f63BCFC4ce5e5e2359c8fc",
+          "0xb3AcAF09a1B801E36655B786da4EAA6aE9F5DC37",
+          "0x18343Aa10e3D2F3A861e5649627324aEAD987Adf",
+          "0xCE06c5fe42d22fF827A519396583Fd9f5176E3D3",
+          "0xE7D0894Ac9266f5cbe8f8E750aC6cbe128FbbeB7"
         ],
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
@@ -114,7 +145,11 @@
     {
       "name": "ankrETH-Strategy",
       "address": "0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff",
+      "template": "eigenlayer/Strategy",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -127,6 +162,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -137,7 +173,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "1217096315759706759374",
+        "totalShares": "1083183054430671500067",
         "underlyingToken": "0xE95A203B1a91a908F9B9CE46459d101078c2c3cb"
       },
       "fieldMeta": {
@@ -159,7 +195,11 @@
     {
       "name": "rETH-Strategy",
       "address": "0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2",
+      "template": "eigenlayer/Strategy",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -172,6 +212,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -182,7 +223,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "48078063183066191952609",
+        "totalShares": "38028181483822690358223",
         "underlyingToken": "0xae78736Cd615f374D3085123A210448E74Fc6393"
       },
       "fieldMeta": {
@@ -266,7 +307,11 @@
     {
       "name": "METH-Strategy",
       "address": "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2",
+      "template": "eigenlayer/Strategy",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -279,6 +324,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -289,7 +335,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "157676250786951044854659",
+        "totalShares": "145535746783040082948865",
         "underlyingToken": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa"
       },
       "fieldMeta": {
@@ -316,7 +362,7 @@
       "derivedName": "EigenLayerBeaconOracle"
     },
     {
-      "name": "EigenlayerProxiedMultisig",
+      "name": "EigenLayerExecutorMultisig",
       "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -334,7 +380,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 10,
+        "nonce": 15,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -354,6 +400,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x1784BE6401339Fc0Fedf7E9379409f5c1BfE9dda",
+        "$upgradeCount": 3,
         "beaconChainETHStrategy": "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0",
         "DELEGATION_APPROVAL_TYPEHASH": "0x14bde674c9f64b2ad00eaaee4a8bed1fabef35c7507e3c5b9cfc9436909a2dad",
         "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
@@ -388,9 +435,48 @@
       }
     },
     {
+      "name": "GnosisSafe",
+      "address": "0x5050389572f2d220ad927CcbeA0D406831012390",
+      "template": "GnosisSafe",
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1686325811,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0xEFca484E497a9de170Da32abfa11650957dD2a95",
+          "0x2E158da11961426E2A1Cc9e79f40244486b6845C",
+          "0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4",
+          "0x4a3CD82B73821d075799680AcDff3e884B726777",
+          "0xA935b0d2a529abb7F048CB56dd8B876ed5d8bD99",
+          "0x34D64c402cA43C1c4B368e16130C64aC245718C6",
+          "0x3C20b05f44ef008A5b848761e58e5Ca9594163e9",
+          "0x82328b7Cd136296bac5c56079A64E58a44d790e2",
+          "0x726b2EF6a771f452Cb1b1ac3C3acF5A46b99c02B",
+          "0xcC82E76106647C921Ed3a6Af869740cce98EC0C7",
+          "0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256",
+          "0xcf09EA5E7625E6E3F3345CACa1d288CcD1F39084",
+          "0xEb94033d1331931cC0539C480Ca39Bf5f6916E89",
+          "0x57af860e3a1C16641CDDDa92898266D2df7Dfa71"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0xfbfd4ff7bef5c0320a947b1a9f8c619140699fe97b75752b6683fab61bd6c249",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 14 (7%)",
+        "nonce": 18,
+        "VERSION": "1.3.0"
+      }
+    },
+    {
       "name": "cbETH-Strategy",
       "address": "0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc",
+      "template": "eigenlayer/Strategy",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -403,6 +489,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -413,7 +500,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "22279527997103365354377",
+        "totalShares": "15526172953943229530104",
         "underlyingToken": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
       },
       "fieldMeta": {
@@ -435,7 +522,11 @@
     {
       "name": "osETH-Strategy",
       "address": "0x57ba429517c3473B6d34CA9aCd56c0e735b94c02",
+      "template": "eigenlayer/Strategy",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -448,6 +539,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -458,7 +550,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "18401006901753451049855",
+        "totalShares": "18093462354604090000118",
         "underlyingToken": "0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38"
       },
       "fieldMeta": {
@@ -488,9 +580,51 @@
       }
     },
     {
+      "name": "StrategyFactory",
+      "address": "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
+      "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1723232243,
+      "values": {
+        "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+        "$implementation": "0x3e07cc2D34C8E0965f5BA45Ac1E960e535155c74",
+        "$upgradeCount": 1,
+        "owner": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+        "paused": 0,
+        "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
+        "strategyBeacon": "0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9",
+        "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
+      }
+    },
+    {
+      "name": "reALT-Strategy",
+      "address": "0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4",
+      "unverified": true,
+      "sinceTimestamp": 1724651639,
+      "values": { "$immutable": true },
+      "derivedName": ""
+    },
+    {
+      "name": "",
+      "address": "0x73a18a6304D05B495ecb161Dbf1ab496461bBf2e",
+      "unverified": true,
+      "sinceTimestamp": 1724651795,
+      "values": { "$immutable": true }
+    },
+    {
       "name": "wBETH-Strategy",
       "address": "0x7CA911E83dabf90C90dD3De5411a10F1A6112184",
+      "template": "eigenlayer/Strategy",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -503,6 +637,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -513,7 +648,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "71361123401776509139177",
+        "totalShares": "38507385174233613401627",
         "underlyingToken": "0xa2E3356610840701BDf5611a53974510Ae27E2e1"
       },
       "fieldMeta": {
@@ -547,6 +682,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x4bB6731B02314d40aBbfFBC4540f508874014226",
+        "$upgradeCount": 3,
         "eigenPodManager": "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
         "MAX_WITHDRAWAL_DELAY_BLOCKS": 216000,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
@@ -570,6 +706,7 @@
       "values": {
         "$admin": "0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9",
         "$implementation": "0xB91c69Af3eE022bd0a59Da082945914BFDcEFFE3",
+        "$upgradeCount": 1,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x5dd88b27402a52ec3e227839f0f448d699f04c912202aa0d2b25bb86127a6e96",
@@ -606,6 +743,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x70f44C13944d49a236E3cD7a94f48f5daB6C619b",
+        "$upgradeCount": 3,
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "DEPOSIT_TYPEHASH": "0x4337f82d142e41f2a8c10547cd8c859bddb92262a61058e77842e24d9dea9224",
         "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
@@ -628,9 +766,12 @@
           "0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
           "0xAe60d8180437b5C34bB956822ac2710972584473",
           "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2",
-          "0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7"
+          "0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
+          "0x8fEb56C8802Bda01F3cC1802D44f6Cb469Ac9B22",
+          "0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4",
+          "0x73a18a6304D05B495ecb161Dbf1ab496461bBf2e"
         ],
-        "strategyWhitelister": "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
+        "strategyWhitelister": "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
       },
       "derivedName": "StrategyManager"
     },
@@ -676,6 +817,11 @@
         {
           "permission": "upgrade",
           "target": "0x57ba429517c3473B6d34CA9aCd56c0e735b94c02",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
           "via": []
         },
         {
@@ -743,7 +889,11 @@
     {
       "name": "sfrxETH-Strategy",
       "address": "0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
+      "template": "eigenlayer/Strategy",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -756,6 +906,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -766,7 +917,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "28017951432683341737501",
+        "totalShares": "12536996441977877375318",
         "underlyingToken": "0xac3E018457B222d93114458476f3E3416Abbe38F"
       },
       "fieldMeta": {
@@ -786,6 +937,14 @@
       "derivedName": "StrategyBaseTVLLimits"
     },
     {
+      "name": "sUSDe-Strategy",
+      "address": "0x8fEb56C8802Bda01F3cC1802D44f6Cb469Ac9B22",
+      "unverified": true,
+      "sinceTimestamp": 1724508563,
+      "values": { "$immutable": true },
+      "derivedName": ""
+    },
+    {
       "name": "EigenPodManager",
       "address": "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
       "proxyType": "EIP1967 proxy",
@@ -801,13 +960,14 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xe4297e3DaDBc7D99e26a2954820f514CB50C5762",
+        "$upgradeCount": 3,
         "beaconChainETHStrategy": "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0",
         "beaconChainOracle": "0x343907185b71aDF0eBa9567538314396aa985442",
         "delegationManager": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "denebForkTimestamp": 1710338135,
         "eigenPodBeacon": "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
-        "numPods": 31168,
+        "numPods": 31912,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
@@ -819,7 +979,11 @@
     {
       "name": "stETH-Strategy",
       "address": "0x93c4b944D05dfe6df7645A86cd2206016c51564D",
+      "template": "eigenlayer/Strategy",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -832,6 +996,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -842,7 +1007,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "992329710678981579743880",
+        "totalShares": "864884497082513522478699",
         "underlyingToken": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
       },
       "fieldMeta": {
@@ -864,7 +1029,11 @@
     {
       "name": "ETHx-Strategy",
       "address": "0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d",
+      "template": "eigenlayer/Strategy",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -877,6 +1046,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -887,7 +1057,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "104648528140155183600493",
+        "totalShares": "80505703881533903207130",
         "underlyingToken": "0xA35b1B31Ce002FBF2058D22F30f95D405200A15b"
       },
       "fieldMeta": {
@@ -909,7 +1079,11 @@
     {
       "name": "OETH-Strategy",
       "address": "0xa4C637e0F704745D182e4D38cAb7E7485321d059",
+      "template": "eigenlayer/Strategy",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -922,6 +1096,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -932,7 +1107,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "15517323551424446652970",
+        "totalShares": "10507271981848201912580",
         "underlyingToken": "0x856c4Efb76C1D1AE02e20CEB03A2A6a08b0b8dC3"
       },
       "fieldMeta": {
@@ -968,7 +1143,11 @@
     {
       "name": "bEIGEN-Strategy",
       "address": "0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
+      "template": "eigenlayer/Strategy",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -981,20 +1160,39 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x27e7a3A81741B9fcc5Ad7edCBf9F8a72a5c00428",
+        "$upgradeCount": 1,
         "EIGEN": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "69303886082612051926539587",
+        "totalShares": "121449865284251007549141652",
         "underlyingToken": "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
+      },
+      "fieldMeta": {
+        "getTVLLimits": {
+          "severity": "LOW",
+          "description": "Maximum TVL of the strategy."
+        },
+        "maxPerDeposit": {
+          "severity": "LOW",
+          "description": "Maximum value of one deposit transaction"
+        },
+        "maxTotalDeposits": {
+          "severity": "LOW",
+          "description": "Same as TVL limit"
+        }
       },
       "derivedName": "EigenStrategy"
     },
     {
       "name": "RiverV1-Strategy",
       "address": "0xAe60d8180437b5C34bB956822ac2710972584473",
+      "template": "eigenlayer/Strategy",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1007,6 +1205,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
           "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -1017,7 +1216,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "9895619834373726317150",
+        "totalShares": "9889814839982992529413",
         "underlyingToken": "0x8c1BEd5b9a0928467c9B1341Da1D7BD5e10b6549"
       },
       "fieldMeta": {
@@ -1053,7 +1252,7 @@
       }
     },
     {
-      "name": "EigenlayerTokenMultisig",
+      "name": "EigenLayerTokenMultisig",
       "address": "0xbb00DDa2832850a43840A3A86515E3Fe226865F2",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -1076,13 +1275,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 24,
+        "nonce": 29,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "EigenlayerOperationsMultisig",
+      "name": "EigenLayerOperationsMultisig",
       "address": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -1104,7 +1303,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 39,
+        "nonce": 50,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1174,6 +1373,7 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xF3234220163a757edf1E11a8a085638D9B236614",
+        "$upgradeCount": 3,
         "delegation": "0x0000000000000000000000000000000000000000",
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -1181,6 +1381,24 @@
         "strategyManager": "0x0000000000000000000000000000000000000000"
       },
       "derivedName": "Slasher"
+    },
+    {
+      "name": "StrategyBase",
+      "address": "0xe9FA8F904d97854C7389b68923262ADCC6C27827",
+      "sinceTimestamp": 1723232207,
+      "values": {
+        "$immutable": true,
+        "explanation": "Base Strategy implementation to inherit from for more complex implementations",
+        "paused": 0,
+        "pauserRegistry": "0x0000000000000000000000000000000000000000",
+        "sharesToUnderlying": [],
+        "sharesToUnderlyingView": [],
+        "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+        "totalShares": 0,
+        "underlyingToken": "0x0000000000000000000000000000000000000000",
+        "underlyingToShares": [],
+        "underlyingToSharesView": []
+      }
     },
     {
       "name": "EIGEN token",
@@ -1197,6 +1415,7 @@
       "values": {
         "$admin": "0xB8915E195121f2B5D989Ec5727fd47a5259F1CEC",
         "$implementation": "0x7EC354C84680112d3cfF1544ec1Eb19ca583700b",
+        "$upgradeCount": 3,
         "bEIGEN": "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
@@ -1219,7 +1438,7 @@
       "derivedName": "Eigen"
     },
     {
-      "name": "EigenlayerCommunityMultisig",
+      "name": "EigenLayerCommunityMultisig",
       "address": "0xFEA47018D632A77bA579846c840d5706705Dc598",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -1257,33 +1476,47 @@
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x065Ed65389c6EC785cD89fcb2e6A7547761eBeA4" },
+    { "address": "0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256" },
     { "address": "0x17919FAC7024d5b770322E5Cb81607D247654116" },
     { "address": "0x27ff193A6A1574A611E21c39FDA636fA1d61ba30" },
+    { "address": "0x2E158da11961426E2A1Cc9e79f40244486b6845C" },
     { "address": "0x30dd80F21aD9222Ce8f33b429fC0Fe25655Fe88a" },
     { "address": "0x313011Ee87b12700E29B0D1136Ae3d64665F3939" },
     { "address": "0x33E816008E7bc7798A73d0eaa640CC24f34d1626" },
     { "address": "0x34C37613e1680efD9e203C979658e1d058b4B2BC" },
+    { "address": "0x34D64c402cA43C1c4B368e16130C64aC245718C6" },
+    { "address": "0x3C20b05f44ef008A5b848761e58e5Ca9594163e9" },
     { "address": "0x422e2F724faFE75F3635458aD7D3Ac803DCD7ff1" },
+    { "address": "0x4a3CD82B73821d075799680AcDff3e884B726777" },
+    { "address": "0x57af860e3a1C16641CDDDa92898266D2df7Dfa71" },
     { "address": "0x5b73C5498c1E3b4dbA84de0F1833c4a029d90519" },
     { "address": "0x65C4799061c0D1e3E87ADdB65b02E92a558F842F" },
     { "address": "0x68a9Ed81BD90c07bA87072fd8055BC54BeAb3B36" },
     { "address": "0x6A662c5DdCe0b76BD081b8A4ec3A4F8a671b0b1f" },
+    { "address": "0x726b2EF6a771f452Cb1b1ac3C3acF5A46b99c02B" },
     { "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54" },
     { "address": "0x76d3A362313BAd49B6380B75aB7fC142a3EFf835" },
     { "address": "0x7cF4888613F744aB4f3bD688eF54E6B31F92A09B" },
     { "address": "0x80cb2DA66A3ccb6064f16B15B6ae11d8E089C6D7" },
+    { "address": "0x82328b7Cd136296bac5c56079A64E58a44d790e2" },
     { "address": "0x8ffCF07A59631f0578f3E84B51C48cF0dEADCd95" },
     { "address": "0x97b4A6E0471A7c5906fF1Cc2a5970ed569B04815" },
+    { "address": "0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4" },
     { "address": "0xa2425B00F9A9457AEdd51d4C36d9917eA1Aa7a02" },
+    { "address": "0xA935b0d2a529abb7F048CB56dd8B876ed5d8bD99" },
     { "address": "0xAF4D94Cd299211de542530399290877E2c85F061" },
     { "address": "0xb7Ae34BB33da55f12797e793E01e63a17B11d108" },
     { "address": "0xb82C36F6C5a3CD345C0954d90c68e26528014aDD" },
     { "address": "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0" },
     { "address": "0xc49735BC14F2fEC11325AcC96ecefD69113de36d" },
+    { "address": "0xcC82E76106647C921Ed3a6Af869740cce98EC0C7" },
+    { "address": "0xcf09EA5E7625E6E3F3345CACa1d288CcD1F39084" },
     { "address": "0xe37756BEdDC89e94A8d557fd5b95a4D2a57e9D60" },
     { "address": "0xe7fFd467F7526abf9c8796EDeE0AD30110419127" },
     { "address": "0xe8F09A9D42aEA0a3B393aD06F25CF512eA51707e" },
-    { "address": "0xeD7Ef087d1C01ecCA9a9688a44aaeDDEf4ea560E" }
+    { "address": "0xEb94033d1331931cC0539C480Ca39Bf5f6916E89" },
+    { "address": "0xeD7Ef087d1C01ecCA9a9688a44aaeDDEf4ea560E" },
+    { "address": "0xEFca484E497a9de170Da32abfa11650957dD2a95" }
   ],
   "abis": {
     "0x00000000219ab540356cBB839Cbe05303d7705Fa": [
@@ -1302,6 +1535,16 @@
       "function setIsPauser(address newPauser, bool canPause)",
       "function setUnpauser(address newUnpauser)",
       "function unpauser() view returns (address)"
+    ],
+    "0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9": [
+      "constructor(address implementation_)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function implementation() view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeTo(address newImplementation)"
     ],
     "0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1568,6 +1811,37 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0x3e07cc2D34C8E0965f5BA45Ac1E960e535155c74": [
+      "constructor(address _strategyManager)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address indexed account, uint256 newPausedStatus)",
+      "event PauserRegistrySet(address pauserRegistry, address newPauserRegistry)",
+      "event StrategyBeaconModified(address previousBeacon, address newBeacon)",
+      "event StrategySetForToken(address token, address strategy)",
+      "event TokenBlacklisted(address token)",
+      "event Unpaused(address indexed account, uint256 newPausedStatus)",
+      "function blacklistTokens(address[] tokens)",
+      "function deployNewStrategy(address token) returns (address newStrategy)",
+      "function deployedStrategies(address) view returns (address)",
+      "function initialize(address _initialOwner, address _pauserRegistry, uint256 _initialPausedStatus, address _strategyBeacon)",
+      "function isBlacklisted(address) view returns (bool)",
+      "function owner() view returns (address)",
+      "function pause(uint256 newPausedStatus)",
+      "function pauseAll()",
+      "function paused(uint8 index) view returns (bool)",
+      "function paused() view returns (uint256)",
+      "function pauserRegistry() view returns (address)",
+      "function removeStrategiesFromWhitelist(address[] strategiesToRemoveFromWhitelist)",
+      "function renounceOwnership()",
+      "function setPauserRegistry(address newPauserRegistry)",
+      "function setThirdPartyTransfersForbidden(address strategy, bool value)",
+      "function strategyBeacon() view returns (address)",
+      "function strategyManager() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function unpause(uint256 newPausedStatus)",
+      "function whitelistStrategies(address[] strategiesToWhitelist, bool[] thirdPartyTransfersForbiddenValues)"
+    ],
     "0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -1614,6 +1888,9 @@
       "function userWithdrawalsLength(address user) view returns (uint256)",
       "function withdrawalDelayBlocks() view returns (uint256)"
     ],
+    "0x5050389572f2d220ad927CcbeA0D406831012390": [
+      "constructor(address _singleton)"
+    ],
     "0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1645,6 +1922,17 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)",
       "function upgradeTo(address newImplementation)"
+    ],
+    "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0x70f44C13944d49a236E3cD7a94f48f5daB6C619b": [
       "constructor(address _delegation, address _eigenPodManager, address _slasher)",
@@ -2176,6 +2464,36 @@
       "function updateBeaconChainOracle(address newBeaconChainOracle)",
       "function withdrawSharesAsTokens(address podOwner, address destination, uint256 shares)"
     ],
+    "0xe9FA8F904d97854C7389b68923262ADCC6C27827": [
+      "constructor(address _strategyManager)",
+      "event ExchangeRateEmitted(uint256 rate)",
+      "event Initialized(uint8 version)",
+      "event Paused(address indexed account, uint256 newPausedStatus)",
+      "event PauserRegistrySet(address pauserRegistry, address newPauserRegistry)",
+      "event StrategyTokenSet(address token, uint8 decimals)",
+      "event Unpaused(address indexed account, uint256 newPausedStatus)",
+      "function deposit(address token, uint256 amount) returns (uint256 newShares)",
+      "function explanation() pure returns (string)",
+      "function initialize(address _underlyingToken, address _pauserRegistry)",
+      "function pause(uint256 newPausedStatus)",
+      "function pauseAll()",
+      "function paused(uint8 index) view returns (bool)",
+      "function paused() view returns (uint256)",
+      "function pauserRegistry() view returns (address)",
+      "function setPauserRegistry(address newPauserRegistry)",
+      "function shares(address user) view returns (uint256)",
+      "function sharesToUnderlying(uint256 amountShares) view returns (uint256)",
+      "function sharesToUnderlyingView(uint256 amountShares) view returns (uint256)",
+      "function strategyManager() view returns (address)",
+      "function totalShares() view returns (uint256)",
+      "function underlyingToShares(uint256 amountUnderlying) view returns (uint256)",
+      "function underlyingToSharesView(uint256 amountUnderlying) view returns (uint256)",
+      "function underlyingToken() view returns (address)",
+      "function unpause(uint256 newPausedStatus)",
+      "function userUnderlying(address user) returns (uint256)",
+      "function userUnderlyingView(address user) view returns (uint256)",
+      "function withdraw(address recipient, address token, uint256 amountShares)"
+    ],
     "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2232,6 +2550,7 @@
     ]
   },
   "usedTemplates": {
+    "eigenlayer/Strategy": "0x9c6bfc5483a4d980895089345ce5607d422a8a656b3ec1f630257081474a2526",
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"

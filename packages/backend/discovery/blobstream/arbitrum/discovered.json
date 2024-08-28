@@ -3,7 +3,7 @@
   "chain": "arbitrum",
   "blockNumber": 208089280,
   "configHash": "0x4dff8d7b222241b058a0a2d54be800864aecef46df03c61606f7c7f313a82491",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "SuccinctFeeVault",
@@ -106,6 +106,7 @@
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0xfb19439fBa9f16aA720be6bE0e53465a9733C964",
+        "$upgradeCount": 2,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",

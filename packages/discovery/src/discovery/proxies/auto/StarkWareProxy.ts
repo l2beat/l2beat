@@ -127,9 +127,9 @@ export async function detectStarkWareProxy(
     type: 'StarkWare proxy',
     values: {
       $immutable: isFinal,
-      $admin: proxyGovernance,
-      $implementation: implementation,
-      StarkWareProxy_callImplementation: callImplementation,
+      $admin: proxyGovernance.map((g) => g.toString()),
+      $implementation: implementation.toString(),
+      StarkWareProxy_callImplementation: callImplementation?.toString(),
       // TODO: (sz-piotr) should be a property of the $admin permission
       StarkWareProxy_upgradeDelay: upgradeDelay,
     },
@@ -249,8 +249,8 @@ async function getStarkWareDiamond(
     type: 'StarkWare diamond',
     values: {
       $immutable: isFinal,
-      $admin: proxyGovernance,
-      $implementation: implementations,
+      $admin: proxyGovernance.map((g) => g.toString()),
+      $implementation: implementations.map((i) => i.toString()),
       // TODO: (sz-piotr) should be a property of the $admin permission
       StarkWareDiamond_upgradeDelay: upgradeDelay,
     },

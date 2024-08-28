@@ -4,7 +4,6 @@ import { getErrorMessage } from '../../utils/getErrorMessage'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { IProvider } from '../provider/IProvider'
 import { Handler, HandlerResult } from './Handler'
-import { SCOPE_VARIABLE_PREFIX } from './reference'
 
 export async function executeHandlers(
   provider: IProvider,
@@ -42,9 +41,7 @@ function orderByDependencies(handlers: Handler[]): Handler[][] {
     const batch: Handler[] = []
     for (const handler of remaining) {
       if (
-        handler.dependencies.every(
-          (x) => known.has(x) || x.startsWith(SCOPE_VARIABLE_PREFIX),
-        )
+        handler.dependencies.every((x) => known.has(x) || x.startsWith('$'))
       ) {
         batch.push(handler)
       }

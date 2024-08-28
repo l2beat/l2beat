@@ -1,5 +1,5 @@
 import { Insertable, Selectable } from 'kysely'
-import { Deployment } from '../../kysely/generated/types'
+import { Deployment } from '../../kysely/token-db/types'
 
 export interface DeploymentRecord {
   id: string

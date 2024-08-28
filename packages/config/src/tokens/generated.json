@@ -122,6 +122,21 @@
       "supply": "zero"
     },
     {
+      "id": "azero-aleph-zero",
+      "name": "Aleph Zero",
+      "coingeckoId": "aleph-zero",
+      "address": "0xdD0ae774F7E300CdAA4EA371cD55169665Ee6AFe",
+      "symbol": "AZERO",
+      "decimals": 18,
+      "deploymentTimestamp": 1721400911,
+      "coingeckoListingTimestamp": 1643328000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/17212/large/azero-logo_coingecko.png?1698147162",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "aleph-aleph.im-v2",
       "name": "aleph.im v2",
       "coingeckoId": "aleph",
@@ -344,7 +359,8 @@
       "iconUrl": "https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg?1721358242",
       "chainId": 1,
       "source": "canonical",
-      "supply": "zero"
+      "supply": "zero",
+      "excludeFromTotal": true
     },
     {
       "id": "arpa-arpa-token",
@@ -8053,6 +8069,21 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/34288/large/r8A3J3kf_400x400.jpg?1704455147",
       "chainId": 42766,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "id": "linea:clip-clip-finance",
+      "name": "Clip Finance",
+      "coingeckoId": "clip-finance",
+      "address": "0x4Ea77a86d6E70FfE8Bb947FC86D68a7F086f198a",
+      "symbol": "CLIP",
+      "decimals": 18,
+      "deploymentTimestamp": 1722503987,
+      "coingeckoListingTimestamp": 1723075200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38090/large/2pNT21dw_400x400.jpg?1716483837",
+      "chainId": 59144,
       "source": "native",
       "supply": "circulatingSupply"
     },

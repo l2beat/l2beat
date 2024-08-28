@@ -40,6 +40,7 @@ export const amarok: Bridge = {
       link: 'https://blog.connext.network/connexts-amarok-upgrade-is-live-683099d61cbb',
       date: '2023-02-02T00:00:00Z',
       description: 'Connext Amarok mainnet deployment.',
+      type: 'general',
     },
     {
       name: 'Connext Amarok announced',
@@ -47,11 +48,13 @@ export const amarok: Bridge = {
       date: '2022-05-11T00:00:00Z',
       description:
         'The new, modular architecture for Connext Amarok has been announced.',
+      type: 'general',
     },
     {
       name: 'Bacco Upgrade',
       date: '2023-12-07T00:00:00Z',
       link: 'https://medium.com/connext/introducing-the-bacco-network-upgrade-73ad19cee9ed',
+      type: 'general',
     },
   ],
   config: {

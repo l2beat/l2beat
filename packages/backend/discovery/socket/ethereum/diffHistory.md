@@ -1,4 +1,58 @@
-Generated with discovered.json: 0x93269995904c8b6da4bf5a27b6ebd8ad1504d7ef
+Generated with discovered.json: 0x10686801e1653785c84c84f31e113bada7d8f27b
+
+# Diff at Wed, 28 Aug 2024 09:14:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e994ce3db09d104c0549bcc88bb0de2f5d3b999e block: 20577569
+- current block number: 20626116
+
+## Description
+
+New plugs and vaults on ethereum. (added to socket.ts, see list of new vaults in added contracts below)
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.89:
++        "0xe38Dccb8Bd138c326E3Df926ADD9dE71a442837F"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20577569 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract USDe Vault Lyra (0x26Cf1Dc84694E04277F2Fe4C13E43597c6010C2A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract sDAI Vault Lyra (0x613e87BE1cd75dEBC5e6e56a2AF2fED84162C142)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WETH Vault Reya (0x64dF894688c5052BeAdC35371cF69151Ebc5D658)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DAI Vault Lyra (0x7E1d17b580dD4F89037DB331430eAEe8B8e50c91)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xdd2c762dc5afedea76043bf6696c0f669b419d60
 
 # Diff at Wed, 21 Aug 2024 14:23:46 GMT:
 
