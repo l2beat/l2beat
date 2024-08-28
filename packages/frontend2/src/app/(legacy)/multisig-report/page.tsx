@@ -1,8 +1,8 @@
 import { ContentWrapper } from '~/app/_components/content-wrapper'
-import { ReportBanner } from './_components/report-banner'
-import { ReportDownloadButton } from './_components/report-download-button'
 import { Logo } from '~/app/_components/logo'
 import { PolygonLogo } from '~/icons/polygon-logo'
+import { ReportBanner } from './_components/report-banner'
+import { ReportDownloadButton } from './_components/report-download-button'
 
 const multisigReportUrl =
   'https://drive.google.com/file/d/1w__7gL91tDg81Nyq9NohC1R6MVMSEzpD/view'
