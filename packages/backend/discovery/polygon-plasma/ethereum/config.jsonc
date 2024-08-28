@@ -107,15 +107,6 @@
     "ValidatorShare": {
       "ignoreMethods": ["getRewardPerShare"]
     },
-    "Timelock": {
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
-      }
-    },
     "MaticWETH": {
       "ignoreInWatchMode": ["totalSupply"]
     }
