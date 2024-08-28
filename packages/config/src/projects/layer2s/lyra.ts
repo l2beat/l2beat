@@ -73,6 +73,29 @@ export const lyra: Layer2 = opStackL2({
     ),
   ],
   nonTemplateEscrows: [
+    // manually added with `yarn socket-convert` script and latest json: https://github.com/SocketDotTech/socket-plugs/blob/295ef847031ae5260361d67a5b15b9a44fe033f7/deployments/superbridge/prod_lyra_addresses.json
+    {
+      address: EthereumAddress('0x7E1d17b580dD4F89037DB331430eAEe8B8e50c91'),
+      sinceTimestamp: new UnixTime(1724140259),
+      source: 'external',
+      bridge: {
+        name: 'Socket bridge',
+        slug: 'socket',
+      },
+      tokens: ['DAI'],
+      chain: 'ethereum',
+    },
+    {
+      address: EthereumAddress('0x613e87BE1cd75dEBC5e6e56a2AF2fED84162C142'),
+      sinceTimestamp: new UnixTime(1724140379),
+      source: 'external',
+      bridge: {
+        name: 'Socket bridge',
+        slug: 'socket',
+      },
+      tokens: ['sDAI'],
+      chain: 'ethereum',
+    },
     // socket superbridge contracts from https://github.com/SocketDotTech/socket-plugs/blob/main/deployments/superbridge/prod_lyra_addresses.json
     {
       address: EthereumAddress('0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d'),
