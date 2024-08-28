@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x6f4b1eccf8661b1b8ad595c5edfa34fa4a6c17ad
+Generated with discovered.json: 0x199774567c1d7eed49edb82f600fefabebcaa7f1
 
-# Diff at Tue, 27 Aug 2024 17:20:54 GMT:
+# Diff at Wed, 28 Aug 2024 10:45:49 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@cf2dd34fdc5bce846ae811aa246ba203fc03f637 block: 14061228
-- current block number: 18994948
+- current block number: 19026298
 
 ## Description
 
@@ -18,7 +18,7 @@ Generated with discovered.json: 0x6f4b1eccf8661b1b8ad595c5edfa34fa4a6c17ad
 ## Watched changes
 
 ```diff
-    contract BlobstreamX (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
     +++ description: None
       values.$implementation:
 -        "0xfb19439fBa9f16aA720be6bE0e53465a9733C964"
@@ -62,16 +62,24 @@ Generated with discovered.json: 0x6f4b1eccf8661b1b8ad595c5edfa34fa4a6c17ad
 
 ```diff
 +   Status: CREATED
-    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878)
     +++ description: None
 ```
 
 ## Source code changes
 
 ```diff
-.../BlobstreamX/SP1Blobstream.sol}                 | 431 ++++++++++++---------
- .../blobstream/base/.flat/SP1VerifierGateway.sol   | 230 +++++++++++
- 2 files changed, 473 insertions(+), 188 deletions(-)
+.../Blobstream/SP1Blobstream.sol}                  | 431 ++++++----
+ .../blobstream/base/.flat/SuccinctGatewaySP1.sol   | 230 +++++
+ .../SuccinctGatewaySP1Multisig/GnosisSafe.sol      | 952 +++++++++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |  34 +
+ 4 files changed, 1459 insertions(+), 188 deletions(-)
 ```
 
 ## Config/verification related changes
@@ -81,12 +89,33 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 14061228 (main branch discovery), not current.
 
 ```diff
-    contract BlobstreamX (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    contract BlobstreamMultisig (0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6) {
     +++ description: None
+      name:
+-        "BlobstreamXMultisig"
++        "BlobstreamMultisig"
+    }
+```
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: None
+      name:
+-        "BlobstreamX"
++        "Blobstream"
       template:
 +        "blobstream/SP1Blobstream"
       errors:
 +        {"isRelayerApproved":"Execution reverted"}
+    }
+```
+
+```diff
+    contract SuccinctGatewayMultisig (0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3) {
+    +++ description: None
+      name:
+-        "SuccinctMultisig"
++        "SuccinctGatewayMultisig"
     }
 ```
 

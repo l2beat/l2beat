@@ -1,13 +1,13 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { ProjectDiscovery } from '../../../../../../../discovery/ProjectDiscovery'
-import { DaExitWindowRisk } from '../../../../types'
-import { DaAttestationSecurityRisk } from '../../../../types/DaAttestationSecurityRisk'
-import { CELESTIA_BLOBSTREAM } from './template'
+import { ProjectDiscovery } from '../../../../../../../../discovery/ProjectDiscovery'
+import { DaAttestationSecurityRisk } from '../../../../../types/DaAttestationSecurityRisk'
+import { DaExitWindowRisk } from '../../../../../types/DaExitWindowRisk'
+import { CELESTIA_BLOBSTREAM } from '../template'
 
-const discovery = new ProjectDiscovery('blobstream', 'base')
+const discovery = new ProjectDiscovery('blobstream')
 
 const maxRangeDataCommitment = discovery.getContractValue<number>(
-  'BlobstreamX',
+  'Blobstream',
   'DATA_COMMITMENT_MAX',
 )
 
@@ -31,47 +31,49 @@ const nextHeaderProvers = discovery.getContractValue<string[]>(
   'nextHeaderProvers',
 )
 
-export const blobstreamBase = CELESTIA_BLOBSTREAM({
-  chain: 'base',
+export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
+  chain: 'ethereum',
+  usedIn: [
+    // no project integrates it for state validation
+  ],
   display: {
     links: {
       websites: [],
       documentation: ['https://docs.celestia.org/developers/blobstream'],
       repositories: ['https://github.com/succinctlabs/blobstreamx'],
       apps: [],
-      explorers: ['https://basescan.org/'],
+      explorers: ['https://etherscan.io/'],
       socialMedia: [],
     },
   },
   technology: `
-      The BlobstreamX bridge is a data availability bridge that facilitates data availability commitments to be bridged between Celestia and Base.
-      The BlobstreamX bridge is composed of three main components: the **BlobstreamX** contract, the **Succinct Gateway** contract and the **Verifier** contracts.
-      By default, BlobstreamX operates asynchronously, handling requests in a fulfillment-based manner. First, zero-knowledge proofs of Celestia block ranges are requested for proving. Requests can be submitted either off-chain through the Succinct API, or onchain through the requestDataHeader() method of the blobstreamX smart contract.
-      Once a proving request is received, the off-chain prover generates the proof and submits it to the Succinct Gateway contract. The Succinct Gateway contract verifies the proof with the corresponding verifier contract and, if successful, calls the blobstreamX contract to store the data commitment.
-      Alternatively, it is possible to run an Blobstream X operator with local proving, allowing for self-generating the proofs.
+     The BlobstreamX bridge is a data availability bridge that facilitates data availability commitments to be bridged between Celestia and Ethereum.
+     The BlobstreamX bridge is composed of three main components: the **BlobstreamX** contract, the **Succinct Gateway** contract and the **Verifier** contracts.
+     By default, BlobstreamX operates asynchronously, handling requests in a fulfillment-based manner. First, zero-knowledge proofs of Celestia block ranges are requested for proving. Requests can be submitted either off-chain through the Succinct API, or onchain through the requestDataHeader() method of the blobstreamX smart contract.
+     Once a proving request is received, the off-chain prover generates the proof and submits it to the Succinct Gateway contract. The Succinct Gateway contract verifies the proof with the corresponding verifier contract and, if successful, calls the blobstreamX contract to store the data commitment.
+     Alternatively, it is possible to run an Blobstream X operator with local proving, allowing for self-generating the proofs.
 
-      Verifying a header range includes verifying tendermint consensus (header signatures are 2/3 of stake) and verifying the data commitment root. This is achieved through a combined circuit. This combined circuit is made up of two parts:
+     Verifying a header range includes verifying tendermint consensus (header signatures are 2/3 of stake) and verifying the data commitment root. This is achieved through a combined circuit. This combined circuit is made up of two parts:
       1) **TendermintX** circuit is used to verify tendermint consensus,
       2) **BlobstreamX** circuit is used to verify the data commitment root.
-      
-      By default, BlobstreamX on Base is updated by the Celestia operator at a regular cadence of 1 hour.
+
+    By default, BlobstreamX on Ethereum is updated by the Celestia operator at a regular cadence of 4 hours.
+
     `,
   contracts: {
     addresses: [
-      discovery.getContractDetails('BlobstreamX', {
+      discovery.getContractDetails('Blobstream', {
         description:
-          'The BlobstreamX DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum.',
+          'The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum.',
       }),
       {
         name: 'headerRangeVerifier',
-        chain: 'base',
         address: EthereumAddress(headerRangeVerifier),
         description: `Verifier contract for the header range [latestBlock, targetBlock] proof.
         A request for a header range can be at most ${maxRangeDataCommitment} blocks long. The proof is generated by an off-chain prover and submitted by a relayer.`,
       },
       {
         name: 'nextHeaderVerifier',
-        chain: 'base',
         address: EthereumAddress(nextHeaderVerifier),
         description:
           'Verifier contract for a single header proof. Used in the rare case in which the validator set changes by more than 2/3 in a single block.',
@@ -94,16 +96,15 @@ export const blobstreamBase = CELESTIA_BLOBSTREAM({
   },
   permissions: [
     ...discovery.getMultisigPermission(
-      'BlobstreamXMultisig',
+      'BlobstreamMultisig',
       'This multisig is the admin of the BlobstreamX contract. It holds the power to change the contract state and upgrade the bridge.',
     ),
     ...discovery.getMultisigPermission(
-      'SuccinctMultisig',
+      'SuccinctGatewayMultisig',
       'This multisig is the admin of the SuccinctGateway contract. As the manager of the entry point and router for proof verification, it holds the power to affect the liveness and safety of the bridge.',
     ),
     {
       name: 'headerRangeProvers',
-      chain: 'base',
       description: `List of prover (relayer) addresses that are allowed to call fulfillCallback()/fulfillCall() in the SuccinctGateway for the headerRange function ID of BlobstreamX.`,
       accounts: headerRangeProvers.map((headerRangeProver) => ({
         address: EthereumAddress(headerRangeProver),
@@ -112,16 +113,12 @@ export const blobstreamBase = CELESTIA_BLOBSTREAM({
     },
     {
       name: 'nextHeaderProvers',
-      chain: 'base',
       description: `List of prover (relayer) addresses that are allowed to call fulfillCallback()/fulfillCall() in the SuccinctGateway for the nextHeader function ID of BlobstreamX.`,
       accounts: nextHeaderProvers.map((nextHeaderProver) => ({
         address: EthereumAddress(nextHeaderProver),
         type: 'EOA',
       })),
     },
-  ],
-  usedIn: [
-    // no project integrates it for state validation
   ],
   risks: {
     attestations: DaAttestationSecurityRisk.SigVerifiedZK(true),

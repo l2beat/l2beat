@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xb367ffe90d7a685b971b51b4409d1cd157f27a18
+Generated with discovered.json: 0x76be647028fad2b05f9e66604d3a85a337236438
 
-# Diff at Tue, 27 Aug 2024 17:21:12 GMT:
+# Diff at Wed, 28 Aug 2024 10:46:08 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@cf2dd34fdc5bce846ae811aa246ba203fc03f637 block: 20218838
-- current block number: 20621378
+- current block number: 20626576
 
 ## Description
 
@@ -19,7 +19,7 @@ Generated with discovered.json: 0xb367ffe90d7a685b971b51b4409d1cd157f27a18
 ## Watched changes
 
 ```diff
-    contract BlobstreamX (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) {
+    contract Blobstream (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) {
     +++ description: None
       values.$implementation:
 -        "0x41a87C543EBcbD93706CF5260AD057D9eCBA1caE"
@@ -63,7 +63,7 @@ Generated with discovered.json: 0xb367ffe90d7a685b971b51b4409d1cd157f27a18
 
 ```diff
 +   Status: CREATED
-    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e)
     +++ description: None
 ```
 
@@ -73,13 +73,21 @@ Generated with discovered.json: 0xb367ffe90d7a685b971b51b4409d1cd157f27a18
     +++ description: None
 ```
 
+```diff
++   Status: CREATED
+    contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878)
+    +++ description: None
+```
+
 ## Source code changes
 
 ```diff
-.../BlobstreamX/SP1Blobstream.sol}                 |  431 +++---
+.../Blobstream/SP1Blobstream.sol}                  |  431 +++---
  .../blobstream/ethereum/.flat/SP1Verifier.sol      | 1429 ++++++++++++++++++++
- .../ethereum/.flat/SP1VerifierGateway.sol          |  230 ++++
- 3 files changed, 1902 insertions(+), 188 deletions(-)
+ .../ethereum/.flat/SuccinctGatewaySP1.sol          |  230 ++++
+ .../SuccinctGatewaySP1Multisig/GnosisSafe.sol      |  952 +++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   34 +
+ 5 files changed, 2888 insertions(+), 188 deletions(-)
 ```
 
 ## Config/verification related changes
@@ -89,12 +97,33 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 20218838 (main branch discovery), not current.
 
 ```diff
-    contract BlobstreamX (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) {
+    contract Blobstream (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) {
     +++ description: None
+      name:
+-        "BlobstreamX"
++        "Blobstream"
       template:
 +        "blobstream/SP1Blobstream"
       errors:
 +        {"isRelayerApproved":"Execution reverted"}
+    }
+```
+
+```diff
+    contract BlobstreamMultisig (0x8bF34D8df1eF0A8A7f27fC587202848E528018E6) {
+    +++ description: None
+      name:
+-        "BlobstreamXMultisig"
++        "BlobstreamMultisig"
+    }
+```
+
+```diff
+    contract SuccinctGatewayMultisig (0xd1999B562e74d9fbf57b4479b3fe8748BDF4e4A0) {
+    +++ description: None
+      name:
+-        "SuccinctMultisig"
++        "SuccinctGatewayMultisig"
     }
 ```
 

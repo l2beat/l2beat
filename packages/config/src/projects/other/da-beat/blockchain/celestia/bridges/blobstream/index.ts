@@ -1,6 +1,6 @@
-import { blobstreamArbitrum } from './arbitrum'
-import { blobstreamBase } from './base'
-import { blobstreamEthereum } from './ethereum'
+import { blobstreamArbitrum } from './BlobstreamX/arbitrum'
+import { blobstreamBase } from './BlobstreamX/base'
+import { blobstreamEthereum } from './SP1Blobstream/ethereum'
 
 export const blobstream = [
   blobstreamArbitrum,
