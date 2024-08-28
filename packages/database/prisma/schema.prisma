@@ -7,7 +7,7 @@ generator kysely {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("PRISMA_DB_URL")
 }
 
 model CurrentPrice {
