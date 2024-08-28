@@ -9,9 +9,7 @@ import { Handler, HandlerResult } from '../Handler'
 import {
   Reference,
   ReferenceInput,
-  ScopeVariables,
   generateReferenceInput,
-  generateScopeVariables,
   getReferencedName,
   resolveReference,
 } from '../reference'

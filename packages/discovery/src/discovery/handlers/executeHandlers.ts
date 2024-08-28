@@ -41,9 +41,7 @@ function orderByDependencies(handlers: Handler[]): Handler[][] {
     const batch: Handler[] = []
     for (const handler of remaining) {
       if (
-        handler.dependencies.every(
-          (x) => known.has(x) || x.startsWith("$"),
-        )
+        handler.dependencies.every((x) => known.has(x) || x.startsWith('$'))
       ) {
         batch.push(handler)
       }

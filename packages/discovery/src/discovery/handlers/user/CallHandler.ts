@@ -8,9 +8,7 @@ import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
 import {
   ReferenceInput,
-  ScopeVariables,
   generateReferenceInput,
-  generateScopeVariables,
   getReferencedName,
   resolveReference,
 } from '../reference'

@@ -5,8 +5,7 @@ import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
 import {
-    generateReferenceInput,
-  generateScopeVariables,
+  generateReferenceInput,
   getReferencedName,
   resolveReference,
 } from '../reference'
@@ -50,7 +49,7 @@ export class OpStackSequencerInboxHandler implements Handler {
     )
     const resolved = resolveReference(
       this.definition.sequencerAddress,
-      referenceInput
+      referenceInput,
     )
     const sequencerAddress = valueToAddress(resolved)
 

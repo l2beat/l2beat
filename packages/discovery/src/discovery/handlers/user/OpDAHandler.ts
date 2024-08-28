@@ -6,7 +6,6 @@ import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
 import {
   generateReferenceInput,
-  generateScopeVariables,
   getReferencedName,
   resolveReference,
 } from '../reference'
