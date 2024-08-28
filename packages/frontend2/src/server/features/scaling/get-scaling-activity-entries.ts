@@ -9,8 +9,6 @@ import {
 import { getCommonScalingEntry } from './get-common-scaling-entry'
 import { getActivityProjects } from './activity/utils/get-activity-projects'
 
-export type ScalingActivityEntry = ScalingActivityProjectEntry
-
 type ActivityProject = Layer2 | Layer3
 
 export async function getScalingActivityEntries() {
@@ -39,9 +37,10 @@ export async function getScalingActivityEntries() {
   ].sort((a, b) => (b.data?.pastDayTps ?? 0) - (a.data?.pastDayTps ?? 0))
 }
 
-export type ScalingActivityProjectEntry = ReturnType<
+export type ScalingActivityEntry = ReturnType<
   typeof getScalingProjectActivityEntry
 >
+
 function getScalingProjectActivityEntry(
   project: ActivityProject,
   data: ActivityTableData | undefined,
@@ -54,30 +53,18 @@ function getScalingProjectActivityEntry(
       isVerified,
       hasImplementationChanged,
     }),
+    entryType: 'activity' as const,
     dataSource: project.display.activityDataSource,
     data,
   }
 }
 
-export type ScalingActivityEthereumEntry = ReturnType<typeof getEthereumEntry>
-function getEthereumEntry(
-  data: ActivityTableData,
-): ReturnType<typeof getScalingProjectActivityEntry> {
+function getEthereumEntry(data: ActivityTableData) {
   return {
-    id: ProjectId.ETHEREUM,
-    name: 'Ethereum',
-    shortName: undefined,
-    slug: 'ethereum',
-    type: undefined,
-    dataSource: 'Blockchain RPC',
-    category: undefined,
-    provider: undefined,
-    purposes: [],
-    warning: undefined,
-    redWarning: undefined,
-    isVerified: true,
-    showProjectUnderReview: false,
-    stage: { stage: 'NotApplicable' },
+    ...getCommonScalingEntry({ project: 'ethereum' }),
+    entryType: 'activity' as const,
+
+    dataSource: 'Blockchain RPC' as const,
     data,
   }
 }

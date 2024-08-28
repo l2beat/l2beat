@@ -16,8 +16,15 @@ import { formatTpsWithUnit } from '~/utils/format-tps'
 import { ActivityChartHeader } from './activity-chart-header'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
 import { RadioGroup, RadioGroupItem } from '../../radio-group'
+import { type Milestone } from '@l2beat/config'
+import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
 
-export function ActivityChart() {
+interface Props {
+  milestones: Milestone[]
+  entries: ScalingActivityEntry[]
+}
+
+export function ActivityChart({ milestones, entries }: Props) {
   const { timeRange, setTimeRange } = useActivityTimeRangeContext()
   const filters = useScalingFilterValues()
   const includeFilter = useScalingFilter()
@@ -29,11 +36,18 @@ export function ActivityChart() {
 
   const { data, isLoading } = api.scaling.activity.chart.useQuery({
     range: timeRange,
-    filter: { type: 'all' },
+    filter: filters.isEmpty
+      ? { type: 'all' }
+      : {
+          type: 'projects',
+          projectIds: entries
+            .filter(includeFilter)
+            .map((project) => project.id),
+        },
   })
 
   const { columns, valuesStyle, chartRange } = useActivityChartRenderParams({
-    milestones: [],
+    milestones,
     unit: 'usd',
     chart: data?.data,
     showMainnet,

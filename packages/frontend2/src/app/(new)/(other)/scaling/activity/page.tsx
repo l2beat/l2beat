@@ -7,6 +7,7 @@ import { getCookie } from '~/utils/cookies/server'
 import { ActivityChart } from '~/app/_components/chart/activity/activity-chart'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../_components/scaling-filters'
+import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 
 export default async function Page() {
   const range = getCookie('activityTimeRange')
@@ -21,7 +22,7 @@ export default async function Page() {
     <HydrateClient>
       <ScalingFilterContextProvider>
         <ActivityTimeRangeContextProvider>
-          <ActivityChart />
+          <ActivityChart milestones={HOMEPAGE_MILESTONES} entries={entries} />
           <HorizontalSeparator className="my-4 md:mt-6" />
           <ScalingFilters items={entries} />
           <ScalingActivityTable entries={entries} />
