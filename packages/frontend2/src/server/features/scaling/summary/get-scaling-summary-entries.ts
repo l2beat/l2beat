@@ -11,7 +11,7 @@ import { orderByTvl } from '../tvl/utils/order-by-tvl'
 export async function getScalingSummaryEntries() {
   const implementationChangeReport = await getImplementationChangeReport()
   const projectsVerificationStatuses = await getProjectsVerificationStatuses()
-  const tvl = await get7dTokenBreakdown()
+  const tvl = await get7dTokenBreakdown({ type: 'layer2' })
 
   const projects = [...layer2s, ...layer3s]
 

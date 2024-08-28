@@ -7,7 +7,7 @@ generator kysely {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("PRISMA_DB_URL")
 }
 
 model CurrentPrice {
@@ -324,16 +324,6 @@ model Price {
 
   @@id([configurationId, timestamp])
   @@map("prices")
-}
-
-model SequenceProcessor {
-  id            String   @id @map("id") @db.VarChar(255)
-  lastProcessed Int      @map("last_processed")
-  updatedAt     DateTime @map("updated_at") @db.Timestamp(6)
-  latest        Int      @map("latest")
-  syncedOnce    Boolean  @default(false) @map("synced_once")
-
-  @@map("sequence_processor")
 }
 
 model TvlCleaner {
