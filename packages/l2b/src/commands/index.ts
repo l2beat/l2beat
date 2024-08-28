@@ -4,6 +4,7 @@ import { CompareOrbitStacks } from './CompareOrbitStacks'
 import { CountUserOperations } from './CountUserOperations'
 import { DeploymentTimestamp } from './DeploymentTimestamp'
 import { Flatten } from './Flatten'
+import { FlattenAndDiff } from './FlattenAndDiff'
 import { Powerdiff } from './Powerdiff'
 import { TVL } from './TVL'
 
@@ -14,6 +15,7 @@ export function getSubcommands() {
     CompareOrbitStacks,
     CountUserOperations,
     DeploymentTimestamp,
+    FlattenAndDiff,
     Flatten,
     Powerdiff,
     TVL,

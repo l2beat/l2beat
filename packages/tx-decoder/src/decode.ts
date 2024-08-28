@@ -39,7 +39,8 @@ export function decode(data: `0x${string}`, abi: string[]) {
         selector,
         values,
       }
-    } catch {
+    } catch (e) {
+      console.error(e)
       continue
     }
   }
@@ -94,6 +95,14 @@ function mixValue(item: AbiParameter, value: unknown, stack: string[]): Value {
       stack,
       type: item.type,
       value,
+    }
+  }
+
+  if (typeof value === 'number') {
+    return {
+      stack,
+      type: item.type,
+      value: BigInt(value),
     }
   }
 
