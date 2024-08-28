@@ -5,7 +5,7 @@ import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
 import {
-  generateScopeVariables,
+  generateReferenceInput,
   getReferencedName,
   resolveReference,
 } from '../reference'
@@ -59,15 +59,15 @@ export class OpStackDAHandler implements Handler {
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, ['Checking OP Stack DA mode'])
-    const scopeVariables = generateScopeVariables(
+
+    const referenceInput = generateReferenceInput(
+      previousResults,
       provider,
       currentContractAddress,
     )
-
     const resolved = resolveReference(
       this.definition.sequencerAddress,
-      previousResults,
-      scopeVariables,
+      referenceInput,
     )
     const sequencerAddress = valueToAddress(resolved)
     const last10Txs = await provider.raw(

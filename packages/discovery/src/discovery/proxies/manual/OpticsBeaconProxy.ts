@@ -41,9 +41,9 @@ export async function getOpticsBeaconProxy(
   return {
     type: 'Optics Beacon proxy',
     values: {
-      $admin: beaconController,
-      $implementation: implementation,
-      OpticsBeacon_beacon: upgradeBeacon,
+      $admin: beaconController.toString(),
+      $implementation: implementation.toString(),
+      OpticsBeacon_beacon: upgradeBeacon.toString(),
     },
   }
 }
