@@ -8,7 +8,7 @@ Generated with discovered.json: 0xfddab7e20377594ae29665447bb6672e87b6f07a
 
 ## Description
 
-The transactions were executed immediately and update the implementation of the shared bridge contract to introduce the ability to set an admin that can add new chains to the shared bridge. The process includes setting a pending admin who has to then claim the role to become an admin. 
+The transactions were executed immediately and update the implementation of the shared bridge contract to introduce the ability to set an admin that can initialize new chains to the shared bridge (can set a chain's l2 bridge address) or add a new pending admin. The `onlyOwnerOrAdmin` is added for this purpose, so the two functions are also callable by the owner (matter labs gov).
 
 ## Watched changes
 
