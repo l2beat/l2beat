@@ -94,7 +94,8 @@ export function ActivityChart({ milestones, entries }: Props) {
           >
             <div className="flex flex-row items-center gap-2">
               <EthereumLineIcon className="hidden h-1.5 w-2.5 sm:inline-block" />
-              ETH Mainnet Transactions
+              <span className="hidden md:inline">ETH Mainnet Transactions</span>
+              <span className="md:hidden">ETH Txs</span>
             </div>
           </Checkbox>
           <RadioGroup value={scale} onValueChange={setScale}>
