@@ -5,7 +5,6 @@ on:
       - packages/database/prisma/**
     branches:
       - main
-      - add-ci-step-to-verify-migartions
 
 jobs:
   validate-migrations:
@@ -38,7 +37,7 @@ jobs:
 
       - name: Check if prisma migration is updated
         run: |-
-          npx prisma migrate diff --exit-code \
+          yarn prisma migrate diff --exit-code \
             --from-migrations packages/database/prisma/migrations \
             --to-schema-datamodel packages/database/prisma/schema.prisma \
             --shadow-database-url ${{env.DATABASE_URL}}
