@@ -14,7 +14,7 @@ export class AggregatedLivenessRepository extends BaseRepository {
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
       await this.db
-        .insertInto('public.aggregated_liveness')
+        .insertInto('aggregated_liveness')
         .values(batch)
         .onConflict((cb) =>
           cb.columns(['project_id', 'subtype', 'range']).doUpdateSet((eb) => ({
@@ -31,14 +31,14 @@ export class AggregatedLivenessRepository extends BaseRepository {
 
   async deleteAll(): Promise<number> {
     const result = await this.db
-      .deleteFrom('public.aggregated_liveness')
+      .deleteFrom('aggregated_liveness')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 
   async getAll(): Promise<AggregatedLivenessRecord[]> {
     const rows = await this.db
-      .selectFrom('public.aggregated_liveness')
+      .selectFrom('aggregated_liveness')
       .select(selectAggregatedLiveness)
       .execute()
     return rows.map(toRecord)
@@ -48,7 +48,7 @@ export class AggregatedLivenessRepository extends BaseRepository {
     projectId: ProjectId,
   ): Promise<AggregatedLivenessRecord[]> {
     const rows = await this.db
-      .selectFrom('public.aggregated_liveness')
+      .selectFrom('aggregated_liveness')
       .select(selectAggregatedLiveness)
       .where('project_id', '=', projectId)
       .execute()
@@ -59,7 +59,7 @@ export class AggregatedLivenessRepository extends BaseRepository {
     projectIds: ProjectId[],
   ): Promise<AggregatedLivenessRecord[]> {
     const rows = await this.db
-      .selectFrom('public.aggregated_liveness')
+      .selectFrom('aggregated_liveness')
       .select(selectAggregatedLiveness)
       .where('project_id', 'in', projectIds)
       .execute()

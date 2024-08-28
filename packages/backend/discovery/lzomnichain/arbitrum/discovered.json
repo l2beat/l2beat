@@ -3,7 +3,7 @@
   "chain": "arbitrum",
   "blockNumber": 229043861,
   "configHash": "0xea56b0f2760ab0b676dd10e24100dd3a76e70ef71ff24dbd1554ba2e9859e693",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "",
@@ -20,7 +20,8 @@
       "sinceTimestamp": 1661530975,
       "values": {
         "$admin": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
-        "$implementation": "0xf77a80851c7f40492eB7a5f1e7d92411ae8962a4"
+        "$implementation": "0xf77a80851c7f40492eB7a5f1e7d92411ae8962a4",
+        "$upgradeCount": 6
       }
     },
     {
@@ -1459,7 +1460,8 @@
       "sinceTimestamp": 1661535615,
       "values": {
         "$admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
-        "$implementation": "0x86591701001B3a5cf901Ed55062c7ECe7B00Cb19"
+        "$implementation": "0x86591701001B3a5cf901Ed55062c7ECe7B00Cb19",
+        "$upgradeCount": 2
       }
     },
     {

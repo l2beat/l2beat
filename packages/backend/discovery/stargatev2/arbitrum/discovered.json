@@ -3,7 +3,7 @@
   "chain": "arbitrum",
   "blockNumber": 223440408,
   "configHash": "0x2dedeb686ae7973502d6a4c436d14370f30589fa594b644de6706b9310331a28",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "TokenMessaging",

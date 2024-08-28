@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20368673,
   "configHash": "0x54b600f138a147f390a890b238a88a803b26d43d59f30b55edf592f85fcc7e87",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "SystemConfig",
@@ -30,6 +30,7 @@
       "values": {
         "$admin": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
         "$implementation": "0xc6cF1149d23F2788AC94312E68EB52a74F288ebe",
+        "$upgradeCount": 1,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "0xa6Ea2f3299b63c53143c993d2d5E60A69Cd6Fe24",
         "batchInbox": "0xFf00000000000000000000000000000000001135",
@@ -102,6 +103,7 @@
       "values": {
         "$admin": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
         "$implementation": "0xe8912070277Dd5D9473904b7F4e6C71290F2AE90",
+        "$upgradeCount": 3,
         "challenger": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
         "CHALLENGER": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
         "deletedOutputs": [],
@@ -142,6 +144,7 @@
       "values": {
         "$admin": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
         "$implementation": "0x5BFC7acc740D2E19c290167052F69947e19475F3",
+        "$upgradeCount": 0,
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x31B72D76FB666844C41EdF08dF0254875Dbb7edB",
         "MESSENGER": "0x31B72D76FB666844C41EdF08dF0254875Dbb7edB",
@@ -172,6 +175,7 @@
       "values": {
         "$admin": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
         "$implementation": "0xd637dc6d7DA9151b5069a4bFB74a12E67a532CC3",
+        "$upgradeCount": 3,
         "guardian": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
         "GUARDIAN_SLOT": "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68",
         "paused": false,
@@ -199,6 +203,7 @@
       "values": {
         "$admin": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
         "$implementation": "0x3Ff11Cde41a5f7c791eFfcd6AeEA05dd2df5e21e",
+        "$upgradeCount": 1,
         "guardian": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
         "GUARDIAN": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
         "L2_ORACLE": "0x113cB99283AF242Da0A0C54347667edF531Aa7d6",
@@ -286,6 +291,7 @@
       "values": {
         "$admin": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
         "$implementation": "0xefBDff012170ae592A3d197bf9Ac10eBF313233a",
+        "$upgradeCount": 1,
         "messenger": "0x31B72D76FB666844C41EdF08dF0254875Dbb7edB",
         "MESSENGER": "0x31B72D76FB666844C41EdF08dF0254875Dbb7edB",
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000014",
@@ -357,6 +363,7 @@
       "values": {
         "$admin": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
         "$implementation": "0xD00e38514d66bf1B761a8937559c6b2854A5B3ad",
+        "$upgradeCount": 1,
         "bridge": "0x2658723Bf70c7667De6B25F99fcce13A16D25d08",
         "BRIDGE": "0x2658723Bf70c7667De6B25F99fcce13A16D25d08",
         "version": "1.9.0"
@@ -857,7 +864,7 @@
     "opstack/L2OutputOracle": "0x1d833a9768af12de67d65ad7dd09fc4b96db543bde5f5fdc2ff0ea0c571ceadf",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
     "opstack/OptimismPortal": "0xcc1b405a2bf545f58a88bb104ba298351e252fc507b40d0e1ef40bf6bbe34152",
-    "opstack/ProxyAdmin": "0x33b1f6469b9b5eb1761afba4083878f499aa61a2bd78de0d0c7731f5e13640e0",
+    "opstack/ProxyAdmin": "0x3731e451e123b81ff581a6795a991123ea030fa0841313746edc4ee05e01f0a7",
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
     "opstack/SystemConfig": "0x64961a217667137a899a8042e685df30318be47b0a07f69792414fb528d3ffc0"
   },

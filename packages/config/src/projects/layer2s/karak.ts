@@ -54,6 +54,7 @@ export const karak: Layer2 = opStackL2({
       link: 'https://x.com/Karak_Network/status/1762561646999068899?s=20',
       date: '2024-02-27T00:00:00Z',
       description: 'Karak Network is live on mainnet.',
+      type: 'general',
     },
   ],
   nonTemplatePermissions: [

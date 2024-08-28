@@ -27,6 +27,7 @@ export const GeneratedToken = z.object({
   chainId: numberAs(ChainId),
   source: z.enum(['canonical', 'external', 'native']),
   supply: z.enum(['totalSupply', 'circulatingSupply', 'zero']),
+  excludeFromTotal: z.literal(true).optional(),
   bridgedUsing: z.optional(
     z.object({
       bridge: z.string(),
@@ -52,6 +53,7 @@ export const SourceEntry = z.object({
     })
     .optional(),
   deploymentTimestamp: numberAs((n) => new UnixTime(n)).optional(),
+  excludeFromTotal: z.literal(true).optional(),
 })
 
 export type Source = z.infer<typeof Source>

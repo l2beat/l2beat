@@ -13,7 +13,8 @@
     "0xD80a805c86C14c879420eC6acb366D04D318fC0C": "SequencerInbox",
     "0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a": "UpgradeExecutor",
     "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF": "ValidatorUtils",
-    "0xEa83E8907C89Bc0D9517632f0ba081972E328631": "Inbox"
+    "0xEa83E8907C89Bc0D9517632f0ba081972E328631": "Inbox",
+    "0xbe9F61555F50DD6167f2772e9CF7519790d96624": "SXNetwork"
   },
   "overrides": {
     "ValidatorUtils": {
@@ -109,6 +110,9 @@
           }
         }
       }
+    },
+    "SXNetwork": {
+      "ignoreMethods": ["totalSupply"]
     }
   }
 }

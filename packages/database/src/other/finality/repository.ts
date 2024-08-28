@@ -12,7 +12,7 @@ import { selectFinality } from './select'
 export class FinalityRepository extends BaseRepository {
   async getAll(): Promise<FinalityRecord[]> {
     const rows = await this.db
-      .selectFrom('public.finality')
+      .selectFrom('finality')
       .select(selectFinality)
       .execute()
     return rows.map(toRecord)
@@ -22,7 +22,7 @@ export class FinalityRepository extends BaseRepository {
     projectId: string,
   ): Promise<FinalityRecord | undefined> {
     const row = await this.db
-      .selectFrom('public.finality')
+      .selectFrom('finality')
       .select(selectFinality)
       .where('project_id', '=', projectId)
       .orderBy('timestamp', 'desc')
@@ -36,7 +36,7 @@ export class FinalityRepository extends BaseRepository {
     timestamp: UnixTime,
   ): Promise<ProjectFinalityRecord | undefined> {
     const row = await this.db
-      .selectFrom('public.finality')
+      .selectFrom('finality')
       .select(selectFinality)
       .where('timestamp', '=', timestamp.toDate())
       .where('project_id', '=', projectId.toString())
@@ -49,7 +49,7 @@ export class FinalityRepository extends BaseRepository {
     if (projectIds.length === 0) return []
 
     const maxTimestampSubquery = this.db
-      .selectFrom('public.finality')
+      .selectFrom('finality')
       .select(['project_id', this.db.fn.max('timestamp').as('max_timestamp')])
       .where(
         'project_id',
@@ -60,7 +60,7 @@ export class FinalityRepository extends BaseRepository {
       .as('max_f')
 
     const rows = await this.db
-      .selectFrom('public.finality as f')
+      .selectFrom('finality as f')
       .innerJoin(maxTimestampSubquery, (join) =>
         join
           .onRef('f.project_id', '=', 'max_f.project_id')
@@ -81,15 +81,13 @@ export class FinalityRepository extends BaseRepository {
 
     const rows = records.map(toRow)
     await this.batch(rows, 10_000, async (batch) => {
-      await this.db.insertInto('public.finality').values(batch).execute()
+      await this.db.insertInto('finality').values(batch).execute()
     })
     return rows.length
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
-      .deleteFrom('public.finality')
-      .executeTakeFirst()
+    const result = await this.db.deleteFrom('finality').executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 }

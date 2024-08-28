@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20032828,
   "configHash": "0xebe0f0cb6387d9421fe6b57702689f36f872724a4106dd03177b3b84447f0ecb",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "DataAvailabilityChallenge",
@@ -20,6 +20,7 @@
       "values": {
         "$admin": "0x7E54107731EC43e78DA678DFa5fB6222Ad036e03",
         "$implementation": "0x0d93eAA86eb6948b977857750A5512Bef6B05C51",
+        "$upgradeCount": 3,
         "bondSize": "103486250000000000",
         "challengeWindow": 3600,
         "fixedResolutionCost": 72925,
@@ -51,6 +52,7 @@
       "values": {
         "$admin": "0x7E54107731EC43e78DA678DFa5fB6222Ad036e03",
         "$implementation": "0x01b46e02fcE5FC0731076711aFFe73bEeCD87997",
+        "$upgradeCount": 0,
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x3c01ebF22e9c111528c1E027D68944eDaB08Dfc9",
         "MESSENGER": "0x3c01ebF22e9c111528c1E027D68944eDaB08Dfc9",
@@ -99,6 +101,7 @@
       "values": {
         "$admin": "0x7E54107731EC43e78DA678DFa5fB6222Ad036e03",
         "$implementation": "0x579f8dFDAF8F180050C67B5D41342d686F2b28a6",
+        "$upgradeCount": 1,
         "guardian": "0x0C883f622b4ccbF1e8ce86217998f87e6d36BCE4",
         "GUARDIAN_SLOT": "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68",
         "paused": false,
@@ -127,6 +130,7 @@
       "values": {
         "$admin": "0x7E54107731EC43e78DA678DFa5fB6222Ad036e03",
         "$implementation": "0xACfD93B4887cef4F05cF3440d150D2cE97339142",
+        "$upgradeCount": 1,
         "guardian": "0x0C883f622b4ccbF1e8ce86217998f87e6d36BCE4",
         "GUARDIAN": "0x0C883f622b4ccbF1e8ce86217998f87e6d36BCE4",
         "L2_ORACLE": "0xa669A743b065828682eE16109273F5CFeF5e676d",
@@ -199,6 +203,7 @@
       "values": {
         "$admin": "0x7E54107731EC43e78DA678DFa5fB6222Ad036e03",
         "$implementation": "0x1234c7a75f40551Fce5aFf1d58efD72F2ee2AFB1",
+        "$upgradeCount": 1,
         "messenger": "0x3c01ebF22e9c111528c1E027D68944eDaB08Dfc9",
         "MESSENGER": "0x3c01ebF22e9c111528c1E027D68944eDaB08Dfc9",
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000014",
@@ -227,6 +232,7 @@
       "values": {
         "$admin": "0x7E54107731EC43e78DA678DFa5fB6222Ad036e03",
         "$implementation": "0x985F187489954435ddf9571D45500184566e4B46",
+        "$upgradeCount": 1,
         "bridge": "0x12a580c05466eefb2c467C6b115844cDaF55B255",
         "BRIDGE": "0x12a580c05466eefb2c467C6b115844cDaF55B255",
         "version": "1.9.0"
@@ -252,6 +258,7 @@
       "values": {
         "$admin": "0x7E54107731EC43e78DA678DFa5fB6222Ad036e03",
         "$implementation": "0x726C6ac8A53061e56AfB2c890545348ba6f0DF0E",
+        "$upgradeCount": 1,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "0xf0748C52EDC23135d9845CDFB91279Cf61ee14b4",
         "batchInbox": "0xfF00000000000000000000000000000000001d88",
@@ -394,6 +401,7 @@
       "values": {
         "$admin": "0x7E54107731EC43e78DA678DFa5fB6222Ad036e03",
         "$implementation": "0x93E1c0D8ef27930130fb809CE18ca681A8C32F85",
+        "$upgradeCount": 1,
         "challenger": "0x87bD2cFf3b59d615b1Eac7A7f809B5e5f0Ee6752",
         "CHALLENGER": "0x87bD2cFf3b59d615b1Eac7A7f809B5e5f0Ee6752",
         "deletedOutputs": [],
@@ -900,7 +908,7 @@
     "opstack/L2OutputOracle": "0x1d833a9768af12de67d65ad7dd09fc4b96db543bde5f5fdc2ff0ea0c571ceadf",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
     "opstack/OptimismPortal": "0xcc1b405a2bf545f58a88bb104ba298351e252fc507b40d0e1ef40bf6bbe34152",
-    "opstack/ProxyAdmin": "0x33b1f6469b9b5eb1761afba4083878f499aa61a2bd78de0d0c7731f5e13640e0",
+    "opstack/ProxyAdmin": "0x3731e451e123b81ff581a6795a991123ea030fa0841313746edc4ee05e01f0a7",
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
     "opstack/SystemConfig": "0x64961a217667137a899a8042e685df30318be47b0a07f69792414fb528d3ffc0"
   },

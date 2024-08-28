@@ -1,9 +1,4 @@
-import {
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-  formatSeconds,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS, NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -12,13 +7,9 @@ import { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('polygon-pos')
 
-const delayString = formatSeconds(
-  discovery.getContractValue('Timelock', 'getMinDelay'),
-)
-
 const upgrades = {
   upgradableBy: ['PolygonMultisig'],
-  upgradeDelay: delayString,
+  upgradeDelay: 'No delay',
 }
 
 export const polygonpos: Bridge = {
@@ -87,9 +78,9 @@ export const polygonpos: Bridge = {
       sentiment: 'warning',
     },
     sourceUpgradeability: {
-      value: `${delayString}`,
-      description: `The bridge can be upgraded by 5/9 MSig after ${delayString} hour delay.`,
-      sentiment: 'warning',
+      value: `Yes`,
+      description: `The bridge can be upgraded by 5/9 MSig.`,
+      sentiment: 'bad',
     },
     destinationToken: {
       ...RISK_VIEW.CANONICAL_OR_WRAPPED,
@@ -173,17 +164,13 @@ export const polygonpos: Bridge = {
         description: 'A registry of different system components.',
         ...upgrades,
       }),
-      discovery.getContractDetails(
-        'Timelock',
-        `Contract enforcing delay on code upgrades. The current delay is ${delayString}.`,
-      ),
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(`${delayString}`)],
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
     ...discovery.getMultisigPermission(
       'PolygonMultisig',
-      'Can propose and execute code upgrades via Timelock contract.',
+      'Can propose and execute code upgrades.',
     ),
   ],
   knowledgeNuggets: [

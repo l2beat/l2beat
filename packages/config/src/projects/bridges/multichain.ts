@@ -156,6 +156,7 @@ export const multichain: Bridge = {
       name: 'Anyswap rebrands to Multichain',
       date: '2021-12-16T00:00:00Z',
       link: 'https://medium.com/multichainorg/anyswap-to-officially-rebrand-as-multichain-16ee7b961ffa',
+      type: 'general',
     },
     {
       name: 'Contracts hacked for $3M',
@@ -163,6 +164,7 @@ export const multichain: Bridge = {
       description:
         'Multiple critical vulnerabilities were found in the contracts.',
       link: 'https://medium.com/multichainorg/multichain-contract-vulnerability-post-mortem-d37bfab237c8',
+      type: 'general',
     },
     {
       name: 'anyCall was introduced',
@@ -170,6 +172,7 @@ export const multichain: Bridge = {
       description:
         'This is the generic cross-chain mechanism that Multichain uses.',
       link: 'https://medium.com/multichainorg/anycall-for-your-cross-chain-dapps-ac0ece9140e9',
+      type: 'general',
     },
     {
       name: 'fastMPC was introduced',
@@ -177,11 +180,13 @@ export const multichain: Bridge = {
       description:
         'It is an upgrade of the network that is used to check cross chain messages.',
       link: 'https://multichainorg.medium.com/fastmpc-mainnet-goes-live-running-in-a-decentralized-way-99f9fe2956b8',
+      type: 'general',
     },
     {
       name: 'Contracts hacked for $130M',
       date: '2023-07-07T00:00:00Z',
       link: 'https://blockworks.co/news/multichain-anyswap-exploit',
+      type: 'general',
     },
   ],
   knowledgeNuggets: [

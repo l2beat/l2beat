@@ -470,6 +470,7 @@ export const degate3: Layer2 = {
       date: '2023-10-27T00:00:00Z',
       description:
         'DeGate redeploy Mainnet Beta with the ability to upgrade the smart contracts, with a time delay.',
+      type: 'general',
     },
   ],
 }

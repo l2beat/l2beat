@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19927696,
   "configHash": "0x13459d3d441c15286942077c1d443e8c8e890e3b2a9bb3dad48a509d9b138acb",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "L1StandardBridge",
@@ -20,6 +20,7 @@
       "values": {
         "$admin": "0x20D697b63d7747cF78C94ad9ee75C1436781E27E",
         "$implementation": "0xa1D67ED34D6485cf59C5aA4AC3AE555959A0adA1",
+        "$upgradeCount": 0,
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x9f6F58F07863D72C47D001066C65528C27D3AE19",
         "MESSENGER": "0x9f6F58F07863D72C47D001066C65528C27D3AE19",
@@ -127,6 +128,7 @@
       "values": {
         "$admin": "0x20D697b63d7747cF78C94ad9ee75C1436781E27E",
         "$implementation": "0x384BA1d14cDdE620d309AcA9B154e6CACbF27d11",
+        "$upgradeCount": 1,
         "messenger": "0x9f6F58F07863D72C47D001066C65528C27D3AE19",
         "MESSENGER": "0x9f6F58F07863D72C47D001066C65528C27D3AE19",
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000014",
@@ -155,6 +157,7 @@
       "values": {
         "$admin": "0x20D697b63d7747cF78C94ad9ee75C1436781E27E",
         "$implementation": "0x2246d85AC397d289d49a92C804201738C4Bd2d73",
+        "$upgradeCount": 1,
         "CHALLENGER": "0x28fB4D0e436874F4107948E358df3C242De06788",
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
@@ -225,6 +228,7 @@
       "values": {
         "$admin": "0x20D697b63d7747cF78C94ad9ee75C1436781E27E",
         "$implementation": "0x2A033B70a4D7FAbc6E651E964D18fcf65D9d2aED",
+        "$upgradeCount": 1,
         "BRIDGE": "0x1bBde518ad01BaABFE30020407A7630FB17B545d",
         "version": "1.1.1"
       }
@@ -271,6 +275,7 @@
       "values": {
         "$admin": "0x20D697b63d7747cF78C94ad9ee75C1436781E27E",
         "$implementation": "0xC3fE3e0Ea967B2878faB2fEc7e1067b32aDf1C03",
+        "$upgradeCount": 1,
         "GUARDIAN": "0x28fB4D0e436874F4107948E358df3C242De06788",
         "L2_ORACLE": "0x3E4F4Eb77a9c1f88c0e1F5aDCc9d3521Ce157FdD",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
@@ -300,6 +305,7 @@
       "values": {
         "$admin": "0x20D697b63d7747cF78C94ad9ee75C1436781E27E",
         "$implementation": "0xd136b83fd10735AB0001B8F8B361900c3717d6C2",
+        "$upgradeCount": 1,
         "batcherHash": "0x994c288de8418c8D3c5a4D21A69f35bF9641781C",
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
@@ -671,7 +677,7 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
-    "opstack/ProxyAdmin": "0x33b1f6469b9b5eb1761afba4083878f499aa61a2bd78de0d0c7731f5e13640e0"
+    "opstack/ProxyAdmin": "0x3731e451e123b81ff581a6795a991123ea030fa0841313746edc4ee05e01f0a7"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

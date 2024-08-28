@@ -14,7 +14,7 @@ export class VerifierStatusRepository extends BaseRepository {
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
       await this.db
-        .insertInto('public.verifier_status')
+        .insertInto('verifier_status')
         .values(batch)
         .onConflict((cb) =>
           cb.columns(['address', 'chain_id']).doUpdateSet((eb) => ({
@@ -32,7 +32,7 @@ export class VerifierStatusRepository extends BaseRepository {
     chainId: ChainId,
   ): Promise<VerifierStatusRecord | undefined> {
     const row = await this.db
-      .selectFrom('public.verifier_status')
+      .selectFrom('verifier_status')
       .select(selectVerifierStatus)
       .where('address', '=', address)
       .where('chain_id', '=', +chainId)
@@ -43,7 +43,7 @@ export class VerifierStatusRepository extends BaseRepository {
 
   async getAll(): Promise<VerifierStatusRecord[]> {
     const rows = await this.db
-      .selectFrom('public.verifier_status')
+      .selectFrom('verifier_status')
       .select(selectVerifierStatus)
       .execute()
     return rows.map(toRecord)
@@ -51,7 +51,7 @@ export class VerifierStatusRepository extends BaseRepository {
 
   async deleteAll(): Promise<number> {
     const result = await this.db
-      .deleteFrom('public.verifier_status')
+      .deleteFrom('verifier_status')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }

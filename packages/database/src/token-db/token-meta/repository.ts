@@ -8,7 +8,7 @@ export class TokenMetaRepository extends BaseRepository {
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
       await this.db
-        .insertInto('public.TokenMeta')
+        .insertInto('TokenMeta')
         .values(batch)
         .onConflict((cb) =>
           cb.columns(['tokenId', 'source']).doUpdateSet((eb) => ({
@@ -16,7 +16,7 @@ export class TokenMetaRepository extends BaseRepository {
             source: eb.ref('excluded.source'),
           })),
         )
-        .returning('public.TokenMeta.id')
+        .returning('TokenMeta.id')
         .execute()
     })
     return records.length

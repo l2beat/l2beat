@@ -17,7 +17,7 @@ export function toRecord(entity: Stake): StakeRecord {
 export function toRow(stake: StakeRecord): Stake {
   return {
     id: stake.id,
-    totalStake: stake.totalStake.toString(),
-    thresholdStake: stake.thresholdStake.toString(),
+    totalStake: Number(stake.totalStake),
+    thresholdStake: Number(stake.thresholdStake),
   }
 }

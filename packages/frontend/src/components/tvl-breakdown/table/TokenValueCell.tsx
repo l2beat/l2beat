@@ -40,7 +40,7 @@ export function TokenValueCell(props: TokenValueCellProps) {
       <TooltipContent>
         Calculation formula:
         <br />
-        Value = tokens locked in the escrow * price
+        Value = amount * price
       </TooltipContent>
     </Tooltip>
   ) : (

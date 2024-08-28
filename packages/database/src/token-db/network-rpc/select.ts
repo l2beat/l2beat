@@ -1,4 +1,4 @@
-import { NetworkRpc } from '../../kysely/generated/types'
+import { NetworkRpc } from '../../kysely/token-db/types'
 
 export const selectNetworkRpc = [
   'id',

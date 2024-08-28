@@ -5,7 +5,7 @@ import { ChartSection } from './sections/ChartSection'
 import { ContractsSection } from './sections/ContractsSection/ContractsSection'
 import { DetailedDescriptionSection } from './sections/DetailedDescriptionSection'
 import { KnowledgeNuggetsSection } from './sections/KnowledgeNuggetsSection/KnowledgeNuggetsSection'
-import { MilestonesSection } from './sections/MilestonesSection/MilestonesSection'
+import { MilestonesAndIncidentsSection } from './sections/MilestonesAndIncidentsSection/MilestonesAndIncidentsSection'
 import { PermissionsSection } from './sections/PermissionsSection'
 import { RiskAnalysisSection } from './sections/RiskAnalysisSection'
 import { RiskSection } from './sections/RiskSection'
@@ -37,9 +37,9 @@ export function ProjectDetails(props: ProjectDetailsProps) {
                 {...item.props}
               />
             )
-          case 'MilestonesSection':
+          case 'MilestonesAndIncidentsSection':
             return (
-              <MilestonesSection
+              <MilestonesAndIncidentsSection
                 key={item.props.id}
                 sectionOrder={sectionOrder}
                 {...item.props}

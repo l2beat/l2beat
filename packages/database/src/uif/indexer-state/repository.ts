@@ -10,7 +10,7 @@ export class IndexerStateRepository extends BaseRepository {
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
       await this.db
-        .insertInto('public.indexer_state')
+        .insertInto('indexer_state')
         .values(batch)
         .onConflict((cb) =>
           cb.column('indexer_id').doUpdateSet((eb) => ({
@@ -28,7 +28,7 @@ export class IndexerStateRepository extends BaseRepository {
     if (ids.length === 0) return []
 
     const rows = await this.db
-      .selectFrom('public.indexer_state')
+      .selectFrom('indexer_state')
       .selectAll()
       .where('indexer_id', 'in', ids)
       .execute()
@@ -39,7 +39,7 @@ export class IndexerStateRepository extends BaseRepository {
     indexerId: string,
   ): Promise<IndexerStateRecord | undefined> {
     const row = await this.db
-      .selectFrom('public.indexer_state')
+      .selectFrom('indexer_state')
       .selectAll()
       .where('indexer_id', '=', indexerId)
       .limit(1)
@@ -52,7 +52,7 @@ export class IndexerStateRepository extends BaseRepository {
     safeHeight: number,
   ): Promise<number> {
     const result = await this.db
-      .updateTable('public.indexer_state')
+      .updateTable('indexer_state')
       .set('safe_height', safeHeight)
       .where('indexer_id', '=', indexerId)
       .executeTakeFirst()
@@ -60,17 +60,12 @@ export class IndexerStateRepository extends BaseRepository {
   }
 
   async getAll(): Promise<IndexerStateRecord[]> {
-    const rows = await this.db
-      .selectFrom('public.indexer_state')
-      .selectAll()
-      .execute()
+    const rows = await this.db.selectFrom('indexer_state').selectAll().execute()
     return rows.map(toRecord)
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
-      .deleteFrom('public.indexer_state')
-      .executeTakeFirst()
+    const result = await this.db.deleteFrom('indexer_state').executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 }
