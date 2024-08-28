@@ -47,8 +47,9 @@ export function ActivityChartHeader({
                 <div className="flex flex-col gap-1">
                   <div className="text-xs font-bold">Exact formula:</div>
                   <div className="text-xs">
-                    {range === 'max'}
-                    (project txs/{range} + ETH txs/{range}) / ETH txs/{range}
+                    {range === 'max'
+                      ? '(projext txs + ETH txs) / ETX txs'
+                      : `(project txs/${range} + ETH txs/${range}) / ETH txs/${range}`}
                   </div>
                 </div>
               </div>
