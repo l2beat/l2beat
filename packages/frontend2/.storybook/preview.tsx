@@ -22,6 +22,7 @@ const preview: Preview = {
     },
     viewport: {
       viewports,
+      defaultViewport: 'desktop',
     },
     chromatic: {
       modes: allModes,
