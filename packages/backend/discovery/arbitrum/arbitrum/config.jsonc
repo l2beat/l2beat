@@ -42,6 +42,30 @@
     // "0xf7951D92B0C345144506576eC13Ecf5103aC905a": "L1CoreTimelockAlias",
   },
   "overrides": {
+    "L2SurplusFee": {
+      "fields": {
+        "recipientsData": {
+          "description": "Lists recipients and weights using events, while the latest represents the current state.",
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "RecipientsUpdated",
+            "returnParams": ["recipients", "weights"]
+          }
+        }
+      }
+    },
+    "L2BaseFee": {
+      "fields": {
+        "recipientsData": {
+          "description": "Lists recipients and weights using events, while the latest represents the current state.",
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "RecipientsUpdated",
+            "returnParams": ["recipients", "weights"]
+          }
+        }
+      }
+    },
     "KeyValueStore": {
       "ignoreMethods": ["get", "store"]
     },
