@@ -3,7 +3,6 @@ import { notFound } from 'next/navigation'
 import { getTvlBreakdownForProject } from '~/server/features/scaling/tvl/breakdown/get-tvl-breakdown-for-project'
 import { getDetailed7dTvlBreakdown } from '~/server/features/scaling/tvl/utils/get-7d-tvl-breakdown'
 import { getDefaultMetadata } from '~/utils/metadata'
-import { BreakdownPageWrapper } from './_components/breakdown-page-wrapper'
 import { RequestTokenBox } from './_components/request-token-box'
 import { CanonicallyBridgedTable } from './_components/tables/canonically-bridged-table'
 import { ExternallyBridgedTable } from './_components/tables/externally-bridges-table'
@@ -49,7 +48,7 @@ export default async function Page({ params }: Props) {
   const extendedBreakdown = assignTokenMetaToBreakdown(tokenBreakdown)
 
   return (
-    <BreakdownPageWrapper>
+    <>
       <TvlBreakdownPageHeader
         title={project.display.name}
         slug={project.display.slug}
@@ -78,6 +77,6 @@ export default async function Page({ params }: Props) {
       <CanonicallyBridgedTable tokens={extendedBreakdown.breakdown.canonical} />
 
       <RequestTokenBox />
-    </BreakdownPageWrapper>
+    </>
   )
 }
