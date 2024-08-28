@@ -3,10 +3,10 @@ import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { db } from '~/server/database'
 import { countToTps } from './utils/count-to-tps'
+import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import { getLastDayTps } from './utils/get-last-day-tps'
 import { getTpsWeeklyChange } from './utils/get-tps-weekly-change'
 import { sumActivityCount } from './utils/sum-activity-count'
-import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 
 export type ActivityTableData = NonNullable<
   Awaited<ReturnType<typeof getActivityTableData>>[string]

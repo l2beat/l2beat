@@ -4,13 +4,13 @@ import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
+import { db } from '~/server/database'
+import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import {
-  createActivityProjectsFilter,
   type ActivityProjectFilter,
+  createActivityProjectsFilter,
 } from './utils/project-filter-utils'
 import { type ActivityTimeRange } from './utils/range'
-import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
-import { db } from '~/server/database'
 
 export function getActivityChart(
   ...parameters: Parameters<typeof getCachedActivityChart>

@@ -4,9 +4,9 @@ import {
   type StageConfig,
   layer2s,
 } from '@l2beat/config'
-import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
-import { type SetOptional } from 'type-fest'
 import { ProjectId } from '@l2beat/shared-pure'
+import { type SetOptional } from 'type-fest'
+import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
 
 export function getCommonScalingEntry(
   params:

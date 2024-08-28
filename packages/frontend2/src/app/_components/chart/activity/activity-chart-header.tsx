@@ -1,5 +1,5 @@
-import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import InfoIcon from '~/icons/info.svg'
+import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/tooltip'
 
 export function ActivityChartHeader({

@@ -1,8 +1,8 @@
 import { z } from 'zod'
-import { procedure, router } from '../../trpc'
 import { getActivityChart } from '~/server/features/scaling/activity/get-activity-chart'
-import { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { ActivityProjectFilter } from '~/server/features/scaling/activity/utils/project-filter-utils'
+import { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
+import { procedure, router } from '../../trpc'
 
 export const activityRouter = router({
   chart: procedure

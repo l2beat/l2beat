@@ -1,13 +1,13 @@
+import { HOMEPAGE_MILESTONES } from '@l2beat/config'
+import { ActivityChart } from '~/app/_components/chart/activity/activity-chart'
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import { getScalingActivityEntries } from '~/server/features/scaling/get-scaling-activity-entries'
-import { api, HydrateClient } from '~/trpc/server'
-import { ActivityTimeRangeContextProvider } from './_components/activity-time-range-context'
-import { ScalingActivityTable } from './_components/table/scaling-activity-table'
+import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
-import { ActivityChart } from '~/app/_components/chart/activity/activity-chart'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../_components/scaling-filters'
-import { HOMEPAGE_MILESTONES } from '@l2beat/config'
+import { ActivityTimeRangeContextProvider } from './_components/activity-time-range-context'
+import { ScalingActivityTable } from './_components/table/scaling-activity-table'
 
 export default async function Page() {
   const range = getCookie('activityTimeRange')

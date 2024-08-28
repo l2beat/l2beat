@@ -1,5 +1,6 @@
 'use client'
 
+import { type Milestone } from '@l2beat/config'
 import {
   useScalingFilter,
   useScalingFilterValues,
@@ -7,17 +8,16 @@ import {
 import { useActivityTimeRangeContext } from '~/app/(new)/(other)/scaling/activity/_components/activity-time-range-context'
 import { ActivityTimeRangeControls } from '~/app/(new)/(other)/scaling/activity/_components/activity-time-range-controls'
 import { useLocalStorage } from '~/hooks/use-local-storage'
-import { api } from '~/trpc/react'
-import { useActivityChartRenderParams } from './use-activity-chart-render-params'
-import { ChartProvider } from '../core/chart-provider'
-import { Chart } from '../core/chart'
-import { Checkbox } from '../../checkbox'
-import { formatTpsWithUnit } from '~/utils/format-tps'
-import { ActivityChartHeader } from './activity-chart-header'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
-import { RadioGroup, RadioGroupItem } from '../../radio-group'
-import { type Milestone } from '@l2beat/config'
 import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
+import { api } from '~/trpc/react'
+import { formatTpsWithUnit } from '~/utils/format-tps'
+import { Checkbox } from '../../checkbox'
+import { RadioGroup, RadioGroupItem } from '../../radio-group'
+import { Chart } from '../core/chart'
+import { ChartProvider } from '../core/chart-provider'
+import { ActivityChartHeader } from './activity-chart-header'
+import { useActivityChartRenderParams } from './use-activity-chart-render-params'
 
 interface Props {
   milestones: Milestone[]

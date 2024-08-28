@@ -6,8 +6,8 @@ import {
   type ActivityTableData,
   getActivityTableData,
 } from './activity/get-activity-table-data'
-import { getCommonScalingEntry } from './get-common-scaling-entry'
 import { getActivityProjects } from './activity/utils/get-activity-projects'
+import { getCommonScalingEntry } from './get-common-scaling-entry'
 
 type ActivityProject = Layer2 | Layer3
 

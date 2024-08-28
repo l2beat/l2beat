@@ -1,5 +1,6 @@
 import { type Layer2Provider, type Layer3Provider } from '@l2beat/config'
 
+import { EM_DASH } from '~/consts/characters'
 import { ArbitrumIcon } from '~/icons/providers/arbitrum-icon'
 import { LoopringIcon } from '~/icons/providers/loopring-icon'
 import { OptimismIcon } from '~/icons/providers/optimism-icon'
@@ -12,7 +13,6 @@ import { ZKStackIcon } from '~/icons/providers/zkstack-icon'
 import { ZkSyncLiteIcon } from '~/icons/providers/zksync-lite-icon'
 import { cn } from '~/utils/cn'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/tooltip'
-import { EM_DASH } from '~/consts/characters'
 
 export interface TypeCellProps {
   children: string | undefined
