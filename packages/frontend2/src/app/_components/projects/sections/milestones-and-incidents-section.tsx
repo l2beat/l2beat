@@ -27,9 +27,6 @@ export function MilestonesAndIncidentsSection({
   ...sectionProps
 }: MilestonesAndIncidentsSectionProps) {
   const [isOpen, setIsOpen] = useState(false)
-  milestones.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-  )
 
   const milestonesWithNext = withNext(milestones)
 
