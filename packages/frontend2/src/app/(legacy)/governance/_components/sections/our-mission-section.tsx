@@ -9,7 +9,7 @@ interface Props {
 
 export function OurMissionSection({ className }: Props) {
   return (
-    <GovernanceCard as="section" mobileFull className={className}>
+    <GovernanceCard mobileFull className={className}>
       <GovernanceCardHeader>Our mission</GovernanceCardHeader>
       <div className="mt-6 text-base md:text-sm">
         At L2BEAT we believe that crypto is the new infrastructure for the

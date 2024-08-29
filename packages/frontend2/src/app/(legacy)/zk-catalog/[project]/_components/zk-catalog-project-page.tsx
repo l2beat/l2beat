@@ -89,7 +89,6 @@ function Header(props: ZkCatalogProjectPageProps) {
           <OutLink
             className="mt-1 md:mt-0"
             href={props.details.linkToMainProjectDetails}
-            showArrow
           >
             View project&apos;s detail page
           </OutLink>

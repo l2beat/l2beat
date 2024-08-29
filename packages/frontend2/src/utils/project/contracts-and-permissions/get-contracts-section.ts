@@ -23,11 +23,11 @@ import { type ProjectSectionProps } from '~/app/_components/projects/sections/ty
 import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
-import { type ContractsSectionProps } from '../../../app/_components/projects/sections/contracts/contracts-section'
 import {
   type TechnologyContract,
   type TechnologyContractAddress,
-} from '../../../app/_components/projects/sections/permissions/contract-entry'
+} from '../../../app/_components/projects/sections/contract-entry'
+import { type ContractsSectionProps } from '../../../app/_components/projects/sections/contracts/contracts-section'
 import { type TechnologyReference } from '../../../app/_components/projects/sections/permissions/reference-list'
 import { getChain } from './get-chain'
 import { getUsedInProjects } from './get-used-in-projects'
