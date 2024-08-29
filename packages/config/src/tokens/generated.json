@@ -5145,8 +5145,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -5164,8 +5168,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -5183,8 +5191,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -5202,8 +5214,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -5221,8 +5237,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -5240,8 +5260,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -5274,8 +5298,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero v2 OFT",
-        "slug": "layerzerov2oft"
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
       }
     },
     {
@@ -5308,8 +5336,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Wormhole",
-        "slug": "portal"
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
       }
     },
     {
@@ -5357,7 +5389,11 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Hyperlane (xERC20)"
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC20)"
+          }
+        ]
       }
     },
     {
@@ -5375,8 +5411,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -5394,8 +5434,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -5413,8 +5457,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -5432,8 +5480,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Stargate",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Stargate",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -5466,8 +5518,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Stargate",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Stargate",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -5530,8 +5586,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -5638,8 +5698,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -5657,8 +5721,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -5676,8 +5744,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -5695,8 +5767,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -5714,8 +5790,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -5748,7 +5828,11 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Hyperlane Nexus"
+        "bridges": [
+          {
+            "name": "Hyperlane Nexus"
+          }
+        ]
       }
     },
     {
@@ -5781,8 +5865,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -5815,7 +5903,11 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Hyperlane (xERC20)"
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC20)"
+          }
+        ]
       }
     },
     {
@@ -5833,8 +5925,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -5852,8 +5948,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -5871,7 +5971,11 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Free Bridge"
+        "bridges": [
+          {
+            "name": "Free Bridge"
+          }
+        ]
       }
     },
     {
@@ -5889,7 +5993,11 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Wemix on Kroma"
+        "bridges": [
+          {
+            "name": "Wemix on Kroma"
+          }
+        ]
       }
     },
     {
@@ -5907,8 +6015,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -5970,8 +6082,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -5989,8 +6105,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -6008,8 +6128,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -6027,8 +6151,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -6046,8 +6174,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -6080,8 +6212,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -6248,8 +6384,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -6267,8 +6407,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -6286,8 +6430,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -6305,8 +6453,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -6324,8 +6476,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -6343,8 +6499,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -6362,8 +6522,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -6381,8 +6545,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
+        "bridges": [
+          {
+            "name": "Socket",
+            "slug": "socket"
+          }
+        ]
       }
     },
     {
@@ -6415,8 +6583,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
+        "bridges": [
+          {
+            "name": "Socket",
+            "slug": "socket"
+          }
+        ]
       }
     },
     {
@@ -6434,8 +6606,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
+        "bridges": [
+          {
+            "name": "Socket",
+            "slug": "socket"
+          }
+        ]
       }
     },
     {
@@ -6468,7 +6644,11 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Fire Bridge"
+        "bridges": [
+          {
+            "name": "Fire Bridge"
+          }
+        ]
       }
     },
     {
@@ -6545,8 +6725,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -6594,8 +6778,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -6628,8 +6816,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "layerzerov2oft"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "layerzerov2oft"
+          }
+        ]
       }
     },
     {
@@ -6766,8 +6958,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -6785,8 +6981,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero v2 OFT",
-        "slug": "layerzerov2oft"
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
       }
     },
     {
@@ -6819,8 +7019,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Connext (xERC20)",
-        "slug": "connext"
+        "bridges": [
+          {
+            "name": "Connext (xERC20)",
+            "slug": "connext"
+          }
+        ]
       }
     },
     {
@@ -6853,8 +7057,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Wormhole",
-        "slug": "portal"
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
       }
     },
     {
@@ -6872,8 +7080,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -6921,8 +7133,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -6970,8 +7186,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -6989,7 +7209,11 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Free Bridge"
+        "bridges": [
+          {
+            "name": "Free Bridge"
+          }
+        ]
       }
     },
     {
@@ -7022,8 +7246,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Connext (xERC20)",
-        "slug": "connext"
+        "bridges": [
+          {
+            "name": "Connext (xERC20)",
+            "slug": "connext"
+          }
+        ]
       }
     },
     {
@@ -7041,8 +7269,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -7060,8 +7292,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Stargate",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Stargate",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -7079,8 +7315,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -7098,8 +7338,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -7132,8 +7376,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Multichain",
-        "slug": "multichain"
+        "bridges": [
+          {
+            "name": "Multichain",
+            "slug": "multichain"
+          }
+        ]
       }
     },
     {
@@ -7151,8 +7399,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -7200,8 +7452,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Wormhole",
-        "slug": "portal"
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
       }
     },
     {
@@ -7278,8 +7534,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Wormhole",
-        "slug": "portal"
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
       }
     },
     {
@@ -7297,8 +7557,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -7316,8 +7580,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -7335,8 +7603,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -7354,8 +7626,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -7373,8 +7649,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -7407,7 +7687,11 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Chainlink CCIP"
+        "bridges": [
+          {
+            "name": "Chainlink CCIP"
+          }
+        ]
       }
     },
     {
@@ -7440,7 +7724,11 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "The Graph Custom Gateway"
+        "bridges": [
+          {
+            "name": "The Graph Custom Gateway"
+          }
+        ]
       }
     },
     {
@@ -7473,8 +7761,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -7507,8 +7799,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -7526,8 +7822,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero v2 OFT",
-        "slug": "layerzerov2oft"
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
       }
     },
     {
@@ -7560,8 +7860,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -7579,8 +7883,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero v2 OFT",
-        "slug": "layerzerov2oft"
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
       }
     },
     {
@@ -7658,8 +7966,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -7677,8 +7989,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Connext (xERC20)",
-        "slug": "connext"
+        "bridges": [
+          {
+            "name": "Connext (xERC20)",
+            "slug": "connext"
+          }
+        ]
       }
     },
     {
@@ -7696,8 +8012,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Wormhole",
-        "slug": "portal"
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
       }
     },
     {
@@ -7745,8 +8065,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -7764,8 +8088,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -7783,8 +8111,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -7802,8 +8134,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Stargate",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Stargate",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -7821,8 +8157,12 @@
       "source": "native",
       "supply": "circulatingSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero v2 OFT",
-        "slug": "layerzerov2oft"
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
       }
     },
     {
@@ -7900,8 +8240,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -8024,8 +8368,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Transporter",
-        "slug": "transporter"
+        "bridges": [
+          {
+            "name": "Transporter",
+            "slug": "transporter"
+          }
+        ]
       }
     },
     {
@@ -8131,8 +8479,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -8225,8 +8577,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Connext (xERC20)",
-        "slug": "connext"
+        "bridges": [
+          {
+            "name": "Connext (xERC20)",
+            "slug": "connext"
+          }
+        ]
       }
     },
     {
@@ -8244,8 +8600,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -8263,8 +8623,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -8312,8 +8676,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -8346,8 +8714,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -8410,8 +8782,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -8458,8 +8834,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -8492,8 +8872,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Connext (xERC20)",
-        "slug": "connext"
+        "bridges": [
+          {
+            "name": "Connext (xERC20)",
+            "slug": "connext"
+          }
+        ]
       }
     },
     {
@@ -8511,8 +8895,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -8530,7 +8918,11 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Blast"
+        "bridges": [
+          {
+            "name": "Blast"
+          }
+        ]
       }
     },
     {
@@ -8548,8 +8940,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -8567,8 +8963,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -8586,8 +8986,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -8605,8 +9009,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -8624,8 +9032,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -8658,8 +9070,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -8691,7 +9107,11 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Free Bridge"
+        "bridges": [
+          {
+            "name": "Free Bridge"
+          }
+        ]
       }
     },
     {
@@ -8709,8 +9129,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -8728,8 +9152,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -8747,8 +9175,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -8796,8 +9228,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -8815,8 +9251,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -8834,8 +9274,11 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "TRON Foundation",
-        "warning": "There is no formal bridge nor a way to withdraw this token. Funds are held by a simple Multisig on TRON and minted by a multisig on zkLink Nova."
+        "bridges": [
+          {
+            "name": "TRON Foundation"
+          }
+        ]
       }
     },
     {
@@ -8853,7 +9296,11 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Free Bridge"
+        "bridges": [
+          {
+            "name": "Free Bridge"
+          }
+        ]
       }
     },
     {
@@ -8871,7 +9318,11 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Free Bridge"
+        "bridges": [
+          {
+            "name": "Free Bridge"
+          }
+        ]
       }
     }
   ]

@@ -3227,7 +3227,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "bridge": "Connext (xERC20)",
+            "name": "Connext (xERC20)",
             "slug": "connext"
           }
         ]
