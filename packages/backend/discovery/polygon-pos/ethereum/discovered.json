@@ -1,8 +1,8 @@
 {
   "name": "polygon-pos",
   "chain": "ethereum",
-  "blockNumber": 20628344,
-  "configHash": "0x277093917a19cb593525834be9535ae172ac12062cb4362faa029339bc191408",
+  "blockNumber": 20632909,
+  "configHash": "0x92b92d1a5ba50fa6fba1215289ecaa0eba010fcdf9499d0b8cc5e6f428b151e2",
   "version": 13,
   "contracts": [
     {
@@ -70,45 +70,13 @@
     {
       "name": "StateSender",
       "address": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE",
-      "ignoreInWatchMode": ["counter"],
       "sinceTimestamp": 1590850580,
       "values": {
         "$immutable": true,
-        "counter": 2953255,
+        "counter": 2953558,
         "isOwner": false,
-        "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
-        "REGISTRATIONS": [
-          "0x401F6c983eA34274ec46f84D70b31C151321188b",
-          "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
-          "0x6566115bC9Aa71f8DbC2004A656B5956C55726a7",
-          "0xb9516057dC40C92F91B6EbB2E3d04288cd0446F1",
-          "0x0D29aDA4c818A9f089107201eaCc6300e56E0d5c",
-          "0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2",
-          "0xA0557234eB7b3c503388202D3768Cfa2f1AE9Dc2",
-          "0xb6Ec8B0a52C1BAe5B6Aa890cD0Ec9704398d0D55",
-          "0x8beDD90e52dF8BB663B9eF5C2ca42E7adC27C9b5"
-        ]
-      },
-      "derivedName": "StateSender"
-    },
-    {
-      "name": "WithdrawManager",
-      "address": "0x2A88696e0fFA76bAA1338F2C74497cC013495922",
-      "proxyType": "EIP897 proxy",
-      "sinceTimestamp": 1590850831,
-      "values": {
-        "$immutable": false,
-        "$implementation": "0xA376680d32Cece9756D9f1087318400DA2fd83dF",
-        "exitNft": "0xDF74156420Bd57ab387B195ed81EcA36F9fABAca",
-        "exitWindow": 0,
-        "HALF_EXIT_PERIOD": 1,
-        "implementation": "0xA376680d32Cece9756D9f1087318400DA2fd83dF",
-        "isOwner": false,
-        "ON_FINALIZE_GAS_LIMIT": 300000,
-        "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
-        "proxyType": 2
-      },
-      "derivedName": "WithdrawManager"
+        "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      }
     },
     {
       "name": "MintableERC1155Predicate",
@@ -264,13 +232,13 @@
         "CHECKPOINT_REWARD": "71795000000000000000000",
         "checkPointBlockInterval": 5120,
         "checkpointRewardDelta": 10,
-        "currentEpoch": 67748,
+        "currentEpoch": 67785,
         "currentValidatorSetSize": 105,
-        "currentValidatorSetTotalStake": "3262758598639344446255091419",
+        "currentValidatorSetTotalStake": "3255406889944527695370131057",
         "delegationEnabled": true,
         "delegatorsReward": [0, 0, 0, 0],
         "dynasty": 80,
-        "epoch": 67748,
+        "epoch": 67785,
         "eventsHub": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
         "extensionCode": "0xef49Ea6996073752b6840CDA34773FFA78F78166",
         "getRegistry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
@@ -297,18 +265,18 @@
         "registry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
         "replacementCoolDown": 2018083,
         "rewardDecreasePerCheckpoint": 30,
-        "rewardPerStake": "2852613962790167644143144",
+        "rewardPerStake": "2853674203290437328282291",
         "rootChain": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
         "signerUpdateLimit": 100,
         "token": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
         "totalHeimdallFee": "10155939209428901681108",
         "totalRewards": "201179489204211582010647007",
-        "totalRewardsLiquidated": "111111200522548221994926586",
+        "totalRewardsLiquidated": "111262577602293368367517057",
         "totalStaked": "10847736755805912873761268",
         "validatorReward": [0, 0, "1081182134824116177126", 0],
         "validatorShareFactory": "0xc4FA447A0e77Eff9717b09C057B40570813bb642",
         "validatorState": {
-          "amount": "3262758598639344446255091419",
+          "amount": "3255406889944527695370131057",
           "stakerCount": 105
         },
         "validatorThreshold": 105,
@@ -417,7 +385,7 @@
       ],
       "sinceTimestamp": 1590849960,
       "values": {
-        "_nextHeaderBlock": 677480000,
+        "_nextHeaderBlock": 677850000,
         "$immutable": false,
         "$implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "CHAINID": 137,
@@ -426,8 +394,8 @@
           "_registry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
           "_heimdallId": "heimdall-137"
         },
-        "currentHeaderBlock": 677470000,
-        "getLastChildBlock": 61145509,
+        "currentHeaderBlock": 677840000,
+        "getLastChildBlock": 61172901,
         "heimdallId": "0x7e10229e6df5851dc336f813dde0cf6559cd517f9ff1980e2e57e192ba3a2329",
         "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "isOwner": false,
@@ -617,13 +585,6 @@
         "proxyType": 2,
         "TOKEN_TYPE": "0x316d3b16328ca1dbcc5aeb9caf982584129f3ad000dc7219dd7dd6727f72fe93"
       }
-    },
-    {
-      "name": "ExitNFT",
-      "address": "0xDF74156420Bd57ab387B195ed81EcA36F9fABAca",
-      "sinceTimestamp": 1590850785,
-      "values": { "$immutable": true, "getApproved": [], "ownerOf": [] },
-      "derivedName": "ExitNFT"
     },
     {
       "name": "ERC721Predicate",
@@ -924,31 +885,6 @@
       "event NewRegistration(address indexed user, address indexed sender, address indexed receiver)",
       "event RegistrationUpdated(address indexed user, address indexed sender, address indexed receiver)",
       "event StateSynced(uint256 indexed id, address indexed contractAddress, bytes data)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)"
-    ],
-    "0x2A88696e0fFA76bAA1338F2C74497cC013495922": [
-      "function updateImplementation(address _newProxyTo)",
-      "function exitWindow() view returns (uint256)",
-      "function exits(uint256) view returns (uint256 receiptAmountOrNFTId, bytes32 txHash, address owner, address token, bool isRegularExit, address predicate)",
-      "function proxyType() pure returns (uint256 proxyTypeId)",
-      "function implementation() view returns (address)",
-      "function ownerExits(bytes32) view returns (uint256)",
-      "function renounceOwnership()",
-      "function owner() view returns (address)",
-      "function isOwner() view returns (bool)",
-      "function ON_FINALIZE_GAS_LIMIT() view returns (uint32)",
-      "function exitsQueues(address) view returns (address)",
-      "function HALF_EXIT_PERIOD() view returns (uint256)",
-      "function exitNft() view returns (address)",
-      "function transferOwnership(address newOwner)",
-      "constructor(address _proxyTo, address _registry, address _rootChain, address _exitNft)",
-      "event Withdraw(uint256 indexed exitId, address indexed user, address indexed token, uint256 amount)",
-      "event ExitStarted(address indexed exitor, uint256 indexed exitId, address indexed token, uint256 amount, bool isRegularExit)",
-      "event ExitUpdated(uint256 indexed exitId, uint256 indexed age, address signer)",
-      "event ExitPeriodUpdate(uint256 indexed oldExitPeriod, uint256 indexed newExitPeriod)",
-      "event ExitCancelled(uint256 indexed exitId)",
-      "event ProxyUpdated(address indexed _new, address indexed _old)",
-      "event OwnerUpdate(address _prevOwner, address _newOwner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)"
     ],
     "0x2d641867411650cd05dB93B59964536b1ED5b1B7": [
@@ -1289,34 +1225,6 @@
       "function updateAndCall(address _newProxyTo, bytes data) payable",
       "function updateImplementation(address _newProxyTo)"
     ],
-    "0xA376680d32Cece9756D9f1087318400DA2fd83dF": [
-      "event ExitCancelled(uint256 indexed exitId)",
-      "event ExitPeriodUpdate(uint256 indexed oldExitPeriod, uint256 indexed newExitPeriod)",
-      "event ExitStarted(address indexed exitor, uint256 indexed exitId, address indexed token, uint256 amount, bool isRegularExit)",
-      "event ExitUpdated(uint256 indexed exitId, uint256 indexed age, address signer)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Withdraw(uint256 indexed exitId, address indexed user, address indexed token, uint256 amount)",
-      "function HALF_EXIT_PERIOD() view returns (uint256)",
-      "function ON_FINALIZE_GAS_LIMIT() view returns (uint32)",
-      "function addExitToQueue(address exitor, address childToken, address rootToken, uint256 exitAmountOrTokenId, bytes32 txHash, bool isRegularExit, uint256 priority)",
-      "function addInput(uint256 exitId, uint256 age, address utxoOwner, address token)",
-      "function challengeExit(uint256 exitId, uint256 inputId, bytes challengeData, address adjudicatorPredicate)",
-      "function createExitQueue(address token)",
-      "function exitNft() view returns (address)",
-      "function exitWindow() view returns (uint256)",
-      "function exits(uint256) view returns (uint256 receiptAmountOrNFTId, bytes32 txHash, address owner, address token, bool isRegularExit, address predicate)",
-      "function exitsQueues(address) view returns (address)",
-      "function isOwner() view returns (bool)",
-      "function owner() view returns (address)",
-      "function ownerExits(bytes32) view returns (uint256)",
-      "function processExits(address _token)",
-      "function processExitsBatch(address[] _tokens)",
-      "function renounceOwnership()",
-      "function startExitWithDepositedTokens(uint256 depositId, address token, uint256 amountOrToken) payable",
-      "function transferOwnership(address newOwner)",
-      "function updateExitPeriod(uint256 halfExitPeriod)",
-      "function verifyInclusion(bytes data, uint8 offset, bool verifyTxInclusion) view returns (uint256)"
-    ],
     "0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8": [
       "function withdraw(uint256 wad, address user)",
       "function name() view returns (string)",
@@ -1649,25 +1557,6 @@
       "function transferProxyOwnership(address newOwner)",
       "function updateAndCall(address _newProxyTo, bytes data) payable",
       "function updateImplementation(address _newProxyTo)"
-    ],
-    "0xDF74156420Bd57ab387B195ed81EcA36F9fABAca": [
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function getApproved(uint256 tokenId) view returns (address)",
-      "function approve(address to, uint256 tokenId)",
-      "function transferFrom(address from, address to, uint256 tokenId)",
-      "function mint(address _owner, uint256 _tokenId)",
-      "function safeTransferFrom(address from, address to, uint256 tokenId)",
-      "function burn(uint256 _tokenId)",
-      "function exists(uint256 tokenId) view returns (bool)",
-      "function ownerOf(uint256 tokenId) view returns (address)",
-      "function balanceOf(address owner) view returns (uint256)",
-      "function setApprovalForAll(address to, bool approved)",
-      "function safeTransferFrom(address from, address to, uint256 tokenId, bytes _data)",
-      "function isApprovedForAll(address owner, address operator) view returns (bool)",
-      "constructor(address _registry)",
-      "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",
-      "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
-      "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)"
     ],
     "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD": [
       "constructor(address _proxyTo)",

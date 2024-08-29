@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x90b0d584c000b39884d655896737990350812a48
+
+# Diff at Thu, 29 Aug 2024 08:00:58 GMT:
+
+- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
+- comparing to: main@4c3d45f0a3321a84fec724320a7c8d1e6f1ddf53 block: 20628344
+- current block number: 20632909
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Watched changes
+
+```diff
+    contract StateSender (0x28e4F3a7f651294B9564800b2D01f35189A5bFbE) {
+    +++ description: None
+      values.counter:
+-        2953255
++        2953558
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20628344 (main branch discovery), not current.
+
+```diff
+    contract StateSender (0x28e4F3a7f651294B9564800b2D01f35189A5bFbE) {
+    +++ description: None
+      values.REGISTRATIONS:
+-        ["0x401F6c983eA34274ec46f84D70b31C151321188b","0xA0c68C638235ee32657e8f720a23ceC1bFc77C77","0x6566115bC9Aa71f8DbC2004A656B5956C55726a7","0xb9516057dC40C92F91B6EbB2E3d04288cd0446F1","0x0D29aDA4c818A9f089107201eaCc6300e56E0d5c","0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2","0xA0557234eB7b3c503388202D3768Cfa2f1AE9Dc2","0xb6Ec8B0a52C1BAe5B6Aa890cD0Ec9704398d0D55","0x8beDD90e52dF8BB663B9eF5C2ca42E7adC27C9b5"]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract WithdrawManager (0x2A88696e0fFA76bAA1338F2C74497cC013495922)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ExitNFT (0xDF74156420Bd57ab387B195ed81EcA36F9fABAca)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x662970b1bf0b32ad873da4a0f522ee69aef1a773
 
 # Diff at Wed, 28 Aug 2024 16:41:41 GMT:
