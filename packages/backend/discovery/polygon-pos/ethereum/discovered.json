@@ -1,9 +1,9 @@
 {
   "name": "polygon-pos",
   "chain": "ethereum",
-  "blockNumber": 20612504,
+  "blockNumber": 20628344,
   "configHash": "0x277093917a19cb593525834be9535ae172ac12062cb4362faa029339bc191408",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "SlashingManager",
@@ -17,12 +17,19 @@
       "name": "ERC1155Predicate",
       "address": "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f",
       "proxyType": "Polygon proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1598437004,
       "values": {
         "$admin": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
-        "$implementation": "0xb86357daD9c3567dD70862a5b49fFFaFb0F094Ac",
+        "$implementation": "0xCFA65db73cB45D458d0a98006d3d558b5e1F021d",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "implementation": "0xb86357daD9c3567dD70862a5b49fFFaFb0F094Ac",
+        "implementation": "0xCFA65db73cB45D458d0a98006d3d558b5e1F021d",
         "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
         "proxyOwner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "proxyType": 2,
@@ -67,7 +74,7 @@
       "sinceTimestamp": 1590850580,
       "values": {
         "$immutable": true,
-        "counter": 2952199,
+        "counter": 2953255,
         "isOwner": false,
         "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "REGISTRATIONS": [
@@ -107,12 +114,19 @@
       "name": "MintableERC1155Predicate",
       "address": "0x2d641867411650cd05dB93B59964536b1ED5b1B7",
       "proxyType": "Polygon proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1613107769,
       "values": {
         "$admin": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
-        "$implementation": "0x985Dbac75cf625dD6baB03Da784CF0D51B4bEcef",
+        "$implementation": "0xFD47E7d657b07B071C3362bBCe908a70895EE747",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "implementation": "0x985Dbac75cf625dD6baB03Da784CF0D51B4bEcef",
+        "implementation": "0xFD47E7d657b07B071C3362bBCe908a70895EE747",
         "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
         "proxyOwner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "proxyType": 2,
@@ -153,10 +167,17 @@
       "name": "ERC20Predicate",
       "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
       "proxyType": "Polygon proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1598436664,
       "values": {
         "$admin": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
-        "$implementation": "0xb774EBbeF817390483FEA5bEd0F0cB0EDEBE4065",
+        "$implementation": "0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB",
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -168,7 +189,7 @@
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "implementation": "0xb774EBbeF817390483FEA5bEd0F0cB0EDEBE4065",
+        "implementation": "0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB",
         "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
         "proxyOwner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "proxyType": 2,
@@ -218,6 +239,13 @@
       "name": "StakeManager",
       "address": "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908",
       "proxyType": "Polygon proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "currentEpoch",
         "currentValidatorSetTotalStake",
@@ -236,13 +264,13 @@
         "CHECKPOINT_REWARD": "71795000000000000000000",
         "checkPointBlockInterval": 5120,
         "checkpointRewardDelta": 10,
-        "currentEpoch": 67628,
+        "currentEpoch": 67748,
         "currentValidatorSetSize": 105,
-        "currentValidatorSetTotalStake": "3273431399029624421753115348",
+        "currentValidatorSetTotalStake": "3262758598639344446255091419",
         "delegationEnabled": true,
         "delegatorsReward": [0, 0, 0, 0],
         "dynasty": 80,
-        "epoch": 67628,
+        "epoch": 67748,
         "eventsHub": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
         "extensionCode": "0xef49Ea6996073752b6840CDA34773FFA78F78166",
         "getRegistry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
@@ -269,18 +297,18 @@
         "registry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
         "replacementCoolDown": 2018083,
         "rewardDecreasePerCheckpoint": 30,
-        "rewardPerStake": "2849241541152212874085825",
+        "rewardPerStake": "2852613962790167644143144",
         "rootChain": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
         "signerUpdateLimit": 100,
         "token": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
         "totalHeimdallFee": "10155939209428901681108",
         "totalRewards": "201179489204211582010647007",
-        "totalRewardsLiquidated": "111067764576877695281090427",
+        "totalRewardsLiquidated": "111111200522548221994926586",
         "totalStaked": "10847736755805912873761268",
         "validatorReward": [0, 0, "1081182134824116177126", 0],
         "validatorShareFactory": "0xc4FA447A0e77Eff9717b09C057B40570813bb642",
         "validatorState": {
-          "amount": "3273431399029624421753115348",
+          "amount": "3262758598639344446255091419",
           "stakerCount": 105
         },
         "validatorThreshold": 105,
@@ -299,6 +327,13 @@
       "name": "EventsHub",
       "address": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
       "proxyType": "Polygon proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1616774452,
       "values": {
         "$admin": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
@@ -340,10 +375,17 @@
       "name": "EtherPredicate",
       "address": "0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30",
       "proxyType": "Polygon proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1598437971,
       "values": {
         "$admin": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
-        "$implementation": "0x3129B90fB7bF58A0B36226f2e6547B89C0BbdE42",
+        "$implementation": "0xeB185ED8f664D105903EF434E5becd214a8AC874",
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -355,7 +397,7 @@
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "implementation": "0x3129B90fB7bF58A0B36226f2e6547B89C0BbdE42",
+        "implementation": "0xeB185ED8f664D105903EF434E5becd214a8AC874",
         "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
         "proxyOwner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "proxyType": 2,
@@ -375,7 +417,7 @@
       ],
       "sinceTimestamp": 1590849960,
       "values": {
-        "_nextHeaderBlock": 676280000,
+        "_nextHeaderBlock": 677480000,
         "$immutable": false,
         "$implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "CHAINID": 137,
@@ -384,8 +426,8 @@
           "_registry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
           "_heimdallId": "heimdall-137"
         },
-        "currentHeaderBlock": 676270000,
-        "getLastChildBlock": 61058213,
+        "currentHeaderBlock": 677470000,
+        "getLastChildBlock": 61145509,
         "heimdallId": "0x7e10229e6df5851dc336f813dde0cf6559cd517f9ff1980e2e57e192ba3a2329",
         "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "isOwner": false,
@@ -400,13 +442,20 @@
       "name": "MintableERC721Predicate",
       "address": "0x932532aA4c0174b8453839A6E44eE09Cc615F2b7",
       "proxyType": "Polygon proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1598436896,
       "values": {
         "$admin": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
-        "$implementation": "0x34AF15A166def1d89D38a70120Ea33CD8cc10C45",
+        "$implementation": "0xba31389292f7EdfC7b60B937b97014b4C354689b",
         "BATCH_LIMIT": 20,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "implementation": "0x34AF15A166def1d89D38a70120Ea33CD8cc10C45",
+        "implementation": "0xba31389292f7EdfC7b60B937b97014b4C354689b",
         "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
         "proxyOwner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "proxyType": 2,
@@ -420,10 +469,17 @@
       "name": "MintableERC20Predicate",
       "address": "0x9923263fA127b3d1484cFD649df8f1831c2A74e4",
       "proxyType": "Polygon proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1613100777,
       "values": {
         "$admin": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
-        "$implementation": "0xab00328234bC22430c78847094A68a6836574fFB",
+        "$implementation": "0x94D40724d6aA4AB313065006E4bA8CA448dcDfae",
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -435,7 +491,7 @@
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "implementation": "0xab00328234bC22430c78847094A68a6836574fFB",
+        "implementation": "0x94D40724d6aA4AB313065006E4bA8CA448dcDfae",
         "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
         "proxyOwner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "proxyType": 2,
@@ -448,10 +504,17 @@
       "name": "RootChainManager",
       "address": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
       "proxyType": "Polygon proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1598436547,
       "values": {
         "$admin": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
-        "$implementation": "0x1633012a2cB27eFBC2944f2E43b9197Bc3964359",
+        "$implementation": "0x8F372f5404514cec63A3F88BAac772Cc620F2281",
         "checkpointManagerAddress": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
         "childChainManagerAddress": "0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -460,7 +523,7 @@
         "ETHER_ADDRESS": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
         "getChainId": 1,
         "getDomainSeperator": "0xb5a4cc9a023bd6d02f117aaf6dbd3f253f1f6e35a8497712420cc482df3f73e7",
-        "implementation": "0x1633012a2cB27eFBC2944f2E43b9197Bc3964359",
+        "implementation": "0x8F372f5404514cec63A3F88BAac772Cc620F2281",
         "MAP_TOKEN": "0x2cef46a936bdc5b7e6e8c71aa04560c41cf7d88bb26901a7e7f4936ff02accad",
         "MAPPER_ROLE": "0x2559c73ad5e64226de134fc607a00e9f0c0b7465b43c2ae69baaca347c607777",
         "PREDICATES": [
@@ -535,6 +598,13 @@
       "name": "ChainExitERC1155Predicate",
       "address": "0xDB2382413bCb9c2F1B6b62B52238558266361D68",
       "proxyType": "Polygon proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1630304491,
       "values": {
         "$admin": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
@@ -559,13 +629,20 @@
       "name": "ERC721Predicate",
       "address": "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD",
       "proxyType": "Polygon proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1598436766,
       "values": {
         "$admin": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
-        "$implementation": "0x9F5B43C0d6d57a76E5B24CE05E11b70C3C7eA8Ec",
+        "$implementation": "0x02Bc987f54B54bf18Ca6E20a13e57508ec561072",
         "BATCH_LIMIT": 20,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "implementation": "0x9F5B43C0d6d57a76E5B24CE05E11b70C3C7eA8Ec",
+        "implementation": "0x02Bc987f54B54bf18Ca6E20a13e57508ec561072",
         "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
         "proxyOwner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "proxyType": 2,
@@ -654,21 +731,63 @@
       "address": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f",
-          "0x2d641867411650cd05dB93B59964536b1ED5b1B7",
-          "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908",
-          "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
-          "0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30",
-          "0x932532aA4c0174b8453839A6E44eE09Cc615F2b7",
-          "0x9923263fA127b3d1484cFD649df8f1831c2A74e4",
-          "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
-          "0xDB2382413bCb9c2F1B6b62B52238558266361D68",
-          "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x2d641867411650cd05dB93B59964536b1ED5b1B7",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x932532aA4c0174b8453839A6E44eE09Cc615F2b7",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x9923263fA127b3d1484cFD649df8f1831c2A74e4",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xDB2382413bCb9c2F1B6b62B52238558266361D68",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1593593561,
       "values": {
@@ -690,7 +809,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 207,
+        "nonce": 208,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -715,6 +834,31 @@
     { "address": "0xf748a187303940856A367D57Dc45D1ac4A597305" }
   ],
   "abis": {
+    "0x02Bc987f54B54bf18Ca6E20a13e57508ec561072": [
+      "constructor()",
+      "event ExitedERC721(address indexed exitor, address indexed rootToken, uint256 tokenId)",
+      "event LockedERC721(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256 tokenId)",
+      "event LockedERC721Batch(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256[] tokenIds)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function BATCH_LIMIT() view returns (uint256)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function MANAGER_ROLE() view returns (bytes32)",
+      "function TOKEN_TYPE() view returns (bytes32)",
+      "function TRANSFER_EVENT_SIG() view returns (bytes32)",
+      "function exitTokens(address, address rootToken, bytes log)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address _owner)",
+      "function lockTokens(address depositor, address depositReceiver, address rootToken, bytes depositData)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)"
+    ],
     "0x0672777617CAA1E778083a4f74eBC997262C9EdD": [
       "event DelegatorUnstakeWithId(uint256 indexed validatorId, address indexed user, uint256 amount, uint256 nonce)",
       "event RewardParams(uint256 rewardDecreasePerCheckpoint, uint256 maxRewardedCheckpoints, uint256 checkpointRewardDelta)",
@@ -759,53 +903,6 @@
       "function lockTokens(address, address, address, bytes) returns (address, address, bytes)",
       "function renounceRole(bytes32 role, address account)",
       "function revokeRole(bytes32 role, address account)"
-    ],
-    "0x1633012a2cB27eFBC2944f2E43b9197Bc3964359": [
-      "constructor()",
-      "event MetaTransactionExecuted(address indexed userAddress, address indexed relayerAddress, bytes functionSignature)",
-      "event PredicateRegistered(bytes32 indexed tokenType, address indexed predicateAddress)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event TokenMapped(address indexed rootToken, address indexed childToken, bytes32 indexed tokenType)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function DEPOSIT() view returns (bytes32)",
-      "function ERC712_VERSION() view returns (string)",
-      "function ETHER_ADDRESS() view returns (address)",
-      "function MAPPER_ROLE() view returns (bytes32)",
-      "function MAP_TOKEN() view returns (bytes32)",
-      "function checkpointManagerAddress() view returns (address)",
-      "function childChainManagerAddress() view returns (address)",
-      "function childToRootToken(address) view returns (address)",
-      "function cleanMapToken(address rootToken, address childToken)",
-      "function depositEtherFor(address user) payable",
-      "function depositFor(address user, address rootToken, bytes depositData)",
-      "function executeMetaTransaction(address userAddress, bytes functionSignature, bytes32 sigR, bytes32 sigS, uint8 sigV) payable returns (bytes)",
-      "function exit(bytes inputData)",
-      "function getChainId() pure returns (uint256)",
-      "function getDomainSeperator() view returns (bytes32)",
-      "function getNonce(address user) view returns (uint256 nonce)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
-      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function initialize(address _owner)",
-      "function initializeEIP712()",
-      "function mapToken(address rootToken, address childToken, bytes32 tokenType)",
-      "function processedExits(bytes32) view returns (bool)",
-      "function registerPredicate(bytes32 tokenType, address predicateAddress)",
-      "function remapToken(address rootToken, address childToken, bytes32 tokenType)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function rootToChildToken(address) view returns (address)",
-      "function setCheckpointManager(address newCheckpointManager)",
-      "function setChildChainManagerAddress(address newChildChainManager)",
-      "function setStateSender(address newStateSender)",
-      "function setupContractId()",
-      "function stateSenderAddress() view returns (address)",
-      "function tokenToType(address) view returns (bytes32)",
-      "function typeToPredicate(bytes32) view returns (address)"
     ],
     "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4": [
       "constructor(address rootChainManager_)",
@@ -865,28 +962,6 @@
       "function updateAndCall(address _newProxyTo, bytes data) payable",
       "function updateImplementation(address _newProxyTo)"
     ],
-    "0x3129B90fB7bF58A0B36226f2e6547B89C0BbdE42": [
-      "constructor()",
-      "event ExitedEther(address indexed exitor, uint256 amount)",
-      "event LockedEther(address indexed depositor, address indexed depositReceiver, uint256 amount)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function MANAGER_ROLE() view returns (bytes32)",
-      "function TOKEN_TYPE() view returns (bytes32)",
-      "function TRANSFER_EVENT_SIG() view returns (bytes32)",
-      "function exitTokens(address, bytes log)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
-      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function initialize(address _owner)",
-      "function lockTokens(address depositor, address depositReceiver, address, bytes depositData)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)"
-    ],
     "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71": [
       "function isTokenMappedAndIsErc721(address _token) view returns (bool)",
       "function removePredicate(address predicate)",
@@ -921,34 +996,6 @@
       "event PredicateAdded(address indexed predicate, address indexed from)",
       "event PredicateRemoved(address indexed predicate, address indexed from)",
       "event ContractMapUpdated(bytes32 indexed key, address indexed previousContract, address indexed newContract)"
-    ],
-    "0x34AF15A166def1d89D38a70120Ea33CD8cc10C45": [
-      "constructor()",
-      "event ExitedMintableERC721(address indexed exitor, address indexed rootToken, uint256 tokenId)",
-      "event ExitedMintableERC721Batch(address indexed exitor, address indexed rootToken, uint256[] tokenIds)",
-      "event LockedMintableERC721(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256 tokenId)",
-      "event LockedMintableERC721Batch(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256[] tokenIds)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "function BATCH_LIMIT() view returns (uint256)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function MANAGER_ROLE() view returns (bytes32)",
-      "function TOKEN_TYPE() view returns (bytes32)",
-      "function TRANSFER_EVENT_SIG() view returns (bytes32)",
-      "function TRANSFER_WITH_METADATA_EVENT_SIG() view returns (bytes32)",
-      "function WITHDRAW_BATCH_EVENT_SIG() view returns (bytes32)",
-      "function exitTokens(address rootToken, bytes log)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
-      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function initialize(address _owner)",
-      "function lockTokens(address depositor, address depositReceiver, address rootToken, bytes depositData)",
-      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)"
     ],
     "0x36C2503d53C6948331144b85D1e74a3B96731d1b": [
       "constructor(address _withdrawManager, address _depositManager)",
@@ -1132,6 +1179,53 @@
       "event OwnerUpdate(address _prevOwner, address _newOwner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)"
     ],
+    "0x8F372f5404514cec63A3F88BAac772Cc620F2281": [
+      "constructor()",
+      "event MetaTransactionExecuted(address indexed userAddress, address indexed relayerAddress, bytes functionSignature)",
+      "event PredicateRegistered(bytes32 indexed tokenType, address indexed predicateAddress)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event TokenMapped(address indexed rootToken, address indexed childToken, bytes32 indexed tokenType)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function DEPOSIT() view returns (bytes32)",
+      "function ERC712_VERSION() view returns (string)",
+      "function ETHER_ADDRESS() view returns (address)",
+      "function MAPPER_ROLE() view returns (bytes32)",
+      "function MAP_TOKEN() view returns (bytes32)",
+      "function checkpointManagerAddress() view returns (address)",
+      "function childChainManagerAddress() view returns (address)",
+      "function childToRootToken(address) view returns (address)",
+      "function cleanMapToken(address rootToken, address childToken)",
+      "function depositEtherFor(address user) payable",
+      "function depositFor(address user, address rootToken, bytes depositData)",
+      "function executeMetaTransaction(address userAddress, bytes functionSignature, bytes32 sigR, bytes32 sigS, uint8 sigV) payable returns (bytes)",
+      "function exit(bytes inputData)",
+      "function getChainId() pure returns (uint256)",
+      "function getDomainSeperator() view returns (bytes32)",
+      "function getNonce(address user) view returns (uint256 nonce)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address _owner)",
+      "function initializeEIP712()",
+      "function mapToken(address rootToken, address childToken, bytes32 tokenType)",
+      "function processedExits(bytes32) view returns (bool)",
+      "function registerPredicate(bytes32 tokenType, address predicateAddress)",
+      "function remapToken(address rootToken, address childToken, bytes32 tokenType)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function rootToChildToken(address) view returns (address)",
+      "function setCheckpointManager(address newCheckpointManager)",
+      "function setChildChainManagerAddress(address newChildChainManager)",
+      "function setStateSender(address newStateSender)",
+      "function setupContractId()",
+      "function stateSenderAddress() view returns (address)",
+      "function tokenToType(address) view returns (bytes32)",
+      "function typeToPredicate(bytes32) view returns (address)"
+    ],
     "0x932532aA4c0174b8453839A6E44eE09Cc615F2b7": [
       "constructor(address _proxyTo)",
       "event ProxyOwnerUpdate(address _new, address _old)",
@@ -1143,28 +1237,18 @@
       "function updateAndCall(address _newProxyTo, bytes data) payable",
       "function updateImplementation(address _newProxyTo)"
     ],
-    "0x98165b71cdDea047C0A49413350C40571195fd07": [
-      "function update(address target, bytes data)",
-      "function renounceOwnership()",
-      "function owner() view returns (address)",
-      "function isOwner() view returns (bool)",
-      "function transferOwnership(address newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)"
-    ],
-    "0x985Dbac75cf625dD6baB03Da784CF0D51B4bEcef": [
+    "0x94D40724d6aA4AB313065006E4bA8CA448dcDfae": [
       "constructor()",
-      "event ExitedBatchMintableERC1155(address indexed exitor, address indexed rootToken, uint256[] ids, uint256[] amounts)",
-      "event ExitedMintableERC1155(address indexed exitor, address indexed rootToken, uint256 id, uint256 amount)",
-      "event LockedBatchMintableERC1155(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256[] ids, uint256[] amounts)",
+      "event ExitedMintableERC20(address indexed exitor, address indexed rootToken, uint256 amount)",
+      "event LockedMintableERC20(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256 amount)",
       "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
       "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
       "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
       "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
       "function MANAGER_ROLE() view returns (bytes32)",
       "function TOKEN_TYPE() view returns (bytes32)",
-      "function TRANSFER_BATCH_EVENT_SIG() view returns (bytes32)",
-      "function TRANSFER_SINGLE_EVENT_SIG() view returns (bytes32)",
-      "function exitTokens(address rootToken, bytes log)",
+      "function TRANSFER_EVENT_SIG() view returns (bytes32)",
+      "function exitTokens(address, address rootToken, bytes log)",
       "function getRoleAdmin(bytes32 role) view returns (bytes32)",
       "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
       "function getRoleMemberCount(bytes32 role) view returns (uint256)",
@@ -1172,11 +1256,16 @@
       "function hasRole(bytes32 role, address account) view returns (bool)",
       "function initialize(address _owner)",
       "function lockTokens(address depositor, address depositReceiver, address rootToken, bytes depositData)",
-      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
-      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
       "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)"
+      "function revokeRole(bytes32 role, address account)"
+    ],
+    "0x98165b71cdDea047C0A49413350C40571195fd07": [
+      "function update(address target, bytes data)",
+      "function renounceOwnership()",
+      "function owner() view returns (address)",
+      "function isOwner() view returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)"
     ],
     "0x9923263fA127b3d1484cFD649df8f1831c2A74e4": [
       "constructor(address _proxyTo)",
@@ -1188,31 +1277,6 @@
       "function transferProxyOwnership(address newOwner)",
       "function updateAndCall(address _newProxyTo, bytes data) payable",
       "function updateImplementation(address _newProxyTo)"
-    ],
-    "0x9F5B43C0d6d57a76E5B24CE05E11b70C3C7eA8Ec": [
-      "constructor()",
-      "event ExitedERC721(address indexed exitor, address indexed rootToken, uint256 tokenId)",
-      "event LockedERC721(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256 tokenId)",
-      "event LockedERC721Batch(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256[] tokenIds)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "function BATCH_LIMIT() view returns (uint256)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function MANAGER_ROLE() view returns (bytes32)",
-      "function TOKEN_TYPE() view returns (bytes32)",
-      "function TRANSFER_EVENT_SIG() view returns (bytes32)",
-      "function exitTokens(address rootToken, bytes log)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
-      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function initialize(address _owner)",
-      "function lockTokens(address depositor, address depositReceiver, address rootToken, bytes depositData)",
-      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)"
     ],
     "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77": [
       "constructor(address _proxyTo)",
@@ -1336,29 +1400,7 @@
       "function updateNonce(uint256[] validatorIds, uint256[] nonces)",
       "function validatorNonce(uint256) view returns (uint256)"
     ],
-    "0xab00328234bC22430c78847094A68a6836574fFB": [
-      "constructor()",
-      "event ExitedMintableERC20(address indexed exitor, address indexed rootToken, uint256 amount)",
-      "event LockedMintableERC20(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256 amount)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function MANAGER_ROLE() view returns (bytes32)",
-      "function TOKEN_TYPE() view returns (bytes32)",
-      "function TRANSFER_EVENT_SIG() view returns (bytes32)",
-      "function exitTokens(address rootToken, bytes log)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
-      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function initialize(address _owner)",
-      "function lockTokens(address depositor, address depositReceiver, address rootToken, bytes depositData)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)"
-    ],
-    "0xb774EBbeF817390483FEA5bEd0F0cB0EDEBE4065": [
+    "0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB": [
       "constructor()",
       "event ExitedERC20(address indexed exitor, address indexed rootToken, uint256 amount)",
       "event LockedERC20(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256 amount)",
@@ -1369,7 +1411,7 @@
       "function MANAGER_ROLE() view returns (bytes32)",
       "function TOKEN_TYPE() view returns (bytes32)",
       "function TRANSFER_EVENT_SIG() view returns (bytes32)",
-      "function exitTokens(address rootToken, bytes log)",
+      "function exitTokens(address, address rootToken, bytes log)",
       "function getRoleAdmin(bytes32 role) view returns (bytes32)",
       "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
       "function getRoleMemberCount(bytes32 role) view returns (uint256)",
@@ -1380,20 +1422,23 @@
       "function renounceRole(bytes32 role, address account)",
       "function revokeRole(bytes32 role, address account)"
     ],
-    "0xb86357daD9c3567dD70862a5b49fFFaFb0F094Ac": [
+    "0xba31389292f7EdfC7b60B937b97014b4C354689b": [
       "constructor()",
-      "event ExitedBatchERC1155(address indexed exitor, address indexed rootToken, uint256[] ids, uint256[] amounts)",
-      "event ExitedERC1155(address indexed exitor, address indexed rootToken, uint256 id, uint256 amount)",
-      "event LockedBatchERC1155(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256[] ids, uint256[] amounts)",
+      "event ExitedMintableERC721(address indexed exitor, address indexed rootToken, uint256 tokenId)",
+      "event ExitedMintableERC721Batch(address indexed exitor, address indexed rootToken, uint256[] tokenIds)",
+      "event LockedMintableERC721(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256 tokenId)",
+      "event LockedMintableERC721Batch(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256[] tokenIds)",
       "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
       "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
       "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function BATCH_LIMIT() view returns (uint256)",
       "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
       "function MANAGER_ROLE() view returns (bytes32)",
       "function TOKEN_TYPE() view returns (bytes32)",
-      "function TRANSFER_BATCH_EVENT_SIG() view returns (bytes32)",
-      "function TRANSFER_SINGLE_EVENT_SIG() view returns (bytes32)",
-      "function exitTokens(address rootToken, bytes log)",
+      "function TRANSFER_EVENT_SIG() view returns (bytes32)",
+      "function TRANSFER_WITH_METADATA_EVENT_SIG() view returns (bytes32)",
+      "function WITHDRAW_BATCH_EVENT_SIG() view returns (bytes32)",
+      "function exitTokens(address, address rootToken, bytes log)",
       "function getRoleAdmin(bytes32 role) view returns (bytes32)",
       "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
       "function getRoleMemberCount(bytes32 role) view returns (uint256)",
@@ -1401,11 +1446,9 @@
       "function hasRole(bytes32 role, address account) view returns (bool)",
       "function initialize(address _owner)",
       "function lockTokens(address depositor, address depositReceiver, address rootToken, bytes depositData)",
-      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
-      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
       "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)"
+      "function revokeRole(bytes32 role, address account)"
     ],
     "0xbA9Ac3C9983a3e967f0f387c75cCbD38Ad484963": [
       "constructor()",
@@ -1520,6 +1563,33 @@
     "0xc4FA447A0e77Eff9717b09C057B40570813bb642": [
       "function create(uint256 validatorId, address loggerAddress, address registry) returns (address)"
     ],
+    "0xCFA65db73cB45D458d0a98006d3d558b5e1F021d": [
+      "constructor()",
+      "event ExitedBatchERC1155(address indexed exitor, address indexed rootToken, uint256[] ids, uint256[] amounts)",
+      "event ExitedERC1155(address indexed exitor, address indexed rootToken, uint256 id, uint256 amount)",
+      "event LockedBatchERC1155(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256[] ids, uint256[] amounts)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function MANAGER_ROLE() view returns (bytes32)",
+      "function TOKEN_TYPE() view returns (bytes32)",
+      "function TRANSFER_BATCH_EVENT_SIG() view returns (bytes32)",
+      "function TRANSFER_SINGLE_EVENT_SIG() view returns (bytes32)",
+      "function exitTokens(address, address rootToken, bytes log)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address _owner)",
+      "function lockTokens(address depositor, address depositReceiver, address rootToken, bytes depositData)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)"
+    ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
@@ -1609,6 +1679,28 @@
       "function transferProxyOwnership(address newOwner)",
       "function updateAndCall(address _newProxyTo, bytes data) payable",
       "function updateImplementation(address _newProxyTo)"
+    ],
+    "0xeB185ED8f664D105903EF434E5becd214a8AC874": [
+      "constructor()",
+      "event ExitedEther(address indexed exitor, uint256 amount)",
+      "event LockedEther(address indexed depositor, address indexed depositReceiver, uint256 amount)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function MANAGER_ROLE() view returns (bytes32)",
+      "function TOKEN_TYPE() view returns (bytes32)",
+      "function TRANSFER_EVENT_SIG() view returns (bytes32)",
+      "function exitTokens(address, address, bytes log)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address _owner)",
+      "function lockTokens(address depositor, address depositReceiver, address, bytes depositData)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)"
     ],
     "0xef49Ea6996073752b6840CDA34773FFA78F78166": [
       "constructor()",
@@ -1751,6 +1843,33 @@
     ],
     "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c": [
       "constructor(address _masterCopy)"
+    ],
+    "0xFD47E7d657b07B071C3362bBCe908a70895EE747": [
+      "constructor()",
+      "event ExitedBatchMintableERC1155(address indexed exitor, address indexed rootToken, uint256[] ids, uint256[] amounts)",
+      "event ExitedMintableERC1155(address indexed exitor, address indexed rootToken, uint256 id, uint256 amount)",
+      "event LockedBatchMintableERC1155(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256[] ids, uint256[] amounts)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function MANAGER_ROLE() view returns (bytes32)",
+      "function TOKEN_TYPE() view returns (bytes32)",
+      "function TRANSFER_BATCH_EVENT_SIG() view returns (bytes32)",
+      "function TRANSFER_SINGLE_EVENT_SIG() view returns (bytes32)",
+      "function exitTokens(address, address rootToken, bytes log)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address _owner)",
+      "function lockTokens(address depositor, address depositReceiver, address rootToken, bytes depositData)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)"
     ]
   },
   "usedTemplates": {

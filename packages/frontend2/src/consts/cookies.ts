@@ -1,4 +1,5 @@
 import { type ZodTypeAny, type z } from 'zod'
+import { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
 import { TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 
@@ -26,6 +27,11 @@ export const knownCookies = {
     'bridges-summary-chart-range',
     TvlChartRange,
     '1y',
+  ),
+  activityTimeRange: knownCookie(
+    'activity-time-range',
+    ActivityTimeRange,
+    '30d',
   ),
 } satisfies Record<string, KnownCookie>
 

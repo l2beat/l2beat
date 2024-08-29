@@ -2,7 +2,6 @@ import { type Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { env } from '~/env'
 import { getDefaultMetadata } from '~/utils/metadata'
-import { Web3Provider } from './_components/web3-provider'
 
 export const metadata: Metadata = getDefaultMetadata({
   title: 'L2BEAT - Asset Risks',
@@ -16,5 +15,5 @@ export default async function Layout({
     return notFound()
   }
 
-  return <Web3Provider>{children}</Web3Provider>
+  return children
 }
