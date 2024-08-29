@@ -1,8 +1,10 @@
-'use client'
 import partition from 'lodash/partition'
 import React from 'react'
 import { type DiagramParams } from '~/utils/project/get-diagram-params'
-import { ContractEntry, type TechnologyContract } from '../contract-entry'
+import {
+  ContractEntry,
+  type TechnologyContract,
+} from '../permissions/contract-entry'
 import {
   ReferenceList,
   type TechnologyReference,
