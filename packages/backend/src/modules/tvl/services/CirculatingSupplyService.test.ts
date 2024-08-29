@@ -1,3 +1,4 @@
+import { createAmountId } from '@l2beat/config'
 import { AmountRecord } from '@l2beat/database'
 import { CoingeckoQueryService } from '@l2beat/shared'
 import {
@@ -8,7 +9,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { createAmountId } from '../utils/createAmountId'
 import { CirculatingSupplyService } from './CirculatingSupplyService'
 
 describe(CirculatingSupplyService.name, () => {

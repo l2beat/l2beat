@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x893b501f63dab947ae9659982771bf04d7fb29a1
+
+# Diff at Thu, 29 Aug 2024 09:45:12 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b4b2da50e6cfefe1b7675065f33cc39284a27e44 block: 20628344
+- current block number: 20632909
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20628344 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract WithdrawManager (0x2A88696e0fFA76bAA1338F2C74497cC013495922)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ExitNFT (0xDF74156420Bd57ab387B195ed81EcA36F9fABAca)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x662970b1bf0b32ad873da4a0f522ee69aef1a773
 
 # Diff at Wed, 28 Aug 2024 16:41:41 GMT:

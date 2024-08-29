@@ -10,6 +10,7 @@ const emptyOutputMeta = {
   roles: undefined,
   issuedPermissions: undefined,
   receivedPermissions: undefined,
+  directlyReceivedPermissions: undefined,
   categories: undefined,
   types: undefined,
   severity: undefined,

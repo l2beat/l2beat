@@ -55,6 +55,12 @@ export function processAnalysis(
       .sort((a, b) => a.address.localeCompare(b.address.toString()))
       .map((x): ContractParameters => {
         const displayName = x.combinedMeta?.displayName
+        const { directlyReceivedPermissions, receivedPermissions } =
+          transformToReceived(
+            x.address,
+            resolvedPermissions,
+            x.combinedMeta?.permissions,
+          )
         return withoutUndefinedKeys({
           name: x.name,
           address: x.address,
@@ -69,10 +75,8 @@ export function processAnalysis(
           types: setToSortedArray(x.combinedMeta?.types),
           severity: x.combinedMeta?.severity,
           issuedPermissions: transformToIssued(x.address, resolvedPermissions),
-          receivedPermissions: transformToReceived(
-            x.address,
-            resolvedPermissions,
-          ),
+          receivedPermissions,
+          directlyReceivedPermissions,
           ignoreInWatchMode: x.ignoreInWatchMode,
           sinceTimestamp: x.deploymentTimestamp?.toNumber(),
           values:
@@ -92,19 +96,25 @@ export function processAnalysis(
     eoas: results
       .filter((x) => x.type === 'EOA')
       .sort((a, b) => a.address.localeCompare(b.address.toString()))
-      .map((x) => ({
-        address: x.address,
-        descriptions: x.combinedMeta?.descriptions,
-        roles: setToSortedArray(x.combinedMeta?.roles),
-        categories: setToSortedArray(x.combinedMeta?.categories),
-        types: setToSortedArray(x.combinedMeta?.types),
-        severity: x.combinedMeta?.severity,
-        issuedPermissions: transformToIssued(x.address, resolvedPermissions),
-        receivedPermissions: transformToReceived(
-          x.address,
-          resolvedPermissions,
-        ),
-      })),
+      .map((x) => {
+        const { directlyReceivedPermissions, receivedPermissions } =
+          transformToReceived(
+            x.address,
+            resolvedPermissions,
+            x.combinedMeta?.permissions,
+          )
+        return {
+          address: x.address,
+          descriptions: x.combinedMeta?.descriptions,
+          roles: setToSortedArray(x.combinedMeta?.roles),
+          categories: setToSortedArray(x.combinedMeta?.categories),
+          types: setToSortedArray(x.combinedMeta?.types),
+          severity: x.combinedMeta?.severity,
+          issuedPermissions: transformToIssued(x.address, resolvedPermissions),
+          receivedPermissions,
+          directlyReceivedPermissions,
+        }
+      }),
     abis,
   }
 }

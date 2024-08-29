@@ -217,7 +217,7 @@ export const rhinofi: Layer2 = {
     discovery.contractAsPermissioned(
       // this multisig does not get recognized as such (because of the old proxy?)
       discovery.getContract('DeversiFiTreasuryMultisig'),
-      'Is the BlockAdmin: Can add addresses to a blocklist in the bridge, blocking the finalization of their withdrawals on L1.',
+      'Is the BlockAdmin: Can add owner keys to a blocklist in the bridge, blocking their withdrawals on L1. After 2 weeks, this multisig can manually withdraw even for blocked actors.',
     ),
   ],
   milestones: [

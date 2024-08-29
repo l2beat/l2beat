@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import { createAmountId } from '@l2beat/config'
 import { AmountRecord, Database } from '@l2beat/database'
 import {
   CoingeckoId,
@@ -13,7 +14,6 @@ import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import { AmountService } from '../services/AmountService'
 import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
-import { createAmountId } from '../utils/createAmountId'
 import { PremintedIndexer } from './PremintedIndexer'
 import { PremintedIndexerDeps } from './types'
 
