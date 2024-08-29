@@ -31,7 +31,8 @@
         "getActionHashByIndex",
         "initializerSize",
         "UPGRADE_DELAY_SLOT",
-        "isBlockListed"
+        "isBlockListed",
+        "readyForClearance"
       ],
       "ignoreInWatchMode": [
         "getLastBatchId",

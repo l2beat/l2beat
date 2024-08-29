@@ -1,8 +1,8 @@
 {
   "name": "real",
   "chain": "ethereum",
-  "blockNumber": 20583702,
-  "configHash": "0xbb0b8a73029a722b0bb56e9231f731131f48b31292a92e42cf304119122592b1",
+  "blockNumber": 20633391,
+  "configHash": "0x9a0e875b484b76bd8ff86ce4e85672be29edc5be3d69f8172b37a2d45fce13a2",
   "version": 13,
   "contracts": [
     {
@@ -81,12 +81,12 @@
           "0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C"
         ],
         "allowedOutboxList": ["0x8592Ca44dE1D354A20F75160F5602E5933D33761"],
-        "delayedMessageCount": 3878,
+        "delayedMessageCount": 3984,
         "nativeToken": "0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
         "rollup": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
         "sequencerInbox": "0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0",
-        "sequencerMessageCount": 2725,
-        "sequencerReportedSubMessageCount": 582621
+        "sequencerMessageCount": 2766,
+        "sequencerReportedSubMessageCount": 608346
       },
       "derivedName": "ERC20Bridge"
     },
@@ -175,7 +175,7 @@
         "$admin": "0xB032ff02cd6425e4b816137207AA8560932180f1",
         "$implementation": "0x873484Ba63353C8b71210ce123B465512d408B27",
         "$upgradeCount": 1,
-        "batchCount": 2725,
+        "batchCount": 2766,
         "batchPosters": ["0x0e00df1afC8574762Ac4C4D8E5D1a19bD6A8Fa2E"],
         "bridge": "0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03",
         "dacKeyset": {
@@ -198,7 +198,7 @@
         "rollup": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 3877
+        "totalDelayedMessagesRead": 3982
       },
       "fieldMeta": {
         "maxTimeVariation": {
@@ -219,15 +219,15 @@
       "values": {
         "$immutable": true,
         "assetsVault": "0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294",
-        "getAllStrategiesValue": "557643177317186004861",
-        "getAllStrategyPendingValue": "41486594479765105",
+        "getAllStrategiesValue": "456033370263695444882",
+        "getAllStrategyPendingValue": 0,
         "getStrategies": {
           "addrs": ["0x679D4C1cC6855C57726BEA1784F578315d6431f6"],
           "allocations": [1000000]
         },
         "getTotalInvestedValue": {
-          "_value": "557601690722706239756",
-          "strategiesValue": ["557601690722706239756"]
+          "_value": "456033370263695444882",
+          "strategiesValue": ["456033370263695444882"]
         },
         "realVault": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1"
       },
@@ -240,7 +240,7 @@
       "sinceTimestamp": 1710542279,
       "values": {
         "$immutable": true,
-        "getTokenPrice": "1008545089817798407",
+        "getTokenPrice": "1009104256958777428",
         "real": "0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
         "vault": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1"
       },
@@ -257,22 +257,9 @@
       "sinceTimestamp": 1715706239,
       "values": {
         "$immutable": true,
-        "getClaimableValue": 0,
-        "getInvestedValue": "557601690722706239756",
-        "getStETHWithdrawalStatus": {
-          "requestIds": [49786],
-          "statuses": [
-            {
-              "amountOfStETH": "41486594479765105",
-              "amountOfShares": "35266325432515644",
-              "owner": "0x679D4C1cC6855C57726BEA1784F578315d6431f6",
-              "timestamp": 1724123411,
-              "isFinalized": false,
-              "isClaimed": false
-            }
-          ]
-        },
-        "getTotalValue": "557643177317186004861",
+        "getInvestedValue": "456033370263695444882",
+        "getStETHWithdrawalStatus": { "requestIds": [], "statuses": [] },
+        "getTotalValue": "456033370263695444882",
         "governance": "0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3",
         "manager": "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8",
         "MAX_STETH_WITHDRAWAL_AMOUNT": "1000000000000000000000",
@@ -458,8 +445,8 @@
         "minter": "0x655756824385F8903AC8cFDa17B656cc26f7C7da",
         "name": "Real Ether",
         "symbol": "reETH",
-        "tokenPrice": "1008545089817798407",
-        "totalSupply": "554529924762291410494"
+        "tokenPrice": "1009104256958777428",
+        "totalSupply": "454389843803176988757"
       },
       "derivedName": "Real"
     },
@@ -498,12 +485,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 2188,
+        "firstUnresolvedNode": 2230,
         "inbox": "0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11",
         "isERC20Enabled": false,
         "lastStakeBlock": 19524244,
-        "latestConfirmed": 2187,
-        "latestNodeCreated": 2226,
+        "latestConfirmed": 2229,
+        "latestNodeCreated": 2267,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x8592Ca44dE1D354A20F75160F5602E5933D33761",
@@ -644,7 +631,7 @@
       "sinceTimestamp": 1715706239,
       "values": {
         "$immutable": true,
-        "getBalance": "1623298139231114128",
+        "getBalance": "2492078397616953081",
         "realVault": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1",
         "strategyManager": "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8"
       },
@@ -664,7 +651,7 @@
       "values": {
         "$immutable": true,
         "assetsVault": "0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294",
-        "currentSharePrice": "1008545089817798407",
+        "currentSharePrice": "1009104256958777428",
         "feeRecipient": "0x0000000000000000000000000000000000000000",
         "minter": "0x655756824385F8903AC8cFDa17B656cc26f7C7da",
         "minWithdrawableShares": 100,
@@ -672,12 +659,12 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "proposal": "0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4",
         "real": "0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
-        "rebaseTime": 1724296823,
+        "rebaseTime": 1724903723,
         "rebaseTimeInterval": 86400,
         "strategyManager": "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8",
-        "withdrawableAmountInPast": "1623298139231114128",
+        "withdrawableAmountInPast": "456856293351831036",
         "withdrawFeeRate": 0,
-        "withdrawingSharesInPast": "1611485173310193047",
+        "withdrawingSharesInPast": "454000000000000000",
         "withdrawingSharesInRound": 0
       },
       "derivedName": "RealVault"
