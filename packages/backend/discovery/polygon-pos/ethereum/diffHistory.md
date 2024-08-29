@@ -1,14 +1,126 @@
-Generated with discovered.json: 0x38ffbbb91d8252142737fbc43cabf815bbe171ff
+Generated with discovered.json: 0x662970b1bf0b32ad873da4a0f522ee69aef1a773
 
-# Diff at Wed, 28 Aug 2024 09:13:42 GMT:
+# Diff at Wed, 28 Aug 2024 16:41:41 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@e994ce3db09d104c0549bcc88bb0de2f5d3b999e block: 20612504
-- current block number: 20612504
+- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
+- comparing to: main@ec0c665426c9791ef4860f527c8da5a8193eb4c2 block: 20612504
+- current block number: 20628344
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Predicates changed as ABI for exits got a new parameter. Insignificant change wrt to risks
+
+## Watched changes
+
+```diff
+    contract ERC1155Predicate (0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f) {
+    +++ description: None
+      values.$implementation:
+-        "0xb86357daD9c3567dD70862a5b49fFFaFb0F094Ac"
++        "0xCFA65db73cB45D458d0a98006d3d558b5e1F021d"
+      values.implementation:
+-        "0xb86357daD9c3567dD70862a5b49fFFaFb0F094Ac"
++        "0xCFA65db73cB45D458d0a98006d3d558b5e1F021d"
+    }
+```
+
+```diff
+    contract MintableERC1155Predicate (0x2d641867411650cd05dB93B59964536b1ED5b1B7) {
+    +++ description: None
+      values.$implementation:
+-        "0x985Dbac75cf625dD6baB03Da784CF0D51B4bEcef"
++        "0xFD47E7d657b07B071C3362bBCe908a70895EE747"
+      values.implementation:
+-        "0x985Dbac75cf625dD6baB03Da784CF0D51B4bEcef"
++        "0xFD47E7d657b07B071C3362bBCe908a70895EE747"
+    }
+```
+
+```diff
+    contract ERC20Predicate (0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf) {
+    +++ description: None
+      values.$implementation:
+-        "0xb774EBbeF817390483FEA5bEd0F0cB0EDEBE4065"
++        "0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB"
+      values.implementation:
+-        "0xb774EBbeF817390483FEA5bEd0F0cB0EDEBE4065"
++        "0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB"
+    }
+```
+
+```diff
+    contract EtherPredicate (0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30) {
+    +++ description: None
+      values.$implementation:
+-        "0x3129B90fB7bF58A0B36226f2e6547B89C0BbdE42"
++        "0xeB185ED8f664D105903EF434E5becd214a8AC874"
+      values.implementation:
+-        "0x3129B90fB7bF58A0B36226f2e6547B89C0BbdE42"
++        "0xeB185ED8f664D105903EF434E5becd214a8AC874"
+    }
+```
+
+```diff
+    contract MintableERC721Predicate (0x932532aA4c0174b8453839A6E44eE09Cc615F2b7) {
+    +++ description: None
+      values.$implementation:
+-        "0x34AF15A166def1d89D38a70120Ea33CD8cc10C45"
++        "0xba31389292f7EdfC7b60B937b97014b4C354689b"
+      values.implementation:
+-        "0x34AF15A166def1d89D38a70120Ea33CD8cc10C45"
++        "0xba31389292f7EdfC7b60B937b97014b4C354689b"
+    }
+```
+
+```diff
+    contract MintableERC20Predicate (0x9923263fA127b3d1484cFD649df8f1831c2A74e4) {
+    +++ description: None
+      values.$implementation:
+-        "0xab00328234bC22430c78847094A68a6836574fFB"
++        "0x94D40724d6aA4AB313065006E4bA8CA448dcDfae"
+      values.implementation:
+-        "0xab00328234bC22430c78847094A68a6836574fFB"
++        "0x94D40724d6aA4AB313065006E4bA8CA448dcDfae"
+    }
+```
+
+```diff
+    contract RootChainManager (0xA0c68C638235ee32657e8f720a23ceC1bFc77C77) {
+    +++ description: None
+      values.$implementation:
+-        "0x1633012a2cB27eFBC2944f2E43b9197Bc3964359"
++        "0x8F372f5404514cec63A3F88BAac772Cc620F2281"
+      values.implementation:
+-        "0x1633012a2cB27eFBC2944f2E43b9197Bc3964359"
++        "0x8F372f5404514cec63A3F88BAac772Cc620F2281"
+    }
+```
+
+```diff
+    contract ERC721Predicate (0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD) {
+    +++ description: None
+      values.$implementation:
+-        "0x9F5B43C0d6d57a76E5B24CE05E11b70C3C7eA8Ec"
++        "0x02Bc987f54B54bf18Ca6E20a13e57508ec561072"
+      values.implementation:
+-        "0x9F5B43C0d6d57a76E5B24CE05E11b70C3C7eA8Ec"
++        "0x02Bc987f54B54bf18Ca6E20a13e57508ec561072"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@20612504 => .flat}/ERC1155Predicate/ERC1155Predicate.sol  | 4 ++++
+ .../{.flat@20612504 => .flat}/ERC20Predicate/ERC20Predicate.sol      | 4 ++++
+ .../{.flat@20612504 => .flat}/ERC721Predicate/ERC721Predicate.sol    | 4 ++++
+ .../{.flat@20612504 => .flat}/EtherPredicate/EtherPredicate.sol      | 5 +++++
+ .../MintableERC1155Predicate/MintableERC1155Predicate.sol            | 4 ++++
+ .../MintableERC20Predicate/MintableERC20Predicate.sol                | 4 ++++
+ .../MintableERC721Predicate/MintableERC721Predicate.sol              | 4 ++++
+ .../{.flat@20612504 => .flat}/RootChainManager/RootChainManager.sol  | 1 +
+ 8 files changed, 30 insertions(+)
+```
 
 ## Config/verification related changes
 
