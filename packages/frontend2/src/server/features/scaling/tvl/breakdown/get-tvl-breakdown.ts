@@ -6,26 +6,14 @@ import {
   UnixTime,
   asNumber,
 } from '@l2beat/shared-pure'
+import { assignTokenMetaToBreakdown } from './assign-token-meta-to-breakdown'
 import { chainConverter } from './chain-converter'
 import { getLatestAmountForConfigurations } from './get-latest-amount-for-configurations'
 import { getLatestPriceForConfigurations } from './get-latest-price-for-configurations'
-import {
-  type CanonicalAssetBreakdownData,
-  type ExternalAssetBreakdownData,
-  type NativeAssetBreakdownData,
-} from './types'
+import { recordToSortedBreakdown } from './record-to-sorted-breakdown'
+import { type BreakdownRecord, type CanonicalAssetBreakdownData } from './types'
 
-interface Dependencies {
-  configMapping: ConfigMapping
-}
-
-type Breakdown = {
-  canonical: Map<AssetId, CanonicalAssetBreakdownData>
-  external: ExternalAssetBreakdownData[]
-  native: NativeAssetBreakdownData[]
-}
-
-export function getTvlBreakdown({ configMapping }: Dependencies) {
+export function getTvlBreakdown(configMapping: ConfigMapping) {
   return async function (projectId: ProjectId, target?: UnixTime) {
     const targetTimestamp =
       target ?? UnixTime.now().toStartOf('hour').add(-2, 'hours')
@@ -44,7 +32,7 @@ export function getTvlBreakdown({ configMapping }: Dependencies) {
       prices.prices.map((x) => [x.configId, x.priceUsd]),
     )
 
-    const breakdown: Breakdown = {
+    const breakdown: BreakdownRecord = {
       canonical: new Map<AssetId, CanonicalAssetBreakdownData>(),
       external: [],
       native: [],
@@ -142,35 +130,9 @@ export function getTvlBreakdown({ configMapping }: Dependencies) {
       }
     }
 
-    const sortedBreakdown = sortBreakdown(breakdown)
+    const sortedBreakdown = recordToSortedBreakdown(breakdown)
+    const breakdownWithTokenInfo = assignTokenMetaToBreakdown(sortedBreakdown)
 
-    return { dataTimestamp: targetTimestamp, breakdown: sortedBreakdown }
+    return { dataTimestamp: targetTimestamp, breakdown: breakdownWithTokenInfo }
   }
-}
-
-function sortBreakdown(breakdown: Breakdown) {
-  const result: {
-    canonical: CanonicalAssetBreakdownData[]
-    external: ExternalAssetBreakdownData[]
-    native: NativeAssetBreakdownData[]
-  } = {
-    canonical: [],
-    external: [],
-    native: [],
-  }
-
-  const canonical = [...breakdown.canonical.values()].sort(
-    (a, b) => +b.usdValue - +a.usdValue,
-  )
-
-  result.canonical = canonical.map((x) => ({
-    ...x,
-    escrows: x.escrows.sort((a, b) => +b.amount - +a.amount),
-    amount: x.amount,
-    usdValue: x.usdValue,
-  }))
-  result.external = breakdown.external.sort((a, b) => +b.usdValue - +a.usdValue)
-  result.native = breakdown.native.sort((a, b) => +b.usdValue - +a.usdValue)
-
-  return result
 }

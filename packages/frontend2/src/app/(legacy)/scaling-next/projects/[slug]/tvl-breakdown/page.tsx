@@ -9,7 +9,6 @@ import { ExternallyBridgedTable } from './_components/tables/externally-bridges-
 import { NativelyMintedTable } from './_components/tables/natively-minted-table'
 import { TvlBreakdownPageHeader } from './_components/tvl-breakdown-page-header'
 import { TvlBreakdownSummaryBox } from './_components/tvl-breakdown-summary-box'
-import { assignTokenMetaToBreakdown } from './_utils/assign-token-meta-to-breakdown'
 
 const scalingProjects = [...layer2s, ...layer3s]
 
@@ -41,40 +40,42 @@ export default async function Page({ params }: Props) {
     notFound()
   }
 
-  const detailedBreakdown = await getDetailed7dTvlBreakdown()
-  const projectBreakdown = detailedBreakdown.projects[project.id.toString()]!
+  const projects7dData = await getDetailed7dTvlBreakdown()
+  const project7dData = projects7dData.projects[project.id.toString()]!
 
-  const tokenBreakdown = await getTvlBreakdownForProject(project)
-  const extendedBreakdown = assignTokenMetaToBreakdown(tokenBreakdown)
+  const {
+    dataTimestamp,
+    breakdown: { canonical, native, external },
+  } = await getTvlBreakdownForProject(project)
 
   return (
     <>
       <TvlBreakdownPageHeader
         title={project.display.name}
         slug={project.display.slug}
-        tvlBreakdownDate={tokenBreakdown.dataTimestamp}
+        tvlBreakdownDate={dataTimestamp}
       />
       <TvlBreakdownSummaryBox
         tvl={{
-          value: projectBreakdown.total,
-          change: projectBreakdown.totalChange,
+          value: project7dData.total,
+          change: project7dData.totalChange,
         }}
         canonical={{
-          value: projectBreakdown.breakdown.canonical,
-          change: projectBreakdown.change.canonical,
+          value: project7dData.breakdown.canonical,
+          change: project7dData.change.canonical,
         }}
         external={{
-          value: projectBreakdown.breakdown.external,
-          change: projectBreakdown.change.external,
+          value: project7dData.breakdown.external,
+          change: project7dData.change.external,
         }}
         native={{
-          value: projectBreakdown.breakdown.native,
-          change: projectBreakdown.change.native,
+          value: project7dData.breakdown.native,
+          change: project7dData.change.native,
         }}
       />
-      <NativelyMintedTable tokens={extendedBreakdown.breakdown.native} />
-      <ExternallyBridgedTable tokens={extendedBreakdown.breakdown.external} />
-      <CanonicallyBridgedTable tokens={extendedBreakdown.breakdown.canonical} />
+      <NativelyMintedTable tokens={native} />
+      <ExternallyBridgedTable tokens={external} />
+      <CanonicallyBridgedTable tokens={canonical} />
 
       <RequestTokenBox />
     </>

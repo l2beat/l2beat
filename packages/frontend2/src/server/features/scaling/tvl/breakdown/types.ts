@@ -33,3 +33,9 @@ export type ExternalAssetBreakdownData = BaseAssetBreakdownData & {
 export type NativeAssetBreakdownData = BaseAssetBreakdownData & {
   tokenAddress?: EthereumAddress
 }
+
+export type BreakdownRecord = {
+  canonical: Map<AssetId, CanonicalAssetBreakdownData>
+  external: ExternalAssetBreakdownData[]
+  native: NativeAssetBreakdownData[]
+}

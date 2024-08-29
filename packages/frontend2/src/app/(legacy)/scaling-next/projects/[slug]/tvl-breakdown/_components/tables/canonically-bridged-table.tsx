@@ -8,13 +8,13 @@ import {
 } from '@tanstack/react-table'
 import { useState } from 'react'
 import { TokenTable } from '~/app/_components/table/token-breakdown-table'
-import { type ExtendedProjectTvlBreakdown } from '../../_utils/assign-token-meta-to-breakdown'
+import { type ProjectTvlBreakdown } from '~/server/features/scaling/tvl/breakdown/get-tvl-breakdown-for-project'
 import { canonicallyBridgedColumns } from './columns/canonically-bridged-columns'
 import { sumTokensValue } from './sum-tokens-value'
 import { TableSum } from './table-sum'
 
 export type CanonicallyBridgedTokenEntry =
-  ExtendedProjectTvlBreakdown['breakdown']['canonical'][number]
+  ProjectTvlBreakdown['breakdown']['canonical'][number]
 
 interface Props {
   tokens: CanonicallyBridgedTokenEntry[]
