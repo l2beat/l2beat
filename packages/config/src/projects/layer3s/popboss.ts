@@ -6,9 +6,9 @@ import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import { Layer3 } from './types'
 
-const discovery = new ProjectDiscovery('popapex', 'arbitrum')
+const discovery = new ProjectDiscovery('popboss', 'arbitrum')
 
-export const popapex: Layer3 = orbitStackL3({
+export const popboss: Layer3 = orbitStackL3({
   badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum, Badge.RaaS.Conduit],
   discovery,
   hostChain: ProjectId('arbitrum'),
@@ -16,23 +16,23 @@ export const popapex: Layer3 = orbitStackL3({
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   display: {
-    name: 'Proof of Play Apex',
-    shortName: 'Apex',
-    slug: 'popapex',
+    name: 'Proof of Play Boss',
+    shortName: 'Boss',
+    slug: 'popboss',
     description:
-      'Proof of Play Apex is a gaming-focused L3 settling on Arbitrum using the Orbit Stack and AnyTrust DA.',
+      'Proof of Play Boss is a gaming-focused L3 settling on Arbitrum using the Orbit Stack and AnyTrust DA. It is the second L3 built by Proof of Play.',
     purposes: ['Gaming', 'NFT'],
     links: {
       websites: ['https://proofofplay.com/'],
       apps: [
-        'https://bridge.arbitrum.io/?destinationChain=pop-apex&sourceChain=arbitrum-one',
+        'https://bridge.arbitrum.io/?destinationChain=pop-boss&sourceChain=arbitrum-one',
         'https://piratenation.game/',
       ],
       documentation: [],
-      explorers: ['https://explorer.apex.proofofplay.com'],
+      explorers: ['https://explorer.boss.proofofplay.com'],
       repositories: ['https://github.com/proofofplay'],
       socialMedia: [
-        'https://twitter.com/ProofOfPlay/',
+        'https://x.com/ProofOfPlay/',
         'https://discord.com/invite/piratenation',
         'https://piratenation.medium.com/',
       ],
@@ -42,8 +42,8 @@ export const popapex: Layer3 = orbitStackL3({
   transactionApi: {
     type: 'rpc',
     startBlock: 1,
-    defaultUrl: 'https://rpc.apex.proofofplay.com',
-    defaultCallsPerMinute: 5000,
+    defaultUrl: 'https://rpc.boss.proofofplay.com',
+    defaultCallsPerMinute: 3000,
     assessCount: subtractOne,
   },
   nonTemplatePermissions: [
