@@ -1,10 +1,10 @@
 import React from 'react'
 
+import Link from 'next/link'
 import { Button } from '~/app/_components/button'
 import { LinkWithThumbnail } from '~/app/_components/link-with-thumbnail'
 import { type GovernancePublicationEntry } from '../../_utils/get-governance-publication-entry'
 import { GovernanceCard, GovernanceCardHeader } from '../governance-card'
-import Link from 'next/link'
 
 interface Props {
   publications: GovernancePublicationEntry[]

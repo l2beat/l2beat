@@ -2,7 +2,6 @@ import { type VariantProps, cva } from 'class-variance-authority'
 import React from 'react'
 
 import { Slot } from '@radix-ui/react-slot'
-import { Props } from 'next/script'
 import { cn } from '~/utils/cn'
 
 const buttonVariants = cva(
