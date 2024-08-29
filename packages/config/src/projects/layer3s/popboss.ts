@@ -48,7 +48,7 @@ export const popboss: Layer3 = orbitStackL3({
   },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
-      'RollupOwnerMultisig',
+      'ProofOfPlayMultisig',
       (() => {
         const discoveredAdminOwner = discovery.getAddressFromValue(
           'ProxyAdmin',

@@ -17,7 +17,7 @@ export const popapex: Layer3 = orbitStackL3({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   display: {
     name: 'Proof of Play Apex',
-    shortName: 'Proof of Play',
+    shortName: 'Apex',
     slug: 'popapex',
     description:
       'Proof of Play Apex is a gaming-focused L3 settling on Arbitrum using the Orbit Stack and AnyTrust DA.',
@@ -48,7 +48,7 @@ export const popapex: Layer3 = orbitStackL3({
   },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
-      'RollupOwnerMultisig',
+      'ProofOfPlayMultisig',
       (() => {
         const discoveredAdminOwner = discovery.getAddressFromValue(
           'ProxyAdmin',
@@ -61,7 +61,7 @@ export const popapex: Layer3 = orbitStackL3({
           'EXECUTOR_ROLE',
         ).members[0]
         const discoveredRollupOwnerMultisig = discovery.getContract(
-          'RollupOwnerMultisig',
+          'ProofOfPlayMultisig',
         ).address
         assert(
           discoveredAdminOwner === discoveredUpgradeExecutorAddy &&
