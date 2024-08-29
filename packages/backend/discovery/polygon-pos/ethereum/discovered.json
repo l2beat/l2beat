@@ -2,7 +2,7 @@
   "name": "polygon-pos",
   "chain": "ethereum",
   "blockNumber": 20632909,
-  "configHash": "0x92b92d1a5ba50fa6fba1215289ecaa0eba010fcdf9499d0b8cc5e6f428b151e2",
+  "configHash": "0xaa3acee466f59f0dbe8eb919c8879136df61559b66825304ab334e5ace0c5fba",
   "version": 13,
   "contracts": [
     {
@@ -70,13 +70,26 @@
     {
       "name": "StateSender",
       "address": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE",
+      "ignoreInWatchMode": ["counter"],
       "sinceTimestamp": 1590850580,
       "values": {
         "$immutable": true,
         "counter": 2953558,
         "isOwner": false,
-        "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
-      }
+        "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
+        "REGISTRATIONS": [
+          "0x401F6c983eA34274ec46f84D70b31C151321188b",
+          "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
+          "0x6566115bC9Aa71f8DbC2004A656B5956C55726a7",
+          "0xb9516057dC40C92F91B6EbB2E3d04288cd0446F1",
+          "0x0D29aDA4c818A9f089107201eaCc6300e56E0d5c",
+          "0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2",
+          "0xA0557234eB7b3c503388202D3768Cfa2f1AE9Dc2",
+          "0xb6Ec8B0a52C1BAe5B6Aa890cD0Ec9704398d0D55",
+          "0x8beDD90e52dF8BB663B9eF5C2ca42E7adC27C9b5"
+        ]
+      },
+      "derivedName": "StateSender"
     },
     {
       "name": "MintableERC1155Predicate",
