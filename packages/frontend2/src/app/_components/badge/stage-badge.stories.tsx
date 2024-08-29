@@ -1,43 +1,23 @@
 import { type Meta, type StoryObj } from '@storybook/react'
-import { onlyDesktopModes } from '~/../.storybook/modes'
 import { StageBadge } from './stage-badge'
 
 const meta = {
-  title: 'UI/Atoms/Badge/Stage',
+  title: 'Atoms/Badge',
   component: StageBadge,
-  args: {
-    stage: 'Stage 0',
-    big: false,
-  },
-  parameters: {
-    chromatic: {
-      modes: onlyDesktopModes,
-    },
-  },
 } satisfies Meta<typeof StageBadge>
 export default meta
 
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof StageBadge>
 
-export const Stage0: Story = {}
-export const Stage1: Story = {
-  args: {
-    stage: 'Stage 1',
-  },
-}
-export const Stage2: Story = {
-  args: {
-    stage: 'Stage 2',
-  },
-}
-export const WithWarningIcon: Story = {
-  args: {
-    icon: 'warning',
-  },
-}
-
-export const WithUnderReviewIcon: Story = {
-  args: {
-    icon: 'underReview',
-  },
+export const Stages: Story = {
+  render: () => (
+    <div className="flex flex-col gap-2">
+      <StageBadge stage="Stage 0" />
+      <StageBadge stage="Stage 1" />
+      <StageBadge stage="Stage 2" />
+      <StageBadge stage="Stage 0" icon="warning" />
+      <StageBadge stage="Stage 0" icon="underReview" />
+      <StageBadge stage="Stage 0" big />
+    </div>
+  ),
 }

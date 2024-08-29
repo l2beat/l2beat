@@ -136,7 +136,7 @@ With a reference later in the document defining the URL location.
 `
 
 const meta = {
-  title: 'UI/Atoms/Markdown',
+  title: 'Atoms/Markdown',
   component: Markdown,
 } satisfies Meta<typeof Markdown>
 export default meta

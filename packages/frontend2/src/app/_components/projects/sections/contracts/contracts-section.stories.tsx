@@ -4,7 +4,7 @@ import { HighlightableLinkContextProvider } from '~/app/_components/link/highlig
 import { ContractsSection } from './contracts-section'
 
 const meta = {
-  title: 'UI/Projects/Sections/Contracts',
+  title: 'Components/Projects/Sections/Contracts',
   component: ContractsSection,
   args: {
     title: 'Contracts',

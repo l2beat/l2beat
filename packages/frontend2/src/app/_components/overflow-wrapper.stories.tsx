@@ -6,7 +6,7 @@ import { onlyMobileModes } from '~/../.storybook/modes'
 import { OverflowWrapper } from './overflow-wrapper'
 
 const meta = {
-  title: 'UI/Atoms/Overflow Wrapper',
+  title: 'Atoms/Overflow Wrapper',
   component: OverflowWrapper,
   parameters: {
     viewport: {

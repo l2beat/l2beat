@@ -1,8 +1,9 @@
-import { type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/react'
+import { userEvent, within } from '@storybook/test'
+import React from 'react'
 import { Button } from './button'
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
   DrawerFooter,
@@ -12,30 +13,42 @@ import {
 } from './drawer'
 
 const meta = {
-  title: 'UI/Atoms/Drawer',
-}
-export default meta
+  title: 'Atoms/Drawer',
+  component: Drawer,
+  argTypes: {
+    shouldScaleBackground: {
+      control: 'boolean',
+    },
+  },
+} satisfies Meta<typeof Drawer>
 
-type Story = StoryObj<typeof meta>
+export default meta
+type Story = StoryObj<typeof Drawer>
 
 export const Default: Story = {
-  render: () => {
-    return (
-      <Drawer>
-        <DrawerTrigger>Open</DrawerTrigger>
-        <DrawerContent>
-          <DrawerHeader>
-            <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-            <DrawerDescription>This action cannot be undone.</DrawerDescription>
-          </DrawerHeader>
-          <DrawerFooter>
-            <Button>Submit</Button>
-            <DrawerClose>
-              <Button>Cancel</Button>
-            </DrawerClose>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
-    )
+  render: (args) => (
+    <Drawer {...args}>
+      <DrawerTrigger asChild>
+        <Button>Open Drawer</Button>
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>Drawer Title</DrawerTitle>
+          <DrawerDescription>
+            This is a description of the drawer.
+          </DrawerDescription>
+        </DrawerHeader>
+        <div className="p-4">
+          <p>This is the main content of the drawer.</p>
+        </div>
+        <DrawerFooter>
+          <Button>Save changes</Button>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(canvas.getByText('Open Drawer'))
   },
 }

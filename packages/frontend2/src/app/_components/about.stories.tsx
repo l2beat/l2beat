@@ -2,7 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 import { About } from './about'
 
 const meta = {
-  title: 'UI/Misc/About',
+  title: 'Components/About',
   component: About,
 } satisfies Meta<typeof About>
 export default meta

@@ -2,7 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 import { Checkbox } from './checkbox'
 
 const meta = {
-  title: 'UI/Atoms/Checkbox',
+  title: 'Atoms/Checkbox',
   component: Checkbox,
 } satisfies Meta<typeof Checkbox>
 export default meta

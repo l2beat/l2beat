@@ -7,7 +7,7 @@ import {
 } from './accordion'
 
 const meta = {
-  title: 'UI/Atoms/Accordion',
+  title: 'Atoms/Accordion',
 }
 export default meta
 

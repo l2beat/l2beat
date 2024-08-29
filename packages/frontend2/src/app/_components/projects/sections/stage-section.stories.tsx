@@ -2,7 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 import { StageSection } from './stage-section'
 
 const meta = {
-  title: 'UI/Projects/Sections/Stage',
+  title: 'Components/Projects/Sections/Stage',
   component: StageSection,
   args: {
     title: 'Rollup stage',

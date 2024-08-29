@@ -2,7 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 import { TechnologySection } from './technology-section'
 
 const meta = {
-  title: 'UI/Projects/Sections/Technology',
+  title: 'Components/Projects/Sections/Technology',
   component: TechnologySection,
   args: {
     id: 'technology',

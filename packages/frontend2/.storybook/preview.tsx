@@ -22,10 +22,15 @@ const preview: Preview = {
     },
     viewport: {
       viewports,
-      defaultViewport: 'desktop',
     },
     chromatic: {
       modes: allModes,
+    },
+    options: {
+      storySort: {
+        method: 'alphabetical',
+        order: ['Atoms', 'Components', 'OG Images'],
+      },
     },
   },
   decorators: [
@@ -37,8 +42,9 @@ const preview: Preview = {
       defaultTheme: 'light',
     }),
     (Story) => {
+      document.body.classList.add(roboto.variable, 'font-sans')
       return (
-        <main className={`p-4 font-sans ${roboto.variable}`}>
+        <main className={`m-8`}>
           <GlossaryContextProvider terms={[EXAMPLE_TERM]}>
             <TooltipProvider>
               <Story />

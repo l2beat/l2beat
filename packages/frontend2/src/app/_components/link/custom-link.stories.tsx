@@ -2,7 +2,7 @@ import { type StoryObj } from '@storybook/react'
 import { CustomLink } from './custom-link'
 
 const meta = {
-  title: 'UI/Atoms/Link',
+  title: 'Atoms/Link',
   component: CustomLink,
 }
 export default meta

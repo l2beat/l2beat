@@ -7,44 +7,19 @@ import { type StoryObj } from '@storybook/react'
 import { ProjectBadge } from './project-badge'
 
 const meta = {
-  title: 'UI/Projects/Project Badge',
+  title: 'Components/Projects',
 }
 export default meta
 
 type Story = StoryObj<typeof meta>
-
-export const VM: Story = {
-  render: () => <Template type={BadgeType.VM} />,
-}
-
-export const DA: Story = {
-  render: () => <Template type={BadgeType.DA} />,
-}
-
-export const Stack: Story = {
-  render: () => <Template type={BadgeType.Stack} />,
-}
-
-export const Fork: Story = {
-  render: () => <Template type={BadgeType.Fork} />,
-}
-
-export const Infra: Story = {
-  render: () => <Template type={BadgeType.Infra} />,
-}
-
-export const L3ParentChain: Story = {
-  name: 'L3 Parent Chain',
-  render: () => <Template type={BadgeType.L3ParentChain} />,
-}
-
-export const Other: Story = {
-  render: () => <Template type={BadgeType.Other} />,
-}
-
-export const RaaS: Story = {
-  name: 'RaaS',
-  render: () => <Template type={BadgeType.RaaS} />,
+export const ProjectBadges: Story = {
+  render: () => (
+    <div className="space-y-4">
+      {Object.values(BadgeType).map((type) => (
+        <Template key={type} type={type} />
+      ))}
+    </div>
+  ),
 }
 
 function Template({ type }: { type: BadgeType }) {

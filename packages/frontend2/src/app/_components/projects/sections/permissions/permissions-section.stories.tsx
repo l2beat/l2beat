@@ -4,7 +4,7 @@ import { HighlightableLinkContextProvider } from '~/app/_components/link/highlig
 import { PermissionsSection } from './permissions-section'
 
 const meta = {
-  title: 'UI/Projects/Sections/Permissions',
+  title: 'Components/Projects/Sections/Permissions',
   component: PermissionsSection,
   args: {
     id: 'permissions',

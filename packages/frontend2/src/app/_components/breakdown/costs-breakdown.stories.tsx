@@ -2,14 +2,14 @@ import { type Meta, type StoryObj } from '@storybook/react'
 import { CostsBreakdown } from './costs-breakdown'
 
 const meta = {
-  title: 'UI/Misc/Breakdown/Costs',
+  title: 'Components/Breakdown',
   component: CostsBreakdown,
 } satisfies Meta<typeof CostsBreakdown>
 export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {
+export const Costs: Story = {
   args: {
     blobs: 10,
     calldata: 20,

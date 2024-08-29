@@ -1,28 +1,25 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 import { userEvent, within } from '@storybook/test'
+import React from 'react'
 import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip'
 
 const meta = {
-  title: 'UI/Atoms/Tooltip',
+  title: 'Atoms/Tooltip',
   component: Tooltip,
 } satisfies Meta<typeof Tooltip>
-export default meta
 
-type Story = StoryObj<typeof meta>
+export default meta
+type Story = StoryObj<typeof Tooltip>
 
 export const Default: Story = {
   render: () => (
-    <div className="m-6">
-      <Tooltip>
-        <TooltipTrigger className="bg-red-500 p-3">Trigger</TooltipTrigger>
-        <TooltipContent>
-          <p>Tooltip content</p>
-        </TooltipContent>
-      </Tooltip>
-    </div>
+    <Tooltip>
+      <TooltipTrigger>Hover me</TooltipTrigger>
+      <TooltipContent>This is a tooltip</TooltipContent>
+    </Tooltip>
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
-    await userEvent.hover(canvas.getByText('Trigger'))
+    await userEvent.hover(canvas.getByText('Hover me'))
   },
 }

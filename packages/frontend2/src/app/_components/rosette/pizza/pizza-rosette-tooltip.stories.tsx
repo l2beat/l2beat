@@ -2,7 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 import { PizzaRosetteTooltip } from './pizza-rosette-tooltip'
 
 const meta = {
-  title: 'UI/Misc/Tooltip/Pizza Rosette',
+  title: 'Components/Tooltip/Pizza Rosette',
   component: PizzaRosetteTooltip,
 } satisfies Meta<typeof PizzaRosetteTooltip>
 export default meta

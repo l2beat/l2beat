@@ -2,7 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 import { StageTooltip } from './stage-tooltip'
 
 const meta = {
-  title: 'UI/Misc/Tooltip/Stage',
+  title: 'Components/Tooltip/Stage',
   component: StageTooltip,
 } satisfies Meta<typeof StageTooltip>
 export default meta

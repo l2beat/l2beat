@@ -2,7 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 import { RiskSummarySection } from './risk-summary-section'
 
 const meta = {
-  title: 'UI/Projects/Sections/Risk Summary',
+  title: 'Components/Projects/Sections/Risk Summary',
   component: RiskSummarySection,
   args: {
     id: 'risk-analysis',

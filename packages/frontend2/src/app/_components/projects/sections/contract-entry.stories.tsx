@@ -3,7 +3,7 @@ import { HighlightableLinkContextProvider } from '~/app/_components/link/highlig
 import { ContractEntry } from './contract-entry'
 
 const meta = {
-  title: 'UI/Projects/Sections/Contract Entry',
+  title: 'Components/Projects/Sections/Contract Entry',
   component: ContractEntry,
   decorators: [
     (Story) => (

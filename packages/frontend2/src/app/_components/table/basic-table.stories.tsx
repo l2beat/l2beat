@@ -128,7 +128,7 @@ const basicTableData: StorybookEntry[] = [
 ]
 
 const meta = {
-  title: 'UI/Table/Basic',
+  title: 'Components/Table/Basic',
   render: () => {
     const table = useTable({
       columns: basicTableColumns,
