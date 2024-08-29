@@ -18,7 +18,6 @@ export function getProps(
   const {
     tvlApiResponse,
     activityApiResponse,
-    tvlBreakdownApiResponse,
     verificationStatus,
     manuallyVerifiedContracts,
     implementationChange,
@@ -33,7 +32,6 @@ export function getProps(
         tvlApiResponse,
         implementationChange,
         activityApiResponse,
-        config.features.layer3sTvl ? tvlBreakdownApiResponse : undefined,
       ),
       projectDetails: getProjectDetails(
         project,

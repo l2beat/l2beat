@@ -1,5 +1,6 @@
 import { layer2s, layer3s } from '@l2beat/config'
 import { notFound } from 'next/navigation'
+import { ContentWrapper } from '~/app/_components/content-wrapper'
 import { HighlightableLinkContextProvider } from '~/app/_components/link/highlightable/highlightable-link-context'
 import { DesktopProjectNavigation } from '~/app/_components/projects/navigation/desktop-project-navigation'
 import { MobileProjectNavigation } from '~/app/_components/projects/navigation/mobile-project-navigation'
@@ -57,7 +58,7 @@ export default async function Page({ params }: Props) {
     projectEntry.projectDetails.filter((s) => !s.excludeFromNavigation)
       .length === 0
   return (
-    <>
+    <ContentWrapper>
       {!isNavigationEmpty && (
         <div className="sticky top-0 z-100 -mx-4 md:hidden">
           <MobileProjectNavigation sections={projectEntry.projectDetails} />
@@ -85,6 +86,6 @@ export default async function Page({ params }: Props) {
           </div>
         </div>
       )}
-    </>
+    </ContentWrapper>
   )
 }

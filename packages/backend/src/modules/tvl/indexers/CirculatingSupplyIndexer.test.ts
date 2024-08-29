@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import { createAmountId } from '@l2beat/config'
 import { AmountRecord, Database } from '@l2beat/database'
 import {
   CirculatingSupplyEntry,
@@ -12,7 +13,6 @@ import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
-import { createAmountId } from '../utils/createAmountId'
 import { CirculatingSupplyIndexer } from './CirculatingSupplyIndexer'
 
 describe(CirculatingSupplyIndexer.name, () => {

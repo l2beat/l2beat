@@ -52,6 +52,24 @@ export interface BackendProjectEscrow {
   }
 }
 
+export function toBackendProject(
+  project: Layer2 | Layer3 | Bridge,
+): BackendProject {
+  if (project.type === 'layer2') {
+    return layer2ToBackendProject(project)
+  }
+
+  if (project.type === 'layer3') {
+    return layer3ToBackendProject(project)
+  }
+
+  if (project.type === 'bridge') {
+    return bridgeToBackendProject(project)
+  }
+
+  throw new Error(`Unknown project type: ${project}`)
+}
+
 export function layer2ToBackendProject(layer2: Layer2): BackendProject {
   return {
     projectId: layer2.id,
