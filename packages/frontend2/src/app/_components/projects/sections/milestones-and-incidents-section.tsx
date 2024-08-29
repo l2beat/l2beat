@@ -40,7 +40,7 @@ export function MilestonesAndIncidentsSection({
           <CollapsibleTrigger asChild>
             <Button
               className="group mx-auto mt-1 flex w-min justify-between gap-2.5"
-              variant="purple"
+              variant="outline"
             >
               <span className="w-[76px] whitespace-pre text-left text-sm font-bold">
                 {isOpen ? 'Show less' : 'Show more'}

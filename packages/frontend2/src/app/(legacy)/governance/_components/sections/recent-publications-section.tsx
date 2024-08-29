@@ -33,7 +33,7 @@ function ExploreAllButton({ className }: { className?: string }) {
       className={className}
       as="a"
       href="/governance/publications"
-      variant="purple"
+      variant="outline"
       size="sm"
     >
       Explore all publications

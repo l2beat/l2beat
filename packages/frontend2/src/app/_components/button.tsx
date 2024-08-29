@@ -10,7 +10,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: 'bg-white text-black',
-        purple: 'border border-pink-900 hover:bg-pink-900/25',
+        outline: 'border border-pink-900 hover:bg-pink-900/25',
       },
       size: {
         default: 'rounded-lg text-base',
