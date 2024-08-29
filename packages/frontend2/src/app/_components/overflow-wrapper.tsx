@@ -77,6 +77,7 @@ export const OverflowWrapper = forwardRef<HTMLDivElement, OverflowWrapperProps>(
     return (
       <div className={cn('relative', className)} {...rest}>
         <div
+          title="Scroll left"
           onClick={() => onArrowClick('left')}
           className={cn(
             'pointer-events-none absolute inset-y-0 -left-px z-10 w-6 bg-gradient-to-r opacity-0 transition-opacity duration-300',
@@ -89,6 +90,7 @@ export const OverflowWrapper = forwardRef<HTMLDivElement, OverflowWrapperProps>(
           </div>
         </div>
         <div
+          data-role="overflow-wrapper-content"
           ref={mergeRefs(contentRef, ref)}
           className={cn(
             'scrollbar-hide overflow-x-auto',
@@ -101,6 +103,7 @@ export const OverflowWrapper = forwardRef<HTMLDivElement, OverflowWrapperProps>(
           {children}
         </div>
         <div
+          title="Scroll right"
           onClick={() => onArrowClick('right')}
           className={cn(
             'pointer-events-none absolute inset-y-0 -right-px z-10 w-6 bg-gradient-to-l opacity-0 transition-opacity duration-200',

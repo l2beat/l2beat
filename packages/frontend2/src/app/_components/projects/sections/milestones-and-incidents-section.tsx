@@ -27,24 +27,26 @@ export function MilestonesAndIncidentsSection({
   ...sectionProps
 }: MilestonesAndIncidentsSectionProps) {
   const [isOpen, setIsOpen] = useState(false)
+
+  const milestonesWithNext = withNext(milestones)
+
   return (
     <ProjectSection {...sectionProps}>
       {milestones.length < 3 ? (
-        <MilestonesBase milestones={milestones} />
+        <MilestonesBase milestones={milestonesWithNext} />
       ) : (
         <Collapsible open={isOpen} onOpenChange={setIsOpen}>
           <MilestonesBase
-            milestones={milestones}
+            milestones={milestonesWithNext.slice(0, 2)}
             isOpen={isOpen}
-            range={[0, 2]}
           />
           <CollapsibleContent>
-            <MilestonesBase milestones={milestones} range={[2]} />
+            <MilestonesBase milestones={milestonesWithNext.slice(2)} />
           </CollapsibleContent>
           <CollapsibleTrigger asChild>
             <Button
               className="group mx-auto mt-1 flex w-min justify-between gap-2.5"
-              variant="purple"
+              variant="outline"
             >
               <span className="w-[76px] whitespace-pre text-left text-sm font-bold">
                 {isOpen ? 'Show less' : 'Show more'}
@@ -59,81 +61,74 @@ export function MilestonesAndIncidentsSection({
 }
 
 function MilestonesBase(props: {
-  milestones: Milestone[]
-  range?: [number, number?]
+  milestones: MilestoneWithNext[]
   isOpen?: boolean
 }) {
   return (
     <div className="relative">
       <div className="ml-10">
-        {props.milestones
-          .sort(
-            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-          )
-          .map((milestone, i) => {
-            if (
-              i < (props.range?.[0] ?? 0) ||
-              (props.range?.[1] && i >= props.range[1])
-            ) {
-              return null
-            }
+        {props.milestones.map((milestone, i) => {
+          const Icon =
+            milestone.type === 'incident' ? IncidentIcon : MilestoneIcon
+          const isLast = i === props.milestones.length - 1
 
-            const previousMilestone = props.milestones.at(i + 1)
-
-            const Icon =
-              milestone.type === 'incident' ? IncidentIcon : MilestoneIcon
-
-            const milestoneLineClassName = previousMilestone?.type
-              ? cn(
-                  milestone.type === 'general' &&
-                    'bg-green-400 dark:bg-green-500',
-                  milestone.type === 'incident' && 'bg-red-700 dark:bg-red-700',
-                  previousMilestone.type === 'incident' &&
-                    milestone.type === 'general' &&
-                    'bg-gradient-to-b from-green-400 to-red-700 dark:from-green-500 dark:to-red-700',
-                  previousMilestone.type === 'general' &&
-                    milestone.type === 'incident' &&
-                    'bg-gradient-to-b from-red-700 to-green-400 dark:from-red-700 dark:to-green-500',
-                )
-              : cn(
-                  'h-3/4 bg-gradient-to-b',
-                  milestone.type === 'incident' &&
-                    'from-red-700 dark:from-red-700',
-                  milestone.type === 'general' &&
+          return (
+            <div key={i} className="relative pb-7">
+              <div
+                className={cn(
+                  'absolute left-[-1.445rem] top-3 h-full w-[1.7px] dark:w-px',
+                  'bg-gradient-to-b',
+                  milestone.type === 'general' && [
                     'from-green-400 dark:from-green-500',
-                )
-
-            return (
-              <div key={i} className="relative pb-7">
-                <div
-                  className={cn(
-                    'absolute left-[-1.445rem] top-3 h-full w-[1.7px] dark:w-px',
-                    milestoneLineClassName,
-                  )}
-                />
-                <Icon className="absolute -left-8" />
-                <p className="text-lg font-bold leading-none">
-                  {milestone.name}
-                </p>
-                <p className="text-sm dark:text-gray-400">
-                  {formatDate(milestone.date)}
-                </p>
-                <div className="mt-3">
-                  {milestone.description && (
-                    <Markdown className="text-sm leading-none dark:text-gray-400">
-                      {milestone.description}
-                    </Markdown>
-                  )}
-                  <CustomLink className="text-sm" href={milestone.link}>
-                    Learn more
-                  </CustomLink>
-                </div>
+                    milestone.next?.type === 'general' &&
+                      'to-green-400 dark:to-green-500',
+                    milestone.next?.type === 'incident' &&
+                      'to-red-700 dark:to-red-700',
+                    isLast && props.isOpen === false && 'to-transparent',
+                  ],
+                  milestone.type === 'incident' && [
+                    'from-red-700 dark:from-red-700',
+                    milestone.next?.type === 'incident' &&
+                      'to-red-700 dark:to-red-700',
+                    milestone.next?.type === 'general' &&
+                      'to-green-400 dark:to-green-500',
+                    isLast && props.isOpen === false && 'to-transparent',
+                  ],
+                )}
+              />
+              <Icon className="absolute -left-8" />
+              <p className="text-lg font-bold leading-none">{milestone.name}</p>
+              <p className="text-sm dark:text-gray-400">
+                {formatDate(milestone.date)}
+              </p>
+              <div className="mt-3">
+                {milestone.description && (
+                  <Markdown className="text-sm leading-none dark:text-gray-400">
+                    {milestone.description}
+                  </Markdown>
+                )}
+                <CustomLink className="text-sm" href={milestone.link}>
+                  Learn more
+                </CustomLink>
               </div>
-            )
-          })}
+            </div>
+          )
+        })}
       </div>
     </div>
   )
+}
+
+type MilestoneWithNext = ReturnType<typeof withNext>[number]
+function withNext(milestones: Milestone[]) {
+  return milestones.map((milestone, i) => {
+    // It's next when you are looking from top to bottom
+    const nextMilestone = milestones.at(i + 1)
+    return {
+      ...milestone,
+      next: nextMilestone,
+    }
+  })
 }
 
 function formatDate(dateString: string): string {
