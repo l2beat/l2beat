@@ -9,7 +9,7 @@ import { getSummaryPage } from './scaling/summary'
 export function renderPages(config: Config, pagesData: PagesData) {
   const pages: Page[] = []
 
-  pages.push(getSummaryPage(config, pagesData))
+  pages.push(getSummaryPage(config))
   pages.push(...getProjectPages(config, pagesData))
   pages.push(...getL3sProjectPages(config, pagesData))
 
