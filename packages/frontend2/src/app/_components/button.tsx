@@ -1,8 +1,9 @@
 import { type VariantProps, cva } from 'class-variance-authority'
 import React from 'react'
 
+import { Slot } from '@radix-ui/react-slot'
+import { Props } from 'next/script'
 import { cn } from '~/utils/cn'
-import { PlainLink } from './plain-link'
 
 const buttonVariants = cva(
   'flex w-max cursor-pointer items-center justify-center px-6 py-2 text-center font-bold transition-colors duration-100',
@@ -24,30 +25,24 @@ const buttonVariants = cva(
   },
 )
 
-type Props<T extends React.ElementType> = {
-  children: React.ReactNode
-  className?: string
-  as?: T
-} & VariantProps<typeof buttonVariants> &
-  React.ComponentPropsWithoutRef<T>
-
-export function Button<T extends React.ElementType>({
-  children,
-  className,
-  as,
-  variant,
-  size,
-  ...rest
-}: Props<T>) {
-  // Plain link was used in the old frontend for a tag
-  const Comp = as === 'a' ? PlainLink : 'button'
-
-  return (
-    <Comp
-      className={cn(buttonVariants({ variant, size }), className)}
-      {...rest}
-    >
-      {children}
-    </Comp>
-  )
+interface Props
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean
 }
+
+const Button = React.forwardRef<HTMLButtonElement, Props>(
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : 'button'
+    return (
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      />
+    )
+  },
+)
+Button.displayName = 'Button'
+
+export { Button, buttonVariants }

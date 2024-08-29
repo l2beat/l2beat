@@ -4,6 +4,7 @@ import { Button } from '~/app/_components/button'
 import { LinkWithThumbnail } from '~/app/_components/link-with-thumbnail'
 import { type GovernancePublicationEntry } from '../../_utils/get-governance-publication-entry'
 import { GovernanceCard, GovernanceCardHeader } from '../governance-card'
+import Link from 'next/link'
 
 interface Props {
   publications: GovernancePublicationEntry[]
@@ -29,14 +30,8 @@ export function RecentPublicationsSection({ publications, className }: Props) {
 
 function ExploreAllButton({ className }: { className?: string }) {
   return (
-    <Button
-      className={className}
-      as="a"
-      href="/governance/publications"
-      variant="outline"
-      size="sm"
-    >
-      Explore all publications
+    <Button className={className} variant="outline" size="sm" asChild>
+      <Link href="/governance/publications">Explore all publications</Link>
     </Button>
   )
 }

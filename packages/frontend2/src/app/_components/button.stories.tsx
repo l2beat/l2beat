@@ -20,9 +20,9 @@ export const Default: Story = {
   },
 }
 
-export const Purple: Story = {
+export const Outline: Story = {
   args: {
     children: 'Label',
-    variant: 'purple',
+    variant: 'outline',
   },
 }
