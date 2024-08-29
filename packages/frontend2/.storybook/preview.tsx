@@ -44,7 +44,7 @@ const preview: Preview = {
     (Story) => {
       document.body.classList.add(roboto.variable, 'font-sans')
       return (
-        <main className={`m-8`}>
+        <main className="m-8">
           <GlossaryContextProvider terms={[EXAMPLE_TERM]}>
             <TooltipProvider>
               <Story />
