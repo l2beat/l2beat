@@ -212,6 +212,14 @@ export const badges = {
     },
     type: BadgeType.VM,
   },
+  CustomVM: {
+    display: {
+      name: 'Custom',
+      description:
+        'This project uses a custom-built virtual machine suitable for its own needs',
+    },
+    type: BadgeType.VM,
+  },
   AppChain: {
     display: {
       name: 'Application-specific chain',

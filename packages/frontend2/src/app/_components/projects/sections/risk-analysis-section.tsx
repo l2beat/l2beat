@@ -64,7 +64,10 @@ export function RiskAnalysisSection({
       {rosetteType === 'pizza' ? (
         <BigPizzaRosette values={rosetteValues} className="mx-auto my-6" />
       ) : (
-        <BigPentagonRosette values={rosetteValues} className="mx-auto my-6" />
+        <BigPentagonRosette
+          values={rosetteValues}
+          className="mx-auto my-6 lg:hidden"
+        />
       )}
       {Object.values(rosetteValues).map((value) => (
         <SingleRisk key={value.name} value={value} />
