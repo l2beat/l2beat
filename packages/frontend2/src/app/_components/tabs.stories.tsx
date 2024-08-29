@@ -11,7 +11,7 @@ const meta = {
   },
   parameters: {
     nextjs: {
-      appDirectory: true, // 👈 Set this
+      appDirectory: true,
     },
   },
 } satisfies Meta<typeof Tabs>
