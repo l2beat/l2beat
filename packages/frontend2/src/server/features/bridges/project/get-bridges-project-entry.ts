@@ -41,7 +41,7 @@ export async function getBridgesProjectEntry(project: Bridge) {
     isUpcoming: !!project.isUpcoming,
     isImplementationUnderReview,
     header,
-    projectDetails: getBridgeProjectDetails(
+    projectDetails: await getBridgeProjectDetails(
       project,
       isVerified,
       contractsVerificationStatuses,
