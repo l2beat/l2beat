@@ -28,7 +28,10 @@
     "find-common-contracts": "ts-node --transpile-only scripts/findCommonContracts.ts",
     "update-diff-history": "ts-node --transpile-only scripts/updateDiffHistory.ts",
     "refresh-discovery": "ts-node --transpile-only scripts/refreshDiscovery.ts",
-    "analyze-project": "ts-node --transpile-only scripts/analyzeProject.ts"
+    "analyze-project": "ts-node --transpile-only scripts/analyzeProject.ts",
+    "restore-tvl": "cd ./scripts/tvl-restore && ./tvl-restore.sh && cd -",
+    "db:inspect": "yarn prisma studio",
+    "dev": "yarn build:dependencies && start:dev"
   },
   "dependencies": {
     "@bugsnag/js": "^7.22.3",
