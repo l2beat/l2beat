@@ -8,8 +8,8 @@ import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
 import {
   Reference,
-  ScopeVariables,
-  generateScopeVariables,
+  ReferenceInput,
+  generateReferenceInput,
   getReferencedName,
   resolveReference,
 } from '../reference'
@@ -46,12 +46,12 @@ export class StorageHandler implements Handler {
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, ['Reading storage'])
-    const scopeVariables = generateScopeVariables(provider, address)
-    const resolved = resolveDependencies(
-      this.definition,
+    const referenceInput = generateReferenceInput(
       previousResults,
-      scopeVariables,
+      provider,
+      address,
     )
+    const resolved = resolveDependencies(this.definition, referenceInput)
 
     let storage: Bytes
     try {
@@ -85,8 +85,7 @@ function getDependencies(definition: StorageHandlerDefinition): string[] {
 type ResolvedDefinition = ReturnType<typeof resolveDependencies>
 function resolveDependencies(
   definition: StorageHandlerDefinition,
-  previousResults: Record<string, HandlerResult | undefined>,
-  scopeVariables: ScopeVariables,
+  referenceInput: ReferenceInput,
 ): {
   slot: bigint | bigint[]
   offset: bigint
@@ -94,26 +93,18 @@ function resolveDependencies(
 } {
   let offset = 0n
   if (definition.offset) {
-    const resolved = resolveReference(
-      definition.offset,
-      previousResults,
-      scopeVariables,
-    )
+    const resolved = resolveReference(definition.offset, referenceInput)
     offset = valueToBigInt(resolved)
   }
 
   let slot: bigint | bigint[]
   if (Array.isArray(definition.slot)) {
     slot = definition.slot.map((x) => {
-      const resolved = resolveReference(x, previousResults, scopeVariables)
+      const resolved = resolveReference(x, referenceInput)
       return valueToBigInt(resolved)
     })
   } else {
-    const resolved = resolveReference(
-      definition.slot,
-      previousResults,
-      scopeVariables,
-    )
+    const resolved = resolveReference(definition.slot, referenceInput)
     slot = valueToBigInt(resolved)
   }
 

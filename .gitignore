@@ -11,7 +11,7 @@ packages/frontend/__screenshots__
 
 # Next.js
 .next
-next-env.d.ts
+# Not ignoring next-env.d.ts as it's needed for type checking on CI
 out
 build
 

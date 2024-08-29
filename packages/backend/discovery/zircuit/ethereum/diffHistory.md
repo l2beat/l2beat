@@ -1,4 +1,4 @@
-Generated with discovered.json: 0xfdafd8b1d8b2db1c184990490b302dd82444dc31
+Generated with discovered.json: 0x5f23bb0b276568036f80cd0694ccc59eac7d6d7d
 
 # Diff at Fri, 23 Aug 2024 09:56:30 GMT:
 
@@ -8,7 +8,7 @@ Generated with discovered.json: 0xfdafd8b1d8b2db1c184990490b302dd82444dc31
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Config changes related to changing grantedPermissions to issuedPermissions.
 
 ## Config/verification related changes
 
