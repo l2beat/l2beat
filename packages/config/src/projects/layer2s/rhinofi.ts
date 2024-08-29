@@ -68,8 +68,6 @@ export const rhinofi: Layer2 = {
     purposes: ['Exchange'],
     provider: 'StarkEx',
     category: 'Validium',
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.', // remove adminEOA from permissions section when removing this
     links: {
       websites: ['https://rhino.fi/'],
       apps: ['https://app.rhino.fi/'],
@@ -208,16 +206,6 @@ export const rhinofi: Layer2 = {
       'GovernanceMultisig',
       'Has full power to upgrade the bridge implementation as a Governor.',
     ),
-    {
-      name: 'AdminEOA',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.get$Admins('StarkExchange')[0],
-        ),
-      ],
-      description:
-        'Upgrade admin of the protocol, meaning it can upgrade the project implementation potentially gaining access to all funds.',
-    },
     committee,
     ...getSHARPVerifierGovernors(discovery, verifierAddress),
     {
