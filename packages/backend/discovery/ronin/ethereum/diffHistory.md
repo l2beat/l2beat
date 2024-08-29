@@ -1,3 +1,58 @@
+Generated with discovered.json: 0x0c58ba585d11cc050cfd94ad4ed6016ee63e6ff9
+
+# Diff at Thu, 29 Aug 2024 08:47:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae2eef5fb76c32f2e57d2f78a8a0f4686592fe8b block: 20475186
+- current block number: 20633139
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract RoninManagerMultiSig (0x2DA02aC5f19Ae362a4121718d990e655eB628D96) {
+    +++ description: None
+      values.transactionCount:
+-        25
++        26
+    }
+```
+
+```diff
+    contract PauseEnforcer (0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4) {
+    +++ description: None
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.1:
++        "0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20475186 (main branch discovery), not current.
+
+```diff
+    contract RoninManagerMultiSig (0x2DA02aC5f19Ae362a4121718d990e655eB628D96) {
+    +++ description: None
+      name:
+-        "RoninBridgeAdminMultiSig"
++        "RoninManagerMultiSig"
+    }
+```
+
+```diff
+    contract RoninAdminMultisig (0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e) {
+    +++ description: None
+      name:
+-        "GnosisSafe"
++        "RoninAdminMultisig"
+    }
+```
+
 Generated with discovered.json: 0x0c7d2642c1ca8f149984644909351348f6e58011
 
 # Diff at Fri, 23 Aug 2024 09:54:55 GMT:

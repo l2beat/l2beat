@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import { ConfigMapping, createAmountId } from '@l2beat/config'
 import {
   BlockExplorerClient,
   CoingeckoClient,
@@ -29,9 +30,7 @@ import { AmountService } from '../services/AmountService'
 import { BlockTimestampProvider } from '../services/BlockTimestampProvider'
 import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
 import { ValueService } from '../services/ValueService'
-import { ConfigMapping } from '../utils/ConfigMapping'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
-import { createAmountId } from '../utils/createAmountId'
 import { PriceModule } from './PriceModule'
 
 export function createChainModules(

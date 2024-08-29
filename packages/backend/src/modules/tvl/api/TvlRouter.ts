@@ -11,7 +11,6 @@ import { z } from 'zod'
 import { withTypedContext } from '../../../api/types'
 import { Clock } from '../../../tools/Clock'
 import { AggregatedService } from './services/AggregatedService'
-import { BreakdownService } from './services/BreakdownService'
 import { TokenService } from './services/TokenService'
 import { TvlService } from './services/TvlService'
 import { ApiProject, AssociatedToken } from './utils/types'
@@ -20,7 +19,6 @@ export function createTvlRouter(
   tvlService: TvlService,
   aggregatedService: AggregatedService,
   tokenService: TokenService,
-  breakdownService: BreakdownService,
   projects: ApiProject[],
   associatedTokens: AssociatedToken[],
   clock: Clock,
@@ -117,17 +115,6 @@ export function createTvlRouter(
       },
     ),
   )
-
-  router.get('/api/tvl/breakdown', async (ctx) => {
-    const breakdown = await breakdownService.getTvlBreakdown(
-      // TODO: This is a temporary solution. We should use the last hour
-      // instead of the hour before the last hour.
-      // This should be fixed by interpolating the data for the last hour when not every project has data for it.
-      getTargetTimestamp(),
-    )
-
-    ctx.body = breakdown
-  })
 
   return router
 }

@@ -1,5 +1,6 @@
 import { layer2s, layer3s } from '@l2beat/config'
 import { notFound } from 'next/navigation'
+import { ContentWrapper } from '~/app/_components/content-wrapper'
 import { HighlightableLinkContextProvider } from '~/app/_components/link/highlightable/highlightable-link-context'
 import { DesktopProjectNavigation } from '~/app/_components/projects/navigation/desktop-project-navigation'
 import { MobileProjectNavigation } from '~/app/_components/projects/navigation/mobile-project-navigation'
