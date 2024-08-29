@@ -1,4 +1,4 @@
-import { createPriceId } from '@l2beat/backend/src/modules/tvl/utils/createPriceId'
+import { createPriceId } from '@l2beat/config'
 import { AssetId, CoingeckoId, UnixTime } from '@l2beat/shared-pure'
 import { db } from '~/server/database'
 
