@@ -5,9 +5,9 @@ import { DesktopProjectNavigation } from '~/app/_components/projects/navigation/
 import { MobileProjectNavigation } from '~/app/_components/projects/navigation/mobile-project-navigation'
 import { ProjectDetails } from '~/app/_components/projects/project-details'
 import { getScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
+import { HydrateClient } from '~/trpc/server'
 import { getProjectMetadata } from '~/utils/metadata'
 import { ScalingProjectSummary } from './_components/scaling-project-summary'
-import { HydrateClient } from '~/trpc/server'
 
 const scalingProjects = [...layer2s, ...layer3s]
 

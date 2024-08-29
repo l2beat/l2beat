@@ -1,7 +1,7 @@
 import { createCallerFactory, router } from '~/server/api/trpc'
 import { costsRouter } from './routers/costs'
-import { tvlRouter } from './routers/tvl'
 import { activityRouter } from './routers/scaling/activity'
+import { tvlRouter } from './routers/tvl'
 
 /**
  * This is the primary router for your server.
