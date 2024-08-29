@@ -18,7 +18,9 @@ export async function getZkSyncLiteProxy(
     type: 'zkSync Lite proxy',
     values: {
       $admin: detection.values.$admin,
-      $implementation: get$Implementations(detection.values).concat(additional),
+      $implementation: get$Implementations(detection.values)
+        .concat(additional)
+        .map((i) => i.toString()),
     },
   }
 }

@@ -1,9 +1,4 @@
-import {
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-  formatSeconds,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -13,13 +8,9 @@ import { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('polygon-plasma')
 
-const delayString = formatSeconds(
-  discovery.getContractValue('Timelock', 'getMinDelay'),
-)
-
 const upgrades = {
   upgradableBy: ['PolygonMultisig'],
-  upgradeDelay: delayString,
+  upgradeDelay: 'No delay',
 }
 
 export const polygonplasma: Bridge = {
@@ -32,7 +23,7 @@ export const polygonplasma: Bridge = {
     description:
       'Polygon Plasma is the official bridge provided by the Polygon team to bridge MATIC tokens from Ethereum to Polygon chain.',
     detailedDescription:
-      'Originally it was also used to bridge DAI, but now Polygon PoS bridge is recommended. Tokens are bridged to the same Polygon sidechain as if Polygon PoS bridge was used, the only difference is a required 7-day withdrawal delay. This delay was originally designed to allow users to challenge the withdrawal, however this functionality is not deployed.',
+      'Originally it was also used to bridge DAI, but now Polygon PoS bridge is recommended. Tokens are bridged to the same Polygon sidechain as if Polygon PoS bridge was used. Originally there was a required 7-day withdrawal delay. This delay was designed to allow users to challenge the withdrawal, however this functionality is not deployed and withdrawals can be processed immediately.',
     category: 'Token Bridge',
   },
   config: {
@@ -54,9 +45,9 @@ export const polygonplasma: Bridge = {
       sentiment: 'warning',
     },
     sourceUpgradeability: {
-      value: `${delayString} delay`,
-      description: `The bridge can be upgraded by the PolygonMultisig after a delay of ${delayString}.`,
-      sentiment: 'warning',
+      value: `Yes`,
+      description: `The bridge can be upgraded by the PolygonMultisig.`,
+      sentiment: 'bad',
     },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('MATIC'),
   },
@@ -164,9 +155,8 @@ export const polygonplasma: Bridge = {
         'NFTs used to represent an exit.',
       ),
       discovery.getContractDetails('SlashingManager'),
-      discovery.getContractDetails('ChildChain'),
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('48 hours')],
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
     ...discovery.getMultisigPermission(

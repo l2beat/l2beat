@@ -100,7 +100,6 @@ export type ContractParameters = {
 
 export type ContractValue =
   | string
-  | EthereumAddress
   | number
   | boolean
   | ContractValue[]

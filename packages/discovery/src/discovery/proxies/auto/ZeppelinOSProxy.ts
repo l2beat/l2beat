@@ -40,8 +40,8 @@ export async function detectZeppelinOSProxy(
     type: 'ZeppelinOS proxy',
     values: {
       $immutable: admins.length === 0,
-      $implementation: implementation,
-      $admin: admins,
+      $implementation: implementation.toString(),
+      $admin: admins.map((a) => a.toString()),
     },
   }
 }

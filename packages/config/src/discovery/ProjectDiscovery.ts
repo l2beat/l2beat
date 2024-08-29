@@ -339,19 +339,29 @@ export class ProjectDiscovery {
     const modulesDescriptions = modules
       .map((m) => this.getContractByAddress(m))
       .filter(notUndefined)
-      .map((contract) => `${contract.name}`)
+      .map((contract) => ({
+        name: contract.name,
+        description: contract.descriptions?.join(' ').replace(/\.$/, '') ?? '', // remove trailing dot
+      }))
+      .map(
+        ({ name, description }) =>
+          name + (description.length !== 0 ? ` (${description})` : ''),
+      )
 
     const fullModulesDescription =
       modulesDescriptions.length === 0
         ? ''
         : `It uses the following modules: ${modulesDescriptions.join(', ')}.`
 
+    const descriptionWithContractNames = this.replaceAddressesWithNames(
+      `${description} This is a Gnosis Safe with ${this.getMultisigStats(
+        identifier,
+      )} threshold. ${fullModulesDescription}`,
+    )
     return [
       {
         name: contract.name,
-        description: `${description} This is a Gnosis Safe with ${this.getMultisigStats(
-          identifier,
-        )} threshold. ${fullModulesDescription}`,
+        description: descriptionWithContractNames,
         accounts: [
           {
             address: contract.address,

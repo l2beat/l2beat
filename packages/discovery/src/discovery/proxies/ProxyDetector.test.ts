@@ -9,16 +9,16 @@ describe(ProxyDetector.name, () => {
   const FIRST_DETAILS: ProxyDetails = {
     type: 'EIP1967 proxy',
     values: {
-      $admin: EthereumAddress.random(),
-      $implementation: EthereumAddress.random(),
+      $admin: EthereumAddress.random().toString(),
+      $implementation: EthereumAddress.random().toString(),
     },
   }
 
   const SECOND_DETAILS: ProxyDetails = {
     type: 'EIP1967 proxy',
     values: {
-      $admin: EthereumAddress.random(),
-      $implementation: EthereumAddress.random(),
+      $admin: EthereumAddress.random().toString(),
+      $implementation: EthereumAddress.random().toString(),
     },
   }
 

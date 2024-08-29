@@ -1,0 +1,47 @@
+name: Validate Prisma migrations
+on:
+  pull_request:
+    paths:
+      - packages/database/prisma/**
+  push:
+    branches:
+      - main
+    paths:
+      - packages/database/prisma/**
+  merge_group:
+    paths:
+      - packages/database/prisma/**
+
+jobs:
+  validate-migrations:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Check if prisma migration is updated
+        run: |-
+          yarn prisma migrate diff --exit-code \
+            --from-migrations packages/database/prisma/migrations \
+            --to-schema-datamodel packages/database/prisma/schema.prisma \
+            --shadow-database-url ${{env.DATABASE_URL}}

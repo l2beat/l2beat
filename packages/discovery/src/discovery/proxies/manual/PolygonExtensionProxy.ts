@@ -19,7 +19,9 @@ export async function getPolygonExtensionProxy(
     type: 'Polygon Extension proxy',
     values: {
       $admin: detection.values.$admin,
-      $implementation: get$Implementations(detection.values).concat(extension),
+      $implementation: get$Implementations(detection.values)
+        .concat(extension)
+        .map((i) => i.toString()),
     },
   }
 }

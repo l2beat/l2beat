@@ -73,8 +73,8 @@ describe(processAnalysis.name, () => {
     name: 'C',
     proxyType: 'EIP1967 proxy',
     values: {
-      $admin: ADDRESS_D,
-      $implementation: ADDRESS_E,
+      $admin: ADDRESS_D.toString(),
+      $implementation: ADDRESS_E.toString(),
       foo: 'foo',
       bar: 'bar',
     },

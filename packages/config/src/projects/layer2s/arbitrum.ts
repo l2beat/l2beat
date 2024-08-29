@@ -354,7 +354,7 @@ export const arbitrum: Layer2 = orbitStackL2({
       l2Discovery.getContractDetails('TreasuryTimelock', {
         description: `Delays treasury proposals from the TreasuryGovernor by ${formatSeconds(
           treasuryTimelockDelay,
-        )}.`,
+        )}. Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts.`,
         ...l2Upgradability,
       }),
       l2Discovery.getContractDetails('L2UpgradeExecutor', {
