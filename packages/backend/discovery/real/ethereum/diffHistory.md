@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x594138a401633a165837723395004aa9fb61155f
+
+# Diff at Thu, 29 Aug 2024 09:37:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8d42e344df72950493a6d9b63b8f4e541ef02586 block: 20583702
+- current block number: 20633391
+
+## Description
+
+Ignore value.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20583702 (main branch discovery), not current.
+
+```diff
+    contract LidoStEthStrategy (0x679D4C1cC6855C57726BEA1784F578315d6431f6) {
+    +++ description: None
+      values.getClaimableValue:
+-        0
+    }
+```
+
 Generated with discovered.json: 0x4d09ed055a70a73ffb88d198d954094ad2231aad
 
 # Diff at Fri, 23 Aug 2024 09:54:39 GMT:
