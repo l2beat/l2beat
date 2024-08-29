@@ -39,8 +39,6 @@ export function ContractsSection(props: ContractsSectionProps) {
     return null
   }
 
-  console.dir(props, { depth: null })
-
   const [changedContracts, unchangedContracts] = partition(
     props.contracts,
     (c) => c.implementationHasChanged,
