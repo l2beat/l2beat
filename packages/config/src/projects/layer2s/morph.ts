@@ -21,7 +21,7 @@ export const morph: Layer2 = upcomingL2({
         'https://t.me/MorphL2official',
         'https://medium.com/@morphlayer2',
         'https://discord.com/invite/L2Morph',
-        'https://www.youtube.com/@morphofficiall2',
+        'https://youtube.com/@morphofficiall2',
       ],
     },
   },
