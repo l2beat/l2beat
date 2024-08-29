@@ -88,7 +88,7 @@ export async function getL2ProjectDetails({
       props: {
         id: 'tvl',
         stacked: true,
-        title: 'Value locked',
+        title: 'Value Locked',
         projectId: project.id,
         milestones: sortedMilestones,
       },

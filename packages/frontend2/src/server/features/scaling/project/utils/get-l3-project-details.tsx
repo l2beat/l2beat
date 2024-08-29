@@ -86,7 +86,7 @@ export async function getL3ProjectDetails({
       props: {
         id: 'tvl',
         stacked: true,
-        title: 'Value locked',
+        title: 'Value Locked',
         projectId: project.id,
         milestones: sortedMilestones,
       },
