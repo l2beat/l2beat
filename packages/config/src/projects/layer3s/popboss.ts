@@ -43,7 +43,7 @@ export const popboss: Layer3 = orbitStackL3({
     type: 'rpc',
     startBlock: 1,
     defaultUrl: 'https://rpc.boss.proofofplay.com',
-    defaultCallsPerMinute: 5000,
+    defaultCallsPerMinute: 3000,
     assessCount: subtractOne,
   },
   nonTemplatePermissions: [
