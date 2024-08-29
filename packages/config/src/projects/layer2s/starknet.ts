@@ -612,7 +612,7 @@ export const starknet: Layer2 = {
           ),
           selector: '0x739ef303',
           functionSignature:
-            'function registerContinuousPageBatch(tuple[] memoryPageEntries)',
+            'function registerContinuousPageBatch((uint256 startAddr, uint256[] values, uint256 z, uint256 alpha, uint256 prime)[] memoryPageEntries)',
           sinceTimestamp: new UnixTime(1722161267),
         },
         _hackCostMultiplier: 0.5,
