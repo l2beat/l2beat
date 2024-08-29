@@ -20,8 +20,7 @@ export interface Token {
   supply: 'totalSupply' | 'circulatingSupply' | 'zero'
   excludeFromTotal?: true
   bridgedUsing?: {
-    bridge: string
-    slug?: string
+    bridges: { name: string; slug?: string }[]
     warning?: string
   }
 }
