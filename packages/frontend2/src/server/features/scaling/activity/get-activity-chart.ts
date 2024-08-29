@@ -1,5 +1,5 @@
 import { layer2s, layer3s } from '@l2beat/config'
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   unstable_cache as cache,
   unstable_noStore as noStore,
@@ -35,7 +35,12 @@ const getCachedActivityChart = cache(
       (e) => e.projectId !== ProjectId.ETHEREUM && e.count > 0,
     )
 
-    assert(startIndex !== -1, 'No activity found')
+    if (startIndex === -1) {
+      return {
+        types: ['timestamp', 'count', 'ethereumCount'] as const,
+        data: [],
+      }
+    }
 
     const aggregatedEntries = entries.slice(startIndex).reduce(
       (acc, entry) => {
