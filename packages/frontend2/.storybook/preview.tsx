@@ -1,14 +1,20 @@
 import { type Preview } from '@storybook/react'
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 import { withThemeByClassName } from '@storybook/addon-themes'
 
-import { GlossaryContextProvider } from '../src/app/_components/markdown/glossary-context'
-import { TooltipProvider } from '../src/app/_components/tooltip/tooltip'
 import { roboto } from '../src/fonts'
 import '../src/styles/globals.css'
 import { allModes } from './modes'
 import { viewports } from './viewports'
+
+const withFonts = () => (Story: () => ReactNode) => {
+  return (
+    <main className={`font-sans ${roboto.variable}`}>
+      <Story />
+    </main>
+  )
+}
 
 const preview: Preview = {
   parameters: {
@@ -26,12 +32,6 @@ const preview: Preview = {
     chromatic: {
       modes: allModes,
     },
-    options: {
-      storySort: {
-        method: 'alphabetical',
-        order: ['Atoms', 'Components', 'OG Images'],
-      },
-    },
   },
   decorators: [
     withThemeByClassName({
@@ -41,18 +41,7 @@ const preview: Preview = {
       },
       defaultTheme: 'light',
     }),
-    (Story) => {
-      document.body.classList.add(roboto.variable, 'font-sans')
-      return (
-        <main className="m-8">
-          <GlossaryContextProvider terms={[]}>
-            <TooltipProvider>
-              <Story />
-            </TooltipProvider>
-          </GlossaryContextProvider>
-        </main>
-      )
-    },
+    withFonts(),
   ],
 }
 

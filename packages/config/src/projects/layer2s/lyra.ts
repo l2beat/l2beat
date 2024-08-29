@@ -18,21 +18,22 @@ export const lyra: Layer2 = opStackL2({
   associatedTokens: ['LYRA'],
   discovery,
   display: {
-    name: 'Lyra',
-    slug: 'lyra',
+    name: 'Derive',
+    slug: 'derive',
     architectureImage: 'lyra',
     description:
-      'Lyra Chain is an L2 scaling solution built using OP Stack specially for Lyra protocol - a settlement protocol for spot, perpetuals, and options trading.',
+      'Derive Chain is an L2 scaling solution built using OP Stack specially for the Derive protocol - a settlement protocol for spot, perpetuals, and options trading.',
     purposes: ['Exchange'],
     links: {
-      websites: ['https://lyra.finance/'],
-      apps: ['https://lyra.finance/portfolio'],
-      documentation: ['https://docs.lyra.finance/docs/introduction'],
+      websites: ['https://derive.xyz/'],
+      apps: ['https://derive.xyz/options/eth'],
+      documentation: ['https://docs.lyra.finance/'],
       explorers: ['https://explorer.lyra.finance/'],
       repositories: ['https://github.com/lyra-finance/v2-core'],
       socialMedia: [
-        'https://twitter.com/lyrafinance',
-        'https://discord.gg/Lyra',
+        'https://x.com/derivexyz',
+        'https://warpcast.com/lyra.eth',
+        'https://discord.gg/Derive',
       ],
     },
     activityDataSource: 'Blockchain RPC',
@@ -48,6 +49,13 @@ export const lyra: Layer2 = opStackL2({
   // stateDerivation: DERIVATION.OPSTACK('LYRA'),
   isNodeAvailable: 'UnderReview',
   milestones: [
+    {
+      name: 'Derive rebrand',
+      link: 'https://x.com/derivexyz/status/1828607400116658227',
+      date: '2024-08-28T00:00:00Z',
+      description: 'Lyra is now called Derive.',
+      type: 'general',
+    },
     {
       name: 'Lyra V2 live on mainnet',
       link: 'https://x.com/lyrafinance/status/1735516929341980748',
