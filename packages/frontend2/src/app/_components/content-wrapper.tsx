@@ -6,13 +6,23 @@ interface Props {
   children: React.ReactNode
   className?: string
   asChild?: boolean
+  mobileFull?: boolean
 }
 
-export function ContentWrapper({ className, children, asChild }: Props) {
+export function ContentWrapper({
+  className,
+  children,
+  asChild,
+  mobileFull = false,
+}: Props) {
   const Comp = asChild ? Slot : 'div'
   return (
     <Comp
-      className={cn('mx-auto h-full max-w-[1296px] px-4 md:px-12', className)}
+      className={cn(
+        'mx-auto h-full max-w-[1296px] md:px-12',
+        !mobileFull && 'px-4',
+        className,
+      )}
     >
       {children}
     </Comp>
