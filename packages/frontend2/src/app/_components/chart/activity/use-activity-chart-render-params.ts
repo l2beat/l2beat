@@ -55,18 +55,19 @@ export function useActivityChartRenderParams({
             {
               fill: 'signature gradient',
               line: 'signature gradient',
-              point: 'circle',
+              point: 'redCircle',
             },
             {
-              line: 'blue',
-              point: 'circle',
+              fill: 'blue gradient',
+              line: 'blue gradient',
+              point: 'blueSquare',
             },
           ]
         : [
             {
               fill: 'signature gradient',
               line: 'signature gradient',
-              point: 'circle',
+              point: 'redCircle',
             },
           ],
     [showMainnet],

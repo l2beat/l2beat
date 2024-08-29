@@ -1,4 +1,5 @@
 import { type Milestone } from '@l2beat/config'
+import { ProjectActivityChart } from '../../chart/activity/project-activity-chart'
 import { ProjectCostsChart } from '../../chart/costs/project-costs-chart'
 import { ProjectSection } from './project-section'
 import { type ProjectSectionId, type ProjectSectionProps } from './types'
@@ -39,8 +40,11 @@ interface ProjectChartProps {
 function ProjectChart({ id, projectId, milestones }: ProjectChartProps) {
   switch (id) {
     case 'tvl':
-    case 'activity':
       throw new Error('Not implemented')
+    case 'activity':
+      return (
+        <ProjectActivityChart milestones={milestones} projectId={projectId} />
+      )
     case 'onchain-costs':
       return <ProjectCostsChart milestones={milestones} projectId={projectId} />
   }
