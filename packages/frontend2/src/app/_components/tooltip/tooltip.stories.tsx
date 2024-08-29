@@ -1,5 +1,5 @@
 import { type Meta, type StoryObj } from '@storybook/react'
-import { userEvent, within } from '@storybook/test'
+import { expect, userEvent, waitFor, within } from '@storybook/test'
 import React from 'react'
 import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip'
 
@@ -21,5 +21,9 @@ export const Default: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     await userEvent.hover(canvas.getByText('Hover me'))
+    await waitFor(async () => {
+      const tooltip = within(canvas.getByRole('tooltip'))
+      await expect(tooltip.getByText('This is a tooltip')).toBeInTheDocument()
+    })
   },
 }
