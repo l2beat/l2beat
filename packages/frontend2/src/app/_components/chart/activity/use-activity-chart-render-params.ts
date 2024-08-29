@@ -1,9 +1,9 @@
 import { type Milestone } from '@l2beat/config'
 import { useCallback, useMemo } from 'react'
 import { type RouterOutputs } from '~/trpc/react'
+import { formatTpsWithUnit } from '~/utils/format-tps'
 import { type SeriesStyle } from '../core/styles'
 import { mapMilestones } from '../core/utils/map-milestones'
-import { formatTpsWithUnit } from '~/utils/format-tps'
 
 interface Params {
   milestones: Milestone[]
