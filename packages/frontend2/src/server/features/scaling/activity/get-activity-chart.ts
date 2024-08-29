@@ -1,5 +1,5 @@
 import { layer2s, layer3s } from '@l2beat/config'
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   unstable_cache as cache,
   unstable_noStore as noStore,
@@ -30,32 +30,41 @@ const getCachedActivityChart = cache(
       projects,
       getFullySyncedActivityRange(range),
     )
-    const aggregatedEntries = entries.reduce(
-      (acc, entry) => {
-        const timestamp = entry.timestamp.toNumber()
-        const isEthereum = entry.projectId === ProjectId.ETHEREUM
 
-        if (!acc[timestamp]) {
-          acc[timestamp] = {
-            timestamp: entry.timestamp,
-            count: 0,
-            ethereumCount: 0,
+    const start = entries.find(
+      (e) => e.projectId !== ProjectId.ETHEREUM && e.count > 0,
+    )?.timestamp
+
+    assert(start, 'No activity found')
+
+    const aggregatedEntries = entries
+      .filter(({ timestamp }) => timestamp.gte(start))
+      .reduce(
+        (acc, entry) => {
+          const timestamp = entry.timestamp.toNumber()
+          const isEthereum = entry.projectId === ProjectId.ETHEREUM
+
+          if (!acc[timestamp]) {
+            acc[timestamp] = {
+              timestamp: entry.timestamp,
+              count: 0,
+              ethereumCount: 0,
+            }
           }
-        }
 
-        if (isEthereum) {
-          acc[timestamp].ethereumCount += entry.count
-        } else {
-          acc[timestamp].count += entry.count
-        }
+          if (isEthereum) {
+            acc[timestamp].ethereumCount += entry.count
+          } else {
+            acc[timestamp].count += entry.count
+          }
 
-        return acc
-      },
-      {} as Record<
-        number,
-        { timestamp: UnixTime; count: number; ethereumCount: number }
-      >,
-    )
+          return acc
+        },
+        {} as Record<
+          number,
+          { timestamp: UnixTime; count: number; ethereumCount: number }
+        >,
+      )
 
     const result = Object.values(aggregatedEntries)
       .sort((a, b) => a.timestamp.toNumber() - b.timestamp.toNumber())
@@ -73,6 +82,6 @@ const getCachedActivityChart = cache(
       data: result,
     }
   },
-  ['activityChartV2'],
+  ['activityChart'],
   { revalidate: UnixTime.HOUR },
 )
