@@ -234,6 +234,10 @@ export function makeConfig(
         ['NEAR_RPC_URL_FOR_DA_BEAT', 'NEAR_RPC_URL'],
         'https://rpc.mainnet.near.org/',
       ),
+      availWsUrl: env.string(
+        ['AVAIL_WS_URL_FOR_DA_BEAT', 'AVAIL_WS_URL'],
+        'wss://avail-mainnet.public.blastapi.io/',
+      ),
     },
 
     // Must be last
