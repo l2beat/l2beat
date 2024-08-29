@@ -34,21 +34,22 @@ export function transformToReceived(
   directlyReceivedPermissions?: OutputResolvedPermission[]
   receivedPermissions?: OutputResolvedPermission[]
 } {
-  const emptyToUndefined = <T>(arr: T[]): T[] | undefined =>
-    arr.length === 0 ? undefined : arr
+  const emptyToUndefined = <T>(arr: T[]) => (arr.length === 0 ? undefined : arr)
+  const zeroToUndefined = (x: number) => (x === 0 ? undefined : x)
 
   const ultimate = sort(
     resolved
       .filter((r) => r.path[r.path.length - 1]?.address === toAddress)
       .map((r) => ({
         permission: internalPermissionToExternal(r.permission),
-        // biome-ignore lint/style/noNonNullAssertion: we know it's fine
+        // biome-ignore lint/style/noNonNullAssertion: we path[0] exists
         target: r.path[0]!.address,
-        delay: undefined,
+        // biome-ignore lint/style/noNonNullAssertion: we path[0] exists
+        delay: zeroToUndefined(r.path[0]!.delay),
         via: emptyToUndefined(
           r.path
             .slice(1, -1)
-            .map((x) => ({ ...x, delay: x.delay === 0 ? undefined : x.delay })),
+            .map((x) => ({ ...x, delay: zeroToUndefined(x.delay) })),
         ),
       })),
   )
@@ -58,7 +59,7 @@ export function transformToReceived(
       .map((p) => ({
         permission: internalPermissionToExternal(p.type),
         target: p.target,
-        delay: p.delay === 0 ? undefined : p.delay,
+        delay: zeroToUndefined(p.delay),
         via: undefined,
       }))
       .filter((p) => !ultimate.some((m) => isEqual(m, p))),
