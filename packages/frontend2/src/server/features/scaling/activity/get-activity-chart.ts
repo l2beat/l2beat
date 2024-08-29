@@ -30,7 +30,19 @@ const getCachedActivityChart = cache(
       projects,
       getFullySyncedActivityRange(range),
     )
-    const aggregatedEntries = entries.reduce(
+
+    const startIndex = entries.findIndex(
+      (e) => e.projectId !== ProjectId.ETHEREUM && e.count > 0,
+    )
+
+    if (startIndex === -1) {
+      return {
+        types: ['timestamp', 'count', 'ethereumCount'] as const,
+        data: [],
+      }
+    }
+
+    const aggregatedEntries = entries.slice(startIndex).reduce(
       (acc, entry) => {
         const timestamp = entry.timestamp.toNumber()
         const isEthereum = entry.projectId === ProjectId.ETHEREUM
@@ -73,6 +85,6 @@ const getCachedActivityChart = cache(
       data: result,
     }
   },
-  ['activityChartV2'],
+  ['activityChart'],
   { revalidate: UnixTime.HOUR },
 )
