@@ -17,11 +17,17 @@ export type ProjectTvlBreakdown = Awaited<
   ReturnType<ReturnType<typeof getTvlBreakdown>>
 >
 
-export function getTvlBreakdownForProject(
+export async function getTvlBreakdownForProject(
   ...parameters: Parameters<typeof getCachedTvlBreakdownForProject>
 ) {
   noStore()
-  return getCachedTvlBreakdownForProject(...parameters)
+  const maybeCached = await getCachedTvlBreakdownForProject(...parameters)
+
+  // Next's using plain JSON.Stringify to cache the data, so we need to re-parse UnixTime
+  return {
+    ...maybeCached,
+    dataTimestamp: new UnixTime(+maybeCached.dataTimestamp),
+  }
 }
 
 export const getCachedTvlBreakdownForProject = cache(
