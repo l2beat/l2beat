@@ -30,8 +30,12 @@ export const GeneratedToken = z.object({
   excludeFromTotal: z.literal(true).optional(),
   bridgedUsing: z.optional(
     z.object({
-      bridge: z.string(),
-      slug: z.string().optional(),
+      bridges: z.array(
+        z.object({
+          name: z.string(),
+          slug: z.string().optional(),
+        }),
+      ),
       warning: z.string().optional(),
     }),
   ),
@@ -45,13 +49,17 @@ export const SourceEntry = z.object({
   category: z.enum(['ether', 'stablecoin', 'other']).optional(),
   source: z.enum(['canonical', 'external', 'native']).optional(),
   supply: z.enum(['totalSupply', 'circulatingSupply', 'zero']).optional(),
-  bridgedUsing: z
-    .object({
-      bridge: z.string(),
-      slug: z.string().optional(),
+  bridgedUsing: z.optional(
+    z.object({
+      bridges: z.array(
+        z.object({
+          name: z.string(),
+          slug: z.string().optional(),
+        }),
+      ),
       warning: z.string().optional(),
-    })
-    .optional(),
+    }),
+  ),
   deploymentTimestamp: numberAs((n) => new UnixTime(n)).optional(),
   excludeFromTotal: z.literal(true).optional(),
 })
