@@ -31,40 +31,38 @@ const getCachedActivityChart = cache(
       getFullySyncedActivityRange(range),
     )
 
-    const start = entries.find(
+    const startIndex = entries.findIndex(
       (e) => e.projectId !== ProjectId.ETHEREUM && e.count > 0,
-    )?.timestamp
+    )
 
-    assert(start, 'No activity found')
+    assert(startIndex !== -1, 'No activity found')
 
-    const aggregatedEntries = entries
-      .filter(({ timestamp }) => timestamp.gte(start))
-      .reduce(
-        (acc, entry) => {
-          const timestamp = entry.timestamp.toNumber()
-          const isEthereum = entry.projectId === ProjectId.ETHEREUM
+    const aggregatedEntries = entries.slice(startIndex).reduce(
+      (acc, entry) => {
+        const timestamp = entry.timestamp.toNumber()
+        const isEthereum = entry.projectId === ProjectId.ETHEREUM
 
-          if (!acc[timestamp]) {
-            acc[timestamp] = {
-              timestamp: entry.timestamp,
-              count: 0,
-              ethereumCount: 0,
-            }
+        if (!acc[timestamp]) {
+          acc[timestamp] = {
+            timestamp: entry.timestamp,
+            count: 0,
+            ethereumCount: 0,
           }
+        }
 
-          if (isEthereum) {
-            acc[timestamp].ethereumCount += entry.count
-          } else {
-            acc[timestamp].count += entry.count
-          }
+        if (isEthereum) {
+          acc[timestamp].ethereumCount += entry.count
+        } else {
+          acc[timestamp].count += entry.count
+        }
 
-          return acc
-        },
-        {} as Record<
-          number,
-          { timestamp: UnixTime; count: number; ethereumCount: number }
-        >,
-      )
+        return acc
+      },
+      {} as Record<
+        number,
+        { timestamp: UnixTime; count: number; ethereumCount: number }
+      >,
+    )
 
     const result = Object.values(aggregatedEntries)
       .sort((a, b) => a.timestamp.toNumber() - b.timestamp.toNumber())
