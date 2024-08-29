@@ -1,10 +1,10 @@
-import { type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/react'
 import { CustomLink } from './custom-link'
 
 const meta = {
   title: 'Atoms/Link',
   component: CustomLink,
-}
+} satisfies Meta<typeof CustomLink>
 export default meta
 
 type Story = StoryObj<typeof meta>
