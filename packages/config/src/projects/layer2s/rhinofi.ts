@@ -68,6 +68,8 @@ export const rhinofi: Layer2 = {
     purposes: ['Exchange'],
     provider: 'StarkEx',
     category: 'Validium',
+    redWarning:
+      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.', // remove adminEOA from permissions section when removing this
     links: {
       websites: ['https://rhino.fi/'],
       apps: ['https://app.rhino.fi/'],
@@ -206,6 +208,16 @@ export const rhinofi: Layer2 = {
       'GovernanceMultisig',
       'Has full power to upgrade the bridge implementation as a Governor.',
     ),
+    {
+      name: 'AdminEOA',
+      accounts: [
+        discovery.formatPermissionedAccount(
+          discovery.get$Admins('StarkExchange')[0],
+        ),
+      ],
+      description:
+        'Upgrade admin of the protocol, meaning it can upgrade the project implementation potentially gaining access to all funds.',
+    },
     committee,
     ...getSHARPVerifierGovernors(discovery, verifierAddress),
     {
@@ -217,7 +229,7 @@ export const rhinofi: Layer2 = {
     discovery.contractAsPermissioned(
       // this multisig does not get recognized as such (because of the old proxy?)
       discovery.getContract('DeversiFiTreasuryMultisig'),
-      'Is the BlockAdmin: Can add addresses to a blocklist in the bridge, blocking the finalization of their withdrawals on L1.',
+      'Is the BlockAdmin: Can add owner keys to a blocklist in the bridge, blocking their withdrawals on L1. After 2 weeks, this multisig can manually withdraw even for blocked actors.',
     ),
   ],
   milestones: [
