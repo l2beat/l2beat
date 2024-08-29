@@ -69,6 +69,54 @@ export class ActivityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getByProjectsAndTimeRange(
+    projectIds: ProjectId[],
+    timeRange: [UnixTime, UnixTime],
+  ): Promise<ActivityRecord[]> {
+    const [from, to] = timeRange
+    const rows = await this.db
+      .selectFrom('activity')
+      .select(selectActivity)
+      .where(
+        'project_id',
+        'in',
+        projectIds.map((p) => p.toString()),
+      )
+      .where('timestamp', '>=', from.toDate())
+      .where('timestamp', '<=', to.toDate())
+      .orderBy('timestamp', 'asc')
+      .execute()
+    return rows.map(toRecord)
+  }
+
+  async getMaxCountForProjects() {
+    const subquery = this.db
+      .selectFrom('activity')
+      .select(['project_id', (eb) => eb.fn.max('count').as('max_count')])
+      .groupBy('project_id')
+      .as('t2')
+
+    const rows = await this.db
+      .selectFrom('activity as t1')
+      .innerJoin(subquery, (join) =>
+        join
+          .onRef('t1.project_id', '=', 't2.project_id')
+          .onRef('t1.count', '=', 't2.max_count'),
+      )
+      .select(['t1.project_id', 't1.count as max_count', 't1.timestamp'])
+      .execute()
+
+    return Object.fromEntries(
+      rows.map((row) => [
+        row.project_id,
+        {
+          count: Number(row.max_count),
+          timestamp: UnixTime.fromDate(row.timestamp),
+        },
+      ]),
+    )
+  }
+
   async getSummedCountForProjectsAndTimeRange(
     projectIds: ProjectId[],
     timeRange: [UnixTime, UnixTime],

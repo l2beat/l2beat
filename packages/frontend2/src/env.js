@@ -23,6 +23,7 @@ export const env = createEnv({
       .default('development'),
     VERCEL_GIT_COMMIT_SHA: z.string().default('local'),
     VERCEL_URL: z.string().optional(),
+    EXCLUDED_ACTIVITY_PROJECTS: z.string().array().optional(),
   },
 
   /**
@@ -49,6 +50,7 @@ export const env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     VERCEL_GIT_COMMIT_SHA: process.env.VERCEL_GIT_COMMIT_SHA,
     VERCEL_URL: process.env.VERCEL_URL,
+    EXCLUDED_ACTIVITY_PROJECTS: process.env.EXCLUDED_ACTIVITY_PROJECTS,
     // Client
     NEXT_PUBLIC_FEATURE_FLAG_ASSET_RISKS:
       process.env.NEXT_PUBLIC_FEATURE_FLAG_ASSET_RISKS,
