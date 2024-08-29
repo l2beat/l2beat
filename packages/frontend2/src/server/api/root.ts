@@ -1,6 +1,7 @@
 import { createCallerFactory, router } from '~/server/api/trpc'
 import { costsRouter } from './routers/costs'
 import { tvlRouter } from './routers/tvl'
+import { activityRouter } from './routers/scaling/activity'
 
 /**
  * This is the primary router for your server.
@@ -10,6 +11,7 @@ import { tvlRouter } from './routers/tvl'
 export const appRouter = router({
   tvl: tvlRouter,
   costs: costsRouter,
+  activity: activityRouter,
 })
 
 // export type definition of API

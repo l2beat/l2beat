@@ -21,7 +21,7 @@ export function ProjectTvlChart({ projectId, milestones }: Props) {
 
   const [timeRange, setTimeRange] = useState<TvlChartRange>('7d')
 
-  const { data } = api.tvl.chart.useQuery({
+  const { data, isLoading } = api.tvl.chart.useQuery({
     range: timeRange,
     filter: { type: 'projects', projectIds: [projectId] },
   })
@@ -36,6 +36,7 @@ export function ProjectTvlChart({ projectId, milestones }: Props) {
       formatYAxisLabel={formatYAxisLabel}
       range={chartRange}
       useLogScale={scale === 'log'}
+      isLoading={isLoading}
       renderHoverContents={(data) => <TvlChartHover data={data} />}
     >
       <section className="flex flex-col gap-4">

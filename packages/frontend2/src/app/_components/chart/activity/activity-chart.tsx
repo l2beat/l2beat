@@ -34,7 +34,7 @@ export function ActivityChart({ milestones, entries }: Props) {
     true,
   )
 
-  const { data, isLoading } = api.scaling.activity.chart.useQuery({
+  const { data, isLoading } = api.activity.chart.useQuery({
     range: timeRange,
     filter: filters.isEmpty
       ? { type: 'all' }
