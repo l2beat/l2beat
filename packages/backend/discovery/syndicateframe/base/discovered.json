@@ -3,7 +3,7 @@
   "chain": "base",
   "blockNumber": 18674800,
   "configHash": "0xf98611165f5abbbf65d8da4632824d2cc0fcc293c72b7d86c7db088cb1fbd810",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -52,6 +52,7 @@
       "values": {
         "$admin": "0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E",
         "$implementation": "0x6042DE5a64709d8d4bBb227891AD886ECff49c6d",
+        "$upgradeCount": 1,
         "CHALLENGER": "0xdC545dDC657A1E2EDA8F6cBBE382927E3C9aA6E4",
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
@@ -84,6 +85,7 @@
       "values": {
         "$admin": "0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E",
         "$implementation": "0x44Ce95273E69246fe258b02a68E3a6FfCA66fdf2",
+        "$upgradeCount": 1,
         "GUARDIAN": "0xdC545dDC657A1E2EDA8F6cBBE382927E3C9aA6E4",
         "L2_ORACLE": "0x520D972B4A7C1CE4d5e01bCd4349a93a8AeaEAC5",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
@@ -166,6 +168,7 @@
       "values": {
         "$admin": "0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E",
         "$implementation": "0x5581A42BAF9bd77e1c56aFB2c74dEF20dfe26f9A",
+        "$upgradeCount": 1,
         "batcherHash": "0x63d02F40A14c54283D5Dc3451d3Ed4DC134833e5",
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
@@ -253,6 +256,7 @@
       "values": {
         "$admin": "0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E",
         "$implementation": "0xFF505c0Eb62C37901F53cCBf2973AAe75D26d0AE",
+        "$upgradeCount": 0,
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x0ED44be59Ea62a9960CB97f8aC54088304D05791",
         "MESSENGER": "0x0ED44be59Ea62a9960CB97f8aC54088304D05791",
@@ -535,7 +539,7 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
-    "opstack/ProxyAdmin": "0x33b1f6469b9b5eb1761afba4083878f499aa61a2bd78de0d0c7731f5e13640e0"
+    "opstack/ProxyAdmin": "0x3731e451e123b81ff581a6795a991123ea030fa0841313746edc4ee05e01f0a7"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

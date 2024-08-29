@@ -160,6 +160,7 @@ export const xai: Layer3 = orbitStackL3({
       link: 'https://x.com/XAI_GAMES/status/1744815749410242568',
       date: '2024-01-09T00:00:00Z',
       description: 'XAI launches on Arbitrum One.',
+      type: 'general',
     },
   ],
 })

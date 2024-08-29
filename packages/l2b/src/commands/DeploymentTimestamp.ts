@@ -1,4 +1,4 @@
-import { command, positional } from 'cmd-ts'
+import { command, option, positional } from 'cmd-ts'
 import { providers } from 'ethers'
 import { getContractCreationTimestamp } from '../implementations/rpcDeploymentFetch'
 import { EthereumAddressValue, HttpUrl } from './types'
@@ -9,7 +9,14 @@ export const DeploymentTimestamp = command({
   version: '1.0.0',
   args: {
     address: positional({ type: EthereumAddressValue, displayName: 'address' }),
-    rpcUrl: positional({ type: HttpUrl, displayName: 'rpcUrl' }),
+    rpcUrl: option({
+      type: HttpUrl,
+      env: 'L2B_RPC_URL',
+      long: 'rpc-url',
+      short: 'u',
+      defaultValue: () => 'https://ethereum-rpc.publicnode.com',
+      defaultValueIsSerializable: true,
+    }),
   },
   handler: async (args) => {
     const provider = new providers.StaticJsonRpcProvider(args.rpcUrl)

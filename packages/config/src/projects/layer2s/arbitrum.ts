@@ -354,7 +354,7 @@ export const arbitrum: Layer2 = orbitStackL2({
       l2Discovery.getContractDetails('TreasuryTimelock', {
         description: `Delays treasury proposals from the TreasuryGovernor by ${formatSeconds(
           treasuryTimelockDelay,
-        )}.`,
+        )}. Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts.`,
         ...l2Upgradability,
       }),
       l2Discovery.getContractDetails('L2UpgradeExecutor', {
@@ -548,12 +548,14 @@ export const arbitrum: Layer2 = orbitStackL2({
       link: 'https://twitter.com/arbitrum/status/1768306107318178061',
       date: '2024-03-14T00:00:00Z',
       description: 'Arbitrum starts publishing data to blobs.',
+      type: 'general',
     },
     {
       name: 'ARB token airdrop',
       link: 'https://twitter.com/arbitrum/status/1638888588443111425',
       date: '2023-03-23T00:00:00Z',
       description: 'ARB token launched as a governance token for Arbitrum DAO.',
+      type: 'general',
     },
     {
       name: 'Nitro Upgrade',
@@ -561,6 +563,7 @@ export const arbitrum: Layer2 = orbitStackL2({
       date: '2022-08-31T00:00:00Z',
       description:
         'Upgrade is live, introducing new architecture, increased throughput and lower fees.',
+      type: 'general',
     },
     {
       name: 'Odyssey paused',
@@ -568,17 +571,20 @@ export const arbitrum: Layer2 = orbitStackL2({
       date: '2022-06-29T00:00:00Z',
       description:
         'Due of the heavy load being put on the chain, Odyssey program got paused.',
+      type: 'general',
     },
     {
       name: 'Odyssey started',
       link: 'https://twitter.com/arbitrum/status/1539292126105706496',
       date: '2022-06-21T00:00:00Z',
       description: 'Incentives program to onboard new users has started.',
+      type: 'general',
     },
     {
       ...MILESTONES.MAINNET_OPEN,
       link: 'https://twitter.com/arbitrum/status/1432817424752128008',
       date: '2021-08-31T00:00:00Z',
+      type: 'general',
     },
   ],
   knowledgeNuggets: [

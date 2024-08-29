@@ -27,8 +27,11 @@ export async function detectArbitrumProxy(
   return {
     type: 'Arbitrum proxy',
     values: {
-      $admin: admin,
-      $implementation: [adminImplementation, userImplementation],
+      $admin: admin.toString(),
+      $implementation: [
+        adminImplementation.toString(),
+        userImplementation.toString(),
+      ],
     },
   }
 }

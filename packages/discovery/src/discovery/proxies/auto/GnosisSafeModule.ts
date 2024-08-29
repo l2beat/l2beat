@@ -48,13 +48,13 @@ export async function detectGnosisSafeZodiacModule(
     values: {
       // TODO: (sz-piotr) is this correct?
       $immutable: false,
-      ZodiacModule_modules: modules ?? [],
+      ZodiacModule_modules: (modules ?? []).map((m) => m.toString()),
       // TODO: (sz-piotr) ignore relative
-      ZodiacModule_avatar: avatar,
+      ZodiacModule_avatar: avatar.toString(),
       // TODO: (sz-piotr) ignore relative
-      ZodiacModule_target: target,
+      ZodiacModule_target: target.toString(),
       // TODO: (sz-piotr) ignore relative
-      ZodiacModule_guard: guard,
+      ZodiacModule_guard: guard.toString(),
     },
   }
 }

@@ -182,6 +182,7 @@ export const tanx: Layer2 = {
       date: '2023-04-27T00:00:00.00Z',
       link: 'https://tanx.fi/',
       description: 'tanX is live on mainnet.',
+      type: 'general',
     },
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],

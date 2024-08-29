@@ -2,7 +2,7 @@ import { ChartSectionProps } from './ChartSection'
 import { ContractsSectionProps } from './ContractsSection/ContractsSection'
 import { DetailedDescriptionSectionProps } from './DetailedDescriptionSection'
 import { KnowledgeNuggetsProps } from './KnowledgeNuggetsSection/KnowledgeNuggetsSection'
-import { MilestonesSectionProps } from './MilestonesSection/MilestonesSection'
+import { MilestonesAndIncidentsSectionProps } from './MilestonesAndIncidentsSection/MilestonesAndIncidentsSection'
 import { PermissionsSectionProps } from './PermissionsSection'
 import { RiskAnalysisSectionProps } from './RiskAnalysisSection'
 import { RiskSectionProps } from './RiskSection'
@@ -24,9 +24,9 @@ export interface ProjectDetailsDetailedDescriptionSection {
   props: ProjectDetailsProps<DetailedDescriptionSectionProps>
 }
 
-export interface ProjectDetailsMilestonesSection {
-  type: 'MilestonesSection'
-  props: ProjectDetailsProps<MilestonesSectionProps>
+export interface ProjectDetailsMilestonesAndIncidentsSection {
+  type: 'MilestonesAndIncidentsSection'
+  props: ProjectDetailsProps<MilestonesAndIncidentsSectionProps>
 }
 
 export interface ProjectDetailsKnowledgeNuggetsSection {
@@ -87,7 +87,7 @@ export interface ProjectDetailsUpcomingDisclaimer {
 export type ProjectDetailsSection = { excludeFromNavigation?: boolean } & (
   | ProjectDetailsChartSection
   | ProjectDetailsDetailedDescriptionSection
-  | ProjectDetailsMilestonesSection
+  | ProjectDetailsMilestonesAndIncidentsSection
   | ProjectDetailsKnowledgeNuggetsSection
   | ProjectDetailsRiskAnalysisSection
   | ProjectDetailsRiskSection

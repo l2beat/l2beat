@@ -80,7 +80,8 @@
     },
     {
       "symbol": "ARB",
-      "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1"
+      "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
+      "excludeFromTotal": true
     },
     {
       "symbol": "EKUBO",
@@ -168,6 +169,11 @@
     {
       "symbol": "AXS",
       "address": "0xBB0E17EF65F82Ab018d8EDd776e8DD940327B28b"
+    },
+    {
+      "symbol": "AZERO",
+      "address": "0xdD0ae774F7E300CdAA4EA371cD55169665Ee6AFe",
+      "coingeckoId": "aleph-zero"
     },
     {
       "symbol": "BabyDoge",
@@ -2711,6 +2717,12 @@
         "bridge": "Layer Zero",
         "slug": "stargate"
       }
+    },
+    {
+      "symbol": "CLIP",
+      "address": "0x4ea77a86d6e70ffe8bb947fc86d68a7f086f198a",
+      "source": "native",
+      "supply": "circulatingSupply"
     }
   ],
   "zkfair": [

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20138492,
   "configHash": "0xa2d3b73f464bf088bb88deb4941464593bad0f0eb4cf4151a94504c3d2a3ec56",
-  "version": 11,
+  "version": 13,
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -46,6 +46,7 @@
       "values": {
         "$admin": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
         "$implementation": "0x4906b8E690EB1E09Fec924422452d1105D59d042",
+        "$upgradeCount": 5,
         "baseGas": 21000,
         "getExecutorManager": "0xbd761D917fB77381B4398Bda89C7F0d9A2BD1399",
         "liquidityProviders": "0xebaB24F13de55789eC1F3fFe99A285754e15F7b9",
@@ -84,6 +85,7 @@
       "values": {
         "$admin": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
         "$implementation": "0x79E559AC5b499A5676e28f0074e29763F6c2A27e",
+        "$upgradeCount": 1,
         "owner": "0xD76b82204BE75Ab9610B04CF27c4F4a34291D5E6",
         "paused": false
       }
@@ -103,6 +105,7 @@
       "values": {
         "$admin": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
         "$implementation": "0x38391eA26F9EeE3ab81DE3C7eE9e168da5149103",
+        "$upgradeCount": 3,
         "BASE_DIVISOR": "1000000000000000000",
         "owner": "0xD76b82204BE75Ab9610B04CF27c4F4a34291D5E6",
         "paused": false

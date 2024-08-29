@@ -4,17 +4,45 @@ import {
   type StageConfig,
   layer2s,
 } from '@l2beat/config'
+import { ProjectId } from '@l2beat/shared-pure'
+import { type SetOptional } from 'type-fest'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
 
-export function getCommonScalingEntry({
-  project,
-  isVerified,
-  hasImplementationChanged,
-}: {
-  project: Layer2 | Layer3
-  isVerified: boolean
-  hasImplementationChanged: boolean
-}) {
+export function getCommonScalingEntry(
+  params:
+    | {
+        project: Layer2 | Layer3
+        isVerified: boolean
+        hasImplementationChanged: boolean
+      }
+    | { project: 'ethereum' },
+) {
+  if (params.project === 'ethereum') {
+    return {
+      id: ProjectId.ETHEREUM,
+      name: 'Ethereum',
+      shortName: undefined,
+      slug: 'ethereum',
+      type: undefined,
+      category: undefined,
+      provider: undefined,
+      purposes: [],
+      warning: undefined,
+      redWarning: undefined,
+      isVerified: true,
+      showProjectUnderReview: false,
+      isArchived: false,
+      hostChain: undefined,
+      href: undefined,
+      hasImplementationChanged: false,
+      isUpcoming: false,
+      isUnderReview: false,
+      stage: { stage: 'NotApplicable' as const },
+    }
+  }
+
+  const { project, isVerified, hasImplementationChanged } = params
+
   const common = {
     id: project.id,
     name: project.display.name,
@@ -55,4 +83,8 @@ export function getCommonScalingEntry({
   }
 }
 
-export type CommonScalingEntry = ReturnType<typeof getCommonScalingEntry>
+// Optional type and category is needed to support Ethereum L1 entry
+export type CommonScalingEntry = SetOptional<
+  ReturnType<typeof getCommonScalingEntry>,
+  'type' | 'category'
+>

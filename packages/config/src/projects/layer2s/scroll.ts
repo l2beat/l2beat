@@ -212,6 +212,7 @@ export const scroll: Layer2 = {
           functionSignature:
             'function finalizeBatchWithProof(bytes _batchHeader,bytes32 _prevStateRoot,bytes32 _postStateRoot,bytes32 _withdrawRoot,bytes _aggrProof)',
           sinceTimestamp: new UnixTime(1696782323),
+          untilTimestamp: new UnixTime(1724227415),
         },
       },
       {
@@ -238,6 +239,22 @@ export const scroll: Layer2 = {
       },
       {
         uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xa13BAF47339d63B743e7Da8741db5456DAc1E556',
+          ),
+          selector: '0x4f099e3d',
+          functionSignature:
+            'function finalizeBundleWithProof(bytes,bytes32,bytes32,bytes)',
+          sinceTimestamp: new UnixTime(1724227415),
+        },
+      },
+      {
+        uses: [
           { type: 'liveness', subtype: 'batchSubmissions' },
           { type: 'l2costs', subtype: 'batchSubmissions' },
         ],
@@ -250,6 +267,23 @@ export const scroll: Layer2 = {
           functionSignature:
             'function commitBatch(uint8 _version,bytes _parentBatchHeader,bytes[] _chunks,bytes _skippedL1MessageBitmap)',
           sinceTimestamp: new UnixTime(1696782323),
+          untilTimestamp: new UnixTime(1724227247),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xa13BAF47339d63B743e7Da8741db5456DAc1E556',
+          ),
+          selector: '0x86b053a9',
+          functionSignature:
+            'function commitBatchWithBlobProof(uint8,bytes,bytes[],bytes,bytes)',
+          sinceTimestamp: new UnixTime(1724227415),
         },
       },
     ],
@@ -279,7 +313,7 @@ export const scroll: Layer2 = {
         {
           contract: 'ScrollChain',
           references: [
-            'https://etherscan.io/address/0x4F250B05262240C787a1eE222687C6eC395C628A#code',
+            'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
           ],
         },
       ],
@@ -290,7 +324,7 @@ export const scroll: Layer2 = {
         {
           contract: 'ScrollChain',
           references: [
-            'https://etherscan.io/address/0x4F250B05262240C787a1eE222687C6eC395C628A#code',
+            'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
           ],
         },
       ],
@@ -312,7 +346,7 @@ export const scroll: Layer2 = {
         {
           contract: 'L1MessageQueue',
           references: [
-            'https://etherscan.io/address/0xeBaed7A81c298B24EE6d59c22698A951dc448E01#code',
+            'https://etherscan.io/address/0x137CC585F607EDeBBc3CA6360AffCFeab507B374#code',
           ],
         },
         {
@@ -329,7 +363,7 @@ export const scroll: Layer2 = {
         {
           contract: 'ScrollChain',
           references: [
-            'https://etherscan.io/address/0x4F250B05262240C787a1eE222687C6eC395C628A#code',
+            'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
           ],
         },
       ],
@@ -345,8 +379,8 @@ export const scroll: Layer2 = {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'ScrollChain.sol - Etherscan source code, verifyAggregateProof() and verifyAggregateProof4844() calls',
-          href: 'https://etherscan.io/address/0x4F250B05262240C787a1eE222687C6eC395C628A#code',
+          text: 'ScrollChain.sol - Etherscan source code, verifyAggregateProof4844() and verifyBundleProof() calls',
+          href: 'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
         },
       ],
     },
@@ -354,8 +388,8 @@ export const scroll: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
       references: [
         {
-          text: 'ScrollChain.sol - Etherscan source, code commitBatch() function',
-          href: 'https://etherscan.io/address/0x4F250B05262240C787a1eE222687C6eC395C628A#code',
+          text: 'ScrollChain.sol - Etherscan source code commitBatch() and commitBatchWithBlobProof() functions',
+          href: 'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
         },
       ],
     },
@@ -363,8 +397,8 @@ export const scroll: Layer2 = {
       ...OPERATOR.CENTRALIZED_OPERATOR,
       references: [
         {
-          text: 'ScrollChain.sol - Etherscan source code, finalizeBatchWithProof() function modifier',
-          href: 'https://etherscan.io/address/0x4F250B05262240C787a1eE222687C6eC395C628A#code',
+          text: 'ScrollChain.sol - Etherscan source code, finalizeBundleWithProof() function modifier',
+          href: 'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
         },
       ],
     },
@@ -605,6 +639,13 @@ export const scroll: Layer2 = {
         description:
           'Plonk verifier used to verify ZK proofs using blobs for DA.',
       }),
+      discovery.getContractDetails('ZkEvmVerifierV2', {
+        description:
+          'Verifier proving bundles (group of batches), used to prepare data for the PlonkVerifierV3.',
+      }),
+      discovery.getContractDetails('PlonkVerifierV3', {
+        description: 'Plonk verifier used to verify ZK proofs for bundles.',
+      }),
       discovery.getContractDetails('L1ETHGateway', {
         description: 'Contract used to bridge ETH from L1 to L2.',
         ...upgradesScrollMultisig,
@@ -704,11 +745,20 @@ export const scroll: Layer2 = {
   ],
   milestones: [
     {
+      name: 'Darwin upgrade',
+      link: 'https://scroll.io/blog/proof-recursion-scrolls-darwin-upgrade',
+      date: '2024-08-21T00:00:00.00Z',
+      description:
+        'Introduces a reduction in gas fees through bundling multiple batches into a single validity proof.',
+      type: 'general',
+    },
+    {
       name: 'Curie upgrade',
       link: 'https://scroll.io/blog/compressing-the-gas-scrolls-curie-upgrade',
       date: '2024-07-03T00:00:00.00Z',
       description:
         'Introduces data compression, new opcodes, dynamic block time, and new transaction types.',
+      type: 'general',
     },
     {
       name: 'Bernoulli upgrade',
@@ -716,18 +766,21 @@ export const scroll: Layer2 = {
       date: '2024-04-29T00:00:00.00Z',
       description:
         'Introduces EIP-4844 data blobs for L1 data availability, and the SHA2-256 precompile on L2.',
+      type: 'general',
     },
     {
       name: 'Scroll official launch',
       link: 'https://x.com/Scroll_ZKP/status/1714286874020528554',
       date: '2023-10-17T00:00:00.00Z',
       description: 'Scroll announces its official launch.',
+      type: 'general',
     },
     {
       name: 'Scroll Alpha testnet launch',
       link: 'https://scroll.io/blog/alphaTestnet',
       date: '2023-02-27T00:00:00.00Z',
       description: 'Scroll launches its Alpha testnet on Goerli.',
+      type: 'general',
     },
   ],
 }

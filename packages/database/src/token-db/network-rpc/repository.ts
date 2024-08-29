@@ -7,7 +7,7 @@ export class NetworkRpcRepository extends BaseRepository {
 
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
-      await this.db.insertInto('public.NetworkRpc').values(batch).execute()
+      await this.db.insertInto('NetworkRpc').values(batch).execute()
     })
     return records.length
   }

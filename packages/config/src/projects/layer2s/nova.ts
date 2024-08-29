@@ -256,6 +256,10 @@ export const nova: Layer2 = orbitStackL2({
         description:
           'This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.',
       }),
+      l2Discovery.getContractDetails('ArbChildToParentRewardRouter', {
+        description:
+          'Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts. Forwards the ETH via L1 to the Arbitrum treasury on Arbitrum One.',
+      }),
       l2Discovery.getContractDetails('L2ArbitrumToken', {
         description:
           'The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%.',
@@ -348,6 +352,7 @@ export const nova: Layer2 = orbitStackL2({
       ...MILESTONES.MAINNET_OPEN,
       date: '2022-08-09T00:00:00Z',
       link: 'https://medium.com/offchainlabs/its-time-for-a-new-dawn-nova-is-open-to-the-public-a081df1e4ad2',
+      type: 'general',
     },
   ],
   knowledgeNuggets: [

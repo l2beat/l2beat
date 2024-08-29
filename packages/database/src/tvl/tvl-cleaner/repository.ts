@@ -13,7 +13,7 @@ export class TvlCleanerRepository extends BaseRepository {
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
       await this.db
-        .insertInto('public.tvl_cleaner')
+        .insertInto('tvl_cleaner')
         .values(batch)
         .onConflict((cb) =>
           cb.column('repository_name').doUpdateSet((eb) => ({
@@ -32,7 +32,7 @@ export class TvlCleanerRepository extends BaseRepository {
     repositoryName: string,
   ): Promise<TvlCleanerRecord | undefined> {
     const row = await this.db
-      .selectFrom('public.tvl_cleaner')
+      .selectFrom('tvl_cleaner')
       .select(selectTvlCleaner)
       .where('repository_name', '=', repositoryName)
       .limit(1)
@@ -41,9 +41,7 @@ export class TvlCleanerRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
-      .deleteFrom('public.tvl_cleaner')
-      .executeTakeFirst()
+    const result = await this.db.deleteFrom('tvl_cleaner').executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 }

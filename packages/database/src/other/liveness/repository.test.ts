@@ -24,7 +24,7 @@ describeDatabase(LivenessRepository.name, (db) => {
     {
       timestamp: START.add(-2, 'hours'),
       blockNumber: 12340,
-      txHash: '0x1234567890abcdef',
+      txHash: '0xabcdef1234567890',
       configurationId: txIdA,
     },
     {
@@ -160,7 +160,7 @@ describeDatabase(LivenessRepository.name, (db) => {
         {
           timestamp: START,
           blockNumber: 12345,
-          txHash: '0x1234567890abcdef',
+          txHash: '0xabcdef1234567891',
           configurationId: txIdA,
         },
         {

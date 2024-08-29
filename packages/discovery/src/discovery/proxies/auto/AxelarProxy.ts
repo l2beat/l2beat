@@ -24,7 +24,7 @@ export async function detectAxelarProxy(
   return {
     type: 'Axelar proxy',
     values: {
-      $implementation: implementation,
+      $implementation: implementation.toString(),
     },
   }
 }

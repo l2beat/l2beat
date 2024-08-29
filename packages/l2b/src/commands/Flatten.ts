@@ -23,7 +23,13 @@ export const Flatten = command({
   version: '1.0.0',
   args: {
     address: positional({ type: EthereumAddressValue, displayName: 'address' }),
-    rpcUrl: positional({ type: HttpUrl, displayName: 'rpcUrl' }),
+    explorerUrl: option({
+      type: HttpUrl,
+      long: 'explorer-url',
+      short: 'u',
+      defaultValue: () => 'https://api.etherscan.io/api',
+      defaultValueIsSerializable: true,
+    }),
     type: option({
       type: oneOf(['etherscan', 'blockscout']),
       long: 'etherscan-type',
@@ -32,6 +38,7 @@ export const Flatten = command({
     }),
     apiKey: option({
       type: string,
+      env: 'L2B_ETHERSCAN_API_KEY',
       long: 'api-key',
       short: 'k',
       defaultValue: () => 'YourApiKeyToken',
@@ -53,7 +60,7 @@ export const Flatten = command({
     const httpClient = new HttpClient()
     const client = getExplorerClient(httpClient, {
       type: args.type as ExplorerConfig['type'],
-      url: args.rpcUrl.toString(),
+      url: args.explorerUrl.toString(),
       apiKey: args.apiKey,
     })
 

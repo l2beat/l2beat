@@ -23,7 +23,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
   const [scale, setScale] = useState('lin')
   const [range, setRange] = useState<CostsTimeRange>('7d')
   const [unit, setUnit] = useState<CostsUnit>('usd')
-  const { data: chart } = api.costs.chart.useQuery({
+  const { data: chart, isLoading } = api.costs.chart.useQuery({
     range,
     filter: { type: 'projects', projectIds: [projectId] },
   })
@@ -43,6 +43,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
         formatYAxisLabel={formatYAxisLabel}
         range={chartRange}
         useLogScale={scale === 'log'}
+        isLoading={isLoading}
         renderHoverContents={(data) => (
           <CostsChartHover data={data} unit={unit} />
         )}

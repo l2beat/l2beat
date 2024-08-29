@@ -4,7 +4,7 @@
   "tasks": {
     "test": {
       "env": ["TEST_DB_URL", "CI"],
-      "dependsOn": ["^build", "db:generate", "@l2beat/database-legacy#test"],
+      "dependsOn": ["^build", "db:generate-types"],
       "inputs": ["**/*.ts", "**/*.test.ts", "**/*.json", "**/*.jsonc"]
     }
   }

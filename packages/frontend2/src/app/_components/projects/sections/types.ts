@@ -3,7 +3,7 @@ import { type ContractsSectionProps } from './contracts/contracts-section'
 import { type DetailedDescriptionSectionProps } from './detailed-description-section'
 import { type KnowledgeNuggetsSectionProps } from './knowledge-nuggets-section'
 import { type MarkdownSectionProps } from './markdown-section'
-import { type MilestonesSectionProps } from './milestones-section'
+import { type MilestonesAndIncidentsSectionProps } from './milestones-and-incidents-section'
 import { type PermissionsSectionProps } from './permissions/permissions-section'
 import { type ExtendedProjectSectionProps } from './project-section'
 import { type RiskAnalysisSectionProps } from './risk-analysis-section'
@@ -18,7 +18,7 @@ export type ProjectSectionId =
   | 'activity'
   | 'onchain-costs'
   | 'detailed-description'
-  | 'milestones'
+  | 'milestones-and-incidents'
   | 'risk-summary'
   | 'risk-analysis'
   | 'stage'
@@ -52,9 +52,9 @@ export interface ProjectDetailsDetailedDescriptionSection {
   props: ProjectDetailsProps<DetailedDescriptionSectionProps>
 }
 
-export interface ProjectDetailsMilestonesSection {
-  type: 'MilestonesSection'
-  props: ProjectDetailsProps<MilestonesSectionProps>
+export interface ProjectDetailsMilestonesAndIncidentsSection {
+  type: 'MilestonesAndIncidentsSection'
+  props: ProjectDetailsProps<MilestonesAndIncidentsSectionProps>
 }
 
 export interface ProjectDetailsRiskSummarySection {
@@ -117,7 +117,7 @@ export type ProjectDetailsSection = {
 } & (
   | ProjectDetailsChartSection
   | ProjectDetailsDetailedDescriptionSection
-  | ProjectDetailsMilestonesSection
+  | ProjectDetailsMilestonesAndIncidentsSection
   | ProjectDetailsRiskSummarySection
   | ProjectDetailsRiskAnalysisSection
   | ProjectDetailsStageSection

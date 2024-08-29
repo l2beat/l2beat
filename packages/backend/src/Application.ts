@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
 
 import { createDatabase } from '@l2beat/database'
-import { LegacyDatabase } from '@l2beat/database-legacy'
 import { ApiServer } from './api/ApiServer'
 import { Config } from './config'
 import { ApplicationModule } from './modules/ApplicationModule'
@@ -27,8 +26,6 @@ export class Application {
   start: () => Promise<void>
 
   constructor(config: Config, logger: Logger) {
-    const database = new LegacyDatabase(config.database, logger, config.name)
-
     const kyselyDatabase = createDatabase({
       ...config.database.connection,
       ...config.database.connectionPoolSize,
@@ -42,7 +39,7 @@ export class Application {
     )
 
     const http = new HttpClient()
-    const peripherals = new Peripherals(database, kyselyDatabase, http, logger)
+    const peripherals = new Peripherals(kyselyDatabase, http, logger)
 
     const trackedTxsModule = createTrackedTxsModule(
       config,
@@ -99,7 +96,6 @@ export class Application {
       }
 
       await apiServer.start()
-      await database.start()
       for (const module of modules) {
         await module?.start?.()
       }

@@ -71,11 +71,11 @@ export async function getBridgeProjectDetails(
 
   if (bridge.milestones && !isEmpty(bridge.milestones)) {
     items.push({
-      type: 'MilestonesSection',
+      type: 'MilestonesAndIncidentsSection',
       props: {
         milestones: bridge.milestones,
-        id: 'milestones',
-        title: 'Milestones',
+        id: 'milestones-and-incidents',
+        title: 'Milestones & Incidents',
       },
     })
   }

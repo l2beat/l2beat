@@ -154,6 +154,7 @@ export const kinto: Layer2 = orbitStackL2({
     },
   ],
   nonTemplateEscrows: [
+    // source for socket superchain vaults https://github.com/KintoXYZ/socket-plugs/blob/feat/autodeploy/deployments/superbridge/prod_kinto_mainnet_addresses.json
     discovery.getEscrowDetails({
       address: EthereumAddress('0x0f1b7bd7762662b23486320aa91f30312184f70c'),
       tokens: '*',
@@ -470,6 +471,28 @@ export const kinto: Layer2 = orbitStackL2({
       tokens: ['SolvBTC'],
       chain: 'arbitrum',
     },
+    {
+      address: EthereumAddress('0x25f0D71Da51A77Ca231484eBbAD1f588A0230ef2'),
+      sinceTimestamp: new UnixTime(1721253827),
+      source: 'external',
+      bridge: {
+        name: 'Socket bridge',
+        slug: 'socket',
+      },
+      tokens: ['PAXG'],
+      chain: 'ethereum',
+    },
+    {
+      address: EthereumAddress('0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF'),
+      sinceTimestamp: new UnixTime(1721253935),
+      source: 'external',
+      bridge: {
+        name: 'Socket bridge',
+        slug: 'socket',
+      },
+      tokens: ['XAUt'],
+      chain: 'ethereum',
+    },
   ],
   isNodeAvailable: false,
   bridge: discovery.getContract('Bridge'),
@@ -505,12 +528,14 @@ export const kinto: Layer2 = orbitStackL2({
       date: '2024-05-22T00:00:00Z',
       description:
         'Engen mining is completed and locked funds are bridged to the Kinto L2.',
+      type: 'general',
     },
     {
       name: 'Kinto Mainnet Genesis',
       link: 'https://medium.com/mamori-finance/%EF%B8%8F-kintos-launch-the-set-up-7eddfbb4bc38',
       date: '2023-12-15T00:00:00Z',
       description: 'Kinto mainnet is launched. Deposits by users are disabled.',
+      type: 'general',
     },
   ],
 })

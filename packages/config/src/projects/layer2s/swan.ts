@@ -52,6 +52,7 @@ export const swan: Layer2 = opStackL2({
       link: 'https://swanchain.medium.com/announcement-swan-chain-mainnet-is-now-live-e34feadec170',
       date: '2024-07-02T00:00:00Z',
       description: 'Swan Mainnet launches.',
+      type: 'general',
     },
   ],
 })

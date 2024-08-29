@@ -18,21 +18,22 @@ export const lyra: Layer2 = opStackL2({
   associatedTokens: ['LYRA'],
   discovery,
   display: {
-    name: 'Lyra',
-    slug: 'lyra',
+    name: 'Derive',
+    slug: 'derive',
     architectureImage: 'lyra',
     description:
-      'Lyra Chain is an L2 scaling solution built using OP Stack specially for Lyra protocol - a settlement protocol for spot, perpetuals, and options trading.',
+      'Derive Chain is an L2 scaling solution built using OP Stack specially for the Derive protocol - a settlement protocol for spot, perpetuals, and options trading.',
     purposes: ['Exchange'],
     links: {
-      websites: ['https://lyra.finance/'],
-      apps: ['https://lyra.finance/portfolio'],
-      documentation: ['https://docs.lyra.finance/docs/introduction'],
+      websites: ['https://derive.xyz/'],
+      apps: ['https://derive.xyz/options/eth'],
+      documentation: ['https://docs.lyra.finance/'],
       explorers: ['https://explorer.lyra.finance/'],
       repositories: ['https://github.com/lyra-finance/v2-core'],
       socialMedia: [
-        'https://twitter.com/lyrafinance',
-        'https://discord.gg/Lyra',
+        'https://x.com/derivexyz',
+        'https://warpcast.com/lyra.eth',
+        'https://discord.gg/Derive',
       ],
     },
     activityDataSource: 'Blockchain RPC',
@@ -49,15 +50,24 @@ export const lyra: Layer2 = opStackL2({
   isNodeAvailable: 'UnderReview',
   milestones: [
     {
+      name: 'Derive rebrand',
+      link: 'https://x.com/derivexyz/status/1828607400116658227',
+      date: '2024-08-28T00:00:00Z',
+      description: 'Lyra is now called Derive.',
+      type: 'general',
+    },
+    {
       name: 'Lyra V2 live on mainnet',
       link: 'https://x.com/lyrafinance/status/1735516929341980748',
       date: '2023-12-15T00:00:00Z',
       description: 'Lyra V2 launches on Mainnet.',
+      type: 'general',
     },
     {
       name: 'Lyra switches to Celestia',
       link: 'https://x.com/lyrafinance/status/1750235026136965260',
       date: '2024-01-16T00:00:00.00Z',
+      type: 'general',
     },
   ],
   nonTemplatePermissions: [
@@ -71,6 +81,29 @@ export const lyra: Layer2 = opStackL2({
     ),
   ],
   nonTemplateEscrows: [
+    // manually added with `yarn socket-convert` script and latest json: https://github.com/SocketDotTech/socket-plugs/blob/295ef847031ae5260361d67a5b15b9a44fe033f7/deployments/superbridge/prod_lyra_addresses.json
+    {
+      address: EthereumAddress('0x7E1d17b580dD4F89037DB331430eAEe8B8e50c91'),
+      sinceTimestamp: new UnixTime(1724140259),
+      source: 'external',
+      bridge: {
+        name: 'Socket bridge',
+        slug: 'socket',
+      },
+      tokens: ['DAI'],
+      chain: 'ethereum',
+    },
+    {
+      address: EthereumAddress('0x613e87BE1cd75dEBC5e6e56a2AF2fED84162C142'),
+      sinceTimestamp: new UnixTime(1724140379),
+      source: 'external',
+      bridge: {
+        name: 'Socket bridge',
+        slug: 'socket',
+      },
+      tokens: ['sDAI'],
+      chain: 'ethereum',
+    },
     // socket superbridge contracts from https://github.com/SocketDotTech/socket-plugs/blob/main/deployments/superbridge/prod_lyra_addresses.json
     {
       address: EthereumAddress('0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d'),

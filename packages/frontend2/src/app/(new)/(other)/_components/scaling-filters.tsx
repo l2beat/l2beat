@@ -1,3 +1,5 @@
+'use client'
+
 import { uniq } from 'lodash'
 import { TableFilter } from '~/app/_components/table/filters/table-filter'
 import { type CommonScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'

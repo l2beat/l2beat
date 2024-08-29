@@ -4,7 +4,7 @@
   "name": "eigenda",
   "initialAddresses": ["0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"],
   "names": {
-    "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0": "eigenDAServiceManager",
+    "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0": "EigenDAServiceManager",
     "0x8247EF5705d3345516286B72bFE6D690197C2E99": "eigenDAProxyAdmin",
     "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656": "RegistryCoordinator",
     "0x343907185b71aDF0eBa9567538314396aa985442": "EigenLayerBeaconOracle",
@@ -24,7 +24,7 @@
     "EigenLayerBeaconOracle": "shared-eigenlayer"
   },
   "overrides": {
-    "eigenDAServiceManager": {
+    "EigenDAServiceManager": {
       "ignoreRelatives": ["getRestakeableStrategies"], // strategies are already tracked in eigenLayer
       "ignoreInWatchMode": ["batchId", "taskNumber"],
       "fields": {
@@ -42,6 +42,17 @@
           "description": "The minimum percentage of stake that must attest in order to consider the blob dispersal successful. First bytes is hex value for the first quorum, second byte is for the second quorum.",
           "severity": "MEDIUM",
           "type": "RISK_PARAMETER"
+        },
+        "batchConfirmers": {
+          "description": "The list of addresses authorized to confirm the availability of blobs batches to the DA bridge.",
+          "severity": "MEDIUM",
+          "type": "RISK_PARAMETER",
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "BatchConfirmerStatusChanged",
+            "valueKey": "batchConfirmer",
+            "flagKey": "status"
+          }
         }
       }
     },

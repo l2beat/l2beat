@@ -205,6 +205,7 @@ export const Milestones = z.array(
     link: z.string(),
     date: z.string(),
     description: z.optional(z.string()),
+    type: z.enum(['general', 'incident']),
   }),
 )
 export type TokenInfo = z.infer<typeof TokenInfo>
