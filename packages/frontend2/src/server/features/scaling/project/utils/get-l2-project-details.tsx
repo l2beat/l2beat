@@ -72,7 +72,27 @@ export async function getL2ProjectDetails({
     range: '1d',
     filter: { type: 'projects', projectIds: [project.id] },
   })
+  const activityChartData = await api.scaling.activity.chart({
+    range: '30d',
+    filter: { type: 'projects', projectIds: [project.id] },
+  })
+  const milestones =
+    project.milestones?.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    ) ?? []
   const items: ProjectDetailsSection[] = []
+
+  if (!isEmpty(activityChartData.data)) {
+    items.push({
+      type: 'ChartSection',
+      props: {
+        id: 'activity',
+        title: 'Activity',
+        projectId: project.id,
+        milestones,
+      },
+    })
+  }
 
   if (!isEmpty(costsChartData.data)) {
     items.push({
@@ -81,10 +101,7 @@ export async function getL2ProjectDetails({
         id: 'onchain-costs',
         title: 'Onchain costs',
         projectId: project.id,
-        milestones:
-          project.milestones?.sort(
-            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-          ) ?? [],
+        milestones,
       },
     })
   }
