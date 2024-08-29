@@ -23,3 +23,11 @@ export const Checked: Story = {
     checked: true,
   },
 }
+
+export const Disabled: Story = {
+  args: {
+    id: 'disabled',
+    children: 'Disabled',
+    disabled: true,
+  },
+}
