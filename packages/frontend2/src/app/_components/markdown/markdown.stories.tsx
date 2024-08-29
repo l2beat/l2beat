@@ -1,8 +1,39 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 
+import { GlossaryContextProvider } from './glossary-context'
 import { Markdown } from './markdown'
 
-const CONTENT = `
+const meta = {
+  title: 'Atoms/Markdown',
+  component: Markdown,
+  decorators: [
+    (Story) => {
+      return (
+        <GlossaryContextProvider
+          terms={[
+            {
+              id: 'bold-example',
+              data: {
+                term: 'Bold',
+                definition: 'Some definition',
+                isSpicy: false,
+              },
+            },
+          ]}
+        >
+          <Story />
+        </GlossaryContextProvider>
+      )
+    },
+  ],
+} satisfies Meta<typeof Markdown>
+export default meta
+
+type Story = StoryObj<typeof meta>
+
+export const Default: Story = {
+  args: {
+    children: `
 # h1 Heading
 ## h2 Heading
 ### h3 Heading
@@ -133,18 +164,6 @@ Like links, Images also have a footnote style syntax
 With a reference later in the document defining the URL location.
 
 [logo]: https://l2beat.com/favicon.svg "Our logo"
-`
-
-const meta = {
-  title: 'Atoms/Markdown',
-  component: Markdown,
-} satisfies Meta<typeof Markdown>
-export default meta
-
-type Story = StoryObj<typeof meta>
-
-export const Default: Story = {
-  args: {
-    children: CONTENT,
+`,
   },
 }

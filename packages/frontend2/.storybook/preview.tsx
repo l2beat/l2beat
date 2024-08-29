@@ -45,7 +45,7 @@ const preview: Preview = {
       document.body.classList.add(roboto.variable, 'font-sans')
       return (
         <main className="m-8">
-          <GlossaryContextProvider terms={[EXAMPLE_TERM]}>
+          <GlossaryContextProvider terms={[]}>
             <TooltipProvider>
               <Story />
             </TooltipProvider>
@@ -57,12 +57,3 @@ const preview: Preview = {
 }
 
 export default preview
-
-const EXAMPLE_TERM = {
-  id: 'bold-example',
-  data: {
-    term: 'Bold',
-    definition: 'Some definition',
-    isSpicy: false,
-  },
-}
