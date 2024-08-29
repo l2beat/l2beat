@@ -1,3 +1,43 @@
+Generated with discovered.json: 0xe0961daf072f569383382d19ac00c9b63b917e29
+
+# Diff at Wed, 28 Aug 2024 15:10:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0fa673a678e6e769a295956285789968836b97a6 block: 237006565
+- current block number: 247630663
+
+## Description
+
+Added fee recipient discovery.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 237006565 (main branch discovery), not current.
+
+```diff
+    contract L2SurplusFee (0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d) {
+    +++ description: None
++++ description: Lists recipients and weights using events, while the latest represents the current state.
+      values.recipientsData:
++        [{"recipients":["0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"],"weights":[10000]}]
+      fieldMeta:
++        {"recipientsData":{"description":"Lists recipients and weights using events, while the latest represents the current state."}}
+    }
+```
+
+```diff
+    contract L2BaseFee (0xbF5041Fc07E1c866D15c749156657B8eEd0fb649) {
+    +++ description: None
++++ description: Lists recipients and weights using events, while the latest represents the current state.
+      values.recipientsData:
++        [{"recipients":["0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"],"weights":[10000]}]
+      fieldMeta:
++        {"recipientsData":{"description":"Lists recipients and weights using events, while the latest represents the current state."}}
+    }
+```
+
 Generated with discovered.json: 0x2593dc87344416c0224f9e4f83098789f8a60514
 
 # Diff at Fri, 23 Aug 2024 09:56:56 GMT:

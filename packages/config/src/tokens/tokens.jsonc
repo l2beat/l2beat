@@ -2717,6 +2717,12 @@
         "bridge": "Layer Zero",
         "slug": "stargate"
       }
+    },
+    {
+      "symbol": "CLIP",
+      "address": "0x4ea77a86d6e70ffe8bb947fc86d68a7f086f198a",
+      "source": "native",
+      "supply": "circulatingSupply"
     }
   ],
   "zkfair": [
