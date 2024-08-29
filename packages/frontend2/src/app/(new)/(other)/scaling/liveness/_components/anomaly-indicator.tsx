@@ -24,10 +24,7 @@ interface Props {
 export function AnomalyIndicator({ anomalyEntries, showComingSoon }: Props) {
   if (showComingSoon) {
     return (
-      <div
-        className="w-min select-none text-center"
-        title="Anomalies coming soon"
-      >
+      <div className="w-min select-none text-center">
         <div className="mx-auto text-gray-500 dark:text-gray-50">
           Coming soon
         </div>
@@ -42,10 +39,7 @@ export function AnomalyIndicator({ anomalyEntries, showComingSoon }: Props) {
 
   if (anomalyEntries.length === 0) {
     return (
-      <div
-        className="w-min select-none text-center"
-        title="No data for anomalies"
-      >
+      <div className="w-min select-none text-center">
         <div className="mx-auto text-gray-500 dark:text-gray-50">No data</div>
         <div className="flex gap-x-0.5">
           {range(30).map((_, i) => (
@@ -61,10 +55,7 @@ export function AnomalyIndicator({ anomalyEntries, showComingSoon }: Props) {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <div
-          className="flex h-6 w-min gap-x-0.5"
-          title="Anomalies in the last 30 days"
-        >
+        <div className="flex h-6 w-min gap-x-0.5">
           {anomalyEntries.map((anomaly, i) => (
             <div
               key={i}

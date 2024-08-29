@@ -1,7 +1,7 @@
 import React from 'react'
-import { ContractEntry, type TechnologyContract } from '../contract-entry'
 import { ProjectSection } from '../project-section'
 import { type ProjectSectionProps } from '../types'
+import { ContractEntry, type TechnologyContract } from './contract-entry'
 
 export interface PermissionsSectionProps extends ProjectSectionProps {
   permissions: TechnologyContract[]

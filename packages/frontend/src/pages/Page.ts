@@ -3,7 +3,6 @@ import {
   ImplementationChangeReportApiResponse,
   L2CostsApiResponse,
   ManuallyVerifiedContracts,
-  ProjectAssetsBreakdownApiResponse,
   TvlApiResponse,
   VerificationStatus,
 } from '@l2beat/shared-pure'
@@ -37,7 +36,6 @@ export interface PagesData {
   activityApiResponse: ActivityApiResponse | undefined
   verificationStatus: VerificationStatus
   manuallyVerifiedContracts: ManuallyVerifiedContracts
-  tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse | undefined
   l2CostsApiResponse: L2CostsApiResponse | undefined
   implementationChange: ImplementationChangeReportApiResponse | undefined
 }

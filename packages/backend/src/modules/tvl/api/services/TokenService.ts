@@ -1,3 +1,4 @@
+import { ConfigMapping } from '@l2beat/config'
 import {
   assert,
   EthereumAddress,
@@ -5,7 +6,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { Clock } from '../../../../tools/Clock'
-import { ConfigMapping } from '../../utils/ConfigMapping'
 import { getTokenCharts } from '../utils/chartsUtils'
 import { ApiProject } from '../utils/types'
 import { AmountsDataService } from './data/AmountsDataService'

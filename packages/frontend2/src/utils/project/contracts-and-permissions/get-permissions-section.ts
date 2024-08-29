@@ -18,7 +18,7 @@ import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
 import {
   type TechnologyContract,
   type TechnologyContractAddress,
-} from '../../../app/_components/projects/sections/contract-entry'
+} from '../../../app/_components/projects/sections/permissions/contract-entry'
 import { type UsedInProject } from '../../../app/_components/projects/sections/permissions/used-in-project'
 import { type ProjectSectionProps } from '../../../app/_components/projects/sections/types'
 import { getChain } from './get-chain'

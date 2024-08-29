@@ -10,7 +10,6 @@ import { fetchFeaturesApi } from './api/fetchFeaturesApi'
 import { fetchImplementationChangeReport } from './api/fetchImplementationChangeReport'
 import { fetchL2CostsApi } from './api/fetchL2CostsApi'
 import { fetchTvlApi } from './api/fetchTvlApi'
-import { fetchTvlBreakdownApi } from './api/fetchTvlBreakdownApi'
 import {
   getManuallyVerifiedContracts,
   getVerificationStatus,
@@ -53,7 +52,6 @@ async function main() {
       excludedTokensTvlApiResponse,
       l2CostsApiResponse,
       activityApiResponse,
-      tvlBreakdownApiResponse,
       implementationChange,
     ] = await Promise.all([
       fetchTvlApi(config.backend, http, { tvl: config.features.tvl }),
@@ -67,9 +65,7 @@ async function main() {
       config.features.activity
         ? fetchActivityApi(config.backend, http)
         : undefined,
-      config.features.tvlBreakdown
-        ? fetchTvlBreakdownApi(config.backend, config.backend.apiUrl, http)
-        : undefined,
+
       config.features.implementationChange
         ? fetchImplementationChangeReport(config.backend, http)
         : undefined,
@@ -103,7 +99,6 @@ async function main() {
       activityApiResponse,
       verificationStatus,
       manuallyVerifiedContracts,
-      tvlBreakdownApiResponse,
       l2CostsApiResponse,
       implementationChange,
     }
