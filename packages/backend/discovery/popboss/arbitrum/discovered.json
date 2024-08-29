@@ -1,9 +1,9 @@
 {
   "name": "popboss",
   "chain": "arbitrum",
-  "blockNumber": 247924188,
-  "configHash": "0xd01de39a0427070e798a6de7449d14f60cfa1c23b88448edf4eebd599df3d772",
-  "version": 13,
+  "blockNumber": 247928690,
+  "configHash": "0x14182cc95b192e10f96fde799e578b30d8b956c1198869c4012559f9219d3b88",
+  "version": 14,
   "contracts": [
     {
       "name": "UpgradeExecutor",
@@ -19,8 +19,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x330F8fEB25f3427cABA32446728C36ae67f2135b",
-          "via": []
+          "target": "0x330F8fEB25f3427cABA32446728C36ae67f2135b"
         }
       ],
       "sinceTimestamp": 1721252581,
@@ -139,38 +138,31 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x246bAB4F36095ABc74052Cc122c318298a9ef876",
-          "via": []
+          "target": "0x246bAB4F36095ABc74052Cc122c318298a9ef876"
         },
         {
           "permission": "upgrade",
-          "target": "0x53D82686BC9827fEc03bcEe661B37b855A18EcA9",
-          "via": []
+          "target": "0x53D82686BC9827fEc03bcEe661B37b855A18EcA9"
         },
         {
           "permission": "upgrade",
-          "target": "0x6e988B94C12194A925D7802FE75891364C312477",
-          "via": []
+          "target": "0x6e988B94C12194A925D7802FE75891364C312477"
         },
         {
           "permission": "upgrade",
-          "target": "0x6eE94AD8057Fd7Ba4d47bb6278a261c8a9FD4E3f",
-          "via": []
+          "target": "0x6eE94AD8057Fd7Ba4d47bb6278a261c8a9FD4E3f"
         },
         {
           "permission": "upgrade",
-          "target": "0xa4270256B160C3Ebec2d6914a906c7EC38D8d072",
-          "via": []
+          "target": "0xa4270256B160C3Ebec2d6914a906c7EC38D8d072"
         },
         {
           "permission": "upgrade",
-          "target": "0xEe30EfcaF812d10e1EFE25E9458f76a39DAD3239",
-          "via": []
+          "target": "0xEe30EfcaF812d10e1EFE25E9458f76a39DAD3239"
         },
         {
           "permission": "upgrade",
-          "target": "0xf3224F90c0A6138209a9EbaFd1971AD1E04eEb0D",
-          "via": []
+          "target": "0xf3224F90c0A6138209a9EbaFd1971AD1E04eEb0D"
         }
       ],
       "sinceTimestamp": 1721252581,
@@ -301,7 +293,7 @@
       "derivedName": "SequencerInbox"
     },
     {
-      "name": "RollupOwnerMultisig",
+      "name": "ProofOfPlayMultisig",
       "address": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",

@@ -23,7 +23,7 @@ export const popboss: Layer3 = orbitStackL3({
       'Proof of Play Boss is a gaming-focused L3 settling on Arbitrum using the Orbit Stack and AnyTrust DA. It is the second L3 built by Proof of Play.',
     purposes: ['Gaming', 'NFT'],
     links: {
-      websites: ['https://www.proofofplay.com/'],
+      websites: ['https://proofofplay.com/'],
       apps: [
         'https://bridge.arbitrum.io/?destinationChain=pop-boss&sourceChain=arbitrum-one',
         'https://piratenation.game/',
@@ -61,7 +61,7 @@ export const popboss: Layer3 = orbitStackL3({
           'EXECUTOR_ROLE',
         ).members[0]
         const discoveredRollupOwnerMultisig = discovery.getContract(
-          'RollupOwnerMultisig',
+          'ProofOfPlayMultisig',
         ).address
         assert(
           discoveredAdminOwner === discoveredUpgradeExecutorAddy &&

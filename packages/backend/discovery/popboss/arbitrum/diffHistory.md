@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x16e25dfbcb3ac0dd1aeac1f26d91b2f803a094c5
+Generated with discovered.json: 0x02f0cce496e2eea8f96242e236bb0edf7cc2d84d
 
-# Diff at Thu, 29 Aug 2024 11:40:54 GMT:
+# Diff at Thu, 29 Aug 2024 11:59:36 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 247924188
+- current block number: 247928690
 
 ## Description
 
@@ -67,7 +67,7 @@ Initial discovery: Orbit stack L3 (AnyTrust 1/1 DAC) on Arbitrum by Conduit RaaS
 
 ```diff
 +   Status: CREATED
-    contract RollupOwnerMultisig (0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56)
+    contract ProofOfPlayMultisig (0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56)
     +++ description: None
 ```
 

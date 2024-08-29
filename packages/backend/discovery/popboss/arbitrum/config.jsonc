@@ -49,9 +49,6 @@
     },
     "ChallengeManager": {
       "ignoreMethods": ["challenges"]
-    },
-    "RollupOwnerMultisig": {
-      "ignoreInWatchMode": ["nonce"]
     }
   }
 }
