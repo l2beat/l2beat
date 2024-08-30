@@ -80,7 +80,7 @@ export const bugbuster: Layer3 = {
           href: 'https://optimistic.etherscan.io/address/0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35#code#F1#L48',
         },
         {
-          text: 'CartesiDApp.sol#L48 - Optimism Etherscan source code, migrateToConsensus function',
+          text: 'CartesiDApp.sol#L201 - Optimism Etherscan source code, migrateToConsensus function',
           href: 'https://optimistic.etherscan.io/address/0x9cb6C6E904cE6BF3Ca6d0002b9629acce74Ea89b#code#F1#L201',
         },
       ],
