@@ -1,5 +1,6 @@
 import React from 'react'
 
+import Link from 'next/link'
 import { Button } from '~/app/_components/button'
 import { LinkWithThumbnail } from '~/app/_components/link-with-thumbnail'
 import { type GovernancePublicationEntry } from '../../_utils/get-governance-publication-entry'
@@ -12,7 +13,7 @@ interface Props {
 
 export function RecentPublicationsSection({ publications, className }: Props) {
   return (
-    <GovernanceCard as="section" mobileFull className={className}>
+    <GovernanceCard mobileFull className={className}>
       <div className="flex flex-wrap justify-between gap-2">
         <GovernanceCardHeader>Recent publications</GovernanceCardHeader>
         <ExploreAllButton className="hidden md:block" />
@@ -29,14 +30,8 @@ export function RecentPublicationsSection({ publications, className }: Props) {
 
 function ExploreAllButton({ className }: { className?: string }) {
   return (
-    <Button
-      className={className}
-      as="a"
-      href="/governance/publications"
-      variant="purple"
-      size="sm"
-    >
-      Explore all publications
+    <Button className={className} variant="outline" size="sm" asChild>
+      <Link href="/governance/publications">Explore all publications</Link>
     </Button>
   )
 }

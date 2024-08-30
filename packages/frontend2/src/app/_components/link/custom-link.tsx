@@ -2,19 +2,18 @@ import { type VariantProps, cva } from 'class-variance-authority'
 import NextLink from 'next/link'
 import React from 'react'
 
-type ElementProps<T extends React.ElementType> = T extends undefined
-  ? React.ComponentPropsWithoutRef<typeof NextLink>
-  : React.ComponentPropsWithoutRef<T>
-
-export type CustomLinkProps<T extends React.ElementType> = ElementProps<T> &
+export type CustomLinkProps = Omit<
+  React.ComponentPropsWithoutRef<typeof NextLink>,
+  'href'
+> &
   VariantProps<typeof linkVariants> & {
     children: React.ReactNode
+    href: string
     className?: string
-    as?: T
   }
 
 // Make sure this is compatible with markdown.css
-const linkVariants = cva(
+export const linkVariants = cva(
   'font-medium transition-colors duration-300 ease-out',
   {
     variants: {
@@ -36,19 +35,19 @@ const linkVariants = cva(
   },
 )
 
-export function CustomLink<T extends React.ElementType>({
+export function CustomLink({
   variant,
   underline,
   children,
   className,
-  as,
   ...rest
-}: CustomLinkProps<T>) {
-  const Comp: React.ElementType = as === 'a' ? NextLink : as ?? NextLink
-
+}: CustomLinkProps) {
   return (
-    <Comp className={linkVariants({ variant, underline, className })} {...rest}>
+    <NextLink
+      className={linkVariants({ variant, underline, className })}
+      {...rest}
+    >
       {children}
-    </Comp>
+    </NextLink>
   )
 }

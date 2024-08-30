@@ -1,3 +1,58 @@
+Generated with discovered.json: 0xac4b6088d34dc34524b09b78f8191d068d9146a9
+
+# Diff at Thu, 29 Aug 2024 11:59:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@32afcfdfd1c9c51d8abb3a0fa5eb61a730d56efd block: 245518206
+- current block number: 247928599
+
+## Description
+
+Renamed MS to match the other ProofofPlay chain.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 245518206 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (0x3d0b021E1d2A8747411E3724d5165716B35448f3) {
+    +++ description: None
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract ProofOfPlayMultisig (0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      name:
+-        "RollupOwnerMultisig"
++        "ProofOfPlayMultisig"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xCC6f49cff395c4d160C61112522700dcB007c41d) {
+    +++ description: None
+      receivedPermissions.6.via:
+-        []
+      receivedPermissions.5.via:
+-        []
+      receivedPermissions.4.via:
+-        []
+      receivedPermissions.3.via:
+-        []
+      receivedPermissions.2.via:
+-        []
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
 Generated with discovered.json: 0xd054a9d3c596c9edfe30f897e6e43e7946db9136
 
 # Diff at Fri, 23 Aug 2024 09:57:14 GMT:
