@@ -1,7 +1,7 @@
 {
   "name": "deversifi",
   "chain": "ethereum",
-  "blockNumber": 20633317,
+  "blockNumber": 20640703,
   "configHash": "0x8a591324e40a30c710cd4945a74a4cd5f7f8cc53c7b6802a87a7b9233fde62df",
   "version": 14,
   "contracts": [
@@ -65,11 +65,6 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3a74010f2b37C02A249bd539EaE6b90Ba7CcD8aA",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
           "target": "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889",
           "via": []
         }
@@ -83,10 +78,7 @@
       ],
       "sinceTimestamp": 1590491810,
       "values": {
-        "$admin": [
-          "0x3a74010f2b37C02A249bd539EaE6b90Ba7CcD8aA",
-          "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889"
-        ],
+        "$admin": "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889",
         "$immutable": false,
         "$implementation": [
           "0x29Db022dbc824b78A0dA699a77E3d177f08A1191",
@@ -101,8 +93,8 @@
         "DEPOSIT_CANCEL_DELAY": 172800,
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 1,
-        "getLastBatchId": 7393,
-        "getOrderRoot": "2103798918400668456336940898776990612977973847165723778578439979671092814108",
+        "getLastBatchId": 7399,
+        "getOrderRoot": "2719042355871708044696447761840588706105422639094010033865873743616188267756",
         "getOrderTreeHeight": 251,
         "getRegisteredAvailabilityVerifiers": [
           "0x28780349A33eEE56bb92241bAAB8095449e24306"
@@ -112,9 +104,9 @@
         ],
         "getRollupTreeHeight": 31,
         "getRollupVaultRoot": "207095555137602068174310225607660532858489993604082708018689543482077973596",
-        "getSequenceNumber": 7366,
+        "getSequenceNumber": 7372,
         "getValidiumTreeHeight": 31,
-        "getValidiumVaultRoot": "771805550270000862985181710392723154894959409141681446826890302164069854332",
+        "getValidiumVaultRoot": "2686509728857324678721834379488350623534006280091959313419960723694303754696",
         "implementation": "0x29Db022dbc824b78A0dA699a77E3d177f08A1191",
         "isFrozen": false,
         "isNotFinalized": true,
@@ -166,7 +158,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 27,
+        "nonce": 28,
         "VERSION": "1.3.0"
       },
       "fieldMeta": {
@@ -185,15 +177,6 @@
   "eoas": [
     { "address": "0x0fa6bf3377Cfa276d9d7122c09C187e5e8ef1C59" },
     { "address": "0x2b6593FcFbfdeD663D7a6448d45b12C16DF6B648" },
-    {
-      "address": "0x3a74010f2b37C02A249bd539EaE6b90Ba7CcD8aA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b"
-        }
-      ]
-    },
     { "address": "0x3Bf2562178eA0CeF6B3F66D971494d65561EFD36" },
     { "address": "0x445EEDE2681116Dd94C8D5Bfab73283B3ef1f6f3" },
     { "address": "0x478615F37FcCB0DF69C191a8674233f6899D092e" },

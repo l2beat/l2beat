@@ -1,4 +1,38 @@
-Generated with discovered.json: 0x5271ad5d66368357b9154dcdaec163e9329e48ed
+Generated with discovered.json: 0x8bff205d514a54237007fec22c001f4543d064c7
+
+# Diff at Fri, 30 Aug 2024 10:12:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@78fe1115153efe3e1ba2014fd74329156dca3951 block: 20569082
+- current block number: 20640712
+
+## Description
+
+Optimistic mode reactivated. Messages are now now passed via offchain relayers and optimistically accepted onchain.
+
+## Watched changes
+
+```diff
+    contract MainnetSpokeConnector (0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc) {
+    +++ description: None
++++ description: When it's disabled, all roots must be passed via canonical rollup AMBs.
+      values.optimisticMode:
+-        false
++        true
+    }
+```
+
+```diff
+    contract RootManager (0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A) {
+    +++ description: None
++++ description: When it's disabled, all roots must be passed via canonical rollup AMBs.
+      values.optimisticMode:
+-        false
++        true
+    }
+```
+
+Generated with discovered.json: 0xc6f0227ea0811dbe5b8dc7cebee5685c432900aa
 
 # Diff at Tue, 20 Aug 2024 09:57:39 GMT:
 
