@@ -1,4 +1,4 @@
-import { ChainId, Hash256, } from '@l2beat/shared-pure'
+import { ChainId, Hash256 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { describeDatabase } from '../../test/database'
@@ -22,7 +22,7 @@ describeDatabase(FlatSourcesRepository.name, (db) => {
       chainId: ChainId.ETHEREUM,
       blockNumber: -1,
       contentHash: CONFIG_HASH,
-      flat: {}
+      flat: {},
     }
     await repository.upsert(flatRecord)
 

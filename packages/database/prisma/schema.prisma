@@ -418,11 +418,11 @@ model Anomaly {
 }
 
 model FlatSources {
-  projectName       String   @db.VarChar(255)
-  chainId           Int
-  blockNumber       Int
-  contentHash       String   @db.VarChar(255)
-  flat              Json
+  projectName String @db.VarChar(255)
+  chainId     Int
+  blockNumber Int
+  contentHash String @db.VarChar(255)
+  flat        Json
 
   @@id([projectName, chainId])
 }

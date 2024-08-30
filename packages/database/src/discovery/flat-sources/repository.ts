@@ -1,4 +1,4 @@
-import { ChainId, } from '@l2beat/shared-pure'
+import { ChainId } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { FlatSourcesRecord, toRecord, toRow } from './entity'
 import { selectFlatSources } from './select'
@@ -15,12 +15,14 @@ export class FlatSourcesRepository extends BaseRepository {
         .insertInto('FlatSources')
         .values(batch)
         .onConflict((cb) =>
-          cb.columns(['projectName', 'chainId']).doUpdateSet((eb) => ({
-            blockNumber: eb.ref('excluded.blockNumber'),
-            contentHash: eb.ref('excluded.contentHash'),
-            flat: eb.ref('excluded.flat'),
-          }))
-          .where('FlatSources.contentHash', "<>", 'excluded.contentHash')
+          cb
+            .columns(['projectName', 'chainId'])
+            .doUpdateSet((eb) => ({
+              blockNumber: eb.ref('excluded.blockNumber'),
+              contentHash: eb.ref('excluded.contentHash'),
+              flat: eb.ref('excluded.flat'),
+            }))
+            .where('FlatSources.contentHash', '<>', 'excluded.contentHash'),
         )
         .execute()
     })
@@ -36,7 +38,10 @@ export class FlatSourcesRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async get(projectName: string, chainId: ChainId): Promise<FlatSourcesRecord | undefined> {
+  async get(
+    projectName: string,
+    chainId: ChainId,
+  ): Promise<FlatSourcesRecord | undefined> {
     const row = await this.db
       .selectFrom('FlatSources')
       .select(selectFlatSources)
