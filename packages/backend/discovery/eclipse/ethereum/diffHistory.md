@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x69b4ca88a08532e5b927f8070fe227027e5c3602
+
+# Diff at Fri, 30 Aug 2024 07:52:07 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 20590601
+- current block number: 20590601
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20590601 (main branch discovery), not current.
+
+```diff
+    contract EclipseMultisig (0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC) {
+    +++ description: None
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
 Generated with discovered.json: 0x0af9f27d0573e340b5d12bb19153c66199e89538
 
 # Diff at Fri, 23 Aug 2024 10:14:19 GMT:

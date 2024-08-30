@@ -1,3 +1,83 @@
+Generated with discovered.json: 0xa4553157c3933596c52abfdb87e3408732e4abf0
+
+# Diff at Fri, 30 Aug 2024 07:59:21 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 20632677
+- current block number: 20632677
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20632677 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9) {
+    +++ description: None
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444) {
+    +++ description: None
+      receivedPermissions.19.via:
+-        []
+      receivedPermissions.18.via:
+-        []
+      receivedPermissions.17.via:
+-        []
+      receivedPermissions.16.via:
+-        []
+      receivedPermissions.15.via:
+-        []
+      receivedPermissions.14.via:
+-        []
+      receivedPermissions.13.via:
+-        []
+      receivedPermissions.12.via:
+-        []
+      receivedPermissions.11.via:
+-        []
+      receivedPermissions.10.via:
+-        []
+      receivedPermissions.9.via:
+-        []
+      receivedPermissions.8.via:
+-        []
+      receivedPermissions.7.via:
+-        []
+      receivedPermissions.6.via:
+-        []
+      receivedPermissions.5.via:
+-        []
+      receivedPermissions.4.via:
+-        []
+      receivedPermissions.3.via:
+-        []
+      receivedPermissions.2.via:
+-        []
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xB8915E195121f2B5D989Ec5727fd47a5259F1CEC) {
+    +++ description: None
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
 Generated with discovered.json: 0x236c711bf97e964b1e3eab3c45d7904b4131fc77
 
 # Diff at Thu, 29 Aug 2024 07:14:39 GMT:

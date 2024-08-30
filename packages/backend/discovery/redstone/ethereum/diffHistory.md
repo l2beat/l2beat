@@ -1,3 +1,49 @@
+Generated with discovered.json: 0x2d4fd87e5fb9446fe7e9ccb8e79572459ccf3999
+
+# Diff at Fri, 30 Aug 2024 07:56:26 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 19831040
+- current block number: 19831040
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19831040 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0xCC53b447aFe07926423aB96D5496b1af30485ED2) {
+    +++ description: It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.
+      receivedPermissions.10.via:
+-        []
+      receivedPermissions.9.via:
+-        []
+      receivedPermissions.8.via:
+-        []
+      receivedPermissions.7.via:
+-        []
+      receivedPermissions.6.via:
+-        []
+      receivedPermissions.5.via:
+-        []
+      receivedPermissions.4.via:
+-        []
+      receivedPermissions.3.via:
+-        []
+      receivedPermissions.2.via:
+-        []
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
 Generated with discovered.json: 0xb2dc5858819a071d0f96a8aaea006ddab7f899fc
 
 # Diff at Fri, 23 Aug 2024 09:54:43 GMT:

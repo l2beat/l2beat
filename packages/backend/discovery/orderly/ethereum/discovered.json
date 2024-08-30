@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20389626,
   "configHash": "0x8c1fe2ea35e3e9d3ce2b472c13c894127ac3703d838d0c97bbbe56232de0804b",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "ConduitMultisig",
@@ -16,8 +16,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9",
-          "via": []
+          "target": "0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -217,33 +216,27 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x87630a802a3789463eC4b00f89b27b1e9f6b92e9",
-          "via": []
+          "target": "0x87630a802a3789463eC4b00f89b27b1e9f6b92e9"
         },
         {
           "permission": "upgrade",
-          "target": "0x5e76821C3c1AbB9fD6E310224804556C61D860e0",
-          "via": []
+          "target": "0x5e76821C3c1AbB9fD6E310224804556C61D860e0"
         },
         {
           "permission": "upgrade",
-          "target": "0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664",
-          "via": []
+          "target": "0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664"
         },
         {
           "permission": "upgrade",
-          "target": "0x91493a61ab83b62943E6dCAa5475Dd330704Cc84",
-          "via": []
+          "target": "0x91493a61ab83b62943E6dCAa5475Dd330704Cc84"
         },
         {
           "permission": "upgrade",
-          "target": "0x934Ab59Ef14b638653b1C0FEf7aB9a72186393DC",
-          "via": []
+          "target": "0x934Ab59Ef14b638653b1C0FEf7aB9a72186393DC"
         },
         {
           "permission": "upgrade",
-          "target": "0xe07eA0436100918F157DF35D01dCE5c11b16D1F1",
-          "via": []
+          "target": "0xe07eA0436100918F157DF35D01dCE5c11b16D1F1"
         }
       ],
       "sinceTimestamp": 1696608287,

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825378,
   "configHash": "0x84d196c4fe19887c26a5c3ca981864854bfca64e0bb7b5f40d427063aadf9189",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "Committee",
@@ -127,8 +127,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7",
-          "via": []
+          "target": "0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7"
         }
       ]
     },

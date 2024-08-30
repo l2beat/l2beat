@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20619826,
   "configHash": "0xad6d5e3bcf485d6dfca75ad1d5d919010760a5a1e78e71ba496385b903defcd7",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "OptimismPortal",
@@ -245,48 +245,39 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1",
-          "via": []
+          "target": "0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1"
         },
         {
           "permission": "upgrade",
-          "target": "0x2a721cBE81a128be0F01040e3353c3805A5EA091",
-          "via": []
+          "target": "0x2a721cBE81a128be0F01040e3353c3805A5EA091"
         },
         {
           "permission": "upgrade",
-          "target": "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff",
-          "via": []
+          "target": "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff"
         },
         {
           "permission": "upgrade",
-          "target": "0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8",
-          "via": []
+          "target": "0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8"
         },
         {
           "permission": "upgrade",
-          "target": "0x6BCe7408c0781dcE7b71494274302D4b75a1447c",
-          "via": []
+          "target": "0x6BCe7408c0781dcE7b71494274302D4b75a1447c"
         },
         {
           "permission": "upgrade",
-          "target": "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
-          "via": []
+          "target": "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0"
         },
         {
           "permission": "upgrade",
-          "target": "0x92Ef6Af472b39F1b363da45E35530c24619245A4",
-          "via": []
+          "target": "0x92Ef6Af472b39F1b363da45E35530c24619245A4"
         },
         {
           "permission": "upgrade",
-          "target": "0x994eEb321F9cD79B077a5455fC248c77f30Dd244",
-          "via": []
+          "target": "0x994eEb321F9cD79B077a5455fC248c77f30Dd244"
         },
         {
           "permission": "upgrade",
-          "target": "0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932",
-          "via": []
+          "target": "0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932"
         }
       ],
       "sinceTimestamp": 1719936419,
@@ -453,8 +444,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff",
-          "via": []
+          "target": "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff"
         }
       ],
       "ignoreInWatchMode": ["nonce"],

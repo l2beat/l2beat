@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20420390,
   "configHash": "0x762971154db7098aa282de45a263463872ec729b207c21c5002056300a160230",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "ParadexImplementationGovernorMultisig",
@@ -13,8 +13,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
-          "via": []
+          "target": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -185,8 +184,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
-          "via": []
+          "target": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
         }
       ]
     },
@@ -199,8 +197,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "via": []
+          "target": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"
         }
       ]
     },

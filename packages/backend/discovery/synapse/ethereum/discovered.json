@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19876012,
   "configHash": "0xc5323f647a9ea9322c162facb56fb967aeeda5e72064249d3a787e7cde4d646a",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "SynapseBridge",
@@ -107,8 +107,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x2796317b0fF8538F253012862c06787Adfb8cEb6",
-          "via": []
+          "target": "0x2796317b0fF8538F253012862c06787Adfb8cEb6"
         }
       ],
       "sinceTimestamp": 1629075985,

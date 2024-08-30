@@ -3,7 +3,7 @@
   "chain": "base",
   "blockNumber": 14061228,
   "configHash": "0xb9a699dc3638010b7b06fbf9da1dc1ffed4abf642060175f050881214908537d",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "SuccinctFeeVault",
@@ -178,8 +178,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
-          "via": []
+          "target": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794"
         }
       ]
     },

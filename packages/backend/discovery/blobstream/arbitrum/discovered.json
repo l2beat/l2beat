@@ -3,7 +3,7 @@
   "chain": "arbitrum",
   "blockNumber": 208089280,
   "configHash": "0x4dff8d7b222241b058a0a2d54be800864aecef46df03c61606f7c7f313a82491",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "SuccinctFeeVault",
@@ -178,8 +178,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
-          "via": []
+          "target": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794"
         }
       ]
     },

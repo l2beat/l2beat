@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20325048,
   "configHash": "0xa75ac3d3673e70efc5004b51931bfbf779c046e09be2455ba9855c5111382b42",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "AstarVerifier",
@@ -18,8 +18,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0",
-          "via": []
+          "target": "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0"
         }
       ],
       "sinceTimestamp": 1708624547,

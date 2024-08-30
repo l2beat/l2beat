@@ -3,7 +3,7 @@
   "chain": "celo",
   "blockNumber": 26689586,
   "configHash": "0xc45aafc3097c83c24c68a6693ab3890e124dae53f2abe2d96a9898cb07900e34",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "OpticsV2Governor",
@@ -46,8 +46,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE",
-          "via": []
+          "target": "0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE"
         }
       ],
       "values": {

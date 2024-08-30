@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20454449,
   "configHash": "0x722bdc74afa4186d83f17ede56db3b5fde5f89d6a296169858d275ccc239df59",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "ChainportCongressMembersRegistry",
@@ -59,8 +59,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a",
-          "via": []
+          "target": "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a"
         }
       ],
       "sinceTimestamp": 1626949762,

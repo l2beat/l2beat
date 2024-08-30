@@ -3,7 +3,7 @@
   "chain": "mantle",
   "blockNumber": 66927056,
   "configHash": "0xba99224e212c7eb632ba06c519a466724d98fb22fad4fc880458e49a59f4dbad",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "MantleOwner",
@@ -13,13 +13,11 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
-          "via": []
+          "target": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657"
         },
         {
           "permission": "upgrade",
-          "target": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
-          "via": []
+          "target": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -153,8 +151,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2",
-          "via": []
+          "target": "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2"
         }
       ],
       "sinceTimestamp": 1709296907,

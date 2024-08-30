@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20475242,
   "configHash": "0x4f504880274f99c9783e5ed09c9ab707e056c1de0fa410a99b7139474a1dad7f",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "LivenessModule",
@@ -166,13 +166,11 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-          "via": []
+          "target": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
         },
         {
           "permission": "upgrade",
-          "target": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
-          "via": []
+          "target": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
         }
       ],
       "sinceTimestamp": 1685377355,
@@ -196,13 +194,11 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
-          "via": []
+          "target": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
         },
         {
           "permission": "configure",
-          "target": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49",
-          "via": []
+          "target": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -552,8 +548,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
-          "via": []
+          "target": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -627,38 +622,31 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef",
-          "via": []
+          "target": "0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef"
         },
         {
           "permission": "upgrade",
-          "target": "0x1a0ad011913A150f69f6A19DF447A0CfD9551054",
-          "via": []
+          "target": "0x1a0ad011913A150f69f6A19DF447A0CfD9551054"
         },
         {
           "permission": "upgrade",
-          "target": "0x3e2Ea9B92B7E48A52296fD261dc26fd995284631",
-          "via": []
+          "target": "0x3e2Ea9B92B7E48A52296fD261dc26fd995284631"
         },
         {
           "permission": "upgrade",
-          "target": "0x83A4521A3573Ca87f3a971B169C5A0E1d34481c3",
-          "via": []
+          "target": "0x83A4521A3573Ca87f3a971B169C5A0E1d34481c3"
         },
         {
           "permission": "upgrade",
-          "target": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
-          "via": []
+          "target": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c"
         },
         {
           "permission": "upgrade",
-          "target": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
-          "via": []
+          "target": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86"
         },
         {
           "permission": "upgrade",
-          "target": "0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf",
-          "via": []
+          "target": "0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf"
         }
       ],
       "sinceTimestamp": 1686693947,

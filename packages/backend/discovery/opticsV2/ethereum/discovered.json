@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20311133,
   "configHash": "0xd6335c5406db7a8838e31ff78c6edbbfc4df448e47a48c802e2545aa4064004b",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "HomeUpgradeBeacon",
@@ -87,23 +87,19 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x27658c5556A9a57f96E69Bbf6d3B8016f001a785",
-          "via": []
+          "target": "0x27658c5556A9a57f96E69Bbf6d3B8016f001a785"
         },
         {
           "permission": "upgrade",
-          "target": "0x4fc16De11deAc71E8b2Db539d82d93BE4b486892",
-          "via": []
+          "target": "0x4fc16De11deAc71E8b2Db539d82d93BE4b486892"
         },
         {
           "permission": "upgrade",
-          "target": "0xa73a3a74C7044B5411bD61E1990618A1400DA379",
-          "via": []
+          "target": "0xa73a3a74C7044B5411bD61E1990618A1400DA379"
         },
         {
           "permission": "upgrade",
-          "target": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94",
-          "via": []
+          "target": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94"
         }
       ],
       "sinceTimestamp": 1637960876,

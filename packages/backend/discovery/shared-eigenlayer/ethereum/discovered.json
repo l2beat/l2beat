@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20632677,
   "configHash": "0xe8a11242fb692a08d7807a97c1799cab4adecf97beb313269edb952d024643eb",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "DepositContract",
@@ -442,8 +442,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
-          "via": []
+          "target": "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
         }
       ],
       "sinceTimestamp": 1710958955,
@@ -849,103 +848,83 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6",
-          "via": []
+          "target": "0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6"
         },
         {
           "permission": "upgrade",
-          "target": "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
-          "via": []
+          "target": "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
         },
         {
           "permission": "upgrade",
-          "target": "0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff",
-          "via": []
+          "target": "0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff"
         },
         {
           "permission": "upgrade",
-          "target": "0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2",
-          "via": []
+          "target": "0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2"
         },
         {
           "permission": "upgrade",
-          "target": "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2",
-          "via": []
+          "target": "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2"
         },
         {
           "permission": "upgrade",
-          "target": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
-          "via": []
+          "target": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
         },
         {
           "permission": "upgrade",
-          "target": "0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc",
-          "via": []
+          "target": "0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc"
         },
         {
           "permission": "upgrade",
-          "target": "0x57ba429517c3473B6d34CA9aCd56c0e735b94c02",
-          "via": []
+          "target": "0x57ba429517c3473B6d34CA9aCd56c0e735b94c02"
         },
         {
           "permission": "upgrade",
-          "target": "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
-          "via": []
+          "target": "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
         },
         {
           "permission": "upgrade",
-          "target": "0x7CA911E83dabf90C90dD3De5411a10F1A6112184",
-          "via": []
+          "target": "0x7CA911E83dabf90C90dD3De5411a10F1A6112184"
         },
         {
           "permission": "upgrade",
-          "target": "0x7Fe7E9CC0F274d2435AD5d56D5fa73E47F6A23D8",
-          "via": []
+          "target": "0x7Fe7E9CC0F274d2435AD5d56D5fa73E47F6A23D8"
         },
         {
           "permission": "upgrade",
-          "target": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-          "via": []
+          "target": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
         },
         {
           "permission": "upgrade",
-          "target": "0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
-          "via": []
+          "target": "0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6"
         },
         {
           "permission": "upgrade",
-          "target": "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
-          "via": []
+          "target": "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
         },
         {
           "permission": "upgrade",
-          "target": "0x93c4b944D05dfe6df7645A86cd2206016c51564D",
-          "via": []
+          "target": "0x93c4b944D05dfe6df7645A86cd2206016c51564D"
         },
         {
           "permission": "upgrade",
-          "target": "0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d",
-          "via": []
+          "target": "0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d"
         },
         {
           "permission": "upgrade",
-          "target": "0xa4C637e0F704745D182e4D38cAb7E7485321d059",
-          "via": []
+          "target": "0xa4C637e0F704745D182e4D38cAb7E7485321d059"
         },
         {
           "permission": "upgrade",
-          "target": "0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
-          "via": []
+          "target": "0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7"
         },
         {
           "permission": "upgrade",
-          "target": "0xAe60d8180437b5C34bB956822ac2710972584473",
-          "via": []
+          "target": "0xAe60d8180437b5C34bB956822ac2710972584473"
         },
         {
           "permission": "upgrade",
-          "target": "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd",
-          "via": []
+          "target": "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd"
         }
       ],
       "sinceTimestamp": 1686348935,
@@ -1316,8 +1295,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
-          "via": []
+          "target": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
         }
       ],
       "sinceTimestamp": 1697499563,

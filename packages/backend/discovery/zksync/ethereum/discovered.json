@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20532597,
   "configHash": "0x3d998b8628d34dc5825d501ad6778e24924b2742b447a4efaa1617f47e42367b",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "Multisig 1",
@@ -132,18 +132,15 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01",
-          "via": []
+          "target": "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01"
         },
         {
           "permission": "upgrade",
-          "target": "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D",
-          "via": []
+          "target": "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D"
         },
         {
           "permission": "upgrade",
-          "target": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
-          "via": []
+          "target": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
         }
       ],
       "sinceTimestamp": 1592218707,
