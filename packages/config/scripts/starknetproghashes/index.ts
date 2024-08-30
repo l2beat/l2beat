@@ -9,6 +9,14 @@ import {
 } from 'viem'
 import { mainnet } from 'viem/chains'
 
+const providerUrl = 'https://eth.drpc.org'
+const knownProgramHashes: Record<string, string> = {
+  // '3383082961563516565935611087683915026448707331436034043529592588079494402084':
+  //   'Known Program 1',
+  // '3485280386001712778192330279103973322645241679001461923469191557000342180556':
+  //   'Known Program 2',
+}
+
 interface DecodedCalldata {
   proofParams: bigint[]
   proof: bigint[]
@@ -138,15 +146,6 @@ class EthereumTransactionAnalyzer {
     }
     console.log('number of unique programHashes:', counter.size)
   }
-}
-
-// Usage
-const providerUrl = 'https://eth.drpc.org'
-const knownProgramHashes: Record<string, string> = {
-  // '3383082961563516565935611087683915026448707331436034043529592588079494402084':
-  //   'Known Program 1',
-  // '3485280386001712778192330279103973322645241679001461923469191557000342180556':
-  //   'Known Program 2',
 }
 
 async function main() {
