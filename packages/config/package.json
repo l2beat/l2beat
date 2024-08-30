@@ -18,7 +18,6 @@
     "update-multichain": "node -r esbuild-register scripts/multichain",
     "socket-crawl": "node -r esbuild-register scripts/socketcrawl",
     "socket-convert": "node -r esbuild-register scripts/socketconvert",
-    "starknet-proghashes": "node -r esbuild-register scripts/starknetproghashes",
     "check-verified-contracts": "node -r esbuild-register scripts/checkVerifiedContracts",
     "tokens": "node -r esbuild-register scripts/tokens/tokens.ts",
     "tokens:verify": "sh scripts/tokens/verify.sh",

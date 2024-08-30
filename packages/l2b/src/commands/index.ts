@@ -7,6 +7,7 @@ import { Flatten } from './Flatten'
 import { FlattenAndDiff } from './FlattenAndDiff'
 import { Powerdiff } from './Powerdiff'
 import { TVL } from './TVL'
+import { StarknetProgramHashes } from './StarknetProgramHashes'
 
 export function getSubcommands() {
   return [
@@ -19,5 +20,6 @@ export function getSubcommands() {
     Flatten,
     Powerdiff,
     TVL,
+    StarknetProgramHashes,
   ]
 }
