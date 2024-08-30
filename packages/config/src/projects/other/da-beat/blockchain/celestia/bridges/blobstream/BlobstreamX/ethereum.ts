@@ -1,13 +1,13 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { ProjectDiscovery } from '../../../../../../../discovery/ProjectDiscovery'
-import { DaAttestationSecurityRisk } from '../../../../types/DaAttestationSecurityRisk'
-import { DaExitWindowRisk } from '../../../../types/DaExitWindowRisk'
-import { CELESTIA_BLOBSTREAM } from './template'
+import { ProjectDiscovery } from '../../../../../../../../discovery/ProjectDiscovery'
+import { DaAttestationSecurityRisk } from '../../../../../types/DaAttestationSecurityRisk'
+import { DaExitWindowRisk } from '../../../../../types/DaExitWindowRisk'
+import { CELESTIA_BLOBSTREAM } from '../template'
 
 const discovery = new ProjectDiscovery('blobstream')
 
 const maxRangeDataCommitment = discovery.getContractValue<number>(
-  'BlobstreamX',
+  'Blobstream',
   'DATA_COMMITMENT_MAX',
 )
 
@@ -62,9 +62,9 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
     `,
   contracts: {
     addresses: [
-      discovery.getContractDetails('BlobstreamX', {
+      discovery.getContractDetails('Blobstream', {
         description:
-          'The BlobstreamX DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum.',
+          'The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum.',
       }),
       {
         name: 'headerRangeVerifier',
@@ -96,11 +96,11 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
   },
   permissions: [
     ...discovery.getMultisigPermission(
-      'BlobstreamXMultisig',
+      'BlobstreamMultisig',
       'This multisig is the admin of the BlobstreamX contract. It holds the power to change the contract state and upgrade the bridge.',
     ),
     ...discovery.getMultisigPermission(
-      'SuccinctMultisig',
+      'SuccinctGatewayMultisig',
       'This multisig is the admin of the SuccinctGateway contract. As the manager of the entry point and router for proof verification, it holds the power to affect the liveness and safety of the bridge.',
     ),
     {
