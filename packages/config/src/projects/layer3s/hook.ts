@@ -53,9 +53,13 @@ export const hook: Layer3 = underReviewL3({
       address: EthereumAddress('0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa'),
       sinceTimestamp: new UnixTime(1709063015),
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['WETH'],
       chain: 'ethereum',
@@ -66,9 +70,13 @@ export const hook: Layer3 = underReviewL3({
       tokens: ['USDC'],
       chain: 'ethereum',
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
     },
     {
@@ -78,9 +86,13 @@ export const hook: Layer3 = underReviewL3({
       tokens: ['WETH'],
       chain: 'arbitrum',
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
     },
     {
@@ -90,9 +102,13 @@ export const hook: Layer3 = underReviewL3({
       tokens: ['USDC'],
       chain: 'arbitrum',
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
     },
     {
@@ -102,9 +118,13 @@ export const hook: Layer3 = underReviewL3({
       tokens: ['WETH'],
       chain: 'base',
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
     },
     {
@@ -114,9 +134,13 @@ export const hook: Layer3 = underReviewL3({
       tokens: ['USDC'],
       chain: 'base',
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
     },
     {
@@ -126,9 +150,13 @@ export const hook: Layer3 = underReviewL3({
       tokens: ['WETH'],
       chain: 'optimism',
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
     },
     {
@@ -138,9 +166,13 @@ export const hook: Layer3 = underReviewL3({
       tokens: ['USDC'],
       chain: 'optimism',
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
     },
   ],

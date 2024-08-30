@@ -52,8 +52,12 @@ export const orderly: Layer2 = opStackL2({
       sinceTimestamp: new UnixTime(1697682598),
       tokens: ['USDC'],
       source: 'external',
-      bridge: {
-        name: 'Arbitrum escrow -> LayerZero AMB',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Arbitrum escrow -> LayerZero AMB',
+          },
+        ],
       },
     },
     {
@@ -63,8 +67,12 @@ export const orderly: Layer2 = opStackL2({
       sinceTimestamp: new UnixTime(1701153879),
       tokens: ['USDC'],
       source: 'external',
-      bridge: {
-        name: 'Optimism escrow -> LayerZero AMB',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Optimism escrow -> LayerZero AMB',
+          },
+        ],
       },
     },
     {
@@ -74,8 +82,12 @@ export const orderly: Layer2 = opStackL2({
       sinceTimestamp: new UnixTime(1712584295),
       tokens: ['USDC'],
       source: 'external',
-      bridge: {
-        name: 'Base escrow -> LayerZero AMB',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Base escrow -> LayerZero AMB',
+          },
+        ],
       },
     },
     {
@@ -85,8 +97,12 @@ export const orderly: Layer2 = opStackL2({
       sinceTimestamp: new UnixTime(1705831672),
       tokens: ['USDC'],
       source: 'external',
-      bridge: {
-        name: 'Mantle escrow -> LayerZero AMB',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Mantle escrow -> LayerZero AMB',
+          },
+        ],
       },
     },
     {
@@ -95,8 +111,12 @@ export const orderly: Layer2 = opStackL2({
       sinceTimestamp: new UnixTime(1705702751),
       tokens: ['USDC'],
       source: 'external',
-      bridge: {
-        name: 'Ethereum escrow -> LayerZero AMB',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Ethereum escrow -> LayerZero AMB',
+          },
+        ],
       },
     },
   ],
