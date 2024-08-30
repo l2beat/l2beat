@@ -221,9 +221,11 @@ describe('tokens', () => {
     it('every bridge slug in bridgedUsing property is valid', () => {
       const tokenSlugs = tokenList
         .filter(
-          (token) => token.source === 'external' && token.bridgedUsing?.slug,
+          (token) =>
+            token.source === 'external' &&
+            token.bridgedUsing?.bridges.some((b) => b.slug),
         )
-        .map((token) => token.bridgedUsing?.slug)
+        .flatMap((token) => token.bridgedUsing?.bridges.map((b) => b.slug))
       const bridgesSlugs = bridges.map((bridge) => bridge.display.slug)
       const invalidSlugs = tokenSlugs.filter(
         (slug) => !bridgesSlugs.includes(slug!),

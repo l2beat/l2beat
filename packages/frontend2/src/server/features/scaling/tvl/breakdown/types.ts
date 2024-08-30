@@ -2,6 +2,7 @@ import {
   type AssetId,
   type ChainId,
   type EthereumAddress,
+  type TokenBridgedUsing,
 } from '@l2beat/shared-pure'
 
 type BaseAssetBreakdownData = {
@@ -23,11 +24,7 @@ export type CanonicalAssetBreakdownData = BaseAssetBreakdownData & {
 
 export type ExternalAssetBreakdownData = BaseAssetBreakdownData & {
   tokenAddress?: EthereumAddress
-  bridge?: {
-    name: string
-    slug?: string
-    warning?: string
-  }
+  bridgedUsing: TokenBridgedUsing
 }
 
 export type NativeAssetBreakdownData = BaseAssetBreakdownData & {

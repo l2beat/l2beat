@@ -9,6 +9,7 @@ import { type Risk } from '../../page'
 import { type Token } from './tokens-table'
 
 export function RiskDetails({ token }: { token: Token }) {
+  const bridges = token.token.bridgedUsing?.bridges
   return (
     <div className="flex flex-col gap-5 border-t border-t-gray-400 pb-4">
       <div className="grid grid-cols-4 pt-4">
@@ -84,7 +85,11 @@ export function RiskDetails({ token }: { token: Token }) {
               width={16}
               className="size-4"
             /> */}
-              {token.token.bridge ?? 'Unknown'}
+              {bridges && bridges.length === 1
+                ? bridges[0]?.name
+                : bridges && bridges.length > 1
+                  ? 'Multiple'
+                  : 'Unknown'}
             </Link>
           </div>
         </div>

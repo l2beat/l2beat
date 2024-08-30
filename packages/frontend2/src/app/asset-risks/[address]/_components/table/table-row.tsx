@@ -59,7 +59,11 @@ export function TableRow({
               &nbsp;
               {token.chain.stage && <StageBadge stage={token.chain.stage} />}
               &nbsp;
-              {token.token.bridge && `bridged via ${token.token.bridge}`}
+              {token.token.bridgedUsing?.bridges.length === 1
+                ? `bridged via ${token.token.bridgedUsing?.bridges[0]?.name}`
+                : token.token.bridgedUsing?.bridges?.length !== 0
+                  ? `bridged via multiple bridges`
+                  : null}
             </div>
           </div>
         </Cell>

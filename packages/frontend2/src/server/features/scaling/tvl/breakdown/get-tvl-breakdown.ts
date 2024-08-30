@@ -108,9 +108,8 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
             usdPrice: price.toString(),
             tokenAddress:
               config.address === 'native' ? undefined : config.address,
-            bridge: config.bridge ?? {
-              name: token?.bridgedUsing?.bridge ?? 'Unknown',
-              slug: token?.bridgedUsing?.slug,
+            bridgedUsing: config.bridgedUsing ?? {
+              bridges: token?.bridgedUsing?.bridges ?? [{ name: 'Unknown' }],
               warning: token?.bridgedUsing?.warning,
             },
           })

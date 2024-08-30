@@ -222,7 +222,7 @@ function getEscrowTokenInfo(
 
   const isAssociated = !!project.associatedTokens?.includes(token.symbol)
   const includeInTotal = escrow.includeInTotal ?? true
-  const bridge = escrow.bridge
+  const bridgedUsing = escrow.bridgedUsing
   const source = escrow.source ?? 'canonical'
 
   return {
@@ -230,7 +230,7 @@ function getEscrowTokenInfo(
     untilTimestamp,
     includeInTotal: token.excludeFromTotal ? false : includeInTotal,
     isAssociated,
-    bridge,
+    bridgedUsing,
     source,
   }
 }

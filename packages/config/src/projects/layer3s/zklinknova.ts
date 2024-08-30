@@ -149,8 +149,12 @@ export const zklinknova: Layer3 = {
         sinceTimestamp: new UnixTime(1711092485),
         tokens: ['ETH'],
         source: 'external',
-        bridge: {
-          name: 'zkLink Nova Bridge from Optimism',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'zkLink Nova Bridge from Optimism',
+            },
+          ],
         },
       },
       {
@@ -160,8 +164,12 @@ export const zklinknova: Layer3 = {
         sinceTimestamp: new UnixTime(1711095511),
         tokens: '*',
         source: 'external',
-        bridge: {
-          name: 'zkLink Nova Bridge from Optimism',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'zkLink Nova Bridge from Optimism',
+            },
+          ],
         },
       },
       {
@@ -184,8 +192,12 @@ export const zklinknova: Layer3 = {
         address: EthereumAddress('0x5fD9F73286b7E8683Bab45019C94553b93e015Cf'),
         sinceTimestamp: new UnixTime(1709278799),
         tokens: ['ETH'],
-        bridge: {
-          name: 'zkLink Nova Bridge from Ethereum',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'zkLink Nova Bridge from Ethereum',
+            },
+          ],
         },
       },
       {
@@ -194,8 +206,12 @@ export const zklinknova: Layer3 = {
         address: EthereumAddress('0xAd16eDCF7DEB7e90096A259c81269d811544B6B6'),
         sinceTimestamp: new UnixTime(1709295323),
         tokens: '*',
-        bridge: {
-          name: 'zkLink Nova Bridge from Ethereum',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'zkLink Nova Bridge from Ethereum',
+            },
+          ],
         },
         premintedTokens: ['ZKL'],
       },
@@ -206,8 +222,12 @@ export const zklinknova: Layer3 = {
         sinceTimestamp: new UnixTime(1709279099),
         tokens: ['ETH'],
         source: 'external',
-        bridge: {
-          name: 'zkLink Nova Bridge from Mantapacific',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'zkLink Nova Bridge from Mantapacific',
+            },
+          ],
         },
       },
       {
@@ -217,8 +237,12 @@ export const zklinknova: Layer3 = {
         sinceTimestamp: new UnixTime(1709295839),
         tokens: '*',
         source: 'external',
-        bridge: {
-          name: 'zkLink Nova Bridge from Mantapacific',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'zkLink Nova Bridge from Mantapacific',
+            },
+          ],
         },
       },
       {
@@ -228,8 +252,12 @@ export const zklinknova: Layer3 = {
         sinceTimestamp: new UnixTime(1709279309),
         tokens: ['MNT'],
         source: 'external',
-        bridge: {
-          name: 'zkLink Nova Bridge from Mantle',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'zkLink Nova Bridge from Mantle',
+            },
+          ],
         },
       },
       {
@@ -239,8 +267,12 @@ export const zklinknova: Layer3 = {
         sinceTimestamp: new UnixTime(1709296907),
         tokens: '*',
         source: 'external',
-        bridge: {
-          name: 'zkLink Nova Bridge from Mantle',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'zkLink Nova Bridge from Mantle',
+            },
+          ],
         },
       },
       {
@@ -250,8 +282,12 @@ export const zklinknova: Layer3 = {
         sinceTimestamp: new UnixTime(1709280600),
         tokens: ['ETH'],
         source: 'external',
-        bridge: {
-          name: 'zkLink Nova Bridge from ZKsync Era',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'zkLink Nova Bridge from ZKsync Era',
+            },
+          ],
         },
       },
       {
@@ -261,8 +297,12 @@ export const zklinknova: Layer3 = {
         sinceTimestamp: new UnixTime(1709297040),
         tokens: '*',
         source: 'external',
-        bridge: {
-          name: 'zkLink Nova Bridge from ZKsync Era',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'zkLink Nova Bridge from ZKsync Era',
+            },
+          ],
         },
       },
       {
@@ -272,8 +312,12 @@ export const zklinknova: Layer3 = {
         sinceTimestamp: new UnixTime(1709280428),
         tokens: ['ETH'],
         source: 'external',
-        bridge: {
-          name: 'zkLink Nova Bridge from Arbitrum',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'zkLink Nova Bridge from Arbitrum',
+            },
+          ],
         },
       },
       {
@@ -283,8 +327,12 @@ export const zklinknova: Layer3 = {
         sinceTimestamp: new UnixTime(1709296973),
         tokens: '*',
         source: 'external',
-        bridge: {
-          name: 'zkLink Nova Bridge from Arbitrum',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'zkLink Nova Bridge from Arbitrum',
+            },
+          ],
         },
       },
       {
@@ -294,8 +342,12 @@ export const zklinknova: Layer3 = {
         sinceTimestamp: new UnixTime(1710417729),
         tokens: ['ETH'],
         source: 'external',
-        bridge: {
-          name: 'zkLink Nova Bridge from Blast',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'zkLink Nova Bridge from Blast',
+            },
+          ],
         },
       },
       {
@@ -305,8 +357,12 @@ export const zklinknova: Layer3 = {
         sinceTimestamp: new UnixTime(1710427013),
         tokens: '*',
         source: 'external',
-        bridge: {
-          name: 'zkLink Nova Bridge from Blast',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'zkLink Nova Bridge from Blast',
+            },
+          ],
         },
       },
       {
@@ -316,8 +372,12 @@ export const zklinknova: Layer3 = {
         sinceTimestamp: new UnixTime(1711095697),
         tokens: ['ETH'],
         source: 'external',
-        bridge: {
-          name: 'zkLink Nova Bridge from Base',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'zkLink Nova Bridge from Base',
+            },
+          ],
         },
       },
       {
@@ -327,8 +387,12 @@ export const zklinknova: Layer3 = {
         sinceTimestamp: new UnixTime(1711098033),
         tokens: '*',
         source: 'external',
-        bridge: {
-          name: 'zkLink Nova Bridge from Base',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'zkLink Nova Bridge from Base',
+            },
+          ],
         },
       },
     ],
