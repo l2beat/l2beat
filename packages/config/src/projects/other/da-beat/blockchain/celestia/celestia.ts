@@ -36,7 +36,7 @@ export const celestia: DaLayer = {
     Celestia achieves finality at each block, with an average time between blocks of 12 seconds.
     ## Blobs
     In Celestia, blobs are user-submitted data which does not modify the blockchain state.  
-    Each blob has two components, one is a binary object of raw data bytes, the other is the namespaceID of the specific application for which the blob data is intended for.\n
+    Each blob has two components, one is a binary object of raw data bytes, the other is the namespace of the specific application for which the blob data is intended for.\n
     
     ![Blobs](/images/da-layer-technology/celestia/blobs.png#center)
 
@@ -65,7 +65,7 @@ export const celestia: DaLayer = {
 
     ## L2s Data Availability
     Scaling solutions can post data to Celestia by submitting blobs through a payForBlobs transaction. The transaction can include data as a single blob or multiple blobs, with the total maximum size determined by the maximum block size. The transaction fee is determined by the size of the data and the current gas price. 
-    Applications can then retrieve the data by querying the Celestia blockchain for the data root of the blob and the namespaceID of the application. The data can be reconstructed by querying the Celestia network for the shares of the data matrix and reconstructing the data using the erasure coding scheme.
+    Applications can then retrieve the data by querying the Celestia blockchain for the data root of the blob and the namespace of the application. The data can be reconstructed by querying the Celestia network for the shares of the data matrix and reconstructing the data using the erasure coding scheme.
 
     `,
   bridges: [
