@@ -3,7 +3,6 @@ import { formatAddress } from '~/utils/format-address'
 import { formatNumberWithCommas } from '~/utils/format-number'
 import { Card } from '../../_components/card'
 import { Breakdown } from './breakdown'
-import { ChangeWalletButton } from './change-wallet-button'
 import { type Token } from './table/tokens-table'
 
 interface DetailsHeaderProps {
@@ -50,7 +49,6 @@ export function DetailsHeader(props: DetailsHeaderProps) {
             {isAddress(props.walletAddress)
               ? formatAddress(props.walletAddress)
               : props.walletAddress}
-            <ChangeWalletButton wallet={props.walletAddress} />
           </span>
         </div>
       </div>

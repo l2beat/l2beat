@@ -1,3 +1,184 @@
+Generated with discovered.json: 0xa4553157c3933596c52abfdb87e3408732e4abf0
+
+# Diff at Fri, 30 Aug 2024 07:59:21 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 20632677
+- current block number: 20632677
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20632677 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9) {
+    +++ description: None
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444) {
+    +++ description: None
+      receivedPermissions.19.via:
+-        []
+      receivedPermissions.18.via:
+-        []
+      receivedPermissions.17.via:
+-        []
+      receivedPermissions.16.via:
+-        []
+      receivedPermissions.15.via:
+-        []
+      receivedPermissions.14.via:
+-        []
+      receivedPermissions.13.via:
+-        []
+      receivedPermissions.12.via:
+-        []
+      receivedPermissions.11.via:
+-        []
+      receivedPermissions.10.via:
+-        []
+      receivedPermissions.9.via:
+-        []
+      receivedPermissions.8.via:
+-        []
+      receivedPermissions.7.via:
+-        []
+      receivedPermissions.6.via:
+-        []
+      receivedPermissions.5.via:
+-        []
+      receivedPermissions.4.via:
+-        []
+      receivedPermissions.3.via:
+-        []
+      receivedPermissions.2.via:
+-        []
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xB8915E195121f2B5D989Ec5727fd47a5259F1CEC) {
+    +++ description: None
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+Generated with discovered.json: 0x236c711bf97e964b1e3eab3c45d7904b4131fc77
+
+# Diff at Thu, 29 Aug 2024 07:14:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae2eef5fb76c32f2e57d2f78a8a0f4686592fe8b block: 20613796
+- current block number: 20632677
+
+## Description
+
+9 new strategies are added (using beacon proxies): Their proxies are unverified but their implementation (beacon) is verified.
+
+These new strategies are due to the [permissionless token support](https://x.com/eigenlayer/status/1828083092591980698) facilitated by the new [StrategyFactory](https://etherscan.io/address/0x5e4c39ad7a3e881585e383db9827eb4811f6f647) contract that allows anyone to add new (not yet added / not blacklisted) tokens for restaking. The StrategyFactory uses a StrategyBase implementation (saved in `StrategyFactory.strategyBeacon().implementation()`) as the current beacon implementation for all new strategies.
+
+## Watched changes
+
+```diff
++   Status: CREATED
+    contract  (0x01F3BE8090C3f3A273c9Cd598d8CFc94854A45dd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x1Fc0DB099E3452b6c20027578CA57722815df98f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x505241696AB63FaEC03ed7893246DE52EB1A8CFF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x6c6E8aF98a49bBaBCc17ca1dbA6b95c5D58A2ccb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x71cB984BbcbaE0E85c8d59dB131246FA694e100D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x752c665ae29bf52F3a162a944AE26882d03321e3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x7AA0B2618daeCdCC3a8D74489c9a601204e1e4B7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x99A05F4e3Fa886A5104630e8a4b01159867ad9a1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xC9ad499c11677Ea3815984295Dd73c0858757B8E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xca18116F8Ed9081501B14C6aF3a7748E52b0E99E)
+    +++ description: None
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20613796 (main branch discovery), not current.
+
+```diff
+    contract StrategiesBeacon (0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9) {
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+      name:
+-        "UpgradeableBeacon"
++        "StrategiesBeacon"
+      descriptions:
++        ["UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory."]
+    }
+```
+
+```diff
+    contract StrategyFactory (0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647) {
+    +++ description: Factory contract for permissionless strategy creation via beacon proxies.
+      descriptions:
++        ["Factory contract for permissionless strategy creation via beacon proxies."]
+    }
+```
+
 Generated with discovered.json: 0x162b87c99b024b368882ca8a96c08b4888cc8b0c
 
 # Diff at Mon, 26 Aug 2024 15:55:43 GMT:

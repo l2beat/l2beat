@@ -3,6 +3,7 @@ import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
 import { assert, CirculatingSupplyEntry, ProjectId } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 
+import { ConfigMapping, createAmountId } from '@l2beat/config'
 import { TvlConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { IndexerService } from '../../../tools/uif/IndexerService'
@@ -12,9 +13,7 @@ import { HourlyIndexer } from '../indexers/HourlyIndexer'
 import { ValueIndexer } from '../indexers/ValueIndexer'
 import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
 import { ValueService } from '../services/ValueService'
-import { ConfigMapping } from '../utils/ConfigMapping'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
-import { createAmountId } from '../utils/createAmountId'
 import { PriceModule } from './PriceModule'
 
 export interface CirculatingSupplyModule {

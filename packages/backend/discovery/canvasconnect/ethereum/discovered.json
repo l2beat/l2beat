@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825363,
   "configHash": "0x19ddeca30a70f486e371b6ec9d33ee69634c48c8e3064a3a5de8bfe1bb713263",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "GpsFactRegistryAdapter",
@@ -129,8 +129,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
-          "via": []
+          "target": "0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d"
         }
       ]
     },

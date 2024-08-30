@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19532020,
   "configHash": "0x8dca5a8454f5155b660803896348b9646389cfe9609c50a969defa9dbc4817e5",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "BridgeGovernance",
@@ -13,18 +13,15 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
-          "via": []
+          "target": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
         },
         {
           "permission": "upgrade",
-          "target": "0x88ad09518695c6c3712AC10a214bE5109a655671",
-          "via": []
+          "target": "0x88ad09518695c6c3712AC10a214bE5109a655671"
         },
         {
           "permission": "upgrade",
-          "target": "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
-          "via": []
+          "target": "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
         }
       ],
       "ignoreInWatchMode": ["nonce"],

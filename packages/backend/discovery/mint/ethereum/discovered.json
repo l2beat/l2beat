@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20032860,
   "configHash": "0x9fae0ffe49eb46bfbb62ec000ea9e814154bce498694f0c2c22e5ec33dde4612",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "L1StandardBridge",
@@ -41,13 +41,11 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF",
-          "via": []
+          "target": "0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF"
         },
         {
           "permission": "configure",
-          "target": "0xC975862927797812371A9Fb631f83F8f5e2240D5",
-          "via": []
+          "target": "0xC975862927797812371A9Fb631f83F8f5e2240D5"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -165,28 +163,23 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xEa4165C5CDCA155779803A113d8391b741bA5228",
-          "via": []
+          "target": "0xEa4165C5CDCA155779803A113d8391b741bA5228"
         },
         {
           "permission": "upgrade",
-          "target": "0x2b3F201543adF73160bA42E1a5b7750024F30420",
-          "via": []
+          "target": "0x2b3F201543adF73160bA42E1a5b7750024F30420"
         },
         {
           "permission": "upgrade",
-          "target": "0x59625d1FE0Eeb8114a4d13c863978F39b3471781",
-          "via": []
+          "target": "0x59625d1FE0Eeb8114a4d13c863978F39b3471781"
         },
         {
           "permission": "upgrade",
-          "target": "0xB751A613f2Db932c6cdeF5048E6D2af05F9B98ED",
-          "via": []
+          "target": "0xB751A613f2Db932c6cdeF5048E6D2af05F9B98ED"
         },
         {
           "permission": "upgrade",
-          "target": "0xC975862927797812371A9Fb631f83F8f5e2240D5",
-          "via": []
+          "target": "0xC975862927797812371A9Fb631f83F8f5e2240D5"
         }
       ],
       "sinceTimestamp": 1715609063,

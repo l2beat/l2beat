@@ -216,8 +216,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
-          "via": []
+          "target": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"
         }
       ]
     },

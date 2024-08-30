@@ -1,3 +1,71 @@
+Generated with discovered.json: 0x146a15784cddb895f4356aab30b34d927f77049f
+
+# Diff at Fri, 30 Aug 2024 07:57:47 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 20590985
+- current block number: 20590985
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20590985 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x9eBf2f33526CD571f8b2ad312492cb650870CFd6) {
+    +++ description: None
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract wstETHescrowLidoProxyAdmin (0xCC2C53556Bc75217cf698721b29071d6f12628A9) {
+    +++ description: None
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xEB803eb3F501998126bf37bB823646Ed3D59d072) {
+    +++ description: None
+      receivedPermissions.13.via:
+-        []
+      receivedPermissions.12.via:
+-        []
+      receivedPermissions.11.via:
+-        []
+      receivedPermissions.10.via:
+-        []
+      receivedPermissions.9.via:
+-        []
+      receivedPermissions.8.via:
+-        []
+      receivedPermissions.7.via:
+-        []
+      receivedPermissions.6.via:
+-        []
+      receivedPermissions.5.via:
+-        []
+      receivedPermissions.4.via:
+-        []
+      receivedPermissions.3.via:
+-        []
+      receivedPermissions.2.via:
+-        []
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
 Generated with discovered.json: 0x04b22e7cd5dcc1270057a5de114bb00e998fb6d1
 
 # Diff at Fri, 23 Aug 2024 11:25:14 GMT:

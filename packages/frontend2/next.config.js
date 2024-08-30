@@ -1,11 +1,10 @@
-import createVercelToolbarPlugin from '@vercel/toolbar/plugins/next'
 import { withPlausibleProxy as createPlausibleProxyPlugin } from 'next-plausible'
 import './src/env.js'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['assets.coingecko.com'],
+    domains: ['assets.coingecko.com', 'coin-images.coingecko.com'],
   },
   // biome-ignore lint/suspicious/useAwait: rewrites must be async
   async redirects() {
@@ -257,7 +256,7 @@ const nextConfig = {
 }
 
 function createNextConfig() {
-  const plugins = [createPlausibleProxyPlugin(), createVercelToolbarPlugin()]
+  const plugins = [createPlausibleProxyPlugin()]
 
   return plugins.reduce((config, plugin) => plugin(config), nextConfig)
 }

@@ -130,7 +130,7 @@ discovery. Values are for block 14061228 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0x14340fa4862502db24894812cdb94c8b61760717
+Generated with discovered.json: 0x2e20fdb3b63a27ab6fc81362f871f62463707849
 
 # Diff at Fri, 23 Aug 2024 09:57:30 GMT:
 

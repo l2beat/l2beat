@@ -219,8 +219,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
-          "via": []
+          "target": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794"
         }
       ]
     },

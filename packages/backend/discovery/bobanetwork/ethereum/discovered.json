@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19960612,
   "configHash": "0x150fd11b72d9b276dab0b43c60f2417401823f672a2bf8c70ec190bd26acdfb7",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "SystemConfig",
@@ -115,8 +115,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc",
-          "via": []
+          "target": "0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -185,43 +184,35 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
-          "via": []
+          "target": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089"
         },
         {
           "permission": "upgrade",
-          "target": "0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB",
-          "via": []
+          "target": "0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB"
         },
         {
           "permission": "upgrade",
-          "target": "0x4d898F66327Fa050131A17ed17a39EBeCC81f0c3",
-          "via": []
+          "target": "0x4d898F66327Fa050131A17ed17a39EBeCC81f0c3"
         },
         {
           "permission": "upgrade",
-          "target": "0x7B02D13904D8e6E0f0Efaf756aB14Cb0FF21eE7e",
-          "via": []
+          "target": "0x7B02D13904D8e6E0f0Efaf756aB14Cb0FF21eE7e"
         },
         {
           "permission": "upgrade",
-          "target": "0x996ffD627901f10C80A7d4B72A12316D2e77c076",
-          "via": []
+          "target": "0x996ffD627901f10C80A7d4B72A12316D2e77c076"
         },
         {
           "permission": "upgrade",
-          "target": "0xA6Ad22bb0E73DEF40a24E510cFbc93807d8bf87e",
-          "via": []
+          "target": "0xA6Ad22bb0E73DEF40a24E510cFbc93807d8bf87e"
         },
         {
           "permission": "upgrade",
-          "target": "0xbB7aD3f9CCbC94085b7F7B1D5258e59F5F068741",
-          "via": []
+          "target": "0xbB7aD3f9CCbC94085b7F7B1D5258e59F5F068741"
         },
         {
           "permission": "upgrade",
-          "target": "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00",
-          "via": []
+          "target": "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00"
         }
       ],
       "sinceTimestamp": 1710967823,

@@ -17,14 +17,13 @@ import { useCostChartRenderParams } from './use-cost-chart-render-params'
 interface Props {
   milestones: Milestone[]
   projectId: string
-  tag?: string
 }
 
 export function ProjectCostsChart({ milestones, projectId }: Props) {
   const [scale, setScale] = useState('lin')
-  const [range, setRange] = useState<CostsTimeRange>('1d')
+  const [range, setRange] = useState<CostsTimeRange>('7d')
   const [unit, setUnit] = useState<CostsUnit>('usd')
-  const { data: chart, isLoading } = api.scaling.costs.chart.useQuery({
+  const { data: chart, isLoading } = api.costs.chart.useQuery({
     range,
     filter: { type: 'projects', projectIds: [projectId] },
   })

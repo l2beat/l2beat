@@ -380,7 +380,7 @@ model Value {
   ether                       BigInt   @default(0)
   stablecoin                  BigInt   @default(0)
 
-  @@id([timestamp, projectId, dataSource])
+  @@id([projectId, timestamp, dataSource])
   @@map("values")
 }
 

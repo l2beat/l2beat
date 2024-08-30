@@ -3,7 +3,7 @@
   "chain": "scroll",
   "blockNumber": 7788134,
   "configHash": "0x7f3c0c7f8dbff6d0beb0fae4065f8c0f2aba3de1b92c4ce05c4e20a70d731a0d",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "zkLink",
@@ -85,8 +85,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
-          "via": []
+          "target": "0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c"
         }
       ],
       "sinceTimestamp": 1718026877,
@@ -131,13 +130,11 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x119B9459D9119D07c23aD06778AeaBec804Fd1a2",
-          "via": []
+          "target": "0x119B9459D9119D07c23aD06778AeaBec804Fd1a2"
         },
         {
           "permission": "upgrade",
-          "target": "0xd8428A59B60Df2d81514D429D57DF23293f1bCe7",
-          "via": []
+          "target": "0xd8428A59B60Df2d81514D429D57DF23293f1bCe7"
         }
       ],
       "ignoreInWatchMode": ["nonce"],

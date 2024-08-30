@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x0daa16be547eb74ea4018727e077d168001915d6
+
+# Diff at Fri, 30 Aug 2024 08:01:52 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 16767881
+- current block number: 16767881
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 16767881 (main branch discovery), not current.
+
+```diff
+    contract UpgradeGatekeeper (0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7) {
+    +++ description: None
+      receivedPermissions.4.via:
+-        []
+      receivedPermissions.3.via:
+-        []
+      receivedPermissions.2.via:
+-        []
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
 Generated with discovered.json: 0xda019687e73bc4475d462455d4a7a41d05e147d4
 
 # Diff at Fri, 23 Aug 2024 09:56:45 GMT:

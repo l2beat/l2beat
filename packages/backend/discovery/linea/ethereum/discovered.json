@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20389671,
   "configHash": "0x311143ae4848e97520f64a30bb9922830c881232fba2b4ba5205492f3e5e951e",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "ERC20Bridge",
@@ -62,8 +62,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x504A330327A089d8364C4ab3811Ee26976d388ce",
-          "via": []
+          "target": "0x504A330327A089d8364C4ab3811Ee26976d388ce"
         }
       ],
       "sinceTimestamp": 1691086259,
@@ -360,13 +359,11 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "via": []
+          "target": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
         },
         {
           "permission": "upgrade",
-          "target": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-          "via": []
+          "target": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
         }
       ],
       "sinceTimestamp": 1689158711,

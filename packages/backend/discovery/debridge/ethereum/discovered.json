@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19531527,
   "configHash": "0xda2ff96fd6b62e3e863cfa2a09f32c1024251fbb46b4a150e1db5ed44869d008",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "DeBridgeGate",
@@ -239,28 +239,23 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
-          "via": []
+          "target": "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA"
         },
         {
           "permission": "upgrade",
-          "target": "0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
-          "via": []
+          "target": "0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464"
         },
         {
           "permission": "upgrade",
-          "target": "0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824",
-          "via": []
+          "target": "0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824"
         },
         {
           "permission": "upgrade",
-          "target": "0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "via": []
+          "target": "0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c"
         },
         {
           "permission": "upgrade",
-          "target": "0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636",
-          "via": []
+          "target": "0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636"
         }
       ],
       "sinceTimestamp": 1637594986,

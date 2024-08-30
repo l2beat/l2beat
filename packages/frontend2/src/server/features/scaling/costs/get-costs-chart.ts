@@ -4,19 +4,22 @@ import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
+import { z } from 'zod'
 import { db } from '~/server/database'
 import { getRange } from '~/utils/range/range'
 import { type CostsChartResponse } from './types'
 import { addIfDefined } from './utils/add-if-defined'
-import { getCostsProjects } from './utils/get-costs-projects'
-import { type CostsTimeRange, rangeToResolution } from './utils/range'
+import {
+  CostsProjectsFilter,
+  getCostsProjects,
+} from './utils/get-costs-projects'
+import { CostsTimeRange, rangeToResolution } from './utils/range'
 
-type CostsChartFilter =
-  | { type: 'all' }
-  | {
-      type: 'projects'
-      projectIds: string[]
-    }
+export const CostsChartParams = z.object({
+  range: CostsTimeRange,
+  filter: CostsProjectsFilter,
+})
+export type CostsChartParams = z.infer<typeof CostsChartParams>
 
 export function getCostsChart(
   ...parameters: Parameters<typeof getCachedCostsChart>
@@ -26,10 +29,10 @@ export function getCostsChart(
 }
 
 const getCachedCostsChart = cache(
-  async (
-    timeRange: CostsTimeRange,
-    filter: CostsChartFilter,
-  ): Promise<CostsChartResponse> => {
+  async ({
+    range: timeRange,
+    filter,
+  }: CostsChartParams): Promise<CostsChartResponse> => {
     const projects = getCostsProjects(filter)
     if (projects.length === 0) {
       return withTypes([])

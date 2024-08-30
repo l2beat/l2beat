@@ -68,23 +68,60 @@ export async function getL2ProjectDetails({
   const operatorSection = getOperatorSection(project)
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
-  const costsChartData = await api.scaling.costs.chart({
-    range: '1d',
+
+  const tvlChartData = await api.tvl.chart({
+    range: '7d',
     filter: { type: 'projects', projectIds: [project.id] },
   })
+  const activityChartData = await api.activity.chart({
+    range: '30d',
+    filter: { type: 'projects', projectIds: [project.id] },
+  })
+  const costsChartData = await api.costs.chart({
+    range: '7d',
+    filter: { type: 'projects', projectIds: [project.id] },
+  })
+
+  const sortedMilestones =
+    project.milestones?.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    ) ?? []
+
   const items: ProjectDetailsSection[] = []
 
-  if (!isEmpty(costsChartData.data)) {
+  if (!project.isUpcoming && !isEmpty(tvlChartData)) {
+    items.push({
+      type: 'ChartSection',
+      props: {
+        id: 'tvl',
+        stacked: true,
+        title: 'Value Locked',
+        projectId: project.id,
+        milestones: sortedMilestones,
+      },
+    })
+  }
+
+  if (!isEmpty(activityChartData.data)) {
+    items.push({
+      type: 'ChartSection',
+      props: {
+        id: 'activity',
+        title: 'Activity',
+        projectId: project.id,
+        milestones: sortedMilestones,
+      },
+    })
+  }
+
+  if (!project.isUpcoming && !isEmpty(costsChartData.data)) {
     items.push({
       type: 'ChartSection',
       props: {
         id: 'onchain-costs',
         title: 'Onchain costs',
         projectId: project.id,
-        milestones:
-          project.milestones?.sort(
-            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-          ) ?? [],
+        milestones: sortedMilestones,
       },
     })
   }
