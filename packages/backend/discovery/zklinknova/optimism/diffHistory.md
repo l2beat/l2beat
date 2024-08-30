@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x4581d4cb0934e9444a32da90225c8625ce71e03e
+
+# Diff at Fri, 30 Aug 2024 08:09:04 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 122588960
+- current block number: 122588960
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 122588960 (main branch discovery), not current.
+
+```diff
+    contract OptimismOwner (0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9) {
+    +++ description: None
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract OptimismProxyAdmin (0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4) {
+    +++ description: None
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
 Generated with discovered.json: 0x8396918b08f37fcb72fbdcea51ded3941aa2cb28
 
 # Diff at Fri, 23 Aug 2024 09:58:11 GMT:

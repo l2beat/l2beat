@@ -20,8 +20,8 @@ export const metadata = getDefaultMetadata({
 export default async function Page() {
   const entries = await getScalingCostsEntries()
   const range = getCookie('scalingCostsChartRange')
-  await api.scaling.costs.chart.prefetch({ range, filter: { type: 'all' } })
-  await api.scaling.costs.table.prefetch({ range })
+  await api.costs.chart.prefetch({ range, filter: { type: 'all' } })
+  await api.costs.table.prefetch({ range })
 
   return (
     <HydrateClient>

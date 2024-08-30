@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20240852,
   "configHash": "0xe296e313abe7ac0bad12697a4ed750d8b5b1476794e5ff0ab09642461c887fd1",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "Factory",
@@ -785,8 +785,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x5a54fe5234E811466D5366846283323c954310B2",
-          "via": []
+          "target": "0x5a54fe5234E811466D5366846283323c954310B2"
         }
       ],
       "sinceTimestamp": 1661448939,
@@ -911,8 +910,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x902F09715B6303d4173037652FA7377e5b98089E",
-          "via": []
+          "target": "0x902F09715B6303d4173037652FA7377e5b98089E"
         }
       ],
       "sinceTimestamp": 1647317012,

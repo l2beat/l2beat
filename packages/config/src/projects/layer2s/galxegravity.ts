@@ -1,3 +1,4 @@
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -12,16 +13,16 @@ export const galxegravity: Layer2 = orbitStackL2({
   associatedTokens: ['G'],
   nativeToken: 'G',
   display: {
-    name: 'Gravity Alpha',
+    name: 'Gravity',
     slug: 'galxegravity',
     description:
-      'Gravity is an Optimium built on the Orbit stack. It features onchain questing and has its own gas token - G. Once complete, Alpha Mainnet is supposed to get merged into Gravity Mainnet (a Proof-of-Stake Layer 1 blockchain).',
+      'Gravity is an Optimium built on the Orbit stack. It features onchain questing has its own gas token - G. Other Galxe products are aiming to integrate with the L2 and a future migration to an L1 of the same name is planned.',
     purposes: ['Social'],
     links: {
       websites: ['https://gravity.xyz'],
       apps: ['https://bridge.gravity.xyz/'],
       documentation: ['https://docs.gravity.xyz/'],
-      explorers: ['https://explorer.gravity.xyz/'],
+      explorers: ['https://gscan.xyz/', 'https://explorer.gravity.xyz/'],
       repositories: ['https://github.com/Galxe'],
       socialMedia: [
         'https://x.com/GravityChain',
@@ -43,20 +44,29 @@ export const galxegravity: Layer2 = orbitStackL2({
     assessCount: subtractOne,
     startBlock: 1,
   },
-  nonTemplatePermissions: [
-    {
-      name: 'Conduit Multisig',
-      accounts: [
-        {
-          address: discovery.getAccessControlField(
-            'UpgradeExecutor',
-            'EXECUTOR_ROLE',
-          ).members[0],
-          type: 'MultiSig',
-        },
-      ],
-      description:
-        "MultiSig that can upgrade the rollup's smart contract system (via UpgradeExecutor) and gain access to all funds.",
+  chainConfig: {
+    name: 'galxegravity',
+    chainId: 1625,
+    explorerUrl: 'https://gscan.xyz/',
+    explorerApi: {
+      url: 'https://explorer.gravity.xyz/api',
+      type: 'blockscout',
     },
+    blockscoutV2ApiUrl: 'https://explorer.gravity.xyz/api/v2',
+    minTimestampForTvl: new UnixTime(1716054191), // block 1 TS
+    multicallContracts: [
+      {
+        sinceBlock: 52682,
+        batchSize: 150,
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        version: '3',
+      },
+    ],
+  },
+  nonTemplatePermissions: [
+    ...discovery.getMultisigPermission(
+      'ConduitMultisig',
+      "MultiSig that can upgrade the rollup's smart contract system (via UpgradeExecutor) and gain access to all funds.",
+    ),
   ],
 })

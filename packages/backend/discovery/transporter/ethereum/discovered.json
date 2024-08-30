@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20576820,
   "configHash": "0xf391f2cbf95d4fb92da983d6f036a5b740c4de59baec4f13d9f56f06a92b5685",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "PriceRegistry",

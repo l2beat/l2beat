@@ -17,7 +17,7 @@
     "invert": "discovery invert",
     "lint": "biome check --formatter-enabled=false .",
     "lint:fix": "biome check --formatter-enabled=false --apply .",
-    "db:migrate": "cd ../database && prisma migrate deploy",
+    "db:migrate": "prisma migrate deploy",
     "run-kroma-propose-script": "ts-node ./discovery/kroma/ethereum/script-ts/propose.ts",
     "start": "node -r source-map-support/register build/src/index.js",
     "start:dev": "source .env && PRISMA_DB_URL=$LOCAL_DB_URL yarn db:migrate && ts-node-dev --respawn --transpile-only src/index.ts",
@@ -28,7 +28,10 @@
     "find-common-contracts": "ts-node --transpile-only scripts/findCommonContracts.ts",
     "update-diff-history": "ts-node --transpile-only scripts/updateDiffHistory.ts",
     "refresh-discovery": "ts-node --transpile-only scripts/refreshDiscovery.ts",
-    "analyze-project": "ts-node --transpile-only scripts/analyzeProject.ts"
+    "analyze-project": "ts-node --transpile-only scripts/analyzeProject.ts",
+    "restore-tvl": "cd ./scripts/tvl-restore && ./tvl-restore.sh && cd -",
+    "db:inspect": "yarn prisma studio",
+    "dev": "yarn build:dependencies && yarn start:dev"
   },
   "dependencies": {
     "@bugsnag/js": "^7.22.3",

@@ -13,7 +13,7 @@ import { TvlChartUnitAndScaleControls } from '~/app/_components/chart/tvl/tvl-ch
 import { useCookieState } from '~/hooks/use-cookie-state'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
-import { type TvlLayer2ProjectFilter } from '~/server/features/scaling/tvl/utils/project-filter-utils'
+import { type TvlProjectFilter } from '~/server/features/scaling/tvl/utils/project-filter-utils'
 import { api } from '~/trpc/react'
 import { formatCurrency } from '~/utils/format'
 import { TvlChartHeader } from '../tvl-chart-header'
@@ -26,7 +26,7 @@ interface Props {
   entries: ScalingTvlEntry[]
 }
 
-export function StackedTvlChart({ milestones, entries }: Props) {
+export function ScalingStackedTvlChart({ milestones, entries }: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
 
   const filters = useScalingFilterValues()
@@ -39,7 +39,7 @@ export function StackedTvlChart({ milestones, entries }: Props) {
   )
   const [scale, setScale] = useLocalStorage('scaling-tvl-scale', 'lin')
 
-  const chartDataType = useMemo<TvlLayer2ProjectFilter>(() => {
+  const filter = useMemo<TvlProjectFilter>(() => {
     if (filters.isEmpty) {
       return { type: 'layer2' }
     }
@@ -50,10 +50,10 @@ export function StackedTvlChart({ milestones, entries }: Props) {
     }
   }, [entries, filters, includeFilter])
 
-  const { data, isLoading } = api.scaling.summary.chart.useQuery({
+  const { data, isLoading } = api.tvl.chart.useQuery({
     range: timeRange,
     excludeAssociatedTokens,
-    ...chartDataType,
+    filter,
   })
 
   const { columns, chartRange, lastValue, change, valuesStyle } =

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19532236,
   "configHash": "0x6f289441b363ced9d2f5f1500c425c462ed7923c113afec9d7de7b772d896e22",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "ProxyAdminBridgeV2",
@@ -11,13 +11,11 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x5523985926Aa12BA58DC5Ad00DDca99678D7227E",
-          "via": []
+          "target": "0x5523985926Aa12BA58DC5Ad00DDca99678D7227E"
         },
         {
           "permission": "upgrade",
-          "target": "0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8",
-          "via": []
+          "target": "0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8"
         }
       ],
       "sinceTimestamp": 1668406715,
@@ -33,8 +31,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0",
-          "via": []
+          "target": "0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0"
         }
       ],
       "sinceTimestamp": 1643968066,

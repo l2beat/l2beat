@@ -3,7 +3,7 @@
   "chain": "polygonzkevm",
   "blockNumber": 14728552,
   "configHash": "0x710026b5135b5d108b40faf49d9063aa0102a28e3c1346da5da9851d474cdc27",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "",
@@ -25,8 +25,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
-          "via": []
+          "target": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
         }
       ],
       "sinceTimestamp": 1679974014,
@@ -81,8 +80,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xA6Bf2bE6c60175601BF88217c75dD4b14ABB5FBb",
-          "via": []
+          "target": "0xA6Bf2bE6c60175601BF88217c75dD4b14ABB5FBb"
         }
       ],
       "sinceTimestamp": 1679975850,

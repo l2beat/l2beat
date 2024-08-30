@@ -3,7 +3,7 @@
   "chain": "base",
   "blockNumber": 18674800,
   "configHash": "0xf98611165f5abbbf65d8da4632824d2cc0fcc293c72b7d86c7db088cb1fbd810",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -111,8 +111,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E",
-          "via": []
+          "target": "0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -209,28 +208,23 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x9Bf9cd5aD745076b5bFb7Cc2d3b871532973C2c0",
-          "via": []
+          "target": "0x9Bf9cd5aD745076b5bFb7Cc2d3b871532973C2c0"
         },
         {
           "permission": "upgrade",
-          "target": "0x520D972B4A7C1CE4d5e01bCd4349a93a8AeaEAC5",
-          "via": []
+          "target": "0x520D972B4A7C1CE4d5e01bCd4349a93a8AeaEAC5"
         },
         {
           "permission": "upgrade",
-          "target": "0x52fA397D799f1CE416a2089B964Aa293c347994F",
-          "via": []
+          "target": "0x52fA397D799f1CE416a2089B964Aa293c347994F"
         },
         {
           "permission": "upgrade",
-          "target": "0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4",
-          "via": []
+          "target": "0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4"
         },
         {
           "permission": "upgrade",
-          "target": "0xF7Cb313CB6D146dAbB8c5E31798BDCeFc67B831b",
-          "via": []
+          "target": "0xF7Cb313CB6D146dAbB8c5E31798BDCeFc67B831b"
         }
       ],
       "sinceTimestamp": 1707369295,

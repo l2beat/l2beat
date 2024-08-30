@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20240831,
   "configHash": "0x7fda11b24b5eed1d80b7cd4d4072385ee8cff7a3cc6537727d204842c13b9d88",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "WTIA_OFTAdapter",
@@ -458,8 +458,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x173272739Bd7Aa6e4e214714048a9fE699453059",
-          "via": []
+          "target": "0x173272739Bd7Aa6e4e214714048a9fE699453059"
         }
       ],
       "sinceTimestamp": 1706307875,
@@ -695,8 +694,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x8ddF05F9A5c488b4973897E278B58895bF87Cb24",
-          "via": []
+          "target": "0x8ddF05F9A5c488b4973897E278B58895bF87Cb24"
         }
       ],
       "sinceTimestamp": 1708705703,

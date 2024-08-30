@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20618759,
   "configHash": "0x897fdb6fb1f6c34118d11c2f55033666c8e47e8e3754543e6a1ed8ea5e286ced",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "Governance",
@@ -7903,18 +7903,15 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-          "via": []
+          "target": "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
         },
         {
           "permission": "upgrade",
-          "target": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-          "via": []
+          "target": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
         },
         {
           "permission": "upgrade",
-          "target": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
-          "via": []
+          "target": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
         }
       ],
       "sinceTimestamp": 1717520627,

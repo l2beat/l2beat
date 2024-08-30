@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20633391,
   "configHash": "0x9a0e875b484b76bd8ff86ce4e85672be29edc5be3d69f8172b37a2d45fce13a2",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "OneStepProofEntry",
@@ -330,48 +330,39 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x369001149fe80892665a7b0c17fe8Db6BeFC7F5d",
-          "via": []
+          "target": "0x369001149fe80892665a7b0c17fe8Db6BeFC7F5d"
         },
         {
           "permission": "upgrade",
-          "target": "0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03",
-          "via": []
+          "target": "0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03"
         },
         {
           "permission": "upgrade",
-          "target": "0x490f337Ac108b2a555183f5b5fd2ee84a7F45a18",
-          "via": []
+          "target": "0x490f337Ac108b2a555183f5b5fd2ee84a7F45a18"
         },
         {
           "permission": "upgrade",
-          "target": "0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C",
-          "via": []
+          "target": "0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C"
         },
         {
           "permission": "upgrade",
-          "target": "0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0",
-          "via": []
+          "target": "0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0"
         },
         {
           "permission": "upgrade",
-          "target": "0x8592Ca44dE1D354A20F75160F5602E5933D33761",
-          "via": []
+          "target": "0x8592Ca44dE1D354A20F75160F5602E5933D33761"
         },
         {
           "permission": "upgrade",
-          "target": "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a",
-          "via": []
+          "target": "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
         },
         {
           "permission": "upgrade",
-          "target": "0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11",
-          "via": []
+          "target": "0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11"
         },
         {
           "permission": "upgrade",
-          "target": "0xfC89B875970122E24C6C5ADd4Dea139443943ea7",
-          "via": []
+          "target": "0xfC89B875970122E24C6C5ADd4Dea139443943ea7"
         }
       ],
       "sinceTimestamp": 1710580715,
@@ -564,8 +555,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
-          "via": []
+          "target": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a"
         }
       ],
       "sinceTimestamp": 1710580715,
@@ -723,8 +713,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xbf2F26cadbC10C4d61ac7e424D514d79a12126f8",
-          "via": []
+          "target": "0xbf2F26cadbC10C4d61ac7e424D514d79a12126f8"
         }
       ]
     },

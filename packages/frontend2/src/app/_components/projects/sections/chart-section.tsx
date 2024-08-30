@@ -1,6 +1,8 @@
 import { type Milestone } from '@l2beat/config'
 import { ProjectActivityChart } from '../../chart/activity/project-activity-chart'
 import { ProjectCostsChart } from '../../chart/costs/project-costs-chart'
+import { ProjectTvlChart } from '../../chart/tvl/project-tvl-chart'
+import { ProjectStackedTvlChart } from '../../chart/tvl/stacked/project-stacked-tvl-chart'
 import { ProjectSection } from './project-section'
 import { type ProjectSectionId, type ProjectSectionProps } from './types'
 
@@ -11,6 +13,7 @@ type ChartSectionId = Extract<
 
 export interface ChartSectionProps extends ProjectSectionProps {
   id: ChartSectionId
+  stacked?: boolean
   projectId: string
   milestones: Milestone[]
 }
@@ -23,29 +26,44 @@ export function ChartSection({
   return (
     <ProjectSection {...sectionProps}>
       <ProjectChart
-        id={sectionProps.id}
-        milestones={milestones}
         projectId={projectId}
+        milestones={milestones}
+        {...sectionProps}
       />
     </ProjectSection>
   )
 }
 
-interface ProjectChartProps {
-  id: ChartSectionId
-  projectId: string
-  milestones: Milestone[]
-}
-
-function ProjectChart({ id, projectId, milestones }: ProjectChartProps) {
-  switch (id) {
+function ProjectChart(props: ChartSectionProps) {
+  switch (props.id) {
     case 'tvl':
-      throw new Error('Not implemented')
-    case 'activity':
+      if (props.stacked) {
+        return (
+          <ProjectStackedTvlChart
+            milestones={props.milestones}
+            projectId={props.projectId}
+          />
+        )
+      }
       return (
-        <ProjectActivityChart milestones={milestones} projectId={projectId} />
+        <ProjectTvlChart
+          milestones={props.milestones}
+          projectId={props.projectId}
+        />
       )
     case 'onchain-costs':
-      return <ProjectCostsChart milestones={milestones} projectId={projectId} />
+      return (
+        <ProjectCostsChart
+          milestones={props.milestones}
+          projectId={props.projectId}
+        />
+      )
+    case 'activity':
+      return (
+        <ProjectActivityChart
+          milestones={props.milestones}
+          projectId={props.projectId}
+        />
+      )
   }
 }

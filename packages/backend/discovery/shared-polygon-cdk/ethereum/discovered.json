@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20585049,
   "configHash": "0x282688e34ebaed9fcd1520e58e5ef3f2b2ee61cb7905d88652e16be6273d0350",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "Permit2",
@@ -20,18 +20,15 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-          "via": []
+          "target": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
         },
         {
           "permission": "upgrade",
-          "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "via": []
+          "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
         },
         {
           "permission": "upgrade",
-          "target": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
-          "via": []
+          "target": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"
         }
       ],
       "sinceTimestamp": 1679653103,

@@ -3,7 +3,7 @@
   "chain": "zksync2",
   "blockNumber": 40563041,
   "configHash": "0x04bcea5ee3d1dbb85b9f4514ecd0cd9710c3e155a03fd4f908d1e8e6824410bc",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "EraOwner",
@@ -13,8 +13,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A",
-          "via": []
+          "target": "0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -88,8 +87,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08",
-          "via": []
+          "target": "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08"
         }
       ],
       "sinceTimestamp": 1709297074,

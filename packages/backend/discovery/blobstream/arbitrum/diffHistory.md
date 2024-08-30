@@ -1,3 +1,135 @@
+Generated with discovered.json: 0x5b2c360f19f29887785ca845f03f2e00ce253980
+
+# Diff at Fri, 30 Aug 2024 11:34:11 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@15092f43b0444977eaee21a17c064e8a6944b864 block: 208089280
+- current block number: 248266616
+
+## Description
+
+- The SP1 Verifier Gateway address is set in the Blobstream contract, and replaces the SuccinctGateway for routing to the correct verifier. The Guardian can update the SP1VerifierGateway address.
+- RequestHeaderRange and NextHeaderRange functions deprecated, together with their functionIds. FunctionIds were previously used when calling the SuccinctGateway to identify which verifier to use for proof verification. Now the verifier selector is contained in the first 4 bytes of the proof.
+- Verifier program verification key is now stored in the Blobstream contract and it is used in the verifier for proof verification. It can be updated by the Guardian.
+- CommitHeaderRange has now a permissioned mode, due to onlyApprovedRelayer modifier. Guardian can approve authorised relayers and toggle the permissioned mode through checkRelayer updates (true for permissioned, false for permissionless).
+
+- SP1VerifierGateway:  contract that verifies proofs by routing to the correct verifier based on the verifier selector contained in the first 4 bytes of the proof. It additionally checks that to see that the verifier route is not frozen. The owner of the contract can add and freeze routes.
+
+## Watched changes
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: None
+      values.$implementation:
+-        "0xfb19439fBa9f16aA720be6bE0e53465a9733C964"
++        "0x47fd660D5252Bd6F9D2c71507E46aa1d6e957c23"
+      values.$upgradeCount:
+-        2
++        3
+      values.DATA_COMMITMENT_MAX:
+-        10000
++        1000
+      values.gateway:
+-        "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776"
+      values.headerRangeFunctionId:
+-        "0x949dc389c82c63394889813be437513ebc5d06f43bbc9c1e2eb4b791faade1a0"
+      values.nextHeaderFunctionId:
+-        "0x044611c8d01cf88e09811f3270a654e7faf319e96b38f3dd7f9d218c8bb4d0ef"
+      values.VERSION:
+-        "0.1.0"
++        "1.1.0"
+      values.blobstreamProgramVkey:
++        "0x0038c5c5568fe5e1ae267efb1298a7792d1cda00bccc2d1d4bfa4c1511e06380"
+      values.checkRelayer:
++        true
+      values.gateway_deprecated:
++        "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776"
+      values.headerRangeFunctionId_deprecated:
++        "0x949dc389c82c63394889813be437513ebc5d06f43bbc9c1e2eb4b791faade1a0"
+      values.isRelayerApproved:
++        true
+      values.nextHeaderFunctionId_depcrecated:
++        "0x044611c8d01cf88e09811f3270a654e7faf319e96b38f3dd7f9d218c8bb4d0ef"
+      values.verifier:
++        "0x3B6041173B80E77f038f3F2C0f9744f04837185e"
+      errors:
+-        {"isRelayerApproved":"Execution reverted"}
+      derivedName:
+-        "BlobstreamX"
++        "SP1Blobstream"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0xc350F063C13a3Ca21331610fe159E697a5c9c2FB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../Blobstream/SP1Blobstream.sol}                  |  431 +++---
+ .../blobstream/arbitrum/.flat/SP1Verifier.sol      | 1429 ++++++++++++++++++++
+ .../arbitrum/.flat/SuccinctGatewaySP1.sol          |  230 ++++
+ .../SuccinctGatewaySP1Multisig/GnosisSafe.sol      |  952 +++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   34 +
+ 5 files changed, 2888 insertions(+), 188 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 208089280 (main branch discovery), not current.
+
+```diff
+    contract BlobstreamMultisig (0x738a9b55304f9fcF776B3BA285e50c0f9eF77997) {
+    +++ description: None
+      name:
+-        "BlobstreamXMultisig"
++        "BlobstreamMultisig"
+    }
+```
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: None
+      name:
+-        "BlobstreamX"
++        "Blobstream"
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]},"TIMELOCK_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]},"GUARDIAN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]}}
+      values.relayers:
++        ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"]
+      template:
++        "blobstream/SP1Blobstream"
+      errors:
++        {"isRelayerApproved":"Execution reverted"}
+    }
+```
+
+```diff
+    contract SuccinctGatewayMultisig (0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3) {
+    +++ description: None
+      name:
+-        "SuccinctMultisig"
++        "SuccinctGatewayMultisig"
+    }
+```
+
 Generated with discovered.json: 0x1155d09f610a62ea87831e6583719e50f97da383
 
 # Diff at Fri, 23 Aug 2024 09:56:58 GMT:

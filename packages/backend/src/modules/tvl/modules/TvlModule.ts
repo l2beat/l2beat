@@ -44,6 +44,19 @@ export function createTvlModule(
     config.tvl.projects.map((p) => p.projectId),
   )
 
+  const tvlCleaner = new TvlCleaner(
+    clock,
+    logger,
+    syncOptimizer,
+    peripherals.database,
+    [
+      peripherals.database.amount,
+      peripherals.database.blockTimestamp,
+      peripherals.database.price,
+      peripherals.database.value,
+    ],
+  )
+
   const hourlyIndexer = new HourlyIndexer(logger, clock)
 
   const priceModule = createPriceModule(
@@ -136,19 +149,6 @@ export function createTvlModule(
     getApiProjects(config.tvl, configMapping),
     getAssociatedTokens(config.tvl, configMapping),
     clock,
-  )
-
-  const tvlCleaner = new TvlCleaner(
-    clock,
-    logger,
-    syncOptimizer,
-    peripherals.database,
-    [
-      peripherals.database.amount,
-      peripherals.database.blockTimestamp,
-      peripherals.database.price,
-      peripherals.database.value,
-    ],
   )
 
   const start = async () => {

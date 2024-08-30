@@ -11,7 +11,8 @@ const Enshrined = {
   type: 'Enshrined',
   value: 'Enshrined',
   sentiment: 'good',
-  description: 'TODO',
+  description:
+    'Validators and full nodes directly validate blobs data availability. On the consensus layer, block validity rules ensure that blobs are retrievable and their KZG proofs are verified. Execution clients validate blob gas values and transaction parameters.',
 } as const
 
 const NoBridge = {

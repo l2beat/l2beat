@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20568363,
   "configHash": "0x0ad84142dd4e79a6db01ea065ec0f792ac66011581e37506bc2a8a80aa13a63f",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "ZKsync",

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20440714,
   "configHash": "0x899e53b29b077d1af0417c2dcf901f5a4bfdb20a2598939c95c06827ec471499",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "EcdsaPointsXColumn",
@@ -162,8 +162,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
-          "via": []
+          "target": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -2720,8 +2719,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
-          "via": []
+          "target": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
         }
       ]
     },

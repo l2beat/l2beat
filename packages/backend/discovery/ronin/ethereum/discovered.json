@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20633139,
   "configHash": "0x0613299b238669d4cc9292ebd752109a776c3ee0fac1ca9e94e631f54a5497d8",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "MainchainBridgeManager",
@@ -19,8 +19,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08",
-          "via": []
+          "target": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08"
         }
       ],
       "sinceTimestamp": 1722414335,
@@ -126,8 +125,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB",
-          "via": []
+          "target": "0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB"
         }
       ],
       "ignoreInWatchMode": ["nonce"],

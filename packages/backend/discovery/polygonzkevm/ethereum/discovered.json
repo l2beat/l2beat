@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19976289,
   "configHash": "0x8660573ec3e06fd6350670ae40ed0bd1067e4751b1b00a633cbc91f86ec05fde",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "PolygonzkEVMVerifier",
@@ -171,18 +171,15 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
-          "via": []
+          "target": "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98"
         },
         {
           "permission": "upgrade",
-          "target": "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB",
-          "via": []
+          "target": "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB"
         },
         {
           "permission": "upgrade",
-          "target": "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01",
-          "via": []
+          "target": "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01"
         }
       ],
       "ignoreInWatchMode": ["nonce"],

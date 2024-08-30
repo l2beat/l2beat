@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19927728,
   "configHash": "0x1556cca6a43d40327c72021678db58a02c5dcb18b6d8b1c8301d3657294568c5",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "AddressManager",
@@ -62,8 +62,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4",
-          "via": []
+          "target": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -241,28 +240,23 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e",
-          "via": []
+          "target": "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e"
         },
         {
           "permission": "upgrade",
-          "target": "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9",
-          "via": []
+          "target": "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9"
         },
         {
           "permission": "upgrade",
-          "target": "0xA38d0c4E6319F9045F20318BA5f04CDe94208608",
-          "via": []
+          "target": "0xA38d0c4E6319F9045F20318BA5f04CDe94208608"
         },
         {
           "permission": "upgrade",
-          "target": "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c",
-          "via": []
+          "target": "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c"
         },
         {
           "permission": "upgrade",
-          "target": "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b",
-          "via": []
+          "target": "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b"
         }
       ],
       "sinceTimestamp": 1689106787,

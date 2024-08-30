@@ -6531,6 +6531,66 @@
       }
     },
     {
+      "id": "galxegravity:usdc.e-bridged-usdc-(stargate)",
+      "name": "Bridged USDC (Stargate)",
+      "coingeckoId": "usd-coin",
+      "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
+      "symbol": "USDC.e",
+      "decimals": 6,
+      "deploymentTimestamp": 1720481296,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "chainId": 1625,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Stargate v2 (Hydra mode)",
+        "slug": "stargatev2"
+      },
+      "excludeFromTotal": true
+    },
+    {
+      "id": "galxegravity:usdt-tether-usd",
+      "name": "Tether USD",
+      "coingeckoId": "tether",
+      "address": "0x816E810f9F787d669FB71932DeabF6c83781Cd48",
+      "symbol": "USDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1720481298,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "chainId": 1625,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Stargate v2 (Hydra mode)",
+        "slug": "stargatev2"
+      },
+      "excludeFromTotal": true
+    },
+    {
+      "id": "galxegravity:weth-weth",
+      "name": "WETH",
+      "coingeckoId": "weth",
+      "address": "0xf6f832466Cd6C21967E0D954109403f36Bc8ceaA",
+      "symbol": "WETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1720481294,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "chainId": 1625,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Stargate v2 (Hydra mode)",
+        "slug": "stargatev2"
+      },
+      "excludeFromTotal": true
+    },
+    {
       "id": "reya:usdc-usd-coin",
       "name": "USD Coin",
       "coingeckoId": "usd-coin",
@@ -7170,6 +7230,44 @@
       "chainId": 8453,
       "source": "canonical",
       "supply": "zero"
+    },
+    {
+      "id": "mode:abtc-abtc",
+      "name": "aBTC",
+      "coingeckoId": "xlink-bridged-btc-stacks",
+      "address": "0x7A087e75807F2E5143C161a817E64dF6dC5EAFe0",
+      "symbol": "aBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1721774411,
+      "coingeckoListingTimestamp": 1701648000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33363/large/abtc_%281%29.png?1701606956",
+      "chainId": 34443,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "XLink bridge"
+      },
+      "excludeFromTotal": true
+    },
+    {
+      "id": "mode:alex-alex",
+      "name": "ALEX",
+      "coingeckoId": "alexgo",
+      "address": "0xdfd0660032c2D0D38a9092a43d1669D6568cAF71",
+      "symbol": "ALEX",
+      "decimals": 18,
+      "deploymentTimestamp": 1721774433,
+      "coingeckoListingTimestamp": 1662508800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/25837/large/ALEX_Token.png?1696524922",
+      "chainId": 34443,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "XLink bridge"
+      },
+      "excludeFromTotal": true
     },
     {
       "id": "mode:rseth-kelpdao-restaked-eth",

@@ -1429,6 +1429,47 @@
       "address": "0xE41d2489571d322189246DaFA5ebDe1F4699F498"
     }
   ],
+  "galxegravity": [
+    {
+      "symbol": "USDC.e",
+      "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin",
+      "supply": "totalSupply",
+      "source": "external",
+      "excludeFromTotal": true,
+      "bridgedUsing": {
+        "bridge": "Stargate v2 (Hydra mode)",
+        "slug": "stargatev2"
+      }
+    },
+    {
+      "symbol": "USDT",
+      "address": "0x816E810f9F787d669FB71932DeabF6c83781Cd48",
+      "coingeckoId": "tether",
+      "category": "stablecoin",
+      "supply": "totalSupply",
+      "source": "external",
+      "excludeFromTotal": true,
+      "bridgedUsing": {
+        "bridge": "Stargate v2 (Hydra mode)",
+        "slug": "stargatev2"
+      }
+    },
+    {
+      "symbol": "WETH",
+      "address": "0xf6f832466Cd6C21967E0D954109403f36Bc8ceaA",
+      "coingeckoId": "weth",
+      "category": "ether",
+      "supply": "totalSupply",
+      "source": "external",
+      "excludeFromTotal": true,
+      "bridgedUsing": {
+        "bridge": "Stargate v2 (Hydra mode)",
+        "slug": "stargatev2"
+      }
+    }
+  ],
   "arbitrum": [
     {
       "symbol": "PMON",
@@ -3217,6 +3258,28 @@
     }
   ],
   "mode": [
+    {
+      "symbol": "aBTC",
+      "address": "0x7A087e75807F2E5143C161a817E64dF6dC5EAFe0",
+      "excludeFromTotal": true,
+      "coingeckoId": "xlink-bridged-btc-stacks",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "XLink bridge" // lock-mint bridge locking on Ethereum and L2s (wBTC) and on Bitcoin (BTC) and minting at the destination
+      }
+    },
+    {
+      "symbol": "ALEX",
+      "address": "0xdfd0660032c2D0D38a9092a43d1669D6568cAF71",
+      "excludeFromTotal": true,
+      "coingeckoId": "alexgo",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "XLink bridge"
+      }
+    },
     {
       "symbol": "ezETH",
       "category": "ether",

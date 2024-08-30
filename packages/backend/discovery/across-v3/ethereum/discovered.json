@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20532552,
   "configHash": "0xf486b63f8ed759517c43e689f34697eacc9d82deefc356f0c99a4c61f56a36bd",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "Zora_Adapter",
@@ -397,8 +397,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
-          "via": []
+          "target": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"
         }
       ],
       "ignoreInWatchMode": ["rootBundleProposal"],

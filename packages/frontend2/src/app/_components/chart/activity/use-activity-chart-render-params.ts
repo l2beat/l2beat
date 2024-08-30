@@ -7,7 +7,7 @@ import { mapMilestones } from '../core/utils/map-milestones'
 
 interface Params {
   milestones: Milestone[]
-  chart: RouterOutputs['scaling']['activity']['chart']['data'] | undefined
+  chart: RouterOutputs['activity']['chart']['data'] | undefined
   showMainnet: boolean
 }
 

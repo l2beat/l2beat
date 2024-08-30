@@ -13,7 +13,7 @@ export default async function Page() {
   const range = getCookie('activityTimeRange')
   const entries = await getScalingActivityEntries()
 
-  await api.scaling.activity.chart.prefetch({
+  await api.activity.chart.prefetch({
     range,
     filter: { type: 'all' },
   })

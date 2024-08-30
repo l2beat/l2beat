@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xf9c20f9cb11432b4350e8509740de3aa5ecd5bf6
+
+# Diff at Fri, 30 Aug 2024 07:54:34 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 20632523
+- current block number: 20632523
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20632523 (main branch discovery), not current.
+
+```diff
+    contract PolygonMultisig (0xFa7D2a996aC6350f4b56C043112Da0366a59b74c) {
+    +++ description: None
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
 Generated with discovered.json: 0x87bd68e8b7de7276e23bb72fe0e2044d41e2bc45
 
 # Diff at Wed, 28 Aug 2024 19:13:34 GMT:

@@ -6,6 +6,7 @@ import { DeploymentTimestamp } from './DeploymentTimestamp'
 import { Flatten } from './Flatten'
 import { FlattenAndDiff } from './FlattenAndDiff'
 import { Powerdiff } from './Powerdiff'
+import { StarknetProgramHashes } from './StarknetProgramHashes'
 import { TVL } from './TVL'
 
 export function getSubcommands() {
@@ -19,5 +20,6 @@ export function getSubcommands() {
     Flatten,
     Powerdiff,
     TVL,
+    StarknetProgramHashes,
   ]
 }

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 17968825,
   "configHash": "0xccac8f34b06e2a5664c1a8d39d3544c382c436c2d93cd6c2c70718376fae67b3",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "ForeignOmnibridge",
@@ -168,8 +168,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x1715a3E4A142d8b698131108995174F37aEBA10D",
-          "via": []
+          "target": "0x1715a3E4A142d8b698131108995174F37aEBA10D"
         }
       ]
     },
@@ -185,13 +184,11 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d",
-          "via": []
+          "target": "0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d"
         },
         {
           "permission": "upgrade",
-          "target": "0xd0764FAe29E0a6a96fF685f71CfC685456D5636c",
-          "via": []
+          "target": "0xd0764FAe29E0a6a96fF685f71CfC685456D5636c"
         }
       ]
     },
