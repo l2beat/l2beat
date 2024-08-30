@@ -21,6 +21,7 @@ import { createVerifiersModule } from './modules/verifiers/VerifiersModule'
 import { Peripherals } from './peripherals/Peripherals'
 import { Clock } from './tools/Clock'
 import { getErrorReportingMiddleware } from './tools/ErrorReporter'
+import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
 
 export class Application {
   start: () => Promise<void>
@@ -54,6 +55,7 @@ export class Application {
       createActivityModule(config, logger, peripherals, clock),
       createUpdateMonitorModule(config, logger, peripherals, clock),
       createImplementationChangeModule(config, logger, peripherals),
+      createFlatSourcesModule(config, logger, peripherals),
       createStatusModule(config, logger, peripherals),
       trackedTxsModule,
       createFinalityModule(
