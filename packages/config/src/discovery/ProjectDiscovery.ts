@@ -16,6 +16,7 @@ import {
 import {
   assert,
   EthereumAddress,
+  TokenBridgedUsing,
   UnixTime,
   notUndefined,
 } from '@l2beat/shared-pure'
@@ -125,10 +126,7 @@ export class ProjectDiscovery {
     isUpcoming?: boolean
     includeInTotal?: boolean
     source?: ScalingProjectEscrow['source']
-    bridgedUsing?: {
-      bridges: { name: string; slug?: string }[]
-      warning?: string
-    }
+    bridgedUsing?: TokenBridgedUsing
     isHistorical?: boolean
     untilTimestamp?: UnixTime
   }): ScalingProjectEscrow {

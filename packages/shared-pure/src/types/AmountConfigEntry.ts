@@ -52,8 +52,5 @@ export interface AmountConfigBase {
   symbol: string
   isAssociated: boolean
   category: Token['category']
-  bridgedUsing?: {
-    bridges: { name: string; slug?: string }[]
-    warning?: string
-  }
+  bridgedUsing?: Token['bridgedUsing']
 }

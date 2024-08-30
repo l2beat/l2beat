@@ -19,8 +19,15 @@ export interface Token {
   source: 'canonical' | 'external' | 'native'
   supply: 'totalSupply' | 'circulatingSupply' | 'zero'
   excludeFromTotal?: true
-  bridgedUsing?: {
-    bridges: { name: string; slug?: string }[]
-    warning?: string
-  }
+  bridgedUsing?: TokenBridgedUsing
+}
+
+export interface TokenBridge {
+  name: string
+  slug?: string
+}
+
+export interface TokenBridgedUsing {
+  bridges: TokenBridge[]
+  warning?: string
 }

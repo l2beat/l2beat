@@ -8,6 +8,7 @@ import {
   EthereumAddress,
   ProjectId,
   Token,
+  TokenBridgedUsing,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { ScalingProjectEscrow } from '../common/ScalingProjectEscrow'
@@ -45,10 +46,7 @@ export interface BackendProjectEscrow {
   chain: string
   includeInTotal?: boolean
   source?: ScalingProjectEscrow['source']
-  bridgedUsing?: {
-    bridges: { name: string; slug?: string }[]
-    warning?: string
-  }
+  bridgedUsing?: TokenBridgedUsing
 }
 
 export function toBackendProject(
