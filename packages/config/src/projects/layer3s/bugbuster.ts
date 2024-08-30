@@ -59,7 +59,7 @@ export const bugbuster: Layer3 = {
     stateCorrectness: {
       name: 'Fraud proofs are in development',
       description:
-        'Ultimately, Cartesi DApps will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the Honeypot DApp permits invalid state roots. Since Honeypot is immutable, this feature will not be added to the DApp.',
+        'Ultimately, Cartesi DApps will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the Bug Buster DApp permits invalid state roots.',
       risks: [
         {
           category: 'Funds can be stolen if',
@@ -102,9 +102,31 @@ export const bugbuster: Layer3 = {
     destinationToken: RISK_VIEW.CANONICAL,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
+  permissions: [
+    {
+      name: 'BugBuster Owner',
+      accounts: [
+        discovery.formatPermissionedAccount(
+          discovery.getContractValue('BugBuster', 'owner'),
+        ),
+      ],
+      description:
+        'Owner of the Bug Buster Cartesi DApp. Can exchange the consensus and therefore steal all funds.',
+    },
+    {
+      name: 'Authority Owner',
+      accounts: [
+        discovery.formatPermissionedAccount(
+          discovery.getContractValue('Authority', 'owner'),
+        ),
+      ],
+      description:
+        'Owner of the Authority contract - the current consensus implementation. Can make arbitrary claims about the current state of Bug Buster and steal all funds in the absence of fraud proofs.',
+    },
+  ],
   contracts: {
     addresses: [
-      discovery.getContractDetails('Honeypot', {
+      discovery.getContractDetails('BugBuster', {
         description:
           'CartesiDApp instance for the Bug Buster DApp, responsible for holding assets and allowing the DApp to interact with other smart contracts.',
       }),
@@ -114,7 +136,7 @@ export const bugbuster: Layer3 = {
       }),
       discovery.getContractDetails('ERC20Portal', {
         description:
-          'Contract that allows anyone to perform transfers of ERC-20 tokens to Cartesi DApps.',
+          'Contract that allows anyone to perform transfers of ERC-20 tokens to Cartesi DApps (like e.g. Bug Buster).',
       }),
       discovery.getContractDetails('Authority', {
         description:
