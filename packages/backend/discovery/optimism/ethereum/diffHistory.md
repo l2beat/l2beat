@@ -1,14 +1,59 @@
-Generated with discovered.json: 0x3655cd4d93e0c9af9ff4f01738a0abf8aa0acc65
+Generated with discovered.json: 0xa247759011073b8a4fd767846c728bae9aac6f49
 
-# Diff at Fri, 30 Aug 2024 07:54:13 GMT:
+# Diff at Fri, 30 Aug 2024 10:28:19 GMT:
 
-- author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 20548226
-- current block number: 20548226
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@78fe1115153efe3e1ba2014fd74329156dca3951 block: 20548226
+- current block number: 20640793
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Synthetix MS changes (owns the SNX escrow).
+
+Optimism is meanwhile still using the fallback centralized FPs.
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (0xe5965Ab5962eDc7477C8520243A95517CD252fA9) {
+    +++ description: None
+      values.permissionedGamesTotal:
+-        17
++        326
+    }
+```
+
+```diff
+    contract SynthetixMultisig (0xEb3107117FEAd7de89Cd14D463D340A2E6917769) {
+    +++ description: None
+      values.$members.10:
+-        "0x562948111d50BF039A39Eea48D127f2Ae51ddF02"
+      values.$members.9:
+-        "0x1dd532CF7603a60C3ec91360f273DA3Db38545aB"
+      values.$members.8:
+-        "0x2d8cF727d37e7277D5eeDbAb853a3e8320f767Cd"
+      values.$members.7:
+-        "0x347c3190bD015FBD0e47fb90AA4917138A8A32FE"
+      values.$members.6:
+-        "0xa2fa6Ef1Fcf740b632a04B3FC56B5d3118Bbd211"
++        "0x562948111d50BF039A39Eea48D127f2Ae51ddF02"
+      values.$members.5:
+-        "0x599e835cbFC903eF09f3Dd5E08D1cF63c32AF8d8"
++        "0x347c3190bD015FBD0e47fb90AA4917138A8A32FE"
+      values.$members.4:
+-        "0xe1Efa5C91cA533E4a51884d805879249E3FCB2BC"
++        "0x599e835cbFC903eF09f3Dd5E08D1cF63c32AF8d8"
+      values.$members.3:
+-        "0x8909F73188C4fE68B283fCB1E724b2466e0BdfD0"
++        "0xe1Efa5C91cA533E4a51884d805879249E3FCB2BC"
+      values.$threshold:
+-        5
++        4
+      values.multisigThreshold:
+-        "5 of 11 (45%)"
++        "4 of 7 (57%)"
+    }
+```
 
 ## Config/verification related changes
 
