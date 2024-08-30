@@ -1439,8 +1439,12 @@
       "source": "external",
       "excludeFromTotal": true,
       "bridgedUsing": {
-        "bridge": "Stargate v2 (Hydra mode)",
-        "slug": "stargatev2"
+        "bridges": [
+          {
+            "name": "Stargate v2 (Hydra mode)",
+            "slug": "stargatev2"
+          }
+        ]
       }
     },
     {
@@ -1452,8 +1456,12 @@
       "source": "external",
       "excludeFromTotal": true,
       "bridgedUsing": {
-        "bridge": "Stargate v2 (Hydra mode)",
-        "slug": "stargatev2"
+        "bridges": [
+          {
+            "name": "Stargate v2 (Hydra mode)",
+            "slug": "stargatev2"
+          }
+        ]
       }
     },
     {
@@ -1465,8 +1473,12 @@
       "source": "external",
       "excludeFromTotal": true,
       "bridgedUsing": {
-        "bridge": "Stargate v2 (Hydra mode)",
-        "slug": "stargatev2"
+        "bridges": [
+          {
+            "name": "Stargate v2 (Hydra mode)",
+            "slug": "stargatev2"
+          }
+        ]
       }
     }
   ],
@@ -3266,7 +3278,11 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "XLink bridge" // lock-mint bridge locking on Ethereum and L2s (wBTC) and on Bitcoin (BTC) and minting at the destination
+        "bridges": [
+          {
+            "name": "XLink bridge" // lock-mint bridge locking on Ethereum and L2s (wBTC) and on Bitcoin (BTC) and minting at the destination
+          }
+        ]
       }
     },
     {
@@ -3277,7 +3293,11 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "XLink bridge"
+        "bridges": [
+          {
+            "name": "XLink bridge"
+          }
+        ]
       }
     },
     {

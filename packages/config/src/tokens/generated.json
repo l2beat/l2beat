@@ -6545,8 +6545,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Stargate v2 (Hydra mode)",
-        "slug": "stargatev2"
+        "bridges": [
+          {
+            "name": "Stargate v2 (Hydra mode)",
+            "slug": "stargatev2"
+          }
+        ]
       },
       "excludeFromTotal": true
     },
@@ -6565,8 +6569,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Stargate v2 (Hydra mode)",
-        "slug": "stargatev2"
+        "bridges": [
+          {
+            "name": "Stargate v2 (Hydra mode)",
+            "slug": "stargatev2"
+          }
+        ]
       },
       "excludeFromTotal": true
     },
@@ -6585,8 +6593,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Stargate v2 (Hydra mode)",
-        "slug": "stargatev2"
+        "bridges": [
+          {
+            "name": "Stargate v2 (Hydra mode)",
+            "slug": "stargatev2"
+          }
+        ]
       },
       "excludeFromTotal": true
     },
@@ -7246,7 +7258,11 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "XLink bridge"
+        "bridges": [
+          {
+            "name": "XLink bridge"
+          }
+        ]
       },
       "excludeFromTotal": true
     },
@@ -7265,7 +7281,11 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "XLink bridge"
+        "bridges": [
+          {
+            "name": "XLink bridge"
+          }
+        ]
       },
       "excludeFromTotal": true
     },
