@@ -3,7 +3,7 @@
   "chain": "optimism",
   "blockNumber": 123584561,
   "configHash": "0xacfdf8cae6b79206af8daa019648487244a36aebfae0394e9a29e7ea1544a351",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "GnosisSafe",
@@ -396,13 +396,11 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x57f928158C3EE7CDad1e4D8642503c4D0201f611",
-          "via": []
+          "target": "0x57f928158C3EE7CDad1e4D8642503c4D0201f611"
         },
         {
           "permission": "upgrade",
-          "target": "0x86D26Ed31556EA7694BD0cC4e674D7526f70511a",
-          "via": []
+          "target": "0x86D26Ed31556EA7694BD0cC4e674D7526f70511a"
         }
       ]
     },

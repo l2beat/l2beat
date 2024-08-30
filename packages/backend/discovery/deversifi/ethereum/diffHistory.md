@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xee827e23ad54c8283fe16e6d8391b4df55125648
+
+# Diff at Fri, 30 Aug 2024 07:52:03 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 20633317
+- current block number: 20633317
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20633317 (main branch discovery), not current.
+
+```diff
+    contract GovernanceMultisig (0xCCa5De1e10c05c50C51ac551D9182cd31aca1889) {
+    +++ description: This Multisig itself is one of the two Governors, the other being an EOA, both equally permissioned to upgrade the bridge.
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
 Generated with discovered.json: 0xd3cb0c967e7f0f853d636259b32a7bdf6de9801d
 
 # Diff at Thu, 29 Aug 2024 09:22:37 GMT:

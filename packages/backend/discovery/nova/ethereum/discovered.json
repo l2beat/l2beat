@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20627688,
   "configHash": "0x1241b90279ce248a8d9706c69b47eade2b801d879df669fccf14af7d3a924a41",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "ValidatorWallet",
@@ -199,8 +199,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xFb209827c58283535b744575e11953DCC4bEAD88",
-          "via": []
+          "target": "0xFb209827c58283535b744575e11953DCC4bEAD88"
         }
       ],
       "sinceTimestamp": 1678968515,
@@ -236,13 +235,11 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
-          "via": []
+          "target": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
         },
         {
           "permission": "upgrade",
-          "target": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-          "via": []
+          "target": "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
         }
       ],
       "sinceTimestamp": 1678968395,
@@ -313,33 +310,27 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-          "via": []
+          "target": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b"
         },
         {
           "permission": "upgrade",
-          "target": "0x304807A7ed6c1296df2128E6ff3836e477329CD2",
-          "via": []
+          "target": "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         },
         {
           "permission": "upgrade",
-          "target": "0xA59075221b50C598aED0Eae0bB9869639513af0D",
-          "via": []
+          "target": "0xA59075221b50C598aED0Eae0bB9869639513af0D"
         },
         {
           "permission": "upgrade",
-          "target": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
-          "via": []
+          "target": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd"
         },
         {
           "permission": "upgrade",
-          "target": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
-          "via": []
+          "target": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949"
         },
         {
           "permission": "upgrade",
-          "target": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
-          "via": []
+          "target": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"
         }
       ],
       "sinceTimestamp": 1656050353,
@@ -361,8 +352,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x658e8123722462F888b6fa01a7dbcEFe1D6DD709",
-          "via": []
+          "target": "0x658e8123722462F888b6fa01a7dbcEFe1D6DD709"
         }
       ],
       "sinceTimestamp": 1660078092,
@@ -435,18 +425,15 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
-          "via": []
+          "target": "0x23122da8C581AA7E0d07A36Ff1f16F799650232f"
         },
         {
           "permission": "upgrade",
-          "target": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
-          "via": []
+          "target": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf"
         },
         {
           "permission": "upgrade",
-          "target": "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48",
-          "via": []
+          "target": "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48"
         }
       ],
       "sinceTimestamp": 1656312664,
@@ -462,8 +449,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23",
-          "via": []
+          "target": "0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23"
         }
       ],
       "sinceTimestamp": 1659949972,
@@ -502,8 +488,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3",
-          "via": []
+          "target": "0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3"
         }
       ],
       "sinceTimestamp": 1659997241,
@@ -525,8 +510,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3B0369CAD35d257793F51c28213a4Cf4001397AC",
-          "via": []
+          "target": "0x3B0369CAD35d257793F51c28213a4Cf4001397AC"
         }
       ],
       "sinceTimestamp": 1653129278,
@@ -740,8 +724,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87",
-          "via": []
+          "target": "0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87"
         }
       ],
       "sinceTimestamp": 1656217585,
@@ -840,8 +823,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76",
-          "via": []
+          "target": "0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76"
         }
       ],
       "sinceTimestamp": 1657735979,

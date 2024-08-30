@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x6d6b9df731962a3b59a97d94d7b57792794c1bed
+
+# Diff at Fri, 30 Aug 2024 07:53:25 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 20117905
+- current block number: 20117905
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20117905 (main branch discovery), not current.
+
+```diff
+    contract LightLinkMultisig (0x3345702FeA1669Efa1e085610A62F89d159Bc0c8) {
+    +++ description: None
+      receivedPermissions.2.via:
+-        []
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
 Generated with discovered.json: 0xbfab149ef568896625f0220e4db9c67e96c97804
 
 # Diff at Fri, 23 Aug 2024 09:52:57 GMT:

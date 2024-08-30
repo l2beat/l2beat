@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20138492,
   "configHash": "0xa2d3b73f464bf088bb88deb4941464593bad0f0eb4cf4151a94504c3d2a3ec56",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -11,18 +11,15 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x2A5c2568b10A0E826BfA892Cf21BA7218310180b",
-          "via": []
+          "target": "0x2A5c2568b10A0E826BfA892Cf21BA7218310180b"
         },
         {
           "permission": "upgrade",
-          "target": "0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168",
-          "via": []
+          "target": "0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168"
         },
         {
           "permission": "upgrade",
-          "target": "0xebaB24F13de55789eC1F3fFe99A285754e15F7b9",
-          "via": []
+          "target": "0xebaB24F13de55789eC1F3fFe99A285754e15F7b9"
         }
       ],
       "sinceTimestamp": 1647128852,

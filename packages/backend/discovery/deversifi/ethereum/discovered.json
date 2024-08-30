@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20633317,
   "configHash": "0x8a591324e40a30c710cd4945a74a4cd5f7f8cc53c7b6802a87a7b9233fde62df",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "Committee",
@@ -145,8 +145,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b",
-          "via": []
+          "target": "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -191,8 +190,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b",
-          "via": []
+          "target": "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b"
         }
       ]
     },

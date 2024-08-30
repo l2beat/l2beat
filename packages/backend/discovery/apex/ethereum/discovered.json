@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825348,
   "configHash": "0x337a5ff15a122bd974e00bbfe46a4cf2b443ee344d041a199bbf3b8bf4e15bda",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "AggregationRouterV4",
@@ -231,8 +231,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-          "via": []
+          "target": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -381,8 +380,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
-          "via": []
+          "target": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b"
         }
       ]
     },
@@ -401,8 +399,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-          "via": []
+          "target": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"
         }
       ]
     },

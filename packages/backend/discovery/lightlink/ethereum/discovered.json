@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20117905,
   "configHash": "0xbd532d50aee921cf92fede7bc5de97f9045a0e13b17f1abb4df7a6affca962a8",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "Challenge",
@@ -74,18 +74,15 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3ca373F5ecB92ac762f9876f6e773082A4589995",
-          "via": []
+          "target": "0x3ca373F5ecB92ac762f9876f6e773082A4589995"
         },
         {
           "permission": "upgrade",
-          "target": "0x624631881655a310adcF0d1336658Cc977609b72",
-          "via": []
+          "target": "0x624631881655a310adcF0d1336658Cc977609b72"
         },
         {
           "permission": "upgrade",
-          "target": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
-          "via": []
+          "target": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9"
         }
       ],
       "sinceTimestamp": 1692154319,
@@ -259,18 +256,15 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd",
-          "via": []
+          "target": "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd"
         },
         {
           "permission": "upgrade",
-          "target": "0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04",
-          "via": []
+          "target": "0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04"
         },
         {
           "permission": "upgrade",
-          "target": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE",
-          "via": []
+          "target": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE"
         }
       ]
     },

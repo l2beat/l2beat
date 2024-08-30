@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20632523,
   "configHash": "0xb5e2cf1823aed9991691794fa7ebc2aec51dc9338234024703e35f0ce879ee8a",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "SlashingManager",
@@ -354,13 +354,11 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908",
-          "via": []
+          "target": "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908"
         },
         {
           "permission": "upgrade",
-          "target": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
-          "via": []
+          "target": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b"
         }
       ],
       "ignoreInWatchMode": ["nonce"],

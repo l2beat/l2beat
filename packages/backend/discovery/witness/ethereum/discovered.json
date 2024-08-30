@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20491473,
   "configHash": "0x5a18dc94a699ce771faca7fc8fd756e0d22f96fe60d5e177d853ca3c8c90f379",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "FflonkVerifier",
@@ -62,8 +62,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
-          "via": []
+          "target": "0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8"
         }
       ],
       "sinceTimestamp": 1718630195,

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20632909,
   "configHash": "0xaa3acee466f59f0dbe8eb919c8879136df61559b66825304ab334e5ace0c5fba",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "SlashingManager",
@@ -708,58 +708,47 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f",
-          "via": []
+          "target": "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f"
         },
         {
           "permission": "upgrade",
-          "target": "0x2d641867411650cd05dB93B59964536b1ED5b1B7",
-          "via": []
+          "target": "0x2d641867411650cd05dB93B59964536b1ED5b1B7"
         },
         {
           "permission": "upgrade",
-          "target": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "via": []
+          "target": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf"
         },
         {
           "permission": "upgrade",
-          "target": "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908",
-          "via": []
+          "target": "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908"
         },
         {
           "permission": "upgrade",
-          "target": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
-          "via": []
+          "target": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b"
         },
         {
           "permission": "upgrade",
-          "target": "0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30",
-          "via": []
+          "target": "0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30"
         },
         {
           "permission": "upgrade",
-          "target": "0x932532aA4c0174b8453839A6E44eE09Cc615F2b7",
-          "via": []
+          "target": "0x932532aA4c0174b8453839A6E44eE09Cc615F2b7"
         },
         {
           "permission": "upgrade",
-          "target": "0x9923263fA127b3d1484cFD649df8f1831c2A74e4",
-          "via": []
+          "target": "0x9923263fA127b3d1484cFD649df8f1831c2A74e4"
         },
         {
           "permission": "upgrade",
-          "target": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
-          "via": []
+          "target": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
         },
         {
           "permission": "upgrade",
-          "target": "0xDB2382413bCb9c2F1B6b62B52238558266361D68",
-          "via": []
+          "target": "0xDB2382413bCb9c2F1B6b62B52238558266361D68"
         },
         {
           "permission": "upgrade",
-          "target": "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD",
-          "via": []
+          "target": "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD"
         }
       ],
       "ignoreInWatchMode": ["nonce"],

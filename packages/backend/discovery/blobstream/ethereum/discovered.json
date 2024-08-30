@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20218838,
   "configHash": "0xcf8eb56d57080d480c766eda217b523305fd0fa54653550aace47ce9679209ad",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "FunctionVerifier",
@@ -175,8 +175,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
-          "via": []
+          "target": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"
         }
       ]
     },

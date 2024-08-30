@@ -3,7 +3,7 @@
   "chain": "base",
   "blockNumber": 15661242,
   "configHash": "0x0c0d0bcd179872a8706b012c4ecadd3454541847850f80a127ceaea39a281aea",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -19,28 +19,23 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x31f09c4a4151EeBB1c0Ac10003bF3b06f4Aa5668",
-          "via": []
+          "target": "0x31f09c4a4151EeBB1c0Ac10003bF3b06f4Aa5668"
         },
         {
           "permission": "upgrade",
-          "target": "0x52c901666Cfc8AeE9b46A3b7C101688351529B37",
-          "via": []
+          "target": "0x52c901666Cfc8AeE9b46A3b7C101688351529B37"
         },
         {
           "permission": "upgrade",
-          "target": "0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E",
-          "via": []
+          "target": "0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E"
         },
         {
           "permission": "upgrade",
-          "target": "0xbA256039AEdaD407692D8Deb366308BE6Bb2515C",
-          "via": []
+          "target": "0xbA256039AEdaD407692D8Deb366308BE6Bb2515C"
         },
         {
           "permission": "upgrade",
-          "target": "0xCC61c26901E719B73273C1484e337cBAB84369EF",
-          "via": []
+          "target": "0xCC61c26901E719B73273C1484e337cBAB84369EF"
         }
       ],
       "sinceTimestamp": 1709680173,
@@ -179,8 +174,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x25aBB510386A658c622280f488844BD3b485DC32",
-          "via": []
+          "target": "0x25aBB510386A658c622280f488844BD3b485DC32"
         }
       ],
       "ignoreInWatchMode": ["nonce"],

@@ -3,7 +3,7 @@
   "chain": "linea",
   "blockNumber": 7681920,
   "configHash": "0x6c55b858b842e046139e5aa87fd8f201e2b06d85311095d9aec21c8711b5ab0e",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "LineaOwner",
@@ -13,8 +13,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB",
-          "via": []
+          "target": "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -285,8 +284,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8",
-          "via": []
+          "target": "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8"
         }
       ],
       "sinceTimestamp": 1709218009,
