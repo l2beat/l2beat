@@ -1,101 +1,73 @@
-import {
-  http,
-  Hash,
-  PublicClient,
-  createPublicClient,
-  decodeFunctionData,
-  keccak256,
-  toHex,
-} from 'viem'
-import { mainnet } from 'viem/chains'
+import { ethers } from 'ethers'
 
 const providerUrl = 'https://eth.drpc.org'
 const knownProgramHashes: Record<string, string> = {
-  // '3383082961563516565935611087683915026448707331436034043529592588079494402084':
-  //   'Known Program 1',
-  // '3485280386001712778192330279103973322645241679001461923469191557000342180556':
-  //   'Known Program 2',
+  // from our discovery: names are just project names that are using this progHash
+  '3383082961563516565935611087683915026448707331436034043529592588079494402084':
+    'Paradex, Starknet',
+  '3485280386001712778192330279103973322645241679001461923469191557000342180556':
+    'ImutableX, Layer2FinanceZK',
+  '770346231394331402493200980986217737662224545740427952627288191358999988146':
+    'ApeX-USDT',
+  '3174901404014912024702042974619036870715605532092680335571201877913899936957':
+    'RhinoFi, Sorare',
+  '16830627573509542901909952446321116535677491650708854009406762893086223513':
+    'Brine, Canvasconnect, Myria, ReddioEX',
+  '3114724292040200590153042023978438629733352741898912919152162079752811928849':
+    'ApeX-USDC',
 }
 
 interface DecodedCalldata {
-  proofParams: bigint[]
-  proof: bigint[]
-  taskMetadata: bigint[]
-  cairoAuxInput: bigint[]
-  cairoVerifierId: bigint
+  proofParams: ethers.BigNumber[]
+  proof: ethers.BigNumber[]
+  taskMetadata: ethers.BigNumber[]
+  cairoAuxInput: ethers.BigNumber[]
+  cairoVerifierId: ethers.BigNumber
 }
 
 class EthereumTransactionAnalyzer {
-  private client: PublicClient
+  private provider: ethers.providers.JsonRpcProvider
   private knownProgramHashes: Record<string, string>
 
   constructor(
     providerUrl: string,
     knownProgramHashes: Record<string, string> = {},
   ) {
-    this.client = createPublicClient({
-      chain: mainnet,
-      transport: http(providerUrl),
-    })
+    this.provider = new ethers.providers.JsonRpcProvider(providerUrl)
     this.knownProgramHashes = knownProgramHashes
   }
 
   private async fetchTransactionCalldata(
-    txHash: Hash,
-  ): Promise<`0x${string}` | null> {
+    txHash: string,
+  ): Promise<string | null> {
     try {
-      const tx = await this.client.getTransaction({ hash: txHash })
-      return tx.input
+      const tx = await this.provider.getTransaction(txHash)
+      return tx.data
     } catch (error) {
       console.error(`Error fetching transaction ${txHash}:`, error)
       return null
     }
   }
 
-  private decodeCalldata(calldata: `0x${string}`): DecodedCalldata {
+  private decodeCalldata(calldata: string): DecodedCalldata {
     const funcSignature =
       'verifyProofAndRegister(uint256[],uint256[],uint256[],uint256[],uint256)'
-    const selector = keccak256(toHex(funcSignature)).slice(0, 10)
+    const iface = new ethers.utils.Interface([`function ${funcSignature}`])
+    const selector = iface.getSighash('verifyProofAndRegister')
 
     if (calldata.slice(0, 10) !== selector) {
       throw new Error('Calldata does not match the function signature')
     }
 
-    const { args } = decodeFunctionData({
-      abi: [
-        {
-          name: 'verifyProofAndRegister',
-          type: 'function',
-          inputs: [
-            { type: 'uint256[]', name: 'proofParams' },
-            { type: 'uint256[]', name: 'proof' },
-            { type: 'uint256[]', name: 'taskMetadata' },
-            { type: 'uint256[]', name: 'cairoAuxInput' },
-            { type: 'uint256', name: 'cairoVerifierId' },
-          ],
-          outputs: [],
-        },
-      ],
-      data: calldata,
-    })
-
-    if (!args || args.length !== 5) {
-      throw new Error('Unexpected argument structure in decoded calldata')
-    }
+    const decoded = iface.decodeFunctionData('verifyProofAndRegister', calldata)
 
     return {
-      proofParams: args[0] as bigint[],
-      proof: args[1] as bigint[],
-      taskMetadata: args[2] as bigint[],
-      cairoAuxInput: args[3] as bigint[],
-      cairoVerifierId: args[4] as bigint,
+      proofParams: decoded[0],
+      proof: decoded[1],
+      taskMetadata: decoded[2],
+      cairoAuxInput: decoded[3],
+      cairoVerifierId: decoded[4],
     }
-  }
-
-  private extractProgramHashes(taskMetadata: bigint[]): string[] {
-    return taskMetadata
-      .filter((x) => x.toString().length > 10) // simply treat everything over 10 digits as a program hash
-      .map((x) => x.toString())
   }
 
   /**
@@ -109,6 +81,12 @@ class EthereumTransactionAnalyzer {
    *
    */
 
+  private extractProgramHashes(taskMetadata: ethers.BigNumber[]): string[] {
+    return taskMetadata
+      .filter((x) => x.toString().length > 10) // simply treat everything over 10 digits as a program hash
+      .map((x) => x.toString())
+  }
+
   private countProgramHashes(programHashes: string[]): Map<string, number> {
     return programHashes.reduce((counter, hash) => {
       counter.set(hash, (counter.get(hash) || 0) + 1)
@@ -116,7 +94,7 @@ class EthereumTransactionAnalyzer {
     }, new Map<string, number>())
   }
 
-  public async analyzeProgramHashes(txHash: Hash): Promise<void> {
+  public async analyzeProgramHashes(txHash: string): Promise<void> {
     const calldata = await this.fetchTransactionCalldata(txHash)
     if (!calldata) {
       console.error(`Transaction with hash ${txHash} not found.`)
@@ -159,7 +137,7 @@ async function main() {
     providerUrl,
     knownProgramHashes,
   )
-  await analyzer.analyzeProgramHashes(txHash as Hash)
+  await analyzer.analyzeProgramHashes(txHash)
 }
 
 main().catch(console.error)
