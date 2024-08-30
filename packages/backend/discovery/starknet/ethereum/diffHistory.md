@@ -1,3 +1,89 @@
+Generated with discovered.json: 0x2c4b0cd0339b8c428f9a437291bccbded87a1c38
+
+# Diff at Thu, 29 Aug 2024 13:21:54 GMT:
+
+- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
+- comparing to: main@612fba37e9862b944ddc0ced2cc0892ca74b4eae block: 20461688
+- current block number: 20634500
+
+## Description
+
+* aggregatorProgramHash is now introduced allowing for aggregation
+* more than one blob is now allowed
+
+## Watched changes
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: None
+      values.$implementation:
+-        "0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24"
++        "0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC"
+      values.identify:
+-        "StarkWare_Starknet_2024_8"
++        "StarkWare_Starknet_2024_9"
+      values.implementation:
+-        "0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24"
++        "0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC"
++++ description: The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.
++++ severity: HIGH
+      values.programHash:
+-        "3383082961563516565935611087683915026448707331436034043529592588079494402084"
++        "853638403225561750106379562222782223909906501242604214771127703946595519856"
+      values.programHashHistory.7:
++        "3383082961563516565935611087683915026448707331436034043529592588079494402084"
+      values.aggregatorProgramHash:
++        "1161178844461337253856226043908368523817098764221830529880464854589141231910"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Starknet/Starknet.sol                          | 297 ++++++++++++++++-----
+ 1 file changed, 223 insertions(+), 74 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20461688 (main branch discovery), not current.
+
+```diff
+    contract BridgeMultisig (0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec) {
+    +++ description: None
+      receivedPermissions.9.via:
+-        []
+      receivedPermissions.8.via:
+-        []
+      receivedPermissions.7.via:
+-        []
+      receivedPermissions.6.via:
+-        []
+      receivedPermissions.5.via:
+-        []
+      receivedPermissions.4.via:
+-        []
+      receivedPermissions.3.via:
+-        []
+      receivedPermissions.2.via:
+-        []
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract ProxyMultisig (0x83C0A700114101D1283D1405E2c8f21D3F03e988) {
+    +++ description: None
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
 Generated with discovered.json: 0x3e8cca328df6b88ca5d67846f51f0281443512db
 
 # Diff at Wed, 21 Aug 2024 10:06:09 GMT:
