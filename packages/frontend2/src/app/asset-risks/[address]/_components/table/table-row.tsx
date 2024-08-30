@@ -61,8 +61,7 @@ export function TableRow({
               &nbsp;
               {token.token.bridgedUsing?.bridges.length === 1
                 ? `bridged via ${token.token.bridgedUsing?.bridges[0]?.name}`
-                : token.token.bridgedUsing?.bridges?.length &&
-                    token.token.bridgedUsing?.bridges?.length > 1
+                : token.token.bridgedUsing?.bridges?.length !== 0
                   ? `bridged via multiple bridges`
                   : null}
             </div>
