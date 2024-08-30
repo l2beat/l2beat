@@ -110,6 +110,7 @@ import { rhinofi } from './rhinofi'
 import { rise } from './rise'
 import { rss3 } from './rss3'
 import { scroll } from './scroll'
+import { silicon } from './silicon'
 import { socialnetwork } from './socialnetwork'
 import { soneium } from './soneium'
 import { sophon } from './sophon'
@@ -263,6 +264,7 @@ export const layer2s: Layer2[] = [
   rise,
   rss3,
   scroll,
+  silicon,
   sophon,
   soneium,
   socialnetwork,
