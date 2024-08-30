@@ -9,6 +9,7 @@ import { createActivityModule } from './modules/activity/ActivityModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { createFeaturesModule } from './modules/features/FeaturesModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
+import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
 import { createHealthModule } from './modules/health/HealthModule'
 import { createImplementationChangeModule } from './modules/implementation-change-report/createImplementationChangeModule'
 import { createLzOAppsModule } from './modules/lz-oapps/createLzOAppsModule'
@@ -21,7 +22,6 @@ import { createVerifiersModule } from './modules/verifiers/VerifiersModule'
 import { Peripherals } from './peripherals/Peripherals'
 import { Clock } from './tools/Clock'
 import { getErrorReportingMiddleware } from './tools/ErrorReporter'
-import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
 
 export class Application {
   start: () => Promise<void>

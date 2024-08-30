@@ -1,4 +1,4 @@
-import { ChainId, ProjectId } from '@l2beat/shared-pure'
+import { ChainId, } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { FlatSourcesRecord, toRecord, toRow } from './entity'
 import { selectFlatSources } from './select'

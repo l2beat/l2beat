@@ -1,10 +1,10 @@
-import { Analysis } from '../analysis/AddressAnalyzer'
-import { DiscoveryLogger } from '../DiscoveryLogger'
-import { FileContent } from '../../flatten/ParsedFilesManager'
-import { formatSI, getThroughput, timed } from '../../utils/timing'
-import { flattenStartingFrom } from '../../flatten/flatten'
 import { posix } from 'path'
 import { assert } from '@l2beat/shared-pure'
+import { FileContent } from '../../flatten/ParsedFilesManager'
+import { flattenStartingFrom } from '../../flatten/flatten'
+import { formatSI, getThroughput, timed } from '../../utils/timing'
+import { DiscoveryLogger } from '../DiscoveryLogger'
+import { Analysis } from '../analysis/AddressAnalyzer'
 
 export function flattenDiscoveredSources(
   results: Analysis[],

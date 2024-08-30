@@ -1,4 +1,4 @@
-import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, Hash256, } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { describeDatabase } from '../../test/database'
