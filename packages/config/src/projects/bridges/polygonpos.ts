@@ -67,7 +67,7 @@ export const polygonpos: Bridge = {
         tokens: '*',
         ...upgrades,
       }),
-      // ERC20MintBurnablePredicate is not used
+      // ERC20MintBurnablePredicate is for PlasmaBridge
     ],
   },
   riskView: {
@@ -158,6 +158,11 @@ export const polygonpos: Bridge = {
       discovery.getContractDetails('StakeManager', {
         description:
           'Main configuration contract to manage stakers and their voting power.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails('SlashingManager', {
+        description:
+          'A contract priviliged to slash validators in StakeManager via slash() method.',
         ...upgrades,
       }),
       discovery.getContractDetails('Registry', {
