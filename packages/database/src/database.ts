@@ -32,6 +32,7 @@ import { TvlCleanerRepository } from './tvl/tvl-cleaner/repository'
 import { ValueRepository } from './tvl/value/repository'
 import { IndexerConfigurationRepository } from './uif/indexer-configuration/repository'
 import { IndexerStateRepository } from './uif/indexer-state/repository'
+import { FlatSourcesRepository } from './discovery/flat-sources/repository'
 
 export type Database = ReturnType<typeof createDatabase>
 export function createDatabase(config?: PoolConfig) {
@@ -55,6 +56,7 @@ export function createDatabase(config?: PoolConfig) {
     discoveryCache: new DiscoveryCacheRepository(db),
     updateMonitor: new UpdateMonitorRepository(db),
     updateNotifier: new UpdateNotifierRepository(db),
+    flatSources: new FlatSourcesRepository(db),
     // #endregion
 
     // #region Token DB
