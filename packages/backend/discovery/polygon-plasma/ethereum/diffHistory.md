@@ -1,3 +1,36 @@
+Generated with discovered.json: 0x99cc896ef586e4fa3749f6f5871425324679f7cf
+
+# Diff at Fri, 30 Aug 2024 12:08:41 GMT:
+
+- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
+- comparing to: main@ae634417f89d24a024e44e0e2eedda2a1c008d14 block: 20632523
+- current block number: 20641293
+
+## Description
+
+Trivial implementation update, likely some issue fix
+
+## Watched changes
+
+```diff
+    contract WithdrawManager (0x2A88696e0fFA76bAA1338F2C74497cC013495922) {
+    +++ description: None
+      values.$implementation:
+-        "0xA376680d32Cece9756D9f1087318400DA2fd83dF"
++        "0x31f9c8c786aD7cc70ad10cF136B36681d340b792"
+      values.implementation:
+-        "0xA376680d32Cece9756D9f1087318400DA2fd83dF"
++        "0x31f9c8c786aD7cc70ad10cF136B36681d340b792"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@20632523 => .flat}/WithdrawManager/WithdrawManager.sol      | 3 ---
+ 1 file changed, 3 deletions(-)
+```
+
 Generated with discovered.json: 0xf9c20f9cb11432b4350e8509740de3aa5ecd5bf6
 
 # Diff at Fri, 30 Aug 2024 07:54:34 GMT:
