@@ -45,9 +45,8 @@ export interface BackendProjectEscrow {
   chain: string
   includeInTotal?: boolean
   source?: ScalingProjectEscrow['source']
-  bridge?: {
-    name: string
-    slug?: string
+  bridgedUsing?: {
+    bridges: { name: string; slug?: string }[]
     warning?: string
   }
 }
@@ -192,7 +191,7 @@ function toProjectEscrow(escrow: ScalingProjectEscrow): BackendProjectEscrow {
     chain: escrow.chain,
     includeInTotal: escrow.includeInTotal,
     source: escrow.source,
-    bridge: escrow.bridge,
+    bridgedUsing: escrow.bridgedUsing,
   }
 }
 

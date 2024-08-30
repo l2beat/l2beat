@@ -23,9 +23,8 @@ export type CanonicalAssetBreakdownData = BaseAssetBreakdownData & {
 
 export type ExternalAssetBreakdownData = BaseAssetBreakdownData & {
   tokenAddress?: EthereumAddress
-  bridge?: {
-    name: string
-    slug?: string
+  bridgedUsing?: {
+    bridges: { name: string; slug?: string }[]
     warning?: string
   }
 }
