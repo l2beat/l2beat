@@ -84,7 +84,7 @@ export function RiskDetails({ token }: { token: Token }) {
               width={16}
               className="size-4"
             /> */}
-              {token.token.bridge ?? 'Unknown'}
+              {token.token.bridgedUsing?.bridges[0]?.name ?? 'Unknown'}
             </Link>
           </div>
         </div>

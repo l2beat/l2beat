@@ -25,7 +25,10 @@ export type Token = {
     decimals: number
     symbol: string
     iconUrl?: string
-    bridge?: string | null
+    bridgedUsing?: {
+      bridges: { name: string; slug?: string }[]
+      warning?: string
+    }
     address?: `0x${string}`
   }
   chain: {
