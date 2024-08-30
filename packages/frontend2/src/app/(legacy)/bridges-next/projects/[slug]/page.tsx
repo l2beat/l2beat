@@ -53,6 +53,8 @@ export default async function Page({ params }: Props) {
   const isNavigationEmpty =
     projectEntry.projectDetails.filter((s) => !s.excludeFromNavigation)
       .length === 0
+
+  // HydrateClient is used to hydrate the client with chart data that is fetched inside get-bridges-project-details.tsx
   return (
     <HydrateClient>
       {!isNavigationEmpty && (

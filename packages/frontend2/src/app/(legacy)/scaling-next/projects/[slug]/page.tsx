@@ -1,6 +1,5 @@
 import { layer2s, layer3s } from '@l2beat/config'
 import { notFound } from 'next/navigation'
-import { ContentWrapper } from '~/app/_components/content-wrapper'
 import { HighlightableLinkContextProvider } from '~/app/_components/link/highlightable/highlightable-link-context'
 import { DesktopProjectNavigation } from '~/app/_components/projects/navigation/desktop-project-navigation'
 import { MobileProjectNavigation } from '~/app/_components/projects/navigation/mobile-project-navigation'
@@ -58,6 +57,8 @@ export default async function Page({ params }: Props) {
   const isNavigationEmpty =
     projectEntry.projectDetails.filter((s) => !s.excludeFromNavigation)
       .length === 0
+
+  // HydrateClient is used to hydrate the client with chart data that is fetched inside get-l2-project-details.tsx and get-l3-project-details.tsx
   return (
     <HydrateClient>
       {!isNavigationEmpty && (
