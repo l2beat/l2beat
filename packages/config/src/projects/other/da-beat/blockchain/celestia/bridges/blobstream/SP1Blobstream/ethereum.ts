@@ -6,6 +6,9 @@ import { CELESTIA_BLOBSTREAM } from '../template'
 
 const discovery = new ProjectDiscovery('blobstream')
 
+const chainName = 'Ethereum'
+const updateInterval = 4 // hours
+
 const maxRangeDataCommitment = discovery.getContractValue<number>(
   'Blobstream',
   'DATA_COMMITMENT_MAX',
@@ -34,14 +37,14 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
     },
   },
   technology: `
-     The Blobstream bridge is a data availability bridge that facilitates data availability commitments to be bridged between Celestia and Ethereum.
+     The Blobstream bridge is a data availability bridge that facilitates data availability commitments to be bridged between Celestia and ${chainName}.
      The Blobstream bridge is composed of three main components: the **Blobstream** contract, the **Succinct Gateway** contracts and the **Verifier** contracts.  <br /> 
      By default, Blobstream operates asynchronously, handling requests in a fulfillment-based manner. First, zero-knowledge proofs of Celestia block ranges are requested for proving. Requests can be submitted either off-chain through the Succinct API, or onchain through the requestCall() method of the Succinct Gateway smart contract.
      Alternatively, it is possible to run an SP1 Blobstream operator with local proving, allowing for self-generating the proofs.
      Once a proving request is received, the off-chain prover generates the proof and submits it to Blobstream contract. The Blobstream contract verifies the proof with the corresponding verifier contract and, if successful, stores the data commitment in storage. <br /> 
 
      Verifying a header range includes verifying tendermint consensus (header signatures are 2/3 of stake) and verifying the data commitment root.
-      By default, Blobstream on Ethereum is updated by the Celestia operator at a regular cadence of 4 hours.
+      By default, Blobstream on Arbitrum is updated by the Celestia operator at a regular cadence of ${updateInterval} hour.
     `,
   contracts: {
     addresses: [
