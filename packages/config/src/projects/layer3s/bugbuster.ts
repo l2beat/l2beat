@@ -25,10 +25,12 @@ export const bugbuster: Layer3 = {
     name: 'Bug Buster',
     slug: 'bugbuster',
     description:
-      'Bug Buster is a trustless, open source bug bounty platform for web3, powered by Cartesi.',
+      'Bug Buster is an open source bug bounty platform for web3, powered by Cartesi.',
     purposes: ['Bug bounty'],
     category: 'Optimistic Rollup',
     provider: 'Cartesi Rollups',
+    redWarning:
+      'Critical contract references can be changed by an EOA which could result in the loss of all funds.',
     links: {
       documentation: [
         'https://github.com/crypto-bug-hunters/bug-buster/blob/main/README.md',
@@ -66,11 +68,20 @@ export const bugbuster: Layer3 = {
           text: 'an invalid state root is submitted to the system by the configured Authority.',
           isCritical: true,
         },
+        {
+          category: 'Funds can be stolen if',
+          text: 'the DApp owner changes the consensus implementation maliciously.',
+          isCritical: true,
+        },
       ],
       references: [
         {
           text: 'Authority.sol#L48 - Optimism Etherscan source code, submitClaim function',
           href: 'https://optimistic.etherscan.io/address/0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35#code#F1#L48',
+        },
+        {
+          text: 'CartesiDApp.sol#L48 - Optimism Etherscan source code, migrateToConsensus function',
+          href: 'https://optimistic.etherscan.io/address/0x9cb6C6E904cE6BF3Ca6d0002b9629acce74Ea89b#code#F1#L201',
         },
       ],
     },
@@ -96,7 +107,7 @@ export const bugbuster: Layer3 = {
         },
       ],
     },
-    exitWindow: RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(0),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
     destinationToken: RISK_VIEW.CANONICAL,
@@ -111,7 +122,7 @@ export const bugbuster: Layer3 = {
         ),
       ],
       description:
-        'Owner of the Bug Buster Cartesi DApp. Can exchange the consensus and therefore steal all funds.',
+        'Owner of the Bug Buster Cartesi DApp. Can change the consensus reference and therefore steal all funds.',
     },
     {
       name: 'Authority Owner',
