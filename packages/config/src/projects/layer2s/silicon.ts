@@ -7,7 +7,7 @@ export const silicon: Layer2 = underReviewL2({
     name: 'Silicon',
     slug: 'silicon',
     description:
-      'Silicon is a Validium built on the Polygon CDK Stack, aiming to become the the social network of the future.',
+      'Silicon is a Validium built on the Polygon CDK Stack, aiming to become the social network of the future.',
     purposes: ['Universal'],
     category: 'Validium',
     provider: 'Polygon',
