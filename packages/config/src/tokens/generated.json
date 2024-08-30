@@ -6956,6 +6956,44 @@
       "supply": "zero"
     },
     {
+      "id": "mode:abtc-abtc",
+      "name": "aBTC",
+      "coingeckoId": "xlink-bridged-btc-stacks",
+      "address": "0x7A087e75807F2E5143C161a817E64dF6dC5EAFe0",
+      "symbol": "aBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1721774411,
+      "coingeckoListingTimestamp": 1701648000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33363/large/abtc_%281%29.png?1701606956",
+      "chainId": 34443,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "XLink bridge"
+      },
+      "excludeFromTotal": true
+    },
+    {
+      "id": "mode:alex-alex",
+      "name": "ALEX",
+      "coingeckoId": "alexgo",
+      "address": "0xdfd0660032c2D0D38a9092a43d1669D6568cAF71",
+      "symbol": "ALEX",
+      "decimals": 18,
+      "deploymentTimestamp": 1721774433,
+      "coingeckoListingTimestamp": 1662508800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/25837/large/ALEX_Token.png?1696524922",
+      "chainId": 34443,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "XLink bridge"
+      },
+      "excludeFromTotal": true
+    },
+    {
       "id": "mode:rseth-kelpdao-restaked-eth",
       "name": "KelpDao Restaked ETH",
       "coingeckoId": "kelp-dao-restaked-eth",

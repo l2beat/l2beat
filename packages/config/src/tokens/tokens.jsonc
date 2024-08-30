@@ -2906,6 +2906,28 @@
   ],
   "mode": [
     {
+      "symbol": "aBTC",
+      "address": "0x7A087e75807F2E5143C161a817E64dF6dC5EAFe0",
+      "excludeFromTotal": true,
+      "coingeckoId": "xlink-bridged-btc-stacks",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "XLink bridge" // lock-mint bridge locking on Ethereum and L2s (wBTC) and on Bitcoin (BTC) and minting at the destination
+      }
+    },
+    {
+      "symbol": "ALEX",
+      "address": "0xdfd0660032c2D0D38a9092a43d1669D6568cAF71",
+      "excludeFromTotal": true,
+      "coingeckoId": "alexgo",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "XLink bridge"
+      }
+    },
+    {
       "symbol": "ezETH",
       "category": "ether",
       "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
