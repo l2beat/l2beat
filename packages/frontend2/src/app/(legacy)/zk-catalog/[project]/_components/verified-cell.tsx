@@ -10,21 +10,23 @@ import {
   TooltipTrigger,
 } from '~/app/_components/tooltip/tooltip'
 
-interface Props {
-  verified: 'yes' | 'no' | 'failed'
+type Props = {
   askForVerificationLink: string
-  performedBy?: {
-    name: string
-    link: string
-  }
-}
+} & (
+  | {
+      verified: 'yes' | 'failed'
+      performedBy: {
+        name: string
+        link: string
+      }
+    }
+  | {
+      verified: 'no'
+    }
+)
 
-export function VerifiedCell({
-  verified,
-  askForVerificationLink,
-  performedBy,
-}: Props) {
-  switch (verified) {
+export function VerifiedCell(props: Props) {
+  switch (props.verified) {
     case 'yes':
       return (
         <div className="flex w-max flex-col">
@@ -36,15 +38,15 @@ export function VerifiedCell({
               </span>
             </TooltipTrigger>
             <TooltipContent>
-              {performedBy?.name} has tried the verification procedure and was
-              able to regenerate the onchain verifier.
+              {props.performedBy.name} has tried the verification procedure and
+              was able to regenerate the onchain verifier.
             </TooltipContent>
           </Tooltip>
           <div className="ml-[26px] w-full flex-nowrap whitespace-nowrap text-xs font-medium text-zinc-500 max-md:hidden">
             (performed by{' '}
             {
-              <OutLink className="underline" href={performedBy?.link}>
-                {performedBy?.name}
+              <OutLink className="underline" href={props.performedBy.link}>
+                {props.performedBy.name}
               </OutLink>
             }
             )
@@ -65,7 +67,7 @@ export function VerifiedCell({
           </Tooltip>
           <OutLink
             className="ml-[26px] text-xs max-md:hidden"
-            href={askForVerificationLink}
+            href={props.askForVerificationLink}
           >
             Submit or ask for verification
           </OutLink>
@@ -82,15 +84,15 @@ export function VerifiedCell({
               </span>
             </TooltipTrigger>
             <TooltipContent>
-              {performedBy?.name} has tried the verification procedure and
+              {props.performedBy.name} has tried the verification procedure and
               wasn&apos;t able to regenerate the onchain verifier.
             </TooltipContent>
           </Tooltip>
           <div className="ml-[26px] w-full flex-nowrap whitespace-nowrap text-xs font-medium text-zinc-500 max-md:hidden">
             (performed by{' '}
             {
-              <OutLink className="underline" href={performedBy?.link}>
-                {performedBy?.name}
+              <OutLink className="underline" href={props.performedBy.link}>
+                {props.performedBy.name}
               </OutLink>
             }
             )
@@ -98,6 +100,6 @@ export function VerifiedCell({
         </div>
       )
     default:
-      assertUnreachable(verified)
+      assertUnreachable(props)
   }
 }

@@ -1,13 +1,10 @@
 'use client'
 
 import { cn } from '~/utils/cn'
-import { CustomLink } from '../custom-link'
+import { CustomLink, type CustomLinkProps } from '../custom-link'
 import { useHiglightableLinkContext } from './highlightable-link-context'
 
-export function HighlightableLink({
-  className,
-  ...props
-}: React.ComponentPropsWithoutRef<typeof CustomLink<'a'>>) {
+export function HighlightableLink({ className, ...props }: CustomLinkProps) {
   const { current, setCurrent } = useHiglightableLinkContext()
 
   return (

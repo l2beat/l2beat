@@ -1,14 +1,12 @@
 import { type VariantProps, cva } from 'class-variance-authority'
-import React, { type ComponentPropsWithoutRef } from 'react'
+import React from 'react'
 import { cn } from '~/utils/cn'
 
-type GovernanceCardProps<T extends React.ElementType> = {
+type GovernanceCardProps = {
   children: React.ReactNode
   className?: string
   mobileFull?: boolean
-  as?: T
-} & ComponentPropsWithoutRef<T> &
-  VariantProps<typeof governanceCardVariants>
+} & VariantProps<typeof governanceCardVariants>
 
 const governanceCardVariants = cva('rounded-lg', {
   variants: {
@@ -28,18 +26,16 @@ const governanceCardVariants = cva('rounded-lg', {
   },
 })
 
-export function GovernanceCard<T extends React.ElementType>({
+export function GovernanceCard({
   children,
   className,
   type,
   size,
-  as,
   mobileFull,
   ...rest
-}: GovernanceCardProps<T>) {
-  const Comp = as ?? 'div'
+}: GovernanceCardProps) {
   return (
-    <Comp
+    <section
       className={cn(
         governanceCardVariants({ type, size }),
         mobileFull &&
@@ -49,7 +45,7 @@ export function GovernanceCard<T extends React.ElementType>({
       {...rest}
     >
       {children}
-    </Comp>
+    </section>
   )
 }
 

@@ -26,15 +26,17 @@ export default function Page() {
   return (
     <>
       <Header />
-      <ContentWrapper as="main">
-        <h1 className="mt-20 text-3xl font-bold">
-          All governance publications
-        </h1>
-        <div className="mt-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {publications.map((publication) => (
-            <PublicationCard publication={publication} key={publication.id} />
-          ))}
-        </div>
+      <ContentWrapper asChild>
+        <main>
+          <h1 className="mt-20 text-3xl font-bold">
+            All governance publications
+          </h1>
+          <div className="mt-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {publications.map((publication) => (
+              <PublicationCard publication={publication} key={publication.id} />
+            ))}
+          </div>
+        </main>
       </ContentWrapper>
     </>
   )
