@@ -69,10 +69,16 @@ export async function getL3ProjectDetails({
   const operatorSection = getOperatorSection(project)
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
+
   const tvlChartData = await api.tvl.chart({
     range: '7d',
     filter: { type: 'projects', projectIds: [project.id] },
   })
+  const activityChartData = await api.activity.chart({
+    range: '30d',
+    filter: { type: 'projects', projectIds: [project.id] },
+  })
+
   const sortedMilestones =
     project.milestones?.sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
@@ -80,7 +86,7 @@ export async function getL3ProjectDetails({
 
   const items: ProjectDetailsSection[] = []
 
-  if (!project.isUpcoming && tvlChartData.length > 0) {
+  if (!project.isUpcoming && !isEmpty(tvlChartData)) {
     items.push({
       type: 'ChartSection',
       props: {
@@ -89,6 +95,18 @@ export async function getL3ProjectDetails({
         title: 'Value Locked',
         projectId: project.id,
         milestones: sortedMilestones,
+      },
+    })
+  }
+
+  if (!isEmpty(activityChartData.data)) {
+    items.push({
+      type: 'ChartSection',
+      props: {
+        id: 'activity',
+        title: 'Activity',
+        projectId: project.id,
+        milestones: project.milestones ?? [],
       },
     })
   }

@@ -25,11 +25,8 @@ export function VerifierCard({
         </DetailsItem>
         <DetailsItem title="Verification status">
           <VerifiedCell
-            verified={verifier.verified}
+            {...verifier}
             askForVerificationLink={askForVerificationLink}
-            performedBy={
-              verifier.verified !== 'no' ? verifier.performedBy : undefined
-            }
           />
         </DetailsItem>
         <DetailsItem title="Last used" className="lg:pl-10">

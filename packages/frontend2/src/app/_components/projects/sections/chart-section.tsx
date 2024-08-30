@@ -1,4 +1,5 @@
 import { type Milestone } from '@l2beat/config'
+import { ProjectActivityChart } from '../../chart/activity/project-activity-chart'
 import { ProjectCostsChart } from '../../chart/costs/project-costs-chart'
 import { ProjectTvlChart } from '../../chart/tvl/project-tvl-chart'
 import { ProjectStackedTvlChart } from '../../chart/tvl/stacked/project-stacked-tvl-chart'
@@ -58,6 +59,11 @@ function ProjectChart(props: ChartSectionProps) {
         />
       )
     case 'activity':
-      throw new Error('Not implemented')
+      return (
+        <ProjectActivityChart
+          milestones={props.milestones}
+          projectId={props.projectId}
+        />
+      )
   }
 }
