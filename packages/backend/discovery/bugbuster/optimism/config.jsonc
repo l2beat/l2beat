@@ -1,0 +1,13 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "optimism",
+  "name": "bugbuster",
+  "initialAddresses": [
+    "0x9cb6c6e904ce6bf3ca6d0002b9629acce74ea89b",
+    "0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB"
+  ],
+  "names": {
+    "0x9cb6c6e904ce6bf3ca6d0002b9629acce74ea89b": "BugBuster"
+  },
+  "overrides": {}
+}
