@@ -1,20 +1,21 @@
+import { Slot } from '@radix-ui/react-slot'
 import React from 'react'
 import { cn } from '~/utils/cn'
 
 interface Props {
   children: React.ReactNode
   className?: string
-  as?: 'div' | 'main'
+  asChild?: boolean
   mobileFull?: boolean
 }
 
 export function ContentWrapper({
   className,
   children,
-  as = 'div',
+  asChild,
   mobileFull = false,
 }: Props) {
-  const Comp = as
+  const Comp = asChild ? Slot : 'div'
   return (
     <Comp
       className={cn(

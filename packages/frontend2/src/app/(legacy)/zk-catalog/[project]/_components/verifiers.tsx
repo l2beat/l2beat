@@ -65,11 +65,8 @@ export function Verifiers(props: Props) {
                     </td>
                     <td className="pr-4">
                       <VerifiedCell
-                        verified={item.verified}
+                        {...item}
                         askForVerificationLink={props.askForVerificationLink}
-                        performedBy={
-                          item.verified !== 'no' ? item.performedBy : undefined
-                        }
                       />
                     </td>
                     <td className="hidden pr-4 md:table-cell">
