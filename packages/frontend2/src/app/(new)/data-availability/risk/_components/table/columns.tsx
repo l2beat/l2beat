@@ -8,33 +8,44 @@ import { type DaRiskEntry } from '~/server/features/data-availability/risks/get-
 const columnHelper = createColumnHelper<DaRiskEntry>()
 
 export const columns = [
-  ...getCommonProjectColumns(columnHelper),
+  ...getCommonProjectColumns(columnHelper, (ctx) => !ctx.row.getParentRow()),
   columnHelper.accessor('name', {
     header: 'DA Layer',
-    cell: (ctx) => (
-      <ProjectNameCell
-        project={{
-          name: ctx.getValue(),
-        }}
-      />
-    ),
+    cell: (ctx) =>
+      !ctx.row.getParentRow() && (
+        <ProjectNameCell
+          project={{
+            name: ctx.getValue(),
+          }}
+        />
+      ),
   }),
   columnHelper.accessor('daBridge', {
     header: 'DA Bridge',
-    cell: (ctx) => (
-      <ProjectNameCell
-        className="!pl-0"
-        project={{
-          ...ctx.row.original,
-          name: ctx.getValue().name,
-          shortName: undefined,
-        }}
-      />
-    ),
+    cell: (ctx) => {
+      const value = ctx.getValue()
+      if (value === 'multiple') {
+        return (
+          <button onClick={() => ctx.row.toggleExpanded()}>
+            Multiple bridges
+          </button>
+        )
+      }
+      return (
+        <ProjectNameCell
+          className="!pl-0"
+          project={{
+            ...ctx.row.original,
+            name: value.name,
+            shortName: undefined,
+          }}
+        />
+      )
+    },
   }),
   columnHelper.accessor('risks.economicSecurity', {
     header: 'Economic security',
-    cell: (ctx) => <RiskCell risk={ctx.getValue()} />,
+    cell: (ctx) => <RiskCell risk={ctx.getValue()} emptyMode="em-dash" />,
     sortingFn: (rowA, rowB) =>
       sortSentiments(
         rowA.original.risks.economicSecurity,
@@ -43,7 +54,7 @@ export const columns = [
   }),
   columnHelper.accessor('risks.fraudDetection', {
     header: 'Fraud detection',
-    cell: (ctx) => <RiskCell risk={ctx.getValue()} />,
+    cell: (ctx) => <RiskCell risk={ctx.getValue()} emptyMode="em-dash" />,
     sortingFn: (rowA, rowB) =>
       sortSentiments(
         rowA.original.risks.fraudDetection,
@@ -52,7 +63,7 @@ export const columns = [
   }),
   columnHelper.accessor('risks.attestations', {
     header: 'Attestation security',
-    cell: (ctx) => <RiskCell risk={ctx.getValue()} />,
+    cell: (ctx) => <RiskCell risk={ctx.getValue()} emptyMode="em-dash" />,
     sortingFn: (rowA, rowB) =>
       sortSentiments(
         rowA.original.risks.attestations,
@@ -61,7 +72,7 @@ export const columns = [
   }),
   columnHelper.accessor('risks.exitWindow', {
     header: 'Exit window',
-    cell: (ctx) => <RiskCell risk={ctx.getValue()} />,
+    cell: (ctx) => <RiskCell risk={ctx.getValue()} emptyMode="em-dash" />,
     sortingFn: (rowA, rowB) =>
       sortSentiments(
         rowA.original.risks.exitWindow,
@@ -70,7 +81,7 @@ export const columns = [
   }),
   columnHelper.accessor('risks.accessibility', {
     header: 'Accessibility',
-    cell: (ctx) => <RiskCell risk={ctx.getValue()} />,
+    cell: (ctx) => <RiskCell risk={ctx.getValue()} emptyMode="em-dash" />,
     sortingFn: (rowA, rowB) =>
       sortSentiments(
         rowA.original.risks.accessibility,

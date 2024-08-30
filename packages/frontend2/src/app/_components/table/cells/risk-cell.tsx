@@ -12,6 +12,7 @@ import { SentimentText } from '../../sentiment-text'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/tooltip'
 import { WarningBar } from '../../warning-bar'
 import { NoInfoCell } from './no-info-cell'
+import { EM_DASH } from '~/consts/characters'
 
 interface Risk {
   value: string
@@ -24,10 +25,14 @@ interface Risk {
 
 interface Props {
   risk: Risk | undefined
+  emptyMode?: 'em-dash' | 'no-info'
 }
 
-export function RiskCell({ risk }: Props) {
+export function RiskCell({ risk, emptyMode = 'no-info' }: Props) {
   if (!risk) {
+    if (emptyMode === 'em-dash') {
+      return EM_DASH
+    }
     return <NoInfoCell />
   }
 
