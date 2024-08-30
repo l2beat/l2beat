@@ -1,14 +1,30 @@
-Generated with discovered.json: 0xee827e23ad54c8283fe16e6d8391b4df55125648
+Generated with discovered.json: 0xf262a64a3850dbfb866758c225175dd7ba5b3789
 
-# Diff at Fri, 30 Aug 2024 07:52:03 GMT:
+# Diff at Fri, 30 Aug 2024 10:09:59 GMT:
 
-- author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 20633317
-- current block number: 20633317
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@78fe1115153efe3e1ba2014fd74329156dca3951 block: 20633317
+- current block number: 20640703
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Admin EOA removed after our ping.
+
+## Watched changes
+
+```diff
+    contract StarkExchange (0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b) {
+    +++ description: None
+      issuedPermissions.1:
+-        {"permission":"upgrade","target":"0xCCa5De1e10c05c50C51ac551D9182cd31aca1889","via":[]}
+      issuedPermissions.0.target:
+-        "0x3a74010f2b37C02A249bd539EaE6b90Ba7CcD8aA"
++        "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889"
+      values.$admin:
+-        ["0x3a74010f2b37C02A249bd539EaE6b90Ba7CcD8aA","0xCCa5De1e10c05c50C51ac551D9182cd31aca1889"]
++        "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889"
+    }
+```
 
 ## Config/verification related changes
 
