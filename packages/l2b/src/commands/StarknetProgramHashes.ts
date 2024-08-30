@@ -1,6 +1,6 @@
-import { command, flag, option, positional, string } from 'cmd-ts'
-import { EthereumAddressValue, Hash256Value, HttpUrl } from './types'
+import { command, option, positional } from 'cmd-ts'
 import { EthereumTransactionAnalyzer } from '../implementations/starknetProgramHashes'
+import { Hash256Value, HttpUrl } from './types'
 
 export const StarknetProgramHashes = command({
   name: 'starknet-program-hashes',
