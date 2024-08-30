@@ -80,12 +80,11 @@ export const ethereum: DaLayer = {
     
     Optimistic rollups use blob data primarily during the process of submitting fraud proofs. 
     When a dispute arises, the rollup must provide the underlying data from a blob as part of the calldata. 
-    The blob verification precompile is employed to verify that the provided blob data corresponds to the versioned hash that was initially committed in the transaction. 
+    The blob verification precompile is used to verify that the provided blob data corresponds to the versioned hash that was initially committed in the transaction. 
     This ensures that the data being used for fraud proof verification is accurate and consistent with what was originally submitted.<br />
 
-    ZK rollups, on the other hand, submit two commitments: one for the blob's KZG commitment and another for the rollup's internal proof system.
-    They use a proof of equivalence to ensure that both commitments refer to the same data. The point evaluation precompile is used to verify that specific points in the polynomial (represented by the blob) match the expected values. 
-    This method allows ZK rollups to prove that the data used in their validity proof is consistent with the data committed to Ethereum.
+    ZK rollups, on the other hand, use the point evaluation precompile to verify that specific points in the polynomial (represented by the blob) match the expected values. 
+    This method allows ZK rollups to prove that the data used in their validity proof is consistent with the blob data committed to Ethereum.
     `,
   bridges: [enshrinedBridge],
   usedIn: enshrinedBridge.usedIn,
