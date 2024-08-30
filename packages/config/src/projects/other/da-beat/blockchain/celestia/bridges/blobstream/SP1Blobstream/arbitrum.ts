@@ -6,8 +6,8 @@ import { CELESTIA_BLOBSTREAM } from '../template'
 
 const discovery = new ProjectDiscovery('blobstream', 'arbitrum')
 
-const chainName = 'Arbitrum';
-const updateInterval = 1; // hours
+const chainName = 'Arbitrum'
+const updateInterval = 1 // hours
 
 const maxRangeDataCommitment = discovery.getContractValue<number>(
   'Blobstream',
