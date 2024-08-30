@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xf55fd96e5a4a5cec64aeb3b11408e35c5cca5b89
+Generated with discovered.json: 0xe304a4299d879d9d83a90949b26d2781cd131aad
 
-# Diff at Fri, 30 Aug 2024 11:05:44 GMT:
+# Diff at Fri, 30 Aug 2024 11:34:31 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@15092f43b0444977eaee21a17c064e8a6944b864 block: 20218838
-- current block number: 20640981
+- current block number: 20641123
 
 ## Description
 
@@ -131,7 +131,7 @@ discovery. Values are for block 20218838 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0x074c60e04fd1fab0a7505ea6e4301f03d8cc8704
+Generated with discovered.json: 0xdff2e689e46248cfd5fbc9cdc194a60b93a1bf8c
 
 # Diff at Fri, 23 Aug 2024 09:51:30 GMT:
 
