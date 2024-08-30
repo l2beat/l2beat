@@ -1,6 +1,10 @@
 import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import {
+  EXITS,
+  FORCE_TRANSACTIONS,
+  OPERATOR,
   RISK_VIEW,
+  TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
   makeBridgeCompatible,
 } from '../../common'
@@ -18,7 +22,7 @@ export const bugbuster: Layer3 = {
     Badge.Stack.Cartesi,
     Badge.VM.AppChain,
     Badge.VM.CartesiVM,
-    Badge.DA.EthereumBlobs,
+    Badge.DA.EthereumCalldata,
     Badge.L3ParentChain.Optimism,
   ],
   display: {
@@ -85,6 +89,30 @@ export const bugbuster: Layer3 = {
         },
       ],
     },
+    dataAvailability: {
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+      references: [
+        {
+          text: 'InputBox.sol#30 - Optimism Etherscan source code, addInput function',
+          href: 'https://optimistic.etherscan.io/address/0x59b22D57D4f067708AB0c00552767405926dc768#code#F1#L30',
+        },
+      ],
+    },
+    operator: {
+      ...OPERATOR.CENTRALIZED_OPERATOR,
+      references: [],
+    },
+    forceTransactions: {
+      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
+      references: [],
+    },
+    exitMechanisms: [
+      {
+        ...EXITS.REGULAR('optimistic', 'merkle proof'),
+        references: [],
+        risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
+      },
+    ],
   },
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (calldata)'],
