@@ -1,5 +1,5 @@
 import { Layer2Provider, Layer3Provider } from '@l2beat/config'
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { assert, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { Type, extendType, string } from 'cmd-ts'
 import { stat } from 'fs/promises'
 
@@ -7,6 +7,14 @@ export const EthereumAddressValue: Type<string, EthereumAddress> = {
   async from(str): Promise<EthereumAddress> {
     return new Promise((resolve, _) => {
       resolve(EthereumAddress(str))
+    })
+  },
+}
+
+export const Hash256Value: Type<string, Hash256> = {
+  async from(str): Promise<Hash256> {
+    return new Promise((resolve, _) => {
+      resolve(Hash256(str))
     })
   },
 }
