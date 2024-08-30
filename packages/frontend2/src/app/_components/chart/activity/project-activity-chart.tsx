@@ -23,7 +23,7 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
   const [scale, setScale] = useState('lin')
   const [showMainnet, setShowMainnet] = useState(true)
 
-  const { data, isLoading } = api.scaling.activity.chart.useQuery({
+  const { data, isLoading } = api.activity.chart.useQuery({
     range: timeRange,
     filter: {
       type: 'projects',

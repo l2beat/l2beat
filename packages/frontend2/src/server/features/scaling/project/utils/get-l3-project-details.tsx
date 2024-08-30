@@ -70,12 +70,34 @@ export async function getL3ProjectDetails({
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
 
-  const activityChartData = await api.scaling.activity.chart({
+  const tvlChartData = await api.tvl.chart({
+    range: '7d',
+    filter: { type: 'projects', projectIds: [project.id] },
+  })
+  const activityChartData = await api.activity.chart({
     range: '30d',
     filter: { type: 'projects', projectIds: [project.id] },
   })
 
+  const sortedMilestones =
+    project.milestones?.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    ) ?? []
+
   const items: ProjectDetailsSection[] = []
+
+  if (!project.isUpcoming && !isEmpty(tvlChartData)) {
+    items.push({
+      type: 'ChartSection',
+      props: {
+        id: 'tvl',
+        stacked: true,
+        title: 'Value Locked',
+        projectId: project.id,
+        milestones: sortedMilestones,
+      },
+    })
+  }
 
   if (!isEmpty(activityChartData.data)) {
     items.push({

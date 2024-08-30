@@ -1,16 +1,18 @@
+import { z } from 'zod'
 import { type TvlProject } from './get-tvl-projects'
 
-export type TvlProjectFilter =
-  | { type: 'all' | TvlProject['type'] }
-  | { type: 'projects'; projectIds: string[] }
+export const TvlProjectFilter = z.discriminatedUnion('type', [
+  z.object({
+    type: z.enum(['all', 'layer2', 'bridge']),
+  }),
+  z.object({
+    type: z.literal('projects'),
+    projectIds: z.array(z.string()),
+  }),
+])
+export type TvlProjectFilter = z.infer<typeof TvlProjectFilter>
 
-export type TvlLayer2ProjectFilter = TvlProjectFilter & {
-  type: 'layer2' | 'projects'
-}
-
-export function createTvlProjectsFilter(
-  filter: TvlProjectFilter,
-): (project: TvlProject) => boolean {
+export function createTvlProjectsFilter(filter: TvlProjectFilter) {
   if (filter.type === 'all') {
     return () => true
   }

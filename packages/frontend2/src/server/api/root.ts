@@ -1,6 +1,7 @@
 import { createCallerFactory, router } from '~/server/api/trpc'
-import { bridgesRouter } from './routers/bridges'
-import { scalingRouter } from './routers/scaling'
+import { costsRouter } from './routers/costs'
+import { activityRouter } from './routers/scaling/activity'
+import { tvlRouter } from './routers/tvl'
 
 /**
  * This is the primary router for your server.
@@ -8,8 +9,9 @@ import { scalingRouter } from './routers/scaling'
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = router({
-  scaling: scalingRouter,
-  bridges: bridgesRouter,
+  tvl: tvlRouter,
+  costs: costsRouter,
+  activity: activityRouter,
 })
 
 // export type definition of API
