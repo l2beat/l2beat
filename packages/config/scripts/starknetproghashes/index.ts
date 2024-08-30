@@ -86,9 +86,20 @@ class EthereumTransactionAnalyzer {
 
   private extractProgramHashes(taskMetadata: bigint[]): string[] {
     return taskMetadata
-      .filter((x) => x.toString().length > 10)
+      .filter((x) => x.toString().length > 10) // simply treat everything over 10 digits as a program hash
       .map((x) => x.toString())
   }
+
+  /**
+   * taskMetadata structure:
+   *
+   * 270, 31, 168306275735...893086223513, 2, 2, 1, 0, 2, ...next task
+   *  I    I         l                     l  -----I----
+   *  I    l         task0programHash      nPairs  l
+   *  l    task0Size                               Merkle tree structure
+   *  number of all tasks in this call
+   *
+   */
 
   private countProgramHashes(programHashes: string[]): Map<string, number> {
     return programHashes.reduce((counter, hash) => {
@@ -112,7 +123,7 @@ class EthereumTransactionAnalyzer {
     )
 
     const programHashes = this.extractProgramHashes(decodedDict.taskMetadata)
-    console.log('length of program_hashes:', programHashes.length)
+    console.log('length of extracted programhashes:', programHashes.length)
 
     const counter = this.countProgramHashes(programHashes)
     console.log('programHash counts:')
