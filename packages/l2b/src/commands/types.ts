@@ -11,6 +11,17 @@ export const EthereumAddressValue: Type<string, EthereumAddress> = {
   },
 }
 
+export const PositiveRpcBoundNumber: Type<string, number> = extendType(string, {
+  async from(str) {
+    const num = await Promise.resolve(parseInt(str, 10))
+    assert(
+      !isNaN(num) && num > 0 && num <= 1000000,
+      'Call rate bound per minute must be a positive integer between 1 and 1,000,000',
+    )
+    return num
+  },
+})
+
 export const Hash256Value: Type<string, Hash256> = {
   async from(str): Promise<Hash256> {
     return new Promise((resolve, _) => {

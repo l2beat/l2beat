@@ -1,3 +1,4 @@
+import { CheckRpc } from './CheckRpc'
 import { CompareFlatSources } from './CompareFlatSources'
 import { CompareOpStacks } from './CompareOpStacks'
 import { CompareOrbitStacks } from './CompareOrbitStacks'
@@ -15,6 +16,7 @@ export function getSubcommands() {
     CompareOpStacks,
     CompareOrbitStacks,
     CountUserOperations,
+    CheckRpc,
     DeploymentTimestamp,
     FlattenAndDiff,
     Flatten,
