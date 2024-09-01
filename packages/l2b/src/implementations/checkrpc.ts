@@ -1,6 +1,9 @@
+import chalk from 'chalk'
+
 enum FailureReason {
   Timeout = 'Response took too long',
-  StatusCode = '429 Too Many Requests',
+  Status429 = 'Response: 429 Too Many Requests',
+  OtherStatus = 'Response: Other Status Code',
   Other = 'Other Error',
 }
 
@@ -34,10 +37,10 @@ async function callRpc(
     if (response.status === 200) {
       return null
     } else if (response.status === 429) {
-      return FailureReason.StatusCode
+      return FailureReason.Status429
     } else {
-      if (verbosity > 1) console.log(response.status)
-      return FailureReason.Other
+      if (verbosity > 1) console.log(chalk.yellow(response.status.toString()))
+      return FailureReason.OtherStatus
     }
   } catch (error) {
     clearTimeout(id)
@@ -45,7 +48,7 @@ async function callRpc(
     if (error instanceof Error && error.name === 'AbortError') {
       return FailureReason.Timeout
     } else {
-      if (verbosity > 1) console.log(error)
+      if (verbosity > 1) console.log(chalk.red(error))
       return FailureReason.Other
     }
   }
@@ -70,7 +73,8 @@ async function runBatch(
   let successes = 0
   const failures: Record<FailureReason, number> = {
     [FailureReason.Timeout]: 0,
-    [FailureReason.StatusCode]: 0,
+    [FailureReason.Status429]: 0,
+    [FailureReason.OtherStatus]: 0,
     [FailureReason.Other]: 0,
   }
   let totalCalls = 0
@@ -102,19 +106,27 @@ async function runBatch(
           }
 
           if (!aborted) {
-            process.stdout.write(
-              `\rSuccesses: ${successes}, Failures (Timeout: ${
-                failures[FailureReason.Timeout]
-              }, Status Code: ${failures[FailureReason.StatusCode]}, Other: ${
-                failures[FailureReason.Other]
-              })`,
-            )
-
             const totalFailures =
               failures[FailureReason.Timeout] +
-              failures[FailureReason.StatusCode] +
+              failures[FailureReason.Status429] +
+              failures[FailureReason.OtherStatus] +
               failures[FailureReason.Other]
             const failureRate = totalFailures / totalCalls
+            process.stdout.write(
+              `\r${chalk.green(`Successes: ${successes}`)}, ${chalk.red(
+                `Failures: ${totalFailures}`,
+              )} (Timeout: ${chalk.yellow(
+                failures[FailureReason.Timeout].toString(),
+              )}, Status 429: ${chalk.yellow(
+                failures[FailureReason.Status429].toString(),
+              )}, Other Status: ${chalk.yellow(
+                failures[FailureReason.OtherStatus].toString(),
+              )}, Other: ${chalk.yellow(
+                failures[FailureReason.Other].toString(),
+              )}), Failure rate: ${chalk.magenta(
+                Math.floor(failureRate * 100).toString(),
+              )}%`,
+            )
 
             if (
               totalCalls > minCallsToAbort &&
@@ -122,9 +134,11 @@ async function runBatch(
             ) {
               aborted = true
               console.log(
-                `\nAborting batch due to high failure rate (${Math.floor(
-                  failureRate * 100,
-                )}%) after ${totalCalls} calls.`,
+                chalk.red(
+                  `\nAborting batch due to high failure rate (${Math.floor(
+                    failureRate * 100,
+                  )}%) after ${totalCalls} calls.`,
+                ),
               )
             }
           }
@@ -143,9 +157,9 @@ async function runBatch(
     console.log(
       `Batch at ${callRate} calls/min: ${successes} successes, Failures (Timeout: ${
         failures[FailureReason.Timeout]
-      }, Status Code: ${failures[FailureReason.StatusCode]}, Other: ${
-        failures[FailureReason.Other]
-      })`,
+      }, Status 429: ${failures[FailureReason.Status429]}, Other Status: ${
+        failures[FailureReason.OtherStatus]
+      }, Other: ${failures[FailureReason.Other]}),`,
     )
   }
 
@@ -196,7 +210,7 @@ export async function findRateLimit({
     verbosity,
   )
   if (aborted || !isBatchSuccessful(successes, lowerBoundary)) {
-    console.error('Rate limit is below the lower boundary.')
+    console.error(chalk.red('Rate limit is below the lower boundary.'))
     return
   }
 
@@ -236,10 +250,10 @@ export async function findRateLimit({
     }
 
     if (pauseNeeded) {
-      console.log(`Pausing for ${batchDelay / 1000} seconds...`)
+      console.log(chalk.yellow(`Pausing for ${batchDelay / 1000} seconds...`))
       await new Promise((res) => setTimeout(res, batchDelay))
     }
   }
 
-  console.log(`Estimated rate limit: ${lowerRate} calls/min`)
+  console.log(chalk.green(`Estimated rate limit: ${lowerRate} calls/min`))
 }
