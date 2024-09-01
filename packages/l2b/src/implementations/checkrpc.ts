@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 enum FailureReason {
   Timeout = 'Response took too long',
   StatusCode = '429 Too Many Requests',
@@ -13,35 +11,39 @@ async function callRpc(
   timeout: number,
   verbosity: number,
 ): Promise<FailureReason | null> {
+  const controller = new AbortController()
+  const id = setTimeout(() => controller.abort(), timeout)
+
   try {
-    const response = await axios.post(
-      rpcUrl,
-      {
+    const response = await fetch(rpcUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
         jsonrpc: '2.0',
         method: method,
         params: [blockNumber.toString(16), false],
         id: blockNumber,
-      },
-      {
-        timeout: timeout,
-      },
-    )
+      }),
+      signal: controller.signal,
+    })
+
+    clearTimeout(id)
+
     if (response.status === 200) {
       return null
+    } else if (response.status === 429) {
+      return FailureReason.StatusCode
     } else {
       if (verbosity > 1) console.log(response.status)
       return FailureReason.Other
     }
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      if (error.code === 'ECONNABORTED') {
-        return FailureReason.Timeout
-      } else if (error.status === 429) {
-        return FailureReason.StatusCode
-      } else {
-        if (verbosity > 1) console.log(error.status)
-        return FailureReason.Other
-      }
+    clearTimeout(id)
+
+    if (error instanceof Error && error.name === 'AbortError') {
+      return FailureReason.Timeout
     } else {
       if (verbosity > 1) console.log(error)
       return FailureReason.Other
