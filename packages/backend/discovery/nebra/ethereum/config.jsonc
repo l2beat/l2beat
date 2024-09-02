@@ -13,7 +13,7 @@
       "ignoreInWatchMode": [
         "claimableFees",
         "getNextSubmissionsIdx",
-        "nextProofIdx"
+        "nextProofIdxToVerify"
       ]
     }
   }

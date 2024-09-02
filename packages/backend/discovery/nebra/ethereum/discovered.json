@@ -1,8 +1,8 @@
 {
   "name": "nebra",
   "chain": "ethereum",
-  "blockNumber": 20661600,
-  "configHash": "0x2b3ffe359e6deba2f04d1a109b10a43dbffec04afe9e7cda50f936780bc48b5e",
+  "blockNumber": 20662516,
+  "configHash": "0x8992f14bbdbd6c8d82b3a306c2183f8f10d8f60b99561d92d9a9d9d0dfe4907d",
   "version": 14,
   "contracts": [
     {
@@ -19,7 +19,7 @@
       "ignoreInWatchMode": [
         "claimableFees",
         "getNextSubmissionsIdx",
-        "nextProofIdx"
+        "nextProofIdxToVerify"
       ],
       "sinceTimestamp": 1723653167,
       "values": {

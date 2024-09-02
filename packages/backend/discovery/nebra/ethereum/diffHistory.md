@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x0d51dfc651330344f04ae8c4f53931dd90ff11ad
+Generated with discovered.json: 0x1a079bfe28256dd120c2c60dd750c41d76599efa
 
 # Diff at Mon, 02 Sep 2024 08:10:13 GMT:
 
@@ -7,7 +7,7 @@ Generated with discovered.json: 0x0d51dfc651330344f04ae8c4f53931dd90ff11ad
 
 ## Description
 
-Initial discovery.
+Provide description of changes. This section will be preserved.
 
 ## Initial discovery
 
