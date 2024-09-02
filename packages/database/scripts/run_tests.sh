@@ -1,3 +1,4 @@
+#!/bin/bash
 source .env
 
 if [ -n "$TEST_DB_URL" ]; then 
