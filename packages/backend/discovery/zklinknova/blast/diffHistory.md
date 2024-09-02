@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x182ca76d2aab79e37cd80a2e59f8dc5d09e2d7ae
+
+# Diff at Mon, 02 Sep 2024 08:51:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8fcb30f6c613b5454aa9ecdec05a118442e9dc7b block: 5983401
+- current block number: 8228641
+
+## Description
+
+Config related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 5983401 (main branch discovery), not current.
+
+```diff
+    contract BlastOwner (0x730200f698cc8Ff16C00F4E8520Fd780B916D50E) {
+    +++ description: None
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract BlastProxyAdmin (0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19) {
+    +++ description: None
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
 Generated with discovered.json: 0xa7883e1a4c30e9eafe71b1f49c2387e02272785d
 
 # Diff at Fri, 23 Aug 2024 10:03:53 GMT:

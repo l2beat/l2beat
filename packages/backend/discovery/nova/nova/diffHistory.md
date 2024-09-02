@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x725318d87ea1063fd83db489d27cea82908e4362
+
+# Diff at Mon, 02 Sep 2024 08:41:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8fcb30f6c613b5454aa9ecdec05a118442e9dc7b block: 75424833
+- current block number: 75517853
+
+## Description
+
+Config related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 75424833 (main branch discovery), not current.
+
+```diff
+    contract L2GatewaysProxyAdmin (0xada790b026097BfB36a5ed696859b97a96CEd92C) {
+    +++ description: None
+      receivedPermissions.3.via:
+-        []
+      receivedPermissions.2.via:
+-        []
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9) {
+    +++ description: None
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
 Generated with discovered.json: 0xfd77969411227d59e52c9c8902751ee479e47aad
 
 # Diff at Wed, 28 Aug 2024 15:10:30 GMT:

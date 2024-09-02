@@ -147,7 +147,8 @@ export const parallel: Layer2 = orbitStackL2({
         'UpgradeExecutor',
         'EXECUTOR_ROLE',
       ),
-      description: 'EOA that can execute upgrades via the UpgradeExecutor.',
+      description:
+        'Can execute upgrades via the UpgradeExecutor, potentially stealing all funds.',
     },
     ...discovery.getMultisigPermission(
       'ParallelMultisig',
