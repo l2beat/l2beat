@@ -17,7 +17,7 @@
     "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6": "POL",
     "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0": "MaticToken",
     "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507": "XLayerValidiumEtrog",
-    "0x88AaB361f108C3c959F2928Da3cD8e47298016B5": "OevValidiumEtrog", //TODO: change once verified
+    "0x88AaB361f108C3c959F2928Da3cD8e47298016B5": "OevValidiumEtrog",
     "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB": "CreateRollupMultisig"
   },
   "overrides": {
@@ -174,23 +174,8 @@
       "ignoreInWatchMode": ["getRoot"],
       "fields": {}
     },
-    "AstarValidiumDAC": {
-      "ignoreDiscovery": true // already fetched in Astar
-    },
-    "AstarValidiumEtrog": {
-      "ignoreDiscovery": true // already fetched in Astar
-    },
-    "PolygonZkEVMEtrog": {
-      "ignoreDiscovery": true // already fetched in Polygon zkEVM
-    },
-    "XLayerValidiumEtrog": {
-      "ignoreDiscovery": true
-    },
     "POL": {
       "ignoreInWatchMode": ["lastMint", "totalSupply"]
-    },
-    "UnverifiedProject": {
-      "ignoreDiscovery": true
     }
   }
 }

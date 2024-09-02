@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x1b69636094eb00aa6f52b635e6e3f23b2a21998b
+Generated with discovered.json: 0x152fbc09283611d598b5ed010ea0fabefbef82d7
 
-# Diff at Mon, 02 Sep 2024 07:21:22 GMT:
+# Diff at Mon, 02 Sep 2024 08:59:16 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@8fcb30f6c613b5454aa9ecdec05a118442e9dc7b block: 20585049
-- current block number: 20661354
+- current block number: 20661845
 
 ## Description
 
@@ -22,15 +22,15 @@ Scheduled tx is executed giving a yet unknown Multisig the CREATE_ROLLUP role. T
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB)
+    contract CreateRollupMultisig (0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB)
     +++ description: None
 ```
 
 ## Source code changes
 
 ```diff
-.../ethereum/.flat/GnosisSafe/GnosisSafe.sol       | 952 +++++++++++++++++++++
- .../.flat/GnosisSafe/GnosisSafeProxy.p.sol         |  34 +
+.../.flat/CreateRollupMultisig/GnosisSafe.sol      | 952 +++++++++++++++++++++
+ .../CreateRollupMultisig/GnosisSafeProxy.p.sol     |  34 +
  2 files changed, 986 insertions(+)
 ```
 
