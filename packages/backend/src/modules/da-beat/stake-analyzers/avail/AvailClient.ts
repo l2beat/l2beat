@@ -59,7 +59,7 @@ type Codec<T> = {
 type ValidatorKeysCodec = Codec<[string, string]>
 type ValidatorValueCodec = Codec<{ own: string; total: string }>
 
-interface Exposure {
+type Exposure = {
   own: bigint
   total: bigint
 }
