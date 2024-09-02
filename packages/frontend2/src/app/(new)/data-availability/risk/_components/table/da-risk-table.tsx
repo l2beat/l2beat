@@ -95,59 +95,30 @@ export function DaRiskTable({ items }: Props) {
                         />
                       </Link>
                     </td>
-                    <TableCell
-                      href={href}
-                      className={cn(
-                        'bg-black/[0.05] group-hover:bg-black/[0.1] dark:bg-white/[0.1] dark:group-hover:bg-white/[0.2]',
-                        !lastRow &&
-                          'border-b border-b-gray-200 dark:border-b-zinc-700',
-                      )}
-                    >
+                    <SubRowTableCell>
                       <RiskCell
                         risk={subRow.risks.economicSecurity}
                         emptyMode="em-dash"
                       />
-                    </TableCell>
-
-                    <TableCell
-                      href={href}
-                      className={cn(
-                        'bg-black/[0.05] group-hover:bg-black/[0.1] dark:bg-white/[0.1] dark:group-hover:bg-white/[0.2]',
-                        !lastRow &&
-                          'border-b border-b-gray-200 dark:border-b-zinc-700',
-                      )}
-                    >
+                    </SubRowTableCell>
+                    <SubRowTableCell>
                       <RiskCell
                         risk={subRow.risks.fraudDetection}
                         emptyMode="em-dash"
                       />
-                    </TableCell>
-                    <TableCell
-                      href={href}
-                      className={cn(
-                        'bg-black/[0.05] group-hover:bg-black/[0.1] dark:bg-white/[0.1] dark:group-hover:bg-white/[0.2]',
-                        !lastRow &&
-                          'border-b border-b-gray-200 dark:border-b-zinc-700',
-                      )}
-                    >
+                    </SubRowTableCell>
+                    <SubRowTableCell>
                       <RiskCell
                         risk={subRow.risks.attestations}
                         emptyMode="em-dash"
                       />
-                    </TableCell>
-                    <TableCell
-                      href={href}
-                      className={cn(
-                        'bg-black/[0.05] group-hover:bg-black/[0.1] dark:bg-white/[0.1] dark:group-hover:bg-white/[0.2]',
-                        !lastRow &&
-                          'border-b border-b-gray-200 dark:border-b-zinc-700',
-                      )}
-                    >
+                    </SubRowTableCell>
+                    <SubRowTableCell>
                       <RiskCell
                         risk={subRow.risks.exitWindow}
                         emptyMode="em-dash"
                       />
-                    </TableCell>
+                    </SubRowTableCell>
                     <td
                       className={cn(
                         'group h-9 whitespace-pre bg-black/[0.05] group-hover:bg-black/[0.1] dark:bg-white/[0.1] dark:group-hover:bg-white/[0.2]',
@@ -177,5 +148,28 @@ export function DaRiskTable({ items }: Props) {
         }}
       />
     </>
+  )
+}
+
+function SubRowTableCell({
+  href,
+  children,
+  lastRow,
+}: {
+  href?: string
+  children: React.ReactNode
+  className?: string
+  lastRow?: boolean
+}) {
+  return (
+    <TableCell
+      href={href}
+      className={cn(
+        'bg-black/[0.05] group-hover:bg-black/[0.1] dark:bg-white/[0.1] dark:group-hover:bg-white/[0.2]',
+        !lastRow && 'border-b border-b-gray-200 dark:border-b-zinc-700',
+      )}
+    >
+      {children}
+    </TableCell>
   )
 }
