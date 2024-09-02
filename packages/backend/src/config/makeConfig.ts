@@ -200,6 +200,7 @@ export function makeConfig(
     implementationChangeReporterEnabled: flags.isEnabled(
       'implementationChangeReporter',
     ),
+    flatSourceModuleEnabled: flags.isEnabled('flatSourcesModule'),
     chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
 
     daBeat: flags.isEnabled('da-beat') && {

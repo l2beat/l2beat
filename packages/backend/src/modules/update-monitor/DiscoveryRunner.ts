@@ -4,7 +4,9 @@ import {
   ConfigReader,
   DiscoveryConfig,
   DiscoveryEngine,
+  DiscoveryLogger,
   TemplateService,
+  flattenDiscoveredSources,
   toDiscoveryOutput,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
@@ -21,6 +23,11 @@ export interface DiscoveryRunnerOptions {
   injectInitialAddresses: boolean
   maxRetries?: number
   retryDelayMs?: number
+}
+
+export interface DiscoveryRunResult {
+  discovery: DiscoveryOutput
+  flatSources: Record<string, string>
 }
 
 // 10 minutes
@@ -44,32 +51,30 @@ export class DiscoveryRunner {
     projectConfig: DiscoveryConfig,
     blockNumber: number,
     options: DiscoveryRunnerOptions,
-  ) {
+  ): Promise<DiscoveryRunResult> {
     const config = options.injectInitialAddresses
       ? await this.updateInitialAddresses(projectConfig)
       : projectConfig
 
-    const discovery = await this.discoverWithRetry(
+    return await this.discoverWithRetry(
       config,
       blockNumber,
       options.logger,
       options.maxRetries,
       options.retryDelayMs,
     )
-
-    return discovery
   }
 
   private async discover(
     config: DiscoveryConfig,
     blockNumber: number,
-  ): Promise<DiscoveryOutput> {
+  ): Promise<DiscoveryRunResult> {
     const provider = this.allProviders.get(config.chain, blockNumber)
     const result = await this.discoveryEngine.discover(provider, config)
 
     setDiscoveryMetrics(this.allProviders.getStats(config.chain), config.chain)
 
-    return toDiscoveryOutput(
+    const discovery = toDiscoveryOutput(
       config.name,
       config.chain,
       config.hash,
@@ -77,6 +82,10 @@ export class DiscoveryRunner {
       result,
       this.templateService.getShapeFilesHash(),
     )
+
+    const flatSources = flattenDiscoveredSources(result, DiscoveryLogger.SILENT)
+
+    return { discovery, flatSources }
   }
 
   async discoverWithRetry(
@@ -85,13 +94,13 @@ export class DiscoveryRunner {
     logger: Logger,
     maxRetries = MAX_RETRIES,
     delayMs = RETRY_DELAY_MS,
-  ): Promise<DiscoveryOutput> {
-    let discovery: DiscoveryOutput | undefined = undefined
+  ): Promise<DiscoveryRunResult> {
+    let result: DiscoveryRunResult | undefined = undefined
     let err: Error | undefined = undefined
 
     for (let i = 0; i <= maxRetries; i++) {
       try {
-        discovery = await this.discover(config, blockNumber)
+        result = await this.discover(config, blockNumber)
         break
       } catch (error) {
         err = isError(err) ? (error as Error) : new Error(JSON.stringify(error))
@@ -108,7 +117,7 @@ export class DiscoveryRunner {
       await new Promise((resolve) => setTimeout(resolve, delayMs))
     }
 
-    if (discovery === undefined) {
+    if (result?.discovery === undefined) {
       assert(
         err !== undefined,
         'Programmer error: Error should not be undefined there',
@@ -116,7 +125,7 @@ export class DiscoveryRunner {
       throw err
     }
 
-    return discovery
+    return result
   }
 
   // There was a case connected with Amarok (better described in L2B-1521)
