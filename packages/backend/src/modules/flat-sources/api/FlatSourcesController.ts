@@ -11,11 +11,9 @@ export class FlatSourcesController {
     const flat = await this.db.flatSources.getAll()
 
     return flat.map((e) => ({
-      projectName: e.projectName,
+      ...e,
       chainName: this.chainConverter.toName(e.chainId),
-      blockNumber: e.blockNumber,
       contentHash: e.contentHash.toString(),
-      flat: e.flat,
     }))
   }
 }
