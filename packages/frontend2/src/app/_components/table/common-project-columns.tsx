@@ -15,7 +15,7 @@ export function getCommonProjectColumns<T extends BaseProject>(
     columnHelper.accessor((_, index) => index + 1, {
       header: '#',
       cell: (ctx) => {
-        if (!shouldShowEmpty?.(ctx)) return null
+        if (shouldShowEmpty && !shouldShowEmpty(ctx)) return null
         return <IndexCell>{ctx.row.index + 1}</IndexCell>
       },
       meta: {
@@ -26,7 +26,7 @@ export function getCommonProjectColumns<T extends BaseProject>(
     columnHelper.display({
       id: 'logo',
       cell: (ctx) => {
-        if (!shouldShowEmpty?.(ctx)) return null
+        if (shouldShowEmpty && !shouldShowEmpty(ctx)) return null
         return (
           <Image
             className="min-h-[18px] min-w-[18px]"
