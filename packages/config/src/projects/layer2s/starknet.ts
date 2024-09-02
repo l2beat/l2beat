@@ -822,6 +822,7 @@ export const starknet: Layer2 = {
       },
     ],
     proofVerification: {
+      shortDescription: 'Starknet is a ZK-CairoVM rollup on Ethereum.',
       aggregation: true,
       requiredTools: [],
       verifiers: [

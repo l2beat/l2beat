@@ -9,6 +9,8 @@ export const worldcoinsmtb: ZkCatalogProject = {
     name: 'Worldcoin SMTB',
   },
   proofVerification: {
+    shortDescription:
+      'ZK program to add or delete users from the Worldcoin anonymity set.',
     aggregation: false,
     verifiers: [
       {

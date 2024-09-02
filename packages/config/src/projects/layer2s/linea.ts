@@ -527,6 +527,7 @@ export const linea: Layer2 = {
       },
     ],
     proofVerification: {
+      shortDescription: 'Linea is a universal ZK-EVM rollup on Ethereum.',
       aggregation: false,
       requiredTools: [],
       verifiers: [

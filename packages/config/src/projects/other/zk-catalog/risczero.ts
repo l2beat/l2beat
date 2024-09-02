@@ -8,6 +8,7 @@ export const risczero: ZkCatalogProject = {
     name: 'RISC Zero',
   },
   proofVerification: {
+    shortDescription: 'ZK verifier for RISC-V programs.',
     aggregation: true,
     verifiers: [
       {

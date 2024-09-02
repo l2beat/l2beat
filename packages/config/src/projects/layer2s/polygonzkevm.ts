@@ -241,6 +241,7 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
       },
     ],
     proofVerification: {
+      shortDescription: 'Polygon zkEVM is a ZK-EVM rollup on Ethereum.',
       aggregation: true,
       requiredTools: [
         {

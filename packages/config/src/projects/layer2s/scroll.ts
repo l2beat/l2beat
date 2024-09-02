@@ -456,6 +456,7 @@ export const scroll: Layer2 = {
       },
     ],
     proofVerification: {
+      shortDescription: 'Scroll is a ZK-EVM rollup on Ethereum.',
       aggregation: true,
       requiredTools: [
         {

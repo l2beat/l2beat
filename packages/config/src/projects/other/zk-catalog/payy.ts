@@ -8,6 +8,7 @@ export const payy: ZkCatalogProject = {
     name: 'Payy',
   },
   proofVerification: {
+    shortDescription: 'A privacy-preserving payment system.',
     aggregation: true,
     verifiers: [
       {

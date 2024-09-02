@@ -9,6 +9,8 @@ export const worldcoinsemaphore: ZkCatalogProject = {
     name: 'Worldcoin Semaphore',
   },
   proofVerification: {
+    shortDescription:
+      'Anonymity set inclusion checker for the Worldcoin network.',
     aggregation: false,
     verifiers: [
       {
