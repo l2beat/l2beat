@@ -1,45 +1,42 @@
-import { ChainId } from '@l2beat/shared-pure'
+import { ChainId, Hash256 } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { FlatSourcesRecord, toRecord, toRow } from './entity'
 import { selectFlatSources } from './select'
 
 export class FlatSourcesRepository extends BaseRepository {
   async upsert(record: FlatSourcesRecord): Promise<void> {
-    await this.upsertMany([record])
-  }
+    const { projectName, chainId, blockNumber, contentHash, flat } = record
 
-  async upsertMany(records: FlatSourcesRecord[]): Promise<number> {
-    const rows = records.map(toRow)
-    await this.batch(rows, 1_000, async (batch) => {
-      await this.db
-        .insertInto('FlatSources')
-        .values(batch)
-        .onConflict((cb) =>
-          cb
-            .columns(['projectName', 'chainId'])
-            .doUpdateSet((eb) => ({
-              blockNumber: eb.ref('excluded.blockNumber'),
-              contentHash: eb.ref('excluded.contentHash'),
-              flat: eb.ref('excluded.flat'),
-            }))
-            .where('FlatSources.contentHash', '<>', 'excluded.contentHash'),
-        )
-        .execute()
+    await this.transaction(async () => {
+      const existing = await this.db
+        .selectFrom('FlatSources')
+        .select(['contentHash']) // <-- don't download flat sources
+        .where('projectName', '=', projectName)
+        .where('chainId', '=', +chainId)
+        .forUpdate() // <-- lock the row for upcoming update
+        .executeTakeFirst()
 
-      await this.db
-        .insertInto('FlatSources')
-        .values(batch)
-        .onConflict((cb) =>
-          cb
-            .columns(['projectName', 'chainId'])
-            .doUpdateSet((eb) => ({
-              blockNumber: eb.ref('excluded.blockNumber'),
-            }))
-            .where('FlatSources.contentHash', '=', 'excluded.contentHash'),
+      if (existing) {
+        const hashChanged = Hash256(existing.contentHash) !== contentHash
+        const update = toRow(
+          { projectName, chainId, blockNumber, contentHash },
+          hashChanged ? flat : undefined,
         )
-        .execute()
+        await this.db
+          .updateTable('FlatSources')
+          .set(update)
+          .where('projectName', '=', projectName)
+          .where('chainId', '=', +chainId)
+          .execute()
+      } else {
+        await this.db
+          .insertInto('FlatSources')
+          .values(
+            toRow({ projectName, chainId, blockNumber, contentHash }, flat),
+          )
+          .execute()
+      }
     })
-    return records.length
   }
 
   async getAll(): Promise<FlatSourcesRecord[]> {

@@ -10,14 +10,17 @@ export interface FlatSourcesRecord {
   flat: Record<string, string>
 }
 
-export function toRow(record: FlatSourcesRecord): Insertable<FlatSources> {
-  return {
+export function toRow(
+  record: Omit<FlatSourcesRecord, 'flat'>,
+  flat?: FlatSourcesRecord['flat'],
+): Insertable<FlatSources> {
+  const result = {
     projectName: record.projectName,
     chainId: +record.chainId,
     blockNumber: record.blockNumber,
     contentHash: record.contentHash.toString(),
-    flat: JSON.stringify(record.flat),
   }
+  return flat === undefined ? result : { ...result, flat }
 }
 
 export function toRecord(row: Selectable<FlatSources>): FlatSourcesRecord {
