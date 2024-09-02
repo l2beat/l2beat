@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x7219e90f18bcdf7199774fcff76519a5d21f2bc0
+
+# Diff at Mon, 02 Sep 2024 08:29:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8fcb30f6c613b5454aa9ecdec05a118442e9dc7b block: 20626116
+- current block number: 20661696
+
+## Description
+
+Three new Lyra tokens (not yet used): LBTC, LBTCCS, LBTCPS
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.92:
++        "0xdb1c2F432e51824b33b9269C4b1Ff6190c1e5F35"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.91:
++        "0x2D733e70A377FcFc249d273095250762A93F3820"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.90:
++        "0x457379de638CAFeB1759a22457fe893b288E2e89"
+    }
+```
+
 Generated with discovered.json: 0x9dedacc8326208f39ddd0d92173dfa503d7f5bd0
 
 # Diff at Wed, 28 Aug 2024 09:14:01 GMT:

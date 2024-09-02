@@ -10,8 +10,8 @@
     "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e",
     "0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592",
     "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab",
-    "0x26Cf1Dc84694E04277F2Fe4C13E43597c6010C2A",
     "0x7E1d17b580dD4F89037DB331430eAEe8B8e50c91",
+    "0x26Cf1Dc84694E04277F2Fe4C13E43597c6010C2A",
 // Hook
     "0x855Aaf2f690Ef6e5EF451D7AE73EC3fa61c50981",
     "0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa",
@@ -54,8 +54,8 @@
     "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e": "WETH Vault Lyra",
     "0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592": "SNX Vault Lyra",
     "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab": "WBTC Vault Lyra",
-    "0x26Cf1Dc84694E04277F2Fe4C13E43597c6010C2A": "USDe Vault Lyra",
     "0x7E1d17b580dD4F89037DB331430eAEe8B8e50c91": "DAI Vault Lyra",
+    "0x26Cf1Dc84694E04277F2Fe4C13E43597c6010C2A": "USDe Vault Lyra",
 // Hook
     "0x855Aaf2f690Ef6e5EF451D7AE73EC3fa61c50981": "USDC Vault Hook",
     "0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa": "WETH Vault Hook",
@@ -98,8 +98,8 @@
     "WETH Vault Lyra": {"ignoreMethods":["token","token__","hook__"]},
     "SNX Vault Lyra": {"ignoreMethods":["token","token__","hook__"]},
     "WBTC Vault Lyra": {"ignoreMethods":["token","token__","hook__"]},
-    "USDe Vault Lyra": {"ignoreMethods":["token","token__","hook__"]},
     "DAI Vault Lyra": {"ignoreMethods":["token","token__","hook__"]},
+    "USDe Vault Lyra": {"ignoreMethods":["token","token__","hook__"]},
 // Hook
     "USDC Vault Hook": {"ignoreMethods":["token","token__","hook__"]},
     "WETH Vault Hook": {"ignoreMethods":["token","token__","hook__"]},
@@ -193,16 +193,16 @@ discovery.getEscrowDetails({
                 tokens: ['WBTC'],
               }),
 discovery.getEscrowDetails({
-                address: EthereumAddress('0x26Cf1Dc84694E04277F2Fe4C13E43597c6010C2A'),
-                name: 'USDe Vault Lyra',
-                description: 'Socket Vault associated with Lyra and owned by LyraMultisig.',
-                tokens: ['USDe'],
-              }),
-discovery.getEscrowDetails({
                 address: EthereumAddress('0x7E1d17b580dD4F89037DB331430eAEe8B8e50c91'),
                 name: 'DAI Vault Lyra',
                 description: 'Socket Vault associated with Lyra and owned by LyraMultisig.',
                 tokens: ['DAI'],
+              }),
+discovery.getEscrowDetails({
+                address: EthereumAddress('0x26Cf1Dc84694E04277F2Fe4C13E43597c6010C2A'),
+                name: 'USDe Vault Lyra',
+                description: 'Socket Vault associated with Lyra and owned by LyraMultisig.',
+                tokens: ['USDe'],
               }),
 // Hook
 discovery.getEscrowDetails({
@@ -227,7 +227,7 @@ discovery.getEscrowDetails({
 discovery.getEscrowDetails({
                 address: EthereumAddress('0x2f87464d5F5356dB350dcb302FE28040986783a7'),
                 name: 'KINTO Vault Kinto',
-                description: 'Socket Vault associated with Kinto and owned by Unknown Owner.',
+                description: 'Socket Vault associated with Kinto and owned by KintoEOA.',
                 tokens: ['KINTO'],
               }),
 discovery.getEscrowDetails({
@@ -287,13 +287,13 @@ discovery.getEscrowDetails({
 discovery.getEscrowDetails({
                 address: EthereumAddress('0x25f0D71Da51A77Ca231484eBbAD1f588A0230ef2'),
                 name: 'PAXG Vault Kinto',
-                description: 'Socket Vault associated with Kinto and owned by Unknown Owner.',
+                description: 'Socket Vault associated with Kinto and owned by KintoEOA.',
                 tokens: ['PAXG'],
               }),
 discovery.getEscrowDetails({
                 address: EthereumAddress('0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF'),
                 name: 'XAUt Vault Kinto',
-                description: 'Socket Vault associated with Kinto and owned by Unknown Owner.',
+                description: 'Socket Vault associated with Kinto and owned by KintoEOA.',
                 tokens: ['XAUt'],
               }),
 // Polynomial
