@@ -7,6 +7,7 @@ export const blobstreamx: ZkCatalogProject = {
     name: 'BlobstreamX',
   },
   proofVerification: {
+    shortDescription: 'Celestia ZK light client implementation.',
     aggregation: false,
     verifiers: [
       {
