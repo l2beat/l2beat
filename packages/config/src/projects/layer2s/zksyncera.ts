@@ -655,6 +655,7 @@ export const zksyncera: Layer2 = {
       },
     ],
     proofVerification: {
+      shortDescription: 'ZKsync Era is a ZK-EVM rollup on Ethereum.',
       aggregation: true,
       requiredTools: [
         {

@@ -10,7 +10,7 @@ export const worldcoinsmtb: ZkCatalogProject = {
   },
   proofVerification: {
     shortDescription:
-      'ZK program to add or delete users from the anonymity set.',
+      'ZK program to add or delete users from the Worldcoin anonymity set.',
     aggregation: false,
     verifiers: [
       {

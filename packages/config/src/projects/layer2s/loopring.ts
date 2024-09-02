@@ -396,6 +396,7 @@ export const loopring: Layer2 = {
       },
     ],
     proofVerification: {
+      shortDescription: 'Loopring is a DEX rollup built on Ethereum.',
       aggregation: false,
       requiredTools: [
         {
