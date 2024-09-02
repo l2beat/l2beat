@@ -16,7 +16,7 @@ import {
 import { Gauge } from 'prom-client'
 
 import { Database } from '@l2beat/database'
-import { hashJson } from '@l2beat/shared'
+import { hashJson, sortObjectByKeys } from '@l2beat/shared'
 import { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 import { DiscoveryRunner } from './DiscoveryRunner'
@@ -234,7 +234,7 @@ export class UpdateMonitor {
       projectName: projectConfig.name,
       chainId: this.chainConverter.toChainId(runner.chain),
       blockNumber,
-      contentHash: hashJson(flatSources),
+      contentHash: hashJson(sortObjectByKeys(flatSources)),
       flat: flatSources,
     })
   }
