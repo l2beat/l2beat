@@ -13,6 +13,10 @@ import { TableFacetedFilter } from '~/app/_components/table/filters/table-facete
 import { useTable } from '~/hooks/use-table'
 import { type DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
 import { columns } from './columns'
+import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
+import { TableCell } from '~/app/_components/table/table'
+import { RiskCell } from '~/app/_components/table/cells/risk-cell'
+import { cn } from '~/utils/cn'
 
 interface Props {
   items: DaRiskEntry[]
@@ -22,7 +26,7 @@ export function DaRiskTable({ items }: Props) {
   const table = useTable({
     data: items,
     columns,
-    getSubRows: (row) => row.subRows,
+    getSubRows: () => [],
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -39,7 +43,77 @@ export function DaRiskTable({ items }: Props) {
       <FilterWrapper>
         <TableFacetedFilter title="DA Layer" column={table.getColumn('name')} />
       </FilterWrapper>
-      <BasicTable table={table} />
+      <BasicTable
+        table={table}
+        rawSubComponent
+        renderSubComponent={({ row }) => {
+          return (
+            <>
+              {row.original.subRows.map((subRow, i) => {
+                const firstRow = i === 0
+                const lastRow = i === row.original.subRows.length - 1
+                return (
+                  <tr key={subRow.slug} className="p-4">
+                    <td colSpan={3}></td>
+                    <td className="group h-9 whitespace-pre align-middle">
+                      <ProjectNameCell
+                        className={cn(
+                          'size-full bg-gray-100 p-2',
+                          firstRow && 'rounded-tl-xl',
+                          lastRow && 'rounded-bl-xl',
+                        )}
+                        project={{
+                          ...row.original,
+                          name: row.original.name,
+                          shortName: undefined,
+                        }}
+                      />
+                    </td>
+                    <TableCell className="bg-gray-100">
+                      <RiskCell
+                        risk={subRow.risks.economicSecurity}
+                        emptyMode="em-dash"
+                      />
+                    </TableCell>
+                    <TableCell className="bg-gray-100">
+                      <RiskCell
+                        risk={subRow.risks.fraudDetection}
+                        emptyMode="em-dash"
+                      />
+                    </TableCell>
+                    <TableCell className="bg-gray-100">
+                      <RiskCell
+                        risk={subRow.risks.attestations}
+                        emptyMode="em-dash"
+                      />
+                    </TableCell>
+                    <TableCell className="bg-gray-100">
+                      <RiskCell
+                        risk={subRow.risks.exitWindow}
+                        emptyMode="em-dash"
+                      />
+                    </TableCell>
+                    <td className="group h-9 whitespace-pre align-middle">
+                      <div
+                        className={cn(
+                          'flex size-full items-center bg-gray-100',
+                          firstRow && 'rounded-tr-xl',
+                          lastRow && 'rounded-br-xl',
+                        )}
+                      >
+                        <RiskCell
+                          risk={subRow.risks.accessibility}
+                          emptyMode="em-dash"
+                        />
+                      </div>
+                    </td>
+                  </tr>
+                )
+              })}
+            </>
+          )
+        }}
+      />
     </>
   )
 }

@@ -64,28 +64,16 @@ export const columns = [
   columnHelper.accessor('risks.attestations', {
     header: 'Attestation security',
     cell: (ctx) => <RiskCell risk={ctx.getValue()} emptyMode="em-dash" />,
-    sortingFn: (rowA, rowB) =>
-      sortSentiments(
-        rowA.original.risks.attestations,
-        rowB.original.risks.attestations,
-      ),
+    enableSorting: false,
   }),
   columnHelper.accessor('risks.exitWindow', {
     header: 'Exit window',
     cell: (ctx) => <RiskCell risk={ctx.getValue()} emptyMode="em-dash" />,
-    sortingFn: (rowA, rowB) =>
-      sortSentiments(
-        rowA.original.risks.exitWindow,
-        rowB.original.risks.exitWindow,
-      ),
+    enableSorting: false,
   }),
   columnHelper.accessor('risks.accessibility', {
     header: 'Accessibility',
     cell: (ctx) => <RiskCell risk={ctx.getValue()} emptyMode="em-dash" />,
-    sortingFn: (rowA, rowB) =>
-      sortSentiments(
-        rowA.original.risks.accessibility,
-        rowB.original.risks.accessibility,
-      ),
+    enableSorting: false,
   }),
 ]
