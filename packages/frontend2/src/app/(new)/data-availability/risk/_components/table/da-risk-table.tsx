@@ -57,6 +57,7 @@ export function DaRiskTable({ items }: Props) {
       </FilterWrapper>
       <BasicTable
         table={table}
+        rowColoringMode="ethereum-only"
         rawSubComponent
         renderSubComponent={({ row }) => {
           if (row.original.subRows.length < 1) {
@@ -94,7 +95,7 @@ export function DaRiskTable({ items }: Props) {
                             lastRow && 'rounded-bl-xl',
                           )}
                           project={{
-                            ...row.original,
+                            ...subRow,
                             name: subRow.daBridge.name,
                             shortName: undefined,
                           }}

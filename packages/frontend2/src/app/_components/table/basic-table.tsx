@@ -42,6 +42,7 @@ interface Props<T extends BasicEntry> {
    * If the sub component is a raw component (e.g. renders a tr element), false by default
    */
   rawSubComponent?: boolean
+  rowColoringMode?: 'default' | 'ethereum-only'
 }
 
 function getCommonPinningStyles<T>(
@@ -74,6 +75,7 @@ export function BasicTable<T extends BasicEntry>({
   className,
   renderSubComponent,
   rawSubComponent,
+  rowColoringMode = 'default',
 }: Props<T>) {
   if (table.getRowCount() === 0) {
     return <TableEmptyState />
@@ -168,7 +170,7 @@ export function BasicTable<T extends BasicEntry>({
       </TableHeader>
       <TableBody>
         {table.getRowModel().rows.map((row) => {
-          const rowType = getRowType(row.original)
+          const rowType = getRowType(row.original, rowColoringMode)
           return (
             <>
               <TableRow
@@ -317,10 +319,17 @@ function getHref(href: string | undefined, hash: string | undefined) {
 }
 
 type RowType = ReturnType<typeof getRowType>
-function getRowType(entry: BasicEntry) {
+function getRowType(
+  entry: BasicEntry,
+  rowColoringMode: Props<BasicEntry>['rowColoringMode'],
+) {
   if (entry.slug === 'ethereum') {
     return 'ethereum'
   }
+  if (rowColoringMode === 'ethereum-only') {
+    return undefined
+  }
+
   if (entry.isVerified === false || entry.redWarning) {
     return 'unverified'
   }
