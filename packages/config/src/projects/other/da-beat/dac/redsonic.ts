@@ -7,7 +7,7 @@ export const redsonicLayer: DaLayer = {
   type: 'DaLayer',
   kind: 'DAC',
   display: {
-    name: 'Data Availability Committee (DAC)',
+    name: 'Redsonic DAC',
     slug: 'redsonic',
     description:
       'Set of parties responsible for signing and attesting to the availability of data.',

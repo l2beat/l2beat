@@ -7,7 +7,7 @@ export const xlayerLayer: DaLayer = {
   type: 'DaLayer',
   kind: 'DAC',
   display: {
-    name: 'Data Availability Committee (DAC)',
+    name: 'xlayer DAC',
     slug: 'xlayer',
     description:
       'Set of parties responsible for signing and attesting to the availability of data.',

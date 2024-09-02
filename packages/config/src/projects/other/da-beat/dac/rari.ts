@@ -7,7 +7,7 @@ export const rariLayer: DaLayer = {
   type: 'DaLayer',
   kind: 'DAC',
   display: {
-    name: 'Data Availability Committee (DAC)',
+    name: 'Rari DAC',
     slug: 'rari',
     description:
       'Set of parties responsible for signing and attesting to the availability of data.',

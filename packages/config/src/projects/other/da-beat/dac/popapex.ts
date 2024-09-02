@@ -7,7 +7,7 @@ export const popapexLayer: DaLayer = {
   type: 'DaLayer',
   kind: 'DAC',
   display: {
-    name: 'Data Availability Committee (DAC)',
+    name: 'Proof-of-play Apex DAC',
     slug: 'popapex',
     description:
       'Set of parties responsible for signing and attesting to the availability of data.',

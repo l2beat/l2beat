@@ -7,7 +7,7 @@ export const edgelessLayer: DaLayer = {
   type: 'DaLayer',
   kind: 'DAC',
   display: {
-    name: 'Data Availability Committee (DAC)',
+    name: 'Edgeless DAC',
     slug: 'edgeless',
     description:
       'Set of parties responsible for signing and attesting to the availability of data.',

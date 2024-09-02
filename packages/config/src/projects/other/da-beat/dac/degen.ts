@@ -7,7 +7,7 @@ export const degenLayer: DaLayer = {
   type: 'DaLayer',
   kind: 'DAC',
   display: {
-    name: 'Data Availability Committee (DAC)',
+    name: 'Degen DAC',
     slug: 'degen',
     description:
       'Set of parties responsible for signing and attesting to the availability of data.',

@@ -7,7 +7,7 @@ export const arbitrumnovaLayer: DaLayer = {
   type: 'DaLayer',
   kind: 'DAC',
   display: {
-    name: 'Data Availability Committee (DAC)',
+    name: 'Arbitrum Nova DAC',
     slug: 'nova',
     description:
       'Set of parties responsible for signing and attesting to the availability of data.',

@@ -7,7 +7,7 @@ export const moltenLayer: DaLayer = {
   type: 'DaLayer',
   kind: 'DAC',
   display: {
-    name: 'Data Availability Committee (DAC)',
+    name: 'Molten DAC',
     slug: 'molten',
     description:
       'Set of parties responsible for signing and attesting to the availability of data.',

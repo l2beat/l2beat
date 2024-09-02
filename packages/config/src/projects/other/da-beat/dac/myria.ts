@@ -7,7 +7,7 @@ export const myriaLayer: DaLayer = {
   type: 'DaLayer',
   kind: 'DAC',
   display: {
-    name: 'Data Availability Committee (DAC)',
+    name: 'Myria DAC',
     slug: 'myria',
     description:
       'Set of parties responsible for signing and attesting to the availability of data.',

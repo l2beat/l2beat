@@ -7,7 +7,7 @@ export const witnessLayer: DaLayer = {
   type: 'DaLayer',
   kind: 'DAC',
   display: {
-    name: 'Data Availability Committee (DAC)',
+    name: 'Witness DAC',
     slug: 'witness',
     description:
       'Set of parties responsible for signing and attesting to the availability of data.',
