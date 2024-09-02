@@ -15,14 +15,21 @@ export class FlatSourcesRepository extends BaseRepository {
         .insertInto('FlatSources')
         .values(batch)
         .onConflict((cb) =>
-          cb
-            .columns(['projectName', 'chainId'])
-            .doUpdateSet((eb) => ({
-              blockNumber: eb.ref('excluded.blockNumber'),
-              contentHash: eb.ref('excluded.contentHash'),
-              flat: eb.ref('excluded.flat'),
-            }))
-            .where('FlatSources.contentHash', '<>', 'excluded.contentHash'),
+          cb.columns(['projectName', 'chainId']).doUpdateSet((eb) => ({
+            blockNumber: eb.ref('excluded.blockNumber'),
+            contentHash: eb
+              .case()
+              .when(eb.ref('FlatSources.contentHash'), '<>', eb.ref('excluded.contentHash'))
+              .then(eb.ref('excluded.contentHash'))
+              .else(eb.ref('FlatSources.contentHash'))
+              .end(),
+            flat: eb
+              .case()
+              .when(eb.ref('FlatSources.contentHash'), '<>', eb.ref('excluded.contentHash'))
+              .then(eb.ref('excluded.flat'))
+              .else(eb.ref('FlatSources.flat'))
+              .end(),
+          })),
         )
         .execute()
     })
