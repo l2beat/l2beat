@@ -44,6 +44,12 @@ export function DaRiskTable({ items }: Props) {
     },
   })
 
+  /**
+   * NOTE: This table uses a custom sub-component to render the sub-rows. This is done mainly
+   * because of some specific requirements for the layout of the sub-rows. Always keep this layout
+   * in sync with columns.tsx.
+   */
+
   return (
     <>
       <FilterWrapper>
