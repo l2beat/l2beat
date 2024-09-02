@@ -109,6 +109,17 @@ export class EtherscanClient implements IEtherscanClient {
     throw new Error('Could not fetch block number')
   }
 
+  private parseContractName(name: string): string {
+    if (name.includes(':')) {
+      const parts = name.split(':')
+      assert(parts.length === 2, 'Expected only a single colon')
+      // biome-ignore lint/style/noNonNullAssertion: we know it's there
+      return parts[1]!
+    }
+
+    return name
+  }
+
   async getContractSource(address: EthereumAddress): Promise<ContractSource> {
     const response = await this.callWithRetries('contract', 'getsourcecode', {
       address: address.toString(),
@@ -142,7 +153,7 @@ export class EtherscanClient implements IEtherscanClient {
     }
 
     return {
-      name,
+      name: this.parseContractName(name),
       isVerified,
       abi: isVerified ? jsonToHumanReadableAbi(result.ABI) : [],
       solidityVersion,
