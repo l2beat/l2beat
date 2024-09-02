@@ -89,7 +89,7 @@ export function DaRiskTable({ items }: Props) {
                       <Link href={href}>
                         <ProjectNameCell
                           className={cn(
-                            'size-full bg-black/[0.05] p-2 pl-8 group-hover:bg-black/[0.1] dark:bg-white/[0.1] dark:group-hover:bg-white/[0.2]',
+                            'size-full bg-black/[0.05] p-2 !pl-8 group-hover:bg-black/[0.1] dark:bg-white/[0.1] dark:group-hover:bg-white/[0.2]',
                             firstRow && 'rounded-tl-xl',
                             lastRow && 'rounded-bl-xl',
                           )}
