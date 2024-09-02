@@ -1,6 +1,7 @@
+import { LogLevel } from '@l2beat/backend-tools/dist/logger/LogLevel'
 import { command, option, positional } from 'cmd-ts'
 import { Configuration, findRateLimit } from '../implementations/checkrpc'
-import { HttpUrl, PositiveRpcBoundNumber } from './types'
+import { HttpUrl, LogLevelValue, PositiveRpcBoundNumber } from './types'
 
 export const CheckRpc = command({
   name: 'check-rpc',
@@ -24,6 +25,13 @@ export const CheckRpc = command({
       defaultValue: () => 5000,
       defaultValueIsSerializable: true,
     }),
+    logLevel: option({
+      type: LogLevelValue,
+      long: 'log-level',
+      short: 'l',
+      defaultValue: () => 'INFO' as LogLevel,
+      defaultValueIsSerializable: true,
+    }),
   },
   handler: async (args) => {
     const config: Configuration = {
@@ -38,7 +46,7 @@ export const CheckRpc = command({
       minSuccessRatio: 0.95,
       maxFailureRatio: 0.2,
       minCallsToAbort: 100,
-      verbosity: 1, // 0: silent, 1: basic, 2: detailed
+      logLevel: args.logLevel,
     }
 
     await findRateLimit(config).catch(console.error)

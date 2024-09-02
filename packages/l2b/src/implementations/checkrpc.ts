@@ -1,3 +1,5 @@
+import { LogFormatterPretty, Logger } from '@l2beat/backend-tools'
+import { LogLevel } from '@l2beat/backend-tools/dist/logger/LogLevel'
 import chalk from 'chalk'
 
 enum FailureReason {
@@ -12,7 +14,6 @@ export interface BatchConfiguration {
   method: string
   timeoutMs: number
   batchDurationMs: number
-  verbosity: number
   minCallsToAbort: number
   maxFailureRatio: number
 }
@@ -24,6 +25,7 @@ export type Configuration = BatchConfiguration & {
   retryDelayMs: number
   maxBatches: number
   minSuccessRatio: number
+  logLevel: LogLevel
 }
 
 async function callRpc(
@@ -31,7 +33,7 @@ async function callRpc(
   rpcUrl: string,
   method: string,
   timeout: number,
-  verbosity: number,
+  logger: Logger,
 ): Promise<FailureReason | null> {
   const controller = new AbortController()
   const id = setTimeout(() => controller.abort(), timeout)
@@ -58,7 +60,7 @@ async function callRpc(
     } else if (response.status === 429) {
       return FailureReason.Status429
     } else {
-      if (verbosity > 1) console.log(chalk.yellow(response.status.toString()))
+      logger.error(`Got HTTP code: ${chalk.yellow(response.status.toString())}`)
       return FailureReason.OtherStatus
     }
   } catch (error) {
@@ -67,7 +69,7 @@ async function callRpc(
     if (error instanceof Error && error.name === 'AbortError') {
       return FailureReason.Timeout
     } else {
-      if (verbosity > 1) console.log(chalk.red(error))
+      logger.info(chalk.red(error))
       return FailureReason.Other
     }
   }
@@ -77,6 +79,7 @@ async function runBatch(
   callRate: number,
   blockNumber: number,
   config: BatchConfiguration,
+  logger: Logger,
 ): Promise<{
   successes: number
   failures: Record<FailureReason, number>
@@ -93,7 +96,7 @@ async function runBatch(
   let totalCalls = 0
   let aborted = false
 
-  console.log(`Starting batch at ${callRate} calls/minute...`)
+  logger.info(`Starting batch at ${callRate} calls/minute...`)
 
   const promises = Array.from({ length: callRate }, (_, i) => {
     return new Promise<void>((resolve) => {
@@ -108,7 +111,7 @@ async function runBatch(
             config.rpcUrl,
             config.method,
             config.timeoutMs,
-            config.verbosity,
+            logger,
           )
           totalCalls++
 
@@ -125,8 +128,8 @@ async function runBatch(
               failures[FailureReason.OtherStatus] +
               failures[FailureReason.Other]
             const failureRate = totalFailures / totalCalls
-            process.stdout.write(
-              `\r${chalk.green(`Successes: ${successes}`)}, ${chalk.red(
+            logger.info(
+              `${chalk.green(`Successes: ${successes}`)}, ${chalk.red(
                 `Failures: ${totalFailures}`,
               )} (Timeout: ${chalk.yellow(
                 failures[FailureReason.Timeout].toString(),
@@ -146,7 +149,7 @@ async function runBatch(
               failureRate >= config.maxFailureRatio
             ) {
               aborted = true
-              console.log(
+              logger.info(
                 chalk.red(
                   `\nAborting batch due to high failure rate (${Math.floor(
                     failureRate * 100,
@@ -165,9 +168,8 @@ async function runBatch(
 
   await Promise.all(promises)
 
-  console.log()
-  if (!aborted && config.verbosity > 0) {
-    console.log(
+  if (!aborted) {
+    logger.debug(
       `Batch at ${callRate} calls/min: ${successes} successes, Failures (Timeout: ${
         failures[FailureReason.Timeout]
       }, Status 429: ${failures[FailureReason.Status429]}, Other Status: ${
@@ -188,46 +190,63 @@ function isBatchSuccessful(
 }
 
 export async function findRateLimit(config: Configuration) {
+  const logger: Logger = new Logger({
+    logLevel: config.logLevel,
+    transports: [
+      {
+        transport: console,
+        formatter: new LogFormatterPretty(),
+      },
+    ],
+  })
   let blockNumber = 1
 
   let lowerRate = config.lowerBoundary
   let upperRate = config.upperBoundary
 
-  let { successes, aborted } = await runBatch(lowerRate, blockNumber, config)
+  let { successes, aborted } = await runBatch(
+    lowerRate,
+    blockNumber,
+    config,
+    logger,
+  )
   if (aborted || !isBatchSuccessful(successes, lowerRate, config)) {
-    console.error(chalk.red('Rate limit is below the lower boundary.'))
+    logger.error(chalk.red('Rate limit is below the lower boundary.'))
     return
   }
 
   for (let i = 1; i <= config.maxBatches; i++) {
     const testRate = Math.floor((lowerRate + upperRate) / 2)
-    ;({ successes, aborted } = await runBatch(testRate, blockNumber, config))
+    ;({ successes, aborted } = await runBatch(
+      testRate,
+      blockNumber,
+      config,
+      logger,
+    ))
     blockNumber += testRate
 
-    let pauseNeeded = false
+    const pauseNeeded =
+      aborted || !isBatchSuccessful(successes, testRate, config)
 
-    if (aborted || !isBatchSuccessful(successes, testRate, config)) {
+    if (pauseNeeded) {
       upperRate = testRate
-      pauseNeeded = true
     } else {
       lowerRate = testRate
     }
 
-    if (config.verbosity > 1) {
-      console.log(`New bounds: lower=${lowerRate}, upper=${upperRate}`)
-    }
+    logger.info(`New bounds: lower=${lowerRate}, upper=${upperRate}`)
 
     if (upperRate - lowerRate <= 1) {
       break
     }
 
     if (pauseNeeded) {
-      console.log(
+      logger.info(
         chalk.yellow(`Pausing for ${config.retryDelayMs / 1000} seconds...`),
       )
       await new Promise((res) => setTimeout(res, config.retryDelayMs))
     }
   }
 
-  console.log(chalk.green(`Estimated rate limit: ${lowerRate} calls/min`))
+  logger.info(chalk.green(`Estimated rate limit: ${lowerRate} calls/min`))
 }
