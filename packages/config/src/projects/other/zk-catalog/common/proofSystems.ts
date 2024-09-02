@@ -19,7 +19,7 @@ function HALO2KZG(
 ): Omit<SubVerifier, 'name'> {
   return {
     proofSystem: 'Halo2',
-    mainArithmetization: 'Plonkishish',
+    mainArithmetization: 'Plonkish',
     mainPCS: 'KZG',
     trustedSetup,
   }
