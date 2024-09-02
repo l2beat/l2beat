@@ -26,9 +26,7 @@ export function formatCurrency(
   if (showLessThanMinimum) {
     const minimum = round(Math.pow(10, -decimals), decimals)
     if (value < minimum) {
-      return symbol
-        ? `<${symbol}${minimum}`
-        : `<${minimum} ${currency.toUpperCase()}`
+      return symbol ? `<${symbol}${minimum}` : `<${minimum} ${currency}`
     }
   }
 

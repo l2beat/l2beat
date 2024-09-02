@@ -64,6 +64,7 @@ export async function getBridgeProjectDetails(
         id: 'tvl',
         title: 'Value Locked',
         projectId: bridge.id,
+        tokens: undefined,
         milestones: [],
       },
     })

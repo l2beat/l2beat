@@ -4,12 +4,13 @@ import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import { formatCurrency } from '~/utils/format'
 import { type SeriesStyle } from '../../core/styles'
 import { mapMilestones } from '../../core/utils/map-milestones'
+import { type ChartUnit } from '../../types'
 
 export type TvlDataPoint = readonly [number, number, number, number, number]
 
 interface Params {
   milestones: Milestone[]
-  unit: 'usd' | 'eth'
+  unit: ChartUnit
   data?: TvlDataPoint[]
 }
 

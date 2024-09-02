@@ -16,6 +16,7 @@ import { getOperatorSection } from '~/utils/project/technology/get-operator-sect
 import { getOtherConsiderationsSection } from '~/utils/project/technology/get-other-considerations-section'
 import { getScalingTechnologySection } from '~/utils/project/technology/get-technology-section'
 import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawals-section'
+import { getTopTokensForProject } from '../../tvl/tokens/get-top-tokens-for-project'
 
 interface Params {
   project: Layer2
@@ -89,12 +90,15 @@ export async function getL2ProjectDetails({
 
   const items: ProjectDetailsSection[] = []
 
+  const topTokens = await getTopTokensForProject(project)
+
   if (!project.isUpcoming && !isEmpty(tvlChartData)) {
     items.push({
       type: 'ChartSection',
       props: {
         id: 'tvl',
         stacked: true,
+        tokens: topTokens,
         title: 'Value Locked',
         projectId: project.id,
         milestones: sortedMilestones,

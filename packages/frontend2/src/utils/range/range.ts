@@ -7,10 +7,11 @@ export type Resolution = 'hourly' | 'daily' | 'sixHourly'
 export function getRange(
   range: TimeRange,
   resolution: Resolution,
+  now?: UnixTime,
 ): [UnixTime, UnixTime] {
   const days = rangeToDays(range)
 
-  const roundedNow = UnixTime.now().toStartOf(
+  const roundedNow = (now ?? UnixTime.now()).toStartOf(
     resolution === 'hourly' ? 'hour' : 'day',
   )
 

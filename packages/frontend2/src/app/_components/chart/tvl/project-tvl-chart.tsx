@@ -5,6 +5,7 @@ import { Chart } from '~/app/_components/chart/core/chart'
 import { ChartProvider } from '~/app/_components/chart/core/chart-provider'
 import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
+import { type ChartScale, type ChartUnit } from '../types'
 import { TvlChartHover } from './tvl-chart-hover'
 import { TvlChartTimeRangeControls } from './tvl-chart-time-range-controls'
 import { TvlChartUnitAndScaleControls } from './tvl-chart-unit-and-scale-controls'
@@ -16,8 +17,8 @@ interface Props {
 }
 
 export function ProjectTvlChart({ projectId, milestones }: Props) {
-  const [scale, setScale] = useState('lin')
-  const [unit, setUnit] = useState<'usd' | 'eth'>('usd')
+  const [scale, setScale] = useState<ChartScale>('lin')
+  const [unit, setUnit] = useState<ChartUnit>('usd')
 
   const [timeRange, setTimeRange] = useState<TvlChartRange>('7d')
 
