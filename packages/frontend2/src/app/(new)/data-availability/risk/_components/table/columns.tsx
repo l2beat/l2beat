@@ -42,6 +42,10 @@ export const columns = [
         />
       )
     },
+    meta: {
+      cellClassName: 'pl-8',
+      headClassName: 'pl-8',
+    },
   }),
   columnHelper.accessor('risks.economicSecurity', {
     header: 'Economic security',

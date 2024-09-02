@@ -171,7 +171,15 @@ export function BasicTable<T extends BasicEntry>({
           const rowType = getRowType(row.original)
           return (
             <>
-              <TableRow key={row.id} className={getRowTypeClassNames(rowType)}>
+              <TableRow
+                key={row.id}
+                className={cn(
+                  getRowTypeClassNames(rowType),
+                  row.getIsExpanded() &&
+                    renderSubComponent?.({ row }) &&
+                    '!border-none',
+                )}
+              >
                 {row.getVisibleCells().map((cell) => {
                   const { meta } = cell.column.columnDef
                   const groupParams = getGroupParams(cell.column)
@@ -207,7 +215,7 @@ export function BasicTable<T extends BasicEntry>({
                 (rawSubComponent ? (
                   renderSubComponent({ row })
                 ) : (
-                  <tr>
+                  <tr className="border-b">
                     {/* 2nd row is a custom 1 cell row */}
                     <td colSpan={row.getVisibleCells().length}>
                       {renderSubComponent({ row })}

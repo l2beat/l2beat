@@ -47,18 +47,31 @@ export function DaRiskTable({ items }: Props) {
         table={table}
         rawSubComponent
         renderSubComponent={({ row }) => {
+          if (row.original.subRows.length < 1) {
+            return (
+              <tr className="border-b">
+                <td colSpan={8}></td>
+              </tr>
+            )
+          }
           return (
             <>
+              <tr>
+                <td className="h-2" />
+              </tr>
               {row.original.subRows.map((subRow, i) => {
                 const firstRow = i === 0
                 const lastRow = i === row.original.subRows.length - 1
                 return (
-                  <tr key={subRow.slug} className="p-4">
+                  <tr
+                    key={subRow.slug}
+                    className={cn('group-hover:bg-gray-100')}
+                  >
                     <td colSpan={3}></td>
                     <td className="group h-9 whitespace-pre align-middle">
                       <ProjectNameCell
                         className={cn(
-                          'size-full bg-gray-100 p-2',
+                          'size-full bg-gray-100 p-2 pl-8',
                           firstRow && 'rounded-tl-xl',
                           lastRow && 'rounded-bl-xl',
                         )}
@@ -110,6 +123,9 @@ export function DaRiskTable({ items }: Props) {
                   </tr>
                 )
               })}
+              <tr className="border-b">
+                <td className="h-2" />
+              </tr>
             </>
           )
         }}
