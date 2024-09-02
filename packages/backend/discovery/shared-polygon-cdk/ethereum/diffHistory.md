@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x1b69636094eb00aa6f52b635e6e3f23b2a21998b
+
+# Diff at Mon, 02 Sep 2024 07:21:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8fcb30f6c613b5454aa9ecdec05a118442e9dc7b block: 20585049
+- current block number: 20661354
+
+## Description
+
+Scheduled tx is executed giving a yet unknown Multisig the CREATE_ROLLUP role. This role can add new rollups that must use an existing rollup type. So far the role was held only by the RollupManagerAdminMultisig. As this permission does not affect existing chains it is not added to the shared template.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      values.accessControl.CREATE_ROLLUP.members.1:
++        "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/GnosisSafe/GnosisSafe.sol       | 952 +++++++++++++++++++++
+ .../.flat/GnosisSafe/GnosisSafeProxy.p.sol         |  34 +
+ 2 files changed, 986 insertions(+)
+```
+
 Generated with discovered.json: 0xd2495f646a0033a5e87873cdc7867242321923e3
 
 # Diff at Fri, 30 Aug 2024 07:59:23 GMT:
