@@ -12,7 +12,7 @@
       "ignoreMethods": ["proxiableUUID"],
       "ignoreInWatchMode": [
         "claimableFees",
-        "getNextSubmissionsIdx",
+        "nextSubmissionIdxToVerify",
         "nextProofIdxToVerify"
       ]
     }
