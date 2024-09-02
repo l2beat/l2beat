@@ -67,10 +67,17 @@ export function DaRiskTable({ items }: Props) {
               {row.original.subRows.map((subRow, i) => {
                 const firstRow = i === 0
                 const lastRow = i === row.original.subRows.length - 1
+
                 return (
                   <tr key={subRow.slug}>
                     <td colSpan={3}></td>
-                    <td className="group h-9 whitespace-pre align-middle">
+                    <td
+                      className={cn(
+                        'group h-9 whitespace-pre align-middle',
+                        !lastRow &&
+                          'border-b border-b-gray-200 dark:border-b-zinc-700',
+                      )}
+                    >
                       <ProjectNameCell
                         className={cn(
                           'size-full bg-gray-100 p-2 pl-8 dark:bg-gray-900',
@@ -79,36 +86,69 @@ export function DaRiskTable({ items }: Props) {
                         )}
                         project={{
                           ...row.original,
-                          name: row.original.name,
+                          name: subRow.daBridge.name,
                           shortName: undefined,
                         }}
                       />
                     </td>
-                    <TableCell className="bg-gray-100 dark:bg-gray-900">
+                    <TableCell
+                      className={cn(
+                        'bg-gray-100 align-middle dark:bg-gray-900',
+                        !lastRow &&
+                          'border-b border-b-gray-200 dark:border-b-zinc-700',
+                      )}
+                    >
                       <RiskCell
                         risk={subRow.risks.economicSecurity}
                         emptyMode="em-dash"
                       />
                     </TableCell>
-                    <TableCell className="bg-gray-100 dark:bg-gray-900">
+
+                    <TableCell
+                      className={cn(
+                        'bg-gray-100 align-middle dark:bg-gray-900',
+                        !lastRow &&
+                          'border-b border-b-gray-200 dark:border-b-zinc-700',
+                      )}
+                    >
                       <RiskCell
                         risk={subRow.risks.fraudDetection}
                         emptyMode="em-dash"
                       />
                     </TableCell>
-                    <TableCell className="bg-gray-100 dark:bg-gray-900">
+
+                    <TableCell
+                      className={cn(
+                        'bg-gray-100 align-middle dark:bg-gray-900',
+                        !lastRow &&
+                          'border-b border-b-gray-200 dark:border-b-zinc-700',
+                      )}
+                    >
                       <RiskCell
                         risk={subRow.risks.attestations}
                         emptyMode="em-dash"
                       />
                     </TableCell>
-                    <TableCell className="bg-gray-100 dark:bg-gray-900">
+
+                    <TableCell
+                      className={cn(
+                        'bg-gray-100 align-middle dark:bg-gray-900',
+                        !lastRow &&
+                          'border-b border-b-gray-200 dark:border-b-zinc-700',
+                      )}
+                    >
                       <RiskCell
                         risk={subRow.risks.exitWindow}
                         emptyMode="em-dash"
                       />
                     </TableCell>
-                    <td className="group h-9 whitespace-pre align-middle">
+                    <td
+                      className={cn(
+                        'group h-9 whitespace-pre align-middle',
+                        !lastRow &&
+                          'border-b border-b-gray-200 dark:border-b-zinc-700',
+                      )}
+                    >
                       <div
                         className={cn(
                           'flex size-full items-center bg-gray-100 dark:bg-gray-900',
