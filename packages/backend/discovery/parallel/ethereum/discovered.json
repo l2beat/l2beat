@@ -1,7 +1,7 @@
 {
   "name": "parallel",
   "chain": "ethereum",
-  "blockNumber": 20654582,
+  "blockNumber": 20661240,
   "configHash": "0x3c393e38d3a0c4192d3c292b3a4c74216e488212eb4b8f4b26be8344d87510fa",
   "version": 14,
   "contracts": [
@@ -80,7 +80,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 215,
+        "nonce": 216,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -566,8 +566,7 @@
             "adminRole": "ADMIN_ROLE",
             "members": [
               "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
-              "0x19293FBec52F94165f903708a74513Dd6dFedd0a",
-              "0x7AC5Af3cb1F05aC5301E5589e8bE097247C5456b"
+              "0x19293FBec52F94165f903708a74513Dd6dFedd0a"
             ]
           }
         },
@@ -595,7 +594,6 @@
       "roles": ["Sequencer"]
     },
     { "address": "0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341" },
-    { "address": "0x7AC5Af3cb1F05aC5301E5589e8bE097247C5456b" },
     { "address": "0x909e36B512Ed45250fdff513523119d825647695" },
     { "address": "0x9EBe5cabad9748263DbE1304064AdAb285c0f515" },
     { "address": "0xb0A6d4ddE9f8B8f0763b34834589BF38607c7778" },

@@ -1,3 +1,25 @@
+Generated with discovered.json: 0x1c45b4656a74dcf9c9576a9c54e54d4bf837d034
+
+# Diff at Mon, 02 Sep 2024 06:58:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8fcb30f6c613b5454aa9ecdec05a118442e9dc7b block: 20654582
+- current block number: 20661240
+
+## Description
+
+One of the two (!) upgrade admin EOA's is removed.
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89) {
+    +++ description: None
+      values.accessControl.EXECUTOR_ROLE.members.2:
+-        "0x7AC5Af3cb1F05aC5301E5589e8bE097247C5456b"
+    }
+```
+
 Generated with discovered.json: 0x014a2cd73b33f516dfdef1c258f6b9d4423dac12
 
 # Diff at Sun, 01 Sep 2024 08:40:07 GMT:
