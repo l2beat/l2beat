@@ -80,7 +80,7 @@
           "handler": {
             "type": "arrayFromOneEvent",
             "event": "StrategyAddedToDepositWhitelist",
-            "valueKey": "strategy",
+            "valueKey": "strategy"
           },
           "target": { "template": "eigenlayer/Strategy" }
         }
