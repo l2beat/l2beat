@@ -1,8 +1,8 @@
 {
-  "name": "nebra",
+  "name": "nebraupa",
   "chain": "ethereum",
-  "blockNumber": 20662516,
-  "configHash": "0x8992f14bbdbd6c8d82b3a306c2183f8f10d8f60b99561d92d9a9d9d0dfe4907d",
+  "blockNumber": 20662585,
+  "configHash": "0x380e2d7bcca4b582f09a8222caf25fcacc17c036da397e9361dacf9f4873877f",
   "version": 14,
   "contracts": [
     {
