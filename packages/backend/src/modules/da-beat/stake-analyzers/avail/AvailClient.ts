@@ -18,52 +18,48 @@ export class AvailClient {
     await this.api.disconnect()
   }
 
-  async getActiveValidators() {
-    const activeValidators = await this.api.query.session.validators()
+  async getCurrentEra() {
+    const currentEra = await this.api.query.staking.currentEra()
 
-    return activeValidators.toHuman() as string[]
+    return currentEra.toHuman() as string
   }
 
-  async getValidatorData(validators: string[]) {
-    const validatorData = await Promise.all(
-      validators.map(async (validatorAddress) => {
-        const totalStaked = await this.getStakingInfo(validatorAddress)
+  async getStakingEraOverview(era: string) {
+    const overview = (await this.api.query.staking.erasStakersOverview.entries(
+      era,
+    )) as unknown as [ValidatorKeysCodec, ValidatorValueCodec][]
 
-        return {
-          address: validatorAddress,
-          totalStaked,
+    const validatorsOverview = overview.reduce(
+      (
+        acc: Record<string, Exposure>,
+        [validatorKeys, value]: [ValidatorKeysCodec, ValidatorValueCodec],
+      ) => {
+        const [, validator] = validatorKeys.toHuman()
+        const { own, total } = value.toPrimitive()
+
+        acc[validator] = {
+          own: BigInt(own),
+          total: BigInt(total),
         }
-      }),
+
+        return acc
+      },
+      {},
     )
 
-    return validatorData
-  }
-
-  private async getStakingInfo(validatorAddress: string) {
-    const stakingLedger = await this.api.query.staking.ledger(validatorAddress)
-
-    const primitive = stakingLedger.toPrimitive() as PrimitiveStakingInfo
-
-    return toStakingInfo(primitive)
+    return validatorsOverview
   }
 }
 
-function toStakingInfo(primitive: PrimitiveStakingInfo): StakingInfo {
-  return {
-    stash: primitive.stash,
-    total: BigInt(primitive.total),
-    active: BigInt(primitive.active),
-  }
+type Codec<T> = {
+  toHuman: () => T
+  toPrimitive: () => T
 }
 
-type PrimitiveStakingInfo = {
-  stash: string
-  total: string
-  active: string
-}
+type ValidatorKeysCodec = Codec<[string, string]>
+type ValidatorValueCodec = Codec<{ own: string; total: string }>
 
-type StakingInfo = {
-  stash: string
+interface Exposure {
+  own: bigint
   total: bigint
-  active: bigint
 }

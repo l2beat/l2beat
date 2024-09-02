@@ -10,13 +10,13 @@ export class AvailStakeAnalyzer extends AbstractStakeAnalyzer {
     await this.client.connect()
 
     try {
-      const activeValidatorSet = await this.client.getActiveValidators()
+      const currentEra = await this.client.getCurrentEra()
 
-      const validatorsData =
-        await this.client.getValidatorData(activeValidatorSet)
+      const validatorsOverview =
+        await this.client.getStakingEraOverview(currentEra)
 
-      const total = validatorsData.reduce(
-        (acc, v) => acc + v.totalStaked.total,
+      const total = Object.values(validatorsOverview).reduce(
+        (acc, { total }) => acc + total,
         0n,
       )
 
