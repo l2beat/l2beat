@@ -7,6 +7,25 @@ enum FailureReason {
   Other = 'Other Error',
 }
 
+export interface BatchConfiguration {
+  rpcUrl: string
+  method: string
+  timeoutMs: number
+  batchDurationMs: number
+  verbosity: number
+  minCallsToAbort: number
+  maxFailureRatio: number
+}
+
+export type Verbosity = 'silent' | 'basic' | 'detailed'
+export type Configuration = BatchConfiguration & {
+  lowerBoundary: number
+  upperBoundary: number
+  retryDelayMs: number
+  maxBatches: number
+  minSuccessRatio: number
+}
+
 async function callRpc(
   blockNumber: number,
   rpcUrl: string,
@@ -57,19 +76,13 @@ async function callRpc(
 async function runBatch(
   callRate: number,
   blockNumber: number,
-  rpcUrl: string,
-  method: string,
-  timeout: number,
-  batchDuration: number,
-  minCallsToAbort: number,
-  abortFailureThreshold: number,
-  verbosity: number,
+  config: BatchConfiguration,
 ): Promise<{
   successes: number
   failures: Record<FailureReason, number>
   aborted: boolean
 }> {
-  const interval = batchDuration / callRate
+  const interval = config.batchDurationMs / callRate
   let successes = 0
   const failures: Record<FailureReason, number> = {
     [FailureReason.Timeout]: 0,
@@ -92,10 +105,10 @@ async function runBatch(
 
           const result = await callRpc(
             blockNumber + i,
-            rpcUrl,
-            method,
-            timeout,
-            verbosity,
+            config.rpcUrl,
+            config.method,
+            config.timeoutMs,
+            config.verbosity,
           )
           totalCalls++
 
@@ -129,8 +142,8 @@ async function runBatch(
             )
 
             if (
-              totalCalls > minCallsToAbort &&
-              failureRate >= abortFailureThreshold
+              totalCalls > config.minCallsToAbort &&
+              failureRate >= config.maxFailureRatio
             ) {
               aborted = true
               console.log(
@@ -153,7 +166,7 @@ async function runBatch(
   await Promise.all(promises)
 
   console.log()
-  if (!aborted && verbosity > 0) {
+  if (!aborted && config.verbosity > 0) {
     console.log(
       `Batch at ${callRate} calls/min: ${successes} successes, Failures (Timeout: ${
         failures[FailureReason.Timeout]
@@ -166,82 +179,41 @@ async function runBatch(
   return { successes, failures, aborted }
 }
 
-export async function findRateLimit({
-  rpcUrl,
-  method,
-  lowerBoundary,
-  upperBoundary,
-  batchDuration,
-  batchDelay,
-  maxBatches,
-  timeout,
-  minSuccessRatio,
-  abortFailureThreshold,
-  minCallsToAbort,
-  verbosity,
-}: {
-  rpcUrl: string
-  method: string
-  lowerBoundary: number
-  upperBoundary: number
-  batchDuration: number
-  batchDelay: number
-  maxBatches: number
-  timeout: number
-  minSuccessRatio: number
-  abortFailureThreshold: number
-  minCallsToAbort: number
-  verbosity: number
-}) {
+function isBatchSuccessful(
+  successes: number,
+  totalCalls: number,
+  config: Configuration,
+): boolean {
+  return successes / totalCalls >= config.minSuccessRatio
+}
+
+export async function findRateLimit(config: Configuration) {
   let blockNumber = 1
 
-  const isBatchSuccessful = (successes: number, totalCalls: number) =>
-    successes / totalCalls >= minSuccessRatio
+  let lowerRate = config.lowerBoundary
+  let upperRate = config.upperBoundary
 
-  let { successes, aborted } = await runBatch(
-    lowerBoundary,
-    blockNumber,
-    rpcUrl,
-    method,
-    timeout,
-    batchDuration,
-    minCallsToAbort,
-    abortFailureThreshold,
-    verbosity,
-  )
-  if (aborted || !isBatchSuccessful(successes, lowerBoundary)) {
+  let { successes, aborted } = await runBatch(lowerRate, blockNumber, config)
+  if (aborted || !isBatchSuccessful(successes, lowerRate, config)) {
     console.error(chalk.red('Rate limit is below the lower boundary.'))
     return
   }
 
-  let lowerRate = lowerBoundary
-  let upperRate = upperBoundary
-
-  for (let i = 1; i <= maxBatches; i++) {
+  for (let i = 1; i <= config.maxBatches; i++) {
     const testRate = Math.floor((lowerRate + upperRate) / 2)
-    ;({ successes, aborted } = await runBatch(
-      testRate,
-      blockNumber,
-      rpcUrl,
-      method,
-      timeout,
-      batchDuration,
-      minCallsToAbort,
-      abortFailureThreshold,
-      verbosity,
-    ))
+    ;({ successes, aborted } = await runBatch(testRate, blockNumber, config))
     blockNumber += testRate
 
     let pauseNeeded = false
 
-    if (aborted || !isBatchSuccessful(successes, testRate)) {
+    if (aborted || !isBatchSuccessful(successes, testRate, config)) {
       upperRate = testRate
       pauseNeeded = true
     } else {
       lowerRate = testRate
     }
 
-    if (verbosity > 1) {
+    if (config.verbosity > 1) {
       console.log(`New bounds: lower=${lowerRate}, upper=${upperRate}`)
     }
 
@@ -250,8 +222,10 @@ export async function findRateLimit({
     }
 
     if (pauseNeeded) {
-      console.log(chalk.yellow(`Pausing for ${batchDelay / 1000} seconds...`))
-      await new Promise((res) => setTimeout(res, batchDelay))
+      console.log(
+        chalk.yellow(`Pausing for ${config.retryDelayMs / 1000} seconds...`),
+      )
+      await new Promise((res) => setTimeout(res, config.retryDelayMs))
     }
   }
 
