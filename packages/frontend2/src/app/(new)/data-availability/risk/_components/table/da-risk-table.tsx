@@ -17,12 +17,14 @@ import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell
 import { TableCell } from '~/app/_components/table/table'
 import { RiskCell } from '~/app/_components/table/cells/risk-cell'
 import { cn } from '~/utils/cn'
+import { useBreakpoint } from '~/hooks/use-is-mobile'
 
 interface Props {
   items: DaRiskEntry[]
 }
 
 export function DaRiskTable({ items }: Props) {
+  const breakpoint = useBreakpoint()
   const table = useTable({
     data: items,
     columns,
@@ -34,7 +36,10 @@ export function DaRiskTable({ items }: Props) {
     getFacetedUniqueValues: getFacetedUniqueValues(),
     getExpandedRowModel: getExpandedRowModel(),
     initialState: {
-      expanded: true,
+      expanded: breakpoint !== 'mobile' ? true : undefined,
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
     },
   })
 
@@ -49,7 +54,7 @@ export function DaRiskTable({ items }: Props) {
         renderSubComponent={({ row }) => {
           if (row.original.subRows.length < 1) {
             return (
-              <tr className="border-b">
+              <tr className="border-b border-b-gray-200 dark:border-b-zinc-700">
                 <td colSpan={8}></td>
               </tr>
             )
@@ -63,15 +68,12 @@ export function DaRiskTable({ items }: Props) {
                 const firstRow = i === 0
                 const lastRow = i === row.original.subRows.length - 1
                 return (
-                  <tr
-                    key={subRow.slug}
-                    className={cn('group-hover:bg-gray-100')}
-                  >
+                  <tr key={subRow.slug}>
                     <td colSpan={3}></td>
                     <td className="group h-9 whitespace-pre align-middle">
                       <ProjectNameCell
                         className={cn(
-                          'size-full bg-gray-100 p-2 pl-8',
+                          'size-full bg-gray-100 p-2 pl-8 dark:bg-gray-900',
                           firstRow && 'rounded-tl-xl',
                           lastRow && 'rounded-bl-xl',
                         )}
@@ -82,25 +84,25 @@ export function DaRiskTable({ items }: Props) {
                         }}
                       />
                     </td>
-                    <TableCell className="bg-gray-100">
+                    <TableCell className="bg-gray-100 dark:bg-gray-900">
                       <RiskCell
                         risk={subRow.risks.economicSecurity}
                         emptyMode="em-dash"
                       />
                     </TableCell>
-                    <TableCell className="bg-gray-100">
+                    <TableCell className="bg-gray-100 dark:bg-gray-900">
                       <RiskCell
                         risk={subRow.risks.fraudDetection}
                         emptyMode="em-dash"
                       />
                     </TableCell>
-                    <TableCell className="bg-gray-100">
+                    <TableCell className="bg-gray-100 dark:bg-gray-900">
                       <RiskCell
                         risk={subRow.risks.attestations}
                         emptyMode="em-dash"
                       />
                     </TableCell>
-                    <TableCell className="bg-gray-100">
+                    <TableCell className="bg-gray-100 dark:bg-gray-900">
                       <RiskCell
                         risk={subRow.risks.exitWindow}
                         emptyMode="em-dash"
@@ -109,7 +111,7 @@ export function DaRiskTable({ items }: Props) {
                     <td className="group h-9 whitespace-pre align-middle">
                       <div
                         className={cn(
-                          'flex size-full items-center bg-gray-100',
+                          'flex size-full items-center bg-gray-100 dark:bg-gray-900',
                           firstRow && 'rounded-tr-xl',
                           lastRow && 'rounded-br-xl',
                         )}
@@ -123,7 +125,7 @@ export function DaRiskTable({ items }: Props) {
                   </tr>
                 )
               })}
-              <tr className="border-b">
+              <tr className="border-b border-b-gray-200 dark:border-b-zinc-700">
                 <td className="h-2" />
               </tr>
             </>

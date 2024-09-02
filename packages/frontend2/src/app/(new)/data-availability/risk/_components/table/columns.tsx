@@ -4,6 +4,8 @@ import { RiskCell } from '~/app/_components/table/cells/risk-cell'
 import { getCommonProjectColumns } from '~/app/_components/table/common-project-columns'
 import { sortSentiments } from '~/app/_components/table/sorting/functions/sentiment-sorting'
 import { type DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
+import ChevronDown from '~/icons/chevron.svg'
+import { cn } from '~/utils/cn'
 
 const columnHelper = createColumnHelper<DaRiskEntry>()
 
@@ -26,8 +28,17 @@ export const columns = [
       const value = ctx.getValue()
       if (value === 'multiple') {
         return (
-          <button onClick={() => ctx.row.toggleExpanded()}>
+          <button
+            className="flex flex-row items-center gap-4 italic text-[#9EA0A4]"
+            onClick={() => ctx.row.toggleExpanded()}
+          >
             Multiple bridges
+            <ChevronDown
+              className={cn(
+                'fill-black dark:fill-white',
+                ctx.row.getIsExpanded() && 'rotate-180',
+              )}
+            />
           </button>
         )
       }
