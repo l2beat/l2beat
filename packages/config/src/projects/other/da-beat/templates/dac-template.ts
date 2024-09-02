@@ -1,0 +1,140 @@
+import { Layer2 } from '../../../layer2s'
+import { Layer3 } from '../../../layer3s'
+import {
+  DaAccessibilityRisk,
+  DaAttestationSecurityRisk,
+  DaEconomicSecurityRisk,
+  DaExitWindowRisk,
+  DaFraudDetectionRisk,
+  DacBridge,
+  DacDaLayer,
+} from '../types'
+import { DaLinks } from '../types/DaLinks'
+import { toUsedInProject } from '../utils/to-used-in-project'
+
+type TemplateSpecific = {
+  /** Project DAC is associated with */
+  project: Layer2 | Layer3
+}
+
+type Optionals = {
+  risks: Partial<DacDaLayer['risks'] & DacBridge['risks']>
+  links?: Partial<DaLinks>
+  layer: {
+    technology: DacDaLayer['technology']
+    description: DacDaLayer['display']['description']
+  }
+  bridge: {
+    technology: DacBridge['technology']
+    description: DacBridge['display']['description']
+  } & Pick<
+    DacBridge,
+    | 'chain'
+    | 'totalMembers'
+    | 'requiredMembers'
+    | 'permissions'
+    | 'contracts'
+    | 'members'
+    | 'transactionDataType'
+    | 'isUnderReview'
+  >
+  warning?: DacBridge['display']['warning']
+  redWarning?: DacBridge['display']['redWarning']
+}
+
+type TemplateVars = Optionals & TemplateSpecific
+
+export function DAC(template: TemplateVars): DacDaLayer {
+  // Common
+  const name = `${template.project.display.name} DAC`
+  const usedIn = toUsedInProject([template.project])
+
+  // "Bridge" backfill for DAC
+  const bridgeDescription =
+    template.bridge?.description ??
+    `${template.project.display.name} DAC on Ethereum`
+
+  const bridgeTechnology = `## Simple DA Bridge
+    The DA bridge is a smart contract verifying a data availability claim from DAC Members via signature verification.
+    The bridge requires a ${template.bridge.requiredMembers}/${template.bridge.totalMembers} threshold of signatures to be met before the data commitment is accepted.
+  `
+
+  const bridgeDisplay: DacBridge['display'] = {
+    name,
+    slug: 'dac',
+    description: bridgeDescription,
+    warning: template.warning,
+    redWarning: template.redWarning,
+    links: {
+      websites: [],
+      documentation: [],
+      repositories: [],
+      apps: [],
+      explorers: [],
+      socialMedia: [],
+      ...template.links,
+    },
+  }
+
+  const dacBridge: DacBridge = {
+    id: `${template.project.display.slug}-dac-bridge`,
+    type: 'DAC',
+    usedIn,
+    ...template.bridge,
+    display: bridgeDisplay,
+    technology: bridgeTechnology,
+    risks: {
+      attestations:
+        template.risks.attestations ?? DaAttestationSecurityRisk.NotVerified,
+      exitWindow: template.risks.exitWindow ?? DaExitWindowRisk.Immutable,
+      accessibility:
+        template.risks.accessibility ?? DaAccessibilityRisk.NotEnshrined,
+    },
+  }
+
+  // DAC "DA-Layer"
+  const layerDescription =
+    template.layer?.description ??
+    'Set of parties responsible for signing and attesting to the availability of data.'
+
+  const layerTechnology =
+    template.layer?.technology ??
+    `## Simple Committee
+  The Data Availability Committee (DAC) is a set of trusted parties responsible for storing data off-chain and serving it upon demand. 
+  The security guarantees of DACs depend on the specific setup and can vary significantly based on the criteria for selecting committee members, 
+  their operational transparency, and the mechanisms in place to handle disputes and failures.
+  `
+
+  const layerDisplay: DacDaLayer['display'] = {
+    name,
+    slug: `${template.project.display.slug}-dac-layer`,
+    description: layerDescription,
+    links: {
+      websites: [],
+      documentation: [],
+      repositories: [],
+      apps: [],
+      explorers: [],
+      socialMedia: [],
+      ...template.links,
+    },
+  }
+
+  const dacLayer: DacDaLayer = {
+    id: `${template.project.display.slug}-dac-layer`,
+    kind: 'DAC',
+    type: 'DaLayer',
+    display: layerDisplay,
+    technology: layerTechnology,
+    usedIn,
+    bridges: [dacBridge],
+    risks: {
+      economicSecurity:
+        template.risks?.economicSecurity ?? DaEconomicSecurityRisk.Unknown,
+      fraudDetection:
+        template.risks?.fraudDetection ?? DaFraudDetectionRisk.NoFraudDetection,
+    },
+  }
+
+  return dacLayer
+}
