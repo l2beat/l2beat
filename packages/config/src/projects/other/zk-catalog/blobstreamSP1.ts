@@ -1,7 +1,7 @@
 import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { ZkCatalogProject } from './types'
 
-export const blobstreamx: ZkCatalogProject = {
+export const blobstreamSP1: ZkCatalogProject = {
   display: {
     slug: 'SP1Blobstream',
     name: 'SP1Blobstream',
@@ -32,7 +32,7 @@ export const blobstreamx: ZkCatalogProject = {
             mainArithmetization: 'Plonk',
             mainPCS: 'FRI',
             trustedSetup: 'None',
-            link: '',
+            link: 'https://github.com/succinctlabs/sp1',
           },
         ],
       },
@@ -59,7 +59,7 @@ export const blobstreamx: ZkCatalogProject = {
             mainArithmetization: 'Plonk',
             mainPCS: 'FRI',
             trustedSetup: 'None',
-            link: '',
+            link: 'https://github.com/succinctlabs/sp1',
           },
         ],
       },
@@ -86,7 +86,7 @@ export const blobstreamx: ZkCatalogProject = {
             mainArithmetization: 'Plonk',
             mainPCS: 'FRI',
             trustedSetup: 'None',
-            link: '',
+            link: 'https://github.com/succinctlabs/sp1',
           },
         ],
       }

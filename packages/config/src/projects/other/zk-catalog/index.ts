@@ -1,4 +1,4 @@
-import { blobstreamx } from './blobstreamx'
+import { blobstreamSP1 } from './blobstreamSP1'
 import { payy } from './payy'
 import { risczero } from './risczero'
 import { soulwallet } from './soulwallet'
@@ -11,7 +11,7 @@ export * from './common'
 export * from './utils/getVerifiers'
 
 export const zkCatalogProjects: ZkCatalogProject[] = [
-  blobstreamx,
+  blobstreamSP1,
   payy,
   risczero,
   soulwallet,
