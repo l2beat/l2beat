@@ -23,12 +23,7 @@ export function createFlatSourcesModule(
     chainConverter,
   )
 
-  const routers = [createFlatSourcesRouter(controller)]
-
-  const start = () => {}
-
   return {
-    routers,
-    start,
+    routers: [createFlatSourcesRouter(controller)],
   }
 }
