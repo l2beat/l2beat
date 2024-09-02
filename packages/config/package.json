@@ -14,7 +14,6 @@
     "test": "mocha",
     "typecheck": "tsc --noEmit",
     "get-lz-data": "node -r esbuild-register scripts/omnichain",
-    "check-rpc": "node -r esbuild-register scripts/checkRpc",
     "update-multichain": "node -r esbuild-register scripts/multichain",
     "socket-crawl": "node -r esbuild-register scripts/socketcrawl",
     "socket-convert": "node -r esbuild-register scripts/socketconvert",

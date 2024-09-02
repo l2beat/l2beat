@@ -1,3 +1,4 @@
+import { LEVEL, LogLevel } from '@l2beat/backend-tools/dist/logger/LogLevel'
 import { Layer2Provider, Layer3Provider } from '@l2beat/config'
 import { assert, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { Type, extendType, string } from 'cmd-ts'
@@ -11,10 +12,34 @@ export const EthereumAddressValue: Type<string, EthereumAddress> = {
   },
 }
 
+export const PositiveRpcBoundNumber: Type<string, number> = extendType(string, {
+  async from(str) {
+    const num = await Promise.resolve(parseInt(str, 10))
+    assert(
+      !isNaN(num) && num > 0 && num <= 1000000,
+      'Call rate bound per minute must be a positive integer between 1 and 1,000,000',
+    )
+    return num
+  },
+})
+
 export const Hash256Value: Type<string, Hash256> = {
   async from(str): Promise<Hash256> {
     return new Promise((resolve, _) => {
       resolve(Hash256(str))
+    })
+  },
+}
+
+export const LogLevelValue: Type<string, LogLevel> = {
+  async from(str): Promise<LogLevel> {
+    return new Promise((resolve, reject) => {
+      if (LEVEL[str as keyof typeof LEVEL] !== undefined) {
+        resolve(str as LogLevel)
+      } else {
+        const allLogLevels = Object.keys(LEVEL).join(', ')
+        reject(new Error(`Undefined LogLevel provided, use ${allLogLevels}`))
+      }
     })
   },
 }
