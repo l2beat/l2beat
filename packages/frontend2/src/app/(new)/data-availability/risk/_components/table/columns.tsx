@@ -10,17 +10,16 @@ import { cn } from '~/utils/cn'
 const columnHelper = createColumnHelper<DaRiskEntry>()
 
 export const columns = [
-  ...getCommonProjectColumns(columnHelper, (ctx) => !ctx.row.getParentRow()),
+  ...getCommonProjectColumns(columnHelper),
   columnHelper.accessor('name', {
     header: 'DA Layer',
-    cell: (ctx) =>
-      !ctx.row.getParentRow() && (
-        <ProjectNameCell
-          project={{
-            name: ctx.getValue(),
-          }}
-        />
-      ),
+    cell: (ctx) => (
+      <ProjectNameCell
+        project={{
+          name: ctx.getValue(),
+        }}
+      />
+    ),
   }),
   columnHelper.accessor('daBridge', {
     header: 'DA Bridge',
