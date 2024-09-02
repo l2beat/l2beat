@@ -79,20 +79,28 @@ export function DaRiskTable({ items }: Props) {
                 return (
                   <tr key={subRow.slug} className="group">
                     <td colSpan={3} className="pointer-events-none"></td>
-                    <FirstSubRomTableCell href={href} lastRow={lastRow}>
-                      <ProjectNameCell
-                        className={cn(
-                          'size-full bg-black/[0.05] p-2 pl-8 group-hover:bg-black/[0.1] dark:bg-white/[0.1] dark:group-hover:bg-white/[0.2]',
-                          firstRow && 'rounded-tl-xl',
-                          lastRow && 'rounded-bl-xl',
-                        )}
-                        project={{
-                          ...row.original,
-                          name: subRow.daBridge.name,
-                          shortName: undefined,
-                        }}
-                      />
-                    </FirstSubRomTableCell>
+                    <td
+                      className={cn(
+                        'group h-9 whitespace-pre align-middle',
+                        !lastRow &&
+                          'border-b border-b-gray-200 dark:border-b-zinc-700',
+                      )}
+                    >
+                      <Link href={href}>
+                        <ProjectNameCell
+                          className={cn(
+                            'size-full bg-black/[0.05] p-2 pl-8 group-hover:bg-black/[0.1] dark:bg-white/[0.1] dark:group-hover:bg-white/[0.2]',
+                            firstRow && 'rounded-tl-xl',
+                            lastRow && 'rounded-bl-xl',
+                          )}
+                          project={{
+                            ...row.original,
+                            name: subRow.daBridge.name,
+                            shortName: undefined,
+                          }}
+                        />
+                      </Link>
+                    </td>
                     <SubRowTableCell href={href}>
                       <RiskCell
                         risk={subRow.risks.economicSecurity}
@@ -138,27 +146,6 @@ export function DaRiskTable({ items }: Props) {
         }}
       />
     </>
-  )
-}
-
-function FirstSubRomTableCell({
-  href,
-  children,
-  lastRow,
-}: {
-  href: string
-  children: React.ReactNode
-  lastRow: boolean
-}) {
-  return (
-    <td
-      className={cn(
-        'group h-9 whitespace-pre align-middle',
-        !lastRow && 'border-b border-b-gray-200 dark:border-b-zinc-700',
-      )}
-    >
-      <Link href={href}>{children}</Link>
-    </td>
   )
 }
 
