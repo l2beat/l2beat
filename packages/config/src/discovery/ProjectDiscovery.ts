@@ -26,7 +26,7 @@ import {
 import { utils } from 'ethers'
 import { groupBy, isArray, isString, uniq } from 'lodash'
 
-import { format, join } from 'path'
+import { join } from 'path'
 import {
   ScalingProjectContractSingleAddress,
   ScalingProjectUpgradeability,
@@ -324,11 +324,7 @@ export class ProjectDiscovery {
     return contracts
   }
 
-  getMultisigPermission(
-    identifier: string,
-    description: string,
-    references?: ScalingProjectReference[],
-  ): ScalingProjectPermission[] {
+  getMultisigDescription(identifier: string): string[] {
     const contract = this.getContract(identifier)
     assert(
       contract.proxyType === 'gnosis safe',
@@ -351,21 +347,37 @@ export class ProjectDiscovery {
     const fullModulesDescription =
       modulesDescriptions.length === 0
         ? undefined
-        : `* It uses the following modules: ${modulesDescriptions.join(
-            ', ',
-          )}.\n`
+        : `Uses the following modules: ${modulesDescriptions.join(', ')}.`
 
-    const descriptionWithContractNames = this.replaceAddressesWithNames(
-      [
-        `* This is a Gnosis Safe with ${this.getMultisigStats(
-          identifier,
-        )} threshold.\n`,
-        fullModulesDescription,
-        description,
-      ]
-        .filter(notUndefined)
-        .join(' '),
-    )
+    return [
+      `Gnosis Safe with ${this.getMultisigStats(identifier)} threshold.`,
+      fullModulesDescription,
+    ].filter(notUndefined)
+  }
+
+  getMultisigPermission(
+    identifier: string,
+    description: string | string[],
+    references?: ScalingProjectReference[],
+    useBulletPoints: boolean = false,
+  ): ScalingProjectPermission[] {
+    const contract = this.getContract(identifier)
+
+    const passedDescription = Array.isArray(description)
+      ? description
+      : [description]
+
+    const multisigDesc = this.getMultisigDescription(identifier)
+
+    const combinedDescriptions = [...multisigDesc, ...passedDescription]
+
+    const formattedDesc = useBulletPoints
+      ? formatAsBulletPoints(combinedDescriptions)
+      : combinedDescriptions.join(' ')
+
+    const descriptionWithContractNames =
+      this.replaceAddressesWithNames(formattedDesc)
+
     return [
       {
         name: contract.name,
@@ -680,7 +692,7 @@ export class ProjectDiscovery {
 
   describeGnosisSafeMembership(
     contractOrEoa: ContractParameters | EoaParameters,
-  ): string | undefined {
+  ): string[] {
     const safesWithThisMember = this.discoveries
       .flatMap((discovery) => discovery.contracts)
       .filter((contract) => contract.proxyType === 'gnosis safe')
@@ -691,27 +703,25 @@ export class ProjectDiscovery {
       )
       .map((contract) => contract.name)
     return safesWithThisMember.length === 0
-      ? undefined
-      : '* Member of ' + safesWithThisMember.join(', ') + '.\n'
+      ? []
+      : ['Member of ' + safesWithThisMember.join(', ')]
   }
 
-  describeRoles(
-    contractOrEoa: ContractParameters | EoaParameters,
-  ): string | undefined {
+  describeRoles(contractOrEoa: ContractParameters | EoaParameters): string[] {
     const roles = contractOrEoa.roles
     return roles === undefined
-      ? undefined
-      : '* ' + (roles.length === 1 ? 'A ' : '') + roles.join(', ') + '.\n'
+      ? []
+      : [(roles.length === 1 ? 'A ' : '') + roles.join(', ')]
   }
 
   describeUltimatelyReceivedPermissions(
     contractOrEoa: ContractParameters | EoaParameters,
-  ): string | undefined {
+  ): string[] {
     const ultimatePermissionToPrefix: {
       [key in PermissionType]: string | undefined
     } = {
-      configure: 'It can configure',
-      upgrade: 'It can upgrade implementation of',
+      configure: 'Can change configuration of',
+      upgrade: 'Can upgrade implementation of',
       act: undefined,
     }
 
@@ -737,65 +747,67 @@ export class ProjectDiscovery {
           )
         },
       ),
-    )
-      .map(([key, entries]) => {
-        const permission = key.split(':')[0] as PermissionType
-        const via = key.split(':')[1] ?? ''
-        const prefix = ultimatePermissionToPrefix[permission]
-        if (prefix === undefined) {
-          return ''
-        }
-        const addressesString =
-          entries
-            .map((entry) => this.getContract(entry.target.toString()).name)
-            .join(', ') + via
-        return `* ${
-          ultimatePermissionToPrefix[permission as PermissionType]
-        } ${addressesString}.\n`
-      })
-      .join(' ')
+    ).map(([key, entries]) => {
+      const permission = key.split(':')[0] as PermissionType
+      const via = key.split(':')[1] ?? ''
+      const prefix = ultimatePermissionToPrefix[permission]
+      if (prefix === undefined) {
+        return ''
+      }
+      const addressesString =
+        entries
+          .map((entry) => this.getContract(entry.target.toString()).name)
+          .join(', ') + via
+      return `${
+        ultimatePermissionToPrefix[permission as PermissionType]
+      } ${addressesString}.`
+    })
   }
 
   describeDirectlyReceivedPermissions(
     contractOrEoa: ContractParameters | EoaParameters,
-  ): string | undefined {
+  ): string[] {
     const directPermissionToPrefix: {
       [key in PermissionType]: string | undefined
     } = {
-      configure: 'It can be used to configure',
-      upgrade: 'It can be used to upgrade implementation of\n',
-      act: 'It can act on behalf of',
+      configure: 'Can be used to configure',
+      upgrade: 'Can be used to upgrade implementation of\n',
+      act: 'Can act on behalf of',
     }
 
     return Object.entries(
       groupBy(contractOrEoa.directlyReceivedPermissions ?? [], 'permission'),
-    )
-      .map(([permission, entries]) => {
-        const addressesString = entries
-          .map((entry) => this.getContract(entry.target.toString()).name)
-          .join(', ')
-        return `* ${
-          directPermissionToPrefix[permission as PermissionType]
-        } ${addressesString}.\n`
-      })
-      .join(' ')
+    ).map(([permission, entries]) => {
+      const addressesString = entries
+        .map((entry) => this.getContract(entry.target.toString()).name)
+        .join(', ')
+      return `${
+        directPermissionToPrefix[permission as PermissionType]
+      } ${addressesString}.`
+    })
   }
 
   describeContractOrEoa(
     contractOrEoa: ContractParameters | EoaParameters,
     includeDirectPermissions: boolean = true,
-  ): string {
+  ): string[] {
+    // const combinedDescriptions = [
     return [
-      this.describeRoles(contractOrEoa),
-      this.describeGnosisSafeMembership(contractOrEoa),
-      this.describeUltimatelyReceivedPermissions(contractOrEoa),
-      includeDirectPermissions
+      ...this.describeRoles(contractOrEoa),
+      ...this.describeGnosisSafeMembership(contractOrEoa),
+      ...(includeDirectPermissions
         ? this.describeDirectlyReceivedPermissions(contractOrEoa)
-        : undefined,
-      '* ' + contractOrEoa.descriptions?.join(' ') + '\n',
-    ]
-      .filter(notUndefined)
-      .join(' ')
+        : []),
+      ...this.describeUltimatelyReceivedPermissions(contractOrEoa),
+      contractOrEoa.descriptions?.join(' '),
+    ].filter(notUndefined)
+
+    // const withBulletPoints =
+    //   combinedDescriptions.length > 1
+    //     ? combinedDescriptions.map((s) => `* ${s}\n`)
+    //     : combinedDescriptions
+
+    // return withBulletPoints.join(' ')
   }
 
   replaceAddressesWithNames(s: string): string {
@@ -833,16 +845,23 @@ export class ProjectDiscovery {
     ]
 
     for (const contract of relevantContracts) {
-      const description = this.describeContractOrEoa(contract, false)
+      const descriptions = this.describeContractOrEoa(contract, true)
       if (contract.proxyType === 'gnosis safe') {
         result.push(
           ...this.getMultisigPermission(
             contract.address.toString(),
-            description,
+            descriptions,
+            undefined,
+            true,
           ),
         )
       } else {
-        result.push(this.contractAsPermissioned(contract, description))
+        result.push(
+          this.contractAsPermissioned(
+            contract,
+            formatAsBulletPoints(descriptions),
+          ),
+        )
       }
     }
 
@@ -851,7 +870,9 @@ export class ProjectDiscovery {
       if (eoa.receivedPermissions === undefined) {
         continue
       }
-      const description = this.describeContractOrEoa(eoa, false)
+      const description = formatAsBulletPoints(
+        this.describeContractOrEoa(eoa, false),
+      )
       result.push({
         name: 'EOA',
         accounts: [this.formatPermissionedAccount(eoa.address)],
@@ -889,7 +910,9 @@ export class ProjectDiscovery {
         }
 
         return this.getContractDetails(contract.address.toString(), {
-          description: this.describeContractOrEoa(contract, true),
+          description: formatAsBulletPoints(
+            this.describeContractOrEoa(contract, true),
+          ),
           ...upgradableBy,
         })
       })
@@ -946,4 +969,10 @@ const roleDescriptions: { [key in StackRole]: string } = {
   Guardian: 'Guardian is an actor allowed to pause deposits and withdrawals.',
   Validator:
     'Validator is an actor that validates the correctness of state transitions.',
+}
+
+export function formatAsBulletPoints(description: string[]): string {
+  return description.length > 1
+    ? description.map((s) => `* ${s}\n`).join('')
+    : description.join(' ')
 }

@@ -271,7 +271,7 @@
       "address": "0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8",
       "template": "gnosisSafeModules/DeputyGuardianModule",
       "descriptions": [
-        "allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A (the deputy guardian) to act on behalf of the Gnosis Safe."
+        "allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe."
       ],
       "sinceTimestamp": 1717149791,
       "values": {
@@ -1348,7 +1348,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
-    "gnosisSafeModules/DeputyGuardianModule": "0x609d56c883a67fb1b7cc98e2b71c1a4014a7cafe743a970ece9aa8dd742b4bf2",
+    "gnosisSafeModules/DeputyGuardianModule": "0xdf0eca44c189c3ae1ab3dc595b9be07ccf7a590046f698cae8ce191b0265bc59",
     "gnosisSafeModules/LivenessModule": "0x8162081df0fcb97a9f284af7abf967750d51b78f421e00d5ceafb3c0dc425164",
     "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",

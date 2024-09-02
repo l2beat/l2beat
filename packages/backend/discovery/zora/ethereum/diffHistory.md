@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x0082aa6cf05e8d1c2ddeece71083d8256a2b236b
+Generated with discovered.json: 0x8453dc6cfb65b8576b3c718cf9229f517ef86dd8
 
-# Diff at Sun, 01 Sep 2024 17:08:44 GMT:
+# Diff at Mon, 02 Sep 2024 16:43:32 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@bee35b6cff7c52634ae8667cbb331e18ad4ec17a block: 20475242
+- comparing to: main@b19e9655a9a9bec0f52d0272591a19bcb136b40b block: 20475242
 - current block number: 20475242
 
 ## Description
@@ -81,6 +81,15 @@ discovery. Values are for block 20475242 (main branch discovery), not current.
 +        [{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]
       directlyReceivedPermissions:
 +        [{"permission":"act","target":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"},{"permission":"act","target":"0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"}]
+    }
+```
+
+```diff
+    contract DeputyGuardianModule (0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8) {
+    +++ description: allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.
+      descriptions.0:
+-        "allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A (the deputy guardian) to act on behalf of the Gnosis Safe."
++        "allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe."
     }
 ```
 
