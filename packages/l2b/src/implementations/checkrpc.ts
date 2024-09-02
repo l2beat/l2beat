@@ -121,42 +121,46 @@ async function runBatch(
             failures[result]++
           }
 
-          if (!aborted) {
-            const totalFailures =
-              failures[FailureReason.Timeout] +
-              failures[FailureReason.Status429] +
-              failures[FailureReason.OtherStatus] +
-              failures[FailureReason.Other]
-            const failureRate = totalFailures / totalCalls
-            logger.info(
-              `${chalk.green(`Successes: ${successes}`)}, ${chalk.red(
-                `Failures: ${totalFailures}`,
-              )} (Timeout: ${chalk.yellow(
-                failures[FailureReason.Timeout].toString(),
-              )}, Status 429: ${chalk.yellow(
-                failures[FailureReason.Status429].toString(),
-              )}, Other Status: ${chalk.yellow(
-                failures[FailureReason.OtherStatus].toString(),
-              )}, Other: ${chalk.yellow(
-                failures[FailureReason.Other].toString(),
-              )}), Failure rate: ${chalk.magenta(
-                Math.floor(failureRate * 100).toString(),
-              )}%`,
-            )
+          if (aborted) {
+            resolve()
+          }
 
-            if (
-              totalCalls > config.minCallsToAbort &&
-              failureRate >= config.maxFailureRatio
-            ) {
-              aborted = true
-              logger.info(
-                chalk.red(
-                  `\nAborting batch due to high failure rate (${Math.floor(
-                    failureRate * 100,
-                  )}%) after ${totalCalls} calls.`,
-                ),
-              )
-            }
+          const totalFailures =
+            failures[FailureReason.Timeout] +
+            failures[FailureReason.Status429] +
+            failures[FailureReason.OtherStatus] +
+            failures[FailureReason.Other]
+          const failureRate = totalFailures / totalCalls
+          logger.info(
+            [
+              chalk.green(`Successes: ${successes}`),
+              chalk.red(`Failures: ${totalFailures}`),
+              `(${[
+                `Timeout: ${chalk.yellow(failures[FailureReason.Timeout])}`,
+                `Status 429: ${chalk.yellow(
+                  failures[FailureReason.Status429],
+                )}`,
+                `Other Status: ${chalk.yellow(
+                  failures[FailureReason.OtherStatus],
+                )}`,
+                `Other: ${chalk.yellow(failures[FailureReason.Other])}`,
+              ].join(', ')})`,
+              `Failure rate: ${chalk.magenta(Math.floor(failureRate * 100))}%`,
+            ].join(' '),
+          )
+
+          if (
+            totalCalls > config.minCallsToAbort &&
+            failureRate >= config.maxFailureRatio
+          ) {
+            aborted = true
+            logger.info(
+              chalk.red(
+                `\nAborting batch due to high failure rate (${Math.floor(
+                  failureRate * 100,
+                )}%) after ${totalCalls} calls.`,
+              ),
+            )
           }
 
           resolve()
