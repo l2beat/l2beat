@@ -1,3 +1,4 @@
+import { type ReactNode } from 'react'
 import { RadioGroup, RadioGroupItem } from '~/app/_components/radio-group'
 import { Skeleton } from '~/app/_components/skeleton'
 import { useIsClient } from '~/hooks/use-is-client'
@@ -8,7 +9,7 @@ interface Props {
   scale: ChartScale
   setUnit: (value: ChartUnit) => void
   setScale: (value: ChartScale) => void
-  disabled?: boolean
+  children?: ReactNode
 }
 
 export function TvlChartUnitAndScaleControls({
@@ -16,7 +17,7 @@ export function TvlChartUnitAndScaleControls({
   scale,
   setUnit,
   setScale,
-  disabled,
+  children,
 }: Props) {
   const isClient = useIsClient()
 
@@ -28,12 +29,24 @@ export function TvlChartUnitAndScaleControls({
       </div>
     )
   }
+
+  const unitControls = (
+    <RadioGroup value={unit} onValueChange={setUnit}>
+      <RadioGroupItem value="usd">USD</RadioGroupItem>
+      <RadioGroupItem value="eth">ETH</RadioGroupItem>
+    </RadioGroup>
+  )
+
   return (
     <div className="flex items-center justify-between gap-2">
-      <RadioGroup value={unit} onValueChange={setUnit} disabled={disabled}>
-        <RadioGroupItem value="usd">USD</RadioGroupItem>
-        <RadioGroupItem value="eth">ETH</RadioGroupItem>
-      </RadioGroup>
+      {children ? (
+        <div className="mr-4 flex items-center gap-x-4 gap-y-2">
+          {unitControls}
+          {children}
+        </div>
+      ) : (
+        unitControls
+      )}
       <RadioGroup value={scale} onValueChange={setScale}>
         <RadioGroupItem value="log">LOG</RadioGroupItem>
         <RadioGroupItem value="lin">LIN</RadioGroupItem>

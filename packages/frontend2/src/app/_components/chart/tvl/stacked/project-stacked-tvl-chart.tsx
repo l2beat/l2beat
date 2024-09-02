@@ -70,6 +70,20 @@ export function ProjectStackedTvlChart({
   )
 }
 
+interface StackedTvlChartProps {
+  projectId: string
+  milestones: Milestone[]
+  timeRange: TvlChartRange
+  setTimeRange: (timeRange: TvlChartRange) => void
+  tokens: ProjectTokens | undefined
+  token: ProjectToken | undefined
+  setToken: (token: ProjectToken | undefined) => void
+  unit: ChartUnit
+  setUnit: (unit: ChartUnit) => void
+  scale: ChartScale
+  setScale: (scale: ChartScale) => void
+}
+
 function StackedTvlChart({
   projectId,
   milestones,
@@ -82,19 +96,7 @@ function StackedTvlChart({
   setUnit,
   scale,
   setScale,
-}: {
-  projectId: string
-  milestones: Milestone[]
-  timeRange: TvlChartRange
-  setTimeRange: (timeRange: TvlChartRange) => void
-  tokens: ProjectTokens | undefined
-  token: ProjectToken | undefined
-  setToken: (token: ProjectToken | undefined) => void
-  unit: ChartUnit
-  setUnit: (unit: ChartUnit) => void
-  scale: ChartScale
-  setScale: (scale: ChartScale) => void
-}) {
+}: StackedTvlChartProps) {
   const { data, isLoading } = api.tvl.chart.useQuery({
     filter: { type: 'projects', projectIds: [projectId] },
     range: timeRange,
@@ -134,10 +136,11 @@ function StackedTvlChart({
           scale={scale}
           setUnit={setUnit}
           setScale={setScale}
-        />
-        {tokens && (
-          <TokenCombobox tokens={tokens} value={token} setValue={setToken} />
-        )}
+        >
+          {tokens && (
+            <TokenCombobox tokens={tokens} value={token} setValue={setToken} />
+          )}
+        </TvlChartUnitAndScaleControls>
       </section>
     </ChartProvider>
   )

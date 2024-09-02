@@ -4,6 +4,7 @@ import { Command as CommandPrimitive } from 'cmdk'
 import * as React from 'react'
 import SearchIcon from '~/icons/search.svg'
 import { cn } from '~/utils/cn'
+import { linkVariants } from './link/custom-link'
 
 const Command = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive>,
@@ -22,23 +23,35 @@ Command.displayName = CommandPrimitive.displayName
 
 const CommandInput = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Input>,
-  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
->(({ className, ...props }, ref) => (
-  <div
-    className="flex items-center border-b border-gray-400 px-3 dark:border-gray-650"
-    cmdk-input-wrapper=""
-  >
-    <SearchIcon className="mr-2 size-4 shrink-0 stroke-gray-500 opacity-50 dark:stroke-gray-50" />
-    <CommandPrimitive.Input
-      ref={ref}
-      className={cn(
-        'flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-gray-500 disabled:cursor-not-allowed disabled:opacity-50 dark:placeholder:text-gray-50',
-        className,
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input> & {
+    reset?: () => void
+  }
+>(({ className, reset, ...props }, ref) => {
+  return (
+    <div
+      className="flex items-center border-b border-gray-400 px-3 dark:border-gray-650"
+      cmdk-input-wrapper=""
+    >
+      <SearchIcon className="mr-2 size-4 shrink-0 stroke-gray-500 opacity-50 dark:stroke-gray-50" />
+      <CommandPrimitive.Input
+        ref={ref}
+        className={cn(
+          'flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-gray-500 disabled:cursor-not-allowed disabled:opacity-50 dark:placeholder:text-gray-50',
+          className,
+        )}
+        {...props}
+      />
+      {reset && (
+        <button
+          className={linkVariants({ underline: false, className: 'text-xs' })}
+          onClick={reset}
+        >
+          Clear
+        </button>
       )}
-      {...props}
-    />
-  </div>
-))
+    </div>
+  )
+})
 
 CommandInput.displayName = CommandPrimitive.Input.displayName
 
@@ -61,7 +74,7 @@ const CommandEmpty = React.forwardRef<
 >((props, ref) => (
   <CommandPrimitive.Empty
     ref={ref}
-    className="px-1 py-6 text-center text-sm"
+    className="px-4 py-6 text-center text-sm"
     {...props}
   />
 ))

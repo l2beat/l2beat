@@ -5,16 +5,23 @@ import { type ProjectToken } from '~/server/features/scaling/tvl/tokens/get-top-
 import { formatCurrency } from '~/utils/format'
 import { type SeriesStyle } from '../../core/styles'
 import { mapMilestones } from '../../core/utils/map-milestones'
+import { type ChartUnit } from '../../types'
 
 export type TokenDataPoint = readonly [number, number, number]
 
 interface Params {
   milestones: Milestone[]
   token: ProjectToken
+  unit: ChartUnit
   data?: TokenDataPoint[]
 }
 
-export function useTokenChartRenderParams({ milestones, token, data }: Params) {
+export function useTokenChartRenderParams({
+  milestones,
+  token,
+  unit,
+  data,
+}: Params) {
   const mappedMilestones = useMemo(
     () => mapMilestones(milestones),
     [milestones],
@@ -22,8 +29,10 @@ export function useTokenChartRenderParams({ milestones, token, data }: Params) {
 
   const formatYAxisLabel = useCallback(
     (value: number) =>
-      formatCurrency(value, token.symbol, { showLessThanMinimum: false }),
-    [token.symbol],
+      formatCurrency(value, unit === 'usd' ? 'usd' : token.symbol, {
+        showLessThanMinimum: false,
+      }),
+    [token.symbol, unit],
   )
 
   const columns = useMemo(
@@ -34,7 +43,7 @@ export function useTokenChartRenderParams({ milestones, token, data }: Params) {
         const milestone = mappedMilestones[timestamp]
 
         return {
-          values: [{ value: amount }],
+          values: [unit === 'usd' ? { value: usdValue } : { value: amount }],
           data: {
             timestamp,
             amount,
@@ -43,7 +52,7 @@ export function useTokenChartRenderParams({ milestones, token, data }: Params) {
           milestone,
         }
       }) ?? [],
-    [data, mappedMilestones],
+    [data, mappedMilestones, unit],
   )
 
   const chartRange: [number, number] = useMemo(

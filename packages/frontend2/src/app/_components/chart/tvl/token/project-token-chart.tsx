@@ -1,5 +1,8 @@
 import { type Milestone } from '@l2beat/config'
+import { RadioGroup, RadioGroupItem } from '~/app/_components/radio-group'
+import { Skeleton } from '~/app/_components/skeleton'
 import { TokenCombobox } from '~/app/_components/token-combobox'
+import { useIsClient } from '~/hooks/use-is-client'
 import {
   type ProjectToken,
   type ProjectTokens,
@@ -10,7 +13,6 @@ import { Chart } from '../../core/chart'
 import { ChartProvider } from '../../core/chart-provider'
 import { type ChartScale, type ChartUnit } from '../../types'
 import { TvlChartTimeRangeControls } from '../tvl-chart-time-range-controls'
-import { TvlChartUnitAndScaleControls } from '../tvl-chart-unit-and-scale-controls'
 import { TokenChartHover } from './token-chart-hover'
 import { useTokenChartRenderParams } from './use-token-chart-render-params'
 
@@ -54,6 +56,7 @@ export function ProjectTokenChart({
     useTokenChartRenderParams({
       milestones,
       token,
+      unit,
       data,
     })
 
@@ -66,7 +69,7 @@ export function ProjectTokenChart({
       useLogScale={scale === 'log'}
       isLoading={isLoading}
       renderHoverContents={(data) => (
-        <TokenChartHover {...data} token={token} />
+        <TokenChartHover {...data} token={token} unit={unit} />
       )}
     >
       <section className="flex flex-col gap-4">
@@ -77,15 +80,65 @@ export function ProjectTokenChart({
         />
 
         <Chart />
-        <TvlChartUnitAndScaleControls
+        <TokenChartUnitAndScaleControls
           unit={unit}
           scale={scale}
           setUnit={setUnit}
           setScale={setScale}
-          disabled
+          tokens={tokens}
+          token={token}
+          setToken={setToken}
         />
-        <TokenCombobox tokens={tokens} value={token} setValue={setToken} />
       </section>
     </ChartProvider>
+  )
+}
+
+interface ControlsProps {
+  unit: ChartUnit
+  scale: ChartScale
+  setUnit: (value: ChartUnit) => void
+  setScale: (value: ChartScale) => void
+  tokens: ProjectTokens
+  token: ProjectToken
+  setToken: (token: ProjectToken | undefined) => void
+}
+
+export function TokenChartUnitAndScaleControls({
+  unit,
+  scale,
+  setUnit,
+  setScale,
+  tokens,
+  token,
+  setToken,
+}: ControlsProps) {
+  const isClient = useIsClient()
+
+  if (!isClient) {
+    return (
+      <div className="flex items-center justify-between gap-2">
+        <div className="mr-4 flex items-center gap-x-4 gap-y-2">
+          <Skeleton className="h-8 w-[104.82px]" />
+          <TokenCombobox tokens={tokens} value={token} setValue={setToken} />
+        </div>
+        <Skeleton className="h-8 w-[98.63px]" />
+      </div>
+    )
+  }
+  return (
+    <div className="flex items-center justify-between gap-2">
+      <div className="mr-4 flex items-center gap-x-4 gap-y-2">
+        <RadioGroup value={unit} onValueChange={setUnit}>
+          <RadioGroupItem value="usd">USD</RadioGroupItem>
+          <RadioGroupItem value="eth">{token.symbol}</RadioGroupItem>
+        </RadioGroup>
+        <TokenCombobox tokens={tokens} value={token} setValue={setToken} />
+      </div>
+      <RadioGroup value={scale} onValueChange={setScale}>
+        <RadioGroupItem value="log">LOG</RadioGroupItem>
+        <RadioGroupItem value="lin">LIN</RadioGroupItem>
+      </RadioGroup>
+    </div>
   )
 }

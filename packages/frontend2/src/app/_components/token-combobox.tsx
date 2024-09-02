@@ -55,7 +55,10 @@ export function TokenCombobox({ tokens, value, setValue }: Props) {
       </PopoverTrigger>
       <PopoverContent className="p-0">
         <Command>
-          <CommandInput placeholder="Search token..." />
+          <CommandInput
+            placeholder="Search token..."
+            reset={value ? () => setValue(undefined) : undefined}
+          />
           <CommandList>
             <CommandEmpty>
               Can&apos;t find a token you&apos;re looking for?{' '}
