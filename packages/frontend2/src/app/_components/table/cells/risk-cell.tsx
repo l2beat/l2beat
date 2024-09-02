@@ -4,6 +4,7 @@ import {
   type Sentiment,
   type WarningValueWithSentiment,
 } from '@l2beat/shared-pure'
+import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { cn } from '~/utils/cn'
 import { sentimentToFillColor } from '~/utils/sentiment'
@@ -12,7 +13,6 @@ import { SentimentText } from '../../sentiment-text'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/tooltip'
 import { WarningBar } from '../../warning-bar'
 import { NoInfoCell } from './no-info-cell'
-import { EM_DASH } from '~/consts/characters'
 
 interface Risk {
   value: string

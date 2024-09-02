@@ -3,8 +3,8 @@ import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell
 import { RiskCell } from '~/app/_components/table/cells/risk-cell'
 import { getCommonProjectColumns } from '~/app/_components/table/common-project-columns'
 import { sortSentiments } from '~/app/_components/table/sorting/functions/sentiment-sorting'
-import { type DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
 import ChevronDown from '~/icons/chevron.svg'
+import { type DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
 import { cn } from '~/utils/cn'
 
 const columnHelper = createColumnHelper<DaRiskEntry>()

@@ -4,6 +4,7 @@ import {
   daLayers,
   getDaProjectKey,
 } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { toDaBridge } from '../utils/get-da-bridge'
 import { getUniqueProjectsInUse } from '../utils/get-da-projects'
@@ -13,7 +14,6 @@ import {
   pickTvlForProjects,
 } from '../utils/get-da-projects-tvl'
 import { getDaRisks } from '../utils/get-da-risks'
-import { assert } from '@l2beat/shared-pure'
 
 type DaEntryRisk =
   | (DaLayerRisks & Record<keyof DaBridgeRisks, undefined>)
