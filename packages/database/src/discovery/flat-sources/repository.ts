@@ -19,13 +19,21 @@ export class FlatSourcesRepository extends BaseRepository {
             blockNumber: eb.ref('excluded.blockNumber'),
             contentHash: eb
               .case()
-              .when(eb.ref('FlatSources.contentHash'), '<>', eb.ref('excluded.contentHash'))
+              .when(
+                eb.ref('FlatSources.contentHash'),
+                '<>',
+                eb.ref('excluded.contentHash'),
+              )
               .then(eb.ref('excluded.contentHash'))
               .else(eb.ref('FlatSources.contentHash'))
               .end(),
             flat: eb
               .case()
-              .when(eb.ref('FlatSources.contentHash'), '<>', eb.ref('excluded.contentHash'))
+              .when(
+                eb.ref('FlatSources.contentHash'),
+                '<>',
+                eb.ref('excluded.contentHash'),
+              )
               .then(eb.ref('excluded.flat'))
               .else(eb.ref('FlatSources.flat'))
               .end(),
