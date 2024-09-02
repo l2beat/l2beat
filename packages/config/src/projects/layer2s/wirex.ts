@@ -1,8 +1,10 @@
+import { Badge } from '../badges'
 import { underReviewL2 } from './templates/underReview'
 import { Layer2 } from './types'
 
 export const wirex: Layer2 = underReviewL2({
   id: 'wirex',
+  badges: [Badge.Infra.AggLayer],
   display: {
     name: 'Pay Chain',
     slug: 'wirex',
