@@ -1,4 +1,5 @@
 import { blobstreamx } from './blobstreamx'
+import { nebraupa } from './nebraupa'
 import { payy } from './payy'
 import { risczero } from './risczero'
 import { soulwallet } from './soulwallet'
@@ -12,6 +13,7 @@ export * from './utils/getVerifiers'
 
 export const zkCatalogProjects: ZkCatalogProject[] = [
   blobstreamx,
+  nebraupa,
   payy,
   risczero,
   soulwallet,

@@ -263,7 +263,7 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
             {
               name: 'Final wrap',
               proofSystem: 'fflonk',
-              mainArithmetization: 'Plonk',
+              mainArithmetization: 'Plonkish',
               mainPCS: 'KZG-fflonk',
               trustedSetup: 'Powers of Tau 28',
             },

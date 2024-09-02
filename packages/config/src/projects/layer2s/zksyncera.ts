@@ -677,7 +677,7 @@ export const zksyncera: Layer2 = {
             {
               name: 'Final wrap',
               proofSystem: 'Plonk SNARK',
-              mainArithmetization: 'Plonk',
+              mainArithmetization: 'Plonkish',
               mainPCS: 'KZG',
               trustedSetup: 'Aztec ceremony',
               link: 'https://github.com/matter-labs/era-zkevm_test_harness/blob/v1.5.0/circuit_definitions/src/circuit_definitions/aux_layer/wrapper.rs',
@@ -685,7 +685,7 @@ export const zksyncera: Layer2 = {
             {
               name: 'Aggregation circuit',
               proofSystem: 'Redshift',
-              mainArithmetization: 'Plonk',
+              mainArithmetization: 'Plonkish',
               mainPCS: 'LPC',
               trustedSetup: 'None',
               link: 'https://github.com/matter-labs/era-zkevm_test_harness/blob/v1.5.0/circuit_definitions/src/circuit_definitions/recursion_layer/mod.rs#L45',
@@ -693,7 +693,7 @@ export const zksyncera: Layer2 = {
             {
               name: 'Main circuit',
               proofSystem: 'Redshift',
-              mainArithmetization: 'Plonk',
+              mainArithmetization: 'Plonkish',
               mainPCS: 'LPC',
               trustedSetup: 'None',
               link: 'https://github.com/matter-labs/era-zkevm_circuits',
