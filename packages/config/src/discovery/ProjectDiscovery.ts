@@ -8,6 +8,9 @@ import {
   type ContractValue,
   type DiscoveryOutput,
   EoaParameters,
+  PermissionType,
+  ResolvedPermission,
+  ResolvedPermissionPath,
   StackRole,
   get$Admins,
   get$Implementations,
@@ -23,7 +26,7 @@ import {
 import { utils } from 'ethers'
 import { groupBy, isArray, isString, uniq } from 'lodash'
 
-import { join } from 'path'
+import { format, join } from 'path'
 import {
   ScalingProjectContractSingleAddress,
   ScalingProjectUpgradeability,
@@ -347,13 +350,21 @@ export class ProjectDiscovery {
 
     const fullModulesDescription =
       modulesDescriptions.length === 0
-        ? ''
-        : `It uses the following modules: ${modulesDescriptions.join(', ')}.`
+        ? undefined
+        : `* It uses the following modules: ${modulesDescriptions.join(
+            ', ',
+          )}.\n`
 
     const descriptionWithContractNames = this.replaceAddressesWithNames(
-      `${description} This is a Gnosis Safe with ${this.getMultisigStats(
-        identifier,
-      )} threshold. ${fullModulesDescription}`,
+      [
+        `* This is a Gnosis Safe with ${this.getMultisigStats(
+          identifier,
+        )} threshold.\n`,
+        fullModulesDescription,
+        description,
+      ]
+        .filter(notUndefined)
+        .join(' '),
     )
     return [
       {
@@ -681,7 +692,7 @@ export class ProjectDiscovery {
       .map((contract) => contract.name)
     return safesWithThisMember.length === 0
       ? undefined
-      : 'Member of ' + safesWithThisMember.join(', ') + '.'
+      : '* Member of ' + safesWithThisMember.join(', ') + '.\n'
   }
 
   describeRoles(
@@ -690,43 +701,98 @@ export class ProjectDiscovery {
     const roles = contractOrEoa.roles
     return roles === undefined
       ? undefined
-      : (roles.length === 1 ? 'A ' : '') + roles.join(', ') + '.'
+      : '* ' + (roles.length === 1 ? 'A ' : '') + roles.join(', ') + '.\n'
   }
 
-  describePermissions(
+  describeUltimatelyReceivedPermissions(
     contractOrEoa: ContractParameters | EoaParameters,
   ): string | undefined {
-    const permissionToRole = {
-      configure: 'Owner',
-      upgrade: 'Admin',
+    const ultimatePermissionToPrefix: {
+      [key in PermissionType]: string | undefined
+    } = {
+      configure: 'It can configure',
+      upgrade: 'It can upgrade implementation of',
+      act: undefined,
     }
 
-    const permissions = contractOrEoa.receivedPermissions
-    return permissions === undefined
-      ? undefined
-      : Object.entries(
-          groupBy(contractOrEoa.receivedPermissions ?? [], 'permission'),
+    const formatVia = (via: ResolvedPermissionPath[]) =>
+      ' (acting via ' +
+      via
+        .map(
+          (path) =>
+            this.getContractByAddress(path.address)?.name ??
+            path.address.toString(),
         )
-          .map(([permission, entries]) => {
-            const addressesString = entries
-              .filter((entry) => !this.isEOA(entry.target))
-              .map((entry) => this.getContract(entry.target.toString()).name)
-              .join(', ')
-            return `${
-              permissionToRole[permission as keyof typeof permissionToRole]
-            } of ${addressesString}.`
-          })
-          .join(' ')
+        .join(', ') +
+      ')'
+
+    return Object.entries(
+      groupBy(
+        contractOrEoa.receivedPermissions ?? [],
+        (value: ResolvedPermission) => {
+          return (
+            value.permission +
+            ':' +
+            (value.via !== undefined ? formatVia(value.via) : '')
+          )
+        },
+      ),
+    )
+      .map(([key, entries]) => {
+        const permission = key.split(':')[0] as PermissionType
+        const via = key.split(':')[1] ?? ''
+        const prefix = ultimatePermissionToPrefix[permission]
+        if (prefix === undefined) {
+          return ''
+        }
+        const addressesString =
+          entries
+            .map((entry) => this.getContract(entry.target.toString()).name)
+            .join(', ') + via
+        return `* ${
+          ultimatePermissionToPrefix[permission as PermissionType]
+        } ${addressesString}.\n`
+      })
+      .join(' ')
+  }
+
+  describeDirectlyReceivedPermissions(
+    contractOrEoa: ContractParameters | EoaParameters,
+  ): string | undefined {
+    const directPermissionToPrefix: {
+      [key in PermissionType]: string | undefined
+    } = {
+      configure: 'It can be used to configure',
+      upgrade: 'It can be used to upgrade implementation of\n',
+      act: 'It can act on behalf of',
+    }
+
+    return Object.entries(
+      groupBy(contractOrEoa.directlyReceivedPermissions ?? [], 'permission'),
+    )
+      .map(([permission, entries]) => {
+        const addressesString = entries
+          .map((entry) => this.getContract(entry.target.toString()).name)
+          .join(', ')
+        return `* ${
+          directPermissionToPrefix[permission as PermissionType]
+        } ${addressesString}.\n`
+      })
+      .join(' ')
   }
 
   describeContractOrEoa(
     contractOrEoa: ContractParameters | EoaParameters,
+    includeDirectPermissions: boolean = true,
   ): string {
     return [
       this.describeRoles(contractOrEoa),
       this.describeGnosisSafeMembership(contractOrEoa),
-      this.describePermissions(contractOrEoa),
-      contractOrEoa.descriptions?.join(' '),
+      this.describeUltimatelyReceivedPermissions(contractOrEoa),
+      includeDirectPermissions
+        ? this.describeDirectlyReceivedPermissions(contractOrEoa)
+        : undefined,
+      '* ' + contractOrEoa.descriptions?.join(' ') + '\n',
     ]
       .filter(notUndefined)
       .join(' ')
@@ -750,8 +816,24 @@ export class ProjectDiscovery {
       (discovery) => discovery.contracts,
     )
     const result: ScalingProjectPermission[] = []
-    for (const contract of contracts) {
-      const description = this.describeContractOrEoa(contract)
+
+    const relevantContracts = [
+      ...contracts.filter(
+        (contract) => contract.receivedPermissions !== undefined,
+      ),
+      // We show multisigs even without ultimate permissions,
+      // because they can be members of msigs with permissions.
+      // We can also assume that msigs are always permissioned.
+      // But we show them last.
+      ...contracts.filter(
+        (contract) =>
+          contract.receivedPermissions === undefined &&
+          contract.proxyType === 'gnosis safe',
+      ),
+    ]
+
+    for (const contract of relevantContracts) {
+      const description = this.describeContractOrEoa(contract, false)
       if (contract.proxyType === 'gnosis safe') {
         result.push(
           ...this.getMultisigPermission(
@@ -759,7 +841,7 @@ export class ProjectDiscovery {
             description,
           ),
         )
-      } else if (contract.receivedPermissions !== undefined) {
+      } else {
         result.push(this.contractAsPermissioned(contract, description))
       }
     }
@@ -769,7 +851,7 @@ export class ProjectDiscovery {
       if (eoa.receivedPermissions === undefined) {
         continue
       }
-      const description = this.describeContractOrEoa(eoa)
+      const description = this.describeContractOrEoa(eoa, false)
       result.push({
         name: 'EOA',
         accounts: [this.formatPermissionedAccount(eoa.address)],
@@ -807,7 +889,7 @@ export class ProjectDiscovery {
         }
 
         return this.getContractDetails(contract.address.toString(), {
-          description: this.describeContractOrEoa(contract),
+          description: this.describeContractOrEoa(contract, true),
           ...upgradableBy,
         })
       })
