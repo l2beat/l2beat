@@ -20,6 +20,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { PROOFS } from '../other/zk-catalog/common/proofSystems'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -476,25 +477,16 @@ export const scroll: Layer2 = {
           subVerifiers: [
             {
               name: 'Final circuit',
-              proofSystem: 'Halo2',
-              mainArithmetization: 'Plonk',
-              mainPCS: 'KZG',
-              trustedSetup: 'Powers of Tau 26',
+              ...PROOFS.HALO2KZG('Powers of Tau 26'),
             },
             {
               name: 'Aggregation circuit',
-              proofSystem: 'Halo2',
-              mainArithmetization: 'Plonk',
-              mainPCS: 'KZG',
-              trustedSetup: 'Powers of Tau 26',
+              ...PROOFS.HALO2KZG('Powers of Tau 26'),
               link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.9.5/aggregator',
             },
             {
               name: 'Main circuit',
-              proofSystem: 'Halo2',
-              mainArithmetization: 'Plonk',
-              mainPCS: 'KZG',
-              trustedSetup: 'Powers of Tau 26',
+              ...PROOFS.HALO2KZG('Powers of Tau 26'),
               link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.9.5/zkevm-circuits',
             },
           ],
@@ -511,25 +503,16 @@ export const scroll: Layer2 = {
           subVerifiers: [
             {
               name: 'Final Circuit',
-              proofSystem: 'Halo2',
-              mainArithmetization: 'Plonk',
-              mainPCS: 'KZG',
-              trustedSetup: 'Powers of Tau 26',
+              ...PROOFS.HALO2KZG('Powers of Tau 26'),
             },
             {
               name: 'Aggregation circuit',
-              proofSystem: 'Halo2',
-              mainArithmetization: 'Plonk',
-              mainPCS: 'KZG',
-              trustedSetup: 'Powers of Tau 26',
+              ...PROOFS.HALO2KZG('Powers of Tau 26'),
               link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.10.3/zkevm-circuits',
             },
             {
               name: 'Main circuit',
-              proofSystem: 'Halo2',
-              mainArithmetization: 'Plonk',
-              mainPCS: 'KZG',
-              trustedSetup: 'Powers of Tau 26',
+              ...PROOFS.HALO2KZG('Powers of Tau 26'),
               link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.10.3/zkevm-circuits',
             },
           ],
@@ -546,25 +529,16 @@ export const scroll: Layer2 = {
           subVerifiers: [
             {
               name: 'Final circuit',
-              proofSystem: 'Halo2',
-              mainArithmetization: 'Plonk',
-              mainPCS: 'KZG',
-              trustedSetup: 'Powers of Tau 26',
+              ...PROOFS.HALO2KZG('Powers of Tau 26'),
             },
             {
               name: 'Aggregation circuit',
-              proofSystem: 'Halo2',
-              mainArithmetization: 'Plonk',
-              mainPCS: 'KZG',
-              trustedSetup: 'Powers of Tau 26',
+              ...PROOFS.HALO2KZG('Powers of Tau 26'),
               link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.11.4/zkevm-circuits',
             },
             {
               name: 'Main verifier',
-              proofSystem: 'Halo2',
-              mainArithmetization: 'Plonk',
-              mainPCS: 'KZG',
-              trustedSetup: 'Powers of Tau 26',
+              ...PROOFS.HALO2KZG('Powers of Tau 26'),
               link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.11.4/zkevm-circuits',
             },
           ],
