@@ -1,8 +1,8 @@
 {
   "name": "nebraupa",
   "chain": "ethereum",
-  "blockNumber": 20662591,
-  "configHash": "0x081da0bce808ea08ac736890460c2d8518bc2671da97b8cf2bc1f576818c3e24",
+  "blockNumber": 20662597,
+  "configHash": "0xdb25d1315c5fa2c22158953d37ae83e573b948409f83e430f8abe8c38ef6d27f",
   "version": 14,
   "contracts": [
     {
@@ -19,7 +19,7 @@
       "ignoreInWatchMode": [
         "claimableFees",
         "nextSubmissionIdxToVerify",
-        "nextProofIdxToVerify"
+        "nextProofIdx"
       ],
       "sinceTimestamp": 1723653167,
       "values": {
