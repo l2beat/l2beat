@@ -7,6 +7,7 @@ import {
   DEFAULT_OTHER_CONSIDERATIONS,
   getNitroGovernance,
   orbitStackL2,
+  WASMVM_OTHER_CONSIDERATIONS,
 } from './templates/orbitStack'
 import { Layer2 } from './types'
 
@@ -340,6 +341,7 @@ export const nova: Layer2 = orbitStackL2({
   nonTemplateTechnology: {
     otherConsiderations: [
       ...DEFAULT_OTHER_CONSIDERATIONS,
+      ...WASMVM_OTHER_CONSIDERATIONS,
       UPGRADE_MECHANISM.ARBITRUM_DAO(
         l1TimelockDelay,
         challengeWindow * assumedBlockTime,
