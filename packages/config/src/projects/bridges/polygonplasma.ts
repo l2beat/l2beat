@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -12,6 +17,10 @@ const upgrades = {
   upgradableBy: ['PolygonMultisig'],
   upgradeDelay: 'No delay',
 }
+
+const delayString = formatSeconds(
+  discovery.getContractValue('Timelock', 'getMinDelay'),
+)
 
 export const polygonplasma: Bridge = {
   type: 'bridge',
@@ -153,6 +162,10 @@ export const polygonplasma: Bridge = {
       discovery.getContractDetails(
         'ExitNFT',
         'NFTs used to represent an exit.',
+      ),
+      discovery.getContractDetails(
+        'Timelock',
+        `Contract enforcing delay on code upgrades. The current delay is ${delayString}.`,
       ),
       discovery.getContractDetails('SlashingManager'),
     ],
