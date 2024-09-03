@@ -33,6 +33,21 @@ const CHAINS = [
     rpcUrl: 'https://rpc.startale.com/astar-zkevm',
     premintedEth: 340282366920938463463374607431768211455n,
   },
+  {
+    name: 'GPT',
+    rpcUrl: 'https://sequencer.gptprotocol.io',
+    premintedEth: 340282366920938463463374607431768211455n,
+  },
+  {
+    name: 'Silicon',
+    rpcUrl: 'https://rpc.silicon.network',
+    premintedEth: 340282366920938463463374607431768211455n,
+  },
+  {
+    name: 'Wirex',
+    rpcUrl: 'https://pay-chain-rpc.wirexpaychain.com',
+    premintedEth: 340282366920938463463374607431768211455n,
+  },
 ] as const
 
 interface Token {
