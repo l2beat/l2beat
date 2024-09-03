@@ -549,6 +549,13 @@ export const arbitrum: Layer2 = orbitStackL2({
   },
   milestones: [
     {
+      name: 'ArbOS 31 Bianca upgrade',
+      link: 'https://www.tally.xyz/gov/arbitrum/proposal/108288822474129076868455956066667369439381709547570289793612729242368710728616',
+      date: '2024-09-03T00:00:00Z',
+      description: 'Arbitrum upgrades to ArbOS 31 activating Stylus (new languages for smart contracts).',
+      type: 'general',
+    },
+    {
       name: 'Arbitrum starts using blobs',
       link: 'https://twitter.com/arbitrum/status/1768306107318178061',
       date: '2024-03-14T00:00:00Z',

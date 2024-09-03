@@ -349,6 +349,13 @@ export const nova: Layer2 = orbitStackL2({
   },
   milestones: [
     {
+      name: 'ArbOS 31 Bianca upgrade',
+      link: 'https://www.tally.xyz/gov/arbitrum/proposal/108288822474129076868455956066667369439381709547570289793612729242368710728616',
+      date: '2024-09-03T00:00:00Z',
+      description: 'Nova upgrades to ArbOS 31 activating Stylus (new languages for smart contracts).',
+      type: 'general',
+    },
+    {
       ...MILESTONES.MAINNET_OPEN,
       date: '2022-08-09T00:00:00Z',
       link: 'https://medium.com/offchainlabs/its-time-for-a-new-dawn-nova-is-open-to-the-public-a081df1e4ad2',
