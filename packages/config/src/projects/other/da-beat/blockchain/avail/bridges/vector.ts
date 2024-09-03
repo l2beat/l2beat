@@ -10,19 +10,20 @@ const validation = {
   relayer: 'SuccinctGateway',
 }
 
-export const vectorX = {
-  id: 'vectorX',
+export const vector = {
+  id: 'vector',
   type: 'OnChainBridge',
   chain: 'Ethereum',
   display: {
-    name: 'VectorX',
-    slug: 'vectorx',
+    name: 'Vector',
+    slug: 'vector',
     description:
-      'VectorX is a data availability bridge using Zero-Knowledge Proofs to verify Avail data availability attestations on Ethereum.',
+      `Vector is a data availability bridge using Zero-Knowledge proofs to verify Avail data availability attestations on Ethereum.
+      `,
     links: {
       websites: [],
       documentation: [],
-      repositories: ['https://github.com/succinctlabs/vectorx'],
+      repositories: ['https://github.com/succinctlabs/sp1-vector'],
       apps: [],
       explorers: [],
       socialMedia: [],
@@ -32,16 +33,17 @@ export const vectorX = {
   contracts: {
     addresses: [
       {
-        name: 'VectorX',
+        name: 'Vector',
         address: EthereumAddress('0x02993cdC11213985b9B13224f3aF289F03bf298d'),
         description:
-          'VectorX bridge contract that accepts and stores Avail data availability commitments on Ethereum.',
+          'Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.',
       },
     ],
     risks: [],
   },
   technology: ` 
-   VectorX is an implementation of zero-knowledge proof circuits for Vector, Avail's Data Attestation Bridge.
+   Vector SP1 is an implementation of zero-knowledge proof circuits for Vector, Avail's Data Attestation Bridge.
+   The VectorSP1 contract should be used to store the latest data from the Avail chain, including the headers and data commitments.
     `,
   permissions: [],
   usedIn: [],

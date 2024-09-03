@@ -23,7 +23,7 @@ function DasWithNoBlobsReconstruction(erasureCoding: boolean) {
   return {
     type: 'DasWithNoBlobsReconstruction',
     value: 'DAS with no blobs reconstruction',
-    sentiment: erasureCoding ? 'good' : 'warning',
+    sentiment: erasureCoding ? 'warning' : 'bad',
     description: `
     The DA layer uses data availability sampling (DAS) to protect against data withholding attacks. However, there is no mechanism in place to reconstruct the data if some of it is withheld or the minimum number of light nodes
     required to perform DAS is not available. This means that the data may be lost if a block producer withholds data or if there are not enough honest light nodes to perform DAS.

@@ -6,7 +6,7 @@ import { DaLayer } from '../../types/DaLayer'
 import { DasErasureCodingProof } from '../../types/DasErasureCodingProof'
 import { DasErasureCodingScheme } from '../../types/DasErasureCodingScheme'
 import { linkByDA } from '../../utils/link-by-da'
-import { vectorX } from './bridges/vectorX'
+import { vector } from './bridges/vector'
 
 export const avail: DaLayer = {
   id: 'avail',
@@ -38,7 +38,7 @@ export const avail: DaLayer = {
     Avail implements a Nominated Proof-of-Stake (NPoS) Sybil resistance mechanism, combined with the BABE/GRANDPA consensus protocol. 
     BABE handles block production by assigning block production slots according to validators' stake and using a Verifiable Random Function (VRF). 
     At the start of each epoch, nodes run the Block-Production-Lottery algorithm to assign block production slots and share the results with other nodes. 
-    Slots are randomly assigned, meaning multiple validators might be selected for the same slot (starting a 'race') and some slots may remain empty. 
+    Slots are randomly assigned, meaning multiple validators might be selected for the same slot (with a 'race' determining who gets to propose the block) and some slots may remain empty. 
     To ensure liveness, secondary block producers are pre-determined and can step in if necessary, preventing any slot from being skipped. 
     Finality is achieved through GRANDPA, a GHOST-based finality gadget that provides finality through consecutive rounds of validators voting.
     
@@ -74,7 +74,7 @@ export const avail: DaLayer = {
         'The risk profile in this page refers to scaling solutions that do not integrate with a data availability bridge.',
       technology: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
     }),
-    vectorX,
+    vector,
   ],
   usedIn: linkByDA({
     layer: (layer) => layer === 'Avail',
