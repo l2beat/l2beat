@@ -22,7 +22,7 @@ export function TvlChartHeader({
   const changeOverTime =
     range === 'max' ? (
       INFINITY
-    ) : change ? (
+    ) : change !== undefined ? (
       <PercentChange value={change} />
     ) : null
 
@@ -37,7 +37,7 @@ export function TvlChartHeader({
       </div>
       <div className="flex flex-row items-baseline gap-2 md:flex-col md:items-end md:gap-1">
         <div className="whitespace-nowrap text-right text-lg font-bold md:text-3xl">
-          {!value || loading ? (
+          {value === undefined || loading ? (
             <Skeleton className="h-6 w-32" />
           ) : (
             formatCurrency(value, unit, {
