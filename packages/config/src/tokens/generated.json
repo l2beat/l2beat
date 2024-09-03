@@ -6544,6 +6544,7 @@
       "chainId": 1625,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
@@ -6551,8 +6552,7 @@
             "slug": "stargatev2"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     },
     {
       "id": "galxegravity:usdt-tether-usd",
@@ -6568,6 +6568,7 @@
       "chainId": 1625,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
@@ -6575,8 +6576,7 @@
             "slug": "stargatev2"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     },
     {
       "id": "galxegravity:weth-weth",
@@ -6592,6 +6592,7 @@
       "chainId": 1625,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
@@ -6599,8 +6600,7 @@
             "slug": "stargatev2"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     },
     {
       "id": "reya:usdc-usd-coin",
@@ -7257,14 +7257,14 @@
       "chainId": 34443,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
             "name": "XLink bridge"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     },
     {
       "id": "mode:alex-alex",
@@ -7280,14 +7280,14 @@
       "chainId": 34443,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
             "name": "XLink bridge"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     },
     {
       "id": "mode:rseth-kelpdao-restaked-eth",
@@ -9085,6 +9085,29 @@
           {
             "name": "Layer Zero",
             "slug": "stargate"
+          }
+        ]
+      }
+    },
+    {
+      "id": "xchain:usdc.e-bridged-usdc-(stargate)",
+      "name": "Bridged USDC (Stargate)",
+      "coingeckoId": "usd-coin",
+      "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
+      "symbol": "USDC.e",
+      "decimals": 6,
+      "deploymentTimestamp": 1718324677,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "chainId": 94524,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2 (Hydra mode)",
+            "slug": "stargatev2"
           }
         ]
       }

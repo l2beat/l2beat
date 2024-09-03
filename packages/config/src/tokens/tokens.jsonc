@@ -3989,5 +3989,22 @@
       "supply": "circulatingSupply",
       "coingeckoId": "smoke-the-ticker"
     }
+  ],
+  "xchain": [
+    {
+      "symbol": "USDC.e",
+      "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
+      "source": "external",
+      "supply": "totalSupply",
+      "coingeckoId": "usd-coin",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2 (Hydra mode)",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    }
   ]
 }
