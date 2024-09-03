@@ -346,13 +346,14 @@ export class ProjectDiscovery {
 
     const fullModulesDescription =
       modulesDescriptions.length === 0
-        ? undefined
-        : `Uses the following modules: ${modulesDescriptions.join(', ')}.`
+        ? ''
+        : `It uses the following modules: ${modulesDescriptions.join(', ')}.`
 
     return [
-      `Gnosis Safe with ${this.getMultisigStats(identifier)} threshold.`,
-      fullModulesDescription,
-    ].filter(notUndefined)
+      `This is a Gnosis Safe with ${this.getMultisigStats(
+        identifier,
+      )} threshold. ` + fullModulesDescription,
+    ]
   }
 
   getMultisigPermission(
@@ -369,7 +370,7 @@ export class ProjectDiscovery {
 
     const multisigDesc = this.getMultisigDescription(identifier)
 
-    const combinedDescriptions = [...multisigDesc, ...passedDescription]
+    const combinedDescriptions = [...passedDescription, ...multisigDesc]
 
     const formattedDesc = useBulletPoints
       ? formatAsBulletPoints(combinedDescriptions)
@@ -704,14 +705,14 @@ export class ProjectDiscovery {
       .map((contract) => contract.name)
     return safesWithThisMember.length === 0
       ? []
-      : ['Member of ' + safesWithThisMember.join(', ')]
+      : ['Member of ' + safesWithThisMember.join(', ') + '.']
   }
 
   describeRoles(contractOrEoa: ContractParameters | EoaParameters): string[] {
     const roles = contractOrEoa.roles
     return roles === undefined
       ? []
-      : [(roles.length === 1 ? 'A ' : '') + roles.join(', ')]
+      : [(roles.length === 1 ? 'A ' : '') + roles.join(', ') + '.']
   }
 
   describeUltimatelyReceivedPermissions(
@@ -791,7 +792,6 @@ export class ProjectDiscovery {
     contractOrEoa: ContractParameters | EoaParameters,
     includeDirectPermissions: boolean = true,
   ): string[] {
-    // const combinedDescriptions = [
     return [
       ...this.describeRoles(contractOrEoa),
       ...this.describeGnosisSafeMembership(contractOrEoa),
@@ -801,13 +801,6 @@ export class ProjectDiscovery {
       ...this.describeUltimatelyReceivedPermissions(contractOrEoa),
       contractOrEoa.descriptions?.join(' '),
     ].filter(notUndefined)
-
-    // const withBulletPoints =
-    //   combinedDescriptions.length > 1
-    //     ? combinedDescriptions.map((s) => `* ${s}\n`)
-    //     : combinedDescriptions
-
-    // return withBulletPoints.join(' ')
   }
 
   replaceAddressesWithNames(s: string): string {
@@ -972,6 +965,8 @@ const roleDescriptions: { [key in StackRole]: string } = {
 }
 
 export function formatAsBulletPoints(description: string[]): string {
+  // Temporarily, for clean diffs, disable bullet points.
+  // It will be enabled as part of upcoming stories.
   return description.join(' ')
   // return description.length > 1
   //   ? description.map((s) => `* ${s}\n`).join('')
