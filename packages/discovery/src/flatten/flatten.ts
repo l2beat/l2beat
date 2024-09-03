@@ -7,9 +7,9 @@ import {
   ParsedFile,
   ParsedFilesManager,
 } from './ParsedFilesManager'
+import { formatAst } from './formatAst'
 import { generateInterfaceSourceFromContract } from './generateInterfaceSourceFromContract'
 import { FlattenOptions } from './types'
-import { formatAst } from './formatAst'
 
 type EntryType = 'inheritance' | 'dynamic'
 
