@@ -1,4 +1,5 @@
 import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { PROOFS } from './common/proofSystems'
 import { ZkCatalogProject } from './types'
 
 export const blobstreamSP1: ZkCatalogProject = {
@@ -21,10 +22,7 @@ export const blobstreamSP1: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Final wrap',
-            proofSystem: 'Plonk SNARK',
-            mainArithmetization: 'Plonk',
-            mainPCS: 'KZG',
-            trustedSetup: '?',
+            ...PROOFS.PLONKSNARK('?'),
           },
           {
             name: 'Main circuit',
@@ -48,10 +46,7 @@ export const blobstreamSP1: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Final wrap',
-            proofSystem: 'Plonk SNARK',
-            mainArithmetization: 'Plonk',
-            mainPCS: 'KZG',
-            trustedSetup: '?',
+            ...PROOFS.PLONKSNARK('?'),
           },
           {
             name: 'Main circuit',
@@ -75,10 +70,7 @@ export const blobstreamSP1: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Final wrap',
-            proofSystem: 'Plonk SNARK',
-            mainArithmetization: 'Plonk',
-            mainPCS: 'KZG',
-            trustedSetup: '?',
+            ...PROOFS.PLONKSNARK('?'),
           },
           {
             name: 'Main circuit',
@@ -89,7 +81,7 @@ export const blobstreamSP1: ZkCatalogProject = {
             link: 'https://github.com/succinctlabs/sp1',
           },
         ],
-      }
+      },
     ],
     requiredTools: [],
   },
