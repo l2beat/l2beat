@@ -224,7 +224,7 @@ function defaultStateValidation(
           currentRequiredStake,
         )} ETH, that can be slashed if the proposal is proven incorrect via a fraud proof. Stakes can be moved from one node to one of its children, either by calling \`stakeOnExistingNode\` or \`stakeOnNewNode\`. New nodes cannot be created faster than the minimum assertion period by the same validator, currently set to ${formatSeconds(
           minimumAssertionPeriod,
-        )}. The oldest unconfirmed node is confirmed if the challenge period has passed and there are no siblings, and rejected if the parent is not a confirmed node or if the challenge period has passed and no one is staked on it.`,
+        )}. The oldest unconfirmed node can be confirmed if the challenge period has passed and there are no siblings, and rejected if the parent is not a confirmed node or if the challenge period has passed and no one is staked on it.`,
         risks: [
           {
             category: 'Funds can be stolen if',
