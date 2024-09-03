@@ -48,7 +48,7 @@ export const avail: DaLayer = {
     Each block header on Avail includes two types of attestations: KZG polynomial commitments of the submitted data and the root of a Merkle tree, where the leaves represent the data blobs. 
 
     ## Data Availability Sampling (DAS)
-    Avail ensures data availability through a data availability sampling (DAS) mechanism , which involves both Light clients and App clients.
+    Avail ensures data availability through a data availability sampling (DAS) mechanism, which involves both Light clients and App clients.
     Light clients sample the data matrix by requesting data cells, and for each cell they then check the KZG polynomial openings against the commitments in the block header.
     Light clients first attempt to fetch cells using a Kademlia-based Distributed Hash Table (DHT) within a light clients peer-to-peer (P2P) network.
     If the randomly selected cells are not available via DHT, the light client resorts to RPC calls to the Avail node(s) to obtain the data. Cells retrieved this way are then shared back into the DHT network, enhancing the overall availability of block data.
