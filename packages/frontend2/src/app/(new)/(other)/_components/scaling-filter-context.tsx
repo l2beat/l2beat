@@ -65,6 +65,11 @@ export function useScalingFilterValues() {
   return context
 }
 
+export function useOptionalScalingFilterValues() {
+  const context = useContext(ScalingFilterContext)
+  return context
+}
+
 type ScalingEntry =
   | ScalingRiskEntry
   | ScalingFinalityEntry
