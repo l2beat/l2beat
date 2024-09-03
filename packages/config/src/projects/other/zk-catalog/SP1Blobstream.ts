@@ -2,12 +2,13 @@ import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { PROOFS } from './common/proofSystems'
 import { ZkCatalogProject } from './types'
 
-export const blobstreamSP1: ZkCatalogProject = {
+export const SP1Blobstream: ZkCatalogProject = {
   display: {
     slug: 'SP1Blobstream',
     name: 'SP1Blobstream',
   },
   proofVerification: {
+    shortDescription: 'Celestia ZK light client implementation.',
     aggregation: false,
     verifiers: [
       {
@@ -23,6 +24,7 @@ export const blobstreamSP1: ZkCatalogProject = {
           {
             name: 'Final wrap',
             ...PROOFS.PLONKSNARK('?'),
+            link: 'https://github.com/succinctlabs/sp1-blobstream/blob/main/program/src/main.rs',
           },
           {
             name: 'Main circuit',
@@ -47,6 +49,7 @@ export const blobstreamSP1: ZkCatalogProject = {
           {
             name: 'Final wrap',
             ...PROOFS.PLONKSNARK('?'),
+            link: 'https://github.com/succinctlabs/sp1-blobstream/blob/main/program/src/main.rs',
           },
           {
             name: 'Main circuit',
@@ -71,6 +74,7 @@ export const blobstreamSP1: ZkCatalogProject = {
           {
             name: 'Final wrap',
             ...PROOFS.PLONKSNARK('?'),
+            link: 'https://github.com/succinctlabs/sp1-blobstream/blob/main/program/src/main.rs',
           },
           {
             name: 'Main circuit',
@@ -83,7 +87,13 @@ export const blobstreamSP1: ZkCatalogProject = {
         ],
       },
     ],
-    requiredTools: [],
+    requiredTools: [
+      {
+        name: 'SP1 zkVM',
+        version: '?',
+        link: 'https://github.com/succinctlabs/sp1',
+      },
+    ],
   },
   type: 'zk-catalog',
 }
