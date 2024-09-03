@@ -1,4 +1,5 @@
 import {
+  bridges,
   ConfigMapping,
   getTvlAmountsConfigForProject,
   getTvlPricesConfig,
@@ -50,7 +51,9 @@ export async function getTokenTvlChart({ token, range }: TokenTvlChartParams) {
   const targetTimestamp = UnixTime.now().toStartOf('hour').add(-2, 'hours')
   const resolution = rangeToResolution(range)
 
-  const project = [...layer2s, ...layer3s].find((p) => p.id === token.projectId)
+  const project = [...layer2s, ...layer3s, ...bridges].find(
+    (p) => p.id === token.projectId,
+  )
   assert(project, 'Project not found')
   const backendProject = toBackendProject(project)
 

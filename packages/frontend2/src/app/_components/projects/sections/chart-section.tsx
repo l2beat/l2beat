@@ -59,6 +59,7 @@ function ProjectChart(props: ChartSectionProps) {
         <ProjectTvlChart
           milestones={props.milestones}
           projectId={props.projectId}
+          tokens={props.tokens}
         />
       )
     case 'onchain-costs':

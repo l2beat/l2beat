@@ -54,7 +54,7 @@ export function ProjectStackedTvlChart({
   }
 
   return (
-    <StackedTvlChart
+    <DefaultChart
       projectId={projectId}
       milestones={milestones}
       timeRange={timeRange}
@@ -70,7 +70,7 @@ export function ProjectStackedTvlChart({
   )
 }
 
-interface StackedTvlChartProps {
+interface DefaultChartProps {
   projectId: string
   milestones: Milestone[]
   timeRange: TvlChartRange
@@ -84,7 +84,7 @@ interface StackedTvlChartProps {
   setScale: (scale: ChartScale) => void
 }
 
-function StackedTvlChart({
+function DefaultChart({
   projectId,
   milestones,
   timeRange,
@@ -96,7 +96,7 @@ function StackedTvlChart({
   setUnit,
   scale,
   setScale,
-}: StackedTvlChartProps) {
+}: DefaultChartProps) {
   const { data, isLoading } = api.tvl.chart.useQuery({
     filter: { type: 'projects', projectIds: [projectId] },
     range: timeRange,

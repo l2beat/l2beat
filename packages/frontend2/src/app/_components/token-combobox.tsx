@@ -46,7 +46,7 @@ export function TokenCombobox({ tokens, value, setValue, className }: Props) {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger
-        className={cn('group/popover-trigger justify-between', className)}
+        className={cn('group/popover-trigger h-8 justify-between', className)}
       >
         {value ? (
           <TokenItem
@@ -62,6 +62,7 @@ export function TokenCombobox({ tokens, value, setValue, className }: Props) {
         <Command shouldFilter={false}>
           <CommandInput
             placeholder="Start typing to find more..."
+            className="min-w-48"
             reset={value ? () => setValue(undefined) : undefined}
           />
           <CommandList>
@@ -81,14 +82,12 @@ export function TokenCombobox({ tokens, value, setValue, className }: Props) {
               tokens={tokens.canonical}
               onSelect={onSelect}
             />
-            <CommandSeparator />
             <TokenGroup
               heading="External"
               value={value}
               tokens={tokens.external}
               onSelect={onSelect}
             />
-            <CommandSeparator />
             <TokenGroup
               heading="Native"
               value={value}
@@ -119,23 +118,26 @@ function TokenGroup({
     return null
   }
   return (
-    <CommandGroup heading={heading}>
-      {filteredTokens.slice(0, 10).map((token) => (
-        <CommandItem
-          key={token.assetId.toString()}
-          value={token.assetId.toString()}
-          onSelect={onSelect}
-        >
-          <CheckIcon
-            className={cn(
-              'mr-2 size-5 shrink-0',
-              value?.assetId === token.assetId ? 'opacity-100' : 'opacity-0',
-            )}
-          />
-          <TokenItem token={token} />
-        </CommandItem>
-      ))}
-    </CommandGroup>
+    <>
+      <CommandGroup heading={heading}>
+        {filteredTokens.slice(0, 10).map((token) => (
+          <CommandItem
+            key={token.assetId.toString()}
+            value={token.assetId.toString()}
+            onSelect={onSelect}
+          >
+            <CheckIcon
+              className={cn(
+                'mr-2 size-5 shrink-0',
+                value?.assetId === token.assetId ? 'opacity-100' : 'opacity-0',
+              )}
+            />
+            <TokenItem token={token} />
+          </CommandItem>
+        ))}
+      </CommandGroup>
+      <CommandSeparator className="[&:last-of-type]:hidden" />
+    </>
   )
 }
 

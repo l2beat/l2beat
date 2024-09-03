@@ -17,7 +17,7 @@ import {
   asNumber,
   notUndefined,
 } from '@l2beat/shared-pure'
-import { groupBy, uniqBy } from 'lodash'
+import { uniqBy } from 'lodash'
 import { getLatestAmountForConfigurations } from '../breakdown/get-latest-amount-for-configurations'
 import { getLatestPriceForConfigurations } from '../breakdown/get-latest-price-for-configurations'
 
@@ -89,7 +89,29 @@ export async function getTopTokensForProject(
     .map((token) => toDisplayableTokens(backendProject.projectId, token))
     .filter(notUndefined)
 
-  return groupBy(displayable, (e) => e.source) as ProjectTokens
+  const canonical: ProjectToken[] = []
+  const native: ProjectToken[] = []
+  const external: ProjectToken[] = []
+
+  for (const token of displayable) {
+    switch (token.source) {
+      case 'canonical':
+        canonical.push(token)
+        break
+      case 'native':
+        native.push(token)
+        break
+      case 'external':
+        external.push(token)
+        break
+    }
+  }
+
+  return {
+    canonical,
+    native,
+    external,
+  }
 }
 
 export function toDisplayableTokens(
