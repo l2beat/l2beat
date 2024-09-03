@@ -544,6 +544,32 @@ export const scroll: Layer2 = {
             },
           ],
         },
+        // {
+        //   name: 'ScrollVerifierV3',
+        //   description:
+        //     'Third generation (Darwinv2 Upgrade) Halo2 + KZG verifier using blobs for DA. Corresponds to version v0.12.0 of the circuits.',
+        //   verified: 'no',
+        //   contractAddress: EthereumAddress(
+        //     '0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9',
+        //   ),
+        //   chainId: ChainId.ETHEREUM,
+        //   subVerifiers: [
+        //     {
+        //       name: 'Final circuit',
+        //       ...PROOFS.HALO2KZG('Powers of Tau 26'),
+        //     },
+        //     {
+        //       name: 'Aggregation circuit',
+        //       ...PROOFS.HALO2KZG('Powers of Tau 26'),
+        //       link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.12.0/zkevm-circuits',
+        //     },
+        //     {
+        //       name: 'Main verifier',
+        //       ...PROOFS.HALO2KZG('Powers of Tau 26'),
+        //       link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.11.4/zkevm-circuits',
+        //     },
+        //   ],
+        // },
       ],
     },
   },

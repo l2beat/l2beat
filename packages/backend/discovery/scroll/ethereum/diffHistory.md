@@ -1,16 +1,16 @@
-Generated with discovered.json: 0x03bb3fae58b27b4460ae346316f26ac880a1d0de
+Generated with discovered.json: 0x2ad85d19c10f054cbae724dc37cb260bc9502e55
 
-# Diff at Mon, 02 Sep 2024 07:05:23 GMT:
+# Diff at Tue, 03 Sep 2024 11:27:34 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@8fcb30f6c613b5454aa9ecdec05a118442e9dc7b block: 20590985
-- current block number: 20661273
+- comparing to: main@4aa95146cde1555bcce17311b090748c26bb20f8 block: 20590985
+- current block number: 20669745
 
 ## Description
 
 [DarwinV2 upgrade](https://github.com/scroll-tech/go-ethereum/releases/tag/scroll-v5.7.0): This security patch adds a fallback for the case where blocks cannot be compressed under the new compression scheme (Darwin Upgrade). These are now posted as uncompressed blobs.
 
-The verifier is therefore changed to a new ZkEvmVerifierV2 (code-identical) and a [new PlonkVerifier]().
+The verifier is therefore changed to a new ZkEvmVerifierV2 (code-identical) and a new PlonkVerifier.
 
 MultipleVersionRollupVerifier owner is changed from ScrollMultisig to ScrollOwner.
 
@@ -33,22 +33,21 @@ MultipleVersionRollupVerifier owner is changed from ScrollMultisig to ScrollOwne
 
 ```diff
 +   Status: CREATED
-    contract  (0x8c1b52757b5c571ADcB5572E992679d4D48e30f7)
+    contract PlonkVerifierV3-1 (0x8c1b52757b5c571ADcB5572E992679d4D48e30f7)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract ZkEvmVerifierV2 (0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3)
+    contract ZkEvmVerifierV2-1 (0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3)
     +++ description: None
 ```
 
 ## Source code changes
 
 ```diff
-...0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB.sol} |   0
- ...-0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3.sol | 108 +++++++++++++++++++++
- 2 files changed, 108 insertions(+)
+.../scroll/ethereum/.flat/ZkEvmVerifierV2-1.sol    | 108 +++++++++++++++++++++
+ 1 file changed, 108 insertions(+)
 ```
 
 Generated with discovered.json: 0x146a15784cddb895f4356aab30b34d927f77049f
