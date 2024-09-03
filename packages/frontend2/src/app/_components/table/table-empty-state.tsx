@@ -1,6 +1,6 @@
 import { useOptionalScalingFilterValues } from '~/app/(new)/(other)/_components/scaling-filter-context'
-import { linkVariants } from '../link/custom-link'
 import { useOptionalBridgesFilterValues } from '~/app/(new)/(other)/bridges/_components/bridges-filter-context'
+import { linkVariants } from '../link/custom-link'
 
 export function TableEmptyState() {
   const filterStates = [
