@@ -68,7 +68,7 @@ export function DAC(template: TemplateVars): DacDaLayer {
   // "Bridge" backfill for DAC
   const bridgeDescription =
     template.bridge?.description ??
-    `${template.project.display.name} DAC on Ethereum`
+    `${template.project.display.name} DAC on Ethereum.`
 
   const bridgeTechnology =
     template.bridge.technology ??
