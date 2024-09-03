@@ -111,7 +111,7 @@ export function ContractEntry({
               <strong className="text-black dark:text-white">
                 Can be upgraded by:
               </strong>
-              <div className="ml-1.5 flex flex-wrap">
+              <div className="ml-1.5 flex flex-wrap gap-1.5">
                 {contract.upgradeableBy.map((name) => (
                   <CustomLink key={name} href={`#${name}`}>
                     {name}
