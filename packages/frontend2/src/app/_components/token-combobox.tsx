@@ -145,7 +145,7 @@ function TokenGroup({ heading, tokens, value, onSelect }: TokenGroupProps) {
           </CommandItem>
         ))}
         {moreCount > 0 && (
-          <p className="px-2 py-1.5 text-xs font-medium">
+          <p className="ml-7 px-2 py-1.5 text-xs font-medium">
             and {moreCount} more...
           </p>
         )}
