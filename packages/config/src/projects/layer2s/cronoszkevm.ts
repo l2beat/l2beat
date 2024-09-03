@@ -1,7 +1,4 @@
-import {
-  ProjectId,
-  formatSeconds,
-} from '@l2beat/shared-pure'
+import { ProjectId, formatSeconds } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
   EXITS,
@@ -441,10 +438,12 @@ export const cronoszkevm: Layer2 = {
     ),
     {
       name: 'AdminEOA',
-      accounts: [discovery.getAccessControlRolePermission(
-        'CronosZkEVMAdmin',
-        'ADMIN',
-      )[0]],
+      accounts: [
+        discovery.getAccessControlRolePermission(
+          'CronosZkEVMAdmin',
+          'ADMIN',
+        )[0],
+      ],
       description: 'Inherits all permissions of the CronosZkEVMAdmin contract.',
     },
     {
