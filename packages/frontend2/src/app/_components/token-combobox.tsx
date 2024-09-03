@@ -1,4 +1,5 @@
 'use client'
+import { useCommandState } from 'cmdk'
 import Image from 'next/image'
 import React from 'react'
 import { externalLinks } from '~/consts/external-links'
@@ -58,7 +59,7 @@ export function TokenCombobox({ tokens, value, setValue, className }: Props) {
         <ChevronIcon className="ml-2 size-4 shrink-0 opacity-50 transition-transform group-data-[state=open]/popover-trigger:rotate-180" />
       </PopoverTrigger>
       <PopoverContent className="p-0" align="start">
-        <Command filter={tokenFilter}>
+        <Command shouldFilter={false}>
           <CommandInput
             placeholder="Start typing to find more..."
             reset={value ? () => setValue(undefined) : undefined}
@@ -112,15 +113,18 @@ function TokenGroup({
   tokens: ProjectToken[]
   onSelect: (value: string) => void
 }) {
+  const search = useCommandState((state) => state.search)
+  const filteredTokens = tokens.filter((token) => tokenFilter(search, token))
+  if (filteredTokens.length === 0) {
+    return null
+  }
   return (
     <CommandGroup heading={heading}>
-      {tokens.map((token) => (
+      {filteredTokens.slice(0, 10).map((token) => (
         <CommandItem
           key={token.assetId.toString()}
           value={token.assetId.toString()}
-          keywords={[token.name, token.symbol]}
           onSelect={onSelect}
-          className="[&:nth-child(n+11)]:hidden"
         >
           <CheckIcon
             className={cn(
@@ -161,17 +165,14 @@ function TokenItem({
   )
 }
 
-function tokenFilter(
-  _: string,
-  search: string,
-  keywords: string[] | undefined,
-) {
+function tokenFilter(search: string, token: ProjectToken) {
+  const keywords = [token.name, token.symbol]
   if (
     keywords?.some((keyword) =>
       keyword.toLowerCase().includes(search.toLowerCase()),
     )
   ) {
-    return 1
+    return true
   }
-  return 0
+  return false
 }
