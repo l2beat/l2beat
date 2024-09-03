@@ -84,11 +84,9 @@ export function TokenCombobox({
               </a>
             </CommandEmpty>
             <TokenGroup
-              heading={
-                isBridge ? 'Bridged Tokens' : 'Canonically Bridged Tokens'
-              }
+              heading="Natively Minted Tokens"
               value={value}
-              tokens={tokens.canonical}
+              tokens={tokens.native}
               onSelect={onSelect}
             />
             <TokenGroup
@@ -98,9 +96,11 @@ export function TokenCombobox({
               onSelect={onSelect}
             />
             <TokenGroup
-              heading="Natively Minted Tokens"
+              heading={
+                isBridge ? 'Bridged Tokens' : 'Canonically Bridged Tokens'
+              }
               value={value}
-              tokens={tokens.native}
+              tokens={tokens.canonical}
               onSelect={onSelect}
             />
           </CommandList>
