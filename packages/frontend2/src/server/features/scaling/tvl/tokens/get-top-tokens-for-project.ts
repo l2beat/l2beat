@@ -30,7 +30,6 @@ export type ProjectToken = {
   name: string
   symbol: string
   source: ProjectTokenSource
-  usdValue: number
 }
 
 type ProjectTokenSource = 'native' | 'canonical' | 'external'
@@ -119,13 +118,11 @@ export function toDisplayableTokens(
   {
     assetId,
     source,
-    usdValue,
   }: {
     assetId: AssetId
     source: 'native' | 'canonical' | 'external'
-    usdValue: number
   },
-) {
+): ProjectToken {
   const token = safeGetTokenByAssetId(assetId)
   assert(token, 'Token not found for asset id ' + assetId.toString())
   let symbol = token.symbol
@@ -146,12 +143,11 @@ export function toDisplayableTokens(
 
   return {
     assetId,
-    address: address?.toString(),
+    address: address.toString(),
     iconUrl,
     name,
     symbol,
     chain: chainConverter.toName(token.chainId),
     source,
-    usdValue,
   }
 }
