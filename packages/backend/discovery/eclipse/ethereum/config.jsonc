@@ -9,13 +9,31 @@
     "0xb23B2492f7A9631104A5877F7FFA00633660968d"
   ],
   "names": {
-    "0xb23B2492f7A9631104A5877F7FFA00633660968d": "Contract1",
-    "0xD7E4b67E735733aC98a88F13d087D8aac670E644": "Contract2",
-    "0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1": "Contract3",
-    "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC": "EclipseMultisig"
+    "0xb23B2492f7A9631104A5877F7FFA00633660968d": "Mailbox",
+    "0xD7E4b67E735733aC98a88F13d087D8aac670E644": "Treasury",
+    "0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1": "EtherBridge",
+    "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC": "TreasuryOwner",
+    "0x4720342419C1D316B948690d12C86D5b485C64E0": "AuthorityMultisig"
   },
   "overrides": {
-    "Contract1": {
+    "Mailbox": {
+      "fields": {
+        "proxiableUUID": {
+          "handler": {
+            "type": "call",
+            "method": "function proxiableUUID() view returns (bytes32)",
+            "args": [],
+            "expectRevert": true
+          }
+        },
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    },
+    "Treasury": {
       "fields": {
         "proxiableUUID": {
           "handler": {
@@ -27,7 +45,7 @@
         }
       }
     },
-    "Contract2": {
+    "EtherBridge": {
       "fields": {
         "proxiableUUID": {
           "handler": {
@@ -36,17 +54,10 @@
             "args": [],
             "expectRevert": true
           }
-        }
-      }
-    },
-    "Contract3": {
-      "fields": {
-        "proxiableUUID": {
+        },
+        "accessControl": {
           "handler": {
-            "type": "call",
-            "method": "function proxiableUUID() view returns (bytes32)",
-            "args": [],
-            "expectRevert": true
+            "type": "accessControl"
           }
         }
       }
