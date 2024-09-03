@@ -1,5 +1,4 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
-import React from 'react'
 
 import { ChartSection } from './sections/chart-section'
 import { ContractsSection } from './sections/contracts/contracts-section'
@@ -24,7 +23,7 @@ export interface ProjectDetailsProps {
 
 export function ProjectDetails(props: ProjectDetailsProps) {
   return (
-    <div className="px-4 md:px-0">
+    <div>
       {props.items.map((item, index) => {
         const sectionOrder = index + 1
 

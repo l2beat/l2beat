@@ -19,7 +19,7 @@ import { groupBy } from 'lodash'
 import { z } from 'zod'
 import { db } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
-import { getRange } from '~/utils/range/range'
+import { getRangeWithMax } from '~/utils/range/range'
 import { getAmountsStatus } from '../sync-status/get-amounts-status'
 import { getConfigurationsStatus } from '../sync-status/get-configurations-status'
 import {
@@ -49,7 +49,6 @@ export type TokenParams = z.infer<typeof TokenParams>
 export async function getTokenTvlChart({ token, range }: TokenTvlChartParams) {
   const targetTimestamp = UnixTime.now().toStartOf('hour').add(-2, 'hours')
   const resolution = rangeToResolution(range)
-  const [from, to] = getRange(range, resolution, targetTimestamp)
 
   const project = [...layer2s, ...layer3s].find((p) => p.id === token.projectId)
   assert(project, 'Project not found')
@@ -69,18 +68,26 @@ export async function getTokenTvlChart({ token, range }: TokenTvlChartParams) {
 
   const firstTokenAmountConfig = tokenAmountConfigs[0]
   assert(firstTokenAmountConfig, 'No token amount config found')
+  const [from, to] = getRangeWithMax(range, resolution, {
+    now: targetTimestamp,
+  })
+  const adjustedFrom = from
+    ? UnixTime.max(from, firstTokenAmountConfig.sinceTimestamp)
+    : firstTokenAmountConfig.sinceTimestamp
+  const adjustedRange: [UnixTime, UnixTime] = [adjustedFrom, to]
+
   const tokenPriceConfig = configMapping.getPriceConfigFromAmountConfig(
     firstTokenAmountConfig,
   )
 
-  const timestamps = generateTimestamps([from, to], resolution)
+  const timestamps = generateTimestamps(adjustedRange, resolution)
 
   const aggregatedTokenAmounts = await getAggregatedTokenAmounts({
     configurations: tokenAmountConfigs,
-    range: [from, to],
+    range: adjustedRange,
     timestamps,
   })
-  const prices = await getPrices(tokenPriceConfig, [from, to], resolution)
+  const prices = await getPrices(tokenPriceConfig, adjustedRange, resolution)
 
   const decimals = firstTokenAmountConfig.decimals
   const data: [number, number, number][] = []

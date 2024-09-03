@@ -25,9 +25,10 @@ interface Props {
   tokens: ProjectTokens
   value: ProjectToken | undefined
   setValue: (token: ProjectToken | undefined) => void
+  className?: string
 }
 
-export function TokenCombobox({ tokens, value, setValue }: Props) {
+export function TokenCombobox({ tokens, value, setValue, className }: Props) {
   const [open, setOpen] = React.useState(false)
 
   const allTokens = [...tokens.canonical, ...tokens.external, ...tokens.native]
@@ -43,10 +44,13 @@ export function TokenCombobox({ tokens, value, setValue }: Props) {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger className="group/popover-trigger w-max justify-between">
+      <PopoverTrigger
+        className={cn('group/popover-trigger justify-between', className)}
+      >
         {value ? (
           <TokenItem
             token={allTokens.find((t) => t.assetId === value.assetId)!}
+            truncate
           />
         ) : (
           'Tokens'
@@ -129,7 +133,10 @@ function TokenGroup({
   )
 }
 
-function TokenItem({ token }: { token: ProjectToken }) {
+function TokenItem({
+  token,
+  truncate,
+}: { token: ProjectToken; truncate?: boolean }) {
   return (
     <div className="flex items-center gap-1.5">
       <Image
@@ -139,7 +146,14 @@ function TokenItem({ token }: { token: ProjectToken }) {
         height={18}
         className="rounded-full"
       />
-      <span className="text-sm font-bold">{token.name}</span>
+      <span
+        className={cn(
+          'text-sm font-bold',
+          truncate && 'truncate max-lg:max-w-[200px]',
+        )}
+      >
+        {token.name}
+      </span>
       <span>({token.symbol})</span>
     </div>
   )

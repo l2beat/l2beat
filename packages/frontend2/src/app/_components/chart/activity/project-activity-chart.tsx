@@ -66,8 +66,8 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
           >
             <div className="flex flex-row items-center gap-2">
               <EthereumLineIcon className="hidden h-1.5 w-2.5 sm:inline-block" />
-              <span className="hidden md:inline">ETH Mainnet Transactions</span>
-              <span className="md:hidden">ETH Txs</span>
+              <span className="max-lg:hidden">ETH Mainnet Transactions</span>
+              <span className="lg:hidden">ETH Txs</span>
             </div>
           </Checkbox>
           <RadioGroup

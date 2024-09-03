@@ -30,27 +30,22 @@ export function TvlChartUnitAndScaleControls({
     )
   }
 
-  const unitControls = (
-    <RadioGroup value={unit} onValueChange={setUnit}>
-      <RadioGroupItem value="usd">USD</RadioGroupItem>
-      <RadioGroupItem value="eth">ETH</RadioGroupItem>
-    </RadioGroup>
-  )
-
   return (
-    <div className="flex items-center justify-between gap-2">
-      {children ? (
-        <div className="mr-4 flex items-center gap-x-4 gap-y-2">
-          {unitControls}
-          {children}
+    <div className="space-y-2">
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <RadioGroup value={unit} onValueChange={setUnit}>
+            <RadioGroupItem value="usd">USD</RadioGroupItem>
+            <RadioGroupItem value="eth">ETH</RadioGroupItem>
+          </RadioGroup>
+          <div className="max-lg:hidden">{children}</div>
         </div>
-      ) : (
-        unitControls
-      )}
-      <RadioGroup value={scale} onValueChange={setScale}>
-        <RadioGroupItem value="log">LOG</RadioGroupItem>
-        <RadioGroupItem value="lin">LIN</RadioGroupItem>
-      </RadioGroup>
+        <RadioGroup value={scale} onValueChange={setScale}>
+          <RadioGroupItem value="log">LOG</RadioGroupItem>
+          <RadioGroupItem value="lin">LIN</RadioGroupItem>
+        </RadioGroup>
+      </div>
+      <div className="lg:hidden">{children}</div>
     </div>
   )
 }

@@ -7,7 +7,7 @@ export type TvlChartRange = z.infer<typeof TvlChartRange>
 export type TvlChartResolution = ReturnType<typeof rangeToResolution>
 
 export function rangeToResolution(range: TvlChartRange) {
-  const days = rangeToDays(range) ?? Infinity
+  const days = rangeToDays(range)
   if (days <= 7) return 'hourly'
   if (days < 180) return 'sixHourly'
   return 'daily'

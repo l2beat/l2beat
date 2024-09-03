@@ -118,27 +118,37 @@ export function TokenChartUnitAndScaleControls({
   if (!isClient) {
     return (
       <div className="flex items-center justify-between gap-2">
-        <div className="mr-4 flex items-center gap-x-4 gap-y-2">
-          <Skeleton className="h-8 w-[104.82px]" />
-          <TokenCombobox tokens={tokens} value={token} setValue={setToken} />
-        </div>
+        <Skeleton className="h-8 w-[104.82px]" />
         <Skeleton className="h-8 w-[98.63px]" />
       </div>
     )
   }
   return (
-    <div className="flex items-center justify-between gap-2">
-      <div className="mr-4 flex items-center gap-x-4 gap-y-2">
-        <RadioGroup value={unit} onValueChange={setUnit}>
-          <RadioGroupItem value="usd">USD</RadioGroupItem>
-          <RadioGroupItem value="eth">{token.symbol}</RadioGroupItem>
+    <div className="space-y-2">
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <RadioGroup value={unit} onValueChange={setUnit}>
+            <RadioGroupItem value="usd">USD</RadioGroupItem>
+            <RadioGroupItem value="eth">{token.symbol}</RadioGroupItem>
+          </RadioGroup>
+          <TokenCombobox
+            tokens={tokens}
+            value={token}
+            setValue={setToken}
+            className="max-lg:hidden"
+          />
+        </div>
+        <RadioGroup value={scale} onValueChange={setScale}>
+          <RadioGroupItem value="log">LOG</RadioGroupItem>
+          <RadioGroupItem value="lin">LIN</RadioGroupItem>
         </RadioGroup>
-        <TokenCombobox tokens={tokens} value={token} setValue={setToken} />
       </div>
-      <RadioGroup value={scale} onValueChange={setScale}>
-        <RadioGroupItem value="log">LOG</RadioGroupItem>
-        <RadioGroupItem value="lin">LIN</RadioGroupItem>
-      </RadioGroup>
+      <TokenCombobox
+        tokens={tokens}
+        value={token}
+        setValue={setToken}
+        className="lg:hidden"
+      />
     </div>
   )
 }

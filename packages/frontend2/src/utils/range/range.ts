@@ -5,17 +5,38 @@ export type TimeRange = '1d' | '7d' | '30d' | '90d' | '180d' | '1y' | 'max'
 export type Resolution = 'hourly' | 'daily' | 'sixHourly'
 
 export function getRange(
-  range: TimeRange,
+  range: Exclude<TimeRange, 'max'>,
   resolution: Resolution,
-  now?: UnixTime,
+  opts?: {
+    now?: UnixTime
+  },
 ): [UnixTime, UnixTime] {
   const days = rangeToDays(range)
 
-  const roundedNow = (now ?? UnixTime.now()).toStartOf(
+  const roundedNow = (opts?.now ?? UnixTime.now()).toStartOf(
     resolution === 'hourly' ? 'hour' : 'day',
   )
 
   const start = roundedNow.add(-days, 'days')
+  const end = roundedNow
+
+  return [start, end]
+}
+
+export function getRangeWithMax(
+  range: TimeRange,
+  resolution: Resolution,
+  opts?: {
+    now?: UnixTime
+  },
+): [UnixTime | null, UnixTime] {
+  const days = rangeToDays(range)
+
+  const roundedNow = (opts?.now ?? UnixTime.now()).toStartOf(
+    resolution === 'hourly' ? 'hour' : 'day',
+  )
+
+  const start = days != Infinity ? roundedNow.add(-days, 'days') : null
   const end = roundedNow
 
   return [start, end]
