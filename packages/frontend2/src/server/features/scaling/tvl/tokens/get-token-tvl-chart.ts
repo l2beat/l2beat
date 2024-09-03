@@ -71,9 +71,11 @@ export async function getTokenTvlChart({ token, range }: TokenTvlChartParams) {
   const [from, to] = getRangeWithMax(range, resolution, {
     now: targetTimestamp,
   })
+  const tokenSinceTimestamp =
+    firstTokenAmountConfig.sinceTimestamp.toEndOf('day')
   const adjustedFrom = from
-    ? UnixTime.max(from, firstTokenAmountConfig.sinceTimestamp)
-    : firstTokenAmountConfig.sinceTimestamp
+    ? UnixTime.max(from, tokenSinceTimestamp)
+    : tokenSinceTimestamp
   const adjustedRange: [UnixTime, UnixTime] = [adjustedFrom, to]
 
   const tokenPriceConfig = configMapping.getPriceConfigFromAmountConfig(

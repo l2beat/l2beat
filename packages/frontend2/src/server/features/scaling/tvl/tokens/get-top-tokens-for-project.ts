@@ -17,14 +17,11 @@ import {
   asNumber,
   notUndefined,
 } from '@l2beat/shared-pure'
+import { groupBy, uniqBy } from 'lodash'
 import { getLatestAmountForConfigurations } from '../breakdown/get-latest-amount-for-configurations'
 import { getLatestPriceForConfigurations } from '../breakdown/get-latest-price-for-configurations'
 
-export type ProjectTokens = {
-  canonical: ProjectToken[]
-  external: ProjectToken[]
-  native: ProjectToken[]
-}
+export type ProjectTokens = Record<ProjectTokenSource, ProjectToken[]>
 export type ProjectToken = {
   assetId: AssetId
   address: string
@@ -32,13 +29,15 @@ export type ProjectToken = {
   iconUrl: string
   name: string
   symbol: string
-  source: 'native' | 'canonical' | 'external'
+  source: ProjectTokenSource
   usdValue: number
 }
 
+type ProjectTokenSource = 'native' | 'canonical' | 'external'
+
 export async function getTopTokensForProject(
   project: Layer2 | Layer3 | Bridge,
-) {
+): Promise<ProjectTokens> {
   const backendProject = toBackendProject(project)
 
   const amountsConfigs = getTvlAmountsConfigForProject(backendProject)
@@ -72,6 +71,7 @@ export async function getTopTokensForProject(
       }
       const price = pricesMap.get(priceConfig.configId)
       assert(price, 'Price not found for id ' + priceConfig.configId)
+
       return {
         assetId: priceConfig.assetId,
         address: config.address,
@@ -85,36 +85,11 @@ export async function getTopTokensForProject(
 
   mapped.sort((a, b) => b.usdValue - a.usdValue)
 
-  const displayable = mapped
+  const displayable = uniqBy(mapped, (e) => e.assetId.toString())
     .map((token) => toDisplayableTokens(backendProject.projectId, token))
     .filter(notUndefined)
 
-  const canonical = []
-  const external = []
-  const native = []
-  for (const token of displayable) {
-    const source = token.source
-    switch (source) {
-      case 'canonical': {
-        canonical.push(token)
-        break
-      }
-      case 'external': {
-        external.push(token)
-        break
-      }
-      case 'native': {
-        native.push(token)
-        break
-      }
-    }
-  }
-
-  return {
-    canonical,
-    external,
-    native,
-  }
+  return groupBy(displayable, (e) => e.source) as ProjectTokens
 }
 
 export function toDisplayableTokens(
@@ -122,17 +97,16 @@ export function toDisplayableTokens(
   {
     assetId,
     source,
-    chain,
     usdValue,
   }: {
     assetId: AssetId
     source: 'native' | 'canonical' | 'external'
-    chain: string
     usdValue: number
   },
 ) {
   const token = safeGetTokenByAssetId(assetId)
-  let symbol = token?.symbol
+  assert(token, 'Token not found for asset id ' + assetId.toString())
+  let symbol = token.symbol
   if (symbol === 'USDC' && source === 'canonical') {
     if (
       projectId.toString() === 'arbitrum' ||
@@ -143,19 +117,13 @@ export function toDisplayableTokens(
       symbol = 'USDbC'
     }
   }
-  const name = token?.name
-  const address = token?.address ?? 'native'
-  const iconUrl = token?.iconUrl ?? ''
 
-  // TODO: this is just temporary, so CI passes
-  assert(chain, 'Chain not defined')
-
-  if (!symbol || !name) {
-    return
-  }
+  const name = token.name
+  const address = token.address ?? 'native'
+  const iconUrl = token.iconUrl ?? ''
 
   return {
-    assetId: assetId,
+    assetId,
     address: address?.toString(),
     iconUrl,
     name,
