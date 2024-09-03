@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x2ad85d19c10f054cbae724dc37cb260bc9502e55
+Generated with discovered.json: 0xf927951961dafb58ba0045cdf101156aeff92873
 
-# Diff at Tue, 03 Sep 2024 11:27:34 GMT:
+# Diff at Tue, 03 Sep 2024 15:09:19 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@4aa95146cde1555bcce17311b090748c26bb20f8 block: 20590985
-- current block number: 20669745
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@8b201382220336bea7cda6fb789ab7a680e53200 block: 20590985
+- current block number: 20670849
 
 ## Description
 
@@ -33,7 +33,7 @@ MultipleVersionRollupVerifier owner is changed from ScrollMultisig to ScrollOwne
 
 ```diff
 +   Status: CREATED
-    contract PlonkVerifierV3-1 (0x8c1b52757b5c571ADcB5572E992679d4D48e30f7)
+    contract PlonkVerifierV2-1 (0x8c1b52757b5c571ADcB5572E992679d4D48e30f7)
     +++ description: None
 ```
 
@@ -48,6 +48,30 @@ MultipleVersionRollupVerifier owner is changed from ScrollMultisig to ScrollOwne
 ```diff
 .../scroll/ethereum/.flat/ZkEvmVerifierV2-1.sol    | 108 +++++++++++++++++++++
  1 file changed, 108 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20590985 (main branch discovery), not current.
+
+```diff
+    contract PlonkVerifierV1-1 (0x03a72B00D036C479105fF98A1953b15d9c510110) {
+    +++ description: None
+      name:
+-        "PlonkVerifierV2"
++        "PlonkVerifierV1-1"
+    }
+```
+
+```diff
+    contract PlonkVerifierV2 (0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9) {
+    +++ description: None
+      name:
+-        "PlonkVerifierV3"
++        "PlonkVerifierV2"
+    }
 ```
 
 Generated with discovered.json: 0x146a15784cddb895f4356aab30b34d927f77049f

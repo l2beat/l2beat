@@ -634,17 +634,24 @@ export const scroll: Layer2 = {
       }),
       discovery.getContractDetails('ZkEvmVerifierV1-1', {
         description:
-          'Current verifier (post-Curie upgrade) using blobs for DA, used to prepare data for the PlonkVerifierV2.',
+          'Verifier using blobs for DA, used to prepare data for the PlonkVerifierV1-1. Added in the Curie upgrade.',
       }),
-      discovery.getContractDetails('PlonkVerifierV2', {
+      discovery.getContractDetails('PlonkVerifierV1-1', {
         description:
           'Plonk verifier used to verify ZK proofs using blobs for DA.',
       }),
       discovery.getContractDetails('ZkEvmVerifierV2', {
         description:
-          'Verifier proving bundles (group of batches), used to prepare data for the PlonkVerifierV3.',
+          'Verifier proving bundles (group of batches), used to prepare data for the PlonkVerifierV2. Added in the Darwin upgrade.',
       }),
-      discovery.getContractDetails('PlonkVerifierV3', {
+      discovery.getContractDetails('PlonkVerifierV2', {
+        description: 'Plonk verifier used to verify ZK proofs for bundles.',
+      }),
+      discovery.getContractDetails('ZkEvmVerifierV2-1', {
+        description:
+          'Verifier proving bundles (group of batches), used to prepare data for the PlonkVerifierV2-1. Added in the Darwin v2 upgrade.',
+      }),
+      discovery.getContractDetails('PlonkVerifierV2-1', {
         description: 'Plonk verifier used to verify ZK proofs for bundles.',
       }),
       discovery.getContractDetails('L1ETHGateway', {
