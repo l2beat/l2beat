@@ -23,9 +23,15 @@ export function TvlChartUnitAndScaleControls({
 
   if (!isClient) {
     return (
-      <div className="flex items-center justify-between gap-2">
-        <Skeleton className="h-8 w-[104.82px]" />
-        <Skeleton className="h-8 w-[98.63px]" />
+      <div className="space-y-2">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-8 w-[104.82px]" />
+            <Skeleton className="h-8 w-[106px] max-lg:hidden" />
+          </div>
+          <Skeleton className="h-8 w-[98.63px]" />
+        </div>
+        <Skeleton className="h-8 w-[106px] lg:hidden" />
       </div>
     )
   }
