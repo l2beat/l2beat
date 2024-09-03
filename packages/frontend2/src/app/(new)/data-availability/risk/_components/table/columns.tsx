@@ -34,7 +34,7 @@ export const columns = [
             Multiple bridges
             <ChevronDown
               className={cn(
-                'fill-black dark:fill-white',
+                'fill-black transition-transform dark:fill-white',
                 ctx.row.getIsExpanded() && 'rotate-180',
               )}
             />
