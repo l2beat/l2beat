@@ -1,11 +1,8 @@
 import {
   type Bridge,
-  ConfigMapping,
   type Layer2,
   type Layer3,
   chainConverter,
-  getTvlAmountsConfigForProject,
-  getTvlPricesConfig,
   safeGetTokenByAssetId,
   toBackendProject,
 } from '@l2beat/config'
@@ -18,8 +15,13 @@ import {
   notUndefined,
 } from '@l2beat/shared-pure'
 import { uniqBy } from 'lodash'
+import {
+  unstable_cache as cache,
+  unstable_noStore as noStore,
+} from 'next/cache'
 import { getLatestAmountForConfigurations } from '../breakdown/get-latest-amount-for-configurations'
 import { getLatestPriceForConfigurations } from '../breakdown/get-latest-price-for-configurations'
+import { getConfigMapping } from '../utils/get-config-mapping'
 
 export type ProjectTokens = Record<ProjectTokenSource, ProjectToken[]>
 export type ProjectToken = {
@@ -37,62 +39,62 @@ type ProjectTokenSource = 'native' | 'canonical' | 'external'
 export async function getTopTokensForProject(
   project: Layer2 | Layer3 | Bridge,
 ): Promise<ProjectTokens> {
-  const backendProject = toBackendProject(project)
+  noStore()
+  return getCachedTopTokensForProject(project)
+}
 
-  const amountsConfigs = getTvlAmountsConfigForProject(backendProject)
-  const priceConfigs = getTvlPricesConfig()
+const getCachedTopTokensForProject = cache(
+  async (project: Layer2 | Layer3 | Bridge): Promise<ProjectTokens> => {
+    const backendProject = toBackendProject(project)
+    const configMapping = getConfigMapping(backendProject)
+    const targetTimestamp = UnixTime.now().toStartOf('hour').add(-2, 'hours')
 
-  const configMapping = new ConfigMapping(priceConfigs, amountsConfigs, [
-    backendProject.projectId,
-  ])
+    const [priceConfigs, amountConfigs] = await Promise.all([
+      getLatestPriceForConfigurations(configMapping.prices, targetTimestamp),
+      getLatestAmountForConfigurations(configMapping.amounts, targetTimestamp),
+    ])
 
-  const targetTimestamp = UnixTime.now().toStartOf('hour').add(-2, 'hours')
+    const pricesMap = new Map(
+      priceConfigs.prices.map((x) => [x.configId, x.priceUsd]),
+    )
 
-  const prices = await getLatestPriceForConfigurations(
-    configMapping.prices,
-    targetTimestamp,
-  )
+    const withUsdValue = amountConfigs.amounts
+      .map((a) => {
+        const config = configMapping.getAmountConfig(a.configId)
+        const amountAsNumber = asNumber(a.amount, config.decimals)
+        const priceConfig = configMapping.getPriceConfigFromAmountConfig(config)
+        if (priceConfigs.excluded.has(priceConfig.configId)) {
+          return undefined
+        }
+        const price = pricesMap.get(priceConfig.configId)
+        assert(price, 'Price not found for id ' + priceConfig.configId)
 
-  const tokenAmounts = await getLatestAmountForConfigurations(
-    configMapping.amounts,
-    targetTimestamp,
-  )
+        return {
+          assetId: priceConfig.assetId,
+          source: config.source,
+          usdValue: amountAsNumber * price,
+        }
+      })
+      .filter(notUndefined)
 
-  const pricesMap = new Map(prices.prices.map((x) => [x.configId, x.priceUsd]))
+    withUsdValue.sort((a, b) => b.usdValue - a.usdValue)
 
-  const mapped = tokenAmounts.amounts
-    .map((a) => {
-      const config = configMapping.getAmountConfig(a.configId)
-      const amountAsNumber = asNumber(a.amount, config.decimals)
-      const priceConfig = configMapping.getPriceConfigFromAmountConfig(config)
-      if (prices.excluded.has(priceConfig.configId)) {
-        return undefined
-      }
-      const price = pricesMap.get(priceConfig.configId)
-      assert(price, 'Price not found for id ' + priceConfig.configId)
+    const displayable = uniqBy(withUsdValue, (e) => e.assetId.toString())
+      .map((token) => toDisplayableTokens(backendProject.projectId, token))
+      .filter(notUndefined)
 
-      return {
-        assetId: priceConfig.assetId,
-        address: config.address,
-        chain: config.chain,
-        chainId: chainConverter.toChainId(config.chain),
-        source: config.source,
-        usdValue: amountAsNumber * price,
-      }
-    })
-    .filter(notUndefined)
+    return groupBySource(displayable)
+  },
+  ['topTokensForProject'],
+  { revalidate: 60 * UnixTime.MINUTE },
+)
 
-  mapped.sort((a, b) => b.usdValue - a.usdValue)
-
-  const displayable = uniqBy(mapped, (e) => e.assetId.toString())
-    .map((token) => toDisplayableTokens(backendProject.projectId, token))
-    .filter(notUndefined)
-
+function groupBySource(tokens: ProjectToken[]) {
   const canonical: ProjectToken[] = []
   const native: ProjectToken[] = []
   const external: ProjectToken[] = []
 
-  for (const token of displayable) {
+  for (const token of tokens) {
     switch (token.source) {
       case 'canonical':
         canonical.push(token)
@@ -113,7 +115,7 @@ export async function getTopTokensForProject(
   }
 }
 
-export function toDisplayableTokens(
+function toDisplayableTokens(
   projectId: ProjectId,
   {
     assetId,
