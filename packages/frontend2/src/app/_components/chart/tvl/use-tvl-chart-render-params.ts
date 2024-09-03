@@ -43,11 +43,11 @@ export function useTvlChartRenderParams({ milestones, unit, data }: Params) {
 
   const firstValue = useMemo(() => columns[0]?.values[0]?.value, [columns])
   const lastValue = useMemo(
-    () => columns[columns.length - 1]?.values[0]!.value ?? undefined,
+    () => columns[columns.length - 1]?.values[0]!.value ?? 0,
     [columns],
   )
   const change = useMemo(
-    () => (lastValue && firstValue ? lastValue / firstValue - 1 : undefined),
+    () => (lastValue && firstValue ? lastValue / firstValue - 1 : 0),
     [firstValue, lastValue],
   )
 
