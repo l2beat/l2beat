@@ -69,7 +69,7 @@ export const WASMVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
   {
     name: 'Stylus smart contracts are supported',
     description:
-      "Arbitrum One supports smart contracts written in other programming languages (Rust, C++) that compile to WASM. Such smart contracts are executed by nodes using [a fork of wasmer](https://github.com/OffchainLabs/wasmer) inside the Nitro node, and can be proven inside Nitro's WASM VM like solidity contracts.",
+      "Arbitrum One supports smart contracts written in Solidity and other programming languages (Rust, C++) that compile to WASM. Such smart contracts are executed by nodes using [a fork of wasmer](https://github.com/OffchainLabs/wasmer) inside the Nitro node, and can be proven with the onchain WASM VM.",
     risks: [],
     references: [
       {
