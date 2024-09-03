@@ -424,7 +424,7 @@ export const cronoszkevm: Layer2 = {
   permissions: [
     ...discovery.getMultisigPermission(
       'Matter Labs Multisig',
-      'This MultiSig is the current central Admin for upgradeability and configuration of all shared ZK stack contracts and each Hyperchain under it and can potentially steal all funds.',
+      'This MultiSig is the current central Governor for upgradeability and configuration of all shared ZK stack contracts and each Hyperchain under it and can potentially steal all funds.',
     ),
     {
       name: 'CronosZkEVMAdmin',
