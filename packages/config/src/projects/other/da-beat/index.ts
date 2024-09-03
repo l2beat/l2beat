@@ -1,8 +1,8 @@
 import { celestia } from './blockchain/celestia/celestia'
 import { ethereum } from './blockchain/ethereum/ethereum'
 import { near } from './blockchain/near/near'
-import { apexLayer } from './dac/apex'
-import { arbitrumnovaLayer } from './dac/arbitrumnova'
+import { apexDac } from './dac/apex'
+import { arbitrumNovaDac } from './dac/arbitrumnova'
 import { astarzkEVMLayer } from './dac/astarzkEVM'
 import { degenLayer } from './dac/degen'
 import { edgelessLayer } from './dac/edgeless'
@@ -34,8 +34,8 @@ export * from './types'
 export const daLayers: DaLayer[] = [
   rhinofiLayer,
   zkfairLayer,
-  arbitrumnovaLayer,
-  apexLayer,
+  arbitrumNovaDac,
+  apexDac,
   astarzkEVMLayer,
   immutableXLayer,
   celestia,

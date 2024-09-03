@@ -1,3 +1,4 @@
+import { merge } from 'lodash'
 import { Layer2 } from '../../../layer2s'
 import { Layer3 } from '../../../layer3s'
 import {
@@ -18,15 +19,21 @@ type TemplateSpecific = {
 }
 
 type Optionals = {
-  risks: Partial<DacDaLayer['risks'] & DacBridge['risks']>
+  /** Overwrite some of the risks, check defaults below */
+  risks?: Partial<DacDaLayer['risks'] & DacBridge['risks']>
+  /** Links for given DAC, defaults to Project's main links */
   links?: Partial<DaLinks>
-  layer: {
-    technology: DacDaLayer['technology']
-    description: DacDaLayer['display']['description']
+  /** Optional layer description and technology, defaults to generic ones*/
+  layer?: {
+    technology?: DacDaLayer['technology']
+    description?: DacDaLayer['display']['description']
   }
+  /**
+   * Optional layer description and technology, defaults to generic ones
+   */
   bridge: {
-    technology: DacBridge['technology']
-    description: DacBridge['display']['description']
+    technology?: DacBridge['technology']
+    description?: DacBridge['display']['description']
   } & Pick<
     DacBridge,
     | 'chain'
@@ -38,23 +45,34 @@ type Optionals = {
     | 'transactionDataType'
     | 'isUnderReview'
   >
+  /** Optional warning, defaults to undefined */
   warning?: DacBridge['display']['warning']
+  /** Optional red warning, defaults to undefined */
   redWarning?: DacBridge['display']['redWarning']
 }
 
 type TemplateVars = Optionals & TemplateSpecific
 
+/**
+ * Template function for DA-BEAT DACs.
+ * Coverts basic information into expected by DA-BEAT shape
+ * creating DA-LAYER and DA-BRIDGE without the need to manually
+ * duplicate code and files.
+ */
 export function DAC(template: TemplateVars): DacDaLayer {
   // Common
   const name = `${template.project.display.name} DAC`
   const usedIn = toUsedInProject([template.project])
+  const links = merge(template.project.display.links, template.links)
 
   // "Bridge" backfill for DAC
   const bridgeDescription =
     template.bridge?.description ??
     `${template.project.display.name} DAC on Ethereum`
 
-  const bridgeTechnology = `## Simple DA Bridge
+  const bridgeTechnology =
+    template.bridge.technology ??
+    `## Simple DA Bridge
     The DA bridge is a smart contract verifying a data availability claim from DAC Members via signature verification.
     The bridge requires a ${template.bridge.requiredMembers}/${template.bridge.totalMembers} threshold of signatures to be met before the data commitment is accepted.
   `
@@ -65,15 +83,7 @@ export function DAC(template: TemplateVars): DacDaLayer {
     description: bridgeDescription,
     warning: template.warning,
     redWarning: template.redWarning,
-    links: {
-      websites: [],
-      documentation: [],
-      repositories: [],
-      apps: [],
-      explorers: [],
-      socialMedia: [],
-      ...template.links,
-    },
+    links,
   }
 
   const dacBridge: DacBridge = {
@@ -85,10 +95,10 @@ export function DAC(template: TemplateVars): DacDaLayer {
     technology: bridgeTechnology,
     risks: {
       attestations:
-        template.risks.attestations ?? DaAttestationSecurityRisk.NotVerified,
-      exitWindow: template.risks.exitWindow ?? DaExitWindowRisk.Immutable,
+        template.risks?.attestations ?? DaAttestationSecurityRisk.NotVerified,
+      exitWindow: template.risks?.exitWindow ?? DaExitWindowRisk.Immutable,
       accessibility:
-        template.risks.accessibility ?? DaAccessibilityRisk.NotEnshrined,
+        template.risks?.accessibility ?? DaAccessibilityRisk.NotEnshrined,
     },
   }
 
@@ -109,15 +119,7 @@ export function DAC(template: TemplateVars): DacDaLayer {
     name,
     slug: `${template.project.display.slug}-dac-layer`,
     description: layerDescription,
-    links: {
-      websites: [],
-      documentation: [],
-      repositories: [],
-      apps: [],
-      explorers: [],
-      socialMedia: [],
-      ...template.links,
-    },
+    links,
   }
 
   const dacLayer: DacDaLayer = {
