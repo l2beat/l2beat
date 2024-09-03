@@ -195,4 +195,5 @@ export interface DABeatConfig {
   readonly celestiaApiUrl: string
   readonly celestiaCallsPerMinute: number
   readonly nearRpcUrl: string
+  readonly availWsUrl: string
 }
