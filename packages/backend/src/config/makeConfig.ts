@@ -200,6 +200,7 @@ export function makeConfig(
     implementationChangeReporterEnabled: flags.isEnabled(
       'implementationChangeReporter',
     ),
+    flatSourceModuleEnabled: flags.isEnabled('flatSourcesModule'),
     chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
 
     daBeat: flags.isEnabled('da-beat') && {
@@ -232,6 +233,10 @@ export function makeConfig(
       nearRpcUrl: env.string(
         ['NEAR_RPC_URL_FOR_DA_BEAT', 'NEAR_RPC_URL'],
         'https://rpc.mainnet.near.org/',
+      ),
+      availWsUrl: env.string(
+        ['AVAIL_WS_URL_FOR_DA_BEAT', 'AVAIL_WS_URL'],
+        'wss://avail-mainnet.public.blastapi.io/',
       ),
     },
 

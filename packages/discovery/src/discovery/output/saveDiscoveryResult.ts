@@ -3,15 +3,11 @@ import { assert, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { writeFile } from 'fs/promises'
 import { mkdirp } from 'mkdirp'
 import { rimraf } from 'rimraf'
-
-import { FileContent } from '../../flatten/ParsedFilesManager'
-import { flattenStartingFrom } from '../../flatten/flatten'
-import { formatSI, getThroughput, timed } from '../../utils/timing'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { Analysis } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
-import { PerContractSource } from '../source/SourceCodeService'
 import { removeSharedNesting } from '../source/removeSharedNesting'
+import { flattenDiscoveredSources } from './flattenDiscoveredSource'
 import { toDiscoveryOutput } from './toDiscoveryOutput'
 import { toPrettyJson } from './toPrettyJson'
 
@@ -123,142 +119,19 @@ async function saveFlatSources(
 
   logger.log(`Saving flattened sources`)
 
-  const nameCounts = new Map<string, number>()
-  for (const contract of results) {
-    if (contract.type === 'EOA') {
-      continue
+  const flatten = flattenDiscoveredSources(results, logger)
+  for (const entryPath of Object.keys(flatten)) {
+    const outputPath = posix.join(flatSourcesPath, entryPath)
+
+    if (posix.dirname(outputPath) !== flatSourcesPath) {
+      await mkdirp(posix.dirname(outputPath))
     }
 
-    const name = contract.name
-    const count = nameCounts.get(name) || 0
-    nameCounts.set(name, count + 1)
+    const content = flatten[entryPath]
+    assert(content !== undefined, 'Content should never be undefined')
+
+    await writeFile(outputPath, content)
   }
-
-  for (const analyzedContract of results) {
-    try {
-      if (analyzedContract.type === 'EOA') {
-        continue
-      }
-
-      let outName = analyzedContract.name
-      const count = nameCounts.get(outName) || 0
-      if (count > 1) {
-        outName = `${outName}-${analyzedContract.address}`
-      }
-
-      await writeFlattenedFiles(
-        flatSourcesPath,
-        outName,
-        analyzedContract.sourceBundles,
-        logger,
-      )
-    } catch (e) {
-      assert(analyzedContract.type !== 'EOA', 'This should never happen')
-      const contractName = analyzedContract.derivedName ?? analyzedContract.name
-
-      logger.log(`[FAIL]: ${contractName} - ${stringifyError(e)}`)
-    }
-  }
-}
-
-async function writeFlattenedFiles(
-  flatSourcesPath: string,
-  topLevelName: string,
-  bundles: PerContractSource[],
-  logger: DiscoveryLogger,
-) {
-  let containingDirectory = ''
-  if (bundles.length > 1) {
-    containingDirectory = topLevelName
-
-    const path = posix.join(flatSourcesPath, containingDirectory)
-    await mkdirp(path)
-  }
-
-  for (const [bundleIndex, bundle] of bundles.entries()) {
-    const input: FileContent[] = Object.entries(bundle.source.files)
-      .map(([fileName, content]) => ({
-        path: fileName,
-        content,
-      }))
-      .filter((e) => e.path.endsWith('.sol'))
-
-    if (input.length === 0) {
-      logger.log(`[SKIP]: ${topLevelName}-${bundle.name} no .sol files`)
-      continue
-    }
-
-    const result = timed(() => {
-      const output = flattenStartingFrom(
-        bundle.name,
-        input,
-        bundle.source.remappings,
-      )
-
-      return output
-    })
-
-    const throughput = formatThroughput(input, result.executionTime)
-
-    const flatContent = addSolidityVersionComment(
-      bundle.source.solidityVersion,
-      result.value,
-    )
-
-    const fileName = bundles.length > 1 ? bundle.name : topLevelName
-
-    const hasProxy = bundles.length > 1
-    const isProxy = hasProxy && bundleIndex === 0
-    const hasManyImplementations = bundles.length > 2
-
-    const implementationPostfix = hasManyImplementations
-      ? `.${bundleIndex}`
-      : ''
-    const proxyPostfix = isProxy ? '.p' : ''
-    const postfix = isProxy ? proxyPostfix : implementationPostfix
-
-    const path = posix.join(
-      flatSourcesPath,
-      containingDirectory,
-      `${fileName}${postfix}.sol`,
-    )
-    await writeFile(path, flatContent)
-
-    logger.log(`[ OK ]: ${topLevelName} @ ${throughput}`)
-  }
-}
-
-function addSolidityVersionComment(
-  solidityVersion: string,
-  flatSource: string,
-): string {
-  return `// Compiled with solc version: ${solidityVersion}\n\n${flatSource}`
-}
-
-function formatThroughput(
-  input: FileContent[],
-  executionTimeMilliseconds: number,
-): string {
-  const sourceLineCount = input.reduce(
-    (acc, { content }) => acc + content.split('\n').length,
-    0,
-  )
-  const throughput = formatSI(
-    getThroughput(sourceLineCount, executionTimeMilliseconds),
-    'lines/s',
-  )
-
-  return throughput
-}
-
-function stringifyError(e: unknown): string {
-  if (e instanceof Error) {
-    return e.message
-  } else if (typeof e === 'string') {
-    return e
-  }
-
-  return JSON.stringify(e)
 }
 
 export function getSourceOutputPath(

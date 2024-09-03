@@ -1,8 +1,8 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 20585049,
-  "configHash": "0x282688e34ebaed9fcd1520e58e5ef3f2b2ee61cb7905d88652e16be6273d0350",
+  "blockNumber": 20661845,
+  "configHash": "0x5943efe0a05ae0ecfd3ac11cd0516f29678b9935af12c82b1488fc8272b45d0d",
   "version": 14,
   "contracts": [
     {
@@ -58,7 +58,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 42,
+        "nonce": 43,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -84,7 +84,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0x44c3625c6413f7e33ad4af0aba05c26059815531f96f594d7c4e37419cc8e5c0",
+        "getRoot": "0x40595986030c7c0e5b5439b5597d9c28a463a606a12744d543b9eef0afad4e0a",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -144,14 +144,14 @@
           "extensions": []
         },
         "EMISSION_ROLE": "0x573321b8a13c75b2702bc4b0ad9afaae98bf6985285411964a564e68bf6da1c9",
-        "lastMint": 1724148419,
+        "lastMint": 1725255719,
         "mintPerSecondCap": "13370000000000000000",
         "name": "Polygon Ecosystem Token",
         "PERMIT2": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
         "PERMIT2_REVOKER_ROLE": "0xbd4c1461ef59750b24719a44d7e2a7948c57fd12c98e333541b7ea7b61f07cb7",
         "permit2Enabled": true,
         "symbol": "POL",
-        "totalSupply": "10239857811217650638902505068",
+        "totalSupply": "10248739753465028590240000886",
         "version": "1.1.0"
       },
       "derivedName": "PolygonEcosystemToken"
@@ -212,7 +212,10 @@
           },
           "CREATE_ROLLUP": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+            "members": [
+              "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
+              "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB"
+            ]
           },
           "STOP_EMERGENCY": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -243,7 +246,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x7d3495f1e016d9bcd0ee5f2fa46dfa5a140402ffa29b6887c8bbeb26b1c40709",
+        "getRollupExitRoot": "0xaaf1e78cc398b3655189b6f823e7871c47bd7b870b5f8ed4fcc985bdda3b1d85",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "isVerifyingBatches": [
@@ -258,7 +261,7 @@
           [true],
           [true]
         ],
-        "lastAggregationTimestamp": 1724340227,
+        "lastAggregationTimestamp": 1725267203,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "nondeterministicPendingState": [],
         "pendingStateTimeout": 432000,
@@ -345,8 +348,8 @@
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
           ]
         ],
-        "totalSequencedBatches": 302072,
-        "totalVerifiedBatches": 301626,
+        "totalSequencedBatches": 323371,
+        "totalVerifiedBatches": 322867,
         "trustedAggregatorTimeout": 432000,
         "verifyBatchTimeTarget": 1800
       },
@@ -383,11 +386,39 @@
         "$implementation": "0x2E38cD55163137483E30580Cb468C2dFf1d85077",
         "$upgradeCount": 2,
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 42307,
-        "getRoot": "0x273ff3893718b7fa68bd09bb6b70848bd25d0869fc9aded6e53c335959185128",
+        "depositCount": 43667,
+        "getRoot": "0x04cbce0ad7b33d6c1a50adec710d57a99b0d5d78bd2943ef2ca64d548c8d6622",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "derivedName": "PolygonZkEVMGlobalExitRootV2"
+    },
+    {
+      "name": "CreateRollupMultisig",
+      "address": "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB",
+      "template": "GnosisSafe",
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1722533147,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC",
+          "0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc",
+          "0x0B84d2e66192448B680BBd06813efF9e5923Ca77",
+          "0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6",
+          "0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496",
+          "0xC8aaFEF5C3689c29143023Fe53cB3e833e0439e9"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x771bc24f4d160e0eb868dd1295227792c9121e52ca89c5940d820985422c484e",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 1,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "Timelock",
@@ -615,16 +646,22 @@
   ],
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6" },
+    { "address": "0x0B84d2e66192448B680BBd06813efF9e5923Ca77" },
     { "address": "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE" },
     { "address": "0x21887c89368bf918346c62460e0c339113801C28" },
     { "address": "0x3ab9f4b964eE665F7CDf1d65f1cEEc6196B0D622" },
     { "address": "0x49c15936864690bCd6af0ecaca8E874adFF30E86" },
     { "address": "0x4c1665d6651ecEfa59B9B3041951608468b18891" },
     { "address": "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab" },
+    { "address": "0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496" },
     { "address": "0x9F7dfAb2222A473284205cdDF08a677726d786A0" },
     { "address": "0xA0B02B28920812324f1cC3255bd8840867d3f227" },
     { "address": "0xaF46a0ddf80DFFB49C87656625E65A37499B261D" },
     { "address": "0xBDc235cC9d6Baa641c5ae306bc83962475A5FEFf" },
+    { "address": "0xC8aaFEF5C3689c29143023Fe53cB3e833e0439e9" },
+    { "address": "0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc" },
+    { "address": "0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC" },
     { "address": "0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2" },
     { "address": "0xFe45baf0F18c207152A807c1b05926583CFE2e4b" }
   ],
@@ -956,6 +993,9 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB": [
+      "constructor(address _singleton)"
     ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",

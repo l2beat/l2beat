@@ -416,3 +416,13 @@ model Anomaly {
   @@id([timestamp, projectId, subtype])
   @@map("anomalies")
 }
+
+model FlatSources {
+  projectName String @db.VarChar(255)
+  chainId     Int
+  blockNumber Int
+  contentHash String @db.VarChar(255)
+  flat        Json
+
+  @@id([projectName, chainId])
+}

@@ -18,6 +18,8 @@ import { AbstractStakeAnalyzer } from './stake-analyzers/AbstractStakeAnalyzer'
 import { CelestiaStakeAnalyzer } from './stake-analyzers/CelestiaStakeAnalyzer'
 import { EthereumStakeAnalyzer } from './stake-analyzers/EthereumStakeAnalyzer'
 import { NearStakeAnalyzer } from './stake-analyzers/NearStakeAnalyzer'
+import { AvailClient } from './stake-analyzers/avail/AvailClient'
+import { AvailStakeAnalyzer } from './stake-analyzers/avail/AvailStakeAnalyzer'
 
 export class DaBeatStakeRefresher {
   private readonly refreshQueue: TaskQueue<void>
@@ -69,6 +71,15 @@ export class DaBeatStakeRefresher {
             return [
               type,
               new NearStakeAnalyzer(this.config.nearRpcUrl, httpClient),
+            ]
+          case 'Avail':
+            return [
+              type,
+              new AvailStakeAnalyzer(
+                this.peripherals.getClient(AvailClient, {
+                  url: this.config.availWsUrl,
+                }),
+              ),
             ]
           default:
             assertUnreachable(type)

@@ -28,7 +28,8 @@ export const CheckRpc = command({
     logLevel: option({
       type: LogLevelValue,
       long: 'log-level',
-      short: 'l',
+      short: 'v',
+      description: 'Log level to use, choose between NONE, INFO and DEBUG',
       defaultValue: () => 'INFO' as LogLevel,
       defaultValueIsSerializable: true,
     }),

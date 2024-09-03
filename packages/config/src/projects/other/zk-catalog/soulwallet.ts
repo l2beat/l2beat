@@ -8,6 +8,8 @@ export const soulwallet: ZkCatalogProject = {
     name: 'Soul Wallet',
   },
   proofVerification: {
+    shortDescription:
+      'Smart contract wallet supporting guardians and email recovery with ZK.',
     aggregation: false,
     verifiers: [
       {

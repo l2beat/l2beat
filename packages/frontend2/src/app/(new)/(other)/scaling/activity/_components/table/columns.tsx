@@ -69,6 +69,7 @@ export const scalingActivityColumns = [
         </div>
       )
     },
+    sortUndefined: 'last',
   }),
   columnHelper.accessor('dataSource', {
     header: 'Data source',

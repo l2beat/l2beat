@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xcfb42636cbc1fe3f8d87d1234f42014f5df2a21b
+
+# Diff at Mon, 02 Sep 2024 06:44:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8fcb30f6c613b5454aa9ecdec05a118442e9dc7b block: 20317887
+- current block number: 20661171
+
+## Description
+
+USDYieldManager contract is upgraded to change the immutable constant PSM to the [new price stability module 'LITE-PSM-USDC-A'](https://vote.makerdao.com/executive/template-executive-vote-lite-psm-usdc-a-phase-2-setup-august-22-2024) by MakerDAO.
+
+## Watched changes
+
+```diff
+    contract USDYieldManager (0xa230285d5683C74935aD14c446e137c8c8828438) {
+    +++ description: None
+      values.$implementation:
+-        "0xE1cB7358311eCc408e1EFC47ceDc6740A8F68013"
++        "0xeCDdf748A60E23609c07af6CA3856744B139B911"
+    }
+```
+
+## Source code changes
+
+```diff
+.../USDYieldManager/USDYieldManager.sol            | 25 ++++++++++++++--------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
+```
+
 Generated with discovered.json: 0x77eb9fea3bccc1e71fd3c0ab81a739c8ab32a583
 
 # Diff at Fri, 30 Aug 2024 07:51:32 GMT:
