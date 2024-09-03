@@ -60,7 +60,7 @@ export function TokenCombobox({ tokens, value, setValue, className }: Props) {
       <PopoverContent className="p-0" align="start">
         <Command filter={tokenFilter}>
           <CommandInput
-            placeholder="Search token..."
+            placeholder="Start typing to find more..."
             reset={value ? () => setValue(undefined) : undefined}
           />
           <CommandList>
@@ -120,6 +120,7 @@ function TokenGroup({
           value={token.assetId.toString()}
           keywords={[token.name, token.symbol]}
           onSelect={onSelect}
+          className="[&:nth-child(n+11)]:hidden"
         >
           <CheckIcon
             className={cn(

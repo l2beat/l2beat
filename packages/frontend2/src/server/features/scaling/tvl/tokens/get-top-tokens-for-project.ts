@@ -85,24 +85,25 @@ export async function getTopTokensForProject(
 
   mapped.sort((a, b) => b.usdValue - a.usdValue)
 
+  const displayable = mapped
+    .map((token) => toDisplayableTokens(backendProject.projectId, token))
+    .filter(notUndefined)
+
   const canonical = []
   const external = []
   const native = []
-  for (const token of mapped) {
+  for (const token of displayable) {
     const source = token.source
     switch (source) {
       case 'canonical': {
-        if (canonical.length >= 15) continue
         canonical.push(token)
         break
       }
       case 'external': {
-        if (external.length >= 15) continue
         external.push(token)
         break
       }
       case 'native': {
-        if (native.length >= 15) continue
         native.push(token)
         break
       }
@@ -110,15 +111,9 @@ export async function getTopTokensForProject(
   }
 
   return {
-    canonical: canonical
-      .map((token) => toDisplayableTokens(backendProject.projectId, token))
-      .filter(notUndefined),
-    external: external
-      .map((token) => toDisplayableTokens(backendProject.projectId, token))
-      .filter(notUndefined),
-    native: native
-      .map((token) => toDisplayableTokens(backendProject.projectId, token))
-      .filter(notUndefined),
+    canonical,
+    external,
+    native,
   }
 }
 
