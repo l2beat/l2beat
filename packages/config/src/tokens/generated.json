@@ -9439,28 +9439,6 @@
       }
     },
     {
-      "id": "zklinknova:btct-btct",
-      "name": "BTCT",
-      "coingeckoId": "bitcoin-trc20",
-      "address": "0xFb8dBdc644eb54dAe0D7A9757f1e6444a07F8067",
-      "symbol": "BTCT",
-      "decimals": 18,
-      "deploymentTimestamp": 1714820378,
-      "coingeckoListingTimestamp": 1626048000,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/16999/large/9486.png?1696516564",
-      "chainId": 810180,
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "TRON Foundation"
-          }
-        ]
-      }
-    },
-    {
       "id": "zklinknova:solvbtc.m-free-bridged-solvbtc",
       "name": "Free Bridged SolvBTC",
       "coingeckoId": "solv-btc",
