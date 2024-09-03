@@ -12,7 +12,6 @@ import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import {
-  DEFAULT_OTHER_CONSIDERATIONS,
   WASMVM_OTHER_CONSIDERATIONS,
   getNitroGovernance,
   orbitStackL2,
@@ -540,7 +539,6 @@ export const arbitrum: Layer2 = orbitStackL2({
   },
   nonTemplateTechnology: {
     otherConsiderations: [
-      ...DEFAULT_OTHER_CONSIDERATIONS,
       ...WASMVM_OTHER_CONSIDERATIONS,
       UPGRADE_MECHANISM.ARBITRUM_DAO(
         l1TimelockDelay,

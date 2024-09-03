@@ -4,7 +4,6 @@ import { MILESTONES, NUGGETS, RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import {
-  DEFAULT_OTHER_CONSIDERATIONS,
   WASMVM_OTHER_CONSIDERATIONS,
   getNitroGovernance,
   orbitStackL2,
@@ -340,7 +339,6 @@ export const nova: Layer2 = orbitStackL2({
   },
   nonTemplateTechnology: {
     otherConsiderations: [
-      ...DEFAULT_OTHER_CONSIDERATIONS,
       ...WASMVM_OTHER_CONSIDERATIONS,
       UPGRADE_MECHANISM.ARBITRUM_DAO(
         l1TimelockDelay,
