@@ -1,4 +1,4 @@
-import { ProjectId, formatSeconds } from '@l2beat/shared-pure'
+import { assert, ProjectId, formatSeconds } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
   EXITS,
@@ -395,6 +395,39 @@ export const cronoszkevm: Layer2 = {
   //   dataFormat:
   //     'Details on data format can be found [here](https://github.com/matter-labs/zksync-era/blob/main/docs/guides/advanced/pubdata.md).',
   // },
+  upgradesAndGovernance: (() => {
+    assert(
+      !isSCset,
+      'There is a Security Council set up for the ZK stack. Change the governance description to reflect that.',
+    )
+    const description = `
+    The Matter Labs multisig (${discovery.getMultisigStats(
+      'Matter Labs Multisig',
+    )}) is able to instantly upgrade all contracts and manage all parameters and roles. This includes upgrading the shared contracts, the \`CronosZkEvm diamond\` and other ZK stack diamonds and their facets and censoring transactions or stealing locked funds. Most permissions are inherited by it being the indirect *Owner* of the \`StateTransitionManager\` (\`STM\`) and Governor (owner) of the \`Governance\` contract. A security council is currently not used.
+    
+    The current deployment allows for a subset of the permissions currently held by the *Matter Labs Multisig* to be held by a *ChainAdmin* role.
+    This role can manage fees, apply predefined upgrades, censor bridge transactions, manage Validator addresses and revert batches. It cannot make arbitrary updates or access funds in the escrows. This *Admin* role is usually set to a \`ChainAdmin\` contract which is itself owned by the *Matter Labs Multisig* (Thus not affecting their full permissions).
+    
+    Other roles include:
+    
+    *Validator:* Proposes batches from L2 through the \`ValidatorTimelock\`, from where they can be proven and finally executed (by the *Validator* through the \`ExecutorFacet\` of the diamond) after a predefined delay (currently ${formatSeconds(
+      discovery.getContractValue('ValidatorTimelock', 'executionDelay'),
+    )}). This allows for freezing the L2 chain and reverting batches within the delay if any suspicious activity was detected, but also delays finality. The \`ValidatorTimelock\` has the single *Validator* role in the Zk stack diamond contracts and can be set by the *Matter Labs Multisig* through the \`STM\`. The actual *Validator* actors can be added and removed by the *ChainAdmin* in the \`ValidatorTimelock\` contract.
+    
+    *Verifier:* Verifies the zk proofs that were provided by a *Validator*. Can be changed by calling \`executeUpgrade()\` on the \`AdminFacet\` from the \`STM\`.
+    
+    A \`Governance\` smart contract is used as the intermediary for most of the critical permissions of the *Matter Labs Multisig*. It includes logic for planning upgrades with parameters like transparency and/or a delay. 
+    ${
+      discovery.getContractValue<number>('Governance', 'minDelay') === 0
+        ? 'Currently the delay is optional and not used by the multisig.'
+        : `Currently the minimum delay is ${formatSeconds(
+            discovery.getContractValue('Governance', 'minDelay'),
+          )}.`
+    }
+    The optional transparency may be used in the future to hide instant emergency upgrades by the *Security Council* or delay transparent (thus auditable) governance upgrades. The \`Governance\` smart contract has two roles, an *Owner* (*Governor* role in the picture, resolves to *Matter Labs Multisig*) role and a *SecurityCouncil* role.
+`
+    return description
+  })(),
   stateValidation: {
     description:
       'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
