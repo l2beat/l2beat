@@ -8,6 +8,7 @@ import {
   createPublicClient,
   decodeFunctionResult,
   encodeFunctionData,
+  formatEther,
   parseAbi,
 } from 'viem'
 
@@ -15,14 +16,17 @@ const CHAINS = [
   {
     name: 'Polygon zkEVM',
     rpcUrl: 'https://polygon-zkevm.drpc.org',
+    premintedEth: 200000000000000000000000000n,
   },
   {
     name: 'X Layer',
     rpcUrl: 'https://rpc.xlayer.tech',
+    premintedEth: 0n,
   },
   {
     name: 'Astar zkEVM',
     rpcUrl: 'https://rpc.startale.com/astar-zkevm',
+    premintedEth: 340282366920938463463374607431768211455n,
   },
 ] as const
 
@@ -61,6 +65,12 @@ async function main() {
     const chainClient = createPublicClient({
       transport: http(chain.rpcUrl),
     })
+
+    const etherSupply = await chainClient.getBalance({
+      address: bridge as Address,
+    })
+
+    console.log(`ETH: ${formatEther(chain.premintedEth - etherSupply)} ETH`)
 
     const supportsMulticall = await checkMulticallSupport(chainClient)
 
