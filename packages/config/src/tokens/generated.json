@@ -9128,6 +9128,29 @@
       }
     },
     {
+      "id": "xchain:usdc.e-bridged-usdc-(stargate)",
+      "name": "Bridged USDC (Stargate)",
+      "coingeckoId": "usd-coin",
+      "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
+      "symbol": "USDC.e",
+      "decimals": 6,
+      "deploymentTimestamp": 1718324677,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "chainId": 94524,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2 (Hydra mode)",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
       "id": "real:arcusd-arcusd",
       "name": "arcUSD",
       "coingeckoId": "arcana-2",
