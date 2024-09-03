@@ -1,3 +1,4 @@
+import { tokenList } from '@l2beat/config'
 import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { formatEther, formatUnits } from 'ethers/lib/utils'
 import {
@@ -9,7 +10,6 @@ import {
   parseAbi,
 } from 'viem'
 import { mainnet } from 'viem/chains'
-import { tokenList } from '../src'
 
 const CHAINS = [
   {

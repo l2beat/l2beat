@@ -1,3 +1,4 @@
+import { tokenList } from '@l2beat/config/src'
 import { ChainId, EthereumAddress, notUndefined } from '@l2beat/shared-pure'
 import { formatUnits } from 'ethers/lib/utils'
 import {
@@ -9,7 +10,6 @@ import {
   encodeFunctionData,
   parseAbi,
 } from 'viem'
-import { tokenList } from '../src'
 
 const CHAINS = [
   {
