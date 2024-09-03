@@ -88,7 +88,12 @@ const maxTimeVariation = discovery.getContractValue<number[]>(
 const selfSequencingDelay = maxTimeVariation[2]
 
 export const arbitrum: Layer2 = orbitStackL2({
-  badges: [Badge.Stack.Nitro, Badge.Other.Governance, Badge.Other.L3HostChain],
+  badges: [
+    Badge.VM.WasmVM,
+    Badge.Stack.Nitro,
+    Badge.Other.Governance,
+    Badge.Other.L3HostChain,
+  ],
   discovery,
   associatedTokens: ['ARB'],
   bridge: discovery.getContract('Bridge'),

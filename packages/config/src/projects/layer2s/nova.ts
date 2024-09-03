@@ -84,7 +84,7 @@ const selfSequencingDelay = maxTimeVariation[2]
 
 export const nova: Layer2 = orbitStackL2({
   badges: [
-    Badge.VM.EVM,
+    Badge.VM.WasmVM,
     Badge.DA.DAC,
     Badge.Stack.Nitro,
     Badge.Other.Governance,
