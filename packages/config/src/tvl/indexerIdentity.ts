@@ -1,7 +1,7 @@
 import { CoingeckoId, EthereumAddress } from '@l2beat/shared-pure'
 
 /**
- * This whole file is a pack of common utilities extract from backed that enables the frontend
+ * This whole file is a pack of common utilities extracted from backend - it enables the frontend
  * to query the data in status-aware fashion. Most notably TVL before aggregation.
  */
 
