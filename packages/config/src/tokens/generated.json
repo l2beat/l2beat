@@ -6544,6 +6544,7 @@
       "chainId": 1625,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
@@ -6551,8 +6552,7 @@
             "slug": "stargatev2"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     },
     {
       "id": "galxegravity:usdt-tether-usd",
@@ -6568,6 +6568,7 @@
       "chainId": 1625,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
@@ -6575,8 +6576,7 @@
             "slug": "stargatev2"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     },
     {
       "id": "galxegravity:weth-weth",
@@ -6592,6 +6592,7 @@
       "chainId": 1625,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
@@ -6599,8 +6600,7 @@
             "slug": "stargatev2"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     },
     {
       "id": "reya:usdc-usd-coin",
@@ -7257,14 +7257,14 @@
       "chainId": 34443,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
             "name": "XLink bridge"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     },
     {
       "id": "mode:alex-alex",
@@ -7280,14 +7280,14 @@
       "chainId": 34443,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
             "name": "XLink bridge"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     },
     {
       "id": "mode:rseth-kelpdao-restaked-eth",
@@ -7962,6 +7962,29 @@
       "chainId": 42161,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "id": "arbitrum:mgp-magpie-token",
+      "name": "Magpie Token",
+      "coingeckoId": "magpie",
+      "address": "0xa61F74247455A40b01b0559ff6274441FAfa22A3",
+      "symbol": "MGP",
+      "decimals": 18,
+      "deploymentTimestamp": 1677340301,
+      "coingeckoListingTimestamp": 1667433600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/27972/large/MagpieLogo.png?1696526991",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
     },
     {
       "id": "arbitrum:molten-molten",

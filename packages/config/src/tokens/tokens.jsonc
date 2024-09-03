@@ -2057,7 +2057,21 @@
           }
         ]
       }
-    }
+    },
+    {
+      "symbol": "MGP",
+      "address": "0xa61f74247455a40b01b0559ff6274441fafa22a3",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
   ],
   "nova": [
     {
