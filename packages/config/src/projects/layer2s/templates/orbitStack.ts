@@ -222,7 +222,7 @@ function defaultStateValidation(
         title: 'State root proposals',
         description: `Whitelisted validators propose state roots as children of a previous state root. A state root can have multiple conflicting children. This structure forms a graph, and therefore, in the contracts, state roots are referred to as nodes. Each proposal requires a stake, currently set to ${utils.formatEther(
           currentRequiredStake,
-        )}, that can be slashed if the proposal is proven incorrect via a fraud proof. Stakes can be moved from one node to one of its children, either by calling \`stakeOnExistingNode\` or \`stakeOnNewNode\`. New nodes cannot be created faster than the minimum assertion period by the same validator, currently set to ${formatSeconds(
+        )} ETH, that can be slashed if the proposal is proven incorrect via a fraud proof. Stakes can be moved from one node to one of its children, either by calling \`stakeOnExistingNode\` or \`stakeOnNewNode\`. New nodes cannot be created faster than the minimum assertion period by the same validator, currently set to ${formatSeconds(
           minimumAssertionPeriod,
         )}. The oldest unconfirmed node is confirmed if the challenge period has passed and there are no siblings, and rejected if the parent is not a confirmed node or if the challenge period has passed and no one is staked on it.`,
         risks: [
@@ -266,7 +266,7 @@ export function orbitStackCommon(
     templateVars.discovery.getContractValue<number>(
       'RollupProxy',
       'minimumAssertionPeriod',
-    )
+    ) * 12 // 12 seconds is the assumed block time
   const postsToExternalDA = sequencerVersion !== '0x00'
   if (postsToExternalDA) {
     assert(
