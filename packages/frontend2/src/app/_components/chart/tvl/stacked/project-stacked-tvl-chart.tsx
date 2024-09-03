@@ -23,12 +23,14 @@ interface Props {
   milestones: Milestone[]
   projectId: string
   tokens: ProjectTokens | undefined
+  isBridge: boolean
 }
 
 export function ProjectStackedTvlChart({
   milestones,
   projectId,
   tokens,
+  isBridge,
 }: Props) {
   const [token, setToken] = useState<ProjectToken>()
   const [timeRange, setTimeRange] = useState<TvlChartRange>('7d')
@@ -38,6 +40,7 @@ export function ProjectStackedTvlChart({
   if (tokens && token) {
     return (
       <ProjectTokenChart
+        isBridge={isBridge}
         tokens={tokens}
         setToken={setToken}
         token={token}
@@ -55,6 +58,7 @@ export function ProjectStackedTvlChart({
 
   return (
     <DefaultChart
+      isBridge={isBridge}
       projectId={projectId}
       milestones={milestones}
       timeRange={timeRange}
@@ -72,6 +76,7 @@ export function ProjectStackedTvlChart({
 
 interface DefaultChartProps {
   projectId: string
+  isBridge: boolean
   milestones: Milestone[]
   timeRange: TvlChartRange
   setTimeRange: (timeRange: TvlChartRange) => void
@@ -86,6 +91,7 @@ interface DefaultChartProps {
 
 function DefaultChart({
   projectId,
+  isBridge,
   milestones,
   timeRange,
   setTimeRange,
@@ -138,7 +144,12 @@ function DefaultChart({
           setScale={setScale}
         >
           {tokens && (
-            <TokenCombobox tokens={tokens} value={token} setValue={setToken} />
+            <TokenCombobox
+              tokens={tokens}
+              value={token}
+              setValue={setToken}
+              isBridge={isBridge}
+            />
           )}
         </TvlChartUnitAndScaleControls>
       </section>

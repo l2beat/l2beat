@@ -27,9 +27,16 @@ interface Props {
   value: ProjectToken | undefined
   setValue: (token: ProjectToken | undefined) => void
   className?: string
+  isBridge: boolean
 }
 
-export function TokenCombobox({ tokens, value, setValue, className }: Props) {
+export function TokenCombobox({
+  tokens,
+  value,
+  setValue,
+  className,
+  isBridge,
+}: Props) {
   const [open, setOpen] = React.useState(false)
 
   const allTokens = [...tokens.canonical, ...tokens.external, ...tokens.native]
@@ -77,19 +84,21 @@ export function TokenCombobox({ tokens, value, setValue, className }: Props) {
               </a>
             </CommandEmpty>
             <TokenGroup
-              heading="Canonical"
+              heading={
+                isBridge ? 'Bridged Tokens' : 'Canonically Bridged Tokens'
+              }
               value={value}
               tokens={tokens.canonical}
               onSelect={onSelect}
             />
             <TokenGroup
-              heading="External"
+              heading="Externally Bridged Tokens"
               value={value}
               tokens={tokens.external}
               onSelect={onSelect}
             />
             <TokenGroup
-              heading="Native"
+              heading="Natively Minted Tokens"
               value={value}
               tokens={tokens.native}
               onSelect={onSelect}

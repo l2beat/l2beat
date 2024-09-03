@@ -18,6 +18,7 @@ import { useTokenChartRenderParams } from './use-token-chart-render-params'
 
 interface Props {
   projectId: string
+  isBridge: boolean
   milestones: Milestone[]
   timeRange: TvlChartRange
   setTimeRange: (timeRange: TvlChartRange) => void
@@ -32,6 +33,7 @@ interface Props {
 
 export function ProjectTokenChart({
   projectId,
+  isBridge,
   milestones,
   timeRange,
   setTimeRange,
@@ -58,6 +60,7 @@ export function ProjectTokenChart({
       token,
       unit,
       data,
+      isBridge,
     })
 
   return (
@@ -69,7 +72,12 @@ export function ProjectTokenChart({
       useLogScale={scale === 'log'}
       isLoading={isLoading}
       renderHoverContents={(data) => (
-        <TokenChartHover {...data} token={token} unit={unit} />
+        <TokenChartHover
+          {...data}
+          token={token}
+          unit={unit}
+          isBridge={isBridge}
+        />
       )}
     >
       <section className="flex flex-col gap-4">
@@ -81,6 +89,7 @@ export function ProjectTokenChart({
 
         <Chart />
         <TokenChartUnitAndScaleControls
+          isBridge={isBridge}
           unit={unit}
           scale={scale}
           setUnit={setUnit}
@@ -95,6 +104,7 @@ export function ProjectTokenChart({
 }
 
 interface ControlsProps {
+  isBridge: boolean
   unit: ChartUnit
   scale: ChartScale
   setUnit: (value: ChartUnit) => void
@@ -105,6 +115,7 @@ interface ControlsProps {
 }
 
 export function TokenChartUnitAndScaleControls({
+  isBridge,
   unit,
   scale,
   setUnit,
@@ -117,9 +128,27 @@ export function TokenChartUnitAndScaleControls({
 
   if (!isClient) {
     return (
-      <div className="flex items-center justify-between gap-2">
-        <Skeleton className="h-8 w-[104.82px]" />
-        <Skeleton className="h-8 w-[98.63px]" />
+      <div className="space-y-2">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-8 w-[104.82px]" />
+            <TokenCombobox
+              tokens={tokens}
+              value={token}
+              setValue={setToken}
+              className="max-lg:hidden"
+              isBridge={isBridge}
+            />
+          </div>
+          <Skeleton className="h-8 w-[98.63px]" />
+        </div>
+        <TokenCombobox
+          tokens={tokens}
+          value={token}
+          setValue={setToken}
+          isBridge={isBridge}
+          className="lg:hidden"
+        />
       </div>
     )
   }
@@ -136,6 +165,7 @@ export function TokenChartUnitAndScaleControls({
             value={token}
             setValue={setToken}
             className="max-lg:hidden"
+            isBridge={isBridge}
           />
         </div>
         <RadioGroup value={scale} onValueChange={setScale}>
@@ -148,6 +178,7 @@ export function TokenChartUnitAndScaleControls({
         value={token}
         setValue={setToken}
         className="lg:hidden"
+        isBridge={isBridge}
       />
     </div>
   )

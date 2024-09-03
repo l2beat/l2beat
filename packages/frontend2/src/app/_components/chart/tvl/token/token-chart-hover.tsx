@@ -1,5 +1,6 @@
 import { Square } from '~/app/_components/square'
 import { type ProjectToken } from '~/server/features/scaling/tvl/tokens/get-top-tokens-for-project'
+import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrencyExactValue } from '~/utils/format'
 import { type ChartUnit } from '../../types'
@@ -10,6 +11,7 @@ interface Props {
   usdValue: number
   token: ProjectToken
   unit: ChartUnit
+  isBridge: boolean
 }
 
 export function TokenChartHover({
@@ -18,11 +20,12 @@ export function TokenChartHover({
   usdValue,
   token,
   unit,
+  isBridge,
 }: Props) {
   const tokenHtml = (
     <div className="flex w-full items-center justify-between gap-2">
       <div className="flex items-center gap-1">
-        <Square variant={token.source} size="small" />
+        {!isBridge ? <Square variant={token.source} size="small" /> : null}
         <span className="text-sm text-gray-700 dark:text-gray-50">
           {token.symbol}
         </span>
@@ -32,7 +35,14 @@ export function TokenChartHover({
   )
   const usdHtml = (
     <div className="flex w-full items-center justify-between gap-2">
-      <div className="ml-4 text-sm text-gray-700 dark:text-gray-50">USD</div>
+      <div
+        className={cn(
+          'text-sm text-gray-700 dark:text-gray-50',
+          !isBridge && 'ml-4',
+        )}
+      >
+        USD
+      </div>
       {formatCurrencyExactValue(usdValue, 'USD')}
     </div>
   )

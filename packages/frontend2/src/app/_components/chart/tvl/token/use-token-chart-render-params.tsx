@@ -13,7 +13,8 @@ interface Params {
   milestones: Milestone[]
   token: ProjectToken
   unit: ChartUnit
-  data?: TokenDataPoint[]
+  data: TokenDataPoint[] | undefined
+  isBridge?: boolean
 }
 
 export function useTokenChartRenderParams({
@@ -21,6 +22,7 @@ export function useTokenChartRenderParams({
   token,
   unit,
   data,
+  isBridge,
 }: Params) {
   const mappedMilestones = useMemo(
     () => mapMilestones(milestones),
@@ -62,11 +64,17 @@ export function useTokenChartRenderParams({
   const color = sourceToColor(token.source)
 
   const valuesStyle: SeriesStyle[] = [
-    {
-      line: color,
-      fill: color,
-      point: 'circle',
-    },
+    isBridge
+      ? {
+          line: 'signature gradient',
+          fill: 'signature gradient',
+          point: 'circle',
+        }
+      : {
+          line: color,
+          fill: color,
+          point: 'circle',
+        },
   ]
 
   return {

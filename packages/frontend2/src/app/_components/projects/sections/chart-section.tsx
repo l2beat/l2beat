@@ -21,6 +21,7 @@ type ChartSectionId = Extract<
 */
 export interface ChartSectionProps extends ProjectSectionProps {
   id: ChartSectionId
+  isBridge?: boolean
   stacked?: boolean
   tokens?: ProjectTokens
   projectId: string
@@ -52,6 +53,7 @@ function ProjectChart(props: ChartSectionProps) {
             milestones={props.milestones}
             projectId={props.projectId}
             tokens={props.tokens}
+            isBridge={!!props.isBridge}
           />
         )
       }
@@ -60,6 +62,7 @@ function ProjectChart(props: ChartSectionProps) {
           milestones={props.milestones}
           projectId={props.projectId}
           tokens={props.tokens}
+          isBridge={!!props.isBridge}
         />
       )
     case 'onchain-costs':

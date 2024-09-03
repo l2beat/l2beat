@@ -21,9 +21,15 @@ interface Props {
   projectId: string
   milestones: Milestone[]
   tokens: ProjectTokens | undefined
+  isBridge: boolean
 }
 
-export function ProjectTvlChart({ projectId, milestones, tokens }: Props) {
+export function ProjectTvlChart({
+  projectId,
+  milestones,
+  tokens,
+  isBridge,
+}: Props) {
   const [token, setToken] = useState<ProjectToken>()
   const [scale, setScale] = useState<ChartScale>('lin')
   const [unit, setUnit] = useState<ChartUnit>('usd')
@@ -33,6 +39,7 @@ export function ProjectTvlChart({ projectId, milestones, tokens }: Props) {
   if (tokens && token) {
     return (
       <ProjectTokenChart
+        isBridge={isBridge}
         tokens={tokens}
         setToken={setToken}
         token={token}
@@ -50,6 +57,7 @@ export function ProjectTvlChart({ projectId, milestones, tokens }: Props) {
 
   return (
     <DefaultChart
+      isBridge={isBridge}
       projectId={projectId}
       milestones={milestones}
       timeRange={timeRange}
@@ -67,6 +75,7 @@ export function ProjectTvlChart({ projectId, milestones, tokens }: Props) {
 
 interface DefaultChartProps {
   projectId: string
+  isBridge: boolean
   milestones: Milestone[]
   timeRange: TvlChartRange
   setTimeRange: (timeRange: TvlChartRange) => void
@@ -82,6 +91,7 @@ interface DefaultChartProps {
 function DefaultChart({
   projectId,
   milestones,
+  isBridge,
   timeRange,
   setTimeRange,
   scale,
@@ -123,7 +133,12 @@ function DefaultChart({
           setScale={setScale}
         >
           {tokens && (
-            <TokenCombobox tokens={tokens} setValue={setToken} value={token} />
+            <TokenCombobox
+              tokens={tokens}
+              setValue={setToken}
+              value={token}
+              isBridge={isBridge}
+            />
           )}
         </TvlChartUnitAndScaleControls>
       </section>
