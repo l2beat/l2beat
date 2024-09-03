@@ -13,9 +13,9 @@ import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import {
   DEFAULT_OTHER_CONSIDERATIONS,
+  WASMVM_OTHER_CONSIDERATIONS,
   getNitroGovernance,
   orbitStackL2,
-  WASMVM_OTHER_CONSIDERATIONS,
 } from './templates/orbitStack'
 import { Layer2 } from './types'
 
@@ -554,7 +554,8 @@ export const arbitrum: Layer2 = orbitStackL2({
       name: 'ArbOS 31 Bianca upgrade',
       link: 'https://www.tally.xyz/gov/arbitrum/proposal/108288822474129076868455956066667369439381709547570289793612729242368710728616',
       date: '2024-09-03T00:00:00Z',
-      description: 'Arbitrum upgrades to ArbOS 31 activating Stylus (new languages for smart contracts).',
+      description:
+        'Arbitrum upgrades to ArbOS 31 activating Stylus (new languages for smart contracts).',
       type: 'general',
     },
     {
