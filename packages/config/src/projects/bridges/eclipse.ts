@@ -7,7 +7,6 @@ const discovery = new ProjectDiscovery('eclipse')
 
 export const eclipse: Bridge = {
   type: 'bridge',
-  isUnderReview: true,
   id: ProjectId('eclipse'),
   display: {
     name: 'Eclipse',
