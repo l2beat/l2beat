@@ -2,6 +2,7 @@ import { assert } from '@l2beat/shared-pure'
 import {
   type Column,
   type Header,
+  type Row,
   type Table as TanstackTable,
   flexRender,
 } from '@tanstack/react-table'
@@ -33,6 +34,15 @@ interface BasicEntry {
 interface Props<T extends BasicEntry> {
   table: TanstackTable<T>
   className?: string
+  /**
+   * Custom sub component render function
+   */
+  renderSubComponent?: (props: { row: Row<T> }) => React.ReactElement
+  /**
+   * If the sub component is a raw component (e.g. renders a tr element), false by default
+   */
+  rawSubComponent?: boolean
+  rowColoringMode?: 'default' | 'ethereum-only'
 }
 
 function getCommonPinningStyles<T>(
@@ -63,6 +73,9 @@ function getCommonPinningStyles<T>(
 export function BasicTable<T extends BasicEntry>({
   table,
   className,
+  renderSubComponent,
+  rawSubComponent,
+  rowColoringMode = 'default',
 }: Props<T>) {
   if (table.getRowCount() === 0) {
     return <TableEmptyState />
@@ -157,39 +170,61 @@ export function BasicTable<T extends BasicEntry>({
       </TableHeader>
       <TableBody>
         {table.getRowModel().rows.map((row) => {
-          const rowType = getRowType(row.original)
+          const rowType = getRowType(row.original, rowColoringMode)
           return (
-            <TableRow key={row.id} className={getRowTypeClassNames(rowType)}>
-              {row.getVisibleCells().map((cell) => {
-                const { meta } = cell.column.columnDef
-                const groupParams = getGroupParams(cell.column)
-                const href = getHref(row.original.href, meta?.hash)
-                return (
-                  <React.Fragment key={`${row.id}-${cell.id}`}>
-                    <TableCell
-                      href={href}
-                      align={meta?.align}
-                      className={cn(
-                        cell.column.getIsPinned() &&
-                          getRowTypeClassNamesWithoutOpacity(rowType),
-                        groupParams?.isFirstInGroup && 'pl-6',
-                        groupParams?.isLastInGroup && 'pr-6',
-                        meta?.cellClassName,
+            <>
+              <TableRow
+                key={row.id}
+                className={cn(
+                  getRowTypeClassNames(rowType),
+                  row.getIsExpanded() &&
+                    renderSubComponent?.({ row }) &&
+                    '!border-none',
+                )}
+              >
+                {row.getVisibleCells().map((cell) => {
+                  const { meta } = cell.column.columnDef
+                  const groupParams = getGroupParams(cell.column)
+                  const href = getHref(row.original.href, meta?.hash)
+                  return (
+                    <React.Fragment key={`${row.id}-${cell.id}`}>
+                      <TableCell
+                        href={href}
+                        align={meta?.align}
+                        className={cn(
+                          cell.column.getIsPinned() &&
+                            getRowTypeClassNamesWithoutOpacity(rowType),
+                          groupParams?.isFirstInGroup && 'pl-6',
+                          groupParams?.isLastInGroup && 'pr-6',
+                          meta?.cellClassName,
+                        )}
+                        style={getCommonPinningStyles(cell.column)}
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </TableCell>
+                      {groupParams?.isLastInGroup && (
+                        <ColumnFiller as="td" href={href} />
                       )}
-                      style={getCommonPinningStyles(cell.column)}
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </TableCell>
-                    {groupParams?.isLastInGroup && (
-                      <ColumnFiller as="td" href={href} />
-                    )}
-                  </React.Fragment>
-                )
-              })}
-            </TableRow>
+                    </React.Fragment>
+                  )
+                })}
+              </TableRow>
+              {row.getIsExpanded() &&
+                renderSubComponent &&
+                (rawSubComponent ? (
+                  renderSubComponent({ row })
+                ) : (
+                  <tr className="border-b">
+                    {/* 2nd row is a custom 1 cell row */}
+                    <td colSpan={row.getVisibleCells().length}>
+                      {renderSubComponent({ row })}
+                    </td>
+                  </tr>
+                ))}
+            </>
           )
         })}
         {groupedHeader && <RowFiller headers={groupedHeader.headers} />}
@@ -284,10 +319,17 @@ function getHref(href: string | undefined, hash: string | undefined) {
 }
 
 type RowType = ReturnType<typeof getRowType>
-function getRowType(entry: BasicEntry) {
+function getRowType(
+  entry: BasicEntry,
+  rowColoringMode: Props<BasicEntry>['rowColoringMode'],
+) {
   if (entry.slug === 'ethereum') {
     return 'ethereum'
   }
+  if (rowColoringMode === 'ethereum-only') {
+    return undefined
+  }
+
   if (entry.isVerified === false || entry.redWarning) {
     return 'unverified'
   }
