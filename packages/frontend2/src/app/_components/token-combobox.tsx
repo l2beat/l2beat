@@ -22,6 +22,8 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '../_components/popover'
 import { linkVariants } from './link/custom-link'
 
+const MAX_PER_SOURCE = 10
+
 interface Props {
   tokens: ProjectTokens
   value: ProjectToken | undefined
@@ -110,26 +112,24 @@ export function TokenCombobox({
   )
 }
 
-function TokenGroup({
-  heading,
-  tokens,
-  value,
-  onSelect,
-}: {
+interface TokenGroupProps {
   heading: string
   value: ProjectToken | undefined
   tokens: ProjectToken[]
   onSelect: (value: string) => void
-}) {
+}
+
+function TokenGroup({ heading, tokens, value, onSelect }: TokenGroupProps) {
   const search = useCommandState((state) => state.search)
   const filteredTokens = tokens.filter((token) => tokenFilter(search, token))
   if (filteredTokens.length === 0) {
     return null
   }
+  const moreCount = filteredTokens.length - MAX_PER_SOURCE
   return (
     <>
       <CommandGroup heading={heading}>
-        {filteredTokens.slice(0, 10).map((token) => (
+        {filteredTokens.slice(0, MAX_PER_SOURCE).map((token) => (
           <CommandItem
             key={token.assetId.toString()}
             value={token.assetId.toString()}
@@ -144,16 +144,23 @@ function TokenGroup({
             <TokenItem token={token} />
           </CommandItem>
         ))}
+        {moreCount > 0 && (
+          <p className="px-2 py-1.5 text-xs font-medium">
+            and {moreCount} more...
+          </p>
+        )}
       </CommandGroup>
       <CommandSeparator className="[&:last-of-type]:hidden" />
     </>
   )
 }
 
-function TokenItem({
-  token,
-  truncate,
-}: { token: ProjectToken; truncate?: boolean }) {
+interface TokenItemProps {
+  token: ProjectToken
+  truncate?: boolean
+}
+
+function TokenItem({ token, truncate }: TokenItemProps) {
   return (
     <div className="flex items-center gap-1.5">
       <Image
