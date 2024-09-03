@@ -1,8 +1,5 @@
-import {
-  CoingeckoId,
-  CoingeckoPriceConfigEntry,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { INDEXER_NAMES } from '@l2beat/config'
+import { CoingeckoPriceConfigEntry, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import {
@@ -11,12 +8,11 @@ import {
 } from '../../../tools/uif/multi/types'
 import { PriceIndexerDeps } from './types'
 
-const NAME = 'price_indexer'
 export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry> {
   constructor(private readonly $: PriceIndexerDeps) {
     super({
       ...$,
-      name: NAME,
+      name: INDEXER_NAMES.PRICE,
       tag: $.coingeckoId.toString(),
       updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
     })
@@ -77,9 +73,5 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
         })
       }
     }
-  }
-
-  static getId(coingeckoId: CoingeckoId) {
-    return Indexer.createId(NAME, coingeckoId.toString())
   }
 }
