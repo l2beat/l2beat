@@ -12,6 +12,13 @@ type ChartSectionId = Extract<
   'onchain-costs' | 'tvl' | 'activity'
 >
 
+/* 
+  Note (torztomasz):
+  I know this props with optional tokens and stacked is kinda bad as it is only used for TVL chart.
+  Although I couldn't get type union working with get-l2-project-details.tsx or get-l3-project-details.tsx.
+  You can give it a shot if you want.
+  Shots counter: 0
+*/
 export interface ChartSectionProps extends ProjectSectionProps {
   id: ChartSectionId
   stacked?: boolean

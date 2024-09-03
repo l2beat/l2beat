@@ -87,10 +87,9 @@ export async function getL2ProjectDetails({
     project.milestones?.sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
     ) ?? []
+  const tokens = await getTopTokensForProject(project)
 
   const items: ProjectDetailsSection[] = []
-
-  const topTokens = await getTopTokensForProject(project)
 
   if (!project.isUpcoming && !isEmpty(tvlChartData)) {
     items.push({
@@ -98,10 +97,10 @@ export async function getL2ProjectDetails({
       props: {
         id: 'tvl',
         stacked: true,
-        tokens: topTokens,
         title: 'Value Locked',
         projectId: project.id,
         milestones: sortedMilestones,
+        tokens,
       },
     })
   }
