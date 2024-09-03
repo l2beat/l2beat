@@ -1,10 +1,11 @@
 import { assert } from '@l2beat/shared-pure'
 import type * as AST from '@mradomski/fast-solidity-parser'
+import { parse } from '@mradomski/fast-solidity-parser'
 import { TopLevelDeclaration } from './ParsedFilesManager'
 
 export function generateInterfaceSourceFromContract(
   contract: TopLevelDeclaration,
-): string {
+): AST.ASTNode {
   assert(
     contract.type === 'contract' || contract.type === 'abstract',
     'Only contracts are supported',
@@ -100,7 +101,8 @@ export function generateInterfaceSourceFromContract(
 
   result += '}'
 
-  return result
+  const children = parse(result).children
+  return { type: 'SourceUnit', children }
 }
 
 function formatEnumDefinition(
