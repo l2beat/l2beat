@@ -93,6 +93,7 @@ export const zksyncera: Layer2 = {
     Badge.DA.EthereumBlobs,
     Badge.Stack.ZKStack,
     Badge.Other.L3HostChain,
+    Badge.Infra.ElasticChain,
   ],
   display: {
     name: 'ZKsync Era',
@@ -539,21 +540,21 @@ export const zksyncera: Layer2 = {
   upgradesAndGovernance: (() => {
     assert(
       !isSCset,
-      'There is a Security Council set up for ZKsync Era. Change the governance description to reflect that.',
+      'There is a Security Council set up for the ZK stack. Change the governance description to reflect that.',
     )
     const description = `
     The Matter Labs multisig (${discovery.getMultisigStats(
       'Matter Labs Multisig',
-    )}) is able to instantly upgrade all contracts and manage all parameters and roles. This includes upgrading the shared contracts, the \`ZKsync Era diamond\` and its facets and censoring transactions or stealing locked funds. Most permissions are inherited by it being the indirect *Owner* of the \`StateTransitionManager\` (\`STM\`). A security council is currently not used.
+    )}) is able to instantly upgrade all contracts and manage all parameters and roles. This includes upgrading the shared contracts, the \`ZKsync Era diamond\` and other ZK stack diamonds and their facets and censoring transactions or stealing locked funds. Most permissions are inherited by it being the indirect *Owner* of the \`StateTransitionManager\` (\`STM\`) and Governor (owner) of the \`Governance\` contract. A security council is currently not used.
     
-    The current deployment allows for a subset of the permissions currently held by the *Matter Labs Multisig* to be held by an *Admin* role.
-    This role can manage fees, apply predefined upgrades, censor bridge transactions and revert batches. It cannot make arbitrary updates or access funds in the escrows. This *Admin* role is set to a \`ChainAdmin\` contract which is itself owned by the *Matter Labs Multisig* (Thus not affecting their full permissions).
+    The current deployment allows for a subset of the permissions currently held by the *Matter Labs Multisig* to be held by a *ChainAdmin* role.
+    This role can manage fees, apply predefined upgrades, censor bridge transactions, manage Validator addresses and revert batches. It cannot make arbitrary updates or access funds in the escrows. This *Admin* role is usually set to a \`ChainAdmin\` contract which is itself owned by the *Matter Labs Multisig* (Thus not affecting their full permissions).
     
     Other roles include:
     
-    *Validator:* Proposes batches from L2 through the \`ValidatorTimelock\`, from where they can be proven and finally executed (through the \`ExecutorFacet\` of the diamond) after a predefined delay (currently ${formatSeconds(
+    *Validator:* Proposes batches from L2 through the \`ValidatorTimelock\`, from where they can be proven and finally executed (by the *Validator* through the \`ExecutorFacet\` of the diamond) after a predefined delay (currently ${formatSeconds(
       discovery.getContractValue('ValidatorTimelock', 'executionDelay'),
-    )}). This allows for freezing the L2 chain and reverting batches within the delay if any suspicious activity was detected, but also delays finality. The \`ValidatorTimelock\` has the single *Validator* role in the ZKsync Era diamond and can be set by the *Matter Labs Multisig* through the \`STM\`. The actual *Validator* actors can be added and removed by the *Admin* in the \`ValidatorTimelock\` contract.
+    )}). This allows for freezing the L2 chain and reverting batches within the delay if any suspicious activity was detected, but also delays finality. The \`ValidatorTimelock\` has the single *Validator* role in the Zk stack diamond contracts and can be set by the *Matter Labs Multisig* through the \`STM\`. The actual *Validator* actors can be added and removed by the *ChainAdmin* in the \`ValidatorTimelock\` contract.
     
     *Verifier:* Verifies the zk proofs that were provided by a *Validator*. Can be changed by calling \`executeUpgrade()\` on the \`AdminFacet\` from the \`STM\`.
     
@@ -565,7 +566,7 @@ export const zksyncera: Layer2 = {
             discovery.getContractValue('Governance', 'minDelay'),
           )}.`
     }
-    The optional transparency may be used in the future to hide instant emergency upgrades by the *Security Council* or delay transparent (thus auditable) governance upgrades. The \`Governance\` smart contract has two roles, an *Owner* (*Matter Labs Multisig*) role and a *SecurityCouncil* role.
+    The optional transparency may be used in the future to hide instant emergency upgrades by the *Security Council* or delay transparent (thus auditable) governance upgrades. The \`Governance\` smart contract has two roles, an *Owner* (*Governor* role in the picture, resolves to *Matter Labs Multisig*) role and a *SecurityCouncil* role.
 `
     return description
   })(),
