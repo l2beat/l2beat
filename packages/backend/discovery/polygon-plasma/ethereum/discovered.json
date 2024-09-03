@@ -1,8 +1,8 @@
 {
   "name": "polygon-plasma",
   "chain": "ethereum",
-  "blockNumber": 20641293,
-  "configHash": "0xb5e2cf1823aed9991691794fa7ebc2aec51dc9338234024703e35f0ce879ee8a",
+  "blockNumber": 20669996,
+  "configHash": "0xad8f8c04f2157f000fd347f4f7979d7308b48af0851225292891ff70928f16de",
   "version": 14,
   "contracts": [
     {
@@ -20,7 +20,7 @@
       "sinceTimestamp": 1590850580,
       "values": {
         "$immutable": true,
-        "counter": 2954091,
+        "counter": 2955973,
         "isOwner": false,
         "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "REGISTRATIONS": [
@@ -51,7 +51,7 @@
         "implementation": "0x31f9c8c786aD7cc70ad10cF136B36681d340b792",
         "isOwner": false,
         "ON_FINALIZE_GAS_LIMIT": 300000,
-        "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
+        "owner": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "proxyType": 2
       },
       "derivedName": "WithdrawManager"
@@ -97,7 +97,7 @@
         "isOwner": false,
         "locked": false,
         "maxErc20Deposit": "1000000000000000000000000000000",
-        "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
+        "owner": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "proxyType": 2,
         "registry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
         "rootChain": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
@@ -112,7 +112,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
+          "target": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
           "via": []
         }
       ],
@@ -131,7 +131,7 @@
       ],
       "sinceTimestamp": 1593189690,
       "values": {
-        "$admin": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
+        "$admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "$implementation": [
           "0xbA9Ac3C9983a3e967f0f387c75cCbD38Ad484963",
           "0xef49Ea6996073752b6840CDA34773FFA78F78166"
@@ -141,13 +141,13 @@
         "CHECKPOINT_REWARD": "71795000000000000000000",
         "checkPointBlockInterval": 5120,
         "checkpointRewardDelta": 10,
-        "currentEpoch": 67848,
+        "currentEpoch": 68067,
         "currentValidatorSetSize": 105,
-        "currentValidatorSetTotalStake": "3456816543278353960325972503",
+        "currentValidatorSetTotalStake": "3471407633213240865042062755",
         "delegationEnabled": true,
         "delegatorsReward": [0, 0, 0, 0],
         "dynasty": 80,
-        "epoch": 67848,
+        "epoch": 68067,
         "eventsHub": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
         "extensionCode": "0xef49Ea6996073752b6840CDA34773FFA78F78166",
         "getRegistry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
@@ -161,7 +161,7 @@
         "minHeimdallFee": "1000000000000000000",
         "NFTContract": "0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F",
         "NFTCounter": 175,
-        "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
+        "owner": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "ownerOf": [
           "0x21A5418009C5d70db1552e7206Ed884F9Adb903A",
           "0x8F9953FC47Bd5d5531FD2504612a5F4ecA16d7CF",
@@ -179,12 +179,12 @@
         "token": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
         "totalHeimdallFee": "10155939209428901681108",
         "totalRewards": "201179489204211582010647007",
-        "totalRewardsLiquidated": "111388367083424040114814129",
+        "totalRewardsLiquidated": "111786304500600244168413732",
         "totalStaked": "10847736755805912873761268",
         "validatorReward": [0, 0, "1081182134824116177126", 0],
         "validatorShareFactory": "0xc4FA447A0e77Eff9717b09C057B40570813bb642",
         "validatorState": {
-          "amount": "3456816543278353960325972503",
+          "amount": "3471407633213240865042062755",
           "stakerCount": 105
         },
         "validatorThreshold": 105,
@@ -206,16 +206,16 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
+          "target": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
           "via": []
         }
       ],
       "sinceTimestamp": 1616774452,
       "values": {
-        "$admin": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
+        "$admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "$implementation": "0x0672777617CAA1E778083a4f74eBC997262C9EdD",
         "implementation": "0x0672777617CAA1E778083a4f74eBC997262C9EdD",
-        "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
+        "owner": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "proxyType": 2,
         "registry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71"
       }
@@ -230,7 +230,7 @@
         "$implementation": "0x98165b71cdDea047C0A49413350C40571195fd07",
         "implementation": "0x98165b71cdDea047C0A49413350C40571195fd07",
         "isOwner": false,
-        "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
+        "owner": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "proxyType": 2
       }
     },
@@ -258,17 +258,17 @@
       ],
       "sinceTimestamp": 1590849960,
       "values": {
-        "_nextHeaderBlock": 678480000,
+        "_nextHeaderBlock": 680670000,
         "$immutable": false,
         "$implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "CHAINID": 137,
-        "currentHeaderBlock": 678470000,
-        "getLastChildBlock": 61219493,
+        "currentHeaderBlock": 680660000,
+        "getLastChildBlock": 61374117,
         "heimdallId": "0x7e10229e6df5851dc336f813dde0cf6559cd517f9ff1980e2e57e192ba3a2329",
         "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "isOwner": false,
         "networkId": "0x89",
-        "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
+        "owner": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "proxyType": 2,
         "VOTE_TYPE": 2
       },
@@ -311,6 +311,48 @@
       "values": { "$immutable": true }
     },
     {
+      "name": "Timelock",
+      "address": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908"
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b"
+        }
+      ],
+      "sinceTimestamp": 1630059303,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "TIMELOCK_ADMIN_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
+          }
+        },
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "getMinDelay": 0,
+        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
+        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
+      },
+      "derivedName": "Timelock"
+    },
+    {
       "name": "ExitNFT",
       "address": "0xDF74156420Bd57ab387B195ed81EcA36F9fABAca",
       "sinceTimestamp": 1590850785,
@@ -351,16 +393,6 @@
       "address": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908"
-        },
-        {
-          "permission": "upgrade",
-          "target": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1593593561,
       "values": {
@@ -382,7 +414,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 210,
+        "nonce": 213,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -873,6 +905,40 @@
     ],
     "0xc4FA447A0e77Eff9717b09C057B40570813bb642": [
       "function create(uint256 validatorId, address loggerAddress, address registry) returns (address)"
+    ],
+    "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf": [
+      "constructor(uint256 minDelay, address[] proposers, address[] executors)",
+      "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
+      "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)",
+      "event Cancelled(bytes32 indexed id)",
+      "event MinDelayChange(uint256 oldDuration, uint256 newDuration)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXECUTOR_ROLE() view returns (bytes32)",
+      "function PROPOSER_ROLE() view returns (bytes32)",
+      "function TIMELOCK_ADMIN_ROLE() view returns (bytes32)",
+      "function cancel(bytes32 id)",
+      "function execute(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt) payable",
+      "function executeBatch(address[] targets, uint256[] values, bytes[] datas, bytes32 predecessor, bytes32 salt) payable",
+      "function getMinDelay() view returns (uint256 duration)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getTimestamp(bytes32 id) view returns (uint256 timestamp)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hashOperation(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt) pure returns (bytes32 hash)",
+      "function hashOperationBatch(address[] targets, uint256[] values, bytes[] datas, bytes32 predecessor, bytes32 salt) pure returns (bytes32 hash)",
+      "function isOperation(bytes32 id) view returns (bool pending)",
+      "function isOperationDone(bytes32 id) view returns (bool done)",
+      "function isOperationPending(bytes32 id) view returns (bool pending)",
+      "function isOperationReady(bytes32 id) view returns (bool ready)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function schedule(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function scheduleBatch(address[] targets, uint256[] values, bytes[] datas, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updateDelay(uint256 newDelay)"
     ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
