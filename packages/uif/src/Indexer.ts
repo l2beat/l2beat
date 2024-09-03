@@ -43,10 +43,6 @@ export abstract class Indexer {
       maxTimeoutMs: 1 * 60 * 60_000,
     })
 
-  // static createId(name: string, tag: string | undefined): string {
-  //    return tag === undefined ? name : `${name}::${tag}`
-  // }
-
   /**
    * Initializes the indexer.
    *
