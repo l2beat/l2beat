@@ -1,4 +1,3 @@
-import { tokenList } from '@l2beat/config'
 import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 import {
   assert,
@@ -9,12 +8,18 @@ import {
 } from '@l2beat/shared-pure'
 import { BigNumber, providers, utils } from 'ethers'
 
+async function loadTokenList() {
+  const { tokenList } = await import('@l2beat/config')
+  return tokenList
+}
+
 export async function estimateTVL(rpcUrl: string, address: EthereumAddress) {
   const provider = new providers.JsonRpcBatchProvider(rpcUrl)
   console.log('Fetching network...')
   const network = await provider.getNetwork()
   console.log(`ChainId: ${network.chainId}`)
 
+  const tokenList = await loadTokenList()
   const tokensOnThisChain = tokenList.filter(
     (token) =>
       +token.chainId === network.chainId && token.address !== undefined,

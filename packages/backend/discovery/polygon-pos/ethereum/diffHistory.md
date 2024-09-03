@@ -1,3 +1,227 @@
+Generated with discovered.json: 0x6ecd5c52754a9bec3cceb909e212d746d9013042
+
+# Diff at Tue, 03 Sep 2024 12:18:09 GMT:
+
+- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
+- comparing to: main@4aa95146cde1555bcce17311b090748c26bb20f8 block: 20632909
+- current block number: 20669997
+
+## Description
+
+TimeLock (with zero minDelay) has been restored
+
+## Watched changes
+
+```diff
+    contract ERC1155Predicate (0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.$admin:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.proxyOwner:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+    }
+```
+
+```diff
+    contract MintableERC1155Predicate (0x2d641867411650cd05dB93B59964536b1ED5b1B7) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.$admin:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.proxyOwner:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+    }
+```
+
+```diff
+    contract ERC20Predicate (0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.$admin:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.proxyOwner:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+    }
+```
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.$admin:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.owner:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+    }
+```
+
+```diff
+    contract EventsHub (0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.$admin:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.owner:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+    }
+```
+
+```diff
+    contract Governance (0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48) {
+    +++ description: None
+      values.owner:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+    }
+```
+
+```diff
+    contract EtherPredicate (0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.$admin:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.proxyOwner:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+    }
+```
+
+```diff
+    contract RootChain (0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287) {
+    +++ description: None
+      values.owner:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+    }
+```
+
+```diff
+    contract MintableERC721Predicate (0x932532aA4c0174b8453839A6E44eE09Cc615F2b7) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.$admin:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.proxyOwner:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+    }
+```
+
+```diff
+    contract MintableERC20Predicate (0x9923263fA127b3d1484cFD649df8f1831c2A74e4) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.$admin:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.proxyOwner:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+    }
+```
+
+```diff
+    contract RootChainManager (0xA0c68C638235ee32657e8f720a23ceC1bFc77C77) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.$admin:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.proxyOwner:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+    }
+```
+
+```diff
+    contract ERC721Predicate (0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.$admin:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.proxyOwner:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+    }
+```
+
+```diff
+    contract PolygonMultisig (0xFa7D2a996aC6350f4b56C043112Da0366a59b74c) {
+    +++ description: None
+      receivedPermissions.10:
+-        {"permission":"upgrade","target":"0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD"}
+      receivedPermissions.9:
+-        {"permission":"upgrade","target":"0xDB2382413bCb9c2F1B6b62B52238558266361D68"}
+      receivedPermissions.8:
+-        {"permission":"upgrade","target":"0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"}
+      receivedPermissions.7:
+-        {"permission":"upgrade","target":"0x9923263fA127b3d1484cFD649df8f1831c2A74e4"}
+      receivedPermissions.6:
+-        {"permission":"upgrade","target":"0x932532aA4c0174b8453839A6E44eE09Cc615F2b7"}
+      receivedPermissions.5:
+-        {"permission":"upgrade","target":"0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30"}
+      receivedPermissions.4:
+-        {"permission":"upgrade","target":"0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b"}
+      receivedPermissions.3:
+-        {"permission":"upgrade","target":"0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908"}
+      receivedPermissions.2:
+-        {"permission":"upgrade","target":"0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf"}
+      receivedPermissions.1:
+-        {"permission":"upgrade","target":"0x2d641867411650cd05dB93B59964536b1ED5b1B7"}
+      receivedPermissions.0.target:
+-        "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f"
++        "0xDB2382413bCb9c2F1B6b62B52238558266361D68"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Timelock (0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../polygon-pos/ethereum/.flat/Timelock.sol        | 675 +++++++++++++++++++++
+ 1 file changed, 675 insertions(+)
+```
+
 Generated with discovered.json: 0xd48fcc3b5c0b6352327c6b5763773d9faf2bfd73
 
 # Diff at Fri, 30 Aug 2024 07:54:44 GMT:

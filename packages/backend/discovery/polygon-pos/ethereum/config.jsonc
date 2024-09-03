@@ -29,7 +29,8 @@
     "0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35": "CustomPredicate",
     "0xDF74156420Bd57ab387B195ed81EcA36F9fABAca": "ExitNFT",
     "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c": "PolygonMultisig",
-    "0x1906fd9c4AC440561F7197Da0A4BD2E88DF5fA70": "Aavegotchi"
+    "0x1906fd9c4AC440561F7197Da0A4BD2E88DF5fA70": "Aavegotchi",
+    "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf": "Timelock"
   },
   // we will discover four predicates (escrows)
   "overrides": {
@@ -174,6 +175,15 @@
     },
     "ValidatorShareImpl": {
       "ignoreMethods": ["getRewardPerShare"]
+    },
+    "Timelock": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
     }
   }
 }

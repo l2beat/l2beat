@@ -3890,21 +3890,22 @@
     }
   ],
   "zklinknova": [
-    {
-      "symbol": "BTCT",
-      "address": "0xFb8dBdc644eb54dAe0D7A9757f1e6444a07F8067",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "TRON Foundation",
-            "warning": "There is no formal bridge nor a way to withdraw this token. Funds are held by a simple Multisig on TRON and minted by a multisig on zkLink Nova."
-          }
-        ]
-      },
-      "coingeckoId": "bitcoin-trc20"
-    },
+    // removed because we have no CG price and no bridge back to TRON
+    // {
+    //   "symbol": "BTCT",
+    //   "address": "0xFb8dBdc644eb54dAe0D7A9757f1e6444a07F8067",
+    //   "source": "external",
+    //   "supply": "totalSupply",
+    //   "bridgedUsing": {
+    //     "bridges": [
+    //       {
+    //         "name": "TRON Foundation",
+    //         "warning": "There is no formal bridge nor a way to withdraw this token. Funds are held by a simple Multisig on TRON and minted by a multisig on zkLink Nova."
+    //       }
+    //     ]
+    //   },
+    //   "coingeckoId": "bitcoin-trc20"
+    // },
     {
       "symbol": "SolvBTC.m",
       "address": "0xbEAf16cFD8eFe0FC97C2a07E349B9411F5dC272C",
@@ -4009,6 +4010,23 @@
       "source": "native",
       "supply": "circulatingSupply",
       "coingeckoId": "smoke-the-ticker"
+    }
+  ],
+  "xchain": [
+    {
+      "symbol": "USDC.e",
+      "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
+      "source": "external",
+      "supply": "totalSupply",
+      "coingeckoId": "usd-coin",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2 (Hydra mode)",
+            "slug": "stargatev2"
+          }
+        ]
+      }
     }
   ]
 }
