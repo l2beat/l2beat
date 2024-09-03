@@ -46,6 +46,7 @@
     "@l2beat/shared": "*",
     "@l2beat/shared-pure": "*",
     "@l2beat/uif": "*",
+    "@polkadot/api": "^12.4.2",
     "@types/koa-compress": "^4.0.6",
     "@types/readline-sync": "^1.4.8",
     "ansi-to-html": "^0.7.2",

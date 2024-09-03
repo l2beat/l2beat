@@ -36,7 +36,7 @@ export const zora: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  rpcUrl: 'https://rpc.zora.co',
+  rpcUrl: 'https://rpc.zora.energy',
   finality: {
     type: 'OPStack-blob',
     genesisTimestamp: new UnixTime(1686693839),
