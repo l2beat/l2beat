@@ -1,5 +1,10 @@
 import { tokenList } from '@l2beat/config/src'
-import { ChainId, EthereumAddress, notUndefined } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  EthereumAddress,
+  UnixTime,
+  notUndefined,
+} from '@l2beat/shared-pure'
 import {
   http,
   Address,
@@ -15,7 +20,7 @@ import {
 const CHAINS = [
   {
     name: 'Polygon zkEVM',
-    rpcUrl: 'https://polygon-zkevm.drpc.org',
+    rpcUrl: 'https://zkevm-rpc.com',
     premintedEth: 200000000000000000000000000n,
   },
   {
@@ -63,6 +68,8 @@ const ETHEREUM = {
   rpcUrl: 'https://eth.llamarpc.com',
 }
 
+const TIMESTAMP = UnixTime.fromDate(new Date('2024-09-01T00:00:00Z'))
+
 const ethereumBalances: Record<string, number> = {}
 const L2sBalances: Record<string, number> = {}
 
@@ -86,8 +93,20 @@ async function main() {
       transport: http(chain.rpcUrl),
     })
 
+    const currentBlock = await chainClient.getBlockNumber()
+
+    console.log(`${chain.name} - Searching for block on or before ${TIMESTAMP}`)
+    const blockOnTimestamp = await getBlockNumberAtOrBefore(
+      TIMESTAMP,
+      0,
+      Number(currentBlock),
+      chainClient.getBlock,
+    )
+    console.log(`${chain.name} - Found block ${blockOnTimestamp}`)
+
     const etherSupply = await chainClient.getBalance({
       address: BRIDGE_ADDRESS as Address,
+      blockNumber: BigInt(blockOnTimestamp),
     })
 
     if (etherSupply > 0n) {
@@ -101,7 +120,12 @@ async function main() {
 
     const supportsMulticall = await checkMulticallSupport(chainClient)
 
-    await processBatches(chainClient, tokensOnEthereum, supportsMulticall)
+    await processBatches(
+      chainClient,
+      tokensOnEthereum,
+      supportsMulticall,
+      BigInt(blockOnTimestamp),
+    )
 
     console.log('---')
   }
@@ -117,8 +141,20 @@ async function getEthereumBalances(
   ethereumClient: PublicClient,
   tokensOnEthereum: Token[],
 ) {
+  const currentBlock = await ethereumClient.getBlockNumber()
+
+  console.log(`Ethereum - Searching for block on or before ${TIMESTAMP}`)
+  const ethereumBlock = await getBlockNumberAtOrBefore(
+    TIMESTAMP,
+    0,
+    Number(currentBlock),
+    ethereumClient.getBlock,
+  )
+  console.log(`Ethereum - Found block ${ethereumBlock}`)
+
   const ethereumEtherSupply = await ethereumClient.getBalance({
     address: BRIDGE_ADDRESS as Address,
+    blockNumber: BigInt(ethereumBlock),
   })
 
   ethereumBalances['ETH'] = Number(formatEther(ethereumEtherSupply))
@@ -140,6 +176,7 @@ async function getEthereumBalances(
       abi: MUTLICALL_ABI,
       functionName: 'aggregate',
       args: [calls],
+      blockNumber: BigInt(ethereumBlock),
     })
 
     returnData.forEach((data, i) => {
@@ -180,14 +217,15 @@ async function processBatches(
   chainClient: PublicClient,
   tokens: Token[],
   supportsMulticall: boolean,
+  blockNumber: bigint,
 ) {
   for (let i = 0; i < tokens.length; i += BATCH_SIZE) {
     const batch = tokens.slice(i, i + BATCH_SIZE)
 
     if (supportsMulticall) {
-      await processBatchWithMulticall(chainClient, batch)
+      await processBatchWithMulticall(chainClient, batch, blockNumber)
     } else {
-      await processBatchIndividually(chainClient, batch)
+      await processBatchIndividually(chainClient, batch, blockNumber)
     }
   }
 }
@@ -195,6 +233,7 @@ async function processBatches(
 async function processBatchWithMulticall(
   chainClient: PublicClient,
   batch: Token[],
+  blockNumber: bigint,
 ) {
   const calls = batch.map((token) => ({
     target: BRIDGE_ADDRESS,
@@ -210,6 +249,7 @@ async function processBatchWithMulticall(
     abi: MUTLICALL_ABI,
     functionName: 'aggregate',
     args: [calls],
+    blockNumber,
   })
 
   const foundTokens = tokenAddressesReturnData
@@ -247,6 +287,7 @@ async function processBatchWithMulticall(
     abi: MUTLICALL_ABI,
     functionName: 'aggregate',
     args: [totalSupplyCalls],
+    blockNumber,
   })
 
   const decoded = totalSupplyReturnData.map((data, i) => {
@@ -281,6 +322,7 @@ async function processBatchWithMulticall(
 async function processBatchIndividually(
   chainClient: PublicClient,
   batch: Token[],
+  blockNumber: bigint,
 ) {
   for (const token of batch) {
     try {
@@ -289,6 +331,7 @@ async function processBatchIndividually(
         abi: BRIDGE_ABI,
         functionName: 'getTokenWrappedAddress',
         args: [0, token.address.toString() as Address],
+        blockNumber,
       })) as Address
 
       if (l2TokenAddress === '0x0000000000000000000000000000000000000000') {
@@ -312,6 +355,30 @@ async function processBatchIndividually(
       console.error(`Error fetching total supply for ${token.symbol}`, error)
     }
   }
+}
+
+async function getBlockNumberAtOrBefore(
+  timestamp: UnixTime,
+  start: number,
+  end: number,
+  getBlock: ({
+    blockNumber,
+  }: { blockNumber: bigint }) => Promise<{ timestamp: bigint }>,
+): Promise<number> {
+  while (start + 1 < end) {
+    const mid = start + Math.floor((end - start) / 2)
+    const midBlock = await getBlock({
+      blockNumber: BigInt(mid),
+    })
+    const midTimestamp = new UnixTime(Number(midBlock.timestamp))
+    if (midTimestamp.lte(timestamp)) {
+      start = mid
+    } else {
+      end = mid
+    }
+  }
+
+  return start
 }
 
 main()
