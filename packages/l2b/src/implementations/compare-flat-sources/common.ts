@@ -1,11 +1,6 @@
 import { resolve } from 'path'
 import {
-  Layer2Provider,
-  Layer3Provider,
-  layer2s,
-  layer3s,
-} from '@l2beat/config'
-import {
+  ConfigReader,
   HashedFileContent,
   buildSimilarityHashmap,
   estimateSimilarity,
@@ -14,8 +9,6 @@ import {
 import { assert } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { readFile, readdir } from 'fs/promises'
-
-export const ALL_CONFIGS = [...layer2s, ...layer3s]
 
 export interface Project {
   name: string
@@ -39,46 +32,40 @@ export function needsToBe(
   }
 }
 
-export async function computeStackSimilarity(
-  stack: Layer2Provider | Layer3Provider,
-  discoveryPath: string,
-): Promise<{
+export async function computeStackSimilarity(discoveryPath: string): Promise<{
   matrix: Record<string, Record<string, number>>
   projects: Project[]
 }> {
-  const configs = ALL_CONFIGS.filter(
-    (config) =>
-      config.display.provider === stack &&
-      ('isArchived' in config ? !config.isArchived : true) &&
-      ('hostChain' in config ? config.hostChain !== 'Multiple' : true) &&
-      !config.isUpcoming,
-  )
+  const configReader = new ConfigReader(discoveryPath)
+  const configs = configReader.readAllConfigs()
 
   const stackProject = await Promise.all(
     configs.map((config) =>
-      readProject(
-        config.id.toString(),
-        'hostChain' in config ? config.hostChain : 'ethereum',
-        discoveryPath,
-      ),
+      readProject(config.name, config.chain, discoveryPath),
     ),
   )
   const projects = stackProject.filter((p) => p !== undefined) as Project[]
 
   const matrix: Record<string, Record<string, number>> = {}
+  for (let row = 0; row < projects.length; row++) {
+    const p1 = projects[row]
+    const path1 = encodeProjectPath(p1.name, p1.chain)
 
-  for (const p1 of projects) {
-    const c1Object: Record<string, number> = {}
+    matrix[path1] ??= {}
+    matrix[path1][path1] = 1
+    for (let col = row + 1; col < projects.length; col++) {
+      const p2 = projects[col]
+      const path2 = encodeProjectPath(p2.name, p2.chain)
 
-    for (const p2 of projects) {
       const similarity = estimateSimilarity(
         p1.concatenatedSource,
         p2.concatenatedSource,
       )
-      c1Object[encodeProjectPath(p2.name, p2.chain)] = similarity
-    }
 
-    matrix[encodeProjectPath(p1.name, p1.chain)] = c1Object
+      matrix[path2] ??= {}
+      matrix[path1][path2] = similarity
+      matrix[path2][path1] = similarity
+    }
   }
 
   return { matrix, projects }
@@ -230,7 +217,7 @@ async function getFlatSources(
   assert(allFilesAreSol, 'All files should be .sol files')
 
   const contents: HashedFileContent[] = []
-  for (const filePath of filePaths.filter((file) => !file.endsWith('.p.sol'))) {
+  for (const filePath of filesToCompare(filePaths)) {
     const rawContent = await readFile(filePath, 'utf-8')
     const content = removeComments(rawContent)
 
@@ -242,6 +229,12 @@ async function getFlatSources(
   }
 
   return contents
+}
+
+function filesToCompare(paths: string[]): string[] {
+  return paths.filter(
+    (file) => !file.endsWith('.p.sol') && !file.endsWith('GnosisSafe.sol'),
+  )
 }
 
 async function listFilesRecursively(path: string): Promise<string[]> {

@@ -165,7 +165,7 @@ export function estimateSimilarity(
     lhsIndex++
   }
 
-  return sourceCopied / Math.max(lhs.content.length, rhs.content.length)
+  return (sourceCopied * 2) / (lhs.content.length + rhs.content.length)
 }
 
 function splitLineKeepingNewlines(input: string): string[] {
