@@ -18,21 +18,22 @@ export const lyra: Layer2 = opStackL2({
   associatedTokens: ['LYRA'],
   discovery,
   display: {
-    name: 'Lyra',
-    slug: 'lyra',
+    name: 'Derive',
+    slug: 'derive',
     architectureImage: 'lyra',
     description:
-      'Lyra Chain is an L2 scaling solution built using OP Stack specially for Lyra protocol - a settlement protocol for spot, perpetuals, and options trading.',
+      'Derive Chain is an L2 scaling solution built using OP Stack specially for the Derive protocol - a settlement protocol for spot, perpetuals, and options trading.',
     purposes: ['Exchange'],
     links: {
-      websites: ['https://lyra.finance/'],
-      apps: ['https://lyra.finance/portfolio'],
-      documentation: ['https://docs.lyra.finance/docs/introduction'],
+      websites: ['https://derive.xyz/'],
+      apps: ['https://derive.xyz/options/eth'],
+      documentation: ['https://docs.lyra.finance/'],
       explorers: ['https://explorer.lyra.finance/'],
       repositories: ['https://github.com/lyra-finance/v2-core'],
       socialMedia: [
-        'https://twitter.com/lyrafinance',
-        'https://discord.gg/Lyra',
+        'https://x.com/derivexyz',
+        'https://warpcast.com/lyra.eth',
+        'https://discord.gg/Derive',
       ],
     },
     activityDataSource: 'Blockchain RPC',
@@ -48,6 +49,13 @@ export const lyra: Layer2 = opStackL2({
   // stateDerivation: DERIVATION.OPSTACK('LYRA'),
   isNodeAvailable: 'UnderReview',
   milestones: [
+    {
+      name: 'Derive rebrand',
+      link: 'https://x.com/derivexyz/status/1828607400116658227',
+      date: '2024-08-28T00:00:00Z',
+      description: 'Lyra is now called Derive.',
+      type: 'general',
+    },
     {
       name: 'Lyra V2 live on mainnet',
       link: 'https://x.com/lyrafinance/status/1735516929341980748',
@@ -73,14 +81,49 @@ export const lyra: Layer2 = opStackL2({
     ),
   ],
   nonTemplateEscrows: [
+    // manually added with `yarn socket-convert` script and latest json: https://github.com/SocketDotTech/socket-plugs/blob/295ef847031ae5260361d67a5b15b9a44fe033f7/deployments/superbridge/prod_lyra_addresses.json
+    {
+      address: EthereumAddress('0x7E1d17b580dD4F89037DB331430eAEe8B8e50c91'),
+      sinceTimestamp: new UnixTime(1724140259),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['DAI'],
+      chain: 'ethereum',
+    },
+    {
+      address: EthereumAddress('0x613e87BE1cd75dEBC5e6e56a2AF2fED84162C142'),
+      sinceTimestamp: new UnixTime(1724140379),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['sDAI'],
+      chain: 'ethereum',
+    },
     // socket superbridge contracts from https://github.com/SocketDotTech/socket-plugs/blob/main/deployments/superbridge/prod_lyra_addresses.json
     {
       address: EthereumAddress('0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d'),
       sinceTimestamp: new UnixTime(1700227943),
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['USDC'],
       chain: 'ethereum',
@@ -89,9 +132,13 @@ export const lyra: Layer2 = opStackL2({
       address: EthereumAddress('0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e'),
       sinceTimestamp: new UnixTime(1705069895),
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['WETH'],
       chain: 'ethereum',
@@ -100,9 +147,13 @@ export const lyra: Layer2 = opStackL2({
       address: EthereumAddress('0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab'),
       sinceTimestamp: new UnixTime(1705069499),
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['WBTC'],
       chain: 'ethereum',
@@ -111,9 +162,13 @@ export const lyra: Layer2 = opStackL2({
       address: EthereumAddress('0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa'),
       sinceTimestamp: new UnixTime(1705566299),
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['USDT'],
       chain: 'ethereum',
@@ -122,9 +177,13 @@ export const lyra: Layer2 = opStackL2({
       address: EthereumAddress('0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592'),
       sinceTimestamp: new UnixTime(1708294763),
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['SNX'],
       chain: 'ethereum',
@@ -133,9 +192,13 @@ export const lyra: Layer2 = opStackL2({
       address: EthereumAddress('0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3'),
       sinceTimestamp: new UnixTime(1709517155),
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['wstETH'],
       chain: 'ethereum',
@@ -145,9 +208,13 @@ export const lyra: Layer2 = opStackL2({
       sinceTimestamp: new UnixTime(1704715451),
       includeInTotal: false,
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['USDC'],
       chain: 'optimism',
@@ -157,9 +224,13 @@ export const lyra: Layer2 = opStackL2({
       sinceTimestamp: new UnixTime(1704715597),
       includeInTotal: false,
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['USDC.e'],
       chain: 'optimism',
@@ -169,9 +240,13 @@ export const lyra: Layer2 = opStackL2({
       sinceTimestamp: new UnixTime(1704715809),
       includeInTotal: false,
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['WETH'],
       chain: 'optimism',
@@ -181,9 +256,13 @@ export const lyra: Layer2 = opStackL2({
       sinceTimestamp: new UnixTime(1704715873),
       includeInTotal: false,
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['wBTC'],
       chain: 'optimism',
@@ -193,9 +272,13 @@ export const lyra: Layer2 = opStackL2({
       sinceTimestamp: new UnixTime(1705566299),
       includeInTotal: false,
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['USDT'],
       chain: 'optimism',
@@ -205,9 +288,13 @@ export const lyra: Layer2 = opStackL2({
       sinceTimestamp: new UnixTime(1708294759),
       includeInTotal: false,
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['SNX'],
       chain: 'optimism',
@@ -217,9 +304,13 @@ export const lyra: Layer2 = opStackL2({
       sinceTimestamp: new UnixTime(1709502863),
       includeInTotal: false,
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['wstETH'],
       chain: 'optimism',
@@ -229,9 +320,13 @@ export const lyra: Layer2 = opStackL2({
       sinceTimestamp: new UnixTime(1704715450),
       includeInTotal: false,
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['USDC'],
       chain: 'arbitrum',
@@ -241,9 +336,13 @@ export const lyra: Layer2 = opStackL2({
       sinceTimestamp: new UnixTime(1704715596),
       includeInTotal: false,
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['USDC.e'],
       chain: 'arbitrum',
@@ -253,9 +352,13 @@ export const lyra: Layer2 = opStackL2({
       sinceTimestamp: new UnixTime(1704715806),
       includeInTotal: false,
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['WETH'],
       chain: 'arbitrum',
@@ -265,9 +368,13 @@ export const lyra: Layer2 = opStackL2({
       sinceTimestamp: new UnixTime(1704715871),
       includeInTotal: false,
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['wBTC'],
       chain: 'arbitrum',
@@ -277,9 +384,13 @@ export const lyra: Layer2 = opStackL2({
       sinceTimestamp: new UnixTime(1705566298),
       includeInTotal: false,
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['USDT'],
       chain: 'arbitrum',
@@ -289,9 +400,13 @@ export const lyra: Layer2 = opStackL2({
       sinceTimestamp: new UnixTime(1709502860),
       includeInTotal: false,
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['wstETH'],
       chain: 'arbitrum',
@@ -301,9 +416,13 @@ export const lyra: Layer2 = opStackL2({
       address: EthereumAddress('0x8180EcCC825b692ef65FF099a0A387743788bf78'),
       sinceTimestamp: new UnixTime(1715846411),
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['weETH'],
       chain: 'ethereum',
@@ -312,9 +431,13 @@ export const lyra: Layer2 = opStackL2({
       address: EthereumAddress('0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4'),
       sinceTimestamp: new UnixTime(1715855051),
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['rswETH'],
       chain: 'ethereum',
@@ -323,9 +446,13 @@ export const lyra: Layer2 = opStackL2({
       address: EthereumAddress('0x35d4D9bc79B0a543934b1769304B90d752691caD'),
       sinceTimestamp: new UnixTime(1717724723),
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['rsETH'],
       chain: 'ethereum',
@@ -334,9 +461,13 @@ export const lyra: Layer2 = opStackL2({
       address: EthereumAddress('0xE3E96892D30E0ee1a8131BAf87c891201F7137bf'),
       sinceTimestamp: new UnixTime(1719833675),
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['sUSDe'],
       chain: 'ethereum',
@@ -358,9 +489,13 @@ export const lyra: Layer2 = opStackL2({
       sinceTimestamp: new UnixTime(1719833737),
       includeInTotal: false,
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['sUSDe'],
       chain: 'optimism',
@@ -406,9 +541,13 @@ export const lyra: Layer2 = opStackL2({
       sinceTimestamp: new UnixTime(1717674857),
       includeInTotal: false,
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['weETH.mode'],
       chain: 'mode',
@@ -418,9 +557,13 @@ export const lyra: Layer2 = opStackL2({
       sinceTimestamp: new UnixTime(1717724847),
       includeInTotal: false,
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['rsETH'],
       chain: 'mode',
@@ -430,9 +573,13 @@ export const lyra: Layer2 = opStackL2({
       sinceTimestamp: new UnixTime(1719833783),
       includeInTotal: false,
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['sUSDe'],
       chain: 'mode',
@@ -442,9 +589,13 @@ export const lyra: Layer2 = opStackL2({
       sinceTimestamp: new UnixTime(1715846405),
       includeInTotal: false,
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['weETH'],
       chain: 'arbitrum',
@@ -454,9 +605,13 @@ export const lyra: Layer2 = opStackL2({
       sinceTimestamp: new UnixTime(1717724755),
       includeInTotal: false,
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['rsETH'],
       chain: 'arbitrum',
@@ -466,9 +621,13 @@ export const lyra: Layer2 = opStackL2({
       sinceTimestamp: new UnixTime(1719833706),
       includeInTotal: false,
       source: 'external',
-      bridge: {
-        name: 'Socket bridge',
-        slug: 'socket',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
       },
       tokens: ['sUSDe'],
       chain: 'arbitrum',

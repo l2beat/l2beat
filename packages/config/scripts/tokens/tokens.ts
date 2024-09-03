@@ -13,6 +13,7 @@ import {
 } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
+import { isEqual } from 'lodash'
 import { chains } from '../../src'
 import { ChainConfig } from '../../src/common'
 import { GeneratedToken, Output, SourceEntry } from '../../src/tokens/types'
@@ -89,8 +90,10 @@ async function main() {
         }
         const bridgedUsing = token.bridgedUsing ?? existingToken.bridgedUsing
         if (
-          existingToken.bridgedUsing?.bridge !== bridgedUsing?.bridge ||
-          existingToken.bridgedUsing?.slug !== bridgedUsing?.slug ||
+          !isEqual(
+            existingToken.bridgedUsing?.bridges,
+            bridgedUsing?.bridges,
+          ) ||
           existingToken.bridgedUsing?.warning !== bridgedUsing?.warning
         ) {
           tokenLogger.overriding(

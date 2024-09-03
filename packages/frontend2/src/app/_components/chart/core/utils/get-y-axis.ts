@@ -7,6 +7,12 @@ export function getYAxis(
   format: (value: number) => string,
   labelCount = 5,
 ) {
+  if (values.length === 0) {
+    return {
+      labels: new Array(labelCount).fill(''),
+      getY: () => -1,
+    }
+  }
   const ticks = calculateTicks(labelCount, values, isLogScale)
   const labels = ticks.map(format)
   const min = ticks[0]

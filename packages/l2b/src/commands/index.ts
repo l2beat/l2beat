@@ -1,3 +1,4 @@
+import { CheckRpc } from './CheckRpc'
 import { CompareFlatSources } from './CompareFlatSources'
 import { CompareOpStacks } from './CompareOpStacks'
 import { CompareOrbitStacks } from './CompareOrbitStacks'
@@ -6,6 +7,7 @@ import { DeploymentTimestamp } from './DeploymentTimestamp'
 import { Flatten } from './Flatten'
 import { FlattenAndDiff } from './FlattenAndDiff'
 import { Powerdiff } from './Powerdiff'
+import { StarknetProgramHashes } from './StarknetProgramHashes'
 import { TVL } from './TVL'
 
 export function getSubcommands() {
@@ -14,10 +16,12 @@ export function getSubcommands() {
     CompareOpStacks,
     CompareOrbitStacks,
     CountUserOperations,
+    CheckRpc,
     DeploymentTimestamp,
     FlattenAndDiff,
     Flatten,
     Powerdiff,
     TVL,
+    StarknetProgramHashes,
   ]
 }

@@ -2,8 +2,8 @@
   "name": "taiko",
   "chain": "ethereum",
   "blockNumber": 20367491,
-  "configHash": "0xe4e0c6fd03b9c9ec903e56fbea2b9b1029b8ba7e8af2de80d87a9adf173f478c",
-  "version": 13,
+  "configHash": "0xa7fa8ee1d43f5eca0d3c68565663e23d685250177bc8cb60d9c35a302788f4f5",
+  "version": 14,
   "contracts": [
     {
       "name": "PEMCertChainLib",
@@ -444,63 +444,51 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
-          "via": []
+          "target": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
         },
         {
           "permission": "upgrade",
-          "target": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
-          "via": []
+          "target": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
         },
         {
           "permission": "upgrade",
-          "target": "0x579A8d63a2Db646284CBFE31FE5082c9989E985c",
-          "via": []
+          "target": "0x579A8d63a2Db646284CBFE31FE5082c9989E985c"
         },
         {
           "permission": "upgrade",
-          "target": "0x579f40D0BE111b823962043702cabe6Aaa290780",
-          "via": []
+          "target": "0x579f40D0BE111b823962043702cabe6Aaa290780"
         },
         {
           "permission": "upgrade",
-          "target": "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
-          "via": []
+          "target": "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
         },
         {
           "permission": "upgrade",
-          "target": "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
-          "via": []
+          "target": "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
         },
         {
           "permission": "upgrade",
-          "target": "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab",
-          "via": []
+          "target": "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
         },
         {
           "permission": "upgrade",
-          "target": "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
-          "via": []
+          "target": "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
         },
         {
           "permission": "upgrade",
-          "target": "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81",
-          "via": []
+          "target": "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81"
         },
         {
           "permission": "upgrade",
-          "target": "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
-          "via": []
+          "target": "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
         },
         {
           "permission": "upgrade",
-          "target": "0xE3D777143Ea25A6E031d1e921F396750885f43aC",
-          "via": []
+          "target": "0xE3D777143Ea25A6E031d1e921F396750885f43aC"
         },
         {
           "permission": "upgrade",
-          "target": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
-          "via": []
+          "target": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
         }
       ],
       "ignoreInWatchMode": ["nonce"],

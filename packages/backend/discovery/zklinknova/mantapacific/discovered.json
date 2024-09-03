@@ -3,7 +3,7 @@
   "chain": "mantapacific",
   "blockNumber": 2775705,
   "configHash": "0x47105bb307ede9b31b7f4dff4a5ccbc362ced0d066f6eb8da52c0753e64b3f8a",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "MantaProxyAdmin",
@@ -11,8 +11,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
-          "via": []
+          "target": "0x44a65dc12865A1e5249b45b4868f32b0E37168FF"
         }
       ],
       "sinceTimestamp": 1709295839,
@@ -53,13 +52,11 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
-          "via": []
+          "target": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657"
         },
         {
           "permission": "upgrade",
-          "target": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
-          "via": []
+          "target": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
         }
       ],
       "sinceTimestamp": 1710253339,

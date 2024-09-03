@@ -1,7 +1,6 @@
 'use client'
 
 import { type Milestone } from '@l2beat/config'
-import React from 'react'
 import { useCostsTimeRangeContext } from '~/app/(new)/(other)/scaling/costs/_components/costs-time-range-context'
 import { useCostsUnitContext } from '~/app/(new)/(other)/scaling/costs/_components/costs-unit-context'
 import { Chart } from '~/app/_components/chart/core/chart'
@@ -25,7 +24,7 @@ export function ScalingCostsChart({ milestones, tag = 'costs' }: Props) {
   const [scale, setScale] = useLocalStorage(`${tag}-scale`, 'lin')
   const { range, setRange } = useCostsTimeRangeContext()
   const { unit, setUnit } = useCostsUnitContext()
-  const { data: chart, isLoading } = api.scaling.costs.chart.useQuery({
+  const { data: chart, isLoading } = api.costs.chart.useQuery({
     range,
     filter: { type: 'all' },
   })

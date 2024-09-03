@@ -1,3 +1,101 @@
+Generated with discovered.json: 0xf262a64a3850dbfb866758c225175dd7ba5b3789
+
+# Diff at Fri, 30 Aug 2024 10:09:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@78fe1115153efe3e1ba2014fd74329156dca3951 block: 20633317
+- current block number: 20640703
+
+## Description
+
+Admin EOA removed after our ping.
+
+## Watched changes
+
+```diff
+    contract StarkExchange (0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b) {
+    +++ description: None
+      issuedPermissions.1:
+-        {"permission":"upgrade","target":"0xCCa5De1e10c05c50C51ac551D9182cd31aca1889","via":[]}
+      issuedPermissions.0.target:
+-        "0x3a74010f2b37C02A249bd539EaE6b90Ba7CcD8aA"
++        "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889"
+      values.$admin:
+-        ["0x3a74010f2b37C02A249bd539EaE6b90Ba7CcD8aA","0xCCa5De1e10c05c50C51ac551D9182cd31aca1889"]
++        "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20633317 (main branch discovery), not current.
+
+```diff
+    contract GovernanceMultisig (0xCCa5De1e10c05c50C51ac551D9182cd31aca1889) {
+    +++ description: This Multisig itself is one of the two Governors, the other being an EOA, both equally permissioned to upgrade the bridge.
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+Generated with discovered.json: 0xd3cb0c967e7f0f853d636259b32a7bdf6de9801d
+
+# Diff at Thu, 29 Aug 2024 09:22:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae2eef5fb76c32f2e57d2f78a8a0f4686592fe8b block: 19825372
+- current block number: 20633317
+
+## Description
+
+This minor upgrade of StarkExchange.sol and TokensAndRamping.sol adds the ability to withdraw even for blocklisted owner keys after a CLEARANCE_DELAY hardcoded to 2 weeks. This can only be done by the BlockAdmin (hardcoded to DeversiFiTreasuryMultisig).
+
+Furthermore two signers of the GovernanceMultisig are rotated.
+
+A redWarning is added due to EOA Admin (was missed in the past).
+
+## Watched changes
+
+```diff
+    contract StarkExchange (0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b) {
+    +++ description: None
+      values.$implementation.2:
+-        "0x654cEF88e1EDD4B5a6d10815439768c60ca109a1"
++        "0x5524cB52490e01CBa4EB64F230CC661780cB6298"
+      values.$implementation.0:
+-        "0xc392DD8edAd534266cbf2817ee01dC68193DE23d"
++        "0x29Db022dbc824b78A0dA699a77E3d177f08A1191"
+      values.implementation:
+-        "0xc392DD8edAd534266cbf2817ee01dC68193DE23d"
++        "0x29Db022dbc824b78A0dA699a77E3d177f08A1191"
+      values.VERSION:
+-        "4.5.2-bl"
++        "4.5.3-blc"
+    }
+```
+
+```diff
+    contract GovernanceMultisig (0xCCa5De1e10c05c50C51ac551D9182cd31aca1889) {
+    +++ description: This Multisig itself is one of the two Governors, the other being an EOA, both equally permissioned to upgrade the bridge.
+      values.$members.5:
+-        "0xe0fE5b38C52A83308bEC9242d768441025DBB4D8"
++        "0x8501cFEE1715F5BC771cC65997F2A655f234e9Ef"
+      values.$members.0:
+-        "0x94aa58E38ac22518Cf0E267cd062Ed7E78eA958E"
++        "0x6Db55792263D558d9c98B740f8cB5E8a2e02Ec05"
+    }
+```
+
+## Source code changes
+
+```diff
+.../StarkExchange/StarkExchange.1.sol              | 16 ++--
+ .../StarkExchange/TokensAndRamping.3.sol           | 88 ++++++++++++++++++++--
+ 2 files changed, 89 insertions(+), 15 deletions(-)
+```
+
 Generated with discovered.json: 0x7b68025e5a9b3890af9387a25144eda5f8e9ec59
 
 # Diff at Wed, 21 Aug 2024 10:02:45 GMT:

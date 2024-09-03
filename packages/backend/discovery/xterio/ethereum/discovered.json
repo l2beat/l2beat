@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20327427,
   "configHash": "0x6204667bcd6d0206ba6f768d6cd11bb3c85ae3234d5aec6c2df112049ba7eb72",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "PreimageOracle",
@@ -445,58 +445,47 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xBdF852e2cc26Ea3C2dee7b493B1Fc12dA406175a",
-          "via": []
+          "target": "0xBdF852e2cc26Ea3C2dee7b493B1Fc12dA406175a"
         },
         {
           "permission": "upgrade",
-          "target": "0x0eCe16401A80551345bB672f177f51A8755FF775",
-          "via": []
+          "target": "0x0eCe16401A80551345bB672f177f51A8755FF775"
         },
         {
           "permission": "upgrade",
-          "target": "0x16193e14197c10109F3e81b938153A04A2a00190",
-          "via": []
+          "target": "0x16193e14197c10109F3e81b938153A04A2a00190"
         },
         {
           "permission": "upgrade",
-          "target": "0x28d56C3BBbe4807c19Cc81E6D5207Fb681C3726b",
-          "via": []
+          "target": "0x28d56C3BBbe4807c19Cc81E6D5207Fb681C3726b"
         },
         {
           "permission": "upgrade",
-          "target": "0x2AD84AbD52050956AcC9c490D024b821A59e3FB6",
-          "via": []
+          "target": "0x2AD84AbD52050956AcC9c490D024b821A59e3FB6"
         },
         {
           "permission": "upgrade",
-          "target": "0x443164F044D8840479234e00E7aD5bb06b85fC78",
-          "via": []
+          "target": "0x443164F044D8840479234e00E7aD5bb06b85fC78"
         },
         {
           "permission": "upgrade",
-          "target": "0x515A0c8b1d9574C65EA1924eCd767B1d9b6AC32f",
-          "via": []
+          "target": "0x515A0c8b1d9574C65EA1924eCd767B1d9b6AC32f"
         },
         {
           "permission": "upgrade",
-          "target": "0x5A0492D20D984eE904E46E6Ff24572bc755abb28",
-          "via": []
+          "target": "0x5A0492D20D984eE904E46E6Ff24572bc755abb28"
         },
         {
           "permission": "upgrade",
-          "target": "0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C",
-          "via": []
+          "target": "0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C"
         },
         {
           "permission": "upgrade",
-          "target": "0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A",
-          "via": []
+          "target": "0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A"
         },
         {
           "permission": "upgrade",
-          "target": "0xcbF423525a5471Fc5037a5397F99f6F09fe41379",
-          "via": []
+          "target": "0xcbF423525a5471Fc5037a5397F99f6F09fe41379"
         }
       ],
       "sinceTimestamp": 1716540191,
@@ -602,8 +591,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
-          "via": []
+          "target": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -652,8 +640,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C",
-          "via": []
+          "target": "0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C"
         }
       ]
     },
@@ -1343,7 +1330,7 @@
     "opstack/L2OutputOracle": "0x1d833a9768af12de67d65ad7dd09fc4b96db543bde5f5fdc2ff0ea0c571ceadf",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
     "opstack/OptimismPortal": "0xcc1b405a2bf545f58a88bb104ba298351e252fc507b40d0e1ef40bf6bbe34152",
-    "opstack/ProxyAdmin": "0x33b1f6469b9b5eb1761afba4083878f499aa61a2bd78de0d0c7731f5e13640e0",
+    "opstack/ProxyAdmin": "0x3731e451e123b81ff581a6795a991123ea030fa0841313746edc4ee05e01f0a7",
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
     "opstack/SystemConfig": "0x64961a217667137a899a8042e685df30318be47b0a07f69792414fb528d3ffc0"
   },

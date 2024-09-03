@@ -39,6 +39,11 @@ export function useBridgesFilterValues() {
   return context
 }
 
+export function useOptionalBridgesFilterValues() {
+  const context = useContext(BridgesFilterContext)
+  return context
+}
+
 export type BridgesFilterEntry = BridgesSummaryEntry | BridgesRiskEntry
 
 export function useBridgesFilter() {

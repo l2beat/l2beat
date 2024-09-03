@@ -1,3 +1,307 @@
+Generated with discovered.json: 0xd48fcc3b5c0b6352327c6b5763773d9faf2bfd73
+
+# Diff at Fri, 30 Aug 2024 07:54:44 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 20632909
+- current block number: 20632909
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20632909 (main branch discovery), not current.
+
+```diff
+    contract PolygonMultisig (0xFa7D2a996aC6350f4b56C043112Da0366a59b74c) {
+    +++ description: None
+      receivedPermissions.10.via:
+-        []
+      receivedPermissions.9.via:
+-        []
+      receivedPermissions.8.via:
+-        []
+      receivedPermissions.7.via:
+-        []
+      receivedPermissions.6.via:
+-        []
+      receivedPermissions.5.via:
+-        []
+      receivedPermissions.4.via:
+-        []
+      receivedPermissions.3.via:
+-        []
+      receivedPermissions.2.via:
+-        []
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+Generated with discovered.json: 0x893b501f63dab947ae9659982771bf04d7fb29a1
+
+# Diff at Thu, 29 Aug 2024 09:45:12 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b4b2da50e6cfefe1b7675065f33cc39284a27e44 block: 20628344
+- current block number: 20632909
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20628344 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract WithdrawManager (0x2A88696e0fFA76bAA1338F2C74497cC013495922)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ExitNFT (0xDF74156420Bd57ab387B195ed81EcA36F9fABAca)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x662970b1bf0b32ad873da4a0f522ee69aef1a773
+
+# Diff at Wed, 28 Aug 2024 16:41:41 GMT:
+
+- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
+- comparing to: main@ec0c665426c9791ef4860f527c8da5a8193eb4c2 block: 20612504
+- current block number: 20628344
+
+## Description
+
+Predicates changed as ABI for exits got a new parameter. Insignificant change wrt to risks
+
+## Watched changes
+
+```diff
+    contract ERC1155Predicate (0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f) {
+    +++ description: None
+      values.$implementation:
+-        "0xb86357daD9c3567dD70862a5b49fFFaFb0F094Ac"
++        "0xCFA65db73cB45D458d0a98006d3d558b5e1F021d"
+      values.implementation:
+-        "0xb86357daD9c3567dD70862a5b49fFFaFb0F094Ac"
++        "0xCFA65db73cB45D458d0a98006d3d558b5e1F021d"
+    }
+```
+
+```diff
+    contract MintableERC1155Predicate (0x2d641867411650cd05dB93B59964536b1ED5b1B7) {
+    +++ description: None
+      values.$implementation:
+-        "0x985Dbac75cf625dD6baB03Da784CF0D51B4bEcef"
++        "0xFD47E7d657b07B071C3362bBCe908a70895EE747"
+      values.implementation:
+-        "0x985Dbac75cf625dD6baB03Da784CF0D51B4bEcef"
++        "0xFD47E7d657b07B071C3362bBCe908a70895EE747"
+    }
+```
+
+```diff
+    contract ERC20Predicate (0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf) {
+    +++ description: None
+      values.$implementation:
+-        "0xb774EBbeF817390483FEA5bEd0F0cB0EDEBE4065"
++        "0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB"
+      values.implementation:
+-        "0xb774EBbeF817390483FEA5bEd0F0cB0EDEBE4065"
++        "0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB"
+    }
+```
+
+```diff
+    contract EtherPredicate (0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30) {
+    +++ description: None
+      values.$implementation:
+-        "0x3129B90fB7bF58A0B36226f2e6547B89C0BbdE42"
++        "0xeB185ED8f664D105903EF434E5becd214a8AC874"
+      values.implementation:
+-        "0x3129B90fB7bF58A0B36226f2e6547B89C0BbdE42"
++        "0xeB185ED8f664D105903EF434E5becd214a8AC874"
+    }
+```
+
+```diff
+    contract MintableERC721Predicate (0x932532aA4c0174b8453839A6E44eE09Cc615F2b7) {
+    +++ description: None
+      values.$implementation:
+-        "0x34AF15A166def1d89D38a70120Ea33CD8cc10C45"
++        "0xba31389292f7EdfC7b60B937b97014b4C354689b"
+      values.implementation:
+-        "0x34AF15A166def1d89D38a70120Ea33CD8cc10C45"
++        "0xba31389292f7EdfC7b60B937b97014b4C354689b"
+    }
+```
+
+```diff
+    contract MintableERC20Predicate (0x9923263fA127b3d1484cFD649df8f1831c2A74e4) {
+    +++ description: None
+      values.$implementation:
+-        "0xab00328234bC22430c78847094A68a6836574fFB"
++        "0x94D40724d6aA4AB313065006E4bA8CA448dcDfae"
+      values.implementation:
+-        "0xab00328234bC22430c78847094A68a6836574fFB"
++        "0x94D40724d6aA4AB313065006E4bA8CA448dcDfae"
+    }
+```
+
+```diff
+    contract RootChainManager (0xA0c68C638235ee32657e8f720a23ceC1bFc77C77) {
+    +++ description: None
+      values.$implementation:
+-        "0x1633012a2cB27eFBC2944f2E43b9197Bc3964359"
++        "0x8F372f5404514cec63A3F88BAac772Cc620F2281"
+      values.implementation:
+-        "0x1633012a2cB27eFBC2944f2E43b9197Bc3964359"
++        "0x8F372f5404514cec63A3F88BAac772Cc620F2281"
+    }
+```
+
+```diff
+    contract ERC721Predicate (0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD) {
+    +++ description: None
+      values.$implementation:
+-        "0x9F5B43C0d6d57a76E5B24CE05E11b70C3C7eA8Ec"
++        "0x02Bc987f54B54bf18Ca6E20a13e57508ec561072"
+      values.implementation:
+-        "0x9F5B43C0d6d57a76E5B24CE05E11b70C3C7eA8Ec"
++        "0x02Bc987f54B54bf18Ca6E20a13e57508ec561072"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@20612504 => .flat}/ERC1155Predicate/ERC1155Predicate.sol  | 4 ++++
+ .../{.flat@20612504 => .flat}/ERC20Predicate/ERC20Predicate.sol      | 4 ++++
+ .../{.flat@20612504 => .flat}/ERC721Predicate/ERC721Predicate.sol    | 4 ++++
+ .../{.flat@20612504 => .flat}/EtherPredicate/EtherPredicate.sol      | 5 +++++
+ .../MintableERC1155Predicate/MintableERC1155Predicate.sol            | 4 ++++
+ .../MintableERC20Predicate/MintableERC20Predicate.sol                | 4 ++++
+ .../MintableERC721Predicate/MintableERC721Predicate.sol              | 4 ++++
+ .../{.flat@20612504 => .flat}/RootChainManager/RootChainManager.sol  | 1 +
+ 8 files changed, 30 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20612504 (main branch discovery), not current.
+
+```diff
+    contract ERC1155Predicate (0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xFa7D2a996aC6350f4b56C043112Da0366a59b74c","via":[]}]
+    }
+```
+
+```diff
+    contract MintableERC1155Predicate (0x2d641867411650cd05dB93B59964536b1ED5b1B7) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xFa7D2a996aC6350f4b56C043112Da0366a59b74c","via":[]}]
+    }
+```
+
+```diff
+    contract ERC20Predicate (0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xFa7D2a996aC6350f4b56C043112Da0366a59b74c","via":[]}]
+    }
+```
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xFa7D2a996aC6350f4b56C043112Da0366a59b74c","via":[]}]
+    }
+```
+
+```diff
+    contract EventsHub (0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xFa7D2a996aC6350f4b56C043112Da0366a59b74c","via":[]}]
+    }
+```
+
+```diff
+    contract EtherPredicate (0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xFa7D2a996aC6350f4b56C043112Da0366a59b74c","via":[]}]
+    }
+```
+
+```diff
+    contract MintableERC721Predicate (0x932532aA4c0174b8453839A6E44eE09Cc615F2b7) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xFa7D2a996aC6350f4b56C043112Da0366a59b74c","via":[]}]
+    }
+```
+
+```diff
+    contract MintableERC20Predicate (0x9923263fA127b3d1484cFD649df8f1831c2A74e4) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xFa7D2a996aC6350f4b56C043112Da0366a59b74c","via":[]}]
+    }
+```
+
+```diff
+    contract RootChainManager (0xA0c68C638235ee32657e8f720a23ceC1bFc77C77) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xFa7D2a996aC6350f4b56C043112Da0366a59b74c","via":[]}]
+    }
+```
+
+```diff
+    contract ChainExitERC1155Predicate (0xDB2382413bCb9c2F1B6b62B52238558266361D68) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xFa7D2a996aC6350f4b56C043112Da0366a59b74c","via":[]}]
+    }
+```
+
+```diff
+    contract ERC721Predicate (0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xFa7D2a996aC6350f4b56C043112Da0366a59b74c","via":[]}]
+    }
+```
+
+```diff
+    contract PolygonMultisig (0xFa7D2a996aC6350f4b56C043112Da0366a59b74c) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f","0x2d641867411650cd05dB93B59964536b1ED5b1B7","0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf","0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908","0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b","0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30","0x932532aA4c0174b8453839A6E44eE09Cc615F2b7","0x9923263fA127b3d1484cFD649df8f1831c2A74e4","0xA0c68C638235ee32657e8f720a23ceC1bFc77C77","0xDB2382413bCb9c2F1B6b62B52238558266361D68","0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f","via":[]},{"permission":"upgrade","target":"0x2d641867411650cd05dB93B59964536b1ED5b1B7","via":[]},{"permission":"upgrade","target":"0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf","via":[]},{"permission":"upgrade","target":"0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908","via":[]},{"permission":"upgrade","target":"0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b","via":[]},{"permission":"upgrade","target":"0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30","via":[]},{"permission":"upgrade","target":"0x932532aA4c0174b8453839A6E44eE09Cc615F2b7","via":[]},{"permission":"upgrade","target":"0x9923263fA127b3d1484cFD649df8f1831c2A74e4","via":[]},{"permission":"upgrade","target":"0xA0c68C638235ee32657e8f720a23ceC1bFc77C77","via":[]},{"permission":"upgrade","target":"0xDB2382413bCb9c2F1B6b62B52238558266361D68","via":[]},{"permission":"upgrade","target":"0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x56953e56a39e1e3fb701ecb601d4eda075c91bb0
 
 # Diff at Mon, 26 Aug 2024 11:36:43 GMT:

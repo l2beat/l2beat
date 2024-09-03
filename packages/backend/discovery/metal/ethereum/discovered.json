@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20475247,
   "configHash": "0x85be15526d61d81a7d1d4555a2bb56835c1fd6e9c3d75cdfd5d4dd2ad6dd140f",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "LivenessModule",
@@ -138,38 +138,31 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xd4b1EC0DEc3C7F12abD3ec27B7514880ae1C3a37",
-          "via": []
+          "target": "0xd4b1EC0DEc3C7F12abD3ec27B7514880ae1C3a37"
         },
         {
           "permission": "upgrade",
-          "target": "0x1aaab4E20d2e4Bb992b5BCA2125e8bd3588c8730",
-          "via": []
+          "target": "0x1aaab4E20d2e4Bb992b5BCA2125e8bd3588c8730"
         },
         {
           "permission": "upgrade",
-          "target": "0x3B1F7aDa0Fcc26B13515af752Dd07fB1CAc11426",
-          "via": []
+          "target": "0x3B1F7aDa0Fcc26B13515af752Dd07fB1CAc11426"
         },
         {
           "permission": "upgrade",
-          "target": "0x3F37aBdE2C6b5B2ed6F8045787Df1ED1E3753956",
-          "via": []
+          "target": "0x3F37aBdE2C6b5B2ed6F8045787Df1ED1E3753956"
         },
         {
           "permission": "upgrade",
-          "target": "0x50D700e97967F9115e3f999bDB263d69F6704680",
-          "via": []
+          "target": "0x50D700e97967F9115e3f999bDB263d69F6704680"
         },
         {
           "permission": "upgrade",
-          "target": "0x6d0f65D59b55B0FEC5d2d15365154DcADC140BF3",
-          "via": []
+          "target": "0x6d0f65D59b55B0FEC5d2d15365154DcADC140BF3"
         },
         {
           "permission": "upgrade",
-          "target": "0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA",
-          "via": []
+          "target": "0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA"
         }
       ],
       "sinceTimestamp": 1711563575,
@@ -361,13 +354,11 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-          "via": []
+          "target": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
         },
         {
           "permission": "upgrade",
-          "target": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
-          "via": []
+          "target": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
         }
       ],
       "sinceTimestamp": 1685377355,
@@ -391,13 +382,11 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99",
-          "via": []
+          "target": "0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"
         },
         {
           "permission": "configure",
-          "target": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
-          "via": []
+          "target": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -1237,8 +1226,8 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
-    "gnosisSafeModules/DeputyGuardianModule": "0xaf5b0d62e72a14151b44a22d48bafb364c7a48b955581e4d6170558da9355712",
-    "gnosisSafeModules/LivenessModule": "0xd75d1e4e8d40e200f67ee9e7ad3d207c223529d0012960d395b78e88adeef410",
+    "gnosisSafeModules/DeputyGuardianModule": "0x609d56c883a67fb1b7cc98e2b71c1a4014a7cafe743a970ece9aa8dd742b4bf2",
+    "gnosisSafeModules/LivenessModule": "0x8162081df0fcb97a9f284af7abf967750d51b78f421e00d5ceafb3c0dc425164",
     "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
@@ -1246,7 +1235,7 @@
     "opstack/L2OutputOracle": "0x1d833a9768af12de67d65ad7dd09fc4b96db543bde5f5fdc2ff0ea0c571ceadf",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
     "opstack/OptimismPortal": "0xcc1b405a2bf545f58a88bb104ba298351e252fc507b40d0e1ef40bf6bbe34152",
-    "opstack/ProxyAdmin": "0x33b1f6469b9b5eb1761afba4083878f499aa61a2bd78de0d0c7731f5e13640e0",
+    "opstack/ProxyAdmin": "0x3731e451e123b81ff581a6795a991123ea030fa0841313746edc4ee05e01f0a7",
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
     "opstack/SystemConfig": "0x64961a217667137a899a8042e685df30318be47b0a07f69792414fb528d3ffc0"
   },

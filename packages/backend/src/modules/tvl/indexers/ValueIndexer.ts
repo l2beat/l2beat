@@ -1,12 +1,17 @@
 import {
+  AmountId,
+  AssetId,
+  PriceId,
+  createAmountId,
+  createAssetId,
+  createPriceId,
+} from '@l2beat/config'
+import {
   AmountConfigEntry,
   PriceConfigEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
-import { AmountId, createAmountId } from '../utils/createAmountId'
-import { AssetId, createAssetId } from '../utils/createAssetId'
-import { PriceId, createPriceId } from '../utils/createPriceId'
 import { getValuesConfigHash } from '../utils/getValuesConfigHash'
 import { ValueIndexerDeps } from './types'
 

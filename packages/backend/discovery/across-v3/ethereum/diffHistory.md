@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x5505aceb59200d22be98a33c394b380e7a23c7cf
+
+# Diff at Fri, 30 Aug 2024 07:50:52 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 20532552
+- current block number: 20532552
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20532552 (main branch discovery), not current.
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
 Generated with discovered.json: 0x8e35f31d9d10c1b7228c85a0ffc973980ed619c0
 
 # Diff at Fri, 23 Aug 2024 09:50:52 GMT:

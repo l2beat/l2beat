@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 
-import { chains } from '@l2beat/config'
+import { ConfigMapping, chains, createPriceId } from '@l2beat/config'
 import { assert, ChainConverter, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { Config, TvlConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
@@ -9,7 +9,6 @@ import { IndexerService } from '../../../tools/uif/IndexerService'
 import { ApplicationModule } from '../../ApplicationModule'
 import { createTvlRouter } from '../api/TvlRouter'
 import { AggregatedService } from '../api/services/AggregatedService'
-import { BreakdownService } from '../api/services/BreakdownService'
 import { TokenService } from '../api/services/TokenService'
 import { TvlService } from '../api/services/TvlService'
 import { AmountsDataService } from '../api/services/data/AmountsDataService'
@@ -18,10 +17,8 @@ import { PricesDataService } from '../api/services/data/PricesDataService'
 import { ValuesDataService } from '../api/services/data/ValuesDataService'
 import { ApiProject, AssociatedToken } from '../api/utils/types'
 import { HourlyIndexer } from '../indexers/HourlyIndexer'
-import { ConfigMapping } from '../utils/ConfigMapping'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { TvlCleaner } from '../utils/TvlCleaner'
-import { createPriceId } from '../utils/createPriceId'
 import { createChainModules } from './ChainModule'
 import { createCirculatingSupplyModule } from './CirculatingSupplyModule'
 import { createPriceModule } from './PriceModule'
@@ -45,6 +42,19 @@ export function createTvlModule(
     config.tvl.prices,
     config.tvl.amounts,
     config.tvl.projects.map((p) => p.projectId),
+  )
+
+  const tvlCleaner = new TvlCleaner(
+    clock,
+    logger,
+    syncOptimizer,
+    peripherals.database,
+    [
+      peripherals.database.amount,
+      peripherals.database.blockTimestamp,
+      peripherals.database.price,
+      peripherals.database.value,
+    ],
   )
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
@@ -122,13 +132,6 @@ export function createTvlModule(
     tokenService,
   })
 
-  const breakdownService = new BreakdownService({
-    pricesDataService,
-    amountsDataService,
-    configMapping,
-    chainConverter,
-  })
-
   const tvlService = new TvlService({
     valuesDataService,
     pricesDataService,
@@ -143,23 +146,9 @@ export function createTvlModule(
     tvlService,
     aggregatedService,
     tokenService,
-    breakdownService,
     getApiProjects(config.tvl, configMapping),
     getAssociatedTokens(config.tvl, configMapping),
     clock,
-  )
-
-  const tvlCleaner = new TvlCleaner(
-    clock,
-    logger,
-    syncOptimizer,
-    peripherals.database,
-    [
-      peripherals.database.amount,
-      peripherals.database.blockTimestamp,
-      peripherals.database.price,
-      peripherals.database.value,
-    ],
   )
 
   const start = async () => {

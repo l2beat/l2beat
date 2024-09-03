@@ -1,4 +1,45 @@
-Generated with discovered.json: 0x51cd9e477ba87793a5c37ff4cdc532c311300816
+Generated with discovered.json: 0x865a8e739118900548347a9154da2e4a57703a09
+
+# Diff at Mon, 02 Sep 2024 07:03:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8fcb30f6c613b5454aa9ecdec05a118442e9dc7b block: 19940448
+- current block number: 20661268
+
+## Description
+
+Bridge paused. Frontend will reflect this change.
+
+## Watched changes
+
+```diff
+    contract EthCrossChainManager (0x14413419452Aaf089762A0c5e95eD2A13bBC488C) {
+    +++ description: Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs.
+      values.paused:
+-        false
++        true
+    }
+```
+
+```diff
+    contract EthCrossChainManagerProxy (0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb) {
+    +++ description: Used to proxy requests from LockProxy to EthCrossChainManager and to pause/unpause it.
+      values.paused:
+-        false
++        true
+    }
+```
+
+```diff
+    contract EthCrossChainData (0xcF2afe102057bA5c16f899271045a0A37fCb10f2) {
+    +++ description: Used to store Keepers’ signatures and other parameters used by EthCrossChainManager.
+      values.paused:
+-        false
++        true
+    }
+```
+
+Generated with discovered.json: 0x1eba1523db535adcb520ecfc6989d6e1d9640800
 
 # Diff at Tue, 30 Jul 2024 11:13:44 GMT:
 

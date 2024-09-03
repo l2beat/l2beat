@@ -155,7 +155,7 @@ export default async function Page({ params: { address } }: Props) {
                 decimals: token.decimals,
                 symbol: token.symbol,
                 iconUrl: token.iconUrl,
-                bridge: token.bridgedUsing?.slug,
+                bridgedUsing: token.bridgedUsing,
                 address: token.address,
               },
               chain: {

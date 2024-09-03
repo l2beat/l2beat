@@ -177,7 +177,7 @@ describe('metaUtils', () => {
         },
         resourceConfig: {
           target: {
-            description: 'The resource config of the contract {{ #address }}',
+            description: 'The resource config of the contract {{ $.address }}',
             role: ['Guardian', 'Challenger'],
             permissions: [
               { type: 'upgrade', delay: 0 },
@@ -444,7 +444,7 @@ describe('metaUtils', () => {
   describe('interpolateDescription', () => {
     it('should correctly interpolate variables in the description', () => {
       const description =
-        'Contract with address {{ #address }} and value {{ someValue }}'
+        'Contract with address {{ $.address }} and value {{ someValue }}'
       const analysis = generateFakeAnalysis(
         EthereumAddress.from('0x1234567890123456789012345678901234567890'),
         undefined,

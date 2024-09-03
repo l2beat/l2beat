@@ -18,6 +18,7 @@ import {
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
 import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/types'
+import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
 import { type ScalingLivenessEntry } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
 import { type ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
@@ -64,6 +65,11 @@ export function useScalingFilterValues() {
   return context
 }
 
+export function useOptionalScalingFilterValues() {
+  const context = useContext(ScalingFilterContext)
+  return context
+}
+
 type ScalingEntry =
   | ScalingRiskEntry
   | ScalingFinalityEntry
@@ -72,6 +78,7 @@ type ScalingEntry =
   | ScalingCostsEntry
   | ScalingTvlEntry
   | ScalingLivenessEntry
+  | ScalingActivityEntry
 
 export function useScalingFilter() {
   const scalingFilters = useScalingFilterValues()
@@ -80,7 +87,7 @@ export function useScalingFilter() {
     (entry: ScalingEntry) => {
       const checks = [
         scalingFilters.rollupsOnly !== false
-          ? entry.category.includes('Rollup')
+          ? entry.category?.includes('Rollup')
           : undefined,
         scalingFilters.category !== undefined
           ? entry.category === scalingFilters.category

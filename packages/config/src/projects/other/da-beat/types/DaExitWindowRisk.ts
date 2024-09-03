@@ -4,6 +4,7 @@ import { DaRiskViewOptions } from './DaRiskView'
 export type DaExitWindowRisk =
   | typeof NoBridge
   | typeof Immutable
+  | typeof Enshrined
   | ReturnType<typeof Eoa>
   | ReturnType<typeof LowOrNoDelay>
   | ReturnType<typeof SecurityCouncil>
@@ -104,10 +105,19 @@ function LowOrNoDelay(delaySeconds?: number) {
   } as const
 }
 
+const Enshrined = {
+  type: 'Enshrined',
+  value: 'Immutable',
+  sentiment: 'good',
+  description:
+    'Blob commitments posted to Ethereum become irreversible after the block that includes them is finalized.',
+} as const
+
 export const DaExitWindowRisk = {
   Eoa,
   NoBridge,
   Immutable,
   LowOrNoDelay,
   SecurityCouncil,
+  Enshrined,
 } satisfies DaRiskViewOptions

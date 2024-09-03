@@ -1,4 +1,54 @@
-Generated with discovered.json: 0xfdafd8b1d8b2db1c184990490b302dd82444dc31
+Generated with discovered.json: 0xed1a5ff267d65269cdac030b1e7d6b49475b8871
+
+# Diff at Fri, 30 Aug 2024 08:01:42 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 20619826
+- current block number: 20619826
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20619826 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257) {
+    +++ description: It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.
+      receivedPermissions.8.via:
+-        []
+      receivedPermissions.7.via:
+-        []
+      receivedPermissions.6.via:
+-        []
+      receivedPermissions.5.via:
+-        []
+      receivedPermissions.4.via:
+-        []
+      receivedPermissions.3.via:
+-        []
+      receivedPermissions.2.via:
+-        []
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract ZircuitMultiSig (0xC463EaC02572CC964D43D2414023E2c6B62bAF38) {
+    +++ description: It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+Generated with discovered.json: 0x5f23bb0b276568036f80cd0694ccc59eac7d6d7d
 
 # Diff at Fri, 23 Aug 2024 09:56:30 GMT:
 
@@ -8,7 +58,7 @@ Generated with discovered.json: 0xfdafd8b1d8b2db1c184990490b302dd82444dc31
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Config changes related to changing grantedPermissions to issuedPermissions.
 
 ## Config/verification related changes
 

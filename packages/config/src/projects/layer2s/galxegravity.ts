@@ -1,21 +1,28 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { underReviewL2 } from './templates/underReview'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { subtractOne } from '../../common/assessCount'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
+import { orbitStackL2 } from './templates/orbitStack'
 import { Layer2 } from './types'
 
-export const galxegravity: Layer2 = underReviewL2({
-  id: ProjectId('galxegravity'),
+const discovery = new ProjectDiscovery('galxegravity', 'ethereum')
+
+export const galxegravity: Layer2 = orbitStackL2({
+  discovery,
+  badges: [Badge.DA.DAC, Badge.RaaS.Conduit],
+  associatedTokens: ['G'],
+  nativeToken: 'G',
   display: {
-    name: 'Gravity Alpha',
+    name: 'Gravity',
     slug: 'galxegravity',
-    provider: 'Arbitrum',
-    description: 'Gravity is an Optimium built on the Orbit stack.',
+    description:
+      'Gravity is an Optimium built on the Orbit stack. It features onchain questing has its own gas token - G. Other Galxe products are aiming to integrate with the L2 and a future migration to an L1 of the same name is planned.',
     purposes: ['Social'],
-    category: 'Optimium',
     links: {
       websites: ['https://gravity.xyz'],
-      apps: [],
+      apps: ['https://bridge.gravity.xyz/'],
       documentation: ['https://docs.gravity.xyz/'],
-      explorers: ['https://explorer.gravity.xyz/'],
+      explorers: ['https://gscan.xyz/', 'https://explorer.gravity.xyz/'],
       repositories: ['https://github.com/Galxe'],
       socialMedia: [
         'https://x.com/GravityChain',
@@ -23,13 +30,43 @@ export const galxegravity: Layer2 = underReviewL2({
         'https://t.me/GravityChain',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
-  escrows: [
-    {
-      chain: 'ethereum',
-      address: EthereumAddress('0x7983403dDA368AA7d67145a9b81c5c517F364c42'), // ERC20Bridge
-      sinceTimestamp: new UnixTime(1686211235),
-      tokens: '*',
+  isNodeAvailable: 'UnderReview',
+  bridge: discovery.getContract('Bridge'),
+  rollupProxy: discovery.getContract('RollupProxy'),
+  sequencerInbox: discovery.getContract('SequencerInbox'),
+  rpcUrl: 'https://rpc.gravity.xyz',
+  transactionApi: {
+    type: 'rpc',
+    defaultUrl: 'https://rpc.gravity.xyz',
+    defaultCallsPerMinute: 1500,
+    assessCount: subtractOne,
+    startBlock: 1,
+  },
+  chainConfig: {
+    name: 'galxegravity',
+    chainId: 1625,
+    explorerUrl: 'https://gscan.xyz/',
+    explorerApi: {
+      url: 'https://explorer.gravity.xyz/api',
+      type: 'blockscout',
     },
+    blockscoutV2ApiUrl: 'https://explorer.gravity.xyz/api/v2',
+    minTimestampForTvl: new UnixTime(1716054191), // block 1 TS
+    multicallContracts: [
+      {
+        sinceBlock: 52682,
+        batchSize: 150,
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        version: '3',
+      },
+    ],
+  },
+  nonTemplatePermissions: [
+    ...discovery.getMultisigPermission(
+      'ConduitMultisig',
+      "MultiSig that can upgrade the rollup's smart contract system (via UpgradeExecutor) and gain access to all funds.",
+    ),
   ],
 })

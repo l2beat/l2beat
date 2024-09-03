@@ -1,4 +1,99 @@
-Generated with discovered.json: 0xbd5bbb5a44e648c83b703c3791ca66b721661f83
+Generated with discovered.json: 0xa247759011073b8a4fd767846c728bae9aac6f49
+
+# Diff at Fri, 30 Aug 2024 10:28:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@78fe1115153efe3e1ba2014fd74329156dca3951 block: 20548226
+- current block number: 20640793
+
+## Description
+
+Synthetix MS changes (owns the SNX escrow).
+
+Optimism is meanwhile still using the fallback centralized FPs.
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (0xe5965Ab5962eDc7477C8520243A95517CD252fA9) {
+    +++ description: None
+      values.permissionedGamesTotal:
+-        17
++        326
+    }
+```
+
+```diff
+    contract SynthetixMultisig (0xEb3107117FEAd7de89Cd14D463D340A2E6917769) {
+    +++ description: None
+      values.$members.10:
+-        "0x562948111d50BF039A39Eea48D127f2Ae51ddF02"
+      values.$members.9:
+-        "0x1dd532CF7603a60C3ec91360f273DA3Db38545aB"
+      values.$members.8:
+-        "0x2d8cF727d37e7277D5eeDbAb853a3e8320f767Cd"
+      values.$members.7:
+-        "0x347c3190bD015FBD0e47fb90AA4917138A8A32FE"
+      values.$members.6:
+-        "0xa2fa6Ef1Fcf740b632a04B3FC56B5d3118Bbd211"
++        "0x562948111d50BF039A39Eea48D127f2Ae51ddF02"
+      values.$members.5:
+-        "0x599e835cbFC903eF09f3Dd5E08D1cF63c32AF8d8"
++        "0x347c3190bD015FBD0e47fb90AA4917138A8A32FE"
+      values.$members.4:
+-        "0xe1Efa5C91cA533E4a51884d805879249E3FCB2BC"
++        "0x599e835cbFC903eF09f3Dd5E08D1cF63c32AF8d8"
+      values.$members.3:
+-        "0x8909F73188C4fE68B283fCB1E724b2466e0BdfD0"
++        "0xe1Efa5C91cA533E4a51884d805879249E3FCB2BC"
+      values.$threshold:
+-        5
++        4
+      values.multisigThreshold:
+-        "5 of 11 (45%)"
++        "4 of 7 (57%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20548226 (main branch discovery), not current.
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.
+      receivedPermissions.8.via:
+-        []
+      receivedPermissions.7.via:
+-        []
+      receivedPermissions.6.via:
+-        []
+      receivedPermissions.5.via:
+-        []
+      receivedPermissions.4.via:
+-        []
+      receivedPermissions.3.via:
+-        []
+      receivedPermissions.2.via:
+-        []
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: It can act on behalf of 0x543bA4AADBAb8f9025686Bd03993043599c6fB04, inheriting its permissions.
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+Generated with discovered.json: 0x1394163fad243257c6846d189ed0012a66a8e1bb
 
 # Diff at Fri, 23 Aug 2024 09:53:50 GMT:
 

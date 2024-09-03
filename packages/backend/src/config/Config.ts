@@ -30,6 +30,7 @@ export interface Config {
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
   readonly implementationChangeReporterEnabled: boolean
+  readonly flatSourceModuleEnabled: boolean
   readonly lzOAppsEnabled: boolean
   readonly statusEnabled: boolean
   readonly chains: { name: string; chainId: ChainId }[]
@@ -194,4 +195,5 @@ export interface DABeatConfig {
   readonly celestiaApiUrl: string
   readonly celestiaCallsPerMinute: number
   readonly nearRpcUrl: string
+  readonly availWsUrl: string
 }

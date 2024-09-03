@@ -4,6 +4,7 @@ import {
   type Sentiment,
   type WarningValueWithSentiment,
 } from '@l2beat/shared-pure'
+import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { cn } from '~/utils/cn'
 import { sentimentToFillColor } from '~/utils/sentiment'
@@ -24,10 +25,14 @@ interface Risk {
 
 interface Props {
   risk: Risk | undefined
+  emptyMode?: 'em-dash' | 'no-info'
 }
 
-export function RiskCell({ risk }: Props) {
+export function RiskCell({ risk, emptyMode = 'no-info' }: Props) {
   if (!risk) {
+    if (emptyMode === 'em-dash') {
+      return <div className="text-xs text-[#9EA0A4]">{EM_DASH}</div>
+    }
     return <NoInfoCell />
   }
 

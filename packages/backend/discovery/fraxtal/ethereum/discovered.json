@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20460352,
   "configHash": "0xf2c4aa1cfc3e0f620dabd0fae68d003fff9a68fe04f9e95de984ce1c17e7fcc6",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "DepositContract",
@@ -83,43 +83,35 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
-          "via": []
+          "target": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE"
         },
         {
           "permission": "upgrade",
-          "target": "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc",
-          "via": []
+          "target": "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc"
         },
         {
           "permission": "upgrade",
-          "target": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
-          "via": []
+          "target": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
         },
         {
           "permission": "upgrade",
-          "target": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
-          "via": []
+          "target": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2"
         },
         {
           "permission": "upgrade",
-          "target": "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
-          "via": []
+          "target": "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"
         },
         {
           "permission": "upgrade",
-          "target": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
-          "via": []
+          "target": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4"
         },
         {
           "permission": "upgrade",
-          "target": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
-          "via": []
+          "target": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
         },
         {
           "permission": "upgrade",
-          "target": "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5",
-          "via": []
+          "target": "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5"
         }
       ],
       "sinceTimestamp": 1706811599,
@@ -554,8 +546,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
-          "via": []
+          "target": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
         }
       ],
       "ignoreInWatchMode": ["nonce"],

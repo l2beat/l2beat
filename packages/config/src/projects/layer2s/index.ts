@@ -1,4 +1,5 @@
 import { HOMEPAGE_MILESTONES } from '../../common'
+import { abstract } from './abstract'
 import { aevo } from './aevo'
 import { aiechain } from './aiechain'
 import { alephzero } from './alephzero'
@@ -23,6 +24,7 @@ import { canvasconnect } from './canvasconnect'
 import { capx } from './capx'
 import { celo } from './celo'
 import { coti } from './coti'
+import { creator } from './creator'
 import { cronoszkevm } from './cronoszkevm'
 import { cyber } from './cyber'
 import { debank } from './debank'
@@ -108,7 +110,9 @@ import { rhinofi } from './rhinofi'
 import { rise } from './rise'
 import { rss3 } from './rss3'
 import { scroll } from './scroll'
+import { silicon } from './silicon'
 import { socialnetwork } from './socialnetwork'
+import { soneium } from './soneium'
 import { sophon } from './sophon'
 import { sorare } from './sorare'
 import { specular } from './specular'
@@ -124,7 +128,6 @@ import { tanx } from './tanx'
 import { telos } from './telos'
 import { ten } from './ten'
 import { termstructure } from './termstructure'
-import { tradable } from './tradable'
 import { treasure } from './treasure'
 import { Layer2 } from './types'
 import { wirex } from './wirex'
@@ -150,6 +153,7 @@ export * from './common'
 export * from './types'
 
 export const layer2s: Layer2[] = [
+  abstract,
   aevo,
   aiechain,
   alephzero,
@@ -175,6 +179,7 @@ export const layer2s: Layer2[] = [
   cyber,
   canvasconnect,
   coti,
+  creator,
   cronoszkevm,
   debank,
   honeypot,
@@ -259,7 +264,9 @@ export const layer2s: Layer2[] = [
   rise,
   rss3,
   scroll,
+  silicon,
   sophon,
+  soneium,
   socialnetwork,
   sorare,
   specular,
@@ -275,7 +282,6 @@ export const layer2s: Layer2[] = [
   telos,
   ten,
   termstructure,
-  tradable,
   treasure,
   wirex,
   witness,

@@ -1,4 +1,46 @@
-Generated with discovered.json: 0x8b22c09f3a9e8ef988c0b9cf7961bdc484b27330
+Generated with discovered.json: 0x59c72cddb6b11c73779f7f07ea78cf0ce7383008
+
+# Diff at Fri, 30 Aug 2024 08:17:26 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 18674800
+- current block number: 18674800
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18674800 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafeL2 (0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d) {
+    +++ description: It can act on behalf of 0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E, inheriting its permissions.
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E) {
+    +++ description: None
+      receivedPermissions.4.via:
+-        []
+      receivedPermissions.3.via:
+-        []
+      receivedPermissions.2.via:
+-        []
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+Generated with discovered.json: 0x0029b9aaad77af80f4c27d0af65ed3625501792d
 
 # Diff at Fri, 23 Aug 2024 09:57:47 GMT:
 

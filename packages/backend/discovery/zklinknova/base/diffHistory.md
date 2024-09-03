@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x086346a6cadc0dd620fa64682a084e9fbf6c4c5a
+
+# Diff at Fri, 30 Aug 2024 08:17:27 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 17596075
+- current block number: 17596075
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 17596075 (main branch discovery), not current.
+
+```diff
+    contract BaseProxyAdmin (0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE) {
+    +++ description: None
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract BaseOwner (0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C) {
+    +++ description: None
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
 Generated with discovered.json: 0xdc59fa8ac919c4ce129af4e5c7295cba97e1ad8b
 
 # Diff at Fri, 23 Aug 2024 09:57:49 GMT:

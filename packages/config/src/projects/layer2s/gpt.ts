@@ -1,8 +1,10 @@
+import { Badge } from '../badges'
 import { underReviewL2 } from './templates/underReview'
 import { Layer2 } from './types'
 
 export const gpt: Layer2 = underReviewL2({
   id: 'gpt',
+  badges: [Badge.Infra.AggLayer],
   display: {
     name: 'GPT Protocol',
     slug: 'gpt',

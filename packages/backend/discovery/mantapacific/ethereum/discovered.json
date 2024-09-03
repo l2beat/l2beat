@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19531966,
   "configHash": "0x9a18ab68308a35e364ba62fda2ad1b04d8a41a6c5a298f098cf3455109bcd457",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "L2OutputOracle",
@@ -95,8 +95,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xa2DCa85BB892De55D8B262d1806114733106e8D1",
-          "via": []
+          "target": "0xa2DCa85BB892De55D8B262d1806114733106e8D1"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -247,28 +246,23 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x3Ad319BB4872F8cB75a26Ac30CC4bD2d56b67b05",
-          "via": []
+          "target": "0x3Ad319BB4872F8cB75a26Ac30CC4bD2d56b67b05"
         },
         {
           "permission": "upgrade",
-          "target": "0x30c789674ad3B458886BBC9abf42EEe19EA05C1D",
-          "via": []
+          "target": "0x30c789674ad3B458886BBC9abf42EEe19EA05C1D"
         },
         {
           "permission": "upgrade",
-          "target": "0x3B95bC951EE0f553ba487327278cAc44f29715E5",
-          "via": []
+          "target": "0x3B95bC951EE0f553ba487327278cAc44f29715E5"
         },
         {
           "permission": "upgrade",
-          "target": "0x895E00269A05848F3c9889EfA677D02fF7351a5D",
-          "via": []
+          "target": "0x895E00269A05848F3c9889EfA677D02fF7351a5D"
         },
         {
           "permission": "upgrade",
-          "target": "0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622",
-          "via": []
+          "target": "0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622"
         }
       ],
       "sinceTimestamp": 1694224847,
@@ -557,7 +551,7 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
-    "opstack/ProxyAdmin": "0x33b1f6469b9b5eb1761afba4083878f499aa61a2bd78de0d0c7731f5e13640e0"
+    "opstack/ProxyAdmin": "0x3731e451e123b81ff581a6795a991123ea030fa0841313746edc4ee05e01f0a7"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

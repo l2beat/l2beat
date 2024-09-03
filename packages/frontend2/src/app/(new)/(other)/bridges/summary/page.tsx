@@ -16,8 +16,9 @@ export const metadata = getDefaultMetadata({
 export default async function Page() {
   const [entries] = await Promise.all([
     getBridgesSummaryEntries(),
-    await api.bridges.summary.chart.prefetch({
+    api.tvl.chart.prefetch({
       range: getCookie('bridgesSummaryChartRange'),
+      filter: { type: 'bridge' },
     }),
   ])
 

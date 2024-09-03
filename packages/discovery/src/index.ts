@@ -16,6 +16,7 @@ export {
   DISCOVERY_LOGIC_VERSION,
   DiscoveryEngine,
 } from './discovery/engine/DiscoveryEngine'
+export { flattenDiscoveredSources } from './discovery/output/flattenDiscoveredSource'
 export { HandlerExecutor } from './discovery/handlers/HandlerExecutor'
 export { diffContracts, type FieldDiff } from './discovery/output/diffContracts'
 export {

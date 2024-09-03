@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20240876,
   "configHash": "0x9d96b20a841797ca5d2e377b9c244b1781d5c5b56faf0686676a0c3d77c5503a",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "FPValidator",
@@ -1575,13 +1575,11 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034",
-          "via": []
+          "target": "0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034"
         },
         {
           "permission": "upgrade",
-          "target": "0x5a54fe5234E811466D5366846283323c954310B2",
-          "via": []
+          "target": "0x5a54fe5234E811466D5366846283323c954310B2"
         }
       ],
       "sinceTimestamp": 1661448939,
@@ -1596,13 +1594,11 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x6BD792911F4B3714E88FbDf32B351632e7d22c70",
-          "via": []
+          "target": "0x6BD792911F4B3714E88FbDf32B351632e7d22c70"
         },
         {
           "permission": "upgrade",
-          "target": "0x902F09715B6303d4173037652FA7377e5b98089E",
-          "via": []
+          "target": "0x902F09715B6303d4173037652FA7377e5b98089E"
         }
       ],
       "sinceTimestamp": 1647317012,

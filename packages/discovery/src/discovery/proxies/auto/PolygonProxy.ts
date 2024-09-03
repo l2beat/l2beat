@@ -28,8 +28,8 @@ export async function detectPolygonProxy(
   return {
     type: 'Polygon proxy',
     values: {
-      $admin: admin,
-      $implementation: implementation,
+      $admin: admin.toString(),
+      $implementation: implementation.toString(),
     },
   }
 }

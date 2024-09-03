@@ -16,6 +16,7 @@ import {
 import { Gauge } from 'prom-client'
 
 import { Database } from '@l2beat/database'
+import { hashJson, sortObjectByKeys } from '@l2beat/shared'
 import { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 import { DiscoveryRunner } from './DiscoveryRunner'
@@ -176,10 +177,14 @@ export class UpdateMonitor {
       runner,
       projectConfig,
     )
-    const discovery = await runner.run(projectConfig, blockNumber, {
-      logger: this.logger,
-      injectInitialAddresses: false,
-    })
+    const { discovery, flatSources } = await runner.run(
+      projectConfig,
+      blockNumber,
+      {
+        logger: this.logger,
+        injectInitialAddresses: false,
+      },
+    )
 
     if (!previousDiscovery || !discovery) return
 
@@ -223,6 +228,14 @@ export class UpdateMonitor {
       discovery,
       version: this.version,
       configHash: projectConfig.hash,
+    })
+
+    await this.db.flatSources.upsert({
+      projectName: projectConfig.name,
+      chainId: this.chainConverter.toChainId(runner.chain),
+      blockNumber,
+      contentHash: hashJson(sortObjectByKeys(flatSources)),
+      flat: flatSources,
     })
   }
 
@@ -279,10 +292,16 @@ export class UpdateMonitor {
       },
     )
 
-    return await runner.run(projectConfig, previousDiscovery.blockNumber, {
-      logger: this.logger,
-      injectInitialAddresses: false,
-    })
+    const result = await runner.run(
+      projectConfig,
+      previousDiscovery.blockNumber,
+      {
+        logger: this.logger,
+        injectInitialAddresses: false,
+      },
+    )
+
+    return result.discovery
   }
 
   private async handleDiff(

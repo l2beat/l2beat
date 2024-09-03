@@ -38,9 +38,17 @@
     "0x2520C6b2C1FBE1813AB5c7c1018CDa39529e9FF2": "EIGEN Timelock",
     "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75": "bEIGEN token",
     "0xd6EC41E453C5E7dA5494f4d51A053Ab571712E6f": "bEIGEN Timelock",
-    "0x0c431C66F4dE941d089625E5B423D00707977060": "PauserRegistry"
+    "0x0c431C66F4dE941d089625E5B423D00707977060": "PauserRegistry",
+    "0x5e4c39ad7a3e881585e383db9827eb4811f6f647": "StrategyFactory",
+    "0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9": "StrategiesBeacon"
   },
   "overrides": {
+    "StrategiesBeacon": {
+      "description": "UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory."
+    },
+    "StrategyFactory": {
+      "description": "Factory contract for permissionless strategy creation via beacon proxies."
+    },
     "bEIGEN token": {
       "ignoreMethods": ["getPastTotalSupply", "clock"]
     },
@@ -66,82 +74,23 @@
       }
     },
     "StrategyManager": {
+      "ignoreInWatchMode": ["strategies"],
       "fields": {
         "strategies": {
           "handler": {
             "type": "arrayFromOneEvent",
             "event": "StrategyAddedToDepositWhitelist",
             "valueKey": "strategy"
-          }
+          },
+          "target": { "template": "eigenlayer/Strategy" }
         }
       }
     },
-    "rETH-Strategy": {
-      "extends": "eigenlayer/Strategy"
-    },
-    "ETHx-Strategy": {
-      "extends": "eigenlayer/Strategy"
-    },
-    "cbETH-Strategy": {
-      "extends": "eigenlayer/Strategy"
-    },
-    "stETH-Strategy": {
-      "extends": "eigenlayer/Strategy"
-    },
-    "ankrETH-Strategy": {
-      "extends": "eigenlayer/Strategy"
-    },
-    "OETH-Strategy": {
-      "extends": "eigenlayer/Strategy"
-    },
-    "osETH-Strategy": {
-      "extends": "eigenlayer/Strategy"
-    },
-    "swETH-Strategy": {
-      "extends": "eigenlayer/Strategy"
-    },
-    "wBETH-Strategy": {
-      "extends": "eigenlayer/Strategy"
-    },
-    "sfrxETH-Strategy": {
-      "extends": "eigenlayer/Strategy"
-    },
-    "RiverV1-Strategy": {
-      "extends": "eigenlayer/Strategy"
-    },
-    "METH-Strategy": {
-      "extends": "eigenlayer/Strategy"
-    },
-    "bEIGEN-Strategy": {
-      "extends": "eigenlayer/Strategy"
-    },
-    // Unverified contracts - fail tests for missing methods
-    // "sUSDe-Strategy": {
-    //   "extends": "eigenlayer/Strategy"
-    // },
-    // "reALT-Strategy": {
-    //   "extends": "eigenlayer/Strategy"
-    // },
-    // "ALT-Strategy": {
-    //   "extends": "eigenlayer/Strategy"
-    // },
     "DepositContract": {
       "ignoreInWatchMode": ["get_deposit_count", "get_deposit_root"]
     },
     "EigenPodManager": {
       "ignoreInWatchMode": ["numPods"]
-    },
-    "EigenLayerOperationsMultisig": {
-      "ignoreInWatchMode": ["nonce"]
-    },
-    "EigenLayerExecutorMultisig": {
-      "ignoreInWatchMode": ["nonce"]
-    },
-    "EigenLayerCommunityMultisig": {
-      "ignoreInWatchMode": ["nonce"]
-    },
-    "EigenLayerTokenMultisig": {
-      "ignoreInWatchMode": ["nonce"]
     },
     "EigenLayerBeaconOracle": {
       "ignoreMethods": ["findBlockRoot", "timestampToBlockRoot"]
@@ -170,43 +119,6 @@
           }
         }
       }
-    },
-    // ignore discovery, should be ignoreRelative in a strategy but it does not work
-    "0xae78736Cd615f374D3085123A210448E74Fc6393": {
-      "ignoreDiscovery": true
-    },
-    "0xA35b1B31Ce002FBF2058D22F30f95D405200A15b": {
-      "ignoreDiscovery": true
-    },
-    "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704": {
-      "ignoreDiscovery": true
-    },
-    "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84": {
-      "ignoreDiscovery": true
-    },
-    "0xE95A203B1a91a908F9B9CE46459d101078c2c3cb": {
-      "ignoreDiscovery": true
-    },
-    "0x856c4Efb76C1D1AE02e20CEB03A2A6a08b0b8dC3": {
-      "ignoreDiscovery": true
-    },
-    "0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38": {
-      "ignoreDiscovery": true
-    },
-    "0xf951E335afb289353dc249e82926178EaC7DEd78": {
-      "ignoreDiscovery": true
-    },
-    "0xa2E3356610840701BDf5611a53974510Ae27E2e1": {
-      "ignoreDiscovery": true
-    },
-    "0xac3E018457B222d93114458476f3E3416Abbe38F": {
-      "ignoreDiscovery": true
-    },
-    "0x8c1BEd5b9a0928467c9B1341Da1D7BD5e10b6549": {
-      "ignoreDiscovery": true
-    },
-    "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa": {
-      "ignoreDiscovery": true
     }
   }
 }

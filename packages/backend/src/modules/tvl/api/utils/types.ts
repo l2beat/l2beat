@@ -2,21 +2,11 @@ import { BackendProject } from '@l2beat/config'
 import {
   AmountConfigEntry,
   AssetId,
-  CanonicalAssetBreakdownData,
-  ChainId,
   EthereumAddress,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 
-export interface CanonicalAssetBreakdown {
-  assetId: AssetId
-  chainId: ChainId
-  amount: number
-  usdValue: number
-  usdPrice: string
-  escrows: CanonicalAssetBreakdownData['escrows']
-}
 export type AmountConfigMap = Map<
   ProjectId,
   (AmountConfigEntry & { configId: string })[]

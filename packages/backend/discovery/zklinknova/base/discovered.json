@@ -3,7 +3,7 @@
   "chain": "base",
   "blockNumber": 17596075,
   "configHash": "0x49f7bf7640f2f567471dbb7179bf811af73dcafa29f1fb7e91dce5adda9dc2db",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "BaseL2Gateway",
@@ -57,8 +57,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x80d12A78EfE7604F00ed07aB2f16F643301674D5",
-          "via": []
+          "target": "0x80d12A78EfE7604F00ed07aB2f16F643301674D5"
         }
       ],
       "sinceTimestamp": 1711098033,
@@ -130,8 +129,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd",
-          "via": []
+          "target": "0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -168,8 +166,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011",
-          "via": []
+          "target": "0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011"
         }
       ]
     },

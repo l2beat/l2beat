@@ -9,7 +9,7 @@ interface Props {
 
 export function OurApproachSection({ className }: Props) {
   return (
-    <GovernanceCard as="section" mobileFull className={cn(className, 'h-min')}>
+    <GovernanceCard mobileFull className={cn(className, 'h-min')}>
       <GovernanceCardHeader>Our approach</GovernanceCardHeader>
       <p className="mt-6 text-base md:text-sm">
         We recognize that achieving successful decentralized governance stands

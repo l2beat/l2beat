@@ -1,9 +1,9 @@
 {
   "name": "nova",
   "chain": "nova",
-  "blockNumber": 74799516,
-  "configHash": "0x0ae7a253225fd679b78cc06f5169ffccebb37cfa8c00f2d23027e6649a7e25c2",
-  "version": 13,
+  "blockNumber": 75517853,
+  "configHash": "0x1c226d3f76c0ec2cb1fcb3c363c2743922f2a82aebe21238fdf8d9afd72f6388",
+  "version": 14,
   "contracts": [
     {
       "name": "L2GatewayRouter",
@@ -28,16 +28,71 @@
       "derivedName": "L2GatewayRouter"
     },
     {
+      "name": "ArbChildToParentRewardRouter",
+      "address": "0x36D0170D92F66e8949eB276C3AC4FEA64f83704d",
+      "sinceTimestamp": 1721151174,
+      "values": {
+        "$immutable": true,
+        "childChainGatewayRouter": "0x0000000000000000000000000000000000000001",
+        "childChainTokenAddress": "0x0000000000000000000000000000000000000001",
+        "NATIVE_CURRENCY": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+        "parentChainTarget": "0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
+        "parentChainTokenAddress": "0x0000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "name": "GnosisSafeL2",
+      "address": "0x41C327d5fc9e29680CcD45e5E52446E0DB3DAdFd",
+      "template": "GnosisSafe",
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1678988124,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$members": [
+          "0x64379Dee676ab442B48925Ed603771f386510Ee7",
+          "0x375906ADFD34D93236084F462BB2dB0D92129Fe1",
+          "0xfE2bf40f2A9183774BF8E871d634A4E50255158B",
+          "0x290Aa3E7533c873B3326DabFe7579e86ed951428",
+          "0x4d9A23BD4DBBdC04A88B99d8d2ac450EB6b8f49C",
+          "0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe"
+        ],
+        "$threshold": 4,
+        "domainSeparator": "0x2642c966a16d60463f8e8ac8efe354e7c901780bc42df4c9186bf1c0a06c73ac",
+        "getChainId": 42170,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
+        "nonce": 1,
+        "VERSION": "1.3.0"
+      }
+    },
+    {
       "name": "L2SurplusFee",
       "address": "0x509386DbF5C0BE6fd68Df97A05fdB375136c32De",
       "sinceTimestamp": 1678990053,
       "values": {
         "$immutable": true,
-        "currentRecipientGroup": "0xa4d6665ee2121503a4513275116c9cda5eaac3a8b759ff4c41fb4cc089f0b338",
+        "currentRecipientGroup": "0xf282fbf81236cb85617464bf2345689bad849c6122d8725eeef1a4cf78e8d9a3",
         "currentRecipientWeights": "0x1d460b64f7b8ba0be629afe9b4ae65333b379985d7ea823ff4c0b8c3b5102153",
         "MAX_RECIPIENTS": 64,
         "owner": "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482",
-        "PER_RECIPIENT_GAS": 100000
+        "PER_RECIPIENT_GAS": 100000,
+        "recipientsData": [
+          {
+            "recipients": ["0xf7951D92B0C345144506576eC13Ecf5103aC905a"],
+            "weights": [10000]
+          },
+          {
+            "recipients": ["0x36D0170D92F66e8949eB276C3AC4FEA64f83704d"],
+            "weights": [10000]
+          }
+        ]
+      },
+      "fieldMeta": {
+        "recipientsData": {
+          "description": "Lists recipients and weights using events, while the latest represents the current state."
+        }
       },
       "derivedName": "RewardDistributor"
     },
@@ -125,11 +180,42 @@
       "sinceTimestamp": 1678990053,
       "values": {
         "$immutable": true,
-        "currentRecipientGroup": "0x2c40b8c2309d10d43a712b6df564ebd140153dcfe8428552d24aa294a8b34107",
+        "currentRecipientGroup": "0xc21cdeb0278022eeb6305048d7d033ce165b518e371bc91c58b76175e4f7fc2b",
         "currentRecipientWeights": "0x27c5930fa5bbbf9423b2d7e7555073eb37787a62eb8ffeac867b84726ed94af8",
         "MAX_RECIPIENTS": 64,
         "owner": "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482",
-        "PER_RECIPIENT_GAS": 100000
+        "PER_RECIPIENT_GAS": 100000,
+        "recipientsData": [
+          {
+            "recipients": [
+              "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
+              "0xD0749b3e537Ed52DE4e6a3Ae1eB6fc26059d0895",
+              "0x41C327d5fc9e29680CcD45e5E52446E0DB3DAdFd",
+              "0x02C2599aa929e2509741b44F3a13029745aB1AB2",
+              "0xA221f29236996BDEfA5C585acdD407Ec84D78447",
+              "0x0fB1f1a31429F1A90a19Ab5486a6DFb384179641",
+              "0xb814441ed86e98e8B83d31eEC095e4a5A36Fc3c2"
+            ],
+            "weights": [8000, 375, 373, 373, 373, 373, 133]
+          },
+          {
+            "recipients": [
+              "0x36D0170D92F66e8949eB276C3AC4FEA64f83704d",
+              "0xD0749b3e537Ed52DE4e6a3Ae1eB6fc26059d0895",
+              "0x41C327d5fc9e29680CcD45e5E52446E0DB3DAdFd",
+              "0x02C2599aa929e2509741b44F3a13029745aB1AB2",
+              "0xA221f29236996BDEfA5C585acdD407Ec84D78447",
+              "0x0fB1f1a31429F1A90a19Ab5486a6DFb384179641",
+              "0xb814441ed86e98e8B83d31eEC095e4a5A36Fc3c2"
+            ],
+            "weights": [8000, 375, 373, 373, 373, 373, 133]
+          }
+        ]
+      },
+      "fieldMeta": {
+        "recipientsData": {
+          "description": "Lists recipients and weights using events, while the latest represents the current state."
+        }
       },
       "derivedName": "RewardDistributor"
     },
@@ -139,23 +225,19 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8",
-          "via": []
+          "target": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
         },
         {
           "permission": "upgrade",
-          "target": "0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD",
-          "via": []
+          "target": "0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD"
         },
         {
           "permission": "upgrade",
-          "target": "0xbf544970E6BD77b21C6492C281AB60d0770451F4",
-          "via": []
+          "target": "0xbf544970E6BD77b21C6492C281AB60d0770451F4"
         },
         {
           "permission": "upgrade",
-          "target": "0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257",
-          "via": []
+          "target": "0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257"
         }
       ],
       "sinceTimestamp": 1656313068,
@@ -183,7 +265,7 @@
         "$implementation": "0x554e12DBAa0fBeB8A35583a6Fd9D04BaA4ff597f",
         "$upgradeCount": 3,
         "counterpartGateway": "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
-        "exitNum": 2238,
+        "exitNum": 2277,
         "router": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
       },
       "derivedName": "L2CustomGateway"
@@ -242,10 +324,37 @@
         "beaconProxyFactory": "0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3",
         "cloneableProxyHash": "0xe95e7b13b0b76934e55320c0f1a812918ec818f61a9b36660d64d803eeecb91a",
         "counterpartGateway": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
-        "exitNum": 835,
+        "exitNum": 843,
         "router": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
       },
       "derivedName": "L2ERC20Gateway"
+    },
+    {
+      "name": "GnosisSafeL2",
+      "address": "0xD0749b3e537Ed52DE4e6a3Ae1eB6fc26059d0895",
+      "template": "GnosisSafe",
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1676820030,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$members": [
+          "0x64379Dee676ab442B48925Ed603771f386510Ee7",
+          "0x375906ADFD34D93236084F462BB2dB0D92129Fe1",
+          "0xfE2bf40f2A9183774BF8E871d634A4E50255158B",
+          "0x290Aa3E7533c873B3326DabFe7579e86ed951428",
+          "0x4d9A23BD4DBBdC04A88B99d8d2ac450EB6b8f49C",
+          "0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe"
+        ],
+        "$threshold": 4,
+        "domainSeparator": "0x31b5f1696fef5acc8eeda3667225671f622317fd7d5925657c2852f7c65d05be",
+        "getChainId": 42170,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
+        "nonce": 3,
+        "VERSION": "1.3.0"
+      }
     },
     {
       "name": "UpgradeableBeacon",
@@ -273,13 +382,11 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482",
-          "via": []
+          "target": "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
         },
         {
           "permission": "upgrade",
-          "target": "0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD",
-          "via": []
+          "target": "0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD"
         }
       ],
       "sinceTimestamp": 1678968471,
@@ -318,21 +425,34 @@
   ],
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x0000000000000000000000000000000000000001" },
     { "address": "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae" },
+    { "address": "0x02C2599aa929e2509741b44F3a13029745aB1AB2" },
+    { "address": "0x0fB1f1a31429F1A90a19Ab5486a6DFb384179641" },
+    { "address": "0x290Aa3E7533c873B3326DabFe7579e86ed951428" },
+    { "address": "0x375906ADFD34D93236084F462BB2dB0D92129Fe1" },
     { "address": "0x3Bd8e2AC65ad6f0F094BA6766cBd9484AB49eF23" },
     { "address": "0x3E286452b1C66abB08Eb5494c3894F40aB5a59AF" },
+    { "address": "0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999" },
     { "address": "0x475816ca2a31D601B4e336f5c2418A67978aBf09" },
+    { "address": "0x4d9A23BD4DBBdC04A88B99d8d2ac450EB6b8f49C" },
     { "address": "0x5a09A94eE8198D3c474d723337aa58023810022C" },
     { "address": "0x5DD2205C3aac13E592F0a3D85188c948D1781df1" },
+    { "address": "0x64379Dee676ab442B48925Ed603771f386510Ee7" },
     { "address": "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75" },
+    { "address": "0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe" },
     { "address": "0x8F10e3413586c4a8DCfcE19D009872b19e9cd8E3" },
+    { "address": "0xA221f29236996BDEfA5C585acdD407Ec84D78447" },
     { "address": "0xA821c8c245d1F3A257e3B0DEC99268cA05144422" },
     { "address": "0xb07dc9103328A51128bC6Cc1049d1137035f5E28" },
     { "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1" },
     { "address": "0xb71ca4FFbB7b58d75Ba29891ab45e9Dc12B444Ed" },
+    { "address": "0xb814441ed86e98e8B83d31eEC095e4a5A36Fc3c2" },
     { "address": "0xE4E2121b479017955Be0b175305B35f312330BaE" },
+    { "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE" },
     { "address": "0xf7951D92B0C345144506576eC13Ecf5103aC905a" },
-    { "address": "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd" }
+    { "address": "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd" },
+    { "address": "0xfE2bf40f2A9183774BF8E871d634A4E50255158B" }
   ],
   "abis": {
     "0x099bC495EA4Fd828FEe7C636F0Ab84d0f501B96d": [
@@ -390,6 +510,26 @@
       "function revokeRole(bytes32 role, address account)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
     ],
+    "0x36D0170D92F66e8949eB276C3AC4FEA64f83704d": [
+      "constructor(address _parentChainTarget, uint256 _minDistributionIntervalSeconds, address _parentChainTokenAddress, address _childChainTokenAddress, address _childChainGatewayRouter)",
+      "error DistributionTooSoon(uint256 currentTimestamp, uint256 distributionTimestamp)",
+      "error NativeOnly()",
+      "error NotArbitrum()",
+      "error TokenDisabled(address tokenAddr)",
+      "error TokenNotRegisteredToGateway(address tokenAddr)",
+      "error ZeroAddress()",
+      "event FundsRouted(address indexed token, uint256 amount)",
+      "function NATIVE_CURRENCY() view returns (address)",
+      "function canDistribute(address _erc20orNative) view returns (bool)",
+      "function childChainGatewayRouter() view returns (address)",
+      "function childChainTokenAddress() view returns (address)",
+      "function nextDistributions(address) view returns (uint256)",
+      "function parentChainTarget() view returns (address)",
+      "function parentChainTokenAddress() view returns (address)",
+      "function routeNativeFunds()",
+      "function routeToken()",
+      "function timeToNextDistribution(address _erc20orNative) view returns (uint256)"
+    ],
     "0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -439,6 +579,9 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0x41C327d5fc9e29680CcD45e5E52446E0DB3DAdFd": [
+      "constructor(address _singleton)"
     ],
     "0x466155FD6d8BbF1c0d5ca32818814cB28b6884d8": [
       "event DepositFinalized(address indexed l1Token, address indexed _from, address indexed _to, uint256 _amount)",
@@ -644,6 +787,9 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xD0749b3e537Ed52DE4e6a3Ae1eB6fc26059d0895": [
+      "constructor(address _singleton)"
     ],
     "0xd31Ed16a8CeCe0A5070AC26024674eB680E3e639": [
       "constructor(address implementation_)",

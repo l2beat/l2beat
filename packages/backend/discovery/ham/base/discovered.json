@@ -3,7 +3,7 @@
   "chain": "base",
   "blockNumber": 17827903,
   "configHash": "0x6dbcd0a3ed37a0123922561e52e68fa8df142159233f463e8c4494e33312fbb5",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "HamMultisig1",
@@ -16,8 +16,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x5eC25263F8a79F8D5fF7bD5F493640b6E2627B49",
-          "via": []
+          "target": "0x5eC25263F8a79F8D5fF7bD5F493640b6E2627B49"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -163,43 +162,35 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xd2e0532f8AE8DeDA4b9Ad2CB79f008C97c9C25eE",
-          "via": []
+          "target": "0xd2e0532f8AE8DeDA4b9Ad2CB79f008C97c9C25eE"
         },
         {
           "permission": "upgrade",
-          "target": "0x38893659CF2b4b3E02B2dC93fe9A55Ea155a3daF",
-          "via": []
+          "target": "0x38893659CF2b4b3E02B2dC93fe9A55Ea155a3daF"
         },
         {
           "permission": "upgrade",
-          "target": "0x3c69dcFF018766c72449cd460Cc7AF8863056a43",
-          "via": []
+          "target": "0x3c69dcFF018766c72449cd460Cc7AF8863056a43"
         },
         {
           "permission": "upgrade",
-          "target": "0x80292D35789462aeD1D694899f1FaAE184Fe3E5b",
-          "via": []
+          "target": "0x80292D35789462aeD1D694899f1FaAE184Fe3E5b"
         },
         {
           "permission": "upgrade",
-          "target": "0x936c137699230c4732d534c7E968cC7cEAa6Cf45",
-          "via": []
+          "target": "0x936c137699230c4732d534c7E968cC7cEAa6Cf45"
         },
         {
           "permission": "upgrade",
-          "target": "0xad22377De22537e4e6bd192AeBCa524a79B0d3Fd",
-          "via": []
+          "target": "0xad22377De22537e4e6bd192AeBCa524a79B0d3Fd"
         },
         {
           "permission": "upgrade",
-          "target": "0xdD83c537B35d98776913D7ab60EBaA5c28F9dD01",
-          "via": []
+          "target": "0xdD83c537B35d98776913D7ab60EBaA5c28F9dD01"
         },
         {
           "permission": "upgrade",
-          "target": "0xFC57b0947C079073A1C5Fe61887Eb3495972EE72",
-          "via": []
+          "target": "0xFC57b0947C079073A1C5Fe61887Eb3495972EE72"
         }
       ],
       "sinceTimestamp": 1716591991,
@@ -251,8 +242,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xad22377De22537e4e6bd192AeBCa524a79B0d3Fd",
-          "via": []
+          "target": "0xad22377De22537e4e6bd192AeBCa524a79B0d3Fd"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -862,7 +852,7 @@
     "opstack/L2OutputOracle": "0x1d833a9768af12de67d65ad7dd09fc4b96db543bde5f5fdc2ff0ea0c571ceadf",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
     "opstack/OptimismPortal": "0xcc1b405a2bf545f58a88bb104ba298351e252fc507b40d0e1ef40bf6bbe34152",
-    "opstack/ProxyAdmin": "0x33b1f6469b9b5eb1761afba4083878f499aa61a2bd78de0d0c7731f5e13640e0",
+    "opstack/ProxyAdmin": "0x3731e451e123b81ff581a6795a991123ea030fa0841313746edc4ee05e01f0a7",
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
     "opstack/SystemConfig": "0x64961a217667137a899a8042e685df30318be47b0a07f69792414fb528d3ffc0"
   },

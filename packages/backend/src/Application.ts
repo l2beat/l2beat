@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
 
 import { createDatabase } from '@l2beat/database'
-import { LegacyDatabase } from '@l2beat/database-legacy'
 import { ApiServer } from './api/ApiServer'
 import { Config } from './config'
 import { ApplicationModule } from './modules/ApplicationModule'
@@ -10,6 +9,7 @@ import { createActivityModule } from './modules/activity/ActivityModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { createFeaturesModule } from './modules/features/FeaturesModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
+import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
 import { createHealthModule } from './modules/health/HealthModule'
 import { createImplementationChangeModule } from './modules/implementation-change-report/createImplementationChangeModule'
 import { createLzOAppsModule } from './modules/lz-oapps/createLzOAppsModule'
@@ -27,8 +27,6 @@ export class Application {
   start: () => Promise<void>
 
   constructor(config: Config, logger: Logger) {
-    const database = new LegacyDatabase(config.database, logger, config.name)
-
     const kyselyDatabase = createDatabase({
       ...config.database.connection,
       ...config.database.connectionPoolSize,
@@ -42,7 +40,7 @@ export class Application {
     )
 
     const http = new HttpClient()
-    const peripherals = new Peripherals(database, kyselyDatabase, http, logger)
+    const peripherals = new Peripherals(kyselyDatabase, http, logger)
 
     const trackedTxsModule = createTrackedTxsModule(
       config,
@@ -57,6 +55,7 @@ export class Application {
       createActivityModule(config, logger, peripherals, clock),
       createUpdateMonitorModule(config, logger, peripherals, clock),
       createImplementationChangeModule(config, logger, peripherals),
+      createFlatSourcesModule(config, logger, peripherals),
       createStatusModule(config, logger, peripherals),
       trackedTxsModule,
       createFinalityModule(
@@ -99,7 +98,6 @@ export class Application {
       }
 
       await apiServer.start()
-      await database.start()
       for (const module of modules) {
         await module?.start?.()
       }

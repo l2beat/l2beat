@@ -1,6 +1,6 @@
-import React, { type ComponentProps } from 'react'
-import { CustomLink } from './link/custom-link'
+import React from 'react'
+import { CustomLink, type CustomLinkProps } from './link/custom-link'
 
-export function OutLink(props: ComponentProps<typeof CustomLink>) {
+export function OutLink(props: CustomLinkProps) {
   return <CustomLink target="_blank" rel="noreferrer noopener" {...props} />
 }

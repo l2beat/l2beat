@@ -346,6 +346,8 @@ export const degate3: Layer2 = {
       },
     ],
     proofVerification: {
+      shortDescription:
+        'DeGate is a DEX rollup on Ethereum, based on Loopring V3.',
       aggregation: false,
       requiredTools: [
         {

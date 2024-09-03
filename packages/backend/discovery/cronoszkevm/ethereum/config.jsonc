@@ -10,7 +10,7 @@
     "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b": "DenyListOwnerMultisig"
   },
   "sharedModules": {
-    "PolygonRollupManager": "shared-zk-stack"
+    "BridgeHub": "shared-zk-stack"
   },
   "overrides": {
     "CronosZkEVMAdmin": {

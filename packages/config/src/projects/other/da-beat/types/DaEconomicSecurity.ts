@@ -2,6 +2,7 @@ export const DaEconomicSecurityType = {
   Ethereum: 'Ethereum',
   Celestia: 'Celestia',
   Near: 'Near',
+  Avail: 'Avail',
 } as const
 
 export type DaEconomicSecurityType =
@@ -39,5 +40,10 @@ export const daEconomicSecurityMeta: Record<
     symbol: 'NEAR',
     decimals: 24,
     coingeckoId: 'near',
+  },
+  Avail: {
+    symbol: 'AVAIL',
+    decimals: 18,
+    coingeckoId: 'avail',
   },
 }
