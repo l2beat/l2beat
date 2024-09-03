@@ -1,6 +1,6 @@
 import {
-  bridges,
   ConfigMapping,
+  bridges,
   getTvlAmountsConfigForProject,
   getTvlPricesConfig,
   layer2s,
