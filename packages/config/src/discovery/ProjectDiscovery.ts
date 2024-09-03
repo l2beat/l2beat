@@ -972,7 +972,8 @@ const roleDescriptions: { [key in StackRole]: string } = {
 }
 
 export function formatAsBulletPoints(description: string[]): string {
-  return description.length > 1
-    ? description.map((s) => `* ${s}\n`).join('')
-    : description.join(' ')
+  return description.join(' ')
+  // return description.length > 1
+  //   ? description.map((s) => `* ${s}\n`).join('')
+  //   : description.join(' ')
 }
