@@ -5072,6 +5072,21 @@
       "supply": "zero"
     },
     {
+      "id": "optimism:ctsi-cartesi-token",
+      "name": "Cartesi Token",
+      "coingeckoId": "cartesi",
+      "address": "0xEc6adef5E1006bb305bB1975333e8fc4071295bf",
+      "symbol": "CTSI",
+      "decimals": 18,
+      "deploymentTimestamp": 1662387816,
+      "coingeckoListingTimestamp": 1587686400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11038/large/Cartesi_Logo.png?1696510982",
+      "chainId": 10,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "optimism:dai-dai-stablecoin",
       "name": "Dai Stablecoin",
       "coingeckoId": "dai",
@@ -6544,6 +6559,7 @@
       "chainId": 1625,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
@@ -6551,8 +6567,7 @@
             "slug": "stargatev2"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     },
     {
       "id": "galxegravity:usdt-tether-usd",
@@ -6568,6 +6583,7 @@
       "chainId": 1625,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
@@ -6575,8 +6591,7 @@
             "slug": "stargatev2"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     },
     {
       "id": "galxegravity:weth-weth",
@@ -6592,6 +6607,7 @@
       "chainId": 1625,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
@@ -6599,8 +6615,7 @@
             "slug": "stargatev2"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     },
     {
       "id": "reya:usdc-usd-coin",
@@ -7257,14 +7272,14 @@
       "chainId": 34443,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
             "name": "XLink bridge"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     },
     {
       "id": "mode:alex-alex",
@@ -7280,14 +7295,14 @@
       "chainId": 34443,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
             "name": "XLink bridge"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     },
     {
       "id": "mode:rseth-kelpdao-restaked-eth",

@@ -2069,6 +2069,13 @@
   ],
   "optimism": [
     {
+      "symbol": "CTSI",
+      "address": "0xec6adef5e1006bb305bb1975333e8fc4071295bf",
+      "source": "canonical",
+      "supply": "zero",
+      "category": "other"
+    },
+    {
       "symbol": "ezETH",
       "category": "ether",
       "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
