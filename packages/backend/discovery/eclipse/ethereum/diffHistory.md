@@ -8,7 +8,7 @@ Generated with discovered.json: 0xd1d58883cb0cfd0b397d67fe177e27bc062d5ed2
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Discovery of newly verified contracts.
 
 ## Config/verification related changes
 
