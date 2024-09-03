@@ -1,5 +1,5 @@
 import { type ValueRecord } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import {
   unstable_cache as cache,
   unstable_noStore as noStore,
@@ -48,18 +48,20 @@ export const getCachedTvlChartData = cache(
         timestampValues[timestamp] = map.concat(values)
       }
     }
-
     const chart = Object.entries(timestampValues).map(([timestamp, values]) => {
       const summed = sumValuesPerSource(values, {
         forTotal: true,
         excludeAssociatedTokens: !!excludeAssociatedTokens,
       })
+      const ethPrice = ethPrices[+timestamp]
+      assert(ethPrice, 'No ETH price for ' + timestamp)
+
       return [
         +timestamp,
         Number(summed.native),
         Number(summed.canonical),
         Number(summed.external),
-        ethPrices[+timestamp]! * 100,
+        ethPrice * 100,
       ] as const
     })
 
