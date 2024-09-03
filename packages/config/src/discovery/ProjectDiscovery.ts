@@ -370,7 +370,7 @@ export class ProjectDiscovery {
 
     const multisigDesc = this.getMultisigDescription(identifier)
 
-    const combinedDescriptions = [...passedDescription, ...multisigDesc]
+    const combinedDescriptions = [...multisigDesc, ...passedDescription]
 
     const formattedDesc = useBulletPoints
       ? formatAsBulletPoints(combinedDescriptions)
@@ -744,24 +744,29 @@ export class ProjectDiscovery {
           return (
             value.permission +
             ':' +
-            (value.via !== undefined ? formatVia(value.via) : '')
+            (value.via !== undefined ? formatVia(value.via) : '') +
+            ':' +
+            (value.description ?? '')
           )
         },
       ),
     ).map(([key, entries]) => {
       const permission = key.split(':')[0] as PermissionType
       const via = key.split(':')[1] ?? ''
+      const description = key.split(':', 3)[2] ?? ''
       const prefix = ultimatePermissionToPrefix[permission]
       if (prefix === undefined) {
         return ''
       }
-      const addressesString =
+      const detailsString =
         entries
           .map((entry) => this.getContract(entry.target.toString()).name)
-          .join(', ') + via
+          .join(', ') +
+        via +
+        (description !== '' ? ` - ${description}` : '')
       return `${
         ultimatePermissionToPrefix[permission as PermissionType]
-      } ${addressesString}.`
+      } ${detailsString}.`
     })
   }
 
@@ -782,9 +787,10 @@ export class ProjectDiscovery {
       const addressesString = entries
         .map((entry) => this.getContract(entry.target.toString()).name)
         .join(', ')
+
       return `${
         directPermissionToPrefix[permission as PermissionType]
-      } ${addressesString}.`
+      } ${addressesString}. TODO DESCRIPTION`
     })
   }
 
@@ -965,10 +971,7 @@ const roleDescriptions: { [key in StackRole]: string } = {
 }
 
 export function formatAsBulletPoints(description: string[]): string {
-  // Temporarily, for clean diffs, disable bullet points.
-  // It will be enabled as part of upcoming stories.
-  return description.join(' ')
-  // return description.length > 1
-  //   ? description.map((s) => `* ${s}\n`).join('')
-  //   : description.join(' ')
+  return description.length > 1
+    ? description.map((s) => `* ${s}\n`).join('')
+    : description.join(' ')
 }

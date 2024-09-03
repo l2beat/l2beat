@@ -6,7 +6,12 @@
   "fields": {
     "$admin": {
       "target": {
-        "description": "It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component."
+        "permissions": [
+          {
+            "type": "upgrade",
+            "description": "by upgrading bridge implementation can gain access to all funds, and change any system component."
+          }
+        ]
       }
     },
     "superchainConfig": {

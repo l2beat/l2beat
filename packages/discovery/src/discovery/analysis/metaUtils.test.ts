@@ -156,7 +156,7 @@ describe('metaUtils', () => {
       const fields: { [address: string]: DiscoveryContractField } = {
         overhead: {
           target: {
-            description: 'The overhead of the contract',
+            // description: 'The overhead of the contract',
             role: 'Challenger',
             permissions: [{ type: 'configure', delay: 0 }],
             category: 'Core',
@@ -166,8 +166,8 @@ describe('metaUtils', () => {
         },
         owner: {
           target: {
-            description:
-              'The owner of the contract (some number {{ numberField }} )',
+            // description:
+            //   'The owner of the contract (some number {{ numberField }} )',
             role: 'Challenger',
             permissions: [{ type: 'configure', delay: 0 }],
             category: 'Core',
@@ -177,7 +177,7 @@ describe('metaUtils', () => {
         },
         resourceConfig: {
           target: {
-            description: 'The resource config of the contract {{ $.address }}',
+            // description: 'The resource config of the contract {{ $.address }}',
             role: ['Guardian', 'Challenger'],
             permissions: [
               { type: 'upgrade', delay: 0 },
@@ -190,7 +190,7 @@ describe('metaUtils', () => {
         },
         scalar: {
           target: {
-            description: 'The scalar of the contract',
+            // description: 'The scalar of the contract',
             role: 'Challenger',
             permissions: [{ type: 'configure', delay: 0 }],
             category: 'Core',

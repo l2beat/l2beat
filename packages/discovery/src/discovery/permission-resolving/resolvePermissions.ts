@@ -35,8 +35,8 @@ export interface Node<T = EthereumAddress> {
 export interface Edge<T = EthereumAddress> {
   permission: Permission
   delay: number
-  toNode: T
   description?: string
+  toNode: T
 }
 
 export interface PathElement<T = EthereumAddress> {

@@ -160,9 +160,11 @@ export function targetConfigToMeta(
   if (target === undefined) {
     return undefined
   }
-  const descriptions = target.description
-    ? [interpolateDescription(target.description, analysis)]
-    : undefined
+  // const descriptions = target.description
+  //   ? [interpolateDescription(target.description, analysis)]
+  //   : undefined
+
+  const descriptions = undefined
 
   const result: ContractMeta = {
     displayName: undefined,
@@ -191,6 +193,7 @@ function linkPermission(
   return {
     type: rawPermission.type,
     delay,
+    description: rawPermission.description,
     target: self,
   }
 }
