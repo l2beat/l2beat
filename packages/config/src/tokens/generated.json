@@ -5072,6 +5072,21 @@
       "supply": "zero"
     },
     {
+      "id": "optimism:ctsi-cartesi-token",
+      "name": "Cartesi Token",
+      "coingeckoId": "cartesi",
+      "address": "0xEc6adef5E1006bb305bB1975333e8fc4071295bf",
+      "symbol": "CTSI",
+      "decimals": 18,
+      "deploymentTimestamp": 1662387816,
+      "coingeckoListingTimestamp": 1587686400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11038/large/Cartesi_Logo.png?1696510982",
+      "chainId": 10,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "optimism:dai-dai-stablecoin",
       "name": "Dai Stablecoin",
       "coingeckoId": "dai",
