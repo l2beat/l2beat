@@ -93,7 +93,7 @@ export const zksyncera: Layer2 = {
     Badge.DA.EthereumBlobs,
     Badge.Stack.ZKStack,
     Badge.Other.L3HostChain,
-    Badge.Infra.ElasticChain
+    Badge.Infra.ElasticChain,
   ],
   display: {
     name: 'ZKsync Era',
