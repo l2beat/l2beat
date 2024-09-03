@@ -24,7 +24,7 @@
   "astarzkevm": true,
   "astarzkevm-dac-layer-astarzkevm-dac-bridge": true,
   "avail-no-bridge": true,
-  "avail-vectorX": false,
+  "avail-vector": false,
   "avalanche": true,
   "aviveworld": true,
   "axonum": true,

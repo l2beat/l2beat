@@ -17,12 +17,10 @@ export const vector = {
   display: {
     name: 'Vector',
     slug: 'vector',
-    description:
-      `Vector is a data availability bridge using Zero-Knowledge proofs to verify Avail data availability attestations on Ethereum.
-      `,
+    description: `Vector is a data availability bridge using Zero-Knowledge proofs to verify Avail data availability attestations on Ethereum.`,
     links: {
       websites: [],
-      documentation: [],
+      documentation: ['https://docs.succinct.xyz/'],
       repositories: ['https://github.com/succinctlabs/sp1-vector'],
       apps: [],
       explorers: [],
@@ -36,15 +34,14 @@ export const vector = {
         name: 'Vector',
         address: EthereumAddress('0x02993cdC11213985b9B13224f3aF289F03bf298d'),
         description:
-          'Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.',
+          'The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.',
       },
     ],
     risks: [],
   },
   technology: ` 
    Vector SP1 is an implementation of zero-knowledge proof circuits for Vector, Avail's Data Attestation Bridge.
-   The VectorSP1 contract should be used to store the latest data from the Avail chain, including the headers and data commitments.
-    `,
+   The VectorSP1 contract should be used to store the latest data from the Avail chain, including the headers and data commitments.`,
   permissions: [],
   usedIn: [],
   risks: {
