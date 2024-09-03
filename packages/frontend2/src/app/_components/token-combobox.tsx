@@ -57,15 +57,15 @@ export function TokenCombobox({ tokens, value, setValue, className }: Props) {
         )}
         <ChevronIcon className="ml-2 size-4 shrink-0 opacity-50 transition-transform group-data-[state=open]/popover-trigger:rotate-180" />
       </PopoverTrigger>
-      <PopoverContent className="p-0">
-        <Command>
+      <PopoverContent className="p-0" align="start">
+        <Command filter={tokenFilter}>
           <CommandInput
             placeholder="Search token..."
             reset={value ? () => setValue(undefined) : undefined}
           />
           <CommandList>
             <CommandEmpty>
-              Can&apos;t find a token you&apos;re looking for?{' '}
+              <p>Can&apos;t find a token you&apos;re looking for?</p>
               <a
                 className={linkVariants()}
                 href={externalLinks.tokenRequest}
@@ -118,6 +118,7 @@ function TokenGroup({
         <CommandItem
           key={token.assetId.toString()}
           value={token.assetId.toString()}
+          keywords={[token.name, token.symbol]}
           onSelect={onSelect}
         >
           <CheckIcon
@@ -154,7 +155,22 @@ function TokenItem({
       >
         {token.name}
       </span>
-      <span>({token.symbol})</span>
+      {!truncate && <span className="max-xs:hidden">({token.symbol})</span>}
     </div>
   )
+}
+
+function tokenFilter(
+  _: string,
+  search: string,
+  keywords: string[] | undefined,
+) {
+  if (
+    keywords?.some((keyword) =>
+      keyword.toLowerCase().includes(search.toLowerCase()),
+    )
+  ) {
+    return 1
+  }
+  return 0
 }
