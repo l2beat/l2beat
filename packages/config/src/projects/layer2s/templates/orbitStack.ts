@@ -3,6 +3,7 @@ import {
   get$Implementations,
 } from '@l2beat/discovery-types'
 import { assert, ProjectId, formatSeconds } from '@l2beat/shared-pure'
+import { utils } from 'ethers'
 
 import { unionBy } from 'lodash'
 import {
@@ -20,6 +21,7 @@ import {
   ScalingProjectRisk,
   ScalingProjectRiskView,
   ScalingProjectStateDerivation,
+  ScalingProjectStateValidation,
   ScalingProjectTechnology,
   ScalingProjectTechnologyChoice,
   ScalingProjectTransactionApi,
@@ -118,6 +120,7 @@ export interface OrbitStackConfigCommon {
   usesBlobs?: boolean
   badges?: BadgeId[]
   stage?: StageConfig
+  stateValidation?: ScalingProjectStateValidation
   stateDerivation?: ScalingProjectStateDerivation
   upgradesAndGovernance?: string
   nonTemplateContractRisks?: ScalingProjectRisk[]
@@ -207,6 +210,37 @@ export function getNitroGovernance(
   these transactions or schedule different ones but can overwrite them anyway by having full admin upgrade permissions for all the underlying smart contracts.`
 }
 
+function defaultStateValidation(
+  minimumAssertionPeriod: number,
+  currentRequiredStake: number,
+): ScalingProjectStateValidation {
+  return {
+    description:
+      'Updates to the system state can be proposed and challenged by a set of whitelisted validators. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.',
+    categories: [
+      {
+        title: 'State root proposals',
+        description: `Whitelisted validators propose state roots as children of a previous state root. A state root can have multiple conflicting children. This structure forms a graph, and therefore, in the contracts, state roots are referred to as nodes. Each proposal requires a stake, currently set to ${utils.formatEther(
+          currentRequiredStake,
+        )}, that can be slashed if the proposal is proven incorrect via a fraud proof. Stakes can be moved from one node to one of its children, either by calling \`stakeOnExistingNode\` or \`stakeOnNewNode\`. New nodes cannot be created faster than the minimum assertion period by the same validator, currently set to ${formatSeconds(
+          minimumAssertionPeriod,
+        )}. The oldest unconfirmed node is confirmed if the challenge period has passed and there are no siblings, and rejected if the parent is not a confirmed node or if the challenge period has passed and no one is staked on it.`,
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: 'none of the whitelisted verifiers checks the published state. Fraud proofs assume at least one honest and able validator.',
+            isCritical: true,
+          },
+        ],
+      },
+      {
+        title: 'Challenges',
+        description: `A challenge can be started between two siblings, i.e. two different state roots that share the same parent, by calling the \`startChallenge\` function. Validators cannot be in more than one challenge at the same time, meaning that the protocol operates with [partial concurrency](https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a). This implies that the protocol can be subject to [delay attacks](https://medium.com/offchainlabs/solutions-to-delay-attacks-on-rollups-434f9d05a07a), where a malicious actor can delay withdrawals as long as they are willing to pay the cost of losing their stakes. If the protocol is delayed attacked, the new stake requirement increases exponentially for each challenge period of delay. Challenges are played via a bisection game, where asserter and challenger play together to find the first instruction of disagreement. Such instruction is then executed onchain in the WASM OneStepProver contract to determine the winner, who then gets half of the stake of the loser. As said before, a state root is rejected only when no one left is staked on it.`,
+      },
+    ],
+  }
+}
+
 export function orbitStackCommon(
   templateVars: OrbitStackConfigCommon,
   explorerLinkFormat: string,
@@ -224,6 +258,15 @@ export function orbitStackCommon(
     'SequencerInbox',
     'sequencerVersion',
   )
+  const currentRequiredStake = templateVars.discovery.getContractValue<number>(
+    'RollupProxy',
+    'currentRequiredStake',
+  )
+  const minimumAssertionPeriod =
+    templateVars.discovery.getContractValue<number>(
+      'RollupProxy',
+      'minimumAssertionPeriod',
+    )
   const postsToExternalDA = sequencerVersion !== '0x00'
   if (postsToExternalDA) {
     assert(
@@ -279,6 +322,7 @@ export function orbitStackCommon(
     },
     chainConfig: templateVars.chainConfig,
     technology: {
+      // TODO: remove after filling state validation
       stateCorrectness: templateVars.nonTemplateTechnology
         ?.stateCorrectness ?? {
         name: 'Fraud proofs ensure state correctness',
@@ -291,24 +335,7 @@ export function orbitStackCommon(
             isCritical: true,
           },
         ],
-        references: [
-          {
-            text: 'How is fraud proven - Arbitrum documentation FAQ',
-            href: 'https://developer.offchainlabs.com/intro/#q-and-how-exactly-is-fraud-proven-sounds-complicated',
-          },
-          {
-            text: 'Arbitrum Glossary: Challenge Period',
-            href: 'https://developer.arbitrum.io/intro/glossary#challenge-period',
-          },
-          {
-            text: 'RollupUser.sol - Etherscan source code, onlyValidator modifier',
-            href: getCodeLink(templateVars.rollupProxy, explorerLinkFormat, 1), // TODO
-          },
-          {
-            text: 'Solutions to Delay Attacks on Rollups',
-            href: 'https://medium.com/offchainlabs/solutions-to-delay-attacks-on-rollups-434f9d05a07a',
-          },
-        ],
+        references: [],
       },
       dataAvailability:
         templateVars.nonTemplateTechnology?.dataAvailability ??
@@ -416,6 +443,9 @@ export function orbitStackCommon(
     ],
     nativePermissions: templateVars.nativePermissions,
     stateDerivation: templateVars.stateDerivation,
+    stateValidation:
+      templateVars.stateValidation ??
+      defaultStateValidation(minimumAssertionPeriod, currentRequiredStake),
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
     milestones: templateVars.milestones,
     knowledgeNuggets: templateVars.knowledgeNuggets,
