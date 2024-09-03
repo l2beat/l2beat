@@ -9,7 +9,7 @@ import { DacTransactionDataType } from '../types/DacTransactionDataType'
 const discovery = new ProjectDiscovery('immutablex')
 const committee = getCommittee(discovery)
 
-export const immutableXDacNew = DAC({
+export const immutableXDac = DAC({
   project: immutablex,
   links: {
     websites: ['https://immutablex.xyz/'],

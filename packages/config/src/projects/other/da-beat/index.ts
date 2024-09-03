@@ -3,13 +3,13 @@ import { ethereum } from './blockchain/ethereum/ethereum'
 import { near } from './blockchain/near/near'
 import { apexDac } from './dac/apex'
 import { arbitrumNovaDac } from './dac/arbitrumnova'
-import { astarzkEVMLayer } from './dac/astarzkEVM'
-import { degenLayer } from './dac/degen'
-import { edgelessLayer } from './dac/edgeless'
+import { astarZkEvmDac } from './dac/astarzkevm'
+import { degenDac } from './dac/degen'
+import { edgelessDac } from './dac/edgeless'
 import { eigenDA } from './dac/eigenDA'
-import { hychainLayer } from './dac/hychain'
-import { immutableXLayer } from './dac/immutablex'
-import { l3xLayer } from './dac/l3x'
+import { hychainDac } from './dac/hychain'
+import { immutableXDac } from './dac/immutablex'
+import { l3xDac } from './dac/l3x'
 import { mantleDA } from './dac/mantleDA'
 import { moltenLayer } from './dac/molten'
 import { myriaLayer } from './dac/myria'
@@ -36,8 +36,8 @@ export const daLayers: DaLayer[] = [
   zkfairLayer,
   arbitrumNovaDac,
   apexDac,
-  astarzkEVMLayer,
-  immutableXLayer,
+  astarZkEvmDac,
+  immutableXDac,
   celestia,
   ethereum,
   near,
@@ -46,18 +46,18 @@ export const daLayers: DaLayer[] = [
   reyaLayer,
   sorareLayer,
   tanxLayer,
-  hychainLayer,
+  hychainDac,
   sankoLayer,
   myriaLayer,
-  edgelessLayer,
+  edgelessDac,
   redsonicLayer,
   witnessLayer,
-  degenLayer,
+  degenDac,
   rariLayer,
   xaiLayer,
   popapexLayer,
   moltenLayer,
-  l3xLayer,
+  l3xDac,
   playblockLayer,
   mantleDA,
   eigenDA,

@@ -117,7 +117,7 @@ export function DAC(template: TemplateVars): DacDaLayer {
 
   const layerDisplay: DacDaLayer['display'] = {
     name,
-    slug: `${template.project.display.slug}-dac-layer`,
+    slug: template.project.display.slug,
     description: layerDescription,
     links,
   }
