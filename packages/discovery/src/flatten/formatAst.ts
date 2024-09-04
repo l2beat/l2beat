@@ -43,7 +43,7 @@ const FORMATTERS: {
   AssemblyMemberAccess: __REPLACE_ME__,
   AssemblyStackAssignment: __REPLACE_ME__,
   AssemblySwitch: __REPLACE_ME__,
-  BinaryOperation: __REPLACE_ME__,
+  BinaryOperation,
   Block,
   BooleanLiteral,
   Break: __REPLACE_ME__,
@@ -61,13 +61,13 @@ const FORMATTERS: {
   EnumDefinition,
   EnumValue,
   EventDefinition,
-  ExpressionStatement: __REPLACE_ME__,
+  ExpressionStatement,
   FileLevelConstant: __REPLACE_ME__,
   ForStatement: __REPLACE_ME__,
-  FunctionCall: __REPLACE_ME__,
+  FunctionCall,
   FunctionDefinition,
   FunctionTypeName: __REPLACE_ME__,
-  HexLiteral: __REPLACE_ME__,
+  HexLiteral,
   HexNumber: __REPLACE_ME__,
   Identifier,
   IfStatement: __REPLACE_ME__,
@@ -96,13 +96,19 @@ const FORMATTERS: {
   TryStatement: __REPLACE_ME__,
   TupleExpression,
   TypeDefinition,
-  UnaryOperation: __REPLACE_ME__,
+  UnaryOperation,
   UncheckedStatement: __REPLACE_ME__,
   UserDefinedTypeName,
   UsingForDeclaration,
   VariableDeclaration,
   VariableDeclarationStatement,
   WhileStatement: __REPLACE_ME__,
+}
+
+function BinaryOperation(node: AST.BinaryOperation, out: OutputStream) {
+  formatAstNode(node.left, out)
+  out.token(node.operator)
+  formatAstNode(node.right, out)
 }
 
 function Block(node: AST.Block, out: OutputStream) {
@@ -159,6 +165,7 @@ function CustomErrorDefinition(
   out.beginLine()
   out.token('error')
   out.token(node.name)
+  out.noSpace()
   out.token('(')
   formatNodeList(node.parameters, out, { separator: ',' })
   out.token(')')
@@ -197,6 +204,7 @@ function EventDefinition(node: AST.EventDefinition, out: OutputStream) {
   out.beginLine()
   out.token('event')
   out.token(node.name)
+  out.noSpace()
   out.token('(')
   formatNodeList(node.parameters, out, { separator: ',' })
   out.token(')')
@@ -205,6 +213,23 @@ function EventDefinition(node: AST.EventDefinition, out: OutputStream) {
   }
   out.token(';')
   out.endLine()
+}
+
+function ExpressionStatement(node: AST.ExpressionStatement, out: OutputStream) {
+  out.beginLine()
+  if (node.expression) {
+    formatAstNode(node.expression, out)
+  }
+  out.token(';')
+  out.endLine()
+}
+
+function FunctionCall(node: AST.FunctionCall, out: OutputStream) {
+  formatAstNode(node.expression, out)
+  out.noSpace()
+  out.token('(')
+  formatNodeList(node.arguments, out, { separator: ',' })
+  out.token(')')
 }
 
 function FunctionDefinition(node: AST.FunctionDefinition, out: OutputStream) {
@@ -223,6 +248,7 @@ function FunctionDefinition(node: AST.FunctionDefinition, out: OutputStream) {
     }
   }
 
+  out.noSpace()
   out.token('(')
   formatNodeList(node.parameters, out, { separator: ',' })
   out.token(')')
@@ -259,6 +285,10 @@ function FunctionDefinition(node: AST.FunctionDefinition, out: OutputStream) {
   }
 
   out.endLine()
+}
+
+function HexLiteral(node: AST.HexLiteral, out: OutputStream) {
+  out.token(`hex"${node.value}"`)
 }
 
 function Identifier(node: AST.Identifier, out: OutputStream) {
@@ -305,16 +335,20 @@ function InheritanceSpecifier(
   out: OutputStream,
 ) {
   formatAstNode(node.baseName, out)
-  formatNodeList(node.arguments, out, {
-    separator: ',',
-    prefix: '(',
-    suffix: ')',
-  })
+  if (node.arguments.length > 0) {
+    out.noSpace()
+    formatNodeList(node.arguments, out, {
+      separator: ',',
+      prefix: '(',
+      suffix: ')',
+    })
+  }
 }
 
 function ModifierInvocation(node: AST.ModifierInvocation, out: OutputStream) {
   out.token(node.name)
-  if (node.arguments) {
+  if (node.arguments && node.arguments.length > 0) {
+    out.noSpace()
     formatNodeList(node.arguments, out, {
       separator: ',',
       prefix: '(',
@@ -405,6 +439,20 @@ function TypeDefinition(node: AST.TypeDefinition, out: OutputStream) {
   formatAstNode(node.definition, out)
   out.token(';')
   out.endLine()
+}
+
+function UnaryOperation(node: AST.UnaryOperation, out: OutputStream) {
+  if (node.isPrefix) {
+    out.token(node.operator)
+    if (node.operator !== 'delete') {
+      out.noSpace()
+    }
+  }
+  formatAstNode(node.subExpression, out)
+  if (!node.isPrefix) {
+    out.noSpace()
+    out.token(node.operator)
+  }
 }
 
 function UserDefinedTypeName(node: AST.UserDefinedTypeName, out: OutputStream) {
@@ -517,6 +565,7 @@ class OutputStream {
 
   private isLineStart = true
   private indented = false
+  private hintNoSpace = false
 
   private previous = ''
 
@@ -529,8 +578,8 @@ class OutputStream {
       this.appendRaw(this.indent.repeat(this.level))
     }
     if (
+      this.hintNoSpace ||
       this.isLineStart ||
-      (token === '(' && this.previous !== 'returns' && this.previous !== '=') ||
       token === ')' ||
       token === ';' ||
       (token === ',' && this.previous !== ',') ||
@@ -542,8 +591,13 @@ class OutputStream {
       this.result += ' ' + token
     }
     this.previous = token
+    this.hintNoSpace = false
     this.isLineStart = false
     this.indented = false
+  }
+
+  noSpace() {
+    this.hintNoSpace = true
   }
 
   private appendRaw(value: string) {
@@ -638,9 +692,12 @@ function formatOverride(
   out: OutputStream,
 ) {
   out.token('override')
-  formatNodeList(override, out, {
-    separator: ',',
-    prefix: '(',
-    suffix: ')',
-  })
+  if (override.length > 0) {
+    out.noSpace()
+    formatNodeList(override, out, {
+      separator: ',',
+      prefix: '(',
+      suffix: ')',
+    })
+  }
 }

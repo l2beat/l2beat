@@ -38,6 +38,10 @@ contract Test {
 	using a.b for uint global;
 	using { a.b, c.d as + } for uint;
 
+	uint256 foo;
+	address immutable foo;
+	address constant foo;
+
 	type Money is uint;
 
 	struct Vector2 {
@@ -54,6 +58,17 @@ contract Test {
 		uint256 foo = 1 wei;
 		uint256 foo = 1_2_34.5 ether;
 		(uint256 foo, , string a) = (1, true, "hello");
+		bytes foo = hex"12_34_ab_CD";
+		uint256 foo = 0x12_34_ab_CD;
+
+		bool a = !true;
+		x++;
+		++x;
+		uint256 x = 1 + 2;
+		uint256 y = 1 + (2 + 3);
+		uint256 z = 1 * (2 + 3);
+		address foo = bar();
+		address foo = bar(1, 2);
 	}
 
 	function foo() public {}
