@@ -9,7 +9,7 @@ export const SP1Blobstream: ZkCatalogProject = {
   },
   proofVerification: {
     shortDescription: 'Celestia ZK light client implementation.',
-    aggregation: false,
+    aggregation: true,
     verifiers: [
       {
         name: 'Blobstream SP1 Verifier (Ethereum)',
