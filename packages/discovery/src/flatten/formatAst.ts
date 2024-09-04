@@ -45,7 +45,7 @@ const FORMATTERS: {
   AssemblySwitch: __REPLACE_ME__,
   BinaryOperation: __REPLACE_ME__,
   Block,
-  BooleanLiteral: __REPLACE_ME__,
+  BooleanLiteral,
   Break: __REPLACE_ME__,
   BreakStatement: __REPLACE_ME__,
   CatchClause: __REPLACE_ME__,
@@ -84,7 +84,7 @@ const FORMATTERS: {
   NameValueExpression: __REPLACE_ME__,
   NameValueList: __REPLACE_ME__,
   NewExpression: __REPLACE_ME__,
-  NumberLiteral: __REPLACE_ME__,
+  NumberLiteral,
   PragmaDirective,
   ReturnStatement: __REPLACE_ME__,
   RevertStatement: __REPLACE_ME__,
@@ -94,14 +94,14 @@ const FORMATTERS: {
   StructDefinition,
   ThrowStatement: __REPLACE_ME__,
   TryStatement: __REPLACE_ME__,
-  TupleExpression: __REPLACE_ME__,
+  TupleExpression,
   TypeDefinition,
   UnaryOperation: __REPLACE_ME__,
   UncheckedStatement: __REPLACE_ME__,
   UserDefinedTypeName,
   UsingForDeclaration,
   VariableDeclaration,
-  VariableDeclarationStatement: __REPLACE_ME__,
+  VariableDeclarationStatement,
   WhileStatement: __REPLACE_ME__,
 }
 
@@ -114,6 +114,10 @@ function Block(node: AST.Block, out: OutputStream) {
   out.popIndent()
   out.token('}')
   out.endLine()
+}
+
+function BooleanLiteral(node: AST.BooleanLiteral, out: OutputStream) {
+  out.token(node.value ? 'true' : 'false')
 }
 
 function ContractDefinition(node: AST.ContractDefinition, out: OutputStream) {
@@ -319,6 +323,13 @@ function ModifierInvocation(node: AST.ModifierInvocation, out: OutputStream) {
   }
 }
 
+function NumberLiteral(node: AST.NumberLiteral, out: OutputStream) {
+  out.token(node.number)
+  if (node.subdenomination) {
+    out.token(node.subdenomination)
+  }
+}
+
 function PragmaDirective(node: AST.PragmaDirective, out: OutputStream) {
   out.beginLine()
   out.token('pragma')
@@ -371,6 +382,19 @@ function StructDefinition(node: AST.StructDefinition, out: OutputStream) {
   out.popIndent()
   out.token('}')
   out.endLine()
+}
+
+function TupleExpression(node: AST.TupleExpression, out: OutputStream) {
+  out.token('(')
+  forEachSeparator(node.components, (n, separate) => {
+    if (n) {
+      formatAstNode(n as AST.ASTNode, out)
+    }
+    if (separate) {
+      out.token(',')
+    }
+  })
+  out.token(')')
 }
 
 function TypeDefinition(node: AST.TypeDefinition, out: OutputStream) {
@@ -452,6 +476,36 @@ function VariableDeclaration(node: AST.VariableDeclaration, out: OutputStream) {
   }
 }
 
+function VariableDeclarationStatement(
+  node: AST.VariableDeclarationStatement,
+  out: OutputStream,
+) {
+  out.beginLine()
+  if (node.variables) {
+    if (node.variables.length === 1) {
+      // biome-ignore lint/style/noNonNullAssertion: we know it's there
+      formatAstNode(node.variables[0]! as AST.ASTNode, out)
+    } else {
+      out.token('(')
+      forEachSeparator(node.variables, (n, separate) => {
+        if (n) {
+          formatAstNode(n as AST.ASTNode, out)
+        }
+        if (separate) {
+          out.token(',')
+        }
+      })
+      out.token(')')
+    }
+  }
+  if (node.initialValue) {
+    out.token('=')
+    formatAstNode(node.initialValue, out)
+  }
+  out.token(';')
+  out.endLine()
+}
+
 // --- HELPERS ---
 
 class OutputStream {
@@ -476,10 +530,10 @@ class OutputStream {
     }
     if (
       this.isLineStart ||
-      (token === '(' && this.previous !== 'returns') ||
+      (token === '(' && this.previous !== 'returns' && this.previous !== '=') ||
       token === ')' ||
       token === ';' ||
-      token === ',' ||
+      (token === ',' && this.previous !== ',') ||
       this.previous === '(' ||
       (token === '}' && this.previous === '{')
     ) {

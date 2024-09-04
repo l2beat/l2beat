@@ -49,7 +49,12 @@ contract Test {
 
 	constructor(uint a, bytes calldata b) payable onlyFullMoon {}
 
-	function foo() {}
+	function foo() {
+		uint256 foo = 1;
+		uint256 foo = 1 wei;
+		uint256 foo = 1_2_34.5 ether;
+		(uint256 foo, , string a) = (1, true, "hello");
+	}
 
 	function foo() public {}
 
