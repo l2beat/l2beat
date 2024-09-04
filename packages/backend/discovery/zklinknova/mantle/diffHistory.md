@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x3f175e737441e0168f3f17bb38ed09bb8523ebc9
+
+# Diff at Wed, 04 Sep 2024 07:32:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@878a951312cec062f5003f6749f781861b0cdba1 block: 66927056
+- current block number: 68652420
+
+## Description
+
+Set forwardFeeAllocator to MantleOwner MS. The forwardFee consists of fees paid to 'validators' for `requestL2Transaction()`.
+
+## Watched changes
+
+```diff
+    contract zkLink (0xD784d7128B46B60Ca7d8BdC17dCEC94917455657) {
+    +++ description: None
+      values.forwardFeeAllocator:
+-        "0x0000000000000000000000000000000000000000"
++        "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60"
+    }
+```
+
 Generated with discovered.json: 0x3df07a64992ffdc4f0c99745024eacb4dc59de4d
 
 # Diff at Fri, 30 Aug 2024 08:17:42 GMT:
