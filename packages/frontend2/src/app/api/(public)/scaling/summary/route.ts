@@ -7,8 +7,13 @@ export async function GET() {
     data: entries.reduce<Record<string, unknown>>((acc, entry) => {
       acc[entry.id] = {
         ...entry,
-        // Remap change to change7d
-        tvl: { ...entry.tvl, change: undefined, change7d: entry.tvl.change },
+        // Remap change to change7d, remove TVL warnings
+        tvl: {
+          ...entry.tvl,
+          change: undefined,
+          warnings: undefined,
+          change7d: entry.tvl.change,
+        },
         // For stage - only return the stage name
         stage: entry.stage.stage,
         // Strip out the following fields
