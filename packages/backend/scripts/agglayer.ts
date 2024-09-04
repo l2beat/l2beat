@@ -1,10 +1,13 @@
 import { tokenList } from '@l2beat/config/src'
 import {
+  assert,
   ChainId,
+  CoingeckoId,
   EthereumAddress,
-  UnixTime,
+  Token,
   notUndefined,
 } from '@l2beat/shared-pure'
+import fetch from 'node-fetch'
 import {
   http,
   Address,
@@ -21,40 +24,48 @@ const CHAINS = [
   {
     name: 'Polygon zkEVM',
     rpcUrl: 'https://zkevm-rpc.com',
-    premintedEth: 200000000000000000000000000n,
+    premintedNative: 200000000000000000000000000n,
+    nativeToken: 'ETH',
   },
   {
     name: 'X Layer',
     rpcUrl: 'https://rpc.xlayer.tech',
-    premintedEth: 0n,
+    premintedNative: 0n,
+    nativeToken: 'OKB',
+    additionalTokens: [
+      {
+        symbol: 'ETH',
+        address: EthereumAddress('0x5a77f1443d16ee5761d310e38b62f77f726bc71c'),
+        decimals: 18,
+        alreadyWrapped: true,
+      } as unknown as Token & { alreadyWrapped?: boolean },
+    ],
   },
   {
     name: 'Astar zkEVM',
     rpcUrl: 'https://rpc.startale.com/astar-zkevm',
-    premintedEth: 340282366920938463463374607431768211455n,
+    premintedNative: 340282366920938463463374607431768211455n,
+    nativeToken: 'ETH',
   },
   {
     name: 'GPT',
     rpcUrl: 'https://sequencer.gptprotocol.io',
-    premintedEth: 340282366920938463463374607431768211455n,
+    premintedNative: 340282366920938463463374607431768211455n,
+    nativeToken: 'GPT',
   },
   {
     name: 'Silicon',
     rpcUrl: 'https://rpc.silicon.network',
-    premintedEth: 340282366920938463463374607431768211455n,
+    premintedNative: 340282366920938463463374607431768211455n,
+    nativeToken: 'ETH',
   },
   {
     name: 'Wirex',
     rpcUrl: 'https://pay-chain-rpc.wirexpaychain.com',
-    premintedEth: 340282366920938463463374607431768211455n,
+    premintedNative: 340282366920938463463374607431768211455n,
+    nativeToken: 'ETH',
   },
-] as const
-
-interface Token {
-  address: EthereumAddress
-  symbol: string
-  decimals: number
-}
+]
 
 // same address on all the chains
 const BRIDGE_ADDRESS = '0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe' as Address
@@ -83,10 +94,14 @@ const ETHEREUM = {
   rpcUrl: 'https://eth.llamarpc.com',
 }
 
-const TIMESTAMP = UnixTime.fromDate(new Date('2024-09-01T00:00:00Z'))
-
-const ethereumBalances: Record<string, number> = {}
+const ethereumBalances: Record<
+  string,
+  { amount: number; coingeckoId: CoingeckoId }
+> = {}
 const L2sBalances: Record<string, number> = {}
+
+const tvlMap = new Map<string, number>()
+let prices: Map<string, number>
 
 async function main() {
   const tokensOnEthereum = tokenList.filter(
@@ -94,12 +109,26 @@ async function main() {
       token.chainId === ChainId.ETHEREUM && token.address !== undefined,
   )
 
-  console.log(`Processing ${ETHEREUM.name} balances`)
-  const ethereumClient = createPublicClient({
-    transport: http(ETHEREUM.rpcUrl),
-  })
+  prices = await fetchPrices([
+    ...tokensOnEthereum.map(({ coingeckoId, symbol }) => ({
+      symbol,
+      coingeckoId,
+    })),
+    {
+      symbol: 'ETH',
+      coingeckoId: CoingeckoId('ethereum'),
+    },
+  ])
+  console.log('Fetched prices for', prices.size, 'tokens')
 
-  await getEthereumBalances(ethereumClient, tokensOnEthereum)
+  await getEthereumBalances(tokensOnEthereum)
+
+  const tvl = tvlMap.get('Ethereum')
+  if (tvl) {
+    console.log('---')
+    console.log(`TVL: $${formatNumberWithCommas(tvl)}`)
+  }
+  console.log('---------------------------------')
 
   for (const chain of CHAINS) {
     console.log(`Processing ${chain.name}`)
@@ -108,77 +137,125 @@ async function main() {
       transport: http(chain.rpcUrl),
     })
 
-    const currentBlock = await chainClient.getBlockNumber()
-
-    console.log(`${chain.name} - Searching for block on or before ${TIMESTAMP}`)
-    const blockOnTimestamp = await getBlockNumberAtOrBefore(
-      TIMESTAMP,
-      0,
-      Number(currentBlock),
-      chainClient.getBlock,
-    )
-    console.log(`${chain.name} - Found block ${blockOnTimestamp}`)
-
     const etherSupply = await chainClient.getBalance({
       address: BRIDGE_ADDRESS as Address,
-      blockNumber: BigInt(blockOnTimestamp),
     })
 
     if (etherSupply > 0n) {
-      const key = 'ETH'
+      const tokenPrice = prices.get(chain.nativeToken)
+      if (!tokenPrice) {
+        console.log(
+          `${chain.nativeToken}: ${formatEther(
+            chain.premintedNative - etherSupply,
+          )} ${chain.nativeToken}`,
+        )
+      } else {
+        const chainTVL = tvlMap.get(chain.name) ?? 0
+        tvlMap.set(
+          chain.name,
+          chainTVL +
+            tokenPrice *
+              Number(formatEther(chain.premintedNative - etherSupply)),
+        )
+        console.log(
+          `${chain.nativeToken}: ${formatEther(
+            chain.premintedNative - etherSupply,
+          )} ${chain.nativeToken} --- $${
+            tokenPrice *
+            Number(formatEther(chain.premintedNative - etherSupply))
+          }`,
+        )
+      }
+      const key = chain.nativeToken
       L2sBalances[key] =
         (L2sBalances[key] || 0) +
-        Number(formatEther(chain.premintedEth - etherSupply))
+        Number(formatEther(chain.premintedNative - etherSupply))
     }
-
-    console.log(`ETH: ${formatEther(chain.premintedEth - etherSupply)} ETH`)
 
     const supportsMulticall = await checkMulticallSupport(chainClient)
 
     await processBatches(
       chainClient,
-      tokensOnEthereum,
+      [...tokensOnEthereum, ...(chain.additionalTokens ?? [])],
       supportsMulticall,
-      BigInt(blockOnTimestamp),
+      chain.name,
     )
 
     console.log('---')
+    const tvl = tvlMap.get(chain.name)
+    if (tvl) {
+      console.log(`TVL: $${formatNumberWithCommas(tvl)}`)
+    }
+    console.log('---------------------------------')
   }
 
   Object.entries(L2sBalances).forEach(([symbol, balance]) => {
-    if (ethereumBalances[symbol] - balance !== 0) {
-      console.log(`Diff: ${ethereumBalances[symbol] - balance} ${symbol}`)
+    if (symbol === 'GPT') {
+      console.log(`Diff: ${0 - balance} ${symbol}`)
+      return
+    }
+    if (ethereumBalances[symbol].amount - balance !== 0) {
+      console.log(
+        `Diff: ${ethereumBalances[symbol].amount - balance} ${symbol}`,
+      )
     }
   })
+
+  console.log('---------------------------------')
+  const ethTvl = tvlMap.get('Ethereum')
+  const totalTvl = Array.from(tvlMap.entries())
+    .filter(([key]) => key !== 'Ethereum')
+    .reduce((acc, [, value]) => acc + value, 0)
+  if (ethTvl && totalTvl) {
+    console.log(`Total TVL Diff: $${formatNumberWithCommas(ethTvl - totalTvl)}`)
+  }
 }
 
-async function getEthereumBalances(
-  ethereumClient: PublicClient,
-  tokensOnEthereum: Token[],
-) {
-  const currentBlock = await ethereumClient.getBlockNumber()
+export function formatNumberWithCommas(value: number): string {
+  const formattedNumber = value.toLocaleString('en-US', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })
 
-  console.log(`Ethereum - Searching for block on or before ${TIMESTAMP}`)
-  const ethereumBlock = await getBlockNumberAtOrBefore(
-    TIMESTAMP,
-    0,
-    Number(currentBlock),
-    ethereumClient.getBlock,
-  )
-  console.log(`Ethereum - Found block ${ethereumBlock}`)
+  return formattedNumber
+}
+
+async function getEthereumBalances(tokensOnEthereum: Token[]) {
+  console.log(`Processing ${ETHEREUM.name} balances`)
+  const ethereumClient = createPublicClient({
+    transport: http(ETHEREUM.rpcUrl),
+  })
 
   const ethereumEtherSupply = await ethereumClient.getBalance({
     address: BRIDGE_ADDRESS as Address,
-    blockNumber: BigInt(ethereumBlock),
   })
 
-  ethereumBalances['ETH'] = Number(formatEther(ethereumEtherSupply))
+  if (ethereumEtherSupply > 0n) {
+    const tokenPrice = prices.get('ETH')
+    assert(tokenPrice !== undefined, `Price not found for ETH`)
+    if (tokenPrice) {
+      const chainTVL = tvlMap.get('Ethereum') ?? 0
+      tvlMap.set(
+        'Ethereum',
+        chainTVL + tokenPrice * Number(formatEther(ethereumEtherSupply)),
+      )
+    }
+    ethereumBalances['ETH'] = {
+      amount: Number(formatEther(ethereumEtherSupply)),
+      coingeckoId: CoingeckoId('ethereum'),
+    }
+    console.log(
+      `ETH: ${formatEther(ethereumEtherSupply)} ETH --- $${
+        tokenPrice * Number(formatEther(ethereumEtherSupply))
+      }`,
+    )
+  }
 
   for (let i = 0; i < tokensOnEthereum.length; i += BATCH_SIZE) {
     const batch = tokensOnEthereum.slice(i, i + BATCH_SIZE)
 
     const calls = batch.map((token) => ({
-      target: token.address.toString() as Address,
+      target: token.address?.toString() as Address,
       callData: encodeFunctionData({
         abi: ERC20_ABI,
         functionName: 'balanceOf',
@@ -191,7 +268,6 @@ async function getEthereumBalances(
       abi: MUTLICALL_ABI,
       functionName: 'aggregate',
       args: [calls],
-      blockNumber: BigInt(ethereumBlock),
     })
 
     returnData.forEach((data, i) => {
@@ -203,10 +279,31 @@ async function getEthereumBalances(
       })
 
       if (bridgeBalance > 0n) {
+        const tokenPrice = prices.get(token.symbol)
+        assert(tokenPrice !== undefined, `Price not found for ${token.symbol}`)
+        if (tokenPrice) {
+          const chainTVL = tvlMap.get('Ethereum') ?? 0
+          tvlMap.set(
+            'Ethereum',
+            chainTVL +
+              tokenPrice * Number(formatUnits(bridgeBalance, token.decimals)),
+          )
+        }
         const key = token.symbol
-        ethereumBalances[key] =
-          (ethereumBalances[key] || 0) +
-          Number(formatUnits(bridgeBalance, token.decimals))
+        ethereumBalances[key] = {
+          amount:
+            (ethereumBalances[key]?.amount || 0) +
+            Number(formatUnits(bridgeBalance, token.decimals)),
+          coingeckoId: ethereumBalances[key]?.coingeckoId || token.coingeckoId,
+        }
+
+        console.log(
+          `${token.symbol}: ${formatUnits(bridgeBalance, token.decimals)} ${
+            token.symbol
+          } --- $${
+            tokenPrice * Number(formatUnits(bridgeBalance, token.decimals))
+          }`,
+        )
       }
     })
   }
@@ -230,32 +327,35 @@ async function checkMulticallSupport(
 
 async function processBatches(
   chainClient: PublicClient,
-  tokens: Token[],
+  tokens: (Token & { alreadyWrapped?: boolean })[],
   supportsMulticall: boolean,
-  blockNumber: bigint,
+  chainName: string,
 ) {
   for (let i = 0; i < tokens.length; i += BATCH_SIZE) {
     const batch = tokens.slice(i, i + BATCH_SIZE)
 
     if (supportsMulticall) {
-      await processBatchWithMulticall(chainClient, batch, blockNumber)
+      await processBatchWithMulticall(chainClient, batch, chainName)
     } else {
-      await processBatchIndividually(chainClient, batch, blockNumber)
+      await processBatchIndividually(chainClient, batch, chainName)
     }
   }
 }
 
 async function processBatchWithMulticall(
   chainClient: PublicClient,
-  batch: Token[],
-  blockNumber: bigint,
+  batch: (Token & { alreadyWrapped?: boolean })[],
+  chainName: string,
 ) {
-  const calls = batch.map((token) => ({
+  const tokens = batch.filter((token) => !token.alreadyWrapped)
+  const additionalTokens = batch.filter((token) => token.alreadyWrapped)
+
+  const calls = tokens.map((token) => ({
     target: BRIDGE_ADDRESS,
     callData: encodeFunctionData({
       abi: BRIDGE_ABI,
       functionName: 'getTokenWrappedAddress',
-      args: [0, token.address.toString() as Address],
+      args: [0, token.address?.toString() as Address],
     }),
   }))
 
@@ -264,7 +364,6 @@ async function processBatchWithMulticall(
     abi: MUTLICALL_ABI,
     functionName: 'aggregate',
     args: [calls],
-    blockNumber,
   })
 
   const foundTokens = tokenAddressesReturnData
@@ -302,7 +401,6 @@ async function processBatchWithMulticall(
     abi: MUTLICALL_ABI,
     functionName: 'aggregate',
     args: [totalSupplyCalls],
-    blockNumber,
   })
 
   const decoded = totalSupplyReturnData.map((data, i) => {
@@ -317,8 +415,60 @@ async function processBatchWithMulticall(
     }
   })
 
-  decoded.forEach((data) => {
+  const additionalTotalSupplyCalls = additionalTokens.map((data) => {
+    return {
+      target: data.address as unknown as Address,
+      callData: encodeFunctionData({
+        abi: ERC20_ABI,
+        functionName: 'totalSupply',
+      }),
+    }
+  })
+
+  const [, additionalTotalSupplyReturnData] = await chainClient.readContract({
+    address: MULTICALL_ADDRESS,
+    abi: MUTLICALL_ABI,
+    functionName: 'aggregate',
+    args: [additionalTotalSupplyCalls],
+  })
+
+  const additionalDecoded = additionalTotalSupplyReturnData.map((data, i) => {
+    const token = additionalTokens[i]
+    return {
+      token,
+      totalSupply: decodeFunctionResult({
+        abi: ERC20_ABI,
+        functionName: 'totalSupply',
+        data,
+      }),
+    }
+  })
+
+  additionalDecoded.concat(decoded).forEach((data) => {
     if (data.totalSupply > 0n) {
+      const tokenPrice = prices.get(data.token.symbol)
+      if (!tokenPrice) {
+        console.log(
+          `${data.token.symbol}: ${formatUnits(
+            data.totalSupply,
+            data.token.decimals,
+          )} ${data.token.symbol}`,
+        )
+        return
+      }
+      assert(
+        tokenPrice !== undefined,
+        `Price not found for ${data.token.symbol}`,
+      )
+      if (tokenPrice) {
+        const chainTVL = tvlMap.get(chainName) ?? 0
+        tvlMap.set(
+          chainName,
+          chainTVL +
+            tokenPrice *
+              Number(formatUnits(data.totalSupply, data.token.decimals)),
+        )
+      }
       const key = data.token.symbol
       L2sBalances[key] =
         (L2sBalances[key] || 0) +
@@ -328,7 +478,10 @@ async function processBatchWithMulticall(
         `${data.token.symbol}: ${formatUnits(
           data.totalSupply,
           data.token.decimals,
-        )} ${data.token.symbol}`,
+        )} ${data.token.symbol} --- $${
+          tokenPrice *
+          Number(formatUnits(data.totalSupply, data.token.decimals))
+        }`,
       )
     }
   })
@@ -337,7 +490,7 @@ async function processBatchWithMulticall(
 async function processBatchIndividually(
   chainClient: PublicClient,
   batch: Token[],
-  blockNumber: bigint,
+  chainName: string,
 ) {
   for (const token of batch) {
     try {
@@ -345,8 +498,7 @@ async function processBatchIndividually(
         address: BRIDGE_ADDRESS,
         abi: BRIDGE_ABI,
         functionName: 'getTokenWrappedAddress',
-        args: [0, token.address.toString() as Address],
-        blockNumber,
+        args: [0, token.address?.toString() as Address],
       })) as Address
 
       if (l2TokenAddress === '0x0000000000000000000000000000000000000000') {
@@ -360,6 +512,20 @@ async function processBatchIndividually(
       })) as bigint
 
       if (totalSupply > 0n) {
+        const tokenPrice = prices.get(token.symbol)
+        assert(tokenPrice !== undefined, `Price not found for ${token.symbol}`)
+        if (tokenPrice) {
+          const chainTVL = tvlMap.get(chainName) ?? 0
+          tvlMap.set(
+            chainName,
+            chainTVL +
+              tokenPrice * Number(formatUnits(totalSupply, token.decimals)),
+          )
+        }
+        const key = token.symbol
+        L2sBalances[key] =
+          (L2sBalances[key] || 0) +
+          Number(formatUnits(totalSupply, token.decimals))
         console.log(
           `${token.symbol}: ${formatUnits(totalSupply, token.decimals)} ${
             token.symbol
@@ -372,28 +538,33 @@ async function processBatchIndividually(
   }
 }
 
-async function getBlockNumberAtOrBefore(
-  timestamp: UnixTime,
-  start: number,
-  end: number,
-  getBlock: ({
-    blockNumber,
-  }: { blockNumber: bigint }) => Promise<{ timestamp: bigint }>,
-): Promise<number> {
-  while (start + 1 < end) {
-    const mid = start + Math.floor((end - start) / 2)
-    const midBlock = await getBlock({
-      blockNumber: BigInt(mid),
-    })
-    const midTimestamp = new UnixTime(Number(midBlock.timestamp))
-    if (midTimestamp.lte(timestamp)) {
-      start = mid
-    } else {
-      end = mid
+async function fetchPrices(
+  tokens: {
+    coingeckoId: CoingeckoId
+    symbol: string
+  }[],
+): Promise<Map<string, number>> {
+  const prices = new Map<string, number>()
+  const ids = tokens
+    .map((token) => token.coingeckoId)
+    .filter(Boolean)
+    .join(',')
+  const url = `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`
+
+  try {
+    const response = await fetch(url)
+    const data = await response.json()
+
+    for (const token of tokens) {
+      if (token.coingeckoId && data[token.coingeckoId.toString()]) {
+        prices.set(token.symbol, data[token.coingeckoId.toString()].usd)
+      }
     }
+  } catch (error) {
+    console.error('Error fetching prices:', error)
   }
 
-  return start
+  return prices
 }
 
 main()
