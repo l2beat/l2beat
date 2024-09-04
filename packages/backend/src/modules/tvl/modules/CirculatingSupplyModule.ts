@@ -18,10 +18,9 @@ import { PriceModule } from './PriceModule'
 
 export interface CirculatingSupplyModule {
   start: () => Promise<void> | void
-  descendant: DescendantIndexer
 }
 
-export function createCirculatingSupplyModule(
+export function initCirculatingSupplyModule(
   config: TvlConfig,
   logger: Logger,
   peripherals: Peripherals,
@@ -127,6 +126,5 @@ export function createCirculatingSupplyModule(
 
       await descendant.start()
     },
-    descendant,
   }
 }

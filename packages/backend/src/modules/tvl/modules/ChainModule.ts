@@ -25,7 +25,11 @@ import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
 import { ValueService } from '../services/ValueService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
-export function createChainModule(
+export interface ChainModule {
+  start: () => Promise<void> | void
+}
+
+export function initChainModule(
   config: TvlConfig,
   peripherals: Peripherals,
   logger: Logger,
@@ -34,7 +38,7 @@ export function createChainModule(
   indexerService: IndexerService,
   descendantPriceIndexer: DescendantIndexer,
   configMapping: ConfigMapping,
-) {
+): ChainModule {
   const dataIndexers: (ChainAmountIndexer | PremintedIndexer)[] = []
   const valueIndexers: ValueIndexer[] = []
 

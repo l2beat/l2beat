@@ -19,12 +19,12 @@ import { ApiProject, AssociatedToken } from '../api/utils/types'
 import { HourlyIndexer } from '../indexers/HourlyIndexer'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { TvlCleaner } from '../utils/TvlCleaner'
-import { createBlockTimestampModule } from './BlockTimestampModule'
-import { createChainModule } from './ChainModule'
-import { createCirculatingSupplyModule } from './CirculatingSupplyModule'
-import { createPriceModule } from './PriceModule'
+import { initBlockTimestampModule } from './BlockTimestampModule'
+import { initChainModule } from './ChainModule'
+import { initCirculatingSupplyModule } from './CirculatingSupplyModule'
+import { initPriceModule } from './PriceModule'
 
-export function createTvlModule(
+export function initTvlModule(
   config: Config,
   logger: Logger,
   peripherals: Peripherals,
@@ -60,7 +60,7 @@ export function createTvlModule(
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
 
-  const priceModule = createPriceModule(
+  const priceModule = initPriceModule(
     config.tvl,
     logger,
     peripherals,
@@ -69,7 +69,7 @@ export function createTvlModule(
     indexerService,
   )
 
-  const blockTimestampModule = createBlockTimestampModule(
+  const blockTimestampModule = initBlockTimestampModule(
     config.tvl,
     logger,
     peripherals,
@@ -78,7 +78,7 @@ export function createTvlModule(
     indexerService,
   )
 
-  const chainModule = createChainModule(
+  const chainModule = initChainModule(
     config.tvl,
     peripherals,
     logger,
@@ -89,7 +89,7 @@ export function createTvlModule(
     configMapping,
   )
 
-  const circulatingSuppliesModule = createCirculatingSupplyModule(
+  const circulatingSuppliesModule = initCirculatingSupplyModule(
     config.tvl,
     logger,
     peripherals,

@@ -17,7 +17,7 @@ export interface PriceModule {
   descendant: DescendantIndexer
 }
 
-export function createPriceModule(
+export function initPriceModule(
   config: TvlConfig,
   logger: Logger,
   peripherals: Peripherals,

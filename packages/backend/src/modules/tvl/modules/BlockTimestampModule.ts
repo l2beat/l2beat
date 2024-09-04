@@ -14,7 +14,7 @@ export interface BlockTimestampModule {
   blockTimestampIndexers: Map<string, BlockTimestampIndexer>
 }
 
-export function createBlockTimestampModule(
+export function initBlockTimestampModule(
   config: TvlConfig,
   logger: Logger,
   peripherals: Peripherals,
