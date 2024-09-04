@@ -24,12 +24,14 @@ import { mapRisksToRosetteValues } from '../../../_utils/map-risks-to-rosette-va
 import { columns } from './columns'
 import { DaEconomicSecurityCell } from './da-economic-security-cell'
 import { ProjectsUsedIn } from './projects-used-in'
+import { useBreakpoint } from '~/hooks/use-is-mobile'
 
 interface Props {
   items: DaSummaryEntry[]
 }
 
 export function DaSummaryTable({ items }: Props) {
+  const breakpoint = useBreakpoint()
   const table = useTable({
     data: items,
     columns,
@@ -49,6 +51,7 @@ export function DaSummaryTable({ items }: Props) {
       columnPinning: {
         left: ['#', 'logo'],
       },
+      expanded: breakpoint !== 'mobile' ? true : undefined,
     },
   })
 
