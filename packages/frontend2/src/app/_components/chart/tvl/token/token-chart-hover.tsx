@@ -1,5 +1,5 @@
 import { Square } from '~/app/_components/square'
-import { type ProjectToken } from '~/server/features/scaling/tvl/tokens/get-top-tokens-for-project'
+import { type ProjectToken } from '~/server/features/scaling/tvl/tokens/get-tokens-for-project'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrencyExactValue } from '~/utils/format'

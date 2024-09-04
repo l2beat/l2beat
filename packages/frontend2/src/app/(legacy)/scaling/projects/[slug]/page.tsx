@@ -3,9 +3,9 @@ import { notFound } from 'next/navigation'
 import { HighlightableLinkContextProvider } from '~/app/_components/link/highlightable/highlightable-link-context'
 import { DesktopProjectNavigation } from '~/app/_components/projects/navigation/desktop-project-navigation'
 import { MobileProjectNavigation } from '~/app/_components/projects/navigation/mobile-project-navigation'
+import { projectDetailsToNavigationSections } from '~/app/_components/projects/navigation/types'
 import { ProjectDetails } from '~/app/_components/projects/project-details'
 import { getScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
-import { HydrateClient } from '~/trpc/server'
 import { getProjectMetadata } from '~/utils/metadata'
 import { ScalingProjectSummary } from './_components/scaling-project-summary'
 
@@ -54,16 +54,16 @@ export default async function Page({ params }: Props) {
   }
 
   const projectEntry = await getScalingProjectEntry(project)
-  const isNavigationEmpty =
-    projectEntry.projectDetails.filter((s) => !s.excludeFromNavigation)
-      .length === 0
+  const navigationSections = projectDetailsToNavigationSections(
+    projectEntry.projectDetails,
+  )
+  const isNavigationEmpty = navigationSections.length === 0
 
-  // HydrateClient is used to hydrate the client with chart data that is fetched inside get-l2-project-details.tsx and get-l3-project-details.tsx
   return (
-    <HydrateClient>
+    <>
       {!isNavigationEmpty && (
         <div className="sticky top-0 z-100 md:hidden">
-          <MobileProjectNavigation sections={projectEntry.projectDetails} />
+          <MobileProjectNavigation sections={navigationSections} />
         </div>
       )}
       <ScalingProjectSummary project={projectEntry} />
@@ -78,7 +78,7 @@ export default async function Page({ params }: Props) {
                 slug: projectEntry.slug,
                 showProjectUnderReview: projectEntry.isUnderReview,
               }}
-              sections={projectEntry.projectDetails}
+              sections={navigationSections}
             />
           </div>
           <div className="w-full">
@@ -88,6 +88,6 @@ export default async function Page({ params }: Props) {
           </div>
         </div>
       )}
-    </HydrateClient>
+    </>
   )
 }

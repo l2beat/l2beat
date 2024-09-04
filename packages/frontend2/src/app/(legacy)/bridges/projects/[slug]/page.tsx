@@ -8,6 +8,7 @@ import { getBridgesProjectEntry } from '~/server/features/bridges/project/get-br
 import { HydrateClient } from '~/trpc/server'
 import { getProjectMetadata } from '~/utils/metadata'
 import { BridgesProjectSummary } from './_components/bridges-project-summary'
+import { projectDetailsToNavigationSections } from '~/app/_components/projects/navigation/types'
 
 export async function generateStaticParams() {
   return bridges.map((layer) => ({
@@ -50,16 +51,17 @@ export default async function Page({ params }: Props) {
   }
 
   const projectEntry = await getBridgesProjectEntry(project)
-  const isNavigationEmpty =
-    projectEntry.projectDetails.filter((s) => !s.excludeFromNavigation)
-      .length === 0
+  const navigationSections = projectDetailsToNavigationSections(
+    projectEntry.projectDetails,
+  )
+  const isNavigationEmpty = navigationSections.length === 0
 
   // HydrateClient is used to hydrate the client with chart data that is fetched inside get-bridges-project-details.tsx
   return (
     <HydrateClient>
       {!isNavigationEmpty && (
         <div className="sticky top-0 z-100 md:hidden">
-          <MobileProjectNavigation sections={projectEntry.projectDetails} />
+          <MobileProjectNavigation sections={navigationSections} />
         </div>
       )}
       <BridgesProjectSummary project={projectEntry} />
@@ -74,7 +76,7 @@ export default async function Page({ params }: Props) {
                 slug: projectEntry.slug,
                 showProjectUnderReview: projectEntry.isUnderReview,
               }}
-              sections={projectEntry.projectDetails}
+              sections={navigationSections}
             />
           </div>
           <div className="w-full">

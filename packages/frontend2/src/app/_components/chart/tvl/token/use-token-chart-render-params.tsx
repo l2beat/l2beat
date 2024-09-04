@@ -1,7 +1,7 @@
 import { type Milestone } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { useCallback, useMemo } from 'react'
-import { type ProjectToken } from '~/server/features/scaling/tvl/tokens/get-top-tokens-for-project'
+import { type ProjectToken } from '~/server/features/scaling/tvl/tokens/get-tokens-for-project'
 import { formatCurrency } from '~/utils/format'
 import { type SeriesStyle } from '../../core/styles'
 import { mapMilestones } from '../../core/utils/map-milestones'

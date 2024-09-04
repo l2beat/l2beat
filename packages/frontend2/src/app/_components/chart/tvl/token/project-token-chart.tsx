@@ -6,7 +6,7 @@ import { useIsClient } from '~/hooks/use-is-client'
 import {
   type ProjectToken,
   type ProjectTokens,
-} from '~/server/features/scaling/tvl/tokens/get-top-tokens-for-project'
+} from '~/server/features/scaling/tvl/tokens/get-tokens-for-project'
 import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
 import { Chart } from '../../core/chart'

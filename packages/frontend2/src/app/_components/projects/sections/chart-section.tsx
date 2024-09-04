@@ -1,5 +1,5 @@
 import { type Milestone } from '@l2beat/config'
-import { type ProjectTokens } from '~/server/features/scaling/tvl/tokens/get-top-tokens-for-project'
+import { type ProjectTokens } from '~/server/features/scaling/tvl/tokens/get-tokens-for-project'
 import { ProjectActivityChart } from '../../chart/activity/project-activity-chart'
 import { ProjectCostsChart } from '../../chart/costs/project-costs-chart'
 import { ProjectTvlChart } from '../../chart/tvl/project-tvl-chart'

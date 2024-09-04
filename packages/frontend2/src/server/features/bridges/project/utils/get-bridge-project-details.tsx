@@ -6,7 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import isEmpty from 'lodash/isEmpty'
 import { type ProjectDetailsSection } from '~/app/_components/projects/sections/types'
-import { getTopTokensForProject } from '~/server/features/scaling/tvl/tokens/get-top-tokens-for-project'
+import { getTokensForProject } from '~/server/features/scaling/tvl/tokens/get-tokens-for-project'
 import { api } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
@@ -56,7 +56,7 @@ export async function getBridgeProjectDetails(
     filter: { type: 'projects', projectIds: [bridge.id] },
   })
 
-  const tokens = await getTopTokensForProject(bridge)
+  const tokens = await getTokensForProject(bridge)
 
   const items: ProjectDetailsSection[] = []
 

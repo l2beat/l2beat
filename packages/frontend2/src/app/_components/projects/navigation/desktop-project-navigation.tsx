@@ -6,8 +6,8 @@ import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import { useCurrentSection } from '~/hooks/use-current-section'
 import SummaryIcon from '~/icons/pages/summary.svg'
 import { cn } from '~/utils/cn'
-import { type ProjectDetailsSection } from '../sections/types'
 import { UnderReviewCallout } from '../under-review-callout'
+import { type ProjectNavigationSection } from './types'
 
 interface Project {
   title: string
@@ -16,7 +16,7 @@ interface Project {
 }
 interface ProjectNavigationProps {
   project: Project
-  sections: ProjectDetailsSection[]
+  sections: ProjectNavigationSection[]
 }
 
 export function DesktopProjectNavigation({
@@ -101,21 +101,18 @@ function ProjectNavigationList({
         Summary
       </a>
       {sections.map((section, i) => {
-        if (section.excludeFromNavigation) {
-          return null
-        }
-        const selected = currentSection?.id === section.props.id
+        const selected = currentSection?.id === section.id
         return (
           <a
-            key={section.props.id}
-            href={`#${section.props.id}`}
+            key={section.id}
+            href={`#${section.id}`}
             className={cn(
               'flex flex-row items-center transition-opacity hover:opacity-100',
               !selected && 'opacity-60',
             )}
           >
             <NavigationListIndex index={i + 1} selected={selected} />
-            <span className="ml-3">{section.props.title}</span>
+            <span className="ml-3">{section.title}</span>
           </a>
         )
       })}

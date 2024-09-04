@@ -109,9 +109,9 @@ function groupBySource(tokens: ProjectToken[]) {
   }
 
   return {
-    canonical,
-    native,
-    external,
+    canonical: canonical.slice(0, 10),
+    native: native.slice(0, 10),
+    external: external.slice(0, 10),
   }
 }
 
