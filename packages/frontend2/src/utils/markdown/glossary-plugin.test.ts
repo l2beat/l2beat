@@ -7,7 +7,7 @@ describe(linkGlossaryTerms.name, () => {
   const glossary: GlossaryTermWithoutDescription[] = [
     {
       id: 'blob',
-      matches: ['blobs'],
+      matches: ['Blob', 'blobs'],
     },
     {
       id: 'node',

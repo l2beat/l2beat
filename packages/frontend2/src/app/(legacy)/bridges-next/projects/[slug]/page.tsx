@@ -3,12 +3,12 @@ import { notFound } from 'next/navigation'
 import { HighlightableLinkContextProvider } from '~/app/_components/link/highlightable/highlightable-link-context'
 import { DesktopProjectNavigation } from '~/app/_components/projects/navigation/desktop-project-navigation'
 import { MobileProjectNavigation } from '~/app/_components/projects/navigation/mobile-project-navigation'
+import { projectDetailsToNavigationSections } from '~/app/_components/projects/navigation/types'
 import { ProjectDetails } from '~/app/_components/projects/project-details'
 import { getBridgesProjectEntry } from '~/server/features/bridges/project/get-bridges-project-entry'
 import { HydrateClient } from '~/trpc/server'
 import { getProjectMetadata } from '~/utils/metadata'
 import { BridgesProjectSummary } from './_components/bridges-project-summary'
-import { projectDetailsToNavigationSections } from '~/app/_components/projects/navigation/types'
 
 export async function generateStaticParams() {
   return bridges.map((layer) => ({
