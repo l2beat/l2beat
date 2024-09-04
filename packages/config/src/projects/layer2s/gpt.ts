@@ -28,7 +28,7 @@ const upgradeability = {
 }
 
 export const gpt: Layer2 = polygonCDKStack({
-  badges: [Badge.DA.DAC, Badge.RaaS.Gateway, Badge.Infra.AggLayer],
+  badges: [Badge.DA.DAC, Badge.RaaS.Gateway],
   display: {
     name: 'GPT Protocol',
     slug: 'gpt',
