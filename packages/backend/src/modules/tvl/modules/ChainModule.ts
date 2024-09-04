@@ -1,10 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ConfigMapping, createAmountId } from '@l2beat/config'
-import {
-  BlockExplorerClient,
-  CoingeckoClient,
-  CoingeckoQueryService,
-} from '@l2beat/shared'
+import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
 import {
   assert,
   AmountConfigEntry,
@@ -22,42 +18,46 @@ import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
 import { ChainAmountIndexer } from '../indexers/ChainAmountIndexer'
-import { HourlyIndexer } from '../indexers/HourlyIndexer'
+import { DescendantIndexer } from '../indexers/DescendantIndexer'
 import { PremintedIndexer } from '../indexers/PremintedIndexer'
 import { ValueIndexer } from '../indexers/ValueIndexer'
 import { ChainAmountConfig } from '../indexers/types'
 import { AmountService } from '../services/AmountService'
-import { BlockTimestampProvider } from '../services/BlockTimestampProvider'
 import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
 import { ValueService } from '../services/ValueService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
-import { PriceModule } from './PriceModule'
 
 export function createChainModules(
   config: TvlConfig,
   peripherals: Peripherals,
   logger: Logger,
-  hourlyIndexer: HourlyIndexer,
+  blockTimestampIndexers: Map<string, BlockTimestampIndexer>,
   syncOptimizer: SyncOptimizer,
   indexerService: IndexerService,
-  priceModule: PriceModule,
+  descendantPriceIndexer: DescendantIndexer,
   configMapping: ConfigMapping,
 ) {
   return config.chains
-    .map((chain) =>
-      createChainModule(
+    .map((chain) => {
+      const blockTimestampIndexer = blockTimestampIndexers.get(chain.chain)
+      assert(
+        blockTimestampIndexer,
+        'blockTimestampIndexer should be defined for enabled chain',
+      )
+
+      return createChainModule(
         config,
         chain,
         config.amounts,
         peripherals,
         logger,
-        hourlyIndexer,
+        blockTimestampIndexer,
         syncOptimizer,
         indexerService,
-        priceModule,
+        descendantPriceIndexer,
         configMapping,
-      ),
-    )
+      )
+    })
     .filter(notUndefined)
 }
 
@@ -67,10 +67,10 @@ function createChainModule(
   amounts: AmountConfigEntry[],
   peripherals: Peripherals,
   logger: Logger,
-  hourlyIndexer: HourlyIndexer,
+  blockTimestampIndexer: BlockTimestampIndexer,
   syncOptimizer: SyncOptimizer,
   indexerService: IndexerService,
-  priceModule: PriceModule,
+  descendantPriceIndexer: DescendantIndexer,
   configMapping: ConfigMapping,
 ) {
   const chain = chainConfig.chain
@@ -79,23 +79,8 @@ function createChainModule(
     return
   }
 
-  const {
-    blockTimestampProvider,
-    amountService,
-    valueService,
-    circulatingSupplyService,
-  } = createPeripherals(peripherals, chainConfig, logger, chain, config)
-
-  const blockTimestampIndexer = new BlockTimestampIndexer({
-    logger,
-    parents: [hourlyIndexer],
-    minHeight: chainConfig.config.minBlockTimestamp.toNumber(),
-    indexerService,
-    chain,
-    blockTimestampProvider,
-    db: peripherals.database,
-    syncOptimizer,
-  })
+  const { amountService, valueService, circulatingSupplyService } =
+    createPeripherals(peripherals, chainConfig, logger, chain, config)
 
   const dataIndexers: (ChainAmountIndexer | PremintedIndexer)[] = []
   const valueIndexers: ValueIndexer[] = []
@@ -134,7 +119,7 @@ function createChainModule(
 
     const perProject = groupBy(chainAmountEntries, 'project')
 
-    const parents = [priceModule.descendant, chainAmountIndexer]
+    const parents = [descendantPriceIndexer, chainAmountIndexer]
     for (const [project, amountConfigs] of Object.entries(perProject)) {
       const priceConfigs = new Set(
         amountConfigs.map((c) =>
@@ -196,7 +181,7 @@ function createChainModule(
       project: ProjectId(preminted.project),
       dataSource: `${chain}_preminted_${preminted.address}`,
       syncOptimizer,
-      parents: [priceModule.descendant, indexer],
+      parents: [descendantPriceIndexer, indexer],
       indexerService,
       logger,
       minHeight: preminted.sinceTimestamp.toNumber(),
@@ -211,8 +196,6 @@ function createChainModule(
     ? undefined
     : {
         start: async () => {
-          await blockTimestampIndexer.start()
-
           for (const dataIndexer of dataIndexers) {
             await dataIndexer.start()
           }
@@ -239,32 +222,6 @@ function createPeripherals(
     chain: chainConfig.chain,
   })
 
-  const options =
-    chainConfig.config.blockExplorerConfig === undefined
-      ? undefined
-      : chainConfig.config.blockExplorerConfig.type === 'etherscan'
-        ? {
-            type: 'Etherscan' as const,
-            apiKey: chainConfig.config.blockExplorerConfig.etherscanApiKey,
-            url: chainConfig.config.blockExplorerConfig.etherscanApiUrl,
-            maximumCallsForBlockTimestamp: 3,
-          }
-        : {
-            type: 'Blockscout' as const,
-            url: chainConfig.config.blockExplorerConfig.blockscoutApiUrl,
-            maximumCallsForBlockTimestamp: 10,
-          }
-
-  const blockExplorerClient = options
-    ? peripherals.getClient(BlockExplorerClient, options)
-    : undefined
-
-  const blockTimestampProvider = new BlockTimestampProvider({
-    blockExplorerClient,
-    client: rpcClient,
-    logger,
-  })
-
   const amountService = new AmountService({
     rpcClient: rpcClient,
     multicallClient: new MulticallClient(
@@ -283,8 +240,8 @@ function createPeripherals(
     coingeckoQueryService,
   })
   const valueService = new ValueService(peripherals.database)
+
   return {
-    blockTimestampProvider,
     amountService,
     valueService,
     circulatingSupplyService,

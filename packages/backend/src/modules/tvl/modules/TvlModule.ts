@@ -19,6 +19,7 @@ import { ApiProject, AssociatedToken } from '../api/utils/types'
 import { HourlyIndexer } from '../indexers/HourlyIndexer'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { TvlCleaner } from '../utils/TvlCleaner'
+import { createBlockTimestampModule } from './BlockTimestampModule'
 import { createChainModules } from './ChainModule'
 import { createCirculatingSupplyModule } from './CirculatingSupplyModule'
 import { createPriceModule } from './PriceModule'
@@ -68,14 +69,23 @@ export function createTvlModule(
     indexerService,
   )
 
+  const blockTimestampModule = createBlockTimestampModule(
+    config.tvl,
+    logger,
+    peripherals,
+    hourlyIndexer,
+    syncOptimizer,
+    indexerService,
+  )
+
   const chainModules = createChainModules(
     config.tvl,
     peripherals,
     logger,
-    hourlyIndexer,
+    blockTimestampModule.blockTimestampIndexers,
     syncOptimizer,
     indexerService,
-    priceModule,
+    priceModule.descendant,
     configMapping,
   )
 
@@ -156,15 +166,17 @@ export function createTvlModule(
 
     await priceModule.start()
 
-    if (config.tvl && config.tvl.tvlCleanerEnabled) {
-      tvlCleaner.start()
-    }
+    await blockTimestampModule.start()
 
     for (const module of chainModules) {
       await module.start()
     }
 
     await circulatingSuppliesModule.start()
+
+    if (config.tvl && config.tvl.tvlCleanerEnabled) {
+      tvlCleaner.start()
+    }
   }
 
   return {
