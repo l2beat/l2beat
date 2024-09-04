@@ -57,6 +57,14 @@ export const mode: Layer2 = opStackL2({
   isNodeAvailable: true,
   milestones: [
     {
+      name: 'Mode extracts 4800 ETH from the bridge',
+      link: 'https://github.com/etherfi-protocol/postmortems',
+      date: '2024-08-01T00:00:00Z',
+      description:
+        "Mode rescues Etherfi's lost funds on L2 by extracting them from the L1 bridge via an upgrade.",
+      type: 'incident',
+    },
+    {
       name: 'Mode starts using blobs',
       link: 'https://twitter.com/Optimism/status/1768235284494450922',
       date: '2024-03-14T00:00:00Z',
