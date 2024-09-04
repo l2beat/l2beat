@@ -101,7 +101,7 @@ export function initTvlModule(
     configMapping,
   )
 
-  const circulatingSuppliesModule = initCirculatingSupplyModule(
+  const circulatingSupplyModule = initCirculatingSupplyModule(
     config.tvl,
     logger,
     peripherals,
@@ -179,7 +179,7 @@ export function initTvlModule(
     await blockTimestampModule.start()
     await chainModule.start()
     await premintedModule.start()
-    await circulatingSuppliesModule.start()
+    await circulatingSupplyModule.start()
 
     if (config.tvl && config.tvl.tvlCleanerEnabled) {
       tvlCleaner.start()
