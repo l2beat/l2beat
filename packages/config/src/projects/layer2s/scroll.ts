@@ -560,7 +560,7 @@ export const scroll: Layer2 = {
             'Scroll verifier proving bundles (group of batches). Corresponds to version v0.13.0 of the circuits (Darwin v2 upgrade).',
           verified: 'no',
           contractAddress: EthereumAddress(
-            '0x6f8C4e2f2dE2c4f2b1c9f3a2C1fBfB7b8f2f0B4',
+            '0x8c1b52757b5c571ADcB5572E992679d4D48e30f7',
           ),
           chainId: ChainId.ETHEREUM,
           subVerifiers: [
