@@ -23,6 +23,14 @@ error MyError();
 
 error OtherError(uint256 a, bytes b);
 
+enum Bar { X, Y, Z }
+
+event E1();
+
+event E2(address a, address indexed b);
+
+event E3(address a, address indexed b) anonymous;
+
 contract Test {
 	using a.b for uint256;
 	using a.b for *;

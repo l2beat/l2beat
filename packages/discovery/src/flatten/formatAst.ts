@@ -57,9 +57,9 @@ const FORMATTERS: {
   DoWhileStatement: __REPLACE_ME__,
   ElementaryTypeName,
   EmitStatement: __REPLACE_ME__,
-  EnumDefinition: __REPLACE_ME__,
-  EnumValue: __REPLACE_ME__,
-  EventDefinition: __REPLACE_ME__,
+  EnumDefinition,
+  EnumValue,
+  EventDefinition,
   ExpressionStatement: __REPLACE_ME__,
   FileLevelConstant: __REPLACE_ME__,
   ForStatement: __REPLACE_ME__,
@@ -172,6 +172,34 @@ function ElementaryTypeName(node: AST.ElementaryTypeName, out: OutputStream) {
   if (node.stateMutability) {
     out.token(node.stateMutability)
   }
+}
+
+function EnumDefinition(node: AST.EnumDefinition, out: OutputStream) {
+  out.beginLine()
+  out.token('enum')
+  out.token(node.name)
+  out.token('{')
+  formatNodeList(node.members, out, { separator: ',' })
+  out.token('}')
+  out.endLine()
+}
+
+function EnumValue(node: AST.EnumValue, out: OutputStream) {
+  out.token(node.name)
+}
+
+function EventDefinition(node: AST.EventDefinition, out: OutputStream) {
+  out.beginLine()
+  out.token('event')
+  out.token(node.name)
+  out.token('(')
+  formatNodeList(node.parameters, out, { separator: ',' })
+  out.token(')')
+  if (node.isAnonymous) {
+    out.token('anonymous')
+  }
+  out.token(';')
+  out.endLine()
 }
 
 function FunctionDefinition(node: AST.FunctionDefinition, out: OutputStream) {
