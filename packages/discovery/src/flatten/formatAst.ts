@@ -4,6 +4,10 @@ export function formatAst(ast: AST.ASTNode) {
   return formatAstNode(ast, 0) + '\n\n'
 }
 
+const state = {
+  insideInterface: false,
+}
+
 export function formatAstNode(node: AST.ASTNode, indent: number): string {
   return FORMATTERS[node.type](node as never, indent)
 }
@@ -72,7 +76,7 @@ const FORMATTERS: {
   Mapping: __REPLACE_ME__,
   MemberAccess: __REPLACE_ME__,
   ModifierDefinition: __REPLACE_ME__,
-  ModifierInvocation: __REPLACE_ME__,
+  ModifierInvocation,
   NameValueExpression: __REPLACE_ME__,
   NameValueList: __REPLACE_ME__,
   NewExpression: __REPLACE_ME__,
@@ -111,6 +115,10 @@ function ContractDefinition(node: AST.ContractDefinition, indent: number) {
   const begin = formatIndent(indent)
   const type = node.kind === 'abstract' ? 'abstract contract' : node.kind
 
+  if (node.kind === 'interface') {
+    state.insideInterface = true
+  }
+
   const base = formatNodeList(node.baseContracts, indent, {
     prefix: 'is ',
     separator: ', ',
@@ -138,6 +146,8 @@ function ContractDefinition(node: AST.ContractDefinition, indent: number) {
     suffix: '\n',
   })
 
+  state.insideInterface = false
+
   return `${begin}${type} ${node.name} ${base}{${statementsFmt}}`
 }
 
@@ -159,46 +169,50 @@ function FunctionDefinition(node: AST.FunctionDefinition, indent: number) {
   const typeName = node.isConstructor
     ? 'constructor'
     : node.isFallback
-      ? 'fallback'
+      ? 'function fallback'
       : node.isReceiveEther
-        ? 'receive'
+        ? 'function receive'
         : 'function'
   const name = node.name ? ` ${node.name}` : ''
-
-  const modifiers: string[] = []
-  if (node.visibility !== 'default') {
-    modifiers.push(node.visibility)
-  }
-  if (node.isVirtual) {
-    modifiers.push('virtual')
-  }
-  if (node.stateMutability !== null) {
-    modifiers.push(node.stateMutability)
-  }
-  if (node.override) {
-    modifiers.push(formatOverride(node.override, indent))
-  }
-  for (const n of node.modifiers) {
-    modifiers.push(formatAstNode(n, indent))
-  }
-  const modifiersFmt = formatList(modifiers, {
-    separator: ' ',
-    suffix: ' ',
-  })
 
   const parameters = formatNodeList(node.parameters, indent, {
     separator: ', ',
   })
 
-  const returns = formatNodeList(node.returnParameters ?? [], indent, {
-    separator: ', ',
-    prefix: 'returns (',
-    suffix: ') ',
-  })
+  const after: string[] = []
+  if (node.visibility !== 'default') {
+    after.push(node.visibility)
+  }
+  if (node.stateMutability !== null) {
+    after.push(node.stateMutability)
+  }
+  for (const n of node.modifiers) {
+    after.push(formatAstNode(n, indent))
+  }
+  if (node.isVirtual) {
+    after.push('virtual')
+  }
+  if (node.override) {
+    after.push(formatOverride(node.override, indent))
+  }
+  if (node.returnParameters) {
+    after.push(
+      formatNodeList(node.returnParameters, indent, {
+        separator: ', ',
+        prefix: 'returns (',
+        suffix: ')',
+      }),
+    )
+  }
+  const afterFmt = formatList(after, { separator: ' ', prefix: ' ' })
 
-  const body = node.body ? formatAstNode(node.body, indent).trimStart() : '{}'
+  const body = node.body
+    ? ' ' + formatAstNode(node.body, indent).trimStart()
+    : state.insideInterface
+      ? ';'
+      : ' {}'
 
-  return `${begin}${typeName}${name}(${parameters}) ${modifiersFmt}${returns}${body}`
+  return `${begin}${typeName}${name}(${parameters})${afterFmt}${body}`
 }
 
 function Identifier(node: AST.Identifier, _: number) {
@@ -234,6 +248,15 @@ function InheritanceSpecifier(node: AST.InheritanceSpecifier, indent: number) {
     suffix: ')',
   })
   return `${base}${args}`
+}
+
+function ModifierInvocation(node: AST.ModifierInvocation, indent: number) {
+  const args = formatNodeList(node.arguments ?? [], indent, {
+    separator: ', ',
+    prefix: '(',
+    suffix: ')',
+  })
+  return `${node.name}${args}`
 }
 
 function PragmaDirective(node: AST.PragmaDirective, indent: number) {
