@@ -1,11 +1,5 @@
 'use client'
-import React, {
-  type CSSProperties,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import { type CSSProperties, useEffect, useMemo, useRef, useState } from 'react'
 
 import Image from 'next/image'
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
@@ -93,7 +87,7 @@ function ProjectNavigationList({
   const currentSection = useCurrentSection()
   return (
     <div
-      className="absolute top-0 flex flex-col gap-3 transition-[top] duration-300"
+      className="absolute top-0 flex flex-col gap-3 leading-none transition-[top] duration-300"
       style={style}
     >
       <a
