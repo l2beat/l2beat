@@ -120,7 +120,9 @@ export function DaSummaryTable({ items }: Props) {
                       {EM_DASH}
                     </DaTableSubRowCell>
                     <DaTableSubRowCell href={href} lastRow={lastRow}>
-                      ${formatNumber(subRow.tvs, 2)}
+                      {subRow.usedIn.length > 0
+                        ? `$${formatNumber(subRow.tvs, 2)}`
+                        : EM_DASH}
                     </DaTableSubRowCell>
                     <DaTableSubRowCell href={href} lastRow={lastRow}>
                       {EM_DASH}

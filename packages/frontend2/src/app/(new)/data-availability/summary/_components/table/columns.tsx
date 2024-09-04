@@ -110,7 +110,10 @@ export const columns = [
   }),
   columnHelper.accessor('tvs', {
     header: 'Total value secured',
-    cell: (ctx) => `${formatNumber(ctx.getValue(), 2)}`,
+    cell: (ctx) =>
+      ctx.row.original.usedIn.length > 0
+        ? `$${formatNumber(ctx.row.original.tvs, 2)}`
+        : EM_DASH,
   }),
   columnHelper.accessor('economicSecurity', {
     header: 'Economic security',
