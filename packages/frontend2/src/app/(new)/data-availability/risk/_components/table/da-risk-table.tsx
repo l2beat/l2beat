@@ -63,7 +63,7 @@ export function DaRiskTable({ items }: Props) {
           if (row.original.subRows.length < 1) {
             return (
               <tr className="border-b border-b-gray-200 dark:border-b-zinc-700">
-                <td colSpan={8}></td>
+                <td colSpan={9}></td>
               </tr>
             )
           }
@@ -82,45 +82,45 @@ export function DaRiskTable({ items }: Props) {
                     <td colSpan={3} className="pointer-events-none"></td>
                     <td
                       className={cn(
-                        'group h-9 whitespace-pre align-middle',
+                        'group whitespace-pre bg-black/[0.05] pr-3 align-middle group-hover:bg-black/[0.1] dark:bg-white/[0.1] dark:group-hover:bg-white/[0.2]',
                         !lastRow &&
                           'border-b border-b-gray-200 dark:border-b-zinc-700',
+                        firstRow && 'rounded-tl-xl',
+                        lastRow && 'rounded-bl-xl',
                       )}
                     >
                       <Link href={href}>
-                        <ProjectNameCell
-                          className={cn(
-                            'size-full bg-black/[0.05] p-2 !pl-8 group-hover:bg-black/[0.1] dark:bg-white/[0.1] dark:group-hover:bg-white/[0.2]',
-                            firstRow && 'rounded-tl-xl',
-                            lastRow && 'rounded-bl-xl',
-                          )}
-                          project={{
-                            ...subRow,
-                            name: subRow.daBridge.name,
-                            shortName: undefined,
-                          }}
-                        />
+                        <div className="flex size-full items-center">
+                          <ProjectNameCell
+                            className={cn('size-full p-2 !pl-8')}
+                            project={{
+                              ...subRow,
+                              name: subRow.daBridge.name,
+                              shortName: undefined,
+                            }}
+                          />
+                        </div>
                       </Link>
                     </td>
-                    <SubRowTableCell href={href}>
+                    <SubRowTableCell href={href} lastRow={lastRow}>
                       <RiskCell
                         risk={subRow.risks.economicSecurity}
                         emptyMode="em-dash"
                       />
                     </SubRowTableCell>
-                    <SubRowTableCell href={href}>
+                    <SubRowTableCell href={href} lastRow={lastRow}>
                       <RiskCell
                         risk={subRow.risks.fraudDetection}
                         emptyMode="em-dash"
                       />
                     </SubRowTableCell>
-                    <SubRowTableCell href={href}>
+                    <SubRowTableCell href={href} lastRow={lastRow}>
                       <RiskCell
                         risk={subRow.risks.attestations}
                         emptyMode="em-dash"
                       />
                     </SubRowTableCell>
-                    <SubRowTableCell href={href}>
+                    <SubRowTableCell href={href} lastRow={lastRow}>
                       <RiskCell
                         risk={subRow.risks.exitWindow}
                         emptyMode="em-dash"
@@ -140,7 +140,7 @@ export function DaRiskTable({ items }: Props) {
                 )
               })}
               <tr className="border-b border-b-gray-200 dark:border-b-zinc-700">
-                <td className="h-2" />
+                <td colSpan={9} className="h-2" />
               </tr>
             </>
           )
@@ -164,7 +164,7 @@ function LastSubRowTableCell({
   return (
     <td
       className={cn(
-        'group h-9 whitespace-pre bg-black/[0.05] group-hover:bg-black/[0.1] dark:bg-white/[0.1] dark:group-hover:bg-white/[0.2]',
+        'group whitespace-pre bg-black/[0.05] group-hover:bg-black/[0.1] dark:bg-white/[0.1] dark:group-hover:bg-white/[0.2]',
         firstRow && 'rounded-tr-xl',
         lastRow && 'rounded-br-xl',
         !lastRow && 'border-b border-b-gray-200 dark:border-b-zinc-700 ',
@@ -182,20 +182,21 @@ function SubRowTableCell({
   children,
   lastRow,
 }: {
-  href?: string
+  href: string
   children: React.ReactNode
   className?: string
   lastRow?: boolean
 }) {
   return (
-    <TableCell
-      href={href}
+    <td
       className={cn(
-        'bg-black/[0.05] group-hover:bg-black/[0.1] dark:bg-white/[0.1] dark:group-hover:bg-white/[0.2]',
+        'size-full whitespace-pre bg-black/[0.05] pr-3 group-hover:bg-black/[0.1] dark:bg-white/[0.1] dark:group-hover:bg-white/[0.2]',
         !lastRow && 'border-b border-b-gray-200 dark:border-b-zinc-700',
       )}
     >
-      {children}
-    </TableCell>
+      <Link href={href}>
+        <div className="flex size-full items-center">{children}</div>
+      </Link>
+    </td>
   )
 }

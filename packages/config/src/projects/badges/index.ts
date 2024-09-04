@@ -212,6 +212,14 @@ export const badges = {
     },
     type: BadgeType.VM,
   },
+  WasmVM: {
+    display: {
+      name: 'WasmVM',
+      description:
+        'This project uses a WebAssembly Virtual Machine to run its smart contracts',
+    },
+    type: BadgeType.VM,
+  },
   AppChain: {
     display: {
       name: 'Application-specific chain',
