@@ -11,7 +11,7 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
     super({
       ...$,
       name: INDEXER_NAMES.CIRCULATING_SUPPLY,
-      tag: $.configuration.toString(),
+      tag: $.configuration.coingeckoId.toString(),
       updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       configHash: $.minHeight.toString(),
     })
