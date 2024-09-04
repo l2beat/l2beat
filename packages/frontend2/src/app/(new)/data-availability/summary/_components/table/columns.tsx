@@ -82,17 +82,14 @@ export const columns = [
             fraudDetection: value.fraudDetection,
             attestations: {
               value: 'Depends on the DA Bridge',
-              description: '',
               sentiment: 'neutral',
             },
             exitWindow: {
               value: 'Depends on the DA Bridge',
-              description: '',
               sentiment: 'neutral',
             },
             accessibility: {
               value: 'Depends on the DA Bridge',
-              description: '',
               sentiment: 'neutral',
             },
           })}

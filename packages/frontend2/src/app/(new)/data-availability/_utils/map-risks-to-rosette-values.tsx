@@ -5,7 +5,7 @@ import { type RosetteValue } from '~/app/_components/rosette/types'
 export function mapRisksToRosetteValues(
   risks: Record<
     keyof (DaLayerRisks & DaBridgeRisks),
-    ValueWithSentiment<string, Sentiment> & { description: string }
+    ValueWithSentiment<string, Sentiment> & { description?: string }
   >,
 ): RosetteValue[] {
   const values: RosetteValue[] = [
