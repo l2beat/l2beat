@@ -7,21 +7,21 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('gpt')
 
 const membersCountDAC = discovery.getContractValue<number>(
-  'AstarValidiumDAC',
+  'GptProtocolDAC',
   'getAmountOfMembers',
 )
 
 const requiredSignaturesDAC = discovery.getContractValue<number>(
-  'AstarValidiumDAC',
+  'GptProtocolDAC',
   'requiredAmountOfSignatures',
 )
 
 const isForcedBatchDisallowed =
-  discovery.getContractValue<string>('AstarValidium', 'forceBatchAddress') !==
+  discovery.getContractValue<string>('GptProtocolValidium', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
 
 const upgradeability = {
-  upgradableBy: ['LocalAdmin'],
+  upgradableBy: ['GptProtocolDAC Upgrader'],
   upgradeDelay: 'None',
 }
 
@@ -71,7 +71,7 @@ export const gpt: Layer2 = polygonCDKStack({
         {
           contract: 'PolygonDataCommittee.sol',
           references: [
-            'https://etherscan.io/address/0xF4e87685e323818E0aE35dCdFc3B65106002E456#code',
+            'https://etherscan.io/address/0xA36aFB6b79A3d164a3d12C141c916BECc6e012D8#code',
           ],
         },
       ],
@@ -111,7 +111,7 @@ export const gpt: Layer2 = polygonCDKStack({
     genesisState:
       'The genesis state, whose corresponding root is accessible as Batch 0 root in the `getRollupBatchNumToStateRoot(5,0)` method of PolygonRollupManager, is available [here](https://github.com/0xPolygonHermez/zkevm-contracts/blob/1ad7089d04910c319a257ff4f3674ffd6fc6e64e/tools/addRollupType/genesis.json).',
     dataFormat:
-      'The trusted sequencer request signatures from DAC members off-chain, and posts hashed batches with signatures to the AstarValidium contract.',
+      'The trusted sequencer request signatures from DAC members off-chain, and posts hashed batches with signatures to the GptProtocolValidium contract.',
   },
   nonTemplatePermissions: [
     {
