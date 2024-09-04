@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import { BlockExplorerClient } from '@l2beat/shared'
-import { assert } from '@l2beat/shared-pure'
 import { TvlConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
@@ -26,7 +25,9 @@ export function createBlockTimestampModule(
   const blockTimestampIndexers = new Map<string, BlockTimestampIndexer>()
 
   for (const chainConfig of config.chains) {
-    assert(chainConfig.config, 'Config should be defined for enabled chain')
+    if (chainConfig.config === undefined) {
+      continue
+    }
 
     const rpcClient = peripherals.getClient(RpcClient, {
       url: chainConfig.config.providerUrl,

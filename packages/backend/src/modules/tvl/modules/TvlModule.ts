@@ -20,7 +20,7 @@ import { HourlyIndexer } from '../indexers/HourlyIndexer'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { TvlCleaner } from '../utils/TvlCleaner'
 import { createBlockTimestampModule } from './BlockTimestampModule'
-import { createChainModules } from './ChainModule'
+import { createChainModule } from './ChainModule'
 import { createCirculatingSupplyModule } from './CirculatingSupplyModule'
 import { createPriceModule } from './PriceModule'
 
@@ -78,7 +78,7 @@ export function createTvlModule(
     indexerService,
   )
 
-  const chainModules = createChainModules(
+  const chainModule = createChainModule(
     config.tvl,
     peripherals,
     logger,
@@ -163,15 +163,9 @@ export function createTvlModule(
 
   const start = async () => {
     await hourlyIndexer.start()
-
     await priceModule.start()
-
     await blockTimestampModule.start()
-
-    for (const module of chainModules) {
-      await module.start()
-    }
-
+    await chainModule.start()
     await circulatingSuppliesModule.start()
 
     if (config.tvl && config.tvl.tvlCleanerEnabled) {
