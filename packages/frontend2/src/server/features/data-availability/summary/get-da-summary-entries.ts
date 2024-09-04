@@ -67,7 +67,7 @@ export async function getDaSummaryEntries() {
         {
           slug: daLayer.display.slug,
           name: daLayer.display.name,
-          href: `#`,
+          href: undefined,
           daBridge: 'multiple' as const,
           layerType: kindToType(daLayer.kind),
           isUnderReview: !!daLayer.isUnderReview,

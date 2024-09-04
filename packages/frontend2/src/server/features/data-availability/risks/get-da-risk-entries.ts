@@ -70,7 +70,7 @@ export async function getDaRiskEntries() {
           name: daLayer.display.name,
           slug: daLayer.display.slug,
           daBridge: 'multiple' as const,
-          href: '#',
+          href: undefined,
           warning: undefined,
           redWarning: undefined,
           isVerified: true,

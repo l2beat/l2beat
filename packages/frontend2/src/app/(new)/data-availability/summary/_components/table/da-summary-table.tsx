@@ -14,6 +14,7 @@ import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell
 import { FilterWrapper } from '~/app/_components/table/filters/filter-wrapper'
 import { TableFacetedFilter } from '~/app/_components/table/filters/table-faceted-filter'
 import { EM_DASH } from '~/consts/characters'
+import { useBreakpoint } from '~/hooks/use-is-mobile'
 import { useTable } from '~/hooks/use-table'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { cn } from '~/utils/cn'
@@ -22,9 +23,7 @@ import { DaTableLastSubRowCell } from '../../../_components/da-table-last-sub-ro
 import { DaTableSubRowCell } from '../../../_components/da-table-sub-row-cell'
 import { mapRisksToRosetteValues } from '../../../_utils/map-risks-to-rosette-values'
 import { columns } from './columns'
-import { DaEconomicSecurityCell } from './da-economic-security-cell'
 import { ProjectsUsedIn } from './projects-used-in'
-import { useBreakpoint } from '~/hooks/use-is-mobile'
 
 interface Props {
   items: DaSummaryEntry[]
