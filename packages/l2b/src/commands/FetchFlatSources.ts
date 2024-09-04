@@ -1,6 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 import { assert } from '@l2beat/shared-pure'
+import chalk from 'chalk'
 import { command, option, optional } from 'cmd-ts'
+import { keyInYN } from 'readline-sync'
 import { readConfig } from '../config/readConfig'
 import {
   fetchFlatSources,
@@ -30,6 +32,16 @@ export const FetchFlatSources = command({
   handler: async (args) => {
     const config = readConfig()
     const logger = Logger.INFO
+    if (
+      config.discoveryPath !== undefined &&
+      !keyInYN(
+        `${chalk.red(
+          'WARNING:',
+        )} This command will override all of your local .flat directories with sources taken from UpdateMonitor.\nDo you wish to continue?`,
+      )
+    ) {
+      return
+    }
 
     const flat = await fetchFlatSources(logger, args.backendUrl)
 
