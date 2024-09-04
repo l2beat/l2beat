@@ -14,6 +14,7 @@ import { useLocalStorage } from '~/hooks/use-local-storage'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { type TvlProjectFilter } from '~/server/features/scaling/tvl/utils/project-filter-utils'
 import { api } from '~/trpc/react'
+import { type ChartScale, type ChartUnit } from '../types'
 import { TvlChartHeader } from './tvl-chart-header'
 import { TvlChartHover } from './tvl-chart-hover'
 import { TvlChartTimeRangeControls } from './tvl-chart-time-range-controls'
@@ -30,8 +31,11 @@ export function ScalingSummaryTvlChart({ entries, milestones }: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
   const includeFilter = useScalingFilter()
 
-  const [scale, setScale] = useLocalStorage('scaling-summary-scale', 'lin')
-  const [unit, setUnit] = useLocalStorage<'usd' | 'eth'>(
+  const [scale, setScale] = useLocalStorage<ChartScale>(
+    'scaling-summary-scale',
+    'lin',
+  )
+  const [unit, setUnit] = useLocalStorage<ChartUnit>(
     `scaling-summary-unit`,
     'usd',
   )

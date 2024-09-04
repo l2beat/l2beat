@@ -11,6 +11,7 @@ import { useLocalStorage } from '~/hooks/use-local-storage'
 import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import { api } from '~/trpc/react'
 import { useChartLoading } from '../core/chart-loading-context'
+import { type ChartScale } from '../types'
 import { CostsChartHover } from './costs-chart-hover'
 import { CostsChartTimeRangeControls } from './costs-chart-time-range-controls'
 import { useCostChartRenderParams } from './use-cost-chart-render-params'
@@ -21,7 +22,7 @@ interface Props {
 }
 
 export function ScalingCostsChart({ milestones, tag = 'costs' }: Props) {
-  const [scale, setScale] = useLocalStorage(`${tag}-scale`, 'lin')
+  const [scale, setScale] = useLocalStorage<ChartScale>(`${tag}-scale`, 'lin')
   const { range, setRange } = useCostsTimeRangeContext()
   const { unit, setUnit } = useCostsUnitContext()
   const { data: chart, isLoading } = api.costs.chart.useQuery({
@@ -86,9 +87,9 @@ function UnitAndScaleControls({
   setScale,
 }: {
   unit: CostsUnit
-  scale: string
+  scale: ChartScale
   setUnit: (value: CostsUnit) => void
-  setScale: (value: string) => void
+  setScale: (value: ChartScale) => void
 }) {
   const loading = useChartLoading()
 

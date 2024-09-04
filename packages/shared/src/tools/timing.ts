@@ -21,15 +21,31 @@ export function formatSI(value: number, unit: string): string {
   if (value === 0) {
     return `0 ${unit}`
   }
+  if (value === Infinity || value === -Infinity) {
+    const sign = value > 0 ? '' : '-'
+    return `${sign}∞ ${unit}`
+  }
 
-  const orderPrefix = [' ', ' K', ' M', ' G', ' T', ' P']
-  const order = Math.floor(Math.log2(value) / Math.log2(1000))
+  const orderPrefix = [
+    ' f',
+    ' p',
+    ' n',
+    ' µ',
+    ' m',
+    ' ',
+    ' K',
+    ' M',
+    ' G',
+    ' T',
+    ' P',
+  ]
+  const order = Math.floor(Math.log2(Math.abs(value)) / Math.log2(1000))
   const newValue = value / Math.pow(1000, order)
 
-  const prefix = orderPrefix[order]
+  const prefix = orderPrefix[order + 5]
   assert(
     prefix !== undefined,
     `Prefix should not be undefined for order ${order}`,
   )
-  return `${newValue.toFixed(2)}${prefix}${unit}`
+  return `${newValue.toFixed(2).replace(/\.?0+$/, '')}${prefix}${unit}`
 }

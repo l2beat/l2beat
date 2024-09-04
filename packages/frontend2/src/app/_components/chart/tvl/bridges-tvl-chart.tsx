@@ -10,6 +10,7 @@ import { formatCurrency } from '~/utils/format'
 import { PercentChange } from '../../percent-change'
 import { Skeleton } from '../../skeleton'
 import { useChartLoading } from '../core/chart-loading-context'
+import { type ChartScale, type ChartUnit } from '../types'
 import { TvlChartHover } from './tvl-chart-hover'
 import { TvlChartTimeRangeControls } from './tvl-chart-time-range-controls'
 import { TvlChartUnitAndScaleControls } from './tvl-chart-unit-and-scale-controls'
@@ -17,8 +18,11 @@ import { tvlRangeToReadable } from './tvl-range-to-readable'
 import { useTvlChartRenderParams } from './use-tvl-chart-render-params'
 
 export function BridgesTvlChart() {
-  const [scale, setScale] = useLocalStorage('bridges-summary-scale', 'lin')
-  const [unit, setUnit] = useLocalStorage<'usd' | 'eth'>(
+  const [scale, setScale] = useLocalStorage<ChartScale>(
+    'bridges-summary-scale',
+    'lin',
+  )
+  const [unit, setUnit] = useLocalStorage<ChartUnit>(
     'bridges-summary-unit',
     'usd',
   )

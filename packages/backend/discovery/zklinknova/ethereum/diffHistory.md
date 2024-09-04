@@ -1,3 +1,50 @@
+Generated with discovered.json: 0x724ebaf74ecc31838a2726032cc7f4dbf1157f46
+
+# Diff at Wed, 04 Sep 2024 07:32:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@878a951312cec062f5003f6749f781861b0cdba1 block: 20389275
+- current block number: 20675743
+
+## Description
+
+Set forwardFeeAllocator to EthereumOwner MS. (And withdraw 15 ETH of fees). The forwardFee consists of fees paid to 'validators' for `requestL2Transaction()`. One signer of EthereumOwner MS is changed.
+
+## Watched changes
+
+```diff
+    contract zkLink (0x5fD9F73286b7E8683Bab45019C94553b93e015Cf) {
+    +++ description: None
+      values.forwardFeeAllocator:
+-        "0x0000000000000000000000000000000000000000"
++        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+    }
+```
+
+```diff
+    contract EthereumOwner (0xdb4D755E3b8735314147b9bB146327C269701E2D) {
+    +++ description: None
+      values.$members.5:
+-        "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
++        "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
+      values.$members.4:
+-        "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
++        "0xC75EFCffEE930706daec5CaCA012551f6a1845D7"
+      values.$members.3:
+-        "0xC75EFCffEE930706daec5CaCA012551f6a1845D7"
++        "0xF801886AE2e127A269B0F11892edb54F692d02dF"
+      values.$members.2:
+-        "0xF801886AE2e127A269B0F11892edb54F692d02dF"
++        "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
+      values.$members.1:
+-        "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
++        "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
+      values.$members.0:
+-        "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
++        "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5"
+    }
+```
+
 Generated with discovered.json: 0x8a30aed7137282cb4bd3ba55a944b709fc7b8a1f
 
 # Diff at Fri, 30 Aug 2024 08:01:44 GMT:

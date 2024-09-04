@@ -22,7 +22,7 @@ export default async function Page(props: Props) {
   if (!daBridge) return notFound()
 
   const header = (
-    <header className="space-y-4 pt-6 max-md:-mx-4 max-md:bg-gray-100 max-md:px-4 max-md:pb-4 max-md:dark:bg-zinc-900 md:space-y-3">
+    <header className="space-y-4 pt-6 max-md:bg-gray-100 max-md:pb-4 max-md:dark:bg-zinc-900 md:space-y-3">
       <ProjectHeader title={daLayer.display.name} slug={daLayer.display.slug} />
       <DaBridgeSelect
         defaultValue={daBridge.display.slug}
@@ -34,7 +34,7 @@ export default async function Page(props: Props) {
 
   return (
     <Suspense fallback={<DaProjectPageSkeleton header={header} />}>
-      <DaProjectPage daLayer={daLayer} daBridge={daBridge} header={header} />
+      <DaProjectPage header={header} daLayer={daLayer} daBridge={daBridge} />
     </Suspense>
   )
 }

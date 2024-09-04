@@ -41,7 +41,12 @@ export default async function RootLayout({
               disableTransitionOnChange
             >
               <TooltipProvider delayDuration={300}>
-                <GlossaryContextProvider terms={terms}>
+                <GlossaryContextProvider
+                  terms={terms.map((term) => ({
+                    id: term.id,
+                    matches: [term.data.term, ...(term.data.match ?? [])],
+                  }))}
+                >
                   {children}
                 </GlossaryContextProvider>
               </TooltipProvider>

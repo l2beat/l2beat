@@ -1,7 +1,8 @@
 import { type ValueRecord } from '@l2beat/database'
-import { assert, UnixTime } from '@l2beat/shared-pure'
-import { type Dictionary, groupBy, range as lodashRange } from 'lodash'
+import { assert } from '@l2beat/shared-pure'
+import { type Dictionary, groupBy } from 'lodash'
 import { db } from '~/server/database'
+import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
 import { type TvlProject } from './get-tvl-projects'
 import { getTvlTargetTimestamp } from './get-tvl-target-timestamp'
 import { getValuesStatus } from './get-tvl-values-status'
@@ -49,26 +50,10 @@ export async function getTvlValuesForProjects(
           : 'day',
     )
 
-    const timestamps = lodashRange(
-      (target.toNumber() - minTimestamp.toNumber()) /
-        (resolution === 'hourly'
-          ? UnixTime.HOUR
-          : resolution === 'sixHourly'
-            ? UnixTime.SIX_HOURS
-            : UnixTime.DAY) +
-        1,
-    )
-      .map((i) => {
-        return minTimestamp.add(
-          i * (resolution === 'sixHourly' ? 6 : 1),
-          resolution === 'hourly'
-            ? 'hours'
-            : resolution === 'sixHourly'
-              ? 'hours'
-              : 'days',
-        )
-      })
-      .filter((t) => t.lte(target))
+    const timestamps = generateTimestamps(
+      [minTimestamp, target],
+      resolution,
+    ).filter((t) => t.lte(target))
 
     for (const timestamp of timestamps) {
       const values = (valuesByTimestamp[timestamp.toString()] ?? []).filter(

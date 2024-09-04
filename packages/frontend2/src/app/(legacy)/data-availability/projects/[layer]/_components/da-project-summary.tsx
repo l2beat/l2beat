@@ -14,7 +14,7 @@ export function DaProjectSummary({ project }: Props) {
   return (
     <section
       id="summary"
-      className="max-md:-mx-4 max-md:bg-gray-100 max-md:px-4 max-md:dark:bg-zinc-900"
+      className="max-md:bg-gray-100 max-md:px-4 max-md:dark:bg-zinc-900"
     >
       <div className="flex gap-10">
         <div className="w-full space-y-4">

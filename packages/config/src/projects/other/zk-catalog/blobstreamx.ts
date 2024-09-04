@@ -1,4 +1,5 @@
 import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { PROOFS } from './common/proofSystems'
 import { ZkCatalogProject } from './types'
 
 export const blobstreamx: ZkCatalogProject = {
@@ -22,10 +23,7 @@ export const blobstreamx: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Final wrap',
-            proofSystem: 'Plonk SNARK',
-            mainArithmetization: 'Plonkish',
-            mainPCS: 'KZG',
-            trustedSetup: '?',
+            ...PROOFS.PLONKSNARK('?'),
           },
           {
             name: 'Main circuit',
@@ -49,10 +47,7 @@ export const blobstreamx: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Final wrap',
-            proofSystem: 'Plonk SNARK',
-            mainArithmetization: 'Plonkish',
-            mainPCS: 'KZG',
-            trustedSetup: '?',
+            ...PROOFS.PLONKSNARK('?'),
           },
           {
             name: 'Main circuit',
@@ -76,10 +71,7 @@ export const blobstreamx: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Final wrap',
-            proofSystem: 'Plonk SNARK',
-            mainArithmetization: 'Plonkish',
-            mainPCS: 'KZG',
-            trustedSetup: '?',
+            ...PROOFS.PLONKSNARK('?'),
           },
           {
             name: 'Main circuit',
@@ -103,10 +95,7 @@ export const blobstreamx: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Final wrap',
-            proofSystem: 'Plonk SNARK',
-            mainArithmetization: 'Plonkish',
-            mainPCS: 'KZG',
-            trustedSetup: '?',
+            ...PROOFS.PLONKSNARK('?'),
           },
           {
             name: 'Main circuit',
@@ -130,10 +119,7 @@ export const blobstreamx: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Final wrap',
-            proofSystem: 'Plonk SNARK',
-            mainArithmetization: 'Plonkish',
-            mainPCS: 'KZG',
-            trustedSetup: '?',
+            ...PROOFS.PLONKSNARK('?'),
           },
           {
             name: 'Main circuit',
@@ -157,10 +143,7 @@ export const blobstreamx: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Final wrap',
-            proofSystem: 'Plonk SNARK',
-            mainArithmetization: 'Plonkish',
-            mainPCS: 'KZG',
-            trustedSetup: '?',
+            ...PROOFS.PLONKSNARK('?'),
           },
           {
             name: 'Main circuit',

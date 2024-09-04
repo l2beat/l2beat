@@ -1,6 +1,13 @@
 import React from 'react'
-import { CustomLink, type CustomLinkProps } from './link/custom-link'
+import { type CustomLinkProps, linkVariants } from './link/custom-link'
 
-export function OutLink(props: CustomLinkProps) {
-  return <CustomLink target="_blank" rel="noreferrer noopener" {...props} />
+export function OutLink({ variant, underline, ...props }: CustomLinkProps) {
+  return (
+    <a
+      target="_blank"
+      rel="noreferrer noopener"
+      className={linkVariants({ variant, underline })}
+      {...props}
+    />
+  )
 }

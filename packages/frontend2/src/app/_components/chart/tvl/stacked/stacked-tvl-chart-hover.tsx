@@ -1,6 +1,7 @@
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/format'
+import { type ChartUnit } from '../../types'
 
 interface Props {
   timestamp: number
@@ -8,14 +9,14 @@ interface Props {
   external: number
   native: number
   ethPrice: number
-  currency: 'usd' | 'eth'
+  unit: ChartUnit
 }
 
 export function StackedTvlChartHover(props: Props) {
-  const divideBy = props.currency === 'usd' ? 100 : props.ethPrice
+  const divideBy = props.unit === 'usd' ? 100 : props.ethPrice
   const total = formatCurrency(
     (props.canonical + props.external + props.native) / divideBy,
-    props.currency,
+    props.unit,
   )
   const values = [
     {
@@ -65,7 +66,7 @@ export function StackedTvlChartHover(props: Props) {
                   <span>{v.title}</span>
                 </span>
                 <span className="font-semibold">
-                  {formatCurrency(v.value / divideBy, props.currency)}
+                  {formatCurrency(v.value / divideBy, props.unit)}
                 </span>
               </div>
             ),

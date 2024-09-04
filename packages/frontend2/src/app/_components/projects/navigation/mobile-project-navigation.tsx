@@ -1,15 +1,15 @@
 'use client'
 
 import debounce from 'lodash/debounce'
-import React, { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
 import { useCurrentSection } from '~/hooks/use-current-section'
 import { cn } from '~/utils/cn'
 import { scrollHorizontallyToItem } from '~/utils/scroll-to-item'
-import { type ProjectDetailsSection } from '../sections/types'
+import { type ProjectNavigationSection } from './types'
 
 interface Props {
-  sections: ProjectDetailsSection[]
+  sections: ProjectNavigationSection[]
 }
 
 export function MobileProjectNavigation({ sections }: Props) {
@@ -54,23 +54,20 @@ export function MobileProjectNavigation({ sections }: Props) {
           Summary
         </a>
         {sections.map((section) => {
-          if (section.excludeFromNavigation) {
-            return null
-          }
-          const selected = section.props.id === currentSection?.id
+          const selected = section.id === currentSection?.id
 
           return (
             <a
-              key={section.props.id}
+              key={section.id}
               ref={selected ? selectedItem : undefined}
-              href={`#${section.props.id}`}
+              href={`#${section.id}`}
               className={cn(
                 'whitespace-nowrap p-4 text-xs transition-colors',
                 selected &&
                   'border-b-2 border-current text-pink-900 dark:text-pink-200',
               )}
             >
-              {section.props.title}
+              {section.title}
             </a>
           )
         })}
