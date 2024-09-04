@@ -24,10 +24,6 @@ export const playblockDac = DAC({
       ],
       risks: [],
     },
-    technology: `## Simple DA Bridge
-      The DA bridge is a smart contract verifying a data availability claim from DAC Members via signature verification.
-      The bridge requires a ${requiredSignatures}/${membersCount} threshold of signatures to be met before the data commitment is accepted.
-    `,
     permissions: [
       // Members: DAC uses BLS sigs, not EOAs
       {
