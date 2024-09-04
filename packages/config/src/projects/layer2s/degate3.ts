@@ -471,7 +471,7 @@ export const degate3: Layer2 = {
       link: 'https://medium.com/degate/degate-mainnet-beta-redeployment-oct-2023-e07c8eeaec4c',
       date: '2023-11-13T00:00:00Z',
       description:
-        'DeGate redeploy Mainnet Beta with the ability to upgrade the smart contracts, with a time delay.',
+        'DeGate redeploys Mainnet Beta due to a bug, with the ability to upgrade the smart contracts.',
       type: 'incident',
     },
   ],
