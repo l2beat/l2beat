@@ -31,7 +31,7 @@ interface Props {
 export function RiskCell({ risk, emptyMode = 'no-info' }: Props) {
   if (!risk) {
     if (emptyMode === 'em-dash') {
-      return <div className="text-xs text-[#9EA0A4]">{EM_DASH}</div>
+      return <div className="text-xs text-gray-450">{EM_DASH}</div>
     }
     return <NoInfoCell />
   }
