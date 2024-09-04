@@ -1,6 +1,5 @@
 import { layer2s, layer3s } from '@l2beat/config'
 import { notFound } from 'next/navigation'
-import { ContentWrapper } from '~/app/_components/content-wrapper'
 import { HighlightableLinkContextProvider } from '~/app/_components/link/highlightable/highlightable-link-context'
 import { DesktopProjectNavigation } from '~/app/_components/projects/navigation/desktop-project-navigation'
 import { MobileProjectNavigation } from '~/app/_components/projects/navigation/mobile-project-navigation'
@@ -61,36 +60,34 @@ export default async function Page({ params }: Props) {
 
   // HydrateClient is used to hydrate the client with chart data that is fetched inside get-l2-project-details.tsx and get-l3-project-details.tsx
   return (
-    <ContentWrapper>
-      <HydrateClient>
-        {!isNavigationEmpty && (
-          <div className="sticky top-0 z-100 -mx-4 md:hidden">
-            <MobileProjectNavigation sections={projectEntry.projectDetails} />
+    <HydrateClient>
+      {!isNavigationEmpty && (
+        <div className="sticky top-0 z-100 md:hidden">
+          <MobileProjectNavigation sections={projectEntry.projectDetails} />
+        </div>
+      )}
+      <ScalingProjectSummary project={projectEntry} />
+      {isNavigationEmpty ? (
+        <ProjectDetails items={projectEntry.projectDetails} />
+      ) : (
+        <div className="gap-x-12 md:flex">
+          <div className="mt-10 hidden w-[242px] shrink-0 md:block">
+            <DesktopProjectNavigation
+              project={{
+                title: projectEntry.name,
+                slug: projectEntry.slug,
+                showProjectUnderReview: projectEntry.isUnderReview,
+              }}
+              sections={projectEntry.projectDetails}
+            />
           </div>
-        )}
-        <ScalingProjectSummary project={projectEntry} />
-        {isNavigationEmpty ? (
-          <ProjectDetails items={projectEntry.projectDetails} />
-        ) : (
-          <div className="gap-x-12 md:flex">
-            <div className="mt-10 hidden w-[242px] shrink-0 md:block">
-              <DesktopProjectNavigation
-                project={{
-                  title: projectEntry.name,
-                  slug: projectEntry.slug,
-                  showProjectUnderReview: projectEntry.isUnderReview,
-                }}
-                sections={projectEntry.projectDetails}
-              />
-            </div>
-            <div className="w-full">
-              <HighlightableLinkContextProvider>
-                <ProjectDetails items={projectEntry.projectDetails} />
-              </HighlightableLinkContextProvider>
-            </div>
+          <div className="w-full">
+            <HighlightableLinkContextProvider>
+              <ProjectDetails items={projectEntry.projectDetails} />
+            </HighlightableLinkContextProvider>
           </div>
-        )}
-      </HydrateClient>
-    </ContentWrapper>
+        </div>
+      )}
+    </HydrateClient>
   )
 }

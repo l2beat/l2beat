@@ -58,7 +58,7 @@ export default async function Page({ params }: Props) {
   return (
     <HydrateClient>
       {!isNavigationEmpty && (
-        <div className="sticky top-0 z-100 -mx-4 md:hidden">
+        <div className="sticky top-0 z-100 md:hidden">
           <MobileProjectNavigation sections={projectEntry.projectDetails} />
         </div>
       )}

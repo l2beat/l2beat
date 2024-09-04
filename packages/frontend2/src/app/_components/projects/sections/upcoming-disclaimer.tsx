@@ -1,4 +1,3 @@
-import React from 'react'
 import InfoIcon from '~/icons/info.svg'
 import { Callout } from '../../callout'
 import { CustomLink } from '../../link/custom-link'
@@ -6,7 +5,7 @@ import { CustomLink } from '../../link/custom-link'
 export function UpcomingDisclaimer() {
   return (
     <Callout
-      className="-mx-4 rounded-none bg-blue-600/20 p-4 md:mx-0 md:mt-16 md:rounded-lg"
+      className="rounded-none bg-blue-600/20 p-4 max-md:-mx-4 md:mt-16 md:rounded-lg"
       icon={<InfoIcon className="mt-1 fill-blue-500" />}
       body={
         <>

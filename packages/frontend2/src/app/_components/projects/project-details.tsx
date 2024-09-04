@@ -23,7 +23,7 @@ export interface ProjectDetailsProps {
 
 export function ProjectDetails(props: ProjectDetailsProps) {
   return (
-    <div>
+    <div className="max-md:px-4">
       {props.items.map((item, index) => {
         const sectionOrder = index + 1
 
