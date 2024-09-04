@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x42721588abd1870538c09b7148319f7286c73d8e
+Generated with discovered.json: 0xcf8c254225b26419c2a5c357b2ffd130d3f2498c
 
-# Diff at Tue, 03 Sep 2024 16:50:37 GMT:
+# Diff at Wed, 04 Sep 2024 11:00:53 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@8b201382220336bea7cda6fb789ab7a680e53200 block: 20475242
+- comparing to: main@cdee8593311791a0ce855abd72742907545139fa block: 20475242
 - current block number: 20475242
 
 ## Description
@@ -169,7 +169,7 @@ discovery. Values are for block 20475242 (main branch discovery), not current.
       descriptions:
 -        ["It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."]
       receivedPermissions.0.description:
-+        "It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
     }
 ```
 

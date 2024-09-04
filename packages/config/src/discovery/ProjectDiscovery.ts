@@ -337,7 +337,7 @@ export class ProjectDiscovery {
       .filter(notUndefined)
       .map((contract) => ({
         name: contract.name,
-        description: contract.descriptions?.join(' ').replace(/\.$/, '') ?? '', // remove trailing dot
+        description: trimTrailingDots(contract.descriptions?.join(' ') ?? ''),
       }))
       .map(
         ({ name, description }) =>
@@ -763,7 +763,7 @@ export class ProjectDiscovery {
           .map((entry) => this.getContract(entry.target.toString()).name)
           .join(', ') +
         via +
-        (description !== '' ? ` - ${description}` : '')
+        (description !== '' ? ` - ${trimTrailingDots(description)}` : '')
       return `${
         ultimatePermissionToPrefix[permission as PermissionType]
       } ${detailsString}.`
@@ -782,15 +782,22 @@ export class ProjectDiscovery {
     }
 
     return Object.entries(
-      groupBy(contractOrEoa.directlyReceivedPermissions ?? [], 'permission'),
-    ).map(([permission, entries]) => {
+      groupBy(
+        contractOrEoa.directlyReceivedPermissions ?? [],
+        (value: ResolvedPermission) =>
+          value.permission + ':' + (value.description ?? ''),
+      ),
+    ).map(([key, entries]) => {
+      const permission = key.split(':')[0] as PermissionType
+      const description = key.split(':', 2)[1] ?? ''
       const addressesString = entries
         .map((entry) => this.getContract(entry.target.toString()).name)
         .join(', ')
-
-      return `${
-        directPermissionToPrefix[permission as PermissionType]
-      } ${addressesString}. TODO DESCRIPTION`
+      return (
+        `${directPermissionToPrefix[permission]} ${addressesString}` +
+        (description !== '' ? ` - ${trimTrailingDots(description)}` : '') +
+        '.'
+      )
     })
   }
 
@@ -974,4 +981,8 @@ export function formatAsBulletPoints(description: string[]): string {
   return description.length > 1
     ? description.map((s) => `* ${s}\n`).join('')
     : description.join(' ')
+}
+
+export function trimTrailingDots(s: string): string {
+  return s.replace(/\.*$/, '')
 }
