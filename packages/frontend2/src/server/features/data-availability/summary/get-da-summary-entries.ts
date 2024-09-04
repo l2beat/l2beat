@@ -1,4 +1,10 @@
-import { daLayers, getDaProjectKey } from '@l2beat/config'
+import {
+  type DaLayerRisks,
+  DaRiskView,
+  daLayers,
+  getDaProjectKey,
+} from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { toDaBridge } from '../utils/get-da-bridge'
 import { getUniqueProjectsInUse } from '../utils/get-da-projects'
@@ -17,33 +23,77 @@ export async function getDaSummaryEntries() {
   const tvlPerProject = await getDaProjectsTvl(uniqueProjectsInUse)
   const getSumFor = pickTvlForProjects(tvlPerProject)
 
-  const entries = daLayers.flatMap((daLayer) =>
-    daLayer.bridges.map((daBridge) => {
-      const projectEconomicSecurity = economicSecurity[daLayer.id]
-      // TODO: Remove it to re-enable per-combination TVL
-      const tvlSource = daLayer.kind === 'DAC' ? daBridge : daLayer
-      const tvs = getSumFor(tvlSource.usedIn.map((project) => project.id))
+  const entries = daLayers
+    // Calculate total TVS for each bridge
+    .map((daLayer) => ({
+      ...daLayer,
+      usedIn: daLayer.bridges.flatMap((bridge) => bridge.usedIn),
+      tvs: getSumFor(
+        daLayer.bridges.flatMap((bridge) =>
+          bridge.usedIn.map((project) => project.id),
+        ),
+      ),
+    }))
+    // Sort by TVS
+    .sort((a, b) => b.tvs - a.tvs)
+    .map((daLayer) => {
+      const daBridges = daLayer.bridges.map((daBridge) => {
+        const projectEconomicSecurity = economicSecurity[daLayer.id]
+        // TODO: Remove it to re-enable per-combination TVL
+        const tvlSource = daLayer.kind === 'DAC' ? daBridge : daLayer
+        const tvs = getSumFor(tvlSource.usedIn.map((project) => project.id))
 
-      return {
-        slug: daLayer.display.slug,
-        name: daLayer.display.name,
-        href: `/data-availability/projects/${daLayer.display.slug}/${daBridge.display.slug}`,
-        daBridge: toDaBridge(daBridge),
-        layerType: kindToType(daLayer.kind),
-        risks: getDaRisks(daLayer, daBridge, tvs, projectEconomicSecurity),
-        isUnderReview: !!daLayer.isUnderReview || daBridge.isUnderReview,
-        isVerified:
-          !!projectsVerificationStatuses[getDaProjectKey(daLayer, daBridge)],
-        warning: daBridge.display.warning,
-        redWarning: daBridge.display.redWarning,
-        tvs,
-        economicSecurity: projectEconomicSecurity,
-        usedIn: daBridge.usedIn,
+        return {
+          slug: daLayer.display.slug,
+          name: daLayer.display.name,
+          href: `/data-availability/projects/${daLayer.display.slug}/${daBridge.display.slug}`,
+          daBridge: toDaBridge(daBridge),
+          layerType: kindToType(daLayer.kind),
+          risks: getDaRisks(daLayer, daBridge, tvs, projectEconomicSecurity),
+          isUnderReview: !!daLayer.isUnderReview || daBridge.isUnderReview,
+          isVerified:
+            !!projectsVerificationStatuses[getDaProjectKey(daLayer, daBridge)],
+          warning: daBridge.display.warning,
+          redWarning: daBridge.display.redWarning,
+          tvs,
+          economicSecurity: projectEconomicSecurity,
+          usedIn: daBridge.usedIn,
+          subRows: [],
+        }
+      })
+
+      if (daBridges.length === 0) {
+        return []
+      } else if (daBridges.length === 1 && daBridges[0]) {
+        return daBridges
       }
-    }),
-  )
 
-  return entries.sort((a, b) => b.tvs - a.tvs)
+      assert(daBridges[0], 'Expected at least one bridge')
+
+      return [
+        {
+          slug: daLayer.display.slug,
+          name: daLayer.display.name,
+          href: `#`,
+          daBridge: 'multiple' as const,
+          layerType: kindToType(daLayer.kind),
+          isUnderReview: !!daLayer.isUnderReview,
+          isVerified: true,
+          warning: undefined,
+          redWarning: undefined,
+          economicSecurity: daBridges[0].economicSecurity,
+          usedIn: daLayer.usedIn,
+          risks: {
+            economicSecurity: daLayer.risks.economicSecurity,
+            fraudDetection: daLayer.risks.fraudDetection,
+          } as DaLayerRisks,
+          subRows: daBridges,
+          tvs: daLayer.tvs,
+        },
+      ]
+    })
+
+  return entries.flat()
 }
 
 export type DaSummaryEntry = Awaited<

@@ -3,7 +3,10 @@ import { PentagonRosetteCell } from '~/app/_components/rosette/pentagon/pentagon
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import { getCommonProjectColumns } from '~/app/_components/table/common-project-columns'
 import { EM_DASH } from '~/consts/characters'
+import ChevronDown from '~/icons/chevron.svg'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
+import { cn } from '~/utils/cn'
+import { formatCurrency } from '~/utils/format'
 import { formatNumber } from '~/utils/format-number'
 import { mapRisksToRosetteValues } from '../../../_utils/map-risks-to-rosette-values'
 import { DaEconomicSecurityCell } from './da-economic-security-cell'
@@ -25,25 +28,79 @@ export const columns = [
   }),
   columnHelper.accessor('daBridge', {
     header: 'DA Bridge',
-    cell: (ctx) => (
-      <ProjectNameCell
-        className="!pl-0"
-        project={{
-          ...ctx.row.original,
-          name: ctx.getValue().name,
-          shortName: undefined,
-        }}
-      />
-    ),
+    cell: (ctx) => {
+      const value = ctx.getValue()
+      if (value === 'multiple') {
+        return (
+          <button
+            className="flex flex-row items-center gap-4 italic text-[#9EA0A4]"
+            onClick={() => ctx.row.toggleExpanded()}
+          >
+            Multiple bridges
+            <ChevronDown
+              className={cn(
+                'fill-black transition-transform dark:fill-white',
+                ctx.row.getIsExpanded() && 'rotate-180',
+              )}
+            />
+          </button>
+        )
+      }
+      return (
+        <ProjectNameCell
+          className="!pl-0"
+          project={{
+            ...ctx.row.original,
+            name: value.name,
+            shortName: undefined,
+          }}
+        />
+      )
+    },
+    meta: {
+      cellClassName: 'pl-8',
+      headClassName: 'pl-8',
+    },
   }),
   columnHelper.accessor('risks', {
     header: 'Risks',
-    cell: (ctx) => (
-      <PentagonRosetteCell
-        values={mapRisksToRosetteValues(ctx.getValue())}
-        isUnderReview={ctx.row.original.isUnderReview}
-      />
-    ),
+    cell: (ctx) => {
+      const value = ctx.getValue()
+
+      if ('accessibility' in value) {
+        return (
+          <PentagonRosetteCell
+            values={mapRisksToRosetteValues(value)}
+            isUnderReview={ctx.row.original.isUnderReview}
+          />
+        )
+      }
+
+      return (
+        <PentagonRosetteCell
+          values={mapRisksToRosetteValues({
+            economicSecurity: value.economicSecurity,
+            fraudDetection: value.fraudDetection,
+            attestations: {
+              value: 'Unknown',
+              description: 'Depends on DA Bridge.',
+              sentiment: 'neutral',
+            },
+            exitWindow: {
+              value: 'Unknown',
+              description: 'Depends on DA Bridge.',
+              sentiment: 'neutral',
+            },
+            accessibility: {
+              value: 'Unknown',
+              description: 'Depends on DA Bridge.',
+              sentiment: 'neutral',
+            },
+          })}
+          isUnderReview={ctx.row.original.isUnderReview}
+        />
+      )
+    },
     enableSorting: false,
     meta: {
       hash: 'risk-analysis',
@@ -54,7 +111,7 @@ export const columns = [
   }),
   columnHelper.accessor('tvs', {
     header: 'Total value secured',
-    cell: (ctx) => `$${formatNumber(ctx.getValue(), 2)}`,
+    cell: (ctx) => formatCurrency(ctx.getValue(), 'usd'),
   }),
   columnHelper.accessor('economicSecurity', {
     header: 'Economic security',
