@@ -31,7 +31,7 @@ export function formatCurrency(
   }
 
   const num = formatNumber(value, decimals)
-  return symbol ? `${symbol}${num}` : `${num} ${currency.toUpperCase()}`
+  return symbol ? `${symbol}${num}` : `${num} ${currency}`
 }
 
 export function formatCurrencyExactValue(value: number, currency: string) {
