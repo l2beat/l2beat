@@ -26,6 +26,11 @@ contract Test {
 	using a.b for uint256 global;
 	using { a.b, c.d as + } for uint256;
 
+	struct Vector2 {
+		uint256 a;
+		string b;
+	}
+
 	constructor() {}
 
 	constructor(uint256 a, bytes calldata b) payable onlyFullMoon {}

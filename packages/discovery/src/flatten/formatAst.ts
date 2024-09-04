@@ -90,7 +90,7 @@ const FORMATTERS: {
   SourceUnit,
   StateVariableDeclaration,
   StringLiteral,
-  StructDefinition: __REPLACE_ME__,
+  StructDefinition,
   ThrowStatement: __REPLACE_ME__,
   TryStatement: __REPLACE_ME__,
   TupleExpression: __REPLACE_ME__,
@@ -313,6 +313,23 @@ function StringLiteral(node: AST.StringLiteral, out: OutputStream) {
   out.token(JSON.stringify(node.value))
 }
 
+function StructDefinition(node: AST.StructDefinition, out: OutputStream) {
+  out.beginLine()
+  out.token('struct')
+  out.token(node.name)
+  out.token('{')
+  out.pushIndent()
+  for (const n of node.members) {
+    out.beginLine()
+    formatAstNode(n, out)
+    out.token(';')
+    out.endLine()
+  }
+  out.popIndent()
+  out.token('}')
+  out.endLine()
+}
+
 function UserDefinedTypeName(node: AST.UserDefinedTypeName, out: OutputStream) {
   out.token(node.namePath)
 }
@@ -401,6 +418,9 @@ class OutputStream {
   }
 
   token(token: string) {
+    if (this.isLineStart && !this.indented) {
+      this.appendRaw(this.indent.repeat(this.level))
+    }
     if (
       this.isLineStart ||
       (token === '(' && this.previous !== 'returns') ||
