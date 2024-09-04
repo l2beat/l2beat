@@ -1,34 +1,38 @@
-import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
-import { DaLayer } from '../types/DaLayer'
-import { sankoDac } from './bridges/sanko'
+import { ChainId } from '@l2beat/shared-pure'
+import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
+import { sanko } from '../../../layer3s/sanko'
+import { DAC } from '../templates/dac-template'
+import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
-export const sankoLayer: DaLayer = {
-  id: 'sanko-dac-layer',
-  type: 'DaLayer',
-  kind: 'DAC',
-  display: {
-    name: 'Sanko DAC',
-    slug: 'sanko',
-    description:
-      'Set of parties responsible for signing and attesting to the availability of data.',
-    links: {
-      websites: [],
-      documentation: [],
-      repositories: [],
-      apps: [],
-      explorers: [],
-      socialMedia: [],
+const discovery = new ProjectDiscovery('sanko', 'arbitrum')
+
+const dac = discovery.getContractValue<{
+  membersCount: number
+  requiredSignatures: number
+}>('SequencerInbox', 'dacKeyset')
+const { membersCount, requiredSignatures } = dac
+
+export const sankoDac = DAC({
+  project: sanko,
+  bridge: {
+    contracts: {
+      addresses: [
+        discovery.getContractDetails(
+          'SequencerInbox',
+          'Main entry point for the Sequencer submitting transaction batches.',
+        ),
+      ],
+      risks: [],
+    },
+    permissions: [
+      // BLS sigs, not EOAs
+    ],
+    chain: ChainId.ETHEREUM,
+    requiredMembers: requiredSignatures,
+    totalMembers: membersCount,
+    transactionDataType: DacTransactionDataType.TransactionDataCompressed,
+    members: {
+      type: 'unknown',
     },
   },
-  technology: `## Simple Committee
-  The Data Availability Committee (DAC) is a set of trusted parties responsible for storing data off-chain and serving it upon demand. 
-  The security guarantees of DACs depend on the specific setup and can vary significantly based on the criteria for selecting committee members, 
-  their operational transparency, and the mechanisms in place to handle disputes and failures.
-  `,
-  bridges: [sankoDac],
-  usedIn: [...sankoDac.usedIn],
-  risks: {
-    economicSecurity: DaEconomicSecurityRisk.Unknown,
-    fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
-  },
-}
+})
