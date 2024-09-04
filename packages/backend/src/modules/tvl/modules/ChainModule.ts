@@ -4,7 +4,6 @@ import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
 import {
   assert,
   EscrowEntry,
-  PremintedEntry,
   ProjectId,
   TotalSupplyEntry,
 } from '@l2beat/shared-pure'
@@ -17,7 +16,6 @@ import { IndexerService } from '../../../tools/uif/IndexerService'
 import { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
 import { ChainAmountIndexer } from '../indexers/ChainAmountIndexer'
 import { DescendantIndexer } from '../indexers/DescendantIndexer'
-import { PremintedIndexer } from '../indexers/PremintedIndexer'
 import { ValueIndexer } from '../indexers/ValueIndexer'
 import { ChainAmountConfig } from '../indexers/types'
 import { AmountService } from '../services/AmountService'
@@ -25,7 +23,7 @@ import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
 import { ValueService } from '../services/ValueService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
-export interface ChainModule {
+interface ChainModule {
   start: () => Promise<void> | void
 }
 
@@ -39,7 +37,7 @@ export function initChainModule(
   descendantPriceIndexer: DescendantIndexer,
   configMapping: ConfigMapping,
 ): ChainModule {
-  const dataIndexers: (ChainAmountIndexer | PremintedIndexer)[] = []
+  const dataIndexers: ChainAmountIndexer[] = []
   const valueIndexers: ValueIndexer[] = []
 
   for (const chainConfig of config.chains) {
@@ -49,8 +47,13 @@ export function initChainModule(
       continue
     }
 
-    const { amountService, valueService, circulatingSupplyService } =
-      createPeripherals(peripherals, chainConfig, logger, chain, config)
+    const { amountService, valueService } = createPeripherals(
+      peripherals,
+      chainConfig,
+      logger,
+      chain,
+      config,
+    )
 
     const chainAmountEntries = config.amounts
       .filter((a) => a.chain === chain)
@@ -125,44 +128,6 @@ export function initChainModule(
 
         valueIndexers.push(indexer)
       }
-    }
-
-    const premintedTokens = config.amounts
-      .filter((a) => a.chain === chain)
-      .filter((a): a is PremintedEntry => a.type === 'preminted')
-
-    for (const preminted of premintedTokens) {
-      const indexer = new PremintedIndexer({
-        logger,
-        parents: [blockTimestampIndexer],
-        indexerService,
-        configuration: preminted,
-        minHeight: preminted.sinceTimestamp.toNumber(),
-        amountService,
-        circulatingSupplyService,
-        syncOptimizer,
-        db: peripherals.database,
-      })
-
-      dataIndexers.push(indexer)
-
-      const valueIndexer = new ValueIndexer({
-        valueService,
-        db: peripherals.database,
-        priceConfigs: [configMapping.getPriceConfigFromAmountConfig(preminted)],
-        amountConfigs: [preminted],
-        project: ProjectId(preminted.project),
-        dataSource: `${chain}_preminted_${preminted.address}`,
-        syncOptimizer,
-        parents: [descendantPriceIndexer, indexer],
-        indexerService,
-        logger,
-        minHeight: preminted.sinceTimestamp.toNumber(),
-        maxHeight: preminted.untilTimestamp?.toNumber(),
-        maxTimestampsToProcessAtOnce: config.maxTimestampsToAggregateAtOnce,
-      })
-
-      valueIndexers.push(valueIndexer)
     }
   }
 

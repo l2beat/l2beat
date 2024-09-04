@@ -9,7 +9,7 @@ import { HourlyIndexer } from '../indexers/HourlyIndexer'
 import { BlockTimestampProvider } from '../services/BlockTimestampProvider'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
-export interface BlockTimestampModule {
+interface BlockTimestampModule {
   start: () => Promise<void> | void
   blockTimestampIndexers: Map<string, BlockTimestampIndexer>
 }

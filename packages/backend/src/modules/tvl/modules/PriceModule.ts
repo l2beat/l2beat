@@ -12,7 +12,7 @@ import { PriceIndexer } from '../indexers/PriceIndexer'
 import { PriceService } from '../services/PriceService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
-export interface PriceModule {
+interface PriceModule {
   start: () => Promise<void> | void
   descendant: DescendantIndexer
 }

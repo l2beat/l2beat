@@ -14,9 +14,8 @@ import { ValueIndexer } from '../indexers/ValueIndexer'
 import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
 import { ValueService } from '../services/ValueService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
-import { PriceModule } from './PriceModule'
 
-export interface CirculatingSupplyModule {
+interface CirculatingSupplyModule {
   start: () => Promise<void> | void
 }
 
@@ -27,7 +26,7 @@ export function initCirculatingSupplyModule(
   hourlyIndexer: HourlyIndexer,
   syncOptimizer: SyncOptimizer,
   indexerService: IndexerService,
-  priceModule: PriceModule,
+  descendantPriceIndexer: DescendantIndexer,
   configMapping: ConfigMapping,
 ): CirculatingSupplyModule {
   const coingeckoClient = peripherals.getClient(CoingeckoClient, {
@@ -74,7 +73,7 @@ export function initCirculatingSupplyModule(
       return indexer
     })
 
-    const parents = [priceModule.descendant, ...csIndexers]
+    const parents = [descendantPriceIndexer, ...csIndexers]
 
     const valueService = new ValueService(peripherals.database)
 

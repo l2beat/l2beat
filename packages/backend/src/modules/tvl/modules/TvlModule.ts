@@ -22,6 +22,7 @@ import { TvlCleaner } from '../utils/TvlCleaner'
 import { initBlockTimestampModule } from './BlockTimestampModule'
 import { initChainModule } from './ChainModule'
 import { initCirculatingSupplyModule } from './CirculatingSupplyModule'
+import { initPremintedModule } from './PremintedModules'
 import { initPriceModule } from './PriceModule'
 
 export function initTvlModule(
@@ -89,6 +90,17 @@ export function initTvlModule(
     configMapping,
   )
 
+  const premintedModule = initPremintedModule(
+    config.tvl,
+    peripherals,
+    logger,
+    blockTimestampModule.blockTimestampIndexers,
+    syncOptimizer,
+    indexerService,
+    priceModule.descendant,
+    configMapping,
+  )
+
   const circulatingSuppliesModule = initCirculatingSupplyModule(
     config.tvl,
     logger,
@@ -96,7 +108,7 @@ export function initTvlModule(
     hourlyIndexer,
     syncOptimizer,
     indexerService,
-    priceModule,
+    priceModule.descendant,
     configMapping,
   )
 
@@ -166,6 +178,7 @@ export function initTvlModule(
     await priceModule.start()
     await blockTimestampModule.start()
     await chainModule.start()
+    await premintedModule.start()
     await circulatingSuppliesModule.start()
 
     if (config.tvl && config.tvl.tvlCleanerEnabled) {
