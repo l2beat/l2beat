@@ -322,21 +322,8 @@ export function orbitStackCommon(
     },
     chainConfig: templateVars.chainConfig,
     technology: {
-      // TODO: remove after filling state validation
-      stateCorrectness: templateVars.nonTemplateTechnology
-        ?.stateCorrectness ?? {
-        name: 'Fraud proofs ensure state correctness',
-        description:
-          'After some period of time, the published state root is assumed to be correct. For a certain time period, one of the whitelisted actors can submit a fraud proof that shows that the state was incorrect. The challenge protocol can be subject to delay attacks.',
-        risks: [
-          {
-            category: 'Funds can be stolen if',
-            text: 'none of the whitelisted verifiers checks the published state. Fraud proofs assume at least one honest and able validator.',
-            isCritical: true,
-          },
-        ],
-        references: [],
-      },
+      stateCorrectness:
+        templateVars.nonTemplateTechnology?.stateCorrectness ?? undefined,
       dataAvailability:
         templateVars.nonTemplateTechnology?.dataAvailability ??
         postsToExternalDA
