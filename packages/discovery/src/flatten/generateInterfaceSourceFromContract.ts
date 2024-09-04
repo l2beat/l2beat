@@ -101,8 +101,7 @@ export function generateInterfaceSourceFromContract(
 
   result += '}'
 
-  const children = parse(result).children
-  return { type: 'SourceUnit', children }
+  return parse(result)
 }
 
 function formatEnumDefinition(
