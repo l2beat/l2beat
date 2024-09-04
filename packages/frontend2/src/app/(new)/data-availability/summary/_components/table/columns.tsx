@@ -81,18 +81,18 @@ export const columns = [
             economicSecurity: value.economicSecurity,
             fraudDetection: value.fraudDetection,
             attestations: {
-              value: 'Unknown',
-              description: 'Depends on DA Bridge.',
+              value: 'Depends on the DA Bridge',
+              description: '',
               sentiment: 'neutral',
             },
             exitWindow: {
-              value: 'Unknown',
-              description: 'Depends on DA Bridge.',
+              value: 'Depends on the DA Bridge',
+              description: '',
               sentiment: 'neutral',
             },
             accessibility: {
-              value: 'Unknown',
-              description: 'Depends on DA Bridge.',
+              value: 'Depends on the DA Bridge',
+              description: '',
               sentiment: 'neutral',
             },
           })}
