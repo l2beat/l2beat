@@ -467,19 +467,15 @@ export const scroll: Layer2 = {
       ],
       verifiers: [
         {
-          name: 'ScrollVerifierV0',
+          name: 'PlonkVerifierV0',
           description:
-            'Halo2 + KZG verifier using calldata for DA. Corresponds to version v0.9.5 of the circuits.',
+            'Scroll verifier using calldata for DA. Corresponds to version v0.9.5 of the circuits.',
           verified: 'no',
           contractAddress: EthereumAddress(
             '0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1',
           ),
           chainId: ChainId.ETHEREUM,
           subVerifiers: [
-            {
-              name: 'Final circuit',
-              ...PROOFS.HALO2KZG('Powers of Tau 26'),
-            },
             {
               name: 'Aggregation circuit',
               ...PROOFS.HALO2KZG('Powers of Tau 26'),
@@ -493,9 +489,9 @@ export const scroll: Layer2 = {
           ],
         },
         {
-          name: 'ScrollVerifierV1',
+          name: 'PlonkVerifierV1',
           description:
-            'Halo2 + KZG verifier using blobs for DA. Corresponds to version v0.10.3 of the circuits.',
+            'Scroll verifier using blobs for DA. Corresponds to version v0.10.3 of the circuits.',
           verified: 'no',
           contractAddress: EthereumAddress(
             '0x2293cd12e8564e8219d314b075867c2f66ac6941',
@@ -503,13 +499,9 @@ export const scroll: Layer2 = {
           chainId: ChainId.ETHEREUM,
           subVerifiers: [
             {
-              name: 'Final Circuit',
-              ...PROOFS.HALO2KZG('Powers of Tau 26'),
-            },
-            {
               name: 'Aggregation circuit',
               ...PROOFS.HALO2KZG('Powers of Tau 26'),
-              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.10.3/zkevm-circuits',
+              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.10.3/aggregator',
             },
             {
               name: 'Main circuit',
@@ -519,9 +511,9 @@ export const scroll: Layer2 = {
           ],
         },
         {
-          name: 'ScrollVerifierV2',
+          name: 'PlonkVerifierV1-1',
           description:
-            'Second generation (Curie Upgrade) Halo2 + KZG verifier using blobs for DA. Corresponds to version v0.11.4 of the circuits.',
+            'Scroll verifier using blobs for DA. Corresponds to version v0.11.4 of the circuits (Curie upgrade).',
           verified: 'no',
           contractAddress: EthereumAddress(
             '0x03a72B00D036C479105fF98A1953b15d9c510110',
@@ -529,13 +521,9 @@ export const scroll: Layer2 = {
           chainId: ChainId.ETHEREUM,
           subVerifiers: [
             {
-              name: 'Final circuit',
-              ...PROOFS.HALO2KZG('Powers of Tau 26'),
-            },
-            {
               name: 'Aggregation circuit',
               ...PROOFS.HALO2KZG('Powers of Tau 26'),
-              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.11.4/zkevm-circuits',
+              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.11.4/aggregator',
             },
             {
               name: 'Main verifier',
@@ -544,32 +532,50 @@ export const scroll: Layer2 = {
             },
           ],
         },
-        // {
-        //   name: 'ScrollVerifierV3',
-        //   description:
-        //     'Third generation (Darwinv2 Upgrade) Halo2 + KZG verifier using blobs for DA. Corresponds to version v0.12.0 of the circuits.',
-        //   verified: 'no',
-        //   contractAddress: EthereumAddress(
-        //     '0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9',
-        //   ),
-        //   chainId: ChainId.ETHEREUM,
-        //   subVerifiers: [
-        //     {
-        //       name: 'Final circuit',
-        //       ...PROOFS.HALO2KZG('Powers of Tau 26'),
-        //     },
-        //     {
-        //       name: 'Aggregation circuit',
-        //       ...PROOFS.HALO2KZG('Powers of Tau 26'),
-        //       link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.12.0/zkevm-circuits',
-        //     },
-        //     {
-        //       name: 'Main verifier',
-        //       ...PROOFS.HALO2KZG('Powers of Tau 26'),
-        //       link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.11.4/zkevm-circuits',
-        //     },
-        //   ],
-        // },
+        {
+          name: 'PlonkVerifierV2',
+          description:
+            'Scroll verifier proving bundles (group of batches). Corresponds to version v0.12.0 of the circuits (Darwin upgrade).',
+          verified: 'no',
+          contractAddress: EthereumAddress(
+            '0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9',
+          ),
+          chainId: ChainId.ETHEREUM,
+          subVerifiers: [
+            {
+              name: 'Aggregation circuit',
+              ...PROOFS.HALO2KZG('Powers of Tau 26'),
+              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.12.0/aggregator',
+            },
+            {
+              name: 'Main verifier',
+              ...PROOFS.HALO2KZG('Powers of Tau 26'),
+              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.12.0/zkevm-circuits',
+            },
+          ],
+        },
+        {
+          name: 'PlonkVerifierV2-1',
+          description:
+            'Scroll verifier proving bundles (group of batches). Corresponds to version v0.13.0 of the circuits (Darwin v2 upgrade).',
+          verified: 'no',
+          contractAddress: EthereumAddress(
+            '0x6f8C4e2f2dE2c4f2b1c9f3a2C1fBfB7b8f2f0B4',
+          ),
+          chainId: ChainId.ETHEREUM,
+          subVerifiers: [
+            {
+              name: 'Aggregation circuit',
+              ...PROOFS.HALO2KZG('Powers of Tau 26'),
+              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.13.0/aggregator',
+            },
+            {
+              name: 'Main verifier',
+              ...PROOFS.HALO2KZG('Powers of Tau 26'),
+              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.13.0/zkevm-circuits',
+            },
+          ],
+        },
       ],
     },
   },
