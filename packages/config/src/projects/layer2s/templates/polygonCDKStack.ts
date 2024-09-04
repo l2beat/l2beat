@@ -595,7 +595,12 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     milestones: templateVars.milestones,
     knowledgeNuggets: templateVars.knowledgeNuggets,
     badges: mergeBadges(
-      [Badge.Stack.PolygonCDK, Badge.VM.EVM, Badge.DA.EthereumCalldata, Badge.Infra.AggLayer],
+      [
+        Badge.Stack.PolygonCDK,
+        Badge.VM.EVM,
+        Badge.DA.EthereumCalldata,
+        Badge.Infra.AggLayer,
+      ],
       templateVars.badges ?? [],
     ),
   }
