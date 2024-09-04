@@ -4,7 +4,7 @@ import { MILESTONES, NUGGETS, RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import {
-  DEFAULT_OTHER_CONSIDERATIONS,
+  WASMVM_OTHER_CONSIDERATIONS,
   getNitroGovernance,
   orbitStackL2,
 } from './templates/orbitStack'
@@ -84,7 +84,7 @@ const selfSequencingDelay = maxTimeVariation[2]
 
 export const nova: Layer2 = orbitStackL2({
   badges: [
-    Badge.VM.EVM,
+    Badge.VM.WasmVM,
     Badge.DA.DAC,
     Badge.Stack.Nitro,
     Badge.Other.Governance,
@@ -339,7 +339,7 @@ export const nova: Layer2 = orbitStackL2({
   },
   nonTemplateTechnology: {
     otherConsiderations: [
-      ...DEFAULT_OTHER_CONSIDERATIONS,
+      ...WASMVM_OTHER_CONSIDERATIONS,
       UPGRADE_MECHANISM.ARBITRUM_DAO(
         l1TimelockDelay,
         challengeWindow * assumedBlockTime,
@@ -348,6 +348,14 @@ export const nova: Layer2 = orbitStackL2({
     ],
   },
   milestones: [
+    {
+      name: 'ArbOS 31 Bianca upgrade',
+      link: 'https://www.tally.xyz/gov/arbitrum/proposal/108288822474129076868455956066667369439381709547570289793612729242368710728616',
+      date: '2024-09-03T00:00:00Z',
+      description:
+        'Nova upgrades to ArbOS 31 activating Stylus (new languages for smart contracts).',
+      type: 'general',
+    },
     {
       ...MILESTONES.MAINNET_OPEN,
       date: '2022-08-09T00:00:00Z',

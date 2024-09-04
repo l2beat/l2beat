@@ -1,0 +1,1 @@
+SP1 Blobstream is a set of smart contracts that act as a Celestia ZK light client, used to verify DA attestations by projects using Celestia for DA. SP1 Blobstream is an implementation of the original BlobstreamX in Rust for the SP1 zkVM. The repo can be found [here](https://github.com/succinctlabs/sp1-blobstream/tree/main).

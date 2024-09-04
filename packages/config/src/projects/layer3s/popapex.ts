@@ -74,4 +74,14 @@ export const popapex: Layer3 = orbitStackL3({
       })(),
     ),
   ],
+  milestones: [
+    {
+      name: 'Proof of Play Apex halts for two days',
+      date: '2024-05-13T00:00:00Z',
+      link: 'https://x.com/conduitxyz/status/1790065376975552549',
+      description:
+        'Proof of Play halts for two days due to a chain misconfiguration.',
+      type: 'incident',
+    },
+  ],
 })

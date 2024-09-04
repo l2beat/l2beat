@@ -202,7 +202,7 @@ export const orbit: Bridge = {
       name: 'Orbit Bridge hacked for $81.5M',
       date: '2024-01-01T00:00:00.00Z',
       link: 'https://digifinex.medium.com/orbit-bridge-hacked-for-81-5-million-orbit-chain-ecosystem-plummets-1fe5b8d85ff3',
-      type: 'general',
+      type: 'incident',
     },
   ],
 }

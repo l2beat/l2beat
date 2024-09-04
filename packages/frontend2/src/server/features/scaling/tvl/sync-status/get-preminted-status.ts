@@ -1,10 +1,10 @@
+import { getPremintedIndexerId } from '@l2beat/config'
 import {
   type AmountConfigEntry,
   type PremintedEntry,
   type UnixTime,
 } from '@l2beat/shared-pure'
 import { getStatus } from './get-status'
-import { getPremintedIndexerId } from './ids'
 
 export async function getPremintedStatus(
   entries: (AmountConfigEntry & { configId: string })[],

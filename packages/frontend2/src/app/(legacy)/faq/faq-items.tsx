@@ -25,10 +25,9 @@ export const faqItems: FaqItem[] = [
     ],
   },
   {
-    question: 'What exactly are L2s and why Polygon is not included?',
+    question: 'What exactly are L2s?',
     answer: [
-      'Trust-minimized L2s are chains that can be exited by interacting directly with L1 alone, eliminating the need to rely on L2 operators for the security of the funds.',
-      "In the case of Polygon, an additional layer of trust is introduced: users must trust the majority of Polygon's validators to enable secure withdrawals and prevent fund theft. Note that application-specific logic, like in the case of dYdX forced trade requests, may also require inter-user dependencies to successfully exit the system.",
+      'Layer 2 (L2) is a category of technical solutions aimed to scale the base layer in a trust minimized way. This category includes solutions like rollups as well as state channels and plasma. Other solutions are able to scale further, but with the introduction of additional trust assumptions, which are therefore not trust minimized. Sometimes the term Layer 2 is used to refer to include these solutions too, like validiums and optimiums, but to distinguish between trust minimized and non trust minimized solutions they are often referred to as "light" L2s, opposed to "strong" L2s like rollups.',
     ],
   },
   {
@@ -40,19 +39,14 @@ export const faqItems: FaqItem[] = [
   {
     question: 'Are Validiums and Optimiums L2s?',
     answer:
-      'Validiums and Optimiums are not L2s: by not publishing data on L1 they introduce additional trust assumptions on top of it. If the data to reconstruct the state is not made available by the operators of the offchain DA solution, funds are at risk.',
-  },
-  {
-    question: 'If Validiums and Optimiums are not L2s, why are they included?',
-    answer:
-      'We include Validiums and Optimiums along with L2s mainly for historical reasons. We introduced them when the L2 space was still in its infancy and we wanted to provide a comprehensive overview of the space. We will continue to track these projects to provide the community with a broader perspective on the state of the space and to provide tools to evaluate the different tradeoffs between the various solutions.',
+      'We originally excluded Validiums and Optimiums from our definition of L2s due to the additional trust assumptions they introduce. However, the broader community often includes them in the L2 category, so we consider them to be "light" L2s as opposed to "strong" L2s like rollups. We will continue to track these projects to provide the community with a broader perspective on the state of the space and to provide tools to evaluate the different tradeoffs between the various solutions.',
   },
   {
     question: 'How do L2s derive their security from L1?',
     answer: [
       'There are two primary (and somewhat independent) mechanisms that L2 chains use.',
       'First, the L2 state can be verified by L1 through either **Validity Proof** or **Fraud Proof** . This mechanism is most important as it ensures that L2 proposers cannot cheat and include invalid transactions in an L2 block, e.g. mint coins out of thin air or steal your coins.',
-      'The second use of L1 is as a **Data Availability** layer for L2 transactions so that users can independently re-create the L2 state and ensure continued and safe system operation or trustlessly exit to L1.',
+      'The second use of L1 is as a **Data Availability** layer for L2 transactions so that users can independently re-create the L2 state and ensure continued and safe system operation or trustlessly exit to L1. If the data is published on another chain, then the security of the L2 is dependent on the security of that chain as well.',
     ],
   },
   {
@@ -71,7 +65,7 @@ export const faqItems: FaqItem[] = [
   {
     question: "Are there any other ways L2 validators can steal user's coins?",
     answer:
-      'Most L2 constructions are upgradable and until upgradability mechanism is either fully disabled or controlled by a sufficiently decentralised DAO, the funds can be, in theory, stolen through the upgrade mechanism. L2BEAT will closely monitor how the particular construction is upgradable and who currently controls the upgradability keys.',
+      'Most L2 constructions are upgradable and until upgradability mechanism is either fully disabled or controlled by a sufficiently decentralized DAO, the funds can be, in theory, stolen through the upgrade mechanism. L2BEAT will closely monitor how the particular construction is upgradable and who currently controls the upgradability keys.',
   },
   {
     question: 'What about data availability? Why is it important?',
@@ -88,7 +82,7 @@ export const faqItems: FaqItem[] = [
       '- **Optimistic Rollup** - they publish data on L1 to inherit data availability and consensus guarantees, and use fraud proofs to guarantee state roots correctness.',
       '- **State channel** - they don’t publish data onchain, but require users to keep their data in order to exit. They’re not general and require users participation.',
       '- **Plasma** - they don’t publish data onchain and use fraud proofs for disputes. Similarly to state channels, users are required to keep their data to correctly exit. They don’t require users participation, but they do not support general computation.',
-      'By introducing more trust assumptions we can also specify the following categories that fall outside of the L2 boundary:',
+      'By introducing more trust assumptions we can also specify the following categories that fall outside of the trust-minimized L2s category:',
       '- **Validium** - Those systems rely on validity proofs and data published externally.',
       '- **Optimium** - historically named Optimistic Chain. Those systems rely on fraud proofs and data published externally.',
       'For more details see the [Incomplete guide to Rollups](https://vitalik.eth.limo/general/2021/01/05/rollup.html) by Vitalik Buterin.',
