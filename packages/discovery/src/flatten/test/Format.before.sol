@@ -38,6 +38,8 @@ contract Test {
 	using a.b for uint global;
 	using { a.b, c.d as + } for uint;
 
+	type Money is uint;
+
 	struct Vector2 {
 		uint a;
 		string b;

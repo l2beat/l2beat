@@ -24,6 +24,7 @@ const __REPLACE_ME__ = (node: AST.ASTNode, out: OutputStream) => {
   out.token(node.type)
   if (isStatement) {
     out.token(';')
+    out.endLine()
   }
 }
 
@@ -94,7 +95,7 @@ const FORMATTERS: {
   ThrowStatement: __REPLACE_ME__,
   TryStatement: __REPLACE_ME__,
   TupleExpression: __REPLACE_ME__,
-  TypeDefinition: __REPLACE_ME__,
+  TypeDefinition,
   UnaryOperation: __REPLACE_ME__,
   UncheckedStatement: __REPLACE_ME__,
   UserDefinedTypeName,
@@ -369,6 +370,16 @@ function StructDefinition(node: AST.StructDefinition, out: OutputStream) {
   }
   out.popIndent()
   out.token('}')
+  out.endLine()
+}
+
+function TypeDefinition(node: AST.TypeDefinition, out: OutputStream) {
+  out.beginLine()
+  out.token('type')
+  out.token(node.name)
+  out.token('is')
+  formatAstNode(node.definition, out)
+  out.token(';')
   out.endLine()
 }
 
