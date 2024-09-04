@@ -37,7 +37,6 @@ export interface Edge<T = EthereumAddress> {
   delay: number
   description?: string
   toNode: T
-  description?: string
 }
 
 export interface PathElement<T = EthereumAddress> {
