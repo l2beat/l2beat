@@ -1,34 +1,58 @@
-import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
-import { DaLayer } from '../types/DaLayer'
-import { playblockDac } from './bridges/playblock'
+import { ChainId } from '@l2beat/shared-pure'
+import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
+import { playblock } from '../../../layer3s/playblock'
+import { DAC } from '../templates/dac-template'
+import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
-export const playblockLayer: DaLayer = {
-  id: 'playblock-dac-layer',
-  type: 'DaLayer',
-  kind: 'DAC',
-  display: {
-    name: 'PlayBlock DAC',
-    slug: 'playblock',
-    description:
-      'Set of parties responsible for signing and attesting to the availability of data.',
-    links: {
-      websites: [],
-      documentation: [],
-      repositories: [],
-      apps: [],
-      explorers: [],
-      socialMedia: [],
+const discovery = new ProjectDiscovery('playblock', 'nova')
+
+const dac = discovery.getContractValue<{
+  membersCount: number
+  requiredSignatures: number
+}>('SequencerInbox', 'dacKeyset')
+const { membersCount, requiredSignatures } = dac
+
+export const playblockDac = DAC({
+  project: playblock,
+  bridge: {
+    contracts: {
+      addresses: [
+        discovery.getContractDetails(
+          'SequencerInbox',
+          'Main entry point for the Sequencer submitting transaction batches.',
+        ),
+      ],
+      risks: [],
+    },
+    technology: `## Simple DA Bridge
+      The DA bridge is a smart contract verifying a data availability claim from DAC Members via signature verification.
+      The bridge requires a ${requiredSignatures}/${membersCount} threshold of signatures to be met before the data commitment is accepted.
+    `,
+    permissions: [
+      // Members: DAC uses BLS sigs, not EOAs
+      {
+        name: 'Sequencers',
+        accounts: discovery.getPermissionsByRole('Sequencer'),
+        description:
+          'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
+        chain: discovery.chain,
+      },
+      {
+        name: 'RollupOwner',
+        accounts: discovery.getAccessControlRolePermission(
+          'UpgradeExecutor',
+          'EXECUTOR_ROLE',
+        ),
+        description:
+          'Multisig that can upgrade authorized batch posters via the UpgradeExecutor contract.',
+      },
+    ],
+    chain: ChainId.ETHEREUM,
+    requiredMembers: requiredSignatures,
+    totalMembers: membersCount,
+    transactionDataType: DacTransactionDataType.TransactionDataCompressed,
+    members: {
+      type: 'unknown',
     },
   },
-  technology: `## Simple Committee
-  The Data Availability Committee (DAC) is a set of trusted parties responsible for storing data off-chain and serving it upon demand. 
-  The security guarantees of DACs depend on the specific setup and can vary significantly based on the criteria for selecting committee members, 
-  their operational transparency, and the mechanisms in place to handle disputes and failures.
-  `,
-  bridges: [playblockDac],
-  usedIn: [...playblockDac.usedIn],
-  risks: {
-    economicSecurity: DaEconomicSecurityRisk.Unknown,
-    fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
-  },
-}
+})
