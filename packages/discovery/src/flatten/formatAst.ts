@@ -52,7 +52,7 @@ const FORMATTERS: {
   Continue: __REPLACE_ME__,
   ContinueStatement: __REPLACE_ME__,
   ContractDefinition,
-  CustomErrorDefinition: __REPLACE_ME__,
+  CustomErrorDefinition,
   DecimalNumber: __REPLACE_ME__,
   DoWhileStatement: __REPLACE_ME__,
   ElementaryTypeName,
@@ -145,6 +145,20 @@ function ContractDefinition(node: AST.ContractDefinition, out: OutputStream) {
   out.endLine()
 
   out.state.insideInterface = false
+}
+
+function CustomErrorDefinition(
+  node: AST.CustomErrorDefinition,
+  out: OutputStream,
+) {
+  out.beginLine()
+  out.token('error')
+  out.token(node.name)
+  out.token('(')
+  formatNodeList(node.parameters, out, { separator: ',' })
+  out.token(')')
+  out.token(';')
+  out.endLine()
 }
 
 function ElementaryTypeName(node: AST.ElementaryTypeName, out: OutputStream) {

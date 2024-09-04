@@ -19,6 +19,10 @@ interface I2 is B, C("hello", "world") {}
 
 library Lib {}
 
+error MyError();
+
+error OtherError(uint256 a, bytes b);
+
 contract Test {
 	using a.b for uint;
 	using a.b for *;
