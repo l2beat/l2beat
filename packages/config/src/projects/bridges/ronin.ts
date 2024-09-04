@@ -248,13 +248,13 @@ export const ronin: Bridge = {
   milestones: [
     {
       name: 'Whitehat hack for $12M',
-      date: '2023-08-06T00:00:00Z',
+      date: '2024-08-06T00:00:00Z',
       link: 'https://x.com/Ronin_Network/status/1820804772917588339',
       type: 'incident',
     },
     {
       name: 'Ronin bridge hacked for ~$625M',
-      date: '2023-08-06T00:00:00Z',
+      date: '2022-03-23T00:00:00Z',
       link: 'https://web.archive.org/web/20230518085104/https://blog.roninchain.com/p/back-to-building-ronin-security-breach',
       type: 'incident',
     },
