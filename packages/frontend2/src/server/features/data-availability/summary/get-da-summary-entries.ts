@@ -32,8 +32,8 @@ export async function getDaSummaryEntries() {
     // Sort by TVS
     .sort((a, b) => b.tvs - a.tvs)
     .map((daLayer) => {
+      const projectEconomicSecurity = economicSecurity[daLayer.id]
       const daBridges = daLayer.bridges.map((daBridge) => {
-        const projectEconomicSecurity = economicSecurity[daLayer.id]
         const tvs = getSumFor(daBridge.usedIn.map((project) => project.id))
 
         return {
@@ -80,7 +80,11 @@ export async function getDaSummaryEntries() {
             economicSecurity: daLayer.risks.economicSecurity,
             fraudDetection: daLayer.risks.fraudDetection,
           } as DaLayerRisks,
-          subRows: daBridges,
+          subRows: daBridges.map((daBridge) => ({
+            ...daBridge,
+            layerType: undefined,
+            economicSecurity: undefined,
+          })),
           tvs: daLayer.tvs,
         },
       ]

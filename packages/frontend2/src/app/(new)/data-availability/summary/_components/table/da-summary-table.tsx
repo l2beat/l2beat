@@ -115,13 +115,13 @@ export function DaSummaryTable({ items }: Props) {
                       />
                     </DaTableSubRowCell>
                     <DaTableSubRowCell href={href} lastRow={lastRow}>
-                      {subRow.layerType}
+                      {EM_DASH}
                     </DaTableSubRowCell>
                     <DaTableSubRowCell href={href} lastRow={lastRow}>
                       {formatCurrency(subRow.tvs, 'usd')}
                     </DaTableSubRowCell>
                     <DaTableSubRowCell href={href} lastRow={lastRow}>
-                      <DaEconomicSecurityCell value={subRow.economicSecurity} />
+                      {EM_DASH}
                     </DaTableSubRowCell>
                     <DaTableLastSubRowCell
                       href={href}
