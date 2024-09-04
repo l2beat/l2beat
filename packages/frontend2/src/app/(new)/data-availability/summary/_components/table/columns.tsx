@@ -6,7 +6,7 @@ import { EM_DASH } from '~/consts/characters'
 import ChevronDown from '~/icons/chevron.svg'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/format'
+import { formatNumber } from '~/utils/format-number'
 import { mapRisksToRosetteValues } from '../../../_utils/map-risks-to-rosette-values'
 import { DaEconomicSecurityCell } from './da-economic-security-cell'
 import { ProjectsUsedIn } from './projects-used-in'
@@ -110,7 +110,7 @@ export const columns = [
   }),
   columnHelper.accessor('tvs', {
     header: 'Total value secured',
-    cell: (ctx) => formatCurrency(ctx.getValue(), 'usd'),
+    cell: (ctx) => `${formatNumber(ctx.getValue(), 2)}`,
   }),
   columnHelper.accessor('economicSecurity', {
     header: 'Economic security',
