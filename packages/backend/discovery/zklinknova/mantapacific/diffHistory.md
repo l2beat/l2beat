@@ -1,3 +1,47 @@
+Generated with discovered.json: 0x7de113d773adcde00ce7f0b90bd20c96a3767383
+
+# Diff at Wed, 04 Sep 2024 07:33:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@878a951312cec062f5003f6749f781861b0cdba1 block: 2775705
+- current block number: 3121124
+
+## Description
+
+Set forwardFeeAllocator to MantaOwner MS. The forwardFee consists of fees paid to 'validators' for `requestL2Transaction()`. One signer of MantaOwner MS is changed.
+
+## Watched changes
+
+```diff
+    contract MantaOwner (0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3) {
+    +++ description: None
+      values.$members.4:
+-        "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
++        "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
+      values.$members.3:
+-        "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
++        "0xF801886AE2e127A269B0F11892edb54F692d02dF"
+      values.$members.2:
+-        "0xF801886AE2e127A269B0F11892edb54F692d02dF"
++        "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
+      values.$members.1:
+-        "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
++        "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
+      values.$members.0:
+-        "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
++        "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5"
+    }
+```
+
+```diff
+    contract zkLink (0xD784d7128B46B60Ca7d8BdC17dCEC94917455657) {
+    +++ description: None
+      values.forwardFeeAllocator:
+-        "0x0000000000000000000000000000000000000000"
++        "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3"
+    }
+```
+
 Generated with discovered.json: 0x48419a5f8e0ba246d12e03416531dc7bf1666e92
 
 # Diff at Fri, 30 Aug 2024 08:18:00 GMT:
