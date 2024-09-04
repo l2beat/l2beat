@@ -91,7 +91,7 @@ const FORMATTERS: {
   UnaryOperation: __REPLACE_ME__,
   UncheckedStatement: __REPLACE_ME__,
   UserDefinedTypeName,
-  UsingForDeclaration: __REPLACE_ME__,
+  UsingForDeclaration,
   VariableDeclaration,
   VariableDeclarationStatement: __REPLACE_ME__,
   WhileStatement: __REPLACE_ME__,
@@ -143,6 +143,11 @@ function ContractDefinition(node: AST.ContractDefinition, indent: number) {
 
 function ElementaryTypeName(node: AST.ElementaryTypeName, _: number) {
   let result = node.name
+  if (result === 'uint') {
+    result = 'uint256'
+  } else if (result === 'int') {
+    result = 'int256'
+  }
   if (node.stateMutability) {
     result += ` ${node.stateMutability}`
   }
@@ -273,6 +278,33 @@ function StringLiteral(node: AST.StringLiteral, _: number) {
 
 function UserDefinedTypeName(node: AST.UserDefinedTypeName, _: number) {
   return node.namePath
+}
+
+function UsingForDeclaration(node: AST.UsingForDeclaration, indent: number) {
+  const before = formatIndent(indent)
+  const items = ['using']
+  if (node.libraryName) {
+    items.push(node.libraryName)
+  }
+  if (node.functions.length > 0) {
+    const mapped = node.functions.map((fn, i) => {
+      const operator = node.operators[i]
+      return operator ? `${fn} as ${operator}` : fn
+    })
+    items.push(
+      formatList(mapped, { separator: ', ', prefix: '{ ', suffix: ' }' }),
+    )
+  }
+  items.push('for')
+  if (node.typeName) {
+    items.push(formatAstNode(node.typeName, indent))
+  } else {
+    items.push('*')
+  }
+  if (node.isGlobal) {
+    items.push('global')
+  }
+  return `${before}${items.join(' ')};`
 }
 
 function VariableDeclaration(node: AST.VariableDeclaration, indent: number) {
