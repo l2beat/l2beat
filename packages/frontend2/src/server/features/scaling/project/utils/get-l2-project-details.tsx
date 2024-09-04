@@ -16,7 +16,7 @@ import { getOperatorSection } from '~/utils/project/technology/get-operator-sect
 import { getOtherConsiderationsSection } from '~/utils/project/technology/get-other-considerations-section'
 import { getScalingTechnologySection } from '~/utils/project/technology/get-technology-section'
 import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawals-section'
-import { getTopTokensForProject } from '../../tvl/tokens/get-top-tokens-for-project'
+import { getTokensForProject } from '../../tvl/tokens/get-tokens-for-project'
 
 interface Params {
   project: Layer2
@@ -87,7 +87,7 @@ export async function getL2ProjectDetails({
     project.milestones?.sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
     ) ?? []
-  const tokens = await getTopTokensForProject(project)
+  const tokens = await getTokensForProject(project)
 
   const items: ProjectDetailsSection[] = []
 

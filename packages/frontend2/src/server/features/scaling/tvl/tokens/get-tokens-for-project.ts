@@ -36,14 +36,14 @@ export type ProjectToken = {
 
 type ProjectTokenSource = 'native' | 'canonical' | 'external'
 
-export async function getTopTokensForProject(
+export async function getTokensForProject(
   project: Layer2 | Layer3 | Bridge,
 ): Promise<ProjectTokens> {
   noStore()
-  return getCachedTopTokensForProject(project)
+  return getCachedTokensForProject(project)
 }
 
-const getCachedTopTokensForProject = cache(
+const getCachedTokensForProject = cache(
   async (project: Layer2 | Layer3 | Bridge): Promise<ProjectTokens> => {
     const backendProject = toBackendProject(project)
     const configMapping = getConfigMapping(backendProject)
