@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { HighlightableLinkContextProvider } from '~/app/_components/link/highlightable/highlightable-link-context'
 import { DesktopProjectNavigation } from '~/app/_components/projects/navigation/desktop-project-navigation'
 import { MobileProjectNavigation } from '~/app/_components/projects/navigation/mobile-project-navigation'
+import { projectDetailsToNavigationSections } from '~/app/_components/projects/navigation/types'
 import { ProjectDetails } from '~/app/_components/projects/project-details'
 import { getBridgesProjectEntry } from '~/server/features/bridges/project/get-bridges-project-entry'
 import { HydrateClient } from '~/trpc/server'
@@ -50,16 +51,17 @@ export default async function Page({ params }: Props) {
   }
 
   const projectEntry = await getBridgesProjectEntry(project)
-  const isNavigationEmpty =
-    projectEntry.projectDetails.filter((s) => !s.excludeFromNavigation)
-      .length === 0
+  const navigationSections = projectDetailsToNavigationSections(
+    projectEntry.projectDetails,
+  )
+  const isNavigationEmpty = navigationSections.length === 0
 
   // HydrateClient is used to hydrate the client with chart data that is fetched inside get-bridges-project-details.tsx
   return (
     <HydrateClient>
       {!isNavigationEmpty && (
-        <div className="sticky top-0 z-100 -mx-4 md:hidden">
-          <MobileProjectNavigation sections={projectEntry.projectDetails} />
+        <div className="sticky top-0 z-100 md:hidden">
+          <MobileProjectNavigation sections={navigationSections} />
         </div>
       )}
       <BridgesProjectSummary project={projectEntry} />
@@ -74,7 +76,7 @@ export default async function Page({ params }: Props) {
                 slug: projectEntry.slug,
                 showProjectUnderReview: projectEntry.isUnderReview,
               }}
-              sections={projectEntry.projectDetails}
+              sections={navigationSections}
             />
           </div>
           <div className="w-full">

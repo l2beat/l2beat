@@ -1,3 +1,104 @@
+Generated with discovered.json: 0x911c92bd9ea977184c2674131587c2a9dcf4b431
+
+# Diff at Tue, 03 Sep 2024 12:17:42 GMT:
+
+- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
+- comparing to: main@4aa95146cde1555bcce17311b090748c26bb20f8 block: 20641293
+- current block number: 20669996
+
+## Description
+
+TimeLock (with zero minDelay) has been restored
+
+## Watched changes
+
+```diff
+    contract WithdrawManager (0x2A88696e0fFA76bAA1338F2C74497cC013495922) {
+    +++ description: None
+      values.owner:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+    }
+```
+
+```diff
+    contract DepositManager (0x401F6c983eA34274ec46f84D70b31C151321188b) {
+    +++ description: None
+      values.owner:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+    }
+```
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.$admin:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.owner:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+    }
+```
+
+```diff
+    contract EventsHub (0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.$admin:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.owner:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+    }
+```
+
+```diff
+    contract Governance (0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48) {
+    +++ description: None
+      values.owner:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+    }
+```
+
+```diff
+    contract RootChain (0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287) {
+    +++ description: None
+      values.owner:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+    }
+```
+
+```diff
+    contract PolygonMultisig (0xFa7D2a996aC6350f4b56C043112Da0366a59b74c) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908"},{"permission":"upgrade","target":"0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b"}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Timelock (0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../polygon-plasma/ethereum/.flat/Timelock.sol     | 675 +++++++++++++++++++++
+ 1 file changed, 675 insertions(+)
+```
+
 Generated with discovered.json: 0x99cc896ef586e4fa3749f6f5871425324679f7cf
 
 # Diff at Fri, 30 Aug 2024 12:08:41 GMT:

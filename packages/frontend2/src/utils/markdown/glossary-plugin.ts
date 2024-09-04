@@ -1,9 +1,9 @@
 import { assert } from '@l2beat/shared-pure'
 import type MarkdownIt from 'markdown-it'
-import { type CollectionEntry } from '~/content/get-collection'
+import { type GlossaryTermWithoutDescription } from '~/app/_components/markdown/glossary-context'
 
 export function linkGlossaryTerms(
-  glossary: CollectionEntry<'glossary'>[],
+  glossary: GlossaryTermWithoutDescription[],
   ignoreDelimiter = ':',
 ) {
   const ignorePattern = new RegExp(
@@ -13,9 +13,7 @@ export function linkGlossaryTerms(
 
   const termToId = new Map(
     glossary.flatMap((entry) =>
-      [entry.data.term]
-        .concat(entry.data.match ?? [])
-        .map((term) => [term.toLowerCase(), entry.id]),
+      entry.matches.map((term) => [term.toLowerCase(), entry.id]),
     ),
   )
 

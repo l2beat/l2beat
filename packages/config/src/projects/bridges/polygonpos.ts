@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 
 import { CONTRACTS, NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -11,6 +16,10 @@ const upgrades = {
   upgradableBy: ['PolygonMultisig'],
   upgradeDelay: 'No delay',
 }
+
+const delayString = formatSeconds(
+  discovery.getContractValue('Timelock', 'getMinDelay'),
+)
 
 export const polygonpos: Bridge = {
   type: 'bridge',
@@ -169,6 +178,10 @@ export const polygonpos: Bridge = {
         description: 'A registry of different system components.',
         ...upgrades,
       }),
+      discovery.getContractDetails(
+        'Timelock',
+        `Contract enforcing delay on code upgrades. The current delay is ${delayString}.`,
+      ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },

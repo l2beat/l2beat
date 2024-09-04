@@ -684,6 +684,14 @@ export const optimism: Layer2 = {
     'All contracts are upgradable by the `SuperchainProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. The Guardian role is assigned to the Security Council multisig, with a Safe Module that allows the Foundation to act through it to stop withdrawals in the whole Superchain or blacklist dispute games in case of emergencies. The Security Council can remove the module if the Foundation becomes malicious. The single Sequencer actor can be modified by the `FoundationMultisig_2` via the `SystemConfig` contract. The SuperchainProxyAdminOwner can recover dispute bonds in case of bugs that would distribute them incorrectly. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
   milestones: [
     {
+      name: 'Fallback to permissioned proposals',
+      link: 'https://x.com/Optimism/status/1824560759747256596',
+      date: '2024-08-16T00:00:00Z',
+      description:
+        'OP Mainnet preventively disables the fraud proof system due to a bug.',
+      type: 'incident',
+    },
+    {
       name: 'OP Mainnet becomes Stage 1',
       link: 'https://x.com/Optimism/status/1800256837088145799',
       date: '2024-06-10T00:00:00Z',

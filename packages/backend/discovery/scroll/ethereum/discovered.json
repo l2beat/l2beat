@@ -1,12 +1,12 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "blockNumber": 20590985,
-  "configHash": "0xe99134b8a69470e0aa38a9dd215eeb107a715c31c5c15da37aa20ae29f355d18",
+  "blockNumber": 20670849,
+  "configHash": "0xe468df3eac2c93917dfde6f8e4a52efb7b6d627822520d392642c25338743b81",
   "version": 14,
   "contracts": [
     {
-      "name": "PlonkVerifierV2",
+      "name": "PlonkVerifierV1-1",
       "address": "0x03a72B00D036C479105fF98A1953b15d9c510110",
       "unverified": true,
       "sinceTimestamp": 1719379319,
@@ -37,13 +37,13 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "gasOracle": "0x987e300fDfb06093859358522a79098848C33852",
-        "l2BaseFee": 39168975,
+        "l2BaseFee": 49801942,
         "maxGasLimit": 10000000,
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 928387,
-        "nextUnfinalizedQueueIndex": 928366,
+        "nextCrossDomainMessageIndex": 932577,
+        "nextUnfinalizedQueueIndex": 932526,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-        "pendingQueueIndex": 928383,
+        "pendingQueueIndex": 932574,
         "scrollChain": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "whitelistChecker": "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37"
       },
@@ -229,11 +229,15 @@
           {
             "startBatchIndex": 0,
             "verifier": "0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB"
+          },
+          {
+            "startBatchIndex": 0,
+            "verifier": "0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3"
           }
         ],
-        "legacyVerifiersLength": [0, 0, 0, 0],
-        "owner": "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
-        "verifierVersions": [0, 1, 2, 3]
+        "legacyVerifiersLength": [0, 0, 0, 0, 0],
+        "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
+        "verifierVersions": [0, 1, 2, 3, 4]
       },
       "derivedName": "MultipleVersionRollupVerifier"
     },
@@ -667,10 +671,18 @@
       }
     },
     {
-      "name": "PlonkVerifierV3",
+      "name": "PlonkVerifierV2",
       "address": "0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9",
       "unverified": true,
       "sinceTimestamp": 1722833027,
+      "values": { "$immutable": true },
+      "derivedName": ""
+    },
+    {
+      "name": "PlonkVerifierV2-1",
+      "address": "0x8c1b52757b5c571ADcB5572E992679d4D48e30f7",
+      "unverified": true,
+      "sinceTimestamp": 1724898419,
       "values": { "$immutable": true },
       "derivedName": ""
     },
@@ -784,7 +796,7 @@
         "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
         "$implementation": "0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f",
         "$upgradeCount": 5,
-        "lastFinalizedBatchIndex": 309309,
+        "lastFinalizedBatchIndex": 313671,
         "layer2ChainId": 534352,
         "maxNumTxInChunk": 100,
         "messageQueue": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
@@ -957,7 +969,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 173,
+        "nonce": 174,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -971,6 +983,17 @@
         "owner": "0xF9062b8a30e0d7722960e305049FA50b86ba6253"
       },
       "derivedName": "Fallback"
+    },
+    {
+      "name": "ZkEvmVerifierV2-1",
+      "address": "0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3",
+      "sinceTimestamp": 1724898431,
+      "values": {
+        "$immutable": true,
+        "plonkVerifier": "0x8c1b52757b5c571ADcB5572E992679d4D48e30f7",
+        "verifierDigest": "0x0a1904dbfff4614fb090b4b3864af4874f12680c32f07889e9ede8665097e5ec"
+      },
+      "derivedName": "ZkEvmVerifierV2"
     },
     {
       "name": "wstETHescrowLidoProxyAdmin",
@@ -1151,7 +1174,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 5 (80%)",
-        "nonce": 13,
+        "nonce": 16,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1180,7 +1203,7 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 86720207344596,
+        "totalBridgedUSDC": 87237994605895,
         "withdrawPaused": false
       },
       "derivedName": "L1USDCGateway"
@@ -2022,6 +2045,13 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)",
       "function withdraw(address _token, uint256 _amount, address _recipient)"
+    ],
+    "0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3": [
+      "constructor(address _verifier, bytes32 _verifierDigest)",
+      "error VerificationFailed()",
+      "function plonkVerifier() view returns (address)",
+      "function verifierDigest() view returns (bytes32)",
+      "function verify(bytes bundleProof, bytes publicInput) view"
     ],
     "0xCC2C53556Bc75217cf698721b29071d6f12628A9": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
