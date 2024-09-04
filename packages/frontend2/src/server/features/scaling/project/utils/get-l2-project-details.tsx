@@ -283,6 +283,7 @@ export async function getL2ProjectDetails({
           type: 'upgrades-and-governance',
           slug: project.display.slug,
         },
+        mdClassName: 'text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
         isUnderReview: project.isUnderReview,
         includeChildrenIfUnderReview: true,
       },
