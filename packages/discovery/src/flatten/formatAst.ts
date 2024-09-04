@@ -1,28 +1,31 @@
 import type * as AST from '@mradomski/fast-solidity-parser'
 
 export function formatAst(ast: AST.ASTNode) {
-  return formatAstNode(ast, 0) + '\n\n'
+  const out = new OutputStream()
+  formatAstNode(ast, out)
+  return out.finish()
 }
 
-const state = {
-  insideInterface: false,
-}
-
-export function formatAstNode(node: AST.ASTNode, indent: number): string {
-  return FORMATTERS[node.type](node as never, indent)
+export function formatAstNode(node: AST.ASTNode, out: OutputStream): void {
+  return FORMATTERS[node.type](node as never, out)
 }
 
 type Formatter<T> = (
   node: Extract<AST.ASTNode, { type: T }>,
-  indent: number,
-) => string
+  out: OutputStream,
+) => void
 
-const __REPLACE_ME__ = (node: AST.ASTNode, indent: number) =>
-  `${formatIndent(indent)}${node.type}${
+const __REPLACE_ME__ = (node: AST.ASTNode, out: OutputStream) => {
+  const isStatement =
     node.type.endsWith('Statement') || node.type.endsWith('Definition')
-      ? ';'
-      : ''
-  }`
+  if (isStatement) {
+    out.beginLine()
+  }
+  out.token(node.type)
+  if (isStatement) {
+    out.token(';')
+  }
+}
 
 const FORMATTERS: {
   [K in AST.ASTNode['type']]: Formatter<K>
@@ -101,303 +104,416 @@ const FORMATTERS: {
   WhileStatement: __REPLACE_ME__,
 }
 
-function Block(node: AST.Block, indent: number) {
-  const begin = formatIndent(indent)
-  const statements = formatNodeList(
-    node.statements as AST.ASTNode[],
-    indent + 1,
-    { separator: `${begin}\n`, prefix: '\n', suffix: `\n${begin}` },
-  )
-  return `${begin}{${statements}}`
+function Block(node: AST.Block, out: OutputStream) {
+  out.token('{')
+  out.pushIndent()
+  for (const n of node.statements) {
+    formatAstNode(n as AST.ASTNode, out)
+  }
+  out.popIndent()
+  out.token('}')
+  out.endLine()
 }
 
-function ContractDefinition(node: AST.ContractDefinition, indent: number) {
-  const begin = formatIndent(indent)
-  const type = node.kind === 'abstract' ? 'abstract contract' : node.kind
+function ContractDefinition(node: AST.ContractDefinition, out: OutputStream) {
+  out.beginLine()
+  out.token(node.kind === 'abstract' ? 'abstract contract' : node.kind)
+  out.token(node.name)
+
+  formatNodeList(node.baseContracts, out, { prefix: 'is', separator: ',' })
 
   if (node.kind === 'interface') {
-    state.insideInterface = true
+    out.state.insideInterface = true
   }
 
-  const base = formatNodeList(node.baseContracts, indent, {
-    prefix: 'is ',
-    separator: ', ',
-    suffix: ' ',
-  })
-
-  const statements = node.subNodes.flatMap((n, i) => {
-    const formatted = formatAstNode(n as AST.ASTNode, indent + 1)
-    const result = [formatted]
+  out.token('{')
+  out.pushIndent()
+  forEachPrevious(node.subNodes, (n, prev) => {
     if (
-      i !== 0 &&
+      prev !== undefined &&
       (n.type === 'FunctionDefinition' ||
         n.type === 'ModifierDefinition' ||
         n.type === 'StructDefinition' ||
-        n.type !== node.subNodes[i - 1]?.type)
+        n.type !== prev.type)
     ) {
-      result.unshift('')
+      out.twoNewLines()
     }
-    return result
+    formatAstNode(n as AST.ASTNode, out)
   })
+  out.popIndent()
+  out.token('}')
+  out.endLine()
 
-  const statementsFmt = formatList(statements, {
-    separator: '\n',
-    prefix: '\n',
-    suffix: '\n',
-  })
-
-  state.insideInterface = false
-
-  return `${begin}${type} ${node.name} ${base}{${statementsFmt}}`
+  out.state.insideInterface = false
 }
 
-function ElementaryTypeName(node: AST.ElementaryTypeName, _: number) {
-  let result = node.name
-  if (result === 'uint') {
-    result = 'uint256'
-  } else if (result === 'int') {
-    result = 'int256'
+function ElementaryTypeName(node: AST.ElementaryTypeName, out: OutputStream) {
+  if (node.name === 'uint') {
+    out.token('uint256')
+  } else if (node.name === 'int') {
+    out.token('int256')
+  } else {
+    out.token(node.name)
   }
   if (node.stateMutability) {
-    result += ` ${node.stateMutability}`
+    out.token(node.stateMutability)
   }
-  return result
 }
 
-function FunctionDefinition(node: AST.FunctionDefinition, indent: number) {
-  const begin = formatIndent(indent)
-  const typeName = node.isConstructor
-    ? 'constructor'
-    : node.isFallback
-      ? 'function fallback'
-      : node.isReceiveEther
-        ? 'function receive'
-        : 'function'
-  const name = node.name ? ` ${node.name}` : ''
+function FunctionDefinition(node: AST.FunctionDefinition, out: OutputStream) {
+  out.beginLine()
 
-  const parameters = formatNodeList(node.parameters, indent, {
-    separator: ', ',
-  })
+  if (node.isConstructor) {
+    out.token('constructor')
+  } else {
+    out.token('function')
+    if (node.isFallback) {
+      out.token('fallback')
+    } else if (node.isReceiveEther) {
+      out.token('receive')
+    } else if (node.name) {
+      out.token(node.name)
+    }
+  }
 
-  const after: string[] = []
+  out.token('(')
+  formatNodeList(node.parameters, out, { separator: ',' })
+  out.token(')')
+
   if (node.visibility !== 'default') {
-    after.push(node.visibility)
+    out.token(node.visibility)
   }
   if (node.stateMutability !== null) {
-    after.push(node.stateMutability)
+    out.token(node.stateMutability)
   }
   for (const n of node.modifiers) {
-    after.push(formatAstNode(n, indent))
+    formatAstNode(n, out)
   }
   if (node.isVirtual) {
-    after.push('virtual')
+    out.token('virtual')
   }
   if (node.override) {
-    after.push(formatOverride(node.override, indent))
+    formatOverride(node.override, out)
   }
-  if (node.returnParameters) {
-    after.push(
-      formatNodeList(node.returnParameters, indent, {
-        separator: ', ',
-        prefix: 'returns (',
-        suffix: ')',
-      }),
-    )
+  if (node.returnParameters && node.returnParameters.length > 0) {
+    out.token('returns')
+    out.token('(')
+    formatNodeList(node.returnParameters, out, { separator: ',' })
+    out.token(')')
   }
-  const afterFmt = formatList(after, { separator: ' ', prefix: ' ' })
 
-  const body = node.body
-    ? ' ' + formatAstNode(node.body, indent).trimStart()
-    : state.insideInterface
-      ? ';'
-      : ' {}'
+  if (out.state.insideInterface) {
+    out.token(';')
+  } else if (node.body) {
+    formatAstNode(node.body, out)
+  } else {
+    out.token('{')
+    out.token('}')
+  }
 
-  return `${begin}${typeName}${name}(${parameters})${afterFmt}${body}`
+  out.endLine()
 }
 
-function Identifier(node: AST.Identifier, _: number) {
-  return node.name
+function Identifier(node: AST.Identifier, out: OutputStream) {
+  out.token(node.name)
 }
 
-function ImportDirective(node: AST.ImportDirective, indent: number) {
-  const before = formatIndent(indent)
-  const unit = node.unitAliasIdentifier
-    ? `* as ${formatAstNode(node.unitAliasIdentifier, indent)} from `
-    : ''
-  const aliases = (node.symbolAliasesIdentifiers ?? []).map(([id, asId]) => {
-    const idFmt = formatAstNode(id, indent)
-    if (!asId) {
-      return idFmt
-    }
-    return `${idFmt} as ${formatAstNode(asId, indent)}`
-  })
-  const aliasesFmt = formatList(aliases, {
-    separator: ', ',
-    prefix: '{ ',
-    suffix: ' } from ',
-  })
-  const path = formatAstNode(node.pathLiteral, indent)
-  return `${before}import ${unit}${aliasesFmt}${path};`
-}
+function ImportDirective(node: AST.ImportDirective, out: OutputStream) {
+  out.beginLine()
+  out.token('import')
+  if (node.unitAliasIdentifier) {
+    out.token('*')
+    out.token('as')
+    formatAstNode(node.unitAliasIdentifier, out)
+    out.token('from')
+  }
 
-function InheritanceSpecifier(node: AST.InheritanceSpecifier, indent: number) {
-  const base = formatAstNode(node.baseName, indent)
-  const args = formatNodeList(node.arguments, indent, {
-    separator: ', ',
-    prefix: '(',
-    suffix: ')',
-  })
-  return `${base}${args}`
-}
-
-function ModifierInvocation(node: AST.ModifierInvocation, indent: number) {
-  const args = formatNodeList(node.arguments ?? [], indent, {
-    separator: ', ',
-    prefix: '(',
-    suffix: ')',
-  })
-  return `${node.name}${args}`
-}
-
-function PragmaDirective(node: AST.PragmaDirective, indent: number) {
-  const before = formatIndent(indent)
-  return `${before}pragma ${node.name} ${node.value};`
-}
-
-function SourceUnit(node: AST.SourceUnit, indent: number) {
-  return node.children
-    .map((n, i) => {
-      const fmt = formatAstNode(n, indent)
-      if (
-        i !== node.children.length - 1 &&
-        (n.type !== 'ImportDirective' ||
-          node.children[i + 1]?.type !== 'ImportDirective')
-      ) {
-        return fmt + '\n'
+  if (
+    node.symbolAliasesIdentifiers &&
+    node.symbolAliasesIdentifiers.length > 0
+  ) {
+    out.token('{')
+    forEachSeparator(node.symbolAliasesIdentifiers, (n, separate) => {
+      formatAstNode(n[0], out)
+      if (n[1]) {
+        out.token('as')
+        formatAstNode(n[1], out)
       }
-      return fmt
+      if (separate) {
+        out.token(',')
+      }
     })
-    .join('\n')
+    out.token('}')
+    out.token('from')
+  }
+
+  formatAstNode(node.pathLiteral, out)
+
+  out.token(';')
+  out.endLine()
+}
+
+function InheritanceSpecifier(
+  node: AST.InheritanceSpecifier,
+  out: OutputStream,
+) {
+  formatAstNode(node.baseName, out)
+  formatNodeList(node.arguments, out, {
+    separator: ',',
+    prefix: '(',
+    suffix: ')',
+  })
+}
+
+function ModifierInvocation(node: AST.ModifierInvocation, out: OutputStream) {
+  out.token(node.name)
+  if (node.arguments) {
+    formatNodeList(node.arguments, out, {
+      separator: ',',
+      prefix: '(',
+      suffix: ')',
+    })
+  }
+}
+
+function PragmaDirective(node: AST.PragmaDirective, out: OutputStream) {
+  out.beginLine()
+  out.token('pragma')
+  out.token(node.name)
+  out.token(node.value)
+  out.token(';')
+  out.endLine()
+}
+
+function SourceUnit(node: AST.SourceUnit, out: OutputStream) {
+  forEachPrevious(node.children, (n, prev) => {
+    if (
+      prev !== undefined &&
+      (n.type !== 'ImportDirective' || prev.type !== 'ImportDirective')
+    ) {
+      out.twoNewLines()
+    }
+    formatAstNode(n, out)
+  })
 }
 
 function StateVariableDeclaration(
   node: AST.StateVariableDeclaration,
-  indent: number,
+  out: OutputStream,
 ) {
-  const begin = formatIndent(indent)
-  const [n] = node.variables
-  if (!n || node.variables.length > 1) {
-    throw new Error(
-      'Programmer error: StateVariableDeclaration.variables.length !== 1',
-    )
+  for (const n of node.variables) {
+    out.beginLine()
+    formatAstNode(n, out)
+    out.token(';')
+    out.endLine()
   }
-  const variable = formatAstNode(n, indent)
-  return `${begin}${variable};`
 }
 
-function StringLiteral(node: AST.StringLiteral, _: number) {
-  return JSON.stringify(node.value)
+function StringLiteral(node: AST.StringLiteral, out: OutputStream) {
+  out.token(JSON.stringify(node.value))
 }
 
-function UserDefinedTypeName(node: AST.UserDefinedTypeName, _: number) {
-  return node.namePath
+function UserDefinedTypeName(node: AST.UserDefinedTypeName, out: OutputStream) {
+  out.token(node.namePath)
 }
 
-function UsingForDeclaration(node: AST.UsingForDeclaration, indent: number) {
-  const before = formatIndent(indent)
-  const items = ['using']
+function UsingForDeclaration(node: AST.UsingForDeclaration, out: OutputStream) {
+  out.beginLine()
+  out.token('using')
   if (node.libraryName) {
-    items.push(node.libraryName)
+    out.token(node.libraryName)
   }
   if (node.functions.length > 0) {
-    const mapped = node.functions.map((fn, i) => {
+    out.token('{')
+    forEachSeparator(node.functions, (name, separate, i) => {
+      out.token(name)
       const operator = node.operators[i]
-      return operator ? `${fn} as ${operator}` : fn
+      if (operator) {
+        out.token('as')
+        out.token(operator)
+      }
+      if (separate) {
+        out.token(',')
+      }
     })
-    items.push(
-      formatList(mapped, { separator: ', ', prefix: '{ ', suffix: ' }' }),
-    )
+    out.token('}')
   }
-  items.push('for')
+  out.token('for')
   if (node.typeName) {
-    items.push(formatAstNode(node.typeName, indent))
+    formatAstNode(node.typeName, out)
   } else {
-    items.push('*')
+    out.token('*')
   }
   if (node.isGlobal) {
-    items.push('global')
+    out.token('global')
   }
-  return `${before}${items.join(' ')};`
+  out.token(';')
+  out.endLine()
 }
 
-function VariableDeclaration(node: AST.VariableDeclaration, indent: number) {
-  const items: string[] = []
+function VariableDeclaration(node: AST.VariableDeclaration, out: OutputStream) {
   if (node.typeName) {
-    items.push(formatAstNode(node.typeName, indent))
+    formatAstNode(node.typeName, out)
   }
   if (node.visibility && node.visibility !== 'default') {
-    items.push(node.visibility)
+    out.token(node.visibility)
   }
   if (node.isDeclaredConst) {
-    items.push('constant')
+    out.token('constant')
   }
   if ('override' in node && node.override) {
-    items.push(
-      formatOverride(node.override as AST.UserDefinedTypeName[], indent),
-    )
+    formatOverride(node.override as AST.UserDefinedTypeName[], out)
   }
   if ('isImmutable' in node && node.isImmutable) {
-    items.push('immutable')
+    out.token('immutable')
   }
   if (node.isIndexed) {
-    items.push('indexed')
+    out.token('indexed')
   }
   if (node.storageLocation) {
-    items.push(node.storageLocation)
+    out.token(node.storageLocation)
   }
   if (node.identifier) {
-    items.push(formatAstNode(node.identifier, indent))
+    formatAstNode(node.identifier, out)
   }
   if (node.expression) {
-    items.push('=')
-    items.push(formatAstNode(node.expression, indent))
+    out.token('=')
+    formatAstNode(node.expression, out)
   }
-  return items.join(' ')
 }
 
 // --- HELPERS ---
 
-function formatIndent(indent: number) {
-  return '\t'.repeat(indent)
+class OutputStream {
+  constructor(private indent = '\t') {}
+
+  private result = ''
+
+  private level = 0
+
+  private isLineStart = true
+  private indented = false
+
+  private previous = ''
+
+  state = {
+    insideInterface: false,
+  }
+
+  token(token: string) {
+    if (
+      this.isLineStart ||
+      (token === '(' && this.previous !== 'returns') ||
+      token === ')' ||
+      token === ';' ||
+      token === ',' ||
+      this.previous === '(' ||
+      (token === '}' && this.previous === '{')
+    ) {
+      this.result += token
+    } else {
+      this.result += ' ' + token
+    }
+    this.previous = token
+    this.isLineStart = false
+    this.indented = false
+  }
+
+  private appendRaw(value: string) {
+    this.result += value
+    this.previous = ''
+  }
+
+  pushIndent() {
+    this.level += 1
+  }
+
+  popIndent() {
+    this.level = Math.max(0, this.level - 1)
+  }
+
+  beginLine() {
+    if (this.isLineStart && this.indented) {
+      return
+    }
+    if (!this.isLineStart) {
+      this.appendRaw('\n')
+      this.isLineStart = true
+    }
+    if (!this.indented) {
+      this.appendRaw(this.indent.repeat(this.level))
+      this.indented = true
+    }
+  }
+
+  twoNewLines() {
+    this.endLine()
+    this.appendRaw('\n')
+  }
+
+  endLine() {
+    if (!this.isLineStart) {
+      this.appendRaw('\n')
+      this.isLineStart = true
+    }
+  }
+
+  finish() {
+    return this.result.trimEnd()
+  }
+}
+
+function forEachPrevious<T>(
+  values: T[],
+  callback: (item: T, previous: T | undefined, i: number) => unknown,
+) {
+  for (let i = 0; i < values.length; i++) {
+    // biome-ignore lint/style/noNonNullAssertion: we know it's there
+    if (callback(values[i]!, values[i - 1], i) === true) {
+      break
+    }
+  }
+}
+
+function forEachSeparator<T>(
+  values: T[],
+  callback: (item: T, separate: boolean, i: number) => unknown,
+) {
+  for (let i = 0; i < values.length; i++) {
+    // biome-ignore lint/style/noNonNullAssertion: we know it's there
+    if (callback(values[i]!, i !== values.length - 1, i) === true) {
+      break
+    }
+  }
 }
 
 function formatNodeList(
   nodes: AST.ASTNode[],
-  indent: number,
+  out: OutputStream,
   options: { prefix?: string; suffix?: string; separator: string },
 ) {
-  return formatList(
-    nodes.map((n) => formatAstNode(n, indent)),
-    options,
-  )
+  if (options.prefix && nodes.length > 0) {
+    out.token(options.prefix)
+  }
+  forEachSeparator(nodes, (n, separate) => {
+    formatAstNode(n, out)
+    if (separate) {
+      out.token(options.separator)
+    }
+  })
+  if (options.suffix && nodes.length > 0) {
+    out.token(options.suffix)
+  }
 }
 
-function formatList(
-  strings: string[],
-  options: { prefix?: string; suffix?: string; separator: string },
+function formatOverride(
+  override: AST.UserDefinedTypeName[],
+  out: OutputStream,
 ) {
-  if (strings.length === 0) {
-    return ''
-  }
-  const items = strings.join(options.separator)
-  return `${options.prefix ?? ''}${items}${options.suffix ?? ''}`
-}
-
-function formatOverride(override: AST.UserDefinedTypeName[], indent: number) {
-  const types = override.map((n) => formatAstNode(n, indent))
-  if (types.length > 0) {
-    return `override(${types.join(', ')})`
-  } else {
-    return 'override'
-  }
+  out.token('override')
+  formatNodeList(override, out, {
+    separator: ',',
+    prefix: '(',
+    suffix: ')',
+  })
 }

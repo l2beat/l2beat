@@ -63,11 +63,11 @@ export function flattenStartingFrom(
     ) {
       ast = generateInterfaceSourceFromContract(foundContract.declaration)
     }
-    flatSource = formatAst(ast) + flatSource
+    flatSource = formatAst(ast) + '\n\n' + flatSource
     stack.push(...getStackEntries(foundContract))
   }
 
-  return changeLineEndingsToUnix(flatSource.trimEnd())
+  return changeLineEndingsToUnix(flatSource)
 }
 
 function entryIsPurelyDynamic(

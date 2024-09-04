@@ -2,7 +2,7 @@ import { join } from 'path'
 import { parse } from '@mradomski/fast-solidity-parser'
 import { expect } from 'earl'
 import { readFile } from 'fs/promises'
-import { formatAst, formatAstNode } from './formatAst'
+import { formatAst } from './formatAst'
 
 describe(formatAst.name, () => {
   it('correctly formats the test file', async () => {
@@ -12,7 +12,7 @@ describe(formatAst.name, () => {
     ])
 
     const parsed = parse(before)
-    const formatted = formatAstNode(parsed, 0)
+    const formatted = formatAst(parsed)
 
     expect(formatted).toEqual(after)
   })
