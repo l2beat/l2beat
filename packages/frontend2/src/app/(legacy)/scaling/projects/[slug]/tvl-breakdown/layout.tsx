@@ -1,3 +1,9 @@
+import { ContentWrapper } from '~/app/_components/content-wrapper'
+
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <div className="mx-auto h-full max-w-[928px]">{children}</div>
+  return (
+    <ContentWrapper mobileFull className="mx-auto h-full max-w-[928px]">
+      {children}
+    </ContentWrapper>
+  )
 }
