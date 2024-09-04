@@ -17,8 +17,10 @@ const requiredSignaturesDAC = discovery.getContractValue<number>(
 )
 
 const isForcedBatchDisallowed =
-  discovery.getContractValue<string>('GptProtocolValidium', 'forceBatchAddress') !==
-  '0x0000000000000000000000000000000000000000'
+  discovery.getContractValue<string>(
+    'GptProtocolValidium',
+    'forceBatchAddress',
+  ) !== '0x0000000000000000000000000000000000000000'
 
 const upgradeability = {
   upgradableBy: ['GptProtocolDAC Upgrader'],
@@ -53,7 +55,7 @@ export const gpt: Layer2 = polygonCDKStack({
     activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['GPT'],
-  rpcUrl: 'https://rpc.gptprotocol.io', // tested with no ratelimit at over 10k requests per minute (we default to 1500/min)
+  rpcUrl: 'https://rpc.gptprotocol.io', // tested at over 10k requests per minute with no ratelimit (we default to 1500/min)
   discovery,
   daProvider: {
     name: 'DAC',
@@ -122,7 +124,7 @@ export const gpt: Layer2 = polygonCDKStack({
         ),
       ],
       description:
-        'Admin of the GptProtocolValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, and set the DA committee members in the GptProtocolDAC contract.',
+        'Admin and ForceBatcher of the GptProtocolValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, and set the DA committee members in the GptProtocolDAC contract.',
     },
     {
       name: 'GptProtocolDAC Upgrader',
