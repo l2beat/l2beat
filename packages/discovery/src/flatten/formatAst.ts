@@ -63,7 +63,7 @@ const FORMATTERS: {
   HexNumber: __REPLACE_ME__,
   Identifier,
   IfStatement: __REPLACE_ME__,
-  ImportDirective: __REPLACE_ME__,
+  ImportDirective,
   IndexAccess: __REPLACE_ME__,
   IndexRangeAccess: __REPLACE_ME__,
   InheritanceSpecifier,
@@ -77,12 +77,12 @@ const FORMATTERS: {
   NameValueList: __REPLACE_ME__,
   NewExpression: __REPLACE_ME__,
   NumberLiteral: __REPLACE_ME__,
-  PragmaDirective: __REPLACE_ME__,
+  PragmaDirective,
   ReturnStatement: __REPLACE_ME__,
   RevertStatement: __REPLACE_ME__,
   SourceUnit,
   StateVariableDeclaration,
-  StringLiteral: __REPLACE_ME__,
+  StringLiteral,
   StructDefinition: __REPLACE_ME__,
   ThrowStatement: __REPLACE_ME__,
   TryStatement: __REPLACE_ME__,
@@ -200,6 +200,27 @@ function Identifier(node: AST.Identifier, _: number) {
   return node.name
 }
 
+function ImportDirective(node: AST.ImportDirective, indent: number) {
+  const before = formatIndent(indent)
+  const unit = node.unitAliasIdentifier
+    ? `* as ${formatAstNode(node.unitAliasIdentifier, indent)} from `
+    : ''
+  const aliases = (node.symbolAliasesIdentifiers ?? []).map(([id, asId]) => {
+    const idFmt = formatAstNode(id, indent)
+    if (!asId) {
+      return idFmt
+    }
+    return `${idFmt} as ${formatAstNode(asId, indent)}`
+  })
+  const aliasesFmt = formatList(aliases, {
+    separator: ', ',
+    prefix: '{ ',
+    suffix: ' } from ',
+  })
+  const path = formatAstNode(node.pathLiteral, indent)
+  return `${before}import ${unit}${aliasesFmt}${path};`
+}
+
 function InheritanceSpecifier(node: AST.InheritanceSpecifier, indent: number) {
   const base = formatAstNode(node.baseName, indent)
   const args = formatNodeList(node.arguments, indent, {
@@ -210,8 +231,25 @@ function InheritanceSpecifier(node: AST.InheritanceSpecifier, indent: number) {
   return `${base}${args}`
 }
 
+function PragmaDirective(node: AST.PragmaDirective, indent: number) {
+  const before = formatIndent(indent)
+  return `${before}pragma ${node.name} ${node.value};`
+}
+
 function SourceUnit(node: AST.SourceUnit, indent: number) {
-  return formatNodeList(node.children, indent, { separator: '\n\n' })
+  return node.children
+    .map((n, i) => {
+      const fmt = formatAstNode(n, indent)
+      if (
+        i !== node.children.length - 1 &&
+        (n.type !== 'ImportDirective' ||
+          node.children[i + 1]?.type !== 'ImportDirective')
+      ) {
+        return fmt + '\n'
+      }
+      return fmt
+    })
+    .join('\n')
 }
 
 function StateVariableDeclaration(
@@ -227,6 +265,10 @@ function StateVariableDeclaration(
   }
   const variable = formatAstNode(n, indent)
   return `${begin}${variable};`
+}
+
+function StringLiteral(node: AST.StringLiteral, _: number) {
+  return JSON.stringify(node.value)
 }
 
 function UserDefinedTypeName(node: AST.UserDefinedTypeName, _: number) {
