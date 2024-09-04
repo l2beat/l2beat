@@ -4,7 +4,7 @@ import { PermissionConfiguration } from '../config/RawDiscoveryConfig'
 import { ResolvedPermission } from './resolvePermissions'
 import { transformToReceived } from './transform'
 
-describe.only(transformToReceived.name, () => {
+describe(transformToReceived.name, () => {
   it('correctly transforms resolved and direct permissions', () => {
     const toAddress = EthereumAddress(
       '0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49',
