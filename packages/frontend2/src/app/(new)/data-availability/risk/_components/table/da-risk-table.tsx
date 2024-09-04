@@ -13,7 +13,6 @@ import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell
 import { RiskCell } from '~/app/_components/table/cells/risk-cell'
 import { FilterWrapper } from '~/app/_components/table/filters/filter-wrapper'
 import { TableFacetedFilter } from '~/app/_components/table/filters/table-faceted-filter'
-import { TableCell } from '~/app/_components/table/table'
 import { useBreakpoint } from '~/hooks/use-is-mobile'
 import { useTable } from '~/hooks/use-table'
 import { type DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'

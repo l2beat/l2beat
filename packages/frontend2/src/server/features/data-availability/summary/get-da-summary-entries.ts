@@ -1,9 +1,4 @@
-import {
-  type DaLayerRisks,
-  DaRiskView,
-  daLayers,
-  getDaProjectKey,
-} from '@l2beat/config'
+import { type DaLayerRisks, daLayers, getDaProjectKey } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { toDaBridge } from '../utils/get-da-bridge'
