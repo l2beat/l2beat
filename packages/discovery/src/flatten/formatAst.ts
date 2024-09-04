@@ -78,7 +78,7 @@ const FORMATTERS: {
   InlineAssemblyStatement: __REPLACE_ME__,
   LabelDefinition: __REPLACE_ME__,
   Mapping: __REPLACE_ME__,
-  MemberAccess: __REPLACE_ME__,
+  MemberAccess,
   ModifierDefinition: __REPLACE_ME__,
   ModifierInvocation,
   NameValueExpression: __REPLACE_ME__,
@@ -86,7 +86,7 @@ const FORMATTERS: {
   NewExpression: __REPLACE_ME__,
   NumberLiteral,
   PragmaDirective,
-  ReturnStatement: __REPLACE_ME__,
+  ReturnStatement,
   RevertStatement: __REPLACE_ME__,
   SourceUnit,
   StateVariableDeclaration,
@@ -345,6 +345,14 @@ function InheritanceSpecifier(
   }
 }
 
+function MemberAccess(node: AST.MemberAccess, out: OutputStream) {
+  formatAstNode(node.expression, out)
+  out.noSpace()
+  out.token('.')
+  out.noSpace()
+  out.token(node.memberName)
+}
+
 function ModifierInvocation(node: AST.ModifierInvocation, out: OutputStream) {
   out.token(node.name)
   if (node.arguments && node.arguments.length > 0) {
@@ -369,6 +377,16 @@ function PragmaDirective(node: AST.PragmaDirective, out: OutputStream) {
   out.token('pragma')
   out.token(node.name)
   out.token(node.value)
+  out.token(';')
+  out.endLine()
+}
+
+function ReturnStatement(node: AST.ReturnStatement, out: OutputStream) {
+  out.beginLine()
+  out.token('return')
+  if (node.expression) {
+    formatAstNode(node.expression, out)
+  }
   out.token(';')
   out.endLine()
 }

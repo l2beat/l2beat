@@ -68,10 +68,14 @@ contract Test {
 		uint256 y = 1 + (2 + 3);
 		uint256 z = 1 * (2 + 3);
 		address foo = bar();
-		address foo = bar(1, 2);
+		address foo = bar.baz(1, 2);
+
+		return 3;
 	}
 
-	function foo() public {}
+	function foo() public {
+		return;
+	}
 
 	function foo() public view {}
 
