@@ -1,6 +1,7 @@
 import { type UnixTime } from '@l2beat/shared-pure'
+import { type ChartUnit } from '~/app/_components/chart/types'
 
-export type CostsUnit = 'eth' | 'usd' | 'gas'
+export type CostsUnit = ChartUnit | 'gas'
 
 // COSTS CHART
 export interface CostsChartResponse {

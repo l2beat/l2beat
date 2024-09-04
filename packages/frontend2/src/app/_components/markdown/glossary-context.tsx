@@ -1,15 +1,19 @@
 'use client'
 
 import { createContext, useContext } from 'react'
-import { type CollectionEntry } from '~/content/get-collection'
 
-const GlossaryContext = createContext<CollectionEntry<'glossary'>[] | null>(
+const GlossaryContext = createContext<GlossaryTermWithoutDescription[] | null>(
   null,
 )
 
 interface Props {
-  terms: CollectionEntry<'glossary'>[]
+  terms: GlossaryTermWithoutDescription[]
   children: React.ReactNode
+}
+
+export interface GlossaryTermWithoutDescription {
+  id: string
+  matches: string[]
 }
 
 export function GlossaryContextProvider({ children, terms }: Props) {

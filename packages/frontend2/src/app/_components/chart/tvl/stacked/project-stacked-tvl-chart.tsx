@@ -5,10 +5,16 @@ import { useState } from 'react'
 import { Chart } from '~/app/_components/chart/core/chart'
 import { ChartProvider } from '~/app/_components/chart/core/chart-provider'
 import { TvlChartUnitAndScaleControls } from '~/app/_components/chart/tvl/tvl-chart-unit-and-scale-controls'
-import { useLocalStorage } from '~/hooks/use-local-storage'
+import { TokenCombobox } from '~/app/_components/token-combobox'
+import {
+  type ProjectToken,
+  type ProjectTokens,
+} from '~/server/features/scaling/tvl/tokens/get-tokens-for-project'
 import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
 import { formatCurrency } from '~/utils/format'
+import { type ChartScale, type ChartUnit } from '../../types'
+import { ProjectTokenChart } from '../token/project-token-chart'
 import { TvlChartTimeRangeControls } from '../tvl-chart-time-range-controls'
 import { StackedTvlChartHover } from './stacked-tvl-chart-hover'
 import { useStackedTvlChartRenderParams } from './use-stacked-tvl-chart-render-params'
@@ -16,17 +22,87 @@ import { useStackedTvlChartRenderParams } from './use-stacked-tvl-chart-render-p
 interface Props {
   milestones: Milestone[]
   projectId: string
+  tokens: ProjectTokens | undefined
+  isBridge: boolean
 }
 
-export function ProjectStackedTvlChart({ milestones, projectId }: Props) {
+export function ProjectStackedTvlChart({
+  milestones,
+  projectId,
+  tokens,
+  isBridge,
+}: Props) {
+  const [token, setToken] = useState<ProjectToken>()
   const [timeRange, setTimeRange] = useState<TvlChartRange>('7d')
+  const [unit, setUnit] = useState<ChartUnit>('usd')
+  const [scale, setScale] = useState<ChartScale>('lin')
 
-  const [unit, setUnit] = useLocalStorage<'usd' | 'eth'>(
-    'scaling-tvl-unit',
-    'usd',
+  if (tokens && token) {
+    return (
+      <ProjectTokenChart
+        isBridge={isBridge}
+        tokens={tokens}
+        setToken={setToken}
+        token={token}
+        timeRange={timeRange}
+        setTimeRange={setTimeRange}
+        unit={unit}
+        setUnit={setUnit}
+        scale={scale}
+        setScale={setScale}
+        milestones={milestones}
+        projectId={projectId}
+      />
+    )
+  }
+
+  return (
+    <DefaultChart
+      isBridge={isBridge}
+      projectId={projectId}
+      milestones={milestones}
+      timeRange={timeRange}
+      setTimeRange={setTimeRange}
+      tokens={tokens}
+      token={token}
+      setToken={setToken}
+      unit={unit}
+      setUnit={setUnit}
+      scale={scale}
+      setScale={setScale}
+    />
   )
-  const [scale, setScale] = useState('lin')
+}
 
+interface DefaultChartProps {
+  projectId: string
+  isBridge: boolean
+  milestones: Milestone[]
+  timeRange: TvlChartRange
+  setTimeRange: (timeRange: TvlChartRange) => void
+  tokens: ProjectTokens | undefined
+  token: ProjectToken | undefined
+  setToken: (token: ProjectToken | undefined) => void
+  unit: ChartUnit
+  setUnit: (unit: ChartUnit) => void
+  scale: ChartScale
+  setScale: (scale: ChartScale) => void
+}
+
+function DefaultChart({
+  projectId,
+  isBridge,
+  milestones,
+  timeRange,
+  setTimeRange,
+  tokens,
+  token,
+  setToken,
+  unit,
+  setUnit,
+  scale,
+  setScale,
+}: DefaultChartProps) {
   const { data, isLoading } = api.tvl.chart.useQuery({
     filter: { type: 'projects', projectIds: [projectId] },
     range: timeRange,
@@ -50,7 +126,7 @@ export function ProjectStackedTvlChart({ milestones, projectId }: Props) {
       useLogScale={scale === 'log'}
       isLoading={isLoading}
       renderHoverContents={(data) => (
-        <StackedTvlChartHover {...data} currency={unit} />
+        <StackedTvlChartHover {...data} unit={unit} />
       )}
     >
       <section className="flex flex-col gap-4">
@@ -66,7 +142,16 @@ export function ProjectStackedTvlChart({ milestones, projectId }: Props) {
           scale={scale}
           setUnit={setUnit}
           setScale={setScale}
-        />
+        >
+          {tokens && (
+            <TokenCombobox
+              tokens={tokens}
+              value={token}
+              setValue={setToken}
+              isBridge={isBridge}
+            />
+          )}
+        </TvlChartUnitAndScaleControls>
       </section>
     </ChartProvider>
   )
