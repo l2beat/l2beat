@@ -25,7 +25,19 @@ function HALO2KZG(
   }
 }
 
+function PLONKSNARK(
+  trustedSetup: StringWithAutocomplete<'?'>,
+): Omit<SubVerifier, 'name'> {
+  return {
+    proofSystem: 'Plonk SNARK',
+    mainArithmetization: 'Plonkish',
+    mainPCS: 'KZG',
+    trustedSetup,
+  }
+}
+
 export const PROOFS = {
   GROTH16,
   HALO2KZG,
+  PLONKSNARK,
 }
