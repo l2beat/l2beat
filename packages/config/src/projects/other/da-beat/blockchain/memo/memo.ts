@@ -14,12 +14,8 @@ export const memo: DaLayer = {
     description: `Meeda (MemoDA) is a blockchain-based cloud storage protocol developed by MEMO Labs.`,
     links: {
       websites: ['https://www.memolabs.org/'],
-      documentation: [
-        'https://memolabs.gitbook.io/meeda',
-      ],
-      repositories: [
-        'https://github.com/memoio',
-      ],
+      documentation: ['https://memolabs.gitbook.io/meeda'],
+      repositories: ['https://github.com/memoio'],
       apps: [],
       explorers: ['https://scan.metamemo.one:8080/'],
       socialMedia: [
@@ -32,8 +28,8 @@ export const memo: DaLayer = {
     name: '',
     description: ``,
     blockTime: 0, // seconds average
-    consensusFinality: 0, 
-    unbondingPeriod: 0, 
+    consensusFinality: 0,
+    unbondingPeriod: 0,
   },
   technology: `
     ## Architecture
