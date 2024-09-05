@@ -61,6 +61,8 @@ export function initTvlModule(
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
 
+  assert(config.tvl.prices.length > 0, 'Tokens should be configured')
+
   const priceModule = initPriceModule(
     config.tvl,
     logger,
