@@ -5,7 +5,8 @@ import {
   ExplorerConfig,
   getExplorerClient,
 } from '@l2beat/discovery/dist/utils/IEtherscanClient'
-import { command, oneOf, option, positional, string } from 'cmd-ts'
+import { assert } from '@l2beat/shared-pure'
+import { command, oneOf, option, optional, positional, string } from 'cmd-ts'
 import { powerdiff } from '../implementations/powerdiff'
 import { DiffingModeType, DisplayModeType } from './Powerdiff'
 import { EthereumAddressValue, HttpUrl } from './types'
@@ -37,11 +38,10 @@ export const FlattenAndDiff = command({
       defaultValue: () => 'etherscan',
     }),
     apiKey: option({
-      type: string,
+      type: optional(string),
       env: 'L2B_ETHERSCAN_API_KEY',
       long: 'api-key',
       short: 'k',
-      defaultValue: () => 'YourApiKeyToken',
     }),
     difftasticPath: option({
       type: string,
@@ -66,11 +66,15 @@ export const FlattenAndDiff = command({
     }),
   },
   handler: async (args) => {
+    assert(
+      args.type !== 'etherscan' || args.apiKey !== undefined,
+      'When using etherscan you should provide the API key using --api-key.',
+    )
     const httpClient = new HttpClient()
     const client = getExplorerClient(httpClient, {
       type: args.type as ExplorerConfig['type'],
       url: args.explorerUrl.toString(),
-      apiKey: args.apiKey,
+      apiKey: args.apiKey ?? 'YourApiKeyToken',
     })
 
     console.log('Fetching contract source code...')
