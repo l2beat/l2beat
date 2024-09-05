@@ -32,6 +32,8 @@ export const gpt: Layer2 = polygonCDKStack({
   display: {
     name: 'GPT Protocol',
     slug: 'gpt',
+    headerWarning:
+      'GPT Protocol is using AggLayer, meaning it shares the TVL escrow contracts with Polygon zkEVM and other connected chains.',
     description:
       'GPT Protocol is a Validium built on the Polygon CDK stack. The purpose of the project is to create a decentralized market of AI compute power.',
     purposes: ['AI'],
