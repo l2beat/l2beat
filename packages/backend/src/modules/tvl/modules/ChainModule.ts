@@ -36,7 +36,7 @@ export function initChainModule(
   configMapping: ConfigMapping,
   descendantPriceIndexer: DescendantIndexer,
   blockTimestampIndexers: Map<string, BlockTimestampIndexer>,
-): ChainModule {
+): ChainModule | undefined {
   const dataIndexers: ChainAmountIndexer[] = []
   const valueIndexers: ValueIndexer[] = []
 
@@ -119,6 +119,8 @@ export function initChainModule(
       valueIndexers.push(indexer)
     }
   }
+
+  if (dataIndexers.length === 0) return undefined
 
   return {
     start: async () => {

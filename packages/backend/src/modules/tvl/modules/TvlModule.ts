@@ -177,9 +177,9 @@ export function initTvlModule(
     await hourlyIndexer.start()
     await priceModule.start()
     await blockTimestampModule.start()
-    await chainModule.start()
+    await chainModule?.start()
     await premintedModule.start()
-    await circulatingSupplyModule.start()
+    await circulatingSupplyModule?.start()
 
     if (config.tvl && config.tvl.tvlCleanerEnabled) {
       tvlCleaner.start()
