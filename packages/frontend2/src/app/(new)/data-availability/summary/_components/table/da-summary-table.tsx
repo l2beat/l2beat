@@ -57,7 +57,6 @@ export function DaSummaryTable({ items }: Props) {
   return (
     <>
       <FilterWrapper>
-        <TableFacetedFilter title="DA Layer" column={table.getColumn('name')} />
         <TableFacetedFilter
           title="Layer type"
           column={table.getColumn('layerType')}
