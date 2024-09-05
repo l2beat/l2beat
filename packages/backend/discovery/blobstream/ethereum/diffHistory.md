@@ -8,7 +8,7 @@ Generated with discovered.json: 0x10abadaa17757983f4466ea6755c97721a41100d
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+New verifier version. Gateway route to old verifier route is frozen, and new route is added with identifier 0xc865c1b6.
 
 ## Watched changes
 
