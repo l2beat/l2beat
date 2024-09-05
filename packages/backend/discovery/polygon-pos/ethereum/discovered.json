@@ -1,8 +1,8 @@
 {
   "name": "polygon-pos",
   "chain": "ethereum",
-  "blockNumber": 20685213,
-  "configHash": "0xae8cccc0c52c1749049713e4465c2c677336bd51b7d86eb7481d321d34652f06",
+  "blockNumber": 20685291,
+  "configHash": "0xe56efa10d1cea16a2937950248c4a370d155b1d9e2fa34f65a99b1a91744d6e7",
   "version": 14,
   "contracts": [
     {
@@ -41,7 +41,7 @@
         "withdrawPool": 0,
         "withdrawShares": 0
       },
-      "errors": { "getRewardPerShare": "Execution reverted" }
+      "derivedName": "ValidatorShare"
     },
     {
       "name": "ERC1155Predicate",
@@ -104,7 +104,7 @@
       "sinceTimestamp": 1590850580,
       "values": {
         "$immutable": true,
-        "counter": 2957085,
+        "counter": 2957090,
         "isOwner": false,
         "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "REGISTRATIONS": [

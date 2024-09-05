@@ -21,6 +21,7 @@
     "0xef49Ea6996073752b6840CDA34773FFA78F78166": "StakeManagerExtension",
     "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71": "Registry",
     "0xf98864DA30a5bd657B13e70A57f5718aBf7BAB31": "ValidatorShareImpl",
+    "0x053FA9b934b83E1E0ffc7e98a41aAdc3640bB462": "ValidatorShare",
     "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77": "RootChainManager",
     "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf": "ERC20Predicate",
     "0x9923263fA127b3d1484cFD649df8f1831c2A74e4": "MintableERC20Predicate",
@@ -173,6 +174,9 @@
     },
     "ExitNFT": {
       "ignoreMethods": ["exists"]
+    },
+    "ValidatorShare": {
+      "ignoreMethods": ["getRewardPerShare"]
     },
     "ValidatorShareImpl": {
       "ignoreMethods": ["getRewardPerShare"]
