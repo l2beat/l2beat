@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x492381be1da118b5e33dd6cf22c1834fe4539d7a
+Generated with discovered.json: 0x3e7db4030a9e68b02999c798868fa8c2066511dc
 
-# Diff at Thu, 05 Sep 2024 15:16:20 GMT:
+# Diff at Thu, 05 Sep 2024 15:26:03 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@d01da0bcdde8e77051659c9718e449a44f5f957a block: 20117905
-- current block number: 20685220
+- current block number: 20685269
 
 ## Description
 
@@ -43,12 +43,8 @@ Small upgrade:
       values.$upgradeCount:
 -        1
 +        2
-      values.getL2Output:
-+        [["0xf4ca62891759de132a560b980b18a54f06a417c6cf76a36c40ea945f9f0fc5a0",1717522271],["0x1d64260e1a9640723bd39370ee8f49a07ae7c64fea0d48ac3b81f0222d44802b",1717529867],["0x57682c37780402368b94d167e80291260ed8dd0163debe73d835ef531b3804e2",1717552595],["0x9ed4baba099fbdd0d760f2b9ae2dc97da7d39fae6a9817effac268164d95702d",1717571903],["0x63d376887fdc212bb9082e861ae7f1cc6d0561524a9a641035cbbfb6225fa0b2",1717591055]]
       values.startingTimestamp:
 +        1717522271
-      errors:
-+        {"getL2Output":"Too many values. Update configuration to explore fully"}
     }
 ```
 
