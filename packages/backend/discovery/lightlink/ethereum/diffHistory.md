@@ -1,3 +1,65 @@
+Generated with discovered.json: 0x492381be1da118b5e33dd6cf22c1834fe4539d7a
+
+# Diff at Thu, 05 Sep 2024 15:16:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d01da0bcdde8e77051659c9718e449a44f5f957a block: 20117905
+- current block number: 20685220
+
+## Description
+
+Small upgrade:
+
+### Challenge.sol
+- new `finalizationSeconds()` returns challengePeriod + challengeWindow
+
+### CanonicalStateChain.sol
+- new `OutputProposed` event for each new output root (on `pushBlock()`)
+- `output root = keccack(version_hash || keccack(state_root || withdrawal_root || latest_block_hash))`
+- new `getL2Output()` returns outputRoot, timestamp
+
+## Watched changes
+
+```diff
+    contract Challenge (0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd) {
+    +++ description: None
+      values.$implementation:
+-        "0x2785D4Af59bf299C1f2DBC5132E72B2eE015B3aC"
++        "0x4Fc6a6A2e3864709ae6AdCf29280dA01c95Aa10B"
+      values.$upgradeCount:
+-        1
++        2
+      values.finalizationSeconds:
++        432000
+    }
+```
+
+```diff
+    contract CanonicalStateChain (0x65E325A22c0F519041db69F5693EbAc3b4AE71bE) {
+    +++ description: None
+      values.$implementation:
+-        "0xd8C81A0CB0044fC45B51531A8dcc48Ed385937B5"
++        "0xeFE38Bd58ADDf23eFab1FFa16312030384929289"
+      values.$upgradeCount:
+-        1
++        2
+      values.getL2Output:
++        [["0xf4ca62891759de132a560b980b18a54f06a417c6cf76a36c40ea945f9f0fc5a0",1717522271],["0x1d64260e1a9640723bd39370ee8f49a07ae7c64fea0d48ac3b81f0222d44802b",1717529867],["0x57682c37780402368b94d167e80291260ed8dd0163debe73d835ef531b3804e2",1717552595],["0x9ed4baba099fbdd0d760f2b9ae2dc97da7d39fae6a9817effac268164d95702d",1717571903],["0x63d376887fdc212bb9082e861ae7f1cc6d0561524a9a641035cbbfb6225fa0b2",1717591055]]
+      values.startingTimestamp:
++        1717522271
+      errors:
++        {"getL2Output":"Too many values. Update configuration to explore fully"}
+    }
+```
+
+## Source code changes
+
+```diff
+.../CanonicalStateChain/CanonicalStateChain.sol    | 37 ++++++++++++++++++++--
+ .../Challenge/Challenge.sol                        |  5 +++
+ 2 files changed, 40 insertions(+), 2 deletions(-)
+```
+
 Generated with discovered.json: 0x6d6b9df731962a3b59a97d94d7b57792794c1bed
 
 # Diff at Fri, 30 Aug 2024 07:53:25 GMT:
