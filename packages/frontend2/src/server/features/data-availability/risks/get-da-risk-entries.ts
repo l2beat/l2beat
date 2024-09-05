@@ -1,9 +1,4 @@
-import {
-  type DaBridgeRisks,
-  type DaLayerRisks,
-  daLayers,
-  getDaProjectKey,
-} from '@l2beat/config'
+import { daLayers, getDaProjectKey } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { toDaBridge } from '../utils/get-da-bridge'
@@ -14,11 +9,7 @@ import {
   pickTvlForProjects,
 } from '../utils/get-da-projects-tvl'
 import { getDaRisks } from '../utils/get-da-risks'
-
-type DaEntryRisk =
-  | (DaLayerRisks & Record<keyof DaBridgeRisks, undefined>)
-  | (DaBridgeRisks & Record<keyof DaLayerRisks, undefined>)
-  | (DaLayerRisks & DaBridgeRisks)
+import { type DaEntryRisk } from '../utils/types'
 
 export async function getDaRiskEntries() {
   const economicSecurity = await getDaProjectsEconomicSecurity()
@@ -79,7 +70,7 @@ export async function getDaRiskEntries() {
           name: daLayer.display.name,
           slug: daLayer.display.slug,
           daBridge: 'multiple' as const,
-          href: '#',
+          href: undefined,
           warning: undefined,
           redWarning: undefined,
           isVerified: true,
@@ -99,9 +90,8 @@ export async function getDaRiskEntries() {
         },
       ]
     })
-    .flat()
 
-  return entries
+  return entries.flat()
 }
 
 export type DaRiskEntry = Awaited<ReturnType<typeof getDaRiskEntries>>[number]
