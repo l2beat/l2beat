@@ -29,14 +29,21 @@ export function initPremintedModule(
   configMapping: ConfigMapping,
   descendantPriceIndexer: DescendantIndexer,
   blockTimestampIndexers?: Map<string, BlockTimestampIndexer>,
-): PremintedModule {
+): PremintedModule | undefined {
   const dataIndexers: PremintedIndexer[] = []
   const valueIndexers: ValueIndexer[] = []
 
   for (const chainConfig of config.chains) {
     const chain = chainConfig.chain
     if (!chainConfig.config) {
-      logger.tag(chain).info(`Chain module disabled`)
+      continue
+    }
+
+    const premintedTokens = config.amounts
+      .filter((a) => a.chain === chain)
+      .filter((a): a is PremintedEntry => a.type === 'preminted')
+
+    if (premintedTokens.length === 0) {
       continue
     }
 
@@ -49,10 +56,6 @@ export function initPremintedModule(
       blockTimestampIndexer,
       'blockTimestampIndexer should be defined for enabled chain',
     )
-
-    const premintedTokens = config.amounts
-      .filter((a) => a.chain === chain)
-      .filter((a): a is PremintedEntry => a.type === 'preminted')
 
     for (const preminted of premintedTokens) {
       const indexer = new PremintedIndexer({
@@ -88,6 +91,8 @@ export function initPremintedModule(
       valueIndexers.push(valueIndexer)
     }
   }
+
+  if (dataIndexers.length === 0) return undefined
 
   return {
     start: async () => {

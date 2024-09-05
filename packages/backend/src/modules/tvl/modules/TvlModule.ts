@@ -178,7 +178,7 @@ export function initTvlModule(
     await priceModule.start()
     await blockTimestampModule?.start()
     await chainModule?.start()
-    await premintedModule.start()
+    await premintedModule?.start()
     await circulatingSupplyModule?.start()
 
     if (config.tvl && config.tvl.tvlCleanerEnabled) {
