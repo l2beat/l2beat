@@ -22,7 +22,7 @@ import { TvlCleaner } from '../utils/TvlCleaner'
 import { initBlockTimestampModule } from './BlockTimestampModule'
 import { initChainModule } from './ChainModule'
 import { initCirculatingSupplyModule } from './CirculatingSupplyModule'
-import { initPremintedModule } from './PremintedModules'
+import { initPremintedModule } from './PremintedModule'
 import { initPriceModule } from './PriceModule'
 
 export function initTvlModule(
