@@ -33,7 +33,7 @@ export function DaProjectStats({ project }: Props) {
         }
 
   return (
-    <div className="grid grid-cols-1 gap-3 rounded-lg bg-gray-100 md:grid-cols-3 md:px-6 md:py-5 dark:bg-zinc-900">
+    <div className="grid grid-cols-1 gap-3 rounded-lg bg-gray-100 dark:bg-zinc-900 md:grid-cols-3 md:px-6 md:py-5">
       <ProjectStat title="Type" value={project.type} />
       <ProjectStat
         title="Total value secured"
@@ -101,7 +101,7 @@ function ProjectStat(props: ProjectStat) {
         {props.tooltip && (
           <Tooltip>
             <TooltipTrigger>
-              <InfoIcon className="fill-gray-500 md:size-3.5 dark:fill-gray-600" />
+              <InfoIcon className="fill-gray-500 dark:fill-gray-600 md:size-3.5" />
             </TooltipTrigger>
             <TooltipContent>{props.tooltip}</TooltipContent>
           </Tooltip>
