@@ -1,7 +1,7 @@
 {
   "name": "shared-eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 20654739,
+  "blockNumber": 20684679,
   "configHash": "0x17f138ea945007220ffaacd1b2e104c3259d7e89892b3022f207f889e5918663",
   "version": 14,
   "contracts": [
@@ -12,8 +12,8 @@
       "sinceTimestamp": 1602667372,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0x916c190000000000",
-        "get_deposit_root": "0xb7806311770ffc78ca3e3a2ff2ef98462a5d7ac7ba4b4472af069c2c67ee775f"
+        "get_deposit_count": "0x7e85190000000000",
+        "get_deposit_root": "0x8e121eddcec9f1d45a3154cffe091475b5d6a87c30f1a3e59b10ccc9454df959"
       },
       "derivedName": "DepositContract"
     },
@@ -129,7 +129,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "93352381570818807342598",
+        "totalShares": "91992939802720370444913",
         "underlyingToken": "0xf951E335afb289353dc249e82926178EaC7DEd78"
       },
       "fieldMeta": {
@@ -186,7 +186,8 @@
           "0xb3AcAF09a1B801E36655B786da4EAA6aE9F5DC37",
           "0x18343Aa10e3D2F3A861e5649627324aEAD987Adf",
           "0xCE06c5fe42d22fF827A519396583Fd9f5176E3D3",
-          "0xE7D0894Ac9266f5cbe8f8E750aC6cbe128FbbeB7"
+          "0xE7D0894Ac9266f5cbe8f8E750aC6cbe128FbbeB7",
+          "0x84AdF221Af49E67DB62C5B16d86aFcaD2eF0b262"
         ],
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
@@ -229,7 +230,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "1084277766909380314336",
+        "totalShares": "1084260350693765226233",
         "underlyingToken": "0xE95A203B1a91a908F9B9CE46459d101078c2c3cb"
       },
       "fieldMeta": {
@@ -279,7 +280,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "37834618207142162331306",
+        "totalShares": "37657770244576796993848",
         "underlyingToken": "0xae78736Cd615f374D3085123A210448E74Fc6393"
       },
       "fieldMeta": {
@@ -368,25 +369,6 @@
       "derivedName": "TimelockController"
     },
     {
-      "name": "EigenPod",
-      "address": "0x28144C53bA98B4e909Df5bC7cA33eAf0404cFfcc",
-      "sinceTimestamp": 1715809223,
-      "values": {
-        "$immutable": true,
-        "delayedWithdrawalRouter": "0x7Fe7E9CC0F274d2435AD5d56D5fa73E47F6A23D8",
-        "eigenPodManager": "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
-        "ethPOS": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
-        "GENESIS_TIME": 1606824023,
-        "hasRestaked": false,
-        "MAX_RESTAKED_BALANCE_GWEI_PER_VALIDATOR": 32000000000,
-        "mostRecentWithdrawalTimestamp": 0,
-        "nonBeaconChainETHBalanceWei": 0,
-        "podOwner": "0x0000000000000000000000000000000000000000",
-        "sumOfPartialWithdrawalsClaimedGwei": 0,
-        "withdrawableRestakedExecutionLayerGwei": 0
-      }
-    },
-    {
       "name": "METH-Strategy",
       "address": "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2",
       "template": "eigenlayer/Strategy",
@@ -417,7 +399,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "144421982375108900911590",
+        "totalShares": "144189695970452753614319",
         "underlyingToken": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa"
       },
       "fieldMeta": {
@@ -435,13 +417,6 @@
         }
       },
       "derivedName": "StrategyBaseTVLLimits"
-    },
-    {
-      "name": "EigenLayerBeaconOracle",
-      "address": "0x343907185b71aDF0eBa9567538314396aa985442",
-      "sinceTimestamp": 1710374507,
-      "values": { "$immutable": true, "GENESIS_BLOCK_TIMESTAMP": 1606824023 },
-      "derivedName": "EigenLayerBeaconOracle"
     },
     {
       "name": "EigenLayerExecutorMultisig",
@@ -462,7 +437,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 15,
+        "nonce": 16,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -607,7 +582,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "15408702067176202133268",
+        "totalShares": "15353774935104013149166",
         "underlyingToken": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
       },
       "fieldMeta": {
@@ -657,7 +632,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "18014122382504154594524",
+        "totalShares": "17977409117403115465418",
         "underlyingToken": "0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38"
       },
       "fieldMeta": {
@@ -682,7 +657,7 @@
       "sinceTimestamp": 1686348959,
       "values": {
         "$immutable": true,
-        "implementation": "0x28144C53bA98B4e909Df5bC7cA33eAf0404cFfcc",
+        "implementation": "0x6D225e974Fa404D25Ffb84eD6E242Ffa18eF6430",
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
       }
     },
@@ -764,6 +739,29 @@
           "severity": "LOW",
           "description": "Same as TVL limit"
         }
+      }
+    },
+    {
+      "name": "EigenPod",
+      "address": "0x6D225e974Fa404D25Ffb84eD6E242Ffa18eF6430",
+      "sinceTimestamp": 1724181107,
+      "values": {
+        "$immutable": true,
+        "activeValidatorCount": 0,
+        "currentCheckpoint": {
+          "beaconBlockRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "proofsRemaining": 0,
+          "podBalanceGwei": 0,
+          "balanceDeltasGwei": 0
+        },
+        "currentCheckpointTimestamp": 0,
+        "eigenPodManager": "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
+        "ethPOS": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
+        "GENESIS_TIME": 1606824023,
+        "lastCheckpointTimestamp": 0,
+        "podOwner": "0x0000000000000000000000000000000000000000",
+        "proofSubmitter": "0x0000000000000000000000000000000000000000",
+        "withdrawableRestakedExecutionLayerGwei": 0
       }
     },
     {
@@ -927,7 +925,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "39236728270825451053989",
+        "totalShares": "38697571168825551327894",
         "underlyingToken": "0xa2E3356610840701BDf5611a53974510Ae27E2e1"
       },
       "fieldMeta": {
@@ -945,30 +943,6 @@
         }
       },
       "derivedName": "StrategyBaseTVLLimits"
-    },
-    {
-      "name": "DelayedWithdrawalRouter",
-      "address": "0x7Fe7E9CC0F274d2435AD5d56D5fa73E47F6A23D8",
-      "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
-          "via": []
-        }
-      ],
-      "sinceTimestamp": 1686348959,
-      "values": {
-        "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
-        "$implementation": "0x4bB6731B02314d40aBbfFBC4540f508874014226",
-        "$upgradeCount": 3,
-        "eigenPodManager": "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
-        "MAX_WITHDRAWAL_DELAY_BLOCKS": 216000,
-        "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
-        "paused": 0,
-        "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
-        "withdrawalDelayBlocks": 50400
-      }
     },
     {
       "name": "bEIGEN token",
@@ -1114,10 +1088,6 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x7Fe7E9CC0F274d2435AD5d56D5fa73E47F6A23D8"
-        },
-        {
-          "permission": "upgrade",
           "target": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
         },
         {
@@ -1190,7 +1160,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "12416433301103907535849",
+        "totalShares": "12417403245560918006090",
         "underlyingToken": "0xac3E018457B222d93114458476f3E3416Abbe38F"
       },
       "fieldMeta": {
@@ -1251,15 +1221,13 @@
       "sinceTimestamp": 1686348947,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
-        "$implementation": "0xe4297e3DaDBc7D99e26a2954820f514CB50C5762",
-        "$upgradeCount": 3,
+        "$implementation": "0x731A0aD160e407393Ff662231Add6Dd145AD3FEa",
+        "$upgradeCount": 4,
         "beaconChainETHStrategy": "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0",
-        "beaconChainOracle": "0x343907185b71aDF0eBa9567538314396aa985442",
         "delegationManager": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
-        "denebForkTimestamp": 1710338135,
         "eigenPodBeacon": "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
-        "numPods": 31965,
+        "numPods": 31986,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
@@ -1299,7 +1267,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "861858899090974023250707",
+        "totalShares": "862526584122649875352183",
         "underlyingToken": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
       },
       "fieldMeta": {
@@ -1375,7 +1343,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "80486717657946189444983",
+        "totalShares": "80445572306157064501427",
         "underlyingToken": "0xA35b1B31Ce002FBF2058D22F30f95D405200A15b"
       },
       "fieldMeta": {
@@ -1451,7 +1419,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "10710279336524231509164",
+        "totalShares": "10196480156419902676415",
         "underlyingToken": "0x856c4Efb76C1D1AE02e20CEB03A2A6a08b0b8dC3"
       },
       "fieldMeta": {
@@ -1510,7 +1478,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "118641192263425747284929111",
+        "totalShares": "100825808207221363851788488",
         "underlyingToken": "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
       },
       "fieldMeta": {
@@ -1560,7 +1528,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "9879665847760562073851",
+        "totalShares": "9879654941812716554773",
         "underlyingToken": "0x8c1BEd5b9a0928467c9B1341Da1D7BD5e10b6549"
       },
       "fieldMeta": {
@@ -1619,7 +1587,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 32,
+        "nonce": 34,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1647,7 +1615,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 52,
+        "nonce": 54,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -2133,45 +2101,6 @@
       "function userUnderlyingView(address user) view returns (uint256)",
       "function withdraw(address recipient, address token, uint256 amountShares)"
     ],
-    "0x28144C53bA98B4e909Df5bC7cA33eAf0404cFfcc": [
-      "constructor(address _ethPOS, address _delayedWithdrawalRouter, address _eigenPodManager, uint64 _MAX_RESTAKED_BALANCE_GWEI_PER_VALIDATOR, uint64 _GENESIS_TIME)",
-      "event EigenPodStaked(bytes pubkey)",
-      "event FullWithdrawalRedeemed(uint40 validatorIndex, uint64 withdrawalTimestamp, address indexed recipient, uint64 withdrawalAmountGwei)",
-      "event Initialized(uint8 version)",
-      "event NonBeaconChainETHReceived(uint256 amountReceived)",
-      "event NonBeaconChainETHWithdrawn(address indexed recipient, uint256 amountWithdrawn)",
-      "event PartialWithdrawalRedeemed(uint40 validatorIndex, uint64 withdrawalTimestamp, address indexed recipient, uint64 partialWithdrawalAmountGwei)",
-      "event RestakedBeaconChainETHWithdrawn(address indexed recipient, uint256 amount)",
-      "event RestakingActivated(address indexed podOwner)",
-      "event ValidatorBalanceUpdated(uint40 validatorIndex, uint64 balanceTimestamp, uint64 newValidatorBalanceGwei)",
-      "event ValidatorRestaked(uint40 validatorIndex)",
-      "function GENESIS_TIME() view returns (uint64)",
-      "function MAX_RESTAKED_BALANCE_GWEI_PER_VALIDATOR() view returns (uint64)",
-      "function activateRestaking()",
-      "function delayedWithdrawalRouter() view returns (address)",
-      "function eigenPodManager() view returns (address)",
-      "function ethPOS() view returns (address)",
-      "function hasRestaked() view returns (bool)",
-      "function initialize(address _podOwner)",
-      "function mostRecentWithdrawalTimestamp() view returns (uint64)",
-      "function nonBeaconChainETHBalanceWei() view returns (uint256)",
-      "function podOwner() view returns (address)",
-      "function provenWithdrawal(bytes32, uint64) view returns (bool)",
-      "function recoverTokens(address[] tokenList, uint256[] amountsToWithdraw, address recipient)",
-      "function stake(bytes pubkey, bytes signature, bytes32 depositDataRoot) payable",
-      "function sumOfPartialWithdrawalsClaimedGwei() view returns (uint64)",
-      "function validatorPubkeyHashToInfo(bytes32 validatorPubkeyHash) view returns (tuple(uint64 validatorIndex, uint64 restakedBalanceGwei, uint64 mostRecentBalanceUpdateTimestamp, uint8 status))",
-      "function validatorPubkeyToInfo(bytes validatorPubkey) view returns (tuple(uint64 validatorIndex, uint64 restakedBalanceGwei, uint64 mostRecentBalanceUpdateTimestamp, uint8 status))",
-      "function validatorStatus(bytes validatorPubkey) view returns (uint8)",
-      "function validatorStatus(bytes32 pubkeyHash) view returns (uint8)",
-      "function verifyAndProcessWithdrawals(uint64 oracleTimestamp, tuple(bytes32 beaconStateRoot, bytes proof) stateRootProof, tuple(bytes withdrawalProof, bytes slotProof, bytes executionPayloadProof, bytes timestampProof, bytes historicalSummaryBlockRootProof, uint64 blockRootIndex, uint64 historicalSummaryIndex, uint64 withdrawalIndex, bytes32 blockRoot, bytes32 slotRoot, bytes32 timestampRoot, bytes32 executionPayloadRoot)[] withdrawalProofs, bytes[] validatorFieldsProofs, bytes32[][] validatorFields, bytes32[][] withdrawalFields)",
-      "function verifyBalanceUpdates(uint64 oracleTimestamp, uint40[] validatorIndices, tuple(bytes32 beaconStateRoot, bytes proof) stateRootProof, bytes[] validatorFieldsProofs, bytes32[][] validatorFields)",
-      "function verifyWithdrawalCredentials(uint64 oracleTimestamp, tuple(bytes32 beaconStateRoot, bytes proof) stateRootProof, uint40[] validatorIndices, bytes[] validatorFieldsProofs, bytes32[][] validatorFields)",
-      "function withdrawBeforeRestaking()",
-      "function withdrawNonBeaconChainETHBalanceWei(address recipient, uint256 amountToWithdraw)",
-      "function withdrawRestakedBeaconChainETH(address recipient, uint256 amountWei)",
-      "function withdrawableRestakedExecutionLayerGwei() view returns (uint64)"
-    ],
     "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2182,17 +2111,6 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "0x343907185b71aDF0eBa9567538314396aa985442": [
-      "constructor(uint256 _genesisBlockTimestamp)",
-      "error InvalidBlockTimestamp()",
-      "error NoBlockRootFound()",
-      "error TimestampOutOfRange()",
-      "event EigenLayerBeaconOracleUpdate(uint256 slot, uint256 timestamp, bytes32 blockRoot)",
-      "function GENESIS_BLOCK_TIMESTAMP() view returns (uint256)",
-      "function addTimestamp(uint256 _targetTimestamp)",
-      "function findBlockRoot(uint64 _slot) view returns (bytes32 blockRoot)",
-      "function timestampToBlockRoot(uint256) view returns (bytes32)"
     ],
     "0x369e6F597e22EaB55fFb173C6d9cD234BD699111": [
       "constructor(address _singleton)"
@@ -2250,41 +2168,6 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x4bB6731B02314d40aBbfFBC4540f508874014226": [
-      "constructor(address _eigenPodManager)",
-      "event DelayedWithdrawalCreated(address podOwner, address recipient, uint256 amount, uint256 index)",
-      "event DelayedWithdrawalsClaimed(address recipient, uint256 amountClaimed, uint256 delayedWithdrawalsCompleted)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address indexed account, uint256 newPausedStatus)",
-      "event PauserRegistrySet(address pauserRegistry, address newPauserRegistry)",
-      "event Unpaused(address indexed account, uint256 newPausedStatus)",
-      "event WithdrawalDelayBlocksSet(uint256 previousValue, uint256 newValue)",
-      "function MAX_WITHDRAWAL_DELAY_BLOCKS() view returns (uint256)",
-      "function canClaimDelayedWithdrawal(address user, uint256 index) view returns (bool)",
-      "function claimDelayedWithdrawals(uint256 maxNumberOfDelayedWithdrawalsToClaim)",
-      "function claimDelayedWithdrawals(address recipient, uint256 maxNumberOfDelayedWithdrawalsToClaim)",
-      "function createDelayedWithdrawal(address podOwner, address recipient) payable",
-      "function eigenPodManager() view returns (address)",
-      "function getClaimableUserDelayedWithdrawals(address user) view returns (tuple(uint224 amount, uint32 blockCreated)[])",
-      "function getUserDelayedWithdrawals(address user) view returns (tuple(uint224 amount, uint32 blockCreated)[])",
-      "function initialize(address initOwner, address _pauserRegistry, uint256 initPausedStatus, uint256 _withdrawalDelayBlocks)",
-      "function owner() view returns (address)",
-      "function pause(uint256 newPausedStatus)",
-      "function pauseAll()",
-      "function paused(uint8 index) view returns (bool)",
-      "function paused() view returns (uint256)",
-      "function pauserRegistry() view returns (address)",
-      "function renounceOwnership()",
-      "function setPauserRegistry(address newPauserRegistry)",
-      "function setWithdrawalDelayBlocks(uint256 newValue)",
-      "function transferOwnership(address newOwner)",
-      "function unpause(uint256 newPausedStatus)",
-      "function userDelayedWithdrawalByIndex(address user, uint256 index) view returns (tuple(uint224 amount, uint32 blockCreated))",
-      "function userWithdrawals(address user) view returns (tuple(uint256 delayedWithdrawalsCompleted, tuple(uint224 amount, uint32 blockCreated)[] delayedWithdrawals))",
-      "function userWithdrawalsLength(address user) view returns (uint256)",
-      "function withdrawalDelayBlocks() view returns (uint256)"
-    ],
     "0x5050389572f2d220ad927CcbeA0D406831012390": [
       "constructor(address _singleton)"
     ],
@@ -2330,6 +2213,45 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x6D225e974Fa404D25Ffb84eD6E242Ffa18eF6430": [
+      "constructor(address _ethPOS, address _eigenPodManager, uint64 _GENESIS_TIME)",
+      "event CheckpointCreated(uint64 indexed checkpointTimestamp, bytes32 indexed beaconBlockRoot, uint256 validatorCount)",
+      "event CheckpointFinalized(uint64 indexed checkpointTimestamp, int256 totalShareDeltaWei)",
+      "event EigenPodStaked(bytes pubkey)",
+      "event Initialized(uint8 version)",
+      "event NonBeaconChainETHReceived(uint256 amountReceived)",
+      "event ProofSubmitterUpdated(address prevProofSubmitter, address newProofSubmitter)",
+      "event RestakedBeaconChainETHWithdrawn(address indexed recipient, uint256 amount)",
+      "event ValidatorBalanceUpdated(uint40 validatorIndex, uint64 balanceTimestamp, uint64 newValidatorBalanceGwei)",
+      "event ValidatorCheckpointed(uint64 indexed checkpointTimestamp, uint40 indexed validatorIndex)",
+      "event ValidatorRestaked(uint40 validatorIndex)",
+      "event ValidatorWithdrawn(uint64 indexed checkpointTimestamp, uint40 indexed validatorIndex)",
+      "function GENESIS_TIME() view returns (uint64)",
+      "function activeValidatorCount() view returns (uint256)",
+      "function checkpointBalanceExitedGwei(uint64) view returns (uint64)",
+      "function currentCheckpoint() view returns (tuple(bytes32 beaconBlockRoot, uint24 proofsRemaining, uint64 podBalanceGwei, int128 balanceDeltasGwei))",
+      "function currentCheckpointTimestamp() view returns (uint64)",
+      "function eigenPodManager() view returns (address)",
+      "function ethPOS() view returns (address)",
+      "function getParentBlockRoot(uint64 timestamp) view returns (bytes32)",
+      "function initialize(address _podOwner)",
+      "function lastCheckpointTimestamp() view returns (uint64)",
+      "function podOwner() view returns (address)",
+      "function proofSubmitter() view returns (address)",
+      "function recoverTokens(address[] tokenList, uint256[] amountsToWithdraw, address recipient)",
+      "function setProofSubmitter(address newProofSubmitter)",
+      "function stake(bytes pubkey, bytes signature, bytes32 depositDataRoot) payable",
+      "function startCheckpoint(bool revertIfNoBalance)",
+      "function validatorPubkeyHashToInfo(bytes32 validatorPubkeyHash) view returns (tuple(uint64 validatorIndex, uint64 restakedBalanceGwei, uint64 lastCheckpointedAt, uint8 status))",
+      "function validatorPubkeyToInfo(bytes validatorPubkey) view returns (tuple(uint64 validatorIndex, uint64 restakedBalanceGwei, uint64 lastCheckpointedAt, uint8 status))",
+      "function validatorStatus(bytes validatorPubkey) view returns (uint8)",
+      "function validatorStatus(bytes32 pubkeyHash) view returns (uint8)",
+      "function verifyCheckpointProofs(tuple(bytes32 balanceContainerRoot, bytes proof) balanceContainerProof, tuple(bytes32 pubkeyHash, bytes32 balanceRoot, bytes proof)[] proofs)",
+      "function verifyStaleBalance(uint64 beaconTimestamp, tuple(bytes32 beaconStateRoot, bytes proof) stateRootProof, tuple(bytes32[] validatorFields, bytes proof) proof)",
+      "function verifyWithdrawalCredentials(uint64 beaconTimestamp, tuple(bytes32 beaconStateRoot, bytes proof) stateRootProof, uint40[] validatorIndices, bytes[] validatorFieldsProofs, bytes32[][] validatorFields)",
+      "function withdrawRestakedBeaconChainETH(address recipient, uint256 amountWei)",
+      "function withdrawableRestakedExecutionLayerGwei() view returns (uint64)"
     ],
     "0x70f44C13944d49a236E3cD7a94f48f5daB6C619b": [
       "constructor(address _delegation, address _eigenPodManager, address _slasher)",
@@ -2380,6 +2302,47 @@
       "function unpause(uint256 newPausedStatus)",
       "function withdrawSharesAsTokens(address recipient, address strategy, uint256 shares, address token)",
       "function withdrawalRootPending(bytes32) view returns (bool)"
+    ],
+    "0x731A0aD160e407393Ff662231Add6Dd145AD3FEa": [
+      "constructor(address _ethPOS, address _eigenPodBeacon, address _strategyManager, address _slasher, address _delegationManager)",
+      "event BeaconChainETHDeposited(address indexed podOwner, uint256 amount)",
+      "event BeaconChainETHWithdrawalCompleted(address indexed podOwner, uint256 shares, uint96 nonce, address delegatedAddress, address withdrawer, bytes32 withdrawalRoot)",
+      "event Initialized(uint8 version)",
+      "event NewTotalShares(address indexed podOwner, int256 newTotalShares)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address indexed account, uint256 newPausedStatus)",
+      "event PauserRegistrySet(address pauserRegistry, address newPauserRegistry)",
+      "event PodDeployed(address indexed eigenPod, address indexed podOwner)",
+      "event PodSharesUpdated(address indexed podOwner, int256 sharesDelta)",
+      "event Unpaused(address indexed account, uint256 newPausedStatus)",
+      "function addShares(address podOwner, uint256 shares) returns (uint256)",
+      "function beaconChainETHStrategy() view returns (address)",
+      "function createPod() returns (address)",
+      "function delegationManager() view returns (address)",
+      "function eigenPodBeacon() view returns (address)",
+      "function ethPOS() view returns (address)",
+      "function getPod(address podOwner) view returns (address)",
+      "function hasPod(address podOwner) view returns (bool)",
+      "function initialize(address initialOwner, address _pauserRegistry, uint256 _initPausedStatus)",
+      "function numPods() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function ownerToPod(address) view returns (address)",
+      "function pause(uint256 newPausedStatus)",
+      "function pauseAll()",
+      "function paused(uint8 index) view returns (bool)",
+      "function paused() view returns (uint256)",
+      "function pauserRegistry() view returns (address)",
+      "function podOwnerShares(address) view returns (int256)",
+      "function recordBeaconChainETHBalanceUpdate(address podOwner, int256 sharesDelta)",
+      "function removeShares(address podOwner, uint256 shares)",
+      "function renounceOwnership()",
+      "function setPauserRegistry(address newPauserRegistry)",
+      "function slasher() view returns (address)",
+      "function stake(bytes pubkey, bytes signature, bytes32 depositDataRoot) payable",
+      "function strategyManager() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function unpause(uint256 newPausedStatus)",
+      "function withdrawSharesAsTokens(address podOwner, address destination, uint256 shares)"
     ],
     "0x7CA911E83dabf90C90dD3De5411a10F1A6112184": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -2447,17 +2410,6 @@
       "function transferRestrictionsDisabledAfter() view returns (uint256)",
       "function unwrap(uint256 amount)",
       "function wrap(uint256 amount)"
-    ],
-    "0x7Fe7E9CC0F274d2435AD5d56D5fa73E47F6A23D8": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -2813,53 +2765,6 @@
       "function userUnderlying(address user) returns (uint256)",
       "function userUnderlyingView(address user) view returns (uint256)",
       "function withdraw(address depositor, address token, uint256 amountShares)"
-    ],
-    "0xe4297e3DaDBc7D99e26a2954820f514CB50C5762": [
-      "constructor(address _ethPOS, address _eigenPodBeacon, address _strategyManager, address _slasher, address _delegationManager)",
-      "event BeaconChainETHDeposited(address indexed podOwner, uint256 amount)",
-      "event BeaconChainETHWithdrawalCompleted(address indexed podOwner, uint256 shares, uint96 nonce, address delegatedAddress, address withdrawer, bytes32 withdrawalRoot)",
-      "event BeaconOracleUpdated(address indexed newOracleAddress)",
-      "event DenebForkTimestampUpdated(uint64 newValue)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address indexed account, uint256 newPausedStatus)",
-      "event PauserRegistrySet(address pauserRegistry, address newPauserRegistry)",
-      "event PodDeployed(address indexed eigenPod, address indexed podOwner)",
-      "event PodSharesUpdated(address indexed podOwner, int256 sharesDelta)",
-      "event Unpaused(address indexed account, uint256 newPausedStatus)",
-      "function addShares(address podOwner, uint256 shares) returns (uint256)",
-      "function beaconChainETHStrategy() view returns (address)",
-      "function beaconChainOracle() view returns (address)",
-      "function createPod() returns (address)",
-      "function delegationManager() view returns (address)",
-      "function denebForkTimestamp() view returns (uint64)",
-      "function eigenPodBeacon() view returns (address)",
-      "function ethPOS() view returns (address)",
-      "function getBlockRootAtTimestamp(uint64 timestamp) view returns (bytes32)",
-      "function getPod(address podOwner) view returns (address)",
-      "function hasPod(address podOwner) view returns (bool)",
-      "function initialize(address _beaconChainOracle, address initialOwner, address _pauserRegistry, uint256 _initPausedStatus)",
-      "function numPods() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function ownerToPod(address) view returns (address)",
-      "function pause(uint256 newPausedStatus)",
-      "function pauseAll()",
-      "function paused(uint8 index) view returns (bool)",
-      "function paused() view returns (uint256)",
-      "function pauserRegistry() view returns (address)",
-      "function podOwnerShares(address) view returns (int256)",
-      "function recordBeaconChainETHBalanceUpdate(address podOwner, int256 sharesDelta)",
-      "function removeShares(address podOwner, uint256 shares)",
-      "function renounceOwnership()",
-      "function setDenebForkTimestamp(uint64 newDenebForkTimestamp)",
-      "function setPauserRegistry(address newPauserRegistry)",
-      "function slasher() view returns (address)",
-      "function stake(bytes pubkey, bytes signature, bytes32 depositDataRoot) payable",
-      "function strategyManager() view returns (address)",
-      "function transferOwnership(address newOwner)",
-      "function unpause(uint256 newPausedStatus)",
-      "function updateBeaconChainOracle(address newBeaconChainOracle)",
-      "function withdrawSharesAsTokens(address podOwner, address destination, uint256 shares)"
     ],
     "0xe9FA8F904d97854C7389b68923262ADCC6C27827": [
       "constructor(address _strategyManager)",

@@ -1,3 +1,114 @@
+Generated with discovered.json: 0x96d9225426fb4769ff266a8a682cdfc281511bbf
+
+# Diff at Thu, 05 Sep 2024 13:28:08 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@a07fad74bc34c07e89da01ab49be710834a4dcba block: 20654739
+- current block number: 20684679
+
+## Description
+
+
+EigenPod: new NewTotalShares event.
+UpgradeableBeacon: big update regarding checkpoints - to do: understand it
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract EigenPod (0x28144C53bA98B4e909Df5bC7cA33eAf0404cFfcc)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EigenLayerBeaconOracle (0x343907185b71aDF0eBa9567538314396aa985442)
+    +++ description: None
+```
+
+```diff
+    contract UpgradeableBeacon (0x5a2a4F2F3C18f09179B6703e63D9eDD165909073) {
+    +++ description: None
+      values.implementation:
+-        "0x28144C53bA98B4e909Df5bC7cA33eAf0404cFfcc"
++        "0x6D225e974Fa404D25Ffb84eD6E242Ffa18eF6430"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedWithdrawalRouter (0x7Fe7E9CC0F274d2435AD5d56D5fa73E47F6A23D8)
+    +++ description: None
+```
+
+```diff
+    contract ProxyAdmin (0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444) {
+    +++ description: None
+      receivedPermissions.19:
+-        {"permission":"upgrade","target":"0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd"}
+      receivedPermissions.18.target:
+-        "0xAe60d8180437b5C34bB956822ac2710972584473"
++        "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd"
+      receivedPermissions.17.target:
+-        "0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7"
++        "0xAe60d8180437b5C34bB956822ac2710972584473"
+      receivedPermissions.16.target:
+-        "0xa4C637e0F704745D182e4D38cAb7E7485321d059"
++        "0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7"
+      receivedPermissions.15.target:
+-        "0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d"
++        "0xa4C637e0F704745D182e4D38cAb7E7485321d059"
+      receivedPermissions.14.target:
+-        "0x93c4b944D05dfe6df7645A86cd2206016c51564D"
++        "0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d"
+      receivedPermissions.13.target:
+-        "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
++        "0x93c4b944D05dfe6df7645A86cd2206016c51564D"
+      receivedPermissions.12.target:
+-        "0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6"
++        "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
+      receivedPermissions.11.target:
+-        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
++        "0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6"
+      receivedPermissions.10.target:
+-        "0x7Fe7E9CC0F274d2435AD5d56D5fa73E47F6A23D8"
++        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
+    }
+```
+
+```diff
+    contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
+    +++ description: None
+      values.$implementation:
+-        "0xe4297e3DaDBc7D99e26a2954820f514CB50C5762"
++        "0x731A0aD160e407393Ff662231Add6Dd145AD3FEa"
+      values.$upgradeCount:
+-        3
++        4
+      values.beaconChainOracle:
+-        "0x343907185b71aDF0eBa9567538314396aa985442"
+      values.denebForkTimestamp:
+-        1710338135
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EigenPod (0x6D225e974Fa404D25Ffb84eD6E242Ffa18eF6430)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../DelayedWithdrawalRouter.sol => /dev/null       |  881 ------
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  630 -----
+ .../EigenLayerBeaconOracle.sol => /dev/null        |   91 -
+ .../{.flat@20654739 => .flat}/EigenPod.sol         | 2967 ++++++++++----------
+ .../EigenPodManager/EigenPodManager.sol            |  205 +-
+ 5 files changed, 1543 insertions(+), 3231 deletions(-)
+```
+
 Generated with discovered.json: 0x2cf3c4a3823dcf5c01eb517548d66744b8620598
 
 # Diff at Sun, 01 Sep 2024 09:11:26 GMT:
