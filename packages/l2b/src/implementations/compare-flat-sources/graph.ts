@@ -1,12 +1,13 @@
 import { execSync } from 'child_process'
 import { writeFileSync } from 'fs'
-import graphviz from 'graphviz-wasm'
+import graphvizObject from 'graphviz-wasm'
 
 export async function generateAndOpenGraph(
   clusters: string[][],
 ): Promise<void> {
+  const graphviz = await loadGraphvizModule()
+
   const dot = getSpringGraph(clusters)
-  await graphviz.loadWASM()
   const result = graphviz.layout(dot, 'svg', 'neato')
   const outputPath = '/tmp/l2b_graph.html'
   writeFileSync(outputPath, createSvgHtml(result))
@@ -132,4 +133,12 @@ function hslToRgb(h: number, s: number, l: number): [number, number, number] {
   g = Math.round((g + m) * 255)
   b = Math.round((b + m) * 255)
   return [r, g, b]
+}
+
+type Graphviz = typeof graphvizObject
+async function loadGraphvizModule(): Promise<Graphviz> {
+  const graphviz = (await eval("import('graphviz-wasm')"))
+    .default as unknown as Graphviz
+  await graphviz.loadWASM()
+  return graphviz
 }

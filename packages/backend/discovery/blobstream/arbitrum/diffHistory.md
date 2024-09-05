@@ -1,3 +1,60 @@
+Generated with discovered.json: 0x27d781503a7821fdb523c9be91443e9eca1c3527
+
+# Diff at Thu, 05 Sep 2024 09:17:59 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@6ec5206203571575116cf743c30b8a7c71ceafbb block: 248266616
+- current block number: 250294365
+
+## Description
+
+New verifier version. Gateway route to old verifier route is frozen, and new route is added with identifier 0xc865c1b6.
+
+## Watched changes
+
+```diff
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: None
++++ description: The verifier contract address for Blobstream SP1, and whether it is frozen (true if frozen).
+      values.blobstreamVerifier.0:
+-        "0x0000000000000000000000000000000000000000"
++        "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc"
++++ description: The verifier contract address for Blobstream SP1, and whether it is frozen (true if frozen). This verifier route was frozen on 2024-09-04.
+      values.blobstreamVerifierOld.1:
+-        false
++        true
+    }
+```
+
+```diff
++   Status: CREATED
+    contract  (0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc)
+    +++ description: None
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 248266616 (main branch discovery), not current.
+
+```diff
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: None
++++ description: The verifier contract address for Blobstream SP1, and whether it is frozen (true if frozen).
+      values.blobstreamVerifier.0:
+-        "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB"
++        "0x0000000000000000000000000000000000000000"
++++ description: The verifier contract address for Blobstream SP1, and whether it is frozen (true if frozen). This verifier route was frozen on 2024-09-04.
+      values.blobstreamVerifierOld:
++        ["0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",false]
+      template:
++        "blobstream/SP1SuccinctGateway"
+      fieldMeta:
++        {"blobstreamVerifierOld":{"description":"The verifier contract address for Blobstream SP1, and whether it is frozen (true if frozen). This verifier route was frozen on 2024-09-04."},"blobstreamVerifier":{"description":"The verifier contract address for Blobstream SP1, and whether it is frozen (true if frozen)."}}
+    }
+```
+
 Generated with discovered.json: 0x5b2c360f19f29887785ca845f03f2e00ce253980
 
 # Diff at Fri, 30 Aug 2024 11:34:11 GMT:
