@@ -43,7 +43,15 @@ export function initChainModule(
   for (const chainConfig of config.chains) {
     const chain = chainConfig.chain
     if (!chainConfig.config) {
-      logger.tag(chain).info(`Chain module disabled`)
+      continue
+    }
+
+    const chainAmountEntries = config.amounts.filter(
+      (a): a is ChainAmountConfig =>
+        a.chain === chain && (a.type === 'escrow' || a.type === 'totalSupply'),
+    )
+
+    if (chainAmountEntries.length === 0) {
       continue
     }
 
@@ -55,79 +63,60 @@ export function initChainModule(
       config,
     )
 
-    const chainAmountEntries = config.amounts
-      .filter((a) => a.chain === chain)
-      .filter(
-        (a): a is ChainAmountConfig =>
-          a.type === 'escrow' || a.type === 'totalSupply',
-      )
-
-    const chainMinTimestamp = chainConfig.config.minBlockTimestamp
-    const chainAmountConfigurations = chainAmountEntries.map((a) => ({
-      id: createAmountId(a),
-      properties: a,
-      minHeight: a.sinceTimestamp.lt(chainMinTimestamp)
-        ? chainMinTimestamp.toNumber()
-        : a.sinceTimestamp.toNumber(),
-      maxHeight: a.untilTimestamp?.toNumber() ?? null,
-    }))
-
     const blockTimestampIndexer = blockTimestampIndexers.get(chain)
     assert(
       blockTimestampIndexer,
       'blockTimestampIndexer should be defined for enabled chain',
     )
 
-    if (chainAmountConfigurations.length > 0) {
-      const chainAmountIndexer = new ChainAmountIndexer({
-        logger,
-        parents: [blockTimestampIndexer],
-        indexerService,
-        configurations: chainAmountConfigurations,
-        chain,
-        amountService,
-        serializeConfiguration,
-        syncOptimizer,
+    const configurations = toConfigurations(chainConfig, chainAmountEntries)
+
+    const chainAmountIndexer = new ChainAmountIndexer({
+      logger,
+      parents: [blockTimestampIndexer],
+      indexerService,
+      configurations,
+      chain,
+      amountService,
+      serializeConfiguration,
+      syncOptimizer,
+      db: peripherals.database,
+    })
+
+    dataIndexers.push(chainAmountIndexer)
+
+    const perProject = groupBy(chainAmountEntries, 'project')
+
+    for (const [project, amountConfigs] of Object.entries(perProject)) {
+      const priceConfigs = new Set(
+        amountConfigs.map((c) =>
+          configMapping.getPriceConfigFromAmountConfig(c),
+        ),
+      )
+
+      const minHeight = Math.min(
+        ...amountConfigs.map((c) => c.sinceTimestamp.toNumber()),
+      )
+      const maxHeight = Math.max(
+        ...amountConfigs.map((c) => c.untilTimestamp?.toNumber() ?? Infinity),
+      )
+
+      const indexer = new ValueIndexer({
+        valueService,
         db: peripherals.database,
+        priceConfigs: [...priceConfigs],
+        amountConfigs,
+        project: ProjectId(project),
+        dataSource: chain,
+        syncOptimizer,
+        parents: [descendantPriceIndexer, chainAmountIndexer],
+        indexerService,
+        logger,
+        minHeight,
+        maxHeight,
+        maxTimestampsToProcessAtOnce: config.maxTimestampsToAggregateAtOnce,
       })
-
-      dataIndexers.push(chainAmountIndexer)
-
-      const perProject = groupBy(chainAmountEntries, 'project')
-
-      const parents = [descendantPriceIndexer, chainAmountIndexer]
-      for (const [project, amountConfigs] of Object.entries(perProject)) {
-        const priceConfigs = new Set(
-          amountConfigs.map((c) =>
-            configMapping.getPriceConfigFromAmountConfig(c),
-          ),
-        )
-
-        const minHeight = Math.min(
-          ...amountConfigs.map((c) => c.sinceTimestamp.toNumber()),
-        )
-        const maxHeight = Math.max(
-          ...amountConfigs.map((c) => c.untilTimestamp?.toNumber() ?? Infinity),
-        )
-
-        const indexer = new ValueIndexer({
-          valueService,
-          db: peripherals.database,
-          priceConfigs: [...priceConfigs],
-          amountConfigs,
-          project: ProjectId(project),
-          dataSource: chain,
-          syncOptimizer,
-          parents,
-          indexerService,
-          logger,
-          minHeight,
-          maxHeight,
-          maxTimestampsToProcessAtOnce: config.maxTimestampsToAggregateAtOnce,
-        })
-
-        valueIndexers.push(indexer)
-      }
+      valueIndexers.push(indexer)
     }
   }
 
@@ -142,6 +131,23 @@ export function initChainModule(
       }
     },
   }
+}
+
+function toConfigurations(
+  chainConfig: ChainTvlConfig,
+  chainAmountEntries: ChainAmountConfig[],
+) {
+  assert(chainConfig.config)
+  const chainMinTimestamp = chainConfig.config.minBlockTimestamp
+  const chainAmountConfigurations = chainAmountEntries.map((a) => ({
+    id: createAmountId(a),
+    properties: a,
+    minHeight: a.sinceTimestamp.lt(chainMinTimestamp)
+      ? chainMinTimestamp.toNumber()
+      : a.sinceTimestamp.toNumber(),
+    maxHeight: a.untilTimestamp?.toNumber() ?? null,
+  }))
+  return chainAmountConfigurations
 }
 
 function createPeripherals(
