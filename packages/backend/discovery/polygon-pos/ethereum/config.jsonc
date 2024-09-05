@@ -132,6 +132,7 @@
       "ignoreDiscovery": true
     },
     "StakeManager": {
+      "ignoreRelatives": ["token", "tokenMatic", "migration"],
       "ignoreMethods": [
         "getValidatorContract",
         "delegatedAmount",

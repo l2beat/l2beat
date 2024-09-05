@@ -1,3 +1,86 @@
+Generated with discovered.json: 0x36d11ab8fecd6310ef4f10d8f2c16c1a7f21d194
+
+# Diff at Thu, 05 Sep 2024 14:24:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d01da0bcdde8e77051659c9718e449a44f5f957a block: 20669997
+- current block number: 20684961
+
+## Description
+
+[PIP-42](https://github.com/maticnetwork/Polygon-Improvement-Proposals/blob/63c54e7cf534bed44e034fe32a05ff0fafe75a47/PIPs/PIP-42.md) is executed onchain. This upgrade adds POL as a staking token in a backwards-compatible way.
+
+### ValidatorShare.sol
+- POL compatibility via new functions like `buyVoucherPOL()` and `sellVoucher_newPOL()`
+- permit compatibility (POL supports permit)
+
+### StakeManager.sol
+- POL compatibility via new functions with -POL suffix
+- contract can convert POL to MATIC and vice versa within a call via the new migration contract
+- `slash()` now just always reverts
+
+## Watched changes
+
+```diff
+    contract Registry (0x33a02E6cC863D393d6Bf231B697b82F6e499cA71) {
+    +++ description: None
+      values.getValidatorShareAddress:
+-        "0xf98864DA30a5bd657B13e70A57f5718aBf7BAB31"
++        "0x053FA9b934b83E1E0ffc7e98a41aAdc3640bB462"
+    }
+```
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.$implementation:
+-        "0xbA9Ac3C9983a3e967f0f387c75cCbD38Ad484963"
++        "0x97a3500083348A147F419b8a65717909762c389f"
+      values.implementation:
+-        "0xbA9Ac3C9983a3e967f0f387c75cCbD38Ad484963"
++        "0x97a3500083348A147F419b8a65717909762c389f"
+      values.token:
+-        "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0"
++        "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6"
+      values.migration:
++        "0x29e7DF7b6A1B2b07b731457f499E1696c60E2C4e"
+      values.tokenMatic:
++        "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorShareImpl (0xf98864DA30a5bd657B13e70A57f5718aBf7BAB31)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorShare (0x053FA9b934b83E1E0ffc7e98a41aAdc3640bB462)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../StakeManager/StakeManager.sol                  | 586 ++++++++++++---------
+ .../ValidatorShare.sol}                            | 197 +++++--
+ 2 files changed, 477 insertions(+), 306 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20669997 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract MaticToken (0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x6ecd5c52754a9bec3cceb909e212d746d9013042
 
 # Diff at Tue, 03 Sep 2024 12:18:09 GMT:
