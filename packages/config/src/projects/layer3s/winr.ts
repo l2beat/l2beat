@@ -1,25 +1,36 @@
-import { ProjectId } from '@l2beat/shared-pure'
-import { upcomingL3 } from '../layer2s/templates/upcoming'
-import { Layer3 } from './types'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { underReviewL3 } from '../layer2s/templates/underReview'
+import { Layer3 } from '../layer3s'
 
-export const winr: Layer3 = upcomingL3({
-  id: 'winr',
+export const winr: Layer3 = underReviewL3({
   hostChain: ProjectId('arbitrum'),
+  id: ProjectId('winr'),
   display: {
+    category: 'Optimium',
+    provider: 'Arbitrum',
     name: 'WINR',
     slug: 'winr',
     description:
-      'WINR is an upcoming Layer 3 on Arbitrum, built on the Orbit stack. It is focused on building a decentralized iGaming infrastructure.',
+      'WINR is a Layer 3 on Arbitrum, based on the Orbit stack. It is focused on building a decentralized iGaming infrastructure.',
     purposes: ['Gaming'],
-    category: 'Optimium',
-    provider: 'Arbitrum',
     links: {
       websites: ['https://winr.games/'],
       apps: [],
-      documentation: [],
-      explorers: [],
+      documentation: [''],
+      explorers: ['https://explorer.winr.games/'],
       repositories: [],
       socialMedia: ['https://x.com/WINRProtocol'],
     },
+    activityDataSource: 'Blockchain RPC',
   },
+  rpcUrl: 'https://rpc.winr.games ',
+  associatedTokens: ['WINR'],
+  escrows: [
+    {
+      chain: 'arbitrum',
+      address: EthereumAddress('0xf3f01622ac969156760c32190995f9dc5b3eb7fa'), // ERC20Bridge
+      sinceTimestamp: new UnixTime(1715803200),
+      tokens: '*',
+    },
+  ],
 })
