@@ -377,6 +377,7 @@ export const taiko: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
+  upgradesAndGovernance
   permissions: [
     ...discovery.getMultisigPermission(
       'TaikoAdmin',

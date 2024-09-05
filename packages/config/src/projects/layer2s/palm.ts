@@ -21,3 +21,33 @@ export const palm: Layer2 = upcomingL2({
     },
   },
 })
+
+
+import { Badge } from '../badges'
+import { underReviewL2 } from './templates/underReview'
+import { Layer2 } from './types'
+
+export const palm: Layer2 = underReviewL2({
+  id: 'palm',
+  badges: [Badge.Infra.AggLayer],
+  display: {
+    name: 'Palm Network',
+    slug: 'palm',
+    description:
+      'Palm Network is a Validium built on the Polygon CDK Stack, aiming to become the social network of the future.',
+    purposes: ['Universal'],
+    category: 'Validium',
+    provider: 'Polygon',
+    links: {
+      websites: ['https://silicon.network/'],
+      apps: ['https://bridge.silicon.network/'],
+      documentation: ['https://docs.silicon.network/'],
+      explorers: ['https://scope.silicon.network'],
+      repositories: [],
+      socialMedia: ['https://x.com/0xSilicon'],
+    },
+    activityDataSource: 'Blockchain RPC',
+  },
+  rpcUrl: 'https://rpc.silicon.network',
+  //shared polygon bridge
+})
