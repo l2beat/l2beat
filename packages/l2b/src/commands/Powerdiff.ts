@@ -1,4 +1,8 @@
+import { readdirSync } from 'fs'
+import path from 'path'
+import { assert } from '@l2beat/shared-pure'
 import { Type, command, option, positional, string, subcommands } from 'cmd-ts'
+import { readConfig } from '../config/readConfig'
 import {
   DIFFING_MODES,
   DISPLAY_MODES,
@@ -7,10 +11,6 @@ import {
   powerdiff,
 } from '../implementations/powerdiff'
 import { Directory } from './types'
-import { readConfig } from '../config/readConfig'
-import { assert } from '@l2beat/shared-pure'
-import path from 'path'
-import { readdirSync } from 'fs'
 
 export const DiffingModeType: Type<string, DiffingMode> = {
   async from(str): Promise<DiffingMode> {
