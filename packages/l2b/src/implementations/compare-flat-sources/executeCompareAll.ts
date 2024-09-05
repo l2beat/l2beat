@@ -1,10 +1,12 @@
 import { computeStackSimilarity } from './common'
+import { generateAndOpenGraph } from './graph'
 import { colorMap } from './output'
 
 export interface CompareAllCommand {
   discoveryPath: string
   minProjectSimilarity: number
   minClusterSimilarity: number
+  showGraph: boolean
 }
 
 export async function executeCompareAll(
@@ -48,6 +50,10 @@ export async function executeCompareAll(
   console.log('projects', Object.keys(matrix).length)
   console.log('clusters', clusters.length)
   console.log('unique', unique.length)
+
+  if (command.showGraph) {
+    await generateAndOpenGraph(clusters)
+  }
 }
 
 function computeClusters(
