@@ -1,7 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import chalk from 'chalk'
-
-import { assert } from '@l2beat/shared-pure'
 import {
   boolean,
   command,
@@ -12,7 +10,7 @@ import {
   positional,
   string,
 } from 'cmd-ts'
-import { getChainConfigs } from '../config/config.discovery'
+import { getChainConfig, getChainConfigs } from '../config/config.discovery'
 import { DiscoveryChainConfig, DiscoveryModuleConfig } from '../config/types'
 import { ConfigReader } from '../discovery/config/ConfigReader'
 import { dryRunDiscovery, runDiscovery } from '../discovery/runDiscovery'
@@ -96,10 +94,9 @@ export const DiscoverCommand = command({
       defaultValueIsSerializable: true,
     }),
   },
-  handler: async (args) => {
+  handler: (args) => {
     const chainConfigs = getChainConfigs()
-    const chain = chainConfigs.find((c) => c.name === args.chain)
-    assert(chain !== undefined)
+    const chain = getChainConfig(args.chain)
 
     const config: DiscoveryModuleConfig = {
       ...args,
