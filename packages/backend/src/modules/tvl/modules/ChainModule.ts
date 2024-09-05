@@ -29,13 +29,13 @@ interface ChainModule {
 
 export function initChainModule(
   config: TvlConfig,
-  peripherals: Peripherals,
   logger: Logger,
-  blockTimestampIndexers: Map<string, BlockTimestampIndexer>,
+  peripherals: Peripherals,
   syncOptimizer: SyncOptimizer,
   indexerService: IndexerService,
-  descendantPriceIndexer: DescendantIndexer,
   configMapping: ConfigMapping,
+  descendantPriceIndexer: DescendantIndexer,
+  blockTimestampIndexers: Map<string, BlockTimestampIndexer>,
 ): ChainModule {
   const dataIndexers: ChainAmountIndexer[] = []
   const valueIndexers: ValueIndexer[] = []

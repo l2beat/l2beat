@@ -21,9 +21,9 @@ export function initPriceModule(
   config: TvlConfig,
   logger: Logger,
   peripherals: Peripherals,
-  hourlyIndexer: HourlyIndexer,
   syncOptimizer: SyncOptimizer,
   indexerService: IndexerService,
+  hourlyIndexer: HourlyIndexer,
 ): PriceModule {
   const coingeckoClient = peripherals.getClient(CoingeckoClient, {
     apiKey: config.coingeckoApiKey,

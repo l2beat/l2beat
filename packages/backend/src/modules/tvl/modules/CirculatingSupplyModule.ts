@@ -23,11 +23,11 @@ export function initCirculatingSupplyModule(
   config: TvlConfig,
   logger: Logger,
   peripherals: Peripherals,
-  hourlyIndexer: HourlyIndexer,
   syncOptimizer: SyncOptimizer,
   indexerService: IndexerService,
-  descendantPriceIndexer: DescendantIndexer,
   configMapping: ConfigMapping,
+  hourlyIndexer: HourlyIndexer,
+  descendantPriceIndexer: DescendantIndexer,
 ): CirculatingSupplyModule {
   const coingeckoClient = peripherals.getClient(CoingeckoClient, {
     apiKey: config.coingeckoApiKey,

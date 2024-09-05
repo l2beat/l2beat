@@ -18,9 +18,9 @@ export function initBlockTimestampModule(
   config: TvlConfig,
   logger: Logger,
   peripherals: Peripherals,
-  hourlyIndexer: HourlyIndexer,
   syncOptimizer: SyncOptimizer,
   indexerService: IndexerService,
+  hourlyIndexer: HourlyIndexer,
 ): BlockTimestampModule {
   const blockTimestampIndexers = new Map<string, BlockTimestampIndexer>()
 

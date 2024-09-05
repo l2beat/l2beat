@@ -65,51 +65,51 @@ export function initTvlModule(
     config.tvl,
     logger,
     peripherals,
-    hourlyIndexer,
     syncOptimizer,
     indexerService,
+    hourlyIndexer,
   )
 
   const blockTimestampModule = initBlockTimestampModule(
     config.tvl,
     logger,
     peripherals,
-    hourlyIndexer,
     syncOptimizer,
     indexerService,
+    hourlyIndexer,
   )
 
   const chainModule = initChainModule(
     config.tvl,
-    peripherals,
     logger,
-    blockTimestampModule.blockTimestampIndexers,
+    peripherals,
     syncOptimizer,
     indexerService,
-    priceModule.descendant,
     configMapping,
+    priceModule.descendant,
+    blockTimestampModule.blockTimestampIndexers,
   )
 
   const premintedModule = initPremintedModule(
     config.tvl,
-    peripherals,
     logger,
-    blockTimestampModule.blockTimestampIndexers,
+    peripherals,
     syncOptimizer,
     indexerService,
-    priceModule.descendant,
     configMapping,
+    priceModule.descendant,
+    blockTimestampModule.blockTimestampIndexers,
   )
 
   const circulatingSupplyModule = initCirculatingSupplyModule(
     config.tvl,
     logger,
     peripherals,
-    hourlyIndexer,
     syncOptimizer,
     indexerService,
-    priceModule.descendant,
     configMapping,
+    hourlyIndexer,
+    priceModule.descendant,
   )
 
   const dataStatusService = new DataStatusService(peripherals.database)
