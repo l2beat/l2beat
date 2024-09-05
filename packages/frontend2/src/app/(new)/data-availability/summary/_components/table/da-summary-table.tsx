@@ -18,7 +18,7 @@ import { useBreakpoint } from '~/hooks/use-is-mobile'
 import { useTable } from '~/hooks/use-table'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { cn } from '~/utils/cn'
-import { formatNumber } from '~/utils/format-number'
+import { formatCurrency } from '~/utils/format'
 import { DaTableLastSubRowCell } from '../../../_components/da-table-last-sub-row-cell'
 import { DaTableSubRowCell } from '../../../_components/da-table-sub-row-cell'
 import { mapRisksToRosetteValues } from '../../../_utils/map-risks-to-rosette-values'
@@ -121,7 +121,9 @@ export function DaSummaryTable({ items }: Props) {
                     </DaTableSubRowCell>
                     <DaTableSubRowCell href={href} lastRow={lastRow}>
                       {subRow.usedIn.length > 0
-                        ? `$${formatNumber(subRow.tvs, 2)}`
+                        ? formatCurrency(subRow.tvs, 'usd', {
+                            showLessThanMinimum: false,
+                          })
                         : EM_DASH}
                     </DaTableSubRowCell>
                     <DaTableSubRowCell href={href} lastRow={lastRow}>
