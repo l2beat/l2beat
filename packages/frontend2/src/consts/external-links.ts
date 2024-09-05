@@ -8,4 +8,5 @@ export const externalLinks = {
   forum: 'https://gov.l2beat.com/',
   multisigReport:
     'https://drive.google.com/file/d/182ycEW8C2wk5tGd3X1tG8oQfUy9WmSJk/view',
+  tokenRequest: 'https://forms.gle/fQFsC5g1LgG5z12T7',
 } as const

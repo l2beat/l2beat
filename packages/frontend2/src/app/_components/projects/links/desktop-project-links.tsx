@@ -49,6 +49,7 @@ function ProjectLinkItem({ projectLink }: { projectLink: ProjectLink }) {
         >
           <ProjectLinkIcon name={projectLink.name} />
           {projectLink.name}
+          <OutlinkIcon className="size-4 fill-current" />
         </NavigationMenuLink>
       </NavigationMenuItem>
     )

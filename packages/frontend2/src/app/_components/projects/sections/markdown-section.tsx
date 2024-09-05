@@ -12,11 +12,13 @@ export interface MarkdownSectionProps extends ProjectSectionProps {
     slug: string
   }
   content: string
+  mdClassName?: string
 }
 
 export function MarkdownSection({
   diagram,
   content,
+  mdClassName,
   ...projectSectionProps
 }: MarkdownSectionProps) {
   const diagramParams = diagram
@@ -38,7 +40,7 @@ export function MarkdownSection({
           </figcaption>
         </figure>
       ) : null}
-      <Markdown>{content}</Markdown>
+      <Markdown className={mdClassName}>{content}</Markdown>
     </ProjectSection>
   )
 }

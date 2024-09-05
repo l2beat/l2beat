@@ -1,8 +1,8 @@
 import { posix } from 'path'
+import { formatSI, getThroughput, timed } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { FileContent } from '../../flatten/ParsedFilesManager'
 import { flattenStartingFrom } from '../../flatten/flatten'
-import { formatSI, getThroughput, timed } from '../../utils/timing'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { Analysis } from '../analysis/AddressAnalyzer'
 

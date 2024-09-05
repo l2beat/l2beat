@@ -28,7 +28,7 @@ export const columns = [
       if (value === 'multiple') {
         return (
           <button
-            className="flex flex-row items-center gap-4 italic text-[#9EA0A4]"
+            className="flex flex-row items-center gap-4 italic text-gray-500 dark:text-gray-400"
             onClick={() => ctx.row.toggleExpanded()}
           >
             Multiple bridges

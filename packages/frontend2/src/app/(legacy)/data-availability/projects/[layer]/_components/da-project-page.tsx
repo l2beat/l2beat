@@ -5,6 +5,7 @@ import {
 import { HighlightableLinkContextProvider } from '~/app/_components/link/highlightable/highlightable-link-context'
 import { DesktopProjectNavigation } from '~/app/_components/projects/navigation/desktop-project-navigation'
 import { MobileProjectNavigation } from '~/app/_components/projects/navigation/mobile-project-navigation'
+import { projectDetailsToNavigationSections } from '~/app/_components/projects/navigation/types'
 import { ProjectDetails } from '~/app/_components/projects/project-details'
 import { getDaProjectEntry } from '~/server/features/data-availability/project/get-da-project-entry'
 import { DaProjectSummary } from '../_components/da-project-summary'
@@ -18,15 +19,16 @@ interface Props {
 export async function DaProjectPage({ header, daLayer, daBridge }: Props) {
   const daProjectEntry = await getDaProjectEntry(daLayer, daBridge)
 
-  const isNavigationEmpty =
-    daProjectEntry.projectDetails.filter((s) => !s.excludeFromNavigation)
-      .length === 0
+  const navigationSections = projectDetailsToNavigationSections(
+    daProjectEntry.projectDetails,
+  )
+  const isNavigationEmpty = navigationSections.length === 0
 
   return (
     <>
       {!isNavigationEmpty && (
-        <div className="sticky top-0 z-100 -mx-4 md:hidden">
-          <MobileProjectNavigation sections={daProjectEntry.projectDetails} />
+        <div className="sticky top-0 z-100 md:hidden">
+          <MobileProjectNavigation sections={navigationSections} />
         </div>
       )}
       {header}
@@ -42,7 +44,7 @@ export async function DaProjectPage({ header, daLayer, daBridge }: Props) {
                 slug: daLayer.display.slug,
                 showProjectUnderReview: daProjectEntry.isUnderReview,
               }}
-              sections={daProjectEntry.projectDetails}
+              sections={navigationSections}
             />
           </div>
           <div className="w-full">

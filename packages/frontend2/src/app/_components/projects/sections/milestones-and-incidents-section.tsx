@@ -1,7 +1,7 @@
 'use client'
 
 import { type Milestone } from '@l2beat/config'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import ChevronDownIcon from '~/icons/chevron.svg'
 import { IncidentIcon } from '~/icons/incident'
 import { MilestoneIcon } from '~/icons/milestone'
@@ -76,15 +76,13 @@ function MilestonesBase(props: {
             <div key={i} className="relative pb-7">
               <div
                 className={cn(
-                  'absolute left-[-1.445rem] top-3 h-full w-[1.7px] dark:w-px',
-                  'bg-gradient-to-b',
+                  'absolute left-[-1.445rem] top-3 h-full w-[1.7px] bg-gradient-to-b dark:w-px',
                   milestone.type === 'general' && [
                     'from-green-400 dark:from-green-500',
                     milestone.next?.type === 'general' &&
                       'to-green-400 dark:to-green-500',
                     milestone.next?.type === 'incident' &&
                       'to-red-700 dark:to-red-700',
-                    isLast && props.isOpen === false && 'to-transparent',
                   ],
                   milestone.type === 'incident' && [
                     'from-red-700 dark:from-red-700',
@@ -92,10 +90,22 @@ function MilestonesBase(props: {
                       'to-red-700 dark:to-red-700',
                     milestone.next?.type === 'general' &&
                       'to-green-400 dark:to-green-500',
-                    isLast && props.isOpen === false && 'to-transparent',
                   ],
                 )}
               />
+              {/* 
+                You can not transition gradient in css so we can transition opacity
+                To make it work we need to have overlap last line with and then transition opacity to 0 when open
+              */}
+              {isLast && (
+                <div
+                  className={cn(
+                    'absolute left-[-1.445rem] top-3 h-full w-[1.7px] transition-opacity duration-300 dark:w-px',
+                    'bg-gradient-to-b from-transparent to-gray-100 dark:to-zinc-900',
+                    props.isOpen === true && 'opacity-0',
+                  )}
+                />
+              )}
               <Icon className="absolute -left-8" />
               <p className="text-lg font-bold leading-none">{milestone.name}</p>
               <p className="text-sm dark:text-gray-400">

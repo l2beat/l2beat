@@ -16,6 +16,7 @@ import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-
 import { type TvlProjectFilter } from '~/server/features/scaling/tvl/utils/project-filter-utils'
 import { api } from '~/trpc/react'
 import { formatCurrency } from '~/utils/format'
+import { type ChartScale, type ChartUnit } from '../../types'
 import { TvlChartHeader } from '../tvl-chart-header'
 import { TvlChartTimeRangeControls } from '../tvl-chart-time-range-controls'
 import { StackedTvlChartHover } from './stacked-tvl-chart-hover'
@@ -33,11 +34,11 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
   const includeFilter = useScalingFilter()
   const [timeRange, setTimeRange] = useCookieState('scalingTvlChartRange')
 
-  const [unit, setUnit] = useLocalStorage<'usd' | 'eth'>(
-    'scaling-tvl-unit',
-    'usd',
+  const [unit, setUnit] = useLocalStorage<ChartUnit>('scaling-tvl-unit', 'usd')
+  const [scale, setScale] = useLocalStorage<ChartScale>(
+    'scaling-tvl-scale',
+    'lin',
   )
-  const [scale, setScale] = useLocalStorage('scaling-tvl-scale', 'lin')
 
   const filter = useMemo<TvlProjectFilter>(() => {
     if (filters.isEmpty) {
@@ -70,7 +71,7 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
       useLogScale={scale === 'log'}
       isLoading={isLoading}
       renderHoverContents={(data) => (
-        <StackedTvlChartHover {...data} currency={unit} />
+        <StackedTvlChartHover {...data} unit={unit} />
       )}
     >
       <section className="flex flex-col gap-4">

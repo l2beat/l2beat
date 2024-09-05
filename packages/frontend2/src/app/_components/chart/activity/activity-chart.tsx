@@ -15,6 +15,7 @@ import { Checkbox } from '../../checkbox'
 import { RadioGroup, RadioGroupItem } from '../../radio-group'
 import { Chart } from '../core/chart'
 import { ChartProvider } from '../core/chart-provider'
+import { type ChartScale } from '../types'
 import { ActivityChartHeader } from './activity-chart-header'
 import { ActivityChartHover } from './activity-chart-hover'
 import { useActivityChartRenderParams } from './use-activity-chart-render-params'
@@ -28,7 +29,10 @@ export function ActivityChart({ milestones, entries }: Props) {
   const { timeRange, setTimeRange } = useActivityTimeRangeContext()
   const filters = useScalingFilterValues()
   const includeFilter = useScalingFilter()
-  const [scale, setScale] = useLocalStorage('scaling-tvl-scale', 'lin')
+  const [scale, setScale] = useLocalStorage<ChartScale>(
+    'scaling-tvl-scale',
+    'lin',
+  )
   const [showMainnet, setShowMainnet] = useLocalStorage(
     'scaling-activity-show-mainnet',
     true,
@@ -98,7 +102,10 @@ export function ActivityChart({ milestones, entries }: Props) {
               <span className="md:hidden">ETH Txs</span>
             </div>
           </Checkbox>
-          <RadioGroup value={scale} onValueChange={setScale}>
+          <RadioGroup
+            value={scale}
+            onValueChange={(value) => setScale(value as ChartScale)}
+          >
             <RadioGroupItem value="log">LOG</RadioGroupItem>
             <RadioGroupItem value="lin">LIN</RadioGroupItem>
           </RadioGroup>
