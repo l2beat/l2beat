@@ -35,7 +35,7 @@ export function initChainModule(
   indexerService: IndexerService,
   configMapping: ConfigMapping,
   descendantPriceIndexer: DescendantIndexer,
-  blockTimestampIndexers: Map<string, BlockTimestampIndexer>,
+  blockTimestampIndexers?: Map<string, BlockTimestampIndexer>,
 ): ChainModule | undefined {
   const dataIndexers: ChainAmountIndexer[] = []
   const valueIndexers: ValueIndexer[] = []
@@ -63,7 +63,8 @@ export function initChainModule(
       config,
     )
 
-    const blockTimestampIndexer = blockTimestampIndexers.get(chain)
+    const blockTimestampIndexer =
+      blockTimestampIndexers && blockTimestampIndexers.get(chain)
     assert(
       blockTimestampIndexer,
       'blockTimestampIndexer should be defined for enabled chain',

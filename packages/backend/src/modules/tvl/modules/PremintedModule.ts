@@ -28,7 +28,7 @@ export function initPremintedModule(
   indexerService: IndexerService,
   configMapping: ConfigMapping,
   descendantPriceIndexer: DescendantIndexer,
-  blockTimestampIndexers: Map<string, BlockTimestampIndexer>,
+  blockTimestampIndexers?: Map<string, BlockTimestampIndexer>,
 ): PremintedModule {
   const dataIndexers: PremintedIndexer[] = []
   const valueIndexers: ValueIndexer[] = []
@@ -43,7 +43,8 @@ export function initPremintedModule(
     const { amountService, valueService, circulatingSupplyService } =
       createPeripherals(peripherals, chainConfig, logger, chain, config)
 
-    const blockTimestampIndexer = blockTimestampIndexers.get(chain)
+    const blockTimestampIndexer =
+      blockTimestampIndexers && blockTimestampIndexers.get(chain)
     assert(
       blockTimestampIndexer,
       'blockTimestampIndexer should be defined for enabled chain',

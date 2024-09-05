@@ -21,7 +21,7 @@ export function initBlockTimestampModule(
   syncOptimizer: SyncOptimizer,
   indexerService: IndexerService,
   hourlyIndexer: HourlyIndexer,
-): BlockTimestampModule {
+): BlockTimestampModule | undefined {
   const blockTimestampIndexers = new Map<string, BlockTimestampIndexer>()
 
   for (const chainConfig of config.chains) {
@@ -74,6 +74,8 @@ export function initBlockTimestampModule(
 
     blockTimestampIndexers.set(chainConfig.chain, indexer)
   }
+
+  if (blockTimestampIndexers.size === 0) return undefined
 
   return {
     start: async () => {
