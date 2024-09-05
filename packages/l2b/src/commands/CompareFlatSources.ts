@@ -78,12 +78,19 @@ const CompareAllFlatSources = command({
       defaultValue: () => 0.4,
       defaultValueIsSerializable: true,
     }),
+    showGraph: flag({
+      long: 'graph',
+      short: 'g',
+      defaultValue: () => false,
+      defaultValueIsSerializable: true,
+    }),
   },
   handler: async (args) => {
     await executeCompareAll({
       discoveryPath: args.discoveryPath,
       minClusterSimilarity: args.minClusterSimilarity,
       minProjectSimilarity: args.minProjectSimilarity,
+      showGraph: args.showGraph,
     })
   },
 })
