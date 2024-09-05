@@ -47,6 +47,7 @@
     },
     "StakeManager": {
       "proxyType": "Polygon Extension proxy",
+      "ignoreRelatives": ["token", "tokenMatic", "migration"],
       "ignoreMethods": [
         "delegatedAmount",
         "isValidator",

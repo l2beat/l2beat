@@ -1,3 +1,94 @@
+Generated with discovered.json: 0x8783defe959cdc2671e220e62add94017f633dd5
+
+# Diff at Thu, 05 Sep 2024 15:14:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d01da0bcdde8e77051659c9718e449a44f5f957a block: 20669996
+- current block number: 20685211
+
+## Description
+
+See polygon-pos diffHistory for Registry and StakeManager updates (POL migration).
+
+### DepositManager.sol
+- automatically converts withdrawn MATIC to POL
+- converts deposited MATIC to POL and bridges POL as MATIC (???)
+
+## Watched changes
+
+```diff
+    contract Registry (0x33a02E6cC863D393d6Bf231B697b82F6e499cA71) {
+    +++ description: None
+      values.getValidatorShareAddress:
+-        "0xf98864DA30a5bd657B13e70A57f5718aBf7BAB31"
++        "0x053FA9b934b83E1E0ffc7e98a41aAdc3640bB462"
+    }
+```
+
+```diff
+    contract DepositManager (0x401F6c983eA34274ec46f84D70b31C151321188b) {
+    +++ description: None
+      values.$implementation:
+-        "0xDdaC6D3A2a787b1F4bf26AB6FAF519ae3F1a94cf"
++        "0xb00aa68b87256E2F22058fB2Ba3246EEc54A44fc"
+      values.implementation:
+-        "0xDdaC6D3A2a787b1F4bf26AB6FAF519ae3F1a94cf"
++        "0xb00aa68b87256E2F22058fB2Ba3246EEc54A44fc"
+    }
+```
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.$implementation.0:
+-        "0xbA9Ac3C9983a3e967f0f387c75cCbD38Ad484963"
++        "0x97a3500083348A147F419b8a65717909762c389f"
+      values.implementation:
+-        "0xbA9Ac3C9983a3e967f0f387c75cCbD38Ad484963"
++        "0x97a3500083348A147F419b8a65717909762c389f"
+      values.token:
+-        "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0"
++        "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6"
+      values.migration:
++        "0x29e7DF7b6A1B2b07b731457f499E1696c60E2C4e"
+      values.tokenMatic:
++        "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorShare (0xf98864DA30a5bd657B13e70A57f5718aBf7BAB31)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorShare (0x053FA9b934b83E1E0ffc7e98a41aAdc3640bB462)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../DepositManager/DepositManager.sol              |  80 ++-
+ .../StakeManager/StakeManager.1.sol                | 586 ++++++++++++---------
+ .../{.flat@20669996 => .flat}/ValidatorShare.sol   | 197 +++++--
+ 3 files changed, 528 insertions(+), 335 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20669996 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract MaticToken (0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x911c92bd9ea977184c2674131587c2a9dcf4b431
 
 # Diff at Tue, 03 Sep 2024 12:17:42 GMT:
