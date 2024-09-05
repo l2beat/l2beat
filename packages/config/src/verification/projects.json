@@ -42,7 +42,7 @@
   "canvasconnect": true,
   "capx": true,
   "cbridge": true,
-  "celestia-blobstream-arbitrum": true,
+  "celestia-blobstream-arbitrum": false,
   "celestia-blobstream-base": true,
   "celestia-blobstream-ethereum": true,
   "celestia-no-bridge": true,

@@ -31,18 +31,7 @@
       }
     },
     "SuccinctGatewaySP1": {
-      "fields": {
-        "blobstreamVerifier": {
-          "handler": {
-            "type": "call",
-            "method": "function routes(bytes4) view returns (address verifier, bool frozen)",
-            "args": [
-              // first 4 bytes of the blobstream proof are used as identifier
-              "0xc430ff7f"
-            ]
-          }
-        }
-      }
+      "extends": "blobstream/SP1SuccinctGateway"
     },
     // deprecated, SP1 now used
     "SuccinctGateway": {
