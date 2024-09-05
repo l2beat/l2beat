@@ -16,7 +16,7 @@ export const winr: Layer3 = underReviewL3({
     links: {
       websites: ['https://winr.games/'],
       apps: [],
-      documentation: [''],
+      documentation: ['https://docs.winr.games/'],
       explorers: ['https://explorer.winr.games/'],
       repositories: [],
       socialMedia: ['https://x.com/WINRProtocol'],
