@@ -1,4 +1,4 @@
-import { UnixTime, pluralize } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import round from 'lodash/round'
 import { type ReactNode } from 'react'
 import { ProjectsUsedIn } from '~/app/(new)/data-availability/summary/_components/table/projects-used-in'
@@ -19,11 +19,21 @@ interface Props {
 }
 
 export function DaProjectStats({ project }: Props) {
-  const durationStorage = project.header.durationStorage
-    ? round(project.header.durationStorage / UnixTime.DAY, 2)
-    : undefined
+  const durationStorage =
+    project.kind === 'DAC'
+      ? {
+          value: 'Flexible',
+          tooltip:
+            'The duration depends on the offchain configuration of the DAC.',
+        }
+      : {
+          value: project.header.durationStorage
+            ? round(project.header.durationStorage / UnixTime.DAY, 2)
+            : EM_DASH,
+        }
+
   return (
-    <div className="grid grid-cols-1 gap-3 rounded-lg bg-gray-100 dark:bg-zinc-900 md:grid-cols-3 md:px-6 md:py-5">
+    <div className="grid grid-cols-1 gap-3 rounded-lg bg-gray-100 md:grid-cols-3 md:px-6 md:py-5 dark:bg-zinc-900">
       <ProjectStat title="Type" value={project.type} />
       <ProjectStat
         title="Total value secured"
@@ -50,14 +60,7 @@ export function DaProjectStats({ project }: Props) {
         }
       />
       <HorizontalSeparator className="col-span-full my-5 max-md:hidden" />
-      <ProjectStat
-        title="Duration of storage"
-        value={
-          durationStorage
-            ? pluralize(durationStorage, `${durationStorage} day`)
-            : 'Not synced'
-        }
-      />
+      <ProjectStat title="Duration of storage" {...durationStorage} />
       <ProjectStat
         className="md:col-span-2"
         title="Used in"
@@ -91,14 +94,14 @@ function ProjectStat(props: ProjectStat) {
         props.className,
       )}
     >
-      <div className="flex flex-row gap-1.5">
+      <div className="flex flex-row items-center gap-1.5">
         <span className="text-xs text-gray-500 dark:text-gray-600">
           {props.title}
         </span>
         {props.tooltip && (
           <Tooltip>
-            <TooltipTrigger className="-translate-y-px md:translate-y-0">
-              <InfoIcon className="mt-0.5 fill-gray-500 dark:fill-gray-600 md:size-3.5" />
+            <TooltipTrigger>
+              <InfoIcon className="fill-gray-500 md:size-3.5 dark:fill-gray-600" />
             </TooltipTrigger>
             <TooltipContent>{props.tooltip}</TooltipContent>
           </Tooltip>

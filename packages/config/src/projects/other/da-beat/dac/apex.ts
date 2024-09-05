@@ -1,34 +1,79 @@
-import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
-import { DaLayer } from '../types/DaLayer'
-import { apexDac } from './bridges/apex'
+import { ChainId } from '@l2beat/shared-pure'
+import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
+import { getCommittee } from '../../../../discovery/starkware'
+import { apex } from '../../../layer2s/apex'
+import { DAC } from '../templates/dac-template'
+import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
-export const apexLayer: DaLayer = {
-  id: 'apex-dac-layer',
-  type: 'DaLayer',
-  kind: 'DAC',
-  display: {
-    name: 'Data Availability Committee (DAC)',
-    slug: 'apex',
-    description:
-      'Set of parties responsible for signing and attesting to the availability of data.',
-    links: {
-      websites: [],
-      documentation: [],
-      repositories: [],
-      apps: [],
-      explorers: [],
-      socialMedia: [],
+const discovery = new ProjectDiscovery('apex')
+
+const usdcCommittee = getCommittee(
+  discovery,
+  'CommitteeUSDC',
+  'Data Availability Committee for USDC StarkEx',
+)
+const usdtCommittee = getCommittee(
+  discovery,
+  'CommitteeUSDT',
+  'Data Availability Committee for USDT StarkEx',
+)
+
+const usdcDacConfig =
+  usdcCommittee.minAssumedHonestMembers / usdcCommittee.accounts.length
+const usdtDacConfig =
+  usdtCommittee.minAssumedHonestMembers / usdtCommittee.accounts.length
+
+const dacConfig =
+  usdcDacConfig < usdtDacConfig
+    ? {
+        requiredSignatures: usdcCommittee.minSigners,
+        membersCount: usdcCommittee.accounts.length,
+      }
+    : {
+        requiredSignatures: usdtCommittee.minSigners,
+        membersCount: usdtCommittee.accounts.length,
+      }
+
+export const apexDac = DAC({
+  project: apex,
+  bridge: {
+    chain: ChainId.ETHEREUM,
+    requiredMembers: dacConfig.requiredSignatures,
+    totalMembers: dacConfig.membersCount,
+    transactionDataType: DacTransactionDataType.StateDiffs,
+    members: {
+      type: 'unknown',
     },
+    contracts: {
+      addresses: [
+        discovery.getContractDetails(
+          'CommitteeUSDC',
+          'Data Availability Committee (DAC) contract for USDC StarkEx instance, verifying data availability claim from DAC Members (via multisig check).',
+        ),
+        discovery.getContractDetails(
+          'CommitteeUSDT',
+          'Data Availability Committee (DAC) contract for USDT StarkEx instance, verifying data availability claim from DAC Members (via multisig check).',
+        ),
+      ],
+      risks: [],
+    },
+    permissions: [
+      {
+        name: 'USDC Committee Members',
+        description: `List of addresses authorized to sign data commitments for the DA bridge.`,
+        accounts: usdcCommittee.accounts.map((operator) => ({
+          address: operator.address,
+          type: 'EOA',
+        })),
+      },
+      {
+        name: 'USDT Committee Members',
+        description: `List of addresses authorized to sign data commitments for the DA bridge.`,
+        accounts: usdtCommittee.accounts.map((operator) => ({
+          address: operator.address,
+          type: 'EOA',
+        })),
+      },
+    ],
   },
-  technology: `## Simple Committee
-  The Data Availability Committee (DAC) is a set of trusted parties responsible for storing data off-chain and serving it upon demand. 
-  The security guarantees of DACs depend on the specific setup and can vary significantly based on the criteria for selecting committee members, 
-  their operational transparency, and the mechanisms in place to handle disputes and failures.
-  `,
-  bridges: [apexDac],
-  usedIn: [...apexDac.usedIn],
-  risks: {
-    economicSecurity: DaEconomicSecurityRisk.Unknown,
-    fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
-  },
-}
+})

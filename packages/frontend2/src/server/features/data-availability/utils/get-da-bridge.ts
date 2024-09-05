@@ -8,7 +8,7 @@ export type DaSummaryEntryBridge = {
 export function toDaBridge(daBridge: DaBridge): DaSummaryEntryBridge {
   if (daBridge.type === 'DAC') {
     return {
-      name: `${daBridge.display.name} ${daBridge.requiredMembers}/${daBridge.totalMembers}`,
+      name: `${daBridge.requiredMembers}/${daBridge.totalMembers} members`,
       slug: daBridge.display.slug,
     }
   }
