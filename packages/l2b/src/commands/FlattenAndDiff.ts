@@ -5,11 +5,11 @@ import {
   ExplorerConfig,
   getExplorerClient,
 } from '@l2beat/discovery/dist/utils/IEtherscanClient'
+import { assert } from '@l2beat/shared-pure'
 import { command, oneOf, option, optional, positional, string } from 'cmd-ts'
 import { powerdiff } from '../implementations/powerdiff'
 import { DiffingModeType, DisplayModeType } from './Powerdiff'
 import { EthereumAddressValue, HttpUrl } from './types'
-import { assert } from '@l2beat/shared-pure'
 
 export const FlattenAndDiff = command({
   name: 'flatten-and-diff',
