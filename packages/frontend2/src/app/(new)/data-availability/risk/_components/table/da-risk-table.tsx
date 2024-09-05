@@ -8,17 +8,18 @@ import {
   getSortedRowModel,
 } from '@tanstack/react-table'
 import Link from 'next/link'
+import { useMemo } from 'react'
 import { BasicTable } from '~/app/_components/table/basic-table'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import { RiskCell } from '~/app/_components/table/cells/risk-cell'
-import { FilterWrapper } from '~/app/_components/table/filters/filter-wrapper'
-import { TableFacetedFilter } from '~/app/_components/table/filters/table-faceted-filter'
 import { useBreakpoint } from '~/hooks/use-is-mobile'
 import { useTable } from '~/hooks/use-table'
 import { type DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
 import { cn } from '~/utils/cn'
 import { DaTableLastSubRowCell } from '../../../_components/da-table-last-sub-row-cell'
 import { DaTableSubRowCell } from '../../../_components/da-table-sub-row-cell'
+import { useDaFilter } from '../../../_components/filters/da-filter-context'
+import { DaFilters } from '../../../_components/filters/da-filters'
 import { columns } from './columns'
 
 interface Props {
@@ -26,9 +27,16 @@ interface Props {
 }
 
 export function DaRiskTable({ items }: Props) {
+  const filter = useDaFilter()
+
+  const filteredEntries = useMemo(() => {
+    return items.filter(filter)
+  }, [items, filter])
+
   const breakpoint = useBreakpoint()
+
   const table = useTable({
-    data: items,
+    data: filteredEntries,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -52,12 +60,7 @@ export function DaRiskTable({ items }: Props) {
 
   return (
     <>
-      <FilterWrapper>
-        <TableFacetedFilter
-          title="Layer type"
-          column={table.getColumn('layerType')}
-        />
-      </FilterWrapper>
+      <DaFilters items={filteredEntries} />
       <BasicTable
         table={table}
         rowColoringMode="ethereum-only"
