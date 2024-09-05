@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x8783defe959cdc2671e220e62add94017f633dd5
+Generated with discovered.json: 0xaf96d957890613ca1a94de8c7bde32f4d977411e
 
-# Diff at Thu, 05 Sep 2024 15:14:26 GMT:
+# Diff at Thu, 05 Sep 2024 15:27:39 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@d01da0bcdde8e77051659c9718e449a44f5f957a block: 20669996
-- current block number: 20685211
+- current block number: 20685277
 
 ## Description
 
@@ -87,6 +87,14 @@ discovery. Values are for block 20669996 (main branch discovery), not current.
 -   Status: DELETED
     contract MaticToken (0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0)
     +++ description: None
+```
+
+```diff
+    contract ValidatorShare (0xf98864DA30a5bd657B13e70A57f5718aBf7BAB31) {
+    +++ description: None
+      errors:
++        {"getRewardPerShare":"Execution reverted"}
+    }
 ```
 
 Generated with discovered.json: 0x911c92bd9ea977184c2674131587c2a9dcf4b431

@@ -1,8 +1,8 @@
 {
   "name": "polygon-plasma",
   "chain": "ethereum",
-  "blockNumber": 20685211,
-  "configHash": "0x7169201ab2666bc5b20896ec56043084956323a365ecdd9cf82e3ddff74ad4f0",
+  "blockNumber": 20685277,
+  "configHash": "0x6d92dbb7d7adf7e84a52022a515634cb9126f49456b0fe6739a10d1d7c691832",
   "version": 14,
   "contracts": [
     {
@@ -41,7 +41,7 @@
         "withdrawPool": 0,
         "withdrawShares": 0
       },
-      "errors": { "getRewardPerShare": "Execution reverted" }
+      "derivedName": "ValidatorShare"
     },
     {
       "name": "StateSender",
@@ -50,7 +50,7 @@
       "sinceTimestamp": 1590850580,
       "values": {
         "$immutable": true,
-        "counter": 2957085,
+        "counter": 2957088,
         "isOwner": false,
         "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "REGISTRATIONS": [
