@@ -52,6 +52,7 @@ function getSpringGraph(clusters: string[][]): string {
     '  node [width=.75, height=.75, fontsize=9, fixedsize=true]\n'
 
   const projectColors: Record<string, string[]> = {}
+
   clusters.forEach((cluster, i) => {
     const clusterName = `Cluster ${i}`
     const clusterColor = generateHexColorFromString(i * (360 / clusters.length))
@@ -62,6 +63,7 @@ function getSpringGraph(clusters: string[][]): string {
       projectColors[entry].push(clusterColor)
     }
   })
+
   for (const entry in projectColors) {
     const colors = projectColors[entry]
     const [chain, projectName] = entry.split(':')
@@ -70,7 +72,6 @@ function getSpringGraph(clusters: string[][]): string {
     )}", shape=circle, style=filled];\n`
   }
 
-  // Process the clusters and projects
   clusters.forEach((cluster, i) => {
     const clusterName = `Cluster ${i}`
     for (const entry of cluster) {
@@ -78,9 +79,7 @@ function getSpringGraph(clusters: string[][]): string {
     }
   })
 
-  // Close the graph
   dotFileContent += '}\n'
-
   return dotFileContent
 }
 
