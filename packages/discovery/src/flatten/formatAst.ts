@@ -28,6 +28,8 @@ const __REPLACE_ME__ = (node: AST.ASTNode, out: OutputStream) => {
   }
 }
 
+function DoesNotExistSkip() {}
+
 const FORMATTERS: {
   [K in AST.ASTNode['type']]: Formatter<K>
 } = {
@@ -62,7 +64,7 @@ const FORMATTERS: {
   EnumValue,
   EventDefinition,
   ExpressionStatement,
-  FileLevelConstant: __REPLACE_ME__,
+  FileLevelConstant,
   ForStatement,
   FunctionCall,
   FunctionDefinition,
@@ -72,11 +74,11 @@ const FORMATTERS: {
   Identifier,
   IfStatement,
   ImportDirective,
-  IndexAccess: __REPLACE_ME__,
-  IndexRangeAccess: __REPLACE_ME__,
+  IndexAccess,
+  IndexRangeAccess,
   InheritanceSpecifier,
   InlineAssemblyStatement: __REPLACE_ME__,
-  LabelDefinition: __REPLACE_ME__,
+  LabelDefinition: DoesNotExistSkip,
   Mapping: __REPLACE_ME__,
   MemberAccess,
   ModifierDefinition: __REPLACE_ME__,
@@ -92,12 +94,12 @@ const FORMATTERS: {
   StateVariableDeclaration,
   StringLiteral,
   StructDefinition,
-  ThrowStatement: __REPLACE_ME__,
+  ThrowStatement: DoesNotExistSkip,
   TryStatement,
   TupleExpression,
   TypeDefinition,
   UnaryOperation,
-  UncheckedStatement: __REPLACE_ME__,
+  UncheckedStatement,
   UserDefinedTypeName,
   UsingForDeclaration,
   VariableDeclaration,
@@ -300,6 +302,17 @@ function ExpressionStatement(
   }
 }
 
+function FileLevelConstant(node: AST.FileLevelConstant, out: OutputStream) {
+  out.beginLine()
+  formatAstNode(node.typeName, out)
+  out.token('constant')
+  out.token(node.name)
+  out.token('=')
+  formatAstNode(node.initialValue, out)
+  out.token(';')
+  out.endLine()
+}
+
 function ForStatement(node: AST.ForStatement, out: OutputStream) {
   out.beginLine()
   out.token('for')
@@ -450,6 +463,30 @@ function ImportDirective(node: AST.ImportDirective, out: OutputStream) {
 
   out.token(';')
   out.endLine()
+}
+
+function IndexAccess(node: AST.IndexAccess, out: OutputStream) {
+  formatAstNode(node.base, out)
+  out.noSpace()
+  out.token('[')
+  formatAstNode(node.index, out)
+  out.token(']')
+}
+
+function IndexRangeAccess(node: AST.IndexRangeAccess, out: OutputStream) {
+  formatAstNode(node.base, out)
+  out.noSpace()
+  out.token('[')
+  if (node.indexStart) {
+    formatAstNode(node.indexStart, out)
+  }
+  out.noSpace()
+  out.token(':')
+  out.noSpace()
+  if (node.indexEnd) {
+    formatAstNode(node.indexEnd, out)
+  }
+  out.token(']')
 }
 
 function InheritanceSpecifier(
@@ -625,6 +662,12 @@ function UnaryOperation(node: AST.UnaryOperation, out: OutputStream) {
     out.noSpace()
     out.token(node.operator)
   }
+}
+
+function UncheckedStatement(node: AST.UncheckedStatement, out: OutputStream) {
+  out.beginLine()
+  out.token('unchecked')
+  Block(wrapBlock(node.block), out)
 }
 
 function UserDefinedTypeName(node: AST.UserDefinedTypeName, out: OutputStream) {

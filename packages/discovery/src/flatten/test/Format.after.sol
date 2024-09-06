@@ -31,6 +31,8 @@ event E2(address a, address indexed b);
 
 event E3(address a, address indexed b) anonymous;
 
+uint256 constant HELLO = 1;
+
 contract Test {
 	using a.b for uint256;
 	using a.b for *;
@@ -71,6 +73,13 @@ contract Test {
 		bool a = !true;
 		x++;
 		++x;
+		unchecked {
+			x = x + 3;
+		}
+		x = y[1];
+		x = y[1:2];
+		x = y[:2];
+		x = y[:];
 	}
 
 	function control() {
