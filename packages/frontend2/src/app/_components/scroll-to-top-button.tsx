@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useEventCallback } from '~/hooks/use-event-callback'
 import { useEventListener } from '~/hooks/use-event-listener'
 
@@ -35,7 +35,7 @@ export function ScrollToTopButton() {
     <button
       onClick={scrollToTop}
       className={cn(
-        'fixed -bottom-12 right-8 size-12 rounded-lg bg-pink-900 transition-[bottom,background-color] ease-out hover:bg-fuchsia-700 dark:bg-pink-200 dark:hover:bg-purple-450',
+        'fixed -bottom-12 right-8 z-999 size-12 rounded-lg bg-pink-900 transition-[bottom,background-color] ease-out hover:bg-fuchsia-700 dark:bg-pink-200 dark:hover:bg-purple-450',
         isVisible && 'bottom-8',
       )}
     >

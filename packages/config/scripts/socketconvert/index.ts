@@ -66,6 +66,7 @@ const chainIdToName: Record<string, string> = {
   '81457': 'blast',
   '421613': 'Arbitrum Goerli',
   '421614': 'Arbitrum Sepolia',
+  '777777': 'winr',
   '11155111': 'Sepolia',
   '11155112': 'Aevo testnet',
   '11155420': 'Optimism Sepolia',
@@ -124,10 +125,14 @@ function formatOutputData(data: OutputData[]): string {
     address: ${entry.address},
     sinceTimestamp: ${entry.sinceTimestamp},
     source: '${entry.source}',
-    bridge: {
-      name: '${entry.bridge.name}',
-      slug: '${entry.bridge.slug}',
-    },
+    bridgedUsing: {
+        bridges: [
+          {
+            name: '${entry.bridge.name}',
+            slug: '${entry.bridge.slug}',
+          },
+        ],
+      },
     tokens: ['${entry.tokens[0]}'],
     chain: '${entry.chain}',${includeInTotalStr}
   }`

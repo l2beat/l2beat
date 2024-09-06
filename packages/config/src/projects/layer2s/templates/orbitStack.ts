@@ -45,7 +45,7 @@ import {
 import { mergeBadges } from './utils'
 
 const ETHEREUM_EXPLORER_URL = 'https://etherscan.io/address/{0}#code'
-export const DEFAULT_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
+export const EVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
   {
     name: 'EVM compatible smart contracts are supported',
     description:
@@ -60,6 +60,30 @@ export const DEFAULT_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
       {
         text: 'Inside Arbitrum Nitro',
         href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/',
+      },
+    ],
+  },
+]
+
+export const WASMVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
+  {
+    name: 'EVM compatible and Stylus smart contracts are supported',
+    description:
+      'Arbitrum One supports smart contracts written in Solidity and other programming languages (Rust, C++) that compile to WASM. Such smart contracts are executed by nodes using either a geth fork or [a fork of wasmer](https://github.com/OffchainLabs/wasmer) inside the Nitro node, and can be proven with the onchain WASM VM.',
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: 'there are mistakes in the highly complex Nitro and WASM one-step prover implementation.',
+      },
+    ],
+    references: [
+      {
+        text: 'Inside Arbitrum Nitro',
+        href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/',
+      },
+      {
+        text: 'A gentle introduction: Stylus',
+        href: 'https://docs.arbitrum.io/stylus/stylus-gentle-introduction',
       },
     ],
   },
@@ -382,7 +406,7 @@ export function orbitStackCommon(
       ],
       otherConsiderations:
         templateVars.nonTemplateTechnology?.otherConsiderations ??
-        DEFAULT_OTHER_CONSIDERATIONS,
+        EVM_OTHER_CONSIDERATIONS,
     },
     permissions: [
       sequencers,

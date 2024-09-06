@@ -1,34 +1,83 @@
-import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
-import { DaLayer } from '../types/DaLayer'
-import { xlayerDac } from './bridges/xlayer'
+import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
+import { xlayer } from '../../../layer2s/xlayer'
+import { DAC } from '../templates/dac-template'
+import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
-export const xlayerLayer: DaLayer = {
-  id: 'xlayer-dac-layer',
-  type: 'DaLayer',
-  kind: 'DAC',
-  display: {
-    name: 'Data Availability Committee (DAC)',
-    slug: 'xlayer',
-    description:
-      'Set of parties responsible for signing and attesting to the availability of data.',
-    links: {
-      websites: [],
-      documentation: [],
-      repositories: [],
-      apps: [],
-      explorers: [],
-      socialMedia: [],
+const discovery = new ProjectDiscovery('xlayer')
+
+const upgradeability = {
+  upgradableBy: ['DACProxyAdminOwner'],
+  upgradeDelay: 'No delay',
+}
+
+const membersCountDAC = discovery.getContractValue<number>(
+  'XLayerValidiumDAC',
+  'getAmountOfMembers',
+)
+
+const requiredSignaturesDAC = discovery.getContractValue<number>(
+  'XLayerValidiumDAC',
+  'requiredAmountOfSignatures',
+)
+
+const members = discovery.getContractValue<string[]>(
+  'XLayerValidiumDAC',
+  'members',
+)
+
+export const xlayerDac = DAC({
+  project: xlayer,
+  bridge: {
+    contracts: {
+      addresses: [
+        discovery.getContractDetails('XLayerValidium', {
+          description: `The main contract of the XLayerValidium. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
+        }),
+        discovery.getContractDetails('XLayerValidiumDAC', {
+          description:
+            'Validium committee contract that allows the admin to setup the members of the committee and stores the required amount of signatures threshold.',
+          ...upgradeability,
+        }),
+      ],
+      risks: [],
+    },
+    permissions: [
+      {
+        name: 'Committee Members',
+        description: `List of addresses authorized to sign data commitments for the DA bridge.`,
+        accounts: members.map((operator) => ({
+          address: EthereumAddress(operator[1]),
+          type: 'EOA',
+        })),
+      },
+      {
+        name: 'LocalAdmin',
+        accounts: [
+          discovery.formatPermissionedAccount(
+            discovery.getContractValue('XLayerValidium', 'admin'),
+          ),
+        ],
+        description:
+          'Admin of the XLayerValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions and update the DA mode.',
+      },
+      {
+        name: 'DACProxyAdminOwner',
+        accounts: [
+          discovery.formatPermissionedAccount(
+            discovery.getContractValue('ProxyAdmin', 'owner'),
+          ),
+        ],
+        description:
+          "Owner of the XLayerValidiumDAC's ProxyAdmin. Can upgrade the contract.",
+      },
+    ],
+    chain: ChainId.ETHEREUM,
+    requiredMembers: requiredSignaturesDAC,
+    totalMembers: membersCountDAC,
+    transactionDataType: DacTransactionDataType.TransactionData,
+    members: {
+      type: 'unknown',
     },
   },
-  technology: `## Simple Committee
-  The Data Availability Committee (DAC) is a set of trusted parties responsible for storing data off-chain and serving it upon demand. 
-  The security guarantees of DACs depend on the specific setup and can vary significantly based on the criteria for selecting committee members, 
-  their operational transparency, and the mechanisms in place to handle disputes and failures.
-  `,
-  bridges: [xlayerDac],
-  usedIn: [...xlayerDac.usedIn],
-  risks: {
-    economicSecurity: DaEconomicSecurityRisk.Unknown,
-    fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
-  },
-}
+})

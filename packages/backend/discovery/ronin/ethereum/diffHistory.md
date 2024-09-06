@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x8fc2172551f9f49d30e37e4dcae1576e3d79970f
+
+# Diff at Wed, 04 Sep 2024 08:02:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@878a951312cec062f5003f6749f781861b0cdba1 block: 20640810
+- current block number: 20675893
+
+## Description
+
+Ronin bride unpaused.
+
+## Watched changes
+
+```diff
+    contract MainchainGateway (0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08) {
+    +++ description: None
+      values.paused:
+-        true
++        false
+    }
+```
+
+```diff
+    contract PauseEnforcer (0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4) {
+    +++ description: None
+      values.emergency:
+-        true
++        false
+    }
+```
+
 Generated with discovered.json: 0xabda92b9e46f002ac0602cb427f628bb434df543
 
 # Diff at Fri, 30 Aug 2024 10:31:27 GMT:

@@ -22,7 +22,7 @@ export function ScalingProjectSummary({ project }: Props) {
   return (
     <section
       id="summary"
-      className="pt-6 max-md:-mx-4 max-md:bg-gray-100 max-md:px-4 max-md:dark:bg-zinc-900"
+      className="pt-6 max-md:bg-gray-100 max-md:px-4 max-md:dark:bg-zinc-900"
     >
       <div className="flex gap-10">
         <div className="w-full space-y-4 md:space-y-6">
@@ -93,7 +93,7 @@ export function ScalingProjectSummary({ project }: Props) {
         <MobileProjectLinks projectLinks={project.header.links} />
       </div>
       <div className="max-md:hidden">
-        <div className="mt-6 flex flex-col gap-4 px-4 max-md:-mx-4 max-md:mt-2 max-md:px-4 md:px-0 lg:flex-row lg:gap-8">
+        <div className="mt-6 flex flex-col gap-4 px-4 max-md:mt-2 md:px-0 lg:flex-row lg:gap-8">
           {project.header.badges && (
             <BadgesSection badges={project.header.badges} />
           )}

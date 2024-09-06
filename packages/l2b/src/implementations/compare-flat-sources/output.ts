@@ -102,22 +102,22 @@ export function printComparisonBetweenProjects(
   )
 }
 
-export function colorMap(value: number): string {
+export function colorMap(value: number, multiplier: number = 1): string {
   const valueString = value.toFixed(2)
 
-  if (value < 0.125) {
+  if (value < 0.125 * multiplier) {
     return chalk.grey(valueString)
-  } else if (value < 0.25) {
+  } else if (value < 0.25 * multiplier) {
     return chalk.red(valueString)
-  } else if (value < 0.375) {
+  } else if (value < 0.375 * multiplier) {
     return chalk.redBright(valueString)
-  } else if (value < 0.5) {
+  } else if (value < 0.5 * multiplier) {
     return chalk.magenta(valueString)
-  } else if (value < 0.625) {
+  } else if (value < 0.625 * multiplier) {
     return chalk.magentaBright(valueString)
-  } else if (value < 0.75) {
+  } else if (value < 0.75 * multiplier) {
     return chalk.yellow(valueString)
-  } else if (value < 0.875) {
+  } else if (value < 0.875 * multiplier) {
     return chalk.yellowBright(valueString)
   } else {
     return chalk.greenBright(valueString)

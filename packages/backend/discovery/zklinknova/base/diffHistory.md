@@ -1,3 +1,75 @@
+Generated with discovered.json: 0x5d7f7de272164a612e3e4d7ef18b304b885d8334
+
+# Diff at Thu, 05 Sep 2024 14:10:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d01da0bcdde8e77051659c9718e449a44f5f957a block: 19322901
+- current block number: 19378036
+
+## Description
+
+Fee withdrawer changed to BaseOwner.
+
+## Watched changes
+
+```diff
+    contract zkLink (0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd) {
+    +++ description: None
+      values.forwardFeeAllocator:
+-        "0x0000000000000000000000000000000000000000"
++        "0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C"
+    }
+```
+
+Generated with discovered.json: 0x9d20a45aef54e0a11919ca39a3300349b4e5abdd
+
+# Diff at Wed, 04 Sep 2024 07:32:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@878a951312cec062f5003f6749f781861b0cdba1 block: 17596075
+- current block number: 19322901
+
+## Description
+
+Add one signer to the MS, increase threshold to 5/8.
+
+## Watched changes
+
+```diff
+    contract BaseOwner (0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C) {
+    +++ description: None
+      values.$members.7:
++        "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+      values.$members.6:
+-        "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
++        "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
+      values.$members.5:
+-        "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
++        "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
+      values.$members.4:
+-        "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
++        "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
+      values.$members.3:
+-        "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
++        "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
+      values.$members.2:
+-        "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
++        "0xF801886AE2e127A269B0F11892edb54F692d02dF"
+      values.$members.1:
+-        "0xF801886AE2e127A269B0F11892edb54F692d02dF"
++        "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
+      values.$members.0:
+-        "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
++        "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5"
+      values.$threshold:
+-        4
++        5
+      values.multisigThreshold:
+-        "4 of 7 (57%)"
++        "5 of 8 (63%)"
+    }
+```
+
 Generated with discovered.json: 0x086346a6cadc0dd620fa64682a084e9fbf6c4c5a
 
 # Diff at Fri, 30 Aug 2024 08:17:27 GMT:

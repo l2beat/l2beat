@@ -4,6 +4,7 @@ import {
   ExplorerConfig,
   getExplorerClient,
 } from '@l2beat/discovery/dist/utils/IEtherscanClient'
+import { assert } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import {
   boolean,
@@ -11,6 +12,7 @@ import {
   flag,
   oneOf,
   option,
+  optional,
   positional,
   string,
 } from 'cmd-ts'
@@ -37,11 +39,10 @@ export const Flatten = command({
       defaultValue: () => 'etherscan',
     }),
     apiKey: option({
-      type: string,
+      type: optional(string),
       env: 'L2B_ETHERSCAN_API_KEY',
       long: 'api-key',
       short: 'k',
-      defaultValue: () => 'YourApiKeyToken',
     }),
     output: option({
       type: string,
@@ -57,11 +58,15 @@ export const Flatten = command({
     }),
   },
   handler: async (args) => {
+    assert(
+      args.type !== 'etherscan' || args.apiKey !== undefined,
+      'When using etherscan you should provide the API key using --api-key.',
+    )
     const httpClient = new HttpClient()
     const client = getExplorerClient(httpClient, {
       type: args.type as ExplorerConfig['type'],
       url: args.explorerUrl.toString(),
-      apiKey: args.apiKey,
+      apiKey: args.apiKey ?? 'YourApiKeyToken',
     })
 
     console.log('Fetching contract source code...')

@@ -1,7 +1,7 @@
 {
   "name": "ronin",
   "chain": "ethereum",
-  "blockNumber": 20640810,
+  "blockNumber": 20675893,
   "configHash": "0x0613299b238669d4cc9292ebd752109a776c3ee0fac1ca9e94e631f54a5497d8",
   "version": 14,
   "contracts": [
@@ -184,14 +184,14 @@
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "depositCount": 92280,
+        "depositCount": 92337,
         "DOMAIN_SEPARATOR": "0x2b00d883a78a8b8d324cfe3cc451d9550b8509512a316b5dba270df178853071",
         "emergencyPauser": "0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4",
         "getHighTierVoteWeightThreshold": [90, 100],
         "getThreshold": { "num_": 70, "denom_": 100 },
         "minimumVoteWeight": 1540,
         "nonce": 2,
-        "paused": true,
+        "paused": false,
         "roninChainId": 2020,
         "WITHDRAWAL_UNLOCKER_ROLE": "0x5e5712e902fff5e704bc4d506ad976718319e019e9d2a872528a01a85db433e4",
         "wrappedNativeToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
@@ -208,7 +208,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2913500866597097675646982"
+        "totalSupply": "2904496553014898309421389"
       },
       "derivedName": "WETH9"
     },
@@ -238,7 +238,7 @@
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "emergency": true,
+        "emergency": false,
         "SENTRY_ROLE": "0x5bea60102f2a7acc9e82b1af0e3bd4069661102bb5dd143a6051cd1980dded1c",
         "target": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08"
       },

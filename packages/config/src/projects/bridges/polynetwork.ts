@@ -235,16 +235,22 @@ export const polynetwork: Bridge = {
   ],
   milestones: [
     {
+      name: 'New deployments suspended',
+      date: '2024-04-10T00:00:00.00Z',
+      link: 'https://x.com/PolyNetwork2/status/1778012918941892984',
+      type: 'general',
+    },
+    {
       name: 'Contracts hacked for $611M',
       date: '2021-08-10T00:00:00.00Z',
       link: 'https://en.wikipedia.org/wiki/Poly_Network_exploit',
-      type: 'general',
+      type: 'incident',
     },
     {
       name: 'Compromised multisig steals funds',
       date: '2023-07-03T00:00:00.00Z',
       link: 'https://rekt.news/poly-network-rekt2/',
-      type: 'general',
+      type: 'incident',
     },
   ],
 }

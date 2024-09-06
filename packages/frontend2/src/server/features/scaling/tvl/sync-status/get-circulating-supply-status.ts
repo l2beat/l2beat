@@ -1,10 +1,10 @@
+import { getCirculatingSupplyIndexerId } from '@l2beat/config'
 import {
   type AmountConfigEntry,
   type CirculatingSupplyEntry,
   type UnixTime,
 } from '@l2beat/shared-pure'
 import { getStatus } from './get-status'
-import { getCirculatingSupplyIndexerId } from './ids'
 
 type Entry = AmountConfigEntry & { configId: string }
 

@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xd84b7f1294db4201d0ccc3fa0b7e535ebfd494af
+
+# Diff at Wed, 04 Sep 2024 08:04:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@878a951312cec062f5003f6749f781861b0cdba1 block: 20433272
+- current block number: 20675899
+
+## Description
+
+One signer of MantleEngineeringMultisig is changed.
+
+## Watched changes
+
+```diff
+    contract MantleEngineeringMultisig (0x2F44BD2a54aC3fB20cd7783cF94334069641daC9) {
+    +++ description: None
+      values.$members.3:
+-        "0x66f13847536153eFFFFdfD7Bd4Dea5eD3F60f639"
++        "0x00da2F87c56C3a19BD863613995705095F55b524"
+    }
+```
+
 Generated with discovered.json: 0x504f9af21a4c06cbc2570fc45c518eac5f65a44a
 
 # Diff at Fri, 30 Aug 2024 07:53:40 GMT:

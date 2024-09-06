@@ -10,7 +10,7 @@ describe(resolvePermissions.name, () => {
   it('op mainnet', () => {
     const graph: Node<string>[] = [
       node('contract1', [
-        edge('configure', 'guardian', { delay: 7 }),
+        edge('configure', 'guardian', { delay: 7, description: undefined }),
         edge('upgrade', 'l1Proxy'),
       ]),
       node('contract2', [edge('upgrade', 'l1Proxy')]),
@@ -20,66 +20,66 @@ describe(resolvePermissions.name, () => {
       node('l2Contract2', [edge('upgrade', 'l2Proxy')]),
       node('guardian', [
         edge('act', 'foundationMsig'),
-        edge('act', 'securityCounil'),
+        edge('act', 'securityCouncil'),
       ]),
       node(
         'admins',
-        [edge('member', 'foundationMsig'), edge('member', 'securityCounil')],
+        [edge('member', 'foundationMsig'), edge('member', 'securityCouncil')],
         { threshold: 2 },
       ),
       node('foundationMsig'),
-      node('securityCounil'),
+      node('securityCouncil'),
     ]
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         permission: 'configure',
         path: [
-          { address: 'contract1', delay: 7 },
-          { address: 'guardian', delay: 0 },
-          { address: 'securityCounil', delay: 0 },
+          { address: 'contract1', delay: 7, description: undefined },
+          { address: 'guardian', delay: 0, description: undefined },
+          { address: 'securityCouncil', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'configure',
         path: [
-          { address: 'contract1', delay: 7 },
-          { address: 'guardian', delay: 0 },
-          { address: 'foundationMsig', delay: 0 },
+          { address: 'contract1', delay: 7, description: undefined },
+          { address: 'guardian', delay: 0, description: undefined },
+          { address: 'foundationMsig', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'upgrade',
         path: [
-          { address: 'contract1', delay: 0 },
-          { address: 'l1Proxy', delay: 0 },
-          { address: 'admins', delay: 0 },
+          { address: 'contract1', delay: 0, description: undefined },
+          { address: 'l1Proxy', delay: 0, description: undefined },
+          { address: 'admins', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'upgrade',
         path: [
-          { address: 'contract2', delay: 0 },
-          { address: 'l1Proxy', delay: 0 },
-          { address: 'admins', delay: 0 },
+          { address: 'contract2', delay: 0, description: undefined },
+          { address: 'l1Proxy', delay: 0, description: undefined },
+          { address: 'admins', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'upgrade',
         path: [
-          { address: 'l2Contract1', delay: 0 },
-          { address: 'l2Proxy', delay: 0 },
-          { address: 'l1Proxy', delay: 0 },
-          { address: 'admins', delay: 0 },
+          { address: 'l2Contract1', delay: 0, description: undefined },
+          { address: 'l2Proxy', delay: 0, description: undefined },
+          { address: 'l1Proxy', delay: 0, description: undefined },
+          { address: 'admins', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'upgrade',
         path: [
-          { address: 'l2Contract2', delay: 0 },
-          { address: 'l2Proxy', delay: 0 },
-          { address: 'l1Proxy', delay: 0 },
-          { address: 'admins', delay: 0 },
+          { address: 'l2Contract2', delay: 0, description: undefined },
+          { address: 'l2Proxy', delay: 0, description: undefined },
+          { address: 'l1Proxy', delay: 0, description: undefined },
+          { address: 'admins', delay: 0, description: undefined },
         ],
       },
     ])
@@ -99,7 +99,9 @@ describe(resolvePermissions.name, () => {
         ],
         { threshold: 2 },
       ),
-      node('upgradeGatekeeper', [edge('act', 'zkSyncMsig', { delay: 21 })]),
+      node('upgradeGatekeeper', [
+        edge('act', 'zkSyncMsig', { delay: 21, description: undefined }),
+      ]),
       node('zkSyncMsig'),
       node('actorA'),
       node('actorB'),
@@ -109,32 +111,32 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'upgrade',
         path: [
-          { address: 'verifier', delay: 0 },
-          { address: 'upgradeGatekeeper', delay: 21 },
-          { address: 'zkSyncMsig', delay: 0 },
+          { address: 'verifier', delay: 0, description: undefined },
+          { address: 'upgradeGatekeeper', delay: 21, description: undefined },
+          { address: 'zkSyncMsig', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'upgrade',
         path: [
-          { address: 'governance', delay: 0 },
-          { address: 'upgradeGatekeeper', delay: 21 },
-          { address: 'zkSyncMsig', delay: 0 },
+          { address: 'governance', delay: 0, description: undefined },
+          { address: 'upgradeGatekeeper', delay: 21, description: undefined },
+          { address: 'zkSyncMsig', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'upgrade',
         path: [
-          { address: 'zkSync', delay: 0 },
-          { address: 'upgradeGatekeeper', delay: 21 },
-          { address: 'zkSyncMsig', delay: 0 },
+          { address: 'zkSync', delay: 0, description: undefined },
+          { address: 'upgradeGatekeeper', delay: 21, description: undefined },
+          { address: 'zkSyncMsig', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'configure',
         path: [
-          { address: 'zkSync', delay: 0 }, // contract
-          { address: 'zkSync', delay: 0 }, // embedded security council
+          { address: 'zkSync', delay: 0, description: undefined }, // contract
+          { address: 'zkSync', delay: 0, description: undefined }, // embedded security council
         ],
       },
     ])
@@ -147,8 +149,8 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'configure',
         path: [
-          { address: 'A', delay: 0 },
-          { address: 'A', delay: 0 },
+          { address: 'A', delay: 0, description: undefined },
+          { address: 'A', delay: 0, description: undefined },
         ],
       },
     ])
@@ -164,9 +166,9 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'configure',
         path: [
-          { address: 'A', delay: 0 },
-          { address: 'A', delay: 0 },
-          { address: 'B', delay: 0 },
+          { address: 'A', delay: 0, description: undefined },
+          { address: 'A', delay: 0, description: undefined },
+          { address: 'B', delay: 0, description: undefined },
         ],
       },
     ])
@@ -182,9 +184,9 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'configure',
         path: [
-          { address: 'A', delay: 0 },
-          { address: 'B', delay: 0 },
-          { address: 'A', delay: 0 },
+          { address: 'A', delay: 0, description: undefined },
+          { address: 'B', delay: 0, description: undefined },
+          { address: 'A', delay: 0, description: undefined },
         ],
       },
     ])
@@ -212,11 +214,11 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'upgrade',
         path: [
-          { address: 'A', delay: 0 },
-          { address: 'B', delay: 0 },
-          { address: 'A', delay: 0 },
-          { address: 'C', delay: 0 },
-          { address: 'D', delay: 0 },
+          { address: 'A', delay: 0, description: undefined },
+          { address: 'B', delay: 0, description: undefined },
+          { address: 'A', delay: 0, description: undefined },
+          { address: 'C', delay: 0, description: undefined },
+          { address: 'D', delay: 0, description: undefined },
         ],
       },
     ])
@@ -225,8 +227,12 @@ describe(resolvePermissions.name, () => {
   it('one actor, four contracts, two timelocks with same delays', () => {
     const graph: Node<string>[] = [
       node('actor'),
-      node('timelockA', [edge('act', 'actor', { delay: 100 })]),
-      node('timelockB', [edge('act', 'actor', { delay: 100 })]),
+      node('timelockA', [
+        edge('act', 'actor', { delay: 100, description: undefined }),
+      ]),
+      node('timelockB', [
+        edge('act', 'actor', { delay: 100, description: undefined }),
+      ]),
       node('proxy', [edge('act', 'timelockB')]),
       node('vault', [edge('configure', 'timelockA'), edge('upgrade', 'proxy')]),
     ]
@@ -235,18 +241,18 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'upgrade',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'proxy', delay: 0 },
-          { address: 'timelockB', delay: 100 },
-          { address: 'actor', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'proxy', delay: 0, description: undefined },
+          { address: 'timelockB', delay: 100, description: undefined },
+          { address: 'actor', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'configure',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'timelockA', delay: 100 },
-          { address: 'actor', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'timelockA', delay: 100, description: undefined },
+          { address: 'actor', delay: 0, description: undefined },
         ],
       },
     ])
@@ -255,8 +261,12 @@ describe(resolvePermissions.name, () => {
   it('one actor, four contracts, configure shorter delay than upgrade', () => {
     const graph: Node<string>[] = [
       node('actor'),
-      node('timelockA', [edge('act', 'actor', { delay: 90 })]),
-      node('timelockB', [edge('act', 'actor', { delay: 100 })]),
+      node('timelockA', [
+        edge('act', 'actor', { delay: 90, description: undefined }),
+      ]),
+      node('timelockB', [
+        edge('act', 'actor', { delay: 100, description: undefined }),
+      ]),
       node('proxy', [edge('act', 'timelockB')]),
       node('vault', [edge('configure', 'timelockA'), edge('upgrade', 'proxy')]),
     ]
@@ -265,18 +275,18 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'upgrade',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'proxy', delay: 0 },
-          { address: 'timelockB', delay: 100 },
-          { address: 'actor', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'proxy', delay: 0, description: undefined },
+          { address: 'timelockB', delay: 100, description: undefined },
+          { address: 'actor', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'configure',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'timelockA', delay: 90 },
-          { address: 'actor', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'timelockA', delay: 90, description: undefined },
+          { address: 'actor', delay: 0, description: undefined },
         ],
       },
     ])
@@ -285,8 +295,12 @@ describe(resolvePermissions.name, () => {
   it('one actor, four contracts, configure longer delay than upgrade', () => {
     const graph: Node<string>[] = [
       node('actor'),
-      node('timelockA', [edge('act', 'actor', { delay: 110 })]),
-      node('timelockB', [edge('act', 'actor', { delay: 100 })]),
+      node('timelockA', [
+        edge('act', 'actor', { delay: 110, description: undefined }),
+      ]),
+      node('timelockB', [
+        edge('act', 'actor', { delay: 100, description: undefined }),
+      ]),
       node('proxy', [edge('act', 'timelockB')]),
       node('vault', [edge('configure', 'timelockA'), edge('upgrade', 'proxy')]),
     ]
@@ -295,18 +309,18 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'upgrade',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'proxy', delay: 0 },
-          { address: 'timelockB', delay: 100 },
-          { address: 'actor', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'proxy', delay: 0, description: undefined },
+          { address: 'timelockB', delay: 100, description: undefined },
+          { address: 'actor', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'configure',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'timelockA', delay: 110 },
-          { address: 'actor', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'timelockA', delay: 110, description: undefined },
+          { address: 'actor', delay: 0, description: undefined },
         ],
       },
     ])
@@ -316,8 +330,12 @@ describe(resolvePermissions.name, () => {
     const graph: Node<string>[] = [
       node('vault', [edge('upgrade', 'proxy')]),
       node('proxy', [edge('act', 'timelockA'), edge('act', 'timelockB')]),
-      node('timelockA', [edge('act', 'multisig', { delay: 50 })]),
-      node('timelockB', [edge('act', 'multisig', { delay: 100 })]),
+      node('timelockA', [
+        edge('act', 'multisig', { delay: 50, description: undefined }),
+      ]),
+      node('timelockB', [
+        edge('act', 'multisig', { delay: 100, description: undefined }),
+      ]),
       node('multisig', [edge('member', 'actor')]),
       node('actor'),
     ]
@@ -326,21 +344,21 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'upgrade',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'proxy', delay: 0 },
-          { address: 'timelockA', delay: 50 },
-          { address: 'multisig', delay: 0 },
-          { address: 'actor', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'proxy', delay: 0, description: undefined },
+          { address: 'timelockA', delay: 50, description: undefined },
+          { address: 'multisig', delay: 0, description: undefined },
+          { address: 'actor', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'upgrade',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'proxy', delay: 0 },
-          { address: 'timelockB', delay: 100 },
-          { address: 'multisig', delay: 0 },
-          { address: 'actor', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'proxy', delay: 0, description: undefined },
+          { address: 'timelockB', delay: 100, description: undefined },
+          { address: 'multisig', delay: 0, description: undefined },
+          { address: 'actor', delay: 0, description: undefined },
         ],
       },
     ])
@@ -349,8 +367,12 @@ describe(resolvePermissions.name, () => {
   it('one actor, four contracts, two upgrades with same delay on different path', () => {
     const graph: Node<string>[] = [
       node('actor'),
-      node('timelockA', [edge('act', 'actor', { delay: 100 })]),
-      node('timelockB', [edge('act', 'actor', { delay: 100 })]),
+      node('timelockA', [
+        edge('act', 'actor', { delay: 100, description: undefined }),
+      ]),
+      node('timelockB', [
+        edge('act', 'actor', { delay: 100, description: undefined }),
+      ]),
       node('proxy', [edge('act', 'timelockB')]),
       node('vault', [edge('upgrade', 'timelockA'), edge('upgrade', 'proxy')]),
     ]
@@ -359,18 +381,18 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'upgrade',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'proxy', delay: 0 },
-          { address: 'timelockB', delay: 100 },
-          { address: 'actor', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'proxy', delay: 0, description: undefined },
+          { address: 'timelockB', delay: 100, description: undefined },
+          { address: 'actor', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'upgrade',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'timelockA', delay: 100 },
-          { address: 'actor', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'timelockA', delay: 100, description: undefined },
+          { address: 'actor', delay: 0, description: undefined },
         ],
       },
     ])
@@ -379,8 +401,12 @@ describe(resolvePermissions.name, () => {
   it('one actor, four contracts, two upgrades with different delay on different path', () => {
     const graph: Node<string>[] = [
       node('actor'),
-      node('timelockA', [edge('act', 'actor', { delay: 110 })]),
-      node('timelockB', [edge('act', 'actor', { delay: 100 })]),
+      node('timelockA', [
+        edge('act', 'actor', { delay: 110, description: undefined }),
+      ]),
+      node('timelockB', [
+        edge('act', 'actor', { delay: 100, description: undefined }),
+      ]),
       node('proxy', [edge('act', 'timelockB')]),
       node('vault', [edge('upgrade', 'proxy'), edge('upgrade', 'timelockA')]),
     ]
@@ -389,18 +415,18 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'upgrade',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'proxy', delay: 0 },
-          { address: 'timelockB', delay: 100 },
-          { address: 'actor', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'proxy', delay: 0, description: undefined },
+          { address: 'timelockB', delay: 100, description: undefined },
+          { address: 'actor', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'upgrade',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'timelockA', delay: 110 },
-          { address: 'actor', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'timelockA', delay: 110, description: undefined },
+          { address: 'actor', delay: 0, description: undefined },
         ],
       },
     ])
@@ -409,8 +435,12 @@ describe(resolvePermissions.name, () => {
   it('one actor, four contracts, two timelocks with different delays', () => {
     const graph: Node<string>[] = [
       node('actor'),
-      node('timelockA', [edge('act', 'actor', { delay: 10 })]),
-      node('timelockB', [edge('act', 'actor', { delay: 100 })]),
+      node('timelockA', [
+        edge('act', 'actor', { delay: 10, description: undefined }),
+      ]),
+      node('timelockB', [
+        edge('act', 'actor', { delay: 100, description: undefined }),
+      ]),
       node('proxy', [edge('act', 'timelockB')]),
       node('vault', [edge('configure', 'timelockA'), edge('upgrade', 'proxy')]),
     ]
@@ -419,18 +449,18 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'configure',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'timelockA', delay: 10 },
-          { address: 'actor', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'timelockA', delay: 10, description: undefined },
+          { address: 'actor', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'upgrade',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'proxy', delay: 0 },
-          { address: 'timelockB', delay: 100 },
-          { address: 'actor', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'proxy', delay: 0, description: undefined },
+          { address: 'timelockB', delay: 100, description: undefined },
+          { address: 'actor', delay: 0, description: undefined },
         ],
       },
     ])
@@ -459,27 +489,27 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'configure',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'msigM', delay: 0 },
-          { address: 'msigB', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'msigM', delay: 0, description: undefined },
+          { address: 'msigB', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'configure',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'msigM', delay: 0 },
-          { address: 'msigA', delay: 0 },
-          { address: 'actorA', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'msigM', delay: 0, description: undefined },
+          { address: 'msigA', delay: 0, description: undefined },
+          { address: 'actorA', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'configure',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'msigM', delay: 0 },
-          { address: 'msigA', delay: 0 },
-          { address: 'actorB', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'msigM', delay: 0, description: undefined },
+          { address: 'msigA', delay: 0, description: undefined },
+          { address: 'actorB', delay: 0, description: undefined },
         ],
       },
     ])
@@ -506,8 +536,8 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'configure',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'msig', delay: 10 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'msig', delay: 10, description: undefined },
         ],
       },
     ])
@@ -534,8 +564,8 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'configure',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'msig', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'msig', delay: 0, description: undefined },
         ],
       },
     ])
@@ -562,25 +592,25 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'configure',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'msig', delay: 10 },
-          { address: 'actorA', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'msig', delay: 10, description: undefined },
+          { address: 'actorA', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'configure',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'msig', delay: 10 },
-          { address: 'actorB', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'msig', delay: 10, description: undefined },
+          { address: 'actorB', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'configure',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'msig', delay: 10 },
-          { address: 'actorC', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'msig', delay: 10, description: undefined },
+          { address: 'actorC', delay: 0, description: undefined },
         ],
       },
     ])
@@ -603,25 +633,25 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'configure',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'msig', delay: 0 },
-          { address: 'actorA', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'msig', delay: 0, description: undefined },
+          { address: 'actorA', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'configure',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'msig', delay: 0 },
-          { address: 'actorB', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'msig', delay: 0, description: undefined },
+          { address: 'actorB', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'configure',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'msig', delay: 0 },
-          { address: 'actorC', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'msig', delay: 0, description: undefined },
+          { address: 'actorC', delay: 0, description: undefined },
         ],
       },
     ])
@@ -644,25 +674,25 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'configure',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'proxy', delay: 0 },
-          { address: 'actorA', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'proxy', delay: 0, description: undefined },
+          { address: 'actorA', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'configure',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'proxy', delay: 0 },
-          { address: 'actorB', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'proxy', delay: 0, description: undefined },
+          { address: 'actorB', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'configure',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'proxy', delay: 0 },
-          { address: 'actorC', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'proxy', delay: 0, description: undefined },
+          { address: 'actorC', delay: 0, description: undefined },
         ],
       },
     ])
@@ -684,22 +714,22 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'configure',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'actorA', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'actorA', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'configure',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'actorB', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'actorB', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'configure',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'actorC', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'actorC', delay: 0, description: undefined },
         ],
       },
     ])
@@ -717,17 +747,17 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'upgrade',
         path: [
-          { address: 'vaultA', delay: 0 },
-          { address: 'proxy', delay: 0 },
-          { address: 'actor', delay: 0 },
+          { address: 'vaultA', delay: 0, description: undefined },
+          { address: 'proxy', delay: 0, description: undefined },
+          { address: 'actor', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'upgrade',
         path: [
-          { address: 'vaultB', delay: 0 },
-          { address: 'proxy', delay: 0 },
-          { address: 'actor', delay: 0 },
+          { address: 'vaultB', delay: 0, description: undefined },
+          { address: 'proxy', delay: 0, description: undefined },
+          { address: 'actor', delay: 0, description: undefined },
         ],
       },
     ])
@@ -746,17 +776,17 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'upgrade',
         path: [
-          { address: 'vaultA', delay: 0 },
-          { address: 'proxyA', delay: 0 },
-          { address: 'actor', delay: 0 },
+          { address: 'vaultA', delay: 0, description: undefined },
+          { address: 'proxyA', delay: 0, description: undefined },
+          { address: 'actor', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'upgrade',
         path: [
-          { address: 'vaultB', delay: 0 },
-          { address: 'proxyB', delay: 0 },
-          { address: 'actor', delay: 0 },
+          { address: 'vaultB', delay: 0, description: undefined },
+          { address: 'proxyB', delay: 0, description: undefined },
+          { address: 'actor', delay: 0, description: undefined },
         ],
       },
     ])
@@ -766,8 +796,12 @@ describe(resolvePermissions.name, () => {
     const graph: Node<string>[] = [
       node('vault', [edge('upgrade', 'proxy')]),
       node('proxy', [edge('act', 'timelockB')]),
-      node('timelockB', [edge('act', 'timelockA', { delay: 69 })]),
-      node('timelockA', [edge('act', 'actor', { delay: 420 })]),
+      node('timelockB', [
+        edge('act', 'timelockA', { delay: 69, description: undefined }),
+      ]),
+      node('timelockA', [
+        edge('act', 'actor', { delay: 420, description: undefined }),
+      ]),
       node('actor'),
     ]
 
@@ -775,11 +809,11 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'upgrade',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'proxy', delay: 0 },
-          { address: 'timelockB', delay: 69 },
-          { address: 'timelockA', delay: 420 },
-          { address: 'actor', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'proxy', delay: 0, description: undefined },
+          { address: 'timelockB', delay: 69, description: undefined },
+          { address: 'timelockA', delay: 420, description: undefined },
+          { address: 'actor', delay: 0, description: undefined },
         ],
       },
     ])
@@ -788,8 +822,8 @@ describe(resolvePermissions.name, () => {
   it('two actors, one contract, two different delays', () => {
     const graph: Node<string>[] = [
       node('vault', [
-        edge('upgrade', 'ownerActor', { delay: 69 }),
-        edge('upgrade', 'adminActor', { delay: 420 }),
+        edge('upgrade', 'ownerActor', { delay: 69, description: undefined }),
+        edge('upgrade', 'adminActor', { delay: 420, description: undefined }),
       ]),
       node('ownerActor'),
       node('adminActor'),
@@ -799,15 +833,15 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'upgrade',
         path: [
-          { address: 'vault', delay: 69 },
-          { address: 'ownerActor', delay: 0 },
+          { address: 'vault', delay: 69, description: undefined },
+          { address: 'ownerActor', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'upgrade',
         path: [
-          { address: 'vault', delay: 420 },
-          { address: 'adminActor', delay: 0 },
+          { address: 'vault', delay: 420, description: undefined },
+          { address: 'adminActor', delay: 0, description: undefined },
         ],
       },
     ])
@@ -819,7 +853,9 @@ describe(resolvePermissions.name, () => {
         edge('configure', 'timelock'),
         edge('configure', 'actorB'),
       ]),
-      node('timelock', [edge('act', 'actorA', { delay: 42069 })]),
+      node('timelock', [
+        edge('act', 'actorA', { delay: 42069, description: undefined }),
+      ]),
       node('actorA'),
       node('actorB'),
     ]
@@ -828,16 +864,16 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'configure',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'timelock', delay: 42069 },
-          { address: 'actorA', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'timelock', delay: 42069, description: undefined },
+          { address: 'actorA', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'configure',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'actorB', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'actorB', delay: 0, description: undefined },
         ],
       },
     ])
@@ -847,7 +883,9 @@ describe(resolvePermissions.name, () => {
     const graph: Node<string>[] = [
       node('vault', [edge('upgrade', 'proxy')]),
       node('proxy', [edge('act', 'timelock')]),
-      node('timelock', [edge('act', 'actor', { delay: 42069 })]),
+      node('timelock', [
+        edge('act', 'actor', { delay: 42069, description: undefined }),
+      ]),
       node('actor'),
     ]
 
@@ -855,10 +893,10 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'upgrade',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'proxy', delay: 0 },
-          { address: 'timelock', delay: 42069 },
-          { address: 'actor', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'proxy', delay: 0, description: undefined },
+          { address: 'timelock', delay: 42069, description: undefined },
+          { address: 'actor', delay: 0, description: undefined },
         ],
       },
     ])
@@ -876,16 +914,16 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'upgrade',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'proxy', delay: 0 },
-          { address: 'actorB', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'proxy', delay: 0, description: undefined },
+          { address: 'actorB', delay: 0, description: undefined },
         ],
       },
       {
         permission: 'configure',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'actorA', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'actorA', delay: 0, description: undefined },
         ],
       },
     ])
@@ -902,9 +940,9 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'upgrade',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'proxy', delay: 0 },
-          { address: 'actor', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'proxy', delay: 0, description: undefined },
+          { address: 'actor', delay: 0, description: undefined },
         ],
       },
     ])
@@ -920,8 +958,8 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'upgrade',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'actor', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'actor', delay: 0, description: undefined },
         ],
       },
     ])
@@ -937,8 +975,8 @@ describe(resolvePermissions.name, () => {
       {
         permission: 'configure',
         path: [
-          { address: 'vault', delay: 0 },
-          { address: 'actor', delay: 0 },
+          { address: 'vault', delay: 0, description: undefined },
+          { address: 'actor', delay: 0, description: undefined },
         ],
       },
     ])
@@ -947,6 +985,37 @@ describe(resolvePermissions.name, () => {
   it('empty graph returns an empty result', () => {
     const graph: Node<string>[] = []
     expect(resolvePermissions(graph)).toEqualUnsorted([])
+  })
+
+  it('correctly handles permission descriptions', () => {
+    const graph: Node<string>[] = [
+      node('vault', [
+        edge('upgrade', 'proxy', { description: 'can steal funds from vault' }),
+      ]),
+      node('proxy', [
+        edge('act', 'actor', { description: 'can act on behalf of proxy' }),
+      ]),
+      node('actor'),
+    ]
+
+    expect(resolvePermissions(graph)).toEqualUnsorted([
+      {
+        permission: 'upgrade',
+        path: [
+          { address: 'vault', delay: 0, description: undefined },
+          {
+            address: 'proxy',
+            delay: 0,
+            description: 'can steal funds from vault',
+          },
+          {
+            address: 'actor',
+            delay: 0,
+            description: 'can act on behalf of proxy',
+          },
+        ],
+      },
+    ])
   })
 })
 
@@ -969,5 +1038,5 @@ function edge(
   toNode: string,
   options?: Partial<Edge<string>>,
 ): Edge<string> {
-  return { permission, toNode, delay: 0, ...options }
+  return { permission, toNode, delay: 0, description: undefined, ...options }
 }

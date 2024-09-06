@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x2a73e7d79017ef77856103254e8631297be55635
+
+# Diff at Wed, 04 Sep 2024 07:12:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@878a951312cec062f5003f6749f781861b0cdba1 block: 20532552
+- current block number: 20675639
+
+## Description
+
+Small implementation upgrade of the Ethereum Spoke Pool:
+* depositExclusive(): Public method that allows users to set an exclusive relayer for their deposit for a certain time. (Any relayer can fulfill the request at the destination after `exclusivityDeadlineOffset` passes)
+
+## Watched changes
+
+```diff
+    contract Ethereum_SpokePool (0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5) {
+    +++ description: None
+      values.$implementation:
+-        "0x08C21b200eD06D2e32cEC91a770C3FcA8aD5F877"
++        "0x48Dcf75EA18233BA947E4480dCd70594720449C1"
+      values.$upgradeCount:
+-        6
++        7
+    }
+```
+
+## Source code changes
+
+```diff
+.../Ethereum_SpokePool/Ethereum_SpokePool.sol      | 95 +++++++++++++++++++++-
+ 1 file changed, 93 insertions(+), 2 deletions(-)
+```
+
 Generated with discovered.json: 0x5505aceb59200d22be98a33c394b380e7a23c7cf
 
 # Diff at Fri, 30 Aug 2024 07:50:52 GMT:

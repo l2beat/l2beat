@@ -1,6 +1,5 @@
 'use client'
 import partition from 'lodash/partition'
-import React from 'react'
 import { type DiagramParams } from '~/utils/project/get-diagram-params'
 import { ContractEntry, type TechnologyContract } from '../contract-entry'
 import {
@@ -143,7 +142,9 @@ export function ContractsSection(props: ContractsSectionProps) {
           <div className="my-4">
             {unchangedEscrows.map((contract) => (
               <ContractEntry
-                key={`${contract.name}-${contract.chain}`}
+                key={`${contract.name}-${contract.chain}-${contract.addresses
+                  .map((a) => a.address)
+                  .join('-')}`}
                 contract={contract}
                 className="my-4"
                 type="contract"

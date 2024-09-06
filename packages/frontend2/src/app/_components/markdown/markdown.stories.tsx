@@ -13,11 +13,7 @@ const meta = {
           terms={[
             {
               id: 'bold-example',
-              data: {
-                term: 'Bold',
-                definition: 'Some definition',
-                isSpicy: false,
-              },
+              matches: ['Bold'],
             },
           ]}
         >

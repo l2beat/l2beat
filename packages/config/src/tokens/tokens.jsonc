@@ -582,6 +582,10 @@
       "address": "0xeEAA40B28A2d1b0B08f6f97bB1DD4B75316c6107"
     },
     {
+      "symbol": "GPT",
+      "address": "0xCdb4A8742ed7D0259b51E3454C46C9D6C48d5e88"
+    },
+    {
       "symbol": "GRT",
       "address": "0xc944E90C64B2c07662A292be6244BDf05Cda44a7"
     },
@@ -3890,21 +3894,22 @@
     }
   ],
   "zklinknova": [
-    {
-      "symbol": "BTCT",
-      "address": "0xFb8dBdc644eb54dAe0D7A9757f1e6444a07F8067",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "TRON Foundation",
-            "warning": "There is no formal bridge nor a way to withdraw this token. Funds are held by a simple Multisig on TRON and minted by a multisig on zkLink Nova."
-          }
-        ]
-      },
-      "coingeckoId": "bitcoin-trc20"
-    },
+    // removed because we have no CG price and no bridge back to TRON
+    // {
+    //   "symbol": "BTCT",
+    //   "address": "0xFb8dBdc644eb54dAe0D7A9757f1e6444a07F8067",
+    //   "source": "external",
+    //   "supply": "totalSupply",
+    //   "bridgedUsing": {
+    //     "bridges": [
+    //       {
+    //         "name": "TRON Foundation",
+    //         "warning": "There is no formal bridge nor a way to withdraw this token. Funds are held by a simple Multisig on TRON and minted by a multisig on zkLink Nova."
+    //       }
+    //     ]
+    //   },
+    //   "coingeckoId": "bitcoin-trc20"
+    // },
     {
       "symbol": "SolvBTC.m",
       "address": "0xbEAf16cFD8eFe0FC97C2a07E349B9411F5dC272C",

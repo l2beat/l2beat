@@ -1,19 +1,18 @@
-import { createAmountId } from '@l2beat/config'
+import { INDEXER_NAMES, createAmountId, createIndexerTag } from '@l2beat/config'
 import { AmountRecord } from '@l2beat/database'
-import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
 import { PremintedIndexerDeps } from './types'
 
-const NAME = 'preminted_indexer'
 export class PremintedIndexer extends ManagedChildIndexer {
   private readonly configurationId: string
 
   constructor(private readonly $: PremintedIndexerDeps) {
     super({
       ...$,
-      name: NAME,
-      tag: createTag($.configuration.chain, $.configuration.address),
+      name: INDEXER_NAMES.PREMINTED,
+      tag: createIndexerTag($.configuration.chain, $.configuration.address),
       updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       configHash: $.minHeight.toString(),
     })
@@ -146,12 +145,4 @@ export class PremintedIndexer extends ManagedChildIndexer {
 
     return targetHeight
   }
-
-  static getId(chain: string, address: EthereumAddress | 'native') {
-    return Indexer.createId(NAME, createTag(chain, address))
-  }
-}
-
-function createTag(chain: string, address: EthereumAddress | 'native'): string {
-  return `${chain}_${address}`
 }

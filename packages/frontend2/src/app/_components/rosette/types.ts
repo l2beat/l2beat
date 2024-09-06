@@ -7,6 +7,6 @@ export interface RosetteValue {
   name: string
   value: string
   sentiment: Sentiment
-  description: string
+  description?: string
   warning?: WarningValueWithSentiment
 }

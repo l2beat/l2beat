@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "optimism",
-  "blockNumber": 122588960,
+  "blockNumber": 124973335,
   "configHash": "0xce10e15afb33d1b6e6810a19bcb0420abc52bc5646c858e42dda06270610dec1",
   "version": 14,
   "contracts": [
@@ -22,6 +22,7 @@
         "$immutable": false,
         "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
         "$members": [
+          "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
           "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
           "0xF801886AE2e127A269B0F11892edb54F692d02dF",
           "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
@@ -30,12 +31,12 @@
           "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
           "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
         ],
-        "$threshold": 4,
+        "$threshold": 5,
         "domainSeparator": "0x18b594ec6cbe81554af90ad5b8ef66a89f70d936be932a27159a978ab571232f",
         "getChainId": 10,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 18,
+        "multisigThreshold": "5 of 8 (63%)",
+        "nonce": 22,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -74,21 +75,21 @@
           "minimalL2GasPrice": 250000000
         },
         "FORWARD_REQUEST_TYPE_HASH": "0xe0aaca1722ef50bb0c9b032e5b16ce2b79fa9f23638835456b27fd6894f8292c",
-        "forwardFeeAllocator": "0x0000000000000000000000000000000000000000",
+        "forwardFeeAllocator": "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9",
         "gateway": "0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c",
         "getGateway": "0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c",
         "getGovernor": "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9",
         "getPriorityTxMaxGasLimit": 72000000,
-        "getTotalBatchesExecuted": 16403,
-        "getTotalPriorityTxs": 13402,
+        "getTotalBatchesExecuted": 24333,
+        "getTotalPriorityTxs": 14195,
         "IS_ETH_GAS_TOKEN": true,
         "owner": "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9",
         "paused": false,
-        "totalBatchesExecuted": 16403,
-        "totalPriorityTxs": 13402,
-        "totalSyncedPriorityTxs": 13400,
-        "totalValidatorForwardFee": "8044861391450402120",
-        "totalValidatorForwardFeeWithdrawn": 0,
+        "totalBatchesExecuted": 24333,
+        "totalPriorityTxs": 14195,
+        "totalSyncedPriorityTxs": 14195,
+        "totalValidatorForwardFee": "8459017154492723812",
+        "totalValidatorForwardFeeWithdrawn": "8459017154492723812",
         "txGasPrice": 40000000000
       },
       "derivedName": "ZkLink"
@@ -158,7 +159,6 @@
     }
   ],
   "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9" },
     {
       "address": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -175,6 +175,7 @@
     { "address": "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db" },
     { "address": "0xC9c41965710Dcc1434A7B7d44dAf6A4418E2C27d" },
     { "address": "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5" },
+    { "address": "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5" },
     { "address": "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92" },
     { "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF" }
   ],

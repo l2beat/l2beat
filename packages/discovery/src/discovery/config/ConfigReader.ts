@@ -100,6 +100,12 @@ export class ConfigReader {
     return [...chains]
   }
 
+  readAllConfigs(): DiscoveryConfig[] {
+    return this.readAllChains().flatMap((chain) =>
+      this.readAllConfigsForChain(chain),
+    )
+  }
+
   readAllConfigsForChain(chain: string): DiscoveryConfig[] {
     const result: DiscoveryConfig[] = []
     const projects = this.readAllProjectsForChain(chain)
