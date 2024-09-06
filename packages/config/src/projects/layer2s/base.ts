@@ -67,6 +67,14 @@ export const base: Layer2 = opStackL2({
   isNodeAvailable: true,
   milestones: [
     {
+      name: 'Chain stall',
+      link: 'https://status.base.org/incidents/n3q0q4z24b7h',
+      date: '2023-09-05T00:00:00Z',
+      description:
+        'Due to an RPC issue, the sequencer stops producing blocks for ~30 minutes.',
+      type: 'incident',
+    },
+    {
       name: 'Base starts using blobs',
       link: 'https://twitter.com/Optimism/status/1768235284494450922',
       date: '2024-03-14T00:00:00Z',

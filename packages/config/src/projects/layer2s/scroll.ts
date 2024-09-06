@@ -759,6 +759,14 @@ export const scroll: Layer2 = {
   ],
   milestones: [
     {
+      name: 'Batches reverted',
+      link: 'https://status.scroll.io/incidents/44k6s4qg6kcs',
+      date: '2024-07-05T00:00:00Z',
+      description:
+        'To fix a bug in the compression for batches 55 previously committed batches are reverted.',
+      type: 'incident',
+    },
+    {
       name: 'Darwin upgrade',
       link: 'https://scroll.io/blog/proof-recursion-scrolls-darwin-upgrade',
       date: '2024-08-21T00:00:00.00Z',
