@@ -3,11 +3,12 @@ import { writeFileSync } from 'fs'
 import graphvizObject from 'graphviz-wasm'
 
 export async function generateAndOpenGraph(
+  matrix: Record<string, Record<string, number>>,
   clusters: string[][],
 ): Promise<void> {
   const graphviz = await loadGraphvizModule()
 
-  const dot = getSpringGraph(clusters)
+  const dot = getSpringGraph(matrix, clusters)
   const result = graphviz.layout(dot, 'svg', 'neato')
   const outputPath = '/tmp/l2b_graph.html'
   writeFileSync(outputPath, createSvgHtml(result))
@@ -39,7 +40,10 @@ function createSvgHtml(svgString: string): string {
   return html
 }
 
-function getSpringGraph(clusters: string[][]): string {
+function getSpringGraph(
+  matrix: Record<string, Record<string, number>>,
+    clusters: string[][]
+): string {
   let dotFileContent = 'graph G {\n'
   dotFileContent += '  layout=neato;\n'
   dotFileContent += '  start=regular;\n'
@@ -56,10 +60,16 @@ function getSpringGraph(clusters: string[][]): string {
 
   clusters.forEach((cluster, i) => {
     const clusterName = `Cluster ${i}`
-    const clusterColor = generateHexColorFromString(i * (360 / clusters.length))
+        const clusterColor = generateHexColorFromString(i * (360 / clusters.length), 65)
     dotFileContent += `  "${clusterName}" [shape=box, style=filled, color="${clusterColor}"];\n`
 
     for (const entry of cluster) {
+        const totalSimilarity = cluster
+          .filter((x) => x !== entry)
+          .reduce((sum, x) => sum + matrix[entry][x], 0)
+        const average = totalSimilarity / (cluster.length - 1)
+        const clusterColor = generateHexColorFromString(i * (360 / clusters.length), mapRange(0.4, 1, 0, 100, average))
+
       projectColors[entry] ??= []
       projectColors[entry].push(clusterColor)
     }
@@ -75,6 +85,7 @@ function getSpringGraph(clusters: string[][]): string {
 
   clusters.forEach((cluster, i) => {
     const clusterName = `Cluster ${i}`
+
     for (const entry of cluster) {
       dotFileContent += `  "${clusterName}" -- "${entry}";\n`
     }
@@ -84,13 +95,24 @@ function getSpringGraph(clusters: string[][]): string {
   return dotFileContent
 }
 
-function generateHexColorFromString(hue: number): string {
-  const saturation = 90
+function generateHexColorFromString(hue: number, saturation: number): string {
+  // const saturation = 90
   const lightness = 65
 
   const [r, g, b] = hslToRgb(hue, saturation, lightness)
   const toHex = (value: number) => value.toString(16).padStart(2, '0')
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`
+}
+
+function mapRange(
+  min: number, 
+  max: number, 
+  newMin: number, 
+  newMax: number, 
+  value: number
+): number {
+  const scale = (newMax - newMin) / (max - min);
+  return newMin + (value - min) * scale;
 }
 
 function hslToRgb(h: number, s: number, l: number): [number, number, number] {

@@ -1,4 +1,3 @@
-import { Logger } from '@l2beat/backend-tools'
 import { assert } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { command, option, optional } from 'cmd-ts'
@@ -10,6 +9,7 @@ import {
   saveIntoDiscovery,
 } from '../implementations/fetchFlatSources'
 import { Directory, HttpUrl } from './types'
+import { CliLogger } from '@l2beat/shared'
 
 export const FetchFlatSources = command({
   name: 'fetch-flat-sources',
@@ -31,7 +31,7 @@ export const FetchFlatSources = command({
   },
   handler: async (args) => {
     const config = readConfig()
-    const logger = Logger.INFO
+    const logger = new CliLogger()
     if (
       config.discoveryPath !== undefined &&
       !keyInYN(
