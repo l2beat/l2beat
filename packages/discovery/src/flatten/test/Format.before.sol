@@ -39,6 +39,9 @@ contract Test {
 	using { a.b, c.d as + } for uint;
 
 	uint256 foo;
+	uint256[] foo;
+	uint256[2] foo;
+	uint256[2][] foo;
 	address immutable foo;
 	address constant foo;
 

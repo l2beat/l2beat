@@ -31,7 +31,7 @@ const __REPLACE_ME__ = (node: AST.ASTNode, out: OutputStream) => {
 const FORMATTERS: {
   [K in AST.ASTNode['type']]: Formatter<K>
 } = {
-  ArrayTypeName: __REPLACE_ME__,
+  ArrayTypeName,
   AssemblyAssignment: __REPLACE_ME__,
   AssemblyBlock: __REPLACE_ME__,
   AssemblyCall: __REPLACE_ME__,
@@ -103,6 +103,16 @@ const FORMATTERS: {
   VariableDeclaration,
   VariableDeclarationStatement,
   WhileStatement: __REPLACE_ME__,
+}
+
+function ArrayTypeName(node: AST.ArrayTypeName, out: OutputStream) {
+  formatAstNode(node.baseTypeName, out)
+  out.noSpace()
+  out.token('[')
+  if (node.length) {
+    formatAstNode(node.length, out)
+  }
+  out.token(']')
 }
 
 function BinaryOperation(node: AST.BinaryOperation, out: OutputStream) {
@@ -599,9 +609,11 @@ class OutputStream {
       this.hintNoSpace ||
       this.isLineStart ||
       token === ')' ||
+      token === ']' ||
       token === ';' ||
       (token === ',' && this.previous !== ',') ||
       this.previous === '(' ||
+      this.previous === '[' ||
       (token === '}' && this.previous === '{')
     ) {
       this.result += token
