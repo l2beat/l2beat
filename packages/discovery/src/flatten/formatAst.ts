@@ -83,9 +83,9 @@ const FORMATTERS: {
   MemberAccess,
   ModifierDefinition,
   ModifierInvocation,
-  NameValueExpression: __REPLACE_ME__,
-  NameValueList: __REPLACE_ME__,
-  NewExpression: __REPLACE_ME__,
+  NameValueExpression,
+  NameValueList,
+  NewExpression,
   NumberLiteral,
   PragmaDirective,
   ReturnStatement,
@@ -584,6 +584,36 @@ function ModifierInvocation(node: AST.ModifierInvocation, out: OutputStream) {
       suffix: ')',
     })
   }
+}
+
+function NameValueExpression(node: AST.NameValueExpression, out: OutputStream) {
+  formatAstNode(node.expression, out)
+  out.noSpace()
+  formatAstNode(node.arguments, out)
+}
+
+function NameValueList(node: AST.NameValueList, out: OutputStream) {
+  out.token('{')
+  out.noSpace()
+  forEachSeparator(node.identifiers, (n, separate, i) => {
+    const value = node.arguments[i]
+    formatAstNode(n, out)
+    if (value) {
+      out.noSpace()
+      out.token(':')
+      formatAstNode(value, out)
+    }
+    if (separate) {
+      out.token(',')
+    }
+  })
+  out.noSpace()
+  out.token('}')
+}
+
+function NewExpression(node: AST.NewExpression, out: OutputStream) {
+  out.token('new')
+  formatAstNode(node.typeName, out)
 }
 
 function NumberLiteral(node: AST.NumberLiteral, out: OutputStream) {

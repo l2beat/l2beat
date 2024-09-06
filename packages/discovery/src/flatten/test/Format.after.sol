@@ -100,6 +100,8 @@ contract Test {
 		x = y[1:2];
 		x = y[:2];
 		x = y[:];
+		ERC20 token = new ERC20("Poop", "POO", 18);
+		feed.info{value: 10, gas: 800}();
 	}
 
 	function control() {

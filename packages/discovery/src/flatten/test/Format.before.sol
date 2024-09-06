@@ -86,6 +86,8 @@ contract Test {
 		uint256 z = 1 * (2 + 3);
 		address foo = bar();
 		address foo = bar.baz(1, 2);
+		// UNSUPPORTED:
+		// address foo = bar.baz({ x: 1, y: 2 });
 		bool a = !true;
 		x++;
 		++x;
@@ -96,6 +98,8 @@ contract Test {
 		x = y[1:2];
 		x = y[:2];
 		x = y[:];
+		ERC20 token = new ERC20("Poop", "POO", 18);
+		feed.info{value: 10, gas: 800}();
 	}
 
 	function control() {
