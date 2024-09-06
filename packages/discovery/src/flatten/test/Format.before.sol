@@ -13,6 +13,10 @@ contract A is B, C("hello", "world") {}
 
 interface I1 {
 	function foo() public view;
+	function fn(function (uint256, bytes32) returns (bytes32) t);
+	function fn(function () t);
+	function fn(function () internal t);
+	function fn(function () external payable returns (bool, bool) t);
 }
 
 interface I2 is B, C("hello", "world") {}
@@ -33,6 +37,10 @@ event E3(address a, address indexed b) anonymous;
 
 uint256 constant HELLO = 1;
 
+function foo() pure returns(uint256) {
+	return 1;
+}
+
 contract Test {
 	using a.b for uint;
 	using a.b for *;
@@ -46,6 +54,9 @@ contract Test {
 	uint256[2][] foo;
 	address immutable foo;
 	address constant foo;
+	mapping(address => bool) single;
+	mapping(address user => bool allowed) named;
+	mapping(address => mapping(address => int)) double;
 
 	type Money is uint;
 
@@ -83,6 +94,7 @@ contract Test {
 	}
 
 	function control() {
+		uint256 a = b ? c : d;
 		for (uint i = 0; i < 5; i++) {
 			for (uint j = 0; j < 5; j++) {
 				if (j == 2) {

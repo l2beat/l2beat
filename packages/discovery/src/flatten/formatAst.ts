@@ -51,7 +51,7 @@ const FORMATTERS: {
   Break: __REPLACE_ME__,
   BreakStatement,
   CatchClause,
-  Conditional: __REPLACE_ME__,
+  Conditional,
   Continue: __REPLACE_ME__,
   ContinueStatement,
   ContractDefinition,
@@ -68,7 +68,7 @@ const FORMATTERS: {
   ForStatement,
   FunctionCall,
   FunctionDefinition,
-  FunctionTypeName: __REPLACE_ME__,
+  FunctionTypeName,
   HexLiteral,
   HexNumber: __REPLACE_ME__,
   Identifier,
@@ -79,7 +79,7 @@ const FORMATTERS: {
   InheritanceSpecifier,
   InlineAssemblyStatement: __REPLACE_ME__,
   LabelDefinition: DoesNotExistSkip,
-  Mapping: __REPLACE_ME__,
+  Mapping,
   MemberAccess,
   ModifierDefinition: __REPLACE_ME__,
   ModifierInvocation,
@@ -167,6 +167,14 @@ function CatchClause(node: AST.CatchClause, out: OutputStream) {
     })
   }
   Block(wrapBlock(node.body), out, { noEndLine: true })
+}
+
+function Conditional(node: AST.Conditional, out: OutputStream) {
+  formatAstNode(node.condition, out)
+  out.token('?')
+  formatAstNode(node.trueExpression, out)
+  out.token(':')
+  formatAstNode(node.falseExpression, out)
 }
 
 function ContinueStatement(_: AST.ContinueStatement, out: OutputStream) {
@@ -398,6 +406,25 @@ function FunctionDefinition(node: AST.FunctionDefinition, out: OutputStream) {
   out.endLine()
 }
 
+function FunctionTypeName(node: AST.FunctionTypeName, out: OutputStream) {
+  out.token('function')
+  out.token('(')
+  formatNodeList(node.parameterTypes, out, { separator: ',' })
+  out.token(')')
+  if (node.visibility !== 'default') {
+    out.token(node.visibility)
+  }
+  if (node.stateMutability) {
+    out.token(node.stateMutability)
+  }
+  if (node.returnTypes.length > 0) {
+    out.token('returns')
+    out.token('(')
+    formatNodeList(node.returnTypes, out, { separator: ',' })
+    out.token(')')
+  }
+}
+
 function HexLiteral(node: AST.HexLiteral, out: OutputStream) {
   out.token(`hex"${node.value}"`)
 }
@@ -502,6 +529,22 @@ function InheritanceSpecifier(
       suffix: ')',
     })
   }
+}
+
+function Mapping(node: AST.Mapping, out: OutputStream) {
+  out.token('mapping')
+  out.noSpace()
+  out.token('(')
+  formatAstNode(node.keyType, out)
+  if (node.keyName) {
+    formatAstNode(node.keyName, out)
+  }
+  out.token('=>')
+  formatAstNode(node.valueType, out)
+  if (node.valueName) {
+    formatAstNode(node.valueName, out)
+  }
+  out.token(')')
 }
 
 function MemberAccess(node: AST.MemberAccess, out: OutputStream) {
