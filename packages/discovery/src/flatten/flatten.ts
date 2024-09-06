@@ -7,7 +7,6 @@ import {
   ParsedFile,
   ParsedFilesManager,
 } from './ParsedFilesManager'
-import { formatAst } from './formatAst'
 import { generateInterfaceSourceFromContract } from './generateInterfaceSourceFromContract'
 import { FlattenOptions } from './types'
 
@@ -36,7 +35,7 @@ export function flattenStartingFrom(
     rootContract,
   )
 
-  let flatSource = formatAst(rootContract.declaration.ast)
+  let flatSource = formatSource(rootContract.declaration.content)
   // Depth first search
   const visited = new Set<string>()
   const stack: ContractNameFilePair[] = getStackEntries(rootContract).reverse()
@@ -56,18 +55,19 @@ export function flattenStartingFrom(
     }
     visited.add(uniqueContractId)
 
-    let ast = foundContract.declaration.ast
+    const { declaration: contract } = foundContract
+    let content = contract.content
     if (
       entryIsPurelyDynamic(relationDictionary, foundContract) &&
       isContract(foundContract)
     ) {
-      ast = generateInterfaceSourceFromContract(foundContract.declaration)
+      content = generateInterfaceSourceFromContract(foundContract.declaration)
     }
-    flatSource = formatAst(ast) + '\n\n' + flatSource
+    flatSource = formatSource(content) + flatSource
     stack.push(...getStackEntries(foundContract))
   }
 
-  return changeLineEndingsToUnix(flatSource)
+  return changeLineEndingsToUnix(flatSource.trimEnd())
 }
 
 function entryIsPurelyDynamic(
@@ -121,6 +121,10 @@ function isContract(entry: DeclarationFilePair): boolean {
     entry.declaration.type === 'contract' ||
     entry.declaration.type === 'abstract'
   )
+}
+
+function formatSource(source: string): string {
+  return source + '\n\n'
 }
 
 function changeLineEndingsToUnix(source: string): string {
