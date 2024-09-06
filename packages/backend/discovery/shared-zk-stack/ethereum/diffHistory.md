@@ -8,7 +8,114 @@ Generated with discovered.json: 0x954bbe4a7a75f6047280a13af0431f31d4dc3168
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+This update introduces a new ProtocolUpgradeHandler contract, with a new attached Governance system. The ProtocolUpgradeHandler is pendingOwner in all shared ZK stack contracts and will supposedly be used as the new owner of the central ProxyAdmin. It currently has no gov roles assigned (yet).
+
+The L2 part of the Governance will be added in a separate config / PR.
+
+### ProtocolUpgradeHandler.sol
+
+Keeps track of the upgrade stages, executes upgrades, freezes contracts (all ZK shared contracts). (needs ProxyAdmin Owner and owner permissions)
+
+check out my ART:
+```
+                     +----------------+
+                     |     START      |
+                     | (UpgradeState  |
+                     |     .None)     |
+                     +----------------+
+                              |
+      L2_PROTOCOL_GOVERNOR    |  (Currently timelock with 3 L2 Gov contracts)
+                              v
+                     +----------------+
+                     |    Proposal    |
+                     | (UpgradeState  |
+                     |     .None)     |
+                     +----------------+
+                              |
+    Timelock L2 (minDelay 0)  | message to L1
+                              v
+         +---------------------------------------------+
+         |           Legal Veto Period                 |
+         | (3 days, extendable to 7 days by Guardians) |
+         |        (UpgradeState.LegalVetoPeriod)       |
+         +---------------------------------------------+
+                              |
+                              | Time passes
+                              v 
+                     +----------------+ nobody   +----------------------+
+                     |    Waiting     | approves |                      |
+                     | (UpgradeState  |--------> | UpgradeState.expired |
+                     |   .Waiting)    | 30 days  |                      |
+                     +----------------+          +----------------------+
+                         /        \
+     Security Council  /            \ Guardians approve within
+approves (immediate)  /              \  waiting period (+ 30d !!)
+                     v                v 
+         +---------------------------------+ 
+         |       Execution Pending         | 
+         | (UpgradeState.ExecutionPending) | 
+         +---------------------------------+ 
+                          |
+                          | 1 day
+                          v  
+                 +-----------------+
+                 |      Ready      |
+                 | (UpgradeState   |
+                 |    .Ready)      |
+                 +-----------------+
+                 | 
+                 |        
+                 |  Executor   or
+                 |  Security Council
+                 v 
+         +-----------------+
+         |    Executed     |
+         | (UpgradeState   |
+         |     .Done)      |
+         +-----------------+
+
+Actors:
+- L2 Timelock Governors: Initiate the upgrade proposal
+- Guardians: Can extend legal veto period and/or approve within 30d delay
+- Security Council: Can approve immediately after legal waiting (3d)
+- Executor: Specified address that can execute the upgrade when ready
+
+UpgradeState Enum:
+- None: Initial state or non-existent upgrade
+- LegalVetoPeriod: During the legal veto period
+- Waiting: Waiting for approval by SC or Guardians
+- ExecutionPending: Approved, waiting for execution delay (1d)
+- Ready: Ready for execution
+- Done: Upgrade executed
+- Expired: Upgrade expired without execution
+```
+
+Apart from this non-emergency track, there is `executeEmergencyUpgrade()` which has no delay. For this, SC, ZK_FOUNDATION MS and Guardians must all approve. (Uses eip712 standard)
+
+Delay with current vars: 
+- L2 proposal, then SC: messageToL1delay+3d+1d = ~5d (The ProtocolUpgradeHandler calls `proveL2MessageInclusion()` which needs the upgrade message batch from L2 to be executed on L1, thus currently ~1d messageToL1delay)
+- L2 Proposal, then Guardians: messageToL1delay+3d+30d+1d = ~35d
+- L1 'emergency' proposal by SC, ZK_FOUNDATION MS, Guardians = No delay
+
+### EmergencyUpgradeBoard.sol
+
+Uses eip712 standard to check signatures from SC, ZK_FOUNDATION MS and Guardians to push emergency approvals through the ProtocolUpgradeHandler.
+
+### SecurityCouncil
+
+12 signers custom multisig (some signers are MS themselves) with varying thresholds for certain actions. (3-9) Has eip712 support.
+
+### Guardians
+
+8 signers custom multisig (all signers are 1/1 GnosisSafes) with eip712 support. `"APPROVE_UPGRADE_GUARDIANS_THRESHOLD": 5`
+
+### ZK Foundation Safe
+
+New 3/5 GnosisSafe currently only used in by the EmergencyUpgradeBoard.
+
+### Various GnosisSafes in the diff
+
+Belong to Guardians or SC signers, there are no superfluous contracts in the config.
 
 ## Watched changes
 
