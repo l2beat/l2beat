@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xc93465a0d26f3cc47cb0a26a602c2d2c7126ef01
+Generated with discovered.json: 0x954bbe4a7a75f6047280a13af0431f31d4dc3168
 
-# Diff at Fri, 06 Sep 2024 16:43:10 GMT:
+# Diff at Fri, 06 Sep 2024 17:05:06 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
 - comparing to: main@fd881462cca0d7ef4519f907f3c6cfd5fe1cde8f block: 20663562
-- current block number: 20692793
+- current block number: 20692926
 
 ## Description
 
@@ -82,12 +82,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract DiamondProxy (0x32400084C286CF3E17e7B677ea9583e60a000324)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract GnosisSafe (0x34Ea62D4b9bBB8AD927eFB6ab31E3Ab3474aC93a)
     +++ description: None
 ```
@@ -118,19 +112,55 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract GnosisSafe (0x590926dBCDfD19627c3BbD2A6Eb96DeC7a3AbF69)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract GnosisSafe (0x69462a81ba94D64c404575f1899a464F123497A2)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract Verifier (0x70F3FBf8a427155185Ec90BED8a3434203de9604)
+    contract GnosisSafe (0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x725065b4eB99294BaaE57AdDA9c32e42F453FA8A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x84BF0Ac41Eeb74373Ddddae8b7055Bf2bD3CE6E0)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
     contract ProtocolUpgradeHandler (0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x9B39Ea22e838B316Ea7D74e7C4B07d91D51ccA88)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x9B8Be3278B7F0168D82059eb6BAc5991DcdfA803)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xB7aC3A79A23B148c85fba259712c5A1e7ad0ca44)
     +++ description: None
 ```
 
@@ -148,6 +178,18 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract GnosisSafe (0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xCe7a3dFcc35602155809920Ff65e093aa726f6cf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract Guardians (0xD677e09324F8Bb3cC64F009973693f751c33A888)
     +++ description: None
 ```
@@ -158,42 +200,62 @@ Provide description of changes. This section will be preserved.
     +++ description: None
 ```
 
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xFB90Da9DC45378A1B50775Beb03aD10C7E8DC231)
+    +++ description: None
+```
+
 ## Source code changes
 
 ```diff
-.../ethereum/.flat/DiamondProxy/AdminFacet.1.sol   | 1975 ++++++++++++++++++
- .../ethereum/.flat/DiamondProxy/DiamondProxy.p.sol | 1468 +++++++++++++
- .../.flat/DiamondProxy/ExecutorFacet.4.sol         | 1187 +++++++++++
- .../ethereum/.flat/DiamondProxy/GettersFacet.2.sol | 2186 ++++++++++++++++++++
- .../ethereum/.flat/DiamondProxy/MailboxFacet.3.sol | 1470 +++++++++++++
- .../ethereum/.flat/EmergencyUpgradeBoard.sol       | 1233 +++++++++++
- .../GnosisSafe.sol                                 |  953 +++++++++
+.../ethereum/.flat/EmergencyUpgradeBoard.sol       | 1233 +++++++++++++++++
+ .../GnosisSafe.sol                                 |  953 +++++++++++++
  .../GnosisSafeProxy.p.sol                          |   35 +
- .../GnosisSafe.sol                                 |  953 +++++++++
+ .../GnosisSafe.sol                                 |  953 +++++++++++++
  .../GnosisSafeProxy.p.sol                          |   35 +
- .../GnosisSafe.sol                                 |  953 +++++++++
+ .../GnosisSafe.sol                                 |  953 +++++++++++++
  .../GnosisSafeProxy.p.sol                          |   35 +
- .../GnosisSafe.sol                                 |  953 +++++++++
+ .../GnosisSafe.sol                                 |  953 +++++++++++++
  .../GnosisSafeProxy.p.sol                          |   35 +
- .../GnosisSafe.sol                                 |  953 +++++++++
+ .../GnosisSafe.sol                                 |  953 +++++++++++++
  .../GnosisSafeProxy.p.sol                          |   35 +
- .../GnosisSafe.sol                                 |  953 +++++++++
+ .../GnosisSafe.sol                                 |  953 +++++++++++++
  .../GnosisSafeProxy.p.sol                          |   35 +
- .../GnosisSafe.sol                                 |  953 +++++++++
+ .../GnosisSafe.sol                                 |  953 +++++++++++++
  .../GnosisSafeProxy.p.sol                          |   35 +
- .../GnosisSafe.sol                                 |  953 +++++++++
+ .../GnosisSafe.sol                                 |  953 +++++++++++++
  .../GnosisSafeProxy.p.sol                          |   35 +
- .../GnosisSafe.sol                                 |  953 +++++++++
+ .../GnosisSafe.sol                                 |  953 +++++++++++++
  .../GnosisSafeProxy.p.sol                          |   35 +
- .../GnosisSafe.sol                                 |  953 +++++++++
+ .../GnosisSafe.sol                                 |  953 +++++++++++++
  .../GnosisSafeProxy.p.sol                          |   35 +
- .../GnosisSafe.sol                                 |  953 +++++++++
+ .../GnosisSafe.sol                                 |  953 +++++++++++++
  .../GnosisSafeProxy.p.sol                          |   35 +
- .../shared-zk-stack/ethereum/.flat/Guardians.sol   | 1439 +++++++++++++
- .../ethereum/.flat/ProtocolUpgradeHandler.sol      |  605 ++++++
- .../ethereum/.flat/SecurityCouncil.sol             | 1389 +++++++++++++
- .../shared-zk-stack/ethereum/.flat/Verifier.sol    | 1706 +++++++++++++++
- 32 files changed, 25526 insertions(+)
+ .../GnosisSafe.sol                                 |  953 +++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../GnosisSafe.sol                                 |  953 +++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../GnosisSafe.sol                                 |  953 +++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../GnosisSafe.sol                                 |  953 +++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../GnosisSafe.sol                                 |  953 +++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../GnosisSafe.sol                                 |  953 +++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../GnosisSafe.sol                                 |  953 +++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../GnosisSafe.sol                                 |  953 +++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../GnosisSafe.sol                                 |  953 +++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../GnosisSafe.sol                                 |  953 +++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../shared-zk-stack/ethereum/.flat/Guardians.sol   | 1439 ++++++++++++++++++++
+ .../ethereum/.flat/ProtocolUpgradeHandler.sol      |  605 ++++++++
+ .../ethereum/.flat/SecurityCouncil.sol             | 1389 +++++++++++++++++++
+ 46 files changed, 25414 insertions(+)
 ```
 
 Generated with discovered.json: 0xe131f21db446bf93a860e4e5e83e4f27e772bd97

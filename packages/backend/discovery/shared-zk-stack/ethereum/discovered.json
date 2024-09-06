@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 20692793,
-  "configHash": "0x897fdb6fb1f6c34118d11c2f55033666c8e47e8e3754543e6a1ed8ea5e286ced",
+  "blockNumber": 20692926,
+  "configHash": "0x3e9838797390d2b37cef8da45ce842fa346551e78cfd78111375e77ffc7380f6",
   "version": 14,
   "contracts": [
     {
@@ -7953,184 +7953,6 @@
       "derivedName": "Bridgehub"
     },
     {
-      "name": "DiamondProxy",
-      "address": "0x32400084C286CF3E17e7B677ea9583e60a000324",
-      "proxyType": "EIP2535 diamond proxy",
-      "sinceTimestamp": 1676315375,
-      "values": {
-        "$immutable": false,
-        "$implementation": [
-          "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
-          "0xE60E94fCCb18a81D501a38959E532C0A85A1be89",
-          "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C",
-          "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
-        ],
-        "baseTokenGasPriceMultiplierDenominator": 1,
-        "baseTokenGasPriceMultiplierNominator": 1,
-        "facetAddresses": [
-          "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
-          "0xE60E94fCCb18a81D501a38959E532C0A85A1be89",
-          "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C",
-          "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
-        ],
-        "facets": [
-          {
-            "addr": "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
-            "selectors": [
-              "0x0e18b681",
-              "0x64bf8d66",
-              "0xa9f6d941",
-              "0x27ae4c16",
-              "0x4dd18bf5",
-              "0x1cc5d103",
-              "0xbe6f11cf",
-              "0xe76db865",
-              "0x235d9eb5",
-              "0x21f603d7",
-              "0x4623c91d",
-              "0x17338945",
-              "0xfc57565f"
-            ]
-          },
-          {
-            "addr": "0xE60E94fCCb18a81D501a38959E532C0A85A1be89",
-            "selectors": [
-              "0x1de72e34",
-              "0xea6c029c",
-              "0xcdffacc6",
-              "0x52ef6b2c",
-              "0xadfca15e",
-              "0x7a0ed627",
-              "0x6e9960c3",
-              "0x98acd7a6",
-              "0x086a56f8",
-              "0x3591c1a0",
-              "0x79823c9a",
-              "0xd86970d8",
-              "0xfd791f3c",
-              "0xe5355c75",
-              "0x9d1b5a81",
-              "0x7b30c8da",
-              "0xd0468156",
-              "0x631f4bac",
-              "0x0ec6b0b7",
-              "0x33ce93fe",
-              "0x06d49e5b",
-              "0xf5c1182c",
-              "0x5518c73b",
-              "0xdb1f0bf9",
-              "0xb8c2f66f",
-              "0xef3f0bae",
-              "0xfe26699e",
-              "0x39607382",
-              "0xaf6a2dcd",
-              "0xa1954fc5",
-              "0x46657fe9",
-              "0x18e3a941",
-              "0x29b98c67",
-              "0xbd7c5412",
-              "0xc3bbd2d7",
-              "0xe81e0ba1",
-              "0xfacd743b",
-              "0x9cd939e4",
-              "0x56142d7a",
-              "0xb22dd78e",
-              "0x74f4d30d"
-            ]
-          },
-          {
-            "addr": "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C",
-            "selectors": [
-              "0x12f43dab",
-              "0x6c0960f9",
-              "0xb473318e",
-              "0x042901c7",
-              "0x263b7f8e",
-              "0xe4948f43",
-              "0xeb672419",
-              "0xc924de35"
-            ]
-          },
-          {
-            "addr": "0xaD193aDe635576d8e9f7ada71Af2137b16c64075",
-            "selectors": [
-              "0x701f58c5",
-              "0x6edd4f12",
-              "0xc3d93e7c",
-              "0x6f497ac6",
-              "0x7f61885c",
-              "0xc37533bb",
-              "0x97c09d34",
-              "0x0f23da43"
-            ]
-          }
-        ],
-        "getAdmin": "0x2cf3bD6a9056b39999F3883955E183F655345063",
-        "getBaseToken": "0x0000000000000000000000000000000000000001",
-        "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
-        "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 3260012,
-        "getL2BootloaderBytecodeHash": "0x010008e742608b21bf7eb23c1a9d0602047e3618b464c9b59c0fba3b3d7ab66e",
-        "getL2DefaultAccountBytecodeHash": "0x01000563374c277a2c1e34659a2a1e87371bb6d852ce142022d497bfb50b9e32",
-        "getL2SystemContractsUpgradeBatchNumber": 0,
-        "getL2SystemContractsUpgradeBlockNumber": 0,
-        "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 53,
-        "getPriorityTxMaxGasLimit": 72000000,
-        "getProtocolVersion": 103079215106,
-        "getPubdataPricingMode": 0,
-        "getSemverProtocolVersion": [0, 24, 2],
-        "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 491773,
-        "getTotalBatchesExecuted": 491727,
-        "getTotalBatchesVerified": 491768,
-        "getTotalBlocksCommitted": 491773,
-        "getTotalBlocksExecuted": 491727,
-        "getTotalBlocksVerified": 491768,
-        "getTotalPriorityTxs": 3260065,
-        "getVerifier": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
-        "getVerifierParams": {
-          "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
-          "recursionLeafLevelVkHash": "0xf9664f4324c1400fa5c3822d667f30e873f53f1b8033180cd15fe41c1e2355c6",
-          "recursionCircuitsSetVksHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
-        },
-        "isDiamondStorageFrozen": false,
-        "l2LogsRootHash": [
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x79d356bbe291d9c82f3d49e431e5bca2d4c39a5332058f9a39025ffaec36e708",
-          "0x758b2c324c08e32ba67a1971e6acdb6261b3af7db9f5d053919f60163fb70559",
-          "0x443c0ff22759be7b23f47f647ef90739e60e2604fd86a4fb52da51285659f46b",
-          "0x7ddd61320147edc90732f9f2516ea65186f65e8b285b21fba15ed8fcc13c713b"
-        ],
-        "priorityQueueFrontOperation": {
-          "canonicalTxHash": "0x63ba4c625a087fd817e321f8ab78929a106e4c3b4a50d282704fe6edd771713d",
-          "expirationTimestamp": 1725554735,
-          "layer2Tip": 0
-        },
-        "storedBatchHash": [
-          "0x0ac272ab86763ec2bc093492128eb0bb7afac0ddb385e4ceb2fdb107f2946f2b",
-          "0x476876ca9c9fa49b1390ae47a04f7434936b77c22af7a055077f2e3486e6fb65",
-          "0x41de068e7043f90c7a5b6c9c80251979c333dc931859a2ec10ef17c9032db250",
-          "0x545ada4b4f784c3a471137da517a9f99ae401c7daa63d951a20222605b12ccbf",
-          "0xdf353be1f590760d533530c19b53309dde820f3c962a5317c89bcd299130c834"
-        ],
-        "storedBlockHash": [
-          "0x0ac272ab86763ec2bc093492128eb0bb7afac0ddb385e4ceb2fdb107f2946f2b",
-          "0x476876ca9c9fa49b1390ae47a04f7434936b77c22af7a055077f2e3486e6fb65",
-          "0x41de068e7043f90c7a5b6c9c80251979c333dc931859a2ec10ef17c9032db250",
-          "0x545ada4b4f784c3a471137da517a9f99ae401c7daa63d951a20222605b12ccbf",
-          "0xdf353be1f590760d533530c19b53309dde820f3c962a5317c89bcd299130c834"
-        ]
-      },
-      "errors": {
-        "getName": "Execution reverted",
-        "l2LogsRootHash": "Too many values. Update configuration to explore fully",
-        "storedBatchHash": "Too many values. Update configuration to explore fully",
-        "storedBlockHash": "Too many values. Update configuration to explore fully"
-      }
-    },
-    {
       "name": "GnosisSafe",
       "address": "0x34Ea62D4b9bBB8AD927eFB6ab31E3Ab3474aC93a",
       "template": "GnosisSafe",
@@ -8288,6 +8110,26 @@
       }
     },
     {
+      "name": "GnosisSafe",
+      "address": "0x590926dBCDfD19627c3BbD2A6Eb96DeC7a3AbF69",
+      "template": "GnosisSafe",
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1720814195,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": ["0x0e621b0A275A207211e161Ee997aA80661Bc1bcf"],
+        "$threshold": 1,
+        "domainSeparator": "0xbb8cfa8774ee78c158a0b696258e52598f6a18e51eeb8e88670c7f80ade08f8c",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 0,
+        "VERSION": "1.3.0"
+      }
+    },
+    {
       "name": "ValidatorTimelock",
       "address": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
       "sinceTimestamp": 1717520615,
@@ -8350,12 +8192,70 @@
       }
     },
     {
-      "name": "Verifier",
-      "address": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
-      "sinceTimestamp": 1717507391,
+      "name": "GnosisSafe",
+      "address": "0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0",
+      "template": "GnosisSafe",
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1720814051,
       "values": {
-        "$immutable": true,
-        "verificationKeyHash": "0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2"
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": ["0x3620B9e7c75E09cCC37458c7B6EE6c23D8Ee4f0f"],
+        "$threshold": 1,
+        "domainSeparator": "0x34cfad626b7297f5a86f1c6dc31bc8bf00160b739ac22f8c3d3cb092dfb10e8e",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 0,
+        "VERSION": "1.3.0"
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "0x725065b4eB99294BaaE57AdDA9c32e42F453FA8A",
+      "template": "GnosisSafe",
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1721854115,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": ["0x6F2A8Ee9452ba7d336b3fba03caC27f7818AeAD6"],
+        "$threshold": 1,
+        "domainSeparator": "0x0ced660004f5095df7762f0dbefcbf5716e6c3bac0d6b138f3184debb19a425a",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 0,
+        "VERSION": "1.3.0"
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "0x84BF0Ac41Eeb74373Ddddae8b7055Bf2bD3CE6E0",
+      "template": "GnosisSafe",
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1721755031,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0x09040e439Ca5F1CF50CF4e9BE9b1F1FB8ef1ce07",
+          "0x2Fd57fdFba5aABbFdc43Fd450c2817D1401E72F2",
+          "0x0F3F84b0aaaA6f577468F6708e7A5E09e59dbfA1",
+          "0xB2Be7F1957Fe3C3Be912e8C736d7e6e8459d386c",
+          "0xDFbD13B78010BF2110a168FA59b682c8a6D96564",
+          "0x3133781381bC58564D5e9888c208ED0b7BD7721F"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xa9f70aaa6c7cfdaa67fafe694ff2b98166fca2a9f73c398e38e4041294a82692",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 6 (33%)",
+        "nonce": 2,
+        "VERSION": "1.3.0"
       }
     },
     {
@@ -8374,6 +8274,82 @@
         "SHARED_BRIDGE": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "STATE_TRANSITION_MANAGER": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
         "ZKSYNC_ERA": "0x32400084C286CF3E17e7B677ea9583e60a000324"
+      },
+      "derivedName": "ProtocolUpgradeHandler"
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "0x9B39Ea22e838B316Ea7D74e7C4B07d91D51ccA88",
+      "template": "GnosisSafe",
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1721748419,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0xcD6998D20876155D37aEC0dB4C19d63EEAEf058F",
+          "0xDfe6610c2357a0BfECF788e52697554aF5F35174"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0xf9b2e53195bad3bbaff6d49c13c65400176ea7f034402528250b7875f990ea27",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 2 (50%)",
+        "nonce": 0,
+        "VERSION": "1.3.0"
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "0x9B8Be3278B7F0168D82059eb6BAc5991DcdfA803",
+      "template": "GnosisSafe",
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1721951675,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0x7DcA405b791CdE56aA60f036C95ec2Efe283647e",
+          "0x239cCb0a6Fc59fc6A53584613707F815503a6aAF",
+          "0xC2Cd2330A575af7f124E07820E7c4AbfaeD02392",
+          "0xcb218CD15fAa4dbAc294b15C7cE99482783d7ad6",
+          "0xd757D6A02cD5af9AEF163D7eB8034f75ac22B553",
+          "0xBab69188f07F2569A41C5B875e147216D974eB3e"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0x8990652fa175690b7ef4cf7f1ae85971a55c587ff8e565372999ea62269e9742",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 6 (17%)",
+        "nonce": 9,
+        "VERSION": "1.3.0"
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "0xB7aC3A79A23B148c85fba259712c5A1e7ad0ca44",
+      "template": "GnosisSafe",
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1721772071,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0x6c25cda91Bef3A4Ba1e4488b4ac276aA02921D67",
+          "0x896E7D2108245ae8d5Aa7E4763024b3945AEd77F",
+          "0xA1AF6Ed43eDeE80F1913ea44E9DC2A93A738EB44",
+          "0x57855BeeB39C56ca4Ff41C1D039B0F022ED08cea"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0x23783d9d5ae0c0d12c7218ba04c50305272dd83f04c5813e3da6706fca6286c1",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 4 (25%)",
+        "nonce": 1,
+        "VERSION": "1.3.0"
       }
     },
     {
@@ -8426,7 +8402,14 @@
           "0x34Ea62D4b9bBB8AD927eFB6ab31E3Ab3474aC93a",
           "0x35eA56fd9eAd2567F339Eb9564B6940b9DD5653F",
           "0x3888777686F0b0d8c3108fc22ad8DE9E049bE26F",
-          "0x69462a81ba94D64c404575f1899a464F123497A2"
+          "0x69462a81ba94D64c404575f1899a464F123497A2",
+          "0x725065b4eB99294BaaE57AdDA9c32e42F453FA8A",
+          "0x84BF0Ac41Eeb74373Ddddae8b7055Bf2bD3CE6E0",
+          "0x9B39Ea22e838B316Ea7D74e7C4B07d91D51ccA88",
+          "0x9B8Be3278B7F0168D82059eb6BAc5991DcdfA803",
+          "0xB7aC3A79A23B148c85fba259712c5A1e7ad0ca44",
+          "0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e",
+          "0xFB90Da9DC45378A1B50775Beb03aD10C7E8DC231"
         ],
         "PROTOCOL_UPGRADE_HANDLER": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
         "RECOMMENDED_SOFT_FREEZE_THRESHOLD": 3,
@@ -8437,9 +8420,7 @@
         "UNFREEZE_THRESHOLD": 9,
         "unfreezeNonce": 0
       },
-      "errors": {
-        "members": "Too many values. Update configuration to explore fully"
-      }
+      "derivedName": "SecurityCouncil"
     },
     {
       "name": "ProxyAdmin",
@@ -8501,6 +8482,53 @@
       "derivedName": "StateTransitionManager"
     },
     {
+      "name": "GnosisSafe",
+      "address": "0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e",
+      "template": "GnosisSafe",
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1722034463,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0x5B87156f1e4Da117c5B49571aa80C836b007e479",
+          "0xB5676D771b538D8E184EaCB1Cc7a963a4bF99252",
+          "0x310E84b3063bBC5C86ED4Bf4D25E2fc3DF1B9735",
+          "0x2AcE51D896fF08587DC381E0961b777599E4562c",
+          "0x0298512Bf8e7AC383c0A353354E3Ff66216654Ac",
+          "0xD775a6f432f97c03718F9adf97e31D8A6431e571"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0x8a595a96d77e992bb9ff8b20fc59215c86b17154838b5386d6b264728a1f4462",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 6 (17%)",
+        "nonce": 2,
+        "VERSION": "1.3.0"
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "0xCe7a3dFcc35602155809920Ff65e093aa726f6cf",
+      "template": "GnosisSafe",
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1720814279,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": ["0x8b0c64CcaB94d4618Ef834F396F622f61F2b013D"],
+        "$threshold": 1,
+        "domainSeparator": "0x5c8369ad7fcba86448de116769e02200c80a424011c14ba09952def6873dbef7",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 0,
+        "VERSION": "1.3.0"
+      }
+    },
+    {
       "name": "Guardians",
       "address": "0xD677e09324F8Bb3cC64F009973693f751c33A888",
       "sinceTimestamp": 1723146191,
@@ -8524,16 +8552,17 @@
           "0x178D8Eb1A1fb81B5102808A83318Bb04C6a9fC6D",
           "0x2A90830083C5Ca1f18d7AA7fCDC2998f93475384",
           "0x538612F6eba6ff80FBD95D60dCDee16b8FfF2c0f",
-          "0x55c671BcE13120387Ded710A1d1b80C0e3d8E857"
+          "0x55c671BcE13120387Ded710A1d1b80C0e3d8E857",
+          "0x590926dBCDfD19627c3BbD2A6Eb96DeC7a3AbF69",
+          "0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0",
+          "0xCe7a3dFcc35602155809920Ff65e093aa726f6cf"
         ],
         "nonce": 0,
         "PROPOSE_L2_GOVERNOR_PROPOSAL_THRESHOLD": 5,
         "PROTOCOL_UPGRADE_HANDLER": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
         "ZKSYNC_ERA": "0x32400084C286CF3E17e7B677ea9583e60a000324"
       },
-      "errors": {
-        "members": "Too many values. Update configuration to explore fully"
-      }
+      "derivedName": "Guardians"
     },
     {
       "name": "L1SharedBridge",
@@ -8583,20 +8612,47 @@
         "SECURITY_COUNCIL": "0xBDFfCC71FE84020238F2990a6D2954e87355De0D",
         "ZK_FOUNDATION_SAFE": "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c"
       }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "0xFB90Da9DC45378A1B50775Beb03aD10C7E8DC231",
+      "template": "GnosisSafe",
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1721992847,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": ["0x2F73918C0F92FA9aD3Cfa87611677345a98CEa6f"],
+        "$threshold": 1,
+        "domainSeparator": "0x8e381b2666c3c7b1f0287ee4f112c5d982826f10fc93f5327ebe854b09380ca1",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 0,
+        "VERSION": "1.3.0"
+      }
     }
   ],
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x0000000000000000000000000000000000000001" },
+    { "address": "0x0298512Bf8e7AC383c0A353354E3Ff66216654Ac" },
+    { "address": "0x09040e439Ca5F1CF50CF4e9BE9b1F1FB8ef1ce07" },
     { "address": "0x0B2E7ffbcD1E3e6f5034555Fb638889FE7564709" },
     { "address": "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99" },
+    { "address": "0x0F3F84b0aaaA6f577468F6708e7A5E09e59dbfA1" },
     { "address": "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137" },
     { "address": "0x1462112B5abdc5577Cbd25a9cAbB4C4d5979D697" },
     { "address": "0x160669864cDe95c190364ad01eDfbAA32E9DA430" },
     { "address": "0x227230CD05e89f41E67df3E5fC61B18411d147A9" },
+    { "address": "0x239cCb0a6Fc59fc6A53584613707F815503a6aAF" },
     { "address": "0x23aaaD48A6409d98Fcc2e9061CD2F437ff4E5839" },
-    { "address": "0x2A71F929fC583Db245B1563996de76Ab9d9A3DAf" },
+    { "address": "0x2AcE51D896fF08587DC381E0961b777599E4562c" },
+    { "address": "0x2F73918C0F92FA9aD3Cfa87611677345a98CEa6f" },
+    { "address": "0x2Fd57fdFba5aABbFdc43Fd450c2817D1401E72F2" },
     { "address": "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc" },
+    { "address": "0x310E84b3063bBC5C86ED4Bf4D25E2fc3DF1B9735" },
+    { "address": "0x3133781381bC58564D5e9888c208ED0b7BD7721F" },
     { "address": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092" },
     { "address": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8" },
     { "address": "0x371F6E45784E7DFBEA2dc18Edb68cD90aD530E6c" },
@@ -8605,32 +8661,44 @@
     { "address": "0x441e5c8910Ef39996B2D01499509861228cbc2d1" },
     { "address": "0x53A26f48ED901336D7C165B85E6F43d9F8dBeAA7" },
     { "address": "0x56B3120c32AE9C3188fafc5Cc542F9c53B0b2222" },
+    { "address": "0x57855BeeB39C56ca4Ff41C1D039B0F022ED08cea" },
+    { "address": "0x5B87156f1e4Da117c5B49571aa80C836b007e479" },
     { "address": "0x5F18752518d81E4AFbB28341EDFba9Aa0E16707C" },
-    { "address": "0x610e45F112e0c8a9aA7137677C83E7A198A1b991" },
     { "address": "0x663ec2BfB273447DC236A646d6dAAA333aAB08f7" },
     { "address": "0x670B24610DF99b1685aEAC0dfD5307B92e0cF4d7" },
     { "address": "0x6754CaFCe32a1bD1A8c88ABc19a113365b85917F" },
+    { "address": "0x6c25cda91Bef3A4Ba1e4488b4ac276aA02921D67" },
     { "address": "0x6DA259FD6b42D6bAB9D22C01418F87c13a271478" },
     { "address": "0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df" },
     { "address": "0x702caCafA54B88e9c54449563Fb2e496e85c78b7" },
     { "address": "0x71d84c3404a6ae258E6471d4934B96a2033F9438" },
     { "address": "0x78834238C8F4CA04c73256D221cd6a1d29b9A81c" },
     { "address": "0x7be0FF978bB8C96F78fb1B1fC6c04b5b572a80B8" },
+    { "address": "0x7DcA405b791CdE56aA60f036C95ec2Efe283647e" },
     { "address": "0x7e0d106fD2Cee9aa846bc419944f5eD8F2935135" },
     { "address": "0x7fEA26A181A792B5107ee0a31e434F5dBcbBe0B7" },
+    { "address": "0x896E7D2108245ae8d5Aa7E4763024b3945AEd77F" },
+    { "address": "0xA1AF6Ed43eDeE80F1913ea44E9DC2A93A738EB44" },
     { "address": "0xa376AaF645dbd9b4f501B2A8a97bc21DcA15B001" },
     { "address": "0xa5D0084A766203b463b3164DFc49D91509C12daB" },
     { "address": "0xaaAdAa000867fb883089B7e528d7eA96937b777f" },
     { "address": "0xACBD581D1BedB2F71d2F5F01f881586e0623d591" },
-    { "address": "0xB1072fD3a5EA72B42e063e5A61963d00eeF655DF" },
+    { "address": "0xB2Be7F1957Fe3C3Be912e8C736d7e6e8459d386c" },
+    { "address": "0xB5676D771b538D8E184EaCB1Cc7a963a4bF99252" },
     { "address": "0xb799FF3DeF706045B5061B22d748E8F52737415d" },
     { "address": "0xb9d48DaF26F3CBE01A959F09f98E8a2eC8204122" },
+    { "address": "0xBab69188f07F2569A41C5B875e147216D974eB3e" },
+    { "address": "0xC2Cd2330A575af7f124E07820E7c4AbfaeD02392" },
+    { "address": "0xcb218CD15fAa4dbAc294b15C7cE99482783d7ad6" },
+    { "address": "0xcD6998D20876155D37aEC0dB4C19d63EEAEf058F" },
     { "address": "0xd5966E3dd25f6086b6aD7D7Fa3292d11b988da95" },
-    { "address": "0xD9b0579e2B8387fE153201631EBC4be9dEFA1A6d" },
+    { "address": "0xd757D6A02cD5af9AEF163D7eB8034f75ac22B553" },
+    { "address": "0xD775a6f432f97c03718F9adf97e31D8A6431e571" },
+    { "address": "0xDFbD13B78010BF2110a168FA59b682c8a6D96564" },
+    { "address": "0xDfe6610c2357a0BfECF788e52697554aF5F35174" },
     { "address": "0xE4F4FdaD61f192EBe9a32b2d2fB47A5802891e14" },
     { "address": "0xe79af29d618141Ffef951B240b250d47030D56d7" },
     { "address": "0xe968FB773e54f77350A427B057FDB44e6592E338" },
-    { "address": "0xEE8fAC9051243379dAAA02c24e07D29F22d73b4E" },
     { "address": "0xF3d913D11dd577DDe5da4f2AA9611Aa799185C46" },
     { "address": "0xFAdb20191Ab38362C50f52909817B74214CA79AE" },
     { "address": "0xfd03dA3aeb6807a98db96C1704Ea4CFf031BaEd2" }
@@ -8745,9 +8813,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x32400084C286CF3E17e7B677ea9583e60a000324": [
-      "constructor(uint256 _chainId, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)"
-    ],
     "0x34Ea62D4b9bBB8AD927eFB6ab31E3Ab3474aC93a": [
       "constructor(address _singleton)"
     ],
@@ -8773,6 +8838,9 @@
       "constructor(address _singleton)"
     ],
     "0x55c671BcE13120387Ded710A1d1b80C0e3d8E857": [
+      "constructor(address _singleton)"
+    ],
+    "0x590926dBCDfD19627c3BbD2A6Eb96DeC7a3AbF69": [
       "constructor(address _singleton)"
     ],
     "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": [
@@ -8814,9 +8882,14 @@
     "0x69462a81ba94D64c404575f1899a464F123497A2": [
       "constructor(address _singleton)"
     ],
-    "0x70F3FBf8a427155185Ec90BED8a3434203de9604": [
-      "function verificationKeyHash() pure returns (bytes32 vkHash)",
-      "function verify(uint256[], uint256[], uint256[]) view returns (bool)"
+    "0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0": [
+      "constructor(address _singleton)"
+    ],
+    "0x725065b4eB99294BaaE57AdDA9c32e42F453FA8A": [
+      "constructor(address _singleton)"
+    ],
+    "0x84BF0Ac41Eeb74373Ddddae8b7055Bf2bD3CE6E0": [
+      "constructor(address _singleton)"
     ],
     "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897": [
       "constructor(address _securityCouncil, address _guardians, address _emergencyUpgradeBoard, address _l2ProtocolGovernor, address _ZKsyncEra, address _stateTransitionManager, address _bridgeHub, address _sharedBridge)",
@@ -8865,20 +8938,11 @@
       "function upgradeState(bytes32 _id) view returns (uint8)",
       "function upgradeStatus(bytes32 upgradeId) view returns (uint48 creationTimestamp, uint48 securityCouncilApprovalTimestamp, bool guardiansApproval, bool guardiansExtendedLegalVeto, bool executed)"
     ],
-    "0xaD193aDe635576d8e9f7ada71Af2137b16c64075": [
-      "event BlockCommit(uint256 indexed batchNumber, bytes32 indexed batchHash, bytes32 indexed commitment)",
-      "event BlockExecution(uint256 indexed batchNumber, bytes32 indexed batchHash, bytes32 indexed commitment)",
-      "event BlocksRevert(uint256 totalBatchesCommitted, uint256 totalBatchesVerified, uint256 totalBatchesExecuted)",
-      "event BlocksVerification(uint256 indexed previousLastVerifiedBatch, uint256 indexed currentLastVerifiedBatch)",
-      "function commitBatches(tuple(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment) _lastCommittedBatchData, tuple(uint64 batchNumber, uint64 timestamp, uint64 indexRepeatedStorageChanges, bytes32 newStateRoot, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 bootloaderHeapInitialContentsHash, bytes32 eventsQueueStateHash, bytes systemLogs, bytes pubdataCommitments)[] _newBatchesData)",
-      "function commitBatchesSharedBridge(uint256, tuple(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment) _lastCommittedBatchData, tuple(uint64 batchNumber, uint64 timestamp, uint64 indexRepeatedStorageChanges, bytes32 newStateRoot, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 bootloaderHeapInitialContentsHash, bytes32 eventsQueueStateHash, bytes systemLogs, bytes pubdataCommitments)[] _newBatchesData)",
-      "function executeBatches(tuple(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _batchesData)",
-      "function executeBatchesSharedBridge(uint256, tuple(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _batchesData)",
-      "function getName() view returns (string)",
-      "function proveBatches(tuple(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment) _prevBatch, tuple(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _committedBatches, tuple(uint256[] recursiveAggregationInput, uint256[] serializedProof) _proof)",
-      "function proveBatchesSharedBridge(uint256, tuple(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment) _prevBatch, tuple(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _committedBatches, tuple(uint256[] recursiveAggregationInput, uint256[] serializedProof) _proof)",
-      "function revertBatches(uint256 _newLastBatch)",
-      "function revertBatchesSharedBridge(uint256, uint256 _newLastBatch)"
+    "0x9B39Ea22e838B316Ea7D74e7C4B07d91D51ccA88": [
+      "constructor(address _singleton)"
+    ],
+    "0x9B8Be3278B7F0168D82059eb6BAc5991DcdfA803": [
+      "constructor(address _singleton)"
     ],
     "0xb56A8225A745756DD215faf22E4796f373561AcD": [
       "constructor(address _l1WethAddress, address _bridgehub, uint256 _eraChainId, address _eraDiamondProxy)",
@@ -8935,6 +8999,9 @@
       "function transferOwnership(address newOwner)",
       "function unpause()"
     ],
+    "0xB7aC3A79A23B148c85fba259712c5A1e7ad0ca44": [
+      "constructor(address _singleton)"
+    ],
     "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c": [
       "constructor(address _singleton)"
     ],
@@ -8982,18 +9049,11 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C": [
-      "constructor(uint256 _eraChainId)",
-      "event NewPriorityRequest(uint256 txId, bytes32 txHash, uint64 expirationTimestamp, tuple(uint256 txType, uint256 from, uint256 to, uint256 gasLimit, uint256 gasPerPubdataByteLimit, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, uint256 paymaster, uint256 nonce, uint256 value, uint256[4] reserved, bytes data, bytes signature, uint256[] factoryDeps, bytes paymasterInput, bytes reservedDynamic) transaction, bytes[] factoryDeps)",
-      "function bridgehubRequestL2Transaction(tuple(address sender, address contractL2, uint256 mintValue, uint256 l2Value, bytes l2Calldata, uint256 l2GasLimit, uint256 l2GasPerPubdataByteLimit, bytes[] factoryDeps, address refundRecipient) _request) returns (bytes32 canonicalTxHash)",
-      "function finalizeEthWithdrawal(uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes _message, bytes32[] _merkleProof)",
-      "function getName() view returns (string)",
-      "function l2TransactionBaseCost(uint256 _gasPrice, uint256 _l2GasLimit, uint256 _l2GasPerPubdataByteLimit) view returns (uint256)",
-      "function proveL1ToL2TransactionStatus(bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof, uint8 _status) view returns (bool)",
-      "function proveL2LogInclusion(uint256 _batchNumber, uint256 _index, tuple(uint8 l2ShardId, bool isService, uint16 txNumberInBatch, address sender, bytes32 key, bytes32 value) _log, bytes32[] _proof) view returns (bool)",
-      "function proveL2MessageInclusion(uint256 _batchNumber, uint256 _index, tuple(uint16 txNumberInBatch, address sender, bytes data) _message, bytes32[] _proof) view returns (bool)",
-      "function requestL2Transaction(address _contractL2, uint256 _l2Value, bytes _calldata, uint256 _l2GasLimit, uint256 _l2GasPerPubdataByteLimit, bytes[] _factoryDeps, address _refundRecipient) payable returns (bytes32 canonicalTxHash)",
-      "function transferEthToSharedBridge()"
+    "0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e": [
+      "constructor(address _singleton)"
+    ],
+    "0xCe7a3dFcc35602155809920Ff65e093aa726f6cf": [
+      "constructor(address _singleton)"
     ],
     "0xD677e09324F8Bb3cC64F009973693f751c33A888": [
       "constructor(address _protocolUpgradeHandler, address _ZKsyncEra, address[] _members)",
@@ -9085,50 +9145,6 @@
       "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
       "function executeEmergencyUpgrade(tuple(address target, uint256 value, bytes data)[] _calls, bytes32 _salt, bytes _guardiansSignatures, bytes _securityCouncilSignatures, bytes _zkFoundationSignatures)"
     ],
-    "0xE60E94fCCb18a81D501a38959E532C0A85A1be89": [
-      "function baseTokenGasPriceMultiplierDenominator() view returns (uint128)",
-      "function baseTokenGasPriceMultiplierNominator() view returns (uint128)",
-      "function facetAddress(bytes4 _selector) view returns (address)",
-      "function facetAddresses() view returns (address[])",
-      "function facetFunctionSelectors(address _facet) view returns (bytes4[])",
-      "function facets() view returns (tuple(address addr, bytes4[] selectors)[] result)",
-      "function getAdmin() view returns (address)",
-      "function getBaseToken() view returns (address)",
-      "function getBaseTokenBridge() view returns (address)",
-      "function getBridgehub() view returns (address)",
-      "function getFirstUnprocessedPriorityTx() view returns (uint256)",
-      "function getL2BootloaderBytecodeHash() view returns (bytes32)",
-      "function getL2DefaultAccountBytecodeHash() view returns (bytes32)",
-      "function getL2SystemContractsUpgradeBatchNumber() view returns (uint256)",
-      "function getL2SystemContractsUpgradeBlockNumber() view returns (uint256)",
-      "function getL2SystemContractsUpgradeTxHash() view returns (bytes32)",
-      "function getName() view returns (string)",
-      "function getPendingAdmin() view returns (address)",
-      "function getPriorityQueueSize() view returns (uint256)",
-      "function getPriorityTxMaxGasLimit() view returns (uint256)",
-      "function getProtocolVersion() view returns (uint256)",
-      "function getPubdataPricingMode() view returns (uint8)",
-      "function getSemverProtocolVersion() view returns (uint32, uint32, uint32)",
-      "function getStateTransitionManager() view returns (address)",
-      "function getTotalBatchesCommitted() view returns (uint256)",
-      "function getTotalBatchesExecuted() view returns (uint256)",
-      "function getTotalBatchesVerified() view returns (uint256)",
-      "function getTotalBlocksCommitted() view returns (uint256)",
-      "function getTotalBlocksExecuted() view returns (uint256)",
-      "function getTotalBlocksVerified() view returns (uint256)",
-      "function getTotalPriorityTxs() view returns (uint256)",
-      "function getVerifier() view returns (address)",
-      "function getVerifierParams() view returns (tuple(bytes32 recursionNodeLevelVkHash, bytes32 recursionLeafLevelVkHash, bytes32 recursionCircuitsSetVksHash))",
-      "function isDiamondStorageFrozen() view returns (bool)",
-      "function isEthWithdrawalFinalized(uint256 _l2BatchNumber, uint256 _l2MessageIndex) view returns (bool)",
-      "function isFacetFreezable(address _facet) view returns (bool isFreezable)",
-      "function isFunctionFreezable(bytes4 _selector) view returns (bool)",
-      "function isValidator(address _address) view returns (bool)",
-      "function l2LogsRootHash(uint256 _batchNumber) view returns (bytes32)",
-      "function priorityQueueFrontOperation() view returns (tuple(bytes32 canonicalTxHash, uint64 expirationTimestamp, uint192 layer2Tip))",
-      "function storedBatchHash(uint256 _batchNumber) view returns (bytes32)",
-      "function storedBlockHash(uint256 _batchNumber) view returns (bytes32)"
-    ],
     "0xed1Dc7F0Be2B19cb02a2476150C8ea24A37c5274": [
       "constructor(address _bridgehub, uint256 _maxNumberOfHyperchains)",
       "event Initialized(uint8 version)",
@@ -9185,34 +9201,8 @@
       "function upgradeCutHash(uint256 protocolVersion) view returns (bytes32 cutHash)",
       "function validatorTimelock() view returns (address)"
     ],
-    "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a": [
-      "event DiamondCut(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata)",
-      "event ExecuteUpgrade(tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) diamondCut)",
-      "event Freeze()",
-      "event IsPorterAvailableStatusUpdate(bool isPorterAvailable)",
-      "event NewAdmin(address indexed oldAdmin, address indexed newAdmin)",
-      "event NewBaseTokenMultiplier(uint128 oldNominator, uint128 oldDenominator, uint128 newNominator, uint128 newDenominator)",
-      "event NewFeeParams(tuple(uint8 pubdataPricingMode, uint32 batchOverheadL1Gas, uint32 maxPubdataPerBatch, uint32 maxL2GasPerBatch, uint32 priorityTxMaxPubdata, uint64 minimalL2GasPrice) oldFeeParams, tuple(uint8 pubdataPricingMode, uint32 batchOverheadL1Gas, uint32 maxPubdataPerBatch, uint32 maxL2GasPerBatch, uint32 priorityTxMaxPubdata, uint64 minimalL2GasPrice) newFeeParams)",
-      "event NewPendingAdmin(address indexed oldPendingAdmin, address indexed newPendingAdmin)",
-      "event NewPriorityTxMaxGasLimit(uint256 oldPriorityTxMaxGasLimit, uint256 newPriorityTxMaxGasLimit)",
-      "event NewTransactionFilterer(address oldTransactionFilterer, address newTransactionFilterer)",
-      "event Unfreeze()",
-      "event ValidatorStatusUpdate(address indexed validatorAddress, bool isActive)",
-      "event ValidiumModeStatusUpdate(uint8 validiumMode)",
-      "function acceptAdmin()",
-      "function changeFeeParams(tuple(uint8 pubdataPricingMode, uint32 batchOverheadL1Gas, uint32 maxPubdataPerBatch, uint32 maxL2GasPerBatch, uint32 priorityTxMaxPubdata, uint64 minimalL2GasPrice) _newFeeParams)",
-      "function executeUpgrade(tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)",
-      "function freezeDiamond()",
-      "function getName() view returns (string)",
-      "function setPendingAdmin(address _newPendingAdmin)",
-      "function setPorterAvailability(bool _zkPorterIsAvailable)",
-      "function setPriorityTxMaxGasLimit(uint256 _newPriorityTxMaxGasLimit)",
-      "function setPubdataPricingMode(uint8 _pricingMode)",
-      "function setTokenMultiplier(uint128 _nominator, uint128 _denominator)",
-      "function setTransactionFilterer(address _transactionFilterer)",
-      "function setValidator(address _validator, bool _active)",
-      "function unfreezeDiamond()",
-      "function upgradeChainFromVersion(uint256 _oldProtocolVersion, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)"
+    "0xFB90Da9DC45378A1B50775Beb03aD10C7E8DC231": [
+      "constructor(address _singleton)"
     ]
   },
   "usedTemplates": {
