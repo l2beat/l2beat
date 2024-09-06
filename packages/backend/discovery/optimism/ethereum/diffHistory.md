@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x7cc64751b1461a39df7f0693d54d3a71f7cc6ea9
+
+# Diff at Fri, 06 Sep 2024 11:28:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08a747098d22564c3a0b869c0a20851bf283bd07 block: 20640793
+- current block number: 20691253
+
+## Description
+
+One signer of SynthetixMultisig is replaced.
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (0xe5965Ab5962eDc7477C8520243A95517CD252fA9) {
+    +++ description: None
+      values.permissionedGamesTotal:
+-        326
++        493
+    }
+```
+
+```diff
+    contract SynthetixMultisig (0xEb3107117FEAd7de89Cd14D463D340A2E6917769) {
+    +++ description: None
+      values.$members.0:
+-        "0xe2163dd599067919d1e9108929b568Bf41D3A420"
++        "0x1C8236B406911A376369e33D39189F1b4B39F27D"
+    }
+```
+
 Generated with discovered.json: 0xa247759011073b8a4fd767846c728bae9aac6f49
 
 # Diff at Fri, 30 Aug 2024 10:28:19 GMT:
