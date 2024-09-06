@@ -85,7 +85,12 @@ contract Test {
 			}
 		}
 		for (;;) a = false;
-
+		while(true) {
+			a = true;
+		}
+		do {
+			a = !a;
+		} while ( a== b);
 		return 3;
 	}
 

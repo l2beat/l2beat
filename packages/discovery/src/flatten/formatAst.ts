@@ -55,7 +55,7 @@ const FORMATTERS: {
   ContractDefinition,
   CustomErrorDefinition,
   DecimalNumber: __REPLACE_ME__,
-  DoWhileStatement: __REPLACE_ME__,
+  DoWhileStatement,
   ElementaryTypeName,
   EmitStatement: __REPLACE_ME__,
   EnumDefinition,
@@ -102,7 +102,7 @@ const FORMATTERS: {
   UsingForDeclaration,
   VariableDeclaration,
   VariableDeclarationStatement,
-  WhileStatement: __REPLACE_ME__,
+  WhileStatement,
 }
 
 function ArrayTypeName(node: AST.ArrayTypeName, out: OutputStream) {
@@ -198,6 +198,18 @@ function CustomErrorDefinition(
   out.noSpace()
   out.token('(')
   formatNodeList(node.parameters, out, { separator: ',' })
+  out.token(')')
+  out.token(';')
+  out.endLine()
+}
+
+function DoWhileStatement(node: AST.DoWhileStatement, out: OutputStream) {
+  out.beginLine()
+  out.token('do')
+  Block(wrapBlock(node.body), out, { noEndLine: true })
+  out.token('while')
+  out.token('(')
+  formatAstNode(node.condition, out)
   out.token(')')
   out.token(';')
   out.endLine()
@@ -659,6 +671,16 @@ function VariableDeclarationStatement(
     out.token(';')
     out.endLine()
   }
+}
+
+function WhileStatement(node: AST.WhileStatement, out: OutputStream) {
+  out.beginLine()
+  out.token('while')
+  out.token('(')
+  formatAstNode(node.condition, out)
+  out.token(')')
+  formatAstNode(wrapBlock(node.body), out)
+  out.endLine()
 }
 
 // --- HELPERS ---
