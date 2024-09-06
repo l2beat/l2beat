@@ -40,7 +40,7 @@ export const memo: DaLayer = {
     
     Storage Nodes, based on seed information generated periodically on the Memo chain, submit KZG data commitments to the Operator. 
     The Verification Contract is responsible for onchain verification on Memo chain, and it will generate seed information through the VRF-Sampling (Verifiable Random Function) cycle to determine which files to select for verification.
-    Not all data commitments are verified on-chain, but only a subset of data is verified, with the sampling determined by the random seed produced by the Verification Contract.
+    Not all data commitments are verified onchain, but only a subset of data is verified, with the sampling determined by the random seed produced by the Verification Contract.
     The operator will then collect and aggregate the KZG commitments for the selected files from storage nodes, and submit the aggregate proof to the Verification Contract.
    
     Optimistic verification assumes that the aggregation commitment submitted by the operator node is correct and only requires checking the accuracy of the associated proof.
