@@ -65,7 +65,8 @@
     "CanonicalStateChain": {
       "ignoreMethods": [
         "chain", // too many values
-        "getHeaderByNum" // too many values
+        "getHeaderByNum", // too many values
+        "getL2Output"
       ],
       "ignoreInWatchMode": ["chainHead", "getHead"],
       "fields": {
