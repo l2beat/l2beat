@@ -15,24 +15,9 @@ type Formatter<T> = (
   out: OutputStream,
 ) => void
 
-const __REPLACE_ME__ = (node: AST.ASTNode, out: OutputStream) => {
-  const isStatement =
-    node.type.endsWith('Statement') || node.type.endsWith('Definition')
-  if (isStatement) {
-    out.beginLine()
-  }
-  out.token(node.type)
-  if (isStatement) {
-    out.token(';')
-    out.endLine()
-  }
-}
-
 function DoesNotExistSkip() {}
 
-const FORMATTERS: {
-  [K in AST.ASTNode['type']]: Formatter<K>
-} = {
+const FORMATTERS: { [K in AST.ASTNode['type']]: Formatter<K> } = {
   ArrayTypeName,
   AssemblyAssignment,
   AssemblyBlock,
@@ -43,7 +28,7 @@ const FORMATTERS: {
   AssemblyIf,
   AssemblyLocalDefinition,
   AssemblyMemberAccess,
-  AssemblyStackAssignment: __REPLACE_ME__,
+  AssemblyStackAssignment: DoesNotExistSkip,
   AssemblySwitch,
   BinaryOperation,
   Block,
