@@ -48,7 +48,7 @@ const FORMATTERS: {
   BooleanLiteral,
   Break: __REPLACE_ME__,
   BreakStatement,
-  CatchClause: __REPLACE_ME__,
+  CatchClause,
   Conditional: __REPLACE_ME__,
   Continue: __REPLACE_ME__,
   ContinueStatement,
@@ -57,7 +57,7 @@ const FORMATTERS: {
   DecimalNumber: __REPLACE_ME__,
   DoWhileStatement,
   ElementaryTypeName,
-  EmitStatement: __REPLACE_ME__,
+  EmitStatement,
   EnumDefinition,
   EnumValue,
   EventDefinition,
@@ -87,13 +87,13 @@ const FORMATTERS: {
   NumberLiteral,
   PragmaDirective,
   ReturnStatement,
-  RevertStatement: __REPLACE_ME__,
+  RevertStatement,
   SourceUnit,
   StateVariableDeclaration,
   StringLiteral,
   StructDefinition,
   ThrowStatement: __REPLACE_ME__,
-  TryStatement: __REPLACE_ME__,
+  TryStatement,
   TupleExpression,
   TypeDefinition,
   UnaryOperation,
@@ -147,6 +147,24 @@ function BreakStatement(_: AST.BreakStatement, out: OutputStream) {
   out.token('break')
   out.token(';')
   out.endLine()
+}
+
+function CatchClause(node: AST.CatchClause, out: OutputStream) {
+  out.token('catch')
+  if (node.kind) {
+    out.token(node.kind)
+  }
+  if (node.parameters) {
+    if (node.kind) {
+      out.noSpace()
+    }
+    formatNodeList(node.parameters, out, {
+      separator: ',',
+      prefix: '(',
+      suffix: ')',
+    })
+  }
+  Block(wrapBlock(node.body), out, { noEndLine: true })
 }
 
 function ContinueStatement(_: AST.ContinueStatement, out: OutputStream) {
@@ -226,6 +244,14 @@ function ElementaryTypeName(node: AST.ElementaryTypeName, out: OutputStream) {
   if (node.stateMutability) {
     out.token(node.stateMutability)
   }
+}
+
+function EmitStatement(node: AST.EmitStatement, out: OutputStream) {
+  out.beginLine()
+  out.token('emit')
+  formatAstNode(node.eventCall, out)
+  out.token(';')
+  out.endLine()
 }
 
 function EnumDefinition(node: AST.EnumDefinition, out: OutputStream) {
@@ -487,6 +513,19 @@ function ReturnStatement(node: AST.ReturnStatement, out: OutputStream) {
   out.endLine()
 }
 
+function RevertStatement(node: AST.RevertStatement, out: OutputStream) {
+  out.beginLine()
+  out.token('revert')
+  // TODO: Incorrect parser types!
+  // @ts-ignore
+  if (node.revertCall.type === 'TupleExpression') {
+    out.noSpace()
+  }
+  formatAstNode(node.revertCall, out)
+  out.token(';')
+  out.endLine()
+}
+
 function SourceUnit(node: AST.SourceUnit, out: OutputStream) {
   forEachPrevious(node.children, (n, prev) => {
     if (
@@ -529,6 +568,25 @@ function StructDefinition(node: AST.StructDefinition, out: OutputStream) {
   }
   out.popIndent()
   out.token('}')
+  out.endLine()
+}
+
+function TryStatement(node: AST.TryStatement, out: OutputStream) {
+  out.beginLine()
+  out.token('try')
+  formatAstNode(node.expression, out)
+  if (node.returnParameters) {
+    out.token('returns')
+    formatNodeList(node.returnParameters, out, {
+      separator: ',',
+      prefix: '(',
+      suffix: ')',
+    })
+  }
+  Block(wrapBlock(node.body), out, { noEndLine: true })
+  for (const catchClause of node.catchClauses) {
+    formatAstNode(catchClause, out)
+  }
   out.endLine()
 }
 

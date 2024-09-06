@@ -56,21 +56,24 @@ contract Test {
 
 	constructor(uint256 a, bytes calldata b) payable onlyFullMoon {}
 
-	function foo() {
+	function variables() {
 		uint256 foo = 1;
 		uint256 foo = 1 wei;
 		uint256 foo = 1_2_34.5 ether;
 		(uint256 foo, , string a) = (1, true, "hello");
 		bytes foo = hex"12_34_ab_CD";
 		uint256 foo = 0x12_34_ab_CD;
-		bool a = !true;
-		x++;
-		++x;
 		uint256 x = 1 + 2;
 		uint256 y = 1 + (2 + 3);
 		uint256 z = 1 * (2 + 3);
 		address foo = bar();
 		address foo = bar.baz(1, 2);
+		bool a = !true;
+		x++;
+		++x;
+	}
+
+	function control() {
 		for (uint256 i = 0; i < 5; i++) {
 			for (uint256 j = 0; j < 5; j++) {
 				if (j == 2) {
@@ -95,6 +98,28 @@ contract Test {
 			a = !a;
 		} while (a == b);
 		return 3;
+	}
+
+	function tryCatchEmit() {
+		emit MyEvent("foo", 1234);
+		revert();
+		revert("reason");
+		revert MyError();
+		revert MyError("reason");
+		try feed.getData(token) returns (uint256 v) {
+			return (v, true);
+		} catch Error(string memory) {
+			errorCount++;
+			return (0, false);
+		} catch Panic(uint256, bool) {
+			errorCount++;
+			return (0, false);
+		} catch (bytes memory) {
+			errorCount++;
+			return (0, false);
+		} catch {
+			return (1234, false);
+		}
 	}
 
 	function foo() public {
