@@ -110,8 +110,11 @@ function ArrayTypeName(node: AST.ArrayTypeName, out: OutputStream) {
 function AssemblyAssignment(node: AST.AssemblyAssignment, out: OutputStream) {
   out.beginLine()
   formatNodeList(node.names, out, { separator: ',' })
-  out.token(':=')
-  formatAstNode(node.expression, out)
+  // TODO: parser error
+  if (node.expression) {
+    out.token(':=')
+    formatAstNode(node.expression, out)
+  }
   out.endLine()
 }
 
@@ -616,7 +619,10 @@ function IndexAccess(node: AST.IndexAccess, out: OutputStream) {
   formatAstNode(node.base, out)
   out.noSpace()
   out.token('[')
-  formatAstNode(node.index, out)
+  // TODO: parser error
+  if (node.index) {
+    formatAstNode(node.index, out)
+  }
   out.token(']')
 }
 
@@ -702,8 +708,8 @@ function ModifierDefinition(node: AST.ModifierDefinition, out: OutputStream) {
   out.beginLine()
   out.token('modifier')
   out.token(node.name)
-  out.noSpace()
   if (node.parameters) {
+    out.noSpace()
     out.token('(')
     formatNodeList(node.parameters, out, { separator: ',' })
     out.token(')')
@@ -829,7 +835,9 @@ function StateVariableDeclaration(
 
 function StringLiteral(node: AST.StringLiteral, out: OutputStream) {
   for (const part of node.parts) {
-    out.token(JSON.stringify(part))
+    out.token(
+      '"' + part.replaceAll(/\\?"/g, '\\"').replaceAll(/\\?'/g, "'") + '"',
+    )
   }
 }
 

@@ -83,6 +83,8 @@ contract Test {
 		uint256 foo = 1 wei;
 		uint256 foo = 1_2_34.5 ether;
 		(uint256 foo, , string a) = (1, true, "hello");
+		string escape = "\"'\\and\\\\";
+		string escape = '"\'\\and\\\\';
 		// Unsupported:
 		// (bool a) = (false);
 		bytes foo = hex"12_34_ab_CD";
@@ -217,5 +219,17 @@ contract Test {
 		assembly "evmasm" {}
 		assembly ("memory-safe") {}
 		assembly "evmasm" ("a", "b") {}
+	}
+
+	function sorry() {
+		abi.encodePacked(
+			'{"name": "Token #',
+			_tokenId.toString(),
+			'", "description": "A NodeLicense token", "image": "data:image/svg+xml;base64,',
+			image,
+			'", "attributes": [{"trait_type": "Owner", "value": "',
+			StringsUpgradeable.toHexString(uint160(ownerAddress)),
+			'"}, {"trait_type": "Legal", "value": "https://xai.games/sentrynodeagreement"}]}'
+		);
 	}
 }
