@@ -1,5 +1,5 @@
 import { LogLevel } from '@l2beat/backend-tools/dist/logger/LogLevel'
-import { CliLogger, StatusLineHandle } from '@l2beat/shared'
+import { CliLogger } from '@l2beat/shared'
 import chalk from 'chalk'
 
 enum FailureReason {

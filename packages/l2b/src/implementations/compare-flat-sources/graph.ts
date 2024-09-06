@@ -42,7 +42,7 @@ function createSvgHtml(svgString: string): string {
 
 function getSpringGraph(
   matrix: Record<string, Record<string, number>>,
-    clusters: string[][]
+  clusters: string[][],
 ): string {
   let dotFileContent = 'graph G {\n'
   dotFileContent += '  layout=neato;\n'
@@ -60,15 +60,21 @@ function getSpringGraph(
 
   clusters.forEach((cluster, i) => {
     const clusterName = `Cluster ${i}`
-        const clusterColor = generateHexColorFromString(i * (360 / clusters.length), 65)
+    const clusterColor = generateHexColorFromString(
+      i * (360 / clusters.length),
+      65,
+    )
     dotFileContent += `  "${clusterName}" [shape=box, style=filled, color="${clusterColor}"];\n`
 
     for (const entry of cluster) {
-        const totalSimilarity = cluster
-          .filter((x) => x !== entry)
-          .reduce((sum, x) => sum + matrix[entry][x], 0)
-        const average = totalSimilarity / (cluster.length - 1)
-        const clusterColor = generateHexColorFromString(i * (360 / clusters.length), mapRange(0.4, 1, 0, 100, average))
+      const totalSimilarity = cluster
+        .filter((x) => x !== entry)
+        .reduce((sum, x) => sum + matrix[entry][x], 0)
+      const average = totalSimilarity / (cluster.length - 1)
+      const clusterColor = generateHexColorFromString(
+        i * (360 / clusters.length),
+        mapRange(0.4, 1, 0, 100, average),
+      )
 
       projectColors[entry] ??= []
       projectColors[entry].push(clusterColor)
@@ -105,14 +111,14 @@ function generateHexColorFromString(hue: number, saturation: number): string {
 }
 
 function mapRange(
-  min: number, 
-  max: number, 
-  newMin: number, 
-  newMax: number, 
-  value: number
+  min: number,
+  max: number,
+  newMin: number,
+  newMax: number,
+  value: number,
 ): number {
-  const scale = (newMax - newMin) / (max - min);
-  return newMin + (value - min) * scale;
+  const scale = (newMax - newMin) / (max - min)
+  return newMin + (value - min) * scale
 }
 
 function hslToRgb(h: number, s: number, l: number): [number, number, number] {
