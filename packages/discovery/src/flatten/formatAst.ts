@@ -47,11 +47,11 @@ const FORMATTERS: {
   Block,
   BooleanLiteral,
   Break: __REPLACE_ME__,
-  BreakStatement: __REPLACE_ME__,
+  BreakStatement,
   CatchClause: __REPLACE_ME__,
   Conditional: __REPLACE_ME__,
   Continue: __REPLACE_ME__,
-  ContinueStatement: __REPLACE_ME__,
+  ContinueStatement,
   ContractDefinition,
   CustomErrorDefinition,
   DecimalNumber: __REPLACE_ME__,
@@ -63,14 +63,14 @@ const FORMATTERS: {
   EventDefinition,
   ExpressionStatement,
   FileLevelConstant: __REPLACE_ME__,
-  ForStatement: __REPLACE_ME__,
+  ForStatement,
   FunctionCall,
   FunctionDefinition,
   FunctionTypeName: __REPLACE_ME__,
   HexLiteral,
   HexNumber: __REPLACE_ME__,
   Identifier,
-  IfStatement: __REPLACE_ME__,
+  IfStatement,
   ImportDirective,
   IndexAccess: __REPLACE_ME__,
   IndexRangeAccess: __REPLACE_ME__,
@@ -121,7 +121,11 @@ function BinaryOperation(node: AST.BinaryOperation, out: OutputStream) {
   formatAstNode(node.right, out)
 }
 
-function Block(node: AST.Block, out: OutputStream) {
+function Block(
+  node: AST.Block,
+  out: OutputStream,
+  options = { noEndLine: false },
+) {
   out.token('{')
   out.pushIndent()
   for (const n of node.statements) {
@@ -129,11 +133,27 @@ function Block(node: AST.Block, out: OutputStream) {
   }
   out.popIndent()
   out.token('}')
-  out.endLine()
+  if (!options.noEndLine) {
+    out.endLine()
+  }
 }
 
 function BooleanLiteral(node: AST.BooleanLiteral, out: OutputStream) {
   out.token(node.value ? 'true' : 'false')
+}
+
+function BreakStatement(_: AST.BreakStatement, out: OutputStream) {
+  out.beginLine()
+  out.token('break')
+  out.token(';')
+  out.endLine()
+}
+
+function ContinueStatement(_: AST.ContinueStatement, out: OutputStream) {
+  out.beginLine()
+  out.token('continue')
+  out.token(';')
+  out.endLine()
 }
 
 function ContractDefinition(node: AST.ContractDefinition, out: OutputStream) {
@@ -225,12 +245,42 @@ function EventDefinition(node: AST.EventDefinition, out: OutputStream) {
   out.endLine()
 }
 
-function ExpressionStatement(node: AST.ExpressionStatement, out: OutputStream) {
-  out.beginLine()
+function ExpressionStatement(
+  node: AST.ExpressionStatement,
+  out: OutputStream,
+  options = { inline: false },
+) {
+  if (!options.inline) {
+    out.beginLine()
+  }
   if (node.expression) {
     formatAstNode(node.expression, out)
   }
+  if (!options.inline) {
+    out.token(';')
+    out.endLine()
+  }
+}
+
+function ForStatement(node: AST.ForStatement, out: OutputStream) {
+  out.beginLine()
+  out.token('for')
+  out.token('(')
+  if (node.initExpression) {
+    if (node.initExpression.type === 'ExpressionStatement') {
+      ExpressionStatement(node.initExpression, out, { inline: true })
+    } else {
+      VariableDeclarationStatement(node.initExpression, out, { inline: true })
+    }
+  }
   out.token(';')
+  if (node.conditionExpression) {
+    formatAstNode(node.conditionExpression, out)
+  }
+  out.token(';')
+  ExpressionStatement(node.loopExpression, out, { inline: true })
+  out.token(')')
+  formatAstNode(wrapBlock(node.body), out)
   out.endLine()
 }
 
@@ -303,6 +353,30 @@ function HexLiteral(node: AST.HexLiteral, out: OutputStream) {
 
 function Identifier(node: AST.Identifier, out: OutputStream) {
   out.token(node.name)
+}
+
+function IfStatement(
+  node: AST.IfStatement,
+  out: OutputStream,
+  options = { elseIf: false },
+) {
+  if (!options.elseIf) {
+    out.beginLine()
+  }
+  out.token('if')
+  out.token('(')
+  formatAstNode(node.condition, out)
+  out.token(')')
+  Block(wrapBlock(node.trueBody), out, { noEndLine: !!node.falseBody })
+  if (node.falseBody) {
+    out.token('else')
+    if (node.falseBody.type === 'IfStatement') {
+      IfStatement(node.falseBody, out, { elseIf: true })
+    } else {
+      formatAstNode(wrapBlock(node.falseBody), out)
+    }
+  }
+  out.endLine()
 }
 
 function ImportDirective(node: AST.ImportDirective, out: OutputStream) {
@@ -555,8 +629,11 @@ function VariableDeclaration(node: AST.VariableDeclaration, out: OutputStream) {
 function VariableDeclarationStatement(
   node: AST.VariableDeclarationStatement,
   out: OutputStream,
+  options = { inline: false },
 ) {
-  out.beginLine()
+  if (!options.inline) {
+    out.beginLine()
+  }
   if (node.variables) {
     if (node.variables.length === 1) {
       // biome-ignore lint/style/noNonNullAssertion: we know it's there
@@ -578,8 +655,10 @@ function VariableDeclarationStatement(
     out.token('=')
     formatAstNode(node.initialValue, out)
   }
-  out.token(';')
-  out.endLine()
+  if (!options.inline) {
+    out.token(';')
+    out.endLine()
+  }
 }
 
 // --- HELPERS ---
@@ -730,4 +809,14 @@ function formatOverride(
       suffix: ')',
     })
   }
+}
+
+function wrapBlock(node: AST.ASTNode): AST.Block {
+  if (node.type !== 'Block') {
+    return {
+      type: 'Block',
+      statements: [node],
+    }
+  }
+  return node
 }

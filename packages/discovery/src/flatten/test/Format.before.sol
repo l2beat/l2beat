@@ -73,6 +73,19 @@ contract Test {
 		address foo = bar();
 		address foo = bar.baz(1, 2);
 
+		for (uint i = 0; i < 5; i++) {
+			for (uint j = 0; j < 5; j++) {
+				if (j == 2) {
+					continue;
+				}
+				if (i == 4) break;
+				else if (i == 5) {
+					i = 6;
+				} else i = 7;
+			}
+		}
+		for (;;) a = false;
+
 		return 3;
 	}
 
