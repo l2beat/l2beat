@@ -174,8 +174,10 @@ function AssemblyFunctionDefinition(
   out.token('(')
   formatNodeList(node.arguments, out, { separator: ',' })
   out.token(')')
-  out.token('->')
-  formatNodeList(node.returnArguments, out, { separator: ',' })
+  if (node.returnArguments.length > 0) {
+    out.token('->')
+    formatNodeList(node.returnArguments, out, { separator: ',' })
+  }
   formatAstNode(node.body, out)
   out.endLine()
 }

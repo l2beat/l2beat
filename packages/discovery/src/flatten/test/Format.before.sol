@@ -197,6 +197,9 @@ contract Test {
 						case 1 { result := mul(base, result) }
 				}
 			}
+			function foo() {}
+			// Unsupported:
+			// foo()
 		}
 		assembly "evmasm" {}
 		assembly ("memory-safe") {}

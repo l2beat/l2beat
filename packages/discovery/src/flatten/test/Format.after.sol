@@ -211,6 +211,7 @@ contract Test {
 							}
 					}
 			}
+			function foo() {}
 		}
 		assembly "evmasm" {}
 		assembly ("memory-safe") {}
