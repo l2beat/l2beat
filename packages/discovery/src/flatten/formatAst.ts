@@ -81,7 +81,7 @@ const FORMATTERS: {
   LabelDefinition: DoesNotExistSkip,
   Mapping,
   MemberAccess,
-  ModifierDefinition: __REPLACE_ME__,
+  ModifierDefinition,
   ModifierInvocation,
   NameValueExpression: __REPLACE_ME__,
   NameValueList: __REPLACE_ME__,
@@ -553,6 +553,25 @@ function MemberAccess(node: AST.MemberAccess, out: OutputStream) {
   out.token('.')
   out.noSpace()
   out.token(node.memberName)
+}
+
+function ModifierDefinition(node: AST.ModifierDefinition, out: OutputStream) {
+  out.beginLine()
+  out.token('modifier')
+  out.token(node.name)
+  out.noSpace()
+  out.token('(')
+  if (node.parameters) {
+    formatNodeList(node.parameters, out, { separator: ',' })
+  }
+  out.token(')')
+  if (node.body) {
+    formatAstNode(node.body, out)
+  } else {
+    out.token('{')
+    out.token('}')
+  }
+  out.endLine()
 }
 
 function ModifierInvocation(node: AST.ModifierInvocation, out: OutputStream) {

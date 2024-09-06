@@ -65,6 +65,11 @@ contract Test {
 		string b;
 	}
 
+	modifier onlyOwner(address owner) {
+		require(msg.sender == owner, "Only owner!");
+		_;
+	}
+
 	constructor() {}
 
 	constructor(uint a, bytes calldata b) payable onlyFullMoon {}
