@@ -37,14 +37,14 @@ const FORMATTERS: {
   AssemblyAssignment,
   AssemblyBlock,
   AssemblyCall,
-  AssemblyCase: __REPLACE_ME__,
+  AssemblyCase,
   AssemblyFor,
-  AssemblyFunctionDefinition: __REPLACE_ME__,
+  AssemblyFunctionDefinition,
   AssemblyIf: __REPLACE_ME__,
   AssemblyLocalDefinition,
-  AssemblyMemberAccess: __REPLACE_ME__,
+  AssemblyMemberAccess,
   AssemblyStackAssignment: __REPLACE_ME__,
-  AssemblySwitch: __REPLACE_ME__,
+  AssemblySwitch,
   BinaryOperation,
   Block,
   BooleanLiteral,
@@ -127,11 +127,15 @@ function AssemblyAssignment(node: AST.AssemblyAssignment, out: OutputStream) {
 
 function AssemblyBlock(node: AST.AssemblyBlock, out: OutputStream) {
   out.token('{')
-  out.pushIndent()
-  for (const operation of node.operations) {
-    formatAstNode(operation, out)
+  if (node.operations.length > 0) {
+    out.pushIndent()
+    out.beginLine()
+    for (const operation of node.operations) {
+      formatAstNode(operation, out)
+    }
+    out.endLine()
+    out.popIndent()
   }
-  out.popIndent()
   out.token('}')
   out.endLine()
 }
@@ -144,6 +148,14 @@ function AssemblyCall(node: AST.AssemblyCall, out: OutputStream) {
     prefix: '(',
     suffix: ')',
   })
+}
+
+function AssemblyCase(node: AST.AssemblyCase, out: OutputStream) {
+  out.token(node.default ? 'default' : 'case')
+  if (node.value) {
+    formatAstNode(node.value, out)
+  }
+  formatAstNode(node.block, out)
 }
 
 function AssemblyFor(node: AST.AssemblyFor, out: OutputStream) {
@@ -161,6 +173,23 @@ function AssemblyFor(node: AST.AssemblyFor, out: OutputStream) {
   out.endLine()
 }
 
+function AssemblyFunctionDefinition(
+  node: AST.AssemblyFunctionDefinition,
+  out: OutputStream,
+) {
+  out.beginLine()
+  out.token('function')
+  out.token(node.name)
+  out.noSpace()
+  out.token('(')
+  formatNodeList(node.arguments, out, { separator: ',' })
+  out.token(')')
+  out.token('->')
+  formatNodeList(node.returnArguments, out, { separator: ',' })
+  formatAstNode(node.body, out)
+  out.endLine()
+}
+
 function AssemblyLocalDefinition(
   node: AST.AssemblyLocalDefinition,
   out: OutputStream,
@@ -172,6 +201,30 @@ function AssemblyLocalDefinition(
     out.token(':=')
     formatAstNode(node.expression, out)
   }
+  out.endLine()
+}
+
+function AssemblyMemberAccess(
+  node: AST.AssemblyMemberAccess,
+  out: OutputStream,
+) {
+  formatAstNode(node.expression, out)
+  out.noSpace()
+  out.token('.')
+  out.noSpace()
+  formatAstNode(node.memberName, out)
+}
+
+function AssemblySwitch(node: AST.AssemblySwitch, out: OutputStream) {
+  out.beginLine()
+  out.token('switch')
+  formatAstNode(node.expression, out)
+  out.pushIndent()
+  out.beginLine()
+  for (const caseStatement of node.cases) {
+    formatAstNode(caseStatement, out)
+  }
+  out.popIndent()
   out.endLine()
 }
 
