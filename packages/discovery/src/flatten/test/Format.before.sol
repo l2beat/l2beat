@@ -172,6 +172,12 @@ contract Test {
 				{ loc := add(loc, 32) }
 			{
 				sum := add(sum, mload(loc))
+				if gt(sum, 10) {
+					break
+				}
+				if lt(sum, 5) {
+					continue
+				}
 			}
 		}
 		assembly {

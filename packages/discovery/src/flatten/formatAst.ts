@@ -40,7 +40,7 @@ const FORMATTERS: {
   AssemblyCase,
   AssemblyFor,
   AssemblyFunctionDefinition,
-  AssemblyIf: __REPLACE_ME__,
+  AssemblyIf,
   AssemblyLocalDefinition,
   AssemblyMemberAccess,
   AssemblyStackAssignment: __REPLACE_ME__,
@@ -48,11 +48,11 @@ const FORMATTERS: {
   BinaryOperation,
   Block,
   BooleanLiteral,
-  Break: __REPLACE_ME__,
+  Break,
   BreakStatement,
   CatchClause,
   Conditional,
-  Continue: __REPLACE_ME__,
+  Continue,
   ContinueStatement,
   ContractDefinition,
   CustomErrorDefinition,
@@ -190,6 +190,14 @@ function AssemblyFunctionDefinition(
   out.endLine()
 }
 
+function AssemblyIf(node: AST.AssemblyIf, out: OutputStream) {
+  out.beginLine()
+  out.token('if')
+  formatAstNode(node.condition, out)
+  formatAstNode(node.body, out)
+  out.endLine()
+}
+
 function AssemblyLocalDefinition(
   node: AST.AssemblyLocalDefinition,
   out: OutputStream,
@@ -255,6 +263,10 @@ function BooleanLiteral(node: AST.BooleanLiteral, out: OutputStream) {
   out.token(node.value ? 'true' : 'false')
 }
 
+function Break(_: AST.Break, out: OutputStream) {
+  out.token('break')
+}
+
 function BreakStatement(_: AST.BreakStatement, out: OutputStream) {
   out.beginLine()
   out.token('break')
@@ -286,6 +298,10 @@ function Conditional(node: AST.Conditional, out: OutputStream) {
   formatAstNode(node.trueExpression, out)
   out.token(':')
   formatAstNode(node.falseExpression, out)
+}
+
+function Continue(_: AST.Continue, out: OutputStream) {
+  out.token('continue')
 }
 
 function ContinueStatement(_: AST.ContinueStatement, out: OutputStream) {
