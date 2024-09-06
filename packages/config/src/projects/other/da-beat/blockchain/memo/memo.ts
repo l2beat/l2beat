@@ -39,7 +39,7 @@ export const memo: DaLayer = {
     The Operator, currently deployed by the project itself, handles the erasure coding of data and data chunks distribution, as well as the aggregation of KZG commitment proofs from Storage Nodes. 
     
     Storage Nodes, based on seed information generated periodically on the Memo chain, submit KZG data commitments to the Operator. 
-    The Verification Contract is responsible for on-chain verification on Memo chain, and it will generate seed information through the VRF-Sampling (Verifiable Random Function) cycle to determine which files to select for verification.
+    The Verification Contract is responsible for onchain verification on Memo chain, and it will generate seed information through the VRF-Sampling (Verifiable Random Function) cycle to determine which files to select for verification.
     Not all data commitments are verified on-chain, but only a subset of data is verified, with the sampling determined by the random seed produced by the Verification Contract.
     The operator will then collect and aggregate the KZG commitments for the selected files from storage nodes, and submit the aggregate proof to the Verification Contract.
    
