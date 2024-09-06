@@ -1,4 +1,9 @@
 import type * as AST from '@mradomski/fast-solidity-parser'
+import { parse } from '@mradomski/fast-solidity-parser'
+
+export function format(source: string) {
+  return formatAst(parse(source))
+}
 
 export function formatAst(ast: AST.ASTNode) {
   const out = new OutputStream()

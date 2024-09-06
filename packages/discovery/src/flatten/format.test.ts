@@ -1,19 +1,16 @@
 import { join } from 'path'
-import { parse } from '@mradomski/fast-solidity-parser'
 import { expect } from 'earl'
 import { readFile } from 'fs/promises'
-import { formatAst } from './formatAst'
+import { format } from './format'
 
-describe(formatAst.name, () => {
+describe(format.name, () => {
   it('correctly formats the test file', async () => {
     const [before, after] = await Promise.all([
       readFile(join(__dirname, 'test/Format.before.sol'), 'utf-8'),
       readFile(join(__dirname, 'test/Format.after.sol'), 'utf-8'),
     ])
 
-    const parsed = parse(before)
-    const formatted = formatAst(parsed)
-
+    const formatted = format(before)
     expect(formatted).toEqual(after)
   })
 })

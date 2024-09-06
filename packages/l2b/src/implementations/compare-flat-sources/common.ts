@@ -4,7 +4,7 @@ import {
   HashedFileContent,
   buildSimilarityHashmap,
   estimateSimilarity,
-  removeComments,
+  format,
 } from '@l2beat/discovery'
 import { assert } from '@l2beat/shared-pure'
 import chalk from 'chalk'
@@ -219,7 +219,7 @@ async function getFlatSources(
   const contents: HashedFileContent[] = []
   for (const filePath of filesToCompare(filePaths)) {
     const rawContent = await readFile(filePath, 'utf-8')
-    const content = removeComments(rawContent)
+    const content = format(rawContent)
 
     contents.push({
       path: filePath,
