@@ -1,3 +1,201 @@
+Generated with discovered.json: 0xc93465a0d26f3cc47cb0a26a602c2d2c7126ef01
+
+# Diff at Fri, 06 Sep 2024 16:43:10 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@fd881462cca0d7ef4519f907f3c6cfd5fe1cde8f block: 20663562
+- current block number: 20692793
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract Governance (0x0b622A2061EaccAE1c664eBC3E868b8438e03F61) {
+    +++ description: None
+      values.scheduledTransactions.63:
++        {"delay":0,"operation":{"calls":[{"target":"0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB","value":"0","function":"transferOwnership","inputs":[{"name":"newOwner","value":"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"}]},{"target":"0x303a465B659cBB0ab36eE643eA362c509EEb5213","value":"0","function":"transferOwnership","inputs":[{"name":"newOwner","value":"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"}]},{"target":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","value":"0","function":"transferOwnership","inputs":[{"name":"newOwner","value":"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"}]},{"target":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","value":"0","function":"transferOwnership","inputs":[{"name":"newOwner","value":"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"}]}],"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","salt":"0x0000000000000000000000000000000000000000000000000000000000000000"}}
+    }
+```
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
+    }
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: None
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
+    }
+```
+
+```diff
+    contract L1SharedBridge (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: None
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x015318c16AE443a20DE0A776dB06a59F0D279057)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x13f07d9BF17615f6a17F272fe1A913168C275A66)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x178D8Eb1A1fb81B5102808A83318Bb04C6a9fC6D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x2A90830083C5Ca1f18d7AA7fCDC2998f93475384)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DiamondProxy (0x32400084C286CF3E17e7B677ea9583e60a000324)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x34Ea62D4b9bBB8AD927eFB6ab31E3Ab3474aC93a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x35eA56fd9eAd2567F339Eb9564B6940b9DD5653F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x3888777686F0b0d8c3108fc22ad8DE9E049bE26F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x538612F6eba6ff80FBD95D60dCDee16b8FfF2c0f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x55c671BcE13120387Ded710A1d1b80C0e3d8E857)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x69462a81ba94D64c404575f1899a464F123497A2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0x70F3FBf8a427155185Ec90BED8a3434203de9604)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProtocolUpgradeHandler (0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xbC1653bd3829dfEc575AfC3816D4899cd103B51c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SecurityCouncil (0xBDFfCC71FE84020238F2990a6D2954e87355De0D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Guardians (0xD677e09324F8Bb3cC64F009973693f751c33A888)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EmergencyUpgradeBoard (0xdEFd1eDEE3E8c5965216bd59C866f7f5307C9b29)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/DiamondProxy/AdminFacet.1.sol   | 1975 ++++++++++++++++++
+ .../ethereum/.flat/DiamondProxy/DiamondProxy.p.sol | 1468 +++++++++++++
+ .../.flat/DiamondProxy/ExecutorFacet.4.sol         | 1187 +++++++++++
+ .../ethereum/.flat/DiamondProxy/GettersFacet.2.sol | 2186 ++++++++++++++++++++
+ .../ethereum/.flat/DiamondProxy/MailboxFacet.3.sol | 1470 +++++++++++++
+ .../ethereum/.flat/EmergencyUpgradeBoard.sol       | 1233 +++++++++++
+ .../GnosisSafe.sol                                 |  953 +++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../GnosisSafe.sol                                 |  953 +++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../GnosisSafe.sol                                 |  953 +++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../GnosisSafe.sol                                 |  953 +++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../GnosisSafe.sol                                 |  953 +++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../GnosisSafe.sol                                 |  953 +++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../GnosisSafe.sol                                 |  953 +++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../GnosisSafe.sol                                 |  953 +++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../GnosisSafe.sol                                 |  953 +++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../GnosisSafe.sol                                 |  953 +++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../GnosisSafe.sol                                 |  953 +++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../shared-zk-stack/ethereum/.flat/Guardians.sol   | 1439 +++++++++++++
+ .../ethereum/.flat/ProtocolUpgradeHandler.sol      |  605 ++++++
+ .../ethereum/.flat/SecurityCouncil.sol             | 1389 +++++++++++++
+ .../shared-zk-stack/ethereum/.flat/Verifier.sol    | 1706 +++++++++++++++
+ 32 files changed, 25526 insertions(+)
+```
+
 Generated with discovered.json: 0xe131f21db446bf93a860e4e5e83e4f27e772bd97
 
 # Diff at Fri, 30 Aug 2024 08:00:41 GMT:
