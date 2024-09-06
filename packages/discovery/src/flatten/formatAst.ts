@@ -34,14 +34,14 @@ const FORMATTERS: {
   [K in AST.ASTNode['type']]: Formatter<K>
 } = {
   ArrayTypeName,
-  AssemblyAssignment: __REPLACE_ME__,
-  AssemblyBlock: __REPLACE_ME__,
-  AssemblyCall: __REPLACE_ME__,
+  AssemblyAssignment,
+  AssemblyBlock,
+  AssemblyCall,
   AssemblyCase: __REPLACE_ME__,
-  AssemblyFor: __REPLACE_ME__,
+  AssemblyFor,
   AssemblyFunctionDefinition: __REPLACE_ME__,
   AssemblyIf: __REPLACE_ME__,
-  AssemblyLocalDefinition: __REPLACE_ME__,
+  AssemblyLocalDefinition,
   AssemblyMemberAccess: __REPLACE_ME__,
   AssemblyStackAssignment: __REPLACE_ME__,
   AssemblySwitch: __REPLACE_ME__,
@@ -56,7 +56,7 @@ const FORMATTERS: {
   ContinueStatement,
   ContractDefinition,
   CustomErrorDefinition,
-  DecimalNumber: __REPLACE_ME__,
+  DecimalNumber,
   DoWhileStatement,
   ElementaryTypeName,
   EmitStatement,
@@ -70,14 +70,14 @@ const FORMATTERS: {
   FunctionDefinition,
   FunctionTypeName,
   HexLiteral,
-  HexNumber: __REPLACE_ME__,
+  HexNumber,
   Identifier,
   IfStatement,
   ImportDirective,
   IndexAccess,
   IndexRangeAccess,
   InheritanceSpecifier,
-  InlineAssemblyStatement: __REPLACE_ME__,
+  InlineAssemblyStatement,
   LabelDefinition: DoesNotExistSkip,
   Mapping,
   MemberAccess,
@@ -115,6 +115,64 @@ function ArrayTypeName(node: AST.ArrayTypeName, out: OutputStream) {
     formatAstNode(node.length, out)
   }
   out.token(']')
+}
+
+function AssemblyAssignment(node: AST.AssemblyAssignment, out: OutputStream) {
+  out.beginLine()
+  formatNodeList(node.names, out, { separator: ',' })
+  out.token(':=')
+  formatAstNode(node.expression, out)
+  out.endLine()
+}
+
+function AssemblyBlock(node: AST.AssemblyBlock, out: OutputStream) {
+  out.token('{')
+  out.pushIndent()
+  for (const operation of node.operations) {
+    formatAstNode(operation, out)
+  }
+  out.popIndent()
+  out.token('}')
+  out.endLine()
+}
+
+function AssemblyCall(node: AST.AssemblyCall, out: OutputStream) {
+  out.token(node.functionName)
+  out.noSpace()
+  formatNodeList(node.arguments, out, {
+    separator: ',',
+    prefix: '(',
+    suffix: ')',
+  })
+}
+
+function AssemblyFor(node: AST.AssemblyFor, out: OutputStream) {
+  out.beginLine()
+  out.token('for')
+  out.pushIndent()
+  out.beginLine()
+  formatAstNode(node.pre, out)
+  out.beginLine()
+  formatAstNode(node.condition, out)
+  out.beginLine()
+  formatAstNode(node.post, out)
+  out.popIndent()
+  formatAstNode(node.body, out)
+  out.endLine()
+}
+
+function AssemblyLocalDefinition(
+  node: AST.AssemblyLocalDefinition,
+  out: OutputStream,
+) {
+  out.beginLine()
+  out.token('let')
+  formatNodeList(node.names, out, { separator: ',' })
+  if (node.expression) {
+    out.token(':=')
+    formatAstNode(node.expression, out)
+  }
+  out.endLine()
 }
 
 function BinaryOperation(node: AST.BinaryOperation, out: OutputStream) {
@@ -229,6 +287,10 @@ function CustomErrorDefinition(
   out.token(')')
   out.token(';')
   out.endLine()
+}
+
+function DecimalNumber(node: AST.DecimalNumber, out: OutputStream) {
+  out.token(node.value)
 }
 
 function DoWhileStatement(node: AST.DoWhileStatement, out: OutputStream) {
@@ -429,6 +491,10 @@ function HexLiteral(node: AST.HexLiteral, out: OutputStream) {
   out.token(`hex"${node.value}"`)
 }
 
+function HexNumber(node: AST.HexNumber, out: OutputStream) {
+  out.token(node.value)
+}
+
 function Identifier(node: AST.Identifier, out: OutputStream) {
   out.token(node.name)
 }
@@ -529,6 +595,29 @@ function InheritanceSpecifier(
       suffix: ')',
     })
   }
+}
+
+function InlineAssemblyStatement(
+  node: AST.InlineAssemblyStatement,
+  out: OutputStream,
+) {
+  out.beginLine()
+  out.token('assembly')
+  if (node.language) {
+    out.token(JSON.stringify(node.language))
+  }
+  if (node.flags.length > 0) {
+    out.token('(')
+    forEachSeparator(node.flags, (flag, separate) => {
+      out.token(JSON.stringify(flag))
+      if (separate) {
+        out.token(',')
+      }
+    })
+    out.token(')')
+  }
+  formatAstNode(node.body, out)
+  out.endLine()
 }
 
 function Mapping(node: AST.Mapping, out: OutputStream) {

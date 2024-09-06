@@ -161,4 +161,21 @@ contract Test {
 	function fallback() {}
 
 	function receive() {}
+
+	function sumPureAsm(uint[] memory data) public pure returns (uint sum) {
+		assembly {
+			let len := mload(data)
+			let loc := add(data, 0x20)
+			for
+				{ let end := add(loc, mul(len, 0x20)) }
+				lt(loc, end)
+				{ loc := add(loc, 32) }
+			{
+				sum := add(sum, mload(loc))
+			}
+		}
+		assembly "evmasm" {}
+		assembly ("memory-safe") {}
+		assembly "evmasm" ("a", "b") {}
+	}
 }
