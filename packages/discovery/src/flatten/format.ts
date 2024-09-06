@@ -310,10 +310,6 @@ function ContractDefinition(node: AST.ContractDefinition, out: OutputStream) {
 
   formatNodeList(node.baseContracts, out, { prefix: 'is', separator: ',' })
 
-  if (node.kind === 'interface') {
-    out.state.insideInterface = true
-  }
-
   out.token('{')
   out.pushIndent()
   forEachPrevious(node.subNodes, (n, prev) => {
@@ -331,8 +327,6 @@ function ContractDefinition(node: AST.ContractDefinition, out: OutputStream) {
   out.popIndent()
   out.token('}')
   out.endLine()
-
-  out.state.insideInterface = false
 }
 
 function CustomErrorDefinition(
@@ -480,12 +474,12 @@ function FunctionDefinition(node: AST.FunctionDefinition, out: OutputStream) {
   if (node.isConstructor) {
     out.token('constructor')
   } else {
-    out.token('function')
     if (node.isFallback) {
       out.token('fallback')
     } else if (node.isReceiveEther) {
       out.token('receive')
     } else if (node.name) {
+      out.token('function')
       out.token(node.name)
     }
   }
@@ -517,13 +511,10 @@ function FunctionDefinition(node: AST.FunctionDefinition, out: OutputStream) {
     out.token(')')
   }
 
-  if (out.state.insideInterface) {
-    out.token(';')
-  } else if (node.body) {
+  if (node.body) {
     formatAstNode(node.body, out)
   } else {
-    out.token('{')
-    out.token('}')
+    out.token(';')
   }
 
   out.endLine()
@@ -549,7 +540,9 @@ function FunctionTypeName(node: AST.FunctionTypeName, out: OutputStream) {
 }
 
 function HexLiteral(node: AST.HexLiteral, out: OutputStream) {
-  out.token(`hex"${node.value}"`)
+  for (const part of node.parts) {
+    out.token(`hex"${part}"`)
+  }
 }
 
 function HexNumber(node: AST.HexNumber, out: OutputStream) {
@@ -710,16 +703,21 @@ function ModifierDefinition(node: AST.ModifierDefinition, out: OutputStream) {
   out.token('modifier')
   out.token(node.name)
   out.noSpace()
-  out.token('(')
   if (node.parameters) {
+    out.token('(')
     formatNodeList(node.parameters, out, { separator: ',' })
+    out.token(')')
   }
-  out.token(')')
+  if (node.isVirtual) {
+    out.token('virtual')
+  }
+  if (node.override) {
+    formatOverride(node.override, out)
+  }
   if (node.body) {
     formatAstNode(node.body, out)
   } else {
-    out.token('{')
-    out.token('}')
+    out.token(';')
   }
   out.endLine()
 }
@@ -830,7 +828,9 @@ function StateVariableDeclaration(
 }
 
 function StringLiteral(node: AST.StringLiteral, out: OutputStream) {
-  out.token(JSON.stringify(node.value))
+  for (const part of node.parts) {
+    out.token(JSON.stringify(part))
+  }
 }
 
 function StructDefinition(node: AST.StructDefinition, out: OutputStream) {
@@ -1040,10 +1040,6 @@ class OutputStream {
   private hintNoSpace = false
 
   private previous = ''
-
-  state = {
-    insideInterface: false,
-  }
 
   token(token: string) {
     if (this.isLineStart && !this.indented) {

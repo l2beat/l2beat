@@ -17,6 +17,7 @@ interface I1 {
 	function fn(function () t);
 	function fn(function () internal t);
 	function fn(function () external payable returns (bool, bool) t);
+	modifier yo;
 }
 
 interface I2 is B, C("hello", "world") {}
@@ -57,6 +58,7 @@ contract Test {
 	mapping(address => bool) single;
 	mapping(address user => bool allowed) named;
 	mapping(address => mapping(address => int)) double;
+	mapping(Foo.Bar => Baz.Xyz) xxx;
 
 	type Money is uint;
 
@@ -70,16 +72,23 @@ contract Test {
 		_;
 	}
 
+	modifier cooCoo() virtual override(Xyz) {}
+
 	constructor() {}
 
-	constructor(uint a, bytes calldata b) payable onlyFullMoon {}
+	constructor(uint a, bytes calldata b) payable MoonLib.onlyFullMoon {}
 
 	function variables() {
 		uint256 foo = 1;
 		uint256 foo = 1 wei;
 		uint256 foo = 1_2_34.5 ether;
 		(uint256 foo, , string a) = (1, true, "hello");
+		// Unsupported:
+		// (bool a) = (false);
 		bytes foo = hex"12_34_ab_CD";
+		bytes foo = hex"12" hex"34";
+		string foo = "asd";
+		string foo = "asd" "fgh";
 		uint256 foo = 0x12_34_ab_CD;
 		uint256 x = 1 + 2;
 		uint256 y = 1 + (2 + 3);
@@ -160,7 +169,11 @@ contract Test {
 
 	function fallback() {}
 
+	fallback() {}
+
 	function receive() {}
+
+	receive() {}
 
 	function sumPureAsm(uint[] memory data) public pure returns (uint sum) {
 		assembly {
