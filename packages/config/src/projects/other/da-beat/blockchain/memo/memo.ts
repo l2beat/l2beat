@@ -35,7 +35,7 @@ export const memo: DaLayer = {
     ## Architecture
     Meeda's architecture consists of several components. 
     Storage Nodes store blob data and generate data availability commitments, with node deployment available to all users. 
-    Light Nodes are responsible for challenging storage nodes through on-chain verification, and their deployment is also open to all users. 
+    Light Nodes are responsible for challenging storage nodes through onchain verification, and their deployment is also open to all users. 
     The Operator, currently deployed by the project itself, handles the erasure coding of data and data chunks distribution, as well as the aggregation of KZG commitment proofs from Storage Nodes. 
     
     Storage Nodes, based on seed information generated periodically on the Memo chain, submit KZG data commitments to the Operator. 
