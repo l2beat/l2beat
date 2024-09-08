@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x9eeff892b00d665fd1fedef86725b3eb91163a99
+
+# Diff at Thu, 05 Sep 2024 14:10:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d01da0bcdde8e77051659c9718e449a44f5f957a block: 124918219
+- current block number: 124973335
+
+## Description
+
+Fee withdrawer changed to OptimismOwner.
+
+## Watched changes
+
+```diff
+    contract zkLink (0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b) {
+    +++ description: None
+      values.forwardFeeAllocator:
+-        "0x0000000000000000000000000000000000000000"
++        "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9"
+    }
+```
+
 Generated with discovered.json: 0x7d50bd948c12967a5ab1bedb727d6805415e08c2
 
 # Diff at Wed, 04 Sep 2024 07:33:43 GMT:

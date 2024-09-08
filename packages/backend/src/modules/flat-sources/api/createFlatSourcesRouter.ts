@@ -6,7 +6,9 @@ export function createFlatSourcesRouter(controller: FlatSourcesController) {
   const router = new Router()
 
   router.get('/api/flat-sources', async (ctx) => {
-    ctx.body = await controller.getFlatSources()
+    const response = await controller.getFlatSources()
+    ctx.body = response
+    ctx.response.length = response.length
   })
 
   return router

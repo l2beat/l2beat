@@ -11,6 +11,7 @@ import { type CostsTimeRange } from '~/server/features/scaling/costs/utils/range
 import { api } from '~/trpc/react'
 import { useChartLoading } from '../core/chart-loading-context'
 import { ChartTimeRangeControls } from '../core/chart-time-range-controls'
+import { type ChartScale } from '../types'
 import { CostsChartHover } from './costs-chart-hover'
 import { useCostChartRenderParams } from './use-cost-chart-render-params'
 
@@ -20,7 +21,7 @@ interface Props {
 }
 
 export function ProjectCostsChart({ milestones, projectId }: Props) {
-  const [scale, setScale] = useState('lin')
+  const [scale, setScale] = useState<ChartScale>('lin')
   const [range, setRange] = useState<CostsTimeRange>('7d')
   const [unit, setUnit] = useState<CostsUnit>('usd')
   const { data: chart, isLoading } = api.costs.chart.useQuery({
@@ -94,9 +95,9 @@ function UnitAndScaleControls({
   setScale,
 }: {
   unit: CostsUnit
-  scale: string
+  scale: ChartScale
   setUnit: (value: CostsUnit) => void
-  setScale: (value: string) => void
+  setScale: (value: ChartScale) => void
 }) {
   const loading = useChartLoading()
 

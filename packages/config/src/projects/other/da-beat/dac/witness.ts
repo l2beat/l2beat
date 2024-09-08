@@ -1,34 +1,87 @@
-import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
-import { DaLayer } from '../types/DaLayer'
-import { witnessDac } from './bridges/witness'
+import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
+import { witness } from '../../../layer2s/witness'
+import { DAC } from '../templates/dac-template'
+import { DaAttestationSecurityRisk } from '../types'
+import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
-export const witnessLayer: DaLayer = {
-  id: 'witness-dac-layer',
-  type: 'DaLayer',
-  kind: 'DAC',
-  display: {
-    name: 'Data Availability Committee (DAC)',
-    slug: 'witness',
-    description:
-      'Set of parties responsible for signing and attesting to the availability of data.',
-    links: {
-      websites: [],
-      documentation: [],
-      repositories: [],
-      apps: [],
-      explorers: [],
-      socialMedia: [],
+const discovery = new ProjectDiscovery('witness')
+
+const upgradeability = {
+  upgradableBy: ['DACProxyAdminOwner'],
+  upgradeDelay: 'No delay',
+}
+
+const membersCountDAC = discovery.getContractValue<number>(
+  'WitnessValidiumDAC',
+  'getAmountOfMembers',
+)
+
+const requiredSignaturesDAC = discovery.getContractValue<number>(
+  'WitnessValidiumDAC',
+  'requiredAmountOfSignatures',
+)
+
+const members = discovery.getContractValue<string[]>(
+  'WitnessValidiumDAC',
+  'members',
+)
+
+export const witnessDac = DAC({
+  project: witness,
+  risks: {
+    attestations: DaAttestationSecurityRisk.SigVerified(true),
+  },
+  bridge: {
+    contracts: {
+      addresses: [
+        discovery.getContractDetails('WitnessValidium', {
+          description: `The main contract of the WitnessValidium. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
+        }),
+        discovery.getContractDetails('WitnessValidiumDAC', {
+          description:
+            'Validium committee contract that allows the admin to setup the members of the committee and stores the required amount of signatures threshold.',
+          ...upgradeability,
+        }),
+      ],
+      risks: [],
+    },
+    permissions: [
+      {
+        name: 'Committee Members',
+        description: `List of addresses authorized to sign data commitments for the DA bridge.`,
+        accounts: members.map((operator) => ({
+          address: EthereumAddress(operator[1]),
+          type: 'EOA',
+        })),
+      },
+      {
+        name: 'LocalAdmin',
+        accounts: [
+          discovery.formatPermissionedAccount(
+            discovery.getContractValue('WitnessValidium', 'admin'),
+          ),
+        ],
+        description:
+          'Admin of the WitnessValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions and update the DA mode.',
+      },
+      {
+        name: 'DACProxyAdminOwner',
+        accounts: [
+          discovery.formatPermissionedAccount(
+            discovery.getContractValue('ProxyAdmin', 'owner'),
+          ),
+        ],
+        description:
+          "Owner of the WitnessValidiumDAC's ProxyAdmin. Can upgrade the contract.",
+      },
+    ],
+    chain: ChainId.ETHEREUM,
+    requiredMembers: requiredSignaturesDAC,
+    totalMembers: membersCountDAC,
+    transactionDataType: DacTransactionDataType.TransactionData,
+    members: {
+      type: 'unknown',
     },
   },
-  technology: `## Simple Committee
-  The Data Availability Committee (DAC) is a set of trusted parties responsible for storing data off-chain and serving it upon demand. 
-  The security guarantees of DACs depend on the specific setup and can vary significantly based on the criteria for selecting committee members, 
-  their operational transparency, and the mechanisms in place to handle disputes and failures.
-  `,
-  bridges: [witnessDac],
-  usedIn: [...witnessDac.usedIn],
-  risks: {
-    economicSecurity: DaEconomicSecurityRisk.Unknown,
-    fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
-  },
-}
+})

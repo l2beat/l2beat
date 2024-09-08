@@ -1,4 +1,3 @@
-import React from 'react'
 import { Callout } from '~/app/_components/callout'
 import { CustomLink } from '~/app/_components/link/custom-link'
 import { HighlightableLink } from '~/app/_components/link/highlightable/highlightable-link'
@@ -112,7 +111,7 @@ export function ContractEntry({
               <strong className="text-black dark:text-white">
                 Can be upgraded by:
               </strong>
-              <div className="ml-1.5 space-x-1.5">
+              <div className="ml-1.5 flex flex-wrap gap-1.5">
                 {contract.upgradeableBy.map((name) => (
                   <CustomLink key={name} href={`#${name}`}>
                     {name}
