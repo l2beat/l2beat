@@ -24,7 +24,7 @@ import {
   notUndefined,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { groupBy, isArray, isString, uniq } from 'lodash'
+import { groupBy, isArray, isString, sum, uniq } from 'lodash'
 
 import { join } from 'path'
 import {
@@ -907,19 +907,33 @@ export class ProjectDiscovery {
       .filter((contracts) => contracts.receivedPermissions === undefined)
       .filter((contracts) => contracts.proxyType !== 'gnosis safe')
       .map((contract) => {
-        const admins = get$Admins(contract.values)
-        const upgradableBy = admins.length > 0 && {
-          upgradableBy: admins.map(
-            (a) => this.getContractByAddress(a)?.name ?? a.toString(),
-          ),
-          upgradeDelay: 'No delay',
-        }
+        const upgradersWithDelay: Record<string, number> = Object.fromEntries(
+          contract.issuedPermissions
+            ?.filter((p) => p.permission === 'upgrade')
+            .map((p) => {
+              const address =
+                this.getContractByAddress(p.target)?.name ?? p.target.toString()
+              const delay =
+                (p.delay ?? 0) + sum(p.via?.map((v) => v.delay ?? 0) ?? [])
+              return [address, delay]
+            }) ?? [],
+        )
+
+        const ultimateUpgraders = Object.keys(upgradersWithDelay)
+        const minDelay = Math.min(...Object.values(upgradersWithDelay))
+        const upgradableByStruct =
+          ultimateUpgraders.length === 0
+            ? {}
+            : {
+                upgradableBy: ultimateUpgraders,
+                upgradeDelay: minDelay === 0 ? 'No delay' : minDelay.toString(),
+              }
 
         return this.getContractDetails(contract.address.toString(), {
           description: formatAsBulletPoints(
             this.describeContractOrEoa(contract, true),
           ),
-          ...upgradableBy,
+          ...upgradableByStruct,
         })
       })
 
