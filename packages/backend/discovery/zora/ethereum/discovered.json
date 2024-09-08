@@ -117,7 +117,7 @@
             {
               "address": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49",
               "delay": 0,
-              "description": "upgrading bridge implementation grants access to all funds, and allows to change any system component."
+              "description": "upgrading bridge implementation allows to access all funds and change every system component."
             }
           ]
         }
@@ -207,7 +207,7 @@
         {
           "permission": "upgrade",
           "target": "0x3e2Ea9B92B7E48A52296fD261dc26fd995284631",
-          "description": "upgrading bridge implementation grants access to all funds, and allows to change any system component.",
+          "description": "upgrading bridge implementation allows to access all funds and change every system component.",
           "via": [{ "address": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49" }]
         },
         {
@@ -270,7 +270,7 @@
       "address": "0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8",
       "template": "gnosisSafeModules/DeputyGuardianModule",
       "descriptions": [
-        "allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A (the deputy guardian) to act on behalf of the Gnosis Safe."
+        "allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe."
       ],
       "sinceTimestamp": 1717149791,
       "values": {
@@ -683,7 +683,7 @@
         {
           "permission": "upgrade",
           "target": "0x3e2Ea9B92B7E48A52296fD261dc26fd995284631",
-          "description": "upgrading bridge implementation grants access to all funds, and allows to change any system component."
+          "description": "upgrading bridge implementation allows to access all funds and change every system component."
         },
         {
           "permission": "upgrade",
@@ -1337,12 +1337,12 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
-    "gnosisSafeModules/DeputyGuardianModule": "0x797526056a0c2aacf8273ac6d650658e4431861c943aaff5e979a5a06c613cb4",
+    "gnosisSafeModules/DeputyGuardianModule": "0xd3930cda89001876a722ed430ea8ed07e4823c83ed910e621744eccab9becba1",
     "gnosisSafeModules/LivenessModule": "0x93a18dea68cf1d0abddfc33adec077c82356344dd7b49ae5542b16ca9319bb91",
     "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
-    "opstack/L1StandardBridge": "0x384b023512fe1647d7349fc6e7613a4b9bcd15f04b09049c8e867edc67ae59e1",
+    "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
     "opstack/L2OutputOracle": "0x1d833a9768af12de67d65ad7dd09fc4b96db543bde5f5fdc2ff0ea0c571ceadf",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
     "opstack/OptimismPortal": "0xcc1b405a2bf545f58a88bb104ba298351e252fc507b40d0e1ef40bf6bbe34152",

@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x678010ea398719c9c8a5f0bf597e2a598119030d
+
+# Diff at Sun, 08 Sep 2024 17:24:52 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@fd881462cca0d7ef4519f907f3c6cfd5fe1cde8f block: 20619826
+- current block number: 20619826
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20619826 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257) {
+    +++ description: None
+      descriptions:
+-        ["It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component."]
+      receivedPermissions.3.description:
++        "upgrading bridge implementation allows to access all funds and change every system component."
+    }
+```
+
+```diff
+    contract ZircuitMultiSig (0xC463EaC02572CC964D43D2414023E2c6B62bAF38) {
+    +++ description: None
+      descriptions:
+-        ["It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."]
+      receivedPermissions.0.description:
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+    }
+```
+
 Generated with discovered.json: 0xed1a5ff267d65269cdac030b1e7d6b49475b8871
 
 # Diff at Fri, 30 Aug 2024 08:01:42 GMT:
