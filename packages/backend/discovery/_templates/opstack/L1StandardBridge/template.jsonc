@@ -9,7 +9,7 @@
         "permissions": [
           {
             "type": "upgrade",
-            "description": "upgrading bridge implementation grants access to all funds, and allows to change any system component."
+            "description": "upgrading bridge implementation allows to access all funds and change every system component."
           }
         ]
       }
