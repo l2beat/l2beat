@@ -160,18 +160,13 @@ export function targetConfigToMeta(
   if (target === undefined) {
     return undefined
   }
-  // const descriptions = target.description
-  //   ? [interpolateDescription(target.description, analysis)]
-  //   : undefined
-
-  const descriptions = undefined
 
   const result: ContractMeta = {
     displayName: undefined,
-    descriptions,
+    descriptions: undefined,
     roles: toSet(target.role),
     permissions: target.permissions?.map((p) =>
-      linkPermission(p, self, analysis.values),
+      linkPermission(p, self, analysis.values, analysis),
     ),
     categories: toSet(target.category),
     types: toSet(field.type),
@@ -184,6 +179,7 @@ function linkPermission(
   rawPermission: RawPermissionConfiguration,
   self: EthereumAddress,
   values: AnalyzedContract['values'],
+  analysis: Omit<AnalyzedContract, 'selfMeta' | 'targetsMeta'>,
 ): PermissionConfiguration {
   let delay = rawPermission.delay
   if (typeof delay === 'string') {
@@ -193,7 +189,9 @@ function linkPermission(
   return {
     type: rawPermission.type,
     delay,
-    description: rawPermission.description,
+    description: rawPermission.description
+      ? interpolateDescription(rawPermission.description, analysis)
+      : undefined,
     target: self,
   }
 }

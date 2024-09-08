@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xcf8c254225b26419c2a5c357b2ffd130d3f2498c
+Generated with discovered.json: 0x210ead8153d02cb13e901eea9915bc79f0d6c806
 
-# Diff at Wed, 04 Sep 2024 11:00:53 GMT:
+# Diff at Sun, 08 Sep 2024 15:59:04 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@cdee8593311791a0ce855abd72742907545139fa block: 20475242
+- comparing to: main@fd881462cca0d7ef4519f907f3c6cfd5fe1cde8f block: 20475242
 - current block number: 20475242
 
 ## Description
@@ -42,7 +42,7 @@ discovery. Values are for block 20475242 (main branch discovery), not current.
 -        "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
 +        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
       issuedPermissions.0.via.0:
-+        {"address":"0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49","delay":0,"description":"by upgrading bridge implementation can gain access to all funds, and change any system component."}
++        {"address":"0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49","delay":0,"description":"upgrading bridge implementation grants access to all funds, and allows to change any system component."}
     }
 ```
 
@@ -74,7 +74,7 @@ discovery. Values are for block 20475242 (main branch discovery), not current.
       receivedPermissions.4:
 +        {"permission":"upgrade","target":"0x83A4521A3573Ca87f3a971B169C5A0E1d34481c3","via":[{"address":"0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"}]}
       receivedPermissions.3:
-+        {"permission":"upgrade","target":"0x3e2Ea9B92B7E48A52296fD261dc26fd995284631","description":"by upgrading bridge implementation can gain access to all funds, and change any system component.","via":[{"address":"0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"}]}
++        {"permission":"upgrade","target":"0x3e2Ea9B92B7E48A52296fD261dc26fd995284631","description":"upgrading bridge implementation grants access to all funds, and allows to change any system component.","via":[{"address":"0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"}]}
       receivedPermissions.2:
 +        {"permission":"upgrade","target":"0x1a0ad011913A150f69f6A19DF447A0CfD9551054","via":[{"address":"0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"}]}
       receivedPermissions.1.target:
@@ -183,7 +183,7 @@ discovery. Values are for block 20475242 (main branch discovery), not current.
       receivedPermissions:
 -        [{"permission":"configure","target":"0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef"},{"permission":"upgrade","target":"0x1a0ad011913A150f69f6A19DF447A0CfD9551054"},{"permission":"upgrade","target":"0x3e2Ea9B92B7E48A52296fD261dc26fd995284631"},{"permission":"upgrade","target":"0x83A4521A3573Ca87f3a971B169C5A0E1d34481c3"},{"permission":"upgrade","target":"0x9E6204F750cD866b299594e2aC9eA824E2e5f95c"},{"permission":"upgrade","target":"0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86"},{"permission":"upgrade","target":"0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf"}]
       directlyReceivedPermissions:
-+        [{"permission":"configure","target":"0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef"},{"permission":"upgrade","target":"0x1a0ad011913A150f69f6A19DF447A0CfD9551054"},{"permission":"upgrade","target":"0x3e2Ea9B92B7E48A52296fD261dc26fd995284631","description":"by upgrading bridge implementation can gain access to all funds, and change any system component."},{"permission":"upgrade","target":"0x83A4521A3573Ca87f3a971B169C5A0E1d34481c3"},{"permission":"upgrade","target":"0x9E6204F750cD866b299594e2aC9eA824E2e5f95c"},{"permission":"upgrade","target":"0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86"},{"permission":"upgrade","target":"0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf"}]
++        [{"permission":"configure","target":"0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef"},{"permission":"upgrade","target":"0x1a0ad011913A150f69f6A19DF447A0CfD9551054"},{"permission":"upgrade","target":"0x3e2Ea9B92B7E48A52296fD261dc26fd995284631","description":"upgrading bridge implementation grants access to all funds, and allows to change any system component."},{"permission":"upgrade","target":"0x83A4521A3573Ca87f3a971B169C5A0E1d34481c3"},{"permission":"upgrade","target":"0x9E6204F750cD866b299594e2aC9eA824E2e5f95c"},{"permission":"upgrade","target":"0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86"},{"permission":"upgrade","target":"0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf"}]
     }
 ```
 

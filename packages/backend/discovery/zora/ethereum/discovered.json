@@ -117,7 +117,7 @@
             {
               "address": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49",
               "delay": 0,
-              "description": "by upgrading bridge implementation can gain access to all funds, and change any system component."
+              "description": "upgrading bridge implementation grants access to all funds, and allows to change any system component."
             }
           ]
         }
@@ -207,7 +207,7 @@
         {
           "permission": "upgrade",
           "target": "0x3e2Ea9B92B7E48A52296fD261dc26fd995284631",
-          "description": "by upgrading bridge implementation can gain access to all funds, and change any system component.",
+          "description": "upgrading bridge implementation grants access to all funds, and allows to change any system component.",
           "via": [{ "address": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49" }]
         },
         {
@@ -683,7 +683,7 @@
         {
           "permission": "upgrade",
           "target": "0x3e2Ea9B92B7E48A52296fD261dc26fd995284631",
-          "description": "by upgrading bridge implementation can gain access to all funds, and change any system component."
+          "description": "upgrading bridge implementation grants access to all funds, and allows to change any system component."
         },
         {
           "permission": "upgrade",
@@ -1342,7 +1342,7 @@
     "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
-    "opstack/L1StandardBridge": "0xe35e85463cc0ebd650df1a852849e194e937fa7865a3a5cc92022abdfeb46d3f",
+    "opstack/L1StandardBridge": "0x384b023512fe1647d7349fc6e7613a4b9bcd15f04b09049c8e867edc67ae59e1",
     "opstack/L2OutputOracle": "0x1d833a9768af12de67d65ad7dd09fc4b96db543bde5f5fdc2ff0ea0c571ceadf",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
     "opstack/OptimismPortal": "0xcc1b405a2bf545f58a88bb104ba298351e252fc507b40d0e1ef40bf6bbe34152",

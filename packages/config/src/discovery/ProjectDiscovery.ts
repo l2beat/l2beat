@@ -777,7 +777,7 @@ export class ProjectDiscovery {
       [key in PermissionType]: string | undefined
     } = {
       configure: 'Can be used to configure',
-      upgrade: 'Can be used to upgrade implementation of\n',
+      upgrade: 'Can be used to upgrade implementation of',
       act: 'Can act on behalf of',
     }
 
