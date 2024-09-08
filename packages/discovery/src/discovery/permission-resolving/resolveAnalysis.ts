@@ -33,9 +33,6 @@ export function resolveAnalysis(analyses: Analysis[]): ResolvedPermission[] {
         threshold,
         edges: [],
       }
-      if (entry.description !== undefined) {
-        console.log(entry.description)
-      }
       graph[entry.target.toString()]?.edges.push({
         toNode: address,
         delay: entry.delay,
