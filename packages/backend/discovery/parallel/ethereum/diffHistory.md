@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xad2104162b7b0ea2e26cc67df7a5f5c5021f6be0
+
+# Diff at Mon, 09 Sep 2024 07:12:30 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@fd881462cca0d7ef4519f907f3c6cfd5fe1cde8f block: 20661240
+- current block number: 20711478
+
+## Description
+
+Parallel had a 11d gap between batches delivered to the SequencerInbox. The sequencer-only window was 2d, so `forceInclusion()` should have been possible. (nobody used it)
+
+The proposer was active and has a much longer max inactivity before allowing self-proposing (~12d).
+
+Paradex is currently using the ArbOS 31 wasmmoduleroot but not the new ChallengeManager nor the OSP contracts seen in Arbitrum.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0xb4795A0edae98d7820C37F06f6b858e7acb51DF8) {
+    +++ description: None
+      values.postsBlobs:
+-        true
++        false
+    }
+```
+
 Generated with discovered.json: 0x1c45b4656a74dcf9c9576a9c54e54d4bf837d034
 
 # Diff at Mon, 02 Sep 2024 06:58:48 GMT:
