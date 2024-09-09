@@ -1,14 +1,12 @@
-import React from 'react'
-
 import { CustomLink } from '~/app/_components/link/custom-link'
 import { cn } from '~/utils/cn'
 
 export interface ReferenceListProps {
-  references: TechnologyReference[]
+  references: Reference[]
   tight?: boolean
 }
 
-export interface TechnologyReference {
+export interface Reference {
   text: string
   href: string
 }
