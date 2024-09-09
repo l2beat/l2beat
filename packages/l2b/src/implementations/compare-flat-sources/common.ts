@@ -1,10 +1,10 @@
-import { resolve } from 'path'
+import path, { resolve } from 'path'
 import {
   ConfigReader,
   HashedFileContent,
   buildSimilarityHashmap,
   estimateSimilarity,
-  removeComments,
+  format,
 } from '@l2beat/discovery'
 import { assert } from '@l2beat/shared-pure'
 import chalk from 'chalk'
@@ -36,12 +36,12 @@ export async function computeStackSimilarity(discoveryPath: string): Promise<{
   matrix: Record<string, Record<string, number>>
   projects: Project[]
 }> {
-  const configReader = new ConfigReader(discoveryPath)
+  const configReader = new ConfigReader(path.dirname(discoveryPath))
   const configs = configReader.readAllConfigs()
 
   const stackProject = await Promise.all(
     configs.map((config) =>
-      readProject(config.name, config.chain, discoveryPath),
+      readProject(config.name, config.chain, path.dirname(discoveryPath)),
     ),
   )
   const projects = stackProject.filter((p) => p !== undefined) as Project[]
@@ -219,7 +219,7 @@ async function getFlatSources(
   const contents: HashedFileContent[] = []
   for (const filePath of filesToCompare(filePaths)) {
     const rawContent = await readFile(filePath, 'utf-8')
-    const content = removeComments(rawContent)
+    const content = format(rawContent)
 
     contents.push({
       path: filePath,

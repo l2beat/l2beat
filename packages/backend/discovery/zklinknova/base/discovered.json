@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "base",
-  "blockNumber": 19322901,
+  "blockNumber": 19378036,
   "configHash": "0x49f7bf7640f2f567471dbb7179bf811af73dcafa29f1fb7e91dce5adda9dc2db",
   "version": 14,
   "contracts": [
@@ -102,21 +102,21 @@
           "minimalL2GasPrice": 250000000
         },
         "FORWARD_REQUEST_TYPE_HASH": "0xe0aaca1722ef50bb0c9b032e5b16ce2b79fa9f23638835456b27fd6894f8292c",
-        "forwardFeeAllocator": "0x0000000000000000000000000000000000000000",
+        "forwardFeeAllocator": "0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C",
         "gateway": "0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011",
         "getGateway": "0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011",
         "getGovernor": "0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C",
         "getPriorityTxMaxGasLimit": 72000000,
-        "getTotalBatchesExecuted": 24163,
-        "getTotalPriorityTxs": 16410,
+        "getTotalBatchesExecuted": 24333,
+        "getTotalPriorityTxs": 16412,
         "IS_ETH_GAS_TOKEN": true,
         "owner": "0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C",
         "paused": false,
-        "totalBatchesExecuted": 24163,
-        "totalPriorityTxs": 16410,
-        "totalSyncedPriorityTxs": 16410,
-        "totalValidatorForwardFee": "9061143842984511537",
-        "totalValidatorForwardFeeWithdrawn": 0,
+        "totalBatchesExecuted": 24333,
+        "totalPriorityTxs": 16412,
+        "totalSyncedPriorityTxs": 16411,
+        "totalValidatorForwardFee": "9062127527451437068",
+        "totalValidatorForwardFeeWithdrawn": "9060669163451053288",
         "txGasPrice": 40000000000
       },
       "derivedName": "ZkLink"
@@ -152,14 +152,13 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 17,
+        "nonce": 18,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
     }
   ],
   "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9" },
     { "address": "0x2f4EE4c9737916bBF9E6a29Bb9DFEae3348c5eE9" },
     {

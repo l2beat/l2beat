@@ -1,4 +1,5 @@
 import { ProofVerification } from '../projects/types'
+import { ScalingProjectReference } from './ScalingProjectReference'
 import { ScalingProjectRisk } from './ScalingProjectRisk'
 
 type CategoryTitle =
@@ -11,6 +12,7 @@ type ScalingProjectStateValidationCategory = {
   title: CategoryTitle
   description: string
   risks?: ScalingProjectRisk[]
+  references?: ScalingProjectReference[]
 }
 
 export interface ScalingProjectStateValidation {

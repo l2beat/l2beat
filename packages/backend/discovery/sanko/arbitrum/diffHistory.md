@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x74b0beb0abc992d417da24b1ff59a3d9ceb344f1
+
+# Diff at Mon, 09 Sep 2024 08:41:15 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@fd881462cca0d7ef4519f907f3c6cfd5fe1cde8f block: 245517194
+- current block number: 251657470
+
+## Description
+
+Caldera MS removed, replaced with Sanko MS. 
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract GnosisSafeL2 (0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF)
+    +++ description: None
+```
+
+```diff
+    contract UpgradeExecutor (0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276) {
+    +++ description: None
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"
++        "0x420B4d16119127E4b96E55CB8a9D0c2828a161BB"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Sanko Multisig (0x420B4d16119127E4b96E55CB8a9D0c2828a161BB)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafeL2 => .flat/Sanko Multisig}/GnosisSafeL2.sol                | 0
+ .../GnosisSafeL2 => .flat/Sanko Multisig}/GnosisSafeProxy.p.sol           | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 245517194 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafeL2 (0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      name:
+-        "Caldera Multisig"
++        "GnosisSafeL2"
+    }
+```
+
 Generated with discovered.json: 0xb5b2f9e2382bd174b88d32f20268a9fd54527f71
 
 # Diff at Sun, 01 Sep 2024 08:47:24 GMT:

@@ -8,11 +8,10 @@ import {
   getSortedRowModel,
 } from '@tanstack/react-table'
 import Link from 'next/link'
+import { useMemo } from 'react'
 import { PentagonRosetteCell } from '~/app/_components/rosette/pentagon/pentagon-rosette-cell'
 import { BasicTable } from '~/app/_components/table/basic-table'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
-import { FilterWrapper } from '~/app/_components/table/filters/filter-wrapper'
-import { TableFacetedFilter } from '~/app/_components/table/filters/table-faceted-filter'
 import { EM_DASH } from '~/consts/characters'
 import { useBreakpoint } from '~/hooks/use-is-mobile'
 import { useTable } from '~/hooks/use-table'
@@ -21,6 +20,8 @@ import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/format'
 import { DaTableLastSubRowCell } from '../../../_components/da-table-last-sub-row-cell'
 import { DaTableSubRowCell } from '../../../_components/da-table-sub-row-cell'
+import { useDaFilter } from '../../../_components/filters/da-filter-context'
+import { DaFilters } from '../../../_components/filters/da-filters'
 import { mapRisksToRosetteValues } from '../../../_utils/map-risks-to-rosette-values'
 import { columns } from './columns'
 import { ProjectsUsedIn } from './projects-used-in'
@@ -30,9 +31,15 @@ interface Props {
 }
 
 export function DaSummaryTable({ items }: Props) {
+  const filter = useDaFilter()
+
+  const filteredEntries = useMemo(() => {
+    return items.filter(filter)
+  }, [items, filter])
+
   const breakpoint = useBreakpoint()
   const table = useTable({
-    data: items,
+    data: filteredEntries,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -56,13 +63,7 @@ export function DaSummaryTable({ items }: Props) {
 
   return (
     <>
-      <FilterWrapper>
-        <TableFacetedFilter title="DA Layer" column={table.getColumn('name')} />
-        <TableFacetedFilter
-          title="Layer type"
-          column={table.getColumn('layerType')}
-        />
-      </FilterWrapper>
+      <DaFilters items={filteredEntries} />
       <BasicTable
         table={table}
         rowColoringMode="ethereum-only"

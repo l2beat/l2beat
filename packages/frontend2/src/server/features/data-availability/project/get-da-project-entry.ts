@@ -46,6 +46,7 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
   return {
     name: daLayer.display.name,
     slug: daLayer.display.slug,
+    kind: daLayer.kind,
     type: kindToType(daLayer.kind),
     description: `${daLayer.display.description} ${daBridge.display.description}`,
     isUnderReview: daLayer.isUnderReview,

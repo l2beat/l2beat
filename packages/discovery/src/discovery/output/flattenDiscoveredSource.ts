@@ -108,7 +108,10 @@ function addSolidityVersionComment(
   solidityVersion: string,
   flatSource: string,
 ): string {
-  return `// Compiled with solc version: ${solidityVersion}\n\n${flatSource}`
+  // v1.2.3+commit.1234
+  const version = solidityVersion.slice(1).split('+')[0]
+  const license = `// SPDX-License-Identifier: Unknown\n`
+  return `${license}pragma solidity ${version};\n\n${flatSource}`
 }
 
 function formatThroughput(

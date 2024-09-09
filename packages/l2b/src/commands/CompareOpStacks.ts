@@ -1,4 +1,6 @@
+import { assert } from '@l2beat/shared-pure'
 import { command, positional, string, subcommands } from 'cmd-ts'
+import { readConfig } from '../config/readConfig'
 import { analyseAllOpStackChains } from '../implementations/compareOpStacks'
 import { discoveryPath } from './args'
 
@@ -11,7 +13,11 @@ const CompareSingleOpStackProjects = command({
     discoveryPath,
   },
   handler: async (args) => {
-    await analyseAllOpStackChains(args.project, args.discoveryPath)
+    const config = readConfig()
+    const discoveryPath = config.discoveryPath ?? args.discoveryPath
+    assert(discoveryPath !== undefined)
+
+    await analyseAllOpStackChains(args.project, discoveryPath)
   },
 })
 
@@ -21,7 +27,11 @@ const CompareAllOpStackProjects = command({
   version: '1.0.0',
   args: { discoveryPath },
   handler: async (args) => {
-    await analyseAllOpStackChains(null, args.discoveryPath)
+    const config = readConfig()
+    const discoveryPath = config.discoveryPath ?? args.discoveryPath
+    assert(discoveryPath !== undefined)
+
+    await analyseAllOpStackChains(null, discoveryPath)
   },
 })
 
