@@ -67,7 +67,7 @@ export function BigPizzaRosette(props: BigPizzaRosetteProps) {
           className={cn('relative w-[272px] p-12', props.className)}
           data-rosette-hover-disabled={isUnderReview || props.isUpcoming}
         >
-          <TooltipTrigger disabled>
+          <TooltipTrigger>
             <PizzaRosetteIcon
               values={props.values}
               isUnderReview={isUnderReview}
@@ -94,6 +94,10 @@ function RosetteTooltipContent() {
     <TooltipContent
       side={content.side}
       sideOffset={content.sideOffset}
+      onPointerDownOutside={(e) => {
+        e.preventDefault()
+        console.log('onPointerDownOutside')
+      }}
       className="w-[300px]"
     >
       <SentimentText
