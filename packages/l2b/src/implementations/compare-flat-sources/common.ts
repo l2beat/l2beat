@@ -1,4 +1,4 @@
-import { resolve } from 'path'
+import path, { resolve } from 'path'
 import {
   ConfigReader,
   HashedFileContent,
@@ -36,12 +36,12 @@ export async function computeStackSimilarity(discoveryPath: string): Promise<{
   matrix: Record<string, Record<string, number>>
   projects: Project[]
 }> {
-  const configReader = new ConfigReader(discoveryPath)
+  const configReader = new ConfigReader(path.dirname(discoveryPath))
   const configs = configReader.readAllConfigs()
 
   const stackProject = await Promise.all(
     configs.map((config) =>
-      readProject(config.name, config.chain, discoveryPath),
+      readProject(config.name, config.chain, path.dirname(discoveryPath)),
     ),
   )
   const projects = stackProject.filter((p) => p !== undefined) as Project[]
