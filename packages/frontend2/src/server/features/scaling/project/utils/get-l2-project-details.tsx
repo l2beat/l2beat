@@ -70,18 +70,20 @@ export async function getL2ProjectDetails({
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
 
-  const tvlChartData = await api.tvl.chart({
-    range: '7d',
-    filter: { type: 'projects', projectIds: [project.id] },
-  })
-  const activityChartData = await api.activity.chart({
-    range: '30d',
-    filter: { type: 'projects', projectIds: [project.id] },
-  })
-  const costsChartData = await api.costs.chart({
-    range: '7d',
-    filter: { type: 'projects', projectIds: [project.id] },
-  })
+  const [tvlChartData, activityChartData, costsChartData] = await Promise.all([
+    api.tvl.chart({
+      range: '7d',
+      filter: { type: 'projects', projectIds: [project.id] },
+    }),
+    api.activity.chart({
+      range: '30d',
+      filter: { type: 'projects', projectIds: [project.id] },
+    }),
+    api.costs.chart({
+      range: '7d',
+      filter: { type: 'projects', projectIds: [project.id] },
+    }),
+  ])
 
   const sortedMilestones =
     project.milestones?.sort(
