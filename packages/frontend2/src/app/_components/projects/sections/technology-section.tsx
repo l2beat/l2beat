@@ -1,12 +1,8 @@
-import React from 'react'
 import { Markdown } from '~/app/_components/markdown/markdown'
 import { UnderReviewCallout } from '../under-review-callout'
 import { TechnologyIncompleteNote } from './contracts/technology-incomplete-note'
-import {
-  ReferenceList,
-  type TechnologyReference,
-} from './permissions/reference-list'
 import { ProjectSection } from './project-section'
+import { type Reference, ReferenceList } from './reference-list'
 import { RiskList, type TechnologyRisk } from './risk-list'
 import { type ProjectSectionProps } from './types'
 
@@ -21,7 +17,7 @@ export interface TechnologyChoice {
   isIncomplete: boolean
   isUnderReview: boolean
   risks: TechnologyRisk[]
-  references: TechnologyReference[]
+  references: Reference[]
 }
 
 export function TechnologySection({

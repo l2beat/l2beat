@@ -348,7 +348,7 @@ export function orbitStackCommon(
         references: [
           {
             text: 'Sequencer - Arbitrum documentation',
-            href: 'https://developer.offchainlabs.com/sequencer',
+            href: 'https://docs.arbitrum.io/how-arbitrum-works/inside-arbitrum-nitro#the-sequencer',
           },
         ],
       },
@@ -367,7 +367,7 @@ export function orbitStackCommon(
           },
           {
             text: 'Sequencer Isn’t Doing Its Job - Arbitrum documentation',
-            href: 'https://developer.offchainlabs.com/sequencer#unhappyuncommon-case-sequencer-isnt-doing-its-job',
+            href: 'https://docs.arbitrum.io/how-arbitrum-works/sequencer#unhappyuncommon-case-sequencer-isnt-doing-its-job',
           },
         ],
       },
