@@ -54,3 +54,19 @@ export interface AmountConfigBase {
   category: Token['category']
   bridgedUsing?: Token['bridgedUsing']
 }
+
+export interface AggLayerL2Token extends AmountConfigBase {
+  type: 'agglayerL2Token'
+  l1Address: EthereumAddress
+}
+
+export interface AggLayerNativeEtherPreminted extends AmountConfigBase {
+  type: 'agglayerNativeEtherPreminted'
+  l2BridgeAddress: EthereumAddress
+  premintedAmount: bigint
+}
+
+export interface AggLayerNativeEtherWrapped extends AmountConfigBase {
+  type: 'agglayerNativeEtherWrapped'
+  wethAddress: EthereumAddress
+}
