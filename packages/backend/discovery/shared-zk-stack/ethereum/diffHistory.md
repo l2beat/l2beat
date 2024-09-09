@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xfebdc41677b04bf109847e17a5320f23bd01c291
+
+# Diff at Mon, 09 Sep 2024 14:22:30 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@92161a8609a409a7bea80cf1d38924cd21e5bc7f block: 20692926
+- current block number: 20713619
+
+## Description
+
+BridgeHub upgrade (one-line diff):
+* `addToken()` (acts as a global token whitelist for the shared bridge) now can only be called by the owner (not the admin). Currently those two roles are still held by the same address anyway.
+
+## Watched changes
+
+```diff
+    contract Governance (0x0b622A2061EaccAE1c664eBC3E868b8438e03F61) {
+    +++ description: None
+      values.scheduledTransactions.64:
++        {"delay":0,"operation":{"calls":[{"target":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1","value":"0","function":"upgrade","inputs":[{"name":"proxy","value":"0x303a465B659cBB0ab36eE643eA362c509EEb5213"},{"name":"implementation","value":"0x509dA1BE24432F8804C4A9FF4a3c3f80284CDd13"}]}],"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","salt":"0x0000000000000000000000000000000000000000000000000000000000000000"}}
+    }
+```
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
+      values.$implementation:
+-        "0x12f893689f9603991a8c22C249FFd0509Be95661"
++        "0x509dA1BE24432F8804C4A9FF4a3c3f80284CDd13"
+      values.$upgradeCount:
+-        1
++        2
+    }
+```
+
+## Source code changes
+
+```diff
+.../ethereum/{.flat@20692926 => .flat}/BridgeHub/Bridgehub.sol          | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
 Generated with discovered.json: 0x954bbe4a7a75f6047280a13af0431f31d4dc3168
 
 # Diff at Fri, 06 Sep 2024 17:05:06 GMT:
