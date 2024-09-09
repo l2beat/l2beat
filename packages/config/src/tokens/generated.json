@@ -4622,21 +4622,6 @@
       "supply": "zero"
     },
     {
-      "id": "ybeth-veno-yield-bearing-eth",
-      "name": "Veno yield bearing ETH",
-      "coingeckoId": "ethereum",
-      "address": "0x76bf2D1e6dFda645c0c17440B17Eccc181dfC351",
-      "symbol": "ybETH",
-      "decimals": 18,
-      "deploymentTimestamp": 1721279435,
-      "coingeckoListingTimestamp": 1573689600,
-      "category": "other",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628",
-      "chainId": 1,
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
       "id": "vent-vent",
       "name": "VENT",
       "coingeckoId": "vent-finance",
