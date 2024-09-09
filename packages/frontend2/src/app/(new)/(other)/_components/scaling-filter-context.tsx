@@ -96,9 +96,7 @@ export function useScalingFilter() {
           ? entry.provider === scalingFilters.stack
           : undefined,
         scalingFilters.stage !== undefined
-          ? entry.type === 'layer2'
-            ? entry.stage?.stage === scalingFilters.stage
-            : false
+          ? entry.stage?.stage === scalingFilters.stage
           : undefined,
         scalingFilters.purpose !== undefined
           ? entry.purposes.some((purpose) => purpose === scalingFilters.purpose)
