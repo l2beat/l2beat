@@ -9,7 +9,7 @@ Generated with discovered.json: 0xfebdc41677b04bf109847e17a5320f23bd01c291
 ## Description
 
 BridgeHub upgrade (one-line diff):
-* `addToken()` now can only be called by the owner (not the admin). Currently those two roles are still held by the same address anyway.
+* `addToken()` (acts as a global token whitelist for the shared bridge) now can only be called by the owner (not the admin). Currently those two roles are still held by the same address anyway.
 
 ## Watched changes
 
