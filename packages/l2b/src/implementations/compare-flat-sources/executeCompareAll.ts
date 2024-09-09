@@ -52,7 +52,7 @@ export async function executeCompareAll(
   console.log('unique', unique.length)
 
   if (command.showGraph) {
-    await generateAndOpenGraph(clusters)
+    await generateAndOpenGraph(matrix, clusters)
   }
 }
 

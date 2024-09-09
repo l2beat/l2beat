@@ -1,7 +1,6 @@
 import { existsSync, mkdirSync, rmSync, writeFileSync } from 'fs'
 import path from 'path'
-import { Logger } from '@l2beat/backend-tools'
-import { HttpClient, formatSI } from '@l2beat/shared'
+import { CliLogger, HttpClient, formatSI } from '@l2beat/shared'
 import { FlatSourcesApiResponse, formatSeconds } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { ProgressEvent, ResponseProgress } from './common/ResponseProgress'
@@ -10,7 +9,7 @@ import { colorMap } from './compare-flat-sources/output'
 const ENDPOINT = '/api/flat-sources'
 
 export async function fetchFlatSources(
-  logger: Logger,
+  logger: CliLogger,
   backendUrl: string,
 ): Promise<FlatSourcesApiResponse> {
   const httpClient = new HttpClient()
@@ -19,41 +18,44 @@ export async function fetchFlatSources(
   })
 
   const progress = new ResponseProgress(response)
-  let lastPrintTime = Date.now()
-  progress.on('progress', (p) => {
-    const currentTime = Date.now()
-    if (currentTime - lastPrintTime <= 10) {
-      return
-    }
-    lastPrintTime = currentTime
+  progress.on('progress', (p) => printProgress(logger, p))
+  progress.on('finish', (p) => {
     printProgress(logger, p)
+    finishProgress(logger, p)
   })
-  progress.on('finish', (p) => printProgress(logger, p))
 
   return FlatSourcesApiResponse.parse(await response.json())
 }
 
-function printProgress(logger: Logger, progress: ProgressEvent) {
+function printProgress(logger: CliLogger, progress: ProgressEvent) {
   const done = formatSI(progress.done, 'B')
-  const rate = formatSI(progress.rate, 'B/s')
+  const rate = chalk.magenta(formatSI(progress.rate, 'B/s'))
 
   if (progress.total === 0) {
-    logger.info(`Downloaded ${done} [${rate}]`)
+    logger.updateStatus('lineDownloaded', `Downloaded ${done} [${rate}]`)
     return
   }
 
   const prog = colorMap(progress.progress * 100, 100)
   const total = formatSI(progress.total, 'B')
   const eta = formatSeconds(progress.eta)
-  logger.info(`Downloaded ${prog} % (${done} of ${total}) [${rate} in ~${eta}]`)
+  logger.updateStatus(
+    'lineDownloaded',
+    `Downloaded ${prog} % (${done} of ${total}) [${rate} in ~${eta}]`,
+  )
+}
+
+function finishProgress(logger: CliLogger, progress: ProgressEvent) {
+  printProgress(logger, progress)
+  logger.removeStatus('lineDownloaded')
 }
 
 export function saveIntoDirectory(
-  logger: Logger,
+  logger: CliLogger,
   flat: FlatSourcesApiResponse,
   outputDirectory: string,
 ) {
-  logger.info(
+  logger.logLine(
     [chalk.green('Saving into directory'), chalk.magenta(outputDirectory)].join(
       ' ',
     ),
@@ -81,11 +83,11 @@ export function saveIntoDirectory(
 }
 
 export function saveIntoDiscovery(
-  logger: Logger,
+  logger: CliLogger,
   flat: FlatSourcesApiResponse,
   discoveryPath: string,
 ) {
-  logger.info(chalk.green('Saving into discovery...'))
+  logger.logLine(chalk.green('Saving into discovery...'))
 
   for (const project of flat) {
     const outputPath = path.join(
