@@ -28,7 +28,7 @@ import {
   type TechnologyContractAddress,
 } from '../../../components/projects/sections/contract-entry'
 import { type ContractsSectionProps } from '../../../components/projects/sections/contracts/contracts-section'
-import { type TechnologyReference } from '../../../components/projects/sections/permissions/reference-list'
+import { type Reference } from '../../../components/projects/sections/reference-list'
 import { getChain } from './get-chain'
 import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
@@ -319,7 +319,7 @@ function makeTechnologyContract(
     addresses.map((a) => a.address).includes(ca.containingContract.toString()),
   )
 
-  const additionalReferences: TechnologyReference[] = []
+  const additionalReferences: Reference[] = []
   addresses.forEach((address) => {
     const manuallyVerified = manuallyVerifiedContractsForChain[address.address]
     if (manuallyVerified) {

@@ -3,6 +3,7 @@ import { type DiagramParams } from '~/utils/project/get-diagram-params'
 import { HorizontalSeparator } from '../../core/horizontal-separator'
 import { Markdown } from '../../markdown/markdown'
 import { ProjectSection } from './project-section'
+import { ReferenceList } from './reference-list'
 import { RiskList } from './risk-list'
 import { type ProjectSectionProps } from './types'
 
@@ -36,21 +37,20 @@ export function StateValidationSection({
           {stateValidation.description}
         </Markdown>
         <HorizontalSeparator />
-        {stateValidation.categories.map((stateValidationCategory) => (
-          <Item
-            stateValidationCategory={stateValidationCategory}
-            key={stateValidationCategory.title}
-          />
+        {stateValidation.categories.map((category) => (
+          <Category key={category.title} category={category} />
         ))}
       </div>
     </ProjectSection>
   )
 }
 
-function Item(props: {
-  stateValidationCategory: ScalingProjectStateValidation['categories'][number]
-}) {
-  const risks = props.stateValidationCategory.risks?.map((risk) => ({
+type CategoryProps = {
+  category: ScalingProjectStateValidation['categories'][number]
+}
+
+function Category({ category }: CategoryProps) {
+  const risks = category.risks?.map((risk) => ({
     text: `${risk.category} ${risk.text}`,
     isCritical: !!risk.isCritical,
   }))
@@ -58,12 +58,15 @@ function Item(props: {
   return (
     <div>
       <span className="text-lg font-bold uppercase md:text-xl">
-        {props.stateValidationCategory.title}
+        {category.title}
       </span>
       <Markdown className="mt-2 leading-snug text-gray-850 dark:text-gray-400 md:text-lg">
-        {props.stateValidationCategory.description}
+        {category.description}
       </Markdown>
       {risks && <RiskList risks={risks} />}
+      {category.references && (
+        <ReferenceList references={category.references} tight />
+      )}
     </div>
   )
 }

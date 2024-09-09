@@ -12,15 +12,12 @@ import ShieldIcon from '~/icons/shield.svg'
 import UnverifiedIcon from '~/icons/unverified.svg'
 import { cn } from '~/utils/cn'
 import { type VerificationStatus } from '~/utils/project/contracts-and-permissions/to-verification-status'
-import {
-  ReferenceList,
-  type TechnologyReference,
-} from './permissions/reference-list'
 import { UpgradeConsiderations } from './permissions/upgrade-considerations'
 import {
   type UsedInProject,
   UsedInProjectEntry,
 } from './permissions/used-in-project'
+import { type Reference, ReferenceList } from './reference-list'
 
 export interface TechnologyContract {
   name: string
@@ -31,7 +28,7 @@ export interface TechnologyContract {
   upgradeDelay?: string
   usedInProjects?: UsedInProject[]
   upgradeConsiderations?: string
-  references: TechnologyReference[]
+  references: Reference[]
   implementationHasChanged?: boolean
 }
 
