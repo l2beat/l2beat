@@ -24,7 +24,7 @@ export default async function Page() {
         <ActivityTimeRangeContextProvider>
           <ActivityChart milestones={HOMEPAGE_MILESTONES} entries={entries} />
           <HorizontalSeparator className="my-4 md:mt-6" />
-          <ScalingFilters items={entries} />
+          <ScalingFilters showRollupsOnly items={entries} />
           <ScalingActivityTable entries={entries} />
         </ActivityTimeRangeContextProvider>
       </ScalingFilterContextProvider>
