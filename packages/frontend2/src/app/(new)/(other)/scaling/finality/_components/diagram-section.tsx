@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { Logo } from '~/app/_components/logo'
+import { Logo } from '~/components/logo'
 
 export interface FinalityDiagram {
   name: string

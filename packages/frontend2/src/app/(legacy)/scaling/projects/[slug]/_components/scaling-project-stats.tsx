@@ -1,16 +1,16 @@
 import { pluralize } from '@l2beat/shared-pure'
 import { type ReactNode } from 'react'
-import { StageBadge } from '~/app/_components/badge/stage-badge'
-import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
-import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
-import { StatWithChange } from '~/app/_components/projects/stat-with-change'
-import { StageTooltip } from '~/app/_components/table/cells/stage/stage-tooltip'
-import { TypeCell } from '~/app/_components/table/cells/type-cell'
+import { StageBadge } from '~/components/badge/stage-badge'
+import { UpcomingBadge } from '~/components/badge/upcoming-badge'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip'
+} from '~/components/core/tooltip/tooltip'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { StatWithChange } from '~/components/projects/stat-with-change'
+import { StageTooltip } from '~/components/table/cells/stage/stage-tooltip'
+import { TypeCell } from '~/components/table/cells/type-cell'
 import InfoIcon from '~/icons/info.svg'
 import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { cn } from '~/utils/cn'

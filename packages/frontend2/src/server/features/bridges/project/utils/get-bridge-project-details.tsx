@@ -5,7 +5,7 @@ import {
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
 import isEmpty from 'lodash/isEmpty'
-import { type ProjectDetailsSection } from '~/app/_components/projects/sections/types'
+import { type ProjectDetailsSection } from '~/components/projects/sections/types'
 import { getTokensForProject } from '~/server/features/scaling/tvl/tokens/get-tokens-for-project'
 import { api } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'

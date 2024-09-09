@@ -5,9 +5,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@radix-ui/react-accordion'
-import { EtherscanLink } from '~/app/_components/etherscan-link'
-import { CustomLink } from '~/app/_components/link/custom-link'
-import { Markdown } from '~/app/_components/markdown/markdown'
+import { EtherscanLink } from '~/components/etherscan-link'
+import { CustomLink } from '~/components/link/custom-link'
+import { Markdown } from '~/components/markdown/markdown'
 import ChevronDownIcon from '~/icons/chevron.svg'
 import { getExplorerUrlByChainId } from '../../_utils/get-explorer-url'
 import { LastUsedCell } from './last-used-cell'

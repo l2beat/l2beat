@@ -1,12 +1,11 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import range from 'lodash/range'
-import React from 'react'
 
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip'
+} from '~/components/core/tooltip/tooltip'
 import { type LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import {
   type AnomalyEntry,

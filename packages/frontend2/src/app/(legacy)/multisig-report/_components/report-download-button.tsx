@@ -1,4 +1,4 @@
-import { OutLink } from '~/app/_components/out-link'
+import { OutLink } from '~/components/out-link'
 import DownloadArrow from '~/icons/download-arrow.svg'
 import { cn } from '~/utils/cn'
 

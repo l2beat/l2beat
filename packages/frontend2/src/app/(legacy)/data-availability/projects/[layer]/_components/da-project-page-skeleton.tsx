@@ -1,7 +1,7 @@
 import { range } from 'lodash'
-import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
-import { PentagonRosetteSkeleton } from '~/app/_components/rosette/pentagon/pentagon-rosette-skeleton'
-import { Skeleton } from '~/app/_components/skeleton'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { PentagonRosetteSkeleton } from '~/components/rosette/pentagon/pentagon-rosette-skeleton'
+import { Skeleton } from '~/components/core/skeleton'
 import { cn } from '~/utils/cn'
 
 const classes = (className: string) =>

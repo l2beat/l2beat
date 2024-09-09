@@ -1,6 +1,6 @@
 import { type Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { ContentWrapper } from '~/app/_components/content-wrapper'
+import { ContentWrapper } from '~/components/content-wrapper'
 import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ZK_CATALOG_ASK_FOR_VERIFICATION_LINK } from '../_utils/get-zk-catalog-view'

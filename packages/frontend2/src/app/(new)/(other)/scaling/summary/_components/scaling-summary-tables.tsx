@@ -1,15 +1,15 @@
 'use client'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
-import { TabCountBadge } from '~/app/_components/badge/tab-count-badge'
-import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
-import { BasicTable } from '~/app/_components/table/basic-table'
+import { TabCountBadge } from '~/components/badge/tab-count-badge'
+import { OverflowWrapper } from '~/components/core/overflow-wrapper'
+import { BasicTable } from '~/components/table/basic-table'
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from '~/app/_components/tabs'
+} from '~/components/core/tabs'
 import { useTable } from '~/hooks/use-table'
 import ActiveIcon from '~/icons/active.svg'
 import ArchivedIcon from '~/icons/archived.svg'

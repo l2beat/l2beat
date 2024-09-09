@@ -1,12 +1,12 @@
 import { type WarningValueWithSentiment } from '@l2beat/shared-pure'
 
-import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip'
-import { WarningBar } from '~/app/_components/warning-bar'
+} from '~/components/core/tooltip/tooltip'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { WarningBar } from '~/components/warning-bar'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { type FinalityDataPoint } from '~/server/features/scaling/finality/schema'
 import { type SyncStatus } from '~/types/sync-status'

@@ -2,7 +2,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip'
+} from '~/components/core/tooltip/tooltip'
 import { cn } from '~/utils/cn'
 import { formatNumberWithCommas } from '~/utils/format-number'
 

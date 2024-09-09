@@ -1,12 +1,12 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { SentimentText } from '~/app/_components/sentiment-text'
-import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
+import { SentimentText } from '~/components/sentiment-text'
+import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import {
   TypeCell,
   TypeExplanationTooltip,
-} from '~/app/_components/table/cells/type-cell'
-import { getCommonProjectColumns } from '~/app/_components/table/common-project-columns'
-import { sortSentiments } from '~/app/_components/table/sorting/functions/sentiment-sorting'
+} from '~/components/table/cells/type-cell'
+import { getCommonProjectColumns } from '~/components/table/common-project-columns'
+import { sortSentiments } from '~/components/table/sorting/functions/sentiment-sorting'
 import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
 
 const columnHelper = createColumnHelper<ScalingDataAvailabilityEntry>()

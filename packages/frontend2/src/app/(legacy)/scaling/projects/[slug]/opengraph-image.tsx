@@ -2,7 +2,7 @@
 import { layer2s, layer3s } from '@l2beat/config'
 import { ImageResponse } from 'next/og'
 import { NextResponse } from 'next/server'
-import { ProjectOpengraphImage } from '~/app/_components/opengraph-image/project'
+import { ProjectOpengraphImage } from '~/components/opengraph-image/project'
 import { env } from '~/env'
 
 export const runtime = 'nodejs'

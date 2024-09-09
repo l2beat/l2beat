@@ -1,4 +1,4 @@
-import { RadioGroup, RadioGroupItem } from '~/app/_components/radio-group'
+import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 
 interface Props<T extends string> {
   value: T

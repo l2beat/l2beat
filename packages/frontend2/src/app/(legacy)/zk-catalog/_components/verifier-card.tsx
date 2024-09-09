@@ -1,4 +1,4 @@
-import { EtherscanLink } from '~/app/_components/etherscan-link'
+import { EtherscanLink } from '~/components/etherscan-link'
 import { LastUsedCell } from '../[project]/_components/last-used-cell'
 import { SubVerifiersTable } from '../[project]/_components/sub-verifiers-table'
 import { VerifiedCell } from '../[project]/_components/verified-cell'

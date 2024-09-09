@@ -1,7 +1,7 @@
 'use client'
 import { debounce } from 'lodash'
 import React, { useEffect, useMemo, useRef } from 'react'
-import { glossarySectionTreshold } from '~/app/_components/nav/consts'
+import { glossarySectionTreshold } from '~/components/nav/consts'
 import { type CollectionEntry } from '~/content/get-collection'
 import { useCurrentSection } from '~/hooks/use-current-section'
 import { scrollVerticallyToItem } from '~/utils/scroll-to-item'

@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { Button } from '~/app/_components/button'
-import { PlainLink } from '~/app/_components/plain-link'
+import { Button } from '~/components/core/button'
+import { PlainLink } from '~/components/plain-link'
 import { cn } from '~/utils/cn'
 import OfficeHoursIllustration from '../../_assets/office-hours.svg'
 import { GovernanceCard, GovernanceCardHeader } from '../governance-card'

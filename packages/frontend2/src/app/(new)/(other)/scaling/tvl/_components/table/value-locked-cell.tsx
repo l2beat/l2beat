@@ -1,4 +1,4 @@
-import { PercentChange } from '~/app/_components/percent-change'
+import { PercentChange } from '~/components/percent-change'
 import { EM_DASH } from '~/consts/characters'
 import { formatCurrency } from '~/utils/format'
 

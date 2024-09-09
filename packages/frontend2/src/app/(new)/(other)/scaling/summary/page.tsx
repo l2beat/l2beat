@@ -1,6 +1,6 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
-import { ScalingSummaryTvlChart } from '~/app/_components/chart/tvl/scaling-summary-tvl-chart'
-import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
+import { ScalingSummaryTvlChart } from '~/components/chart/tvl/scaling-summary-tvl-chart'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { getScalingSummaryEntries } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
