@@ -26,7 +26,7 @@ interface Props {
   milestones: Milestone[]
 }
 
-export function ScalingSummaryTvlChart({ entries, milestones }: Props) {
+export function ScalingTvlChart({ entries, milestones }: Props) {
   const filters = useScalingFilterValues()
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
   const includeFilter = useScalingFilter()
