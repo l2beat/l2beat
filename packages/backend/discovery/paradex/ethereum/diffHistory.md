@@ -1,3 +1,48 @@
+Generated with discovered.json: 0xdc3306b785cc9e7d6a26a2f16a3579d38722b9b2
+
+# Diff at Mon, 09 Sep 2024 06:43:56 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@fd881462cca0d7ef4519f907f3c6cfd5fe1cde8f block: 20420390
+- current block number: 20711342
+
+## Description
+
+Aggregator compatibility upgrade. (See also recent Starknet upgrade to the same implementation / programHashes)
+- add aggregatorProgramHash and support aggregation
+- add multiple blob support
+
+## Watched changes
+
+```diff
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: None
+      values.$implementation:
+-        "0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24"
++        "0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC"
+      values.identify:
+-        "StarkWare_Starknet_2024_8"
++        "StarkWare_Starknet_2024_9"
+      values.implementation:
+-        "0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24"
++        "0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC"
++++ description: The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.
++++ severity: HIGH
+      values.programHash:
+-        "3383082961563516565935611087683915026448707331436034043529592588079494402084"
++        "853638403225561750106379562222782223909906501242604214771127703946595519856"
+      values.aggregatorProgramHash:
++        "1161178844461337253856226043908368523817098764221830529880464854589141231910"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@20420390 => .flat}/Paradex/Starknet.sol | 297 ++++++++++++++++-----
+ 1 file changed, 223 insertions(+), 74 deletions(-)
+```
+
 Generated with discovered.json: 0x0e0b96c8f79c3e7a254842be941a4c2db301e2e0
 
 # Diff at Fri, 30 Aug 2024 07:54:25 GMT:

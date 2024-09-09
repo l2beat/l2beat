@@ -19,8 +19,10 @@ export const StarknetProgramHashes = command({
   handler: async (args) => {
     const knownProgramHashes: Record<string, string> = {
       // from our discovery: names are just project names that are using this progHash
+      '853638403225561750106379562222782223909906501242604214771127703946595519856':
+        'current StarkNet OS (Paradex, StarkNet)',
       '3383082961563516565935611087683915026448707331436034043529592588079494402084':
-        'StarkNet OS (Paradex, old StarkNet)',
+        'StarkNet OS (old Paradex, old StarkNet)',
       '3485280386001712778192330279103973322645241679001461923469191557000342180556':
         'StarkEx Spot v3.0 (ImutableX, Layer2FinanceZK)',
       '770346231394331402493200980986217737662224545740427952627288191358999988146':
