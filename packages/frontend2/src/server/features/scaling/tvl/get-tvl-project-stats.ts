@@ -1,13 +1,15 @@
-import { type ProjectId } from '@l2beat/shared-pure'
+import { type Bridge, type Layer2, type Layer3 } from '@l2beat/config'
 import { getTokenBreakdown } from './utils/get-token-breakdown'
 import { getTvlBreakdown } from './utils/get-tvl-breakdown'
-import { getTvlProjects } from './utils/get-tvl-projects'
+import { toTvlProject } from './utils/get-tvl-projects'
 import { getTvlValuesForProjects } from './utils/get-tvl-values-for-projects'
 
-export async function getTvlProjectStats(id: ProjectId) {
-  const projects = getTvlProjects().filter((project) => project.id === id)
-  const tvlValues = await getTvlValuesForProjects(projects, '7d')
-  const projectTvlValues = tvlValues[id]
+export async function getTvlProjectStats(project: Layer2 | Layer3 | Bridge) {
+  const tvlProject = toTvlProject(project)
+  const tvlValues = await getTvlValuesForProjects([tvlProject], '7d')
+
+  const projectTvlValues = tvlValues[project.id]
+
   if (!projectTvlValues) {
     return
   }

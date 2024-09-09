@@ -36,9 +36,10 @@ export const getCachedTvlChartData = cache(
 
     const tvlProjects = getTvlProjects().filter(projectsFilter)
 
-    const ethPrices = await getEthPrices()
-
-    const values = await getTvlValuesForProjects(tvlProjects, range)
+    const [ethPrices, values] = await Promise.all([
+      getEthPrices(),
+      getTvlValuesForProjects(tvlProjects, range),
+    ])
 
     const timestampValues: Record<string, ValueRecord[]> = {}
 
