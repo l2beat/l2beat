@@ -22,6 +22,84 @@ const MOCK_ID1 = '1'
 const MOCK_ID2 = '2'
 
 describe(AggLayerService.name, () => {
+  describe(AggLayerService.prototype.getL2TokensTotalSupply.name, () => {
+    it('encodes, calls, decodes and returns AmountRecords with correct supply', async () => {
+      const mockToken1 = mockObject<
+        AggLayerL2Token & { address: EthereumAddress; id: string }
+      >({
+        address: EthereumAddress.random(),
+        id: MOCK_ID1,
+      })
+      const mockToken2 = mockObject<
+        AggLayerL2Token & { address: EthereumAddress; id: string }
+      >({
+        address: EthereumAddress.random(),
+        id: MOCK_ID2,
+      })
+
+      const mockToken1Supply = 1000n
+      const mockToken2Supply = 2000n
+
+      const rpcClient = mockObject<RpcClient>({})
+      const multicallClient = mockObject<MulticallClient>({
+        multicall: mockFn().resolvesTo([
+          {
+            success: true,
+            data: Bytes.fromHex(
+              erc20Interface.encodeFunctionResult('totalSupply', [
+                mockToken1Supply,
+              ]),
+            ),
+          },
+          {
+            success: true,
+            data: Bytes.fromHex(
+              erc20Interface.encodeFunctionResult('totalSupply', [
+                mockToken2Supply,
+              ]),
+            ),
+          },
+        ]),
+      })
+
+      const aggLayerService = new AggLayerService({
+        logger: Logger.SILENT,
+        multicallClient,
+        rpcClient,
+      })
+      const result = await aggLayerService.getL2TokensTotalSupply(
+        [mockToken1, mockToken2],
+        123456,
+        NOW,
+      )
+
+      // encodes and calls
+      expect(multicallClient.multicall).toHaveBeenCalledWith(
+        [
+          {
+            address: mockToken1.address,
+            data: Bytes.fromHex(
+              erc20Interface.encodeFunctionData('totalSupply', []),
+            ),
+          },
+          {
+            address: mockToken2.address,
+            data: Bytes.fromHex(
+              erc20Interface.encodeFunctionData('totalSupply', []),
+            ),
+          },
+        ],
+        123456,
+      )
+
+      // decodes and returns
+      expect(result).toEqual([
+        { configId: mockToken1.id, amount: mockToken1Supply, timestamp: NOW },
+        { configId: mockToken2.id, amount: mockToken2Supply, timestamp: NOW },
+      ])
+    })
+  })
+
   describe(AggLayerService.prototype.getL2TokensAddresses.name, () => {
     it('encodes, calls, decodes and returns correct L2 token addresses', async () => {
       const mockToken1 = mockObject<AggLayerL2Token & { id: string }>({
