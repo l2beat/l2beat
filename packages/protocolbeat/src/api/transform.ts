@@ -4,11 +4,13 @@ import type { DiscoveryContract, DiscoveryOutput } from './paseDiscovery'
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
 export function transformContracts(discovery: DiscoveryOutput): SimpleNode[] {
+  const chain = discovery.chain
   const contractNodes: ContractNode[] = discovery.contracts.map((contract) => {
     const implementations = getAsStringArray(contract.values?.$implementation)
     return {
       type: 'Contract',
       id: contract.address,
+      chain,
       name: emojifyContractName(contract),
       proxyType: contract.proxyType,
       discovered: true,
@@ -22,6 +24,7 @@ export function transformContracts(discovery: DiscoveryOutput): SimpleNode[] {
   const eoaNodes: EOANode[] = discovery.eoas.map((eoa) => ({
     type: 'EOA',
     id: eoa.address,
+    chain,
     name: `🧍 EOA ${eoa.address}`,
     discovered: true,
     fields: [],
