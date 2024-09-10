@@ -26,7 +26,7 @@
     "seed": "tsx src/db/seed.ts",
     "start": "tsx src/main.ts",
     "start:queue": "tsx --no-warnings=ExperimentalWarning --watch src/queue.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "prisma generate && tsc --noEmit"
   },
   "dependencies": {
     "@bull-board/api": "^5.17.1",
