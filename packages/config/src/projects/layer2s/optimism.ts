@@ -498,7 +498,9 @@ export const optimism: Layer2 = {
           permissionlessGameClockExtension,
         )}, it gets extended by ${formatSeconds(
           permissionlessGameClockExtension,
-        )} up to depth ${permissionlessGameSplitDepth}, and double that up the max depth. The maximum clock extensions that a top level claim can get is therefore ${formatSeconds(permissionlessGameMaxClockExtension()}. The protocol does not enforces valid bisections, meaning that actors can propose correct initial claims and then provide incorrect midpoints.`,
+        )} up to depth ${permissionlessGameSplitDepth}, and double that up the max depth. The maximum clock extensions that a top level claim can get is therefore ${formatSeconds(
+          permissionlessGameMaxClockExtension,
+        )}. The protocol does not enforces valid bisections, meaning that actors can propose correct initial claims and then provide incorrect midpoints.`,
       },
     ],
   },
