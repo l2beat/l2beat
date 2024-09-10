@@ -12,15 +12,15 @@ import {
   notUndefined,
 } from '@l2beat/shared-pure'
 import { concat } from 'lodash'
-import { type PermissionsSectionProps } from '~/app/_components/projects/sections/permissions/permissions-section'
+import { type PermissionsSectionProps } from '~/components/projects/sections/permissions/permissions-section'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
 import {
   type TechnologyContract,
   type TechnologyContractAddress,
-} from '../../../app/_components/projects/sections/contract-entry'
-import { type UsedInProject } from '../../../app/_components/projects/sections/permissions/used-in-project'
-import { type ProjectSectionProps } from '../../../app/_components/projects/sections/types'
+} from '../../../components/projects/sections/contract-entry'
+import { type UsedInProject } from '../../../components/projects/sections/permissions/used-in-project'
+import { type ProjectSectionProps } from '../../../components/projects/sections/types'
 import { getChain } from './get-chain'
 import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'

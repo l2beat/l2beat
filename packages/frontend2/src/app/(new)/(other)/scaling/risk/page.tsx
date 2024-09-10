@@ -1,6 +1,6 @@
 import { getDefaultMetadata } from '~/utils/metadata'
 
-import { SimplePageHeader } from '~/app/_components/simple-page-header'
+import { SimplePageHeader } from '~/components/simple-page-header'
 import { getScalingRiskEntries } from '~/server/features/scaling/risks/get-scaling-risk-entries'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
 import { ScalingRiskTables } from './_components/table/scaling-risk-tables'

@@ -1,13 +1,13 @@
-import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
+import { UpcomingBadge } from '~/components/badge/upcoming-badge'
 import {
   TokenBreakdown,
   TokenBreakdownTooltipContent,
-} from '~/app/_components/breakdown/token-breakdown'
+} from '~/components/breakdown/token-breakdown'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip'
+} from '~/components/core/tooltip/tooltip'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 

@@ -3,7 +3,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip'
+} from '~/components/core/tooltip/tooltip'
 import ArrowRightIcon from '~/icons/arrow-right.svg'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 

@@ -19,16 +19,16 @@ import {
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
 import { concat } from 'lodash'
-import { type ProjectSectionProps } from '~/app/_components/projects/sections/types'
+import { type ProjectSectionProps } from '~/components/projects/sections/types'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
 import {
   type TechnologyContract,
   type TechnologyContractAddress,
-} from '../../../app/_components/projects/sections/contract-entry'
-import { type ContractsSectionProps } from '../../../app/_components/projects/sections/contracts/contracts-section'
-import { type Reference } from '../../../app/_components/projects/sections/reference-list'
+} from '../../../components/projects/sections/contract-entry'
+import { type ContractsSectionProps } from '../../../components/projects/sections/contracts/contracts-section'
+import { type Reference } from '../../../components/projects/sections/reference-list'
 import { getChain } from './get-chain'
 import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'

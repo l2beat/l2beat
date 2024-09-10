@@ -1,10 +1,10 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
+import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import {
   TypeCell,
   TypeExplanationTooltip,
-} from '~/app/_components/table/cells/type-cell'
-import { getCommonProjectColumns } from '~/app/_components/table/common-project-columns'
+} from '~/components/table/cells/type-cell'
+import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { type ScalingSummaryTableRow } from '../../../_utils/to-table-rows'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()

@@ -1,16 +1,16 @@
 import { type ReactNode } from 'react'
-import { NoDataBadge } from '~/app/_components/badge/no-data-badge'
+import { NoDataBadge } from '~/components/badge/no-data-badge'
 import {
   TokenBreakdown,
   TokenBreakdownTooltipContent,
-} from '~/app/_components/breakdown/token-breakdown'
-import { PercentChange } from '~/app/_components/percent-change'
-import { RiskCell } from '~/app/_components/table/cells/risk-cell'
+} from '~/components/breakdown/token-breakdown'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip'
+} from '~/components/core/tooltip/tooltip'
+import { PercentChange } from '~/components/percent-change'
+import { RiskCell } from '~/components/table/cells/risk-cell'
 import InfoIcon from '~/icons/info.svg'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { type BridgesProjectEntry } from '~/server/features/bridges/project/get-bridges-project-entry'

@@ -1,6 +1,6 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
-import { ActivityChart } from '~/app/_components/chart/activity/activity-chart'
-import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
+import { ActivityChart } from '~/components/chart/activity/activity-chart'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { getScalingActivityEntries } from '~/server/features/scaling/get-scaling-activity-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'

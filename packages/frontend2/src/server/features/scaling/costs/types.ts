@@ -1,5 +1,5 @@
 import { type UnixTime } from '@l2beat/shared-pure'
-import { type ChartUnit } from '~/app/_components/chart/types'
+import { type ChartUnit } from '~/components/chart/types'
 
 export type CostsUnit = ChartUnit | 'gas'
 

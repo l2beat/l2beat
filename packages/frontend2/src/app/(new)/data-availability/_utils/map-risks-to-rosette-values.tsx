@@ -1,6 +1,6 @@
 import { type DaBridgeRisks, type DaLayerRisks } from '@l2beat/config'
 import { type Sentiment, type ValueWithSentiment } from '@l2beat/shared-pure'
-import { type RosetteValue } from '~/app/_components/rosette/types'
+import { type RosetteValue } from '~/components/rosette/types'
 
 export function mapRisksToRosetteValues(
   risks: Record<

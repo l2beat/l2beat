@@ -1,8 +1,8 @@
-import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
-import { DesktopProjectLinks } from '~/app/_components/projects/links/desktop-project-links'
-import { MobileProjectLinks } from '~/app/_components/projects/links/mobile-project-links'
-import { AboutSection } from '~/app/_components/projects/sections/about-section'
-import { BigPentagonRosette } from '~/app/_components/rosette/pentagon/big-pentagon-rosette'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { DesktopProjectLinks } from '~/components/projects/links/desktop-project-links'
+import { MobileProjectLinks } from '~/components/projects/links/mobile-project-links'
+import { AboutSection } from '~/components/projects/sections/about-section'
+import { BigPentagonRosette } from '~/components/rosette/pentagon/big-pentagon-rosette'
 import { type DaProjectEntry } from '~/server/features/data-availability/project/get-da-project-entry'
 import { DaProjectStats } from './da-project-stats'
 

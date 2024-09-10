@@ -1,9 +1,9 @@
-import { About } from '~/app/_components/about'
-import { Banner } from '~/app/_components/banner'
-import { ContentWrapper } from '~/app/_components/content-wrapper'
-import { Footer } from '~/app/_components/footer'
-import { NavLayout } from '~/app/_components/nav/nav-layout'
-import { OtherSites } from '~/app/_components/other-sites'
+import { About } from '~/components/about'
+import { Banner } from '~/components/banner'
+import { ContentWrapper } from '~/components/content-wrapper'
+import { Footer } from '~/components/footer'
+import { NavLayout } from '~/components/nav/nav-layout'
+import { OtherSites } from '~/components/other-sites'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

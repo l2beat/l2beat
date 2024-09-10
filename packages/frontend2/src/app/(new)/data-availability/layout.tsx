@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation'
 import React from 'react'
-import { ContentWrapper } from '~/app/_components/content-wrapper'
-import { Footer } from '~/app/_components/footer'
-import { NavLayout } from '~/app/_components/nav/nav-layout'
+import { ContentWrapper } from '~/components/content-wrapper'
+import { Footer } from '~/components/footer'
+import { NavLayout } from '~/components/nav/nav-layout'
 import { env } from '~/env'
 
 export default function Layout({ children }: { children: React.ReactNode }) {

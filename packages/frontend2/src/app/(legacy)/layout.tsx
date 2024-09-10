@@ -1,6 +1,6 @@
-import { Banner } from '../_components/banner'
-import { Footer } from '../_components/footer'
-import { NavLayout } from '../_components/nav/nav-layout'
+import { Banner } from '../../components/banner'
+import { Footer } from '../../components/footer'
+import { NavLayout } from '../../components/nav/nav-layout'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
