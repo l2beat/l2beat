@@ -19,10 +19,8 @@ export interface ProjectCellProps {
     redWarning?: string
     showProjectUnderReview?: boolean
     hasImplementationChanged?: boolean
-    warning?: string
     data?: { syncStatus?: SyncStatus }
   }
-  hideWarning?: boolean
   type?: 'layer2' | 'layer3' | 'bridge'
   showIsL3?: boolean
   className?: string
@@ -30,7 +28,6 @@ export interface ProjectCellProps {
 
 export function ProjectNameCell({
   project,
-  hideWarning,
   showIsL3,
   type,
   className,
@@ -85,16 +82,7 @@ export function ProjectNameCell({
           </Tooltip>
         </span>
       )}
-      {project.warning && !hideWarning && (
-        <span className="pl-1.5">
-          <Tooltip>
-            <TooltipTrigger>
-              <ShieldIcon className="relative top-px h-4 fill-yellow-700 dark:fill-yellow-300" />
-            </TooltipTrigger>
-            <TooltipContent>{project.warning}</TooltipContent>
-          </Tooltip>
-        </span>
-      )}
+
       {project.data?.syncStatus?.isSynced === false && (
         <div className="mb-1.5 flex items-center justify-center pl-1.5">
           <NotSyncedBadge syncedUntil={project.data?.syncStatus.syncedUntil} />

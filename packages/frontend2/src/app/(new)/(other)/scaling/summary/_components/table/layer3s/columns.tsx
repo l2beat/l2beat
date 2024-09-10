@@ -14,9 +14,7 @@ const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 export const summaryLayer3sColumns = [
   ...getCommonProjectColumns(columnHelper),
   columnHelper.accessor('name', {
-    cell: (ctx) => (
-      <ProjectNameCell hideWarning project={ctx.row.original} type="layer2" />
-    ),
+    cell: (ctx) => <ProjectNameCell project={ctx.row.original} type="layer2" />,
   }),
   columnHelper.accessor('category', {
     header: 'Type',

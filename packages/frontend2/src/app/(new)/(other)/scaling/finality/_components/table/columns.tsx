@@ -29,7 +29,6 @@ export const scalingFinalityColumns = [
   columnHelper.accessor('name', {
     cell: (ctx) => (
       <ProjectNameCell
-        hideWarning
         project={ctx.row.original}
         type={ctx.row.original.type}
       />
