@@ -3,8 +3,8 @@ import Link from 'next/link'
 import { OutLinkIcon } from '~/icons/outlink'
 import { cn } from '~/utils/cn'
 import { formatAddress } from '~/utils/format-address'
-import CriticalIcon from '../../_assets/critical-badge.svg'
-import WarningIcon from '../../_assets/warning-badge.svg'
+import { CriticalBadgeIcon } from '../../_assets/critical-badge'
+import { WarningBadgeIcon } from '../../_assets/warning-badge'
 import { type Risk } from '../../page'
 import { type Token } from './tokens-table'
 
@@ -118,7 +118,7 @@ function CategoryRisks({ title, risks }: { title: string; risks: Risk[] }) {
           <div key={i}>
             <div className="flex items-center gap-2">
               <div className="size-5">
-                {risk.isCritical ? <CriticalIcon /> : <WarningIcon />}
+                {risk.isCritical ? <CriticalBadgeIcon /> : <WarningBadgeIcon />}
               </div>
               <span
                 className={cn(

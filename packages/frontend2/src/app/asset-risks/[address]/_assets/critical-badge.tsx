@@ -1,10 +1,8 @@
-<svg
-      width="20"
-      height="20"
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+import { SvgIcon, type SvgIconProps } from '~/icons/svg-icon'
+
+export function CriticalBadgeIcon(props: SvgIconProps) {
+  return (
+    <SvgIcon width="20" height="20" viewBox="0 0 20 20" {...props}>
       <g clipPath="url(#clip0_403_17913)">
         <path
           d="M8.83301 18.6665L1.33301 11.1665C0.666341 10.4998 0.666341 9.45817 1.33301 8.7915L8.83301 1.2915C9.49967 0.624837 10.5413 0.624837 11.208 1.2915L18.708 8.7915C19.3747 9.45817 19.3747 10.4998 18.708 11.1665L11.208 18.6665C10.5413 19.3332 9.45801 19.3332 8.83301 18.6665Z"
@@ -20,4 +18,6 @@
           <rect width="20" height="20" fill="white" />
         </clipPath>
       </defs>
-    </svg>
+    </SvgIcon>
+  )
+}

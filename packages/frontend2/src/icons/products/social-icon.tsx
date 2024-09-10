@@ -1,14 +1,14 @@
 import { type SVGAttributes } from 'react'
 
-import DiscordIcon from './discord.svg'
-import GithubIcon from './github.svg'
-import InstagramIcon from './instagram.svg'
-import LinkedInIcon from './linkedin.svg'
-import MediumIcon from './medium.svg'
-import RedditIcon from './reddit.svg'
-import TelegramIcon from './telegram.svg'
-import XIcon from './x.svg'
-import YouTubeIcon from './youtube.svg'
+import { DiscordIcon } from './discord'
+import { GithubIcon } from './github'
+import { InstagramIcon } from './instagram'
+import { LinkedInIcon } from './linkedin'
+import { MediumIcon } from './medium'
+import { RedditIcon } from './reddit'
+import { TelegramIcon } from './telegram'
+import { XIcon } from './x'
+import { YouTubeIcon } from './youtube'
 
 export type SocialIconType =
   | 'discord'
