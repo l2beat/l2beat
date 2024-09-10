@@ -1,8 +1,8 @@
 {
   "name": "polygon-pos",
   "chain": "ethereum",
-  "blockNumber": 20685291,
-  "configHash": "0xe56efa10d1cea16a2937950248c4a370d155b1d9e2fa34f65a99b1a91744d6e7",
+  "blockNumber": 20719990,
+  "configHash": "0x0150a8b6be88d55f9ccc5854f6760f648aaf86ff630cbfdf52675a284392a7b2",
   "version": 14,
   "contracts": [
     {
@@ -46,6 +46,7 @@
     {
       "name": "ERC1155Predicate",
       "address": "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f",
+      "template": "polygonposbridge/predicate",
       "proxyType": "Polygon proxy",
       "issuedPermissions": [
         {
@@ -58,6 +59,16 @@
       "values": {
         "$admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "$implementation": "0xCFA65db73cB45D458d0a98006d3d558b5e1F021d",
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
+          },
+          "MANAGER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]
+          }
+        },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "implementation": "0xCFA65db73cB45D458d0a98006d3d558b5e1F021d",
         "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
@@ -66,14 +77,26 @@
         "TOKEN_TYPE": "0x973bb64086f173ec8099b7ed3d43da984f4a332e4417a08bc6a286e6402b0586",
         "TRANSFER_BATCH_EVENT_SIG": "0x4a39dc06d4c0dbc64b70af90fd698a233a518aa5d07e595d983b8c0526c8f7fb",
         "TRANSFER_SINGLE_EVENT_SIG": "0xc3d58168c5ae7397731d063d5bbf3d657854427343f4c083240f7aacaa2d0f62"
-      }
+      },
+      "derivedName": "ERC1155Predicate"
     },
     {
       "name": "CustomPredicate",
       "address": "0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35",
+      "template": "polygonposbridge/predicate",
       "sinceTimestamp": 1617750281,
       "values": {
         "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
+          },
+          "MANAGER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]
+          }
+        },
         "CUSTOM_EVENT_SIG": "0x93f3e547dcb3ce9c356bb293f12e44f70fc24105d675b782bd639333aab70df7",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08"
@@ -83,6 +106,7 @@
     {
       "name": "ERC20EscrowPredicate",
       "address": "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4",
+      "template": "polygonposbridge/predicate",
       "sinceTimestamp": 1627373890,
       "values": {
         "$immutable": true,
@@ -104,7 +128,7 @@
       "sinceTimestamp": 1590850580,
       "values": {
         "$immutable": true,
-        "counter": 2957090,
+        "counter": 2959134,
         "isOwner": false,
         "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "REGISTRATIONS": [
@@ -122,8 +146,28 @@
       "derivedName": "StateSender"
     },
     {
+      "name": "WithdrawManager",
+      "address": "0x2A88696e0fFA76bAA1338F2C74497cC013495922",
+      "proxyType": "EIP897 proxy",
+      "sinceTimestamp": 1590850831,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x31f9c8c786aD7cc70ad10cF136B36681d340b792",
+        "exitNft": "0xDF74156420Bd57ab387B195ed81EcA36F9fABAca",
+        "exitWindow": 0,
+        "HALF_EXIT_PERIOD": 1,
+        "implementation": "0x31f9c8c786aD7cc70ad10cF136B36681d340b792",
+        "isOwner": false,
+        "ON_FINALIZE_GAS_LIMIT": 300000,
+        "owner": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
+        "proxyType": 2
+      },
+      "derivedName": "WithdrawManager"
+    },
+    {
       "name": "MintableERC1155Predicate",
       "address": "0x2d641867411650cd05dB93B59964536b1ED5b1B7",
+      "template": "polygonposbridge/predicate",
       "proxyType": "Polygon proxy",
       "issuedPermissions": [
         {
@@ -136,6 +180,19 @@
       "values": {
         "$admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "$implementation": "0xFD47E7d657b07B071C3362bBCe908a70895EE747",
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
+          },
+          "MANAGER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
+              "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+            ]
+          }
+        },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "implementation": "0xFD47E7d657b07B071C3362bBCe908a70895EE747",
         "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
@@ -144,7 +201,8 @@
         "TOKEN_TYPE": "0xb62883a28321b19a93c6657bfb8ea4cec51ed05c3ab26ecec680fa0c7efb31b9",
         "TRANSFER_BATCH_EVENT_SIG": "0x4a39dc06d4c0dbc64b70af90fd698a233a518aa5d07e595d983b8c0526c8f7fb",
         "TRANSFER_SINGLE_EVENT_SIG": "0xc3d58168c5ae7397731d063d5bbf3d657854427343f4c083240f7aacaa2d0f62"
-      }
+      },
+      "derivedName": "MintableERC1155Predicate"
     },
     {
       "name": "Registry",
@@ -165,8 +223,7 @@
         "getWethTokenAddress": "0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8",
         "getWithdrawManagerAddress": "0x2A88696e0fFA76bAA1338F2C74497cC013495922",
         "governance": "0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48"
-      },
-      "derivedName": "Registry"
+      }
     },
     {
       "name": "ERC721PredicateBurnOnly",
@@ -175,8 +232,31 @@
       "values": { "$immutable": true, "CHAINID": 15001, "networkId": "0x3a99" }
     },
     {
+      "name": "DepositManager",
+      "address": "0x401F6c983eA34274ec46f84D70b31C151321188b",
+      "proxyType": "EIP897 proxy",
+      "sinceTimestamp": 1590850640,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xb00aa68b87256E2F22058fB2Ba3246EEc54A44fc",
+        "childChain": "0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861",
+        "governance": "0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48",
+        "implementation": "0xb00aa68b87256E2F22058fB2Ba3246EEc54A44fc",
+        "isOwner": false,
+        "locked": false,
+        "maxErc20Deposit": "1000000000000000000000000000000",
+        "owner": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
+        "proxyType": 2,
+        "registry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
+        "rootChain": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
+        "stateSender": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE"
+      },
+      "derivedName": "DepositManager"
+    },
+    {
       "name": "ERC20Predicate",
       "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
+      "template": "polygonposbridge/predicate",
       "proxyType": "Polygon proxy",
       "issuedPermissions": [
         {
@@ -212,12 +292,20 @@
     {
       "name": "PolygonERC20MintBurnPredicate",
       "address": "0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5",
+      "template": "polygonposbridge/predicate",
       "sinceTimestamp": 1657162305,
       "values": {
         "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          }
+        },
         "rootChainManager": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
         "WITHDRAWN_EVENT_SIG": "0x7084f5476618d8e60b11ef0d7d3f06914655adb8793e28ff7f018d4c76d505d5"
-      }
+      },
+      "derivedName": "PolygonERC20MintBurnPredicate"
     },
     {
       "name": "StakingNFT",
@@ -245,6 +333,24 @@
         "totalSupply": 127
       },
       "derivedName": "StakingNFT"
+    },
+    {
+      "name": "RootChainInitialImplementation",
+      "address": "0x5A09cD4601b66bc107D377AB81E0dbb5dFABaA84",
+      "sinceTimestamp": 1590849948,
+      "values": {
+        "_nextHeaderBlock": 10000,
+        "$immutable": true,
+        "CHAINID": 137,
+        "currentHeaderBlock": 0,
+        "getLastChildBlock": 0,
+        "heimdallId": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "isOwner": false,
+        "networkId": "0x89",
+        "owner": "0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78",
+        "VOTE_TYPE": 2
+      },
+      "derivedName": "RootChain"
     },
     {
       "name": "StakeManager",
@@ -275,13 +381,13 @@
         "CHECKPOINT_REWARD": "71795000000000000000000",
         "checkPointBlockInterval": 5120,
         "checkpointRewardDelta": 10,
-        "currentEpoch": 68177,
+        "currentEpoch": 68434,
         "currentValidatorSetSize": 105,
-        "currentValidatorSetTotalStake": "3467097463449346425224626242",
+        "currentValidatorSetTotalStake": "3439729006364427354066527287",
         "delegationEnabled": true,
         "delegatorsReward": [0, 0, 0, 0],
         "dynasty": 80,
-        "epoch": 68177,
+        "epoch": 68434,
         "eventsHub": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
         "extensionCode": "0xef49Ea6996073752b6840CDA34773FFA78F78166",
         "getRegistry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
@@ -309,19 +415,19 @@
         "registry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
         "replacementCoolDown": 2018083,
         "rewardDecreasePerCheckpoint": 30,
-        "rewardPerStake": "2864119987482280430893472",
+        "rewardPerStake": "2871197006590730100711851",
         "rootChain": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
         "signerUpdateLimit": 100,
         "token": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "tokenMatic": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
         "totalHeimdallFee": "10155939209428901681108",
         "totalRewards": "201179489204211582010647007",
-        "totalRewardsLiquidated": "111989443350772725413456750",
-        "totalStaked": "10847736755805912873761268",
+        "totalRewardsLiquidated": "112045904671304178906050345",
+        "totalStaked": "10914213879282518567372038",
         "validatorReward": [0, 0, "1081182134824116177126", 0],
         "validatorShareFactory": "0xc4FA447A0e77Eff9717b09C057B40570813bb642",
         "validatorState": {
-          "amount": "3467097463449346425224626242",
+          "amount": "3439729006364427354066527287",
           "stakerCount": 105
         },
         "validatorThreshold": 105,
@@ -374,6 +480,7 @@
     {
       "name": "EtherPredicate",
       "address": "0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30",
+      "template": "polygonposbridge/predicate",
       "proxyType": "Polygon proxy",
       "issuedPermissions": [
         {
@@ -417,7 +524,7 @@
       ],
       "sinceTimestamp": 1590849960,
       "values": {
-        "_nextHeaderBlock": 681770000,
+        "_nextHeaderBlock": 684340000,
         "$immutable": false,
         "$implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "CHAINID": 137,
@@ -426,8 +533,8 @@
           "_registry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
           "_heimdallId": "heimdall-137"
         },
-        "currentHeaderBlock": 681760000,
-        "getLastChildBlock": 61457061,
+        "currentHeaderBlock": 684330000,
+        "getLastChildBlock": 61651365,
         "heimdallId": "0x7e10229e6df5851dc336f813dde0cf6559cd517f9ff1980e2e57e192ba3a2329",
         "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "isOwner": false,
@@ -441,6 +548,7 @@
     {
       "name": "MintableERC721Predicate",
       "address": "0x932532aA4c0174b8453839A6E44eE09Cc615F2b7",
+      "template": "polygonposbridge/predicate",
       "proxyType": "Polygon proxy",
       "issuedPermissions": [
         {
@@ -453,6 +561,16 @@
       "values": {
         "$admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "$implementation": "0xba31389292f7EdfC7b60B937b97014b4C354689b",
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
+          },
+          "MANAGER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]
+          }
+        },
         "BATCH_LIMIT": 20,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "implementation": "0xba31389292f7EdfC7b60B937b97014b4C354689b",
@@ -463,11 +581,13 @@
         "TRANSFER_EVENT_SIG": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
         "TRANSFER_WITH_METADATA_EVENT_SIG": "0xf94915c6d1fd521cee85359239227480c7e8776d7caf1fc3bacad5c269b66a14",
         "WITHDRAW_BATCH_EVENT_SIG": "0xf871896b17e9cb7a64941c62c188a4f5c621b86800e3d15452ece01ce56073df"
-      }
+      },
+      "derivedName": "MintableERC721Predicate"
     },
     {
       "name": "MintableERC20Predicate",
       "address": "0x9923263fA127b3d1484cFD649df8f1831c2A74e4",
+      "template": "polygonposbridge/predicate",
       "proxyType": "Polygon proxy",
       "issuedPermissions": [
         {
@@ -671,6 +791,7 @@
     {
       "name": "ChainExitERC1155Predicate",
       "address": "0xDB2382413bCb9c2F1B6b62B52238558266361D68",
+      "template": "polygonposbridge/predicate",
       "proxyType": "Polygon proxy",
       "issuedPermissions": [
         {
@@ -683,6 +804,19 @@
       "values": {
         "$admin": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "$implementation": "0xf17461C73d32f7545ADfdd478a6eC5a382F5A58f",
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x63ec5767F54F6943750A70eB6117EA2D9Ca77313"]
+          },
+          "MANAGER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "0x63ec5767F54F6943750A70eB6117EA2D9Ca77313",
+              "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
+            ]
+          }
+        },
         "CHAIN_EXIT_EVENT_SIG": "0xc7b80b68f1c661da97dbd7e6e143a0c7c587dfc522cb2ac508b9084fecc492bc",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "implementation": "0xf17461C73d32f7545ADfdd478a6eC5a382F5A58f",
@@ -690,11 +824,20 @@
         "proxyOwner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "proxyType": 2,
         "TOKEN_TYPE": "0x316d3b16328ca1dbcc5aeb9caf982584129f3ad000dc7219dd7dd6727f72fe93"
-      }
+      },
+      "derivedName": "ChainExitERC1155Predicate"
+    },
+    {
+      "name": "ExitNFT",
+      "address": "0xDF74156420Bd57ab387B195ed81EcA36F9fABAca",
+      "sinceTimestamp": 1590850785,
+      "values": { "$immutable": true, "getApproved": [], "ownerOf": [] },
+      "derivedName": "ExitNFT"
     },
     {
       "name": "ERC721Predicate",
       "address": "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD",
+      "template": "polygonposbridge/predicate",
       "proxyType": "Polygon proxy",
       "issuedPermissions": [
         {
@@ -707,6 +850,16 @@
       "values": {
         "$admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "$implementation": "0x02Bc987f54B54bf18Ca6E20a13e57508ec561072",
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
+          },
+          "MANAGER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]
+          }
+        },
         "BATCH_LIMIT": 20,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "implementation": "0x02Bc987f54B54bf18Ca6E20a13e57508ec561072",
@@ -715,7 +868,8 @@
         "proxyType": 2,
         "TOKEN_TYPE": "0x73ad2146b3d3a286642c794379d750360a2d53a3459a11b3e5d6cc900f55f44a",
         "TRANSFER_EVENT_SIG": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
-      }
+      },
+      "derivedName": "ERC721Predicate"
     },
     {
       "name": "StakeManagerExtension",
@@ -811,10 +965,12 @@
     { "address": "0x39415255619783A2E71fcF7d8f708A951d92e1b6" },
     { "address": "0x427cEB53c3532835CcfdBbE4c533286e15d3576E" },
     { "address": "0x62a8029CDAf8576e337b86187B82474EFcE712d8" },
+    { "address": "0x63ec5767F54F6943750A70eB6117EA2D9Ca77313" },
     { "address": "0x803B74766D8f79195D4DaeCF6f2aac31Dba78F25" },
     { "address": "0x80D63799b1e08a80f73FB7a83264b5c31600bF3a" },
     { "address": "0x8Eab5aEfe2755E1bAD2052944Ea096AEbdA1d602" },
     { "address": "0x8F9953FC47Bd5d5531FD2504612a5F4ecA16d7CF" },
+    { "address": "0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78" },
     { "address": "0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc" },
     { "address": "0xb771380f912E4b5F6beDdf81314C383c13F16ab5" },
     { "address": "0xD0FD9303fe99EdFAF5eD4A2c1657a347d8053C9a" },
@@ -983,6 +1139,31 @@
       "event StateSynced(uint256 indexed id, address indexed contractAddress, bytes data)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)"
     ],
+    "0x2A88696e0fFA76bAA1338F2C74497cC013495922": [
+      "function updateImplementation(address _newProxyTo)",
+      "function exitWindow() view returns (uint256)",
+      "function exits(uint256) view returns (uint256 receiptAmountOrNFTId, bytes32 txHash, address owner, address token, bool isRegularExit, address predicate)",
+      "function proxyType() pure returns (uint256 proxyTypeId)",
+      "function implementation() view returns (address)",
+      "function ownerExits(bytes32) view returns (uint256)",
+      "function renounceOwnership()",
+      "function owner() view returns (address)",
+      "function isOwner() view returns (bool)",
+      "function ON_FINALIZE_GAS_LIMIT() view returns (uint32)",
+      "function exitsQueues(address) view returns (address)",
+      "function HALF_EXIT_PERIOD() view returns (uint256)",
+      "function exitNft() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "constructor(address _proxyTo, address _registry, address _rootChain, address _exitNft)",
+      "event Withdraw(uint256 indexed exitId, address indexed user, address indexed token, uint256 amount)",
+      "event ExitStarted(address indexed exitor, uint256 indexed exitId, address indexed token, uint256 amount, bool isRegularExit)",
+      "event ExitUpdated(uint256 indexed exitId, uint256 indexed age, address signer)",
+      "event ExitPeriodUpdate(uint256 indexed oldExitPeriod, uint256 indexed newExitPeriod)",
+      "event ExitCancelled(uint256 indexed exitId)",
+      "event ProxyUpdated(address indexed _new, address indexed _old)",
+      "event OwnerUpdate(address _prevOwner, address _newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)"
+    ],
     "0x2d641867411650cd05dB93B59964536b1ED5b1B7": [
       "constructor(address _proxyTo)",
       "event ProxyOwnerUpdate(address _new, address _old)",
@@ -993,6 +1174,34 @@
       "function transferProxyOwnership(address newOwner)",
       "function updateAndCall(address _newProxyTo, bytes data) payable",
       "function updateImplementation(address _newProxyTo)"
+    ],
+    "0x31f9c8c786aD7cc70ad10cF136B36681d340b792": [
+      "event ExitCancelled(uint256 indexed exitId)",
+      "event ExitPeriodUpdate(uint256 indexed oldExitPeriod, uint256 indexed newExitPeriod)",
+      "event ExitStarted(address indexed exitor, uint256 indexed exitId, address indexed token, uint256 amount, bool isRegularExit)",
+      "event ExitUpdated(uint256 indexed exitId, uint256 indexed age, address signer)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Withdraw(uint256 indexed exitId, address indexed user, address indexed token, uint256 amount)",
+      "function HALF_EXIT_PERIOD() view returns (uint256)",
+      "function ON_FINALIZE_GAS_LIMIT() view returns (uint32)",
+      "function addExitToQueue(address exitor, address childToken, address rootToken, uint256 exitAmountOrTokenId, bytes32 txHash, bool isRegularExit, uint256 priority)",
+      "function addInput(uint256 exitId, uint256 age, address utxoOwner, address token)",
+      "function challengeExit(uint256 exitId, uint256 inputId, bytes challengeData, address adjudicatorPredicate)",
+      "function createExitQueue(address token)",
+      "function exitNft() view returns (address)",
+      "function exitWindow() view returns (uint256)",
+      "function exits(uint256) view returns (uint256 receiptAmountOrNFTId, bytes32 txHash, address owner, address token, bool isRegularExit, address predicate)",
+      "function exitsQueues(address) view returns (address)",
+      "function isOwner() view returns (bool)",
+      "function owner() view returns (address)",
+      "function ownerExits(bytes32) view returns (uint256)",
+      "function processExits(address _token)",
+      "function processExitsBatch(address[] _tokens)",
+      "function renounceOwnership()",
+      "function startExitWithDepositedTokens(uint256 depositId, address token, uint256 amountOrToken) payable",
+      "function transferOwnership(address newOwner)",
+      "function updateExitPeriod(uint256 halfExitPeriod)",
+      "function verifyInclusion(bytes data, uint8 offset, bool verifyTxInclusion) view returns (uint256)"
     ],
     "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71": [
       "function isTokenMappedAndIsErc721(address _token) view returns (bool)",
@@ -1037,6 +1246,31 @@
       "function onFinalizeExit(bytes data)",
       "function startExitWithBurntTokens(bytes data) returns (bytes)",
       "function verifyDeprecation(bytes exit, bytes inputUtxo, bytes challengeData) returns (bool)"
+    ],
+    "0x401F6c983eA34274ec46f84D70b31C151321188b": [
+      "function updateImplementation(address _newProxyTo)",
+      "function childChain() view returns (address)",
+      "function proxyType() pure returns (uint256 proxyTypeId)",
+      "function governance() view returns (address)",
+      "function implementation() view returns (address)",
+      "function renounceOwnership()",
+      "function registry() view returns (address)",
+      "function owner() view returns (address)",
+      "function isOwner() view returns (bool)",
+      "function rootChain() view returns (address)",
+      "function unlock()",
+      "function deposits(uint256) view returns (bytes32 depositHash, uint256 createdAt)",
+      "function stateSender() view returns (address)",
+      "function locked() view returns (bool)",
+      "function maxErc20Deposit() view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function lock()",
+      "constructor(address _proxyTo, address _registry, address _rootChain, address _governance)",
+      "event NewDepositBlock(address indexed owner, address indexed token, uint256 amountOrNFTId, uint256 depositBlockId)",
+      "event MaxErc20DepositUpdate(uint256 indexed oldLimit, uint256 indexed newLimit)",
+      "event ProxyUpdated(address indexed _new, address indexed _old)",
+      "event OwnerUpdate(address _prevOwner, address _newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)"
     ],
     "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf": [
       "constructor(address _proxyTo)",
@@ -1108,6 +1342,28 @@
       "function submitHeaderBlock(bytes data, bytes sigs)",
       "function transferOwnership(address newOwner)",
       "function updateDepositId(uint256 numDeposits) returns (uint256 depositId)"
+    ],
+    "0x5A09cD4601b66bc107D377AB81E0dbb5dFABaA84": [
+      "function slash()",
+      "function headerBlocks(uint256) view returns (bytes32 root, uint256 start, uint256 end, uint256 createdAt, address proposer)",
+      "function updateDepositId(uint256 numDeposits) returns (uint256 depositId)",
+      "function submitHeaderBlock(bytes data, bytes sigs)",
+      "function renounceOwnership()",
+      "function _nextHeaderBlock() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function isOwner() view returns (bool)",
+      "function networkId() view returns (bytes)",
+      "function getLastChildBlock() view returns (uint256)",
+      "function CHAINID() view returns (uint256)",
+      "function setNextHeaderBlock(uint256 _value)",
+      "function VOTE_TYPE() view returns (uint8)",
+      "function setHeimdallId(string _heimdallId)",
+      "function currentHeaderBlock() view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function heimdallId() view returns (bytes32)",
+      "event NewHeaderBlock(address indexed proposer, uint256 indexed headerBlockId, uint256 indexed reward, uint256 start, uint256 end, bytes32 root)",
+      "event ResetHeaderBlock(address indexed proposer, uint256 indexed headerBlockId)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)"
     ],
     "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908": [
       "constructor(address _proxyTo)",
@@ -1500,6 +1756,38 @@
       "function updateNonce(uint256[] validatorIds, uint256[] nonces)",
       "function validatorNonce(uint256) view returns (uint256)"
     ],
+    "0xb00aa68b87256E2F22058fB2Ba3246EEc54A44fc": [
+      "constructor()",
+      "event MaxErc20DepositUpdate(uint256 indexed oldLimit, uint256 indexed newLimit)",
+      "event NewDepositBlock(address indexed owner, address indexed token, uint256 amountOrNFTId, uint256 depositBlockId)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function childChain() view returns (address)",
+      "function depositBulk(address[] _tokens, uint256[] _amountOrTokens, address _user)",
+      "function depositERC20(address _token, uint256 _amount)",
+      "function depositERC20ForUser(address _token, address _user, uint256 _amount)",
+      "function depositERC721(address _token, uint256 _tokenId)",
+      "function depositERC721ForUser(address _token, address _user, uint256 _tokenId)",
+      "function depositEther() payable",
+      "function deposits(uint256) view returns (bytes32 depositHash, uint256 createdAt)",
+      "function governance() view returns (address)",
+      "function isOwner() view returns (bool)",
+      "function lock()",
+      "function locked() view returns (bool)",
+      "function maxErc20Deposit() view returns (uint256)",
+      "function migrateMatic()",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function owner() view returns (address)",
+      "function registry() view returns (address)",
+      "function renounceOwnership()",
+      "function rootChain() view returns (address)",
+      "function stateSender() view returns (address)",
+      "function transferAssets(address _token, address _user, uint256 _amountOrNFTId)",
+      "function transferOwnership(address newOwner)",
+      "function unlock()",
+      "function updateChildChainAndStateSender()",
+      "function updateMaxErc20Deposit(uint256 maxDepositAmount)",
+      "function updateRootChain(address _rootChain)"
+    ],
     "0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB": [
       "constructor()",
       "event ExitedERC20(address indexed exitor, address indexed rootToken, uint256 amount)",
@@ -1674,6 +1962,25 @@
       "function updateAndCall(address _newProxyTo, bytes data) payable",
       "function updateImplementation(address _newProxyTo)"
     ],
+    "0xDF74156420Bd57ab387B195ed81EcA36F9fABAca": [
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function getApproved(uint256 tokenId) view returns (address)",
+      "function approve(address to, uint256 tokenId)",
+      "function transferFrom(address from, address to, uint256 tokenId)",
+      "function mint(address _owner, uint256 _tokenId)",
+      "function safeTransferFrom(address from, address to, uint256 tokenId)",
+      "function burn(uint256 _tokenId)",
+      "function exists(uint256 tokenId) view returns (bool)",
+      "function ownerOf(uint256 tokenId) view returns (address)",
+      "function balanceOf(address owner) view returns (uint256)",
+      "function setApprovalForAll(address to, bool approved)",
+      "function safeTransferFrom(address from, address to, uint256 tokenId, bytes _data)",
+      "function isApprovedForAll(address owner, address operator) view returns (bool)",
+      "constructor(address _registry)",
+      "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",
+      "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
+      "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)"
+    ],
     "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD": [
       "constructor(address _proxyTo)",
       "event ProxyOwnerUpdate(address _new, address _old)",
@@ -1822,7 +2129,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "polygonposbridge/predicate": "0xd0002593506440cc569c7eaae5de56a803422500de47fb71f70657bc32793f78"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }
