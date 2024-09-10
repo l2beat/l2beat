@@ -27,7 +27,6 @@ export const All: Story = {
       redWarning: 'Red warning message',
       showProjectUnderReview: true,
       hasImplementationChanged: true,
-      warning: 'General warning message',
       data: {
         syncStatus: {
           isSynced: false,

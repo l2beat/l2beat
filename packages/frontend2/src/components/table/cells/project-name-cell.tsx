@@ -3,6 +3,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
+import { Markdown } from '~/components/markdown/markdown'
 import Layer3sIcon from '~/icons/layer3s.svg'
 import ShieldIcon from '~/icons/shield.svg'
 import UnderReviewIcon from '~/icons/under-review.svg'
@@ -16,10 +17,10 @@ export interface ProjectCellProps {
     name: string
     shortName?: string
     isVerified?: boolean
+    headerWarning?: string
     redWarning?: string
     showProjectUnderReview?: boolean
     hasImplementationChanged?: boolean
-    warning?: string
     data?: { syncStatus?: SyncStatus }
   }
   type?: 'layer2' | 'layer3' | 'bridge'
@@ -83,13 +84,17 @@ export function ProjectNameCell({
           </Tooltip>
         </span>
       )}
-      {project.warning && (
+      {project.headerWarning && (
         <span className="pl-1.5">
           <Tooltip>
             <TooltipTrigger>
               <ShieldIcon className="relative top-px h-4 fill-yellow-700 dark:fill-yellow-300" />
             </TooltipTrigger>
-            <TooltipContent>{project.warning}</TooltipContent>
+            <TooltipContent>
+              <Markdown inline ignoreGlossary>
+                {project.headerWarning}
+              </Markdown>
+            </TooltipContent>
           </Tooltip>
         </span>
       )}
