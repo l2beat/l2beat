@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/backend-tools'
+import { LogFormatterPretty, Logger } from '@l2beat/backend-tools'
 
 import { buildAxelarGatewaySource } from './sources/axelarGateway.js'
 import { buildCoingeckoSource } from './sources/coingecko.js'
@@ -20,7 +20,14 @@ const db = createPrismaClient()
 
 const voidQueue = { add: () => {} } as unknown as TokenUpdateQueue
 
-const logger = new Logger({ format: 'pretty', colors: true })
+const logger = new Logger({
+  transports: [
+    {
+      formatter: new LogFormatterPretty(),
+      transport: console,
+    },
+  ],
+})
 
 const networksConfig = await getNetworksConfig({
   db,

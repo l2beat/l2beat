@@ -1,4 +1,4 @@
-import { Logger, assert } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import { z } from 'zod'
 
 import { nanoid } from 'nanoid'
@@ -7,6 +7,7 @@ import { env } from '../env.js'
 import { zodFetch } from '../utils/zodFetch.js'
 import { TokenUpdateQueue } from '../utils/queue/wrap.js'
 import { PrismaClient } from '../db/prisma.js'
+import { assert } from '@l2beat/shared-pure'
 
 type Dependencies = {
   logger: Logger

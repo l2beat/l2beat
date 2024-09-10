@@ -1,5 +1,5 @@
 import { Insertable, Selectable } from 'kysely'
-import { ExplorerType } from '../../kysely/token-db/enums'
+import { ExplorerType } from '../../kysely/generated/enums'
 import { NetworkExplorer } from '../../kysely/generated/types'
 
 export interface NetworkExplorerRecord {

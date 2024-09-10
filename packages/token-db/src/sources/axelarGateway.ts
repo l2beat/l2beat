@@ -1,4 +1,5 @@
-import { assert, Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
+import { assert } from '@l2beat/shared-pure'
 import { SetRequired } from 'type-fest'
 import { isAddress, parseAbiItem } from 'viem'
 import { upsertManyTokensWithMeta } from '../db/helpers.js'

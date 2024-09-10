@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/backend-tools'
+import { LogFormatterPretty, Logger } from '@l2beat/backend-tools'
 import { Token } from '@prisma/client'
 import { createPrismaClient } from './db/prisma.js'
 import { connection } from './redis/redis.js'
@@ -33,7 +33,14 @@ type BatchTokenPayload = { tokenIds: Token['id'][] }
 
 const db = createPrismaClient()
 
-const logger = new Logger({ format: 'pretty', colors: true })
+const logger = new Logger({
+  transports: [
+    {
+      formatter: new LogFormatterPretty(),
+      transport: console,
+    },
+  ],
+})
 
 const networksConfig = await getNetworksConfig({
   db,

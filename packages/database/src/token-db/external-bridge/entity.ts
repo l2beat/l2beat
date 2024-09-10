@@ -1,6 +1,6 @@
 import { Insertable, Selectable } from 'kysely'
-import { ExternalBridgeType } from '../../kysely/token-db/enums'
 import { ExternalBridge } from '../../kysely/generated/types'
+import { ExternalBridgeType } from '../../kysely/generated/enums'
 
 export interface ExternalBridgeRecord {
   id: string

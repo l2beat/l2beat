@@ -1,4 +1,5 @@
-import { assert, Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
+import { assert } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 import { upsertManyTokensWithMeta } from '../db/helpers.js'
