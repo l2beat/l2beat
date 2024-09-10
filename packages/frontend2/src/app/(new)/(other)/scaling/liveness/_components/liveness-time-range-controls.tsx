@@ -1,6 +1,5 @@
-import React from 'react'
-import { RadioGroup, RadioGroupItem } from '~/app/_components/radio-group'
-import { Skeleton } from '~/app/_components/skeleton'
+import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
+import { Skeleton } from '~/components/core/skeleton'
 import { useIsClient } from '~/hooks/use-is-client'
 import { type LivenessTimeRange } from '~/server/features/scaling/liveness/types'
 

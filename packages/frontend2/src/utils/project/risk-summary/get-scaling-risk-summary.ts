@@ -6,8 +6,8 @@ import {
 } from '@l2beat/config'
 import isArray from 'lodash/isArray'
 
-import { type RiskSummarySectionProps } from '../../../app/_components/projects/sections/risk-summary-section'
-import { type ProjectSectionProps } from '../../../app/_components/projects/sections/types'
+import { type RiskSummarySectionProps } from '../../../components/projects/sections/risk-summary-section'
+import { type ProjectSectionProps } from '../../../components/projects/sections/types'
 import { groupRisks } from './group-risks'
 
 export function getScalingRiskSummarySection(

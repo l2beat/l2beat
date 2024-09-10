@@ -1,4 +1,4 @@
-import { SimplePageHeader } from '~/app/_components/simple-page-header'
+import { SimplePageHeader } from '~/components/simple-page-header'
 import { getBridgeRiskEntries } from '~/server/features/bridges/get-bridge-risk-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { BridgesFilterContextProvider } from '../_components/bridges-filter-context'

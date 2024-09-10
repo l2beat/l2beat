@@ -1,4 +1,4 @@
-import { SimplePageHeader } from '~/app/_components/simple-page-header'
+import { SimplePageHeader } from '~/components/simple-page-header'
 import { getDaSummaryEntries } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { DaFilterContextProvider } from '../_components/filters/da-filter-context'
 import { DaSummaryTable } from './_components/table/da-summary-table'

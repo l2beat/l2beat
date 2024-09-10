@@ -1,10 +1,10 @@
 'use client'
 
-import React, { useEffect, useMemo, useRef } from 'react'
-import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
+import { useEffect, useMemo, useRef } from 'react'
+import { OverflowWrapper } from '~/components/core/overflow-wrapper'
 
 import debounce from 'lodash/debounce'
-import { glossarySectionTreshold } from '~/app/_components/nav/consts'
+import { glossarySectionTreshold } from '~/components/nav/consts'
 import { useCurrentSection } from '~/hooks/use-current-section'
 import { scrollHorizontallyToItem } from '~/utils/scroll-to-item'
 import { startsWithNumber } from '~/utils/starts-with-letter-or-number'

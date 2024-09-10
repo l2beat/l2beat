@@ -2,7 +2,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip'
+} from '~/components/core/tooltip/tooltip'
 import InfoIcon from '~/icons/info.svg'
 import { cn } from '~/utils/cn'
 

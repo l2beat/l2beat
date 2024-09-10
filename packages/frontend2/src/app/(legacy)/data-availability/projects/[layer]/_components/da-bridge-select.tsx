@@ -7,8 +7,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '~/app/_components/select'
-import { Skeleton } from '~/app/_components/skeleton'
+} from '~/components/core/select'
+import { Skeleton } from '~/components/core/skeleton'
 import { useIsClient } from '~/hooks/use-is-client'
 interface Props {
   layerSlug: string

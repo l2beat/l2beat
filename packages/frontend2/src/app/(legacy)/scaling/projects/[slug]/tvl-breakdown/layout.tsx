@@ -1,4 +1,4 @@
-import { ContentWrapper } from '~/app/_components/content-wrapper'
+import { ContentWrapper } from '~/components/content-wrapper'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

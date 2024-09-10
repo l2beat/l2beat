@@ -1,6 +1,7 @@
 import { avail } from './blockchain/avail/avail'
 import { celestia } from './blockchain/celestia/celestia'
 import { ethereum } from './blockchain/ethereum/ethereum'
+import { memo } from './blockchain/memo/memo'
 import { near } from './blockchain/near/near'
 import { apexDac } from './dac/apex'
 import { arbitrumNovaDac } from './dac/arbitrumnova'
@@ -43,6 +44,7 @@ export const daLayers: DaLayer[] = [
   celestia,
   ethereum,
   near,
+  memo,
   xlayerDac,
   realDac,
   reyaDac,

@@ -3,7 +3,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip'
+} from '~/components/core/tooltip/tooltip'
 import { formatNumberWithCommas } from '~/utils/format-number'
 
 interface Props {

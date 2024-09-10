@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
-import { ContentWrapper } from '~/app/_components/content-wrapper'
-import { FullPageHeader } from '~/app/_components/full-page-header'
-import { LinkWithThumbnail } from '~/app/_components/link-with-thumbnail'
+import { ContentWrapper } from '~/components/content-wrapper'
+import { FullPageHeader } from '~/components/full-page-header'
+import { LinkWithThumbnail } from '~/components/link-with-thumbnail'
 import { getCollection } from '~/content/get-collection'
 import { getDefaultMetadata } from '~/utils/metadata'
 import {

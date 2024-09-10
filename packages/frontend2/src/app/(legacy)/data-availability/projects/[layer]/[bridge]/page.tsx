@@ -1,7 +1,7 @@
 import { daLayers } from '@l2beat/config/build/src/projects/other/da-beat/index'
 import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
-import { ProjectHeader } from '~/app/_components/projects/project-header'
+import { ProjectHeader } from '~/components/projects/project-header'
 import { DaBridgeSelect } from '../_components/da-bridge-select'
 import { DaProjectPage } from '../_components/da-project-page'
 import DaProjectPageSkeleton from '../_components/da-project-page-skeleton'

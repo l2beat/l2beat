@@ -3,12 +3,12 @@ import CircleQuestionMark from '~/icons/circle-question-mark.svg'
 import UnverifiedIcon from '~/icons/unverified.svg'
 import VerifiedIcon from '~/icons/verified.svg'
 
-import { OutLink } from '~/app/_components/out-link'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip'
+} from '~/components/core/tooltip/tooltip'
+import { OutLink } from '~/components/out-link'
 
 type Props = {
   askForVerificationLink: string
