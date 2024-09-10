@@ -1,6 +1,6 @@
 import { Insertable, Selectable } from 'kysely'
-import { ExternalBridge } from '../../kysely/generated/types'
 import { ExternalBridgeType } from '../../kysely/generated/enums'
+import { ExternalBridge } from '../../kysely/generated/types'
 
 export interface ExternalBridgeRecord {
   id: string
