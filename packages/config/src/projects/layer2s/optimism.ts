@@ -504,11 +504,11 @@ export const optimism: Layer2 = {
           permissionlessGameClockExtension,
         )}, it gets extended by ${formatSeconds(
           permissionlessGameClockExtension,
-        )} up to depth ${permissionlessGameSplitDepth}, and ${formatSeconds(
+        )} up to depth ${permissionlessGameSplitDepth}, and then ${formatSeconds(
           permissionlessGameClockExtension * 2,
         )} up the max depth. The maximum clock extensions that a top level claim can get is therefore ${formatSeconds(
           permissionlessGameMaxClockExtension,
-        )}. Since unconfirmed state roots are independent with one another, users can decide to exit with a subsequent state root if the previous one is delayed. The protocol does not enforces valid bisections, meaning that actors can propose correct initial claims and then provide incorrect midpoints.`,
+        )}. Since unconfirmed state roots are independent with one another, users can decide to exit with a subsequent state root if the previous one is delayed. Winners gets the entire losers' stake, meaning that sybils can potentially play against each other at no cost. The protocol does not enforces valid bisections, meaning that actors can propose correct initial claims and then provide incorrect midpoints.`,
         references: [
           {
             text: 'Fraud Proof Wars: OPFP',
