@@ -30,7 +30,7 @@ export const columns = [
           <button
             className="flex flex-row items-center gap-4 italic text-gray-500 dark:text-gray-400"
             onClick={(e) => {
-              e.stopPropagation()
+              e.preventDefault()
               ctx.row.toggleExpanded()
             }}
           >
