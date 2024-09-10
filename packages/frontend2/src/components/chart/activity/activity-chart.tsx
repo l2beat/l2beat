@@ -53,7 +53,7 @@ export function ActivityChart({ milestones, entries }: Props) {
   const { columns, valuesStyle, chartRange, formatYAxisLabel } =
     useActivityChartRenderParams({
       milestones,
-      chart: data,
+      data: data,
       showMainnet,
     })
 
