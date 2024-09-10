@@ -19,42 +19,6 @@ const config = {
     getAbsolutePath('@storybook/addon-themes'),
     getAbsolutePath('storybook-addon-pseudo-states'),
   ],
-  /**
-   * Keep in sync with the webpack configuration in next.config.js.
-   */
-  webpackFinal: async (config: {
-    module: {
-      rules: {
-        test: RegExp
-        issuer: unknown
-        resourceQuery: RegExp | { not: RegExp[] }
-        exclude?: RegExp
-        use: string[]
-      }[]
-    }
-  }) => {
-    const fileLoaderRule = config.module.rules.find((rule) =>
-      rule.test?.test?.('.svg'),
-    )
-
-    if (!fileLoaderRule) {
-      throw new Error('Could not find svg fileLoaderRule')
-    }
-
-    config.module.rules.push(
-      // Reapply the existing rule, but only for svg imports ending in ?url
-      {
-        ...fileLoaderRule,
-        test: /\.svg$/i,
-        resourceQuery: /url/, // *.svg?url
-      },
-    )
-
-    // Modify the file loader rule to ignore *.svg, since we have it handled now.
-    fileLoaderRule.exclude = /\.svg$/i
-
-    return config
-  },
   framework: {
     name: getAbsolutePath('@storybook/nextjs'),
     options: {},
