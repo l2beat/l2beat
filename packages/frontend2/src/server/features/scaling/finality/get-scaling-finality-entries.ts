@@ -23,9 +23,8 @@ export async function getScalingFinalityEntries() {
   ])
 
   const includedProjects = getIncludedProjects(layer2s, finality)
-  const orderedProjects = orderByTvl(includedProjects, tvl)
 
-  return orderedProjects
+  const entries = includedProjects
     .map((project) => {
       const hasImplementationChanged =
         !!icReport.projects[project.id.toString()]
@@ -39,6 +38,8 @@ export async function getScalingFinalityEntries() {
       )
     })
     .filter(notUndefined)
+
+  return orderByTvl(entries, tvl)
 }
 
 function getFinalityData(

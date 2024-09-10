@@ -23,9 +23,8 @@ export async function getScalingCostsEntries(): Promise<ScalingCostsEntry[]> {
       getProjectsVerificationStatuses(),
     ])
   const projects = getCostsProjects()
-  const orderedProjects = orderByTvl(projects, tvl)
 
-  return orderedProjects
+  const entries = projects
     .map((project) => {
       const isVerified = !!projectsVerificationStatuses[project.id.toString()]
       const hasImplementationChanged =
@@ -41,4 +40,6 @@ export async function getScalingCostsEntries(): Promise<ScalingCostsEntry[]> {
       }
     })
     .filter(notUndefined)
+
+  return orderByTvl(entries, tvl)
 }
