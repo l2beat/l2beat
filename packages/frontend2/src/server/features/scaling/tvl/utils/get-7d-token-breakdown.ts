@@ -79,8 +79,8 @@ function getMock7dTokenBreakdown(): LatestTvl {
         project.id,
         {
           breakdown: {
-            total: 60,
-            ether: 40,
+            total: 100,
+            ether: 80,
             stablecoin: 15,
             associated: 5,
           },
