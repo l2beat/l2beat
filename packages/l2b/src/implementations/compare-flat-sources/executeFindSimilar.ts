@@ -1,6 +1,7 @@
 import path from 'path'
 import { keyInYN } from 'readline-sync'
 
+import { CliLogger } from '@l2beat/shared'
 import { powerdiff } from '../powerdiff'
 import {
   computeComparisonBetweenProjects,
@@ -18,6 +19,7 @@ export interface FindSimilarCommand {
   projectPath: string
   forceTable: boolean
   discoveryPath: string
+  logger: CliLogger
 }
 
 export async function executeFindSimilar(
@@ -26,6 +28,7 @@ export async function executeFindSimilar(
   const { name, chain } = decodeProjectPath(command.projectPath)
 
   const { matrix: perProjectMatrix } = await computeStackSimilarity(
+    command.logger,
     command.discoveryPath,
   )
   const mostSimilar = getMostSimilar(perProjectMatrix)
@@ -33,17 +36,24 @@ export async function executeFindSimilar(
   const { name: otherName, chain: otherChain, similarity } = mostSimilar[name]
   const { matrix, firstProject, secondProject } =
     await computeComparisonBetweenProjects(
+      command.logger,
       command.projectPath,
       `${otherChain}:${otherName}`,
       command.discoveryPath,
     )
 
-  printComparisonBetweenProjects(matrix, firstProject, secondProject, command)
-  console.log(formatHeader('Most similar to:'))
-  console.log(`${otherName} => ${name} @ ${colorMap(similarity)}`)
+  printComparisonBetweenProjects(
+    command.logger,
+    matrix,
+    firstProject,
+    secondProject,
+    command,
+  )
+  command.logger.logLine(formatHeader('Most similar to:'))
+  command.logger.logLine(`${otherName} => ${name} @ ${colorMap(similarity)}`)
 
   if (similarity === 1) {
-    console.log('No need to run powerdiff, projects are identical')
+    command.logger.logLine('No need to run powerdiff, projects are identical')
     return
   }
 

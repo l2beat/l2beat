@@ -1,5 +1,6 @@
 import path from 'path'
 import { HashedFileContent, estimateSimilarity } from '@l2beat/discovery'
+import { CliLogger } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { Project, computeStackSimilarity, decodeProjectPath } from './common'
 import { colorMap } from './output'
@@ -8,6 +9,7 @@ export interface CompareSourceOnSourceCommand {
   projectPath: string
   discoveryPath: string
   forceTable: boolean
+  logger: CliLogger
 }
 
 export async function executeCompareSourceOnSource(
@@ -15,6 +17,7 @@ export async function executeCompareSourceOnSource(
 ): Promise<void> {
   const { name, chain } = decodeProjectPath(command.projectPath)
   const { projects: projectsWithBase } = await computeStackSimilarity(
+    command.logger,
     command.discoveryPath,
   )
   const base = projectsWithBase.find(
@@ -26,10 +29,10 @@ export async function executeCompareSourceOnSource(
   )
   for (const source of base.sources) {
     const mostSimmilar = findMostSimmilarContract(source, projects)
-    console.log(`${path.basename(source.path)}`)
+    command.logger.logLine(`${path.basename(source.path)}`)
     for (const [i, e] of mostSimmilar.entries()) {
       const prefix = i === mostSimmilar.length - 1 ? `└─` : `├─`
-      console.log(
+      command.logger.logLine(
         `${prefix} [${colorMap(e.similarity)}] in ${e.chain}:${
           e.projectName
         }:${path.basename(e.path)}`,
