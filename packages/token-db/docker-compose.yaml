@@ -1,0 +1,12 @@
+services:
+  redis:
+    image: redis:latest
+    ports:
+      - '6379:6379'
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      start_period: 3s
+      interval: 1s
+      timeout: 3s
+      retries: 5
+
