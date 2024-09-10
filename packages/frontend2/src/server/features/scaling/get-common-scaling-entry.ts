@@ -56,6 +56,7 @@ export function getCommonScalingEntry(
     isUpcoming: !!project.isUpcoming,
     isUnderReview: !!project.isUnderReview,
     warning: project.display.warning,
+    headerWarning: project.display.headerWarning,
     showProjectUnderReview: isAnySectionUnderReview(project),
     redWarning: project.display.redWarning,
     purposes: project.display.purposes,
