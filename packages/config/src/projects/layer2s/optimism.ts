@@ -137,7 +137,6 @@ const permissionlessGameMaxClockExtension =
     2
 
 export const optimism: Layer2 = {
-  isUnderReview: true,
   type: 'layer2',
   id: ProjectId('optimism'),
   badges: [
