@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 20692926,
+  "blockNumber": 20713619,
   "configHash": "0x3e9838797390d2b37cef8da45ce842fa346551e78cfd78111375e77ffc7380f6",
   "version": 14,
   "contracts": [
@@ -7802,6 +7802,30 @@
               "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
               "salt": "0x0000000000000000000000000000000000000000000000000000000000000000"
             }
+          },
+          {
+            "delay": 0,
+            "operation": {
+              "calls": [
+                {
+                  "target": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
+                  "value": "0",
+                  "function": "upgrade",
+                  "inputs": [
+                    {
+                      "name": "proxy",
+                      "value": "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+                    },
+                    {
+                      "name": "implementation",
+                      "value": "0x509dA1BE24432F8804C4A9FF4a3c3f80284CDd13"
+                    }
+                  ]
+                }
+              ],
+              "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+              "salt": "0x0000000000000000000000000000000000000000000000000000000000000000"
+            }
           }
         ],
         "securityCouncil": "0x0000000000000000000000000000000000000000"
@@ -7920,8 +7944,8 @@
       "sinceTimestamp": 1717520639,
       "values": {
         "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
-        "$implementation": "0x12f893689f9603991a8c22C249FFd0509Be95661",
-        "$upgradeCount": 1,
+        "$implementation": "0x509dA1BE24432F8804C4A9FF4a3c3f80284CDd13",
+        "$upgradeCount": 2,
         "admin": "0x2cf3bD6a9056b39999F3883955E183F655345063",
         "chainsCreated": [
           {
@@ -8054,7 +8078,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 150,
+        "nonce": 151,
         "VERSION": "1.3.0"
       },
       "fieldMeta": {
@@ -8638,29 +8662,26 @@
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x0298512Bf8e7AC383c0A353354E3Ff66216654Ac" },
     { "address": "0x09040e439Ca5F1CF50CF4e9BE9b1F1FB8ef1ce07" },
-    { "address": "0x0B2E7ffbcD1E3e6f5034555Fb638889FE7564709" },
     { "address": "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99" },
+    { "address": "0x0e621b0A275A207211e161Ee997aA80661Bc1bcf" },
     { "address": "0x0F3F84b0aaaA6f577468F6708e7A5E09e59dbfA1" },
     { "address": "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137" },
-    { "address": "0x1462112B5abdc5577Cbd25a9cAbB4C4d5979D697" },
     { "address": "0x160669864cDe95c190364ad01eDfbAA32E9DA430" },
-    { "address": "0x227230CD05e89f41E67df3E5fC61B18411d147A9" },
     { "address": "0x239cCb0a6Fc59fc6A53584613707F815503a6aAF" },
     { "address": "0x23aaaD48A6409d98Fcc2e9061CD2F437ff4E5839" },
+    { "address": "0x2A71F929fC583Db245B1563996de76Ab9d9A3DAf" },
     { "address": "0x2AcE51D896fF08587DC381E0961b777599E4562c" },
-    { "address": "0x2F73918C0F92FA9aD3Cfa87611677345a98CEa6f" },
     { "address": "0x2Fd57fdFba5aABbFdc43Fd450c2817D1401E72F2" },
     { "address": "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc" },
     { "address": "0x310E84b3063bBC5C86ED4Bf4D25E2fc3DF1B9735" },
     { "address": "0x3133781381bC58564D5e9888c208ED0b7BD7721F" },
     { "address": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092" },
+    { "address": "0x3620B9e7c75E09cCC37458c7B6EE6c23D8Ee4f0f" },
     { "address": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8" },
     { "address": "0x371F6E45784E7DFBEA2dc18Edb68cD90aD530E6c" },
     { "address": "0x3846c3A30E62075Fa916216b35EF04B8F53931f6" },
     { "address": "0x3F0009D00cc78979d00Eb635490F23E8d6aCc481" },
-    { "address": "0x441e5c8910Ef39996B2D01499509861228cbc2d1" },
     { "address": "0x53A26f48ED901336D7C165B85E6F43d9F8dBeAA7" },
-    { "address": "0x56B3120c32AE9C3188fafc5Cc542F9c53B0b2222" },
     { "address": "0x57855BeeB39C56ca4Ff41C1D039B0F022ED08cea" },
     { "address": "0x5B87156f1e4Da117c5B49571aa80C836b007e479" },
     { "address": "0x5F18752518d81E4AFbB28341EDFba9Aa0E16707C" },
@@ -8669,6 +8690,7 @@
     { "address": "0x6754CaFCe32a1bD1A8c88ABc19a113365b85917F" },
     { "address": "0x6c25cda91Bef3A4Ba1e4488b4ac276aA02921D67" },
     { "address": "0x6DA259FD6b42D6bAB9D22C01418F87c13a271478" },
+    { "address": "0x6F2A8Ee9452ba7d336b3fba03caC27f7818AeAD6" },
     { "address": "0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df" },
     { "address": "0x702caCafA54B88e9c54449563Fb2e496e85c78b7" },
     { "address": "0x71d84c3404a6ae258E6471d4934B96a2033F9438" },
@@ -8678,11 +8700,12 @@
     { "address": "0x7e0d106fD2Cee9aa846bc419944f5eD8F2935135" },
     { "address": "0x7fEA26A181A792B5107ee0a31e434F5dBcbBe0B7" },
     { "address": "0x896E7D2108245ae8d5Aa7E4763024b3945AEd77F" },
+    { "address": "0x8b0c64CcaB94d4618Ef834F396F622f61F2b013D" },
     { "address": "0xA1AF6Ed43eDeE80F1913ea44E9DC2A93A738EB44" },
-    { "address": "0xa376AaF645dbd9b4f501B2A8a97bc21DcA15B001" },
     { "address": "0xa5D0084A766203b463b3164DFc49D91509C12daB" },
     { "address": "0xaaAdAa000867fb883089B7e528d7eA96937b777f" },
     { "address": "0xACBD581D1BedB2F71d2F5F01f881586e0623d591" },
+    { "address": "0xB1072fD3a5EA72B42e063e5A61963d00eeF655DF" },
     { "address": "0xB2Be7F1957Fe3C3Be912e8C736d7e6e8459d386c" },
     { "address": "0xB5676D771b538D8E184EaCB1Cc7a963a4bF99252" },
     { "address": "0xb799FF3DeF706045B5061B22d748E8F52737415d" },
@@ -8691,14 +8714,15 @@
     { "address": "0xC2Cd2330A575af7f124E07820E7c4AbfaeD02392" },
     { "address": "0xcb218CD15fAa4dbAc294b15C7cE99482783d7ad6" },
     { "address": "0xcD6998D20876155D37aEC0dB4C19d63EEAEf058F" },
-    { "address": "0xd5966E3dd25f6086b6aD7D7Fa3292d11b988da95" },
     { "address": "0xd757D6A02cD5af9AEF163D7eB8034f75ac22B553" },
     { "address": "0xD775a6f432f97c03718F9adf97e31D8A6431e571" },
+    { "address": "0xD9b0579e2B8387fE153201631EBC4be9dEFA1A6d" },
     { "address": "0xDFbD13B78010BF2110a168FA59b682c8a6D96564" },
     { "address": "0xDfe6610c2357a0BfECF788e52697554aF5F35174" },
     { "address": "0xE4F4FdaD61f192EBe9a32b2d2fB47A5802891e14" },
     { "address": "0xe79af29d618141Ffef951B240b250d47030D56d7" },
     { "address": "0xe968FB773e54f77350A427B057FDB44e6592E338" },
+    { "address": "0xEE8fAC9051243379dAAA02c24e07D29F22d73b4E" },
     { "address": "0xF3d913D11dd577DDe5da4f2AA9611Aa799185C46" },
     { "address": "0xFAdb20191Ab38362C50f52909817B74214CA79AE" },
     { "address": "0xfd03dA3aeb6807a98db96C1704Ea4CFf031BaEd2" }
@@ -8738,46 +8762,6 @@
       "function transferOwnership(address newOwner)",
       "function updateDelay(uint256 _newDelay)",
       "function updateSecurityCouncil(address _newSecurityCouncil)"
-    ],
-    "0x12f893689f9603991a8c22C249FFd0509Be95661": [
-      "constructor()",
-      "event Initialized(uint8 version)",
-      "event NewAdmin(address indexed oldAdmin, address indexed newAdmin)",
-      "event NewChain(uint256 indexed chainId, address stateTransitionManager, address indexed chainGovernance)",
-      "event NewPendingAdmin(address indexed oldPendingAdmin, address indexed newPendingAdmin)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event Unpaused(address account)",
-      "function acceptAdmin()",
-      "function acceptOwnership()",
-      "function addStateTransitionManager(address _stateTransitionManager)",
-      "function addToken(address _token)",
-      "function admin() view returns (address)",
-      "function baseToken(uint256 _chainId) view returns (address)",
-      "function createNewChain(uint256 _chainId, address _stateTransitionManager, address _baseToken, uint256 _salt, address _admin, bytes _initData) returns (uint256)",
-      "function getHyperchain(uint256 _chainId) view returns (address)",
-      "function initialize(address _owner)",
-      "function l2TransactionBaseCost(uint256 _chainId, uint256 _gasPrice, uint256 _l2GasLimit, uint256 _l2GasPerPubdataByteLimit) view returns (uint256)",
-      "function owner() view returns (address)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function pendingOwner() view returns (address)",
-      "function proveL1ToL2TransactionStatus(uint256 _chainId, bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof, uint8 _status) view returns (bool)",
-      "function proveL2LogInclusion(uint256 _chainId, uint256 _batchNumber, uint256 _index, tuple(uint8 l2ShardId, bool isService, uint16 txNumberInBatch, address sender, bytes32 key, bytes32 value) _log, bytes32[] _proof) view returns (bool)",
-      "function proveL2MessageInclusion(uint256 _chainId, uint256 _batchNumber, uint256 _index, tuple(uint16 txNumberInBatch, address sender, bytes data) _message, bytes32[] _proof) view returns (bool)",
-      "function removeStateTransitionManager(address _stateTransitionManager)",
-      "function renounceOwnership()",
-      "function requestL2TransactionDirect(tuple(uint256 chainId, uint256 mintValue, address l2Contract, uint256 l2Value, bytes l2Calldata, uint256 l2GasLimit, uint256 l2GasPerPubdataByteLimit, bytes[] factoryDeps, address refundRecipient) _request) payable returns (bytes32 canonicalTxHash)",
-      "function requestL2TransactionTwoBridges(tuple(uint256 chainId, uint256 mintValue, uint256 l2Value, uint256 l2GasLimit, uint256 l2GasPerPubdataByteLimit, address refundRecipient, address secondBridgeAddress, uint256 secondBridgeValue, bytes secondBridgeCalldata) _request) payable returns (bytes32 canonicalTxHash)",
-      "function setPendingAdmin(address _newPendingAdmin)",
-      "function setSharedBridge(address _sharedBridge)",
-      "function sharedBridge() view returns (address)",
-      "function stateTransitionManager(uint256 _chainId) view returns (address)",
-      "function stateTransitionManagerIsRegistered(address _stateTransitionManager) view returns (bool)",
-      "function tokenIsRegistered(address _token) view returns (bool)",
-      "function transferOwnership(address newOwner)",
-      "function unpause()"
     ],
     "0x13f07d9BF17615f6a17F272fe1A913168C275A66": [
       "constructor(address _singleton)"
@@ -8833,6 +8817,46 @@
     ],
     "0x4e4943346848c4867F81dFb37c4cA9C5715A7828": [
       "constructor(address _singleton)"
+    ],
+    "0x509dA1BE24432F8804C4A9FF4a3c3f80284CDd13": [
+      "constructor()",
+      "event Initialized(uint8 version)",
+      "event NewAdmin(address indexed oldAdmin, address indexed newAdmin)",
+      "event NewChain(uint256 indexed chainId, address stateTransitionManager, address indexed chainGovernance)",
+      "event NewPendingAdmin(address indexed oldPendingAdmin, address indexed newPendingAdmin)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
+      "function acceptAdmin()",
+      "function acceptOwnership()",
+      "function addStateTransitionManager(address _stateTransitionManager)",
+      "function addToken(address _token)",
+      "function admin() view returns (address)",
+      "function baseToken(uint256 _chainId) view returns (address)",
+      "function createNewChain(uint256 _chainId, address _stateTransitionManager, address _baseToken, uint256 _salt, address _admin, bytes _initData) returns (uint256)",
+      "function getHyperchain(uint256 _chainId) view returns (address)",
+      "function initialize(address _owner)",
+      "function l2TransactionBaseCost(uint256 _chainId, uint256 _gasPrice, uint256 _l2GasLimit, uint256 _l2GasPerPubdataByteLimit) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function proveL1ToL2TransactionStatus(uint256 _chainId, bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof, uint8 _status) view returns (bool)",
+      "function proveL2LogInclusion(uint256 _chainId, uint256 _batchNumber, uint256 _index, tuple(uint8 l2ShardId, bool isService, uint16 txNumberInBatch, address sender, bytes32 key, bytes32 value) _log, bytes32[] _proof) view returns (bool)",
+      "function proveL2MessageInclusion(uint256 _chainId, uint256 _batchNumber, uint256 _index, tuple(uint16 txNumberInBatch, address sender, bytes data) _message, bytes32[] _proof) view returns (bool)",
+      "function removeStateTransitionManager(address _stateTransitionManager)",
+      "function renounceOwnership()",
+      "function requestL2TransactionDirect(tuple(uint256 chainId, uint256 mintValue, address l2Contract, uint256 l2Value, bytes l2Calldata, uint256 l2GasLimit, uint256 l2GasPerPubdataByteLimit, bytes[] factoryDeps, address refundRecipient) _request) payable returns (bytes32 canonicalTxHash)",
+      "function requestL2TransactionTwoBridges(tuple(uint256 chainId, uint256 mintValue, uint256 l2Value, uint256 l2GasLimit, uint256 l2GasPerPubdataByteLimit, address refundRecipient, address secondBridgeAddress, uint256 secondBridgeValue, bytes secondBridgeCalldata) _request) payable returns (bytes32 canonicalTxHash)",
+      "function setPendingAdmin(address _newPendingAdmin)",
+      "function setSharedBridge(address _sharedBridge)",
+      "function sharedBridge() view returns (address)",
+      "function stateTransitionManager(uint256 _chainId) view returns (address)",
+      "function stateTransitionManagerIsRegistered(address _stateTransitionManager) view returns (bool)",
+      "function tokenIsRegistered(address _token) view returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()"
     ],
     "0x538612F6eba6ff80FBD95D60dCDee16b8FfF2c0f": [
       "constructor(address _singleton)"
