@@ -5,9 +5,10 @@ import {
   unstable_noStore as noStore,
 } from 'next/cache'
 import { z } from 'zod'
+import { env } from '~/env'
 import { db } from '~/server/database'
 import { getRange } from '~/utils/range/range'
-import { type CostsChartResponse } from './types'
+import { generateTimestamps } from '../../utils/generate-timestamps'
 import { addIfDefined } from './utils/add-if-defined'
 import {
   CostsProjectsFilter,
@@ -21,21 +22,26 @@ export const CostsChartParams = z.object({
 })
 export type CostsChartParams = z.infer<typeof CostsChartParams>
 
+/**
+ * Returns a chart data of the costs over time.
+ * @returns [timestamp, overheadGas, overheadEth, overheadUsd, calldataGas, calldataEth, calldataUsd, computeGas, computeEth, computeUsd, blobsGas, blobsEth, blobsUsd] - all numbers
+ */
 export function getCostsChart(
   ...parameters: Parameters<typeof getCachedCostsChart>
 ) {
+  if (env.MOCK) {
+    return getMockCostsChart(...parameters)
+  }
   noStore()
   return getCachedCostsChart(...parameters)
 }
 
+export type CostsChartData = Awaited<ReturnType<typeof getCachedCostsChart>>
 const getCachedCostsChart = cache(
-  async ({
-    range: timeRange,
-    filter,
-  }: CostsChartParams): Promise<CostsChartResponse> => {
+  async ({ range: timeRange, filter }: CostsChartParams) => {
     const projects = getCostsProjects(filter)
     if (projects.length === 0) {
-      return withTypes([])
+      return []
     }
     const resolution = rangeToResolution(timeRange)
     const range = getRange(timeRange, resolution)
@@ -47,37 +53,42 @@ const getCachedCostsChart = cache(
 
     const summed = sumByTimestamp(data, resolution)
 
-    return withTypes(summed)
+    return summed
   },
   ['costsChart'],
   { revalidate: 10 * UnixTime.MINUTE },
 )
 
-function withTypes(data: CostsChartResponse['data']): CostsChartResponse {
-  return {
-    types: [
-      'timestamp',
-      'overheadGas',
-      'overheadEth',
-      'overheadUsd',
-      'calldataGas',
-      'calldataEth',
-      'calldataUsd',
-      'computeGas',
-      'computeEth',
-      'computeUsd',
-      'blobsGas',
-      'blobsEth',
-      'blobsUsd',
-    ],
-    data,
-  }
+function getMockCostsChart({ range: timeRange }: CostsChartParams) {
+  const resolution = rangeToResolution(timeRange)
+  const range = getRange(timeRange, resolution)
+
+  const timestamps = generateTimestamps(range, resolution)
+
+  return timestamps.map(
+    (timestamp) =>
+      [
+        timestamp.toNumber(),
+        20000,
+        0.5,
+        1000,
+        400000,
+        10,
+        20000,
+        600000,
+        15,
+        30000,
+        1000000,
+        0.25,
+        500,
+      ] as const,
+  )
 }
 
 function sumByTimestamp(
   records: AggregatedL2CostRecord[],
   resolution: 'daily' | 'hourly',
-): CostsChartResponse['data'] {
+) {
   const result = new Map<
     number,
     {
@@ -135,19 +146,22 @@ function sumByTimestamp(
     })
   }
 
-  return Array.from(result.entries()).map(([timestamp, record]) => [
-    timestamp,
-    record.overheadGas,
-    record.overheadGasEth,
-    record.overheadGasUsd,
-    record.calldataGas,
-    record.calldataGasEth,
-    record.calldataGasUsd,
-    record.computeGas,
-    record.computeGasEth,
-    record.computeGasUsd,
-    record.blobsGas,
-    record.blobsGasEth,
-    record.blobsGasUsd,
-  ])
+  return Array.from(result.entries()).map(
+    ([timestamp, record]) =>
+      [
+        timestamp,
+        record.overheadGas,
+        record.overheadGasEth,
+        record.overheadGasUsd,
+        record.calldataGas,
+        record.calldataGasEth,
+        record.calldataGasUsd,
+        record.computeGas,
+        record.computeGasEth,
+        record.computeGasUsd,
+        record.blobsGas,
+        record.blobsGasEth,
+        record.blobsGasUsd,
+      ] as const,
+  )
 }

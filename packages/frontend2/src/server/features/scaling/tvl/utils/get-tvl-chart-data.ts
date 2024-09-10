@@ -26,6 +26,10 @@ export const TvlChartDataParams = z.object({
 
 export type TvlChartDataParams = z.infer<typeof TvlChartDataParams>
 
+/**
+ * Returns a chart data of the TVL over time.
+ * @returns [timestamp, native, canonical, external, ethPrice]
+ */
 export async function getTvlChartData(
   ...args: Parameters<typeof getCachedTvlChartData>
 ) {
