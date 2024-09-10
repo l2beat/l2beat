@@ -28,6 +28,7 @@ import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { Layer2 } from './types'
 import { formatEther } from 'ethers/lib/utils'
+import { BigNumber } from 'ethers'
 
 const discovery = new ProjectDiscovery('optimism')
 const l2Discovery = new ProjectDiscovery('optimism', 'optimism')
@@ -118,9 +119,13 @@ const permissionlessGameSplitDepth = discovery.getContractValue<number>(
 )
 
 const permissionlessGameFullCost = (() => {
-  let cost = 0
+  let cost = BigNumber.from(0)
   for (let i = 0; i < permissionlessGameMaxDepth; i++) {
-    cost += Math.pow(exponentialBondsFactor, i) * permissionlessDisputeGameBonds
+    cost = cost.add(
+      BigNumber.from(permissionlessDisputeGameBonds).mul(
+        BigNumber.from(exponentialBondsFactor).pow(i),
+      ),
+    )
   }
   return cost
 })()
