@@ -1,12 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import {
-  AggLayerL2Token,
-  AggLayerNativeEtherPreminted,
-  AggLayerNativeEtherWrapped,
-  Bytes,
-  EthereumAddress,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { Bytes, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { BigNumber, utils } from 'ethers'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
@@ -14,6 +7,7 @@ import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import {
   AggLayerService,
   BRIDGE_ADDRESS,
+  Config,
   bridgeInterface,
   erc20Interface,
 } from './AggLayerService'
@@ -23,9 +17,187 @@ const MOCK_ID1 = '1'
 const MOCK_ID2 = '2'
 
 describe(AggLayerService.name, () => {
+  describe(AggLayerService.prototype.fetchAmounts.name, () => {
+    it('fetch amounts for l2 tokens and native as undefined', async () => {
+      const mockToken1 = mockObject<Config & { type: 'agglayerL2Token' }>({
+        l1Address: EthereumAddress.random(),
+        id: MOCK_ID1,
+      })
+      const mockToken2 = mockObject<Config & { type: 'agglayerL2Token' }>({
+        l1Address: EthereumAddress.random(),
+        id: MOCK_ID2,
+      })
+
+      const mockRpcClient = mockObject<RpcClient>({
+        getBalance: mockFn(),
+        call: mockFn(),
+      })
+      const mockAggLayerService = new AggLayerService({
+        logger: Logger.SILENT,
+        multicallClient: mockObject<MulticallClient>({}),
+        rpcClient: mockRpcClient,
+      })
+
+      mockAggLayerService.getL2TokensAmounts = mockFn().resolvesTo([
+        {
+          configId: MOCK_ID1,
+          amount: 400n,
+          timestamp: NOW,
+        },
+        {
+          configId: MOCK_ID2,
+          amount: 700n,
+          timestamp: NOW,
+        },
+      ])
+
+      const result = await mockAggLayerService.fetchAmounts(
+        [mockToken1, mockToken2],
+        undefined,
+        0,
+        NOW,
+      )
+
+      expect(result).toEqual([
+        {
+          configId: MOCK_ID1,
+          amount: 400n,
+          timestamp: NOW,
+        },
+        {
+          configId: MOCK_ID2,
+          amount: 700n,
+          timestamp: NOW,
+        },
+      ])
+      expect(mockRpcClient.getBalance).not.toHaveBeenCalled()
+      expect(mockRpcClient.call).not.toHaveBeenCalled()
+    })
+
+    it('fetch amounts for l2 token and native ether preminted', async () => {
+      const mockToken1 = mockObject<Config & { type: 'agglayerL2Token' }>({
+        l1Address: EthereumAddress.random(),
+        id: MOCK_ID1,
+      })
+
+      const mockNativeToken = mockObject<
+        Config & { type: 'agglayerNativeEtherPreminted' }
+      >({
+        l2BridgeAddress: EthereumAddress.random(),
+        premintedAmount: 1000n,
+        id: MOCK_ID2,
+        type: 'agglayerNativeEtherPreminted',
+      })
+
+      const mockRpcClient = mockObject<RpcClient>({
+        getBalance: mockFn().resolvesTo(BigNumber.from(900)),
+      })
+      const mockAggLayerService = new AggLayerService({
+        logger: Logger.SILENT,
+        multicallClient: mockObject<MulticallClient>({}),
+        rpcClient: mockRpcClient,
+      })
+
+      mockAggLayerService.getL2TokensAmounts = mockFn().resolvesTo([
+        {
+          configId: MOCK_ID1,
+          amount: 400n,
+          timestamp: NOW,
+        },
+      ])
+
+      const result = await mockAggLayerService.fetchAmounts(
+        [mockToken1],
+        mockNativeToken,
+        0,
+        NOW,
+      )
+
+      expect(result).toEqual([
+        {
+          configId: MOCK_ID1,
+          amount: 400n,
+          timestamp: NOW,
+        },
+        {
+          configId: MOCK_ID2,
+          amount: 100n,
+          timestamp: NOW,
+        },
+      ])
+      expect(mockRpcClient.getBalance).toHaveBeenCalledWith(
+        mockNativeToken.l2BridgeAddress,
+        0,
+      )
+    })
+
+    it('fetch amounts for l2 token and native ether wrapped', async () => {
+      const mockToken1 = mockObject<Config & { type: 'agglayerL2Token' }>({
+        l1Address: EthereumAddress.random(),
+        id: MOCK_ID1,
+      })
+
+      const mockWrapperEther = mockObject<
+        Config & { type: 'agglayerNativeEtherWrapped' }
+      >({
+        wethAddress: EthereumAddress.random(),
+        id: MOCK_ID2,
+        type: 'agglayerNativeEtherWrapped',
+      })
+
+      const mockRpcClient = mockObject<RpcClient>({
+        call: mockFn().resolvesTo(
+          erc20Interface.encodeFunctionResult('totalSupply', [300n]),
+        ),
+      })
+      const mockAggLayerService = new AggLayerService({
+        logger: Logger.SILENT,
+        multicallClient: mockObject<MulticallClient>({}),
+        rpcClient: mockRpcClient,
+      })
+
+      mockAggLayerService.getL2TokensAmounts = mockFn().resolvesTo([
+        {
+          configId: MOCK_ID1,
+          amount: 400n,
+          timestamp: NOW,
+        },
+      ])
+
+      const result = await mockAggLayerService.fetchAmounts(
+        [mockToken1],
+        mockWrapperEther,
+        0,
+        NOW,
+      )
+
+      expect(result).toEqual([
+        {
+          configId: MOCK_ID1,
+          amount: 400n,
+          timestamp: NOW,
+        },
+        {
+          configId: MOCK_ID2,
+          amount: 300n,
+          timestamp: NOW,
+        },
+      ])
+      expect(mockRpcClient.call).toHaveBeenCalledWith(
+        {
+          to: mockWrapperEther.wethAddress,
+          data: Bytes.fromHex(
+            erc20Interface.encodeFunctionData('totalSupply', []),
+          ),
+        },
+        0,
+      )
+    })
+  })
+
   describe(AggLayerService.prototype.getL2TokensAmounts.name, () => {
     it('should fetch L2 token addresses and total supplies', async () => {
-      const mockToken = mockObject<AggLayerL2Token & { id: string }>({
+      const mockToken = mockObject<Config & { type: 'agglayerL2Token' }>({
         l1Address: EthereumAddress.random(),
         id: MOCK_ID1,
       })
@@ -113,13 +285,13 @@ describe(AggLayerService.name, () => {
   describe(AggLayerService.prototype.getL2TokensTotalSupply.name, () => {
     it('encodes, calls, decodes and returns AmountRecords with correct supply', async () => {
       const mockToken1 = mockObject<
-        AggLayerL2Token & { address: EthereumAddress; id: string }
+        Config & { address: EthereumAddress; type: 'agglayerL2Token' }
       >({
         address: EthereumAddress.random(),
         id: MOCK_ID1,
       })
       const mockToken2 = mockObject<
-        AggLayerL2Token & { address: EthereumAddress; id: string }
+        Config & { address: EthereumAddress; type: 'agglayerL2Token' }
       >({
         address: EthereumAddress.random(),
         id: MOCK_ID2,
@@ -190,11 +362,11 @@ describe(AggLayerService.name, () => {
 
   describe(AggLayerService.prototype.getL2TokensAddresses.name, () => {
     it('encodes, calls, decodes and returns correct L2 token addresses', async () => {
-      const mockToken1 = mockObject<AggLayerL2Token & { id: string }>({
+      const mockToken1 = mockObject<Config & { type: 'agglayerL2Token' }>({
         l1Address: EthereumAddress.random(),
         id: MOCK_ID1,
       })
-      const mockToken2 = mockObject<AggLayerL2Token & { id: string }>({
+      const mockToken2 = mockObject<Config & { type: 'agglayerL2Token' }>({
         l1Address: EthereumAddress.random(),
         id: MOCK_ID2,
       })
@@ -272,7 +444,7 @@ describe(AggLayerService.name, () => {
     it('should fetch bridge balance and subtract it from premintedAmount', async () => {
       const mockL2BridgeAddress = EthereumAddress.random()
       const mockToken = mockObject<
-        AggLayerNativeEtherPreminted & { id: string }
+        Config & { type: 'agglayerNativeEtherPreminted' }
       >({
         l2BridgeAddress: mockL2BridgeAddress,
         premintedAmount: 1000n,
@@ -309,10 +481,12 @@ describe(AggLayerService.name, () => {
   describe(AggLayerService.prototype.getNativeEtherWrappedAmount.name, () => {
     it('should return the correct totalSupply', async () => {
       const mockWethAddress = EthereumAddress.random()
-      const token = mockObject<AggLayerNativeEtherWrapped & { id: string }>({
-        wethAddress: mockWethAddress,
-        id: MOCK_ID1,
-      })
+      const token = mockObject<Config & { type: 'agglayerNativeEtherWrapped' }>(
+        {
+          wethAddress: mockWethAddress,
+          id: MOCK_ID1,
+        },
+      )
 
       const expectedSupply = 1000n
 

@@ -31,7 +31,7 @@ type AggLayerAmountConfig =
   | AggLayerNativeEtherPreminted
   | AggLayerNativeEtherWrapped
 
-type Config = AggLayerAmountConfig & { id: string }
+export type Config = AggLayerAmountConfig & { id: string }
 
 export interface AggLayerServiceDependencies {
   readonly rpcClient: RpcClient
@@ -44,8 +44,50 @@ export class AggLayerService {
     this.$.logger = $.logger.for(this)
   }
 
+  async fetchAmounts(
+    tokens: (Config & { type: 'agglayerL2Token' })[],
+    nativeToken:
+      | (Config & {
+          type: 'agglayerNativeEtherPreminted' | 'agglayerNativeEtherWrapped'
+        })
+      | undefined,
+    blockNumber: number,
+    timestamp: UnixTime,
+  ): Promise<AmountRecord[]> {
+    const l2TokensAmounts = await this.getL2TokensAmounts(
+      tokens,
+      blockNumber,
+      timestamp,
+    )
+
+    let nativeTokenAmount: AmountRecord | undefined = undefined
+    switch (nativeToken?.type) {
+      case 'agglayerNativeEtherPreminted':
+        nativeTokenAmount = await this.getNativeEtherPremintedAmount(
+          nativeToken,
+          blockNumber,
+          timestamp,
+        )
+        break
+      case 'agglayerNativeEtherWrapped':
+        nativeTokenAmount = await this.getNativeEtherWrappedAmount(
+          nativeToken,
+          blockNumber,
+          timestamp,
+        )
+        break
+      default:
+        break
+    }
+
+    return [
+      ...l2TokensAmounts,
+      ...(nativeTokenAmount ? [nativeTokenAmount] : []),
+    ]
+  }
+
   async getL2TokensAmounts(
-    tokens: (AggLayerL2Token & { id: string })[],
+    tokens: (Config & { type: 'agglayerL2Token' })[],
     blockNumber: number,
     timestamp: UnixTime,
   ) {
@@ -62,7 +104,7 @@ export class AggLayerService {
   }
 
   async getL2TokensTotalSupply(
-    tokens: (AggLayerL2Token & { address: EthereumAddress; id: string })[],
+    tokens: (Config & { address: EthereumAddress; type: 'agglayerL2Token' })[],
     blockNumber: number,
     timestamp: UnixTime,
   ): Promise<AmountRecord[]> {
@@ -91,7 +133,7 @@ export class AggLayerService {
   }
 
   async getL2TokensAddresses(
-    tokens: (AggLayerL2Token & { id: string })[],
+    tokens: (Config & { type: 'agglayerL2Token' })[],
     blockNumber: number,
   ): Promise<(AggLayerL2Token & { address: EthereumAddress; id: string })[]> {
     const encoded: MulticallRequest[] = tokens.map((token) => ({
@@ -123,7 +165,7 @@ export class AggLayerService {
   }
 
   async getNativeEtherPremintedAmount(
-    token: AggLayerNativeEtherPreminted & { id: string },
+    token: Config & { type: 'agglayerNativeEtherPreminted' },
     blockNumber: number,
     timestamp: UnixTime,
   ): Promise<AmountRecord> {
@@ -140,7 +182,7 @@ export class AggLayerService {
   }
 
   async getNativeEtherWrappedAmount(
-    token: AggLayerNativeEtherWrapped & { id: string },
+    token: Config & { type: 'agglayerNativeEtherWrapped' },
     blockNumber: number,
     timestamp: UnixTime,
   ): Promise<AmountRecord> {
@@ -166,5 +208,3 @@ export class AggLayerService {
     }
   }
 }
-
-// getData in: tokens: AggLayerL2Token[] nativeToken: AggLayerNativeEtherPreminted | AggLayerNativeEtherWrapped | undefined
