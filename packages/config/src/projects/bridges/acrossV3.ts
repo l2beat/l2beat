@@ -93,12 +93,13 @@ export const acrossV3: Bridge = {
         tokens: '*',
         chain: 'linea',
       },
-      {
-        address: EthereumAddress('0x9552a0a6624A23B848060AE5901659CDDa1f83f8'),
-        sinceTimestamp: new UnixTime(1719933465),
-        tokens: '*',
-        chain: 'lisk', // chainconf??
-      },
+      // lisk is not conf'd yet
+      // {
+      //   address: EthereumAddress('0x9552a0a6624A23B848060AE5901659CDDa1f83f8'),
+      //   sinceTimestamp: new UnixTime(1719933465),
+      //   tokens: '*',
+      //   chain: 'lisk',
+      // },
       {
         address: EthereumAddress('0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96'),
         sinceTimestamp: new UnixTime(1716253957),
@@ -111,12 +112,13 @@ export const acrossV3: Bridge = {
         tokens: '*',
         chain: 'optimism',
       },
-      {
-        address: EthereumAddress('0x13fDac9F9b4777705db45291bbFF3c972c6d1d97'),
-        sinceTimestamp: new UnixTime(1723209335),
-        tokens: '*',
-        chain: 'redstone', // chainconf?
-      },
+      // no chainconf yet
+      // {
+      //   address: EthereumAddress('0x13fDac9F9b4777705db45291bbFF3c972c6d1d97'),
+      //   sinceTimestamp: new UnixTime(1723209335),
+      //   tokens: '*',
+      //   chain: 'redstone',
+      // },
       {
         address: EthereumAddress('0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96'),
         sinceTimestamp: new UnixTime(1721124038),
@@ -129,12 +131,13 @@ export const acrossV3: Bridge = {
         tokens: '*',
         chain: 'zksync2',
       },
-      {
-        address: EthereumAddress('0x13fDac9F9b4777705db45291bbFF3c972c6d1d97'),
-        sinceTimestamp: new UnixTime(1723459573),
-        tokens: '*',
-        chain: 'zora',
-      },
+      // no chainconf yet
+      // {
+      //   address: EthereumAddress('0x13fDac9F9b4777705db45291bbFF3c972c6d1d97'),
+      //   sinceTimestamp: new UnixTime(1723459573),
+      //   tokens: '*',
+      //   chain: 'zora',
+      // },
     ],
   },
   riskView: {
