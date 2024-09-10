@@ -45,6 +45,7 @@ import {
   Layer2TxConfig,
 } from '../types'
 import { mergeBadges } from './utils'
+import { text } from 'cheerio'
 
 const ETHEREUM_EXPLORER_URL = 'https://etherscan.io/address/{0}#code'
 export const EVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
@@ -230,6 +231,12 @@ function defaultStateValidation(
             category: 'Funds can be stolen if',
             text: 'none of the whitelisted verifiers checks the published state. Fraud proofs assume at least one honest and able validator.',
             isCritical: true,
+          },
+        ],
+        references: [
+          {
+            text: 'How is fraud proven - Arbitrum documentation FAQ',
+            href: 'https://docs.arbitrum.io/welcome/arbitrum-gentle-introduction#q-and-how-exactly-is-fraud-proven-sounds-complicated',
           },
         ],
       },
