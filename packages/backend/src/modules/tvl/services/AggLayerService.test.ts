@@ -13,6 +13,7 @@ import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import {
   AggLayerService,
+  BRIDGE_ADDRESS,
   bridgeInterface,
   erc20Interface,
 } from './AggLayerService'
@@ -22,6 +23,93 @@ const MOCK_ID1 = '1'
 const MOCK_ID2 = '2'
 
 describe(AggLayerService.name, () => {
+  describe(AggLayerService.prototype.getL2TokensAmounts.name, () => {
+    it('should fetch L2 token addresses and total supplies', async () => {
+      const mockToken = mockObject<AggLayerL2Token & { id: string }>({
+        l1Address: EthereumAddress.random(),
+        id: MOCK_ID1,
+      })
+
+      const mockL2Address = EthereumAddress.random()
+      const mockTokenSupply = 1000n
+
+      const rpcClient = mockObject<RpcClient>({})
+      const multicallClient = mockObject<MulticallClient>({
+        multicall: mockFn()
+          .resolvesToOnce([
+            {
+              success: true,
+              data: Bytes.fromHex(
+                bridgeInterface.encodeFunctionResult('getTokenWrappedAddress', [
+                  mockL2Address.toString(),
+                ]),
+              ),
+            },
+          ])
+          .resolvesToOnce([
+            {
+              success: true,
+              data: Bytes.fromHex(
+                erc20Interface.encodeFunctionResult('totalSupply', [
+                  mockTokenSupply,
+                ]),
+              ),
+            },
+          ]),
+      })
+
+      const aggLayerService = new AggLayerService({
+        logger: Logger.SILENT,
+        multicallClient,
+        rpcClient,
+      })
+
+      const result = await aggLayerService.getL2TokensAmounts(
+        [mockToken],
+        123456,
+        NOW,
+      )
+
+      // get l2 token address call
+      expect(multicallClient.multicall).toHaveBeenNthCalledWith(
+        1,
+        [
+          {
+            address: BRIDGE_ADDRESS,
+            data: Bytes.fromHex(
+              bridgeInterface.encodeFunctionData('getTokenWrappedAddress', [
+                0,
+                mockToken.l1Address,
+              ]),
+            ),
+          },
+        ],
+        123456,
+      )
+
+      // get l2 token total supply call
+      expect(multicallClient.multicall).toHaveBeenNthCalledWith(
+        2,
+        [
+          {
+            address: mockL2Address,
+            data: Bytes.fromHex(
+              erc20Interface.encodeFunctionData('totalSupply', []),
+            ),
+          },
+        ],
+        123456,
+      )
+      expect(result).toEqual([
+        {
+          configId: MOCK_ID1,
+          amount: mockTokenSupply,
+          timestamp: NOW,
+        },
+      ])
+    })
+  })
+
   describe(AggLayerService.prototype.getL2TokensTotalSupply.name, () => {
     it('encodes, calls, decodes and returns AmountRecords with correct supply', async () => {
       const mockToken1 = mockObject<
@@ -151,9 +239,7 @@ describe(AggLayerService.name, () => {
       expect(multicallClient.multicall).toHaveBeenCalledWith(
         [
           {
-            address: EthereumAddress(
-              '0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe',
-            ),
+            address: BRIDGE_ADDRESS,
             data: Bytes.fromHex(
               bridgeInterface.encodeFunctionData('getTokenWrappedAddress', [
                 0,
@@ -162,9 +248,7 @@ describe(AggLayerService.name, () => {
             ),
           },
           {
-            address: EthereumAddress(
-              '0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe',
-            ),
+            address: BRIDGE_ADDRESS,
             data: Bytes.fromHex(
               bridgeInterface.encodeFunctionData('getTokenWrappedAddress', [
                 0,

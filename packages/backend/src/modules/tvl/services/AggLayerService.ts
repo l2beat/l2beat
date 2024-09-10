@@ -22,7 +22,7 @@ export const bridgeInterface = new utils.Interface([
   'function getTokenWrappedAddress(uint32 originNetwork, address originTokenAddress) view returns (address)',
 ])
 
-const BRIDGE_ADDRESS = EthereumAddress(
+export const BRIDGE_ADDRESS = EthereumAddress(
   '0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe',
 )
 
