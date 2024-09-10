@@ -1,40 +1,22 @@
 import { randomBytes } from 'crypto'
-import { stripAnsiEscapeCodes } from '@l2beat/shared-pure'
+import { fsyncSync, writeSync } from 'fs'
 
 const START_SYNC: string = '\x1b[?2026h'
-const FINISH_SYNC: string = '\x1b[?2026l'
 const UP_ONE_LINE = '\x1bM'
-const DOWN_ONE_LINE = '\x1bD'
+const FINISH_SYNC: string = '\x1b[?2026l'
 const CLEAR_SCREEN: string = '\x1b[J'
-const HIDE_CURSOR: string = '\x1b[?25l'
-const SHOW_CURSOR: string = '\x1b[?25h'
 
 export type StatusLineHandle = string
 
 export class CliLogger {
   private readonly REDRAW_DELAY: number = 1000 / 30 // 30fps
   private readonly statusLines: Map<string, string> = new Map()
-  private readonly logs: string[] = []
+  private logs: string[] = []
+  private logsToWrite: number = 0
   private lastLines: number = 0
   private lastRedraw: number = 0
   private drawTimeoutId?: ReturnType<typeof setTimeout>
-
-  constructor() {
-    // NOTE(radomski): Without this on process exit the entire output would be cleared
-    process.on('exit', async () => {
-      await writeAllBlocking(
-        START_SYNC +
-          SHOW_CURSOR +
-          DOWN_ONE_LINE.repeat(this.lastLines) +
-          FINISH_SYNC,
-      )
-    })
-
-    process.on('SIGINT', async () => {
-      await writeAllBlocking(START_SYNC + SHOW_CURSOR + FINISH_SYNC)
-      process.exit()
-    })
-  }
+  private termWidth: number = process.stdout.getWindowSize()[0]
 
   logLine(input: string) {
     this.logs.push(input + '\n')
@@ -62,60 +44,59 @@ export class CliLogger {
 
   redraw() {
     let buffer = ''
+
     buffer += START_SYNC
-    buffer += HIDE_CURSOR
+    buffer += UP_ONE_LINE.repeat(this.lastLines)
     buffer += CLEAR_SCREEN
 
-    let newLines = 0
+    this.logsToWrite = this.logs.length
     for (const log of this.logs) {
       buffer += log
-      newLines += countNewlines(log)
     }
 
-    let longestStatusLine: number = 0
-    for (const [_, status] of this.statusLines) {
-      const raw = stripAnsiEscapeCodes(status)
-      longestStatusLine = Math.max(longestStatusLine, raw.length)
-    }
-
+    let newLines = 0
     if (this.statusLines.size > 0) {
-      const divider = `${'<*>'.repeat(Math.ceil(longestStatusLine / 15) * 5)}\n`
+      const third = Math.floor(this.termWidth / 3)
+      const ninth = Math.floor(this.termWidth / 9)
+
+      const minus = '-'.repeat(ninth)
+      const equal = '='.repeat(ninth)
+      const divider = `${' '.repeat(third)}${minus}${equal}${minus}\n`
       buffer += divider
       newLines += countNewlines(divider)
     }
 
+    const maxWidth = this.termWidth - 3
     for (const [_, status] of this.statusLines) {
-      buffer += status
+      const postfix = status.length > maxWidth ? '\n' : ''
+      buffer += status.slice(0, maxWidth) + postfix
       newLines += countNewlines(status)
     }
 
     buffer += FINISH_SYNC
-    buffer += UP_ONE_LINE.repeat(newLines)
 
     const now = Date.now()
     clearTimeout(this.drawTimeoutId)
-    this.drawTimeoutId = setTimeout(
-      async () => {
-        await writeAllBlocking(buffer)
+    const timeout = Math.max(0, this.lastRedraw - now + this.REDRAW_DELAY)
+    if (timeout === 0) {
+      this.lastRedraw = now
+      this.lastLines = newLines
+      writeAllBlocking(buffer)
+      this.logs = this.logs.slice(this.logsToWrite)
+    } else {
+      this.drawTimeoutId = setTimeout(() => {
         this.lastLines = newLines
-        this.lastRedraw = now
-      },
-      Math.max(0, this.lastRedraw - now + this.REDRAW_DELAY),
-    )
+        this.lastRedraw = Date.now()
+        writeAllBlocking(buffer)
+        this.logs = this.logs.slice(this.logsToWrite)
+      }, timeout)
+    }
   }
 }
 
-function writeAllBlocking(data: string): Promise<void> {
-  return new Promise((resolve) => {
-    function write() {
-      if (process.stdout.write(data)) {
-        resolve()
-      } else {
-        process.stdout.once('drain', write)
-      }
-    }
-    write()
-  })
+function writeAllBlocking(data: string): void {
+  writeSync(process.stderr.fd, data)
+  fsyncSync(process.stderr.fd)
 }
 
 function countNewlines(str: string): number {

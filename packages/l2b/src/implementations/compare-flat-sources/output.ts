@@ -1,6 +1,7 @@
 import { estimateSimilarity } from '@l2beat/discovery'
 import chalk from 'chalk'
 
+import { CliLogger } from '@l2beat/shared'
 import { formatAsAsciiTable } from '@l2beat/shared-pure'
 import { Project, removeCommonPath, transpose } from './common'
 
@@ -9,6 +10,7 @@ export function formatHeader(title: string): string {
 }
 
 export function formatTable(
+  logger: CliLogger,
   aIDs: string[],
   bIDs: string[],
   matrix: Record<string, Record<string, number>>,
@@ -20,7 +22,7 @@ export function formatTable(
   const minTableWidth = Math.min(...widths)
 
   if (minTableWidth > terminalWidth && !options?.forceTable) {
-    console.log(
+    logger.logLine(
       [
         `${chalk.yellow('WARNING')}: Table is too wide to fit in the terminal`,
         `Terminal is ${terminalWidth} characters wide, table is ${minTableWidth} characters wide`,
@@ -57,6 +59,7 @@ export function computeTableWidth(headerColumns: string[]): number {
 }
 
 export function printComparisonBetweenProjects(
+  logger: CliLogger,
   matrix: Record<string, Record<string, number>>,
   firstProject: Project,
   secondProject: Project,
@@ -76,6 +79,7 @@ export function printComparisonBetweenProjects(
   )
 
   const table = formatTable(
+    logger,
     aIds.map((a) => a.id),
     bIds.map((a) => a.id),
     matrix,
@@ -83,19 +87,19 @@ export function printComparisonBetweenProjects(
   )
 
   if (table) {
-    console.log(formatHeader(firstProject.name))
-    console.log(aIds.map((e) => `${e.id} - ${e.path}`).join('\n'))
-    console.log(formatHeader(secondProject.name))
-    console.log(bIds.map((e) => `${e.id} - ${e.path}`).join('\n'))
-    console.log('====================================\n')
-    console.log(table)
+    logger.logLine(formatHeader(firstProject.name))
+    logger.logLine(aIds.map((e) => `${e.id} - ${e.path}`).join('\n'))
+    logger.logLine(formatHeader(secondProject.name))
+    logger.logLine(bIds.map((e) => `${e.id} - ${e.path}`).join('\n'))
+    logger.logLine('====================================\n')
+    logger.logLine(table)
   }
 
   const concatenatedSimilarity = estimateSimilarity(
     firstProject.concatenatedSource,
     secondProject.concatenatedSource,
   )
-  console.log(
+  logger.logLine(
     `\nEstimated similarity between two projects: ${colorMap(
       concatenatedSimilarity,
     )}`,
