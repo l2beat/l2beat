@@ -44,7 +44,7 @@ const getCachedActivityProjectStats = cache(
 
 function getMockActivityProjectStats(): ActivityProjectStats {
   return {
-    lastDayTps: 10,
+    lastDayTps: 15,
     txCount: 1500,
     tpsWeeklyChange: 0.1,
   }

@@ -77,9 +77,9 @@ const getCachedTvlProjectStats = cache(
 function getMockTvlProjectStats(): TvlProjectStats {
   return {
     tokenBreakdown: {
-      total: 60,
-      ether: 45,
-      stablecoin: 10,
+      total: 100,
+      ether: 80,
+      stablecoin: 15,
       associated: 5,
     },
     tvlBreakdown: {
