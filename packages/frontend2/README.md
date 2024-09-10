@@ -22,11 +22,13 @@ yarn build:dependencies
 - `yarn lint` - run Next.js doctor and ESLint
 - `yarn test` - run the tests
 - `yarn typecheck` - check if the code satisfies the typescript compiler
+- `yarn tinify-logos` - resizes and optimizes logos
 
 ### Environment variables
 Only required variables are listed there. For a complete list check out `src/env.js`.
 
 - `DATABASE_URL` - database connection url (read-only access is sufficient)
+- `TINIFY_API_KEY` - API key for Tinify, useful if you are adding/changing logo of a project (500 compressions per month are free)
 
 *if you currently work at L2BEAT: feel free to directly connect to our staging DB* 😉
 
@@ -34,26 +36,15 @@ Only required variables are listed there. For a complete list check out `src/env
 
 ```bash
 DATABASE_URL=
+TINIFY_API_KEY=
 ```
 
 ### Known issues
 
 `frontend2`, while on production, is still in the early stage of development. When running it locally and trying to navigate to a page that is not migrated yet (main page included), you'll encounter an Internal Server Error.
 
-#### Fully ported pages
-- /scaling
-  * /risks
-  * /data-availability
-  * /finality
-  * /costs
-  * /liveness
-- /donate
-- /faq
-- /glossary
-- /governance
-- /zk-catalog
-
 ### Work-in-progress pages:
-- /scaling/summary (available at /scaling-next/summary)
+- /scaling/projects/[projectSlug] (available at /scaling-next/projects/[projectSlug])
+- /bridges/projects/[projectSlug] (available at /bridges-next/projects/[projectSlug])
 
 The rest of pages are still present in the legacy frontend.

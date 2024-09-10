@@ -11,7 +11,7 @@ dotenv.config()
 const tinifiedLogosFile = path.join(__dirname, 'tinifiedLogos.json')
 const tinifiedLogos = getTinifiedLogos()
 
-const iconDirectory = path.join(__dirname, '../../src/static/icons')
+const iconDirectory = path.join(__dirname, '../../public/icons')
 
 main().catch((e) => console.error(e))
 
