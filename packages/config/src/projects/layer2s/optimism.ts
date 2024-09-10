@@ -133,7 +133,7 @@ const permissionlessGameFullCost = (() => {
 const permissionlessGameMaxClockExtension =
   permissionlessGameSplitDepth * permissionlessGameClockExtension +
   (permissionlessGameMaxDepth - permissionlessGameSplitDepth) *
-    maxClockDuration *
+    permissionlessGameClockExtension *
     2
 
 export const optimism: Layer2 = {
@@ -491,7 +491,7 @@ export const optimism: Layer2 = {
         title: 'Challenges',
         description: `Challenges are opened to disprove invalid state roots using bisection games. Each bisection move requires a stake that increases expontentially with the depth of the bisection with a factor of ${exponentialBondsFactor}. The maximum depth is ${permissionlessGameMaxDepth}, and reaching it requires a cumulative stake of ${parseFloat(
           formatEther(permissionlessGameFullCost),
-        ).toFixed(2)} ETH. Actors can participate in any challenge by calling the \`defend\` or \`attack\` functions, depending whether they agree or disagree with the claim and want to move the bisection game forward.
+        ).toFixed(2)} ETH from depth 0. Actors can participate in any challenge by calling the \`defend\` or \`attack\` functions, depending whether they agree or disagree with the claim and want to move the bisection game forward.
         Actors might be involved in multiple (sub-)challenges at the same time, meaning that the protocol operates with [full concurrency](https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a). Each claim has a clock that starts with ${formatSeconds(
           maxClockDuration,
         )}, and that gets passed down to grandchildren claims. If a clock expires, the claim is considered defeated if it was countered, or it gets confirmed if uncountered. Since honest parties can inherit clocks from malicious claims (therefore from malicious parties), if a clock has less than ${formatSeconds(
