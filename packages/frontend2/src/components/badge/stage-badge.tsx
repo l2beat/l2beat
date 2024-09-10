@@ -1,8 +1,7 @@
 import { type Stage } from '@l2beat/config'
-import React from 'react'
 
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import UnderReviewIcon from '~/icons/under-review.svg'
+import { UnderReviewIcon } from '~/icons/under-review'
 import { cn } from '~/utils/cn'
 
 export interface StageBadgeProps {

@@ -4,8 +4,8 @@ import { useState } from 'react'
 
 import { useCopyToClipboard } from '~/hooks/use-copy-to-clipboard'
 import { useTimeout } from '~/hooks/use-timeout'
-import CopyIcon from '~/icons/copy.svg'
-import SatisfiedIcon from '~/icons/satisfied.svg'
+import { CopyIcon } from '~/icons/copy'
+import { SatisfiedIcon } from '~/icons/satisfied'
 import { cn } from '~/utils/cn'
 import { Tooltip, TooltipContent, TooltipTrigger } from './core/tooltip/tooltip'
 

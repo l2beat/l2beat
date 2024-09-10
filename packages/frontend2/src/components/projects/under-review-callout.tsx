@@ -1,6 +1,4 @@
-import React from 'react'
-
-import UnderReviewIcon from '~/icons/under-review.svg'
+import { UnderReviewIcon } from '~/icons/under-review'
 import { cn } from '~/utils/cn'
 
 interface Props {

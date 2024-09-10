@@ -3,7 +3,7 @@ import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { RiskCell } from '~/components/table/cells/risk-cell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { sortSentiments } from '~/components/table/sorting/functions/sentiment-sorting'
-import ChevronDown from '~/icons/chevron.svg'
+import { ChevronIcon } from '~/icons/chevron'
 import { type DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
 import { cn } from '~/utils/cn'
 
@@ -32,7 +32,7 @@ export const columns = [
             onClick={() => ctx.row.toggleExpanded()}
           >
             Multiple bridges
-            <ChevronDown
+            <ChevronIcon
               className={cn(
                 'fill-black transition-transform dark:fill-white',
                 ctx.row.getIsExpanded() && 'rotate-180',

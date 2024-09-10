@@ -1,6 +1,4 @@
-import React from 'react'
-
-import HeartIcon from '~/icons/heart.svg'
+import { HeartIcon } from '~/icons/heart'
 import { GovernanceCard, GovernanceCardHeader } from '../governance-card'
 
 interface Props {

@@ -5,7 +5,7 @@ import React, { forwardRef, useEffect, useRef, useState } from 'react'
 import { useEventCallback } from '~/hooks/use-event-callback'
 import { useEventListener } from '~/hooks/use-event-listener'
 
-import ChevronIcon from '~/icons/chevron.svg'
+import { ChevronIcon } from '~/icons/chevron'
 import { cn } from '~/utils/cn'
 import { mergeRefs } from '~/utils/merge-refs'
 

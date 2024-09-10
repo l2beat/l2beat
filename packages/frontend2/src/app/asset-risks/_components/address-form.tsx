@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { http, createPublicClient, isAddress } from 'viem'
 import { mainnet } from 'viem/chains'
 import { normalize } from 'viem/ens'
-import LensIcon from '~/icons/lens.svg'
+import { LensIcon } from '~/icons/lens'
 import { cn } from '~/utils/cn'
 
 export function AddressForm() {

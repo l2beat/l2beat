@@ -9,7 +9,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { EM_DASH } from '~/consts/characters'
-import InfoIcon from '~/icons/info.svg'
+import { InfoIcon } from '~/icons/info'
 import { type DaProjectEntry } from '~/server/features/data-availability/project/get-da-project-entry'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/format'

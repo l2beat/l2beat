@@ -1,5 +1,5 @@
 import { Callout } from '~/components/callout'
-import ShieldIcon from '~/icons/shield.svg'
+import { ShieldIcon } from '~/icons/shield'
 import { cn } from '~/utils/cn'
 
 export function ContractsUpdated() {

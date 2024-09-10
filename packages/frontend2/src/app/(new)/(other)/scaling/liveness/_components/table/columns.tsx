@@ -11,7 +11,7 @@ import {
 } from '~/components/table/cells/type-cell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { LIVENESS_ANOMALIES_COMING_SOON_PROJECTS } from '~/consts/projects'
-import InfoIcon from '~/icons/info.svg'
+import { InfoIcon } from '~/icons/info'
 import { AnomalyIndicator } from '../anomaly-indicator'
 import { IntervalsHeader } from './intervals-header'
 import { LivenessIntervalCell } from './liveness-interval-cell'

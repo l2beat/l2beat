@@ -1,4 +1,4 @@
-import InfoIcon from '~/icons/info.svg'
+import { InfoIcon } from '~/icons/info'
 import { Callout } from '../../callout'
 import { CustomLink } from '../../link/custom-link'
 

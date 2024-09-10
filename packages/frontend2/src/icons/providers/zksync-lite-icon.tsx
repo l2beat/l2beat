@@ -1,8 +1,8 @@
-import React, { type SVGAttributes } from 'react'
+import { SvgIcon, type SvgIconProps } from '../svg-icon'
 
-export function ZkSyncLiteIcon(props: SVGAttributes<SVGElement>) {
+export function ZkSyncLiteIcon(props: SvgIconProps) {
   return (
-    <svg
+    <SvgIcon
       width="24"
       height="24"
       viewBox="0 0 24 24"
@@ -17,6 +17,6 @@ export function ZkSyncLiteIcon(props: SVGAttributes<SVGElement>) {
         d="M6.51001 13.2382L6.3079 13.3882V13.6398V17.364L0.708351 11.7841L6.3079 6.20412V8.62066V9.12032L6.80756 9.12066L12.0558 9.12427L6.51001 13.2382Z"
         className="fill-none stroke-[#4E5299] dark:stroke-current"
       />
-    </svg>
+    </SvgIcon>
   )
 }

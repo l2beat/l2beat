@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import OutLinkIcon from '~/icons/outlink.svg'
+import { OutLinkIcon } from '~/icons/outlink'
 import { cn } from '~/utils/cn'
 import { formatAddress } from '~/utils/format-address'
 import CriticalIcon from '../../_assets/critical-badge.svg'

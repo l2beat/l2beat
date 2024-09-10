@@ -1,6 +1,6 @@
-import { type SVGAttributes } from 'react'
+import { type SvgIconProps } from './svg-icon'
 
-export function MilestoneIcon(props: SVGAttributes<SVGElement>) {
+export function MilestoneIcon(props: SvgIconProps) {
   return (
     <svg
       width="24"

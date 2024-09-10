@@ -11,7 +11,7 @@ import {
 } from '~/components/core/tooltip/tooltip'
 import { PercentChange } from '~/components/percent-change'
 import { RiskCell } from '~/components/table/cells/risk-cell'
-import InfoIcon from '~/icons/info.svg'
+import { InfoIcon } from '~/icons/info'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { type BridgesProjectEntry } from '~/server/features/bridges/project/get-bridges-project-entry'
 import { cn } from '~/utils/cn'

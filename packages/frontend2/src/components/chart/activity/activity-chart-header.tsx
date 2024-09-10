@@ -1,4 +1,4 @@
-import InfoIcon from '~/icons/info.svg'
+import { InfoIcon } from '~/icons/info'
 import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { Skeleton } from '../../core/skeleton'
 import {

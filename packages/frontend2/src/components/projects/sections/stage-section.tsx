@@ -7,11 +7,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '~/components/core/accordion'
-import InfoIcon from '~/icons/info.svg'
-import MissingIcon from '~/icons/missing.svg'
+import { InfoIcon } from '~/icons/info'
+import { MissingIcon } from '~/icons/missing'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import SatisfiedIcon from '~/icons/satisfied.svg'
-import UnderReviewIcon from '~/icons/under-review.svg'
+import { SatisfiedIcon } from '~/icons/satisfied'
+import { UnderReviewIcon } from '~/icons/under-review'
 import { StageBadge } from '../../badge/stage-badge'
 import { Callout } from '../../callout'
 import { CustomLink } from '../../link/custom-link'

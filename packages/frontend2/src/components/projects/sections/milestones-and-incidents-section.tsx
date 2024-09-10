@@ -8,7 +8,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '~/components/core/collapsible'
-import ChevronDownIcon from '~/icons/chevron.svg'
+import { ChevronIcon } from '~/icons/chevron'
 import { IncidentIcon } from '~/icons/incident'
 import { MilestoneIcon } from '~/icons/milestone'
 import { cn } from '~/utils/cn'
@@ -51,7 +51,7 @@ export function MilestonesAndIncidentsSection({
               <span className="w-[76px] whitespace-pre text-left text-sm font-bold">
                 {isOpen ? 'Show less' : 'Show more'}
               </span>
-              <ChevronDownIcon className="transition-transform duration-300 group-data-[state=open]:rotate-180" />
+              <ChevronIcon className="transition-transform duration-300 group-data-[state=open]:rotate-180" />
             </Button>
           </CollapsibleTrigger>
         </Collapsible>
