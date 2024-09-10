@@ -101,7 +101,7 @@ function ProjectStat(props: ProjectStat) {
         {props.tooltip && (
           <Tooltip>
             <TooltipTrigger>
-              <InfoIcon className="fill-gray-500 dark:fill-gray-600 md:size-3.5" />
+              <InfoIcon className="md:size-3.5" variant="gray" />
             </TooltipTrigger>
             <TooltipContent>{props.tooltip}</TooltipContent>
           </Tooltip>

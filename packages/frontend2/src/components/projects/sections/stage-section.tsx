@@ -184,7 +184,7 @@ export function StageSection({
       <Callout
         color="blue"
         body="Please keep in mind that these stages do not reflect rollup security, this is an opinionated assessment of rollup maturity based on subjective criteria, created with a goal of incentivizing projects to push toward better decentralization. Each team may have taken different paths to achieve this goal."
-        icon={<InfoIcon className="size-5 fill-blue-500" />}
+        icon={<InfoIcon className="size-5" variant="blue" />}
         className="mt-6 p-4 font-medium leading-snug"
       />
     </ProjectSection>

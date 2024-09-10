@@ -71,7 +71,7 @@ export function ScalingProjectStats({ project, className }: Props) {
               </a>
               <Tooltip>
                 <TooltipTrigger className="inline-block px-2">
-                  <InfoIcon className="size-4 fill-gray-500 dark:fill-gray-600" />
+                  <InfoIcon className="size-4" variant="gray" />
                 </TooltipTrigger>
                 <TooltipContent>
                   <StageTooltip stageConfig={project.stageConfig} />
@@ -115,7 +115,7 @@ function ProjectStat(props: ProjectStat) {
         {props.tooltip && (
           <Tooltip>
             <TooltipTrigger className="-translate-y-px md:translate-y-0">
-              <InfoIcon className="mt-0.5 fill-gray-500 dark:fill-gray-600 md:size-3.5" />
+              <InfoIcon className="mt-0.5 md:size-3.5" variant="gray" />
             </TooltipTrigger>
             <TooltipContent>{props.tooltip}</TooltipContent>
           </Tooltip>

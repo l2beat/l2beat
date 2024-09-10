@@ -116,7 +116,7 @@ export const columns = [
       return (
         <Tooltip>
           <TooltipTrigger>
-            <InfoIcon className="fill-blue-550" />
+            <InfoIcon variant="blue" />
           </TooltipTrigger>
           <TooltipContent>{explanation}</TooltipContent>
         </Tooltip>
