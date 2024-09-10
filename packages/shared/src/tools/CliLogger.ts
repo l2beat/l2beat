@@ -1,10 +1,8 @@
 import { randomBytes } from 'crypto'
-import { stripAnsiEscapeCodes } from '@l2beat/shared-pure'
 import { fsyncSync, writeSync } from 'fs'
 
 const START_SYNC: string = '\x1b[?2026h'
 const UP_ONE_LINE = '\x1bM'
-const START_OF_LINE = '\x1b[0G'
 const FINISH_SYNC: string = '\x1b[?2026l'
 const CLEAR_SCREEN: string = '\x1b[J'
 
