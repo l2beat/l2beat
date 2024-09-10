@@ -121,7 +121,7 @@ const permissionlessGameSplitDepth = discovery.getContractValue<number>(
 const permissionlessGameFullCost = (() => {
   let cost = 0
   const scaleFactor = 100000
-  for (let i = 0; i < permissionlessGameMaxDepth; i++) {
+  for (let i = 0; i <= permissionlessGameMaxDepth; i++) {
     cost =
       cost +
       (permissionlessDisputeGameBonds / scaleFactor) *
