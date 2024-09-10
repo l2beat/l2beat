@@ -486,6 +486,12 @@ export const optimism: Layer2 = {
         description: `Proposers submit state roots as children of the latest confirmed state root (called anchor state), by calling the \`create\` function in the DisputeGameFactory. A state root can have multiple conflicting children. Each proposal requires a stake, currently set to ${formatEther(
           permissionlessDisputeGameBonds,
         )} ETH, that can be slashed if the proposal is proven incorrect via a fraud proof. Stakes can be withdrawn only after the proposal has been confirmed. A state root gets confirmed if the challenge period has passed and it is not countered.`,
+        references: [
+          {
+            text: 'OP stack specification: Fault Dispute Game',
+            href: 'https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#fault-dispute-game',
+          },
+        ],
       },
       {
         title: 'Challenges',
@@ -503,6 +509,12 @@ export const optimism: Layer2 = {
         )} up the max depth. The maximum clock extensions that a top level claim can get is therefore ${formatSeconds(
           permissionlessGameMaxClockExtension,
         )}. Since unconfirmed state roots are independent with one another, users can decide to exit with a subsequent state root if the previous one is delayed. The protocol does not enforces valid bisections, meaning that actors can propose correct initial claims and then provide incorrect midpoints.`,
+        references: [
+          {
+            text: 'Fraud Proof Wars: OPFP',
+            href: 'https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a',
+          },
+        ],
       },
     ],
   },
