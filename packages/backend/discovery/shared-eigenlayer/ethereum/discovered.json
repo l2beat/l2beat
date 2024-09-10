@@ -1,7 +1,7 @@
 {
   "name": "shared-eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 20684679,
+  "blockNumber": 20718743,
   "configHash": "0x17f138ea945007220ffaacd1b2e104c3259d7e89892b3022f207f889e5918663",
   "version": 14,
   "contracts": [
@@ -12,8 +12,8 @@
       "sinceTimestamp": 1602667372,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0x7e85190000000000",
-        "get_deposit_root": "0x8e121eddcec9f1d45a3154cffe091475b5d6a87c30f1a3e59b10ccc9454df959"
+        "get_deposit_count": "0x2592190000000000",
+        "get_deposit_root": "0x810f53377be303e76602bb40be641f10397b90c8ccfad122cad1e728843292cc"
       },
       "derivedName": "DepositContract"
     },
@@ -129,7 +129,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "91992939802720370444913",
+        "totalShares": "91310970286837475898659",
         "underlyingToken": "0xf951E335afb289353dc249e82926178EaC7DEd78"
       },
       "fieldMeta": {
@@ -187,7 +187,8 @@
           "0x18343Aa10e3D2F3A861e5649627324aEAD987Adf",
           "0xCE06c5fe42d22fF827A519396583Fd9f5176E3D3",
           "0xE7D0894Ac9266f5cbe8f8E750aC6cbe128FbbeB7",
-          "0x84AdF221Af49E67DB62C5B16d86aFcaD2eF0b262"
+          "0x84AdF221Af49E67DB62C5B16d86aFcaD2eF0b262",
+          "0xb19f05CDc5EF266766AC1287A1EeF29283058773"
         ],
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
@@ -230,7 +231,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "1084260350693765226233",
+        "totalShares": "1083864151291086556257",
         "underlyingToken": "0xE95A203B1a91a908F9B9CE46459d101078c2c3cb"
       },
       "fieldMeta": {
@@ -280,7 +281,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "37657770244576796993848",
+        "totalShares": "37287473083091215484534",
         "underlyingToken": "0xae78736Cd615f374D3085123A210448E74Fc6393"
       },
       "fieldMeta": {
@@ -399,7 +400,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "144189695970452753614319",
+        "totalShares": "144169785800325398885314",
         "underlyingToken": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa"
       },
       "fieldMeta": {
@@ -417,6 +418,32 @@
         }
       },
       "derivedName": "StrategyBaseTVLLimits"
+    },
+    {
+      "name": "",
+      "address": "0x2cB2201DF702B01Fec173fDe6756496aebE546F4",
+      "unverified": true,
+      "template": "eigenlayer/Strategy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
+      "ignoreInWatchMode": ["totalShares"],
+      "sinceTimestamp": 1725594587,
+      "values": { "$immutable": true },
+      "fieldMeta": {
+        "getTVLLimits": {
+          "severity": "LOW",
+          "description": "Maximum TVL of the strategy."
+        },
+        "maxPerDeposit": {
+          "severity": "LOW",
+          "description": "Maximum value of one deposit transaction"
+        },
+        "maxTotalDeposits": {
+          "severity": "LOW",
+          "description": "Same as TVL limit"
+        }
+      }
     },
     {
       "name": "EigenLayerExecutorMultisig",
@@ -582,7 +609,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "15353774935104013149166",
+        "totalShares": "15270695567913453444466",
         "underlyingToken": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
       },
       "fieldMeta": {
@@ -632,7 +659,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "17977409117403115465418",
+        "totalShares": "17971522246793501607333",
         "underlyingToken": "0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38"
       },
       "fieldMeta": {
@@ -714,6 +741,32 @@
         }
       },
       "derivedName": ""
+    },
+    {
+      "name": "",
+      "address": "0x66ea956907F7ed2FD816106f2f4d8c384c6d4f92",
+      "unverified": true,
+      "template": "eigenlayer/Strategy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
+      "ignoreInWatchMode": ["totalShares"],
+      "sinceTimestamp": 1725626639,
+      "values": { "$immutable": true },
+      "fieldMeta": {
+        "getTVLLimits": {
+          "severity": "LOW",
+          "description": "Maximum TVL of the strategy."
+        },
+        "maxPerDeposit": {
+          "severity": "LOW",
+          "description": "Maximum value of one deposit transaction"
+        },
+        "maxTotalDeposits": {
+          "severity": "LOW",
+          "description": "Same as TVL limit"
+        }
+      }
     },
     {
       "name": "",
@@ -925,7 +978,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "38697571168825551327894",
+        "totalShares": "38628766036053849839837",
         "underlyingToken": "0xa2E3356610840701BDf5611a53974510Ae27E2e1"
       },
       "fieldMeta": {
@@ -1036,7 +1089,10 @@
           "0x505241696AB63FaEC03ed7893246DE52EB1A8CFF",
           "0x0858616B1a07B7c925Ba7E8F9a33475887db3A36",
           "0x7251e23983643eAB81E17e4f851c4E01ecAFD882",
-          "0xa33600c9B9C2A4585B5A2cecD5b10d0330Cde9A2"
+          "0xa33600c9B9C2A4585B5A2cecD5b10d0330Cde9A2",
+          "0x2cB2201DF702B01Fec173fDe6756496aebE546F4",
+          "0x66ea956907F7ed2FD816106f2f4d8c384c6d4f92",
+          "0xa553a8198e0692b4393Ac2F64bd2E42A2061c1C5"
         ],
         "strategyWhitelister": "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
       },
@@ -1227,7 +1283,7 @@
         "delegationManager": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "eigenPodBeacon": "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
-        "numPods": 31986,
+        "numPods": 32033,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
@@ -1267,7 +1323,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "862526584122649875352183",
+        "totalShares": "868024401063496899776852",
         "underlyingToken": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
       },
       "fieldMeta": {
@@ -1343,7 +1399,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "80445572306157064501427",
+        "totalShares": "80434451320125532423040",
         "underlyingToken": "0xA35b1B31Ce002FBF2058D22F30f95D405200A15b"
       },
       "fieldMeta": {
@@ -1419,7 +1475,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "10196480156419902676415",
+        "totalShares": "9887885220987290506074",
         "underlyingToken": "0x856c4Efb76C1D1AE02e20CEB03A2A6a08b0b8dC3"
       },
       "fieldMeta": {
@@ -1437,6 +1493,32 @@
         }
       },
       "derivedName": "StrategyBaseTVLLimits"
+    },
+    {
+      "name": "",
+      "address": "0xa553a8198e0692b4393Ac2F64bd2E42A2061c1C5",
+      "unverified": true,
+      "template": "eigenlayer/Strategy",
+      "descriptions": [
+        "A strategy implementation allowing to deposit a specific token as a restakable asset."
+      ],
+      "ignoreInWatchMode": ["totalShares"],
+      "sinceTimestamp": 1725681983,
+      "values": { "$immutable": true },
+      "fieldMeta": {
+        "getTVLLimits": {
+          "severity": "LOW",
+          "description": "Maximum TVL of the strategy."
+        },
+        "maxPerDeposit": {
+          "severity": "LOW",
+          "description": "Maximum value of one deposit transaction"
+        },
+        "maxTotalDeposits": {
+          "severity": "LOW",
+          "description": "Same as TVL limit"
+        }
+      }
     },
     {
       "name": "Timelock",
@@ -1478,7 +1560,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "100825808207221363851788488",
+        "totalShares": "100669015550543500047626991",
         "underlyingToken": "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
       },
       "fieldMeta": {
@@ -1528,7 +1610,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "9879654941812716554773",
+        "totalShares": "9879500815636432489398",
         "underlyingToken": "0x8c1BEd5b9a0928467c9B1341Da1D7BD5e10b6549"
       },
       "fieldMeta": {
@@ -1587,7 +1669,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 34,
+        "nonce": 35,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

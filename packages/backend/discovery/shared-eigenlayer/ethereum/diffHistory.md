@@ -1,16 +1,24 @@
-Generated with discovered.json: 0x96d9225426fb4769ff266a8a682cdfc281511bbf
+Generated with discovered.json: 0x6eecf8e45f67facdde442289a66b4824239f41d5
 
-# Diff at Thu, 05 Sep 2024 13:28:08 GMT:
+# Diff at Tue, 10 Sep 2024 07:32:41 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@a07fad74bc34c07e89da01ab49be710834a4dcba block: 20654739
-- current block number: 20684679
+- current block number: 20718743
 
 ## Description
 
+This is the EigenPod Upgrade, introducing a balance checkpointing system for managing Ethereum validator and EigenPod balances. The previous proof system had some accounting issues that allowed for the misrepresentation of the amount of shares in the pod. The new Checkpoint system allows for accurately distinguishing between beaconBalances and podBalances. It builds on the concept of an active validator set for every pod. A validator is added to the active validator set for a pod when a validator withdrawal address is proven to be pointed to the pod. The update introduces Checkpoint proofs, which combine the beacon chain balances on the consensus layer with the pod contract balance on the execution layer at a specific point in time (a checkpoint). A checkpoint proof must be submitted for every active validator in the pod, and it is finalized when all validators have been proven. If there is any extra ETH balance at finalization (e.g., partial withdrawals), new pod shares are issued.
 
-EigenPod: new NewTotalShares event.
-UpgradeableBeacon: big update regarding checkpoints - to do: understand it
+This upgrade is important for the future when slashing is introduced.
+
+Contracts update:
+
+- EigenPodManager: new NewTotalShares event and checkpoint variables.
+- EigenPodL: checkpoint system functions such as startCheckpoint(), verifyCheckpointProofs(), and removal of old deprecated functions.
+- Removed EigenBeacon oracle. The startCheckpoint function queries the EIP-4788 oracle directly.
+
+
 
 ## Watched changes
 
@@ -94,8 +102,26 @@ UpgradeableBeacon: big update regarding checkpoints - to do: understand it
 
 ```diff
 +   Status: CREATED
+    contract  (0x2cB2201DF702B01Fec173fDe6756496aebE546F4)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract  (0x66ea956907F7ed2FD816106f2f4d8c384c6d4f92)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
     contract EigenPod (0x6D225e974Fa404D25Ffb84eD6E242Ffa18eF6430)
     +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xa553a8198e0692b4393Ac2F64bd2E42A2061c1C5)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
 ```
 
 ## Source code changes
