@@ -34,7 +34,8 @@
     "0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5": "PolygonERC20MintBurnPredicate", // PREDICATES[11]-----^
     "0xDF74156420Bd57ab387B195ed81EcA36F9fABAca": "ExitNFT",
     "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c": "PolygonMultisig",
-    "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf": "Timelock"
+    "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf": "Timelock",
+    "0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8": "MaticWETH"
   },
   "overrides": {
     "RootChainManager": {

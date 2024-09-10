@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x4ef58d7fdc9bd36867421019a0c79d28b219f701
+Generated with discovered.json: 0x3d35e33e8d7c7a42b99c510b19d0ecafea220295
 
-# Diff at Tue, 10 Sep 2024 10:30:28 GMT:
+# Diff at Tue, 10 Sep 2024 11:43:09 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
 - comparing to: main@07425576ea2ee80a2328e3024a4ec30d3118550a block: 20685291
-- current block number: 20719628
+- current block number: 20719990
 
 ## Description
 
-Merge polygonpos and -plasma discoveries.
+Merge polygonpos and -plasma discoveries into this one.
 
 ## Config/verification related changes
 
