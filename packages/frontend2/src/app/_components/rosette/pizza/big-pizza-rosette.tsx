@@ -96,7 +96,6 @@ function RosetteTooltipContent() {
       sideOffset={content.sideOffset}
       onPointerDownOutside={(e) => {
         e.preventDefault()
-        console.log('onPointerDownOutside')
       }}
       className="w-[300px]"
     >
