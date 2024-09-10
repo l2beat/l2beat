@@ -4,13 +4,13 @@ import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { TabCountBadge } from '~/components/badge/tab-count-badge'
 import { OverflowWrapper } from '~/components/core/overflow-wrapper'
-import { BasicTable } from '~/components/table/basic-table'
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from '~/components/core/tabs'
+import { BasicTable } from '~/components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
 import { bridgesRisksColumns } from './columns'
 

@@ -2,12 +2,12 @@ import { pluralize } from '@l2beat/shared-pure'
 import { type ReactNode } from 'react'
 import { StageBadge } from '~/components/badge/stage-badge'
 import { UpcomingBadge } from '~/components/badge/upcoming-badge'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { StatWithChange } from '~/components/projects/stat-with-change'
 import { StageTooltip } from '~/components/table/cells/stage/stage-tooltip'
 import { TypeCell } from '~/components/table/cells/type-cell'

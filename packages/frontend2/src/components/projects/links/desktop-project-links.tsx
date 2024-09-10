@@ -1,8 +1,4 @@
 'use client'
-import OutlinkIcon from '~/icons/outlink.svg'
-import { ProductIcon } from '~/icons/products/SocialIcon'
-import { cn } from '~/utils/cn'
-import { formatLink } from '~/utils/format-link'
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -12,6 +8,10 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '~/components/core/navigation-menu'
+import OutlinkIcon from '~/icons/outlink.svg'
+import { ProductIcon } from '~/icons/products/SocialIcon'
+import { cn } from '~/utils/cn'
+import { formatLink } from '~/utils/format-link'
 import { parseSocial } from './parse-social'
 import { ProjectLinkIcon } from './project-link-icon'
 import { type ProjectLink } from './types'

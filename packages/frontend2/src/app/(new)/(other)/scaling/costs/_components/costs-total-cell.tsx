@@ -5,13 +5,13 @@ import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { UpcomingBadge } from '~/components/badge/upcoming-badge'
 import { CostsBreakdown } from '~/components/breakdown/costs-breakdown'
 import { Callout } from '~/components/callout'
+import { Skeleton } from '~/components/core/skeleton'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { DetailedOnHover } from '~/components/detailed-on-hover'
-import { Skeleton } from '~/components/core/skeleton'
 import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { formatCostValue } from '../_utils/format-cost-value'

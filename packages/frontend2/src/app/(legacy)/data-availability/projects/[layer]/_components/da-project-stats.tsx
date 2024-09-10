@@ -2,12 +2,12 @@ import { UnixTime } from '@l2beat/shared-pure'
 import round from 'lodash/round'
 import { type ReactNode } from 'react'
 import { ProjectsUsedIn } from '~/app/(new)/data-availability/summary/_components/table/projects-used-in'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { EM_DASH } from '~/consts/characters'
 import InfoIcon from '~/icons/info.svg'
 import { type DaProjectEntry } from '~/server/features/data-availability/project/get-da-project-entry'

@@ -1,12 +1,12 @@
 import { type TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { Badge } from '~/components/badge/badge'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { Skeleton } from '~/components/core/skeleton'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import { Skeleton } from '~/components/core/skeleton'
 import { WarningBar } from '~/components/warning-bar'
 import { useIsClient } from '~/hooks/use-is-client'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
