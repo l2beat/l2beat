@@ -1,7 +1,7 @@
 {
   "name": "polygon-pos",
   "chain": "ethereum",
-  "blockNumber": 20719430,
+  "blockNumber": 20719628,
   "configHash": "0x7ee2be38ec346c2e5d777bdb056b946f4c471dfdd07783e684ad77d8a38563ad",
   "version": 14,
   "contracts": [
@@ -128,7 +128,7 @@
       "sinceTimestamp": 1590850580,
       "values": {
         "$immutable": true,
-        "counter": 2959113,
+        "counter": 2959123,
         "isOwner": false,
         "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "REGISTRATIONS": [
@@ -381,13 +381,13 @@
         "CHECKPOINT_REWARD": "71795000000000000000000",
         "checkPointBlockInterval": 5120,
         "checkpointRewardDelta": 10,
-        "currentEpoch": 68431,
+        "currentEpoch": 68432,
         "currentValidatorSetSize": 105,
-        "currentValidatorSetTotalStake": "3430692081364427354066527287",
+        "currentValidatorSetTotalStake": "3430692082364427354066527287",
         "delegationEnabled": true,
         "delegatorsReward": [0, 0, 0, 0],
         "dynasty": 80,
-        "epoch": 68431,
+        "epoch": 68432,
         "eventsHub": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
         "extensionCode": "0xef49Ea6996073752b6840CDA34773FFA78F78166",
         "getRegistry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
@@ -415,7 +415,7 @@
         "registry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
         "replacementCoolDown": 2018083,
         "rewardDecreasePerCheckpoint": 30,
-        "rewardPerStake": "2871074730541868383128754",
+        "rewardPerStake": "2871121816886596748870995",
         "rootChain": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
         "signerUpdateLimit": 100,
         "token": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
@@ -427,7 +427,7 @@
         "validatorReward": [0, 0, "1081182134824116177126", 0],
         "validatorShareFactory": "0xc4FA447A0e77Eff9717b09C057B40570813bb642",
         "validatorState": {
-          "amount": "3430692081364427354066527287",
+          "amount": "3430692082364427354066527287",
           "stakerCount": 105
         },
         "validatorThreshold": 105,
@@ -524,7 +524,7 @@
       ],
       "sinceTimestamp": 1590849960,
       "values": {
-        "_nextHeaderBlock": 684310000,
+        "_nextHeaderBlock": 684320000,
         "$immutable": false,
         "$implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "CHAINID": 137,
@@ -533,8 +533,8 @@
           "_registry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
           "_heimdallId": "heimdall-137"
         },
-        "currentHeaderBlock": 684300000,
-        "getLastChildBlock": 61648037,
+        "currentHeaderBlock": 684310000,
+        "getLastChildBlock": 61649317,
         "heimdallId": "0x7e10229e6df5851dc336f813dde0cf6559cd517f9ff1980e2e57e192ba3a2329",
         "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "isOwner": false,
