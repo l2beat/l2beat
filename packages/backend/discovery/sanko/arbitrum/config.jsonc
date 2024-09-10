@@ -14,7 +14,7 @@
     "0x575d32f7ff0C72921645e302cb14d2757E300786": "Outbox",
     "0x24B68936C13A414cd91437aE7AA730321B9ff159": "SequencerInbox",
     "0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276": "UpgradeExecutor",
-    "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF": "Caldera Multisig"
+    "0x420B4d16119127E4b96E55CB8a9D0c2828a161BB": "Sanko Multisig"
   },
   "overrides": {
     "ChallengeManager": {
@@ -46,9 +46,6 @@
           }
         }
       }
-    },
-    "Caldera Multisig": {
-      "ignoreInWatchMode": ["nonce"]
     }
   }
 }

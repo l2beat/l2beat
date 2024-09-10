@@ -70,7 +70,7 @@ export const sanko: Layer3 = orbitStackL3({
   ],
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
-      'Caldera Multisig',
+      'Sanko Multisig',
       'Rollup Owner: Can execute upgrades for the entire rollup system via the UpgradeExecutor.',
     ),
   ],

@@ -1,7 +1,7 @@
 {
   "name": "nebraupa",
   "chain": "ethereum",
-  "blockNumber": 20670228,
+  "blockNumber": 20691150,
   "configHash": "0x641b2bdb0ebcf290f165b19d3ec1cb93ecbcefa62b331d743da00bcef1b84fbf",
   "version": 14,
   "contracts": [
@@ -28,22 +28,23 @@
         "$implementation": "0xB6cD7eD75c008d0033ED241872639a1D8a35020a",
         "$upgradeCount": 1,
         "aggregatorCollateral": "10000000000000000",
-        "claimableFees": 3748042266300000,
+        "claimableFees": "9184992302220000",
         "DUMMY_PROOF_ID": "0x84636c7b9793a9833ef7ca3e1c118d7d21dadb97ef7bf1fbfd549c10bca3553f",
         "feeAllocated": 0,
         "feeRecipient": "0x0188485989e211eDde9e5ba5794a3c6a3429BDb4",
         "fixedGasFeePerProof": 30000,
         "getCircuitIds": [
           "0x1e9db3d963302f5f365388325c3d4f45ee02ae52725f9b81d17fc57d0d288b5c",
-          "0x20040b0a9eb54f6cdbc68333ada4803cb9d09a0a51c43ac891ebd5c797f2a868"
+          "0x20040b0a9eb54f6cdbc68333ada4803cb9d09a0a51c43ac891ebd5c797f2a868",
+          "0x20dca5aeaaa412308a341546b48893f6c4c8f3b5b2774ccbd46e95a9bde9f03b"
         ],
-        "getNextSubmissionIdx": 12,
+        "getNextSubmissionIdx": 17,
         "lastVerifiedSubmissionHeight": 20637069,
         "MAX_DUPLICATE_SUBMISSIONS": 256,
         "MAX_NUM_PROOFS_PER_SUBMISSION": 32,
         "MAX_SUBMISSION_MERKLE_DEPTH": 5,
         "maxNumPublicInputs": 16,
-        "nextProofIdx": 39,
+        "nextProofIdx": 54,
         "nextSubmissionIdxToVerify": 3,
         "outerVerifier": "0xE990F8e3505391d2b42C80683d403A8371Ee88B9",
         "owner": "0xb463603469Bf31f189E3F6625baf8378880Df14e",

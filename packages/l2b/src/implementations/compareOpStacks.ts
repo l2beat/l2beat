@@ -1,3 +1,4 @@
+import path from 'path'
 import { ConfigReader } from '@l2beat/discovery'
 
 type OpStackProject = {
@@ -12,9 +13,9 @@ type OpStackProject = {
 
 export async function analyseAllOpStackChains(
   projectToCompare: string | null,
-  backendPath: string,
+  discoveryPath: string,
 ): Promise<void> {
-  const configReader = new ConfigReader(backendPath)
+  const configReader = new ConfigReader(path.dirname(discoveryPath))
   const allL2s = configReader.readAllProjectsForChain('ethereum')
 
   const opStackChains = [] as OpStackProject[]

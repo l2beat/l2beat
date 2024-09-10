@@ -9,6 +9,7 @@ import {
   pickTvlForProjects,
 } from '../utils/get-da-projects-tvl'
 import { getDaRisks } from '../utils/get-da-risks'
+import { kindToType } from '../utils/kind-to-layer-type'
 import { type DaEntryRisk } from '../utils/types'
 
 export async function getDaRiskEntries() {
@@ -39,6 +40,7 @@ export async function getDaRiskEntries() {
           return {
             name: daLayer.display.name,
             slug: daLayer.display.slug,
+            layerType: kindToType(daLayer.kind),
             href: `/data-availability/projects/${daLayer.display.slug}/${daBridge.display.slug}`,
             daBridge: toDaBridge(daBridge),
             warning: daBridge.display.warning,
@@ -69,8 +71,9 @@ export async function getDaRiskEntries() {
         {
           name: daLayer.display.name,
           slug: daLayer.display.slug,
+          layerType: kindToType(daLayer.kind),
           daBridge: 'multiple' as const,
-          href: undefined,
+          href: daBridges[0]?.href,
           warning: undefined,
           redWarning: undefined,
           isVerified: true,

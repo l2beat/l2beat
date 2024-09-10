@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x5d7f7de272164a612e3e4d7ef18b304b885d8334
+
+# Diff at Thu, 05 Sep 2024 14:10:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d01da0bcdde8e77051659c9718e449a44f5f957a block: 19322901
+- current block number: 19378036
+
+## Description
+
+Fee withdrawer changed to BaseOwner.
+
+## Watched changes
+
+```diff
+    contract zkLink (0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd) {
+    +++ description: None
+      values.forwardFeeAllocator:
+-        "0x0000000000000000000000000000000000000000"
++        "0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C"
+    }
+```
+
 Generated with discovered.json: 0x9d20a45aef54e0a11919ca39a3300349b4e5abdd
 
 # Diff at Wed, 04 Sep 2024 07:32:35 GMT:
