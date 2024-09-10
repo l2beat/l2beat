@@ -1,7 +1,12 @@
 import { type ProjectId } from '@l2beat/shared-pure'
 
 export function orderByTvl<
-  T extends { id: ProjectId; isArchived?: boolean; isUpcoming?: boolean },
+  T extends {
+    id: ProjectId
+    name: string
+    isArchived?: boolean
+    isUpcoming?: boolean
+  },
 >(projects: T[], tvls: Record<ProjectId, number>): T[] {
   const active = projects.filter(
     (project) => !project.isArchived && !project.isUpcoming,
@@ -14,7 +19,14 @@ export function orderByTvl<
     return tvl ?? 0
   }
 
-  const sortByTvl = (a: T, b: T) => getTvl(b) - getTvl(a)
+  const sortByTvl = (a: T, b: T) => {
+    const aTvl = getTvl(a)
+    const bTvl = getTvl(b)
+    if (aTvl === bTvl) {
+      return a.name.localeCompare(b.name)
+    }
+    return bTvl - aTvl
+  }
 
   return [...active]
     .sort(sortByTvl)

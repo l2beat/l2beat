@@ -20,7 +20,7 @@ export const metadata = getDefaultMetadata({
 
 export default async function Page() {
   const entries = await getScalingSummaryEntries()
-
+  console.log(entries.map((entry) => entry.name))
   await api.tvl.chart.prefetch({
     filter: { type: 'layer2' },
     range: getCookie('scalingSummaryChartRange'),
