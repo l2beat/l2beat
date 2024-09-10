@@ -741,13 +741,11 @@ export class ProjectDiscovery {
       groupBy(
         contractOrEoa.receivedPermissions ?? [],
         (value: ResolvedPermission) => {
-          return (
-            value.permission +
-            ':' +
-            (value.via !== undefined ? formatVia(value.via) : '') +
-            ':' +
-            (value.description ?? '')
-          )
+          return [
+            value.permission,
+            value.via !== undefined ? formatVia(value.via) : '',
+            value.description ?? '',
+          ].join(':')
         },
       ),
     ).map(([key, entries]) => {
@@ -763,7 +761,7 @@ export class ProjectDiscovery {
           .map((entry) => this.getContract(entry.target.toString()).name)
           .join(', ') +
         via +
-        (description !== '' ? ` - ${trimTrailingDots(description)}` : '')
+        formatPermissionDescription(description)
       return `${
         ultimatePermissionToPrefix[permission as PermissionType]
       } ${detailsString}.`
@@ -793,11 +791,9 @@ export class ProjectDiscovery {
       const addressesString = entries
         .map((entry) => this.getContract(entry.target.toString()).name)
         .join(', ')
-      return (
-        `${directPermissionToPrefix[permission]} ${addressesString}` +
-        (description !== '' ? ` - ${trimTrailingDots(description)}` : '') +
-        '.'
-      )
+      return `${
+        directPermissionToPrefix[permission]
+      } ${addressesString}${formatPermissionDescription(description)}.`
     })
   }
 
@@ -919,13 +915,13 @@ export class ProjectDiscovery {
             }) ?? [],
         )
 
-        const ultimateUpgraders = Object.keys(upgradersWithDelay)
+        const upgraders = Object.keys(upgradersWithDelay)
         const minDelay = Math.min(...Object.values(upgradersWithDelay))
-        const upgradableByStruct =
-          ultimateUpgraders.length === 0
+        const upgradableBy =
+          upgraders.length === 0
             ? {}
             : {
-                upgradableBy: ultimateUpgraders,
+                upgradableBy: upgraders,
                 upgradeDelay: minDelay === 0 ? 'No delay' : minDelay.toString(),
               }
 
@@ -933,7 +929,7 @@ export class ProjectDiscovery {
           description: formatAsBulletPoints(
             this.describeContractOrEoa(contract, true),
           ),
-          ...upgradableByStruct,
+          ...upgradableBy,
         })
       })
 
@@ -999,4 +995,8 @@ export function formatAsBulletPoints(description: string[]): string {
 
 export function trimTrailingDots(s: string): string {
   return s.replace(/\.*$/, '')
+}
+
+export function formatPermissionDescription(description: string): string {
+  return description !== '' ? ` - ${trimTrailingDots(description)}` : ''
 }
