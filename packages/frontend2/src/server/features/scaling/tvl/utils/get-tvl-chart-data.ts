@@ -5,14 +5,17 @@ import {
   unstable_noStore as noStore,
 } from 'next/cache'
 import { z } from 'zod'
+import { env } from '~/env'
+import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
 import { getEthPrices } from './get-eth-prices'
 import { getTvlProjects } from './get-tvl-projects'
+import { getTvlTargetTimestamp } from './get-tvl-target-timestamp'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
 import {
   TvlProjectFilter,
   createTvlProjectsFilter,
 } from './project-filter-utils'
-import { TvlChartRange } from './range'
+import { TvlChartRange, getRangeConfig } from './range'
 import { sumValuesPerSource } from './sum-values-per-source'
 
 export const TvlChartDataParams = z.object({
@@ -26,10 +29,16 @@ export type TvlChartDataParams = z.infer<typeof TvlChartDataParams>
 export async function getTvlChartData(
   ...args: Parameters<typeof getCachedTvlChartData>
 ) {
+  if (env.MOCK) {
+    return getMockTvlChartData(...args)
+  }
   noStore()
   return getCachedTvlChartData(...args)
 }
 
+export type ScalingSummaryData = Awaited<
+  ReturnType<typeof getCachedTvlChartData>
+>
 export const getCachedTvlChartData = cache(
   async ({ range, excludeAssociatedTokens, filter }: TvlChartDataParams) => {
     const projectsFilter = createTvlProjectsFilter(filter)
@@ -71,6 +80,18 @@ export const getCachedTvlChartData = cache(
   { revalidate: 10 * UnixTime.MINUTE },
 )
 
-export type ScalingSummaryData = Awaited<
-  ReturnType<typeof getCachedTvlChartData>
->
+function getMockTvlChartData({
+  range,
+}: TvlChartDataParams): ScalingSummaryData {
+  const { days, resolution } = getRangeConfig(range)
+  const target = getTvlTargetTimestamp().toStartOf(
+    resolution === 'hourly' ? 'hour' : 'day',
+  )
+  const from =
+    days !== Infinity ? target.add(-days, 'days') : target.add(-730, 'days')
+  const timestamps = generateTimestamps([from, target], resolution)
+
+  return timestamps.map((timestamp) => {
+    return [timestamp.toNumber(), 3000, 2000, 1000, 1200]
+  })
+}

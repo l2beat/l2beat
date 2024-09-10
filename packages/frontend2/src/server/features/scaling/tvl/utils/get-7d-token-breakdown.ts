@@ -1,8 +1,10 @@
+import { layer2s, layer3s } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
+import { env } from '~/env'
 import { getTokenBreakdown } from './get-token-breakdown'
 import { type TvlProject, getTvlProjects } from './get-tvl-projects'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
@@ -11,9 +13,13 @@ export function get7dTokenBreakdown(
   ...parameters: Parameters<typeof getCached7dTokenBreakdown>
 ) {
   noStore()
+  if (env.MOCK) {
+    return getMock7dTokenBreakdown()
+  }
   return getCached7dTokenBreakdown(...parameters)
 }
 
+export type LatestTvl = Awaited<ReturnType<typeof getCached7dTokenBreakdown>>
 export const getCached7dTokenBreakdown = cache(
   async ({ type }: { type: 'layer2' | 'bridge' }) => {
     const filter =
@@ -65,4 +71,22 @@ export const getCached7dTokenBreakdown = cache(
   },
 )
 
-export type LatestTvl = Awaited<ReturnType<typeof getCached7dTokenBreakdown>>
+function getMock7dTokenBreakdown(): LatestTvl {
+  return {
+    total: 1000,
+    projects: Object.fromEntries(
+      [...layer2s, ...layer3s].map((project) => [
+        project.id,
+        {
+          breakdown: {
+            total: 60,
+            ether: 40,
+            stablecoin: 15,
+            associated: 5,
+          },
+          change: Math.random(),
+        },
+      ]),
+    ),
+  }
+}
