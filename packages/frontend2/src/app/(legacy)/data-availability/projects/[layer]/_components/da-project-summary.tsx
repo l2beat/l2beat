@@ -8,14 +8,16 @@ import { DaProjectStats } from './da-project-stats'
 
 interface Props {
   project: DaProjectEntry
+  header: React.ReactNode
 }
 
-export function DaProjectSummary({ project }: Props) {
+export function DaProjectSummary({ project, header }: Props) {
   return (
     <section
       id="summary"
       className="max-md:bg-gray-100 max-md:px-4 max-md:dark:bg-zinc-900"
     >
+      {header}
       <div className="flex gap-10">
         <div className="w-full space-y-4">
           {project.description && (

@@ -31,8 +31,7 @@ export async function DaProjectPage({ header, daLayer, daBridge }: Props) {
           <MobileProjectNavigation sections={navigationSections} />
         </div>
       )}
-      {header}
-      <DaProjectSummary project={daProjectEntry} />
+      <DaProjectSummary project={daProjectEntry} header={header} />
       {isNavigationEmpty ? (
         <ProjectDetails items={daProjectEntry.projectDetails} />
       ) : (
