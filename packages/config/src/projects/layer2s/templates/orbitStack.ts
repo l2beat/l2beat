@@ -45,7 +45,6 @@ import {
   Layer2TxConfig,
 } from '../types'
 import { mergeBadges } from './utils'
-import { text } from 'cheerio'
 
 const ETHEREUM_EXPLORER_URL = 'https://etherscan.io/address/{0}#code'
 export const EVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
