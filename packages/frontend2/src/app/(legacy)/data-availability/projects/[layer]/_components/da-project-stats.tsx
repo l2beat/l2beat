@@ -68,7 +68,7 @@ export function DaProjectStats({ project }: Props) {
           project.header.usedIn.length !== 0 ? (
             <ProjectsUsedIn
               usedIn={project.header.usedIn}
-              className="flex-wrap"
+              className="flex-wrap justify-end"
             />
           ) : (
             'None'
@@ -90,12 +90,12 @@ function ProjectStat(props: ProjectStat) {
   return (
     <li
       className={cn(
-        'flex items-center justify-between md:flex-col md:items-start md:justify-start md:gap-3',
+        'flex items-center justify-between gap-3 md:flex-col md:items-start md:justify-start',
         props.className,
       )}
     >
       <div className="flex flex-row items-center gap-1.5">
-        <span className="text-xs text-gray-500 dark:text-gray-600">
+        <span className="whitespace-pre text-xs text-gray-500 dark:text-gray-600">
           {props.title}
         </span>
         {props.tooltip && (
