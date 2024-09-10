@@ -11,7 +11,7 @@ describe('meta images', () => {
     it(`${project.display.name} has a meta image`, () => {
       const iconPath = path.join(
         __dirname,
-        `../static/icons/${project.display.slug}.png`,
+        `../../public/icons/${project.display.slug}.png`,
       )
       expect(existsSync(iconPath)).toEqual(true)
     })
@@ -23,7 +23,7 @@ describe('icons', () => {
     it(`${project.display.name} has an associated icon`, () => {
       const iconPath = path.join(
         __dirname,
-        `../static/icons/${project.display.slug}.png`,
+        `../../public/icons/${project.display.slug}.png`,
       )
       expect(existsSync(iconPath)).toEqual(true)
     })
@@ -37,7 +37,7 @@ describe('icons', () => {
       it(id, () => {
         const iconPath = path.join(
           __dirname,
-          `../static/icons/${project.display.slug}.png`,
+          `../../public/icons/${project.display.slug}.png`,
         )
 
         const buffer = readFileSync(iconPath)

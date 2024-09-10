@@ -24,12 +24,8 @@ yarn build:frontend
 - `yarn format:fix` - run biome automatic formatter
 - `yarn lint` - check if the code satisfies the biome configuration
 - `yarn lint:fix` - run biome automatic fixer
-- `yarn tinify-logos` - resizes and optimizes logos
 - `yarn typecheck` - check if the code satisfies the typescript compiler
 
-### Environment variables
-
-- `TINIFY_API_KEY` - API key for Tinify, useful if you are adding/changing logo of a project (500 compressions per month are free)
 
 #### .env boilerplate:
 

@@ -14,7 +14,7 @@ const UNVERIFIED_DESCRIPTION_ALL =
   'The source code of these contracts is not verified on Etherscan.'
 
 const UNVERIFIED_IMPLEMENTATIONS_DESCRIPTION =
-  'The source code of some implementations is not verified on Etherscan.'
+  'The source code of an implementation is not verified on Etherscan.'
 
 const UNVERIFIED_RISK: ScalingProjectRisk = {
   category: 'Funds can be stolen if',
