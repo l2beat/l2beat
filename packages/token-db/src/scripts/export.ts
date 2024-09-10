@@ -1,7 +1,7 @@
 import { Prisma } from '@prisma/client'
-import { createPrismaClient } from '../db/prisma.js'
-import { argv } from 'process'
 import { writeFile } from 'fs/promises'
+import { argv } from 'process'
+import { createPrismaClient } from '../db/prisma.js'
 
 const path = argv[2]
 

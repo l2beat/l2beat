@@ -2,12 +2,12 @@ import { Logger } from '@l2beat/backend-tools'
 import { http, PublicClient, createPublicClient } from 'viem'
 import * as viemChains from 'viem/chains'
 import { PrismaClient } from '../db/prisma.js'
+import { DatabaseCache } from './cache/database-cache.js'
 import {
   NetworkExplorerClient,
   instantiateExplorer,
 } from './explorers/index.js'
 import { notUndefined } from './notUndefined.js'
-import { DatabaseCache } from './cache/database-cache.js'
 
 type Dependencies = {
   logger: Logger

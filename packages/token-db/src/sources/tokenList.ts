@@ -1,10 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
+import { getAddress } from 'viem'
 import { z } from 'zod'
 import { upsertManyTokensWithMeta } from '../db/helpers.js'
 import { PrismaClient } from '../db/prisma.js'
-import { zodFetch } from '../utils/zodFetch.js'
 import { TokenUpdateQueue } from '../utils/queue/wrap.js'
-import { getAddress } from 'viem'
+import { zodFetch } from '../utils/zodFetch.js'
 
 export { buildTokenListSource }
 

@@ -18,11 +18,11 @@ import {
   zora,
 } from 'viem/chains'
 import { z } from 'zod'
+import { createPrismaClient } from '../db/prisma.js'
 import { env } from '../env.js'
 import { isExplorerType } from '../utils/isExplorerType.js'
 import { notUndefined } from '../utils/notUndefined.js'
 import { zodFetch } from '../utils/zodFetch.js'
-import { createPrismaClient } from '../db/prisma.js'
 
 export const chainsConfig = [
   arbitrum,

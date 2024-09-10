@@ -1,9 +1,9 @@
 import { ExplorerType, NetworkExplorer } from '@prisma/client'
+import { Cache } from '../cache/types.js'
 import {
   buildCachedEtherscanExplorer,
   buildEtherscanExplorer,
 } from './etherscan.js'
-import { Cache } from '../cache/types.js'
 
 export { instantiateExplorer }
 

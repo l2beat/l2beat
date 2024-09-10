@@ -1,11 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
 
+import { assert } from '@l2beat/shared-pure'
 import { nanoid } from 'nanoid'
 import { getContract, parseAbiItem } from 'viem'
 import { PrismaClient } from '../db/prisma.js'
 import { NetworkConfig } from '../utils/getNetworksConfig.js'
 import { notUndefined } from '../utils/notUndefined.js'
-import { assert } from '@l2beat/shared-pure'
 
 export { buildArbitrumCanonicalSource }
 
