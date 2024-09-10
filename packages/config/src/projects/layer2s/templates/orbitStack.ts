@@ -253,6 +253,7 @@ function defaultStateValidation(
 export function orbitStackCommon(
   templateVars: OrbitStackConfigCommon,
   explorerLinkFormat: string,
+  blockNumberOpcodeTimeSeconds: number,
 ): Omit<
   Layer2,
   'type' | 'display' | 'config' | 'isArchived' | 'stage' | 'riskView'
@@ -318,7 +319,8 @@ export function orbitStackCommon(
     'RollupProxy',
     'confirmPeriodBlocks',
   )
-  const challengePeriodSeconds = challengePeriodBlocks * 12
+  const challengePeriodSeconds =
+    challengePeriodBlocks * blockNumberOpcodeTimeSeconds
 
   return {
     id: ProjectId(templateVars.discovery.projectName),
@@ -590,6 +592,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     ...orbitStackCommon(
       templateVars,
       getExplorerLinkFormat(templateVars.hostChain),
+      blockNumberOpcodeTimeSeconds,
     ),
     hostChain: templateVars.hostChain,
     display: {
@@ -701,7 +704,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
 
   return {
     type: 'layer2',
-    ...orbitStackCommon(templateVars, ETHEREUM_EXPLORER_URL),
+    ...orbitStackCommon(templateVars, ETHEREUM_EXPLORER_URL, 12),
     display: {
       warning:
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
