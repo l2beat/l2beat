@@ -37,6 +37,7 @@ export function resolveAnalysis(analyses: Analysis[]): ResolvedPermission[] {
         toNode: address,
         delay: entry.delay,
         permission: entry.type,
+        description: entry.description,
       })
     }
   }

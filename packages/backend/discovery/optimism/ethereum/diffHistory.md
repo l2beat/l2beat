@@ -1,3 +1,185 @@
+Generated with discovered.json: 0xe6fac3dd6661e453b64deda5d1cea783ee445d8a
+
+# Diff at Sun, 08 Sep 2024 17:24:40 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@fd881462cca0d7ef4519f907f3c6cfd5fe1cde8f block: 20691253
+- current block number: 20691253
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20691253 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (0x18DAc71c228D1C32c99489B7323d441E1175e443) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.via.0:
++        {"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","delay":0}
+    }
+```
+
+```diff
+    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.via.0:
++        {"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","delay":0}
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      descriptions:
+-        ["It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component."]
+      issuedPermissions:
+-        [{"permission":"configure","target":"0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A","via":[]}]
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x18DAc71c228D1C32c99489B7323d441E1175e443"},{"permission":"upgrade","target":"0x229047fed2591dbec1eF1118d64F7aF3dB9EB290"},{"permission":"upgrade","target":"0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"},{"permission":"upgrade","target":"0x75505a97BD334E7BD3C476893285569C4136Fa0F"},{"permission":"upgrade","target":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C"},{"permission":"upgrade","target":"0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"},{"permission":"upgrade","target":"0xbEb5Fc579115071764c7423A4f12eDde41f106Ed"},{"permission":"upgrade","target":"0xE497B094d6DbB3D5E4CaAc9a14696D7572588d14"},{"permission":"upgrade","target":"0xe5965Ab5962eDc7477C8520243A95517CD252fA9"}]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x18DAc71c228D1C32c99489B7323d441E1175e443"},{"permission":"upgrade","target":"0x229047fed2591dbec1eF1118d64F7aF3dB9EB290"},{"permission":"upgrade","target":"0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"},{"permission":"upgrade","target":"0x75505a97BD334E7BD3C476893285569C4136Fa0F"},{"permission":"upgrade","target":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C"},{"permission":"upgrade","target":"0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1","description":"upgrading bridge implementation allows to access all funds and change every system component."},{"permission":"upgrade","target":"0xbEb5Fc579115071764c7423A4f12eDde41f106Ed"},{"permission":"upgrade","target":"0xE497B094d6DbB3D5E4CaAc9a14696D7572588d14"},{"permission":"upgrade","target":"0xe5965Ab5962eDc7477C8520243A95517CD252fA9"}]
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      descriptions:
+-        ["It can act on behalf of 0x543bA4AADBAb8f9025686Bd03993043599c6fB04, inheriting its permissions."]
+      receivedPermissions.8:
++        {"permission":"upgrade","target":"0xe5965Ab5962eDc7477C8520243A95517CD252fA9","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","target":"0xE497B094d6DbB3D5E4CaAc9a14696D7572588d14","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","target":"0xbEb5Fc579115071764c7423A4f12eDde41f106Ed","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","target":"0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1","description":"upgrading bridge implementation allows to access all funds and change every system component.","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","target":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","target":"0x75505a97BD334E7BD3C476893285569C4136Fa0F","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
+      receivedPermissions.2:
++        {"permission":"upgrade","target":"0x5a7749f83b81B301cAb5f48EB8516B986DAef23D","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
+      receivedPermissions.1:
++        {"permission":"upgrade","target":"0x229047fed2591dbec1eF1118d64F7aF3dB9EB290","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
+      receivedPermissions.0.permission:
+-        "configure"
++        "upgrade"
+      receivedPermissions.0.target:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0x18DAc71c228D1C32c99489B7323d441E1175e443"
+      receivedPermissions.0.via:
++        [{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x5a7749f83b81B301cAb5f48EB8516B986DAef23D) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions.0.target:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.via.0:
++        {"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","delay":0}
+    }
+```
+
+```diff
+    contract DeputyGuardianModule (0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8) {
+    +++ description: allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.
+      descriptions.0:
+-        "allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A (the deputy guardian) to act on behalf of the Gnosis Safe."
++        "allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe."
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x75505a97BD334E7BD3C476893285569C4136Fa0F) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      issuedPermissions.0.target:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.via.0:
++        {"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","delay":0}
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions.0.target:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.via.0:
++        {"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","delay":0}
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      issuedPermissions.0.target:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.via.0:
++        {"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","delay":0,"description":"upgrading bridge implementation allows to access all funds and change every system component."}
+    }
+```
+
+```diff
+    contract FoundationMultisig_2 (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      descriptions:
+-        ["Deputy Guardian of 0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8. It can act on behalf of the 0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2."]
+    }
+```
+
+```diff
+    contract OptimismPortal (0xbEb5Fc579115071764c7423A4f12eDde41f106Ed) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.via.0:
++        {"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","delay":0}
+    }
+```
+
+```diff
+    contract DelayedWETH (0xE497B094d6DbB3D5E4CaAc9a14696D7572588d14) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.via.0:
++        {"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","delay":0}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0xe5965Ab5962eDc7477C8520243A95517CD252fA9) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.via.0:
++        {"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","delay":0}
+    }
+```
+
 Generated with discovered.json: 0x7cc64751b1461a39df7f0693d54d3a71f7cc6ea9
 
 # Diff at Fri, 06 Sep 2024 11:28:35 GMT:

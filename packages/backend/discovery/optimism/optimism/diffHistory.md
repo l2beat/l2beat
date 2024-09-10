@@ -1,3 +1,203 @@
+Generated with discovered.json: 0xde56736763a79673334ff3f954cd27f22d15ce8c
+
+# Diff at Sun, 08 Sep 2024 17:20:14 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@fd881462cca0d7ef4519f907f3c6cfd5fe1cde8f block: 122593187
+- current block number: 122593187
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 122593187 (main branch discovery), not current.
+
+```diff
+    contract DeployerWhitelist (0x4200000000000000000000000000000000000002) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x4200000000000000000000000000000000000018"
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0:
++        {"address":"0x4200000000000000000000000000000000000018","delay":0}
+    }
+```
+
+```diff
+    contract L2CrossDomainMessenger (0x4200000000000000000000000000000000000007) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x4200000000000000000000000000000000000018"
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0:
++        {"address":"0x4200000000000000000000000000000000000018","delay":0}
+    }
+```
+
+```diff
+    contract GasPriceOracle (0x420000000000000000000000000000000000000F) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x4200000000000000000000000000000000000018"
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0:
++        {"address":"0x4200000000000000000000000000000000000018","delay":0}
+    }
+```
+
+```diff
+    contract L2StandardBridge (0x4200000000000000000000000000000000000010) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x4200000000000000000000000000000000000018"
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0:
++        {"address":"0x4200000000000000000000000000000000000018","delay":0}
+    }
+```
+
+```diff
+    contract SequencerFeeVault (0x4200000000000000000000000000000000000011) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x4200000000000000000000000000000000000018"
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0:
++        {"address":"0x4200000000000000000000000000000000000018","delay":0}
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x4200000000000000000000000000000000000012) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x4200000000000000000000000000000000000018"
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0:
++        {"address":"0x4200000000000000000000000000000000000018","delay":0}
+    }
+```
+
+```diff
+    contract L1BlockNumber (0x4200000000000000000000000000000000000013) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x4200000000000000000000000000000000000018"
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0:
++        {"address":"0x4200000000000000000000000000000000000018","delay":0}
+    }
+```
+
+```diff
+    contract L2ERC721Bridge (0x4200000000000000000000000000000000000014) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x4200000000000000000000000000000000000018"
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0:
++        {"address":"0x4200000000000000000000000000000000000018","delay":0}
+    }
+```
+
+```diff
+    contract L1Block (0x4200000000000000000000000000000000000015) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x4200000000000000000000000000000000000018"
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0:
++        {"address":"0x4200000000000000000000000000000000000018","delay":0}
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (0x4200000000000000000000000000000000000016) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x4200000000000000000000000000000000000018"
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0:
++        {"address":"0x4200000000000000000000000000000000000018","delay":0}
+    }
+```
+
+```diff
+    contract OptimismMintableERC721Factory (0x4200000000000000000000000000000000000017) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x4200000000000000000000000000000000000018"
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0:
++        {"address":"0x4200000000000000000000000000000000000018","delay":0}
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0x4200000000000000000000000000000000000018) {
+    +++ description: None
+      issuedPermissions.1:
+-        {"permission":"upgrade","target":"0x4200000000000000000000000000000000000018","via":[]}
+      issuedPermissions.0.permission:
+-        "configure"
++        "upgrade"
+      issuedPermissions.0.via.0:
++        {"address":"0x4200000000000000000000000000000000000018","delay":0}
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x4200000000000000000000000000000000000002"},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000007"},{"permission":"upgrade","target":"0x420000000000000000000000000000000000000F"},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000010"},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000011"},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000012"},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000013"},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000014"},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000015"},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000016"},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000017"},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000018"},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000019"},{"permission":"upgrade","target":"0x420000000000000000000000000000000000001A"},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000020"},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000021"}]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x4200000000000000000000000000000000000002"},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000007"},{"permission":"upgrade","target":"0x420000000000000000000000000000000000000F"},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000010"},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000011"},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000012"},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000013"},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000014"},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000015"},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000016"},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000017"},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000018"},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000019"},{"permission":"upgrade","target":"0x420000000000000000000000000000000000001A"},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000020"},{"permission":"upgrade","target":"0x4200000000000000000000000000000000000021"}]
+    }
+```
+
+```diff
+    contract BaseFeeVault (0x4200000000000000000000000000000000000019) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x4200000000000000000000000000000000000018"
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0:
++        {"address":"0x4200000000000000000000000000000000000018","delay":0}
+    }
+```
+
+```diff
+    contract L1FeeVault (0x420000000000000000000000000000000000001A) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x4200000000000000000000000000000000000018"
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0:
++        {"address":"0x4200000000000000000000000000000000000018","delay":0}
+    }
+```
+
+```diff
+    contract SchemaRegistry (0x4200000000000000000000000000000000000020) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x4200000000000000000000000000000000000018"
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0:
++        {"address":"0x4200000000000000000000000000000000000018","delay":0}
+    }
+```
+
+```diff
+    contract EAS (0x4200000000000000000000000000000000000021) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x4200000000000000000000000000000000000018"
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0:
++        {"address":"0x4200000000000000000000000000000000000018","delay":0}
+    }
+```
+
 Generated with discovered.json: 0xbe928e4bf99a8230745afc52ef46b7b67ad76946
 
 # Diff at Fri, 30 Aug 2024 08:07:22 GMT:

@@ -1,3 +1,41 @@
+Generated with discovered.json: 0xe4bb44a4613bca6eae7a08874ec51d990de86fd4
+
+# Diff at Sun, 08 Sep 2024 17:24:26 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@fd881462cca0d7ef4519f907f3c6cfd5fe1cde8f block: 20460352
+- current block number: 20460352
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20460352 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA) {
+    +++ description: None
+      descriptions:
+-        ["It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component."]
+      receivedPermissions.3.description:
++        "upgrading bridge implementation allows to access all funds and change every system component."
+    }
+```
+
+```diff
+    contract FraxtalMultisig (0xe0d7755252873c4eF5788f7f45764E0e17610508) {
+    +++ description: None
+      descriptions:
+-        ["It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."]
+      receivedPermissions.0.description:
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+    }
+```
+
 Generated with discovered.json: 0x512050dfd43ba80106644332c022f28bf9d74318
 
 # Diff at Fri, 30 Aug 2024 07:52:15 GMT:

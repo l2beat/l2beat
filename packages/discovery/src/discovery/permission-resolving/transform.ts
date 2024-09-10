@@ -1,6 +1,7 @@
 import {
   ResolvedPermission as OutputResolvedPermission,
   PermissionType,
+  ResolvedPermissionPath,
 } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
@@ -46,10 +47,14 @@ export function transformToReceived(
         target: r.path[0]!.address,
         // biome-ignore lint/style/noNonNullAssertion: we path[0] exists
         delay: zeroToUndefined(r.path[0]!.delay),
+        description: r.path[1]?.description,
         via: emptyToUndefined(
-          r.path
-            .slice(1, -1)
-            .map((x) => ({ ...x, delay: zeroToUndefined(x.delay) })),
+          r.path.slice(1, -1).map(
+            (x): ResolvedPermissionPath => ({
+              address: x.address,
+              delay: zeroToUndefined(x.delay),
+            }),
+          ),
         ),
       })),
   )
@@ -60,6 +65,7 @@ export function transformToReceived(
         permission: internalPermissionToExternal(p.type),
         target: p.target,
         delay: zeroToUndefined(p.delay),
+        description: p.description,
         via: undefined,
       }))
       .filter((p) => !ultimate.some((m) => isEqual(m, p))),
