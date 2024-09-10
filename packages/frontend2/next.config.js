@@ -217,11 +217,6 @@ const nextConfig = {
       throw new Error('Could not find svg fileLoaderRule')
     }
 
-    const existingResourceQueryNot =
-      'not' in fileLoaderRule.resourceQuery
-        ? fileLoaderRule.resourceQuery.not
-        : []
-
     config.module.rules.push(
       // Reapply the existing rule, but only for svg imports ending in ?url
       {
@@ -230,28 +225,12 @@ const nextConfig = {
         resourceQuery: /url/, // *.svg?url
       },
       // Convert all other *.svg imports to React components
-      {
-        test: /\.svg$/i,
-        issuer: fileLoaderRule.issuer,
-        resourceQuery: { not: [...existingResourceQueryNot, /url/] }, // exclude if *.svg?url
-        use: ['@svgr/webpack'],
-      },
     )
 
     // Modify the file loader rule to ignore *.svg, since we have it handled now.
     fileLoaderRule.exclude = /\.svg$/i
 
     return config
-  },
-  experimental: {
-    turbo: {
-      rules: {
-        '*.svg': {
-          loaders: ['@svgr/webpack'],
-          as: '*.js',
-        },
-      },
-    },
   },
 }
 
