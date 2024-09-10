@@ -1,21 +1,23 @@
-import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
-import { DesktopProjectLinks } from '~/app/_components/projects/links/desktop-project-links'
-import { MobileProjectLinks } from '~/app/_components/projects/links/mobile-project-links'
-import { AboutSection } from '~/app/_components/projects/sections/about-section'
-import { BigPentagonRosette } from '~/app/_components/rosette/pentagon/big-pentagon-rosette'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { DesktopProjectLinks } from '~/components/projects/links/desktop-project-links'
+import { MobileProjectLinks } from '~/components/projects/links/mobile-project-links'
+import { AboutSection } from '~/components/projects/sections/about-section'
+import { BigPentagonRosette } from '~/components/rosette/pentagon/big-pentagon-rosette'
 import { type DaProjectEntry } from '~/server/features/data-availability/project/get-da-project-entry'
 import { DaProjectStats } from './da-project-stats'
 
 interface Props {
   project: DaProjectEntry
+  header: React.ReactNode
 }
 
-export function DaProjectSummary({ project }: Props) {
+export function DaProjectSummary({ project, header }: Props) {
   return (
     <section
       id="summary"
-      className="max-md:-mx-4 max-md:bg-gray-100 max-md:px-4 max-md:dark:bg-zinc-900"
+      className="max-md:bg-gray-100 max-md:px-4 max-md:dark:bg-zinc-900"
     >
+      {header}
       <div className="flex gap-10">
         <div className="w-full space-y-4">
           {project.description && (

@@ -1,3 +1,5 @@
+import { CliLogger } from '@l2beat/shared'
+import { assert } from '@l2beat/shared-pure'
 import {
   boolean,
   command,
@@ -8,8 +10,10 @@ import {
   string,
   subcommands,
 } from 'cmd-ts'
+import { readConfig } from '../config/readConfig'
 import { executeCompareAll } from '../implementations/compare-flat-sources/executeCompareAll'
 import { executeCompareProjects } from '../implementations/compare-flat-sources/executeCompareProjects'
+import { executeCompareSourceOnSource } from '../implementations/compare-flat-sources/executeCompareSourceOnSource'
 import { executeFindSimilar } from '../implementations/compare-flat-sources/executeFindSimilar'
 import { discoveryPath } from './args'
 
@@ -33,11 +37,41 @@ const CompareProjectSources = command({
     discoveryPath,
   },
   handler: async (args) => {
+    const logger = new CliLogger()
+    const config = readConfig()
+    const discoveryPath = config.discoveryPath ?? args.discoveryPath
+    assert(discoveryPath !== undefined)
+
     await executeCompareProjects({
       forceTable: args.forceTableFlag,
       firstProjectPath: args.firstProject,
       secondProjectPath: args.secondProject,
-      discoveryPath: args.discoveryPath,
+      discoveryPath,
+      logger,
+    })
+  },
+})
+
+const CompareProjectSourceOnSource = command({
+  name: 'compare-projects-source-on-source',
+  description:
+    'Given a project for each contract find the most similar among all projects.',
+  args: {
+    projectPath: positional({ type: string, displayName: 'projectPath' }),
+    forceTableFlag,
+    discoveryPath,
+  },
+  handler: async (args) => {
+    const logger = new CliLogger()
+    const config = readConfig()
+    const discoveryPath = config.discoveryPath ?? args.discoveryPath
+    assert(discoveryPath !== undefined)
+
+    await executeCompareSourceOnSource({
+      forceTable: args.forceTableFlag,
+      projectPath: args.projectPath,
+      discoveryPath,
+      logger,
     })
   },
 })
@@ -52,10 +86,16 @@ const MostSimilarFlatSources = command({
     discoveryPath,
   },
   handler: async (args) => {
+    const logger = new CliLogger()
+    const config = readConfig()
+    const discoveryPath = config.discoveryPath ?? args.discoveryPath
+    assert(discoveryPath !== undefined)
+
     await executeFindSimilar({
       projectPath: args.project,
-      discoveryPath: args.discoveryPath,
       forceTable: args.forceTableFlag,
+      discoveryPath,
+      logger,
     })
   },
 })
@@ -78,12 +118,25 @@ const CompareAllFlatSources = command({
       defaultValue: () => 0.4,
       defaultValueIsSerializable: true,
     }),
+    showGraph: flag({
+      long: 'graph',
+      short: 'g',
+      defaultValue: () => false,
+      defaultValueIsSerializable: true,
+    }),
   },
   handler: async (args) => {
+    const logger = new CliLogger()
+    const config = readConfig()
+    const discoveryPath = config.discoveryPath ?? args.discoveryPath
+    assert(discoveryPath !== undefined)
+
     await executeCompareAll({
-      discoveryPath: args.discoveryPath,
       minClusterSimilarity: args.minClusterSimilarity,
       minProjectSimilarity: args.minProjectSimilarity,
+      showGraph: args.showGraph,
+      discoveryPath,
+      logger,
     })
   },
 })
@@ -95,5 +148,6 @@ export const CompareFlatSources = subcommands({
     all: CompareAllFlatSources,
     similar: MostSimilarFlatSources,
     project: CompareProjectSources,
+    ['source-on-source']: CompareProjectSourceOnSource,
   },
 })

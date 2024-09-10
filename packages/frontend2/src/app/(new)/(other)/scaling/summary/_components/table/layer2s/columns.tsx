@@ -1,14 +1,14 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
-import { PizzaRosetteCell } from '~/app/_components/rosette/pizza/pizza-rosette-cell'
-import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
-import { StageCell } from '~/app/_components/table/cells/stage/stage-cell'
+import { UpcomingBadge } from '~/components/badge/upcoming-badge'
+import { PizzaRosetteCell } from '~/components/rosette/pizza/pizza-rosette-cell'
+import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
+import { StageCell } from '~/components/table/cells/stage/stage-cell'
 import {
   TypeCell,
   TypeExplanationTooltip,
-} from '~/app/_components/table/cells/type-cell'
-import { getCommonProjectColumns } from '~/app/_components/table/common-project-columns'
-import { sortStages } from '~/app/_components/table/sorting/functions/stage-sorting'
+} from '~/components/table/cells/type-cell'
+import { getCommonProjectColumns } from '~/components/table/common-project-columns'
+import { sortStages } from '~/components/table/sorting/functions/stage-sorting'
 import { EM_DASH } from '~/consts/characters'
 import { formatPercent } from '~/utils/get-percentage-change'
 import { type ScalingSummaryTableRow } from '../../../_utils/to-table-rows'

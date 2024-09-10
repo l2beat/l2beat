@@ -1,5 +1,5 @@
 import { type EthereumAddress } from '@l2beat/shared-pure'
-import { OutLink } from '~/app/_components/out-link'
+import { OutLink } from '~/components/out-link'
 
 import OutLinkIcon from '~/icons/outlink.svg'
 import { formatAddress } from '~/utils/format-address'

@@ -1,10 +1,10 @@
 import { type Row, createColumnHelper } from '@tanstack/react-table'
-import { NoInfoCell } from '~/app/_components/table/cells/no-info-cell'
-import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
-import { RiskCell } from '~/app/_components/table/cells/risk-cell'
-import { TypeCell } from '~/app/_components/table/cells/type-cell'
-import { getCommonProjectColumns } from '~/app/_components/table/common-project-columns'
-import { sortSentiments } from '~/app/_components/table/sorting/functions/sentiment-sorting'
+import { NoInfoCell } from '~/components/table/cells/no-info-cell'
+import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
+import { RiskCell } from '~/components/table/cells/risk-cell'
+import { TypeCell } from '~/components/table/cells/type-cell'
+import { getCommonProjectColumns } from '~/components/table/common-project-columns'
+import { sortSentiments } from '~/components/table/sorting/functions/sentiment-sorting'
 import { type BridgesRiskEntry } from '~/server/features/bridges/get-bridge-risk-entries'
 
 const sortBridgeRisks =

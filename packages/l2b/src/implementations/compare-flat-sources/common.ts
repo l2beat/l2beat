@@ -1,11 +1,12 @@
-import { resolve } from 'path'
+import path, { resolve } from 'path'
 import {
   ConfigReader,
   HashedFileContent,
   buildSimilarityHashmap,
   estimateSimilarity,
-  removeComments,
+  format,
 } from '@l2beat/discovery'
+import { CliLogger } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { readFile, readdir } from 'fs/promises'
@@ -32,16 +33,24 @@ export function needsToBe(
   }
 }
 
-export async function computeStackSimilarity(discoveryPath: string): Promise<{
+export async function computeStackSimilarity(
+  logger: CliLogger,
+  discoveryPath: string,
+): Promise<{
   matrix: Record<string, Record<string, number>>
   projects: Project[]
 }> {
-  const configReader = new ConfigReader(discoveryPath)
+  const configReader = new ConfigReader(path.dirname(discoveryPath))
   const configs = configReader.readAllConfigs()
 
   const stackProject = await Promise.all(
     configs.map((config) =>
-      readProject(config.name, config.chain, discoveryPath),
+      readProject(
+        logger,
+        config.name,
+        config.chain,
+        path.dirname(discoveryPath),
+      ),
     ),
   )
   const projects = stackProject.filter((p) => p !== undefined) as Project[]
@@ -105,6 +114,7 @@ export function getMostSimilar(
 }
 
 export async function computeComparisonBetweenProjects(
+  logger: CliLogger,
   firstProjectPath: string,
   secondProjectPath: string,
   discoveryPath: string,
@@ -119,11 +129,13 @@ export async function computeComparisonBetweenProjects(
     decodeProjectPath(secondProjectPath)
 
   const firstProject = await readProject(
+    logger,
     firstProjectName,
     firstProjectChain,
     discoveryPath,
   )
   const secondProject = await readProject(
+    logger,
     secondProjectName,
     secondProjectChain,
     discoveryPath,
@@ -176,6 +188,7 @@ export function removeCommonPath(fileIds: FileId[]): FileId[] {
 }
 
 async function readProject(
+  logger: CliLogger,
   projectName: string,
   chain: string,
   discoveryPath: string,
@@ -185,7 +198,7 @@ async function readProject(
     const concatenatedSources = sources.map((source) => source.content).join('')
     const concatenatedSourceHashChunks =
       buildSimilarityHashmap(concatenatedSources)
-    console.log(`[ OK ] Reading ${projectName}`)
+    logger.updateStatus('readProject', `[ OK ] Reading ${projectName}`)
     return {
       name: projectName,
       chain,
@@ -197,7 +210,7 @@ async function readProject(
       sources,
     }
   } catch {
-    console.log(
+    logger.logLine(
       `[${chalk.red('FAIL')}] Reading ${projectName} - ${chalk.magenta(
         'run discovery to generate flat files',
       )}`,
@@ -219,7 +232,7 @@ async function getFlatSources(
   const contents: HashedFileContent[] = []
   for (const filePath of filesToCompare(filePaths)) {
     const rawContent = await readFile(filePath, 'utf-8')
-    const content = removeComments(rawContent)
+    const content = format(rawContent)
 
     contents.push({
       path: filePath,

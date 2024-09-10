@@ -3,7 +3,7 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { useScalingFilter } from '~/app/(new)/(other)/_components/scaling-filter-context'
-import { BasicTable } from '~/app/_components/table/basic-table'
+import { BasicTable } from '~/components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
 import { ScalingDaFilters } from '../scaling-da-filters'

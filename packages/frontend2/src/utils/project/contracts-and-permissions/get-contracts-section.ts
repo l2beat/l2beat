@@ -19,16 +19,16 @@ import {
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
 import { concat } from 'lodash'
-import { type ProjectSectionProps } from '~/app/_components/projects/sections/types'
+import { type ProjectSectionProps } from '~/components/projects/sections/types'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
 import {
   type TechnologyContract,
   type TechnologyContractAddress,
-} from '../../../app/_components/projects/sections/contract-entry'
-import { type ContractsSectionProps } from '../../../app/_components/projects/sections/contracts/contracts-section'
-import { type TechnologyReference } from '../../../app/_components/projects/sections/permissions/reference-list'
+} from '../../../components/projects/sections/contract-entry'
+import { type ContractsSectionProps } from '../../../components/projects/sections/contracts/contracts-section'
+import { type Reference } from '../../../components/projects/sections/reference-list'
 import { getChain } from './get-chain'
 import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
@@ -73,6 +73,7 @@ export function getContractsSection(
     )
     const implementationChangeForProject =
       implementationChange?.projects[projectParams.id]
+
     return makeTechnologyContract(
       contract,
       projectParams,
@@ -279,7 +280,7 @@ function makeTechnologyContract(
   }
 
   const areImplementationsUnverified = addresses
-    .filter((c) => !c.isAdmin)
+    .filter((c) => !c.isAdmin && c.verificationStatus !== 'unverified')
     .map((c) => verificationStatusForChain[c.address])
     .some((c) => c === false)
 
@@ -319,7 +320,7 @@ function makeTechnologyContract(
     addresses.map((a) => a.address).includes(ca.containingContract.toString()),
   )
 
-  const additionalReferences: TechnologyReference[] = []
+  const additionalReferences: Reference[] = []
   addresses.forEach((address) => {
     const manuallyVerified = manuallyVerifiedContractsForChain[address.address]
     if (manuallyVerified) {

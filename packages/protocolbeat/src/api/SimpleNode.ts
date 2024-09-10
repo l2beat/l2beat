@@ -3,6 +3,7 @@ import type { DiscoveryContract, DiscoveryEoa } from './paseDiscovery'
 interface SimpleNodeShared {
   id: string
   name: string
+  proxyType?: string
   discovered: boolean
   fields: {
     name: string

@@ -8,16 +8,18 @@ import {
   getSortedRowModel,
 } from '@tanstack/react-table'
 import Link from 'next/link'
-import { BasicTable } from '~/app/_components/table/basic-table'
-import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
-import { RiskCell } from '~/app/_components/table/cells/risk-cell'
-import { FilterWrapper } from '~/app/_components/table/filters/filter-wrapper'
-import { TableFacetedFilter } from '~/app/_components/table/filters/table-faceted-filter'
-import { TableCell } from '~/app/_components/table/table'
+import { useMemo } from 'react'
+import { BasicTable } from '~/components/table/basic-table'
+import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
+import { RiskCell } from '~/components/table/cells/risk-cell'
 import { useBreakpoint } from '~/hooks/use-is-mobile'
 import { useTable } from '~/hooks/use-table'
 import { type DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
 import { cn } from '~/utils/cn'
+import { DaTableLastSubRowCell } from '../../../_components/da-table-last-sub-row-cell'
+import { DaTableSubRowCell } from '../../../_components/da-table-sub-row-cell'
+import { useDaFilter } from '../../../_components/filters/da-filter-context'
+import { DaFilters } from '../../../_components/filters/da-filters'
 import { columns } from './columns'
 
 interface Props {
@@ -25,11 +27,17 @@ interface Props {
 }
 
 export function DaRiskTable({ items }: Props) {
+  const filter = useDaFilter()
+
+  const filteredEntries = useMemo(() => {
+    return items.filter(filter)
+  }, [items, filter])
+
   const breakpoint = useBreakpoint()
+
   const table = useTable({
-    data: items,
+    data: filteredEntries,
     columns,
-    getSubRows: () => [],
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -52,9 +60,7 @@ export function DaRiskTable({ items }: Props) {
 
   return (
     <>
-      <FilterWrapper>
-        <TableFacetedFilter title="DA Layer" column={table.getColumn('name')} />
-      </FilterWrapper>
+      <DaFilters items={filteredEntries} />
       <BasicTable
         table={table}
         rowColoringMode="ethereum-only"
@@ -102,31 +108,31 @@ export function DaRiskTable({ items }: Props) {
                         </div>
                       </Link>
                     </td>
-                    <SubRowTableCell href={href} lastRow={lastRow}>
+                    <DaTableSubRowCell href={href} lastRow={lastRow}>
                       <RiskCell
                         risk={subRow.risks.economicSecurity}
                         emptyMode="em-dash"
                       />
-                    </SubRowTableCell>
-                    <SubRowTableCell href={href} lastRow={lastRow}>
+                    </DaTableSubRowCell>
+                    <DaTableSubRowCell href={href} lastRow={lastRow}>
                       <RiskCell
                         risk={subRow.risks.fraudDetection}
                         emptyMode="em-dash"
                       />
-                    </SubRowTableCell>
-                    <SubRowTableCell href={href} lastRow={lastRow}>
+                    </DaTableSubRowCell>
+                    <DaTableSubRowCell href={href} lastRow={lastRow}>
                       <RiskCell
                         risk={subRow.risks.attestations}
                         emptyMode="em-dash"
                       />
-                    </SubRowTableCell>
-                    <SubRowTableCell href={href} lastRow={lastRow}>
+                    </DaTableSubRowCell>
+                    <DaTableSubRowCell href={href} lastRow={lastRow}>
                       <RiskCell
                         risk={subRow.risks.exitWindow}
                         emptyMode="em-dash"
                       />
-                    </SubRowTableCell>
-                    <LastSubRowTableCell
+                    </DaTableSubRowCell>
+                    <DaTableLastSubRowCell
                       href={href}
                       firstRow={firstRow}
                       lastRow={lastRow}
@@ -135,7 +141,7 @@ export function DaRiskTable({ items }: Props) {
                         risk={subRow.risks.accessibility}
                         emptyMode="em-dash"
                       />
-                    </LastSubRowTableCell>
+                    </DaTableLastSubRowCell>
                   </tr>
                 )
               })}
@@ -147,56 +153,5 @@ export function DaRiskTable({ items }: Props) {
         }}
       />
     </>
-  )
-}
-
-function LastSubRowTableCell({
-  href,
-  children,
-  firstRow,
-  lastRow,
-}: {
-  href: string
-  children: React.ReactNode
-  firstRow: boolean
-  lastRow: boolean
-}) {
-  return (
-    <td
-      className={cn(
-        'group whitespace-pre bg-black/[0.05] group-hover:bg-black/[0.1] dark:bg-white/[0.1] dark:group-hover:bg-white/[0.2]',
-        firstRow && 'rounded-tr-xl',
-        lastRow && 'rounded-br-xl',
-        !lastRow && 'border-b border-b-gray-200 dark:border-b-zinc-700 ',
-      )}
-    >
-      <Link href={href}>
-        <div className="flex size-full items-center">{children}</div>
-      </Link>
-    </td>
-  )
-}
-
-function SubRowTableCell({
-  href,
-  children,
-  lastRow,
-}: {
-  href: string
-  children: React.ReactNode
-  className?: string
-  lastRow?: boolean
-}) {
-  return (
-    <td
-      className={cn(
-        'size-full whitespace-pre bg-black/[0.05] pr-3 group-hover:bg-black/[0.1] dark:bg-white/[0.1] dark:group-hover:bg-white/[0.2]',
-        !lastRow && 'border-b border-b-gray-200 dark:border-b-zinc-700',
-      )}
-    >
-      <Link href={href}>
-        <div className="flex size-full items-center">{children}</div>
-      </Link>
-    </td>
   )
 }

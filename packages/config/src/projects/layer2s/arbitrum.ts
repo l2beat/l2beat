@@ -584,7 +584,7 @@ export const arbitrum: Layer2 = orbitStackL2({
       date: '2022-06-29T00:00:00Z',
       description:
         'Due of the heavy load being put on the chain, Odyssey program got paused.',
-      type: 'general',
+      type: 'incident',
     },
     {
       name: 'Odyssey started',

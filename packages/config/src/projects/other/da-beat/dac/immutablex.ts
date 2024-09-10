@@ -1,34 +1,86 @@
-import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
-import { DaLayer } from '../types/DaLayer'
-import { immutableXDac } from './bridges/immutablex'
+import { ChainId } from '@l2beat/shared-pure'
+import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
+import { getCommittee } from '../../../../discovery/starkware'
+import { immutablex } from '../../../layer2s/immutablex'
+import { DAC } from '../templates/dac-template'
+import { DaAttestationSecurityRisk } from '../types'
+import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
-export const immutableXLayer: DaLayer = {
-  id: 'immutablex-dac-layer',
-  type: 'DaLayer',
-  kind: 'DAC',
-  display: {
-    name: 'Data Availability Committee (DAC)',
-    slug: 'immutablex',
-    description:
-      'Set of parties responsible for signing and attesting to the availability of data.',
-    links: {
-      websites: [],
-      documentation: [],
-      repositories: [],
-      apps: [],
-      explorers: [],
-      socialMedia: [],
+const discovery = new ProjectDiscovery('immutablex')
+const committee = getCommittee(discovery)
+
+export const immutableXDac = DAC({
+  project: immutablex,
+  links: {
+    websites: ['https://immutablex.xyz/'],
+    documentation: ['https://docs.immutablex.xyz/'],
+    repositories: ['https://github.com/Immutablex/immutablex'],
+    apps: ['https://app.immutable.com/'],
+    explorers: ['https://explorer.immutable.com/'],
+  },
+  bridge: {
+    contracts: {
+      addresses: [
+        discovery.getContractDetails(
+          'Committee',
+          'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
+        ),
+      ],
+      risks: [],
+    },
+    permissions: [
+      {
+        name: 'Committee Members',
+        description: `List of addresses authorized to sign data commitments for the DA bridge.`,
+        accounts: committee.accounts.map((operator) => ({
+          address: operator.address,
+          type: 'EOA',
+        })),
+      },
+    ],
+    chain: ChainId.ETHEREUM,
+    requiredMembers: committee.minSigners,
+    totalMembers: committee.accounts.length,
+    transactionDataType: DacTransactionDataType.StateDiffs,
+    members: {
+      type: 'public',
+      list: [
+        {
+          name: 'Immutable',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+        {
+          name: 'StarkWare',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+        {
+          name: 'Deversifi',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+        {
+          name: 'Consensys',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+        {
+          name: 'Nethermind',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+        {
+          name: 'Iqlusion',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+        {
+          name: 'Infura',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+        {
+          name: 'Cephalopod',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+      ],
     },
   },
-  technology: `## Simple Committee
-  The Data Availability Committee (DAC) is a set of trusted parties responsible for storing data off-chain and serving it upon demand. 
-  The security guarantees of DACs depend on the specific setup and can vary significantly based on the criteria for selecting committee members, 
-  their operational transparency, and the mechanisms in place to handle disputes and failures.
-  `,
-  bridges: [immutableXDac],
-  usedIn: [...immutableXDac.usedIn],
   risks: {
-    economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
-    fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
+    attestations: DaAttestationSecurityRisk.SigVerified(true),
   },
-}
+})

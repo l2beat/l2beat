@@ -5,8 +5,8 @@ import {
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
 import { isEmpty } from 'lodash'
-import { type ProjectDetailsSection } from '~/app/_components/projects/sections/types'
-import { type RosetteValue } from '~/app/_components/rosette/types'
+import { type ProjectDetailsSection } from '~/components/projects/sections/types'
+import { type RosetteValue } from '~/components/rosette/types'
 import { api } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
@@ -16,6 +16,7 @@ import { getOperatorSection } from '~/utils/project/technology/get-operator-sect
 import { getOtherConsiderationsSection } from '~/utils/project/technology/get-other-considerations-section'
 import { getScalingTechnologySection } from '~/utils/project/technology/get-technology-section'
 import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawals-section'
+import { getTokensForProject } from '../../tvl/tokens/get-tokens-for-project'
 
 interface Params {
   project: Layer2
@@ -86,6 +87,7 @@ export async function getL2ProjectDetails({
     project.milestones?.sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
     ) ?? []
+  const tokens = await getTokensForProject(project)
 
   const items: ProjectDetailsSection[] = []
 
@@ -98,6 +100,7 @@ export async function getL2ProjectDetails({
         title: 'Value Locked',
         projectId: project.id,
         milestones: sortedMilestones,
+        tokens,
       },
     })
   }
@@ -280,6 +283,7 @@ export async function getL2ProjectDetails({
           type: 'upgrades-and-governance',
           slug: project.display.slug,
         },
+        mdClassName: 'text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
         isUnderReview: project.isUnderReview,
         includeChildrenIfUnderReview: true,
       },

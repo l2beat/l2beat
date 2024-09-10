@@ -1,8 +1,8 @@
 import { posix } from 'path'
+import { formatSI, getThroughput, timed } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { FileContent } from '../../flatten/ParsedFilesManager'
 import { flattenStartingFrom } from '../../flatten/flatten'
-import { formatSI, getThroughput, timed } from '../../utils/timing'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { Analysis } from '../analysis/AddressAnalyzer'
 
@@ -108,7 +108,10 @@ function addSolidityVersionComment(
   solidityVersion: string,
   flatSource: string,
 ): string {
-  return `// Compiled with solc version: ${solidityVersion}\n\n${flatSource}`
+  // v1.2.3+commit.1234
+  const version = solidityVersion.slice(1).split('+')[0]
+  const license = `// SPDX-License-Identifier: Unknown\n`
+  return `${license}pragma solidity ${version};\n\n${flatSource}`
 }
 
 function formatThroughput(

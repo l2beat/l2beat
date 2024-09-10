@@ -64,6 +64,7 @@ export interface ResolvedPermission {
   permission: PermissionType
   target: EthereumAddress
   delay?: number
+  description?: string
   via?: ResolvedPermissionPath[]
 }
 

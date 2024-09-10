@@ -21,6 +21,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { PROOFS } from '../other/zk-catalog/common/proofSystems'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -584,8 +585,7 @@ export const zksyncera: Layer2 = {
         The *SecurityCouncil* role can execute arbitrary upgrade transactions immediately. 
         Currently the delay is set to ${formatSeconds(
           discovery.getContractValue<number>('Governance', 'minDelay'),
-        )}
-        ${isSCset ? '.' : ' and the *SecurityCouncil* role is not used.'}`,
+        )} ${isSCset ? '.' : ' and the *SecurityCouncil* role is not used.'}`,
         ...upgrades,
       }),
       discovery.getContractDetails('ChainAdmin', {
@@ -678,10 +678,7 @@ export const zksyncera: Layer2 = {
           subVerifiers: [
             {
               name: 'Final wrap',
-              proofSystem: 'Plonk SNARK',
-              mainArithmetization: 'Plonkish',
-              mainPCS: 'KZG',
-              trustedSetup: 'Aztec ceremony',
+              ...PROOFS.PLONKSNARK('Aztec ceremony'),
               link: 'https://github.com/matter-labs/era-zkevm_test_harness/blob/v1.5.0/circuit_definitions/src/circuit_definitions/aux_layer/wrapper.rs',
             },
             {

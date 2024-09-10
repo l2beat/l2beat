@@ -1,16 +1,16 @@
 import Image from 'next/image'
 import { type ReactNode } from 'react'
 
-import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 
 import Link from 'next/link'
-import { Markdown } from '~/app/_components/markdown/markdown'
-import { OutLink } from '~/app/_components/out-link'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip'
+} from '~/components/core/tooltip/tooltip'
+import { Markdown } from '~/components/markdown/markdown'
+import { OutLink } from '~/components/out-link'
 import InfoIcon from '~/icons/info.svg'
 import { type ZkCatalogProofVerification } from '../../_utils/types'
 import { ProjectHeader } from './project-header'

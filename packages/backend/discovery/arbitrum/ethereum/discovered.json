@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "chain": "ethereum",
-  "blockNumber": 20627159,
+  "blockNumber": 20669257,
   "configHash": "0xb9167872259286ee8a64857a8c2385b76b15f5e4732ad3d9ad0c1083b7178613",
   "version": 14,
   "contracts": [
@@ -131,7 +131,7 @@
         "$admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD",
         "$implementation": "0x31DA64D19Cd31A19CD09F4070366Fe2144792cf7",
         "$upgradeCount": 5,
-        "batchCount": 681590,
+        "batchCount": 685277,
         "batchPosterManager": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -153,7 +153,7 @@
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1669368,
+        "totalDelayedMessagesRead": 1675649,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -431,12 +431,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 16427,
+        "firstUnresolvedNode": 16568,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 16426,
-        "latestNodeCreated": 16578,
+        "latestConfirmed": 16567,
+        "latestNodeCreated": 16719,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -677,11 +677,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 1669378,
+        "delayedMessageCount": 1675659,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 681590,
-        "sequencerReportedSubMessageCount": 225387379
+        "sequencerMessageCount": 685277,
+        "sequencerReportedSubMessageCount": 227406408
       },
       "derivedName": "Bridge"
     },

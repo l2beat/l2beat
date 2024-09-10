@@ -1,13 +1,13 @@
 import { type TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
-import { Badge } from '~/app/_components/badge/badge'
-import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
-import { Skeleton } from '~/app/_components/skeleton'
+import { Badge } from '~/components/badge/badge'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { Skeleton } from '~/components/core/skeleton'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip'
-import { WarningBar } from '~/app/_components/warning-bar'
+} from '~/components/core/tooltip/tooltip'
+import { WarningBar } from '~/components/warning-bar'
 import { useIsClient } from '~/hooks/use-is-client'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { type LivenessDataPoint } from '~/server/features/scaling/liveness/types'

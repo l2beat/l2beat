@@ -1,17 +1,17 @@
 import { type WarningWithSentiment } from '@l2beat/config'
 
 import { assertUnreachable } from '@l2beat/shared-pure'
-import { NoDataBadge } from '~/app/_components/badge/no-data-badge'
-import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
-import { CostsBreakdown } from '~/app/_components/breakdown/costs-breakdown'
-import { Callout } from '~/app/_components/callout'
-import { DetailedOnHover } from '~/app/_components/detailed-on-hover'
-import { Skeleton } from '~/app/_components/skeleton'
+import { NoDataBadge } from '~/components/badge/no-data-badge'
+import { UpcomingBadge } from '~/components/badge/upcoming-badge'
+import { CostsBreakdown } from '~/components/breakdown/costs-breakdown'
+import { Callout } from '~/components/callout'
+import { Skeleton } from '~/components/core/skeleton'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip'
+} from '~/components/core/tooltip/tooltip'
+import { DetailedOnHover } from '~/components/detailed-on-hover'
 import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { formatCostValue } from '../_utils/format-cost-value'

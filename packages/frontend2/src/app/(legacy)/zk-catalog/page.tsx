@@ -1,5 +1,5 @@
 import { type Metadata } from 'next'
-import { ContentWrapper } from '~/app/_components/content-wrapper'
+import { ContentWrapper } from '~/components/content-wrapper'
 import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ZkCatalogPage } from './_components/zk-catalog-page'
