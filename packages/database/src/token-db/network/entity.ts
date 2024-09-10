@@ -1,5 +1,5 @@
 import { Insertable, Selectable } from 'kysely'
-import { Network } from '../../kysely/token-db/types'
+import { Network } from '../../kysely/generated/types'
 
 export interface NetworkRecord {
   id: string
@@ -11,6 +11,7 @@ export interface NetworkRecord {
   orbitId: string | null
   wormholeId: string | null
   layerZeroV1EndpointAddress: string | null
+  logoUrl: string | null
   updatedAt: Date
   createdAt: Date
 }

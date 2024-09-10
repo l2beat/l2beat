@@ -1,5 +1,5 @@
 import { Insertable, Selectable } from 'kysely'
-import { Cache } from '../../kysely/token-db/types'
+import { Cache } from '../../kysely/generated/types'
 
 export interface CacheRecord {
   key: string
