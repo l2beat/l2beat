@@ -88,7 +88,7 @@ function getMockTvlChartData({ range }: TvlChartDataParams): TvlChartData {
     resolution === 'hourly' ? 'hour' : 'day',
   )
   const from =
-    days !== Infinity ? target.add(-days, 'days') : target.add(-730, 'days')
+    days !== Infinity ? target.add(-days, 'days') : new UnixTime(1573776000)
   const timestamps = generateTimestamps([from, target], resolution)
 
   return timestamps.map((timestamp) => {
