@@ -22,6 +22,7 @@ export interface ProjectCellProps {
     warning?: string
     data?: { syncStatus?: SyncStatus }
   }
+  hideWarning?: boolean
   type?: 'layer2' | 'layer3' | 'bridge'
   showIsL3?: boolean
   className?: string
@@ -29,6 +30,7 @@ export interface ProjectCellProps {
 
 export function ProjectNameCell({
   project,
+  hideWarning,
   showIsL3,
   type,
   className,
@@ -83,7 +85,7 @@ export function ProjectNameCell({
           </Tooltip>
         </span>
       )}
-      {project.warning && (
+      {project.warning && !hideWarning && (
         <span className="pl-1.5">
           <Tooltip>
             <TooltipTrigger>

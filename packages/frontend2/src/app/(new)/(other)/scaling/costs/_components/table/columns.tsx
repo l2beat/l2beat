@@ -40,7 +40,7 @@ const columnHelper = createColumnHelper<ScalingCostsTableEntry>()
 export const scalingCostsColumns = [
   ...getCommonProjectColumns(columnHelper),
   columnHelper.accessor('name', {
-    cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
+    cell: (ctx) => <ProjectNameCell hideWarning project={ctx.row.original} />,
   }),
   columnHelper.group({
     id: 'total-cost',
