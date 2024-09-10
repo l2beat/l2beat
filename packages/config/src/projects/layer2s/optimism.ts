@@ -9,6 +9,8 @@ import {
   ContractParameters,
   get$Implementations,
 } from '@l2beat/discovery-types'
+import { BigNumber } from 'ethers'
+import { formatEther } from 'ethers/lib/utils'
 import {
   DERIVATION,
   EXITS,
@@ -27,8 +29,6 @@ import { HARDCODED } from '../../discovery/values/hardcoded'
 import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { Layer2 } from './types'
-import { formatEther } from 'ethers/lib/utils'
-import { BigNumber } from 'ethers'
 
 const discovery = new ProjectDiscovery('optimism')
 const l2Discovery = new ProjectDiscovery('optimism', 'optimism')
