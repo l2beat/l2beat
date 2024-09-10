@@ -78,10 +78,9 @@ const getCachedImplementationChangeReport = cache(
 
     return result
   },
-  ['implementationChangeReport', env.VERCEL_GIT_COMMIT_SHA],
-  { revalidate: 1 }, // 1 second
+  [`implementationChangeReport-${env.VERCEL_GIT_COMMIT_SHA}`],
   // This is calculated from project files, so we can cache indefinitely for the same GIT_COMMIT_SHA.
-  // { revalidate: false },
+  { revalidate: false },
 )
 
 function chainNameToId(chainName: string): ChainId {
