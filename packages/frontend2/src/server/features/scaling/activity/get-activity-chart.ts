@@ -4,6 +4,7 @@ import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
+import { env } from '~/env'
 import { db } from '~/server/database'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import {
@@ -12,13 +13,23 @@ import {
 } from './utils/project-filter-utils'
 import { type ActivityTimeRange } from './utils/range'
 
+/**
+ * Returns a chart data of the activity over time.
+ * @returns [timestamp (number), count (number), ethereumCount (number)]
+ */
 export function getActivityChart(
   ...parameters: Parameters<typeof getCachedActivityChart>
 ) {
+  if (env.MOCK) {
+    return getMockActivityChart(...parameters)
+  }
   noStore()
   return getCachedActivityChart(...parameters)
 }
 
+export type ActivityChartData = Awaited<
+  ReturnType<typeof getCachedActivityChart>
+>
 const getCachedActivityChart = cache(
   async (filter: ActivityProjectFilter, range: ActivityTimeRange) => {
     const projects = [...layer2s, ...layer3s]
@@ -36,10 +47,7 @@ const getCachedActivityChart = cache(
     )
 
     if (startIndex === -1) {
-      return {
-        types: ['timestamp', 'count', 'ethereumCount'] as const,
-        data: [],
-      }
+      return []
     }
 
     const aggregatedEntries = entries.slice(startIndex).reduce(
@@ -80,11 +88,21 @@ const getCachedActivityChart = cache(
           ] as const,
       )
 
-    return {
-      types: ['timestamp', 'count', 'ethereumCount'] as const,
-      data: result,
-    }
+    return result
   },
   ['activityChart'],
   { revalidate: UnixTime.HOUR },
 )
+
+function getMockActivityChart(
+  _: ActivityProjectFilter,
+  timeRange: ActivityTimeRange,
+) {
+  const range = getFullySyncedActivityRange(timeRange)
+
+  const timestamps = range.map((timestamp) => timestamp.toNumber())
+
+  return timestamps.map(
+    (timestamp) => [timestamp, Math.random(), Math.random()] as const,
+  )
+}

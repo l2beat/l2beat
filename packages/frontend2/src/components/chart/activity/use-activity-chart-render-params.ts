@@ -1,13 +1,13 @@
 import { type Milestone } from '@l2beat/config'
 import { useCallback, useMemo } from 'react'
-import { type RouterOutputs } from '~/trpc/react'
+import { type ActivityChartData } from '~/server/features/scaling/activity/get-activity-chart'
 import { formatTpsWithUnit } from '~/utils/format-tps'
 import { type SeriesStyle } from '../core/styles'
 import { mapMilestones } from '../core/utils/map-milestones'
 
 interface Params {
   milestones: Milestone[]
-  chart: RouterOutputs['activity']['chart']['data'] | undefined
+  chart: ActivityChartData | undefined
   showMainnet: boolean
 }
 

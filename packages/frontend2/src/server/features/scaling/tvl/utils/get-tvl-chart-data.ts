@@ -36,9 +36,7 @@ export async function getTvlChartData(
   return getCachedTvlChartData(...args)
 }
 
-export type ScalingSummaryData = Awaited<
-  ReturnType<typeof getCachedTvlChartData>
->
+export type TvlChartData = Awaited<ReturnType<typeof getCachedTvlChartData>>
 export const getCachedTvlChartData = cache(
   async ({ range, excludeAssociatedTokens, filter }: TvlChartDataParams) => {
     const projectsFilter = createTvlProjectsFilter(filter)
@@ -80,9 +78,7 @@ export const getCachedTvlChartData = cache(
   { revalidate: 10 * UnixTime.MINUTE },
 )
 
-function getMockTvlChartData({
-  range,
-}: TvlChartDataParams): ScalingSummaryData {
+function getMockTvlChartData({ range }: TvlChartDataParams): TvlChartData {
   const { days, resolution } = getRangeConfig(range)
   const target = getTvlTargetTimestamp().toStartOf(
     resolution === 'hourly' ? 'hour' : 'day',

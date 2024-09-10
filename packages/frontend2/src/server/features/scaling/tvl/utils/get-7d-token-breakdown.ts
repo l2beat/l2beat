@@ -12,10 +12,10 @@ import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
 export function get7dTokenBreakdown(
   ...parameters: Parameters<typeof getCached7dTokenBreakdown>
 ) {
-  noStore()
   if (env.MOCK) {
     return getMock7dTokenBreakdown()
   }
+  noStore()
   return getCached7dTokenBreakdown(...parameters)
 }
 
