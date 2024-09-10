@@ -6,6 +6,8 @@ import {
 } from 'next/cache'
 import { env } from '~/env'
 import { db } from '~/server/database'
+import { getRangeWithMax } from '~/utils/range/range'
+import { generateTimestamps } from '../../utils/generate-timestamps'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import {
   type ActivityProjectFilter,
@@ -97,12 +99,13 @@ const getCachedActivityChart = cache(
 function getMockActivityChart(
   _: ActivityProjectFilter,
   timeRange: ActivityTimeRange,
-) {
-  const range = getFullySyncedActivityRange(timeRange)
+): ActivityChartData {
+  const [from, to] = getRangeWithMax(timeRange, 'daily')
+  const adjustedRange: [UnixTime, UnixTime] = [
+    from ? from : to.add(-730, 'days'),
+    to,
+  ]
+  const timestamps = generateTimestamps(adjustedRange, 'daily')
 
-  const timestamps = range.map((timestamp) => timestamp.toNumber())
-
-  return timestamps.map(
-    (timestamp) => [timestamp, Math.random(), Math.random()] as const,
-  )
+  return timestamps.map((timestamp) => [+timestamp, 15, 11])
 }
