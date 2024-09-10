@@ -27,6 +27,7 @@ import { HARDCODED } from '../../discovery/values/hardcoded'
 import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { Layer2 } from './types'
+import { formatEther } from 'ethers/lib/utils'
 
 const discovery = new ProjectDiscovery('optimism')
 const l2Discovery = new ProjectDiscovery('optimism', 'optimism')
@@ -93,6 +94,42 @@ const respectedGameType = discovery.getContractValue<number>(
 )
 
 const gameTypes = ['FaultDisputeGame', 'PermissionedDisputeGame']
+
+const permissionlessDisputeGameBonds = discovery.getContractValue<number[]>(
+  'DisputeGameFactory',
+  'initBonds',
+)[0]
+
+const permissionlessGameClockExtension = discovery.getContractValue<number>(
+  'FaultDisputeGame',
+  'clockExtension',
+)
+
+const exponentialBondsFactor = 1.09493 // hardcoded, from https://specs.optimism.io/fault-proof/stage-one/bond-incentives.html?highlight=1.09493#bond-scaling
+
+const permissionlessGameMaxDepth = discovery.getContractValue<number>(
+  'FaultDisputeGame',
+  'maxGameDepth',
+)
+
+const permissionlessGameSplitDepth = discovery.getContractValue<number>(
+  'FaultDisputeGame',
+  'splitDepth',
+)
+
+const permissionlessGameFullCost = (() => {
+  let cost = 0
+  for (let i = 0; i < permissionlessGameMaxDepth; i++) {
+    cost += Math.pow(exponentialBondsFactor, i) * permissionlessDisputeGameBonds
+  }
+  return cost
+})()
+
+const permissionlessGameMaxClockExtension =
+  permissionlessGameSplitDepth * permissionlessGameClockExtension +
+  (permissionlessGameMaxDepth - permissionlessGameSplitDepth) *
+    maxClockDuration *
+    2
 
 export const optimism: Layer2 = {
   isUnderReview: true,
@@ -435,6 +472,31 @@ export const optimism: Layer2 = {
     ...DERIVATION.OPSTACK('OP_MAINNET'),
     genesisState:
       'Since OP Mainnet has migrated from the OVM to Bedrock, a node must be synced using a data directory that can be found [here](https://community.optimism.io/docs/useful-tools/networks/#links). To reproduce the migration itself, see this [guide](https://blog.oplabs.co/reproduce-bedrock-migration/).',
+  },
+  stateValidation: {
+    description:
+      'Updates to the system state can be proposed and challenged by anyone who has sufficient funds. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.',
+    categories: [
+      {
+        title: 'State root proposals',
+        description: `Proposers submit state roots as children of the latest confirmed state root (called anchor state), by calling the \`create\` function in the DisputeGameFactory. A state root can have multiple conflicting children. Each proposal requires a stake, currently set to ${formatEther(
+          permissionlessDisputeGameBonds,
+        )} ETH, that can be slashed if the proposal is proven incorrect via a fraud proof. Stakes can be withdrawn only after the proposal has been confirmed.`,
+      },
+      {
+        title: 'Challenges',
+        description: `Challenges are started to disprove invalid state roots using bisection games. Each move requires a stake that increases expontentially with the depth of the bisection with a factor of ${exponentialBondsFactor}. The maximum depth is ${permissionlessGameMaxDepth}, and reaching it requires a cumulative stake of ${formatEther(
+          permissionlessGameFullCost,
+        )} ETH. Actors can participate in any challenge by calling the \`attack\` or \`defend\` functions, depending whether they agree or disagree with the claim and want to move the bisection game forward.
+        Actors might be involved in multiple (sub-)challenges at the same time. Each claim has a clock of ${formatSeconds(
+          maxClockDuration,
+        )}. If a clock time expires, the claim is considered defeated if it was countered, or it gets confirmed if uncountered. If a clock time has less than ${formatSeconds(
+          permissionlessGameClockExtension,
+        )}, it gets extended by ${formatSeconds(
+          permissionlessGameClockExtension,
+        )} up to depth ${permissionlessGameSplitDepth}, and double that up the max depth. The maximum clock extensions that a top level claim can get is therefore ${permissionlessGameMaxClockExtension}. The protocol does not enforces valid bisections, meaning that actors can propose correct initial claims and then provide incorrect midpoints.`,
+      },
+    ],
   },
   stage: {
     stage: 'UnderReview',
