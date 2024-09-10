@@ -28,6 +28,7 @@ export function getCommonScalingEntry(
       provider: undefined,
       purposes: [],
       warning: undefined,
+      headerWarning: undefined,
       redWarning: undefined,
       isVerified: true,
       showProjectUnderReview: false,
