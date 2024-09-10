@@ -86,7 +86,7 @@ function SidebarForSingleNode({
         <code>{JSON.stringify(node.data, null, 2)}</code>
       </pre>
 
-      <p>
+      <p className="flex gap-2">
         <button
           className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
           type="button"
@@ -94,6 +94,23 @@ function SidebarForSingleNode({
         >
           Delete
         </button>
+
+        {node.proxyType === 'gnosis safe' && (
+          <button
+            className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+            type="button"
+            onClick={() => {
+              const members = node.fields
+                .filter((f) => f.name.startsWith('$members'))
+                .map((f) => f.connection)
+                .filter((c) => c !== undefined)
+
+              onDeleteNodes(members)
+            }}
+          >
+            Delete members
+          </button>
+        )}
       </p>
     </>
   )

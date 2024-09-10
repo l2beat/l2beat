@@ -10,6 +10,7 @@ export function transformContracts(discovery: DiscoveryOutput): SimpleNode[] {
       type: 'Contract',
       id: contract.address,
       name: emojifyContractName(contract),
+      proxyType: contract.proxyType,
       discovered: true,
       fields: mapFields(contract.values).filter(
         (x) => !x.connection || !implementations.includes(x.connection),
@@ -83,8 +84,12 @@ function isAddress(value: string): boolean {
 }
 
 function emojifyContractName(contract: DiscoveryContract): string {
-  if (contract.name === 'GnosisSafe') {
-    return '🔐 Gnosis Safe'
+  if (contract.proxyType === 'gnosis safe') {
+    const threshold = contract.values?.['$threshold'] as number
+    const members = (contract.values?.['$members'] as string[]).length
+    const percentage = ((threshold / members) * 100).toFixed(0)
+
+    return `🔐 ${contract.name} [${threshold}/${members} @ ${percentage}%]`
   }
 
   if (contract.values?.$immutable !== true) {
