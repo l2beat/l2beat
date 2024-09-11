@@ -1,20 +1,30 @@
+import { bridges } from '@l2beat/config'
+import { layer2s } from '@l2beat/config/build/src/projects/layer2s'
+import { layer3s } from '@l2beat/config/build/src/projects/layer3s'
 import { UnixTime } from '@l2beat/shared-pure'
 import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
+import { env } from '~/env'
 import { getTvlBreakdown } from './get-tvl-breakdown'
 import { getTvlProjects } from './get-tvl-projects'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
 
 export function get7dTvlBreakdown(
-  ...parameters: Parameters<typeof getDetailed7dTvlBreakdown>
+  ...parameters: Parameters<typeof getCached7dTvlBreakdown>
 ) {
+  if (env.MOCK) {
+    return getMockTvlBreakdown()
+  }
   noStore()
-  return getDetailed7dTvlBreakdown(...parameters)
+  return getCached7dTvlBreakdown(...parameters)
 }
 
-export const getDetailed7dTvlBreakdown = cache(
+export type SevenDayTvlBreakdown = Awaited<
+  ReturnType<typeof getCached7dTvlBreakdown>
+>
+const getCached7dTvlBreakdown = cache(
   async () => {
     const tvlValues = await getTvlValuesForProjects(
       getTvlProjects().filter(
@@ -82,4 +92,32 @@ export const getDetailed7dTvlBreakdown = cache(
   },
 )
 
-export type DetailedLatestTvl = Awaited<ReturnType<typeof get7dTvlBreakdown>>
+function getMockTvlBreakdown(): SevenDayTvlBreakdown {
+  return {
+    total: 1000,
+    projects: Object.fromEntries(
+      [...layer2s, ...layer3s, ...bridges].map((project) => [
+        project.id,
+        {
+          total: 60,
+          totalChange: 0.4,
+          breakdown: {
+            canonical: 30,
+            native: 20,
+            external: 10,
+            associated: {
+              native: 1,
+              canonical: 2,
+              external: 3,
+            },
+          },
+          change: {
+            canonical: 0.5,
+            native: 0.25,
+            external: 0.25,
+          },
+        },
+      ]),
+    ),
+  }
+}
