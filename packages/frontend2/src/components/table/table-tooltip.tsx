@@ -1,4 +1,4 @@
-import InfoIcon from '~/icons/info.svg'
+import { InfoIcon } from '~/icons/info'
 import {
   Tooltip,
   TooltipContent,

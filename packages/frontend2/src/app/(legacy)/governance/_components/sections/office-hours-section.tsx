@@ -1,9 +1,7 @@
-import React from 'react'
-
 import { Button } from '~/components/core/button'
 import { PlainLink } from '~/components/plain-link'
 import { cn } from '~/utils/cn'
-import OfficeHoursIllustration from '../../_assets/office-hours.svg'
+import { OfficeHoursIllustration } from '../../_assets/office-hours-illustration'
 import { GovernanceCard, GovernanceCardHeader } from '../governance-card'
 
 interface Props {
@@ -23,11 +21,7 @@ export function OfficeHoursSection({ className }: Props) {
           To promote transparency and communication as delegates, we&apos;re
           hosting recurring Office Hours on Google Meets.
         </p>
-        <OfficeHoursIllustration
-          width={400}
-          height={82}
-          className="mt-4 w-full"
-        />
+        <OfficeHoursIllustration className="mt-4 w-full" />
         <p className="mt-4 text-sm">
           During the Office Hours, anyone is able to reach L2BEAT&apos;s
           governance team, which consists of{' '}

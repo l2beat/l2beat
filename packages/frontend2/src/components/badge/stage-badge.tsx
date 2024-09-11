@@ -1,4 +1,5 @@
 import { type Stage } from '@l2beat/config'
+
 import { cn } from '~/utils/cn'
 
 export interface StageBadgeProps {

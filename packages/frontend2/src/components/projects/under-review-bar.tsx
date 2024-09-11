@@ -1,6 +1,4 @@
-import React from 'react'
-
-import UnderReviewIcon from '~/icons/under-review.svg'
+import { UnderReviewIcon } from '~/icons/under-review'
 
 export function UnderReviewBar({ text }: { text: string }) {
   return (

@@ -1,8 +1,8 @@
 'use client'
 import { useIsClient } from '~/hooks/use-is-client'
 import { useLocalStorage } from '~/hooks/use-local-storage'
-import ArrowRightIcon from '~/icons/arrow-right.svg'
-import CloseIcon from '~/icons/close.svg'
+import { ArrowRightIcon } from '~/icons/arrow-right'
+import { CloseIcon } from '~/icons/close'
 import { OutLink } from './out-link'
 
 const localStorageTag = 'top-banner'

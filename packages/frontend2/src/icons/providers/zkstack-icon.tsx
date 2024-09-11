@@ -1,8 +1,8 @@
-import React, { type SVGAttributes } from 'react'
+import { SvgIcon, type SvgIconProps } from '../svg-icon'
 
-export function ZKStackIcon(props: SVGAttributes<SVGElement>) {
+export function ZKStackIcon(props: SvgIconProps) {
   return (
-    <svg
+    <SvgIcon
       width="24"
       height="24"
       viewBox="0 0 24 24"
@@ -17,6 +17,6 @@ export function ZKStackIcon(props: SVGAttributes<SVGElement>) {
         d="M0 11.7841L6.8079 18.5681V13.6398L13.5676 8.62531L6.8079 8.62066V5L0 11.7841Z"
         className="fill-[#010100] dark:fill-current"
       />
-    </svg>
+    </SvgIcon>
   )
 }

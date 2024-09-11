@@ -1,8 +1,8 @@
-import { type ProductIconType } from '~/icons/products/SocialIcon'
+import { type SocialIconType } from '~/icons/products/social-icon'
 import { formatLink } from '~/utils/format-link'
 
 interface SocialDetails {
-  platform?: ProductIconType
+  platform?: SocialIconType
   text: string
 }
 

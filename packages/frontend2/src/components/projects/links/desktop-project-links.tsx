@@ -8,8 +8,8 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '~/components/core/navigation-menu'
-import OutlinkIcon from '~/icons/outlink.svg'
-import { ProductIcon } from '~/icons/products/SocialIcon'
+import { OutLinkIcon } from '~/icons/outlink'
+import { SocialIcon } from '~/icons/products/social-icon'
 import { cn } from '~/utils/cn'
 import { formatLink } from '~/utils/format-link'
 import { parseSocial } from './parse-social'
@@ -49,7 +49,7 @@ function ProjectLinkItem({ projectLink }: { projectLink: ProjectLink }) {
         >
           <ProjectLinkIcon name={projectLink.name} />
           {projectLink.name}
-          <OutlinkIcon className="size-4 fill-current" />
+          <OutLinkIcon className="size-4 fill-current" />
         </NavigationMenuLink>
       </NavigationMenuItem>
     )
@@ -81,14 +81,14 @@ function MultiProjectLink({ projectLink }: { projectLink: ProjectLink }) {
               )}
             >
               {parsedSocial?.platform && (
-                <ProductIcon
+                <SocialIcon
                   product={parsedSocial.platform}
                   width={16}
                   height={16}
                 />
               )}
               {parsedSocial ? parsedSocial.text : formatLink(link)}
-              <OutlinkIcon className="size-4 fill-current" />
+              <OutLinkIcon className="size-4 fill-current" />
             </NavigationMenuLink>
           )
         })}

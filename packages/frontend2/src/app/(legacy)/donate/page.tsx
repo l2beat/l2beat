@@ -4,7 +4,7 @@ import { toDataURL } from 'qrcode'
 import { ContentWrapper } from '~/components/content-wrapper'
 import { OutLink } from '~/components/out-link'
 import { env } from '~/env'
-import OutLinkIcon from '~/icons/outlink.svg'
+import { OutLinkIcon } from '~/icons/outlink'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { fundingSources } from './funding-sources'
 

@@ -1,7 +1,7 @@
 'use client'
 
-import MenuCloseIcon from '~/icons/menu-close.svg'
-import MenuOpenIcon from '~/icons/menu-open.svg'
+import { MenuCloseIcon } from '~/icons/menu-close'
+import { MenuOpenIcon } from '~/icons/menu-open'
 import { useMobileNav } from './mobile-nav-context'
 
 /**

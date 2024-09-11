@@ -1,6 +1,4 @@
-import React from 'react'
-
-import UpcomingIcon from '~/icons/upcoming.svg'
+import { UpcomingIcon } from '~/icons/upcoming'
 
 export function UpcomingBar() {
   return (

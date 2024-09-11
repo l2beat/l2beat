@@ -1,6 +1,6 @@
 'use client'
 
-import NavCollapseIcon from '~/icons/nav-collapse.svg'
+import { NavCollapseIcon } from '~/icons/nav-collapse'
 
 function onToggle() {
   window.localStorage.setItem(

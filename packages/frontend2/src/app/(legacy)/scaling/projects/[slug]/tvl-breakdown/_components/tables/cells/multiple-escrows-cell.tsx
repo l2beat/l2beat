@@ -1,4 +1,4 @@
-import ChevronDownIcon from '~/icons/chevron.svg'
+import { ChevronIcon } from '~/icons/chevron'
 import { cn } from '~/utils/cn'
 
 type Props = {
@@ -25,7 +25,7 @@ export function MultipleEscrowsCell(props: Props) {
         />
       </svg>
       <span className="text-xs font-medium">Multiple escrows</span>
-      <ChevronDownIcon
+      <ChevronIcon
         className={cn(
           'w-[10px] transition-transform duration-300',
           props.isExpanded && 'rotate-180',
