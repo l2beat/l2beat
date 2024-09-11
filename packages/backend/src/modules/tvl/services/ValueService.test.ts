@@ -1,7 +1,8 @@
-import { AmountId, AssetId, PriceId, createAssetId } from '@l2beat/config'
+import { AmountId, PriceId } from '@l2beat/config'
 import { Database } from '@l2beat/database'
 import {
   AmountConfigEntry,
+  AssetId,
   EthereumAddress,
   ProjectId,
   UnixTime,
@@ -60,8 +61,8 @@ describe(ValueService.name, () => {
     ])
 
     const priceConfigIds: Map<AssetId, PriceId> = new Map([
-      [createAssetId(CONFIG_A), 'a'],
-      [createAssetId(CONFIG_B), 'b'],
+      [AssetId.create(CONFIG_A.chain, CONFIG_A.address), 'a'],
+      [AssetId.create(CONFIG_B.chain, CONFIG_B.address), 'b'],
     ])
     const timestamps: UnixTime[] = [
       new UnixTime(100),

@@ -1,13 +1,12 @@
 import {
   AmountId,
-  AssetId,
   PriceId,
   createAmountId,
-  createAssetId,
   createPriceId,
 } from '@l2beat/config'
 import {
   AmountConfigEntry,
+  AssetId,
   PriceConfigEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -108,7 +107,7 @@ function getAmountConfigs(amounts: AmountConfigEntry[]) {
 function getPriceConfigIds(prices: PriceConfigEntry[]) {
   const result = new Map<AssetId, string>()
   for (const p of prices) {
-    result.set(createAssetId(p), createPriceId(p))
+    result.set(AssetId.create(p.chain, p.address), createPriceId(p))
   }
 
   return result

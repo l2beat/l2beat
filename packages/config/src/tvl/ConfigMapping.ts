@@ -1,13 +1,13 @@
 import {
   assert,
   type AmountConfigEntry,
+  AssetId,
   type EthereumAddress,
   type PriceConfigEntry,
   ProjectId,
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { createAmountId } from './createAmountId'
-import { type AssetId, createAssetId } from './createAssetId'
 import { createPriceId } from './createPriceId'
 
 export class ConfigMapping {
@@ -42,7 +42,7 @@ export class ConfigMapping {
   getPriceConfigFromAmountConfig(
     amountConfig: AmountConfigEntry,
   ): PriceConfigEntry & { configId: string } {
-    const assetId = createAssetId(amountConfig)
+    const assetId = AssetId.create(amountConfig.chain, amountConfig.address)
 
     const priceConfig = this.pricesByAssetId.get(assetId)
 
@@ -64,9 +64,9 @@ export class ConfigMapping {
     const projectAmounts = this.amountsByProject.get(projectId)
     assert(projectAmounts)
 
-    const assetId = createAssetId(token)
+    const assetId = AssetId.create(token.chain, token.address)
     const amountConfigs = projectAmounts.filter(
-      (x) => createAssetId(x) === assetId,
+      (x) => AssetId.create(x.chain, x.address) === assetId,
     )
     assert(
       amountConfigs.every((x) => x.decimals === amountConfigs[0]?.decimals),
@@ -95,9 +95,12 @@ export class ConfigMapping {
 }
 
 function getPricesMap(prices: PriceConfigEntry[]) {
-  const result = new Map<string, PriceConfigEntry & { configId: string }>()
+  const result = new Map<AssetId, PriceConfigEntry & { configId: string }>()
   for (const p of prices) {
-    result.set(createAssetId(p), { ...p, configId: createPriceId(p) })
+    result.set(AssetId.create(p.chain, p.address), {
+      ...p,
+      configId: createPriceId(p),
+    })
   }
 
   return result

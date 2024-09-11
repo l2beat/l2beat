@@ -64,7 +64,7 @@ function mockPrice(v?: Partial<PriceConfigEntry>): PriceConfigEntry {
     type: 'coingecko',
     coingeckoId: CoingeckoId('id'),
     sinceTimestamp: UnixTime.ZERO,
-    assetId: AssetId.ARB,
+    assetId: AssetId('test'),
     ...v,
   }
 }
