@@ -7,6 +7,7 @@ import {
 } from '@l2beat/shared-pure'
 import { zip } from 'lodash'
 
+import { Logger } from '@l2beat/backend-tools'
 import { CoingeckoClient } from './CoingeckoClient'
 import { CoinMarketChartRangeData } from './model'
 
@@ -24,9 +25,13 @@ export class CoingeckoQueryService {
   static MAX_DAYS_FOR_ONE_CALL =
     MAX_DAYS_FOR_HOURLY_PRECISION - 2 * COINGECKO_INTERPOLATION_WINDOW_DAYS
 
-  constructor(private readonly coingeckoClient: CoingeckoClient) {}
+  constructor(
+    private readonly coingeckoClient: CoingeckoClient,
+    private readonly logger: Logger,
+  ) {
+    this.logger = logger.for(this)
+  }
 
-  /** performance is not a big issue as we download 80 days worth of prices at once */
   async getUsdPriceHistoryHourly(
     coingeckoId: CoingeckoId,
     from: UnixTime,
@@ -39,12 +44,13 @@ export class CoingeckoQueryService {
       // TODO: either make it multichain or remove this fallback
       address,
     )
+
     return queryResult.prices
   }
 
   async getCirculatingSupplies(
     coingeckoId: CoingeckoId,
-    range: { from: UnixTime | undefined; to: UnixTime },
+    range: { from: UnixTime; to: UnixTime },
     address?: EthereumAddress,
   ): Promise<QueryResultPoint[]> {
     const queryResult = await this.queryHourlyPricesAndMarketCaps(
@@ -68,7 +74,7 @@ export class CoingeckoQueryService {
 
   async queryHourlyPricesAndMarketCaps(
     coingeckoId: CoingeckoId,
-    range: { from: UnixTime | undefined; to: UnixTime },
+    range: { from: UnixTime; to: UnixTime },
     address?: EthereumAddress,
   ) {
     const queryResult = await this.queryRawHourlyPricesAndMarketCaps(
@@ -78,20 +84,31 @@ export class CoingeckoQueryService {
       address,
     )
 
-    const from = range.from ?? UnixTime.fromDate(queryResult.prices[0].date)
+    const timestamps = getHourlyTimestamps(range.from, range.to)
 
-    const timestamps = getHourlyTimestamps(from, range.to)
+    const prices = pickClosestValues(queryResult.prices, timestamps)
+    const marketCaps = pickClosestValues(queryResult.marketCaps, timestamps)
+    const totalVolumes = pickClosestValues(queryResult.totalVolumes, timestamps)
+
+    this.assertCoingeckoApiResponse(
+      coingeckoId,
+      range,
+      timestamps.length,
+      prices,
+      marketCaps,
+      totalVolumes,
+    )
 
     return {
-      prices: pickClosestValues(queryResult.prices, timestamps),
-      marketCaps: pickClosestValues(queryResult.marketCaps, timestamps),
-      totalVolumes: pickClosestValues(queryResult.totalVolumes, timestamps),
+      prices,
+      marketCaps,
+      totalVolumes,
     }
   }
 
   async queryRawHourlyPricesAndMarketCaps(
     coingeckoId: CoingeckoId,
-    from: UnixTime | undefined,
+    from: UnixTime,
     to: UnixTime,
     address?: EthereumAddress,
   ): Promise<CoinMarketChartRangeData> {
@@ -121,17 +138,6 @@ export class CoingeckoQueryService {
         address,
       )
 
-      const noData = data.prices.length === 0 && data.marketCaps.length === 0
-      if (noData) {
-        assert(
-          !from || currentTo.lt(from),
-          `No data received for coin: ${coingeckoId.toString()} from ${currentFrom
-            .toDate()
-            .toISOString()} to ${currentTo.toDate().toISOString()}`,
-        )
-        break
-      }
-
       results.push(data)
       if (adjustedFrom && currentFrom.equals(adjustedFrom)) {
         break
@@ -156,6 +162,33 @@ export class CoingeckoQueryService {
     })
 
     return result
+  }
+
+  assertCoingeckoApiResponse(
+    coingeckoId: CoingeckoId,
+    range: { from: UnixTime; to: UnixTime },
+    expectedLength: number,
+    prices: QueryResultPoint[],
+    marketCaps: QueryResultPoint[],
+    totalVolumes: QueryResultPoint[],
+  ) {
+    if (
+      prices.length !== expectedLength ||
+      marketCaps.length !== expectedLength ||
+      totalVolumes.length !== expectedLength
+    ) {
+      this.logger.warn('Issue with Coingecko API response', {
+        coingeckoId,
+        from: range.from.toNumber(),
+        to: range.to.toNumber(),
+        expectedLength,
+        prices: prices.length,
+        marketCaps: marketCaps.length,
+        totalVolumes: totalVolumes.length,
+      })
+
+      throw new Error(`Issue with Coingecko API for ${coingeckoId}`)
+    }
   }
 
   static getAdjustedTo(from: UnixTime, to: UnixTime): UnixTime {
@@ -196,12 +229,9 @@ export function pickClosestValues(
   return result
 }
 
-function adjust(
-  from: UnixTime | undefined,
-  to: UnixTime,
-): [UnixTime | undefined, UnixTime] {
+function adjust(from: UnixTime, to: UnixTime): [UnixTime, UnixTime] {
   return [
-    from?.toEndOf('hour')?.add(-COINGECKO_INTERPOLATION_WINDOW_DAYS, 'days'),
+    from.toEndOf('hour').add(-COINGECKO_INTERPOLATION_WINDOW_DAYS, 'days'),
     to.toStartOf('hour').add(COINGECKO_INTERPOLATION_WINDOW_DAYS, 'days'),
   ]
 }
