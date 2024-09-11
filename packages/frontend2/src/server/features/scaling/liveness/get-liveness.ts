@@ -8,11 +8,12 @@ import {
   type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { groupBy } from 'lodash'
+import { groupBy, range } from 'lodash'
 import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
+import { env } from '~/env'
 import { db } from '~/server/database'
 import { getConfigurationsSyncedUntil } from '../../utils/get-configurations-synced-until'
 import {
@@ -21,6 +22,7 @@ import {
 } from '../../utils/get-tracked-txs-projects'
 import {
   type LivenessAnomaly,
+  type LivenessDataPoint,
   type LivenessDetails,
   type LivenessProject,
   type LivenessResponse,
@@ -28,6 +30,9 @@ import {
 import { getLivenessProjects } from './utils/get-liveness-projects'
 
 export async function getLiveness() {
+  if (env.MOCK) {
+    return getMockLiveness()
+  }
   noStore()
   return getCachedLiveness()
 }
@@ -160,4 +165,128 @@ function mapAnomalyRecords(records: AnomalyRecord[]): LivenessAnomaly[] {
     durationInSeconds: a.duration,
     type: a.subtype,
   }))
+}
+
+function getMockLiveness(): LivenessResponse {
+  const projects = [
+    'arbitrum',
+    'optimism',
+    'apex',
+    'aevo',
+    'base',
+    'dydx',
+    'brine',
+    'linea',
+    'myria',
+    'scroll',
+    'polygonzkevm',
+  ].reduce<Record<string, LivenessProject>>((acc, cur) => {
+    acc[cur] = generateMockData()
+    return acc
+  }, {})
+
+  return {
+    ...projects,
+    linea: {
+      ...projects.linea!,
+      batchSubmissions: {
+        '30d': generateDataPoint(),
+        '90d': generateDataPoint(),
+        max: generateDataPoint(),
+        syncedUntil: UnixTime.now()
+          .add(-2, 'hours')
+          .toStartOf('hour')
+          .toNumber(),
+      },
+      proofSubmissions: {
+        '30d': generateDataPoint(),
+        '90d': generateDataPoint(),
+        max: generateDataPoint(),
+        syncedUntil: UnixTime.now().toStartOf('hour').toNumber(),
+      },
+    },
+    dydx: {
+      ...projects.dydx!,
+      stateUpdates: {
+        '30d': generateDataPoint(),
+        '90d': generateDataPoint(),
+        max: generateDataPoint(),
+        syncedUntil: UnixTime.now()
+          .add(-2, 'hours')
+          .toStartOf('hour')
+          .toNumber(),
+      },
+      proofSubmissions: {
+        '30d': generateDataPoint(),
+        '90d': generateDataPoint(),
+        max: generateDataPoint(),
+        syncedUntil: UnixTime.now()
+          .add(-4, 'hours')
+          .toStartOf('hour')
+          .toNumber(),
+      },
+    },
+  }
+}
+
+function generateMockData(): LivenessProject {
+  return {
+    batchSubmissions: {
+      '30d': generateDataPoint(),
+      '90d': generateDataPoint(),
+      max: generateDataPoint(),
+      syncedUntil: UnixTime.now().toStartOf('hour').toNumber(),
+    },
+    stateUpdates: {
+      '30d': generateDataPoint(),
+      '90d': generateDataPoint(),
+      max: generateDataPoint(),
+      syncedUntil: UnixTime.now().toStartOf('hour').toNumber(),
+    },
+    anomalies: generateAnomalies(),
+  }
+}
+
+function generateDataPoint(): LivenessDataPoint | undefined {
+  const i = Math.round(Math.random() * 100)
+  if (i < 10) {
+    return undefined
+  }
+  return {
+    averageInSeconds: generateRandomTime(),
+    minimumInSeconds: generateRandomTime(),
+    maximumInSeconds: generateRandomTime(),
+  }
+}
+
+function generateAnomalies(): LivenessAnomaly[] {
+  const anomaliesCount = Math.round(Math.random() * 15)
+  return anomaliesCount !== 0
+    ? range(anomaliesCount).map(
+        () =>
+          ({
+            type: Math.random() > 0.5 ? 'batchSubmissions' : 'stateUpdates',
+            timestamp: UnixTime.now()
+              .add(
+                // TODO: (liveness) should we include current day
+                Math.round(Math.random() * -29) - 1,
+                'days',
+              )
+              .add(Math.round(Math.random() * 172800), 'seconds')
+              .toNumber(),
+            durationInSeconds: generateRandomTime(),
+          }) as const,
+      )
+    : []
+}
+
+function generateRandomTime() {
+  const i = Math.round(Math.random() * 100)
+  if (i < 50) {
+    return Math.round(Math.random() * 3600)
+  }
+  if (i < 90) {
+    return 3600 + Math.round(Math.random() * 82800)
+  }
+  return 86400 + Math.round(Math.random() * 86400 * 5)
 }
