@@ -9,6 +9,7 @@ export interface ColorPickerProps {
 
 export function ColorPicker({ ids, onColorChange }: ColorPickerProps) {
   const colors: Color[] = [
+    oklch2rgb(1.0, 0, 90),
     oklch2rgb(0.6, 0.2, 22),
     oklch2rgb(0.6, 0.2, 35),
     oklch2rgb(0.6, 0.2, 142),
@@ -16,6 +17,7 @@ export function ColorPicker({ ids, onColorChange }: ColorPickerProps) {
     oklch2rgb(0.6, 0.2, 320),
     oklch2rgb(0.6, 0.2, 350),
 
+    oklch2rgb(0.8, 0, 90),
     oklch2rgb(0.7, 0.18, 22),
     oklch2rgb(0.7, 0.18, 35),
     oklch2rgb(0.7, 0.18, 142),
@@ -23,6 +25,7 @@ export function ColorPicker({ ids, onColorChange }: ColorPickerProps) {
     oklch2rgb(0.7, 0.18, 320),
     oklch2rgb(0.7, 0.18, 350),
 
+    oklch2rgb(0.6, 0, 90),
     oklch2rgb(0.8, 0.14, 22),
     oklch2rgb(0.8, 0.14, 35),
     oklch2rgb(0.8, 0.14, 142),
@@ -32,11 +35,11 @@ export function ColorPicker({ ids, onColorChange }: ColorPickerProps) {
   ]
 
   return (
-    <div className="grid grid-cols-6 place-items-center gap-3">
+    <div className="grid grid-cols-7 place-items-center gap-3">
       {colors.map((c, i) => (
         <div
           style={{ backgroundColor: colorToCSS(c) }}
-          className="h-12 w-12 rounded shadow-xl active:opacity-50 hover:ring"
+          className="h-12 w-12 border rounded shadow-xl active:opacity-50 hover:ring"
           key={i}
           onClick={() => onColorChange(ids, c)}
         ></div>
