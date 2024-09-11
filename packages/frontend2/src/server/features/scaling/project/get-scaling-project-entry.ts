@@ -1,4 +1,9 @@
-import { type Layer2, type Layer3, badgesCompareFn } from '@l2beat/config'
+import {
+  type Layer2,
+  type Layer3,
+  badgesCompareFn,
+  layer2s,
+} from '@l2beat/config'
 import { compact } from 'lodash'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
@@ -37,26 +42,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
   const isImplementationUnderReview =
     !!implementationChangeReport.projects[project.id]
 
-  const projectDetails =
-    project.type === 'layer2'
-      ? await getL2ProjectDetails({
-          project,
-          isVerified,
-          contractsVerificationStatuses,
-          manuallyVerifiedContracts,
-          implementationChangeReport,
-          rosetteValues: getScalingRosetteValues(project.riskView),
-        })
-      : await getL3ProjectDetails({
-          project,
-          isVerified,
-          contractsVerificationStatuses,
-          manuallyVerifiedContracts,
-          implementationChangeReport,
-          rosetteValues: getScalingRosetteValues(project.riskView),
-        })
-
-  return {
+  const common = {
     type: project.type,
     name: project.display.name,
     slug: project.display.slug,
@@ -64,13 +50,55 @@ export async function getScalingProjectEntry(project: ScalingProject) {
     isArchived: !!project.isArchived,
     isUpcoming: !!project.isUpcoming,
     isImplementationUnderReview,
-    stageConfig:
-      project.type === 'layer2'
-        ? project.stage
-        : {
-            stage: 'NotApplicable' as const,
-          },
     header,
+  }
+
+  const rosetteValues = getScalingRosetteValues(project.riskView)
+
+  if (project.type === 'layer2') {
+    const projectDetails = await getL2ProjectDetails({
+      project,
+      isVerified,
+      contractsVerificationStatuses,
+      manuallyVerifiedContracts,
+      implementationChangeReport,
+      rosetteValues,
+    })
+
+    return {
+      ...common,
+      type: project.type,
+      stageConfig: project.stage,
+      projectDetails,
+      header,
+    }
+  }
+
+  // L3
+  const hostChain = layer2s.find((layer2) => layer2.id === project.hostChain)!
+  const baseLayerRosetteValues = getScalingRosetteValues(hostChain.riskView)
+  const stackedRosetteValues = project.stackedRiskView
+    ? getScalingRosetteValues(project.stackedRiskView)
+    : undefined
+
+  const projectDetails = await getL3ProjectDetails({
+    project,
+    isVerified,
+    contractsVerificationStatuses,
+    manuallyVerifiedContracts,
+    implementationChangeReport,
+    rosetteValues,
+  })
+
+  return {
+    ...common,
+    type: project.type,
+    stageConfig: {
+      stage: 'NotApplicable' as const,
+    },
+    baseLayerRosetteValues,
+    stackedRosetteValues,
+    hostChainName: hostChain.display.name,
     projectDetails,
   }
 }
