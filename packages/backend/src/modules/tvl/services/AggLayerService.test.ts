@@ -15,9 +15,7 @@ import {
 const NOW = UnixTime.now()
 const MOCK_ID1 = '1'
 const MOCK_ID2 = '2'
-export const BRIDGE_ADDRESS = EthereumAddress(
-  '0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe',
-)
+export const BRIDGE_ADDRESS = EthereumAddress.random()
 
 describe.only(AggLayerService.name, () => {
   describe(AggLayerService.prototype.fetchAmounts.name, () => {
@@ -205,13 +203,13 @@ describe.only(AggLayerService.name, () => {
   describe(AggLayerService.prototype.getL2TokensTotalSupply.name, () => {
     it('encodes, calls, decodes and returns AmountRecords with correct supply', async () => {
       const mockToken1 = mockObject<
-        Config & { address: EthereumAddress; type: 'aggLayerL2Token' }
+        Config<'aggLayerL2Token'> & { address: EthereumAddress }
       >({
         address: EthereumAddress.random(),
         id: MOCK_ID1,
       })
       const mockToken2 = mockObject<
-        Config & { address: EthereumAddress; type: 'aggLayerL2Token' }
+        Config<'aggLayerL2Token'> & { address: EthereumAddress }
       >({
         address: EthereumAddress.random(),
         id: MOCK_ID2,
@@ -398,18 +396,19 @@ function agglayerService(opts: Partial<AggLayerServiceDependencies>) {
   })
 }
 
-function aggLayerL2Token(opts: Partial<Config & { type: 'aggLayerL2Token' }>) {
-  return mockObject<Config & { type: 'aggLayerL2Token' }>({
+function aggLayerL2Token(opts: Partial<Config<'aggLayerL2Token'>>) {
+  return mockObject<Config<'aggLayerL2Token'>>({
     id: MOCK_ID1,
     type: 'aggLayerL2Token',
+    originNetwork: 0,
     ...opts,
   })
 }
 
 function aggLayerNativeEtherPreminted(
-  opts: Partial<Config & { type: 'aggLayerNativeEtherPreminted' }> = {},
+  opts: Partial<Config<'aggLayerNativeEtherPreminted'>> = {},
 ) {
-  return mockObject<Config & { type: 'aggLayerNativeEtherPreminted' }>({
+  return mockObject<Config<'aggLayerNativeEtherPreminted'>>({
     id: MOCK_ID1,
     type: 'aggLayerNativeEtherPreminted',
     ...opts,
@@ -417,9 +416,9 @@ function aggLayerNativeEtherPreminted(
 }
 
 function aggLayerNativeEtherWrapped(
-  opts: Partial<Config & { type: 'aggLayerNativeEtherWrapped' }> = {},
+  opts: Partial<Config<'aggLayerNativeEtherWrapped'>> = {},
 ) {
-  return mockObject<Config & { type: 'aggLayerNativeEtherWrapped' }>({
+  return mockObject<Config<'aggLayerNativeEtherWrapped'>>({
     id: MOCK_ID1,
     type: 'aggLayerNativeEtherWrapped',
     ...opts,

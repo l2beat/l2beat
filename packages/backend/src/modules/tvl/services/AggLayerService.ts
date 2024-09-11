@@ -21,16 +21,13 @@ export const bridgeInterface = new utils.Interface([
   'function getTokenWrappedAddress(uint32 originNetwork, address originTokenAddress) view returns (address)',
 ])
 
-// export const BRIDGE_ADDRESS = EthereumAddress(
-//   '0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe',
-// )
-
 type AggLayerAmountConfig =
   | AggLayerL2Token
   | AggLayerNativeEtherPreminted
   | AggLayerNativeEtherWrapped
 
-export type Config = AggLayerAmountConfig & { id: string }
+export type Config<T extends AggLayerAmountConfig['type']> =
+  AggLayerAmountConfig & { type: T } & { id: string }
 
 export interface AggLayerServiceDependencies {
   readonly rpcClient: RpcClient
@@ -44,11 +41,9 @@ export class AggLayerService {
   async fetchAmounts(
     timestamp: UnixTime,
     blockNumber: number,
-    tokens: (Config & { type: 'aggLayerL2Token' })[],
+    tokens: Config<'aggLayerL2Token'>[],
     nativeToken:
-      | (Config & {
-          type: 'aggLayerNativeEtherPreminted' | 'aggLayerNativeEtherWrapped'
-        })
+      | Config<'aggLayerNativeEtherPreminted' | 'aggLayerNativeEtherWrapped'>
       | undefined,
   ): Promise<AmountRecord[]> {
     const l2TokensAmounts = await this.getL2TokensAmounts(
@@ -80,7 +75,7 @@ export class AggLayerService {
   async getL2TokensAmounts(
     timestamp: UnixTime,
     blockNumber: number,
-    tokens: (Config & { type: 'aggLayerL2Token' })[],
+    tokens: Config<'aggLayerL2Token'>[],
   ) {
     const tokensWithL2Addresses = await this.getL2TokensAddresses(
       blockNumber,
@@ -97,7 +92,7 @@ export class AggLayerService {
   async getL2TokensTotalSupply(
     timestamp: UnixTime,
     blockNumber: number,
-    tokens: (Config & { address: EthereumAddress; type: 'aggLayerL2Token' })[],
+    tokens: (Config<'aggLayerL2Token'> & { address: EthereumAddress })[],
   ): Promise<AmountRecord[]> {
     const encoded: MulticallRequest[] = tokens.map((token) => ({
       address: token.address,
@@ -125,13 +120,13 @@ export class AggLayerService {
 
   async getL2TokensAddresses(
     blockNumber: number,
-    tokens: (Config & { type: 'aggLayerL2Token' })[],
+    tokens: Config<'aggLayerL2Token'>[],
   ): Promise<(AggLayerL2Token & { address: EthereumAddress; id: string })[]> {
     const encoded: MulticallRequest[] = tokens.map((token) => ({
       address: this.$.bridgeAddress,
       data: Bytes.fromHex(
         bridgeInterface.encodeFunctionData('getTokenWrappedAddress', [
-          0, // originNetwork - 0 for Ethereum
+          token.originNetwork,
           token.l1Address,
         ]),
       ),
@@ -158,7 +153,7 @@ export class AggLayerService {
   async getNativeEtherPremintedAmount(
     timestamp: UnixTime,
     blockNumber: number,
-    token: Config & { type: 'aggLayerNativeEtherPreminted' },
+    token: Config<'aggLayerNativeEtherPreminted'>,
   ): Promise<AmountRecord> {
     const bridgeBalance = await this.$.rpcClient.getBalance(
       token.l2BridgeAddress,
@@ -175,7 +170,7 @@ export class AggLayerService {
   async getNativeEtherWrappedAmount(
     timestamp: UnixTime,
     blockNumber: number,
-    token: Config & { type: 'aggLayerNativeEtherWrapped' },
+    token: Config<'aggLayerNativeEtherWrapped'>,
   ): Promise<AmountRecord> {
     const response = await this.$.rpcClient.call(
       {
