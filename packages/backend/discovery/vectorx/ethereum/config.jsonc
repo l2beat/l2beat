@@ -4,11 +4,15 @@
   "name": "vectorx",
   "initialAddresses": ["0x02993cdC11213985b9B13224f3aF289F03bf298d"],
   "names": {
-    "0x02993cdC11213985b9B13224f3aF289F03bf298d": "SP1Vector"
+    "0x02993cdC11213985b9B13224f3aF289F03bf298d": "SP1Vector",
+    "0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SuccinctGatewaySP1"
   },
   "overrides": {
     "SP1Vector": {
       "ignoreMethods": ["proxiableUUID"]
+    },
+    "SuccinctGatewaySP1": {
+      "extends": "succint/SP1SuccinctGateway"
     }
   }
 }

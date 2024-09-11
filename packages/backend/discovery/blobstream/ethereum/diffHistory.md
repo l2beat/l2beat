@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x5f3867cedb0e542886add5b3b13f7ccaaee54a1b
+
+# Diff at Wed, 11 Sep 2024 13:17:09 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@26dd3802ec9d5a379686404e22ce931aac62dcdd block: 20683436
+- current block number: 20727609
+
+## Description
+
+Renames.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20683436 (main branch discovery), not current.
+
+```diff
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: None
+      template:
+-        "blobstream/SP1SuccinctGateway"
++        "succint/SP1SuccinctGateway"
+      values.blobstreamVerifier:
+-        ["0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",false]
+      values.blobstreamVerifierOld:
+-        ["0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",true]
++++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen). This verifier route was frozen on 2024-09-04.
+      values.oldVerifier:
++        ["0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",true]
++++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen).
+      values.verifier:
++        ["0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",false]
+      fieldMeta.blobstreamVerifierOld:
+-        {"description":"The verifier contract address for Blobstream SP1, and whether it is frozen (true if frozen). This verifier route was frozen on 2024-09-04."}
+      fieldMeta.blobstreamVerifier:
+-        {"description":"The verifier contract address for Blobstream SP1, and whether it is frozen (true if frozen)."}
+      fieldMeta.oldVerifier:
++        {"description":"The verifier contract address for SP1, and whether it is frozen (true if frozen). This verifier route was frozen on 2024-09-04."}
+      fieldMeta.verifier:
++        {"description":"The verifier contract address for SP1, and whether it is frozen (true if frozen)."}
+    }
+```
+
+```diff
+    contract Blobstream (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) {
+    +++ description: None
+      template:
+-        "blobstream/SP1Blobstream"
++        "succint/SP1Blobstream"
+    }
+```
+
 Generated with discovered.json: 0x10abadaa17757983f4466ea6755c97721a41100d
 
 # Diff at Thu, 05 Sep 2024 09:18:11 GMT:

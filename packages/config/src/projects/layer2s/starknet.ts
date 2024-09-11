@@ -32,6 +32,7 @@ import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
+import { PROOFS } from '../other/zk-catalog/common/proofSystems'
 
 const discovery = new ProjectDiscovery('starknet')
 const verifierAddress = discovery.getAddressFromValue('Starknet', 'verifier')
@@ -839,26 +840,17 @@ export const starknet: Layer2 = {
             // TODO: change links when this is released: https://github.com/starkware-libs/cairo-lang/commit/0e4dab8a6065d80d1c726394f5d9d23cb451706a
             {
               name: 'Main bootloader',
-              proofSystem: 'STARK',
-              mainArithmetization: 'AIR',
-              mainPCS: 'FRI',
-              trustedSetup: 'None',
+              ...PROOFS.PROGRAM,
               link: 'https://github.com/starkware-libs/cairo-lang/blob/v0.13.1/src/starkware/cairo/bootloaders/bootloader/bootloader.cairo',
             },
             {
               name: 'Simple bootloader',
-              proofSystem: 'STARK',
-              mainArithmetization: 'AIR',
-              mainPCS: 'FRI',
-              trustedSetup: 'None',
+              ...PROOFS.PROGRAM,
               link: 'https://github.com/starkware-libs/cairo-lang/blob/v0.13.1/src/starkware/cairo/bootloaders/simple_bootloader/simple_bootloader.cairo',
             },
             {
               name: 'Applicative bootloader',
-              proofSystem: 'STARK',
-              mainArithmetization: 'AIR',
-              mainPCS: 'FRI',
-              trustedSetup: 'None',
+              ...PROOFS.PROGRAM,
               link: 'https://github.com/starkware-libs/cairo-lang/blob/v0.13.2a0/src/starkware/cairo/bootloaders/applicative_bootloader/applicative_bootloader.cairo',
             },
             {
@@ -871,10 +863,7 @@ export const starknet: Layer2 = {
             },
             {
               name: 'StarknetOS',
-              proofSystem: 'STARK',
-              mainArithmetization: 'AIR',
-              mainPCS: 'FRI',
-              trustedSetup: 'None',
+              ...PROOFS.PROGRAM,
               link: 'https://github.com/starkware-libs/cairo-lang/tree/v0.13.1/src/starkware/starknet/core/os',
             },
           ],

@@ -1,8 +1,8 @@
 {
   "name": "vectorx",
   "chain": "ethereum",
-  "blockNumber": 20692048,
-  "configHash": "0xcf664ae4715aa4e3d847ad826116500296f0c7e69017df5644b74581eaa79b10",
+  "blockNumber": 20727675,
+  "configHash": "0x3f287a9a1724af10299350f466d53ee2a05f8915704de07ddea8b01c53a0149e",
   "version": 14,
   "contracts": [
     {
@@ -29,24 +29,55 @@
         "GUARDIAN_ROLE": "0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041",
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "latestAuthoritySetId": 69,
-        "latestBlock": 277200,
+        "latestAuthoritySetId": 74,
+        "latestBlock": 298800,
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "vectorXProgramVkey": "0x0003c5cf9260fcef3df6c79870952e1ce2f57595ac042ea868c9cbbcab548cf8",
         "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "2.0.0"
       },
-      "errors": { "proxiableUUID": "Execution reverted" },
       "derivedName": "SP1Vector"
     },
     {
-      "name": "SP1VerifierGateway",
+      "name": "SuccinctGatewaySP1",
       "address": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "template": "succint/SP1SuccinctGateway",
       "sinceTimestamp": 1720099223,
       "values": {
         "$immutable": true,
-        "owner": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878"
+        "oldVerifier": ["0xc350F063C13a3Ca21331610fe159E697a5c9c2FB", true],
+        "owner": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
+        "verifier": ["0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc", false]
+      },
+      "fieldMeta": {
+        "oldVerifier": {
+          "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This verifier route was frozen on 2024-09-04."
+        },
+        "verifier": {
+          "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen)."
+        }
+      },
+      "derivedName": "SP1VerifierGateway"
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",
+      "sinceTimestamp": 1725472175,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0xc865c1b60c05baa44075f37d6d88f2e18c64effb9113740b47cdf12b711b8aa4",
+        "VERSION": "v1.2.0"
+      }
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",
+      "sinceTimestamp": 1722645791,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0xc430ff7f31a22c5f7607f3ed2a2f5621af340bc45a44179319cba5761664e1f0",
+        "VERSION": "v1.1.0"
       }
     },
     {
@@ -106,6 +137,24 @@
       "function renounceOwnership()",
       "function routes(bytes4) view returns (address verifier, bool frozen)",
       "function transferOwnership(address newOwner)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
+    "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc": [
+      "error InvalidProof()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
+    "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB": [
+      "error InvalidProof()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D": [
@@ -230,7 +279,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "succint/SP1SuccinctGateway": "0xab43397d190f2186363f0ee6178d993c7db9a90f80a1152568d8de09bcc133c1"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

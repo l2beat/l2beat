@@ -13,7 +13,7 @@
   },
   "overrides": {
     "Blobstream": {
-      "extends": "blobstream/SP1Blobstream",
+      "extends": "succint/SP1Blobstream",
       "fields": {
         "relayers": {
           "handler": {
@@ -31,7 +31,7 @@
       }
     },
     "SuccinctGatewaySP1": {
-      "extends": "blobstream/SP1SuccinctGateway"
+      "extends": "succint/SP1SuccinctGateway"
     },
     // deprecated, SP1 now used
     "SuccinctGateway": {
