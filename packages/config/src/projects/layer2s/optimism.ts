@@ -839,12 +839,12 @@ export const optimism: Layer2 = {
       type: 'general',
     },
     {
-      name: 'OVM 2.0 is live',
+      name: 'Optimism removes OVM fraud proofs',
       link: 'https://twitter.com/optimismfnd/status/1458953238867165192?s=21&t=cQ0NPREYt-u1rP7OiPFKUg',
       date: '2021-11-12T00:00:00Z',
       description:
         'Network upgrade to OVM 2.0 and removal of fraud-proof system.',
-      type: 'general',
+      type: 'incident',
     },
     {
       name: 'Mainnet Soft Launch',
