@@ -29,6 +29,7 @@ import { HARDCODED } from '../../discovery/values/hardcoded'
 import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { Layer2 } from './types'
+import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('optimism')
 const l2Discovery = new ProjectDiscovery('optimism', 'optimism')
@@ -495,7 +496,7 @@ export const optimism: Layer2 = {
       },
       {
         title: 'Challenges',
-        description: `Challenges are opened to disprove invalid state roots using bisection games. Each bisection move requires a stake that increases expontentially with the depth of the bisection with a factor of ${exponentialBondsFactor}. The maximum depth is ${permissionlessGameMaxDepth}, and reaching it requires a cumulative stake of ${parseFloat(
+        description: `Challenges are opened to disprove invalid state roots using bisection games. Each bisection move requires a stake that increases expontentially with the depth of the bisection, with a factor of ${exponentialBondsFactor}. The maximum depth is ${permissionlessGameMaxDepth}, and reaching it therefore requires a cumulative stake of ${parseFloat(
           formatEther(permissionlessGameFullCost),
         ).toFixed(2)} ETH from depth 0. Actors can participate in any challenge by calling the \`defend\` or \`attack\` functions, depending whether they agree or disagree with the claim and want to move the bisection game forward.
         Actors might be involved in multiple (sub-)challenges at the same time, meaning that the protocol operates with [full concurrency](https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a). Each claim has a clock that starts with ${formatSeconds(
@@ -506,9 +507,9 @@ export const optimism: Layer2 = {
           permissionlessGameClockExtension,
         )} up to depth ${permissionlessGameSplitDepth}, and then ${formatSeconds(
           permissionlessGameClockExtension * 2,
-        )} up the max depth. The maximum clock extensions that a top level claim can get is therefore ${formatSeconds(
+        )} up the max depth. The maximum clock extension that a top level claim can get is therefore ${formatSeconds(
           permissionlessGameMaxClockExtension,
-        )}. Since unconfirmed state roots are independent with one another, users can decide to exit with a subsequent state root if the previous one is delayed. Winners gets the entire losers' stake, meaning that sybils can potentially play against each other at no cost. The protocol does not enforces valid bisections, meaning that actors can propose correct initial claims and then provide incorrect midpoints.`,
+        )}. Since unconfirmed state roots are independent with one another, users can decide to exit with a subsequent state root if the previous one is delayed. Winners get the entire losers' stake, meaning that sybils can potentially play against each other at no cost. The final instruction found via the bisection game is then executed onchain in the MIPS one step prover contract who determines the winner. The protocol does not enforces valid bisections, meaning that actors can propose correct initial claims and then provide incorrect midpoints. The protocol can be subject to resource exhaustion attacks ([Spearbit 5.1.3](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_report-cb-fault-proofs-non-mips.pdf)).`,
         references: [
           {
             text: 'Fraud Proof Wars: OPFP',
@@ -518,11 +519,7 @@ export const optimism: Layer2 = {
       },
     ],
   },
-  stage: {
-    stage: 'UnderReview',
-  },
-  /*
-  getStage(
+  stage: getStage(
     {
       stage0: {
         callsItselfRollup: true,
@@ -548,7 +545,6 @@ export const optimism: Layer2 = {
         'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
     },
   ),
-  */
   permissions: [
     {
       name: 'Sequencer',
