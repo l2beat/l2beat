@@ -4,11 +4,13 @@ import { FormatSeconds } from './FormatSeconds'
 import { GreaterThan } from './GreaterThan'
 import { Mapping } from './Mapping'
 import { Undecimal } from './Undecimal'
+import { ChainPrefix } from './ChainPrefix'
 
 export const TypeConverters = {
   FormatSeconds,
   Undecimal,
   Mapping,
+  ChainPrefix,
   GreaterThan,
 }
 

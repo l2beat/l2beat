@@ -28,7 +28,12 @@
       }
     },
     "ProtocolUpgradeHandler": {
-      "ignoreRelatives": ["ZKSYNC_ERA"]
+      "ignoreRelatives": ["ZKSYNC_ERA"],
+      "fields": {
+        "L2_PROTOCOL_GOVERNOR": {
+          "returnType": "(ZkSyncAddress)"
+        }
+      }
     },
     "Guardians": {
       "fields": {

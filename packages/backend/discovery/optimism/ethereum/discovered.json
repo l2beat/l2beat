@@ -2,7 +2,7 @@
   "name": "optimism",
   "chain": "ethereum",
   "blockNumber": 20733024,
-  "configHash": "0x38451a105f9d8535e86043d0d8690760de772e7605cf6418562d89e5df5639d3",
+  "configHash": "0xa79e8e6a94de9fe57ccc5f741635dc811567356907fdbeb1356cec21353d43a0",
   "version": 14,
   "contracts": [
     {
@@ -237,7 +237,6 @@
       "descriptions": [
         "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
       ],
-      "categories": ["Core"],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1624400997,
       "values": {
@@ -248,8 +247,8 @@
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
-        "OTHER_MESSENGER": "0x4200000000000000000000000000000000000007",
-        "otherMessenger": "0x4200000000000000000000000000000000000007",
+        "OTHER_MESSENGER": "optimism:0x4200000000000000000000000000000000000007",
+        "otherMessenger": "optimism:0x4200000000000000000000000000000000000007",
         "paused": false,
         "portal": "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
         "PORTAL": "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
@@ -262,7 +261,10 @@
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.3.0"
       },
-      "derivedName": "L1CrossDomainMessenger"
+      "derivedName": "L1CrossDomainMessenger",
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "optimism" } }
+      ]
     },
     {
       "name": "GnosisSafe",
@@ -324,8 +326,7 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
-          "description": "upgrading bridge implementation allows to access all funds and change every system component."
+          "target": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
         },
         {
           "permission": "upgrade",
@@ -388,7 +389,6 @@
         {
           "permission": "upgrade",
           "target": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
-          "description": "upgrading bridge implementation allows to access all funds and change every system component.",
           "via": [{ "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }]
         },
         {
@@ -459,12 +459,16 @@
         "$upgradeCount": 6,
         "messenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "MESSENGER": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
-        "OTHER_BRIDGE": "0x4200000000000000000000000000000000000014",
-        "otherBridge": "0x4200000000000000000000000000000000000014",
+        "OTHER_BRIDGE": "optimism:0x4200000000000000000000000000000000000014",
+        "otherBridge": "optimism:0x4200000000000000000000000000000000000014",
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.1.0"
-      }
+      },
+      "derivedName": "L1ERC721Bridge",
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "optimism" } }
+      ]
     },
     {
       "name": "SynthetixBridgeEscrow",
@@ -631,7 +635,6 @@
       "descriptions": [
         "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
       ],
-      "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -673,8 +676,7 @@
           "via": [
             {
               "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
-              "delay": 0,
-              "description": "upgrading bridge implementation allows to access all funds and change every system component."
+              "delay": 0
             }
           ]
         }
@@ -684,16 +686,19 @@
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF",
         "$upgradeCount": 0,
-        "l2TokenBridge": "0x4200000000000000000000000000000000000010",
+        "l2TokenBridge": "optimism:0x4200000000000000000000000000000000000010",
         "messenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "MESSENGER": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
-        "OTHER_BRIDGE": "0x4200000000000000000000000000000000000010",
-        "otherBridge": "0x4200000000000000000000000000000000000010",
+        "OTHER_BRIDGE": "optimism:0x4200000000000000000000000000000000000010",
+        "otherBridge": "optimism:0x4200000000000000000000000000000000000010",
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.1.0"
       },
-      "derivedName": "L1StandardBridge"
+      "derivedName": "L1StandardBridge",
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "optimism" } }
+      ]
     },
     {
       "name": "FoundationMultisig_2",
