@@ -19,11 +19,11 @@ import {
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { ChainAmountConfig } from '../indexers/types'
 
-const multicallInterface = new utils.Interface([
+export const multicallInterface = new utils.Interface([
   'function getEthBalance(address account) view returns (uint256)',
 ])
 
-const erc20Interface = new utils.Interface([
+export const erc20Interface = new utils.Interface([
   'function balanceOf(address account) view returns (uint256)',
   'function totalSupply() view returns (uint256)',
 ])
@@ -85,10 +85,7 @@ export class AmountService {
     )
   }
 
-  private async fetchWithMulticall(
-    configurations: Config[],
-    blockNumber: number,
-  ) {
+  async fetchWithMulticall(configurations: Config[], blockNumber: number) {
     if (configurations.length === 0) {
       return []
     }
@@ -184,7 +181,7 @@ function isNotSupportedByMulticall(
   )
 }
 
-function encodeGetEthBalance(
+export function encodeGetEthBalance(
   multicall: EthereumAddress,
   address: EthereumAddress,
 ): MulticallRequest {
@@ -207,7 +204,7 @@ function decodeGetEthBalance(response: Bytes) {
   ).toBigInt()
 }
 
-function encodeErc20BalanceQuery(
+export function encodeErc20BalanceQuery(
   holder: EthereumAddress,
   tokenAddress: EthereumAddress,
 ): MulticallRequest {
