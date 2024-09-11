@@ -65,9 +65,9 @@ export class ConfigMapping {
     assert(projectAmounts)
 
     const assetId = createAssetId(token)
-    const amountConfigs = projectAmounts.filter((x) => {
-      return createAssetId(x) === assetId
-    })
+    const amountConfigs = projectAmounts.filter(
+      (x) => createAssetId(x) === assetId,
+    )
     assert(
       amountConfigs.every((x) => x.decimals === amountConfigs[0]?.decimals),
       'Decimals mismatch!',
