@@ -8,7 +8,8 @@ import {
 } from '@l2beat/config'
 import {
   assert,
-  type AssetId,
+  AssetId,
+  EthereumAddress,
   type ProjectId,
   UnixTime,
   asNumber,
@@ -19,6 +20,7 @@ import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
+import { env } from '~/env'
 import { getLatestAmountForConfigurations } from '../breakdown/get-latest-amount-for-configurations'
 import { getLatestPriceForConfigurations } from '../breakdown/get-latest-price-for-configurations'
 import { getConfigMapping } from '../utils/get-config-mapping'
@@ -39,6 +41,9 @@ type ProjectTokenSource = 'native' | 'canonical' | 'external'
 export async function getTokensForProject(
   project: Layer2 | Layer3 | Bridge,
 ): Promise<ProjectTokens> {
+  if (env.MOCK) {
+    return getMockTokensForProject()
+  }
   noStore()
   return getCachedTokensForProject(project)
 }
@@ -88,6 +93,47 @@ const getCachedTokensForProject = cache(
   ['topTokensForProject'],
   { revalidate: 60 * UnixTime.MINUTE },
 )
+
+function getMockTokensForProject(): ProjectTokens {
+  return {
+    canonical: [
+      {
+        address: EthereumAddress.random().toString(),
+        assetId: AssetId('1'),
+        chain: 'ethereum',
+        iconUrl:
+          'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
+        name: 'Canonical Token',
+        symbol: 'TKN',
+        source: 'canonical',
+      },
+    ],
+    native: [
+      {
+        address: EthereumAddress.random().toString(),
+        assetId: AssetId('2'),
+        chain: 'ethereum',
+        iconUrl:
+          'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
+        name: 'Native Token',
+        symbol: 'TKN',
+        source: 'native',
+      },
+    ],
+    external: [
+      {
+        address: EthereumAddress.random().toString(),
+        assetId: AssetId('3'),
+        chain: 'ethereum',
+        iconUrl:
+          'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
+        name: 'External Token',
+        symbol: 'TKN',
+        source: 'external',
+      },
+    ],
+  }
+}
 
 function groupBySource(tokens: ProjectToken[]) {
   const canonical: ProjectToken[] = []
