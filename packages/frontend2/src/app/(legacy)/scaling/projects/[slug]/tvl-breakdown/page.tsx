@@ -53,7 +53,7 @@ export default async function Page({ params }: Props) {
       <TvlBreakdownPageHeader
         title={project.display.name}
         slug={project.display.slug}
-        tvlBreakdownDate={dataTimestamp}
+        tvlBreakdownTimestamp={dataTimestamp}
       />
       <TvlBreakdownSummaryBox
         tvl={{
