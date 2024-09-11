@@ -1,8 +1,8 @@
 {
   "name": "optimism",
   "chain": "ethereum",
-  "blockNumber": 20726119,
-  "configHash": "0xb64cfdda9e137ec0feb6c850d9cbe01d37502ccaabf854d16d817280dea715cc",
+  "blockNumber": 20726359,
+  "configHash": "0x5ae5829eb5827e171741f89b74424dca88ee5b19892052249e33ab6dbf184e61",
   "version": 14,
   "contracts": [
     {
@@ -51,7 +51,6 @@
         },
         "gameType": 1,
         "getChallengerDuration": [],
-        "getNumToResolve": [0, 0, 0, 0, 0],
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "l2BlockNumber": 0,
         "l2BlockNumberChallenged": false,
@@ -60,15 +59,7 @@
         "maxClockDuration": 302400,
         "maxGameDepth": 73,
         "proposer": "0x473300df21D047806A082244b417f96b32f13A33",
-        "resolutionCheckpoints": [
-          [false, 0, 0, "0x0000000000000000000000000000000000000000"],
-          [false, 0, 0, "0x0000000000000000000000000000000000000000"],
-          [false, 0, 0, "0x0000000000000000000000000000000000000000"],
-          [false, 0, 0, "0x0000000000000000000000000000000000000000"],
-          [false, 0, 0, "0x0000000000000000000000000000000000000000"]
-        ],
         "resolvedAt": 0,
-        "resolvedSubgames": [false, false, false, false, false],
         "rootClaim": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "splitDepth": 30,
         "startingBlockNumber": 0,
@@ -82,11 +73,7 @@
         "vm": "0x16e83cE5Ce29BF90AD9Da06D2fE6a15d5f344ce4",
         "weth": "0x9F9b897e37de5052cD70Db6D08474550DDb07f39"
       },
-      "errors": {
-        "getNumToResolve": "Too many values. Update configuration to explore fully",
-        "resolutionCheckpoints": "Too many values. Update configuration to explore fully",
-        "resolvedSubgames": "Too many values. Update configuration to explore fully"
-      }
+      "derivedName": "PermissionedDisputeGame"
     },
     {
       "name": "GuardianMultisig",
@@ -257,7 +244,7 @@
         "$immutable": false,
         "$implementation": "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292754195",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292754201",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -337,7 +324,8 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
+          "target": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+          "description": "upgrading bridge implementation allows to access all funds and change every system component."
         },
         {
           "permission": "upgrade",
@@ -400,6 +388,7 @@
         {
           "permission": "upgrade",
           "target": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+          "description": "upgrading bridge implementation allows to access all funds and change every system component.",
           "via": [{ "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }]
         },
         {
@@ -492,39 +481,6 @@
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "1.1.0"
       }
-    },
-    {
-      "name": "CanonicalTransactionChain",
-      "address": "0x5E4e65926BA27467555EB562121fac00D24E9dD2",
-      "ignoreInWatchMode": [
-        "getLastBlockNumber",
-        "getLastTimestamp",
-        "getNextQueueIndex",
-        "getNumPendingQueueElements",
-        "getQueueLength",
-        "getTotalBatches",
-        "getTotalElements"
-      ],
-      "sinceTimestamp": 1636654670,
-      "values": {
-        "$immutable": true,
-        "batches": "0xD16463EF9b0338CE3D73309028ef1714D220c024",
-        "enqueueGasCost": 60000,
-        "enqueueL2GasPrepaid": 1920000,
-        "getLastBlockNumber": 17422409,
-        "getLastTimestamp": 1686066707,
-        "getNextQueueIndex": 356633,
-        "getNumPendingQueueElements": 0,
-        "getQueueLength": 356633,
-        "getTotalBatches": 854468,
-        "getTotalElements": 105235062,
-        "l2GasDiscountDivisor": 32,
-        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-        "MAX_ROLLUP_TX_SIZE": 50000,
-        "maxTransactionGasLimit": 15000000,
-        "MIN_ROLLUP_TX_GAS": 100000
-      },
-      "derivedName": "CanonicalTransactionChain"
     },
     {
       "name": "SynthetixBridgeEscrow",
@@ -622,19 +578,6 @@
       "derivedName": "L1ERC20TokenBridge"
     },
     {
-      "name": "SCCStorageContainerBatches_OLD",
-      "address": "0x77eBfdFcC906DDcDa0C42B866f26A8D5A2bb0572",
-      "sinceTimestamp": 1624400753,
-      "values": {
-        "$immutable": true,
-        "getGlobalMetadata": "0x000000000000000000000000000000000000618d50d100003e24ec",
-        "length": 4302,
-        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-        "owner": "OVM_StateCommitmentChain"
-      },
-      "derivedName": "OVM_ChainStorageContainer"
-    },
-    {
       "name": "DelayedWETH",
       "address": "0x82511d494B5C942BE57498a70Fdd7184Ee33B975",
       "proxyType": "EIP1967 proxy",
@@ -650,6 +593,7 @@
           ]
         }
       ],
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1724975003,
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
@@ -663,7 +607,8 @@
         "symbol": "WETH",
         "totalSupply": 0,
         "version": "1.1.0"
-      }
+      },
+      "derivedName": "DelayedWETH"
     },
     {
       "name": "FoundationMultisig_1",
@@ -744,7 +689,8 @@
           "via": [
             {
               "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
-              "delay": 0
+              "delay": 0,
+              "description": "upgrading bridge implementation allows to access all funds and change every system component."
             }
           ]
         }
@@ -770,9 +716,6 @@
       "address": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "descriptions": [
-        "Deputy Guardian of 0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8. It can act on behalf of the 0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2."
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1610850364,
       "values": {
@@ -852,7 +795,7 @@
         "name": "Wrapped Ether",
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
-        "totalSupply": "640000000000000000",
+        "totalSupply": "720000000000000000",
         "version": "1.1.0"
       }
     },
@@ -890,7 +833,6 @@
         },
         "gameType": 0,
         "getChallengerDuration": [],
-        "getNumToResolve": [0, 0, 0, 0, 0],
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "l2BlockNumber": 0,
         "l2BlockNumberChallenged": false,
@@ -898,15 +840,7 @@
         "l2ChainId": 10,
         "maxClockDuration": 302400,
         "maxGameDepth": 73,
-        "resolutionCheckpoints": [
-          [false, 0, 0, "0x0000000000000000000000000000000000000000"],
-          [false, 0, 0, "0x0000000000000000000000000000000000000000"],
-          [false, 0, 0, "0x0000000000000000000000000000000000000000"],
-          [false, 0, 0, "0x0000000000000000000000000000000000000000"],
-          [false, 0, 0, "0x0000000000000000000000000000000000000000"]
-        ],
         "resolvedAt": 0,
-        "resolvedSubgames": [false, false, false, false, false],
         "rootClaim": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "splitDepth": 30,
         "startingBlockNumber": 0,
@@ -920,46 +854,7 @@
         "vm": "0x16e83cE5Ce29BF90AD9Da06D2fE6a15d5f344ce4",
         "weth": "0x82511d494B5C942BE57498a70Fdd7184Ee33B975"
       },
-      "errors": {
-        "getNumToResolve": "Too many values. Update configuration to explore fully",
-        "resolutionCheckpoints": "Too many values. Update configuration to explore fully",
-        "resolvedSubgames": "Too many values. Update configuration to explore fully"
-      }
-    },
-    {
-      "name": "SCCStorageContainerBatches",
-      "address": "0xb0ddFf09c4019e31960de11bD845E836078E8EbE",
-      "ignoreInWatchMode": ["getGlobalMetadata", "length"],
-      "sinceTimestamp": 1636654521,
-      "values": {
-        "$immutable": true,
-        "getGlobalMetadata": "0x000000000000000000000000000000000000647f5a9f000645c276",
-        "length": 111420,
-        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-        "owner": "StateCommitmentChain"
-      },
-      "derivedName": "ChainStorageContainer"
-    },
-    {
-      "name": "StateCommitmentChain",
-      "address": "0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19",
-      "ignoreInWatchMode": [
-        "getLastSequencerTimestamp",
-        "getTotalBatches",
-        "getTotalElements"
-      ],
-      "sinceTimestamp": 1636654763,
-      "values": {
-        "$immutable": true,
-        "batches": "0xb0ddFf09c4019e31960de11bD845E836078E8EbE",
-        "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1686067871,
-        "getTotalBatches": 111420,
-        "getTotalElements": 105235062,
-        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-        "SEQUENCER_PUBLISH_WINDOW": 12592000
-      },
-      "derivedName": "StateCommitmentChain"
+      "derivedName": "FaultDisputeGame"
     },
     {
       "name": "OptimismPortal",
@@ -990,7 +885,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 1301449,
-          "prevBlockNum": 20726056
+          "prevBlockNum": 20726354
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1044,43 +939,12 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "CTCStorageContainerBatches",
-      "address": "0xD16463EF9b0338CE3D73309028ef1714D220c024",
-      "ignoreInWatchMode": ["getGlobalMetadata", "length"],
-      "sinceTimestamp": 1636654402,
-      "values": {
-        "$immutable": true,
-        "getGlobalMetadata": "0x00000000000000000109d84900647f56130000057119000645c276",
-        "length": 854468,
-        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-        "owner": "CanonicalTransactionChain"
-      },
-      "derivedName": "ChainStorageContainer"
-    },
-    {
       "name": "AddressManager",
       "address": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
       "template": "opstack/AddressManager",
       "sinceTimestamp": 1624400033,
       "values": {
         "$immutable": true,
-        "BondManager": "0x0000000000000000000000000000000000000000",
-        "OVM_BondManager": "0x0000000000000000000000000000000000000000",
-        "OVM_CanonicalTransactionChain": "0x0000000000000000000000000000000000000000",
-        "OVM_ChainStorageContainer_CTC_batches": "0x0000000000000000000000000000000000000000",
-        "OVM_ChainStorageContainer_CTC_queue": "0x0000000000000000000000000000000000000000",
-        "OVM_ChainStorageContainer_SCC_batches": "0x77eBfdFcC906DDcDa0C42B866f26A8D5A2bb0572",
-        "OVM_DecompressionPrecompileAddress": "0x0000000000000000000000000000000000000000",
-        "OVM_ExecutionManager": "0x0000000000000000000000000000000000000000",
-        "OVM_FraudVerifier": "0x0000000000000000000000000000000000000000",
-        "OVM_L1MultiMessageRelayer": "0x0000000000000000000000000000000000000000",
-        "OVM_L2CrossDomainMessenger": "0x0000000000000000000000000000000000000000",
-        "OVM_Proposer": "0x0000000000000000000000000000000000000000",
-        "OVM_SafetyChecker": "0x0000000000000000000000000000000000000000",
-        "OVM_Sequencer": "0x0000000000000000000000000000000000000000",
-        "OVM_StateCommitmentChain": "0x0000000000000000000000000000000000000000",
-        "OVM_StateManagerFactory": "0x0000000000000000000000000000000000000000",
-        "OVM_StateTransitionerFactory": "0x0000000000000000000000000000000000000000",
         "owner": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "Proxy__OVM_L1CrossDomainMessenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "Proxy__OVM_L1StandardBridge": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
@@ -1109,7 +973,7 @@
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0xc641A33cab81C559F2bd4b21EA34C290E2440C2B",
         "$upgradeCount": 1,
-        "gameCount": 2245,
+        "gameCount": 2246,
         "gameImpls": [
           "0xA6f3DFdbf4855a43c529bc42EDE96797252879af",
           "0x050ed6F6273c7D836a111E42153BC00D0380b87d",
@@ -1119,7 +983,7 @@
         ],
         "initBonds": ["80000000000000000", "80000000000000000", 0, 0, 0],
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 609,
+        "permissionedGamesTotal": 610,
         "version": "1.0.0"
       },
       "derivedName": "DisputeGameFactory"
@@ -1548,34 +1412,6 @@
       "function unpause()",
       "function version() view returns (string)"
     ],
-    "0x5E4e65926BA27467555EB562121fac00D24E9dD2": [
-      "constructor(address _libAddressManager, uint256 _maxTransactionGasLimit, uint256 _l2GasDiscountDivisor, uint256 _enqueueGasCost)",
-      "event L2GasParamsUpdated(uint256 l2GasDiscountDivisor, uint256 enqueueGasCost, uint256 enqueueL2GasPrepaid)",
-      "event QueueBatchAppended(uint256 _startingQueueIndex, uint256 _numQueueElements, uint256 _totalElements)",
-      "event SequencerBatchAppended(uint256 _startingQueueIndex, uint256 _numQueueElements, uint256 _totalElements)",
-      "event TransactionBatchAppended(uint256 indexed _batchIndex, bytes32 _batchRoot, uint256 _batchSize, uint256 _prevTotalElements, bytes _extraData)",
-      "event TransactionEnqueued(address indexed _l1TxOrigin, address indexed _target, uint256 _gasLimit, bytes _data, uint256 indexed _queueIndex, uint256 _timestamp)",
-      "function MAX_ROLLUP_TX_SIZE() view returns (uint256)",
-      "function MIN_ROLLUP_TX_GAS() view returns (uint256)",
-      "function appendSequencerBatch()",
-      "function batches() view returns (address)",
-      "function enqueue(address _target, uint256 _gasLimit, bytes _data)",
-      "function enqueueGasCost() view returns (uint256)",
-      "function enqueueL2GasPrepaid() view returns (uint256)",
-      "function getLastBlockNumber() view returns (uint40)",
-      "function getLastTimestamp() view returns (uint40)",
-      "function getNextQueueIndex() view returns (uint40)",
-      "function getNumPendingQueueElements() view returns (uint40)",
-      "function getQueueElement(uint256 _index) view returns (tuple(bytes32 transactionHash, uint40 timestamp, uint40 blockNumber) _element)",
-      "function getQueueLength() view returns (uint40)",
-      "function getTotalBatches() view returns (uint256 _totalBatches)",
-      "function getTotalElements() view returns (uint256 _totalElements)",
-      "function l2GasDiscountDivisor() view returns (uint256)",
-      "function libAddressManager() view returns (address)",
-      "function maxTransactionGasLimit() view returns (uint256)",
-      "function resolve(string _name) view returns (address)",
-      "function setGasParams(uint256 _l2GasDiscountDivisor, uint256 _enqueueGasCost)"
-    ],
     "0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f": [
       "constructor(address _owner)",
       "event BridgeApproval(address _token, address indexed spender, uint256 value)",
@@ -1679,20 +1515,6 @@
       "function proxy__ossify()",
       "function proxy__upgradeTo(address newImplementation_)",
       "function proxy__upgradeToAndCall(address newImplementation_, bytes setupCalldata_, bool forceCall_)"
-    ],
-    "0x77eBfdFcC906DDcDa0C42B866f26A8D5A2bb0572": [
-      "constructor(address _libAddressManager, string _owner)",
-      "function deleteElementsAfterInclusive(uint256 _index, bytes27 _globalMetadata)",
-      "function deleteElementsAfterInclusive(uint256 _index)",
-      "function get(uint256 _index) view returns (bytes32)",
-      "function getGlobalMetadata() view returns (bytes27)",
-      "function length() view returns (uint256)",
-      "function libAddressManager() view returns (address)",
-      "function owner() view returns (string)",
-      "function push(bytes32 _object, bytes27 _globalMetadata)",
-      "function push(bytes32 _object)",
-      "function resolve(string _name) view returns (address)",
-      "function setGlobalMetadata(bytes27 _globalMetadata)"
     ],
     "0x82511d494B5C942BE57498a70Fdd7184Ee33B975": [
       "constructor(address _admin)",
@@ -1909,37 +1731,6 @@
       "function superchainConfig() view returns (address)",
       "function version() view returns (string)"
     ],
-    "0xb0ddFf09c4019e31960de11bD845E836078E8EbE": [
-      "constructor(address _libAddressManager, string _owner)",
-      "function deleteElementsAfterInclusive(uint256 _index, bytes27 _globalMetadata)",
-      "function deleteElementsAfterInclusive(uint256 _index)",
-      "function get(uint256 _index) view returns (bytes32)",
-      "function getGlobalMetadata() view returns (bytes27)",
-      "function length() view returns (uint256)",
-      "function libAddressManager() view returns (address)",
-      "function owner() view returns (string)",
-      "function push(bytes32 _object, bytes27 _globalMetadata)",
-      "function push(bytes32 _object)",
-      "function resolve(string _name) view returns (address)",
-      "function setGlobalMetadata(bytes27 _globalMetadata)"
-    ],
-    "0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19": [
-      "constructor(address _libAddressManager, uint256 _fraudProofWindow, uint256 _sequencerPublishWindow)",
-      "event StateBatchAppended(uint256 indexed _batchIndex, bytes32 _batchRoot, uint256 _batchSize, uint256 _prevTotalElements, bytes _extraData)",
-      "event StateBatchDeleted(uint256 indexed _batchIndex, bytes32 _batchRoot)",
-      "function FRAUD_PROOF_WINDOW() view returns (uint256)",
-      "function SEQUENCER_PUBLISH_WINDOW() view returns (uint256)",
-      "function appendStateBatch(bytes32[] _batch, uint256 _shouldStartAtElement)",
-      "function batches() view returns (address)",
-      "function deleteStateBatch(tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader)",
-      "function getLastSequencerTimestamp() view returns (uint256 _lastSequencerTimestamp)",
-      "function getTotalBatches() view returns (uint256 _totalBatches)",
-      "function getTotalElements() view returns (uint256 _totalElements)",
-      "function insideFraudProofWindow(tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader) view returns (bool _inside)",
-      "function libAddressManager() view returns (address)",
-      "function resolve(string _name) view returns (address)",
-      "function verifyStateCommitment(bytes32 _element, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader, tuple(uint256 index, bytes32[] siblings) _proof) view returns (bool)"
-    ],
     "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1978,20 +1769,6 @@
       "function setInitBond(uint32 _gameType, uint256 _initBond)",
       "function transferOwnership(address newOwner)",
       "function version() view returns (string)"
-    ],
-    "0xD16463EF9b0338CE3D73309028ef1714D220c024": [
-      "constructor(address _libAddressManager, string _owner)",
-      "function deleteElementsAfterInclusive(uint256 _index, bytes27 _globalMetadata)",
-      "function deleteElementsAfterInclusive(uint256 _index)",
-      "function get(uint256 _index) view returns (bytes32)",
-      "function getGlobalMetadata() view returns (bytes27)",
-      "function length() view returns (uint256)",
-      "function libAddressManager() view returns (address)",
-      "function owner() view returns (string)",
-      "function push(bytes32 _object, bytes27 _globalMetadata)",
-      "function push(bytes32 _object)",
-      "function resolve(string _name) view returns (address)",
-      "function setGlobalMetadata(bytes27 _globalMetadata)"
     ],
     "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65": [
       "constructor()",
@@ -2202,12 +1979,12 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
-    "gnosisSafeModules/DeputyGuardianModule": "0xdf0eca44c189c3ae1ab3dc595b9be07ccf7a590046f698cae8ce191b0265bc59",
-    "gnosisSafeModules/LivenessModule": "0x8162081df0fcb97a9f284af7abf967750d51b78f421e00d5ceafb3c0dc425164",
+    "gnosisSafeModules/DeputyGuardianModule": "0xd3930cda89001876a722ed430ea8ed07e4823c83ed910e621744eccab9becba1",
+    "gnosisSafeModules/LivenessModule": "0x93a18dea68cf1d0abddfc33adec077c82356344dd7b49ae5542b16ca9319bb91",
     "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
-    "opstack/L1StandardBridge": "0xddf1dd5445f612b5e1a4b13c68df1d9904506ec9ed0961c62a619498a40344b4",
+    "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837"
