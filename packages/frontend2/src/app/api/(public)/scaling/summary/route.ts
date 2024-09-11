@@ -11,7 +11,13 @@ export async function GET() {
   return NextResponse.json({
     success: true,
     data: {
-      chart,
+      chart: chart.map(([timestamp, canonical, external, native, ethPrice]) => [
+        timestamp,
+        canonical / 100,
+        external / 100,
+        native / 100,
+        ethPrice,
+      ]),
       projects: entries.reduce<Record<string, unknown>>((acc, entry) => {
         acc[entry.id] = {
           ...entry,
