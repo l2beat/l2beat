@@ -1,7 +1,7 @@
 import { layer2s, layer3s } from '@l2beat/config'
 import { notFound } from 'next/navigation'
 import { getTvlBreakdownForProject } from '~/server/features/scaling/tvl/breakdown/get-tvl-breakdown-for-project'
-import { getDetailed7dTvlBreakdown } from '~/server/features/scaling/tvl/utils/get-7d-tvl-breakdown'
+import { get7dTvlBreakdown } from '~/server/features/scaling/tvl/utils/get-7d-tvl-breakdown'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { RequestTokenBox } from './_components/request-token-box'
 import { CanonicallyBridgedTable } from './_components/tables/canonically-bridged-table'
@@ -40,7 +40,7 @@ export default async function Page({ params }: Props) {
     notFound()
   }
 
-  const projects7dData = await getDetailed7dTvlBreakdown()
+  const projects7dData = await get7dTvlBreakdown()
   const project7dData = projects7dData.projects[project.id.toString()]!
 
   const {
