@@ -1,3 +1,4 @@
+import { recallNodeState } from '../store/utils/localStore'
 import { oklch2rgb } from '../utils/oklch'
 import { stringHash } from '../utils/stringHash'
 import type { ContractNode, EOANode, SimpleNode } from './SimpleNode'
@@ -5,15 +6,19 @@ import type { DiscoveryContract, DiscoveryOutput } from './paseDiscovery'
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
-export function transformContracts(discovery: DiscoveryOutput): SimpleNode[] {
-  const color = oklch2rgb(0.75, 0.12, stringHash(discovery.chain) % 360)
+export function transformContracts(
+  projectId: string,
+  discovery: DiscoveryOutput,
+): SimpleNode[] {
+  const state = recallNodeState(projectId)
+  const baseColor = oklch2rgb(0.75, 0.12, stringHash(discovery.chain) % 360)
 
   const contractNodes: ContractNode[] = discovery.contracts.map((contract) => {
     const implementations = getAsStringArray(contract.values?.$implementation)
     return {
       type: 'Contract',
       id: contract.address,
-      color,
+      color: state?.colors?.[contract.address] ?? baseColor,
       name: emojifyContractName(contract),
       proxyType: contract.proxyType,
       discovered: true,
@@ -27,7 +32,7 @@ export function transformContracts(discovery: DiscoveryOutput): SimpleNode[] {
   const eoaNodes: EOANode[] = discovery.eoas.map((eoa) => ({
     type: 'EOA',
     id: eoa.address,
-    color,
+    color: state?.colors?.[eoa.address] ?? baseColor,
     name: `🧍 EOA ${eoa.address}`,
     discovered: true,
     fields: [],

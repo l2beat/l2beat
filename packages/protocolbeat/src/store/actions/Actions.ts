@@ -1,5 +1,5 @@
 import type { SimpleNode } from '../../api/SimpleNode'
-import type { NodeLocations } from '../utils/storageParsing'
+import type { NodeColors, NodeLocations } from '../utils/storageParsing'
 
 export interface Actions {
   onKeyDown: (event: KeyboardEvent) => void
@@ -11,6 +11,7 @@ export interface Actions {
 
   updateNodes: (nodes: SimpleNode[]) => void
   updateNodeLocations: (locations: NodeLocations) => void
+  updateNodeColors: (colors?: NodeColors) => void
   setProjectId: (projectId: string) => void
 
   setHiddenNodes: (update: (currentlyHiddenIds: string[]) => string[]) => void

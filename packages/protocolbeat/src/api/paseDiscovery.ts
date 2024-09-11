@@ -4,6 +4,10 @@ export function parseDiscovery(data: unknown): DiscoveryOutput {
   return DiscoveryOutput.parse(data)
 }
 
+export function encodeProjectId(discovery: DiscoveryOutput) {
+  return `${discovery.name}@${discovery.chain}`
+}
+
 export type DiscoveryContract = z.infer<typeof DiscoveryContract>
 export const DiscoveryContract = z
   .object({

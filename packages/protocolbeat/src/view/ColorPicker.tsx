@@ -32,11 +32,12 @@ export function ColorPicker({ ids, onColorChange }: ColorPickerProps) {
   ]
 
   return (
-    <div className="grid grid-cols-6 gap-3">
-      {colors.map((c) => (
+    <div className="grid grid-cols-6 place-items-center gap-3">
+      {colors.map((c, i) => (
         <div
           style={{ backgroundColor: colorToCSS(c) }}
-          className="h-12 w-12 rounded"
+          className="h-12 w-12 rounded shadow-xl active:opacity-50 hover:ring"
+          key={i}
           onClick={() => onColorChange(ids, c)}
         ></div>
       ))}
