@@ -3,12 +3,12 @@ import React from 'react'
 
 import { withThemeByClassName } from '@storybook/addon-themes'
 
+import { TooltipProvider } from '../src/components/core/tooltip/tooltip'
+import { GlossaryContextProvider } from '../src/components/markdown/glossary-context'
 import { roboto } from '../src/fonts'
 import '../src/styles/globals.css'
 import { allModes } from './modes'
 import { viewports } from './viewports'
-import { TooltipProvider } from '../src/components/core/tooltip/tooltip'
-import { GlossaryContextProvider } from '../src/components/markdown/glossary-context'
 
 const preview: Preview = {
   parameters: {
