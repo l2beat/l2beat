@@ -3,6 +3,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
+import { Markdown } from '~/components/markdown/markdown'
 import { Layer3sIcon } from '~/icons/layer3s'
 import { ShieldIcon } from '~/icons/shield'
 import { UnderReviewIcon } from '~/icons/under-review'
@@ -10,7 +11,6 @@ import { UnverifiedIcon } from '~/icons/unverified'
 import { type SyncStatus } from '~/types/sync-status'
 import { cn } from '~/utils/cn'
 import { NotSyncedBadge } from '../../badge/not-synced-badge'
-import { Markdown } from '~/components/markdown/markdown'
 
 export interface ProjectCellProps {
   project: {
