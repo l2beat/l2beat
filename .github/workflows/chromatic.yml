@@ -1,14 +1,9 @@
 name: "Chromatic"
 
-# It would be nice to use the @chromeui/action to build storybook and deploy to chromatic
-# Although I had problem with it to make turbosnap work
-# You can check the issue here:
-# https://github.com/IanVS/vite-plugin-turbosnap/issues/13
-
 on:
   push:
     paths:
-      - "packages/frontend/**"
+      - "packages/frontend2/**"
 
 jobs:
   deploy:
@@ -16,13 +11,13 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./packages/frontend
+        working-directory: ./packages/frontend2
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # 👈 Required to retrieve git history
+          fetch-depth: 0
 
       - name: Install dependencies
         run: yarn
@@ -38,8 +33,3 @@ jobs:
           --only-changed
           --exit-once-uploaded
           --exit-zero-on-changes
-          --externals packages/frontend/tailwind.config.js
-          --externals *.css
-          --externals packages/frontend/src/static/fonts/**/*
-          --untraced packages/backend/package.json
-          --untraced packages/shared/package.json
