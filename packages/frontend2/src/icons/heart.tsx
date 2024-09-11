@@ -376,7 +376,7 @@ export function HeartIcon(props: SvgIconProps) {
           y2="15.5586"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.147" stop-color="#F4523D" stop-opacity="0" />
+          <stop offset="0.147" stop-color="#F4523D" stopOpacity="0" />
           <stop offset="0.845" stop-color="#A52510" />
         </linearGradient>
         <radialGradient
@@ -388,7 +388,7 @@ export function HeartIcon(props: SvgIconProps) {
           gradientTransform="translate(7.16957 6.88785) rotate(-37.9592) scale(3.24001 2.26483)"
         >
           <stop offset="0.129" stop-color="#F9A29B" />
-          <stop offset="0.834" stop-color="#F9A29B" stop-opacity="0" />
+          <stop offset="0.834" stop-color="#F9A29B" stopOpacity="0" />
         </radialGradient>
       </defs>
     </SvgIcon>
