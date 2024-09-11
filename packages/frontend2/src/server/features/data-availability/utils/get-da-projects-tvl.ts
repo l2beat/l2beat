@@ -1,16 +1,22 @@
+import { layer2s, layer3s } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
+import { env } from '~/env'
 import { db } from '~/server/database'
 
 export async function getDaProjectsTvl(projectIds: ProjectId[]) {
+  if (env.MOCK) {
+    return getMockDaProjectsTvl()
+  }
   noStore()
   return await getCachedDaProjectsTvl(projectIds)
 }
 
+type DaProjectsTvl = Awaited<ReturnType<typeof getCachedDaProjectsTvl>>
 const getCachedDaProjectsTvl = cache(
   async (projectIds: ProjectId[]) => {
     const values = await db.value.getLatestValues(projectIds)
@@ -57,4 +63,11 @@ export function pickTvlForProjects(
     // Fiat denomination to cents
     return sum / 100
   }
+}
+
+function getMockDaProjectsTvl(): DaProjectsTvl {
+  return [...layer2s, ...layer3s].map((project) => ({
+    projectId: project.id,
+    tvl: 100000,
+  }))
 }
