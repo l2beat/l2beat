@@ -15,9 +15,6 @@ export type AmountConfigEntry =
   | CirculatingSupplyEntry
   | EscrowEntry
   | PremintedEntry
-  | AggLayerL2Token
-  | AggLayerNativeEtherPreminted
-  | AggLayerNativeEtherWrapped
 
 export interface PremintedEntry extends AmountConfigBase {
   type: 'preminted'

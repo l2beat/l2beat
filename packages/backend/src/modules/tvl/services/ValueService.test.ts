@@ -1,7 +1,6 @@
 import { AmountId, AssetId, PriceId, createAssetId } from '@l2beat/config'
 import { Database } from '@l2beat/database'
 import {
-  assert,
   AmountConfigEntry,
   EthereumAddress,
   ProjectId,
@@ -40,7 +39,6 @@ describe(ValueService.name, () => {
       address: EthereumAddress.random(),
       chain: 'chain',
       includeInTotal: true,
-      type: 'totalSupply',
       decimals: DECIMALS,
       source: 'canonical',
       isAssociated: false,
@@ -50,7 +48,6 @@ describe(ValueService.name, () => {
       sinceTimestamp: new UnixTime(300),
       address: EthereumAddress.random(),
       chain: 'chain',
-      type: 'totalSupply',
       includeInTotal: false,
       decimals: DECIMALS,
       source: 'external',
@@ -61,16 +58,7 @@ describe(ValueService.name, () => {
       ['a', CONFIG_A],
       ['b', CONFIG_B],
     ])
-    assert(
-      CONFIG_A.type !== 'aggLayerL2Token' &&
-        CONFIG_A.type !== 'aggLayerNativeEtherPreminted' &&
-        CONFIG_A.type !== 'aggLayerNativeEtherWrapped',
-    )
-    assert(
-      CONFIG_B.type !== 'aggLayerL2Token' &&
-        CONFIG_B.type !== 'aggLayerNativeEtherPreminted' &&
-        CONFIG_B.type !== 'aggLayerNativeEtherWrapped',
-    )
+
     const priceConfigIds: Map<AssetId, PriceId> = new Map([
       [createAssetId(CONFIG_A), 'a'],
       [createAssetId(CONFIG_B), 'b'],

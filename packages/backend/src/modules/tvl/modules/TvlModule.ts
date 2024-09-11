@@ -233,11 +233,6 @@ function getAssociatedTokens(
     const associatedAmounts = amounts
       .filter((x) => x.isAssociated === true)
       .filter((amount) => {
-        assert(
-          amount.type !== 'aggLayerL2Token' &&
-            amount.type !== 'aggLayerNativeEtherPreminted' &&
-            amount.type !== 'aggLayerNativeEtherWrapped',
-        )
         const u = uniqueTokens.get(`${amount.address}-${amount.chain}`)
         if (u) {
           assert(amount.source === u, 'Type mismatch')
@@ -248,11 +243,6 @@ function getAssociatedTokens(
       })
 
     return associatedAmounts.map((amount) => {
-      assert(
-        amount.type !== 'aggLayerL2Token' &&
-          amount.type !== 'aggLayerNativeEtherPreminted' &&
-          amount.type !== 'aggLayerNativeEtherWrapped',
-      )
       return {
         address: amount.address,
         chain: amount.chain,

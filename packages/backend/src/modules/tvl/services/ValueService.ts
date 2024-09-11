@@ -85,11 +85,6 @@ export class ValueService {
         const amountConfig = amountConfigs.get(amount.configId)
         assert(amountConfig, 'Config not found')
 
-        assert(
-          amountConfig.type !== 'aggLayerL2Token' &&
-            amountConfig.type !== 'aggLayerNativeEtherPreminted' &&
-            amountConfig.type !== 'aggLayerNativeEtherWrapped',
-        )
         const priceId = priceConfigIds.get(createAssetId(amountConfig))
         const price = pricesAtTimestamp.find((x) => x.configId === priceId)
         assert(price, 'Price not found')

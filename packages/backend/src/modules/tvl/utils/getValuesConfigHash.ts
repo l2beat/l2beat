@@ -14,14 +14,9 @@ export function getValuesConfigHash(
   const valueIds: string[] = []
 
   for (const amount of amountConfigs) {
-    const price = priceConfigs.find((p) => {
-      assert(
-        amount.type !== 'aggLayerL2Token' &&
-          amount.type !== 'aggLayerNativeEtherPreminted' &&
-          amount.type !== 'aggLayerNativeEtherWrapped',
-      )
-      return p.address === amount.address && p.chain === amount.chain
-    })
+    const price = priceConfigs.find(
+      (p) => p.address === amount.address && p.chain === amount.chain,
+    )
     assert(price, `Price config not found for ${createAmountId(amount)}`)
     const valueId = createValueId(amount, price)
     valueIds.push(valueId)
