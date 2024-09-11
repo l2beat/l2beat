@@ -1,4 +1,3 @@
-import { Logger } from '@l2beat/backend-tools'
 import { AmountRecord } from '@l2beat/database'
 import { Bytes, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
@@ -8,7 +7,6 @@ import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import {
   AggLayerService,
   AggLayerServiceDependencies,
-  BRIDGE_ADDRESS,
   Config,
   bridgeInterface,
   erc20Interface,
@@ -17,6 +15,9 @@ import {
 const NOW = UnixTime.now()
 const MOCK_ID1 = '1'
 const MOCK_ID2 = '2'
+export const BRIDGE_ADDRESS = EthereumAddress(
+  '0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe',
+)
 
 describe.only(AggLayerService.name, () => {
   describe(AggLayerService.prototype.fetchAmounts.name, () => {
@@ -42,10 +43,10 @@ describe.only(AggLayerService.name, () => {
       ])
 
       const result = await mockAggLayerService.fetchAmounts(
+        NOW,
+        0,
         [mockToken1, mockToken2],
         undefined,
-        0,
-        NOW,
       )
 
       expect(result).toEqual([
@@ -79,10 +80,10 @@ describe.only(AggLayerService.name, () => {
       ])
 
       const result = await mockAggLayerService.fetchAmounts(
+        NOW,
+        0,
         [mockToken1],
         mockNativeToken,
-        0,
-        NOW,
       )
 
       expect(result).toEqual([
@@ -119,10 +120,10 @@ describe.only(AggLayerService.name, () => {
       ])
 
       const result = await mockAggLayerService.fetchAmounts(
+        NOW,
+        0,
         [mockToken1],
         mockWrapperEther,
-        0,
-        NOW,
       )
 
       expect(result).toEqual([
@@ -170,11 +171,9 @@ describe.only(AggLayerService.name, () => {
         multicallClient,
       })
 
-      const result = await aggLayerService.getL2TokensAmounts(
-        [mockToken],
-        123456,
-        NOW,
-      )
+      const result = await aggLayerService.getL2TokensAmounts(NOW, 123456, [
+        mockToken,
+      ])
 
       // get l2 token address call
       expect(multicallClient.multicall).toHaveBeenNthCalledWith(
@@ -239,11 +238,10 @@ describe.only(AggLayerService.name, () => {
         multicallClient,
         rpcClient,
       })
-      const result = await aggLayerService.getL2TokensTotalSupply(
-        [mockToken1, mockToken2],
-        123456,
-        NOW,
-      )
+      const result = await aggLayerService.getL2TokensTotalSupply(NOW, 123456, [
+        mockToken1,
+        mockToken2,
+      ])
 
       // encodes and calls
       expect(multicallClient.multicall).toHaveBeenCalledWith(
@@ -300,10 +298,10 @@ describe.only(AggLayerService.name, () => {
         rpcClient,
       })
 
-      const result = await aggLayerService.getL2TokensAddresses(
-        [mockToken1, mockToken2],
-        123456,
-      )
+      const result = await aggLayerService.getL2TokensAddresses(123456, [
+        mockToken1,
+        mockToken2,
+      ])
 
       // encodes and calls
       expect(multicallClient.multicall).toHaveBeenCalledWith(
@@ -343,9 +341,9 @@ describe.only(AggLayerService.name, () => {
       })
 
       const result = await mockAggLayerService.getNativeEtherPremintedAmount(
-        mockToken,
-        0,
         NOW,
+        0,
+        mockToken,
       )
 
       expect(result).toEqual(amountRecord(MOCK_ID1, 100n))
@@ -374,9 +372,9 @@ describe.only(AggLayerService.name, () => {
       })
 
       const result = await mockAggLayerService.getNativeEtherWrappedAmount(
-        token,
-        0,
         NOW,
+        0,
+        token,
       )
 
       expect(result).toEqual(amountRecord(MOCK_ID1, expectedSupply))
@@ -392,9 +390,9 @@ describe.only(AggLayerService.name, () => {
 })
 
 function agglayerService(opts: Partial<AggLayerServiceDependencies>) {
-  const { logger, multicallClient, rpcClient } = opts
+  const { multicallClient, rpcClient, bridgeAddress } = opts
   return new AggLayerService({
-    logger: logger ?? Logger.SILENT,
+    bridgeAddress: bridgeAddress ?? BRIDGE_ADDRESS,
     multicallClient: multicallClient ?? mockObject<MulticallClient>({}),
     rpcClient: rpcClient ?? mockObject<RpcClient>({}),
   })

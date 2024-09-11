@@ -1,4 +1,3 @@
-import { Logger } from '@l2beat/backend-tools'
 import { AmountRecord } from '@l2beat/database'
 import {
   AggLayerL2Token,
@@ -22,9 +21,9 @@ export const bridgeInterface = new utils.Interface([
   'function getTokenWrappedAddress(uint32 originNetwork, address originTokenAddress) view returns (address)',
 ])
 
-export const BRIDGE_ADDRESS = EthereumAddress(
-  '0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe',
-)
+// export const BRIDGE_ADDRESS = EthereumAddress(
+//   '0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe',
+// )
 
 type AggLayerAmountConfig =
   | AggLayerL2Token
@@ -36,49 +35,41 @@ export type Config = AggLayerAmountConfig & { id: string }
 export interface AggLayerServiceDependencies {
   readonly rpcClient: RpcClient
   readonly multicallClient: MulticallClient
-  logger: Logger
+  readonly bridgeAddress: EthereumAddress
 }
 
 export class AggLayerService {
-  constructor(private readonly $: AggLayerServiceDependencies) {
-    this.$.logger = $.logger.for(this)
-  }
+  constructor(private readonly $: AggLayerServiceDependencies) {}
 
   async fetchAmounts(
+    timestamp: UnixTime,
+    blockNumber: number,
     tokens: (Config & { type: 'aggLayerL2Token' })[],
     nativeToken:
       | (Config & {
           type: 'aggLayerNativeEtherPreminted' | 'aggLayerNativeEtherWrapped'
         })
       | undefined,
-    blockNumber: number,
-    timestamp: UnixTime,
   ): Promise<AmountRecord[]> {
     const l2TokensAmounts = await this.getL2TokensAmounts(
-      tokens,
-      blockNumber,
       timestamp,
+      blockNumber,
+      tokens,
     )
 
-    let nativeTokenAmount: AmountRecord | undefined = undefined
-    switch (nativeToken?.type) {
-      case 'aggLayerNativeEtherPreminted':
-        nativeTokenAmount = await this.getNativeEtherPremintedAmount(
-          nativeToken,
-          blockNumber,
-          timestamp,
-        )
-        break
-      case 'aggLayerNativeEtherWrapped':
-        nativeTokenAmount = await this.getNativeEtherWrappedAmount(
-          nativeToken,
-          blockNumber,
-          timestamp,
-        )
-        break
-      default:
-        break
-    }
+    const nativeTokenAmount = nativeToken
+      ? nativeToken.type === 'aggLayerNativeEtherPreminted'
+        ? await this.getNativeEtherPremintedAmount(
+            timestamp,
+            blockNumber,
+            nativeToken,
+          )
+        : await this.getNativeEtherWrappedAmount(
+            timestamp,
+            blockNumber,
+            nativeToken,
+          )
+      : undefined
 
     return [
       ...l2TokensAmounts,
@@ -87,26 +78,26 @@ export class AggLayerService {
   }
 
   async getL2TokensAmounts(
-    tokens: (Config & { type: 'aggLayerL2Token' })[],
-    blockNumber: number,
     timestamp: UnixTime,
+    blockNumber: number,
+    tokens: (Config & { type: 'aggLayerL2Token' })[],
   ) {
     const tokensWithL2Addresses = await this.getL2TokensAddresses(
-      tokens,
       blockNumber,
+      tokens,
     )
 
     return await this.getL2TokensTotalSupply(
-      tokensWithL2Addresses,
-      blockNumber,
       timestamp,
+      blockNumber,
+      tokensWithL2Addresses,
     )
   }
 
   async getL2TokensTotalSupply(
-    tokens: (Config & { address: EthereumAddress; type: 'aggLayerL2Token' })[],
-    blockNumber: number,
     timestamp: UnixTime,
+    blockNumber: number,
+    tokens: (Config & { address: EthereumAddress; type: 'aggLayerL2Token' })[],
   ): Promise<AmountRecord[]> {
     const encoded: MulticallRequest[] = tokens.map((token) => ({
       address: token.address,
@@ -133,11 +124,11 @@ export class AggLayerService {
   }
 
   async getL2TokensAddresses(
-    tokens: (Config & { type: 'aggLayerL2Token' })[],
     blockNumber: number,
+    tokens: (Config & { type: 'aggLayerL2Token' })[],
   ): Promise<(AggLayerL2Token & { address: EthereumAddress; id: string })[]> {
     const encoded: MulticallRequest[] = tokens.map((token) => ({
-      address: BRIDGE_ADDRESS,
+      address: this.$.bridgeAddress,
       data: Bytes.fromHex(
         bridgeInterface.encodeFunctionData('getTokenWrappedAddress', [
           0, // originNetwork - 0 for Ethereum
@@ -165,15 +156,15 @@ export class AggLayerService {
   }
 
   async getNativeEtherPremintedAmount(
-    token: Config & { type: 'aggLayerNativeEtherPreminted' },
-    blockNumber: number,
     timestamp: UnixTime,
+    blockNumber: number,
+    token: Config & { type: 'aggLayerNativeEtherPreminted' },
   ): Promise<AmountRecord> {
     const bridgeBalance = await this.$.rpcClient.getBalance(
       token.l2BridgeAddress,
       blockNumber,
     )
-    const amount = BigInt(token.premintedAmount) - bridgeBalance.toBigInt()
+    const amount = token.premintedAmount - bridgeBalance.toBigInt()
     return {
       configId: token.id,
       amount,
@@ -182,9 +173,9 @@ export class AggLayerService {
   }
 
   async getNativeEtherWrappedAmount(
-    token: Config & { type: 'aggLayerNativeEtherWrapped' },
-    blockNumber: number,
     timestamp: UnixTime,
+    blockNumber: number,
+    token: Config & { type: 'aggLayerNativeEtherWrapped' },
   ): Promise<AmountRecord> {
     const response = await this.$.rpcClient.call(
       {
