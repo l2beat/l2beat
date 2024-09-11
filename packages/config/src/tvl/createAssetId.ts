@@ -6,5 +6,5 @@ export function createAssetId(asset: {
   address: EthereumAddress | 'native'
   chain: string
 }): AssetId {
-  return `${asset.chain}-${asset.address}`
+  return `${asset.chain}-${asset.address.toString()}`
 }
