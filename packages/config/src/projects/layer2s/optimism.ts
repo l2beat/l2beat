@@ -122,7 +122,7 @@ const permissionlessGameSplitDepth = discovery.getContractValue<number>(
 const permissionlessGameFullCost = (() => {
   let cost = 0
   const scaleFactor = 100000
-  for (let i = 0; i < permissionlessGameMaxDepth; i++) {
+  for (let i = 0; i <= permissionlessGameMaxDepth; i++) {
     cost =
       cost +
       (permissionlessDisputeGameBonds / scaleFactor) *
@@ -139,7 +139,7 @@ const oracleChallengePeriod = discovery.getContractValue<number>(
 const permissionlessGameMaxClockExtension =
   permissionlessGameClockExtension * 2 + // at SPLIT_DEPTH - 1
   oracleChallengePeriod + // at MAX_GAME_DEPTH - 1
-  permissionlessGameClockExtension * (permissionlessGameMaxDepth - 2) // the rest
+  permissionlessGameClockExtension * (permissionlessGameMaxDepth - 3) // the rest, excluding also the last depth
 
 export const optimism: Layer2 = {
   type: 'layer2',
