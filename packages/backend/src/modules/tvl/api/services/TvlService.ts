@@ -364,6 +364,11 @@ export class TvlService {
         decimals: config.decimals,
       })
 
+      assert(
+        config.type !== 'aggLayerL2Token' &&
+          config.type !== 'aggLayerNativeEtherPreminted' &&
+          config.type !== 'aggLayerNativeEtherWrapped',
+      )
       breakdown[config.source].push({
         assetId: priceConfig.assetId,
         address: config.address.toString(),

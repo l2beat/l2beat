@@ -145,7 +145,12 @@ export class DataStatusService {
     targetTimestamp: UnixTime,
   ) {
     const multiIndexerEntries = entries.filter(
-      (c) => c.type !== 'circulatingSupply' && c.type !== 'preminted',
+      (c) =>
+        c.type !== 'circulatingSupply' &&
+        c.type !== 'preminted' &&
+        c.type !== 'aggLayerL2Token' &&
+        c.type !== 'aggLayerNativeEtherPreminted' &&
+        c.type !== 'aggLayerNativeEtherWrapped',
     )
 
     const configurations = await this.getConfigurations(multiIndexerEntries)

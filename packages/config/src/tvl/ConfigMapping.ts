@@ -42,6 +42,11 @@ export class ConfigMapping {
   getPriceConfigFromAmountConfig(
     amountConfig: AmountConfigEntry,
   ): PriceConfigEntry & { configId: string } {
+    assert(
+      amountConfig.type !== 'aggLayerL2Token' &&
+        amountConfig.type !== 'aggLayerNativeEtherPreminted' &&
+        amountConfig.type !== 'aggLayerNativeEtherWrapped',
+    )
     const assetId = createAssetId(amountConfig)
 
     const priceConfig = this.pricesByAssetId.get(assetId)
@@ -65,9 +70,14 @@ export class ConfigMapping {
     assert(projectAmounts)
 
     const assetId = createAssetId(token)
-    const amountConfigs = projectAmounts.filter(
-      (x) => createAssetId(x) === assetId,
-    )
+    const amountConfigs = projectAmounts.filter((x) => {
+      assert(
+        x.type !== 'aggLayerL2Token' &&
+          x.type !== 'aggLayerNativeEtherPreminted' &&
+          x.type !== 'aggLayerNativeEtherWrapped',
+      )
+      return createAssetId(x) === assetId
+    })
     assert(
       amountConfigs.every((x) => x.decimals === amountConfigs[0]?.decimals),
       'Decimals mismatch!',
