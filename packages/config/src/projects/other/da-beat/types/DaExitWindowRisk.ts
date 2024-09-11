@@ -20,7 +20,7 @@ const NoBridge = {
   type: 'NoBridge',
   value: 'No exit window',
   sentiment: 'bad',
-  description: `There is no DA bridge from the DA layer to Ethereum. As such, there is no proof that validators on the DA layer have reached consensus on the availability of the data.`,
+  description: `There is no DA bridge from the DA layer to Ethereum. As such, there is no proof that validators on the DA layer have reached consensus on the availability of the data, and there is no exit window for users to exit the system.`,
 } as const
 
 const ONE_DAY_SECONDS = 24 * 60 * 60
