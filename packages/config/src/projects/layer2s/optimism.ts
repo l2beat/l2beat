@@ -153,8 +153,6 @@ export const optimism: Layer2 = {
     Badge.Other.Governance,
   ],
   display: {
-    headerWarning:
-      'OP Mainnet has reverted to permissioned proposals as part of a bug fix procedure. The network is expected to return to permissionless fault proofs on the week of September 9th.',
     name: 'OP Mainnet',
     slug: 'optimism',
     category: 'Optimistic Rollup',
@@ -502,18 +500,19 @@ export const optimism: Layer2 = {
         title: 'Challenges',
         description: `Challenges are opened to disprove invalid state roots using bisection games. Each bisection move requires a stake that increases expontentially with the depth of the bisection, with a factor of ${exponentialBondsFactor}. The maximum depth is ${permissionlessGameMaxDepth}, and reaching it therefore requires a cumulative stake of ${parseFloat(
           formatEther(permissionlessGameFullCost),
-        ).toFixed(2)} ETH from depth 0. Actors can participate in any challenge by calling the \`defend\` or \`attack\` functions, depending whether they agree or disagree with the claim and want to move the bisection game forward.
-        Actors might be involved in multiple (sub-)challenges at the same time, meaning that the protocol operates with [full concurrency](https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a). Each claim has a clock that starts with ${formatSeconds(
+        ).toFixed(
+          2,
+        )} ETH from depth 0. Actors can participate in any challenge by calling the \`defend\` or \`attack\` functions, depending whether they agree or disagree with the latest claim and want to move the bisection game forward. Actors that disagree with the top-level claim are called challengers, and actors that agree are called defenders. Each actor might be involved in multiple (sub-)challenges at the same time, meaning that the protocol operates with [full concurrency](https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a). Challengers and defenders alternate in the bisection game, and they pass each other a clock that start with ${formatSeconds(
           maxClockDuration,
-        )}, and that gets passed down to grandchildren claims. If a clock expires, the claim is considered defeated if it was countered, or it gets confirmed if uncountered. Since honest parties can inherit clocks from malicious claims (therefore from malicious parties, see [freeloader claims](https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#freeloader-claims)), if a clock gets inherited with less than ${formatSeconds(
+        )}. If a clock expires, the claim is considered defeated if it was countered, or it gets confirmed if uncountered. Since honest parties can inherit clocks from malicious parties that play both as challengers and defenders (see [freeloader claims](https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#freeloader-claims)), if a clock gets inherited with less than ${formatSeconds(
           permissionlessGameClockExtension,
         )}, it generally gets extended by ${formatSeconds(
           permissionlessGameClockExtension,
         )} with the exception of ${formatSeconds(
           permissionlessGameClockExtension * 2,
-        )} at depth ${permissionlessGameSplitDepth}, and ${formatSeconds(
+        )} right before depth ${permissionlessGameSplitDepth}, and ${formatSeconds(
           oracleChallengePeriod,
-        )} at the last depth. The maximum clock extension that a top level claim can get is therefore ${formatSeconds(
+        )} right before the last depth. The maximum clock extension that a top level claim can get is therefore ${formatSeconds(
           permissionlessGameMaxClockExtension,
         )}. Since unconfirmed state roots are independent of one another, users can decide to exit with a subsequent confirmed state root if the previous one is delayed. Winners get the entire losers' stake, meaning that sybils can potentially play against each other at no cost. The final instruction found via the bisection game is then executed onchain in the MIPS one step prover contract who determines the winner. The protocol does not enforce valid bisections, meaning that actors can propose correct initial claims and then provide incorrect midpoints. The protocol can be subject to resource exhaustion attacks ([Spearbit 5.1.3](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_report-cb-fault-proofs-non-mips.pdf)).`,
         references: [
