@@ -16,8 +16,8 @@ import {
 import { type ActivityTimeRange } from './utils/range'
 
 /**
- * Returns a chart data of the activity over time.
- * @returns [timestamp (number), count (number), ethereumCount (number)]
+ * A function that computes values for chart data of the activity over time.
+ * @returns [timestamp, count, ethereumCount][] - all numbers
  */
 export function getActivityChart(
   ...parameters: Parameters<typeof getCachedActivityChart>

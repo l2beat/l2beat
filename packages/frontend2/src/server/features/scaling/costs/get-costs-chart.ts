@@ -23,8 +23,8 @@ export const CostsChartParams = z.object({
 export type CostsChartParams = z.infer<typeof CostsChartParams>
 
 /**
- * Returns a chart data of the costs over time.
- * @returns [timestamp, overheadGas, overheadEth, overheadUsd, calldataGas, calldataEth, calldataUsd, computeGas, computeEth, computeUsd, blobsGas, blobsEth, blobsUsd] - all numbers
+ * A function that computes values for chart data of the costs over time.
+ * @returns [timestamp, overheadGas, overheadEth, overheadUsd, calldataGas, calldataEth, calldataUsd, computeGas, computeEth, computeUsd, blobsGas, blobsEth, blobsUsd][] - all numbers
  */
 export function getCostsChart(
   ...parameters: Parameters<typeof getCachedCostsChart>

@@ -38,8 +38,8 @@ export type TokenTvlChartParams = z.infer<typeof TokenTvlChartParams>
 export type TokenParams = z.infer<typeof TokenParams>
 
 /**
- * Returns a chart of the token's TVL over time.
- * @returns [timestamp (number), amount (number), usdValue (number)]
+ * A function that computes values for chart of the token's TVL over time.
+ * @returns [timestamp, amount, usdValue][] - all numbers
  */
 export async function getTokenTvlChart(params: TokenTvlChartParams) {
   noStore()

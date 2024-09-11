@@ -57,7 +57,6 @@ export async function getScalingSummaryEntries() {
   const remappedForOrdering = Object.fromEntries(
     Object.entries(tvl.projects).map(([k, v]) => [k, v.breakdown.total]),
   )
-  console.log(remappedForOrdering)
 
   return orderByTvl(entries, remappedForOrdering)
 }
