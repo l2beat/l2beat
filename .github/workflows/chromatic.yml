@@ -28,4 +28,7 @@ jobs:
           --only-changed
           --exit-once-uploaded
           --exit-zero-on-changes
+          --externals packages/frontend2/tailwind.config.ts
+          --externals *.css
+          --externals packages/frontend2/src/fonts/**/*
           --build-script-name storybook:build
