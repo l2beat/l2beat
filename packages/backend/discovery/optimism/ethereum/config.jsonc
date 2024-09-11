@@ -45,7 +45,10 @@
     "0x9F9b897e37de5052cD70Db6D08474550DDb07f39": "DelayedWETH_PermissionedGames"
   },
   "overrides": {
-    "DelayedWETH": {
+    "DelayedWETH_PermissionedGames": {
+      "ignoreInWatchMode": ["totalSupply"]
+    },
+    "DelayedWETH_PermissionlessGames": {
       "ignoreInWatchMode": ["totalSupply"]
     },
     "AddressManager": {

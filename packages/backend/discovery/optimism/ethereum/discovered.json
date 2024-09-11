@@ -1,8 +1,8 @@
 {
   "name": "optimism",
   "chain": "ethereum",
-  "blockNumber": 20726359,
-  "configHash": "0xd8db9863289367ae0d63cb15a2773554567dc297e9df9818aa50ce214b0cf74f",
+  "blockNumber": 20726488,
+  "configHash": "0x38451a105f9d8535e86043d0d8690760de772e7605cf6418562d89e5df5639d3",
   "version": 14,
   "contracts": [
     {
@@ -593,6 +593,7 @@
           ]
         }
       ],
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1724975003,
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
@@ -774,6 +775,7 @@
           ]
         }
       ],
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1724975015,
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
