@@ -131,11 +131,15 @@ const permissionlessGameFullCost = (() => {
   return BigNumber.from(cost).mul(BigNumber.from(scaleFactor))
 })()
 
+const oracleChallengePeriod = discovery.getContractValue<number>(
+  'PreimageOracle',
+  'challengePeriod',
+)
+
 const permissionlessGameMaxClockExtension =
-  permissionlessGameSplitDepth * permissionlessGameClockExtension +
-  (permissionlessGameMaxDepth - permissionlessGameSplitDepth) *
-    permissionlessGameClockExtension *
-    2
+  permissionlessGameClockExtension * 2 + // at SPLIT_DEPTH - 1
+  oracleChallengePeriod + // at MAX_GAME_DEPTH - 1
+  permissionlessGameClockExtension * (permissionlessGameMaxDepth - 2) // the rest
 
 export const optimism: Layer2 = {
   type: 'layer2',
@@ -503,11 +507,13 @@ export const optimism: Layer2 = {
           maxClockDuration,
         )}, and that gets passed down to grandchildren claims. If a clock expires, the claim is considered defeated if it was countered, or it gets confirmed if uncountered. Since honest parties can inherit clocks from malicious claims (therefore from malicious parties, see [freeloader claims](https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#freeloader-claims)), if a clock has less than ${formatSeconds(
           permissionlessGameClockExtension,
-        )}, it gets extended by ${formatSeconds(
+        )}, it generally gets extended by ${formatSeconds(
           permissionlessGameClockExtension,
-        )} up to depth ${permissionlessGameSplitDepth}, and then ${formatSeconds(
+        )} with the exception of ${formatSeconds(
           permissionlessGameClockExtension * 2,
-        )} up the max depth. The maximum clock extension that a top level claim can get is therefore ${formatSeconds(
+        )} at depth ${permissionlessGameSplitDepth}, and ${formatSeconds(
+          oracleChallengePeriod,
+        )} at the last depth. The maximum clock extension that a top level claim can get is therefore ${formatSeconds(
           permissionlessGameMaxClockExtension,
         )}. Since unconfirmed state roots are independent with one another, users can decide to exit with a subsequent state root if the previous one is delayed. Winners get the entire losers' stake, meaning that sybils can potentially play against each other at no cost. The final instruction found via the bisection game is then executed onchain in the MIPS one step prover contract who determines the winner. The protocol does not enforces valid bisections, meaning that actors can propose correct initial claims and then provide incorrect midpoints. The protocol can be subject to resource exhaustion attacks ([Spearbit 5.1.3](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_report-cb-fault-proofs-non-mips.pdf)).`,
         references: [
@@ -767,11 +773,11 @@ export const optimism: Layer2 = {
     'All contracts are upgradable by the `SuperchainProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. The Guardian role is assigned to the Security Council multisig, with a Safe Module that allows the Foundation to act through it to stop withdrawals in the whole Superchain, blacklist dispute games, or deactivate the fault proof system entirely in case of emergencies. The Security Council can remove the module if the Foundation becomes malicious. The single Sequencer actor can be modified by the `FoundationMultisig_2` via the `SystemConfig` contract. The SuperchainProxyAdminOwner can recover dispute bonds in case of bugs that would distribute them incorrectly. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
   milestones: [
     {
-      name: 'Fallback to permissioned proposals',
+      name: 'Fallback to permissioned proposals for 26 days.',
       link: 'https://x.com/Optimism/status/1824560759747256596',
       date: '2024-08-16T00:00:00Z',
       description:
-        'OP Mainnet preventively disables the fraud proof system due to a bug.',
+        'OP Mainnet preventively disables the fraud proof system due to a bug for 26 days.',
       type: 'incident',
     },
     {
