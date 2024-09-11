@@ -1,10 +1,8 @@
 import { type Milestone } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { useCallback, useMemo } from 'react'
-import {
-  type CostsChartResponse,
-  type CostsUnit,
-} from '~/server/features/scaling/costs/types'
+import { type CostsChartData } from '~/server/features/scaling/costs/get-costs-chart'
+import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import { formatCurrency } from '~/utils/format'
 import { formatNumber } from '~/utils/format-number'
 import { type SeriesStyle } from '../core/styles'
@@ -16,10 +14,10 @@ const DENCUN_UPGRADE_TIMESTAMP = 1710288000
 interface Params {
   milestones: Milestone[]
   unit: CostsUnit
-  chart: CostsChartResponse | undefined
+  data: CostsChartData | undefined
 }
 
-export function useCostChartRenderParams({ milestones, unit, chart }: Params) {
+export function useCostChartRenderParams({ milestones, unit, data }: Params) {
   const mappedMilestones = useMemo(
     () => mapMilestones(milestones),
     [milestones],
@@ -35,7 +33,7 @@ export function useCostChartRenderParams({ milestones, unit, chart }: Params) {
 
   const columns = useMemo(
     () =>
-      chart?.data.map((dataPoint) => {
+      data?.map((dataPoint) => {
         const [timestamp] = dataPoint
 
         return {
@@ -44,15 +42,12 @@ export function useCostChartRenderParams({ milestones, unit, chart }: Params) {
           milestone: mappedMilestones[timestamp],
         }
       }) ?? [],
-    [chart?.data, mappedMilestones, unit],
+    [data, mappedMilestones, unit],
   )
 
   const chartRange: [number, number] = useMemo(
-    () => [
-      chart?.data[0]?.[0] ?? 0,
-      chart?.data[chart.data.length - 1]?.[0] ?? 1,
-    ],
-    [chart?.data],
+    () => [data?.[0]?.[0] ?? 0, data?.[data.length - 1]?.[0] ?? 1],
+    [data],
   )
 
   const valuesStyle: SeriesStyle[] = useMemo(
@@ -86,10 +81,7 @@ export function useCostChartRenderParams({ milestones, unit, chart }: Params) {
   }
 }
 
-function getValues(
-  dataPoint: CostsChartResponse['data'][number],
-  unit: CostsUnit,
-) {
+function getValues(dataPoint: CostsChartData[number], unit: CostsUnit) {
   const [
     _,
     overheadGas,
@@ -133,7 +125,7 @@ function getValues(
 }
 
 function getData(
-  dataPoint: CostsChartResponse['data'][number],
+  dataPoint: CostsChartData[number],
   unit: CostsUnit,
 ): CostsChartPointData {
   const [

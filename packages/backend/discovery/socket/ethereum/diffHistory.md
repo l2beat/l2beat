@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xe5c9598b6d1b921c349d1bcf2b34d2e22763ad96
+
+# Diff at Wed, 11 Sep 2024 08:33:42 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@407590ebfbad0b4f799badc3ad5fce90a7eaed11 block: 20661696
+- current block number: 20726203
+
+## Description
+
+Socket adds a plug and vault for wormhole-wrapped sol. yea...
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.93:
++        "0xd48A35a853858e344aFCbEcCDBf8FCbFaF8e1501"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20661696 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract USDT Vault Lyra (0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract sUSDe Vault Reya (0x5F3B301B4967623fDb3AE52Bb8FF4dB01C460Cd3)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x7219e90f18bcdf7199774fcff76519a5d21f2bc0
 
 # Diff at Mon, 02 Sep 2024 08:29:43 GMT:

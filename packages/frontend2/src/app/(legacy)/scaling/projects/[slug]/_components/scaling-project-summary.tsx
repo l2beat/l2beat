@@ -40,16 +40,7 @@ export function ScalingProjectSummary({ project }: Props) {
             )}
             {project.header.warning && (
               <WarningBar
-                text={
-                  typeof project.header.warning === 'string'
-                    ? project.header.warning
-                    : project.header.warning.text
-                }
-                href={
-                  typeof project.header.warning !== 'string'
-                    ? project.header.warning.href
-                    : undefined
-                }
+                text={project.header.warning}
                 color="yellow"
                 className="w-full items-center justify-center p-2.5 text-xs md:text-base"
               />

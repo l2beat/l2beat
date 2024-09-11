@@ -1,12 +1,9 @@
 import { type Stage } from '@l2beat/config'
 
-import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import { UnderReviewIcon } from '~/icons/under-review'
 import { cn } from '~/utils/cn'
 
 export interface StageBadgeProps {
   stage: Stage | 'UnderReview' | 'NotApplicable'
-  icon?: 'warning' | 'underReview'
   oneSize?: boolean
   big?: boolean
   className?: string
@@ -14,7 +11,6 @@ export interface StageBadgeProps {
 
 export function StageBadge({
   stage,
-  icon,
   oneSize,
   big,
   className,
@@ -38,10 +34,6 @@ export function StageBadge({
       >
         <span className="relative top-[0.5px]">{value ?? 'n/a'}</span>
       </span>
-      {icon === 'warning' && (
-        <RoundedWarningIcon className="size-5" sentiment="warning" />
-      )}
-      {icon === 'underReview' && <UnderReviewIcon className="size-5" />}
     </div>
   )
 }

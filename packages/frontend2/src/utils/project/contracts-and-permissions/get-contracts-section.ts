@@ -73,6 +73,7 @@ export function getContractsSection(
     )
     const implementationChangeForProject =
       implementationChange?.projects[projectParams.id]
+
     return makeTechnologyContract(
       contract,
       projectParams,
@@ -279,7 +280,7 @@ function makeTechnologyContract(
   }
 
   const areImplementationsUnverified = addresses
-    .filter((c) => !c.isAdmin)
+    .filter((c) => !c.isAdmin && c.verificationStatus !== 'unverified')
     .map((c) => verificationStatusForChain[c.address])
     .some((c) => c === false)
 

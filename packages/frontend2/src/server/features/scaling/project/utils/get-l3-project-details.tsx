@@ -103,7 +103,7 @@ export async function getL3ProjectDetails({
     })
   }
 
-  if (!isEmpty(activityChartData.data)) {
+  if (!isEmpty(activityChartData)) {
     items.push({
       type: 'ChartSection',
       props: {

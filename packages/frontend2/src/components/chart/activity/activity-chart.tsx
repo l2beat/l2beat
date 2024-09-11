@@ -53,11 +53,11 @@ export function ActivityChart({ milestones, entries }: Props) {
   const { columns, valuesStyle, chartRange, formatYAxisLabel } =
     useActivityChartRenderParams({
       milestones,
-      chart: data?.data,
+      data: data,
       showMainnet,
     })
 
-  const totalTxs = data?.data.reduce(
+  const totalTxs = data?.reduce(
     (acc, curr) => {
       acc.ethereum += curr[2]
       acc.rest += curr[1]

@@ -29,7 +29,6 @@ import { opticsV2 } from './opticsV2'
 import { orbit } from './orbit'
 import { orbiter } from './orbiter'
 import { pNetwork } from './pNetwork'
-import { polygonplasma } from './polygonplasma'
 import { polygonpos } from './polygonpos'
 import { polynetwork } from './polynetwork'
 import { portal } from './portal'
@@ -82,7 +81,6 @@ export const bridges: Bridge[] = [
   opticsV2,
   orbit,
   orbiter,
-  polygonplasma,
   polygonpos,
   polynetwork,
   pNetwork,

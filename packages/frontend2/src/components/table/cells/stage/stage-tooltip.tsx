@@ -17,15 +17,7 @@ export function StageTooltip({ stageConfig }: StageTooltipProps) {
   return (
     <div className="flex max-w-[300px] flex-col gap-4 py-1">
       <span>
-        <StageBadge
-          stage={stageConfig.stage}
-          icon={
-            stageConfig.stage !== 'UnderReview'
-              ? stageConfig.message?.type
-              : undefined
-          }
-          className="font-medium"
-        />
+        <StageBadge stage={stageConfig.stage} className="font-medium" />
         <span className="ml-2 inline-block font-medium">
           {getStageName(stageConfig.stage)}
         </span>

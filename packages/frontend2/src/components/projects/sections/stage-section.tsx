@@ -77,12 +77,7 @@ export function StageSection({
           className="relative -top-0.5 mr-2 inline-block"
         />
         {name} is a{' '}
-        <StageBadge
-          stage={stageConfig.stage}
-          icon={stageConfig.message?.type}
-          big
-          className="mx-1"
-        />
+        <StageBadge stage={stageConfig.stage} big className="mx-1" />
         <span className="lowercase"> {type}</span>.
       </div>
       {stageConfig.message && (
