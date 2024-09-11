@@ -15,6 +15,7 @@ yarn build:dependencies
 ## Scripts
 
 - `yarn dev` - run the Next.js development server
+- `yarn dev:mock` - run the Next.js development server with mock data
 - `yarn build` - compile the production build
 - `yarn build:dependencies` - builds the dependencies of frontend2
 - `yarn format` - run biome automatic formatter
@@ -25,19 +26,12 @@ yarn build:dependencies
 - `yarn tinify-logos` - resizes and optimizes logos
 
 ### Environment variables
-Only required variables are listed there. For a complete list check out `src/env.js`.
+If you are running `yarn dev:mock` you do not need any environment variables.
 
+If you are running `yarn dev` or `yarn build` you need to set the following environment variables:
 - `DATABASE_URL` - database connection url (read-only access is sufficient)
-- `TINIFY_API_KEY` - API key for Tinify, useful if you are adding/changing logo of a project (500 compressions per month are free)
 
 *if you currently work at L2BEAT: feel free to directly connect to our staging DB* 😉
-
-#### .env boilerplate:
-
-```bash
-DATABASE_URL=
-TINIFY_API_KEY=
-```
 
 ### Known issues
 
