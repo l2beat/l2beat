@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x814b0f10578cc8ba5cbccc110ca0d5ed9fbc3890
+
+# Diff at Wed, 11 Sep 2024 07:36:12 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@407590ebfbad0b4f799badc3ad5fce90a7eaed11 block: 20670058
+- current block number: 20725912
+
+## Description
+
+New burnMint pool (USDM)
+
+## Watched changes
+
+```diff
++   Status: CREATED
+    contract BurnWithFromMintTokenPool (0x66D40E0D2819a2264B2a61f5DD578573B9dedCEc)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/BurnWithFromMintTokenPool.sol   | 1312 ++++++++++++++++++++
+ 1 file changed, 1312 insertions(+)
+```
+
 Generated with discovered.json: 0x781168431ff8b44676f9132d12dfce75e80e7210
 
 # Diff at Tue, 03 Sep 2024 12:31:46 GMT:

@@ -1,7 +1,7 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 20661845,
+  "blockNumber": 20726217,
   "configHash": "0x5943efe0a05ae0ecfd3ac11cd0516f29678b9935af12c82b1488fc8272b45d0d",
   "version": 14,
   "contracts": [
@@ -84,7 +84,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0x40595986030c7c0e5b5439b5597d9c28a463a606a12744d543b9eef0afad4e0a",
+        "getRoot": "0x06f88383c8790d036b24a7c9d5ebe02e75a2f4b2eea4050a991d7b54eccfa4b7",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -144,14 +144,14 @@
           "extensions": []
         },
         "EMISSION_ROLE": "0x573321b8a13c75b2702bc4b0ad9afaae98bf6985285411964a564e68bf6da1c9",
-        "lastMint": 1725255719,
+        "lastMint": 1725861467,
         "mintPerSecondCap": "13370000000000000000",
         "name": "Polygon Ecosystem Token",
         "PERMIT2": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
         "PERMIT2_REVOKER_ROLE": "0xbd4c1461ef59750b24719a44d7e2a7948c57fd12c98e333541b7ea7b61f07cb7",
         "permit2Enabled": true,
         "symbol": "POL",
-        "totalSupply": "10248739753465028590240000886",
+        "totalSupply": "10253601875854469064786370358",
         "version": "1.1.0"
       },
       "derivedName": "PolygonEcosystemToken"
@@ -246,7 +246,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0xaaf1e78cc398b3655189b6f823e7871c47bd7b870b5f8ed4fcc985bdda3b1d85",
+        "getRollupExitRoot": "0x81fb9da021e015a5a1a47c4d2b5d26b7b033772b26cc3b4942da914eab550de2",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "isVerifyingBatches": [
@@ -259,14 +259,15 @@
           [true],
           [true],
           [true],
-          [true]
+          [true],
+          [false]
         ],
-        "lastAggregationTimestamp": 1725267203,
+        "lastAggregationTimestamp": 1726043195,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "nondeterministicPendingState": [],
         "pendingStateTimeout": 432000,
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
-        "rollupCount": 10,
+        "rollupCount": 11,
         "rollupsData": [
           [
             "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
@@ -327,6 +328,12 @@
             2355,
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
             4
+          ],
+          [
+            "0xB234F18738d9531CAD6ae6d9A587d09fe200272C",
+            999,
+            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            4
           ]
         ],
         "rollupTypeCount": 4,
@@ -348,8 +355,8 @@
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
           ]
         ],
-        "totalSequencedBatches": 323371,
-        "totalVerifiedBatches": 322867,
+        "totalSequencedBatches": 342546,
+        "totalVerifiedBatches": 341720,
         "trustedAggregatorTimeout": 432000,
         "verifyBatchTimeTarget": 1800
       },
@@ -386,8 +393,8 @@
         "$implementation": "0x2E38cD55163137483E30580Cb468C2dFf1d85077",
         "$upgradeCount": 2,
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 43667,
-        "getRoot": "0x04cbce0ad7b33d6c1a50adec710d57a99b0d5d78bd2943ef2ca64d548c8d6622",
+        "depositCount": 44623,
+        "getRoot": "0xbb4320f45e1d6e317a6480db74b2272f50badf9685e8a4bc52aa8eef4fbda036",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "derivedName": "PolygonZkEVMGlobalExitRootV2"
@@ -415,7 +422,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 1,
+        "nonce": 2,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
