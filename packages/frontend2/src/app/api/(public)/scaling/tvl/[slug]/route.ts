@@ -33,7 +33,7 @@ export async function GET(
     })
   }
 
-  const breakdown = await getTvlBreakdownForProject(project)
+  const { breakdown } = await getTvlBreakdownForProject(project)
 
   const usd = latestTvlData[1] + latestTvlData[2] + latestTvlData[3] / 100
   const eth = (usd / latestTvlData[4]) * 100
