@@ -17,6 +17,7 @@ import {
 import { AutoLayoutButton } from './view/AutoLayoutButton'
 import { Sidebar } from './view/Sidebar'
 import { Viewport } from './view/Viewport'
+import { Color } from './utils/color'
 
 export function App() {
   // load the initial nodes from the store that gets rehydrated from local storage at startup
@@ -97,6 +98,22 @@ export function App() {
     }
   }
 
+  function colorChangeAction(id: string[], color: Color) {
+    try {
+      const matching = nodes
+        .filter((n) => id.includes(n.id))
+        .map((n) => ({
+          ...n,
+          color,
+        }))
+      const old = nodes.filter((n) => !id.includes(n.id))
+
+      setNodes(old.concat(matching))
+    } catch (e: unknown) {
+      alert(e instanceof Error && e.message ? e.message : 'Unknown error')
+    }
+  }
+
   return (
     <div
       id="drop_zone"
@@ -167,6 +184,7 @@ export function App() {
             <Sidebar
               selectedNodes={selectedNodes}
               onDeleteNodes={deleteNodeAction}
+              onColorChange={colorChangeAction}
             />
           </div>
         )}

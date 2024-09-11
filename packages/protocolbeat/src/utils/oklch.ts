@@ -1,3 +1,5 @@
+import { Color } from './color'
+
 const multiplyMatrices = (A: number[], B: number[]) => [
   // biome-ignore lint/style/noNonNullAssertion: We know it's there
   A[0]! * B[0]! + A[1]! * B[1]! + A[2]! * B[2]!,
@@ -11,13 +13,12 @@ const multiplyMatrices = (A: number[], B: number[]) => [
 // l :: 0 - 1
 // c :: 0 - 0.37
 // h :: 0 - 360
-export function oklch2rgb(l: number, c: number, h: number): number[] {
+export function oklch2rgb(l: number, c: number, h: number): Color {
   const lab = [
     l,
     Number.isNaN(h) ? 0 : c * Math.cos((h * Math.PI) / 180),
     Number.isNaN(h) ? 0 : c * Math.sin((h * Math.PI) / 180),
   ]
-
   const LMSg = multiplyMatrices(
     [
       1, 0.3963377773761749, 0.2158037573099136, 1, -0.1055613458156586,
@@ -46,7 +47,7 @@ export function oklch2rgb(l: number, c: number, h: number): number[] {
     xyz,
   )
 
-  return rgbLinear.map((c) => {
+  const [r, g, b] = rgbLinear.map((c) => {
     const srgb =
       Math.abs(c) > 0.0031308
         ? (c < 0 ? -1 : 1) * (1.055 * Math.abs(c) ** (1 / 2.4) - 0.055)
@@ -54,9 +55,7 @@ export function oklch2rgb(l: number, c: number, h: number): number[] {
 
     return Math.max(0, Math.min(255, srgb * 255))
   })
-}
 
-export function oklch2rgbCSS(l: number, c: number, h: number): string {
-    const rgb = oklch2rgb(l, c, h).map(c => c.toFixed(0))
-    return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`
+  // biome-ignore lint/style/noNonNullAssertion: We know it's there
+  return { r: r!, g: g!, b: b! }
 }
