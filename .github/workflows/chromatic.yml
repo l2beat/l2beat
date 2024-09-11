@@ -9,9 +9,6 @@ jobs:
   chromatic:
     name: Run Chromatic
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./packages/frontend2
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -24,3 +21,4 @@ jobs:
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           buildScriptName: storybook:build
+          storybookBaseDir: ./packages/frontend2
