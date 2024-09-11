@@ -25,5 +25,7 @@ jobs:
         run: >
           npx chromatic
           --project-token ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          --build-script-name storybook:build
           --only-changed
+          --exit-once-uploaded
+          --exit-zero-on-changes
+          --build-script-name storybook:build
