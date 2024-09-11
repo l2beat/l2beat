@@ -17,7 +17,7 @@ const MOCK_ID1 = '1'
 const MOCK_ID2 = '2'
 export const BRIDGE_ADDRESS = EthereumAddress.random()
 
-describe.only(AggLayerService.name, () => {
+describe(AggLayerService.name, () => {
   describe(AggLayerService.prototype.fetchAmounts.name, () => {
     it('fetch amounts for l2 tokens and native as undefined', async () => {
       const mockToken1 = aggLayerL2Token({
