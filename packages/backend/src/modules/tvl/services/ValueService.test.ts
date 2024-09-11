@@ -58,6 +58,7 @@ describe(ValueService.name, () => {
       ['a', CONFIG_A],
       ['b', CONFIG_B],
     ])
+
     const priceConfigIds: Map<AssetId, PriceId> = new Map([
       [createAssetId(CONFIG_A), 'a'],
       [createAssetId(CONFIG_B), 'b'],
