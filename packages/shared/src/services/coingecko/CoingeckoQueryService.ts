@@ -27,7 +27,7 @@ export class CoingeckoQueryService {
 
   constructor(
     private readonly coingeckoClient: CoingeckoClient,
-    private readonly logger: Logger,
+    private readonly logger = Logger.SILENT,
   ) {
     this.logger = logger.for(this)
   }
@@ -88,7 +88,6 @@ export class CoingeckoQueryService {
 
     const prices = pickClosestValues(queryResult.prices, timestamps)
     const marketCaps = pickClosestValues(queryResult.marketCaps, timestamps)
-    const totalVolumes = pickClosestValues(queryResult.totalVolumes, timestamps)
 
     this.assertCoingeckoApiResponse(
       coingeckoId,
@@ -96,13 +95,11 @@ export class CoingeckoQueryService {
       timestamps.length,
       prices,
       marketCaps,
-      totalVolumes,
     )
 
     return {
       prices,
       marketCaps,
-      totalVolumes,
     }
   }
 
@@ -170,12 +167,10 @@ export class CoingeckoQueryService {
     expectedLength: number,
     prices: QueryResultPoint[],
     marketCaps: QueryResultPoint[],
-    totalVolumes: QueryResultPoint[],
   ) {
     if (
       prices.length !== expectedLength ||
-      marketCaps.length !== expectedLength ||
-      totalVolumes.length !== expectedLength
+      marketCaps.length !== expectedLength
     ) {
       this.logger.warn('Issue with Coingecko API response', {
         coingeckoId,
@@ -184,7 +179,6 @@ export class CoingeckoQueryService {
         expectedLength,
         prices: prices.length,
         marketCaps: marketCaps.length,
-        totalVolumes: totalVolumes.length,
       })
 
       throw new Error(`Issue with Coingecko API for ${coingeckoId}`)
@@ -253,12 +247,10 @@ function combineResults(results: CoinMarketChartRangeData[]) {
   const data: CoinMarketChartRangeData = {
     prices: results.flatMap((result) => result.prices),
     marketCaps: results.flatMap((result) => result.marketCaps),
-    totalVolumes: results.flatMap((result) => result.totalVolumes),
   }
 
   data.prices.sort((a, b) => a.date.getTime() - b.date.getTime())
   data.marketCaps.sort((a, b) => a.date.getTime() - b.date.getTime())
-  data.totalVolumes.sort((a, b) => a.date.getTime() - b.date.getTime())
 
   return data
 }
