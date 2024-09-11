@@ -23,6 +23,12 @@ const config = {
     name: getAbsolutePath('@storybook/nextjs'),
     options: {},
   },
-  staticDirs: ['../public'],
+  staticDirs: [
+    '../public',
+    {
+      from: '../src/fonts',
+      to: 'src/fonts',
+    },
+  ],
 }
 export default config
