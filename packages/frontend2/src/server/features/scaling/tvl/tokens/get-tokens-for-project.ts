@@ -9,7 +9,6 @@ import {
 import {
   assert,
   AssetId,
-  EthereumAddress,
   type ProjectId,
   UnixTime,
   asNumber,
@@ -42,14 +41,17 @@ export async function getTokensForProject(
   project: Layer2 | Layer3 | Bridge,
 ): Promise<ProjectTokens> {
   if (env.MOCK) {
-    return getMockTokensForProject()
+    return toDisplayableTokens(project.id, getMockTokensForProject())
   }
   noStore()
-  return getCachedTokensForProject(project)
+  const cachedTokens = await getCachedTokensForProject(project)
+  return toDisplayableTokens(project.id, cachedTokens)
 }
 
 const getCachedTokensForProject = cache(
-  async (project: Layer2 | Layer3 | Bridge): Promise<ProjectTokens> => {
+  async (
+    project: Layer2 | Layer3 | Bridge,
+  ): Promise<Record<ProjectTokenSource, AssetId[]>> => {
     const backendProject = toBackendProject(project)
     const configMapping = getConfigMapping(backendProject)
     const targetTimestamp = UnixTime.now().toStartOf('hour').add(-2, 'hours')
@@ -84,84 +86,68 @@ const getCachedTokensForProject = cache(
 
     withUsdValue.sort((a, b) => b.usdValue - a.usdValue)
 
-    const displayable = uniqBy(withUsdValue, (e) => e.assetId.toString())
-      .map((token) => toDisplayableTokens(backendProject.projectId, token))
-      .filter(notUndefined)
+    const unique = uniqBy(withUsdValue, (e) => e.assetId.toString())
 
-    return groupBySource(displayable)
+    return groupBySource(unique)
   },
-  ['topTokensForProject'],
+  ['topTokensForProjectV2'],
   { revalidate: 60 * UnixTime.MINUTE },
 )
 
-function getMockTokensForProject(): ProjectTokens {
+function getMockTokensForProject(): Record<ProjectTokenSource, AssetId[]> {
   return {
-    canonical: [
-      {
-        address: EthereumAddress.random().toString(),
-        assetId: AssetId('1'),
-        chain: 'ethereum',
-        iconUrl:
-          'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
-        name: 'Canonical Token',
-        symbol: 'TKN',
-        source: 'canonical',
-      },
-    ],
-    native: [
-      {
-        address: EthereumAddress.random().toString(),
-        assetId: AssetId('2'),
-        chain: 'ethereum',
-        iconUrl:
-          'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
-        name: 'Native Token',
-        symbol: 'TKN',
-        source: 'native',
-      },
-    ],
-    external: [
-      {
-        address: EthereumAddress.random().toString(),
-        assetId: AssetId('3'),
-        chain: 'ethereum',
-        iconUrl:
-          'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
-        name: 'External Token',
-        symbol: 'TKN',
-        source: 'external',
-      },
-    ],
+    canonical: [AssetId('1')],
+    native: [AssetId('2')],
+    external: [AssetId('3')],
   }
 }
 
-function groupBySource(tokens: ProjectToken[]) {
-  const canonical: ProjectToken[] = []
-  const native: ProjectToken[] = []
-  const external: ProjectToken[] = []
+function groupBySource(
+  tokens: { assetId: AssetId; source: ProjectTokenSource }[],
+) {
+  const canonical: AssetId[] = []
+  const native: AssetId[] = []
+  const external: AssetId[] = []
 
   for (const token of tokens) {
     switch (token.source) {
       case 'canonical':
-        canonical.push(token)
+        canonical.push(token.assetId)
         break
       case 'native':
-        native.push(token)
+        native.push(token.assetId)
         break
       case 'external':
-        external.push(token)
+        external.push(token.assetId)
         break
     }
   }
 
   return {
-    canonical: canonical.slice(0, 10),
-    native: native.slice(0, 10),
-    external: external.slice(0, 10),
+    canonical,
+    native,
+    external,
   }
 }
 
 function toDisplayableTokens(
+  projectId: ProjectId,
+  tokens: Record<ProjectTokenSource, AssetId[]>,
+): ProjectTokens {
+  return {
+    canonical: tokens.canonical.map((assetId) =>
+      toDisplayableToken(projectId, { assetId, source: 'canonical' }),
+    ),
+    native: tokens.native.map((assetId) =>
+      toDisplayableToken(projectId, { assetId, source: 'native' }),
+    ),
+    external: tokens.external.map((assetId) =>
+      toDisplayableToken(projectId, { assetId, source: 'external' }),
+    ),
+  }
+}
+
+function toDisplayableToken(
   projectId: ProjectId,
   {
     assetId,
