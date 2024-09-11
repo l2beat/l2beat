@@ -16,16 +16,25 @@ import {
 import { getDaProjectTvl } from './utils/get-da-project-tvl'
 
 export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
-  const economicSecurity = await getDaProjectEconomicSecurity(daLayer)
   // TODO: Remove it to re-enable per-combination TVL
   const tvlSource = daLayer.kind === 'DAC' ? daBridge : daLayer
   const usedInIds = tvlSource.usedIn.map((p) => p.id)
-  const tvs = await getDaProjectTvl(usedInIds)
-  const projectsVerificationStatuses = await getProjectsVerificationStatuses()
-  const contractsVerificationStatuses =
-    await getContractsVerificationStatuses(daLayer)
-  const manuallyVerifiedContracts = await getManuallyVerifiedContracts(daLayer)
-  const implementationChangeReport = await getImplementationChangeReport()
+
+  const [
+    economicSecurity,
+    tvs,
+    projectsVerificationStatuses,
+    contractsVerificationStatuses,
+    manuallyVerifiedContracts,
+    implementationChangeReport,
+  ] = await Promise.all([
+    getDaProjectEconomicSecurity(daLayer),
+    getDaProjectTvl(usedInIds),
+    getProjectsVerificationStatuses(),
+    getContractsVerificationStatuses(daLayer),
+    getManuallyVerifiedContracts(daLayer),
+    getImplementationChangeReport(),
+  ])
 
   const isVerified =
     !!projectsVerificationStatuses[getDaProjectKey(daLayer, daBridge)]

@@ -12,10 +12,13 @@ import { getDaRisks } from '../utils/get-da-risks'
 import { kindToType } from '../utils/kind-to-layer-type'
 
 export async function getDaSummaryEntries() {
-  const economicSecurity = await getDaProjectsEconomicSecurity()
-  const projectsVerificationStatuses = await getProjectsVerificationStatuses()
   const uniqueProjectsInUse = getUniqueProjectsInUse()
-  const tvlPerProject = await getDaProjectsTvl(uniqueProjectsInUse)
+  const [economicSecurity, projectsVerificationStatuses, tvlPerProject] =
+    await Promise.all([
+      getDaProjectsEconomicSecurity(),
+      getProjectsVerificationStatuses(),
+      getDaProjectsTvl(uniqueProjectsInUse),
+    ])
   const getSumFor = pickTvlForProjects(tvlPerProject)
 
   const entries = daLayers
