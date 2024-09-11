@@ -35,15 +35,19 @@ export async function GET(
 
   const { breakdown } = await getTvlBreakdownForProject(project)
 
-  const usd = latestTvlData[1] + latestTvlData[2] + latestTvlData[3] / 100
-  const eth = (usd / latestTvlData[4]) * 100
+  const usdValue = latestTvlData[1] + latestTvlData[2] + latestTvlData[3]
+  const ethPrice = latestTvlData[4]
 
   return NextResponse.json({
     success: true,
     data: {
-      usd,
-      eth,
-      chart,
+      usdValue,
+      ethPrice,
+      chart: chart.map(([timestamp, canonical, external, native, ethPrice]) => [
+        timestamp,
+        canonical + external + native,
+        ethPrice,
+      ]),
       breakdown,
     },
   })
