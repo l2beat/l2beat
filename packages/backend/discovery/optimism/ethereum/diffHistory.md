@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x9adb4c4f43f26ea7e9ddaed4c6cf336da153eaee
+Generated with discovered.json: 0xdafebb6c3330fa67d268c660521c6b09bc8fa5a5
 
-# Diff at Wed, 11 Sep 2024 09:05:02 GMT:
+# Diff at Wed, 11 Sep 2024 09:23:10 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@c6a3ea686769a7280772f1677e2ce572e1723dab block: 20691253
@@ -142,7 +142,7 @@ Generated with discovered.json: 0x9adb4c4f43f26ea7e9ddaed4c6cf336da153eaee
 
 ```diff
 +   Status: CREATED
-    contract DelayedWETH (0x82511d494B5C942BE57498a70Fdd7184Ee33B975)
+    contract DelayedWETH_PermissionlessGames (0x82511d494B5C942BE57498a70Fdd7184Ee33B975)
     +++ description: None
 ```
 
@@ -154,7 +154,7 @@ Generated with discovered.json: 0x9adb4c4f43f26ea7e9ddaed4c6cf336da153eaee
 
 ```diff
 +   Status: CREATED
-    contract DelayedWETH (0x9F9b897e37de5052cD70Db6D08474550DDb07f39)
+    contract DelayedWETH_PermissionedGames (0x9F9b897e37de5052cD70Db6D08474550DDb07f39)
     +++ description: None
 ```
 
@@ -168,10 +168,10 @@ Generated with discovered.json: 0x9adb4c4f43f26ea7e9ddaed4c6cf336da153eaee
 
 ```diff
 .../AnchorStateRegistry/AnchorStateRegistry.sol    |   53 +-
- .../DelayedWETH.sol                                |    9 +-
- .../Proxy.p.sol                                    |    0
+ .../DelayedWETH_PermissionedGames}/DelayedWETH.sol |    9 +-
+ .../DelayedWETH_PermissionedGames}/Proxy.p.sol     |    0
  .../DelayedWETH.sol                                |  651 ++++++
- .../Proxy.p.sol                                    |  200 ++
+ .../DelayedWETH_PermissionlessGames/Proxy.p.sol    |  200 ++
  .../{.flat@20691253 => .flat}/FaultDisputeGame.sol |  292 ++-
  .../ethereum/{.flat@20691253 => .flat}/MIPS.sol    | 2201 ++++++++++++--------
  .../PermissionedDisputeGame.sol                    |  292 ++-
@@ -369,6 +369,16 @@ discovery. Values are for block 20691253 (main branch discovery), not current.
 -   Status: DELETED
     contract CTCStorageContainerBatches (0xD16463EF9b0338CE3D73309028ef1714D220c024)
     +++ description: None
+```
+
+```diff
+    contract PreimageOracle (0xD326E10B8186e90F4E2adc5c13a2d0C137ee8b34) {
+    +++ description: None
+      values.zeroHashes:
++        ["0x0000000000000000000000000000000000000000000000000000000000000000","0xad3228b676f7d3cd4284a5443f17f1962b36e491b30a40b2405849e597ba5fb5","0xb4c11951957c6f8f642c4af61cd6b24640fec6dc7fc607ee8206a99e92410d30","0x21ddb9a356815c3fac1026b6dec5df3124afbadb485c9ba5a3e3398a04b7ba85","0xe58769b32a1beaf1ea27375a44095a0d1fb664ce2dd358e7fcbfb78c26a19344"]
+      errors:
++        {"zeroHashes":"Too many values. Update configuration to explore fully"}
+    }
 ```
 
 ```diff

@@ -2,7 +2,7 @@
   "name": "optimism",
   "chain": "ethereum",
   "blockNumber": 20726359,
-  "configHash": "0x5ae5829eb5827e171741f89b74424dca88ee5b19892052249e33ab6dbf184e61",
+  "configHash": "0xd8db9863289367ae0d63cb15a2773554567dc297e9df9818aa50ce214b0cf74f",
   "version": 14,
   "contracts": [
     {
@@ -578,7 +578,7 @@
       "derivedName": "L1ERC20TokenBridge"
     },
     {
-      "name": "DelayedWETH",
+      "name": "DelayedWETH_PermissionlessGames",
       "address": "0x82511d494B5C942BE57498a70Fdd7184Ee33B975",
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -593,7 +593,6 @@
           ]
         }
       ],
-      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1724975003,
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
@@ -755,21 +754,12 @@
         "PRECOMPILE_CALL_RESERVED_GAS": 100000,
         "proposalCount": 0,
         "proposals": [],
-        "version": "1.1.2",
-        "zeroHashes": [
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0xad3228b676f7d3cd4284a5443f17f1962b36e491b30a40b2405849e597ba5fb5",
-          "0xb4c11951957c6f8f642c4af61cd6b24640fec6dc7fc607ee8206a99e92410d30",
-          "0x21ddb9a356815c3fac1026b6dec5df3124afbadb485c9ba5a3e3398a04b7ba85",
-          "0xe58769b32a1beaf1ea27375a44095a0d1fb664ce2dd358e7fcbfb78c26a19344"
-        ]
+        "version": "1.1.2"
       },
-      "errors": {
-        "zeroHashes": "Too many values. Update configuration to explore fully"
-      }
+      "derivedName": "PreimageOracle"
     },
     {
-      "name": "DelayedWETH",
+      "name": "DelayedWETH_PermissionedGames",
       "address": "0x9F9b897e37de5052cD70Db6D08474550DDb07f39",
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -797,7 +787,8 @@
         "symbol": "WETH",
         "totalSupply": "720000000000000000",
         "version": "1.1.0"
-      }
+      },
+      "derivedName": "DelayedWETH"
     },
     {
       "name": "FeesCollector",
