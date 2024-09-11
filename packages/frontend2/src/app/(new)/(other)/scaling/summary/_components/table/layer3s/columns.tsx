@@ -76,8 +76,7 @@ export const summaryLayer3sColumns = [
       return aTvl - bTvl
     },
     meta: {
-      headClassName: 'justify-end',
-      cellClassName: 'justify-end',
+      align: 'right',
       tooltip:
         'Total value locked in escrow contracts on the base chain displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
     },
