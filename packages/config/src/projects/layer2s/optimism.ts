@@ -658,9 +658,14 @@ export const optimism: Layer2 = {
         description:
           'The PreimageOracle contract is used to load the required data from L1 for a dispute game.',
       }),
-      discovery.getContractDetails('DelayedWETH', {
+      discovery.getContractDetails('DelayedWETH_PermissionlessGames', {
         description:
-          'Contract designed to hold the bonded ETH for each dispute game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds. It is owned by the SuperchainProxyAdminOwner multisig.',
+          'Contract designed to hold the bonded ETH for each permissionless dispute game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds. It is owned by the SuperchainProxyAdminOwner multisig.',
+        ...l1Upgradeability,
+      }),
+      discovery.getContractDetails('DelayedWETH_PermissionedGames', {
+        description:
+          'Contract designed to hold the bonded ETH for each permissioned dispute game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds. It is owned by the SuperchainProxyAdminOwner multisig.',
         ...l1Upgradeability,
       }),
       discovery.getContractDetails('SuperchainConfig', {
