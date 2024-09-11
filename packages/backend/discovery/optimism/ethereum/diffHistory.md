@@ -8,7 +8,9 @@ Generated with discovered.json: 0xebfb460cbb05426a3ff6f709f74aeef8b015a1b7
 
 ## Description
 
+Upgrade #10: https://gov.optimism.io/t/upgrade-proposal-10-granite-network-upgrade/8733
 
+It fixes some bugs, reinstates the proof system and adds the ability to the Guardian to set the anchor state.
 
 ## Watched changes
 
