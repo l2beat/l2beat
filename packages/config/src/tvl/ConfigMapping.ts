@@ -42,7 +42,7 @@ export class ConfigMapping {
   getPriceConfigFromAmountConfig(
     amountConfig: AmountConfigEntry,
   ): PriceConfigEntry & { configId: string } {
-    const assetId = createAssetId(entryToAsset(amountConfig))
+    const assetId = createAssetId(amountConfig)
 
     const priceConfig = this.pricesByAssetId.get(assetId)
 
@@ -66,7 +66,7 @@ export class ConfigMapping {
 
     const assetId = createAssetId(token)
     const amountConfigs = projectAmounts.filter(
-      (x) => createAssetId(entryToAsset(x)) === assetId,
+      (x) => createAssetId(x) === assetId,
     )
     assert(
       amountConfigs.every((x) => x.decimals === amountConfigs[0]?.decimals),
@@ -91,22 +91,6 @@ export class ConfigMapping {
     assert(config, `Config not found ${configId}`)
 
     return config
-  }
-}
-
-function entryToAsset(entry: AmountConfigEntry): {
-  address: EthereumAddress | 'native'
-  chain: string
-} {
-  switch (entry.type) {
-    case 'aggLayerL2Token':
-      return { ...entry, address: entry.l1Address }
-    case 'aggLayerNativeEtherPreminted':
-      return { ...entry, address: entry.l2BridgeAddress }
-    case 'aggLayerNativeEtherWrapped':
-      return { ...entry, address: entry.wethAddress }
-    default:
-      return entry
   }
 }
 
