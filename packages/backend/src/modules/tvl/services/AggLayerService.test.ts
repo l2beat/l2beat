@@ -21,10 +21,10 @@ const MOCK_ID2 = '2'
 describe.only(AggLayerService.name, () => {
   describe(AggLayerService.prototype.fetchAmounts.name, () => {
     it('fetch amounts for l2 tokens and native as undefined', async () => {
-      const mockToken1 = agglayerL2Token({
+      const mockToken1 = aggLayerL2Token({
         l1Address: EthereumAddress.random(),
       })
-      const mockToken2 = agglayerL2Token({
+      const mockToken2 = aggLayerL2Token({
         l1Address: EthereumAddress.random(),
       })
 
@@ -57,11 +57,11 @@ describe.only(AggLayerService.name, () => {
     })
 
     it('fetch amounts for l2 token and native ether preminted', async () => {
-      const mockToken1 = agglayerL2Token({
+      const mockToken1 = aggLayerL2Token({
         l1Address: EthereumAddress.random(),
       })
 
-      const mockNativeToken = agglayerNativeEtherPreminted({
+      const mockNativeToken = aggLayerNativeEtherPreminted({
         l2BridgeAddress: EthereumAddress.random(),
         premintedAmount: 1000n,
         id: MOCK_ID2,
@@ -96,11 +96,11 @@ describe.only(AggLayerService.name, () => {
     })
 
     it('fetch amounts for l2 token and native ether wrapped', async () => {
-      const mockToken1 = agglayerL2Token({
+      const mockToken1 = aggLayerL2Token({
         l1Address: EthereumAddress.random(),
       })
 
-      const mockWrapperEther = agglayerNativeEtherWrapped({
+      const mockWrapperEther = aggLayerNativeEtherWrapped({
         wethAddress: EthereumAddress.random(),
         id: MOCK_ID2,
       })
@@ -141,7 +141,7 @@ describe.only(AggLayerService.name, () => {
 
   describe(AggLayerService.prototype.getL2TokensAmounts.name, () => {
     it('should fetch L2 token addresses and total supplies', async () => {
-      const mockToken = agglayerL2Token({
+      const mockToken = aggLayerL2Token({
         l1Address: EthereumAddress.random(),
       })
 
@@ -206,13 +206,13 @@ describe.only(AggLayerService.name, () => {
   describe(AggLayerService.prototype.getL2TokensTotalSupply.name, () => {
     it('encodes, calls, decodes and returns AmountRecords with correct supply', async () => {
       const mockToken1 = mockObject<
-        Config & { address: EthereumAddress; type: 'agglayerL2Token' }
+        Config & { address: EthereumAddress; type: 'aggLayerL2Token' }
       >({
         address: EthereumAddress.random(),
         id: MOCK_ID1,
       })
       const mockToken2 = mockObject<
-        Config & { address: EthereumAddress; type: 'agglayerL2Token' }
+        Config & { address: EthereumAddress; type: 'aggLayerL2Token' }
       >({
         address: EthereumAddress.random(),
         id: MOCK_ID2,
@@ -270,10 +270,10 @@ describe.only(AggLayerService.name, () => {
 
   describe(AggLayerService.prototype.getL2TokensAddresses.name, () => {
     it('encodes, calls, decodes and returns correct L2 token addresses', async () => {
-      const mockToken1 = agglayerL2Token({
+      const mockToken1 = aggLayerL2Token({
         l1Address: EthereumAddress.random(),
       })
-      const mockToken2 = agglayerL2Token({
+      const mockToken2 = aggLayerL2Token({
         l1Address: EthereumAddress.random(),
         id: MOCK_ID2,
       })
@@ -330,7 +330,7 @@ describe.only(AggLayerService.name, () => {
 
   describe(AggLayerService.prototype.getNativeEtherPremintedAmount.name, () => {
     it('should fetch bridge balance and subtract it from premintedAmount', async () => {
-      const mockToken = agglayerNativeEtherPreminted({
+      const mockToken = aggLayerNativeEtherPreminted({
         l2BridgeAddress: EthereumAddress.random(),
         premintedAmount: 1000n,
       })
@@ -358,7 +358,7 @@ describe.only(AggLayerService.name, () => {
 
   describe(AggLayerService.prototype.getNativeEtherWrappedAmount.name, () => {
     it('should return the correct totalSupply', async () => {
-      const token = agglayerNativeEtherWrapped({
+      const token = aggLayerNativeEtherWrapped({
         wethAddress: EthereumAddress.random(),
       })
 
@@ -400,30 +400,30 @@ function agglayerService(opts: Partial<AggLayerServiceDependencies>) {
   })
 }
 
-function agglayerL2Token(opts: Partial<Config & { type: 'agglayerL2Token' }>) {
-  return mockObject<Config & { type: 'agglayerL2Token' }>({
+function aggLayerL2Token(opts: Partial<Config & { type: 'aggLayerL2Token' }>) {
+  return mockObject<Config & { type: 'aggLayerL2Token' }>({
     id: MOCK_ID1,
-    type: 'agglayerL2Token',
+    type: 'aggLayerL2Token',
     ...opts,
   })
 }
 
-function agglayerNativeEtherPreminted(
-  opts: Partial<Config & { type: 'agglayerNativeEtherPreminted' }> = {},
+function aggLayerNativeEtherPreminted(
+  opts: Partial<Config & { type: 'aggLayerNativeEtherPreminted' }> = {},
 ) {
-  return mockObject<Config & { type: 'agglayerNativeEtherPreminted' }>({
+  return mockObject<Config & { type: 'aggLayerNativeEtherPreminted' }>({
     id: MOCK_ID1,
-    type: 'agglayerNativeEtherPreminted',
+    type: 'aggLayerNativeEtherPreminted',
     ...opts,
   })
 }
 
-function agglayerNativeEtherWrapped(
-  opts: Partial<Config & { type: 'agglayerNativeEtherWrapped' }> = {},
+function aggLayerNativeEtherWrapped(
+  opts: Partial<Config & { type: 'aggLayerNativeEtherWrapped' }> = {},
 ) {
-  return mockObject<Config & { type: 'agglayerNativeEtherWrapped' }>({
+  return mockObject<Config & { type: 'aggLayerNativeEtherWrapped' }>({
     id: MOCK_ID1,
-    type: 'agglayerNativeEtherWrapped',
+    type: 'aggLayerNativeEtherWrapped',
     ...opts,
   })
 }

@@ -45,10 +45,10 @@ export class AggLayerService {
   }
 
   async fetchAmounts(
-    tokens: (Config & { type: 'agglayerL2Token' })[],
+    tokens: (Config & { type: 'aggLayerL2Token' })[],
     nativeToken:
       | (Config & {
-          type: 'agglayerNativeEtherPreminted' | 'agglayerNativeEtherWrapped'
+          type: 'aggLayerNativeEtherPreminted' | 'aggLayerNativeEtherWrapped'
         })
       | undefined,
     blockNumber: number,
@@ -62,14 +62,14 @@ export class AggLayerService {
 
     let nativeTokenAmount: AmountRecord | undefined = undefined
     switch (nativeToken?.type) {
-      case 'agglayerNativeEtherPreminted':
+      case 'aggLayerNativeEtherPreminted':
         nativeTokenAmount = await this.getNativeEtherPremintedAmount(
           nativeToken,
           blockNumber,
           timestamp,
         )
         break
-      case 'agglayerNativeEtherWrapped':
+      case 'aggLayerNativeEtherWrapped':
         nativeTokenAmount = await this.getNativeEtherWrappedAmount(
           nativeToken,
           blockNumber,
@@ -87,7 +87,7 @@ export class AggLayerService {
   }
 
   async getL2TokensAmounts(
-    tokens: (Config & { type: 'agglayerL2Token' })[],
+    tokens: (Config & { type: 'aggLayerL2Token' })[],
     blockNumber: number,
     timestamp: UnixTime,
   ) {
@@ -104,7 +104,7 @@ export class AggLayerService {
   }
 
   async getL2TokensTotalSupply(
-    tokens: (Config & { address: EthereumAddress; type: 'agglayerL2Token' })[],
+    tokens: (Config & { address: EthereumAddress; type: 'aggLayerL2Token' })[],
     blockNumber: number,
     timestamp: UnixTime,
   ): Promise<AmountRecord[]> {
@@ -133,7 +133,7 @@ export class AggLayerService {
   }
 
   async getL2TokensAddresses(
-    tokens: (Config & { type: 'agglayerL2Token' })[],
+    tokens: (Config & { type: 'aggLayerL2Token' })[],
     blockNumber: number,
   ): Promise<(AggLayerL2Token & { address: EthereumAddress; id: string })[]> {
     const encoded: MulticallRequest[] = tokens.map((token) => ({
@@ -165,7 +165,7 @@ export class AggLayerService {
   }
 
   async getNativeEtherPremintedAmount(
-    token: Config & { type: 'agglayerNativeEtherPreminted' },
+    token: Config & { type: 'aggLayerNativeEtherPreminted' },
     blockNumber: number,
     timestamp: UnixTime,
   ): Promise<AmountRecord> {
@@ -182,7 +182,7 @@ export class AggLayerService {
   }
 
   async getNativeEtherWrappedAmount(
-    token: Config & { type: 'agglayerNativeEtherWrapped' },
+    token: Config & { type: 'aggLayerNativeEtherWrapped' },
     blockNumber: number,
     timestamp: UnixTime,
   ): Promise<AmountRecord> {
