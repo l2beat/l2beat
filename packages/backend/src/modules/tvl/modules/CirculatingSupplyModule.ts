@@ -34,7 +34,10 @@ export function createCirculatingSupplyModule(
   const coingeckoClient = peripherals.getClient(CoingeckoClient, {
     apiKey: config.coingeckoApiKey,
   })
-  const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+  const coingeckoQueryService = new CoingeckoQueryService(
+    coingeckoClient,
+    logger.tag('circulatingSupply'),
+  )
 
   const circulatingSupplyService = new CirculatingSupplyService({
     coingeckoQueryService,
