@@ -5,7 +5,7 @@ import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { TypeExplanationTooltip } from '~/components/table/cells/type-cell'
 import { TypeCell } from '~/components/table/cells/type-cell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
-import { formatNumber } from '~/utils/format-number'
+import { formatCurrency } from '~/utils/format'
 import { type ScalingSummaryTableRow } from '../../../_utils/to-table-rows'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
@@ -55,7 +55,11 @@ export const scalingArchivedColumns = [
       }
 
       return (
-        <span className="px-5">${formatNumber(value.breakdown.total)}</span>
+        <span className="text-base font-bold md:text-lg">
+          {formatCurrency(value.breakdown.total, 'usd', {
+            showLessThanMinimum: false,
+          })}
+        </span>
       )
     },
     sortingFn: ({ original: a }, { original: b }) => {
