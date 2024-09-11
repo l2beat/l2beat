@@ -172,9 +172,8 @@ export function BasicTable<T extends BasicEntry>({
         {table.getRowModel().rows.map((row) => {
           const rowType = getRowType(row.original, rowColoringMode)
           return (
-            <>
+            <React.Fragment key={row.id}>
               <TableRow
-                key={row.id}
                 className={cn(
                   getRowTypeClassNames(rowType),
                   row.getIsExpanded() &&
@@ -224,7 +223,7 @@ export function BasicTable<T extends BasicEntry>({
                     </td>
                   </tr>
                 ))}
-            </>
+            </React.Fragment>
           )
         })}
         {groupedHeader && <RowFiller headers={groupedHeader.headers} />}

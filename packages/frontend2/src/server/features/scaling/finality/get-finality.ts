@@ -10,8 +10,9 @@ import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
+import { env } from '~/env'
 import { db } from '~/server/database'
-import { FinalityData, type SerializableFinalityData } from './schema'
+import { type FinalityData, type FinalityDataPoint } from './schema'
 import { calcAvgsPerProject } from './utils/calc-avgs-per-project'
 import { divideAndAddLag } from './utils/divide-and-add-lag'
 import { getLivenessByTypeSince } from './utils/get-liveness-by-type-since'
@@ -21,41 +22,42 @@ export type FinalityProjectConfig = {
 } & Layer2FinalityConfig
 
 export async function getFinality(projects: FinalityProjectConfig[]) {
+  if (env.MOCK) {
+    return getMockFinalityApiResponse(projects)
+  }
   noStore()
-  const cached = await getCachedFinalityData(projects)
-
-  return FinalityData.parse(cached)
+  return getCachedFinalityData(projects)
 }
 
-const getCachedFinalityData = cache(getFinalityData, ['finality'], {
-  revalidate: UnixTime.HOUR,
-})
+const getCachedFinalityData = cache(
+  async (projects: FinalityProjectConfig[]) => {
+    const result: FinalityData = {}
 
-export async function getFinalityData(
-  projects: FinalityProjectConfig[],
-): Promise<SerializableFinalityData> {
-  const result: SerializableFinalityData = {}
+    const [OPStackProjects, otherProjects] = partition(
+      projects,
+      (p) => p.type === 'OPStack',
+    )
+    const OPStackFinality = await getOPStackFinality(OPStackProjects)
+    Object.assign(result, OPStackFinality)
 
-  const [OPStackProjects, otherProjects] = partition(
-    projects,
-    (p) => p.type === 'OPStack',
-  )
-  const OPStackFinality = await getOPStackFinality(OPStackProjects)
-  Object.assign(result, OPStackFinality)
+    const projectsFinality = await getProjectsFinality(otherProjects)
+    Object.assign(result, projectsFinality)
 
-  const projectsFinality = await getProjectsFinality(otherProjects)
-  Object.assign(result, projectsFinality)
-
-  return result
-}
+    return result
+  },
+  ['finality'],
+  {
+    revalidate: UnixTime.HOUR,
+  },
+)
 
 async function getProjectsFinality(
   projects: FinalityProjectConfig[],
-): Promise<SerializableFinalityData> {
+): Promise<FinalityData> {
   const projectIds = projects.map((p) => p.projectId)
   const records = await db.finality.getLatestGroupedByProjectId(projectIds)
 
-  const result: SerializableFinalityData = mapValues(
+  const result: FinalityData = mapValues(
     keyBy(records, 'projectId'),
     (record) => {
       const {
@@ -120,8 +122,8 @@ async function getProjectsFinality(
 
 async function getOPStackFinality(
   projects: FinalityProjectConfig[],
-): Promise<SerializableFinalityData> {
-  const result: SerializableFinalityData = {}
+): Promise<FinalityData> {
+  const result: FinalityData = {}
 
   const configurations = await getLatestConfigurations()
 
@@ -168,7 +170,7 @@ async function getOPStackFinality(
         result[project.projectId.toString()] = {
           timeToInclusion: projectResult,
           stateUpdateDelays: null,
-          syncedUntil: syncedUntil.toNumber(), // cache serialization, will be coerced to UnixTime
+          syncedUntil: syncedUntil.toNumber(),
         }
       }
     }),
@@ -191,4 +193,45 @@ async function getLatestConfigurations() {
     properties: coerce(c.properties),
   }))
   return configurations
+}
+
+function getMockFinalityApiResponse(
+  projects: FinalityProjectConfig[],
+): FinalityData {
+  const result = projects.reduce<FinalityData>((acc, cur) => {
+    acc[cur.projectId.toString()] = {
+      timeToInclusion: generateMockData(),
+      stateUpdateDelays: generateMockData(),
+      syncedUntil: UnixTime.now().toNumber(),
+    }
+    return acc
+  }, {})
+
+  return {
+    ...result,
+    optimism: {
+      ...result.optimism!,
+      syncedUntil: UnixTime.now().add(-2, 'days').toNumber(),
+    },
+  }
+}
+
+function generateMockData(): FinalityDataPoint {
+  return {
+    minimumInSeconds:
+      generateRandomTime() < 3000 ? undefined : generateRandomTime(),
+    averageInSeconds: generateRandomTime(),
+    maximumInSeconds: generateRandomTime(),
+  }
+}
+
+function generateRandomTime() {
+  const i = Math.round(Math.random() * 100)
+  if (i < 50) {
+    return Math.round(Math.random() * 3600)
+  }
+  if (i < 90) {
+    return 3600 + Math.round(Math.random() * 82800)
+  }
+  return 86400 + Math.round(Math.random() * 86400 * 5)
 }

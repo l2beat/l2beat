@@ -1,4 +1,4 @@
-import { layer2s, layer3s } from '@l2beat/config'
+import { bridges, layer2s, layer3s } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import {
   unstable_cache as cache,
@@ -75,7 +75,7 @@ function getMock7dTokenBreakdown(): LatestTvl {
   return {
     total: 1000,
     projects: Object.fromEntries(
-      [...layer2s, ...layer3s].map((project) => [
+      [...layer2s, ...layer3s, ...bridges].map((project) => [
         project.id,
         {
           breakdown: {
