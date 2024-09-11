@@ -105,7 +105,7 @@ export async function getL2ProjectDetails({
     })
   }
 
-  if (!isEmpty(activityChartData.data)) {
+  if (!isEmpty(activityChartData)) {
     items.push({
       type: 'ChartSection',
       props: {
@@ -117,7 +117,7 @@ export async function getL2ProjectDetails({
     })
   }
 
-  if (!project.isUpcoming && !isEmpty(costsChartData.data)) {
+  if (!project.isUpcoming && !isEmpty(costsChartData)) {
     items.push({
       type: 'ChartSection',
       props: {

@@ -11,11 +11,10 @@ export async function getScalingDaEntries() {
     (p) => !p.isUpcoming && !(p.type === 'layer2' && p.isArchived),
   )
   const tvl = await getLatestTvlUsd()
-  const orderedByTvl = orderByTvl(activeProjects, tvl)
   const projectsVerificationStatuses = await getProjectsVerificationStatuses()
   const implementationChangeReport = await getImplementationChangeReport()
 
-  return orderedByTvl
+  const entries = activeProjects
     .map((p) => {
       const hasImplementationChanged =
         !!implementationChangeReport.projects[p.id.toString()]
@@ -27,6 +26,8 @@ export async function getScalingDaEntries() {
       )
     })
     .filter(notUndefined)
+
+  return orderByTvl(entries, tvl)
 }
 
 function getScalingDataAvailabilityEntry(

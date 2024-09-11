@@ -30,9 +30,7 @@ export async function getScalingLivenessEntries() {
 
   const activeProjects = getLivenessProjects()
 
-  const orderedByTvl = orderByTvl(activeProjects, tvl)
-
-  return orderedByTvl
+  const entries = activeProjects
     .map((project) => {
       const hasImplementationChanged =
         !!implementationChangeReport.projects[project.id.toString()]
@@ -56,6 +54,8 @@ export async function getScalingLivenessEntries() {
       }
     })
     .filter(notUndefined)
+
+  return orderByTvl(entries, tvl)
 }
 
 export type ScalingLivenessEntry = Awaited<

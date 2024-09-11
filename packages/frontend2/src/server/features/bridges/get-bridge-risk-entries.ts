@@ -16,9 +16,8 @@ export async function getBridgeRiskEntries() {
     ])
 
   const included = bridges.filter((project) => !project.isUpcoming)
-  const orderedByTvl = orderByTvl(included, tvl)
 
-  return orderedByTvl
+  const entries = included
     .map((project) => {
       const hasImplementationChanged =
         !!implementationChangeReport.projects[project.id.toString()]
@@ -27,6 +26,8 @@ export async function getBridgeRiskEntries() {
       return getBridgesRiskEntry(project, hasImplementationChanged, isVerified)
     })
     .filter(notUndefined)
+
+  return orderByTvl(entries, tvl)
 }
 
 function getBridgesRiskEntry(
@@ -35,6 +36,7 @@ function getBridgesRiskEntry(
   isVerified: boolean,
 ) {
   return {
+    id: project.id,
     href: `/bridges/projects/${project.display.slug}`,
     type: project.type,
     name: project.display.name,
