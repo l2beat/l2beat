@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xa81b154b0b0f415b346571b6a793975a1ec512be
+Generated with discovered.json: 0xce6c94da3055ce2096bdf3cfea720a18f0d94bcc
 
-# Diff at Wed, 11 Sep 2024 13:30:13 GMT:
+# Diff at Thu, 12 Sep 2024 08:50:30 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 20727675
+- current block number: 20733449
 
 ## Description
 
@@ -31,7 +31,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract SP1Verifier (0xc350F063C13a3Ca21331610fe159E697a5c9c2FB)
+    contract SP1Verifier_OLD (0xc350F063C13a3Ca21331610fe159E697a5c9c2FB)
     +++ description: None
 ```
 

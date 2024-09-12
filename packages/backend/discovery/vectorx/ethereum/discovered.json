@@ -1,8 +1,8 @@
 {
   "name": "vectorx",
   "chain": "ethereum",
-  "blockNumber": 20727675,
-  "configHash": "0x3f287a9a1724af10299350f466d53ee2a05f8915704de07ddea8b01c53a0149e",
+  "blockNumber": 20733449,
+  "configHash": "0x7ef34679a5be74be9903c40d930ce6fb09b46e0c6f9557e954cd222df9adddf7",
   "version": 14,
   "contracts": [
     {
@@ -30,7 +30,7 @@
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "latestAuthoritySetId": 74,
-        "latestBlock": 298800,
+        "latestBlock": 302100,
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "vectorXProgramVkey": "0x0003c5cf9260fcef3df6c79870952e1ce2f57595ac042ea868c9cbbcab548cf8",
@@ -71,14 +71,15 @@
       }
     },
     {
-      "name": "SP1Verifier",
+      "name": "SP1Verifier_OLD",
       "address": "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",
       "sinceTimestamp": 1722645791,
       "values": {
         "$immutable": true,
         "VERIFIER_HASH": "0xc430ff7f31a22c5f7607f3ed2a2f5621af340bc45a44179319cba5761664e1f0",
         "VERSION": "v1.1.0"
-      }
+      },
+      "derivedName": "SP1Verifier"
     },
     {
       "name": "GnosisSafe",
