@@ -33,7 +33,7 @@ export const fraxtalDA: DaLayer = {
     The IPFS hash is then submitted to the on-chain inbox contract on Ethereum.
     FraxtalDA relies on a single DA endpoint to manage data posting between the three different locations. 
 
-    ![FraxtalDA](/images/da-layer-technology/fraxtalDA/fraxtalDA.png#center)
+    ![FraxtalDA](/images/da-layer-technology/fraxtalDA/FraxtalDA.png#center)
     `,
   bridges: [
     NO_BRIDGE({
