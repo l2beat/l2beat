@@ -51,7 +51,7 @@ function getMockTvlApiResponse(): TvlApiResponse {
       tokens: {
         canonical: [
           {
-            assetId: AssetId.ETH,
+            assetId: AssetId('ethereum-native'),
             chain: 'ethereum',
             chainId: ChainId.ETHEREUM,
             source: 'canonical',
@@ -60,7 +60,7 @@ function getMockTvlApiResponse(): TvlApiResponse {
         ],
         external: [
           {
-            assetId: AssetId.ETH,
+            assetId: AssetId('ethereum-native'),
             chain: 'ethereum',
             chainId: ChainId.ETHEREUM,
             source: 'external',
@@ -69,7 +69,7 @@ function getMockTvlApiResponse(): TvlApiResponse {
         ],
         native: [
           {
-            assetId: AssetId.ETH,
+            assetId: AssetId('ethereum-native'),
             chain: 'ethereum',
             chainId: ChainId.ETHEREUM,
             source: 'native',
@@ -85,7 +85,7 @@ function getMockTvlApiResponse(): TvlApiResponse {
       tokens: {
         canonical: [
           {
-            assetId: AssetId.ETH,
+            assetId: AssetId('ethereum-native'),
             chain: 'ethereum',
             chainId: ChainId.ETHEREUM,
             source: 'canonical',
