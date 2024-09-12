@@ -76,8 +76,10 @@ describe('projects', () => {
           []) {
           const description = contract.description
           if (description) {
-            it(`contracts[${i}].description ends with a dot`, () => {
-              expect(description.endsWith('.')).toEqual(true)
+            it(`contracts[${i}].description - each line ends with a dot`, () => {
+              for (const descLine of description.trimEnd().split('\n')) {
+                expect(descLine.trimEnd().endsWith('.')).toEqual(true)
+              }
             })
           }
 

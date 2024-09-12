@@ -70,8 +70,8 @@ export async function detectEip1967Proxy(
   return {
     type: 'EIP1967 proxy',
     values: {
-      $admin: admin,
-      $implementation: implementation,
+      $admin: admin.toString(),
+      $implementation: implementation.toString(),
       $upgradeCount: await getUpgradeCount(provider, address),
     },
   }

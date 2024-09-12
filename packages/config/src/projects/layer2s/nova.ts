@@ -4,7 +4,7 @@ import { MILESTONES, NUGGETS, RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import {
-  DEFAULT_OTHER_CONSIDERATIONS,
+  WASMVM_OTHER_CONSIDERATIONS,
   getNitroGovernance,
   orbitStackL2,
 } from './templates/orbitStack'
@@ -84,7 +84,7 @@ const selfSequencingDelay = maxTimeVariation[2]
 
 export const nova: Layer2 = orbitStackL2({
   badges: [
-    Badge.VM.EVM,
+    Badge.VM.WasmVM,
     Badge.DA.DAC,
     Badge.Stack.Nitro,
     Badge.Other.Governance,
@@ -256,6 +256,10 @@ export const nova: Layer2 = orbitStackL2({
         description:
           'This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.',
       }),
+      l2Discovery.getContractDetails('ArbChildToParentRewardRouter', {
+        description:
+          'Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts. Forwards the ETH via L1 to the Arbitrum treasury on Arbitrum One.',
+      }),
       l2Discovery.getContractDetails('L2ArbitrumToken', {
         description:
           'The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%.',
@@ -335,7 +339,7 @@ export const nova: Layer2 = orbitStackL2({
   },
   nonTemplateTechnology: {
     otherConsiderations: [
-      ...DEFAULT_OTHER_CONSIDERATIONS,
+      ...WASMVM_OTHER_CONSIDERATIONS,
       UPGRADE_MECHANISM.ARBITRUM_DAO(
         l1TimelockDelay,
         challengeWindow * assumedBlockTime,
@@ -344,6 +348,14 @@ export const nova: Layer2 = orbitStackL2({
     ],
   },
   milestones: [
+    {
+      name: 'ArbOS 31 Bianca upgrade',
+      link: 'https://www.tally.xyz/gov/arbitrum/proposal/108288822474129076868455956066667369439381709547570289793612729242368710728616',
+      date: '2024-09-03T00:00:00Z',
+      description:
+        'Nova upgrades to ArbOS 31 activating Stylus (new languages for smart contracts).',
+      type: 'general',
+    },
     {
       ...MILESTONES.MAINNET_OPEN,
       date: '2022-08-09T00:00:00Z',

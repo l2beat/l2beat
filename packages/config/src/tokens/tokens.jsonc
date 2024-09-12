@@ -582,6 +582,10 @@
       "address": "0xeEAA40B28A2d1b0B08f6f97bB1DD4B75316c6107"
     },
     {
+      "symbol": "GPT",
+      "address": "0xCdb4A8742ed7D0259b51E3454C46C9D6C48d5e88"
+    },
+    {
       "symbol": "GRT",
       "address": "0xc944E90C64B2c07662A292be6244BDf05Cda44a7"
     },
@@ -1429,6 +1433,59 @@
       "address": "0xE41d2489571d322189246DaFA5ebDe1F4699F498"
     }
   ],
+  "galxegravity": [
+    {
+      "symbol": "USDC.e",
+      "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin",
+      "supply": "totalSupply",
+      "source": "external",
+      "excludeFromTotal": true,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2 (Hydra mode)",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USDT",
+      "address": "0x816E810f9F787d669FB71932DeabF6c83781Cd48",
+      "coingeckoId": "tether",
+      "category": "stablecoin",
+      "supply": "totalSupply",
+      "source": "external",
+      "excludeFromTotal": true,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2 (Hydra mode)",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "WETH",
+      "address": "0xf6f832466Cd6C21967E0D954109403f36Bc8ceaA",
+      "coingeckoId": "weth",
+      "category": "ether",
+      "supply": "totalSupply",
+      "source": "external",
+      "excludeFromTotal": true,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2 (Hydra mode)",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    }
+  ],
   "arbitrum": [
     {
       "symbol": "PMON",
@@ -1444,8 +1501,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Transporter",
-        "slug": "transporter"
+        "bridges": [
+          {
+            "name": "Transporter",
+            "slug": "transporter"
+          }
+        ]
       }
     },
     {
@@ -1461,8 +1522,12 @@
       "source": "native",
       "supply": "circulatingSupply", // not totalSupply since the vesting contracts are on arbitrum (would dilute the supply) and the governance token is native to arbitrum (this will only be wrong if totalSupply(arb) < circulatingSupply (coingecko) which is unlikely to happen)
       "bridgedUsing": {
-        "bridge": "Layer Zero v2 OFT",
-        "slug": "layerzerov2oft"
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
       }
     },
     {
@@ -1472,8 +1537,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Wormhole",
-        "slug": "portal"
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
       }
     },
     {
@@ -1514,7 +1583,11 @@
       "supply": "totalSupply",
       "coingeckoId": "gho",
       "bridgedUsing": {
-        "bridge": "Chainlink CCIP"
+        "bridges": [
+          {
+            "name": "Chainlink CCIP"
+          }
+        ]
       }
     },
     {
@@ -1530,8 +1603,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero v2 OFT",
-        "slug": "layerzerov2oft"
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
       }
     },
     {
@@ -1540,8 +1617,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero v2 OFT",
-        "slug": "layerzerov2oft"
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
       }
     },
     {
@@ -1580,8 +1661,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -1590,8 +1675,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -1600,8 +1689,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -1610,8 +1703,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -1621,8 +1718,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -1632,8 +1733,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -1642,8 +1747,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -1658,8 +1767,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Multichain",
-        "slug": "multichain"
+        "bridges": [
+          {
+            "name": "Multichain",
+            "slug": "multichain"
+          }
+        ]
       },
       "coingeckoId": "beefy-finance"
     },
@@ -1675,8 +1788,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -1699,8 +1816,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Connext (xERC20)",
-        "slug": "connext"
+        "bridges": [
+          {
+            "name": "Connext (xERC20)",
+            "slug": "connext"
+          }
+        ]
       }
     },
     {
@@ -1728,8 +1849,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -1750,8 +1875,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -1773,8 +1902,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -1785,8 +1918,12 @@
       "supply": "totalSupply",
       "coingeckoId": "kelp-dao-restaked-eth",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -1795,8 +1932,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Wormhole",
-        "slug": "portal"
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
       }
     },
     {
@@ -1811,8 +1952,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Stargate",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Stargate",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -1836,8 +1981,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -1847,8 +1996,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -1869,7 +2022,11 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "The Graph Custom Gateway"
+        "bridges": [
+          {
+            "name": "The Graph Custom Gateway"
+          }
+        ]
       }
     },
     {
@@ -1897,8 +2054,26 @@
       "coingeckoId": "cheese-2",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Wormhole",
-        "slug": "portal"
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "MGP",
+      "address": "0xa61f74247455a40b01b0559ff6274441fafa22a3",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
       }
     }
   ],
@@ -1912,6 +2087,13 @@
   ],
   "optimism": [
     {
+      "symbol": "CTSI",
+      "address": "0xec6adef5e1006bb305bb1975333e8fc4071295bf",
+      "source": "canonical",
+      "supply": "zero",
+      "category": "other"
+    },
+    {
       "symbol": "ezETH",
       "category": "ether",
       "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
@@ -1919,7 +2101,11 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Hyperlane (xERC20)"
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC20)"
+          }
+        ]
       }
     },
     {
@@ -1961,8 +2147,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero v2 OFT",
-        "slug": "layerzerov2oft"
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
       }
     },
     {
@@ -1999,8 +2189,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -2009,8 +2203,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       },
       "coingeckoId": "frax-share"
     },
@@ -2020,8 +2218,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       },
       "coingeckoId": "frax-price-index"
     },
@@ -2031,8 +2233,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       },
       "coingeckoId": "frax-price-index-share"
     },
@@ -2043,8 +2249,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -2054,8 +2264,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -2064,8 +2278,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       }
     },
     {
@@ -2094,8 +2312,12 @@
       "supply": "totalSupply",
       "coingeckoId": "kelp-dao-restaked-eth",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -2104,8 +2326,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Stargate",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Stargate",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -2123,8 +2349,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -2134,8 +2364,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -2168,8 +2402,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Wormhole",
-        "slug": "portal"
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
       }
     },
     {
@@ -2178,8 +2416,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Stargate",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Stargate",
+            "slug": "stargate"
+          }
+        ]
       }
     }
   ],
@@ -2211,8 +2453,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero v2 OFT",
-        "slug": "layerzerov2oft"
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
       }
     },
     {
@@ -2241,8 +2487,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Connext (xERC20)",
-        "slug": "connext"
+        "bridges": [
+          {
+            "name": "Connext (xERC20)",
+            "slug": "connext"
+          }
+        ]
       }
     },
     {
@@ -2264,8 +2514,12 @@
       "coingeckoId": "anzen-staked-usdz",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -2276,8 +2530,12 @@
       "supply": "totalSupply",
       "coingeckoId": "kelp-dao-restaked-eth",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -2286,8 +2544,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Wormhole",
-        "slug": "portal"
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
       }
     },
     {
@@ -2329,8 +2591,12 @@
       "coingeckoId": "wrapped-eeth",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     }
   ],
@@ -2341,8 +2607,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "layerzerov2oft"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "layerzerov2oft"
+          }
+        ]
       }
     }
   ],
@@ -2355,7 +2625,11 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Hyperlane (xERC20)"
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC20)"
+          }
+        ]
       }
     },
     {
@@ -2366,8 +2640,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -2377,8 +2655,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     }
   ],
@@ -2389,8 +2671,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -2432,8 +2718,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -2443,8 +2733,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -2453,8 +2747,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -2465,8 +2763,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -2476,8 +2778,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -2486,7 +2792,11 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Hyperlane Nexus"
+        "bridges": [
+          {
+            "name": "Hyperlane Nexus"
+          }
+        ]
       },
       "coingeckoId": "celestia"
     }
@@ -2510,7 +2820,11 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Fire Bridge"
+        "bridges": [
+          {
+            "name": "Fire Bridge"
+          }
+        ]
       }
     },
     {
@@ -2549,8 +2863,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -2560,8 +2878,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -2613,8 +2935,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Connext (xERC20)",
-        "slug": "connext"
+        "bridges": [
+          {
+            "name": "Connext (xERC20)",
+            "slug": "connext"
+          }
+        ]
       }
     },
     {
@@ -2625,8 +2951,12 @@
       "supply": "totalSupply",
       "coingeckoId": "kelp-dao-restaked-eth",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -2635,8 +2965,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -2691,8 +3025,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -2702,8 +3040,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -2714,9 +3056,19 @@
       "coingeckoId": "wrapped-eeth",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
+    },
+    {
+      "symbol": "CLIP",
+      "address": "0x4ea77a86d6e70ffe8bb947fc86d68a7f086f198a",
+      "source": "native",
+      "supply": "circulatingSupply"
     }
   ],
   "zkfair": [
@@ -2745,7 +3097,11 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Free Bridge"
+        "bridges": [
+          {
+            "name": "Free Bridge"
+          }
+        ]
       }
     },
     {
@@ -2754,7 +3110,11 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Wemix on Kroma"
+        "bridges": [
+          {
+            "name": "Wemix on Kroma"
+          }
+        ]
       },
       "coingeckoId": "wemix-token"
     }
@@ -2767,8 +3127,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
+        "bridges": [
+          {
+            "name": "Socket",
+            "slug": "socket"
+          }
+        ]
       },
       "coingeckoId": "usd-coin"
     },
@@ -2779,8 +3143,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
+        "bridges": [
+          {
+            "name": "Socket",
+            "slug": "socket"
+          }
+        ]
       },
       "coingeckoId": "weth"
     }
@@ -2798,8 +3166,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -2816,8 +3188,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Connext (xERC20)",
-        "slug": "connext"
+        "bridges": [
+          {
+            "name": "Connext (xERC20)",
+            "slug": "connext"
+          }
+        ]
       }
     },
     {
@@ -2828,8 +3204,12 @@
       "supply": "totalSupply",
       "coingeckoId": "kelp-dao-restaked-eth",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -2839,7 +3219,11 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Blast"
+        "bridges": [
+          {
+            "name": "Blast"
+          }
+        ]
       },
       "coingeckoId": "usdb"
     },
@@ -2851,8 +3235,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -2862,8 +3250,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -2881,8 +3273,12 @@
       "coingeckoId": "wrapped-eeth",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -2900,6 +3296,36 @@
   ],
   "mode": [
     {
+      "symbol": "aBTC",
+      "address": "0x7A087e75807F2E5143C161a817E64dF6dC5EAFe0",
+      "excludeFromTotal": true,
+      "coingeckoId": "xlink-bridged-btc-stacks",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "XLink bridge" // lock-mint bridge locking on Ethereum and L2s (wBTC) and on Bitcoin (BTC) and minting at the destination
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "ALEX",
+      "address": "0xdfd0660032c2D0D38a9092a43d1669D6568cAF71",
+      "excludeFromTotal": true,
+      "coingeckoId": "alexgo",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "XLink bridge"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "ezETH",
       "category": "ether",
       "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
@@ -2907,8 +3333,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Connext (xERC20)",
-        "slug": "connext"
+        "bridges": [
+          {
+            "name": "Connext (xERC20)",
+            "slug": "connext"
+          }
+        ]
       }
     },
     {
@@ -2919,8 +3349,12 @@
       "supply": "totalSupply",
       "coingeckoId": "kelp-dao-restaked-eth",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -2931,8 +3365,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Stargate",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Stargate",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -2942,7 +3380,11 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Free Bridge"
+        "bridges": [
+          {
+            "name": "Free Bridge"
+          }
+        ]
       }
     },
     {
@@ -2959,8 +3401,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -2970,8 +3416,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -2982,8 +3432,12 @@
       "supply": "totalSupply",
       "coingeckoId": "wrapped-eeth",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     }
   ],
@@ -3017,7 +3471,11 @@
       "supply": "totalSupply",
       "coingeckoId": "solv-btc",
       "bridgedUsing": {
-        "bridge": "Free Bridge"
+        "bridges": [
+          {
+            "name": "Free Bridge"
+          }
+        ]
       },
       "source": "external"
     },
@@ -3029,8 +3487,12 @@
       "coingeckoId": "wrapped-eeth",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -3063,8 +3525,12 @@
       "category": "ether",
       "coingeckoId": "kelp-dao-restaked-eth",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     },
     {
@@ -3075,8 +3541,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -3086,8 +3556,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
       }
     },
     {
@@ -3098,8 +3572,12 @@
       "supply": "totalSupply",
       "coingeckoId": "stakestone-ether",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     }
   ],
@@ -3151,8 +3629,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       },
       "coingeckoId": "frax"
     },
@@ -3162,8 +3644,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       },
       "coingeckoId": "frax-share"
     },
@@ -3173,8 +3659,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       },
       "coingeckoId": "frax-price-index"
     },
@@ -3184,8 +3674,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       },
       "coingeckoId": "frax-price-index-share"
     },
@@ -3196,8 +3690,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       },
       "coingeckoId": "frax-ether"
     },
@@ -3214,8 +3712,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       },
       "coingeckoId": "staked-frax-ether"
     },
@@ -3253,8 +3755,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       },
       "coingeckoId": "frax"
     }
@@ -3267,8 +3773,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       },
       "coingeckoId": "frax"
     },
@@ -3278,8 +3788,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       },
       "coingeckoId": "frax-share"
     },
@@ -3289,8 +3803,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       },
       "coingeckoId": "frax-price-index"
     },
@@ -3300,8 +3818,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       },
       "coingeckoId": "frax-price-index-share"
     },
@@ -3312,8 +3834,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       },
       "coingeckoId": "frax-ether"
     },
@@ -3324,8 +3850,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       },
       "coingeckoId": "staked-frax-ether"
     },
@@ -3335,8 +3865,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
       },
       "coingeckoId": "staked-frax"
     }
@@ -3349,31 +3883,44 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
+        "bridges": [
+          {
+            "name": "Socket",
+            "slug": "socket"
+          }
+        ]
       },
       "coingeckoId": "usd-coin"
     }
   ],
   "zklinknova": [
-    {
-      "symbol": "BTCT",
-      "address": "0xFb8dBdc644eb54dAe0D7A9757f1e6444a07F8067",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "TRON Foundation",
-        "warning": "There is no formal bridge nor a way to withdraw this token. Funds are held by a simple Multisig on TRON and minted by a multisig on zkLink Nova."
-      },
-      "coingeckoId": "bitcoin-trc20"
-    },
+    // removed because we have no CG price and no bridge back to TRON
+    // {
+    //   "symbol": "BTCT",
+    //   "address": "0xFb8dBdc644eb54dAe0D7A9757f1e6444a07F8067",
+    //   "source": "external",
+    //   "supply": "totalSupply",
+    //   "bridgedUsing": {
+    //     "bridges": [
+    //       {
+    //         "name": "TRON Foundation",
+    //         "warning": "There is no formal bridge nor a way to withdraw this token. Funds are held by a simple Multisig on TRON and minted by a multisig on zkLink Nova."
+    //       }
+    //     ]
+    //   },
+    //   "coingeckoId": "bitcoin-trc20"
+    // },
     {
       "symbol": "SolvBTC.m",
       "address": "0xbEAf16cFD8eFe0FC97C2a07E349B9411F5dC272C",
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Free Bridge"
+        "bridges": [
+          {
+            "name": "Free Bridge"
+          }
+        ]
       },
       "coingeckoId": "solv-btc"
     },
@@ -3383,7 +3930,11 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Free Bridge"
+        "bridges": [
+          {
+            "name": "Free Bridge"
+          }
+        ]
       },
       "coingeckoId": "merlin-s-seal-btc"
     }
@@ -3402,8 +3953,12 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       },
       "coingeckoId": "real-us-t-bill"
     },
@@ -3413,8 +3968,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       },
       "coingeckoId": "pearl"
     },
@@ -3424,8 +3983,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       },
       "coingeckoId": "arcana-2"
     },
@@ -3435,8 +3998,12 @@
       "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
       }
     }
   ],
@@ -3447,6 +4014,23 @@
       "source": "native",
       "supply": "circulatingSupply",
       "coingeckoId": "smoke-the-ticker"
+    }
+  ],
+  "xchain": [
+    {
+      "symbol": "USDC.e",
+      "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
+      "source": "external",
+      "supply": "totalSupply",
+      "coingeckoId": "usd-coin",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2 (Hydra mode)",
+            "slug": "stargatev2"
+          }
+        ]
+      }
     }
   ]
 }

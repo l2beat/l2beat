@@ -30,7 +30,7 @@ TEST_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_test
    correct.
 4. To apply the migration run `yarn db:migrate`.
 5. Modify or create new repositories based on your changes according to convention written below.
-6. If you created new repository add it to returned object in `data
+6. If you created new repository add it to returned object in `data`
 
 ## Repository implementation convention
 

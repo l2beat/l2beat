@@ -1,6 +1,9 @@
+import { StringWithAutocomplete } from '@l2beat/shared-pure'
 import { SubVerifier } from '../../../types'
 
-function GROTH16(phase1setup: string | '?'): Omit<SubVerifier, 'name'> {
+function GROTH16(
+  phase1setup: StringWithAutocomplete<'?'>,
+): Omit<SubVerifier, 'name'> {
   const trustedSetup =
     phase1setup === '?' ? '?' : `${phase1setup} + circuit specific`
   return {
@@ -11,6 +14,30 @@ function GROTH16(phase1setup: string | '?'): Omit<SubVerifier, 'name'> {
   }
 }
 
+function HALO2KZG(
+  trustedSetup: StringWithAutocomplete<'?'>,
+): Omit<SubVerifier, 'name'> {
+  return {
+    proofSystem: 'Halo2',
+    mainArithmetization: 'Plonkish',
+    mainPCS: 'KZG',
+    trustedSetup,
+  }
+}
+
+function PLONKSNARK(
+  trustedSetup: StringWithAutocomplete<'?'>,
+): Omit<SubVerifier, 'name'> {
+  return {
+    proofSystem: 'Plonk SNARK',
+    mainArithmetization: 'Plonkish',
+    mainPCS: 'KZG',
+    trustedSetup,
+  }
+}
+
 export const PROOFS = {
   GROTH16,
+  HALO2KZG,
+  PLONKSNARK,
 }

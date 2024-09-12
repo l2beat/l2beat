@@ -1,4 +1,154 @@
-Generated with discovered.json: 0x167c05dbff48bb210431e3044fe4fb8756e9bb75
+Generated with discovered.json: 0x901e7495e893d7530117a915b119450806557380
+
+# Diff at Sun, 08 Sep 2024 17:20:01 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@fd881462cca0d7ef4519f907f3c6cfd5fe1cde8f block: 15661242
+- current block number: 15661242
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 15661242 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x25aBB510386A658c622280f488844BD3b485DC32) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"configure","target":"0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104","via":[]}]
+      receivedPermissions:
+-        [{"permission":"configure","target":"0x31f09c4a4151EeBB1c0Ac10003bF3b06f4Aa5668"},{"permission":"upgrade","target":"0x52c901666Cfc8AeE9b46A3b7C101688351529B37"},{"permission":"upgrade","target":"0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E"},{"permission":"upgrade","target":"0xbA256039AEdaD407692D8Deb366308BE6Bb2515C"},{"permission":"upgrade","target":"0xCC61c26901E719B73273C1484e337cBAB84369EF"}]
+      directlyReceivedPermissions:
++        [{"permission":"configure","target":"0x31f09c4a4151EeBB1c0Ac10003bF3b06f4Aa5668"},{"permission":"upgrade","target":"0x52c901666Cfc8AeE9b46A3b7C101688351529B37"},{"permission":"upgrade","target":"0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E"},{"permission":"upgrade","target":"0xbA256039AEdaD407692D8Deb366308BE6Bb2515C"},{"permission":"upgrade","target":"0xCC61c26901E719B73273C1484e337cBAB84369EF"}]
+    }
+```
+
+```diff
+    contract AddressManager (0x31f09c4a4151EeBB1c0Ac10003bF3b06f4Aa5668) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x25aBB510386A658c622280f488844BD3b485DC32"
++        "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"
+      issuedPermissions.0.via.0:
++        {"address":"0x25aBB510386A658c622280f488844BD3b485DC32","delay":0}
+    }
+```
+
+```diff
+    contract SystemConfig (0x52c901666Cfc8AeE9b46A3b7C101688351529B37) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x25aBB510386A658c622280f488844BD3b485DC32"
++        "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"
+      issuedPermissions.0.via.0:
++        {"address":"0x25aBB510386A658c622280f488844BD3b485DC32","delay":0}
+    }
+```
+
+```diff
+    contract OptimismPortal (0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x25aBB510386A658c622280f488844BD3b485DC32"
++        "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"
+      issuedPermissions.0.via.0:
++        {"address":"0x25aBB510386A658c622280f488844BD3b485DC32","delay":0}
+    }
+```
+
+```diff
+    contract StackMultisig (0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104) {
+    +++ description: None
+      descriptions:
+-        ["It can act on behalf of 0x25aBB510386A658c622280f488844BD3b485DC32, inheriting its permissions."]
+      receivedPermissions.4:
++        {"permission":"upgrade","target":"0xCC61c26901E719B73273C1484e337cBAB84369EF","via":[{"address":"0x25aBB510386A658c622280f488844BD3b485DC32"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","target":"0xbA256039AEdaD407692D8Deb366308BE6Bb2515C","via":[{"address":"0x25aBB510386A658c622280f488844BD3b485DC32"}]}
+      receivedPermissions.2:
++        {"permission":"upgrade","target":"0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E","via":[{"address":"0x25aBB510386A658c622280f488844BD3b485DC32"}]}
+      receivedPermissions.1:
++        {"permission":"upgrade","target":"0x52c901666Cfc8AeE9b46A3b7C101688351529B37","via":[{"address":"0x25aBB510386A658c622280f488844BD3b485DC32"}]}
+      receivedPermissions.0.target:
+-        "0x25aBB510386A658c622280f488844BD3b485DC32"
++        "0x31f09c4a4151EeBB1c0Ac10003bF3b06f4Aa5668"
+      receivedPermissions.0.via:
++        [{"address":"0x25aBB510386A658c622280f488844BD3b485DC32"}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x25aBB510386A658c622280f488844BD3b485DC32"}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xbA256039AEdaD407692D8Deb366308BE6Bb2515C) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x25aBB510386A658c622280f488844BD3b485DC32"
++        "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"
+      issuedPermissions.0.via.0:
++        {"address":"0x25aBB510386A658c622280f488844BD3b485DC32","delay":0}
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xCC61c26901E719B73273C1484e337cBAB84369EF) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x25aBB510386A658c622280f488844BD3b485DC32"
++        "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"
+      issuedPermissions.0.via.0:
++        {"address":"0x25aBB510386A658c622280f488844BD3b485DC32","delay":0}
+    }
+```
+
+Generated with discovered.json: 0xd7a79cbecce20001566e438856473596f747cc95
+
+# Diff at Fri, 30 Aug 2024 08:17:23 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 15661242
+- current block number: 15661242
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 15661242 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x25aBB510386A658c622280f488844BD3b485DC32) {
+    +++ description: None
+      receivedPermissions.4.via:
+-        []
+      receivedPermissions.3.via:
+-        []
+      receivedPermissions.2.via:
+-        []
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract StackMultisig (0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104) {
+    +++ description: It can act on behalf of 0x25aBB510386A658c622280f488844BD3b485DC32, inheriting its permissions.
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+Generated with discovered.json: 0x8bbe4fe3f43fc4235577f3fe243ae729e5d91d88
 
 # Diff at Fri, 23 Aug 2024 09:57:42 GMT:
 

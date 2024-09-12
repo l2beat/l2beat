@@ -1,4 +1,154 @@
-Generated with discovered.json: 0x8b22c09f3a9e8ef988c0b9cf7961bdc484b27330
+Generated with discovered.json: 0x8213fa83edf87c6a80c7884b871e9e4834d8f7a4
+
+# Diff at Sun, 08 Sep 2024 17:20:10 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@fd881462cca0d7ef4519f907f3c6cfd5fe1cde8f block: 18674800
+- current block number: 18674800
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18674800 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x520D972B4A7C1CE4d5e01bCd4349a93a8AeaEAC5) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E"
++        "0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d"
+      issuedPermissions.0.via.0:
++        {"address":"0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E","delay":0}
+    }
+```
+
+```diff
+    contract OptimismPortal (0x52fA397D799f1CE416a2089B964Aa293c347994F) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E"
++        "0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d"
+      issuedPermissions.0.via.0:
++        {"address":"0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E","delay":0}
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d) {
+    +++ description: None
+      descriptions:
+-        ["It can act on behalf of 0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E, inheriting its permissions."]
+      receivedPermissions.4:
++        {"permission":"upgrade","target":"0xF7Cb313CB6D146dAbB8c5E31798BDCeFc67B831b","via":[{"address":"0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","target":"0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4","via":[{"address":"0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E"}]}
+      receivedPermissions.2:
++        {"permission":"upgrade","target":"0x52fA397D799f1CE416a2089B964Aa293c347994F","via":[{"address":"0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E"}]}
+      receivedPermissions.1:
++        {"permission":"upgrade","target":"0x520D972B4A7C1CE4d5e01bCd4349a93a8AeaEAC5","via":[{"address":"0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E"}]}
+      receivedPermissions.0.target:
+-        "0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E"
++        "0x9Bf9cd5aD745076b5bFb7Cc2d3b871532973C2c0"
+      receivedPermissions.0.via:
++        [{"address":"0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E"}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E"}]
+    }
+```
+
+```diff
+    contract AddressManager (0x9Bf9cd5aD745076b5bFb7Cc2d3b871532973C2c0) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E"
++        "0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d"
+      issuedPermissions.0.via.0:
++        {"address":"0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E","delay":0}
+    }
+```
+
+```diff
+    contract SystemConfig (0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E"
++        "0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d"
+      issuedPermissions.0.via.0:
++        {"address":"0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E","delay":0}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"configure","target":"0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d","via":[]}]
+      receivedPermissions:
+-        [{"permission":"configure","target":"0x9Bf9cd5aD745076b5bFb7Cc2d3b871532973C2c0"},{"permission":"upgrade","target":"0x520D972B4A7C1CE4d5e01bCd4349a93a8AeaEAC5"},{"permission":"upgrade","target":"0x52fA397D799f1CE416a2089B964Aa293c347994F"},{"permission":"upgrade","target":"0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4"},{"permission":"upgrade","target":"0xF7Cb313CB6D146dAbB8c5E31798BDCeFc67B831b"}]
+      directlyReceivedPermissions:
++        [{"permission":"configure","target":"0x9Bf9cd5aD745076b5bFb7Cc2d3b871532973C2c0"},{"permission":"upgrade","target":"0x520D972B4A7C1CE4d5e01bCd4349a93a8AeaEAC5"},{"permission":"upgrade","target":"0x52fA397D799f1CE416a2089B964Aa293c347994F"},{"permission":"upgrade","target":"0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4"},{"permission":"upgrade","target":"0xF7Cb313CB6D146dAbB8c5E31798BDCeFc67B831b"}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xF7Cb313CB6D146dAbB8c5E31798BDCeFc67B831b) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E"
++        "0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d"
+      issuedPermissions.0.via.0:
++        {"address":"0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E","delay":0}
+    }
+```
+
+Generated with discovered.json: 0x59c72cddb6b11c73779f7f07ea78cf0ce7383008
+
+# Diff at Fri, 30 Aug 2024 08:17:26 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 18674800
+- current block number: 18674800
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18674800 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafeL2 (0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d) {
+    +++ description: It can act on behalf of 0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E, inheriting its permissions.
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E) {
+    +++ description: None
+      receivedPermissions.4.via:
+-        []
+      receivedPermissions.3.via:
+-        []
+      receivedPermissions.2.via:
+-        []
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+Generated with discovered.json: 0x0029b9aaad77af80f4c27d0af65ed3625501792d
 
 # Diff at Fri, 23 Aug 2024 09:57:47 GMT:
 

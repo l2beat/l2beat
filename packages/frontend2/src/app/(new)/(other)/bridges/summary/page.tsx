@@ -1,5 +1,5 @@
-import { BridgesTvlChart } from '~/app/_components/chart/tvl/bridges-tvl-chart'
-import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
+import { BridgesTvlChart } from '~/components/chart/tvl/bridges-tvl-chart'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { getBridgesSummaryEntries } from '~/server/features/bridges/get-bridge-summary-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
@@ -16,8 +16,9 @@ export const metadata = getDefaultMetadata({
 export default async function Page() {
   const [entries] = await Promise.all([
     getBridgesSummaryEntries(),
-    await api.bridges.summary.chart.prefetch({
+    api.tvl.chart.prefetch({
       range: getCookie('bridgesSummaryChartRange'),
+      filter: { type: 'bridge' },
     }),
   ])
 

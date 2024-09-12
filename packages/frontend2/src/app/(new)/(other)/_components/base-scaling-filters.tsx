@@ -1,9 +1,9 @@
 import { type StageConfig } from '@l2beat/config'
 import { compact, uniq } from 'lodash'
 import React from 'react'
-import { Checkbox } from '~/app/_components/checkbox'
-import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
-import { TableFilter } from '~/app/_components/table/filters/table-filter'
+import { Checkbox } from '~/components/core/checkbox'
+import { OverflowWrapper } from '~/components/core/overflow-wrapper'
+import { TableFilter } from '~/components/table/filters/table-filter'
 import { type CommonScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
 import { useScalingFilterValues } from './scaling-filter-context'
 
@@ -21,6 +21,7 @@ export function BaseScalingFilters({
   const filter = useScalingFilterValues()
   const typeOptions = uniq(items.map((item) => item.category))
     .sort()
+    .filter((value) => !!value)
     .map((value) => ({
       label: value,
       value,
@@ -55,7 +56,9 @@ export function BaseScalingFilters({
       value,
     }))
 
-  const isRollupInItems = items.some((item) => item.category.includes('Rollup'))
+  const isRollupInItems = items.some((item) =>
+    item.category?.includes('Rollup'),
+  )
 
   return (
     <OverflowWrapper>

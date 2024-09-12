@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import { createPriceId } from '@l2beat/config'
 import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
 import { CoingeckoId, CoingeckoPriceConfigEntry } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
@@ -10,20 +11,19 @@ import { HourlyIndexer } from '../indexers/HourlyIndexer'
 import { PriceIndexer } from '../indexers/PriceIndexer'
 import { PriceService } from '../services/PriceService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
-import { createPriceId } from '../utils/createPriceId'
 
-export interface PriceModule {
+interface PriceModule {
   start: () => Promise<void> | void
   descendant: DescendantIndexer
 }
 
-export function createPriceModule(
+export function initPriceModule(
   config: TvlConfig,
   logger: Logger,
   peripherals: Peripherals,
-  hourlyIndexer: HourlyIndexer,
   syncOptimizer: SyncOptimizer,
   indexerService: IndexerService,
+  hourlyIndexer: HourlyIndexer,
 ): PriceModule {
   const coingeckoClient = peripherals.getClient(CoingeckoClient, {
     apiKey: config.coingeckoApiKey,

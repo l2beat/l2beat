@@ -1,3 +1,109 @@
+Generated with discovered.json: 0x9eeff892b00d665fd1fedef86725b3eb91163a99
+
+# Diff at Thu, 05 Sep 2024 14:10:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d01da0bcdde8e77051659c9718e449a44f5f957a block: 124918219
+- current block number: 124973335
+
+## Description
+
+Fee withdrawer changed to OptimismOwner.
+
+## Watched changes
+
+```diff
+    contract zkLink (0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b) {
+    +++ description: None
+      values.forwardFeeAllocator:
+-        "0x0000000000000000000000000000000000000000"
++        "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9"
+    }
+```
+
+Generated with discovered.json: 0x7d50bd948c12967a5ab1bedb727d6805415e08c2
+
+# Diff at Wed, 04 Sep 2024 07:33:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@878a951312cec062f5003f6749f781861b0cdba1 block: 122588960
+- current block number: 124918219
+
+## Description
+
+One signer is added to OptimismOwner MS (and threshold increased to 5/8).
+
+## Watched changes
+
+```diff
+    contract OptimismOwner (0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9) {
+    +++ description: None
+      values.$members.7:
++        "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+      values.$members.6:
+-        "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
++        "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
+      values.$members.5:
+-        "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
++        "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
+      values.$members.4:
+-        "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
++        "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
+      values.$members.3:
+-        "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
++        "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
+      values.$members.2:
+-        "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
++        "0xF801886AE2e127A269B0F11892edb54F692d02dF"
+      values.$members.1:
+-        "0xF801886AE2e127A269B0F11892edb54F692d02dF"
++        "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
+      values.$members.0:
+-        "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
++        "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5"
+      values.$threshold:
+-        4
++        5
+      values.multisigThreshold:
+-        "4 of 7 (57%)"
++        "5 of 8 (63%)"
+    }
+```
+
+Generated with discovered.json: 0x4581d4cb0934e9444a32da90225c8625ce71e03e
+
+# Diff at Fri, 30 Aug 2024 08:09:04 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 122588960
+- current block number: 122588960
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 122588960 (main branch discovery), not current.
+
+```diff
+    contract OptimismOwner (0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9) {
+    +++ description: None
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract OptimismProxyAdmin (0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4) {
+    +++ description: None
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
 Generated with discovered.json: 0x8396918b08f37fcb72fbdcea51ded3941aa2cb28
 
 # Diff at Fri, 23 Aug 2024 09:58:11 GMT:

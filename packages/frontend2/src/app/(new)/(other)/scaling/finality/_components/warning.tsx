@@ -1,4 +1,4 @@
-import { OutLink } from '~/app/_components/out-link'
+import { OutLink } from '~/components/out-link'
 
 export function FinalityWarning() {
   return (

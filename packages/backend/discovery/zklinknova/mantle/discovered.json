@@ -1,9 +1,9 @@
 {
   "name": "zklinknova",
   "chain": "mantle",
-  "blockNumber": 66927056,
+  "blockNumber": 68652420,
   "configHash": "0xba99224e212c7eb632ba06c519a466724d98fb22fad4fc880458e49a59f4dbad",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "MantleOwner",
@@ -13,13 +13,11 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
-          "via": []
+          "target": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657"
         },
         {
           "permission": "upgrade",
-          "target": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
-          "via": []
+          "target": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -42,7 +40,7 @@
         "getChainId": 5000,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 10,
+        "nonce": 11,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -103,20 +101,20 @@
           "minimalL2GasPrice": 250000000
         },
         "FORWARD_REQUEST_TYPE_HASH": "0xe0aaca1722ef50bb0c9b032e5b16ce2b79fa9f23638835456b27fd6894f8292c",
-        "forwardFeeAllocator": "0x0000000000000000000000000000000000000000",
+        "forwardFeeAllocator": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "gateway": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
         "getGateway": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
         "getGovernor": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "getPriorityTxMaxGasLimit": 72000000,
-        "getTotalBatchesExecuted": 18313,
-        "getTotalPriorityTxs": 855,
+        "getTotalBatchesExecuted": 24163,
+        "getTotalPriorityTxs": 861,
         "owner": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "paused": false,
-        "totalBatchesExecuted": 18313,
-        "totalPriorityTxs": 855,
-        "totalSyncedPriorityTxs": 855,
-        "totalValidatorForwardFee": "1091419113052414112870",
-        "totalValidatorForwardFeeWithdrawn": 0,
+        "totalBatchesExecuted": 24163,
+        "totalPriorityTxs": 861,
+        "totalSyncedPriorityTxs": 861,
+        "totalValidatorForwardFee": "1105664800685749588412",
+        "totalValidatorForwardFeeWithdrawn": "1105664800685749588412",
         "txGasPrice": 140000000000000
       },
       "derivedName": "ZkLink"
@@ -153,8 +151,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2",
-          "via": []
+          "target": "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2"
         }
       ],
       "sinceTimestamp": 1709296907,
@@ -167,7 +164,6 @@
     }
   ],
   "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x21194Efd1D913Bc8D62F1ED9467aA0cA2a257FCe" },
     { "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9" },
     { "address": "0x321Ce902eDFC6466B224ce5D9A7Bc16858855272" },

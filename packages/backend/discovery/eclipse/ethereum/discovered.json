@@ -1,20 +1,43 @@
 {
   "name": "eclipse",
   "chain": "ethereum",
-  "blockNumber": 20590601,
-  "configHash": "0x701f558bb792de6bc1f32e31a010af993f7d5349d1db0dbac567b98a6b3aa2a3",
-  "version": 13,
+  "blockNumber": 20663231,
+  "configHash": "0x47f63439da6b399312c0e54a5ddf19c780f316833ebd19f0ffe82e23c73ea170",
+  "version": 14,
   "contracts": [
     {
-      "name": "EclipseMultisig",
+      "name": "AuthorityMultisig",
+      "address": "0x4720342419C1D316B948690d12C86D5b485C64E0",
+      "template": "GnosisSafe",
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1722032243,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA",
+          "0xAFa49B46301BaaD9152dD5aF0C05245B0FA58695"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0x4fc4aca3db1cad217783537dbcbcb1d69e3377e64c4890ff913a3639c94b9386",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 2 (50%)",
+        "nonce": 3,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "TreasuryOwner",
       "address": "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xD7E4b67E735733aC98a88F13d087D8aac670E644",
-          "via": []
+          "target": "0xD7E4b67E735733aC98a88F13d087D8aac670E644"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -39,7 +62,7 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "Contract3",
+      "name": "EtherBridge",
       "address": "0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1",
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -54,6 +77,12 @@
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9",
         "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x4720342419C1D316B948690d12C86D5b485C64E0"]
+          }
+        },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "ETHER_BRIDGE_ID": "0x0bcb6b0b9168c058e28754b0255038028ff8515b5755d989d746fdd8b8f11d7e",
         "getVersionComponents": { "major": 1, "minor": 0, "patch": 0 },
@@ -65,7 +94,7 @@
       "derivedName": "EtherBridge"
     },
     {
-      "name": "Contract1",
+      "name": "Mailbox",
       "address": "0xb23B2492f7A9631104A5877F7FFA00633660968d",
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -80,6 +109,20 @@
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B",
         "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x4720342419C1D316B948690d12C86D5b485C64E0"]
+          },
+          "TRUSTED_RELAYER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x4720342419C1D316B948690d12C86D5b485C64E0"]
+          },
+          "MODULE_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1"]
+          }
+        },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getVersionComponents": { "major": 1, "minor": 0, "patch": 0 },
         "MODULE_ROLE": "0x5098275140f5753db46c42f6e139939968848633a1298402189fdfdafa69b453",
@@ -90,7 +133,7 @@
       "derivedName": "Mailbox"
     },
     {
-      "name": "Contract2",
+      "name": "Treasury",
       "address": "0xD7E4b67E735733aC98a88F13d087D8aac670E644",
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -121,20 +164,20 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1",
-          "via": []
+          "target": "0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1"
         },
         {
           "permission": "upgrade",
-          "target": "0xb23B2492f7A9631104A5877F7FFA00633660968d",
-          "via": []
+          "target": "0xb23B2492f7A9631104A5877F7FFA00633660968d"
         }
       ]
     },
     { "address": "0x33440E53476B855A56B831e7924B5aa123981726" },
     { "address": "0x3392fd462d9710Fbf3A5703818b9920C119DC080" },
+    { "address": "0xAFa49B46301BaaD9152dD5aF0C05245B0FA58695" },
     { "address": "0xDecF20b9213f5d7f16196420377d37ef5f8F9686" },
-    { "address": "0xEe058D13A0c25a1ce2f68eb02dE4CE7E621982D9" }
+    { "address": "0xEe058D13A0c25a1ce2f68eb02dE4CE7E621982D9" },
+    { "address": "0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA" }
   ],
   "abis": {
     "0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9": [
@@ -178,6 +221,9 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function unpause()",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x4720342419C1D316B948690d12C86D5b485C64E0": [
+      "constructor(address _singleton)"
     ],
     "0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B": [
       "constructor()",

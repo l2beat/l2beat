@@ -1,9 +1,9 @@
 {
   "name": "polynetwork",
   "chain": "ethereum",
-  "blockNumber": 19940448,
+  "blockNumber": 20675914,
   "configHash": "0x557042a89ff459f09daf8e1652bea33d5fefcdb080824682bfd2c5e4d3c5ab04",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "EthCrossChainManager",
@@ -153,8 +153,8 @@
       "sinceTimestamp": 1597287911,
       "values": {
         "$immutable": true,
-        "EthToPolyTxHashIndex": 71406,
-        "getEthTxHashIndex": 71406,
+        "EthToPolyTxHashIndex": 72025,
+        "getEthTxHashIndex": 72025,
         "isOwner": false,
         "owner": "0x14413419452Aaf089762A0c5e95eD2A13bBC488C",
         "paused": false

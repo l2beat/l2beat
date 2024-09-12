@@ -1,3 +1,75 @@
+Generated with discovered.json: 0x2ccdebaa7025806644571f9c5d25cfc70cd26a4b
+
+# Diff at Mon, 09 Sep 2024 08:19:48 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@fd881462cca0d7ef4519f907f3c6cfd5fe1cde8f block: 20491472
+- current block number: 20711816
+
+## Description
+
+DAC member URLs have changed (to Tencent). (Onchain addresses stay the same)
+
+## Watched changes
+
+```diff
+    contract ZKFairValidiumDAC (0x997CfB0838544f68E59f877EDc905001456F125b) {
+    +++ description: Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.
++++ description: URL and address of the DAC member
+      values.members.4.0:
+-        "http://ec2-54-219-14-189.us-west-1.compute.amazonaws.com:8444"
++        "http://43.129.158.203:8444"
++++ description: URL and address of the DAC member
+      values.members.3.0:
+-        "http://ec2-18-144-4-166.us-west-1.compute.amazonaws.com:8444"
++        "http://119.28.1.197:8444"
++++ description: URL and address of the DAC member
+      values.members.2.0:
+-        "http://ec2-52-53-165-158.us-west-1.compute.amazonaws.com:8444"
++        "http://43.155.22.171:8444"
++++ description: URL and address of the DAC member
+      values.members.1.0:
+-        "http://ec2-54-153-117-150.us-west-1.compute.amazonaws.com:8444"
++        "http://129.226.185.196:8444"
++++ description: URL and address of the DAC member
+      values.members.0.0:
+-        "http://ec2-13-57-35-237.us-west-1.compute.amazonaws.com:8444"
++        "http://43.129.159.5:8444"
+    }
+```
+
+Generated with discovered.json: 0x2aead1d8f69d1d3e33007e594e1a94f274b0458d
+
+# Diff at Fri, 30 Aug 2024 08:01:43 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 20491472
+- current block number: 20491472
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20491472 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3) {
+    +++ description: None
+      receivedPermissions.3.via:
+-        []
+      receivedPermissions.2.via:
+-        []
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
 Generated with discovered.json: 0xe62f2cfcbb59379f4daa78a452537f2342bde4be
 
 # Diff at Fri, 23 Aug 2024 09:56:32 GMT:

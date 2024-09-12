@@ -1,3 +1,4 @@
+import { AmountId, AssetId, PriceId, createAssetId } from '@l2beat/config'
 import { Database } from '@l2beat/database'
 import {
   AmountConfigEntry,
@@ -6,9 +7,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { AmountId } from '../utils/createAmountId'
-import { AssetId, createAssetId } from '../utils/createAssetId'
-import { PriceId } from '../utils/createPriceId'
 import { MOCKS_FOR_TVL } from '../utils/test/mocks'
 import { ValueService } from './ValueService'
 
@@ -60,6 +58,7 @@ describe(ValueService.name, () => {
       ['a', CONFIG_A],
       ['b', CONFIG_B],
     ])
+
     const priceConfigIds: Map<AssetId, PriceId> = new Map([
       [createAssetId(CONFIG_A), 'a'],
       [createAssetId(CONFIG_B), 'b'],

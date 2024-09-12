@@ -1,8 +1,10 @@
+import { Badge } from '../badges'
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
 export const lumia: Layer2 = upcomingL2({
   id: 'lumia',
+  badges: [Badge.Infra.AggLayer],
   display: {
     name: 'Lumia',
     slug: 'lumia',

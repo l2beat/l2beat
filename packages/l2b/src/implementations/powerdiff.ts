@@ -61,9 +61,17 @@ function diffToHtml(
       )
     }
 
+    if (splitResult.filePathsList.length === 0) {
+      result.push(genNoChangesHtml())
+    }
     filePathsList = splitResult.filePathsList
   } else if (mode === 'together') {
-    result.push(...diffPaths(config, filePathsList))
+    const diffs = diffPaths(config, filePathsList)
+
+    if (diffs.length === 0) {
+      diffs.push(genNoChangesHtml())
+    }
+    result.push(...diffs)
   }
 
   result.push(HTML_END)
@@ -144,7 +152,7 @@ function compareUsingDifftastic(
   const fileName = filePath1.split('/').slice(-1)[0]
   console.log(`Processing ${fileName}`)
   try {
-    const cmd = `${difftasticPath} --ignore-comments ${displayMode} --color=always ${filePath1} ${filePath2}`
+    const cmd = `${difftasticPath} --ignore-comments ${displayMode} --color=always ${filePath1} ${filePath2} --context 20`
     return osExec(cmd).toString()
   } catch (error) {
     console.log(error)
@@ -179,6 +187,16 @@ function gitDiffFolders(absPath1: string, absPath2: string): string {
 
 function osExec(command: string) {
   return execSync(command, { maxBuffer: 1024 * 1024 * 10 }) // 10 MB
+}
+
+function genNoChangesHtml(): string {
+  return `
+    <div class="container">
+      <div class="message-box">
+        <h1 class="main-message">Looks like there are no differences!</h1>
+        <p class="sub-message">The content in both of those directories appears to be <i>the same</i>.</p>
+      </div>
+    </div>`
 }
 
 function genDiffHtml(
@@ -298,6 +316,34 @@ const HTML_START = `
 
         .collapsible.expanded > .button > .icon {
             transform: rotate(90deg);
+        }
+
+        // Classes related to no changes message
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #444;
+            padding: 20px;
+        }
+
+        .message-box {
+            text-align: center;
+        }
+
+        .main-message {
+            font-size: 2.8em;
+            font-weight: 600;
+            color: #3a8fdc;
+            margin-bottom: 10px;
+        }
+
+        .sub-message {
+            font-size: 1.2em;
+            color: #666;
+            margin-top: 0;
         }
     </style>
   </head>

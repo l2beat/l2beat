@@ -1,27 +1,36 @@
+import { bridges, layer2s, layer3s } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
+import { env } from '~/env'
 import { getTokenBreakdown } from './get-token-breakdown'
-import { getTvlProjects } from './get-tvl-projects'
+import { type TvlProject, getTvlProjects } from './get-tvl-projects'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
 
 export function get7dTokenBreakdown(
   ...parameters: Parameters<typeof getCached7dTokenBreakdown>
 ) {
+  if (env.MOCK) {
+    return getMock7dTokenBreakdown()
+  }
   noStore()
   return getCached7dTokenBreakdown(...parameters)
 }
 
+export type LatestTvl = Awaited<ReturnType<typeof getCached7dTokenBreakdown>>
 export const getCached7dTokenBreakdown = cache(
-  async () => {
-    const tvlValues = await getTvlValuesForProjects(
-      getTvlProjects().filter(
-        (project) => project.type === 'layer2' || project.type === 'layer3',
-      ),
-      '7d',
-    )
+  async ({ type }: { type: 'layer2' | 'bridge' }) => {
+    const filter =
+      type === 'layer2'
+        ? (project: TvlProject) =>
+            project.type === 'layer2' || project.type === 'layer3'
+        : (project: TvlProject) => project.type === 'bridge'
+
+    const projectsToQuery = getTvlProjects().filter(filter)
+
+    const tvlValues = await getTvlValuesForProjects(projectsToQuery, '7d')
 
     const projects = Object.fromEntries(
       Object.entries(tvlValues).map(([projectId, values]) => {
@@ -62,4 +71,22 @@ export const getCached7dTokenBreakdown = cache(
   },
 )
 
-export type LatestTvl = Awaited<ReturnType<typeof getCached7dTokenBreakdown>>
+function getMock7dTokenBreakdown(): LatestTvl {
+  return {
+    total: 1000,
+    projects: Object.fromEntries(
+      [...layer2s, ...layer3s, ...bridges].map((project) => [
+        project.id,
+        {
+          breakdown: {
+            total: 100,
+            ether: 80,
+            stablecoin: 15,
+            associated: 5,
+          },
+          change: Math.random(),
+        },
+      ]),
+    ),
+  }
+}

@@ -57,19 +57,22 @@ export type PermissionType = 'configure' | 'upgrade' | 'act'
 
 export interface ResolvedPermissionPath {
   address: EthereumAddress
-  delay: number
+  delay?: number
 }
 
 export interface ResolvedPermission {
   permission: PermissionType
   target: EthereumAddress
-  via: ResolvedPermissionPath[]
+  delay?: number
+  description?: string
+  via?: ResolvedPermissionPath[]
 }
 
 export interface Meta {
   roles?: StackRole[]
   issuedPermissions?: ResolvedPermission[]
   receivedPermissions?: ResolvedPermission[]
+  directlyReceivedPermissions?: ResolvedPermission[]
   categories?: StackCategory[]
   types?: ContractValueType[]
   descriptions?: string[]
@@ -99,7 +102,6 @@ export type ContractParameters = {
 
 export type ContractValue =
   | string
-  | EthereumAddress
   | number
   | boolean
   | ContractValue[]

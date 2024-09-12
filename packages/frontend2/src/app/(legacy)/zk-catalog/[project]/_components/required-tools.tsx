@@ -1,4 +1,4 @@
-import { CustomLink } from '~/app/_components/link/custom-link'
+import { CustomLink } from '~/components/link/custom-link'
 import { EM_DASH } from '~/consts/characters'
 import { type ZkCatalogProjectDetails } from './zk-catalog-project-page'
 

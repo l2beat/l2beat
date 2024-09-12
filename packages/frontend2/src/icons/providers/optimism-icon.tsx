@@ -1,14 +1,12 @@
-import React, { useId, type SVGAttributes } from 'react'
+import { useId } from 'react'
 import { cn } from '~/utils/cn'
+import { SvgIcon, type SvgIconProps } from '../svg-icon'
 
-export function OptimismIcon({
-  className,
-  ...props
-}: SVGAttributes<SVGElement>) {
+export function OptimismIcon({ className, ...props }: SvgIconProps) {
   const id = useId()
 
   return (
-    <svg
+    <SvgIcon
       width="24"
       height="24"
       viewBox="0 0 24 24"
@@ -24,6 +22,6 @@ export function OptimismIcon({
         />
       </mask>
       <rect y="3" width="24" height="18" mask={`url(#${id})`} />
-    </svg>
+    </SvgIcon>
   )
 }

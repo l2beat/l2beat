@@ -1,4 +1,154 @@
-Generated with discovered.json: 0x47dc8d376515df072d9712f1c32ba185713553dc
+Generated with discovered.json: 0x22bdeca9fe8c7fb73dbf1ea6a0ac0696d356ecf9
+
+# Diff at Sun, 08 Sep 2024 17:17:46 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@fd881462cca0d7ef4519f907f3c6cfd5fe1cde8f block: 19927688
+- current block number: 19927688
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19927688 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"configure","target":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[]}]
+      receivedPermissions:
+-        [{"permission":"configure","target":"0x7a616b25E7c96fc4d652966d7DDAbB51dE28eCc1"},{"permission":"upgrade","target":"0x4082C9647c098a6493fb499EaE63b5ce3259c574"},{"permission":"upgrade","target":"0x787A0ACaB02437c60Aafb1a29167A3609801e320"},{"permission":"upgrade","target":"0x909E51211e959339EFb14b36f5A50955a8ae3770"},{"permission":"upgrade","target":"0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca"}]
+      directlyReceivedPermissions:
++        [{"permission":"configure","target":"0x7a616b25E7c96fc4d652966d7DDAbB51dE28eCc1"},{"permission":"upgrade","target":"0x4082C9647c098a6493fb499EaE63b5ce3259c574"},{"permission":"upgrade","target":"0x787A0ACaB02437c60Aafb1a29167A3609801e320"},{"permission":"upgrade","target":"0x909E51211e959339EFb14b36f5A50955a8ae3770"},{"permission":"upgrade","target":"0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca"}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x4082C9647c098a6493fb499EaE63b5ce3259c574) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"
++        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      issuedPermissions.0.via.0:
++        {"address":"0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019","delay":0}
+    }
+```
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      descriptions:
+-        ["It can act on behalf of 0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019, inheriting its permissions."]
+      receivedPermissions.4:
++        {"permission":"upgrade","target":"0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca","via":[{"address":"0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","target":"0x909E51211e959339EFb14b36f5A50955a8ae3770","via":[{"address":"0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"}]}
+      receivedPermissions.2:
++        {"permission":"upgrade","target":"0x787A0ACaB02437c60Aafb1a29167A3609801e320","via":[{"address":"0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"}]}
+      receivedPermissions.1:
++        {"permission":"upgrade","target":"0x4082C9647c098a6493fb499EaE63b5ce3259c574","via":[{"address":"0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"}]}
+      receivedPermissions.0.target:
+-        "0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"
++        "0x7a616b25E7c96fc4d652966d7DDAbB51dE28eCc1"
+      receivedPermissions.0.via:
++        [{"address":"0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"}]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x787A0ACaB02437c60Aafb1a29167A3609801e320) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"
++        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      issuedPermissions.0.via.0:
++        {"address":"0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019","delay":0}
+    }
+```
+
+```diff
+    contract AddressManager (0x7a616b25E7c96fc4d652966d7DDAbB51dE28eCc1) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"
++        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      issuedPermissions.0.via.0:
++        {"address":"0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019","delay":0}
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x909E51211e959339EFb14b36f5A50955a8ae3770) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"
++        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      issuedPermissions.0.via.0:
++        {"address":"0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019","delay":0}
+    }
+```
+
+```diff
+    contract SystemConfig (0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"
++        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      issuedPermissions.0.via.0:
++        {"address":"0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019","delay":0}
+    }
+```
+
+Generated with discovered.json: 0x9c819f01a661cd94f84f4004336eafc9e1aefc95
+
+# Diff at Fri, 30 Aug 2024 07:50:54 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 19927688
+- current block number: 19927688
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19927688 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019) {
+    +++ description: None
+      receivedPermissions.4.via:
+-        []
+      receivedPermissions.3.via:
+-        []
+      receivedPermissions.2.via:
+-        []
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: It can act on behalf of 0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019, inheriting its permissions.
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+Generated with discovered.json: 0xbce73f390f3e47eecb3024cb6bf4536feab9e7c0
 
 # Diff at Fri, 23 Aug 2024 09:50:55 GMT:
 

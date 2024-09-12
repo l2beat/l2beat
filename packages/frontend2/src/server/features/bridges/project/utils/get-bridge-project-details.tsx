@@ -5,13 +5,15 @@ import {
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
 import isEmpty from 'lodash/isEmpty'
-import { type ProjectDetailsSection } from '~/app/_components/projects/sections/types'
+import { type ProjectDetailsSection } from '~/components/projects/sections/types'
+import { getTokensForProject } from '~/server/features/scaling/tvl/tokens/get-tokens-for-project'
+import { api } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { getBridgesRiskSummarySection } from '~/utils/project/risk-summary/get-bridges-risk-summary'
 import { getBridgeTechnologySection } from '~/utils/project/technology/get-technology-section'
 
-export function getBridgeProjectDetails(
+export async function getBridgeProjectDetails(
   bridge: Bridge,
   isVerified: boolean,
   contractsVerificationStatuses: ContractsVerificationStatuses,
@@ -49,10 +51,28 @@ export function getBridgeProjectDetails(
     : undefined
   const riskSummary = getBridgesRiskSummarySection(bridge, isVerified)
   const technologySection = getBridgeTechnologySection(bridge)
+  const tvlChartData = await api.tvl.chart({
+    range: '7d',
+    filter: { type: 'projects', projectIds: [bridge.id] },
+  })
+
+  const tokens = await getTokensForProject(bridge)
 
   const items: ProjectDetailsSection[] = []
 
-  // TODO (bridges-project-page) add tvl chart
+  if (!bridge.isUpcoming && tvlChartData.length > 0) {
+    items.push({
+      type: 'ChartSection',
+      props: {
+        id: 'tvl',
+        title: 'Value Locked',
+        projectId: bridge.id,
+        tokens: tokens,
+        isBridge: true,
+        milestones: [],
+      },
+    })
+  }
 
   if (bridge.milestones && !isEmpty(bridge.milestones)) {
     items.push({

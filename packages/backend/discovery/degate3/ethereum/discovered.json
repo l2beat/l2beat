@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18939732,
   "configHash": "0x59b272da0d65b6f780237f55503b40da0033b0c88e28c75b7a041282560cb8e3",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "TimeLock1",
@@ -11,8 +11,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x9C07A72177c5A05410cA338823e790876E79D73B",
-          "via": []
+          "target": "0x9C07A72177c5A05410cA338823e790876E79D73B"
         }
       ],
       "sinceTimestamp": 1699753175,
@@ -238,8 +237,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x54D7aE423Edb07282645e740C046B9373970a168",
-          "via": []
+          "target": "0x54D7aE423Edb07282645e740C046B9373970a168"
         }
       ],
       "sinceTimestamp": 1699753451,

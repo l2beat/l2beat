@@ -1,10 +1,10 @@
 import { compact } from 'lodash'
 import { type Metadata } from 'next'
 import { toDataURL } from 'qrcode'
-import { ContentWrapper } from '~/app/_components/content-wrapper'
-import { OutLink } from '~/app/_components/out-link'
+import { ContentWrapper } from '~/components/content-wrapper'
+import { OutLink } from '~/components/out-link'
 import { env } from '~/env'
-import OutLinkIcon from '~/icons/outlink.svg'
+import { OutLinkIcon } from '~/icons/outlink'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { fundingSources } from './funding-sources'
 

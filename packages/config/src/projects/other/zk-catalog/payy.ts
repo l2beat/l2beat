@@ -1,4 +1,5 @@
 import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { PROOFS } from './common/proofSystems'
 import { ZkCatalogProject } from './types'
 
 export const payy: ZkCatalogProject = {
@@ -7,6 +8,7 @@ export const payy: ZkCatalogProject = {
     name: 'Payy',
   },
   proofVerification: {
+    shortDescription: 'A privacy-preserving payment system.',
     aggregation: true,
     verifiers: [
       {
@@ -20,10 +22,7 @@ export const payy: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'AggregateVerifier',
-            proofSystem: 'Halo2',
-            mainArithmetization: 'Plonk',
-            mainPCS: 'KZG',
-            trustedSetup: '?',
+            ...PROOFS.HALO2KZG('?'),
             link: 'https://github.com/polybase/payy/blob/main/pkg/zk-circuits/src/aggregate_agg/circuit.rs',
           },
         ],
@@ -40,10 +39,7 @@ export const payy: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'MintVerifier',
-            proofSystem: 'Halo2',
-            mainArithmetization: 'Plonk',
-            mainPCS: 'KZG',
-            trustedSetup: '?',
+            ...PROOFS.HALO2KZG('?'),
             link: 'https://github.com/polybase/payy/blob/main/pkg/zk-circuits/src/mint/circuit.rs',
           },
         ],
@@ -60,10 +56,7 @@ export const payy: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'BurnVerifier',
-            proofSystem: 'Halo2',
-            mainArithmetization: 'Plonk',
-            mainPCS: 'KZG',
-            trustedSetup: '?',
+            ...PROOFS.HALO2KZG('?'),
             link: 'https://github.com/polybase/payy/blob/main/pkg/zk-circuits/src/burn/circuit.rs',
           },
         ],

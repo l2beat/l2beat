@@ -3,10 +3,14 @@ import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
+import { env } from '~/env'
 import { db } from '~/server/database'
 import { sumValuesPerSource } from '../../../scaling/tvl/utils/sum-values-per-source'
 
 export async function getDaProjectTvl(projectIds: ProjectId[]) {
+  if (env.MOCK) {
+    return getMockDaProjectTvl(projectIds)
+  }
   noStore()
   return await getCachedDaProjectTvl(projectIds)
 }
@@ -26,3 +30,7 @@ const getCachedDaProjectTvl = cache(async (projectIds: ProjectId[]) => {
   // Fiat denomination to cents
   return Number(tvl) / 100
 })
+
+const getMockDaProjectTvl = (projectIds: ProjectId[]) => {
+  return projectIds.length * 1000
+}

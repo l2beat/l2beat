@@ -5,8 +5,8 @@ import {
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
 import { isEmpty } from 'lodash'
-import { type ProjectDetailsSection } from '~/app/_components/projects/sections/types'
-import { type RosetteValue } from '~/app/_components/rosette/types'
+import { type ProjectDetailsSection } from '~/components/projects/sections/types'
+import { type RosetteValue } from '~/components/rosette/types'
 import { api } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
@@ -16,6 +16,7 @@ import { getOperatorSection } from '~/utils/project/technology/get-operator-sect
 import { getOtherConsiderationsSection } from '~/utils/project/technology/get-other-considerations-section'
 import { getScalingTechnologySection } from '~/utils/project/technology/get-technology-section'
 import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawals-section'
+import { getTokensForProject } from '../../tvl/tokens/get-tokens-for-project'
 
 interface Params {
   project: Layer2
@@ -68,23 +69,62 @@ export async function getL2ProjectDetails({
   const operatorSection = getOperatorSection(project)
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
-  const costsChartData = await api.scaling.costs.chart({
-    range: '1d',
+
+  const tvlChartData = await api.tvl.chart({
+    range: '7d',
     filter: { type: 'projects', projectIds: [project.id] },
   })
+  const activityChartData = await api.activity.chart({
+    range: '30d',
+    filter: { type: 'projects', projectIds: [project.id] },
+  })
+  const costsChartData = await api.costs.chart({
+    range: '7d',
+    filter: { type: 'projects', projectIds: [project.id] },
+  })
+  const tokens = await getTokensForProject(project)
+
+  const sortedMilestones =
+    project.milestones?.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    ) ?? []
+
   const items: ProjectDetailsSection[] = []
 
-  if (!isEmpty(costsChartData.data)) {
+  if (!project.isUpcoming && !isEmpty(tvlChartData)) {
+    items.push({
+      type: 'ChartSection',
+      props: {
+        id: 'tvl',
+        stacked: true,
+        title: 'Value Locked',
+        projectId: project.id,
+        milestones: sortedMilestones,
+        tokens,
+      },
+    })
+  }
+
+  if (!isEmpty(activityChartData)) {
+    items.push({
+      type: 'ChartSection',
+      props: {
+        id: 'activity',
+        title: 'Activity',
+        projectId: project.id,
+        milestones: sortedMilestones,
+      },
+    })
+  }
+
+  if (!project.isUpcoming && !isEmpty(costsChartData)) {
     items.push({
       type: 'ChartSection',
       props: {
         id: 'onchain-costs',
         title: 'Onchain costs',
         projectId: project.id,
-        milestones:
-          project.milestones?.sort(
-            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-          ) ?? [],
+        milestones: sortedMilestones,
       },
     })
   }
@@ -243,6 +283,7 @@ export async function getL2ProjectDetails({
           type: 'upgrades-and-governance',
           slug: project.display.slug,
         },
+        mdClassName: 'text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
         isUnderReview: project.isUnderReview,
         includeChildrenIfUnderReview: true,
       },

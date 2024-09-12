@@ -1,8 +1,8 @@
-import React, { type SVGAttributes } from 'react'
+import { SvgIcon, type SvgIconProps } from '../svg-icon'
 
-export function ArbitrumIcon(props: SVGAttributes<SVGElement>) {
+export function ArbitrumIcon(props: SvgIconProps) {
   return (
-    <svg
+    <SvgIcon
       width="24"
       height="24"
       viewBox="0 0 24 24"
@@ -44,6 +44,6 @@ export function ArbitrumIcon(props: SVGAttributes<SVGElement>) {
         fill=""
         className="fill-white dark:fill-current"
       />
-    </svg>
+    </SvgIcon>
   )
 }

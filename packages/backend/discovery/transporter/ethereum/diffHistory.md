@@ -1,4 +1,95 @@
-Generated with discovered.json: 0x530141cd08f2d0d184c6b92d1f6f96539e7e5f08
+Generated with discovered.json: 0x814b0f10578cc8ba5cbccc110ca0d5ed9fbc3890
+
+# Diff at Wed, 11 Sep 2024 07:36:12 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@407590ebfbad0b4f799badc3ad5fce90a7eaed11 block: 20670058
+- current block number: 20725912
+
+## Description
+
+New burnMint pool (USDM)
+
+## Watched changes
+
+```diff
++   Status: CREATED
+    contract BurnWithFromMintTokenPool (0x66D40E0D2819a2264B2a61f5DD578573B9dedCEc)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/BurnWithFromMintTokenPool.sol   | 1312 ++++++++++++++++++++
+ 1 file changed, 1312 insertions(+)
+```
+
+Generated with discovered.json: 0x781168431ff8b44676f9132d12dfce75e80e7210
+
+# Diff at Tue, 03 Sep 2024 12:31:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5cfa14fddead70a5165d8b917cf83b9526503ba7 block: 20576820
+- current block number: 20670058
+
+## Description
+
+New tokenPools added, automatically shown on the FE.
+
+## Watched changes
+
+```diff
+    contract LockReleaseTokenPool (0x21377fe476Fb8587CbAFd47155093597Fa4df45E) {
+    +++ description: None
+      values.getOffRamps.1:
++        "0xCe6364dBe64D2789D916180131fAda2ABFF702E8"
+    }
+```
+
+```diff
+    contract LockReleaseTokenPool (0x73aEB5ECA03Ad587B8Fdcc2B61f9fb4D2e3D90c1) {
+    +++ description: None
+      values.getOffRamps.1:
++        "0xCe6364dBe64D2789D916180131fAda2ABFF702E8"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (0x0Bc42675799D0C1efE3CDe64857714ae84f075B4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (0x80Cc104119901fd66088C9a8219E50D9547dE2d4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (0xBA0E1c1F702D7Ec44a555759517BDBe9f7c824C3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (0xd8f734c938200BA294d0De5B555E8ff77d66c351)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0x80Cc104119901fd66088C9a8219E50D9547dE2d4.sol |  998 ++++++++++++++
+ ...-0xBA0E1c1F702D7Ec44a555759517BDBe9f7c824C3.sol |  998 ++++++++++++++
+ ...-0xd8f734c938200BA294d0De5B555E8ff77d66c351.sol |  998 ++++++++++++++
+ ...-0x0Bc42675799D0C1efE3CDe64857714ae84f075B4.sol | 1407 ++++++++++++++++++++
+ 4 files changed, 4401 insertions(+)
+```
+
+Generated with discovered.json: 0xd34fe3ef7fde1392d41d136679c79e5d95f12d8e
 
 # Diff at Fri, 23 Aug 2024 09:56:18 GMT:
 

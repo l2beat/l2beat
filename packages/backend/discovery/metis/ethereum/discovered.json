@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20211335,
   "configHash": "0x6550d030fed3b00ba55a8cbdceab43d131d61699b914915ddbd5fb38b8a3c710",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -118,28 +118,23 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
-          "via": []
+          "target": "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
         },
         {
           "permission": "upgrade",
-          "target": "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a",
-          "via": []
+          "target": "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
         },
         {
           "permission": "upgrade",
-          "target": "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6",
-          "via": []
+          "target": "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
         },
         {
           "permission": "upgrade",
-          "target": "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb",
-          "via": []
+          "target": "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
         },
         {
           "permission": "upgrade",
-          "target": "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0",
-          "via": []
+          "target": "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -301,13 +296,11 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
-          "via": []
+          "target": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
         },
         {
           "permission": "upgrade",
-          "target": "0xD54c868362C2098E0E46F12E7D924C6A332952Dd",
-          "via": []
+          "target": "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
         }
       ],
       "sinceTimestamp": 1710314795,

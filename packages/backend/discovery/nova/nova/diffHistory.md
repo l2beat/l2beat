@@ -1,3 +1,138 @@
+Generated with discovered.json: 0x725318d87ea1063fd83db489d27cea82908e4362
+
+# Diff at Mon, 02 Sep 2024 08:41:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8fcb30f6c613b5454aa9ecdec05a118442e9dc7b block: 75424833
+- current block number: 75517853
+
+## Description
+
+Config related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 75424833 (main branch discovery), not current.
+
+```diff
+    contract L2GatewaysProxyAdmin (0xada790b026097BfB36a5ed696859b97a96CEd92C) {
+    +++ description: None
+      receivedPermissions.3.via:
+-        []
+      receivedPermissions.2.via:
+-        []
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9) {
+    +++ description: None
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+Generated with discovered.json: 0xfd77969411227d59e52c9c8902751ee479e47aad
+
+# Diff at Wed, 28 Aug 2024 15:10:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0fa673a678e6e769a295956285789968836b97a6 block: 74799516
+- current block number: 75424833
+
+## Description
+
+As discussed [in the AIP](https://forum.arbitrum.foundation/t/aip-nova-fee-router-proposal-arbos-30/23310), this upgrade routes the L2Base and L2Surplus fees via L1 to the Arbitrum treasury on Arbitrum One.
+
+Added discovery for the fee recipients.
+
+## Watched changes
+
+```diff
+    contract L2SurplusFee (0x509386DbF5C0BE6fd68Df97A05fdB375136c32De) {
+    +++ description: None
+      values.currentRecipientGroup:
+-        "0xa4d6665ee2121503a4513275116c9cda5eaac3a8b759ff4c41fb4cc089f0b338"
++        "0xf282fbf81236cb85617464bf2345689bad849c6122d8725eeef1a4cf78e8d9a3"
++++ description: Lists recipients and weights using events, while the latest represents the current state.
+      values.recipientsData.1:
++        {"recipients":["0x36D0170D92F66e8949eB276C3AC4FEA64f83704d"],"weights":[10000]}
+    }
+```
+
+```diff
+    contract L2BaseFee (0x9fCB6F75D99029f28F6F4a1d277bae49c5CAC79f) {
+    +++ description: None
+      values.currentRecipientGroup:
+-        "0x2c40b8c2309d10d43a712b6df564ebd140153dcfe8428552d24aa294a8b34107"
++        "0xc21cdeb0278022eeb6305048d7d033ce165b518e371bc91c58b76175e4f7fc2b"
++++ description: Lists recipients and weights using events, while the latest represents the current state.
+      values.recipientsData.1:
++        {"recipients":["0x36D0170D92F66e8949eB276C3AC4FEA64f83704d","0xD0749b3e537Ed52DE4e6a3Ae1eB6fc26059d0895","0x41C327d5fc9e29680CcD45e5E52446E0DB3DAdFd","0x02C2599aa929e2509741b44F3a13029745aB1AB2","0xA221f29236996BDEfA5C585acdD407Ec84D78447","0x0fB1f1a31429F1A90a19Ab5486a6DFb384179641","0xb814441ed86e98e8B83d31eEC095e4a5A36Fc3c2"],"weights":[8000,375,373,373,373,373,133]}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ArbChildToParentRewardRouter (0x36D0170D92F66e8949eB276C3AC4FEA64f83704d)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../nova/.flat/ArbChildToParentRewardRouter.sol    | 476 +++++++++++++++++++++
+ 1 file changed, 476 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 74799516 (main branch discovery), not current.
+
+```diff
+    contract L2SurplusFee (0x509386DbF5C0BE6fd68Df97A05fdB375136c32De) {
+    +++ description: None
++++ description: Lists recipients and weights using events, while the latest represents the current state.
+      values.recipientsData:
++        [{"recipients":["0xf7951D92B0C345144506576eC13Ecf5103aC905a"],"weights":[10000]}]
+      fieldMeta:
++        {"recipientsData":{"description":"Lists recipients and weights using events, while the latest represents the current state."}}
+    }
+```
+
+```diff
+    contract L2BaseFee (0x9fCB6F75D99029f28F6F4a1d277bae49c5CAC79f) {
+    +++ description: None
++++ description: Lists recipients and weights using events, while the latest represents the current state.
+      values.recipientsData:
++        [{"recipients":["0xf7951D92B0C345144506576eC13Ecf5103aC905a","0xD0749b3e537Ed52DE4e6a3Ae1eB6fc26059d0895","0x41C327d5fc9e29680CcD45e5E52446E0DB3DAdFd","0x02C2599aa929e2509741b44F3a13029745aB1AB2","0xA221f29236996BDEfA5C585acdD407Ec84D78447","0x0fB1f1a31429F1A90a19Ab5486a6DFb384179641","0xb814441ed86e98e8B83d31eEC095e4a5A36Fc3c2"],"weights":[8000,375,373,373,373,373,133]}]
+      fieldMeta:
++        {"recipientsData":{"description":"Lists recipients and weights using events, while the latest represents the current state."}}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (0x41C327d5fc9e29680CcD45e5E52446E0DB3DAdFd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (0xD0749b3e537Ed52DE4e6a3Ae1eB6fc26059d0895)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x026698efaae49a4d42eda5d1a5a694297eed99b6
 
 # Diff at Fri, 23 Aug 2024 09:58:46 GMT:

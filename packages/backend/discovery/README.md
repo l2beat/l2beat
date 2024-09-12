@@ -1,16 +1,12 @@
 # How to run discovery?
 
 - `yarn discover [chain] [project]` run discovery for the project
-- `yarn discover [chain] [project] --block-number=<block_number>` run discovery on a specific block number
-- `yarn discover [chain] [project] --dry-run` check simulated update-monitor output
-- `yarn discover [chain] [project] --dev` run discovery on the same block number as in discovered.json (useful for development)
-- `yarn discover [chain] [project] --save-sources` save raw sources in `.code`
-- `yarn discover [chain] [project] --stats` prints provider statistics at the end of the discovery
-- `yarn invert [chain] [project]` print addresses and their functions
+- `yarn discover --help` print out all the possible switches for discovery
 - `yarn invert [chain] [project] --mermaid` builds a mermaid graph of the project
-- `yarn discover:single [chain] [address]` run a discovery on the address (no config needed, useful for experimenting)
 
 A list of currently supported chains is [here](https://github.com/l2beat/tools/blob/main/packages/discovery/src/config/chains.ts)
+If you misspell the chain name, a list of all possible chains is printed
+In the case you have discovery of the same project on multiple chains, you can discover all of them for a single project running: `yarn discover all [project]`.
 
 # Discovery documentation
 
@@ -24,7 +20,7 @@ NOTE: We use a pseudo-TS syntax to simplify parameter types here:
 Create a new folder in `discovery` named after the project, with `config.jsonc` inside. Then run
 
 ```
-yarn discover <project_name>
+yarn discover <project_chain> <project_name>
 ```
 
 A file `discovered.json` will appear in this folder, showing you this project's structure. Make sure to resolve all the errors by ignoring methods or adding specific field handlers.
@@ -868,4 +864,148 @@ Extract the address of the place where the sequencer is going to be posting call
 
 ## Cache
 
-Are you tired of hitting `yarn discover <project>` and waiting for the output? We got you covered, caching is built into discovery scripts!
+Discovery caches the responses of RPC and Etherscan calls, discovering on the same block is going to use the cache, thus speeding it up.
+Cache is stored in `cache/discovery.sqlite`, if you're encountering some weird behaviour try to remove the cache and retry discovering.
+
+## Flattener
+
+Discovery downloads the sources of all contracts that it finds from the configured explorer.
+These sources can be directly saved to disk by providing the `--save-sources` flag.
+By default, this flag is disabled because the tool prioritizes saving flattened sources.
+
+A flattened source consists of the source code that directly affects the published bytecode, concatenated into a single string.
+This process is managed by a module called the flattener.
+The flattener takes as input all files that make up a single contract, along with the remappings used during compilation.
+The resulting flattened files are saved to the .flat directory in the project folder.
+
+For contracts that have a proxy, the tool saves them as directories.
+Inside these directories, you’ll find the flattened sources of both the proxy and its implementations.
+Proxy files are given a .p.sol suffix, while implementation files, if there is more than one, are numbered with suffixes like .2.sol.
+
+If a contract does not have a proxy, its source code is saved directly into the .flat directory without a containing folder.
+
+You can configure the name of the output folder through the `--sources-folder` and `--flat-sources-folder`.
+
+## Type casters
+
+### Idea
+
+Querying the existing state values and creating new state based on events are essential for understanding how the contract is currently configured.
+Normally because these values are taken straight from chain using various RPC calls they might not be easily readable by a human.
+Sometimes you want to assign some further knowledge you have about a value to it's representation.
+The simplest example is a value returned from a function like `getDelay()`.
+As human you understand that it returns the number of seconds representing the delay.
+But since values on chain are oriented towards being computer friendly, instead of seeing `"24 hours"` you'll get `86400`.
+
+Type casters are a feature of discovery aiming to allow you to overcome the problem of assigning meaning to computer friendly values.
+The core idea behind type casters is that every public getter has an entry in the ABI.
+Let's expand on the example provided above, in that case the ABI would be `function getDelay() view returns (uint256)`.
+After the keyword `returns` the language requires you to define the structure of returned data.
+We can change the mentioned type structure definition as long as the shape of the type is the same.
+
+If we define a virtual type called `FormatSeconds` we can overwrite the ABI with it to run arbitrary computation on the returned type.
+You can see how we can change the ABI to `function getDelay() view returns (FormatSeconds)` because we keep the shape of the return type the same.
+You can also notice that everything before the `returns` keyword is not an important part of the change.
+Because of that we can drop it leaving us with the following change `(uint256)` -> `(FormatSeconds)`.
+
+This solution also has one nice advantage, it allows the user to assign structure to values without one.
+Assume we have a function like this `function abc() view returns (uint256[])`.
+We know that the array _always_ has two entries, the first entry is the delay in seconds and the second one is some offset.
+With this knowledge we can assign additional structure like this `(uint256[])` -> `(uint256 delay, uint256 offset)`.
+If the structure ever changes the discovery will throw an error during the type applying phase if the shape has a mismatch.
+What this gives you is that the structure is represented in the resulting `discovered.json`.
+
+Instead of:
+
+```json
+"abc": [120, 1000]
+```
+
+You'll see:
+
+
+```json
+{
+  "abc": {
+    "delay": 120,
+    "offset": 1000,
+  }
+}
+```
+
+### User documentation
+
+To overwrite the ABI, use the "returnType" field in the configuration for a specific field.
+For example:
+
+```json
+"Contract": {
+  "fields": {
+    "abc": {
+      "returnType": "(uint256 delay, uint256 offset)"
+    }
+  }
+}
+```
+
+#### Undecimal new type
+
+To create a new type, you need to define a predefined type caster and provide any necessary arguments.
+Let’s create a new type that parses the totalSupply() function where decimals() is 9.
+Using the Undecimal type caster, you can define it as follows:
+
+```json
+{
+  "Undecimal9": {
+    "typeCaster": "Undecimal",
+    "arg": { "decimals": 9 }
+  }
+}
+```
+
+To use this new type, define the "returnType" as "(Undecimal9)".
+The value retrieved from the blockchain will be passed through this type caster, which will divide it by 10^9 using the Undecimal type caster.
+
+#### Mapping new type
+
+Let’s look at another example with a different type caster.
+Suppose a value on the blockchain is a 4-byte hash representing a unique configuration, such as a version number.
+We query a function with the ABI function version() view returns (uint32).
+Based on information from a third party, we know that 3622689 corresponds to version "v2.1" and 25526433 corresponds to version "v3.0".
+
+To map these integer values to their string representations, you can use the Mapping type caster. Define the type as follows:
+
+```json
+{
+  "VersionMapping": {
+    "typeCaster": "Mapping",
+    "arg": { 
+      3622689: "v2.1",
+      25526433: "v3.0"
+    }
+  }
+}
+```
+
+You can then use this type caster in your configuration by setting the "returnType" to "(VersionMapping)".
+
+#### Places for type definitions 
+
+Types can be defined at three levels:
+
+- Global Types: These are defined once and are available across all discoveries, eliminating the need for repeated definitions.
+- Project Global Types: Defined within the configuration of an entire project, these types are available to all contracts within that project.
+- Contract Local Types: These are defined for a specific contract and are only available to fields within that contract.
+
+Shadowing Rules
+
+The shadowing rules for types follow a hierarchy where more narrowly scoped types override those with broader scope.
+The precedence order is as follows: Global < Project Global < Contract Local
+
+How to Define Types
+
+- Global Types: Define these in the file located at packages/backend/discovery/globalTypes.jsonc.
+- Project Global Types: Define these within the configuration of a specific project in config.jsonc. Use the `"types"` key in the highest JSON scope.
+- Contract Local Types: Define these within the configuration of a specific contract in config.jsonc. For an example, refer to the configuration for PolygonRollupManager in shared-polygon-cdk.
+
+This structure allows for clear and organized management of type definitions, ensuring that your types are applied precisely where needed.

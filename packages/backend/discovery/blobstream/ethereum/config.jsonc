@@ -4,23 +4,36 @@
   "name": "blobstream",
   "initialAddresses": ["0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"],
   "names": {
-    "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe": "BlobstreamX",
-    "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776": "SuccinctGateway",
-    "0xd1999B562e74d9fbf57b4479b3fe8748BDF4e4A0": "SuccinctMultisig",
-    "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6": "BlobstreamXMultisig"
+    "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe": "Blobstream",
+    "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776": "SuccinctGateway", // deprecated, SP1 now used
+    "0xd1999B562e74d9fbf57b4479b3fe8748BDF4e4A0": "SuccinctGatewayMultisig",
+    "0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SuccinctGatewaySP1",
+    "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "SuccinctGatewaySP1Multisig",
+    "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6": "BlobstreamMultisig"
   },
   "overrides": {
-    "BlobstreamX": {
-      "ignoreMethods": ["state_dataCommitments", "proxiableUUID"],
-      "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
+    "Blobstream": {
+      "extends": "blobstream/SP1Blobstream",
       "fields": {
-        "accessControl": {
+        "relayers": {
           "handler": {
-            "type": "accessControl"
+            "type": "hardcoded",
+            "value": ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"]
+          }
+        },
+        "isRelayerApproved": {
+          "handler": {
+            "type": "call",
+            "method": "function approvedRelayers(address) view returns (bool)",
+            "args": ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"]
           }
         }
       }
     },
+    "SuccinctGatewaySP1": {
+      "extends": "blobstream/SP1SuccinctGateway"
+    },
+    // deprecated, SP1 now used
     "SuccinctGateway": {
       "fields": {
         "headerRangeVerifier": {

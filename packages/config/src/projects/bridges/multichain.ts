@@ -164,7 +164,7 @@ export const multichain: Bridge = {
       description:
         'Multiple critical vulnerabilities were found in the contracts.',
       link: 'https://medium.com/multichainorg/multichain-contract-vulnerability-post-mortem-d37bfab237c8',
-      type: 'general',
+      type: 'incident',
     },
     {
       name: 'anyCall was introduced',
@@ -186,7 +186,7 @@ export const multichain: Bridge = {
       name: 'Contracts hacked for $130M',
       date: '2023-07-07T00:00:00Z',
       link: 'https://blockworks.co/news/multichain-anyswap-exploit',
-      type: 'general',
+      type: 'incident',
     },
   ],
   knowledgeNuggets: [

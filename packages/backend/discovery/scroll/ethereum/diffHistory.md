@@ -1,3 +1,171 @@
+Generated with discovered.json: 0x6b5bd6fa0124dd6da49839e5d834a8f046e373fe
+
+# Diff at Wed, 11 Sep 2024 07:47:40 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@407590ebfbad0b4f799badc3ad5fce90a7eaed11 block: 20670849
+- current block number: 20725971
+
+## Description
+
+The revertBatch() target is added to the ScrollOwner accesscontrol after our message to the team. Additionally, the 1d timelock is added as an Admin to the ScrollOwner.
+
+## Watched changes
+
+```diff
+    contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      values.accessControl.roles.DEFAULT_ADMIN_ROLE.members.1:
++        "0x0e58939204eEDa84F796FBc86840A50af10eC4F4"
+      values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.revertBatch(bytes,bytes):
++        ["SCROLL_MULTISIG_NO_DELAY_ROLE","EMERGENCY_MULTISIG_NO_DELAY_ROLE"]
+    }
+```
+
+Generated with discovered.json: 0xf927951961dafb58ba0045cdf101156aeff92873
+
+# Diff at Tue, 03 Sep 2024 15:09:19 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@8b201382220336bea7cda6fb789ab7a680e53200 block: 20590985
+- current block number: 20670849
+
+## Description
+
+[DarwinV2 upgrade](https://github.com/scroll-tech/go-ethereum/releases/tag/scroll-v5.7.0): This security patch adds a fallback for the case where blocks cannot be compressed under the new compression scheme (Darwin Upgrade). These are now posted as uncompressed blobs.
+
+The verifier is therefore changed to a new ZkEvmVerifierV2 (code-identical) and a new PlonkVerifier.
+
+MultipleVersionRollupVerifier owner is changed from ScrollMultisig to ScrollOwner.
+
+## Watched changes
+
+```diff
+    contract MultipleVersionRollupVerifier (0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) {
+    +++ description: Used to update the verifier and keep track of current and old versions.
+      values.latestVerifier.4:
++        {"startBatchIndex":0,"verifier":"0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3"}
+      values.legacyVerifiersLength.4:
++        0
+      values.owner:
+-        "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"
++        "0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      values.verifierVersions.4:
++        4
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierV2-1 (0x8c1b52757b5c571ADcB5572E992679d4D48e30f7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierV2-1 (0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../scroll/ethereum/.flat/ZkEvmVerifierV2-1.sol    | 108 +++++++++++++++++++++
+ 1 file changed, 108 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20590985 (main branch discovery), not current.
+
+```diff
+    contract PlonkVerifierV1-1 (0x03a72B00D036C479105fF98A1953b15d9c510110) {
+    +++ description: None
+      name:
+-        "PlonkVerifierV2"
++        "PlonkVerifierV1-1"
+    }
+```
+
+```diff
+    contract PlonkVerifierV2 (0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9) {
+    +++ description: None
+      name:
+-        "PlonkVerifierV3"
++        "PlonkVerifierV2"
+    }
+```
+
+Generated with discovered.json: 0x146a15784cddb895f4356aab30b34d927f77049f
+
+# Diff at Fri, 30 Aug 2024 07:57:47 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 20590985
+- current block number: 20590985
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20590985 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x9eBf2f33526CD571f8b2ad312492cb650870CFd6) {
+    +++ description: None
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract wstETHescrowLidoProxyAdmin (0xCC2C53556Bc75217cf698721b29071d6f12628A9) {
+    +++ description: None
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xEB803eb3F501998126bf37bB823646Ed3D59d072) {
+    +++ description: None
+      receivedPermissions.13.via:
+-        []
+      receivedPermissions.12.via:
+-        []
+      receivedPermissions.11.via:
+-        []
+      receivedPermissions.10.via:
+-        []
+      receivedPermissions.9.via:
+-        []
+      receivedPermissions.8.via:
+-        []
+      receivedPermissions.7.via:
+-        []
+      receivedPermissions.6.via:
+-        []
+      receivedPermissions.5.via:
+-        []
+      receivedPermissions.4.via:
+-        []
+      receivedPermissions.3.via:
+-        []
+      receivedPermissions.2.via:
+-        []
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
 Generated with discovered.json: 0x04b22e7cd5dcc1270057a5de114bb00e998fb6d1
 
 # Diff at Fri, 23 Aug 2024 11:25:14 GMT:

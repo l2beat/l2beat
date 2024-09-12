@@ -1,9 +1,9 @@
 {
   "name": "zklinknova",
   "chain": "ethereum",
-  "blockNumber": 20389275,
+  "blockNumber": 20675743,
   "configHash": "0x926c1d4f92efc3c362c193fa5a34b633e505eab448e99c54080049146daa7591",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "Arbitrator",
@@ -57,8 +57,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
-          "via": []
+          "target": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6"
         }
       ],
       "sinceTimestamp": 1709295323,
@@ -151,21 +150,21 @@
           "minimalL2GasPrice": 250000000
         },
         "FORWARD_REQUEST_TYPE_HASH": "0xe0aaca1722ef50bb0c9b032e5b16ce2b79fa9f23638835456b27fd6894f8292c",
-        "forwardFeeAllocator": "0x0000000000000000000000000000000000000000",
+        "forwardFeeAllocator": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
         "gateway": "0x83Bc7394738A7A084081aF22EEC0051908c0055c",
         "getGateway": "0x83Bc7394738A7A084081aF22EEC0051908c0055c",
         "getGovernor": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
         "getPriorityTxMaxGasLimit": 72000000,
-        "getTotalBatchesExecuted": 18313,
-        "getTotalPriorityTxs": 26863,
+        "getTotalBatchesExecuted": 24163,
+        "getTotalPriorityTxs": 27332,
         "IS_ETH_GAS_TOKEN": true,
         "owner": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
         "paused": false,
-        "totalBatchesExecuted": 18313,
-        "totalPriorityTxs": 26863,
-        "totalSyncedPriorityTxs": 26834,
-        "totalValidatorForwardFee": "14768726045147001496",
-        "totalValidatorForwardFeeWithdrawn": 0,
+        "totalBatchesExecuted": 24163,
+        "totalPriorityTxs": 27332,
+        "totalSyncedPriorityTxs": 27329,
+        "totalValidatorForwardFee": "15003531805942125819",
+        "totalValidatorForwardFeeWithdrawn": "15001078380274813514",
         "txGasPrice": 40000000000
       },
       "derivedName": "ZkLink"
@@ -320,53 +319,43 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
-          "via": []
+          "target": "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002"
         },
         {
           "permission": "upgrade",
-          "target": "0x273D59aed2d793167c162E64b9162154B07583C0",
-          "via": []
+          "target": "0x273D59aed2d793167c162E64b9162154B07583C0"
         },
         {
           "permission": "upgrade",
-          "target": "0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158",
-          "via": []
+          "target": "0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158"
         },
         {
           "permission": "upgrade",
-          "target": "0x5fD9F73286b7E8683Bab45019C94553b93e015Cf",
-          "via": []
+          "target": "0x5fD9F73286b7E8683Bab45019C94553b93e015Cf"
         },
         {
           "permission": "upgrade",
-          "target": "0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D",
-          "via": []
+          "target": "0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D"
         },
         {
           "permission": "upgrade",
-          "target": "0x803460416C2682Ac54FccF03eF77b10A12f2809b",
-          "via": []
+          "target": "0x803460416C2682Ac54FccF03eF77b10A12f2809b"
         },
         {
           "permission": "upgrade",
-          "target": "0x83Bc7394738A7A084081aF22EEC0051908c0055c",
-          "via": []
+          "target": "0x83Bc7394738A7A084081aF22EEC0051908c0055c"
         },
         {
           "permission": "upgrade",
-          "target": "0x986c905087a663db3C81ad319b94c1E9dd388e92",
-          "via": []
+          "target": "0x986c905087a663db3C81ad319b94c1E9dd388e92"
         },
         {
           "permission": "upgrade",
-          "target": "0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269",
-          "via": []
+          "target": "0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269"
         },
         {
           "permission": "upgrade",
-          "target": "0xeCD189e0f390826E137496a4e4a23ACf76c942Ab",
-          "via": []
+          "target": "0xeCD189e0f390826E137496a4e4a23ACf76c942Ab"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -375,12 +364,12 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
           "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
           "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
           "0xF801886AE2e127A269B0F11892edb54F692d02dF",
           "0xC75EFCffEE930706daec5CaCA012551f6a1845D7",
           "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
-          "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db",
           "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
           "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
         ],
@@ -389,7 +378,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 36,
+        "nonce": 39,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -444,28 +433,25 @@
     }
   ],
   "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9" },
     {
       "address": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E",
-          "via": []
+          "target": "0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E"
         },
         {
           "permission": "upgrade",
-          "target": "0x668e8F67adB8219e1816C2E5bBEa055A78AF3026",
-          "via": []
+          "target": "0x668e8F67adB8219e1816C2E5bBEa055A78AF3026"
         }
       ]
     },
     { "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5" },
     { "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10" },
-    { "address": "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db" },
     { "address": "0xC75EFCffEE930706daec5CaCA012551f6a1845D7" },
     { "address": "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5" },
+    { "address": "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5" },
     { "address": "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92" },
     { "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF" }
   ],

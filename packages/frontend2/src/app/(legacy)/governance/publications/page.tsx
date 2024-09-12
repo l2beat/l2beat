@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
-import { ContentWrapper } from '~/app/_components/content-wrapper'
-import { FullPageHeader } from '~/app/_components/full-page-header'
-import { LinkWithThumbnail } from '~/app/_components/link-with-thumbnail'
+import { ContentWrapper } from '~/components/content-wrapper'
+import { FullPageHeader } from '~/components/full-page-header'
+import { LinkWithThumbnail } from '~/components/link-with-thumbnail'
 import { getCollection } from '~/content/get-collection'
 import { getDefaultMetadata } from '~/utils/metadata'
 import {
@@ -26,15 +26,17 @@ export default function Page() {
   return (
     <>
       <Header />
-      <ContentWrapper as="main">
-        <h1 className="mt-20 text-3xl font-bold">
-          All governance publications
-        </h1>
-        <div className="mt-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {publications.map((publication) => (
-            <PublicationCard publication={publication} key={publication.id} />
-          ))}
-        </div>
+      <ContentWrapper asChild>
+        <main>
+          <h1 className="mt-20 text-3xl font-bold">
+            All governance publications
+          </h1>
+          <div className="mt-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {publications.map((publication) => (
+              <PublicationCard publication={publication} key={publication.id} />
+            ))}
+          </div>
+        </main>
       </ContentWrapper>
     </>
   )

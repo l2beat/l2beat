@@ -212,11 +212,11 @@ export const badges = {
     },
     type: BadgeType.VM,
   },
-  CustomVM: {
+  WasmVM: {
     display: {
-      name: 'Custom',
+      name: 'WasmVM',
       description:
-        'This project uses a custom-built virtual machine suitable for its own needs',
+        'This project uses a WebAssembly Virtual Machine to run its smart contracts',
     },
     type: BadgeType.VM,
   },
@@ -231,14 +231,15 @@ export const badges = {
   Superchain: {
     display: {
       name: 'Part of the Superchain',
-      description: 'The project is part of the Superchain',
+      description:
+        "The project is part of the Superchain, meaning it's included in the Superchain registry or uses the Superchain config",
     },
     type: BadgeType.Infra,
   },
   SHARP: {
     display: {
       name: 'Uses SHARP',
-      description: 'The project uses a shared prover - SHARP',
+      description: 'The project uses a shared prover contract - SHARP',
     },
     type: BadgeType.Infra,
   },
@@ -252,7 +253,8 @@ export const badges = {
   ElasticChain: {
     display: {
       name: 'Part of the Elastic Chain',
-      description: 'The project is part of the Elastic Chain',
+      description:
+        "The project is part of the Elastic Chain, meaning it's based on the ZK stack and uses the shared contracts",
     },
     type: BadgeType.Infra,
   },
@@ -386,7 +388,6 @@ export const badges = {
     },
     type: BadgeType.Other,
   },
-  //should we add link to the forum/dao website?
   Governance: {
     display: {
       name: 'Governance',
@@ -394,7 +395,6 @@ export const badges = {
     },
     type: BadgeType.Other,
   },
-  //we should probably add some logic here to show which exact L3s are builded on top of this project while hovering over the badge
   L3HostChain: {
     display: {
       name: 'L3 Host Chain',
@@ -406,7 +406,7 @@ export const badges = {
     display: {
       name: 'Based Sequencing',
       description:
-        'This project is ordering its transactions through Ethereum block proposers.',
+        'This project is ordering its transactions through Ethereum block proposers',
     },
     type: BadgeType.Other,
   },
@@ -414,7 +414,7 @@ export const badges = {
     display: {
       name: 'Migrated from L1 to Ethereum L2',
       description:
-        'This project has migrated from being a standalone L1 blockchain to an Ethereum L2.',
+        'This project has migrated from being a standalone L1 blockchain to an Ethereum L2',
     },
     type: BadgeType.Other,
   },

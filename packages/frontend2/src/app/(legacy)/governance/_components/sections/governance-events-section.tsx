@@ -1,7 +1,5 @@
-import React from 'react'
-
-import { CustomLink } from '~/app/_components/link/custom-link'
-import OutLinkIcon from '~/icons/outlink.svg'
+import { CustomLink } from '~/components/link/custom-link'
+import { OutLinkIcon } from '~/icons/outlink'
 import { cn } from '~/utils/cn'
 import { type GovernanceEventEntry } from '../../_utils/get-governance-event-entries'
 import { GovernanceCard, GovernanceCardHeader } from '../governance-card'
@@ -13,7 +11,7 @@ interface Props {
 
 export function GovernanceEventsSection({ events, className }: Props) {
   return (
-    <GovernanceCard as="section" mobileFull className={className}>
+    <GovernanceCard mobileFull className={className}>
       <div className="flex flex-wrap justify-between gap-2">
         <GovernanceCardHeader>Governance events</GovernanceCardHeader>
       </div>

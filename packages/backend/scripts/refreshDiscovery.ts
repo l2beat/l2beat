@@ -21,6 +21,7 @@ async function main() {
   const chainConfigs = await Promise.all(
     configReader
       .readAllChains()
+      // .filter((chain) => chain !== 'bsc' && chain !== 'ethereum' && chain !== 'nova' && chain !== 'optimism' && chain !== 'arbitrum' && chain !== 'blast')
       .flatMap((chain) => configReader.readAllConfigsForChain(chain)),
   )
   const toRefresh: { config: DiscoveryConfig; reason: string }[] = []

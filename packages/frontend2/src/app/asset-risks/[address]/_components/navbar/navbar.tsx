@@ -1,12 +1,10 @@
-import Image from 'next/image'
 import Link from 'next/link'
 
-import ScannerName from '../../_assets/scanner-name.svg?url'
-import SmallLogo from '../../_assets/small-logo.svg?url'
+import { DrawerTrigger } from '~/app/asset-risks/_components/drawer'
+import { ScannerNameIcon } from '../../_assets/scanner-name'
+import { SmallLogo } from '../../_assets/small-logo'
 import { InputWallet } from '../input-wallet'
 import { WalletDrawer } from '../wallet-drawer'
-import { NavbarDrawerTrigger } from './navbar-drawer-trigger'
-import { WalletInfo } from './wallet-info'
 
 export function Navbar() {
   return (
@@ -17,25 +15,22 @@ export function Navbar() {
             <li className="mr-4 lg:mr-8">
               <Link href="/asset-risks">
                 <div className="flex flex-row items-center gap-2">
-                  <Image
-                    src={SmallLogo}
-                    alt="logo"
-                    width={32}
-                    height={32}
-                    className="h-8 w-auto"
-                  />
-                  <Image src={ScannerName} alt="logo" width={100} height={32} />
+                  <SmallLogo className="h-8 w-auto" />
+                  <ScannerNameIcon />
                 </div>
               </Link>
             </li>
           </ul>
           <div className="hidden items-center gap-3 md:flex">
             <InputWallet />
-            <WalletInfo />
           </div>
           <div className="inline-block md:hidden">
             <WalletDrawer>
-              <NavbarDrawerTrigger />
+              <DrawerTrigger>
+                <button className="rounded bg-pink-900 px-6 py-2 text-xs font-bold text-white">
+                  Scan assets
+                </button>
+              </DrawerTrigger>
             </WalletDrawer>
           </div>
         </nav>

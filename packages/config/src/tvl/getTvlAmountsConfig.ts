@@ -20,28 +20,13 @@ export function getTvlAmountsConfig(
 
   const nonZeroSupplyTokens = tokenList.filter((t) => t.supply !== 'zero')
   for (const token of nonZeroSupplyTokens) {
-    const { chain, project } = findProjectAndChain(token, projects)
+    const projectAndChain = findProjectAndChain(token, projects)
 
-    switch (token.supply) {
-      case 'totalSupply':
-        assert(token.address, 'Token address is required for total supply')
-        entries.push({
-          type: 'totalSupply',
-          address: token.address,
-          ...getSupplyTokenInfo(chain, token, project),
-          ...getBaseTokenInfo(token, project.projectId),
-        })
-        break
-      case 'circulatingSupply':
-        entries.push({
-          type: 'circulatingSupply',
-          address: token.address ?? 'native',
-          coingeckoId: token.coingeckoId,
-          ...getSupplyTokenInfo(chain, token, project),
-          ...getBaseTokenInfo(token, project.projectId),
-        })
-        break
-    }
+    const { chain, project } = projectAndChain
+
+    const configEntry = projectTokenToConfigEntry(chain, token, project)
+
+    entries.push(configEntry)
   }
 
   for (const project of projects) {
@@ -51,27 +36,58 @@ export function getTvlAmountsConfig(
         assert(chain, `Chain not found for token ${token.id}`)
         assert(chain.name === escrow.chain, 'Programmer error: chain mismatch')
 
-        if (token.isPreminted) {
-          entries.push({
-            type: 'preminted',
-            address: token.address ?? 'native',
-            escrowAddress: escrow.address,
-            coingeckoId: token.coingeckoId,
-            dataSource: `${chain.name}_preminted_${token.address}`,
-            ...getEscrowTokenInfo(chain, token, escrow, project),
-            ...getBaseTokenInfo(token, project.projectId),
-          })
-        } else {
-          entries.push({
-            type: 'escrow',
-            address: token.address ?? 'native',
-            escrowAddress: escrow.address,
-            dataSource: chain.name,
-            ...getEscrowTokenInfo(chain, token, escrow, project),
-            ...getBaseTokenInfo(token, project.projectId),
-          })
-        }
+        const configEntry = projectEscrowToConfigEntry(
+          chain,
+          token,
+          escrow,
+          project,
+        )
+
+        entries.push(configEntry)
       }
+    }
+  }
+
+  return entries
+}
+
+/** Lighter version of `getTvlAmountsConfig`, does not that much nor enforces full configuration compatibility  */
+export function getTvlAmountsConfigForProject(
+  project: BackendProject,
+): AmountConfigEntry[] {
+  const entries: AmountConfigEntry[] = []
+
+  const nonZeroSupplyTokens = tokenList.filter((t) => t.supply !== 'zero')
+
+  const projectTokens = nonZeroSupplyTokens.filter(
+    (t) =>
+      chainToProject.get(chainConverter.toName(t.chainId)) ===
+      project.projectId,
+  )
+
+  for (const token of projectTokens) {
+    const chain = chains.find((x) => x.chainId === +token.chainId)
+    assert(chain, `Chain not found for token ${token.symbol}`)
+
+    const configEntry = projectTokenToConfigEntry(chain, token, project)
+
+    entries.push(configEntry)
+  }
+
+  for (const escrow of project.escrows) {
+    for (const token of escrow.tokens) {
+      const chain = chains.find((x) => x.chainId === +token.chainId)
+      assert(chain, `Chain not found for token ${token.id}`)
+      assert(chain.name === escrow.chain, 'Programmer error: chain mismatch')
+
+      const configEntry = projectEscrowToConfigEntry(
+        chain,
+        token,
+        escrow,
+        project,
+      )
+
+      entries.push(configEntry)
     }
   }
 
@@ -82,14 +98,74 @@ const chainConverter = new ChainConverter(
   chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
 )
 
+function projectTokenToConfigEntry(
+  chain: ChainConfig,
+  token: Token,
+  project: BackendProject,
+): AmountConfigEntry {
+  if (token.supply === 'totalSupply') {
+    assert(token.address, 'Token address is required for total supply')
+
+    return {
+      type: 'totalSupply',
+      address: token.address,
+      ...getSupplyTokenInfo(chain, token, project),
+      ...getBaseTokenInfo(token, project.projectId),
+    }
+  }
+
+  if (token.supply === 'circulatingSupply') {
+    return {
+      type: 'circulatingSupply',
+      address: token.address ?? 'native',
+      coingeckoId: token.coingeckoId,
+      ...getSupplyTokenInfo(chain, token, project),
+      ...getBaseTokenInfo(token, project.projectId),
+    }
+  }
+
+  throw new Error('Invalid token supply type')
+}
+
+function projectEscrowToConfigEntry(
+  chain: ChainConfig,
+  token: Token & { isPreminted: boolean },
+  escrow: BackendProjectEscrow,
+  project: BackendProject,
+): AmountConfigEntry {
+  if (token.isPreminted) {
+    return {
+      type: 'preminted',
+      address: token.address ?? 'native',
+      escrowAddress: escrow.address,
+      coingeckoId: token.coingeckoId,
+      dataSource: `${chain.name}_preminted_${token.address}`,
+      ...getEscrowTokenInfo(chain, token, escrow, project),
+      ...getBaseTokenInfo(token, project.projectId),
+    }
+  }
+
+  return {
+    type: 'escrow',
+    address: token.address ?? 'native',
+    escrowAddress: escrow.address,
+    dataSource: chain.name,
+    ...getEscrowTokenInfo(chain, token, escrow, project),
+    ...getBaseTokenInfo(token, project.projectId),
+  }
+}
+
 function findProjectAndChain(token: Token, projects: BackendProject[]) {
   const projectId = chainToProject.get(chainConverter.toName(token.chainId))
   assert(projectId, `Project is required for token ${token.symbol}`)
+
   const project = projects.find((x) => x.projectId === projectId)
   assert(project, `Project not found for token ${token.symbol}`)
 
   const chain = chains.find((x) => x.chainId === +token.chainId)
+
   assert(chain, `Chain not found for token ${token.symbol}`)
+
   return { chain, project }
 }
 
@@ -146,7 +222,7 @@ function getEscrowTokenInfo(
 
   const isAssociated = !!project.associatedTokens?.includes(token.symbol)
   const includeInTotal = escrow.includeInTotal ?? true
-  const bridge = escrow.bridge
+  const bridgedUsing = escrow.bridgedUsing
   const source = escrow.source ?? 'canonical'
 
   return {
@@ -154,7 +230,7 @@ function getEscrowTokenInfo(
     untilTimestamp,
     includeInTotal: token.excludeFromTotal ? false : includeInTotal,
     isAssociated,
-    bridge,
+    bridgedUsing,
     source,
   }
 }

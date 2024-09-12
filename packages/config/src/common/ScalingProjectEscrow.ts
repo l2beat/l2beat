@@ -26,10 +26,12 @@ interface OldProjectEscrow {
   includeInTotal?: boolean
   source?: 'canonical' | 'external' | 'native'
   /** Bridge used for this escrow */
-  bridge?: {
-    name: string
-    /** Slug is used for the URL of the bridge on L2BEAT */
-    slug?: string
+  bridgedUsing?: {
+    bridges: {
+      name: string
+      /** Slug is used for the URL of the bridge on L2BEAT */
+      slug?: string
+    }[]
     warning?: string
   }
 }
@@ -61,10 +63,12 @@ interface NewProjectEscrow {
   includeInTotal?: boolean
   source?: 'canonical' | 'external' | 'native'
   /** Bridge used for this escrow */
-  bridge?: {
-    name: string
-    /** Slug is used for the URL of the bridge on L2BEAT */
-    slug?: string
+  bridgedUsing?: {
+    bridges: {
+      name: string
+      /** Slug is used for the URL of the bridge on L2BEAT */
+      slug?: string
+    }[]
     warning?: string
   }
 }

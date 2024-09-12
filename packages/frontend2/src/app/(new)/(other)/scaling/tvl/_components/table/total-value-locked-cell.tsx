@@ -1,14 +1,14 @@
 import { type WarningWithSentiment } from '@l2beat/config'
 import {
-  TokenTypeBreakdown,
-  TokenTypeBreakdownTooltipContent,
-} from '~/app/_components/breakdown/token-type-breakdown'
-import { PercentChange } from '~/app/_components/percent-change'
+  ValueLockedBreakdown,
+  ValueLockedBreakdownTooltipContent,
+} from '~/components/breakdown/value-locked-breakdown'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip'
+} from '~/components/core/tooltip/tooltip'
+import { PercentChange } from '~/components/percent-change'
 import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { formatCurrency } from '~/utils/format'
@@ -58,7 +58,7 @@ export function TotalValueLockedCell(data: TotalValueLockedCellProps) {
               />
             )}
           </div>
-          <TokenTypeBreakdown
+          <ValueLockedBreakdown
             canonical={data.breakdown.canonical}
             external={data.breakdown.external}
             native={data.breakdown.native}
@@ -67,7 +67,7 @@ export function TotalValueLockedCell(data: TotalValueLockedCellProps) {
         </div>
       </TooltipTrigger>
       <TooltipContent>
-        <TokenTypeBreakdownTooltipContent
+        <ValueLockedBreakdownTooltipContent
           canonical={data.breakdown.canonical}
           external={data.breakdown.external}
           native={data.breakdown.native}

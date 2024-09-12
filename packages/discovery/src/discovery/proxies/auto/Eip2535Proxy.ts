@@ -26,7 +26,7 @@ export async function detectEip2535proxy(
     values: {
       // TODO: (sz-piotr) I'm not actually sure if this is correct. Diamonds actually have specific faucet that we should query for this.
       $immutable: false,
-      $implementation: facets,
+      $implementation: facets.map((f) => f.toString()),
     },
   }
 }

@@ -35,12 +35,14 @@ export interface Node<T = EthereumAddress> {
 export interface Edge<T = EthereumAddress> {
   permission: Permission
   delay: number
+  description?: string
   toNode: T
 }
 
 export interface PathElement<T = EthereumAddress> {
   address: T
   delay: number
+  description?: string
 }
 
 export interface ResolvedPermission<T = EthereumAddress> {
@@ -61,8 +63,16 @@ export function resolvePermissions<T>(
       const resolved: ResolvedPermission<T> = {
         permission: edge.permission,
         path: [
-          { address: node.address, delay: edge.delay + node.delay },
-          { address: toNode.address, delay: toNode.delay },
+          {
+            address: node.address,
+            delay: edge.delay + node.delay,
+            description: undefined,
+          },
+          {
+            address: toNode.address,
+            delay: toNode.delay,
+            description: edge.description,
+          },
         ],
       }
       result.push(...followThrough(edge.toNode, graph, [], resolved))
@@ -101,7 +111,11 @@ function followThrough<T>(
       if (last !== undefined) {
         last.delay += edge.delay
       }
-      clone.path.push({ address: toNode.address, delay: toNode.delay })
+      clone.path.push({
+        address: toNode.address,
+        delay: toNode.delay,
+        description: edge.description,
+      })
       result.push(
         ...followThrough(toNode.address, graph, [...visited, address], clone),
       )

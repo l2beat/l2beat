@@ -1,10 +1,10 @@
 import { createHash } from 'crypto'
+import { createAmountId } from '@l2beat/config'
 import {
   assert,
   AmountConfigEntry,
   CoingeckoPriceConfigEntry,
 } from '@l2beat/shared-pure'
-import { createAmountId } from './createAmountId'
 import { createValueId } from './createValueId'
 
 export function getValuesConfigHash(

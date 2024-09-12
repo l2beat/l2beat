@@ -9,6 +9,8 @@ import {
   ContractParameters,
   get$Implementations,
 } from '@l2beat/discovery-types'
+import { BigNumber } from 'ethers'
+import { formatEther } from 'ethers/lib/utils'
 import {
   DERIVATION,
   EXITS,
@@ -26,6 +28,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
+import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('optimism')
@@ -94,8 +97,51 @@ const respectedGameType = discovery.getContractValue<number>(
 
 const gameTypes = ['FaultDisputeGame', 'PermissionedDisputeGame']
 
+const permissionlessDisputeGameBonds = discovery.getContractValue<number[]>(
+  'DisputeGameFactory',
+  'initBonds',
+)[0]
+
+const permissionlessGameClockExtension = discovery.getContractValue<number>(
+  'FaultDisputeGame',
+  'clockExtension',
+)
+
+const exponentialBondsFactor = 1.09493 // hardcoded, from https://specs.optimism.io/fault-proof/stage-one/bond-incentives.html?highlight=1.09493#bond-scaling
+
+const permissionlessGameMaxDepth = discovery.getContractValue<number>(
+  'FaultDisputeGame',
+  'maxGameDepth',
+)
+
+const permissionlessGameSplitDepth = discovery.getContractValue<number>(
+  'FaultDisputeGame',
+  'splitDepth',
+)
+
+const permissionlessGameFullCost = (() => {
+  let cost = 0
+  const scaleFactor = 100000
+  for (let i = 0; i <= permissionlessGameMaxDepth; i++) {
+    cost =
+      cost +
+      (permissionlessDisputeGameBonds / scaleFactor) *
+        exponentialBondsFactor ** i
+  }
+  return BigNumber.from(cost).mul(BigNumber.from(scaleFactor))
+})()
+
+const oracleChallengePeriod = discovery.getContractValue<number>(
+  'PreimageOracle',
+  'challengePeriod',
+)
+
+const permissionlessGameMaxClockExtension =
+  permissionlessGameClockExtension * 2 + // at SPLIT_DEPTH - 1
+  oracleChallengePeriod + // at MAX_GAME_DEPTH - 1
+  permissionlessGameClockExtension * (permissionlessGameMaxDepth - 3) // the rest, excluding also the last depth
+
 export const optimism: Layer2 = {
-  isUnderReview: true,
   type: 'layer2',
   id: ProjectId('optimism'),
   badges: [
@@ -107,8 +153,6 @@ export const optimism: Layer2 = {
     Badge.Other.Governance,
   ],
   display: {
-    headerWarning:
-      'OP Mainnet has reverted to permissioned proposals as part of a bug fix procedure. The network is expected to return to permissionless fault proofs on the week of September 9th.',
     name: 'OP Mainnet',
     slug: 'optimism',
     category: 'Optimistic Rollup',
@@ -436,11 +480,51 @@ export const optimism: Layer2 = {
     genesisState:
       'Since OP Mainnet has migrated from the OVM to Bedrock, a node must be synced using a data directory that can be found [here](https://community.optimism.io/docs/useful-tools/networks/#links). To reproduce the migration itself, see this [guide](https://blog.oplabs.co/reproduce-bedrock-migration/).',
   },
-  stage: {
-    stage: 'UnderReview',
+  stateValidation: {
+    description:
+      'Updates to the system state can be proposed and challenged by anyone who has sufficient funds. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.',
+    categories: [
+      {
+        title: 'State root proposals',
+        description: `Proposers submit state roots as children of the latest confirmed state root (called anchor state), by calling the \`create\` function in the DisputeGameFactory. A state root can have multiple conflicting children. Each proposal requires a stake, currently set to ${formatEther(
+          permissionlessDisputeGameBonds,
+        )} ETH, that can be slashed if the proposal is proven incorrect via a fraud proof. Stakes can be withdrawn only after the proposal has been confirmed. A state root gets confirmed if the challenge period has passed and it is not countered.`,
+        references: [
+          {
+            text: 'OP stack specification: Fault Dispute Game',
+            href: 'https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#fault-dispute-game',
+          },
+        ],
+      },
+      {
+        title: 'Challenges',
+        description: `Challenges are opened to disprove invalid state roots using bisection games. Each bisection move requires a stake that increases expontentially with the depth of the bisection, with a factor of ${exponentialBondsFactor}. The maximum depth is ${permissionlessGameMaxDepth}, and reaching it therefore requires a cumulative stake of ${parseFloat(
+          formatEther(permissionlessGameFullCost),
+        ).toFixed(
+          2,
+        )} ETH from depth 0. Actors can participate in any challenge by calling the \`defend\` or \`attack\` functions, depending whether they agree or disagree with the latest claim and want to move the bisection game forward. Actors that disagree with the top-level claim are called challengers, and actors that agree are called defenders. Each actor might be involved in multiple (sub-)challenges at the same time, meaning that the protocol operates with [full concurrency](https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a). Challengers and defenders alternate in the bisection game, and they pass each other a clock that starts with ${formatSeconds(
+          maxClockDuration,
+        )}. If a clock expires, the claim is considered defeated if it was countered, or it gets confirmed if uncountered. Since honest parties can inherit clocks from malicious parties that play both as challengers and defenders (see [freeloader claims](https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#freeloader-claims)), if a clock gets inherited with less than ${formatSeconds(
+          permissionlessGameClockExtension,
+        )}, it generally gets extended by ${formatSeconds(
+          permissionlessGameClockExtension,
+        )} with the exception of ${formatSeconds(
+          permissionlessGameClockExtension * 2,
+        )} right before depth ${permissionlessGameSplitDepth}, and ${formatSeconds(
+          oracleChallengePeriod,
+        )} right before the last depth. The maximum clock extension that a top level claim can get is therefore ${formatSeconds(
+          permissionlessGameMaxClockExtension,
+        )}. Since unconfirmed state roots are independent of one another, users can decide to exit with a subsequent confirmed state root if the previous one is delayed. Winners get the entire losers' stake, meaning that sybils can potentially play against each other at no cost. The final instruction found via the bisection game is then executed onchain in the MIPS one step prover contract who determines the winner. The protocol does not enforce valid bisections, meaning that actors can propose correct initial claims and then provide incorrect midpoints. The protocol can be subject to resource exhaustion attacks ([Spearbit 5.1.3](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_report-cb-fault-proofs-non-mips.pdf)).`,
+        references: [
+          {
+            text: 'Fraud Proof Wars: OPFP',
+            href: 'https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a',
+          },
+        ],
+      },
+    ],
   },
-  /*
-  getStage(
+  stage: getStage(
     {
       stage0: {
         callsItselfRollup: true,
@@ -466,7 +550,6 @@ export const optimism: Layer2 = {
         'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
     },
   ),
-  */
   permissions: [
     {
       name: 'Sequencer',
@@ -580,9 +663,14 @@ export const optimism: Layer2 = {
         description:
           'The PreimageOracle contract is used to load the required data from L1 for a dispute game.',
       }),
-      discovery.getContractDetails('DelayedWETH', {
+      discovery.getContractDetails('DelayedWETH_PermissionlessGames', {
         description:
-          'Contract designed to hold the bonded ETH for each dispute game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds. It is owned by the SuperchainProxyAdminOwner multisig.',
+          'Contract designed to hold the bonded ETH for each permissionless dispute game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds. It is owned by the SuperchainProxyAdminOwner multisig.',
+        ...l1Upgradeability,
+      }),
+      discovery.getContractDetails('DelayedWETH_PermissionedGames', {
+        description:
+          'Contract designed to hold the bonded ETH for each permissioned dispute game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds. It is owned by the SuperchainProxyAdminOwner multisig.',
         ...l1Upgradeability,
       }),
       discovery.getContractDetails('SuperchainConfig', {
@@ -681,8 +769,16 @@ export const optimism: Layer2 = {
     ],
   },
   upgradesAndGovernance:
-    'All contracts are upgradable by the `SuperchainProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. The Guardian role is assigned to the Security Council multisig, with a Safe Module that allows the Foundation to act through it to stop withdrawals in the whole Superchain or blacklist dispute games in case of emergencies. The Security Council can remove the module if the Foundation becomes malicious. The single Sequencer actor can be modified by the `FoundationMultisig_2` via the `SystemConfig` contract. The SuperchainProxyAdminOwner can recover dispute bonds in case of bugs that would distribute them incorrectly. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
+    'All contracts are upgradable by the `SuperchainProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. The Guardian role is assigned to the Security Council multisig, with a Safe Module that allows the Foundation to act through it to stop withdrawals in the whole Superchain, blacklist dispute games, or deactivate the fault proof system entirely in case of emergencies. The Security Council can remove the module if the Foundation becomes malicious. The single Sequencer actor can be modified by the `FoundationMultisig_2` via the `SystemConfig` contract. The SuperchainProxyAdminOwner can recover dispute bonds in case of bugs that would distribute them incorrectly. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
   milestones: [
+    {
+      name: 'Fallback to permissioned proposals for 26 days.',
+      link: 'https://x.com/Optimism/status/1824560759747256596',
+      date: '2024-08-16T00:00:00Z',
+      description:
+        'OP Mainnet preventively disables the fraud proof system due to a bug for 26 days.',
+      type: 'incident',
+    },
     {
       name: 'OP Mainnet becomes Stage 1',
       link: 'https://x.com/Optimism/status/1800256837088145799',
@@ -743,12 +839,12 @@ export const optimism: Layer2 = {
       type: 'general',
     },
     {
-      name: 'OVM 2.0 is live',
+      name: 'Optimism removes OVM fraud proofs',
       link: 'https://twitter.com/optimismfnd/status/1458953238867165192?s=21&t=cQ0NPREYt-u1rP7OiPFKUg',
       date: '2021-11-12T00:00:00Z',
       description:
         'Network upgrade to OVM 2.0 and removal of fraud-proof system.',
-      type: 'general',
+      type: 'incident',
     },
     {
       name: 'Mainnet Soft Launch',

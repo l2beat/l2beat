@@ -4,8 +4,7 @@
   "fields": {
     "owner": {
       "target": {
-        "description": "It can act on behalf of {{ #address }}, inheriting its permissions.",
-        "permissions": [{ "type": "configure" }]
+        "permissions": [{ "type": "act" }]
       }
     }
   }

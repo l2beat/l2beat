@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20420398,
   "configHash": "0xacfacf9c84c23dfb644b1f84136823f08cbe72513fc45dcf9218995c9c893637",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "ERC20 Vault V1",
@@ -204,8 +204,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2",
-          "via": []
+          "target": "0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2"
         }
       ],
       "sinceTimestamp": 1664208791,
@@ -249,8 +248,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8",
-          "via": []
+          "target": "0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8"
         }
       ],
       "sinceTimestamp": 1640866403,

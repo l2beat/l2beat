@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19532023,
   "configHash": "0xf4d522e6a76c655c0c448063299964cc131f8af0b7e12d3b1a91e5de9f315683",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "ReplicaUpgradeBeacon",
@@ -194,23 +194,19 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x42303634F37956687fB7ff2c6146AC842481A052",
-          "via": []
+          "target": "0x42303634F37956687fB7ff2c6146AC842481A052"
         },
         {
           "permission": "upgrade",
-          "target": "0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47",
-          "via": []
+          "target": "0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47"
         },
         {
           "permission": "upgrade",
-          "target": "0x7725EadaC5Ee986CAc8317a1d2fB16e59e079E8b",
-          "via": []
+          "target": "0x7725EadaC5Ee986CAc8317a1d2fB16e59e079E8b"
         },
         {
           "permission": "upgrade",
-          "target": "0xf25C5932bb6EFc7afA4895D9916F2abD7151BF97",
-          "via": []
+          "target": "0xf25C5932bb6EFc7afA4895D9916F2abD7151BF97"
         }
       ],
       "sinceTimestamp": 1631138008,

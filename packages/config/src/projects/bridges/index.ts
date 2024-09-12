@@ -10,6 +10,7 @@ import { chainport } from './chainport'
 import { connext } from './connext'
 import { davos } from './davos'
 import { debridge } from './debridge'
+import { eclipse } from './eclipse'
 import { fraxferry } from './fraxferry'
 import { gravity } from './gravity'
 import { harmony } from './harmony'
@@ -28,7 +29,6 @@ import { opticsV2 } from './opticsV2'
 import { orbit } from './orbit'
 import { orbiter } from './orbiter'
 import { pNetwork } from './pNetwork'
-import { polygonplasma } from './polygonplasma'
 import { polygonpos } from './polygonpos'
 import { polynetwork } from './polynetwork'
 import { portal } from './portal'
@@ -62,6 +62,7 @@ export const bridges: Bridge[] = [
   connext,
   debridge,
   davos,
+  eclipse,
   gravity,
   harmony,
   chainport,
@@ -80,7 +81,6 @@ export const bridges: Bridge[] = [
   opticsV2,
   orbit,
   orbiter,
-  polygonplasma,
   polygonpos,
   polynetwork,
   pNetwork,

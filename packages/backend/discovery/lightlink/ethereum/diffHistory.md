@@ -1,3 +1,91 @@
+Generated with discovered.json: 0x3e7db4030a9e68b02999c798868fa8c2066511dc
+
+# Diff at Thu, 05 Sep 2024 15:26:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d01da0bcdde8e77051659c9718e449a44f5f957a block: 20117905
+- current block number: 20685269
+
+## Description
+
+Small upgrade:
+
+### Challenge.sol
+- new `finalizationSeconds()` returns challengePeriod + challengeWindow
+
+### CanonicalStateChain.sol
+- new `OutputProposed` event for each new output root (on `pushBlock()`)
+- `output root = keccack(version_hash || keccack(state_root || withdrawal_root || latest_block_hash))`
+- new `getL2Output()` returns outputRoot, timestamp
+
+## Watched changes
+
+```diff
+    contract Challenge (0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd) {
+    +++ description: None
+      values.$implementation:
+-        "0x2785D4Af59bf299C1f2DBC5132E72B2eE015B3aC"
++        "0x4Fc6a6A2e3864709ae6AdCf29280dA01c95Aa10B"
+      values.$upgradeCount:
+-        1
++        2
+      values.finalizationSeconds:
++        432000
+    }
+```
+
+```diff
+    contract CanonicalStateChain (0x65E325A22c0F519041db69F5693EbAc3b4AE71bE) {
+    +++ description: None
+      values.$implementation:
+-        "0xd8C81A0CB0044fC45B51531A8dcc48Ed385937B5"
++        "0xeFE38Bd58ADDf23eFab1FFa16312030384929289"
+      values.$upgradeCount:
+-        1
++        2
+      values.startingTimestamp:
++        1717522271
+    }
+```
+
+## Source code changes
+
+```diff
+.../CanonicalStateChain/CanonicalStateChain.sol    | 37 ++++++++++++++++++++--
+ .../Challenge/Challenge.sol                        |  5 +++
+ 2 files changed, 40 insertions(+), 2 deletions(-)
+```
+
+Generated with discovered.json: 0x6d6b9df731962a3b59a97d94d7b57792794c1bed
+
+# Diff at Fri, 30 Aug 2024 07:53:25 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 20117905
+- current block number: 20117905
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20117905 (main branch discovery), not current.
+
+```diff
+    contract LightLinkMultisig (0x3345702FeA1669Efa1e085610A62F89d159Bc0c8) {
+    +++ description: None
+      receivedPermissions.2.via:
+-        []
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
 Generated with discovered.json: 0xbfab149ef568896625f0220e4db9c67e96c97804
 
 # Diff at Fri, 23 Aug 2024 09:52:57 GMT:

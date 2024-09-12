@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
+    "dev:mock": "MOCK=true yarn dev",
     "build": "next build",
     "build:dependencies": "cd ../.. && yarn build:dependencies",
     "start": "next start",
@@ -14,8 +15,9 @@
     "format:fix": "biome check --apply .",
     "test": "mocha",
     "typecheck": "tsc --noEmit",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "storybook": "storybook dev -p 6006 --no-open",
+    "storybook:build": "storybook build",
+    "tinify-logos": "node --loader esbuild-register/loader -r esbuild-register scripts/logos/tinifyLogos.ts"
   },
   "dependencies": {
     "@l2beat/backend": "*",
@@ -30,6 +32,7 @@
     "@radix-ui/react-popover": "^1.0.7",
     "@radix-ui/react-radio-group": "^1.2.0",
     "@radix-ui/react-select": "^2.1.1",
+    "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-tabs": "^1.0.4",
     "@radix-ui/react-tooltip": "^1.0.7",
     "@t3-oss/env-nextjs": "^0.10.1",
@@ -39,10 +42,9 @@
     "@trpc/client": "^11.0.0-rc.446",
     "@trpc/react-query": "^11.0.0-rc.446",
     "@trpc/server": "^11.0.0-rc.446",
-    "@vercel/toolbar": "^0.1.15",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "connectkit": "^1.7.3",
+    "cmdk": "^1.0.0",
     "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
     "markdown-it": "^14.1.0",
@@ -58,7 +60,6 @@
     "tailwind-merge": "^2.3.0",
     "vaul": "^0.9.1",
     "viem": "^2.9.28",
-    "wagmi": "^2.9.8",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -71,7 +72,6 @@
     "@storybook/nextjs": "^8.2.9",
     "@storybook/react": "^8.2.9",
     "@storybook/test": "^8.2.9",
-    "@svgr/webpack": "^8.1.0",
     "@types/js-cookie": "^3.0.6",
     "@types/lodash": "^4.17.4",
     "@types/node": "^20.11.16",

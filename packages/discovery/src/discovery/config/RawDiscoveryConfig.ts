@@ -16,6 +16,7 @@ export type RawPermissionConfiguration = z.infer<
 export const RawPermissionConfiguration = z.object({
   type: z.enum(['configure', 'upgrade', 'act']),
   delay: z.union([z.number(), z.string()]).default(0),
+  description: z.string().optional(),
 })
 
 export type PermissionConfiguration = RawPermissionConfiguration & {
@@ -31,7 +32,6 @@ export const DiscoveryContractField = z.object({
   returnType: z.string().optional(),
   target: z
     .object({
-      description: z.string().optional(),
       template: z.string().optional(),
       role: z.union([StackRole, z.array(StackRole)]).optional(),
       category: z.union([StackCategory, z.array(StackCategory)]).optional(),

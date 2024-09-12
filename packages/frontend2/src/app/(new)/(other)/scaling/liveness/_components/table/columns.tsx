@@ -1,17 +1,17 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
-import {
-  TypeCell,
-  TypeExplanationTooltip,
-} from '~/app/_components/table/cells/type-cell'
-import { getCommonProjectColumns } from '~/app/_components/table/common-project-columns'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip'
+} from '~/components/core/tooltip/tooltip'
+import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
+import {
+  TypeCell,
+  TypeExplanationTooltip,
+} from '~/components/table/cells/type-cell'
+import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { LIVENESS_ANOMALIES_COMING_SOON_PROJECTS } from '~/consts/projects'
-import InfoIcon from '~/icons/info.svg'
+import { InfoIcon } from '~/icons/info'
 import { AnomalyIndicator } from '../anomaly-indicator'
 import { IntervalsHeader } from './intervals-header'
 import { LivenessIntervalCell } from './liveness-interval-cell'
@@ -116,7 +116,7 @@ export const columns = [
       return (
         <Tooltip>
           <TooltipTrigger>
-            <InfoIcon className="fill-blue-550" />
+            <InfoIcon variant="blue" />
           </TooltipTrigger>
           <TooltipContent>{explanation}</TooltipContent>
         </Tooltip>

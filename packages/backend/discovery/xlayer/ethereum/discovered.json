@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20325087,
   "configHash": "0x1faa6e35d2bc7ed2a0ebe00bbb2796abcb918b5266d117b92e441acd4aded7bf",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "XLayerValidiumDAC",
@@ -52,8 +52,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x05652Ec92366F3C2255991a265c499E01Ba58e6a",
-          "via": []
+          "target": "0x05652Ec92366F3C2255991a265c499E01Ba58e6a"
         }
       ],
       "sinceTimestamp": 1711787315,
@@ -146,8 +145,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x75231F58b43240C9718Dd58B4967c5114342a86c",
-          "via": []
+          "target": "0x75231F58b43240C9718Dd58B4967c5114342a86c"
         }
       ]
     },

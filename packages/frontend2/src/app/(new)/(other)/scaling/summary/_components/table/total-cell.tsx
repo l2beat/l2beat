@@ -2,16 +2,16 @@ import { type WarningWithSentiment } from '@l2beat/config'
 import {
   TokenBreakdown,
   TokenBreakdownTooltipContent,
-} from '~/app/_components/breakdown/token-breakdown'
-import { PercentChange } from '~/app/_components/percent-change'
+} from '~/components/breakdown/token-breakdown'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip'
+} from '~/components/core/tooltip/tooltip'
+import { PercentChange } from '~/components/percent-change'
 import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import { formatNumber } from '~/utils/format-number'
+import { formatCurrency } from '~/utils/format'
 
 export interface TotalCellProps {
   breakdown: {
@@ -51,7 +51,9 @@ export function TotalCell(data: TotalCellProps) {
               />
             ) : null}
             <span className="text-base font-bold md:text-lg">
-              ${formatNumber(totalTvl)}
+              {formatCurrency(totalTvl, 'usd', {
+                showLessThanMinimum: false,
+              })}
             </span>
             {data.change !== undefined && (
               <PercentChange

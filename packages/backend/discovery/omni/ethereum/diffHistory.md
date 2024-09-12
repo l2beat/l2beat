@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x7db7faa99cf21679c738058c218b7760a0938288
+
+# Diff at Fri, 30 Aug 2024 07:54:07 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 19532020
+- current block number: 19532020
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19532020 (main branch discovery), not current.
+
+```diff
+    contract BridgeGovernance (0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6) {
+    +++ description: None
+      receivedPermissions.2.via:
+-        []
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
 Generated with discovered.json: 0x3defdc19a728cd3223bef1b0370c6f8c3240e0a6
 
 # Diff at Wed, 21 Aug 2024 10:04:30 GMT:

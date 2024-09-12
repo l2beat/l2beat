@@ -1,3 +1,77 @@
+Generated with discovered.json: 0x4bae17fea069f73f6181cb0fe40028bcfe782345
+
+# Diff at Wed, 04 Sep 2024 07:32:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@878a951312cec062f5003f6749f781861b0cdba1 block: 236183206
+- current block number: 249925893
+
+## Description
+
+Change one signer of the MS.
+
+## Watched changes
+
+```diff
+    contract ArbitrumOwner (0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F) {
+    +++ description: None
+      values.$members.5:
+-        "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
++        "0xC75EFCffEE930706daec5CaCA012551f6a1845D7"
+      values.$members.4:
+-        "0xC75EFCffEE930706daec5CaCA012551f6a1845D7"
++        "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
+      values.$members.3:
+-        "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
++        "0xF801886AE2e127A269B0F11892edb54F692d02dF"
+      values.$members.2:
+-        "0xF801886AE2e127A269B0F11892edb54F692d02dF"
++        "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
+      values.$members.1:
+-        "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
++        "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
+      values.$members.0:
+-        "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
++        "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5"
+    }
+```
+
+Generated with discovered.json: 0x0245cb3dd9cb99d92c2dae199ed7505a82ab2878
+
+# Diff at Fri, 30 Aug 2024 08:06:28 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 236183206
+- current block number: 236183206
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 236183206 (main branch discovery), not current.
+
+```diff
+    contract ArbitrumProxyAdmin (0x48698A17D193bFc882395AC06a1DEdbb222F2917) {
+    +++ description: None
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract ArbitrumOwner (0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F) {
+    +++ description: None
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
 Generated with discovered.json: 0x4fb288a3d6eccd2f8d0f1933ef73cb56b5a01660
 
 # Diff at Fri, 23 Aug 2024 09:57:28 GMT:

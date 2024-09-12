@@ -118,7 +118,7 @@ describe(UpdateMonitor.name, () => {
       sendDailyReminder: async () => {},
     })
     discoveryRunner = mockObject<DiscoveryRunner>({
-      run: async () => DISCOVERY_RESULT,
+      run: async () => ({ discovery: DISCOVERY_RESULT, flatSources: {} }),
       chain: 'ethereum',
       getBlockNumber: async () => BLOCK_NUMBER,
     })
@@ -128,7 +128,7 @@ describe(UpdateMonitor.name, () => {
     it('iterates over runners and dispatches updates', async () => {
       const discoveryRunnerEth = discoveryRunner
       const discoveryRunnerArb = mockObject<DiscoveryRunner>({
-        run: async () => DISCOVERY_RESULT,
+        run: async () => ({ discovery: DISCOVERY_RESULT, flatSources: {} }),
         chain: 'arbitrum',
         getBlockNumber: async () => BLOCK_NUMBER,
       })
@@ -399,16 +399,25 @@ describe(UpdateMonitor.name, () => {
         getBlockNumber: async () => BLOCK_NUMBER,
       })
 
-      discoveryRunner.run.resolvesToOnce({ ...DISCOVERY_RESULT, version: 1 })
       discoveryRunner.run.resolvesToOnce({
-        ...DISCOVERY_RESULT,
-        contracts: [],
-        version: 1,
+        discovery: { ...DISCOVERY_RESULT, version: 1 },
+        flatSources: {},
       })
       discoveryRunner.run.resolvesToOnce({
-        ...DISCOVERY_RESULT,
-        contracts: [],
-        version: 1,
+        discovery: {
+          ...DISCOVERY_RESULT,
+          contracts: [],
+          version: 1,
+        },
+        flatSources: {},
+      })
+      discoveryRunner.run.resolvesToOnce({
+        discovery: {
+          ...DISCOVERY_RESULT,
+          contracts: [],
+          version: 1,
+        },
+        flatSources: {},
       })
 
       const updateMonitor = new UpdateMonitor(
@@ -626,7 +635,7 @@ describe(UpdateMonitor.name, () => {
       })
 
       const discoveryRunner = mockObject<DiscoveryRunner>({
-        run: async () => mockProject,
+        run: async () => ({ discovery: mockProject, flatSources: {} }),
         chain: 'ethereum',
         getBlockNumber: async () => BLOCK_NUMBER,
       })
@@ -661,7 +670,10 @@ describe(UpdateMonitor.name, () => {
     it('does not cross-contaminate between chains', async () => {
       const discoveryRunnerEth = discoveryRunner
       const discoveryRunnerArb = mockObject<DiscoveryRunner>({
-        run: async () => DISCOVERY_RESULT_ARB_2,
+        run: async () => ({
+          discovery: DISCOVERY_RESULT_ARB_2,
+          flatSources: {},
+        }),
         chain: 'arbitrum',
         getBlockNumber: async () => BLOCK_NUMBER,
       })
@@ -746,7 +758,7 @@ describe(UpdateMonitor.name, () => {
     it('generates the daily reminder for two different chains', async () => {
       const discoveryRunnerEth = discoveryRunner
       const discoveryRunnerArb = mockObject<DiscoveryRunner>({
-        run: async () => DISCOVERY_RESULT,
+        run: async () => ({ discovery: DISCOVERY_RESULT, flatSources: {} }),
         chain: 'arbitrum',
         getBlockNumber: async () => BLOCK_NUMBER,
       })

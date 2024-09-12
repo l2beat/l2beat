@@ -1,11 +1,11 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
-import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
+import { UpcomingBadge } from '~/components/badge/upcoming-badge'
+import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import {
   TypeCell,
   TypeExplanationTooltip,
-} from '~/app/_components/table/cells/type-cell'
-import { getCommonProjectColumns } from '~/app/_components/table/common-project-columns'
+} from '~/components/table/cells/type-cell'
+import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { type ScalingSummaryTableRow } from '../../../_utils/to-table-rows'
 import { TotalCell } from '../total-cell'
 
@@ -76,8 +76,7 @@ export const summaryLayer3sColumns = [
       return aTvl - bTvl
     },
     meta: {
-      headClassName: 'justify-end',
-      cellClassName: 'justify-end',
+      align: 'right',
       tooltip:
         'Total value locked in escrow contracts on the base chain displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
     },

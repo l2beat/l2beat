@@ -1,34 +1,45 @@
-import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
-import { DaLayer } from '../types/DaLayer'
-import { sorareDac } from './bridges/sorare'
+import { ChainId } from '@l2beat/shared-pure'
+import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
+import { getCommittee } from '../../../../discovery/starkware'
+import { sorare } from '../../../layer2s/sorare'
+import { DAC } from '../templates/dac-template'
+import { DaAttestationSecurityRisk } from '../types'
+import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
-export const sorareLayer: DaLayer = {
-  id: 'sorare-dac-layer',
-  type: 'DaLayer',
-  kind: 'DAC',
-  display: {
-    name: 'Data Availability Committee (DAC)',
-    slug: 'sorare',
-    description:
-      'Set of parties responsible for signing and attesting to the availability of data.',
-    links: {
-      websites: [],
-      documentation: [],
-      repositories: [],
-      apps: [],
-      explorers: [],
-      socialMedia: [],
+const discovery = new ProjectDiscovery('sorare')
+const committee = getCommittee(discovery)
+
+export const sorareDac = DAC({
+  project: sorare,
+  risks: {
+    attestations: DaAttestationSecurityRisk.SigVerified(true),
+  },
+  bridge: {
+    contracts: {
+      addresses: [
+        discovery.getContractDetails(
+          'Committee',
+          'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
+        ),
+      ],
+      risks: [],
+    },
+    permissions: [
+      {
+        name: 'Committee Members',
+        description: `List of addresses authorized to sign data commitments for the DA bridge.`,
+        accounts: committee.accounts.map((operator) => ({
+          address: operator.address,
+          type: 'EOA',
+        })),
+      },
+    ],
+    chain: ChainId.ETHEREUM,
+    requiredMembers: committee.minSigners,
+    totalMembers: committee.accounts.length,
+    transactionDataType: DacTransactionDataType.StateDiffs,
+    members: {
+      type: 'unknown',
     },
   },
-  technology: `## Simple Committee
-  The Data Availability Committee (DAC) is a set of trusted parties responsible for storing data off-chain and serving it upon demand. 
-  The security guarantees of DACs depend on the specific setup and can vary significantly based on the criteria for selecting committee members, 
-  their operational transparency, and the mechanisms in place to handle disputes and failures.
-  `,
-  bridges: [sorareDac],
-  usedIn: [...sorareDac.usedIn],
-  risks: {
-    economicSecurity: DaEconomicSecurityRisk.Unknown,
-    fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
-  },
-}
+})

@@ -79,6 +79,14 @@
             "args": [1]
           }
         },
+        "operatorSetParamsQuorum3": {
+          "description": "0_maxOperatorCount, 1_kickBIPsOfOperatorStake, 2_kickBIPsOfTotalStake",
+          "handler": {
+            "type": "call",
+            "method": "getOperatorSetParams",
+            "args": [2]
+          }
+        },
         "quorumCount": {
           "description": "if quorum count changes, makes sure the new quorum parameters are tracked in the config",
           "severity": "HIGH",

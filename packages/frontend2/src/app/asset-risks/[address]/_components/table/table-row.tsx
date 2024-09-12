@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { type TdHTMLAttributes, useState } from 'react'
 import { type ClassNameValue } from 'tailwind-merge'
 import { formatUnits } from 'viem'
-import ArrowIcon from '~/icons/arrow.svg'
+import { ArrowIcon } from '~/icons/arrow'
 import { cn } from '~/utils/cn'
 import { RiskDetails } from './risk-details'
 import { StageBadge } from './stage-badge'
@@ -59,7 +59,11 @@ export function TableRow({
               &nbsp;
               {token.chain.stage && <StageBadge stage={token.chain.stage} />}
               &nbsp;
-              {token.token.bridge && `bridged via ${token.token.bridge}`}
+              {token.token.bridgedUsing?.bridges.length === 1
+                ? `bridged via ${token.token.bridgedUsing?.bridges[0]?.name}`
+                : token.token.bridgedUsing?.bridges?.length !== 0
+                  ? `bridged via multiple bridges`
+                  : null}
             </div>
           </div>
         </Cell>

@@ -1,3 +1,74 @@
+Generated with discovered.json: 0xdc3306b785cc9e7d6a26a2f16a3579d38722b9b2
+
+# Diff at Mon, 09 Sep 2024 06:43:56 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@fd881462cca0d7ef4519f907f3c6cfd5fe1cde8f block: 20420390
+- current block number: 20711342
+
+## Description
+
+Aggregator compatibility upgrade. (See also recent Starknet upgrade to the same implementation / programHashes)
+- add aggregatorProgramHash and support aggregation
+- add multiple blob support
+
+## Watched changes
+
+```diff
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: None
+      values.$implementation:
+-        "0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24"
++        "0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC"
+      values.identify:
+-        "StarkWare_Starknet_2024_8"
++        "StarkWare_Starknet_2024_9"
+      values.implementation:
+-        "0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24"
++        "0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC"
++++ description: The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.
++++ severity: HIGH
+      values.programHash:
+-        "3383082961563516565935611087683915026448707331436034043529592588079494402084"
++        "853638403225561750106379562222782223909906501242604214771127703946595519856"
+      values.aggregatorProgramHash:
++        "1161178844461337253856226043908368523817098764221830529880464854589141231910"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@20420390 => .flat}/Paradex/Starknet.sol | 297 ++++++++++++++++-----
+ 1 file changed, 223 insertions(+), 74 deletions(-)
+```
+
+Generated with discovered.json: 0x0e0b96c8f79c3e7a254842be941a4c2db301e2e0
+
+# Diff at Fri, 30 Aug 2024 07:54:25 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 20420390
+- current block number: 20420390
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20420390 (main branch discovery), not current.
+
+```diff
+    contract ParadexImplementationGovernorMultisig (0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) {
+    +++ description: None
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
 Generated with discovered.json: 0xd5cc157e69ce6b3e0ed1db41e96eeb1707d6d0e1
 
 # Diff at Wed, 21 Aug 2024 10:04:53 GMT:

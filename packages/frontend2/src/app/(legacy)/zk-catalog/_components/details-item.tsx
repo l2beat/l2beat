@@ -2,8 +2,8 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip'
-import InfoIcon from '~/icons/info.svg'
+} from '~/components/core/tooltip/tooltip'
+import { InfoIcon } from '~/icons/info'
 import { cn } from '~/utils/cn'
 
 export function DetailsItem({

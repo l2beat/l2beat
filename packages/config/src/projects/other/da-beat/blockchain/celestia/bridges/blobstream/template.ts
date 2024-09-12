@@ -1,6 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
 import capitalize from 'lodash/capitalize'
-import { chains } from '../../../../../../../'
+import { chains } from '../../../../../../..'
 import {
   DaAccessibilityRisk,
   DaBridgeRisks,
@@ -28,11 +28,11 @@ export function CELESTIA_BLOBSTREAM(base: TemplateVars): OnChainDaBridge {
     `Cannot template CELESTIA_BLOBSTREAM - chain ${base.chain} not found among known chains`,
   )
 
-  const id = `blobstreamx-${chain.name}`
+  const id = `blobstream-${chain.name}`
   const display = {
-    name: `Blobstream X on ${capitalize(chain.name)}`,
+    name: `Blobstream on ${capitalize(chain.name)}`,
     slug: id,
-    description: `The BlobstreamX bridge serves as a ZK light client, enabling the bridging of data availability commitments between Celestia and ${capitalize(
+    description: `The Blobstream bridge serves as a ZK light client, enabling the bridging of data availability commitments between Celestia and ${capitalize(
       chain.name,
     )}.`,
     links: base.display.links,

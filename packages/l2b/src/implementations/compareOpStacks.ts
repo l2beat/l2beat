@@ -1,4 +1,4 @@
-import { layer2s } from '@l2beat/config'
+import path from 'path'
 import { ConfigReader } from '@l2beat/discovery'
 
 type OpStackProject = {
@@ -13,19 +13,15 @@ type OpStackProject = {
 
 export async function analyseAllOpStackChains(
   projectToCompare: string | null,
-  backendPath: string,
+  discoveryPath: string,
 ): Promise<void> {
-  const configReader = new ConfigReader(backendPath)
+  const configReader = new ConfigReader(path.dirname(discoveryPath))
+  const allL2s = configReader.readAllProjectsForChain('ethereum')
+
   const opStackChains = [] as OpStackProject[]
 
-  const l2s = layer2s.filter(
-    (l2) =>
-      l2.display.provider === 'OP Stack' && !l2.isArchived && !l2.isUpcoming,
-  )
-
-  for (const l2 of l2s) {
-    console.log('reading', l2.id)
-    const discovery = configReader.readDiscovery(l2.id.toString(), 'ethereum')
+  for (const l2 of allL2s) {
+    const discovery = configReader.readDiscovery(l2, 'ethereum')
 
     const L2OutputOracle = discovery.contracts.find(
       (obj) => obj.name === 'L2OutputOracle',
@@ -46,8 +42,19 @@ export async function analyseAllOpStackChains(
       (obj) => obj.name === 'L1CrossDomainMessenger',
     )
 
+    if (
+      L2OutputOracle === undefined &&
+      optimismPortal === undefined &&
+      l1StandardBridge === undefined &&
+      l1ERC721Bridge === undefined &&
+      systemConfig === undefined &&
+      l1CrossDomainMessenger === undefined
+    ) {
+      continue
+    }
+
     const opStackChain = {
-      project: l2.id.toString(),
+      project: l2,
       OptimismPortal: optimismPortal?.values?.version,
       L1StandardBridge: l1StandardBridge?.values?.version,
       L1ERC721Bridge: l1ERC721Bridge?.values?.version,

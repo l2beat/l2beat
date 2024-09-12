@@ -12,7 +12,7 @@ import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import {
-  DEFAULT_OTHER_CONSIDERATIONS,
+  WASMVM_OTHER_CONSIDERATIONS,
   getNitroGovernance,
   orbitStackL2,
 } from './templates/orbitStack'
@@ -88,7 +88,12 @@ const maxTimeVariation = discovery.getContractValue<number[]>(
 const selfSequencingDelay = maxTimeVariation[2]
 
 export const arbitrum: Layer2 = orbitStackL2({
-  badges: [Badge.Stack.Nitro, Badge.Other.Governance, Badge.Other.L3HostChain],
+  badges: [
+    Badge.VM.WasmVM,
+    Badge.Stack.Nitro,
+    Badge.Other.Governance,
+    Badge.Other.L3HostChain,
+  ],
   discovery,
   associatedTokens: ['ARB'],
   bridge: discovery.getContract('Bridge'),
@@ -354,7 +359,7 @@ export const arbitrum: Layer2 = orbitStackL2({
       l2Discovery.getContractDetails('TreasuryTimelock', {
         description: `Delays treasury proposals from the TreasuryGovernor by ${formatSeconds(
           treasuryTimelockDelay,
-        )}.`,
+        )}. Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts.`,
         ...l2Upgradability,
       }),
       l2Discovery.getContractDetails('L2UpgradeExecutor', {
@@ -526,7 +531,7 @@ export const arbitrum: Layer2 = orbitStackL2({
     },
   ),
   stateDerivation: {
-    nodeSoftware: `The rollup node (Arbitrum Nitro) consists of three parts. The base layer is the core Geth server (with minor modifications to add hooks) that emulates the execution of EVM contracts and maintains Ethereum's state. The middle layer, ArbOS, provides additional Layer 2 functionalities such as decompressing data batches, accounting for Layer 1 gas costs, and supporting cross-chain bridge functionalities. The top layer consists of node software, primarily from Geth, that handles client connections (i.e., regular RPC node). [View Code](https://github.com/OffchainLabs/nitro/)`,
+    nodeSoftware: `The rollup node (Arbitrum Nitro) consists of four parts. The base layer is the core Geth server (with minor modifications to add hooks) that emulates the execution of EVM contracts and maintains Ethereum's state and [a fork of wasmer](https://github.com/OffchainLabs/wasmer) that is used for native WASM execution. The middle layer, ArbOS, provides additional Layer 2 functionalities such as decompressing data batches, accounting for Layer 1 gas costs, and supporting cross-chain bridge functionalities. The top layer consists of node software, primarily from Geth, that handles client connections (i.e., regular RPC node). [View Code](https://github.com/OffchainLabs/nitro/)`,
     compressionScheme: `The Sequencer's batches are compressed using a general-purpose data compression algorithm known as [Brotli](https://github.com/google/brotli), configured to its highest compression setting.`,
     genesisState:
       'They performed a regenesis from Classic to Nitro, and that file represents the [last Classic state](https://snapshot.arbitrum.foundation/arb1/nitro-genesis.tar). To sync from the initial Classic state, instructions can be found [here](https://docs.arbitrum.io/migration/state-migration).',
@@ -534,7 +539,7 @@ export const arbitrum: Layer2 = orbitStackL2({
   },
   nonTemplateTechnology: {
     otherConsiderations: [
-      ...DEFAULT_OTHER_CONSIDERATIONS,
+      ...WASMVM_OTHER_CONSIDERATIONS,
       UPGRADE_MECHANISM.ARBITRUM_DAO(
         l1TimelockDelay,
         challengeWindow * assumedBlockTime,
@@ -543,6 +548,14 @@ export const arbitrum: Layer2 = orbitStackL2({
     ],
   },
   milestones: [
+    {
+      name: 'ArbOS 31 Bianca upgrade',
+      link: 'https://www.tally.xyz/gov/arbitrum/proposal/108288822474129076868455956066667369439381709547570289793612729242368710728616',
+      date: '2024-09-03T00:00:00Z',
+      description:
+        'Arbitrum upgrades to ArbOS 31 activating Stylus (new languages for smart contracts).',
+      type: 'general',
+    },
     {
       name: 'Arbitrum starts using blobs',
       link: 'https://twitter.com/arbitrum/status/1768306107318178061',
@@ -571,7 +584,7 @@ export const arbitrum: Layer2 = orbitStackL2({
       date: '2022-06-29T00:00:00Z',
       description:
         'Due of the heavy load being put on the chain, Odyssey program got paused.',
-      type: 'general',
+      type: 'incident',
     },
     {
       name: 'Odyssey started',

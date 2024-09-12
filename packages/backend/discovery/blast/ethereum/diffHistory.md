@@ -1,3 +1,89 @@
+Generated with discovered.json: 0xcfb42636cbc1fe3f8d87d1234f42014f5df2a21b
+
+# Diff at Mon, 02 Sep 2024 06:44:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8fcb30f6c613b5454aa9ecdec05a118442e9dc7b block: 20317887
+- current block number: 20661171
+
+## Description
+
+USDYieldManager contract is upgraded to change the immutable constant PSM to the [new price stability module 'LITE-PSM-USDC-A'](https://vote.makerdao.com/executive/template-executive-vote-lite-psm-usdc-a-phase-2-setup-august-22-2024) by MakerDAO.
+
+## Watched changes
+
+```diff
+    contract USDYieldManager (0xa230285d5683C74935aD14c446e137c8c8828438) {
+    +++ description: None
+      values.$implementation:
+-        "0xE1cB7358311eCc408e1EFC47ceDc6740A8F68013"
++        "0xeCDdf748A60E23609c07af6CA3856744B139B911"
+    }
+```
+
+## Source code changes
+
+```diff
+.../USDYieldManager/USDYieldManager.sol            | 25 ++++++++++++++--------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
+```
+
+Generated with discovered.json: 0x77eb9fea3bccc1e71fd3c0ab81a739c8ab32a583
+
+# Diff at Fri, 30 Aug 2024 07:51:32 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 20317887
+- current block number: 20317887
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20317887 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x364289230b8cc7d9120eF962AF37ebCFe23cE883) {
+    +++ description: None
+      receivedPermissions.11.via:
+-        []
+      receivedPermissions.10.via:
+-        []
+      receivedPermissions.9.via:
+-        []
+      receivedPermissions.8.via:
+-        []
+      receivedPermissions.7.via:
+-        []
+      receivedPermissions.6.via:
+-        []
+      receivedPermissions.5.via:
+-        []
+      receivedPermissions.4.via:
+-        []
+      receivedPermissions.3.via:
+-        []
+      receivedPermissions.2.via:
+-        []
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract BridgeOwner (0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C) {
+    +++ description: None
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
 Generated with discovered.json: 0x26d0d903cf1bd821fbb66fb1166263964a0cadd0
 
 # Diff at Fri, 23 Aug 2024 09:51:27 GMT:

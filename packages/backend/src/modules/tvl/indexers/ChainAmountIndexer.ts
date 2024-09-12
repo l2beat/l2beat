@@ -1,3 +1,4 @@
+import { INDEXER_NAMES } from '@l2beat/config'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
@@ -7,12 +8,11 @@ import {
 } from '../../../tools/uif/multi/types'
 import { ChainAmountConfig, ChainAmountIndexerDeps } from './types'
 
-const NAME = 'chain_amount_indexer'
 export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
   constructor(private readonly $: ChainAmountIndexerDeps) {
     super({
       ...$,
-      name: NAME,
+      name: INDEXER_NAMES.CHAIN_AMOUNT,
       tag: $.chain,
       updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
     })
@@ -93,9 +93,5 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
         })
       }
     }
-  }
-
-  static getId(chain: string) {
-    return Indexer.createId(NAME, chain)
   }
 }

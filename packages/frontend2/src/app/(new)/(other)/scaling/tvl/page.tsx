@@ -1,6 +1,6 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
-import { StackedTvlChart } from '~/app/_components/chart/tvl/stacked/stacked-tvl-chart'
-import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
+import { ScalingStackedTvlChart } from '~/components/chart/tvl/stacked/scaling-stacked-tvl-chart'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { getImplementationChangeReport } from '~/server/features/implementation-change-report/get-implementation-change-report'
 import { getScalingTvlEntries } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 import { get7dTvlBreakdown } from '~/server/features/scaling/tvl/utils/get-7d-tvl-breakdown'
@@ -27,10 +27,9 @@ export default async function Page() {
       getImplementationChangeReport(),
       getProjectsVerificationStatuses(),
       get7dTvlBreakdown(),
-      api.scaling.summary.chart.prefetch({
-        excludeAssociatedTokens: false,
+      api.tvl.chart.prefetch({
+        filter: { type: 'layer2' },
         range: getCookie('scalingTvlChartRange'),
-        type: 'layer2',
       }),
     ])
 
@@ -44,7 +43,10 @@ export default async function Page() {
     <HydrateClient>
       <ScalingFilterContextProvider>
         <ScalingAssociatedTokensContextProvider>
-          <StackedTvlChart milestones={HOMEPAGE_MILESTONES} entries={entries} />
+          <ScalingStackedTvlChart
+            milestones={HOMEPAGE_MILESTONES}
+            entries={entries}
+          />
           <HorizontalSeparator className="my-4 md:my-6" />
           <ScalingTvlTable entries={entries} />
         </ScalingAssociatedTokensContextProvider>

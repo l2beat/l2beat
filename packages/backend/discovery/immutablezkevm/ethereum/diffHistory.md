@@ -1,3 +1,68 @@
+Generated with discovered.json: 0x2f37a47969364befbfa09088d484ced2840f3d27
+
+# Diff at Fri, 06 Sep 2024 11:30:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08a747098d22564c3a0b869c0a20851bf283bd07 block: 20491123
+- current block number: 20691264
+
+## Description
+
+One signer removed.
+
+## Watched changes
+
+```diff
+    contract OwnerMultisig (0xD2C37fC6fD89563187f3679304975655e448D192) {
+    +++ description: None
+      values.$members.6:
+-        "0xbD8Dc294478ec4dAd9f1b4596bf275f4d0309817"
+      values.$members.5:
+-        "0x296A19A4e87F5824DBE8DEd53415A4704538bB30"
++        "0xbD8Dc294478ec4dAd9f1b4596bf275f4d0309817"
+      values.$members.4:
+-        "0xB3669C058ddF26171Fd131D80C801AaEeb1519b8"
++        "0x296A19A4e87F5824DBE8DEd53415A4704538bB30"
+      values.$members.3:
+-        "0xdb6c271060571A96A62E3947E373395C89f765Ba"
++        "0xB3669C058ddF26171Fd131D80C801AaEeb1519b8"
+      values.$members.2:
+-        "0x5F1A23A3baB949D7264AfA4E6fbfEB245685E6B5"
++        "0xdb6c271060571A96A62E3947E373395C89f765Ba"
+      values.multisigThreshold:
+-        "4 of 7 (57%)"
++        "4 of 6 (67%)"
+    }
+```
+
+Generated with discovered.json: 0x8b9c640015dea885190fc1c5ff08d944dbc15902
+
+# Diff at Fri, 30 Aug 2024 07:53:09 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 20491123
+- current block number: 20491123
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20491123 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8) {
+    +++ description: None
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
 Generated with discovered.json: 0xd7a8d47fe04471712dceff60477b77e901ff2530
 
 # Diff at Fri, 23 Aug 2024 09:52:35 GMT:

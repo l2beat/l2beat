@@ -1,34 +1,49 @@
-import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
-import { DaLayer } from '../types/DaLayer'
-import { degenDac } from './bridges/degen'
+import { ChainId } from '@l2beat/shared-pure'
+import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
+import { degen } from '../../../layer3s/degen'
+import { DAC } from '../templates/dac-template'
+import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
-export const degenLayer: DaLayer = {
-  id: 'degen-dac-layer',
-  type: 'DaLayer',
-  kind: 'DAC',
-  display: {
-    name: 'Data Availability Committee (DAC)',
-    slug: 'degen',
-    description:
-      'Set of parties responsible for signing and attesting to the availability of data.',
-    links: {
-      websites: [],
-      documentation: [],
-      repositories: [],
-      apps: [],
-      explorers: [],
-      socialMedia: [],
+const discovery = new ProjectDiscovery('degen', 'base')
+
+const dac = discovery.getContractValue<{
+  membersCount: number
+  requiredSignatures: number
+}>('SequencerInbox', 'dacKeyset')
+const { membersCount, requiredSignatures } = dac
+
+export const degenDac = DAC({
+  project: degen,
+  bridge: {
+    contracts: {
+      addresses: [
+        discovery.getContractDetails(
+          'SequencerInbox',
+          'Main entry point for the Sequencer submitting transaction batches.',
+        ),
+      ],
+      risks: [],
+    },
+    permissions: [
+      // Members: DAC uses BLS sigs, not EOAs
+      {
+        name: 'Sequencers',
+        accounts: discovery.getPermissionsByRole('Sequencer'),
+        description:
+          'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
+        chain: discovery.chain,
+      },
+      ...discovery.getMultisigPermission(
+        'RollupOwnerMultisig',
+        'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',
+      ),
+    ],
+    chain: ChainId.ETHEREUM,
+    requiredMembers: requiredSignatures,
+    totalMembers: membersCount,
+    transactionDataType: DacTransactionDataType.TransactionDataCompressed,
+    members: {
+      type: 'unknown',
     },
   },
-  technology: `## Simple Committee
-  The Data Availability Committee (DAC) is a set of trusted parties responsible for storing data off-chain and serving it upon demand. 
-  The security guarantees of DACs depend on the specific setup and can vary significantly based on the criteria for selecting committee members, 
-  their operational transparency, and the mechanisms in place to handle disputes and failures.
-  `,
-  bridges: [degenDac],
-  usedIn: [...degenDac.usedIn],
-  risks: {
-    economicSecurity: DaEconomicSecurityRisk.Unknown,
-    fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
-  },
-}
+})

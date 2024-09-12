@@ -1,7 +1,7 @@
 import { range } from 'lodash'
-import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
-import { PentagonRosetteSkeleton } from '~/app/_components/rosette/pentagon/pentagon-rosette-skeleton'
-import { Skeleton } from '~/app/_components/skeleton'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { Skeleton } from '~/components/core/skeleton'
+import { PentagonRosetteSkeleton } from '~/components/rosette/pentagon/pentagon-rosette-skeleton'
 import { cn } from '~/utils/cn'
 
 const classes = (className: string) =>
@@ -65,7 +65,7 @@ function Desktop({ children }: { children: React.ReactNode }) {
 function Mobile({ children }: { children: React.ReactNode }) {
   return (
     <div>
-      <div className="flex h-[54px] flex-nowrap items-center space-x-3">
+      <div className="flex h-[54px] flex-nowrap items-center space-x-3 px-4">
         {range(6).map((i) => (
           <Skeleton
             key={i}
@@ -73,7 +73,7 @@ function Mobile({ children }: { children: React.ReactNode }) {
           />
         ))}
       </div>
-      <div className="-mx-4 bg-gray-100 px-4 dark:bg-zinc-900">
+      <div className="bg-gray-100 px-4 dark:bg-zinc-900">
         {children}
         <div className="w-full space-y-4">
           <AboutSectionLoading lines={5} />
@@ -93,7 +93,9 @@ function Mobile({ children }: { children: React.ReactNode }) {
           <Skeleton className={classes('w-[180px] h-[22px]')} />
         </div>
       </div>
-      <Skeleton className={classes('h-[800px] w-full mt-6')} />
+      <div className="px-4">
+        <Skeleton className={classes('h-[800px] w-full mt-6 px-4')} />
+      </div>
     </div>
   )
 }

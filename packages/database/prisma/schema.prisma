@@ -22,159 +22,155 @@ model Stake {
   thresholdStake Float  @db.Real
 }
 
-// TODO: when adding back token db models below
-// - delete /kysely/token-db directory
-// - generete kysely types
-// - change references '/kysely/token-db/types' to '/kysely/generated/types'
+model BridgeEscrow {
+  id                 String          @id @db.Char(21)
+  networkId          String          @db.Char(21)
+  network            Network         @relation("network", fields: [networkId], references: [id])
+  address            String
+  externalBridgeId   String?         @db.Char(21)
+  externalBridge     ExternalBridge? @relation(fields: [externalBridgeId], references: [id])
+  canonicalNetworkId String?         @db.Char(21)
+  canonicalNetwork   Network?        @relation("canonicalNetwork", fields: [canonicalNetworkId], references: [id])
+  tokens             Token[]
+  updatedAt          DateTime        @updatedAt
+  createdAt          DateTime        @default(now())
 
-// model BridgeEscrow {
-//   id                 String          @id @db.Char(21)
-//   networkId          String          @db.Char(21)
-//   network            Network         @relation("network", fields: [networkId], references: [id])
-//   address            String
-//   externalBridgeId   String?         @db.Char(21)
-//   externalBridge     ExternalBridge? @relation(fields: [externalBridgeId], references: [id])
-//   canonicalNetworkId String?         @db.Char(21)
-//   canonicalNetwork   Network?        @relation("canonicalNetwork", fields: [canonicalNetworkId], references: [id])
-//   tokens             Token[]
-//   updatedAt          DateTime        @default(now()) @updatedAt
-//   createdAt          DateTime        @default(now())
+  @@unique([networkId, address])
+}
 
-//   @@unique([networkId, address])
-// }
+enum ExternalBridgeType {
+  Axelar
+  LayerZeroV1
+  Orbit
+  Wormhole
+}
 
-// enum ExternalBridgeType {
-//   Axelar
-//   LayerZeroV1
-//   Orbit
-//   Wormhole
-// }
+model ExternalBridge {
+  id      String             @id @db.Char(21)
+  name    String             @db.VarChar(256)
+  type    ExternalBridgeType @unique
+  tokens  TokenBridge[]
+  escrows BridgeEscrow[]
 
-// model ExternalBridge {
-//   id        String             @id @db.Char(21)
-//   name      String             @db.VarChar(256)
-//   type      ExternalBridgeType @unique
-//   tokens    TokenBridge[]
-//   escrows   BridgeEscrow[]
-//   updatedAt DateTime           @default(now()) @updatedAt
-//   createdAt DateTime           @default(now())
-// }
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
 
-// model Deployment {
-//   id              String    @id @db.Char(21)
-//   tokenId         String    @unique
-//   token           Token     @relation(fields: [tokenId], references: [id])
-//   txHash          String?   @db.Char(66)
-//   blockNumber     Int?
-//   timestamp       DateTime? @db.Timestamp(6)
-//   from            String?
-//   to              String?
-//   isDeployerEoa   Boolean?
-//   sourceAvailable Boolean
-//   updatedAt       DateTime  @default(now()) @updatedAt
-//   createdAt       DateTime  @default(now())
-// }
+model Deployment {
+  id              String    @id @db.Char(21)
+  tokenId         String    @unique
+  token           Token     @relation(fields: [tokenId], references: [id])
+  txHash          String?   @db.Char(66)
+  blockNumber     Int?
+  timestamp       DateTime? @db.Timestamp(6)
+  from            String?
+  to              String?
+  isDeployerEoa   Boolean?
+  sourceAvailable Boolean
+  updatedAt       DateTime  @updatedAt
+  createdAt       DateTime  @default(now())
+}
 
-// enum ExplorerType {
-//   Etherscan
-// }
+enum ExplorerType {
+  Etherscan
+}
 
-// model NetworkRpc {
-//   id        String   @id @db.Char(21)
-//   networkId String   @db.Char(21)
-//   network   Network  @relation(fields: [networkId], references: [id])
-//   url       String
-//   updatedAt DateTime @default(now()) @updatedAt
-//   createdAt DateTime @default(now())
-// }
+model NetworkRpc {
+  id        String   @id @db.Char(21)
+  networkId String   @db.Char(21)
+  network   Network  @relation(fields: [networkId], references: [id])
+  url       String
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
 
-// model NetworkExplorer {
-//   id        String       @id @db.Char(21)
-//   networkId String       @db.Char(21)
-//   network   Network      @relation(fields: [networkId], references: [id])
-//   type      ExplorerType
-//   url       String
-//   apiKey    String
-//   updatedAt DateTime     @default(now()) @updatedAt
-//   createdAt DateTime     @default(now())
+model NetworkExplorer {
+  id        String       @id @db.Char(21)
+  networkId String       @db.Char(21)
+  network   Network      @relation(fields: [networkId], references: [id])
+  type      ExplorerType
+  url       String
+  apiKey    String
+  updatedAt DateTime     @updatedAt
+  createdAt DateTime     @default(now())
 
-//   @@unique(networkId)
-//   @@unique([networkId, type])
-// }
+  @@unique(networkId)
+  @@unique([networkId, type])
+}
 
-// model Network {
-//   id                         String           @id @db.Char(21)
-//   chainId                    Int
-//   name                       String           @db.VarChar(256)
-//   coingeckoId                String?          @unique @db.VarChar(256)
-//   axelarId                   String?          @db.VarChar(256)
-//   axelarGatewayAddress       String?          @db.Char(42)
-//   orbitId                    String?          @db.VarChar(256)
-//   wormholeId                 String?          @db.VarChar(256)
-//   layerZeroV1EndpointAddress String?          @db.Char(42)
-//   bridgeEscrows              BridgeEscrow[]   @relation("network")
-//   canonicalBridgeEscrows     BridgeEscrow[]   @relation("canonicalNetwork")
-//   rpcs                       NetworkRpc[]
-//   explorer                   NetworkExplorer?
-//   tokens                     Token[]
-//   updatedAt                  DateTime         @default(now()) @updatedAt
-//   createdAt                  DateTime         @default(now())
+model Network {
+  id                         String           @id @db.Char(21)
+  chainId                    Int
+  name                       String           @db.VarChar(256)
+  coingeckoId                String?          @unique @db.VarChar(256)
+  axelarId                   String?          @db.VarChar(256)
+  axelarGatewayAddress       String?          @db.Char(42)
+  orbitId                    String?          @db.VarChar(256)
+  wormholeId                 String?          @db.VarChar(256)
+  layerZeroV1EndpointAddress String?          @db.Char(42)
+  logoUrl                    String?          @db.VarChar(256)
+  bridgeEscrows              BridgeEscrow[]   @relation("network")
+  canonicalBridgeEscrows     BridgeEscrow[]   @relation("canonicalNetwork")
+  rpcs                       NetworkRpc[]
+  explorer                   NetworkExplorer?
+  tokens                     Token[]
+  updatedAt                  DateTime         @updatedAt
+  createdAt                  DateTime         @default(now())
+}
 
-// }
+model TokenBridge {
+  id               String          @id @db.Char(21)
+  sourceTokenId    String          @db.Char(21)
+  sourceToken      Token           @relation("bridgedTo", fields: [sourceTokenId], references: [id])
+  targetTokenId    String          @unique @db.Char(21)
+  targetToken      Token           @relation("bridgedFrom", fields: [targetTokenId], references: [id])
+  externalBridgeId String?         @db.Char(21)
+  externalBridge   ExternalBridge? @relation(fields: [externalBridgeId], references: [id])
+  updatedAt        DateTime        @updatedAt
+  createdAt        DateTime        @default(now())
+}
 
-// model TokenBridge {
-//   id               String          @id @db.Char(21)
-//   sourceTokenId    String          @db.Char(21)
-//   sourceToken      Token           @relation("bridgedTo", fields: [sourceTokenId], references: [id])
-//   targetTokenId    String          @unique @db.Char(21)
-//   targetToken      Token           @relation("bridgedFrom", fields: [targetTokenId], references: [id])
-//   externalBridgeId String?         @db.Char(21)
-//   externalBridge   ExternalBridge? @relation(fields: [externalBridgeId], references: [id])
-//   updatedAt        DateTime        @default(now()) @updatedAt
-//   createdAt        DateTime        @default(now())
-// }
+model TokenMeta {
+  id           String   @id @db.Char(21)
+  tokenId      String   @db.Char(21)
+  token        Token    @relation(fields: [tokenId], references: [id])
+  externalId   String?  @db.VarChar(256)
+  source       String   @db.VarChar(256)
+  name         String?  @db.VarChar(256)
+  symbol       String?  @db.VarChar(32)
+  decimals     Int?
+  logoUrl      String?  @db.VarChar(256)
+  contractName String?  @db.VarChar(256)
+  updatedAt    DateTime @updatedAt
+  createdAt    DateTime @default(now())
 
-// model TokenMeta {
-//   id           String   @id @db.Char(21)
-//   tokenId      String   @db.Char(21)
-//   token        Token    @relation(fields: [tokenId], references: [id])
-//   externalId   String?  @db.VarChar(256)
-//   source       String   @db.VarChar(256)
-//   name         String?  @db.VarChar(256)
-//   symbol       String?  @db.VarChar(32)
-//   decimals     Int?
-//   logoUrl      String?  @db.VarChar(256)
-//   contractName String?  @db.VarChar(256)
-//   updatedAt    DateTime @default(now()) @updatedAt
-//   createdAt    DateTime @default(now())
+  @@unique([tokenId, source])
+}
 
-//   @@unique([tokenId, source])
-// }
+model Token {
+  id          String         @id @db.Char(21)
+  networkId   String         @db.Char(21)
+  network     Network        @relation(fields: [networkId], references: [id])
+  address     String
+  deployment  Deployment?
+  metadata    TokenMeta[]
+  bridgedTo   TokenBridge[]  @relation("bridgedTo")
+  bridgedFrom TokenBridge?   @relation("bridgedFrom")
+  escrows     BridgeEscrow[]
+  updatedAt   DateTime       @updatedAt
+  createdAt   DateTime       @default(now())
 
-// model Token {
-//   id          String         @id @db.Char(21)
-//   networkId   String         @db.Char(21)
-//   network     Network        @relation(fields: [networkId], references: [id])
-//   address     String
-//   deployment  Deployment?
-//   metadata    TokenMeta[]
-//   bridgedTo   TokenBridge[]  @relation("bridgedTo")
-//   bridgedFrom TokenBridge?   @relation("bridgedFrom")
-//   escrows     BridgeEscrow[]
-//   updatedAt   DateTime       @default(now()) @updatedAt
-//   createdAt   DateTime       @default(now())
+  @@unique([networkId, address])
+}
 
-//   @@unique([networkId, address])
-// }
-
-// model Cache {
-//   key         String   @id
-//   value       String
-//   chainId     Int
-//   blockNumber Int?
-//   updatedAt   DateTime @default(now()) @updatedAt
-//   createdAt   DateTime @default(now())
-// }
+model Cache {
+  key         String   @id
+  value       String
+  chainId     Int
+  blockNumber Int?
+  createdAt   DateTime @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime @default(now()) @db.Timestamp(6)
+}
 
 model Activity {
   projectId String   @db.VarChar(255)
@@ -310,14 +306,6 @@ model Price {
   @@id([configurationId, timestamp])
 }
 
-model SequenceProcessor {
-  id            String   @id @db.VarChar(255)
-  lastProcessed Int
-  updatedAt     DateTime @db.Timestamp(6)
-  latest        Int
-  syncedOnce    Boolean  @default(false)
-}
-
 model TvlCleaner {
   repositoryName        String    @id @db.VarChar(255)
   hourlyCleanedUntil    DateTime? @db.Timestamp(6)
@@ -368,7 +356,8 @@ model Value {
   ether                       BigInt   @default(0)
   stablecoin                  BigInt   @default(0)
 
-  @@id([timestamp, projectId, dataSource])
+  @@id([projectId, timestamp, dataSource])
+  @@map("values")
 }
 
 model VerifierStatus {
@@ -399,4 +388,14 @@ model Anomaly {
   duration  Int
 
   @@id([timestamp, projectId, subtype])
+}
+
+model FlatSources {
+  projectName String @db.VarChar(255)
+  chainId     Int
+  blockNumber Int
+  contentHash String @db.VarChar(255)
+  flat        Json
+
+  @@id([projectName, chainId])
 }

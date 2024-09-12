@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xea67e288a5b4518cce9d44247359a2886d5cd8ef
+
+# Diff at Fri, 30 Aug 2024 07:51:03 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 19825348
+- current block number: 19825348
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825348 (main branch discovery), not current.
+
+```diff
+    contract PerpetualGovernanceMultisig (0xC532d2976209A56DdF4a99B844130f7c0daCa7B6) {
+    +++ description: None
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
 Generated with discovered.json: 0x4667d97d555c55a259262c565872eac34b1528da
 
 # Diff at Wed, 21 Aug 2024 10:01:52 GMT:

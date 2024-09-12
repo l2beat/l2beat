@@ -4,6 +4,7 @@ import { CurrentPriceRepository } from './da-beat/current-price/repository'
 import { StakeRepository } from './da-beat/stake/repository'
 import { DailyDiscoveryRepository } from './discovery/daily-discovery/repository'
 import { DiscoveryCacheRepository } from './discovery/discovery-cache/repository'
+import { FlatSourcesRepository } from './discovery/flat-sources/repository'
 import { UpdateMonitorRepository } from './discovery/update-monitor/repository'
 import { UpdateNotifierRepository } from './discovery/update-notifier/repository'
 import { DatabaseClient } from './kysely'
@@ -14,7 +15,6 @@ import { FinalityRepository } from './other/finality/repository'
 import { L2CostPriceRepository } from './other/l2-cost-price/repository'
 import { L2CostRepository } from './other/l2-cost/repository'
 import { LivenessRepository } from './other/liveness/repository'
-import { SequenceProcessorRepository } from './other/sequence-processor/repository'
 import { VerifierStatusRepository } from './other/verifier-status/repository'
 import { BridgeEscrowRepository } from './token-db/bridge-escrow/repository'
 import { CacheRepository } from './token-db/cache/repository'
@@ -56,6 +56,7 @@ export function createDatabase(config?: PoolConfig) {
     discoveryCache: new DiscoveryCacheRepository(db),
     updateMonitor: new UpdateMonitorRepository(db),
     updateNotifier: new UpdateNotifierRepository(db),
+    flatSources: new FlatSourcesRepository(db),
     // #endregion
 
     // #region Token DB
@@ -92,7 +93,6 @@ export function createDatabase(config?: PoolConfig) {
     l2Cost: new L2CostRepository(db),
     l2CostPrice: new L2CostPriceRepository(db),
     liveness: new LivenessRepository(db),
-    sequenceProcessor: new SequenceProcessorRepository(db),
     verifierStatus: new VerifierStatusRepository(db),
     // #endregion
   }

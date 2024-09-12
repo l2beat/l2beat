@@ -1,8 +1,7 @@
-import React from 'react'
-import { CopyButton } from '~/app/_components/copy-button'
+import { CopyButton } from '~/components/copy-button'
 
 import { type CollectionEntry } from '~/content/get-collection'
-import ChiliIcon from '~/icons/chili.svg'
+import { ChiliIcon } from '~/icons/chili'
 
 interface Props {
   entry: CollectionEntry<'glossary'>

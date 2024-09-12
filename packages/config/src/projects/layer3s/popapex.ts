@@ -17,13 +17,13 @@ export const popapex: Layer3 = orbitStackL3({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   display: {
     name: 'Proof of Play Apex',
-    shortName: 'Proof of Play',
+    shortName: 'Apex',
     slug: 'popapex',
     description:
       'Proof of Play Apex is a gaming-focused L3 settling on Arbitrum using the Orbit Stack and AnyTrust DA.',
     purposes: ['Gaming', 'NFT'],
     links: {
-      websites: ['https://proofofplay.gg'],
+      websites: ['https://proofofplay.com/'],
       apps: [
         'https://bridge.arbitrum.io/?destinationChain=pop-apex&sourceChain=arbitrum-one',
         'https://piratenation.game/',
@@ -48,7 +48,7 @@ export const popapex: Layer3 = orbitStackL3({
   },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
-      'RollupOwnerMultisig',
+      'ProofOfPlayMultisig',
       (() => {
         const discoveredAdminOwner = discovery.getAddressFromValue(
           'ProxyAdmin',
@@ -61,7 +61,7 @@ export const popapex: Layer3 = orbitStackL3({
           'EXECUTOR_ROLE',
         ).members[0]
         const discoveredRollupOwnerMultisig = discovery.getContract(
-          'RollupOwnerMultisig',
+          'ProofOfPlayMultisig',
         ).address
         assert(
           discoveredAdminOwner === discoveredUpgradeExecutorAddy &&
@@ -73,5 +73,15 @@ export const popapex: Layer3 = orbitStackL3({
         return description
       })(),
     ),
+  ],
+  milestones: [
+    {
+      name: 'Proof of Play Apex halts for two days',
+      date: '2024-05-13T00:00:00Z',
+      link: 'https://x.com/conduitxyz/status/1790065376975552549',
+      description:
+        'Proof of Play halts for two days due to a chain misconfiguration.',
+      type: 'incident',
+    },
   ],
 })

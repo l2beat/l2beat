@@ -1,7 +1,7 @@
 'use client'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
-import { BasicTable } from '~/app/_components/table/basic-table'
+import { BasicTable } from '~/components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 import { useScalingAssociatedTokensContext } from '../../../_components/scaling-associated-tokens-context'

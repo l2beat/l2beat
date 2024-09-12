@@ -1,8 +1,8 @@
 import { isArray } from 'lodash'
 import { type Metadata } from 'next'
-import { ContentWrapper } from '~/app/_components/content-wrapper'
-import { Markdown } from '~/app/_components/markdown/markdown'
-import { ScrollToTopButton } from '~/app/_components/scroll-to-top-button'
+import { ContentWrapper } from '~/components/content-wrapper'
+import { Markdown } from '~/components/markdown/markdown'
+import { ScrollToTopButton } from '~/components/scroll-to-top-button'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { faqItems } from './faq-items'
 

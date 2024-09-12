@@ -5,8 +5,9 @@ import {
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
 import { isEmpty } from 'lodash'
-import { type ProjectDetailsSection } from '~/app/_components/projects/sections/types'
-import { type RosetteValue } from '~/app/_components/rosette/types'
+import { type ProjectDetailsSection } from '~/components/projects/sections/types'
+import { type RosetteValue } from '~/components/rosette/types'
+import { api } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
@@ -15,6 +16,7 @@ import { getOperatorSection } from '~/utils/project/technology/get-operator-sect
 import { getOtherConsiderationsSection } from '~/utils/project/technology/get-other-considerations-section'
 import { getScalingTechnologySection } from '~/utils/project/technology/get-technology-section'
 import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawals-section'
+import { getTokensForProject } from '../../tvl/tokens/get-tokens-for-project'
 
 interface Params {
   project: Layer3
@@ -25,7 +27,7 @@ interface Params {
   rosetteValues: RosetteValue[]
 }
 
-export function getL3ProjectDetails({
+export async function getL3ProjectDetails({
   project,
   isVerified,
   contractsVerificationStatuses,
@@ -69,7 +71,49 @@ export function getL3ProjectDetails({
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
 
+  const tvlChartData = await api.tvl.chart({
+    range: '7d',
+    filter: { type: 'projects', projectIds: [project.id] },
+  })
+  const activityChartData = await api.activity.chart({
+    range: '30d',
+    filter: { type: 'projects', projectIds: [project.id] },
+  })
+
+  const sortedMilestones =
+    project.milestones?.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    ) ?? []
+
   const items: ProjectDetailsSection[] = []
+
+  const tokens = await getTokensForProject(project)
+
+  if (!project.isUpcoming && !isEmpty(tvlChartData)) {
+    items.push({
+      type: 'ChartSection',
+      props: {
+        id: 'tvl',
+        stacked: true,
+        title: 'Value Locked',
+        projectId: project.id,
+        milestones: sortedMilestones,
+        tokens,
+      },
+    })
+  }
+
+  if (!isEmpty(activityChartData)) {
+    items.push({
+      type: 'ChartSection',
+      props: {
+        id: 'activity',
+        title: 'Activity',
+        projectId: project.id,
+        milestones: project.milestones ?? [],
+      },
+    })
+  }
 
   if (
     !project.isUpcoming &&

@@ -6,7 +6,11 @@ export function mergeBadges(
   definedBadges: BadgeId[],
 ): BadgeId[] {
   const all = definedBadges.concat(inherentBadges)
-  const other = all.filter((b) => badges[b].type === 'Other')
-  const rest = all.filter((b) => badges[b].type !== 'Other')
-  return unionBy(rest, (b) => badges[b].type).concat(other)
+  const allowDuplicates = all.filter(
+    (b) => badges[b].type === 'Other' || badges[b].type === 'VM',
+  ) // do not dedup badges of type 'Other' and 'VM' (multiVM)
+  const rest = all.filter(
+    (b) => badges[b].type !== 'Other' && badges[b].type !== 'VM',
+  )
+  return unionBy(rest, (b) => badges[b].type).concat(allowDuplicates)
 }

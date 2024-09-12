@@ -3,6 +3,7 @@
 import { type Stage } from '@l2beat/config'
 import { type Dispatch, type SetStateAction, useState } from 'react'
 
+import { type TokenBridgedUsing } from '@l2beat/shared-pure'
 import {
   SortingArrowDownIcon,
   SortingArrowUpIcon,
@@ -25,7 +26,7 @@ export type Token = {
     decimals: number
     symbol: string
     iconUrl?: string
-    bridge?: string | null
+    bridgedUsing?: TokenBridgedUsing
     address?: `0x${string}`
   }
   chain: {

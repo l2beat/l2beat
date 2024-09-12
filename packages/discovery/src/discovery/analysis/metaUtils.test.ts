@@ -156,7 +156,6 @@ describe('metaUtils', () => {
       const fields: { [address: string]: DiscoveryContractField } = {
         overhead: {
           target: {
-            description: 'The overhead of the contract',
             role: 'Challenger',
             permissions: [{ type: 'configure', delay: 0 }],
             category: 'Core',
@@ -166,10 +165,15 @@ describe('metaUtils', () => {
         },
         owner: {
           target: {
-            description:
-              'The owner of the contract (some number {{ numberField }} )',
             role: 'Challenger',
-            permissions: [{ type: 'configure', delay: 0 }],
+            permissions: [
+              {
+                type: 'configure',
+                delay: 0,
+                description:
+                  'configuring the {{ $.address }} allows to change this number: {{ numberField }}',
+              },
+            ],
             category: 'Core',
           },
           severity: 'LOW',
@@ -177,11 +181,21 @@ describe('metaUtils', () => {
         },
         resourceConfig: {
           target: {
-            description: 'The resource config of the contract {{ #address }}',
+            // description: 'The resource config of the contract {{ $.address }}',
             role: ['Guardian', 'Challenger'],
             permissions: [
-              { type: 'upgrade', delay: 0 },
-              { type: 'configure', delay: 0 },
+              {
+                type: 'upgrade',
+                delay: 0,
+                description:
+                  'upgrading the {{ $.address }} contract gives access to all funds',
+              },
+              {
+                type: 'configure',
+                delay: 0,
+                description:
+                  'configuring the {{ $.address }} contract allows freeze funds',
+              },
             ],
             category: ['Gateways&Escrows', 'Core'],
           },
@@ -190,7 +204,7 @@ describe('metaUtils', () => {
         },
         scalar: {
           target: {
-            description: 'The scalar of the contract',
+            // description: 'The scalar of the contract',
             role: 'Challenger',
             permissions: [{ type: 'configure', delay: 0 }],
             category: 'Core',
@@ -217,11 +231,17 @@ describe('metaUtils', () => {
       expect(result).toEqual({
         '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
           displayName: undefined,
-          descriptions: ['The owner of the contract (some number 1122 )'],
+          descriptions: undefined,
           roles: new Set(['Challenger']),
           permissions: [
             { type: 'upgrade', delay: 0, target: selfAddress },
-            { type: 'configure', delay: 0, target: selfAddress },
+            {
+              type: 'configure',
+              delay: 0,
+              target: selfAddress,
+              description:
+                'configuring the 0x0000000000000000000000000000000000001234 allows to change this number: 1122',
+            },
           ],
           categories: new Set(['Core']),
           severity: 'LOW',
@@ -230,12 +250,22 @@ describe('metaUtils', () => {
         '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
           displayName: undefined,
           categories: new Set(['Core', 'Gateways&Escrows']),
-          descriptions: [
-            'The resource config of the contract 0x0000000000000000000000000000000000001234',
-          ],
+          descriptions: undefined,
           permissions: [
-            { type: 'upgrade', delay: 0, target: selfAddress },
-            { type: 'configure', delay: 0, target: selfAddress },
+            {
+              type: 'upgrade',
+              delay: 0,
+              target: selfAddress,
+              description:
+                'upgrading the 0x0000000000000000000000000000000000001234 contract gives access to all funds',
+            },
+            {
+              type: 'configure',
+              delay: 0,
+              target: selfAddress,
+              description:
+                'configuring the 0x0000000000000000000000000000000000001234 contract allows freeze funds',
+            },
           ],
           roles: new Set(['Challenger', 'Guardian']),
           severity: 'HIGH',
@@ -244,12 +274,22 @@ describe('metaUtils', () => {
         '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
           displayName: undefined,
           categories: new Set(['Core', 'Gateways&Escrows']),
-          descriptions: [
-            'The resource config of the contract 0x0000000000000000000000000000000000001234',
-          ],
+          descriptions: undefined,
           permissions: [
-            { type: 'upgrade', delay: 0, target: selfAddress },
-            { type: 'configure', delay: 0, target: selfAddress },
+            {
+              type: 'upgrade',
+              delay: 0,
+              target: selfAddress,
+              description:
+                'upgrading the 0x0000000000000000000000000000000000001234 contract gives access to all funds',
+            },
+            {
+              type: 'configure',
+              delay: 0,
+              target: selfAddress,
+              description:
+                'configuring the 0x0000000000000000000000000000000000001234 contract allows freeze funds',
+            },
           ],
           roles: new Set(['Challenger', 'Guardian']),
           severity: 'HIGH',
@@ -444,7 +484,7 @@ describe('metaUtils', () => {
   describe('interpolateDescription', () => {
     it('should correctly interpolate variables in the description', () => {
       const description =
-        'Contract with address {{ #address }} and value {{ someValue }}'
+        'Contract with address {{ $.address }} and value {{ someValue }}'
       const analysis = generateFakeAnalysis(
         EthereumAddress.from('0x1234567890123456789012345678901234567890'),
         undefined,

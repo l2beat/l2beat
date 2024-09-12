@@ -166,7 +166,7 @@ export const ronin: Bridge = {
       ),
       discovery.getContractDetails(
         'PauseEnforcer',
-        `Contract allowing PAUSER to pause the bridge.`,
+        `Contract owning the emergencyPauser role in the MainchainGateway and managing its access control.`,
       ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
@@ -189,10 +189,10 @@ export const ronin: Bridge = {
       description: `List of governors that can update their corresponding operators, upgrade and change bridge parameters.`,
     },
     {
-      name: 'Ronin Bridge AdminMultiSig', // non-standard MultiSig
+      name: 'RoninManagerMultiSig', // non-standard MultiSig
       accounts: [
         {
-          address: discovery.getContract('RoninBridgeAdminMultiSig').address,
+          address: discovery.getContract('RoninManagerMultiSig').address,
           type: 'MultiSig',
         },
       ],
@@ -200,20 +200,41 @@ export const ronin: Bridge = {
         'Admin of the Ronin Bridge, can change Sentry Account and accounts able to unlock withdrawals. This is a non-standard MultiSig with 2 / 3 threshold.',
     },
     {
-      name: 'Ronin Bridge AdminMultiSig participants', // non-standard MultiSig owners
+      name: 'RoninManagerMultiSig participants', // non-standard MultiSig owners
       accounts: discovery.getPermissionedAccounts(
-        'RoninBridgeAdminMultiSig',
+        'RoninManagerMultiSig',
         'getOwners',
       ),
 
       description: 'Those are the participants of the AdminMultisig.',
     },
+    ...discovery.getMultisigPermission(
+      'RoninAdminMultisig',
+      'Can upgrade the bridge and the MainchainBridgeManager instantly by being Admin of the latter. Can add and remove sentries (un-/pausers).',
+    ),
     {
       name: 'MainchainGatewayV3 Sentry Account',
       accounts: [
         discovery.getPermissionedAccount('MainchainGateway', 'emergencyPauser'),
       ],
-      description: 'An address that can pause the bridge in case of emergency.',
+      description:
+        'An address that can pause the bridge in case of emergency (can be another contract).',
+    },
+    {
+      name: 'PauseEnforcer Sentries',
+      accounts: discovery.getAccessControlRolePermission(
+        'PauseEnforcer',
+        'SENTRY_ROLE',
+      ),
+      description: `These accounts can pause and unpause the bridge through the PauseEnforcer.`,
+    },
+    {
+      name: 'PauseEnforcer Admins',
+      accounts: discovery.getAccessControlRolePermission(
+        'PauseEnforcer',
+        'DEFAULT_ADMIN_ROLE',
+      ),
+      description: `These accounts can add and remove sentries (bridge pause-/unpausers) in the PauseEnforcer.`,
     },
     {
       name: 'MainchainGatewayV3 Withdrawal Unlockers',
@@ -222,6 +243,20 @@ export const ronin: Bridge = {
         'WITHDRAWAL_UNLOCKER_ROLE',
       ),
       description: 'Addresses that can unlock withdrawals.',
+    },
+  ],
+  milestones: [
+    {
+      name: 'Whitehat hack for $12M',
+      date: '2024-08-06T00:00:00Z',
+      link: 'https://x.com/Ronin_Network/status/1820804772917588339',
+      type: 'incident',
+    },
+    {
+      name: 'Ronin bridge hacked for ~$625M',
+      date: '2022-03-23T00:00:00Z',
+      link: 'https://web.archive.org/web/20230518085104/https://blog.roninchain.com/p/back-to-building-ronin-security-breach',
+      type: 'incident',
     },
   ],
 }

@@ -1,64 +1,68 @@
+import { avail } from './blockchain/avail/avail'
 import { celestia } from './blockchain/celestia/celestia'
 import { ethereum } from './blockchain/ethereum/ethereum'
+import { memo } from './blockchain/memo/memo'
 import { near } from './blockchain/near/near'
-import { apexLayer } from './dac/apex'
-import { arbitrumnovaLayer } from './dac/arbitrumnova'
-import { astarzkEVMLayer } from './dac/astarzkEVM'
-import { degenLayer } from './dac/degen'
-import { edgelessLayer } from './dac/edgeless'
+import { apexDac } from './dac/apex'
+import { arbitrumNovaDac } from './dac/arbitrumnova'
+import { astarZkEvmDac } from './dac/astarzkEVM'
+import { degenDac } from './dac/degen'
+import { edgelessDac } from './dac/edgeless'
 import { eigenDA } from './dac/eigenDA'
-import { hychainLayer } from './dac/hychain'
-import { immutableXLayer } from './dac/immutablex'
-import { l3xLayer } from './dac/l3x'
+import { hychainDac } from './dac/hychain'
+import { immutableXDac } from './dac/immutablex'
+import { l3xDac } from './dac/l3x'
 import { mantleDA } from './dac/mantleDA'
-import { moltenLayer } from './dac/molten'
-import { myriaLayer } from './dac/myria'
-import { playblockLayer } from './dac/playblock'
-import { popapexLayer } from './dac/popapex'
-import { rariLayer } from './dac/rari'
-import { realLayer } from './dac/real'
-import { redsonicLayer } from './dac/redsonic'
-import { reyaLayer } from './dac/reya'
-import { rhinofiLayer } from './dac/rhinofi'
-import { sankoLayer } from './dac/sanko'
-import { sorareLayer } from './dac/sorare'
-import { tanxLayer } from './dac/tanx'
-import { witnessLayer } from './dac/witness'
-import { xaiLayer } from './dac/xai'
-import { xlayerLayer } from './dac/xlayer'
-import { zkfairLayer } from './dac/zkfair'
+import { moltenDac } from './dac/molten'
+import { myriaDac } from './dac/myria'
+import { playblockDac } from './dac/playblock'
+import { popapexDac } from './dac/popapex'
+import { rariDac } from './dac/rari'
+import { realDac } from './dac/real'
+import { redsonicDac } from './dac/redsonic'
+import { reyaDac } from './dac/reya'
+import { rhinofiDac } from './dac/rhinofi'
+import { sankoDac } from './dac/sanko'
+import { sorareDac } from './dac/sorare'
+import { tanxDac } from './dac/tanx'
+import { witnessDac } from './dac/witness'
+import { xaiDac } from './dac/xai'
+import { xlayerDac } from './dac/xlayer'
+import { zkfairDac } from './dac/zkfair'
 import { DaLayer } from './types/DaLayer'
 
 export * from './types'
 
 export const daLayers: DaLayer[] = [
-  rhinofiLayer,
-  zkfairLayer,
-  arbitrumnovaLayer,
-  apexLayer,
-  astarzkEVMLayer,
-  immutableXLayer,
+  avail,
+  rhinofiDac,
+  zkfairDac,
+  arbitrumNovaDac,
+  apexDac,
+  astarZkEvmDac,
+  immutableXDac,
   celestia,
   ethereum,
   near,
-  xlayerLayer,
-  realLayer,
-  reyaLayer,
-  sorareLayer,
-  tanxLayer,
-  hychainLayer,
-  sankoLayer,
-  myriaLayer,
-  edgelessLayer,
-  redsonicLayer,
-  witnessLayer,
-  degenLayer,
-  rariLayer,
-  xaiLayer,
-  popapexLayer,
-  moltenLayer,
-  l3xLayer,
-  playblockLayer,
+  memo,
+  xlayerDac,
+  realDac,
+  reyaDac,
+  sorareDac,
+  tanxDac,
+  hychainDac,
+  sankoDac,
+  myriaDac,
+  edgelessDac,
+  redsonicDac,
+  witnessDac,
+  degenDac,
+  rariDac,
+  xaiDac,
+  popapexDac,
+  moltenDac,
+  l3xDac,
+  playblockDac,
   mantleDA,
   eigenDA,
 ]

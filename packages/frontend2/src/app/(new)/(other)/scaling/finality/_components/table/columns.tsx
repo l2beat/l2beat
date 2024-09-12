@@ -1,12 +1,12 @@
 import { formatSeconds } from '@l2beat/shared-pure'
 import { type Row, createColumnHelper } from '@tanstack/react-table'
-import { Badge } from '~/app/_components/badge/badge'
-import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
+import { Badge } from '~/components/badge/badge'
+import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import {
   TypeCell,
   TypeExplanationTooltip,
-} from '~/app/_components/table/cells/type-cell'
-import { getCommonProjectColumns } from '~/app/_components/table/common-project-columns'
+} from '~/components/table/cells/type-cell'
+import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/types'
 import { FinalityDurationCell } from './finality-duration-cell'
 

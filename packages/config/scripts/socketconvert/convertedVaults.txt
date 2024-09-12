@@ -1,0 +1,128 @@
+{
+    address: EthereumAddress('0x8E83aED64a0Ad5d7d3A57B6172F14FcA5bfADE56'),
+    sinceTimestamp: new UnixTime(),
+    source: 'external',
+    bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+    tokens: ['USDC.e'],
+    chain: 'arbitrum',
+      includeInTotal: false,
+  },
+{
+    address: EthereumAddress('0x6aDFbA9e45b5c1685007Fe48A784e971e412f839'),
+    sinceTimestamp: new UnixTime(),
+    source: 'external',
+    bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+    tokens: ['USDC'],
+    chain: 'arbitrum',
+      includeInTotal: false,
+  },
+{
+    address: EthereumAddress('0x8b961A67f49bc6334CBA09dbd70a2F14Fc8226a1'),
+    sinceTimestamp: new UnixTime(),
+    source: 'external',
+    bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+    tokens: ['WETH'],
+    chain: 'arbitrum',
+      includeInTotal: false,
+  },
+{
+    address: EthereumAddress('0x88FA3A8624065f3Bf2eDe507b6Fd554C58e5b785'),
+    sinceTimestamp: new UnixTime(),
+    source: 'external',
+    bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+    tokens: ['WBTC'],
+    chain: 'arbitrum',
+      includeInTotal: false,
+  },
+{
+    address: EthereumAddress('0x3222f0F281F1630C50f86fFaA29A29A06559eca8'),
+    sinceTimestamp: new UnixTime(),
+    source: 'external',
+    bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+    tokens: ['USDT'],
+    chain: 'arbitrum',
+      includeInTotal: false,
+  },
+{
+    address: EthereumAddress('0x0aE2F220cE9698b1c9853f7288aC882150291dca'),
+    sinceTimestamp: new UnixTime(),
+    source: 'external',
+    bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+    tokens: ['ETH'],
+    chain: 'arbitrum',
+      includeInTotal: false,
+  },
+{
+    address: EthereumAddress('0x023d27390aEd70aA39823A1e1e06a0b075400214'),
+    sinceTimestamp: new UnixTime(),
+    source: 'external',
+    bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+    tokens: ['ARB'],
+    chain: 'arbitrum',
+      includeInTotal: false,
+  },
+{
+    address: EthereumAddress('0x65B98c6841C44dE72533764d3456068393D8232E'),
+    sinceTimestamp: new UnixTime(),
+    source: 'external',
+    bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+    tokens: ['WINR'],
+    chain: 'arbitrum',
+      includeInTotal: false,
+  }

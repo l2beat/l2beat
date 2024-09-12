@@ -1,4 +1,5 @@
 import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { PROOFS } from './common/proofSystems'
 import { ZkCatalogProject } from './types'
 
 export const blobstreamx: ZkCatalogProject = {
@@ -7,6 +8,7 @@ export const blobstreamx: ZkCatalogProject = {
     name: 'BlobstreamX',
   },
   proofVerification: {
+    shortDescription: 'Celestia ZK light client implementation.',
     aggregation: false,
     verifiers: [
       {
@@ -21,15 +23,12 @@ export const blobstreamx: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Final wrap',
-            proofSystem: 'Plonk SNARK',
-            mainArithmetization: 'Plonk',
-            mainPCS: 'KZG',
-            trustedSetup: '?',
+            ...PROOFS.PLONKSNARK('?'),
           },
           {
             name: 'Main circuit',
             proofSystem: 'Plonky2',
-            mainArithmetization: 'Plonk',
+            mainArithmetization: 'Plonkish',
             mainPCS: 'FRI',
             trustedSetup: 'None',
             link: 'https://github.com/succinctlabs/blobstreamx/blob/main/circuits/header_range.rs',
@@ -48,15 +47,12 @@ export const blobstreamx: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Final wrap',
-            proofSystem: 'Plonk SNARK',
-            mainArithmetization: 'Plonk',
-            mainPCS: 'KZG',
-            trustedSetup: '?',
+            ...PROOFS.PLONKSNARK('?'),
           },
           {
             name: 'Main circuit',
             proofSystem: 'Plonky2',
-            mainArithmetization: 'Plonk',
+            mainArithmetization: 'Plonkish',
             mainPCS: 'FRI',
             trustedSetup: 'None',
             link: 'https://github.com/succinctlabs/blobstreamx/blob/main/circuits/next_header.rs',
@@ -75,15 +71,12 @@ export const blobstreamx: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Final wrap',
-            proofSystem: 'Plonk SNARK',
-            mainArithmetization: 'Plonk',
-            mainPCS: 'KZG',
-            trustedSetup: '?',
+            ...PROOFS.PLONKSNARK('?'),
           },
           {
             name: 'Main circuit',
             proofSystem: 'Plonky2',
-            mainArithmetization: 'Plonk',
+            mainArithmetization: 'Plonkish',
             mainPCS: 'FRI',
             trustedSetup: 'None',
             link: 'https://github.com/succinctlabs/blobstreamx/blob/main/circuits/header_range.rs',
@@ -102,15 +95,12 @@ export const blobstreamx: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Final wrap',
-            proofSystem: 'Plonk SNARK',
-            mainArithmetization: 'Plonk',
-            mainPCS: 'KZG',
-            trustedSetup: '?',
+            ...PROOFS.PLONKSNARK('?'),
           },
           {
             name: 'Main circuit',
             proofSystem: 'Plonky2',
-            mainArithmetization: 'Plonk',
+            mainArithmetization: 'Plonkish',
             mainPCS: 'FRI',
             trustedSetup: 'None',
             link: 'https://github.com/succinctlabs/blobstreamx/blob/main/circuits/next_header.rs',
@@ -129,15 +119,12 @@ export const blobstreamx: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Final wrap',
-            proofSystem: 'Plonk SNARK',
-            mainArithmetization: 'Plonk',
-            mainPCS: 'KZG',
-            trustedSetup: '?',
+            ...PROOFS.PLONKSNARK('?'),
           },
           {
             name: 'Main circuit',
             proofSystem: 'Plonky2',
-            mainArithmetization: 'Plonk',
+            mainArithmetization: 'Plonkish',
             mainPCS: 'FRI',
             trustedSetup: 'None',
             link: 'https://github.com/succinctlabs/blobstreamx/blob/main/circuits/header_range.rs',
@@ -156,15 +143,12 @@ export const blobstreamx: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Final wrap',
-            proofSystem: 'Plonk SNARK',
-            mainArithmetization: 'Plonk',
-            mainPCS: 'KZG',
-            trustedSetup: '?',
+            ...PROOFS.PLONKSNARK('?'),
           },
           {
             name: 'Main circuit',
             proofSystem: 'Plonky2',
-            mainArithmetization: 'Plonk',
+            mainArithmetization: 'Plonkish',
             mainPCS: 'FRI',
             trustedSetup: 'None',
             link: 'https://github.com/succinctlabs/blobstreamx/blob/main/circuits/next_header.rs',

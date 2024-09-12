@@ -1,3 +1,114 @@
+Generated with discovered.json: 0x3c4c51c3c32febb0ab92e52ac6d22d7110040697
+
+# Diff at Wed, 11 Sep 2024 08:36:30 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@407590ebfbad0b4f799badc3ad5fce90a7eaed11 block: 20661845
+- current block number: 20726217
+
+## Description
+
+New Validium deployed: https://haust.network/
+
+Not posting batches yet.
+
+Current rollupIDs:
+    1: pol zkEVM 1101 (type3) 🚀 ✔️
+	2: astar 3776 (type4) 🚀 ✔️
+	3: OkX X Layer 196 (type4) 🚀 ✔️
+	4: OEV network chainid 4913 (type4) X (pivoted to orbit)
+	5: gptprotocol.org 1511670449 (type4) 🚀 ✔️
+	6: witnesschain 1702448187 (type4) 🚀 ✔️
+	7: prism (by prism bridge?) 994873017 (type4) 🚀
+	8: pay network (wirex) 31415 (type4) 🚀 ✔️
+	9: silicon-zk 511252203 (type4) 🚀
+   10: silicon-zk 2355 (type4) 🚀
+   11: haust.network 999 (type4)
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1.
+      values.isVerifyingBatches.10:
++        [false]
+      values.rollupCount:
+-        10
++        11
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.10:
++        ["0xB234F18738d9531CAD6ae6d9A587d09fe200272C",999,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4]
+    }
+```
+
+Generated with discovered.json: 0x152fbc09283611d598b5ed010ea0fabefbef82d7
+
+# Diff at Mon, 02 Sep 2024 08:59:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8fcb30f6c613b5454aa9ecdec05a118442e9dc7b block: 20585049
+- current block number: 20661845
+
+## Description
+
+Scheduled tx is executed giving a yet unknown Multisig the CREATE_ROLLUP role. This role can add new rollups that must use an existing rollup type. So far the role was held only by the RollupManagerAdminMultisig. As this permission does not affect existing chains it is not added to the shared template.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      values.accessControl.CREATE_ROLLUP.members.1:
++        "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract CreateRollupMultisig (0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat/CreateRollupMultisig/GnosisSafe.sol      | 952 +++++++++++++++++++++
+ .../CreateRollupMultisig/GnosisSafeProxy.p.sol     |  34 +
+ 2 files changed, 986 insertions(+)
+```
+
+Generated with discovered.json: 0xd2495f646a0033a5e87873cdc7867242321923e3
+
+# Diff at Fri, 30 Aug 2024 07:59:23 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 20585049
+- current block number: 20585049
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20585049 (main branch discovery), not current.
+
+```diff
+    contract SharedProxyAdmin (0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) {
+    +++ description: None
+      receivedPermissions.2.via:
+-        []
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
 Generated with discovered.json: 0x203942c049270f82399f06fe7b509040c8ff746d
 
 # Diff at Fri, 23 Aug 2024 09:55:20 GMT:

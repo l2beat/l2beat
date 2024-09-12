@@ -1,4 +1,4 @@
-import { Checkbox } from '~/app/_components/checkbox'
+import { Checkbox } from '~/components/core/checkbox'
 import { type CommonScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
 import { BaseScalingFilters } from './base-scaling-filters'
 import { useScalingAssociatedTokensContext } from './scaling-associated-tokens-context'

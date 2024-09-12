@@ -1,17 +1,16 @@
-import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
+import { INDEXER_NAMES, createAmountId } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
-import { createAmountId } from '../utils/createAmountId'
 import { CirculatingSupplyIndexerDeps } from './types'
 
-const NAME = 'circulating_supply_indexer'
 export class CirculatingSupplyIndexer extends ManagedChildIndexer {
   private readonly configurationId: string
 
   constructor(private readonly $: CirculatingSupplyIndexerDeps) {
     super({
       ...$,
-      name: NAME,
+      name: INDEXER_NAMES.CIRCULATING_SUPPLY,
       tag: $.configuration.coingeckoId.toString(),
       updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       configHash: $.minHeight.toString(),
@@ -65,9 +64,5 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
     }
 
     return targetHeight
-  }
-
-  static getId(coingeckoId: CoingeckoId) {
-    return Indexer.createId(NAME, coingeckoId.toString())
   }
 }

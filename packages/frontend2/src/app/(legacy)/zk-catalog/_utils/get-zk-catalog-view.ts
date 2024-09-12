@@ -12,16 +12,21 @@ export function getZkCatalogView(
   verifiersStatuses: VerifiersStatuses,
 ): ZkCatalogViewProps {
   return {
-    items: projects.map((project) => {
-      const proofVerification = getProofVerification(project, verifiersStatuses)
+    items: projects
+      .sort((a, b) => a.display.name.localeCompare(b.display.name))
+      .map((project) => {
+        const proofVerification = getProofVerification(
+          project,
+          verifiersStatuses,
+        )
 
-      return {
-        name: project.display.name,
-        slug: project.display.slug,
-        trustedSetup: getTrustedSetup(proofVerification.verifiers),
-        ...proofVerification,
-      }
-    }),
+        return {
+          name: project.display.name,
+          slug: project.display.slug,
+          trustedSetup: getTrustedSetup(proofVerification.verifiers),
+          ...proofVerification,
+        }
+      }),
     askForVerificationLink: ZK_CATALOG_ASK_FOR_VERIFICATION_LINK,
   }
 }

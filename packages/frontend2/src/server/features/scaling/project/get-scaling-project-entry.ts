@@ -47,7 +47,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
           implementationChangeReport,
           rosetteValues: getScalingRosetteValues(project.riskView),
         })
-      : getL3ProjectDetails({
+      : await getL3ProjectDetails({
           project,
           isVerified,
           contractsVerificationStatuses,

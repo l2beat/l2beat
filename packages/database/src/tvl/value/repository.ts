@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 import { QueryCreator } from 'kysely'
 import { BaseRepository } from '../../BaseRepository'
 import { DB } from '../../kysely'
@@ -22,27 +22,6 @@ export class ValueRepository extends BaseRepository {
         'in',
         projectIds.map((id) => id.toString()),
       )
-      .orderBy('timestamp', 'asc')
-      .execute()
-    return rows.map(toRecord)
-  }
-
-  async getForProjectsInRange(
-    projectIds: ProjectId[],
-    { from, to = UnixTime.now() }: { from: UnixTime; to?: UnixTime },
-  ): Promise<ValueRecord[]> {
-    if (projectIds.length === 0) return []
-
-    const rows = await this.db
-      .selectFrom('Value')
-      .select(selectValue)
-      .where(
-        'projectId',
-        'in',
-        projectIds.map((id) => id.toString()),
-      )
-      .where('timestamp', '>', from.toDate())
-      .where('timestamp', '<=', to.toDate())
       .orderBy('timestamp', 'asc')
       .execute()
     return rows.map(toRecord)

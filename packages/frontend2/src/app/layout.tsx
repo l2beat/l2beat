@@ -1,17 +1,16 @@
-import { VercelToolbar } from '@vercel/toolbar/next'
 import { type Metadata } from 'next'
 import PlausibleProvider from 'next-plausible'
 import { ThemeProvider } from 'next-themes'
 import { env } from '~/env'
 import { TRPCReactProvider } from '~/trpc/react'
-import { restoreCollapsibleNavStateScript } from './_components/nav/consts'
+import { restoreCollapsibleNavStateScript } from '../components/nav/consts'
 
 import { getCollection } from '~/content/get-collection'
 import { getDefaultMetadata } from '~/utils/metadata'
+import { TooltipProvider } from '../components/core/tooltip/tooltip'
+import { GlossaryContextProvider } from '../components/markdown/glossary-context'
 import { roboto } from '../fonts'
 import '../styles/globals.css'
-import { GlossaryContextProvider } from './_components/markdown/glossary-context'
-import { TooltipProvider } from './_components/tooltip/tooltip'
 
 export const metadata: Metadata = getDefaultMetadata()
 
@@ -21,7 +20,6 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   const terms = getCollection('glossary')
-  const shouldInjectToolbar = process.env.NODE_ENV === 'development'
 
   return (
     // We suppress the hydration warning here because we're using:
@@ -43,14 +41,18 @@ export default async function RootLayout({
               disableTransitionOnChange
             >
               <TooltipProvider delayDuration={300}>
-                <GlossaryContextProvider terms={terms}>
+                <GlossaryContextProvider
+                  terms={terms.map((term) => ({
+                    id: term.id,
+                    matches: [term.data.term, ...(term.data.match ?? [])],
+                  }))}
+                >
                   {children}
                 </GlossaryContextProvider>
               </TooltipProvider>
             </ThemeProvider>
           </TRPCReactProvider>
         </PlausibleProvider>
-        {shouldInjectToolbar && <VercelToolbar />}
       </body>
     </html>
   )

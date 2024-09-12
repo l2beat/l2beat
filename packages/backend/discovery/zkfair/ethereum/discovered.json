@@ -1,9 +1,9 @@
 {
   "name": "zkfair",
   "chain": "ethereum",
-  "blockNumber": 20491472,
+  "blockNumber": 20711816,
   "configHash": "0xb7055c80cbad157609938410529e9cd3df380055c0f402a834c492918f2cba62",
-  "version": 13,
+  "version": 14,
   "contracts": [
     {
       "name": "BridgeAdminMultiSig",
@@ -184,23 +184,23 @@
         "getAmountOfMembers": 5,
         "members": [
           [
-            "http://ec2-13-57-35-237.us-west-1.compute.amazonaws.com:8444",
+            "http://43.129.159.5:8444",
             "0x033A75B6B0fc26eDf60e99c4172eB5f87E733ca2"
           ],
           [
-            "http://ec2-54-153-117-150.us-west-1.compute.amazonaws.com:8444",
+            "http://129.226.185.196:8444",
             "0x061D273bEf947BD0ef2B828526e710eEa0f297ae"
           ],
           [
-            "http://ec2-52-53-165-158.us-west-1.compute.amazonaws.com:8444",
+            "http://43.155.22.171:8444",
             "0x9231622437bD57349cC9a15CDEc5383627DEbA17"
           ],
           [
-            "http://ec2-18-144-4-166.us-west-1.compute.amazonaws.com:8444",
+            "http://119.28.1.197:8444",
             "0x9d8616545C9941138832EebC58Cb498E0ef21a13"
           ],
           [
-            "http://ec2-54-219-14-189.us-west-1.compute.amazonaws.com:8444",
+            "http://43.129.158.203:8444",
             "0xFe1da7CAd939805d4A889822357c348177a5118d"
           ]
         ],
@@ -247,23 +247,19 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5",
-          "via": []
+          "target": "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"
         },
         {
           "permission": "upgrade",
-          "target": "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b",
-          "via": []
+          "target": "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b"
         },
         {
           "permission": "upgrade",
-          "target": "0x997CfB0838544f68E59f877EDc905001456F125b",
-          "via": []
+          "target": "0x997CfB0838544f68E59f877EDc905001456F125b"
         },
         {
           "permission": "upgrade",
-          "target": "0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
-          "via": []
+          "target": "0x9cb4706e20A18E59a48ffa7616d700A3891e1861"
         }
       ],
       "sinceTimestamp": 1702879259,

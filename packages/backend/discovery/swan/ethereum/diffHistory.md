@@ -1,4 +1,201 @@
-Generated with discovered.json: 0x42278e7199a056e2e96c0a141419b39481d6e772
+Generated with discovered.json: 0x0dafd8da0589d9aa8ae2c8718af3e79ca6431d55
+
+# Diff at Sun, 08 Sep 2024 17:24:48 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@fd881462cca0d7ef4519f907f3c6cfd5fe1cde8f block: 20413034
+- current block number: 20413034
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20413034 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x1c22740A0B4511E11D76434A424487862b593901) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.0.target:
+-        "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
++        "0x6197f64902b9275e6815F9A5b641Ed2291A5d39c"
+      issuedPermissions.0.via.0:
++        {"address":"0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3","delay":0}
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x1Ccf7e62889E6A93413DEAFC4e390Bd4047bDC32) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions.0.target:
+-        "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
++        "0x6197f64902b9275e6815F9A5b641Ed2291A5d39c"
+      issuedPermissions.0.via.0:
++        {"address":"0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3","delay":0}
+    }
+```
+
+```diff
+    contract SystemConfig (0x504D56cf68f791B45E3A2e895B0e1562f3431328) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.1.target:
+-        "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
++        "0x6197f64902b9275e6815F9A5b641Ed2291A5d39c"
+      issuedPermissions.1.via.0:
++        {"address":"0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3","delay":0}
+    }
+```
+
+```diff
+    contract AddressManager (0x55Aec4EE11dA7d655565cCc2EB3bF21a46C94e6f) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
++        "0x6197f64902b9275e6815F9A5b641Ed2291A5d39c"
+      issuedPermissions.0.via.0:
++        {"address":"0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3","delay":0}
+    }
+```
+
+```diff
+    contract Swan Network Multisig (0x6197f64902b9275e6815F9A5b641Ed2291A5d39c) {
+    +++ description: None
+      descriptions:
+-        ["It can act on behalf of 0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3, inheriting its permissions."]
+      receivedPermissions.7:
++        {"permission":"upgrade","target":"0xed7525946A09056C6AaE29941b8323017382050e","description":"upgrading bridge implementation allows to access all funds and change every system component.","via":[{"address":"0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","target":"0xE9614162C6128ABD7790C65D711CfC43ea842153","via":[{"address":"0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","target":"0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15","via":[{"address":"0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","target":"0xadE916De67511E5C24af4174Be67143d0dA94959","via":[{"address":"0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","target":"0x504D56cf68f791B45E3A2e895B0e1562f3431328","via":[{"address":"0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"}]}
+      receivedPermissions.2:
++        {"permission":"upgrade","target":"0x1Ccf7e62889E6A93413DEAFC4e390Bd4047bDC32","via":[{"address":"0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"}]}
+      receivedPermissions.1:
++        {"permission":"upgrade","target":"0x1c22740A0B4511E11D76434A424487862b593901","via":[{"address":"0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"}]}
+      receivedPermissions.0.target:
+-        "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
++        "0x55Aec4EE11dA7d655565cCc2EB3bF21a46C94e6f"
+      receivedPermissions.0.via:
++        [{"address":"0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"}]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0xadE916De67511E5C24af4174Be67143d0dA94959) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions.0.target:
+-        "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
++        "0x6197f64902b9275e6815F9A5b641Ed2291A5d39c"
+      issuedPermissions.0.via.0:
++        {"address":"0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3","delay":0}
+    }
+```
+
+```diff
+    contract OptimismPortal (0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions.0.target:
+-        "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
++        "0x6197f64902b9275e6815F9A5b641Ed2291A5d39c"
+      issuedPermissions.0.via.0:
++        {"address":"0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3","delay":0}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3) {
+    +++ description: None
+      descriptions:
+-        ["It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component."]
+      issuedPermissions:
+-        [{"permission":"configure","target":"0x6197f64902b9275e6815F9A5b641Ed2291A5d39c","via":[]}]
+      receivedPermissions:
+-        [{"permission":"configure","target":"0x55Aec4EE11dA7d655565cCc2EB3bF21a46C94e6f"},{"permission":"upgrade","target":"0x1c22740A0B4511E11D76434A424487862b593901"},{"permission":"upgrade","target":"0x1Ccf7e62889E6A93413DEAFC4e390Bd4047bDC32"},{"permission":"upgrade","target":"0x504D56cf68f791B45E3A2e895B0e1562f3431328"},{"permission":"upgrade","target":"0xadE916De67511E5C24af4174Be67143d0dA94959"},{"permission":"upgrade","target":"0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15"},{"permission":"upgrade","target":"0xE9614162C6128ABD7790C65D711CfC43ea842153"},{"permission":"upgrade","target":"0xed7525946A09056C6AaE29941b8323017382050e"}]
+      directlyReceivedPermissions:
++        [{"permission":"configure","target":"0x55Aec4EE11dA7d655565cCc2EB3bF21a46C94e6f"},{"permission":"upgrade","target":"0x1c22740A0B4511E11D76434A424487862b593901"},{"permission":"upgrade","target":"0x1Ccf7e62889E6A93413DEAFC4e390Bd4047bDC32"},{"permission":"upgrade","target":"0x504D56cf68f791B45E3A2e895B0e1562f3431328"},{"permission":"upgrade","target":"0xadE916De67511E5C24af4174Be67143d0dA94959"},{"permission":"upgrade","target":"0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15"},{"permission":"upgrade","target":"0xE9614162C6128ABD7790C65D711CfC43ea842153"},{"permission":"upgrade","target":"0xed7525946A09056C6AaE29941b8323017382050e","description":"upgrading bridge implementation allows to access all funds and change every system component."}]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xE9614162C6128ABD7790C65D711CfC43ea842153) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      issuedPermissions.0.target:
+-        "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
++        "0x6197f64902b9275e6815F9A5b641Ed2291A5d39c"
+      issuedPermissions.0.via.0:
++        {"address":"0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3","delay":0}
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xed7525946A09056C6AaE29941b8323017382050e) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      issuedPermissions.0.target:
+-        "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
++        "0x6197f64902b9275e6815F9A5b641Ed2291A5d39c"
+      issuedPermissions.0.via.0:
++        {"address":"0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3","delay":0,"description":"upgrading bridge implementation allows to access all funds and change every system component."}
+    }
+```
+
+Generated with discovered.json: 0xd776d514f393450a4645aac3d54682b8b4e7ec82
+
+# Diff at Fri, 30 Aug 2024 08:01:16 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 20413034
+- current block number: 20413034
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20413034 (main branch discovery), not current.
+
+```diff
+    contract Swan Network Multisig (0x6197f64902b9275e6815F9A5b641Ed2291A5d39c) {
+    +++ description: It can act on behalf of 0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3, inheriting its permissions.
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3) {
+    +++ description: It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.
+      receivedPermissions.7.via:
+-        []
+      receivedPermissions.6.via:
+-        []
+      receivedPermissions.5.via:
+-        []
+      receivedPermissions.4.via:
+-        []
+      receivedPermissions.3.via:
+-        []
+      receivedPermissions.2.via:
+-        []
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+Generated with discovered.json: 0x979a8fa269fbc00bf4e76f8922d5b92d7d241225
 
 # Diff at Fri, 23 Aug 2024 09:55:53 GMT:
 

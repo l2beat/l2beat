@@ -1,14 +1,15 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import OutLinkIcon from '~/icons/outlink.svg'
+import { OutLinkIcon } from '~/icons/outlink'
 import { cn } from '~/utils/cn'
 import { formatAddress } from '~/utils/format-address'
-import CriticalIcon from '../../_assets/critical-badge.svg'
-import WarningIcon from '../../_assets/warning-badge.svg'
+import { CriticalBadgeIcon } from '../../_assets/critical-badge'
+import { WarningBadgeIcon } from '../../_assets/warning-badge'
 import { type Risk } from '../../page'
 import { type Token } from './tokens-table'
 
 export function RiskDetails({ token }: { token: Token }) {
+  const bridges = token.token.bridgedUsing?.bridges
   return (
     <div className="flex flex-col gap-5 border-t border-t-gray-400 pb-4">
       <div className="grid grid-cols-4 pt-4">
@@ -84,7 +85,11 @@ export function RiskDetails({ token }: { token: Token }) {
               width={16}
               className="size-4"
             /> */}
-              {token.token.bridge ?? 'Unknown'}
+              {bridges && bridges.length === 1
+                ? bridges[0]?.name
+                : bridges && bridges.length > 1
+                  ? 'Multiple'
+                  : 'Unknown'}
             </Link>
           </div>
         </div>
@@ -113,7 +118,7 @@ function CategoryRisks({ title, risks }: { title: string; risks: Risk[] }) {
           <div key={i}>
             <div className="flex items-center gap-2">
               <div className="size-5">
-                {risk.isCritical ? <CriticalIcon /> : <WarningIcon />}
+                {risk.isCritical ? <CriticalBadgeIcon /> : <WarningBadgeIcon />}
               </div>
               <span
                 className={cn(

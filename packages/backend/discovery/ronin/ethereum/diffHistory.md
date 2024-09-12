@@ -1,3 +1,175 @@
+Generated with discovered.json: 0x8fc2172551f9f49d30e37e4dcae1576e3d79970f
+
+# Diff at Wed, 04 Sep 2024 08:02:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@878a951312cec062f5003f6749f781861b0cdba1 block: 20640810
+- current block number: 20675893
+
+## Description
+
+Ronin bride unpaused.
+
+## Watched changes
+
+```diff
+    contract MainchainGateway (0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08) {
+    +++ description: None
+      values.paused:
+-        true
++        false
+    }
+```
+
+```diff
+    contract PauseEnforcer (0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4) {
+    +++ description: None
+      values.emergency:
+-        true
++        false
+    }
+```
+
+Generated with discovered.json: 0xabda92b9e46f002ac0602cb427f628bb434df543
+
+# Diff at Fri, 30 Aug 2024 10:31:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@78fe1115153efe3e1ba2014fd74329156dca3951 block: 20633139
+- current block number: 20640810
+
+## Description
+
+Sentries are added. (They are automatically displayed on the frontend since i added the permissions section entry last update)
+
+MainchainGateway.sol: Small upgrade internalizing the previously external WethUnwrapper contract.
+
+## Watched changes
+
+```diff
+    contract MainchainGateway (0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08) {
+    +++ description: None
+      values.$implementation:
+-        "0xfc274EC92bBb1A1472884558d1B5CaaC6F8220Ee"
++        "0xD6c4986bbe09f2dDb262B4611b0BA06891be605e"
+      values.$upgradeCount:
+-        5
++        6
+      values.minimumVoteWeight:
+-        0
++        1540
+      values.wethUnwrapper:
+-        "0x8048b12511d9BE6e4e094089b12f54923C4E2F83"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract WethUnwrapper (0x8048b12511d9BE6e4e094089b12f54923C4E2F83)
+    +++ description: None
+```
+
+```diff
+    contract PauseEnforcer (0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4) {
+    +++ description: None
+      values.accessControl.SENTRY_ROLE.members.4:
++        "0x47870D35cdfF193a428C98a3468c833c23488393"
+      values.accessControl.SENTRY_ROLE.members.3:
++        "0x660Ef9c5a8a92070b03fc5BBC2AC006D0B0Ead33"
+      values.accessControl.SENTRY_ROLE.members.2:
++        "0xcb8225AA9D1029Af2E8cA537027E26bbe3056353"
+      values.accessControl.SENTRY_ROLE.members.1:
++        "0x299F344F0c6cC03cbb250E0f2dDdCD22Ae267c0c"
+      values.accessControl.SENTRY_ROLE.members.0:
++        "0x944b1282cb9B3e62794f38733F3B6336536c30cc"
+    }
+```
+
+## Source code changes
+
+```diff
+.../MainchainGateway/MainchainGatewayV3.sol        | 115 +++++++++++++--------
+ .../.flat@20633139/WethUnwrapper.sol => /dev/null  |  93 -----------------
+ 2 files changed, 70 insertions(+), 138 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20633139 (main branch discovery), not current.
+
+```diff
+    contract MainchainBridgeManager (0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB) {
+    +++ description: None
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract RoninAdminMultisig (0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e) {
+    +++ description: None
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+Generated with discovered.json: 0x0c58ba585d11cc050cfd94ad4ed6016ee63e6ff9
+
+# Diff at Thu, 29 Aug 2024 08:47:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae2eef5fb76c32f2e57d2f78a8a0f4686592fe8b block: 20475186
+- current block number: 20633139
+
+## Description
+
+RoninAdminMultisig (can upgrade) is added: Entry added to ronin.ts permissions.
+
+## Watched changes
+
+```diff
+    contract RoninManagerMultiSig (0x2DA02aC5f19Ae362a4121718d990e655eB628D96) {
+    +++ description: None
+      values.transactionCount:
+-        25
++        26
+    }
+```
+
+```diff
+    contract PauseEnforcer (0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4) {
+    +++ description: None
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.1:
++        "0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20475186 (main branch discovery), not current.
+
+```diff
+    contract RoninManagerMultiSig (0x2DA02aC5f19Ae362a4121718d990e655eB628D96) {
+    +++ description: None
+      name:
+-        "RoninBridgeAdminMultiSig"
++        "RoninManagerMultiSig"
+    }
+```
+
+```diff
+    contract RoninAdminMultisig (0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e) {
+    +++ description: None
+      name:
+-        "GnosisSafe"
++        "RoninAdminMultisig"
+    }
+```
+
 Generated with discovered.json: 0x0c7d2642c1ca8f149984644909351348f6e58011
 
 # Diff at Fri, 23 Aug 2024 09:54:55 GMT:

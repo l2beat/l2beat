@@ -1,11 +1,11 @@
 import { chunk } from 'lodash'
 import { type Metadata } from 'next'
 import Image from 'next/image'
-import { ContentWrapper } from '~/app/_components/content-wrapper'
-import { FullPageHeader } from '~/app/_components/full-page-header'
-import { CustomLink } from '~/app/_components/link/custom-link'
+import { ContentWrapper } from '~/components/content-wrapper'
+import { FullPageHeader } from '~/components/full-page-header'
+import { CustomLink } from '~/components/link/custom-link'
 import { getCollection } from '~/content/get-collection'
-import OutLinkIcon from '~/icons/outlink.svg'
+import { OutLinkIcon } from '~/icons/outlink'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { GovernanceHeaderIllustration } from './_assets/governance-header'
 import { GovernanceEventsSection } from './_components/sections/governance-events-section'
@@ -44,20 +44,22 @@ export default function Page() {
   return (
     <>
       <Header />
-      <ContentWrapper className="md:px-6 lg:px-12" as="main">
-        <div className="grid md:mt-20 md:gap-6 lg:grid-cols-8 lg:gap-8 [&>*:nth-child(odd)]:bg-transparent md:[&>*:nth-child(odd)]:bg-gray-100 md:[&>*:nth-child(odd)]:dark:dark:bg-zinc-900">
-          <RecentPublicationsSection
-            publications={publicationEntries}
-            className="lg:col-span-5"
-          />
-          <OfficeHoursSection className="lg:col-span-3" />
-          <GovernanceEventsSection
-            events={eventEntries}
-            className="lg:col-span-full"
-          />
-          <OurApproachSection className="lg:col-span-4" />
-          <OurMissionSection className="lg:col-span-4" />
-        </div>
+      <ContentWrapper className="md:px-6 lg:px-12" asChild>
+        <main>
+          <div className="grid md:mt-20 md:gap-6 lg:grid-cols-8 lg:gap-8 [&>*:nth-child(odd)]:bg-transparent md:[&>*:nth-child(odd)]:bg-gray-100 md:[&>*:nth-child(odd)]:dark:dark:bg-zinc-900">
+            <RecentPublicationsSection
+              publications={publicationEntries}
+              className="lg:col-span-5"
+            />
+            <OfficeHoursSection className="lg:col-span-3" />
+            <GovernanceEventsSection
+              events={eventEntries}
+              className="lg:col-span-full"
+            />
+            <OurApproachSection className="lg:col-span-4" />
+            <OurMissionSection className="lg:col-span-4" />
+          </div>
+        </main>
       </ContentWrapper>
     </>
   )

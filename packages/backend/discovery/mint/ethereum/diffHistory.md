@@ -1,4 +1,161 @@
-Generated with discovered.json: 0x3ef6438c87c7347edacab7ae58fbf1057a4eb208
+Generated with discovered.json: 0x853e63a362fe17fee5d5625ac0958fe682ff1c84
+
+# Diff at Sun, 08 Sep 2024 17:18:50 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@fd881462cca0d7ef4519f907f3c6cfd5fe1cde8f block: 20032860
+- current block number: 20032860
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20032860 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (0x2b3F201543adF73160bA42E1a5b7750024F30420) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF"
++        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      issuedPermissions.0.via.0:
++        {"address":"0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF","delay":0}
+    }
+```
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      descriptions:
+-        ["It can act on behalf of 0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF, inheriting its permissions.","It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."]
+      receivedPermissions.5:
++        {"permission":"upgrade","target":"0xC975862927797812371A9Fb631f83F8f5e2240D5","via":[{"address":"0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","target":"0xB751A613f2Db932c6cdeF5048E6D2af05F9B98ED","via":[{"address":"0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","target":"0x59625d1FE0Eeb8114a4d13c863978F39b3471781","via":[{"address":"0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF"}]}
+      receivedPermissions.2:
++        {"permission":"upgrade","target":"0x2b3F201543adF73160bA42E1a5b7750024F30420","via":[{"address":"0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF"}]}
+      receivedPermissions.1.target:
+-        "0xC975862927797812371A9Fb631f83F8f5e2240D5"
++        "0xEa4165C5CDCA155779803A113d8391b741bA5228"
+      receivedPermissions.1.via:
++        [{"address":"0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF"}]
+      receivedPermissions.0.target:
+-        "0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF"
++        "0xC975862927797812371A9Fb631f83F8f5e2240D5"
+      receivedPermissions.0.description:
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF"}]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x59625d1FE0Eeb8114a4d13c863978F39b3471781) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions.0.target:
+-        "0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF"
++        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      issuedPermissions.0.via.0:
++        {"address":"0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF","delay":0}
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xB751A613f2Db932c6cdeF5048E6D2af05F9B98ED) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.0.target:
+-        "0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF"
++        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      issuedPermissions.0.via.0:
++        {"address":"0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF","delay":0}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"configure","target":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[]}]
+      receivedPermissions:
+-        [{"permission":"configure","target":"0xEa4165C5CDCA155779803A113d8391b741bA5228"},{"permission":"upgrade","target":"0x2b3F201543adF73160bA42E1a5b7750024F30420"},{"permission":"upgrade","target":"0x59625d1FE0Eeb8114a4d13c863978F39b3471781"},{"permission":"upgrade","target":"0xB751A613f2Db932c6cdeF5048E6D2af05F9B98ED"},{"permission":"upgrade","target":"0xC975862927797812371A9Fb631f83F8f5e2240D5"}]
+      directlyReceivedPermissions:
++        [{"permission":"configure","target":"0xEa4165C5CDCA155779803A113d8391b741bA5228"},{"permission":"upgrade","target":"0x2b3F201543adF73160bA42E1a5b7750024F30420"},{"permission":"upgrade","target":"0x59625d1FE0Eeb8114a4d13c863978F39b3471781"},{"permission":"upgrade","target":"0xB751A613f2Db932c6cdeF5048E6D2af05F9B98ED"},{"permission":"upgrade","target":"0xC975862927797812371A9Fb631f83F8f5e2240D5"}]
+    }
+```
+
+```diff
+    contract SystemConfig (0xC975862927797812371A9Fb631f83F8f5e2240D5) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.1.target:
+-        "0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF"
++        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      issuedPermissions.1.via.0:
++        {"address":"0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF","delay":0}
+    }
+```
+
+```diff
+    contract AddressManager (0xEa4165C5CDCA155779803A113d8391b741bA5228) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF"
++        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      issuedPermissions.0.via.0:
++        {"address":"0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF","delay":0}
+    }
+```
+
+Generated with discovered.json: 0x3bf5da31819ff1427e452945233ffe550cabb39b
+
+# Diff at Fri, 30 Aug 2024 07:53:45 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 20032860
+- current block number: 20032860
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20032860 (main branch discovery), not current.
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: It can act on behalf of 0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF, inheriting its permissions. It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF) {
+    +++ description: None
+      receivedPermissions.4.via:
+-        []
+      receivedPermissions.3.via:
+-        []
+      receivedPermissions.2.via:
+-        []
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+Generated with discovered.json: 0xe377321f8f756baf61b172572d8db26130d2c3a0
 
 # Diff at Fri, 23 Aug 2024 09:53:24 GMT:
 

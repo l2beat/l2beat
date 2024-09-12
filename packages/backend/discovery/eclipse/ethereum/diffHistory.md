@@ -1,3 +1,93 @@
+Generated with discovered.json: 0xd1d58883cb0cfd0b397d67fe177e27bc062d5ed2
+
+# Diff at Mon, 02 Sep 2024 14:35:26 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@0161d2234a9db923bf3750678040cdffe671cd56 block: 20590601
+- current block number: 20663231
+
+## Description
+
+Discovery of newly verified contracts.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20590601 (main branch discovery), not current.
+
+```diff
+    contract TreasuryOwner (0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC) {
+    +++ description: None
+      name:
+-        "EclipseMultisig"
++        "TreasuryOwner"
+    }
+```
+
+```diff
+    contract EtherBridge (0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1) {
+    +++ description: None
+      name:
+-        "Contract3"
++        "EtherBridge"
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x4720342419C1D316B948690d12C86D5b485C64E0"]}}
+    }
+```
+
+```diff
+    contract Mailbox (0xb23B2492f7A9631104A5877F7FFA00633660968d) {
+    +++ description: None
+      name:
+-        "Contract1"
++        "Mailbox"
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x4720342419C1D316B948690d12C86D5b485C64E0"]},"TRUSTED_RELAYER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x4720342419C1D316B948690d12C86D5b485C64E0"]},"MODULE_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1"]}}
+    }
+```
+
+```diff
+    contract Treasury (0xD7E4b67E735733aC98a88F13d087D8aac670E644) {
+    +++ description: None
+      name:
+-        "Contract2"
++        "Treasury"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract AuthorityMultisig (0x4720342419C1D316B948690d12C86D5b485C64E0)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x69b4ca88a08532e5b927f8070fe227027e5c3602
+
+# Diff at Fri, 30 Aug 2024 07:52:07 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@6c1bd1f41fadf5f2cb1c1805b5a2c6138a3ed35a block: 20590601
+- current block number: 20590601
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20590601 (main branch discovery), not current.
+
+```diff
+    contract EclipseMultisig (0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC) {
+    +++ description: None
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
 Generated with discovered.json: 0x0af9f27d0573e340b5d12bb19153c66199e89538
 
 # Diff at Fri, 23 Aug 2024 10:14:19 GMT:
