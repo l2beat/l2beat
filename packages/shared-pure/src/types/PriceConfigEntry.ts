@@ -11,7 +11,6 @@ import { UnixTime } from './UnixTime'
 export type PriceConfigEntry = CoingeckoPriceConfigEntry
 
 interface PriceConfigBase {
-  // for backward compatibility
   assetId: AssetId
   address: EthereumAddress | 'native'
   chain: string

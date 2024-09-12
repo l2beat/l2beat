@@ -3,8 +3,9 @@ import { redirect } from 'next/navigation'
 import type { SetOptional, SetRequired } from 'type-fest'
 import { http, type Hex, createPublicClient, isAddress, parseAbi } from 'viem'
 
-import { type ScalingProjectRisk } from '@l2beat/config'
+import { type ScalingProjectRisk, chainConverter } from '@l2beat/config'
 import { layer2s } from '@l2beat/config/build/src/projects/layer2s'
+import { AssetId, ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { Footer } from '../_components/footer'
 import { DetailsHeader } from './_components/details-header'
 import { Disclaimer } from './_components/disclaimer'
@@ -13,7 +14,7 @@ import { getChain, getChainStage } from './_utils/chains'
 
 type Token = Omit<(typeof generatedJson.tokens)[number], 'address'> & {
   address?: Hex
-}
+} & { id: AssetId }
 
 export type Risk = SetOptional<ScalingProjectRisk, 'category'>
 
@@ -61,6 +62,10 @@ export default async function Page({ params: { address } }: Props) {
       }
       acc[chainId]?.push({
         ...token,
+        id: AssetId.create(
+          chainConverter.toName(ChainId(token.chainId)),
+          address ? EthereumAddress(address) : 'native',
+        ),
         // To make TypeScript happy
         address: address && isAddress(address) ? address : undefined,
       })

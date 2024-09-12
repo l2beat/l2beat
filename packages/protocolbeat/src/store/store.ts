@@ -9,7 +9,11 @@ import { onMouseDown } from './actions/onMouseDown'
 import { onMouseMove } from './actions/onMouseMove'
 import { onMouseUp } from './actions/onMouseUp'
 import { onWheel } from './actions/onWheel'
-import { updateNodeLocations, updateNodes } from './actions/updateNodes'
+import {
+  updateNodeColors,
+  updateNodeLocations,
+  updateNodes,
+} from './actions/updateNodes'
 
 export const useStore = create<State & Actions>()(
   persist(
@@ -43,6 +47,8 @@ export const useStore = create<State & Actions>()(
       updateNodes: (...args) => set((state) => updateNodes(state, ...args)),
       updateNodeLocations: (...args) =>
         set((state) => updateNodeLocations(state, ...args)),
+      updateNodeColors: (...args) =>
+        set((state) => updateNodeColors(state, ...args)),
       setProjectId: (projectId: string) =>
         set((state) => ({ ...state, projectId: projectId })),
 
