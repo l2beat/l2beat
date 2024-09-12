@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "arbitrum",
   "blockNumber": 252706992,
-  "configHash": "0xfb61ab8e05e1e142d2dd38d1984b8f8756e08745913c347d1847f0d7c16b4b3a",
+  "configHash": "0xc6681f85c8ca67eb72e8ce7482cc608442169e70a926a24a3e7783a979db2ae2",
   "version": 14,
   "contracts": [
     {
