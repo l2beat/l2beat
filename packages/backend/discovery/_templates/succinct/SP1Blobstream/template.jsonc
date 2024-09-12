@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "ignoreMethods": ["state_dataCommitments", "proxiableUUID"],
-  "ignoreInWatchMode": ["latestBlock", "latestAuthoritySetId", "state_proofNonce"],
+  "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
   "fields": {
     "accessControl": {
       "handler": {
