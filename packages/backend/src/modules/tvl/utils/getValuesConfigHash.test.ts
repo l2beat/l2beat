@@ -40,6 +40,7 @@ describe(getValuesConfigHash.name, () => {
 
 function mockAmount(v?: Partial<TotalSupplyEntry>): TotalSupplyEntry {
   return {
+    assetId: AssetId.create(v?.chain ?? 'chain', v?.address),
     chain: 'chain',
     dataSource: 'chain',
     project: ProjectId('project'),
@@ -64,7 +65,7 @@ function mockPrice(v?: Partial<PriceConfigEntry>): PriceConfigEntry {
     type: 'coingecko',
     coingeckoId: CoingeckoId('id'),
     sinceTimestamp: UnixTime.ZERO,
-    assetId: AssetId.ARB,
+    assetId: AssetId('test'),
     ...v,
   }
 }

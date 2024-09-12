@@ -4,6 +4,7 @@ DO NOT MODIFY THIS FILE WITHOUT MODIFYING THE "createAmountId" FUNCTION
 DO NOT MODIFY THIS FILE WITHOUT MODIFYING THE getAmountsStatus FUNCTION
 */
 
+import { AssetId } from './AssetId'
 import { CoingeckoId } from './CoingeckoId'
 import { EthereumAddress } from './EthereumAddress'
 import { ProjectId } from './ProjectId'
@@ -41,6 +42,7 @@ export interface EscrowEntry extends AmountConfigBase {
 }
 
 export interface AmountConfigBase {
+  assetId: AssetId
   chain: string
   project: ProjectId
   source: Token['source']

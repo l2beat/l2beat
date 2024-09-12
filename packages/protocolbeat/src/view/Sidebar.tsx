@@ -1,11 +1,18 @@
 import type { SimpleNode } from '../api/SimpleNode'
+import { Color } from '../utils/color'
+import { ColorPicker } from './ColorPicker'
 
 interface SidebarProps {
   selectedNodes: SimpleNode[]
   onDeleteNodes: (ids: string[]) => void
+  onColorChange: (ids: string[], color: Color) => void
 }
 
-export function Sidebar({ selectedNodes, onDeleteNodes }: SidebarProps) {
+export function Sidebar({
+  selectedNodes,
+  onDeleteNodes,
+  onColorChange,
+}: SidebarProps) {
   const selectedNode = selectedNodes[0]
   if (!selectedNode) {
     return <div>Click a contract to select it.</div>
@@ -13,7 +20,11 @@ export function Sidebar({ selectedNodes, onDeleteNodes }: SidebarProps) {
 
   if (selectedNodes.length === 1) {
     return (
-      <SidebarForSingleNode node={selectedNode} onDeleteNodes={onDeleteNodes} />
+      <SidebarForSingleNode
+        node={selectedNode}
+        onDeleteNodes={onDeleteNodes}
+        onColorChange={onColorChange}
+      />
     )
   }
 
@@ -21,6 +32,7 @@ export function Sidebar({ selectedNodes, onDeleteNodes }: SidebarProps) {
     <SidebarForMultipleNodes
       selectedNodes={selectedNodes}
       onDeleteNodes={onDeleteNodes}
+      onColorChange={onColorChange}
     />
   )
 }
@@ -28,9 +40,11 @@ export function Sidebar({ selectedNodes, onDeleteNodes }: SidebarProps) {
 function SidebarForSingleNode({
   node,
   onDeleteNodes,
+  onColorChange,
 }: {
   node: SimpleNode
   onDeleteNodes: SidebarProps['onDeleteNodes']
+  onColorChange: SidebarProps['onColorChange']
 }) {
   if (node.type === 'Unknown') {
     return (
@@ -57,7 +71,7 @@ function SidebarForSingleNode({
       : undefined
 
   return (
-    <>
+    <div className="flex flex-col gap-2">
       <h2 className="font-bold text-xl">{humanReadableName}</h2>
       <p className="text-gray-500 text-sm">
         <a
@@ -112,26 +126,34 @@ function SidebarForSingleNode({
           </button>
         )}
       </p>
-    </>
+
+      <hr />
+
+      <ColorPicker ids={[node.id]} onColorChange={onColorChange} />
+    </div>
   )
 }
 
 function SidebarForMultipleNodes({
   selectedNodes,
   onDeleteNodes: onDeleteNode,
+  onColorChange,
 }: SidebarProps) {
+  const ids = selectedNodes.map((n) => n.id)
   return (
-    <>
+    <div className="flex flex-col gap-2">
       Selected <span className="font-bold">{selectedNodes.length}</span> nodes
       <p>
         <button
           className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
           type="button"
-          onClick={() => onDeleteNode(selectedNodes.map((n) => n.id))}
+          onClick={() => onDeleteNode(ids)}
         >
           Delete all
         </button>
       </p>
-    </>
+      <hr />
+      <ColorPicker ids={ids} onColorChange={onColorChange} />
+    </div>
   )
 }
