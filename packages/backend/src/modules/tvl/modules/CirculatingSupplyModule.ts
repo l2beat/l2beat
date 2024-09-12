@@ -35,7 +35,7 @@ export function initCirculatingSupplyModule(
 
   if (circulatingSupplies.length === 0) return undefined
 
-  const circulatingSupplyService = getDataService(peripherals, config)
+  const circulatingSupplyService = getDataService(logger, peripherals, config)
 
   const dataIndexers = new Map<string, CirculatingSupplyIndexer>()
   circulatingSupplies.forEach((circulatingSupply) => {
@@ -107,11 +107,18 @@ export function initCirculatingSupplyModule(
   }
 }
 
-function getDataService(peripherals: Peripherals, config: TvlConfig) {
+function getDataService(
+  logger: Logger,
+  peripherals: Peripherals,
+  config: TvlConfig,
+) {
   const coingeckoClient = peripherals.getClient(CoingeckoClient, {
     apiKey: config.coingeckoApiKey,
   })
-  const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+  const coingeckoQueryService = new CoingeckoQueryService(
+    coingeckoClient,
+    logger.tag('circulatingSupply'),
+  )
 
   const circulatingSupplyService = new CirculatingSupplyService({
     coingeckoQueryService,

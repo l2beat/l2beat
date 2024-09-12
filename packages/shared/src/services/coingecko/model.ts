@@ -41,7 +41,6 @@ export const CoinMarketChartRangeResult = z.object({
 export interface CoinMarketChartRangeData {
   prices: { date: Date; value: number }[]
   marketCaps: { date: Date; value: number }[]
-  totalVolumes: { date: Date; value: number }[]
 }
 
 export const CoinsMarketResult = z.object({

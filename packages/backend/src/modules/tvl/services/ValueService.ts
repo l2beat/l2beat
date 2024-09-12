@@ -83,11 +83,12 @@ export class ValueService {
 
       for (const amount of amountsAtTimestamp) {
         const amountConfig = amountConfigs.get(amount.configId)
-        assert(amountConfig, 'Config not found')
+        assert(amountConfig, `Config not found for ${amount.configId}`)
 
         const priceId = priceConfigIds.get(createAssetId(amountConfig))
         const price = pricesAtTimestamp.find((x) => x.configId === priceId)
-        assert(price, 'Price not found')
+
+        assert(price, `Price not found for ${priceId} at ${timestamp}`)
 
         const value = calculateValue({
           amount: amount.amount,
