@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xe0211e37beebceaa292ae7c8090f02cc10382969
+Generated with discovered.json: 0x3b8d2273e95552c643dd25b1e3aa0a2f3aae8ed8
 
-# Diff at Wed, 11 Sep 2024 13:25:24 GMT:
+# Diff at Thu, 12 Sep 2024 09:59:29 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@26dd3802ec9d5a379686404e22ce931aac62dcdd block: 250294365
-- current block number: 252412550
+- comparing to: main@21748f79216eb050ed17a98d0e8a74893f478f74 block: 250294365
+- current block number: 252706992
 
 ## Description
 
@@ -21,7 +21,7 @@ discovery. Values are for block 250294365 (main branch discovery), not current.
     +++ description: None
       template:
 -        "blobstream/SP1SuccinctGateway"
-+        "succint/SP1SuccinctGateway"
++        "succinct/SP1SuccinctGateway"
       values.blobstreamVerifier:
 -        ["0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",false]
       values.blobstreamVerifierOld:
@@ -48,7 +48,7 @@ discovery. Values are for block 250294365 (main branch discovery), not current.
     +++ description: None
       template:
 -        "blobstream/SP1Blobstream"
-+        "succint/SP1Blobstream"
++        "succinct/SP1Blobstream"
     }
 ```
 

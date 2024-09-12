@@ -13,7 +13,7 @@
       "ignoreMethods": ["proxiableUUID"]
     },
     "SuccinctGatewaySP1": {
-      "extends": "succint/SP1SuccinctGateway"
+      "extends": "succinct/SP1SuccinctGateway"
     }
   }
 }

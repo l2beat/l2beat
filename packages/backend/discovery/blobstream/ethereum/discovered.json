@@ -1,8 +1,8 @@
 {
   "name": "blobstream",
   "chain": "ethereum",
-  "blockNumber": 20727609,
-  "configHash": "0xf11b26f5989b64f4afb4e4462daa7d1b3790924444ba907b4979e847b5d4239d",
+  "blockNumber": 20733790,
+  "configHash": "0x783d81459f59f0885194dd53ede75781ab7abe3525c0e35e872e481f2c360cb0",
   "version": 14,
   "contracts": [
     {
@@ -27,7 +27,7 @@
     {
       "name": "SuccinctGatewaySP1",
       "address": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-      "template": "succint/SP1SuccinctGateway",
+      "template": "succinct/SP1SuccinctGateway",
       "sinceTimestamp": 1720099223,
       "values": {
         "$immutable": true,
@@ -96,7 +96,7 @@
     {
       "name": "Blobstream",
       "address": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
-      "template": "succint/SP1Blobstream",
+      "template": "succinct/SP1Blobstream",
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -120,10 +120,10 @@
         "GUARDIAN_ROLE": "0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041",
         "headerRangeFunctionId_deprecated": "0xdb3232748ba9f2906d9d2ce97d2fac3963d4346de23c30521f346e10ddad82f7",
         "isRelayerApproved": true,
-        "latestBlock": 2319300,
+        "latestBlock": 2325600,
         "nextHeaderFunctionId_depcrecated": "0xf7ab2ac6f5ccf2da79050efcc0dbdb06d5ae05a332f58076aeac7fc8c73811fe",
         "relayers": ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"],
-        "state_proofNonce": 796,
+        "state_proofNonce": 803,
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "1.1.0"
@@ -503,8 +503,8 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
-    "succint/SP1Blobstream": "0xb0717b3e2a9ebc9678d934fa77de178537019305cf6fd12950b8f116da2a0e9c",
-    "succint/SP1SuccinctGateway": "0xab43397d190f2186363f0ee6178d993c7db9a90f80a1152568d8de09bcc133c1"
+    "succinct/SP1Blobstream": "0xb0717b3e2a9ebc9678d934fa77de178537019305cf6fd12950b8f116da2a0e9c",
+    "succinct/SP1SuccinctGateway": "0xab43397d190f2186363f0ee6178d993c7db9a90f80a1152568d8de09bcc133c1"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }
