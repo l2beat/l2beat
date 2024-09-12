@@ -1,10 +1,9 @@
+import { formatSeconds } from '@l2beat/shared-pure'
+import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
+import { NO_BRIDGE } from '../templates/no-bridge-template'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DaLayer } from '../types/DaLayer'
-import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
-import { formatSeconds } from '@l2beat/shared-pure'
-import { NO_BRIDGE } from '../templates/no-bridge-template'
 import { linkByDA } from '../utils/link-by-da'
-
 
 const discovery = new ProjectDiscovery('xterio')
 
@@ -31,18 +30,18 @@ export const xterioDA: DaLayer = {
     slug: 'xterio',
     description:
       'XterioDA is a data availability solution using data availability challenges (DA Challenges).',
-      links: {
-        websites: ['https://xter.io/'],
-        apps: ['https://xter.io/', 'https://eth-bridge.xter.io/'],
-        documentation: ['https://stack.optimism.io/'],
-        explorers: ['https://eth.xterscan.io/'],
-        repositories: ['https://github.com/XterioTech'],
-        socialMedia: [
-          'https://x.com/XterioGames',
-          'https://discord.gg/xterio',
-          'https://medium.com/@XterioGames',
-        ],
-      },
+    links: {
+      websites: ['https://xter.io/'],
+      apps: ['https://xter.io/', 'https://eth-bridge.xter.io/'],
+      documentation: ['https://stack.optimism.io/'],
+      explorers: ['https://eth.xterscan.io/'],
+      repositories: ['https://github.com/XterioTech'],
+      socialMedia: [
+        'https://x.com/XterioGames',
+        'https://discord.gg/xterio',
+        'https://medium.com/@XterioGames',
+      ],
+    },
   },
   technology: `
     ## Data Availability Challenges
@@ -56,12 +55,12 @@ export const xterioDA: DaLayer = {
   `,
   bridges: [
     NO_BRIDGE({
-        layer: 'XterioDA',
-        description:
-          'The risk profile in this page refers to scaling solutions that do not integrate with a data availability bridge.',
-        technology: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.
+      layer: 'XterioDA',
+      description:
+        'The risk profile in this page refers to scaling solutions that do not integrate with a data availability bridge.',
+      technology: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.
         However, there is a mechanism that allows users to challenge unavailability of data. \n`,
-      }),
+    }),
   ],
   usedIn: linkByDA({
     layer: (layer) => layer === 'XterioDA',
