@@ -57,6 +57,7 @@
   "cronoszkevm": true,
   "cyber": true,
   "dac-mantleDABridge": true,
+  "dac-no-bridge": true,
   "davos": true,
   "dcamonster": true,
   "debank": true,
