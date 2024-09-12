@@ -1,5 +1,8 @@
 import { Database } from '@l2beat/database'
 import {
+  AggLayerL2Token,
+  AggLayerNativeEtherPreminted,
+  AggLayerNativeEtherWrapped,
   AmountConfigEntry,
   CirculatingSupplyEntry,
   CoingeckoId,
@@ -12,6 +15,7 @@ import {
 } from '@l2beat/shared-pure'
 import { ManagedChildIndexerOptions } from '../../../tools/uif/ManagedChildIndexer'
 import { ManagedMultiIndexerOptions } from '../../../tools/uif/multi/types'
+import { AggLayerService } from '../services/AggLayerService'
 import { AmountService } from '../services/AmountService'
 import { BlockTimestampProvider } from '../services/BlockTimestampProvider'
 import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
@@ -32,6 +36,19 @@ export type ChainAmountConfig = EscrowEntry | TotalSupplyEntry
 export interface ChainAmountIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<ChainAmountConfig>, 'name'> {
   amountService: AmountService
+  db: Database
+  syncOptimizer: SyncOptimizer
+  chain: string
+}
+
+export type AggLayerAmountConfig =
+  | AggLayerL2Token
+  | AggLayerNativeEtherPreminted
+  | AggLayerNativeEtherWrapped
+
+export interface AggLayerAmountIndexerDeps
+  extends Omit<ManagedMultiIndexerOptions<AggLayerAmountConfig>, 'name'> {
+  aggLayerService: AggLayerService
   db: Database
   syncOptimizer: SyncOptimizer
   chain: string
