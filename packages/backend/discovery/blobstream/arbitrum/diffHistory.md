@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xdd521dbf63bc6bd0b80c53599d2fea1db67eced4
+Generated with discovered.json: 0x3b8d2273e95552c643dd25b1e3aa0a2f3aae8ed8
 
-# Diff at Thu, 12 Sep 2024 15:43:24 GMT:
+# Diff at Thu, 12 Sep 2024 09:59:29 GMT:
 
-- author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@e6761599b8d9e0b597372bb0e9ca885e08af7101 block: 250294365
-- current block number: 250294365
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@21748f79216eb050ed17a98d0e8a74893f478f74 block: 250294365
+- current block number: 252706992
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Renames.
 
 ## Config/verification related changes
 
@@ -17,10 +17,38 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 250294365 (main branch discovery), not current.
 
 ```diff
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: None
+      template:
+-        "blobstream/SP1SuccinctGateway"
++        "succinct/SP1SuccinctGateway"
+      values.blobstreamVerifier:
+-        ["0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",false]
+      values.blobstreamVerifierOld:
+-        ["0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",true]
++++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen). This verifier route was frozen on 2024-09-04.
+      values.oldVerifier:
++        ["0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",true]
++++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen).
+      values.verifier:
++        ["0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",false]
+      fieldMeta.blobstreamVerifierOld:
+-        {"description":"The verifier contract address for Blobstream SP1, and whether it is frozen (true if frozen). This verifier route was frozen on 2024-09-04."}
+      fieldMeta.blobstreamVerifier:
+-        {"description":"The verifier contract address for Blobstream SP1, and whether it is frozen (true if frozen)."}
+      fieldMeta.oldVerifier:
++        {"description":"The verifier contract address for SP1, and whether it is frozen (true if frozen). This verifier route was frozen on 2024-09-04."}
+      fieldMeta.verifier:
++        {"description":"The verifier contract address for SP1, and whether it is frozen (true if frozen)."}
+    }
+```
+
+```diff
     contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
     +++ description: None
-      values.accessControl:
-+        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]},"TIMELOCK_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]},"GUARDIAN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]}}
+      template:
+-        "blobstream/SP1Blobstream"
++        "succinct/SP1Blobstream"
     }
 ```
 

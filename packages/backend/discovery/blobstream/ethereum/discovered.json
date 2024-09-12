@@ -1,8 +1,8 @@
 {
   "name": "blobstream",
   "chain": "ethereum",
-  "blockNumber": 20683436,
-  "configHash": "0xdb2f1e1a2de0fe89962ba02df83df11cb1da96f4ec9405c97e98c1bb73398ff3",
+  "blockNumber": 20733790,
+  "configHash": "0x783d81459f59f0885194dd53ede75781ab7abe3525c0e35e872e481f2c360cb0",
   "version": 14,
   "contracts": [
     {
@@ -27,26 +27,20 @@
     {
       "name": "SuccinctGatewaySP1",
       "address": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-      "template": "blobstream/SP1SuccinctGateway",
+      "template": "succinct/SP1SuccinctGateway",
       "sinceTimestamp": 1720099223,
       "values": {
         "$immutable": true,
-        "blobstreamVerifier": [
-          "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",
-          false
-        ],
-        "blobstreamVerifierOld": [
-          "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",
-          true
-        ],
-        "owner": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878"
+        "oldVerifier": ["0xc350F063C13a3Ca21331610fe159E697a5c9c2FB", true],
+        "owner": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
+        "verifier": ["0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc", false]
       },
       "fieldMeta": {
-        "blobstreamVerifierOld": {
-          "description": "The verifier contract address for Blobstream SP1, and whether it is frozen (true if frozen). This verifier route was frozen on 2024-09-04."
+        "oldVerifier": {
+          "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This verifier route was frozen on 2024-09-04."
         },
-        "blobstreamVerifier": {
-          "description": "The verifier contract address for Blobstream SP1, and whether it is frozen (true if frozen)."
+        "verifier": {
+          "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen)."
         }
       },
       "derivedName": "SP1VerifierGateway"
@@ -102,7 +96,7 @@
     {
       "name": "Blobstream",
       "address": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
-      "template": "blobstream/SP1Blobstream",
+      "template": "succinct/SP1Blobstream",
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -140,10 +134,10 @@
         "GUARDIAN_ROLE": "0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041",
         "headerRangeFunctionId_deprecated": "0xdb3232748ba9f2906d9d2ce97d2fac3963d4346de23c30521f346e10ddad82f7",
         "isRelayerApproved": true,
-        "latestBlock": 2274300,
+        "latestBlock": 2325600,
         "nextHeaderFunctionId_depcrecated": "0xf7ab2ac6f5ccf2da79050efcc0dbdb06d5ae05a332f58076aeac7fc8c73811fe",
         "relayers": ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"],
-        "state_proofNonce": 746,
+        "state_proofNonce": 803,
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "1.1.0"
@@ -522,9 +516,9 @@
     ]
   },
   "usedTemplates": {
-    "blobstream/SP1Blobstream": "0xb0717b3e2a9ebc9678d934fa77de178537019305cf6fd12950b8f116da2a0e9c",
-    "blobstream/SP1SuccinctGateway": "0xca13f1f002bb3d95f8a29e6b1d21bbacdc46404bc6b7784b48a4d6b095c79097",
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "succinct/SP1Blobstream": "0xb0717b3e2a9ebc9678d934fa77de178537019305cf6fd12950b8f116da2a0e9c",
+    "succinct/SP1SuccinctGateway": "0xab43397d190f2186363f0ee6178d993c7db9a90f80a1152568d8de09bcc133c1"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }
