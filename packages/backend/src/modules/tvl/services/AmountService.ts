@@ -1,24 +1,32 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   assert,
+  Bytes,
   EscrowEntry,
+  EthereumAddress,
   UnixTime,
   assertUnreachable,
 } from '@l2beat/shared-pure'
 import { partition } from 'lodash'
 
 import { AmountRecord } from '@l2beat/database'
+import { BigNumber, utils } from 'ethers'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
-import {
-  erc20Codec,
-  nativeAssetCodec,
-} from '../../../peripherals/multicall/codecs'
 import {
   MulticallRequest,
   MulticallResponse,
 } from '../../../peripherals/multicall/types'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { ChainAmountConfig } from '../indexers/types'
+
+export const multicallInterface = new utils.Interface([
+  'function getEthBalance(address account) view returns (uint256)',
+])
+
+export const erc20Interface = new utils.Interface([
+  'function balanceOf(address account) view returns (uint256)',
+  'function totalSupply() view returns (uint256)',
+])
 
 type Config = ChainAmountConfig & { id: string }
 
@@ -77,10 +85,7 @@ export class AmountService {
     )
   }
 
-  private async fetchWithMulticall(
-    configurations: Config[],
-    blockNumber: number,
-  ) {
+  async fetchWithMulticall(configurations: Config[], blockNumber: number) {
     if (configurations.length === 0) {
       return []
     }
@@ -123,7 +128,7 @@ export class AmountService {
   ): MulticallRequest {
     switch (configuration.type) {
       case 'totalSupply':
-        return erc20Codec.totalSupply.encode(configuration.address)
+        return encodeErc20TotalSupplyQuery(configuration.address)
       case 'escrow':
         if (configuration.address === 'native') {
           // choose multicall address based on block number
@@ -132,12 +137,12 @@ export class AmountService {
 
           assert(multicallAddress, 'Multicall address not found')
 
-          return nativeAssetCodec.balance.encode(
+          return encodeGetEthBalance(
             multicallAddress,
             configuration.escrowAddress,
           )
         }
-        return erc20Codec.balance.encode(
+        return encodeErc20BalanceQuery(
           configuration.escrowAddress,
           configuration.address,
         )
@@ -152,12 +157,12 @@ export class AmountService {
     }
     switch (configuration.type) {
       case 'totalSupply':
-        return erc20Codec.totalSupply.decode(response.data)
+        return decodeErc20TotalSupplyQuery(response.data)
       case 'escrow':
         if (configuration.address === 'native') {
-          return nativeAssetCodec.balance.decode(response.data)
+          return decodeGetEthBalance(response.data)
         }
-        return erc20Codec.balance.decode(response.data)
+        return decodeErc20BalanceQuery(response.data)
       default:
         assertUnreachable(configuration)
     }
@@ -174,4 +179,66 @@ function isNotSupportedByMulticall(
     configuration.address === 'native' &&
     !multicallClient.isNativeBalanceSupported(blockNumber)
   )
+}
+
+export function encodeGetEthBalance(
+  multicall: EthereumAddress,
+  address: EthereumAddress,
+): MulticallRequest {
+  return {
+    address: multicall,
+    data: Bytes.fromHex(
+      multicallInterface.encodeFunctionData('getEthBalance', [
+        address.toString(),
+      ]),
+    ),
+  }
+}
+
+function decodeGetEthBalance(response: Bytes) {
+  return (
+    multicallInterface.decodeFunctionResult(
+      'getEthBalance',
+      response.toString(),
+    )[0] as BigNumber
+  ).toBigInt()
+}
+
+export function encodeErc20BalanceQuery(
+  holder: EthereumAddress,
+  tokenAddress: EthereumAddress,
+): MulticallRequest {
+  return {
+    address: tokenAddress,
+    data: Bytes.fromHex(
+      erc20Interface.encodeFunctionData('balanceOf', [holder.toString()]),
+    ),
+  }
+}
+
+function decodeErc20BalanceQuery(response: Bytes): bigint {
+  const [value] = erc20Interface.decodeFunctionResult(
+    'balanceOf',
+    response.toString(),
+  )
+
+  return (value as BigNumber).toBigInt()
+}
+
+export function encodeErc20TotalSupplyQuery(
+  tokenAddress: EthereumAddress,
+): MulticallRequest {
+  return {
+    address: tokenAddress,
+    data: Bytes.fromHex(erc20Interface.encodeFunctionData('totalSupply', [])),
+  }
+}
+
+export function decodeErc20TotalSupplyQuery(response: Bytes): bigint {
+  const [value] = erc20Interface.decodeFunctionResult(
+    'totalSupply',
+    response.toString(),
+  )
+
+  return (value as BigNumber).toBigInt()
 }

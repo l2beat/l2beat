@@ -11,7 +11,7 @@ import {
 import { PercentChange } from '~/components/percent-change'
 import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import { formatNumber } from '~/utils/format-number'
+import { formatCurrency } from '~/utils/format'
 
 export interface TotalCellProps {
   breakdown: {
@@ -51,7 +51,9 @@ export function TotalCell(data: TotalCellProps) {
               />
             ) : null}
             <span className="text-base font-bold md:text-lg">
-              ${formatNumber(totalTvl)}
+              {formatCurrency(totalTvl, 'usd', {
+                showLessThanMinimum: false,
+              })}
             </span>
             {data.change !== undefined && (
               <PercentChange
