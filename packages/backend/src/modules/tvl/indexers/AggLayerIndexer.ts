@@ -66,7 +66,9 @@ export class AggLayerIndexer extends ManagedMultiIndexer<AggLayerAmountConfig> {
     this.logger.info('Fetched AggLayer amounts for timestamp', {
       timestamp: timestamp.toNumber(),
       blockNumber,
-      tokens: amounts.length,
+      tokens: tokens.length,
+      nativeToken: nativeToken?.properties.type ?? undefined,
+      responseSize: amounts.length,
     })
 
     const nonZeroAmounts = amounts.filter((a) => a.amount > 0)
@@ -75,7 +77,7 @@ export class AggLayerIndexer extends ManagedMultiIndexer<AggLayerAmountConfig> {
       await this.$.db.amount.insertMany(nonZeroAmounts)
       this.logger.info('Saved AggLayer amounts for timestamp into DB', {
         timestamp: timestamp.toNumber(),
-        tokens: nonZeroAmounts.length,
+        records: nonZeroAmounts.length,
       })
 
       return timestamp.toNumber()
