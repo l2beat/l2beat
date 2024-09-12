@@ -27,8 +27,9 @@ export const SP1Blobstream: ZkCatalogProject = {
             link: 'https://github.com/succinctlabs/sp1-blobstream/blob/main/program/src/main.rs',
           },
           {
-            name: 'Final wrap',
-            ...PROOFS.PLONKSNARK('?'),
+            name: 'Main circuit',
+            ...PROOFS.PLONKY3,
+            link: 'https://github.com/succinctlabs/sp1/tree/dev/crates/core',
           },
           {
             name: 'Recursion circuit',
@@ -36,9 +37,8 @@ export const SP1Blobstream: ZkCatalogProject = {
             link: 'https://github.com/succinctlabs/sp1/tree/dev/crates/recursion',
           },
           {
-            name: 'Main circuit',
-            ...PROOFS.PLONKY3,
-            link: 'https://github.com/succinctlabs/sp1/tree/dev/crates/core',
+            name: 'Final wrap',
+            ...PROOFS.PLONKSNARK('?'),
           },
         ],
       },
@@ -58,8 +58,9 @@ export const SP1Blobstream: ZkCatalogProject = {
             link: 'https://github.com/succinctlabs/sp1-blobstream/blob/main/program/src/main.rs',
           },
           {
-            name: 'Final wrap',
-            ...PROOFS.PLONKSNARK('?'),
+            name: 'Main circuit',
+            ...PROOFS.PLONKY3,
+            link: 'https://github.com/succinctlabs/sp1/tree/dev/crates/core',
           },
           {
             name: 'Recursion circuit',
@@ -67,9 +68,8 @@ export const SP1Blobstream: ZkCatalogProject = {
             link: 'https://github.com/succinctlabs/sp1/tree/dev/crates/recursion',
           },
           {
-            name: 'Main circuit',
-            ...PROOFS.PLONKY3,
-            link: 'https://github.com/succinctlabs/sp1/tree/dev/crates/core',
+            name: 'Final wrap',
+            ...PROOFS.PLONKSNARK('?'),
           },
         ],
       },
@@ -89,8 +89,9 @@ export const SP1Blobstream: ZkCatalogProject = {
             link: 'https://github.com/succinctlabs/sp1-blobstream/blob/main/program/src/main.rs',
           },
           {
-            name: 'Final wrap',
-            ...PROOFS.PLONKSNARK('?'),
+            name: 'Main circuit',
+            ...PROOFS.PLONKY3,
+            link: 'https://github.com/succinctlabs/sp1/tree/dev/crates/core',
           },
           {
             name: 'Recursion circuit',
@@ -98,9 +99,8 @@ export const SP1Blobstream: ZkCatalogProject = {
             link: 'https://github.com/succinctlabs/sp1/tree/dev/crates/recursion',
           },
           {
-            name: 'Main circuit',
-            ...PROOFS.PLONKY3,
-            link: 'https://github.com/succinctlabs/sp1/tree/dev/crates/core',
+            name: 'Final wrap',
+            ...PROOFS.PLONKSNARK('?'),
           },
         ],
       },
@@ -120,8 +120,9 @@ export const SP1Blobstream: ZkCatalogProject = {
             link: 'https://github.com/succinctlabs/sp1-blobstream/blob/main/program/src/main.rs',
           },
           {
-            name: 'Final wrap',
-            ...PROOFS.PLONKSNARK('?'),
+            name: 'Main circuit',
+            ...PROOFS.PLONKY3,
+            link: 'https://github.com/succinctlabs/sp1/tree/dev/crates/core',
           },
           {
             name: 'Recursion circuit',
@@ -129,9 +130,8 @@ export const SP1Blobstream: ZkCatalogProject = {
             link: 'https://github.com/succinctlabs/sp1/tree/dev/crates/recursion',
           },
           {
-            name: 'Main circuit',
-            ...PROOFS.PLONKY3,
-            link: 'https://github.com/succinctlabs/sp1/tree/dev/crates/core',
+            name: 'Final wrap',
+            ...PROOFS.PLONKSNARK('?'),
           },
         ],
       },
@@ -151,8 +151,9 @@ export const SP1Blobstream: ZkCatalogProject = {
             link: 'https://github.com/succinctlabs/sp1-blobstream/blob/main/program/src/main.rs',
           },
           {
-            name: 'Final wrap',
-            ...PROOFS.PLONKSNARK('?'),
+            name: 'Main circuit',
+            ...PROOFS.PLONKY3,
+            link: 'https://github.com/succinctlabs/sp1/tree/dev/crates/core',
           },
           {
             name: 'Recursion circuit',
@@ -160,9 +161,8 @@ export const SP1Blobstream: ZkCatalogProject = {
             link: 'https://github.com/succinctlabs/sp1/tree/dev/crates/recursion',
           },
           {
-            name: 'Main circuit',
-            ...PROOFS.PLONKY3,
-            link: 'https://github.com/succinctlabs/sp1/tree/dev/crates/core',
+            name: 'Final wrap',
+            ...PROOFS.PLONKSNARK('?'),
           },
         ],
       },
@@ -182,8 +182,9 @@ export const SP1Blobstream: ZkCatalogProject = {
             link: 'https://github.com/succinctlabs/sp1-blobstream/blob/main/program/src/main.rs',
           },
           {
-            name: 'Final wrap',
-            ...PROOFS.PLONKSNARK('?'),
+            name: 'Main circuit',
+            ...PROOFS.PLONKY3,
+            link: 'https://github.com/succinctlabs/sp1/tree/dev/crates/core',
           },
           {
             name: 'Recursion circuit',
@@ -191,9 +192,8 @@ export const SP1Blobstream: ZkCatalogProject = {
             link: 'https://github.com/succinctlabs/sp1/tree/dev/crates/recursion',
           },
           {
-            name: 'Main circuit',
-            ...PROOFS.PLONKY3,
-            link: 'https://github.com/succinctlabs/sp1/tree/dev/crates/core',
+            name: 'Final wrap',
+            ...PROOFS.PLONKSNARK('?'),
           },
         ],
       },
