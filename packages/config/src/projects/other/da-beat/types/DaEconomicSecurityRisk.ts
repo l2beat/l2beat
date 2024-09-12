@@ -18,7 +18,7 @@ const OnChainNotSlashable = (token?: string) => {
   const tokenExpression = token ? ` ${token} tokens` : 'tokens'
   return {
     type: 'OnChainNotSlashable',
-    value: `Staked assets`,
+    value: `Staked Assets`,
     sentiment: 'bad',
     description: `Although node operators are required to stake ${tokenExpression} to become members of the DA network, there is no slashing mechanism in place for misbehaving nodes.`,
   } as const

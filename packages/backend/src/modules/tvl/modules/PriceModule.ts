@@ -28,7 +28,10 @@ export function initPriceModule(
   const coingeckoClient = peripherals.getClient(CoingeckoClient, {
     apiKey: config.coingeckoApiKey,
   })
-  const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+  const coingeckoQueryService = new CoingeckoQueryService(
+    coingeckoClient,
+    logger.tag('prices'),
+  )
 
   const priceService = new PriceService({
     coingeckoQueryService,
