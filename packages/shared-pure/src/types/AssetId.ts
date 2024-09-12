@@ -10,9 +10,15 @@ export function AssetId(value: string) {
 
 AssetId.create = function (
   chain: string,
-  address?: EthereumAddress | 'native',
+  address: EthereumAddress | 'native' | undefined,
+  type?: 'aggLayer',
 ) {
-  return AssetId(`${chain}-${(address ?? 'native').toString()}`)
+  switch (type) {
+    case 'aggLayer':
+      return AssetId(`AggLayer-${chain}-${(address ?? 'native').toString()}`)
+    default:
+      return AssetId(`${chain}-${(address ?? 'native').toString()}`)
+  }
 }
 
 AssetId.ETH = AssetId('ethereum-native')
