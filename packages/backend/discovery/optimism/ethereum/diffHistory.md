@@ -1,3 +1,131 @@
+Generated with discovered.json: 0xa6772c580f6b89bdefe2fcb930d6014ebac2ead4
+
+# Diff at Thu, 12 Sep 2024 15:37:39 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@e6761599b8d9e0b597372bb0e9ca885e08af7101 block: 20733024
+- current block number: 20733024
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20733024 (main branch discovery), not current.
+
+```diff
+    contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748) {
+    +++ description: used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+      descriptions.0:
+-        "used to remove members inactive for 8467200 while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig"
++        "used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig"
+      values.livenessInterval:
+-        8467200
++        "98d"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      directlyReceivedPermissions.10:
++        {"permission":"upgrade","target":"0xe5965Ab5962eDc7477C8520243A95517CD252fA9"}
+      directlyReceivedPermissions.9.target:
+-        "0xe5965Ab5962eDc7477C8520243A95517CD252fA9"
++        "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed"
+      directlyReceivedPermissions.8.target:
+-        "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed"
++        "0x9F9b897e37de5052cD70Db6D08474550DDb07f39"
+      directlyReceivedPermissions.7.target:
+-        "0x9F9b897e37de5052cD70Db6D08474550DDb07f39"
++        "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
+      directlyReceivedPermissions.7.description:
++        "upgrading bridge implementation allows to access all funds and change every system component."
+      directlyReceivedPermissions.6.target:
+-        "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      directlyReceivedPermissions.6.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
+      directlyReceivedPermissions.5.target:
+-        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "0x82511d494B5C942BE57498a70Fdd7184Ee33B975"
+      directlyReceivedPermissions.4.target:
+-        "0x82511d494B5C942BE57498a70Fdd7184Ee33B975"
++        "0x75505a97BD334E7BD3C476893285569C4136Fa0F"
+      directlyReceivedPermissions.3.target:
+-        "0x75505a97BD334E7BD3C476893285569C4136Fa0F"
++        "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"
+      directlyReceivedPermissions.2.target:
+-        "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"
++        "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290"
+      directlyReceivedPermissions.1.target:
+-        "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290"
++        "0x18DAc71c228D1C32c99489B7323d441E1175e443"
+      directlyReceivedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      directlyReceivedPermissions.0.target:
+-        "0x18DAc71c228D1C32c99489B7323d441E1175e443"
++        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.10:
++        {"permission":"upgrade","target":"0xe5965Ab5962eDc7477C8520243A95517CD252fA9","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
+      receivedPermissions.9.target:
+-        "0xe5965Ab5962eDc7477C8520243A95517CD252fA9"
++        "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed"
+      receivedPermissions.8.target:
+-        "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed"
++        "0x9F9b897e37de5052cD70Db6D08474550DDb07f39"
+      receivedPermissions.7.target:
+-        "0x9F9b897e37de5052cD70Db6D08474550DDb07f39"
++        "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
+      receivedPermissions.7.description:
++        "upgrading bridge implementation allows to access all funds and change every system component."
+      receivedPermissions.6.target:
+-        "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      receivedPermissions.6.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
+      receivedPermissions.5.target:
+-        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "0x82511d494B5C942BE57498a70Fdd7184Ee33B975"
+      receivedPermissions.4.target:
+-        "0x82511d494B5C942BE57498a70Fdd7184Ee33B975"
++        "0x75505a97BD334E7BD3C476893285569C4136Fa0F"
+      receivedPermissions.3.target:
+-        "0x75505a97BD334E7BD3C476893285569C4136Fa0F"
++        "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"
+      receivedPermissions.2.target:
+-        "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"
++        "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290"
+      receivedPermissions.1.target:
+-        "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290"
++        "0x18DAc71c228D1C32c99489B7323d441E1175e443"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      receivedPermissions.0.target:
+-        "0x18DAc71c228D1C32c99489B7323d441E1175e443"
++        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+    }
+```
+
+```diff
+    contract AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"configure","target":"0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","delay":0}]}]
+    }
+```
+
 Generated with discovered.json: 0x88253ac8f615733403c9bb9634aa0acb33cf7ea7
 
 # Diff at Thu, 12 Sep 2024 07:25:21 GMT:

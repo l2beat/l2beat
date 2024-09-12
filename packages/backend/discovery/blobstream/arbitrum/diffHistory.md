@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xdd521dbf63bc6bd0b80c53599d2fea1db67eced4
+
+# Diff at Thu, 12 Sep 2024 15:43:24 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@e6761599b8d9e0b597372bb0e9ca885e08af7101 block: 250294365
+- current block number: 250294365
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 250294365 (main branch discovery), not current.
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: None
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]},"TIMELOCK_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]},"GUARDIAN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]}}
+    }
+```
+
 Generated with discovered.json: 0x27d781503a7821fdb523c9be91443e9eca1c3527
 
 # Diff at Thu, 05 Sep 2024 09:17:59 GMT:

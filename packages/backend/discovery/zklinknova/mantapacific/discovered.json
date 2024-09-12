@@ -14,7 +14,6 @@
           "target": "0x44a65dc12865A1e5249b45b4868f32b0E37168FF"
         }
       ],
-      "sinceTimestamp": 1709295839,
       "values": {
         "$immutable": true,
         "owner": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
@@ -33,7 +32,6 @@
           "via": []
         }
       ],
-      "sinceTimestamp": 1709295839,
       "values": {
         "$admin": "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05",
         "$implementation": "0x5f58BcCE409CDaFBbD705e720743b1EfF9fef28c",
@@ -59,7 +57,6 @@
           "target": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
         }
       ],
-      "sinceTimestamp": 1710253339,
       "values": {
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
@@ -99,7 +96,6 @@
         "totalSyncedPriorityTxs",
         "totalValidatorForwardFee"
       ],
-      "sinceTimestamp": 1709279099,
       "values": {
         "$admin": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
         "$implementation": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
@@ -144,7 +140,6 @@
           "via": []
         }
       ],
-      "sinceTimestamp": 1709279189,
       "values": {
         "$admin": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
         "$implementation": "0x50efC7f1290479cb879473512D89fDC80B726211",

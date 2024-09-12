@@ -1,3 +1,47 @@
+Generated with discovered.json: 0x3097550011aa805b2c77b8c91d7e28b69e1fb2ef
+
+# Diff at Thu, 12 Sep 2024 15:37:07 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@e6761599b8d9e0b597372bb0e9ca885e08af7101 block: 20475247
+- current block number: 20475247
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20475247 (main branch discovery), not current.
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      roles:
++        ["Challenger"]
+      receivedPermissions:
++        [{"permission":"configure","target":"0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."}]
+    }
+```
+
+```diff
+    contract SystemConfig (0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A","via":[{"address":"0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99","delay":0}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.target:
+-        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
++        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      issuedPermissions.0.via.0:
+-        {"address":"0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99","delay":0}
+    }
+```
+
 Generated with discovered.json: 0xa5e55f52c69fd1e6fb0e19f71b9d1422d95b73a5
 
 # Diff at Sun, 08 Sep 2024 17:24:33 GMT:

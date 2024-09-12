@@ -5,6 +5,7 @@ import chalk from 'chalk'
 
 import { hashJson } from '@l2beat/shared'
 import { Hash256, json, stripAnsiEscapeCodes } from '@l2beat/shared-pure'
+import { merge } from 'lodash'
 import {
   HashedFileContent,
   buildSimilarityHashmap,
@@ -182,10 +183,7 @@ export class TemplateService {
     template: string,
   ): DiscoveryContract {
     const templateJson = this.loadContractTemplate(template)
-    return DiscoveryContract.parse({
-      ...templateJson,
-      ...contract,
-    })
+    return DiscoveryContract.parse(merge({}, templateJson, contract))
   }
 
   inlineTemplates(rawConfig: RawDiscoveryConfig): void {

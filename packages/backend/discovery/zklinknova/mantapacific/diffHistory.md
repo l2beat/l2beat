@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x3974b4c9e302bc7ce24ddbcf913d4a407cf9cef1
+
+# Diff at Thu, 12 Sep 2024 15:50:54 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@e6761599b8d9e0b597372bb0e9ca885e08af7101 block: 3121124
+- current block number: 3121124
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 3121124 (main branch discovery), not current.
+
+```diff
+    contract MantaProxyAdmin (0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05) {
+    +++ description: None
+      sinceTimestamp:
+-        1709295839
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x44a65dc12865A1e5249b45b4868f32b0E37168FF) {
+    +++ description: None
+      sinceTimestamp:
+-        1709295839
+    }
+```
+
+```diff
+    contract MantaOwner (0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3) {
+    +++ description: None
+      sinceTimestamp:
+-        1710253339
+    }
+```
+
+```diff
+    contract zkLink (0xD784d7128B46B60Ca7d8BdC17dCEC94917455657) {
+    +++ description: None
+      sinceTimestamp:
+-        1709279099
+    }
+```
+
+```diff
+    contract MantaL2Gateway (0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0) {
+    +++ description: None
+      sinceTimestamp:
+-        1709279189
+    }
+```
+
 Generated with discovered.json: 0x7de113d773adcde00ce7f0b90bd20c96a3767383
 
 # Diff at Wed, 04 Sep 2024 07:33:36 GMT:

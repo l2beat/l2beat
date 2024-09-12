@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xcedf127dbee8b4bd17029dcd29c6132cc259d109
+
+# Diff at Thu, 12 Sep 2024 15:38:48 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@e6761599b8d9e0b597372bb0e9ca885e08af7101 block: 20440714
+- current block number: 20440714
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20440714 (main branch discovery), not current.
+
+```diff
+    contract OldSHARPVerifier (0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6) {
+    +++ description: None
+      values.bootloaderProgramContractAddress:
++        "0x0000000000000000000000000000000000000008"
+      values.cpuFrilessVerifiers:
++        []
+    }
+```
+
 Generated with discovered.json: 0xaeb113ee3aa75cca1c42a7ad41806c76eee26522
 
 # Diff at Fri, 30 Aug 2024 07:59:26 GMT:
