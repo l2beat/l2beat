@@ -212,6 +212,21 @@
       "supply": "zero"
     },
     {
+      "id": "a8-ancient8",
+      "name": "Ancient8",
+      "coingeckoId": "ancient8",
+      "address": "0x3E5A19c91266aD8cE2477B91585d1856B84062dF",
+      "symbol": "A8",
+      "decimals": 18,
+      "deploymentTimestamp": 1651826513,
+      "coingeckoListingTimestamp": 1721174400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39170/large/A8_Token-04_200x200.png?1720798300",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "ankr-ankr-network",
       "name": "Ankr Network",
       "coingeckoId": "ankr",
