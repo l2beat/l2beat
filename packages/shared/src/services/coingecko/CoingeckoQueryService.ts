@@ -172,7 +172,7 @@ export class CoingeckoQueryService {
       prices.length !== expectedLength ||
       marketCaps.length !== expectedLength
     ) {
-      this.logger.warn('Issue with Coingecko API response', {
+      this.logger.warn('Insufficient data in response', {
         coingeckoId,
         from: range.from.toNumber(),
         to: range.to.toNumber(),
@@ -181,7 +181,7 @@ export class CoingeckoQueryService {
         marketCaps: marketCaps.length,
       })
 
-      throw new Error(`Issue with Coingecko API for ${coingeckoId}`)
+      throw new Error(`Insufficient data in response for ${coingeckoId}`)
     }
   }
 
