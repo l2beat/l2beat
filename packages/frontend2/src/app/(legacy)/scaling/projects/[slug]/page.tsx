@@ -33,9 +33,6 @@ export async function generateMetadata({ params }: Props) {
       openGraph: {
         url: `/scaling/projects/${project.display.slug}`,
       },
-      robots: {
-        index: false,
-      },
     },
   })
 }
