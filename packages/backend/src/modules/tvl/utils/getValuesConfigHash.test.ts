@@ -40,6 +40,7 @@ describe(getValuesConfigHash.name, () => {
 
 function mockAmount(v?: Partial<TotalSupplyEntry>): TotalSupplyEntry {
   return {
+    assetId: AssetId.create(v?.chain ?? 'chain', v?.address),
     chain: 'chain',
     dataSource: 'chain',
     project: ProjectId('project'),

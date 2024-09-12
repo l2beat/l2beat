@@ -86,9 +86,7 @@ export class ValueService {
         const amountConfig = amountConfigs.get(amount.configId)
         assert(amountConfig, 'Config not found')
 
-        const priceId = priceConfigIds.get(
-          AssetId.create(amountConfig.chain, amountConfig.address),
-        )
+        const priceId = priceConfigIds.get(amountConfig.assetId)
         const price = pricesAtTimestamp.find((x) => x.configId === priceId)
         assert(price, 'Price not found')
 

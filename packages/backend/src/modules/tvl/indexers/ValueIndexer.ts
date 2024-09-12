@@ -107,7 +107,7 @@ function getAmountConfigs(amounts: AmountConfigEntry[]) {
 function getPriceConfigIds(prices: PriceConfigEntry[]) {
   const result = new Map<AssetId, string>()
   for (const p of prices) {
-    result.set(AssetId.create(p.chain, p.address), createPriceId(p))
+    result.set(p.assetId, createPriceId(p))
   }
 
   return result

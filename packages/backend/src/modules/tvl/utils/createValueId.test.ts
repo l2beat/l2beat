@@ -94,6 +94,7 @@ describe(createValueId.name, () => {
 
 function mockAmount(v?: Partial<TotalSupplyEntry>): TotalSupplyEntry {
   return {
+    assetId: AssetId('assetId'),
     chain: 'chain',
     dataSource: 'chain',
     project: ProjectId('project'),

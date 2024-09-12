@@ -1,6 +1,7 @@
 import {
   assert,
   AmountConfigEntry,
+  AssetId,
   ChainConverter,
   ChainId,
   ProjectId,
@@ -237,6 +238,10 @@ function getEscrowTokenInfo(
 
 function getBaseTokenInfo(token: Token, project: ProjectId) {
   return {
+    assetId: AssetId.create(
+      chainConverter.toName(token.chainId),
+      token.address,
+    ),
     chain: chainConverter.toName(token.chainId),
     project,
     decimals: token.decimals,

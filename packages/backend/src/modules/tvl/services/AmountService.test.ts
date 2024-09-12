@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   AmountConfigBase,
+  AssetId,
   Bytes,
   EscrowEntry,
   EthereumAddress,
@@ -198,7 +199,7 @@ function mockEscrowConfig(config: Partial<EscrowEntry> = {}): EscrowEntry {
     type: 'escrow',
     address: EthereumAddress.random(),
     escrowAddress: EthereumAddress.random(),
-    ...mockBaseConfig(config),
+    ...mockBaseConfig(config, config.address),
     ...config,
   }
 }
@@ -209,13 +210,17 @@ function mockTotalSupplyConfig(
   return {
     type: 'totalSupply',
     address: EthereumAddress.random(),
-    ...mockBaseConfig(config),
+    ...mockBaseConfig(config, config.address),
     ...config,
   }
 }
 
-function mockBaseConfig(base: Partial<AmountConfigBase>): AmountConfigBase {
+function mockBaseConfig(
+  base: Partial<AmountConfigBase>,
+  address: EthereumAddress | 'native' | undefined,
+): AmountConfigBase {
   return {
+    assetId: AssetId.create(base.chain ?? 'chain', address),
     chain: 'chain',
     dataSource: 'chain',
     project: ProjectId('project'),

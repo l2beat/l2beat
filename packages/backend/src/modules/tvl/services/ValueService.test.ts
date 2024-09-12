@@ -35,9 +35,11 @@ describe(ValueService.name, () => {
 
     const project: ProjectId = ProjectId('project')
     const source: string = 'chain'
+    const addressA = EthereumAddress.random()
     const CONFIG_A = mockObject<AmountConfigEntry>({
+      assetId: AssetId.create('chain', addressA),
       sinceTimestamp: UnixTime.ZERO,
-      address: EthereumAddress.random(),
+      address: addressA,
       chain: 'chain',
       includeInTotal: true,
       decimals: DECIMALS,
@@ -45,7 +47,9 @@ describe(ValueService.name, () => {
       isAssociated: false,
       category: 'ether',
     })
+    const addressB = EthereumAddress.random()
     const CONFIG_B = mockObject<AmountConfigEntry>({
+      assetId: AssetId.create('chain', addressB),
       sinceTimestamp: new UnixTime(300),
       address: EthereumAddress.random(),
       chain: 'chain',
