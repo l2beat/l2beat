@@ -1,16 +1,17 @@
 import { type Metadata } from 'next'
 import PlausibleProvider from 'next-plausible'
 import { ThemeProvider } from 'next-themes'
-import { env } from '~/env'
-import { TRPCReactProvider } from '~/trpc/react'
-import { restoreCollapsibleNavStateScript } from '../components/nav/consts'
 
 import { getCollection } from '~/content/get-collection'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { TooltipProvider } from '../components/core/tooltip/tooltip'
 import { GlossaryContextProvider } from '../components/markdown/glossary-context'
+import { env } from '~/env'
+import { TRPCReactProvider } from '~/trpc/react'
+import { restoreCollapsibleNavStateScript } from '../components/nav/consts'
 import { roboto } from '../fonts'
 import '../styles/globals.css'
+import { ProgressBar } from './_components/progress-bar'
 
 export const metadata: Metadata = getDefaultMetadata()
 
@@ -52,6 +53,7 @@ export default async function RootLayout({
                   }))}
                 >
                   {children}
+                  <ProgressBar />
                 </GlossaryContextProvider>
               </TooltipProvider>
             </ThemeProvider>
