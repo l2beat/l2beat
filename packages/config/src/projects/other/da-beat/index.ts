@@ -29,6 +29,8 @@ import { witnessDac } from './dac/witness'
 import { xaiDac } from './dac/xai'
 import { xlayerDac } from './dac/xlayer'
 import { zkfairDac } from './dac/zkfair'
+import { redstoneDA } from './dac/redstoneDA'
+import { xterioDA } from './dac/xterioDA'
 import { DaLayer } from './types/DaLayer'
 
 export * from './types'
@@ -65,4 +67,6 @@ export const daLayers: DaLayer[] = [
   playblockDac,
   mantleDA,
   eigenDA,
+  redstoneDA,
+  xterioDA,
 ]

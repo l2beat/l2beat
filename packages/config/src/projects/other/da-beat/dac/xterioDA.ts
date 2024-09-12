@@ -6,7 +6,7 @@ import { NO_BRIDGE } from '../templates/no-bridge-template'
 import { linkByDA } from '../utils/link-by-da'
 
 
-const discovery = new ProjectDiscovery('redstone')
+const discovery = new ProjectDiscovery('xterio')
 
 const daChallengeWindow = formatSeconds(
   discovery.getContractValue<number>(
@@ -22,30 +22,31 @@ const daResolveWindow = formatSeconds(
   ) * 12, // in blocks, to seconds
 )
 
-export const redstoneDA: DaLayer = {
-  id: 'redstone-da',
+export const xterioDA: DaLayer = {
+  id: 'xterio-da',
   type: 'DaLayer',
   kind: 'DAC',
   display: {
-    name: 'RedstoneDA',
-    slug: 'redstone',
+    name: 'XterioDA',
+    slug: 'xterio',
     description:
-      'RedstoneDA is a data availability solution using data availability challenges (DA Challenges).',
+      'XterioDA is a data availability solution using data availability challenges (DA Challenges).',
       links: {
-        websites: ['https://redstone.xyz/'],
-        apps: ['https://redstone.xyz/deposit'],
-        documentation: ['https://redstone.xyz/docs'],
-        explorers: ['https://explorer.redstone.xyz/'],
-        repositories: ['https://github.com/latticexyz/redstone'],
+        websites: ['https://xter.io/'],
+        apps: ['https://xter.io/', 'https://eth-bridge.xter.io/'],
+        documentation: ['https://stack.optimism.io/'],
+        explorers: ['https://eth.xterscan.io/'],
+        repositories: ['https://github.com/XterioTech'],
         socialMedia: [
-          'https://twitter.com/redstonexyz',
-          'https://discord.com/invite/latticexyz',
+          'https://x.com/XterioGames',
+          'https://discord.gg/xterio',
+          'https://medium.com/@XterioGames',
         ],
       },
   },
   technology: `
     ## Data Availability Challenges
-    Redstone relies on DA challenges for data availability. 
+    Xterio relies on DA challenges for data availability. 
     The DA Provider submits an input commitment on Ethereum, and users can request the data behind the commitment off-chain from the DA Provider.
     If a DA challenger finds that the data behind a tx data commitment is not available, they can submit a challenge which requires locking a bond within ${daChallengeWindow}. 
     A challenge can be resolved by publishing the preimage data within an additional ${daResolveWindow}.
@@ -55,7 +56,7 @@ export const redstoneDA: DaLayer = {
   `,
   bridges: [
     NO_BRIDGE({
-        layer: 'RedstoneDA',
+        layer: 'XterioDA',
         description:
           'The risk profile in this page refers to scaling solutions that do not integrate with a data availability bridge.',
         technology: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.
@@ -63,7 +64,7 @@ export const redstoneDA: DaLayer = {
       }),
   ],
   usedIn: linkByDA({
-    layer: (layer) => layer === 'RedstoneDA',
+    layer: (layer) => layer === 'XterioDA',
   }),
   risks: {
     economicSecurity: DaEconomicSecurityRisk.Unknown,
