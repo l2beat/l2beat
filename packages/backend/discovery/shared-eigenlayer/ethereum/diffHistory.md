@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x6eecf8e45f67facdde442289a66b4824239f41d5
+Generated with discovered.json: 0xfebd0f616c689b49d24344eab469e383414904b6
 
-# Diff at Tue, 10 Sep 2024 07:32:41 GMT:
+# Diff at Thu, 12 Sep 2024 07:30:35 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@a07fad74bc34c07e89da01ab49be710834a4dcba block: 20654739
-- current block number: 20718743
+- comparing to: main@21748f79216eb050ed17a98d0e8a74893f478f74 block: 20654739
+- current block number: 20733051
 
 ## Description
 
@@ -124,15 +124,21 @@ Contracts update:
     +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
 ```
 
+```diff
++   Status: CREATED
+    contract  (0xB8312B0B13dC1925B6aa2dEBB432B4C3B93b1Dab)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
 ## Source code changes
 
 ```diff
-.../DelayedWithdrawalRouter.sol => /dev/null       |  881 ------
- .../TransparentUpgradeableProxy.p.sol => /dev/null |  630 -----
- .../EigenLayerBeaconOracle.sol => /dev/null        |   91 -
+.../DelayedWithdrawalRouter.sol => /dev/null       |  882 ------
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  631 -----
+ .../EigenLayerBeaconOracle.sol => /dev/null        |   92 -
  .../{.flat@20654739 => .flat}/EigenPod.sol         | 2967 ++++++++++----------
  .../EigenPodManager/EigenPodManager.sol            |  205 +-
- 5 files changed, 1543 insertions(+), 3231 deletions(-)
+ 5 files changed, 1543 insertions(+), 3234 deletions(-)
 ```
 
 Generated with discovered.json: 0x2cf3c4a3823dcf5c01eb517548d66744b8620598
