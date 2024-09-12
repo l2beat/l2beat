@@ -14,3 +14,5 @@ AssetId.create = function (
 ) {
   return AssetId(`${chain}-${(address ?? 'native').toString()}`)
 }
+
+AssetId.ETH = AssetId('ethereum-native')

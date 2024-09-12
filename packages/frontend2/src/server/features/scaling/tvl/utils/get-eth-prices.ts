@@ -5,7 +5,7 @@ import { db } from '~/server/database'
 const ethPriceId = createPriceId({
   type: 'coingecko',
   coingeckoId: CoingeckoId('ethereum'),
-  assetId: AssetId('ethereum-native'),
+  assetId: AssetId.ETH,
   address: 'native',
   chain: 'ethereum',
   sinceTimestamp: UnixTime.ZERO,
