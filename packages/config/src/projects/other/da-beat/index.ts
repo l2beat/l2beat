@@ -9,6 +9,7 @@ import { astarZkEvmDac } from './dac/astarzkEVM'
 import { degenDac } from './dac/degen'
 import { edgelessDac } from './dac/edgeless'
 import { eigenDA } from './dac/eigenDA'
+import { fraxtalDA } from './dac/fraxtalDA'
 import { hychainDac } from './dac/hychain'
 import { immutableXDac } from './dac/immutablex'
 import { l3xDac } from './dac/l3x'
@@ -51,6 +52,7 @@ export const daLayers: DaLayer[] = [
   sorareDac,
   tanxDac,
   hychainDac,
+  fraxtalDA,
   sankoDac,
   myriaDac,
   edgelessDac,
