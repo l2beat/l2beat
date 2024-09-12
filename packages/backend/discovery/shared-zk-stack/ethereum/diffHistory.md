@@ -1,30 +1,85 @@
-Generated with discovered.json: 0x512d7632880bdfb945fd5f196cae9a127e76fcd0
+Generated with discovered.json: 0xd238aa713ea8f84fbc7a149a32d0e82d3a19ec60
 
-# Diff at Thu, 12 Sep 2024 09:51:20 GMT:
+# Diff at Thu, 12 Sep 2024 12:07:51 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@127adf09837b5e1f2ac0ecd582a2ef874e97633f block: 20725957
-- current block number: 20725957
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@f3f080827a9c9144630c7d8b5f28745b2029ead2 block: 20725957
+- current block number: 20734424
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Ownership of the four shared ZK stack contracts and their ProxyAdmin has been fully transfered to the ProtocolUpgradeHandler.
 
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 20725957 (main branch discovery), not current.
+## Watched changes
 
 ```diff
-    contract ProtocolUpgradeHandler (0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897) {
+-   Status: DELETED
+    contract Governance (0x0b622A2061EaccAE1c664eBC3E868b8438e03F61)
     +++ description: None
-      values.L2_PROTOCOL_GOVERNOR:
--        "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
-+        "zksync2:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
-      usedTypes:
-+        [{"typeCaster":"ChainPrefix","arg":{"prefix":"zksync2"}}]
+```
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
+      values.owner:
+-        "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61"
++        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
+      values.pendingOwner:
+-        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
++        "0x0000000000000000000000000000000000000000"
     }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
+      values.owner:
+-        "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61"
++        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
+      values.pendingOwner:
+-        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
+    +++ description: None
+      values.owner:
+-        "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61"
++        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
+    }
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: None
+      values.owner:
+-        "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61"
++        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
+      values.pendingOwner:
+-        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L1SharedBridge (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: None
+      values.owner:
+-        "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61"
++        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
+      values.pendingOwner:
+-        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+## Source code changes
+
+```diff
+.../.flat@20725957/Governance.sol => /dev/null     | 440 ---------------------
+ 1 file changed, 440 deletions(-)
 ```
 
 Generated with discovered.json: 0x5316f6730537230399f403d045aae371108b264d
