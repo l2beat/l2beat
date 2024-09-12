@@ -7,8 +7,7 @@ rm -rf data 2>/dev/null &&
 mkdir data &&
 
 echo "Clearing local TVL tables" &&
-BASE_DB_URL="${DEV_LOCAL_DB_URL%/*}"
-psql $BASE_DB_URL -c "DROP DATABASE IF EXISTS l2beat_local" -c "CREATE DATABASE l2beat_local"
+psql $DEV_LOCAL_DB_URL -f reset-local.sql &&
 
 echo "Migrating DB to latest" &&
 PRISMA_DB_URL=$PRISMA_DB_URL yarn prisma migrate deploy &&
