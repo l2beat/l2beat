@@ -75,10 +75,10 @@ export class ActivityRepository extends BaseRepository {
   ): Promise<ActivityRecord[]> {
     const [from, to] = timeRange
     const rows = await this.db
-      .selectFrom('activity')
+      .selectFrom('Activity')
       .select(selectActivity)
       .where(
-        'project_id',
+        'projectId',
         'in',
         projectIds.map((p) => p.toString()),
       )
@@ -91,24 +91,24 @@ export class ActivityRepository extends BaseRepository {
 
   async getMaxCountForProjects() {
     const subquery = this.db
-      .selectFrom('activity')
-      .select(['project_id', (eb) => eb.fn.max('count').as('max_count')])
-      .groupBy('project_id')
+      .selectFrom('Activity')
+      .select(['projectId', (eb) => eb.fn.max('count').as('max_count')])
+      .groupBy('projectId')
       .as('t2')
 
     const rows = await this.db
-      .selectFrom('activity as t1')
+      .selectFrom('Activity as t1')
       .innerJoin(subquery, (join) =>
         join
-          .onRef('t1.project_id', '=', 't2.project_id')
+          .onRef('t1.projectId', '=', 't2.projectId')
           .onRef('t1.count', '=', 't2.max_count'),
       )
-      .select(['t1.project_id', 't1.count as max_count', 't1.timestamp'])
+      .select(['t1.projectId', 't1.count as max_count', 't1.timestamp'])
       .execute()
 
     return Object.fromEntries(
       rows.map((row) => [
-        row.project_id,
+        row.projectId,
         {
           count: Number(row.max_count),
           timestamp: UnixTime.fromDate(row.timestamp),
