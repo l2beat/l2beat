@@ -1,14 +1,17 @@
 import { layer2s, layer3s } from '@l2beat/config'
-import { NextResponse } from 'next/server'
-import { getTvlBreakdownForProject } from '~/server/features/scaling/tvl/breakdown/get-tvl-breakdown-for-project'
+import { type NextRequest, NextResponse } from 'next/server'
 import { getTvlChartData } from '~/server/features/scaling/tvl/utils/get-tvl-chart-data'
+import { TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 
 const projects = [...layer2s, ...layer3s]
 
 export async function GET(
-  request: Request,
+  request: NextRequest,
   { params }: { params: { slug: string } },
 ) {
+  const searchParams = request.nextUrl.searchParams
+  const range = TvlChartRange.catch('30d').parse(searchParams.get('range'))
+
   const project = projects.find((p) => p.display.slug === params.slug)
 
   if (!project) {
@@ -19,7 +22,7 @@ export async function GET(
   }
 
   const chart = await getTvlChartData({
-    range: '30d',
+    range,
     filter: { type: 'projects', projectIds: [project.id] },
   })
 
@@ -32,8 +35,6 @@ export async function GET(
       error: 'Missing data.',
     })
   }
-
-  const { breakdown } = await getTvlBreakdownForProject(project)
 
   const centsValue = latestTvlData[1] + latestTvlData[2] + latestTvlData[3]
   const ethValue = centsValue / latestTvlData[4]
@@ -48,7 +49,6 @@ export async function GET(
         canonical + external + native / 100,
         ethPrice / 100,
       ]),
-      breakdown,
     },
   })
 }
