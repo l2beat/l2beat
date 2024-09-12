@@ -1,10 +1,10 @@
 import { assert } from '@l2beat/shared-pure'
 import { BaseTypeCaster } from './BaseTypeCaster'
+import { ChainPrefix } from './ChainPrefix'
 import { FormatSeconds } from './FormatSeconds'
 import { GreaterThan } from './GreaterThan'
 import { Mapping } from './Mapping'
 import { Undecimal } from './Undecimal'
-import { ChainPrefix } from './ChainPrefix'
 
 export const TypeConverters = {
   FormatSeconds,
