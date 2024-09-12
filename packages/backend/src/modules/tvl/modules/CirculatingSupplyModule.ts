@@ -8,6 +8,7 @@ import { TvlConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { CirculatingSupplyIndexer } from '../indexers/CirculatingSupplyIndexer'
+import { DescendantIndexer } from '../indexers/DescendantIndexer'
 import { HourlyIndexer } from '../indexers/HourlyIndexer'
 import { ValueIndexer } from '../indexers/ValueIndexer'
 import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
@@ -25,19 +26,6 @@ export function initCirculatingSupplyModule(
   syncOptimizer: SyncOptimizer,
   indexerService: IndexerService,
   configMapping: ConfigMapping,
-): CirculatingSupplyModule {
-  const coingeckoClient = peripherals.getClient(CoingeckoClient, {
-    apiKey: config.coingeckoApiKey,
-  })
-  const coingeckoQueryService = new CoingeckoQueryService(
-    coingeckoClient,
-    logger.tag('circulatingSupply'),
-  )
-
-  const circulatingSupplyService = new CirculatingSupplyService({
-    coingeckoQueryService,
-  })
-
   hourlyIndexer: HourlyIndexer,
   descendantPriceIndexer: DescendantIndexer,
 ): CirculatingSupplyModule | undefined {
@@ -47,7 +35,7 @@ export function initCirculatingSupplyModule(
 
   if (circulatingSupplies.length === 0) return undefined
 
-  const circulatingSupplyService = getDataService(peripherals, config)
+  const circulatingSupplyService = getDataService(logger, peripherals, config)
 
   const dataIndexers = new Map<string, CirculatingSupplyIndexer>()
   circulatingSupplies.forEach((circulatingSupply) => {
@@ -119,11 +107,18 @@ export function initCirculatingSupplyModule(
   }
 }
 
-function getDataService(peripherals: Peripherals, config: TvlConfig) {
+function getDataService(
+  logger: Logger,
+  peripherals: Peripherals,
+  config: TvlConfig,
+) {
   const coingeckoClient = peripherals.getClient(CoingeckoClient, {
     apiKey: config.coingeckoApiKey,
   })
-  const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+  const coingeckoQueryService = new CoingeckoQueryService(
+    coingeckoClient,
+    logger.tag('circulatingSupply'),
+  )
 
   const circulatingSupplyService = new CirculatingSupplyService({
     coingeckoQueryService,
