@@ -11,7 +11,7 @@ BASE_DB_URL="${DEV_LOCAL_DB_URL%/*}"
 psql $BASE_DB_URL -c "DROP DATABASE IF EXISTS l2beat_local" -c "CREATE DATABASE l2beat_local"
 
 echo "Migrating DB to latest" &&
-yarn prisma migrate deploy &&
+PRISMA_DB_URL=$PRISMA_DB_URL yarn prisma migrate deploy &&
 
 echo "Fetching TVL tables from remote DB" &&
 ./export.sh &&

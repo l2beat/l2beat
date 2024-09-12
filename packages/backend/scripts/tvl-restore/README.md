@@ -10,13 +10,11 @@
 > ⚠️ **Use readonly credential for remote**: Be very careful here!
 ```
 DEV_LOCAL_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_local
+PRISMA_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_local
 DEV_REMOTE_DB_URL_READ_ONLY=
 ```
-3. Set env in backend root .env
-```
-PRISMA_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_local
-```
-4. Run the script
+3. Run the script
 ```
 ./tvl-restore.sh
 ```
+4. There is also command in the backend `yarn tvl-restore`
