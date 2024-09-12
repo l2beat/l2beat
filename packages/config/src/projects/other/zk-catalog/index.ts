@@ -1,9 +1,9 @@
 import { SP1Blobstream } from './SP1Blobstream'
+import { SP1Vector } from './SP1Vector'
 import { payy } from './payy'
 import { risczero } from './risczero'
 import { soulwallet } from './soulwallet'
 import { ZkCatalogProject } from './types/ZkCatalogProject'
-import { vectorx } from './vectorx'
 import { worldcoinsemaphore } from './worldcoinsemaphore'
 import { worldcoinsmtb } from './worldcoinsmtb'
 
@@ -18,5 +18,5 @@ export const zkCatalogProjects: ZkCatalogProject[] = [
   soulwallet,
   worldcoinsemaphore,
   worldcoinsmtb,
-  vectorx,
+  SP1Vector,
 ]

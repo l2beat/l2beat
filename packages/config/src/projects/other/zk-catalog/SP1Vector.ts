@@ -2,17 +2,17 @@ import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { PROOFS } from './common/proofSystems'
 import { ZkCatalogProject } from './types'
 
-export const vectorx: ZkCatalogProject = {
+export const SP1Vector: ZkCatalogProject = {
   display: {
-    slug: 'vectorx',
-    name: 'VectorX',
+    slug: 'SP1Vector',
+    name: 'SP1Vector',
   },
   proofVerification: {
     shortDescription: 'Avail ZK light client implementation.',
     aggregation: true,
     verifiers: [
       {
-        name: 'VectorX Verifier',
+        name: 'Vector SP1 Verifier',
         description: 'Avail ZK light client verifying multiple blocks at once.',
         contractAddress: EthereumAddress(
           '0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc',

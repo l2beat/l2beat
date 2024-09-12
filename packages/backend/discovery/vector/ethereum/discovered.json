@@ -1,8 +1,8 @@
 {
-  "name": "vectorx",
+  "name": "vector",
   "chain": "ethereum",
-  "blockNumber": 20733794,
-  "configHash": "0xfb9f9bb9a273e4acbcd24b3ef4b63572872a7fd9292246263d14d0ee673b02e8",
+  "blockNumber": 20735125,
+  "configHash": "0x1896de261b10f6a2668c7d5e43c233bc19dd64d7fd3fcc6acce166ce52761e90",
   "version": 14,
   "contracts": [
     {
@@ -30,7 +30,7 @@
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "latestAuthoritySetId": 75,
-        "latestBlock": 302400,
+        "latestBlock": 303300,
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "vectorXProgramVkey": "0x0003c5cf9260fcef3df6c79870952e1ce2f57595ac042ea868c9cbbcab548cf8",

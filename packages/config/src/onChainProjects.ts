@@ -10,5 +10,5 @@ export const onChainProjects: string[] = [
   'worldcoin',
   'cronoszkevm',
   'nebraupa',
-  'vectorx',
+  'vector',
 ]

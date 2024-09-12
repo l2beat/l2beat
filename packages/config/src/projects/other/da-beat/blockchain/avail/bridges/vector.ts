@@ -1,9 +1,17 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
+import { ProjectDiscovery } from '../../../../../../discovery/ProjectDiscovery'
 import { DaAccessibilityRisk } from '../../../types/DaAccessibilityRisk'
 import { DaAttestationSecurityRisk } from '../../../types/DaAttestationSecurityRisk'
 import { DaBridge } from '../../../types/DaBridge'
 import { DaExitWindowRisk } from '../../../types/DaExitWindowRisk'
+
+const discovery = new ProjectDiscovery('vector')
+
+const SP1Verifier = discovery.getContractValue<string>(
+  'SuccinctGatewaySP1',
+  'verifier',
+)[0]
 
 const validation = {
   type: 'zk-proof',
@@ -36,8 +44,26 @@ export const vector = {
         description:
           'The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.',
       },
+      {
+        name: 'VectorSP1Verifier',
+        address: EthereumAddress(SP1Verifier),
+        description: `Verifier contract for the header range [latestBlock, targetBlock] proof.`,
+      },
+      discovery.getContractDetails('SuccinctGatewaySP1', {
+        description: `This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the on-chain verifier contract.
+        `,
+      }),
     ],
-    risks: [],
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: 'the bridge contract receives a malicious code upgrade. There is no delay on code upgrades.',
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'a dishonest majority of Avail validators post incorrect or malicious data commitments.',
+      },
+    ],
   },
   technology: ` 
    Vector SP1 is an implementation of zero-knowledge proof circuits for Vector, Avail's Data Attestation Bridge.
