@@ -114,10 +114,6 @@ ALTER TABLE "Liveness" RENAME COLUMN "configuration_id" TO "configurationId";
 ALTER TABLE "Price" RENAME COLUMN "price_usd" TO "priceUsd";
 ALTER TABLE "Price" RENAME COLUMN "configuration_id" TO "configurationId";
 
-ALTER TABLE "SequenceProcessor" RENAME COLUMN "last_processed" TO "lastProcessed";
-ALTER TABLE "SequenceProcessor" RENAME COLUMN "updated_at" TO "updatedAt";
-ALTER TABLE "SequenceProcessor" RENAME COLUMN "synced_once" TO "syncedOnce";
-
 ALTER TABLE "TvlCleaner" RENAME COLUMN "repository_name" TO "repositoryName";
 ALTER TABLE "TvlCleaner" RENAME COLUMN "hourly_cleaned_until" TO "hourlyCleanedUntil";
 ALTER TABLE "TvlCleaner" RENAME COLUMN "six_hourly_cleaned_until" TO "sixHourlyCleanedUntil";
