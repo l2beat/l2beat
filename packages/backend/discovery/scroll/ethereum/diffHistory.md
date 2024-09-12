@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x6b5bd6fa0124dd6da49839e5d834a8f046e373fe
+
+# Diff at Wed, 11 Sep 2024 07:47:40 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@407590ebfbad0b4f799badc3ad5fce90a7eaed11 block: 20670849
+- current block number: 20725971
+
+## Description
+
+The revertBatch() target is added to the ScrollOwner accesscontrol after our message to the team. Additionally, the 1d timelock is added as an Admin to the ScrollOwner.
+
+## Watched changes
+
+```diff
+    contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      values.accessControl.roles.DEFAULT_ADMIN_ROLE.members.1:
++        "0x0e58939204eEDa84F796FBc86840A50af10eC4F4"
+      values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.revertBatch(bytes,bytes):
++        ["SCROLL_MULTISIG_NO_DELAY_ROLE","EMERGENCY_MULTISIG_NO_DELAY_ROLE"]
+    }
+```
+
 Generated with discovered.json: 0xf927951961dafb58ba0045cdf101156aeff92873
 
 # Diff at Tue, 03 Sep 2024 15:09:19 GMT:

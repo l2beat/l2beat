@@ -1,6 +1,6 @@
-import React, { forwardRef } from 'react'
+import { forwardRef } from 'react'
 import { type CollectionEntry } from '~/content/get-collection'
-import ChiliIcon from '~/icons/chili.svg'
+import { ChiliIcon } from '~/icons/chili'
 import { cn } from '~/utils/cn'
 
 interface Props {

@@ -3,10 +3,14 @@ import { ScalingProjectReference } from './ScalingProjectReference'
 import { ScalingProjectRisk } from './ScalingProjectRisk'
 
 type CategoryTitle =
+  // ZK
   | 'ZK Circuits'
   | 'Prover Architecture'
   | 'Verification Keys Generation'
   | 'Proven Program'
+  // Optimistic
+  | 'State root proposals'
+  | 'Challenges'
 
 type ScalingProjectStateValidationCategory = {
   title: CategoryTitle

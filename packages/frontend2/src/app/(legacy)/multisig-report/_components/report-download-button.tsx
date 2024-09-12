@@ -1,5 +1,5 @@
-import { OutLink } from '~/app/_components/out-link'
-import DownloadArrow from '~/icons/download-arrow.svg'
+import { OutLink } from '~/components/out-link'
+import { DownloadArrowIcon } from '~/icons/download-arrow'
 import { cn } from '~/utils/cn'
 
 interface ReportDownloadButtonProps {
@@ -19,7 +19,7 @@ export function ReportDownloadButton({
       )}
       href={fileUrl}
     >
-      <DownloadArrow className="mr-3" />
+      <DownloadArrowIcon className="mr-3" />
       Download the report
     </OutLink>
   )

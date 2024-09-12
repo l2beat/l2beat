@@ -132,6 +132,9 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
     const sortedBreakdown = recordToSortedBreakdown(breakdown)
     const breakdownWithTokenInfo = assignTokenMetaToBreakdown(sortedBreakdown)
 
-    return { dataTimestamp: targetTimestamp, breakdown: breakdownWithTokenInfo }
+    return {
+      dataTimestamp: targetTimestamp.toNumber(),
+      breakdown: breakdownWithTokenInfo,
+    }
   }
 }

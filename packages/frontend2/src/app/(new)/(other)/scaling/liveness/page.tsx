@@ -1,4 +1,4 @@
-import { SimplePageHeader } from '~/app/_components/simple-page-header'
+import { SimplePageHeader } from '~/components/simple-page-header'
 import { getScalingLivenessEntries } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'

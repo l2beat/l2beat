@@ -15,6 +15,7 @@ yarn build:dependencies
 ## Scripts
 
 - `yarn dev` - run the Next.js development server
+- `yarn dev:mock` - run the Next.js development server with mock data
 - `yarn build` - compile the production build
 - `yarn build:dependencies` - builds the dependencies of frontend2
 - `yarn format` - run biome automatic formatter
@@ -22,38 +23,22 @@ yarn build:dependencies
 - `yarn lint` - run Next.js doctor and ESLint
 - `yarn test` - run the tests
 - `yarn typecheck` - check if the code satisfies the typescript compiler
+- `yarn tinify-logos` - resizes and optimizes logos
 
 ### Environment variables
-Only required variables are listed there. For a complete list check out `src/env.js`.
+If you are running `yarn dev:mock` you do not need any environment variables.
 
+If you are running `yarn dev` or `yarn build` you need to set the following environment variables:
 - `DATABASE_URL` - database connection url (read-only access is sufficient)
 
 *if you currently work at L2BEAT: feel free to directly connect to our staging DB* 😉
-
-#### .env boilerplate:
-
-```bash
-DATABASE_URL=
-```
 
 ### Known issues
 
 `frontend2`, while on production, is still in the early stage of development. When running it locally and trying to navigate to a page that is not migrated yet (main page included), you'll encounter an Internal Server Error.
 
-#### Fully ported pages
-- /scaling
-  * /risks
-  * /data-availability
-  * /finality
-  * /costs
-  * /liveness
-- /donate
-- /faq
-- /glossary
-- /governance
-- /zk-catalog
-
 ### Work-in-progress pages:
-- /scaling/summary (available at /scaling-next/summary)
+- /scaling/projects/[projectSlug] (available at /scaling-next/projects/[projectSlug])
+- /bridges/projects/[projectSlug] (available at /bridges-next/projects/[projectSlug])
 
 The rest of pages are still present in the legacy frontend.

@@ -1,17 +1,17 @@
 import { type ReactNode } from 'react'
-import { NoDataBadge } from '~/app/_components/badge/no-data-badge'
+import { NoDataBadge } from '~/components/badge/no-data-badge'
 import {
   TokenBreakdown,
   TokenBreakdownTooltipContent,
-} from '~/app/_components/breakdown/token-breakdown'
-import { PercentChange } from '~/app/_components/percent-change'
-import { RiskCell } from '~/app/_components/table/cells/risk-cell'
+} from '~/components/breakdown/token-breakdown'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip'
-import InfoIcon from '~/icons/info.svg'
+} from '~/components/core/tooltip/tooltip'
+import { PercentChange } from '~/components/percent-change'
+import { RiskCell } from '~/components/table/cells/risk-cell'
+import { InfoIcon } from '~/icons/info'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { type BridgesProjectEntry } from '~/server/features/bridges/project/get-bridges-project-entry'
 import { cn } from '~/utils/cn'
@@ -113,7 +113,7 @@ function ProjectStat(props: ProjectStat) {
         {props.tooltip && (
           <Tooltip>
             <TooltipTrigger className="-translate-y-px md:translate-y-0">
-              <InfoIcon className="mt-0.5 fill-gray-500 dark:fill-gray-600 md:size-3.5" />
+              <InfoIcon className="mt-0.5 md:size-3.5" variant="gray" />
             </TooltipTrigger>
             <TooltipContent>{props.tooltip}</TooltipContent>
           </Tooltip>

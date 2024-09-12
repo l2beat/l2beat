@@ -1,10 +1,10 @@
-import { PercentChange } from '~/app/_components/percent-change'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip'
-import InfoIcon from '~/icons/info.svg'
+} from '~/components/core/tooltip/tooltip'
+import { PercentChange } from '~/components/percent-change'
+import { InfoIcon } from '~/icons/info'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/format'
 

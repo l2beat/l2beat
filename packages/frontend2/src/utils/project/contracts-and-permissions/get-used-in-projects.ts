@@ -6,8 +6,8 @@ import {
   getCommonContractsIn,
 } from '@l2beat/config'
 import { uniqBy } from 'lodash'
-import { type TechnologyContractAddress } from '../../../app/_components/projects/sections/contract-entry'
-import { type UsedInProject } from '../../../app/_components/projects/sections/permissions/used-in-project'
+import { type TechnologyContractAddress } from '../../../components/projects/sections/contract-entry'
+import { type UsedInProject } from '../../../components/projects/sections/permissions/used-in-project'
 
 type ProjectParams =
   | {

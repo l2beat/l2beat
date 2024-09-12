@@ -6,7 +6,7 @@ import {
 import { type ImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { orderByTvl } from '../tvl/utils/order-by-tvl'
-import { type DetailedLatestTvl } from './utils/get-7d-tvl-breakdown'
+import { type SevenDayTvlBreakdown } from './utils/get-7d-tvl-breakdown'
 
 export function getScalingTvlEntries({
   implementationChangeReport,
@@ -15,7 +15,7 @@ export function getScalingTvlEntries({
 }: {
   implementationChangeReport: ImplementationChangeReport
   projectsVerificationStatuses: ProjectsVerificationStatuses
-  tvl: DetailedLatestTvl
+  tvl: SevenDayTvlBreakdown
 }) {
   const projects = [...layer2s, ...layer3s].filter(
     (project) => !project.isUpcoming && !project.isArchived,

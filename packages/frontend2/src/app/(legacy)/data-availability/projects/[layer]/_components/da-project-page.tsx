@@ -2,11 +2,11 @@ import {
   type DaBridge,
   type DaLayer,
 } from '@l2beat/config/build/src/projects/other/da-beat'
-import { HighlightableLinkContextProvider } from '~/app/_components/link/highlightable/highlightable-link-context'
-import { DesktopProjectNavigation } from '~/app/_components/projects/navigation/desktop-project-navigation'
-import { MobileProjectNavigation } from '~/app/_components/projects/navigation/mobile-project-navigation'
-import { projectDetailsToNavigationSections } from '~/app/_components/projects/navigation/types'
-import { ProjectDetails } from '~/app/_components/projects/project-details'
+import { HighlightableLinkContextProvider } from '~/components/link/highlightable/highlightable-link-context'
+import { DesktopProjectNavigation } from '~/components/projects/navigation/desktop-project-navigation'
+import { MobileProjectNavigation } from '~/components/projects/navigation/mobile-project-navigation'
+import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
+import { ProjectDetails } from '~/components/projects/project-details'
 import { getDaProjectEntry } from '~/server/features/data-availability/project/get-da-project-entry'
 import { DaProjectSummary } from '../_components/da-project-summary'
 
@@ -31,8 +31,7 @@ export async function DaProjectPage({ header, daLayer, daBridge }: Props) {
           <MobileProjectNavigation sections={navigationSections} />
         </div>
       )}
-      {header}
-      <DaProjectSummary project={daProjectEntry} />
+      <DaProjectSummary project={daProjectEntry} header={header} />
       {isNavigationEmpty ? (
         <ProjectDetails items={daProjectEntry.projectDetails} />
       ) : (

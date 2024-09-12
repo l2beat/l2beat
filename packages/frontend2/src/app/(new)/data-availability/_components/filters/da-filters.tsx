@@ -1,6 +1,6 @@
 import { uniq } from 'lodash'
-import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
-import { TableFilter } from '~/app/_components/table/filters/table-filter'
+import { OverflowWrapper } from '~/components/core/overflow-wrapper'
+import { TableFilter } from '~/components/table/filters/table-filter'
 import { type CommonDaEntry, useDaFilterValues } from './da-filter-context'
 
 interface Props {

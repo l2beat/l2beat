@@ -1,3 +1,4 @@
+import { CliLogger } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import {
   boolean,
@@ -36,6 +37,7 @@ const CompareProjectSources = command({
     discoveryPath,
   },
   handler: async (args) => {
+    const logger = new CliLogger()
     const config = readConfig()
     const discoveryPath = config.discoveryPath ?? args.discoveryPath
     assert(discoveryPath !== undefined)
@@ -45,6 +47,7 @@ const CompareProjectSources = command({
       firstProjectPath: args.firstProject,
       secondProjectPath: args.secondProject,
       discoveryPath,
+      logger,
     })
   },
 })
@@ -59,6 +62,7 @@ const CompareProjectSourceOnSource = command({
     discoveryPath,
   },
   handler: async (args) => {
+    const logger = new CliLogger()
     const config = readConfig()
     const discoveryPath = config.discoveryPath ?? args.discoveryPath
     assert(discoveryPath !== undefined)
@@ -67,6 +71,7 @@ const CompareProjectSourceOnSource = command({
       forceTable: args.forceTableFlag,
       projectPath: args.projectPath,
       discoveryPath,
+      logger,
     })
   },
 })
@@ -81,6 +86,7 @@ const MostSimilarFlatSources = command({
     discoveryPath,
   },
   handler: async (args) => {
+    const logger = new CliLogger()
     const config = readConfig()
     const discoveryPath = config.discoveryPath ?? args.discoveryPath
     assert(discoveryPath !== undefined)
@@ -89,6 +95,7 @@ const MostSimilarFlatSources = command({
       projectPath: args.project,
       forceTable: args.forceTableFlag,
       discoveryPath,
+      logger,
     })
   },
 })
@@ -119,6 +126,7 @@ const CompareAllFlatSources = command({
     }),
   },
   handler: async (args) => {
+    const logger = new CliLogger()
     const config = readConfig()
     const discoveryPath = config.discoveryPath ?? args.discoveryPath
     assert(discoveryPath !== undefined)
@@ -128,6 +136,7 @@ const CompareAllFlatSources = command({
       minProjectSimilarity: args.minProjectSimilarity,
       showGraph: args.showGraph,
       discoveryPath,
+      logger,
     })
   },
 })

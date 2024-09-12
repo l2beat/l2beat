@@ -1,14 +1,14 @@
 import { type WarningWithSentiment } from '@l2beat/config'
-import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
-import { ValueLockedBreakdown } from '~/app/_components/breakdown/value-locked-breakdown'
-import { CustomLink } from '~/app/_components/link/custom-link'
-import { PercentChange } from '~/app/_components/percent-change'
-import { Square } from '~/app/_components/square'
+import { UpcomingBadge } from '~/components/badge/upcoming-badge'
+import { ValueLockedBreakdown } from '~/components/breakdown/value-locked-breakdown'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip'
+} from '~/components/core/tooltip/tooltip'
+import { CustomLink } from '~/components/link/custom-link'
+import { PercentChange } from '~/components/percent-change'
+import { Square } from '~/components/square'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { formatCurrency } from '~/utils/format'

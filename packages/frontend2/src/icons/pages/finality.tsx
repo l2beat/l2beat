@@ -1,6 +1,7 @@
 import { cn } from '~/utils/cn'
+import { type SvgIconProps } from '../svg-icon'
 
-export default function FinalityIcon(props: React.SVGAttributes<SVGElement>) {
+export default function FinalityIcon(props: SvgIconProps) {
   return (
     <>
       <svg

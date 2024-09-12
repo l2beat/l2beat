@@ -11,7 +11,11 @@ import {
   discoveredJsonStub,
   discoveredOpStackJsonStub,
 } from '../test/stubs/discoveredJson'
-import { ProjectDiscovery } from './ProjectDiscovery'
+import {
+  ProjectDiscovery,
+  formatAsBulletPoints,
+  trimTrailingDots,
+} from './ProjectDiscovery'
 
 describe(ProjectDiscovery.name, () => {
   const projectName = 'ExampleProject'
@@ -276,6 +280,34 @@ describe(ProjectDiscovery.name, () => {
         'Can be updated by MockedContract, 0x787A0ACaB02437c60Aafb1a29167A3609801e320',
       )
     })
+  })
+})
+
+describe(formatAsBulletPoints.name, () => {
+  it('should format description as bullet points', () => {
+    const description = ['First point', 'Second point', 'Third point']
+    const formatted = formatAsBulletPoints(description)
+    expect(formatted).toEqual('* First point\n* Second point\n* Third point\n')
+  })
+
+  it('should format single point as string', () => {
+    const description = ['Single point']
+    const formatted = formatAsBulletPoints(description)
+    expect(formatted).toEqual('Single point')
+  })
+})
+
+describe(trimTrailingDots.name, () => {
+  it('should remove trailing dots', () => {
+    const description = 'Some description...'
+    const trimmed = trimTrailingDots(description)
+    expect(trimmed).toEqual('Some description')
+  })
+
+  it('should not remove trailing dots if there are no dots', () => {
+    const description = 'Some description'
+    const trimmed = trimTrailingDots(description)
+    expect(trimmed).toEqual(description)
   })
 })
 

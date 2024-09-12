@@ -1,5 +1,5 @@
 import { Insertable, Selectable } from 'kysely'
-import { TokenMeta } from '../../kysely/token-db/types'
+import { TokenMeta } from '../../kysely/generated/types'
 
 export interface TokenMetaRecord {
   id: string

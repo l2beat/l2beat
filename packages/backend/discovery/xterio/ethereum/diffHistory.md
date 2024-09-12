@@ -1,3 +1,191 @@
+Generated with discovered.json: 0x8e7dfa6e8484a585db307e2304871426110b4dda
+
+# Diff at Sun, 08 Sep 2024 17:24:50 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@fd881462cca0d7ef4519f907f3c6cfd5fe1cde8f block: 20327427
+- current block number: 20327427
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20327427 (main branch discovery), not current.
+
+```diff
+    contract DelayedWETH (0x0eCe16401A80551345bB672f177f51A8755FF775) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"
++        "0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574"
+      issuedPermissions.0.via.0:
++        {"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8","delay":0}
+    }
+```
+
+```diff
+    contract DataAvailabilityChallenge (0x16193e14197c10109F3e81b938153A04A2a00190) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"
++        "0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574"
+      issuedPermissions.0.via.0:
++        {"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8","delay":0}
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x28d56C3BBbe4807c19Cc81E6D5207Fb681C3726b) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions.0.target:
+-        "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"
++        "0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574"
+      issuedPermissions.0.via.0:
++        {"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8","delay":0}
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x2AD84AbD52050956AcC9c490D024b821A59e3FB6) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      issuedPermissions.0.target:
+-        "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"
++        "0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574"
+      issuedPermissions.0.via.0:
++        {"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8","delay":0,"description":"upgrading bridge implementation allows to access all funds and change every system component."}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0x443164F044D8840479234e00E7aD5bb06b85fC78) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"
++        "0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574"
+      issuedPermissions.0.via.0:
++        {"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8","delay":0}
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x515A0c8b1d9574C65EA1924eCd767B1d9b6AC32f) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      issuedPermissions.0.target:
+-        "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"
++        "0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574"
+      issuedPermissions.0.via.0:
++        {"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8","delay":0}
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x5A0492D20D984eE904E46E6Ff24572bc755abb28) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.0.target:
+-        "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"
++        "0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574"
+      issuedPermissions.0.via.0:
++        {"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8","delay":0}
+    }
+```
+
+```diff
+    contract SystemConfig (0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.1.target:
+-        "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"
++        "0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574"
+      issuedPermissions.1.via.0:
++        {"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8","delay":0}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x9e48d6bBca781c23392Ec459BfB3657C40a794A8) {
+    +++ description: None
+      descriptions:
+-        ["It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component."]
+      issuedPermissions:
+-        [{"permission":"configure","target":"0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574","via":[]}]
+      receivedPermissions:
+-        [{"permission":"configure","target":"0xBdF852e2cc26Ea3C2dee7b493B1Fc12dA406175a"},{"permission":"upgrade","target":"0x0eCe16401A80551345bB672f177f51A8755FF775"},{"permission":"upgrade","target":"0x16193e14197c10109F3e81b938153A04A2a00190"},{"permission":"upgrade","target":"0x28d56C3BBbe4807c19Cc81E6D5207Fb681C3726b"},{"permission":"upgrade","target":"0x2AD84AbD52050956AcC9c490D024b821A59e3FB6"},{"permission":"upgrade","target":"0x443164F044D8840479234e00E7aD5bb06b85fC78"},{"permission":"upgrade","target":"0x515A0c8b1d9574C65EA1924eCd767B1d9b6AC32f"},{"permission":"upgrade","target":"0x5A0492D20D984eE904E46E6Ff24572bc755abb28"},{"permission":"upgrade","target":"0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C"},{"permission":"upgrade","target":"0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A"},{"permission":"upgrade","target":"0xcbF423525a5471Fc5037a5397F99f6F09fe41379"}]
+      directlyReceivedPermissions:
++        [{"permission":"configure","target":"0xBdF852e2cc26Ea3C2dee7b493B1Fc12dA406175a"},{"permission":"upgrade","target":"0x0eCe16401A80551345bB672f177f51A8755FF775"},{"permission":"upgrade","target":"0x16193e14197c10109F3e81b938153A04A2a00190"},{"permission":"upgrade","target":"0x28d56C3BBbe4807c19Cc81E6D5207Fb681C3726b"},{"permission":"upgrade","target":"0x2AD84AbD52050956AcC9c490D024b821A59e3FB6","description":"upgrading bridge implementation allows to access all funds and change every system component."},{"permission":"upgrade","target":"0x443164F044D8840479234e00E7aD5bb06b85fC78"},{"permission":"upgrade","target":"0x515A0c8b1d9574C65EA1924eCd767B1d9b6AC32f"},{"permission":"upgrade","target":"0x5A0492D20D984eE904E46E6Ff24572bc755abb28"},{"permission":"upgrade","target":"0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C"},{"permission":"upgrade","target":"0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A"},{"permission":"upgrade","target":"0xcbF423525a5471Fc5037a5397F99f6F09fe41379"}]
+    }
+```
+
+```diff
+    contract OptimismPortal (0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions.0.target:
+-        "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"
++        "0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574"
+      issuedPermissions.0.via.0:
++        {"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8","delay":0}
+    }
+```
+
+```diff
+    contract AddressManager (0xBdF852e2cc26Ea3C2dee7b493B1Fc12dA406175a) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"
++        "0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574"
+      issuedPermissions.0.via.0:
++        {"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8","delay":0}
+    }
+```
+
+```diff
+    contract SuperchainConfig (0xcbF423525a5471Fc5037a5397F99f6F09fe41379) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions.0.target:
+-        "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"
++        "0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574"
+      issuedPermissions.0.via.0:
++        {"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8","delay":0}
+    }
+```
+
+```diff
+    contract RollupOwnerMultisig (0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574) {
+    +++ description: None
+      descriptions:
+-        ["It can act on behalf of 0x9e48d6bBca781c23392Ec459BfB3657C40a794A8, inheriting its permissions."]
+      receivedPermissions.10:
++        {"permission":"upgrade","target":"0xcbF423525a5471Fc5037a5397F99f6F09fe41379","via":[{"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"}]}
+      receivedPermissions.9:
++        {"permission":"upgrade","target":"0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A","via":[{"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","target":"0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C","via":[{"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","target":"0x5A0492D20D984eE904E46E6Ff24572bc755abb28","via":[{"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","target":"0x515A0c8b1d9574C65EA1924eCd767B1d9b6AC32f","via":[{"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","target":"0x443164F044D8840479234e00E7aD5bb06b85fC78","via":[{"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","target":"0x2AD84AbD52050956AcC9c490D024b821A59e3FB6","description":"upgrading bridge implementation allows to access all funds and change every system component.","via":[{"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","target":"0x28d56C3BBbe4807c19Cc81E6D5207Fb681C3726b","via":[{"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"}]}
+      receivedPermissions.2:
++        {"permission":"upgrade","target":"0x16193e14197c10109F3e81b938153A04A2a00190","via":[{"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"}]}
+      receivedPermissions.1:
++        {"permission":"upgrade","target":"0x0eCe16401A80551345bB672f177f51A8755FF775","via":[{"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"}]}
+      receivedPermissions.0.target:
+-        "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"
++        "0xBdF852e2cc26Ea3C2dee7b493B1Fc12dA406175a"
+      receivedPermissions.0.via:
++        [{"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"}]
+    }
+```
+
 Generated with discovered.json: 0xda493c9a3d88eb5b3570d913bd305ca28691ad6b
 
 # Diff at Fri, 30 Aug 2024 08:01:36 GMT:

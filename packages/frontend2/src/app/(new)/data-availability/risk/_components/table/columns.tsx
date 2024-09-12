@@ -1,9 +1,9 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
-import { RiskCell } from '~/app/_components/table/cells/risk-cell'
-import { getCommonProjectColumns } from '~/app/_components/table/common-project-columns'
-import { sortSentiments } from '~/app/_components/table/sorting/functions/sentiment-sorting'
-import ChevronDown from '~/icons/chevron.svg'
+import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
+import { RiskCell } from '~/components/table/cells/risk-cell'
+import { getCommonProjectColumns } from '~/components/table/common-project-columns'
+import { sortSentiments } from '~/components/table/sorting/functions/sentiment-sorting'
+import { ChevronIcon } from '~/icons/chevron'
 import { type DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
 import { cn } from '~/utils/cn'
 
@@ -29,10 +29,13 @@ export const columns = [
         return (
           <button
             className="flex flex-row items-center gap-4 italic text-gray-500 dark:text-gray-400"
-            onClick={() => ctx.row.toggleExpanded()}
+            onClick={(e) => {
+              e.preventDefault()
+              ctx.row.toggleExpanded()
+            }}
           >
             Multiple bridges
-            <ChevronDown
+            <ChevronIcon
               className={cn(
                 'fill-black transition-transform dark:fill-white',
                 ctx.row.getIsExpanded() && 'rotate-180',

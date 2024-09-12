@@ -1,6 +1,6 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
-import { ScalingSummaryTvlChart } from '~/app/_components/chart/tvl/scaling-summary-tvl-chart'
-import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
+import { ScalingTvlChart } from '~/components/chart/tvl/scaling-tvl-chart'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { getScalingSummaryEntries } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
@@ -20,7 +20,6 @@ export const metadata = getDefaultMetadata({
 
 export default async function Page() {
   const entries = await getScalingSummaryEntries()
-
   await api.tvl.chart.prefetch({
     filter: { type: 'layer2' },
     range: getCookie('scalingSummaryChartRange'),
@@ -30,10 +29,7 @@ export default async function Page() {
     <HydrateClient>
       <ScalingFilterContextProvider>
         <ScalingAssociatedTokensContextProvider>
-          <ScalingSummaryTvlChart
-            milestones={HOMEPAGE_MILESTONES}
-            entries={entries}
-          />
+          <ScalingTvlChart milestones={HOMEPAGE_MILESTONES} entries={entries} />
           <HorizontalSeparator className="my-4 md:my-6" />
           <ScalingSummaryTables entries={entries} />
         </ScalingAssociatedTokensContextProvider>

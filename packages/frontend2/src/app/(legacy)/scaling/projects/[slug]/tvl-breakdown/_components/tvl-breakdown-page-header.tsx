@@ -1,17 +1,16 @@
-import { type UnixTime } from '@l2beat/shared-pure'
 import Image from 'next/image'
 import { formatTimestampToDateWithHour } from '~/utils/dates'
 
 interface Props {
   title: string
   slug: string
-  tvlBreakdownDate: UnixTime
+  tvlBreakdownTimestamp: number
 }
 
 export function TvlBreakdownPageHeader({
   title,
   slug,
-  tvlBreakdownDate,
+  tvlBreakdownTimestamp,
 }: Props) {
   return (
     <div className="mt-11 flex flex-col px-4 md:px-0">
@@ -34,7 +33,7 @@ export function TvlBreakdownPageHeader({
         <div className="text-xs font-medium text-gray-500 dark:text-gray-550">
           Timestamp:&nbsp;
           <span className="text-base font-semibold text-black dark:text-white">
-            {formatTimestampToDateWithHour(tvlBreakdownDate)}
+            {formatTimestampToDateWithHour(tvlBreakdownTimestamp)}
           </span>
         </div>
       </div>

@@ -3,7 +3,7 @@ import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { useScalingFilter } from '~/app/(new)/(other)/_components/scaling-filter-context'
 import { ScalingFilters } from '~/app/(new)/(other)/_components/scaling-filters'
-import { BasicTable } from '~/app/_components/table/basic-table'
+import { BasicTable } from '~/components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
 import { COSTS_UPCOMING_PROJECTS } from '~/server/features/scaling/costs/consts'
 import { type CostsTableData } from '~/server/features/scaling/costs/get-costs-table-data'
@@ -82,7 +82,7 @@ export function ScalingCostsTable(props: Props) {
 
 function mapToTableEntry(
   entry: ScalingCostsEntry,
-  data: Record<string, CostsTableData> | undefined,
+  data: CostsTableData | undefined,
   unit: CostsUnit,
 ): ScalingCostsTableEntry {
   if (!data)

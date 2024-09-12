@@ -1,14 +1,14 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
-import CircleQuestionMark from '~/icons/circle-question-mark.svg'
-import UnverifiedIcon from '~/icons/unverified.svg'
-import VerifiedIcon from '~/icons/verified.svg'
+import { CircleQuestionMarkIcon } from '~/icons/circle-question-mark'
+import { UnverifiedIcon } from '~/icons/unverified'
+import { VerifiedIcon } from '~/icons/verified'
 
-import { OutLink } from '~/app/_components/out-link'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip'
+} from '~/components/core/tooltip/tooltip'
+import { OutLink } from '~/components/out-link'
 
 type Props = {
   askForVerificationLink: string
@@ -58,7 +58,7 @@ export function VerifiedCell(props: Props) {
         <span className="flex flex-col items-start text-sm md:text-base">
           <Tooltip>
             <TooltipTrigger className="flex w-max items-center text-sm md:text-base">
-              <CircleQuestionMark className="mr-1.5 size-5" />
+              <CircleQuestionMarkIcon className="mr-1.5 size-5" />
               Not verified
             </TooltipTrigger>
             <TooltipContent>

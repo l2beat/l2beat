@@ -1,4 +1,4 @@
-import LensIcon from '~/icons/lens.svg'
+import { LensIcon } from '~/icons/lens'
 import { cn } from '~/utils/cn'
 
 interface FilterInputProps {

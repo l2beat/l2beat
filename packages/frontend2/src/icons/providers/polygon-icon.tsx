@@ -1,12 +1,13 @@
-import React, { useId, type SVGAttributes } from 'react'
+import { useId } from 'react'
 import { cn } from '~/utils/cn'
+import { SvgIcon, type SvgIconProps } from '../svg-icon'
 
-export function PolygonIcon(props: SVGAttributes<SVGElement>) {
+export function PolygonIcon(props: SvgIconProps) {
   const gradientId = useId()
 
   return (
     <>
-      <svg
+      <SvgIcon
         width="24"
         height="24"
         viewBox="0 0 24 24"
@@ -38,12 +39,12 @@ export function PolygonIcon(props: SVGAttributes<SVGElement>) {
             <rect width="16" height="16" fill="#fff" />
           </clipPath>
         </defs>
-      </svg>
-      <svg
+      </SvgIcon>
+      <SvgIcon
         width="24"
         height="24"
         viewBox="0 0 24 24"
-        aria-label="polygon logo"
+        aria-label="Polygon logo"
         {...props}
         className={cn('hidden dark:inline dark:fill-current', props.className)}
       >
@@ -58,7 +59,7 @@ export function PolygonIcon(props: SVGAttributes<SVGElement>) {
             <rect width="16" height="16" fill="#fff" />
           </clipPath>
         </defs>
-      </svg>
+      </SvgIcon>
     </>
   )
 }

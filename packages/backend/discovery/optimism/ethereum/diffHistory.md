@@ -1,3 +1,464 @@
+Generated with discovered.json: 0xebfb460cbb05426a3ff6f709f74aeef8b015a1b7
+
+# Diff at Wed, 11 Sep 2024 09:31:05 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@c6a3ea686769a7280772f1677e2ce572e1723dab block: 20691253
+- current block number: 20726488
+
+## Description
+
+Upgrade #10: https://gov.optimism.io/t/upgrade-proposal-10-granite-network-upgrade/8733
+
+It fixes some bugs, reinstates the proof system and adds the ability to the Guardian to set the anchor state.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract MIPS (0x0f8EdFbDdD3c0256A80AD8C0F2560B1807873C9c)
+    +++ description: None
+```
+
+```diff
+    contract AnchorStateRegistry (0x18DAc71c228D1C32c99489B7323d441E1175e443) {
+    +++ description: None
+      values.$implementation:
+-        "0x6B7da1647Aa9684F54B2BEeB699F91F31cd35Fb9"
++        "0x1B5CC028A4276597C607907F24E1AC05d3852cFC"
+      values.$upgradeCount:
+-        1
++        3
+      values.version:
+-        "1.0.0"
++        "2.0.0"
+      values.superchainConfig:
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      directlyReceivedPermissions.9:
++        {"permission":"upgrade","target":"0xe5965Ab5962eDc7477C8520243A95517CD252fA9"}
+      directlyReceivedPermissions.8.target:
+-        "0xe5965Ab5962eDc7477C8520243A95517CD252fA9"
++        "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed"
+      directlyReceivedPermissions.7.target:
+-        "0xE497B094d6DbB3D5E4CaAc9a14696D7572588d14"
++        "0x9F9b897e37de5052cD70Db6D08474550DDb07f39"
+      directlyReceivedPermissions.6.target:
+-        "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed"
++        "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
+      directlyReceivedPermissions.6.description:
++        "upgrading bridge implementation allows to access all funds and change every system component."
+      directlyReceivedPermissions.5.target:
+-        "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      directlyReceivedPermissions.5.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
+      directlyReceivedPermissions.4.target:
+-        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "0x82511d494B5C942BE57498a70Fdd7184Ee33B975"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.9:
++        {"permission":"upgrade","target":"0xe5965Ab5962eDc7477C8520243A95517CD252fA9","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
+      receivedPermissions.8.target:
+-        "0xe5965Ab5962eDc7477C8520243A95517CD252fA9"
++        "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed"
+      receivedPermissions.7.target:
+-        "0xE497B094d6DbB3D5E4CaAc9a14696D7572588d14"
++        "0x9F9b897e37de5052cD70Db6D08474550DDb07f39"
+      receivedPermissions.6.target:
+-        "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed"
++        "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
+      receivedPermissions.6.description:
++        "upgrading bridge implementation allows to access all funds and change every system component."
+      receivedPermissions.5.target:
+-        "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      receivedPermissions.5.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
+      receivedPermissions.4.target:
+-        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "0x82511d494B5C942BE57498a70Fdd7184Ee33B975"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (0xc307e93a7C530a184c98EaDe4545a412b857b62f)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PreimageOracle (0xD326E10B8186e90F4E2adc5c13a2d0C137ee8b34)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedWETH (0xE497B094d6DbB3D5E4CaAc9a14696D7572588d14)
+    +++ description: None
+```
+
+```diff
+    contract DisputeGameFactory (0xe5965Ab5962eDc7477C8520243A95517CD252fA9) {
+    +++ description: None
+      values.gameImpls.1:
+-        "0xc307e93a7C530a184c98EaDe4545a412b857b62f"
++        "0x050ed6F6273c7D836a111E42153BC00D0380b87d"
+      values.gameImpls.0:
+-        "0xf691F8A6d908B58C534B624cF16495b491E633BA"
++        "0xA6f3DFdbf4855a43c529bc42EDE96797252879af"
+      values.permissionedGamesTotal:
+-        493
++        610
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract FaultDisputeGame (0xf691F8A6d908B58C534B624cF16495b491E633BA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (0x050ed6F6273c7D836a111E42153BC00D0380b87d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (0x16e83cE5Ce29BF90AD9Da06D2fE6a15d5f344ce4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH_PermissionlessGames (0x82511d494B5C942BE57498a70Fdd7184Ee33B975)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PreimageOracle (0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH_PermissionedGames (0x9F9b897e37de5052cD70Db6D08474550DDb07f39)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (0xA6f3DFdbf4855a43c529bc42EDE96797252879af)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../AnchorStateRegistry/AnchorStateRegistry.sol    |   53 +-
+ .../DelayedWETH_PermissionedGames}/DelayedWETH.sol |    9 +-
+ .../DelayedWETH_PermissionedGames}/Proxy.p.sol     |    0
+ .../DelayedWETH.sol                                |  651 ++++++
+ .../DelayedWETH_PermissionlessGames/Proxy.p.sol    |  200 ++
+ .../{.flat@20691253 => .flat}/FaultDisputeGame.sol |  292 ++-
+ .../ethereum/{.flat@20691253 => .flat}/MIPS.sol    | 2201 ++++++++++++--------
+ .../PermissionedDisputeGame.sol                    |  292 ++-
+ .../{.flat@20691253 => .flat}/PreimageOracle.sol   |   67 +-
+ 9 files changed, 2811 insertions(+), 954 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20691253 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (0x18DAc71c228D1C32c99489B7323d441E1175e443) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.via.0:
++        {"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","delay":0}
+    }
+```
+
+```diff
+    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.via.0:
++        {"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","delay":0}
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      descriptions:
+-        ["It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component."]
+      issuedPermissions:
+-        [{"permission":"configure","target":"0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A","via":[]}]
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x18DAc71c228D1C32c99489B7323d441E1175e443"},{"permission":"upgrade","target":"0x229047fed2591dbec1eF1118d64F7aF3dB9EB290"},{"permission":"upgrade","target":"0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"},{"permission":"upgrade","target":"0x75505a97BD334E7BD3C476893285569C4136Fa0F"},{"permission":"upgrade","target":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C"},{"permission":"upgrade","target":"0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"},{"permission":"upgrade","target":"0xbEb5Fc579115071764c7423A4f12eDde41f106Ed"},{"permission":"upgrade","target":"0xE497B094d6DbB3D5E4CaAc9a14696D7572588d14"},{"permission":"upgrade","target":"0xe5965Ab5962eDc7477C8520243A95517CD252fA9"}]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x18DAc71c228D1C32c99489B7323d441E1175e443"},{"permission":"upgrade","target":"0x229047fed2591dbec1eF1118d64F7aF3dB9EB290"},{"permission":"upgrade","target":"0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"},{"permission":"upgrade","target":"0x75505a97BD334E7BD3C476893285569C4136Fa0F"},{"permission":"upgrade","target":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C"},{"permission":"upgrade","target":"0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1","description":"upgrading bridge implementation allows to access all funds and change every system component."},{"permission":"upgrade","target":"0xbEb5Fc579115071764c7423A4f12eDde41f106Ed"},{"permission":"upgrade","target":"0xE497B094d6DbB3D5E4CaAc9a14696D7572588d14"},{"permission":"upgrade","target":"0xe5965Ab5962eDc7477C8520243A95517CD252fA9"}]
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      descriptions:
+-        ["It can act on behalf of 0x543bA4AADBAb8f9025686Bd03993043599c6fB04, inheriting its permissions."]
+      receivedPermissions.8:
++        {"permission":"upgrade","target":"0xe5965Ab5962eDc7477C8520243A95517CD252fA9","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","target":"0xE497B094d6DbB3D5E4CaAc9a14696D7572588d14","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","target":"0xbEb5Fc579115071764c7423A4f12eDde41f106Ed","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","target":"0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1","description":"upgrading bridge implementation allows to access all funds and change every system component.","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","target":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","target":"0x75505a97BD334E7BD3C476893285569C4136Fa0F","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
+      receivedPermissions.2:
++        {"permission":"upgrade","target":"0x5a7749f83b81B301cAb5f48EB8516B986DAef23D","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
+      receivedPermissions.1:
++        {"permission":"upgrade","target":"0x229047fed2591dbec1eF1118d64F7aF3dB9EB290","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
+      receivedPermissions.0.permission:
+-        "configure"
++        "upgrade"
+      receivedPermissions.0.target:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0x18DAc71c228D1C32c99489B7323d441E1175e443"
+      receivedPermissions.0.via:
++        [{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x5a7749f83b81B301cAb5f48EB8516B986DAef23D) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions.0.target:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.via.0:
++        {"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","delay":0}
+    }
+```
+
+```diff
+    contract DeputyGuardianModule (0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8) {
+    +++ description: allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.
+      descriptions.0:
+-        "allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A (the deputy guardian) to act on behalf of the Gnosis Safe."
++        "allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract CanonicalTransactionChain (0x5E4e65926BA27467555EB562121fac00D24E9dD2)
+    +++ description: None
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x75505a97BD334E7BD3C476893285569C4136Fa0F) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      issuedPermissions.0.target:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.via.0:
++        {"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","delay":0}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SCCStorageContainerBatches_OLD (0x77eBfdFcC906DDcDa0C42B866f26A8D5A2bb0572)
+    +++ description: None
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions.0.target:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.via.0:
++        {"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","delay":0}
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      issuedPermissions.0.target:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.via.0:
++        {"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","delay":0,"description":"upgrading bridge implementation allows to access all funds and change every system component."}
+    }
+```
+
+```diff
+    contract FoundationMultisig_2 (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      descriptions:
+-        ["Deputy Guardian of 0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8. It can act on behalf of the 0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2."]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SCCStorageContainerBatches (0xb0ddFf09c4019e31960de11bD845E836078E8EbE)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StateCommitmentChain (0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19)
+    +++ description: None
+```
+
+```diff
+    contract OptimismPortal (0xbEb5Fc579115071764c7423A4f12eDde41f106Ed) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.via.0:
++        {"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","delay":0}
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (0xc307e93a7C530a184c98EaDe4545a412b857b62f) {
+    +++ description: None
+      values.getNumToResolve:
++        [0,0,0,0,0]
+      values.resolutionCheckpoints:
++        [[false,0,0,"0x0000000000000000000000000000000000000000"],[false,0,0,"0x0000000000000000000000000000000000000000"],[false,0,0,"0x0000000000000000000000000000000000000000"],[false,0,0,"0x0000000000000000000000000000000000000000"],[false,0,0,"0x0000000000000000000000000000000000000000"]]
+      values.resolvedSubgames:
++        [false,false,false,false,false]
+      errors:
++        {"getNumToResolve":"Too many values. Update configuration to explore fully","resolutionCheckpoints":"Too many values. Update configuration to explore fully","resolvedSubgames":"Too many values. Update configuration to explore fully"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract CTCStorageContainerBatches (0xD16463EF9b0338CE3D73309028ef1714D220c024)
+    +++ description: None
+```
+
+```diff
+    contract PreimageOracle (0xD326E10B8186e90F4E2adc5c13a2d0C137ee8b34) {
+    +++ description: None
+      values.zeroHashes:
++        ["0x0000000000000000000000000000000000000000000000000000000000000000","0xad3228b676f7d3cd4284a5443f17f1962b36e491b30a40b2405849e597ba5fb5","0xb4c11951957c6f8f642c4af61cd6b24640fec6dc7fc607ee8206a99e92410d30","0x21ddb9a356815c3fac1026b6dec5df3124afbadb485c9ba5a3e3398a04b7ba85","0xe58769b32a1beaf1ea27375a44095a0d1fb664ce2dd358e7fcbfb78c26a19344"]
+      errors:
++        {"zeroHashes":"Too many values. Update configuration to explore fully"}
+    }
+```
+
+```diff
+    contract AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) {
+    +++ description: None
+      values.BondManager:
+-        "0x0000000000000000000000000000000000000000"
+      values.OVM_BondManager:
+-        "0x0000000000000000000000000000000000000000"
+      values.OVM_CanonicalTransactionChain:
+-        "0x0000000000000000000000000000000000000000"
+      values.OVM_ChainStorageContainer_CTC_batches:
+-        "0x0000000000000000000000000000000000000000"
+      values.OVM_ChainStorageContainer_CTC_queue:
+-        "0x0000000000000000000000000000000000000000"
+      values.OVM_ChainStorageContainer_SCC_batches:
+-        "0x77eBfdFcC906DDcDa0C42B866f26A8D5A2bb0572"
+      values.OVM_DecompressionPrecompileAddress:
+-        "0x0000000000000000000000000000000000000000"
+      values.OVM_ExecutionManager:
+-        "0x0000000000000000000000000000000000000000"
+      values.OVM_FraudVerifier:
+-        "0x0000000000000000000000000000000000000000"
+      values.OVM_L1MultiMessageRelayer:
+-        "0x0000000000000000000000000000000000000000"
+      values.OVM_L2CrossDomainMessenger:
+-        "0x0000000000000000000000000000000000000000"
+      values.OVM_Proposer:
+-        "0x0000000000000000000000000000000000000000"
+      values.OVM_SafetyChecker:
+-        "0x0000000000000000000000000000000000000000"
+      values.OVM_Sequencer:
+-        "0x0000000000000000000000000000000000000000"
+      values.OVM_StateCommitmentChain:
+-        "0x0000000000000000000000000000000000000000"
+      values.OVM_StateManagerFactory:
+-        "0x0000000000000000000000000000000000000000"
+      values.OVM_StateTransitionerFactory:
+-        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract DelayedWETH (0xE497B094d6DbB3D5E4CaAc9a14696D7572588d14) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.via.0:
++        {"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","delay":0}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0xe5965Ab5962eDc7477C8520243A95517CD252fA9) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.via.0:
++        {"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","delay":0}
+    }
+```
+
+```diff
+    contract FaultDisputeGame (0xf691F8A6d908B58C534B624cF16495b491E633BA) {
+    +++ description: None
+      values.getNumToResolve:
++        [0,0,0,0,0]
+      values.resolutionCheckpoints:
++        [[false,0,0,"0x0000000000000000000000000000000000000000"],[false,0,0,"0x0000000000000000000000000000000000000000"],[false,0,0,"0x0000000000000000000000000000000000000000"],[false,0,0,"0x0000000000000000000000000000000000000000"],[false,0,0,"0x0000000000000000000000000000000000000000"]]
+      values.resolvedSubgames:
++        [false,false,false,false,false]
+      errors:
++        {"getNumToResolve":"Too many values. Update configuration to explore fully","resolutionCheckpoints":"Too many values. Update configuration to explore fully","resolvedSubgames":"Too many values. Update configuration to explore fully"}
+    }
+```
+
 Generated with discovered.json: 0x7cc64751b1461a39df7f0693d54d3a71f7cc6ea9
 
 # Diff at Fri, 06 Sep 2024 11:28:35 GMT:

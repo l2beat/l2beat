@@ -2,14 +2,14 @@ import { UnixTime } from '@l2beat/shared-pure'
 import round from 'lodash/round'
 import { type ReactNode } from 'react'
 import { ProjectsUsedIn } from '~/app/(new)/data-availability/summary/_components/table/projects-used-in'
-import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip'
+} from '~/components/core/tooltip/tooltip'
 import { EM_DASH } from '~/consts/characters'
-import InfoIcon from '~/icons/info.svg'
+import { InfoIcon } from '~/icons/info'
 import { type DaProjectEntry } from '~/server/features/data-availability/project/get-da-project-entry'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/format'
@@ -68,7 +68,7 @@ export function DaProjectStats({ project }: Props) {
           project.header.usedIn.length !== 0 ? (
             <ProjectsUsedIn
               usedIn={project.header.usedIn}
-              className="flex-wrap"
+              className="flex-wrap justify-end"
             />
           ) : (
             'None'
@@ -90,18 +90,18 @@ function ProjectStat(props: ProjectStat) {
   return (
     <li
       className={cn(
-        'flex items-center justify-between md:flex-col md:items-start md:justify-start md:gap-3',
+        'flex items-center justify-between gap-3 md:flex-col md:items-start md:justify-start',
         props.className,
       )}
     >
       <div className="flex flex-row items-center gap-1.5">
-        <span className="text-xs text-gray-500 dark:text-gray-600">
+        <span className="whitespace-pre text-xs text-gray-500 dark:text-gray-600">
           {props.title}
         </span>
         {props.tooltip && (
           <Tooltip>
             <TooltipTrigger>
-              <InfoIcon className="fill-gray-500 dark:fill-gray-600 md:size-3.5" />
+              <InfoIcon className="md:size-3.5" variant="gray" />
             </TooltipTrigger>
             <TooltipContent>{props.tooltip}</TooltipContent>
           </Tooltip>

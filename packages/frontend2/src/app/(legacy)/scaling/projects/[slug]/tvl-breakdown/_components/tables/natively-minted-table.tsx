@@ -1,6 +1,6 @@
 'use client'
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
-import { TokenTable } from '~/app/_components/table/token-breakdown-table'
+import { TokenTable } from '~/components/table/token-breakdown-table'
 import { type ProjectTvlBreakdown } from '~/server/features/scaling/tvl/breakdown/get-tvl-breakdown-for-project'
 import { nativelyMintedColumns } from './columns/natively-minted-columns'
 import { sumTokensValue } from './sum-tokens-value'

@@ -12,4 +12,5 @@ export const selectNetwork = [
   'coingeckoId',
   'axelarGatewayAddress',
   'layerZeroV1EndpointAddress',
+  'logoUrl',
 ] as const satisfies (keyof NetworkRecord)[]

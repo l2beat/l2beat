@@ -23,7 +23,6 @@
     "start:staging": "DEPLOYMENT_ENV=staging gulp watch",
     "start:production": "DEPLOYMENT_ENV=production gulp watch",
     "test": "mocha",
-    "tinify-logos": "node -r esbuild-register scripts/logos/tinifyLogos.ts",
     "generate-og": "node -r esbuild-register scripts/meta-images/generate.ts",
     "typecheck": "tsc --noEmit",
     "storybook": "storybook dev -p 6006 --no-open",

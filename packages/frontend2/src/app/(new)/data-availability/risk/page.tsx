@@ -1,4 +1,4 @@
-import { SimplePageHeader } from '~/app/_components/simple-page-header'
+import { SimplePageHeader } from '~/components/simple-page-header'
 import { getDaRiskEntries } from '~/server/features/data-availability/risks/get-da-risk-entries'
 import { DaFilterContextProvider } from '../_components/filters/da-filter-context'
 import { DaRiskTable } from './_components/table/da-risk-table'

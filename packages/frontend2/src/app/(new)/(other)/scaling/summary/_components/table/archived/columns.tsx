@@ -1,11 +1,11 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
-import { PizzaRosetteCell } from '~/app/_components/rosette/pizza/pizza-rosette-cell'
-import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
-import { TypeExplanationTooltip } from '~/app/_components/table/cells/type-cell'
-import { TypeCell } from '~/app/_components/table/cells/type-cell'
-import { getCommonProjectColumns } from '~/app/_components/table/common-project-columns'
-import { formatNumber } from '~/utils/format-number'
+import { UpcomingBadge } from '~/components/badge/upcoming-badge'
+import { PizzaRosetteCell } from '~/components/rosette/pizza/pizza-rosette-cell'
+import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
+import { TypeExplanationTooltip } from '~/components/table/cells/type-cell'
+import { TypeCell } from '~/components/table/cells/type-cell'
+import { getCommonProjectColumns } from '~/components/table/common-project-columns'
+import { formatCurrency } from '~/utils/format'
 import { type ScalingSummaryTableRow } from '../../../_utils/to-table-rows'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
@@ -55,7 +55,11 @@ export const scalingArchivedColumns = [
       }
 
       return (
-        <span className="px-5">${formatNumber(value.breakdown.total)}</span>
+        <span className="text-base font-bold md:text-lg">
+          {formatCurrency(value.breakdown.total, 'usd', {
+            showLessThanMinimum: false,
+          })}
+        </span>
       )
     },
     sortingFn: ({ original: a }, { original: b }) => {
@@ -69,8 +73,7 @@ export const scalingArchivedColumns = [
       return aTvl - bTvl
     },
     meta: {
-      headClassName: 'justify-end',
-      cellClassName: 'justify-end',
+      align: 'right',
       tooltip:
         'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
     },

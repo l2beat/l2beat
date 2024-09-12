@@ -1,5 +1,5 @@
-import { ContentWrapper } from '~/app/_components/content-wrapper'
-import { Logo } from '~/app/_components/logo'
+import { ContentWrapper } from '~/components/content-wrapper'
+import { Logo } from '~/components/logo'
 import { PolygonLogo } from '~/icons/polygon-logo'
 import { ReportBanner } from './_components/report-banner'
 import { ReportDownloadButton } from './_components/report-download-button'

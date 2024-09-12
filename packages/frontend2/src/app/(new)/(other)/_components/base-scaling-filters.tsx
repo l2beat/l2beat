@@ -1,9 +1,9 @@
 import { type StageConfig } from '@l2beat/config'
 import { compact, uniq } from 'lodash'
 import React from 'react'
-import { Checkbox } from '~/app/_components/checkbox'
-import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
-import { TableFilter } from '~/app/_components/table/filters/table-filter'
+import { Checkbox } from '~/components/core/checkbox'
+import { OverflowWrapper } from '~/components/core/overflow-wrapper'
+import { TableFilter } from '~/components/table/filters/table-filter'
 import { type CommonScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
 import { useScalingFilterValues } from './scaling-filter-context'
 

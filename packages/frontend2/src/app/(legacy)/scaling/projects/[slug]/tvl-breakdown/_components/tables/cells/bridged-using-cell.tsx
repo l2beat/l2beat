@@ -3,8 +3,8 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip'
-import ArrowRightIcon from '~/icons/arrow-right.svg'
+} from '~/components/core/tooltip/tooltip'
+import { ArrowRightIcon } from '~/icons/arrow-right'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 
 interface Props {

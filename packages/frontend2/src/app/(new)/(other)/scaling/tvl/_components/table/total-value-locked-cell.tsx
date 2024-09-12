@@ -2,13 +2,13 @@ import { type WarningWithSentiment } from '@l2beat/config'
 import {
   ValueLockedBreakdown,
   ValueLockedBreakdownTooltipContent,
-} from '~/app/_components/breakdown/value-locked-breakdown'
-import { PercentChange } from '~/app/_components/percent-change'
+} from '~/components/breakdown/value-locked-breakdown'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip'
+} from '~/components/core/tooltip/tooltip'
+import { PercentChange } from '~/components/percent-change'
 import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { formatCurrency } from '~/utils/format'

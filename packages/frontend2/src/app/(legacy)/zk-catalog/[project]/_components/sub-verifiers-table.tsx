@@ -1,11 +1,11 @@
-import { OutLink } from '~/app/_components/out-link'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip'
+} from '~/components/core/tooltip/tooltip'
+import { OutLink } from '~/components/out-link'
 import { EM_DASH } from '~/consts/characters'
-import InfoIcon from '~/icons/info.svg'
+import { InfoIcon } from '~/icons/info'
 import { cn } from '~/utils/cn'
 import { type ZkCatalogProjectDetails } from './zk-catalog-project-page'
 

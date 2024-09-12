@@ -8,7 +8,7 @@ import {
 } from '@l2beat/config'
 import {
   assert,
-  type AssetId,
+  AssetId,
   type ProjectId,
   UnixTime,
   asNumber,
@@ -19,6 +19,7 @@ import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
+import { env } from '~/env'
 import { getLatestAmountForConfigurations } from '../breakdown/get-latest-amount-for-configurations'
 import { getLatestPriceForConfigurations } from '../breakdown/get-latest-price-for-configurations'
 import { getConfigMapping } from '../utils/get-config-mapping'
@@ -39,12 +40,18 @@ type ProjectTokenSource = 'native' | 'canonical' | 'external'
 export async function getTokensForProject(
   project: Layer2 | Layer3 | Bridge,
 ): Promise<ProjectTokens> {
+  if (env.MOCK) {
+    return toDisplayableTokens(project.id, getMockTokensForProject())
+  }
   noStore()
-  return getCachedTokensForProject(project)
+  const cachedTokens = await getCachedTokensForProject(project)
+  return toDisplayableTokens(project.id, cachedTokens)
 }
 
 const getCachedTokensForProject = cache(
-  async (project: Layer2 | Layer3 | Bridge): Promise<ProjectTokens> => {
+  async (
+    project: Layer2 | Layer3 | Bridge,
+  ): Promise<Record<ProjectTokenSource, AssetId[]>> => {
     const backendProject = toBackendProject(project)
     const configMapping = getConfigMapping(backendProject)
     const targetTimestamp = UnixTime.now().toStartOf('hour').add(-2, 'hours')
@@ -79,43 +86,68 @@ const getCachedTokensForProject = cache(
 
     withUsdValue.sort((a, b) => b.usdValue - a.usdValue)
 
-    const displayable = uniqBy(withUsdValue, (e) => e.assetId.toString())
-      .map((token) => toDisplayableTokens(backendProject.projectId, token))
-      .filter(notUndefined)
+    const unique = uniqBy(withUsdValue, (e) => e.assetId.toString())
 
-    return groupBySource(displayable)
+    return groupBySource(unique)
   },
-  ['topTokensForProject'],
+  ['topTokensForProjectV2'],
   { revalidate: 60 * UnixTime.MINUTE },
 )
 
-function groupBySource(tokens: ProjectToken[]) {
-  const canonical: ProjectToken[] = []
-  const native: ProjectToken[] = []
-  const external: ProjectToken[] = []
+function getMockTokensForProject(): Record<ProjectTokenSource, AssetId[]> {
+  return {
+    canonical: [AssetId('1')],
+    native: [AssetId('2')],
+    external: [AssetId('3')],
+  }
+}
+
+function groupBySource(
+  tokens: { assetId: AssetId; source: ProjectTokenSource }[],
+) {
+  const canonical: AssetId[] = []
+  const native: AssetId[] = []
+  const external: AssetId[] = []
 
   for (const token of tokens) {
     switch (token.source) {
       case 'canonical':
-        canonical.push(token)
+        canonical.push(token.assetId)
         break
       case 'native':
-        native.push(token)
+        native.push(token.assetId)
         break
       case 'external':
-        external.push(token)
+        external.push(token.assetId)
         break
     }
   }
 
   return {
-    canonical: canonical.slice(0, 10),
-    native: native.slice(0, 10),
-    external: external.slice(0, 10),
+    canonical,
+    native,
+    external,
   }
 }
 
 function toDisplayableTokens(
+  projectId: ProjectId,
+  tokens: Record<ProjectTokenSource, AssetId[]>,
+): ProjectTokens {
+  return {
+    canonical: tokens.canonical.map((assetId) =>
+      toDisplayableToken(projectId, { assetId, source: 'canonical' }),
+    ),
+    native: tokens.native.map((assetId) =>
+      toDisplayableToken(projectId, { assetId, source: 'native' }),
+    ),
+    external: tokens.external.map((assetId) =>
+      toDisplayableToken(projectId, { assetId, source: 'external' }),
+    ),
+  }
+}
+
+function toDisplayableToken(
   projectId: ProjectId,
   {
     assetId,

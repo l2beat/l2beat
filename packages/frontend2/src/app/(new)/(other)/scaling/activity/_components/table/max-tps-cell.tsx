@@ -1,4 +1,4 @@
-import { NumberCell } from '~/app/_components/table/cells/number-cell'
+import { NumberCell } from '~/components/table/cells/number-cell'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { formatTps } from '~/utils/format-tps'

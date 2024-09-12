@@ -1,14 +1,14 @@
-import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
-import { ArchivedBar } from '~/app/_components/projects/archived-bar'
-import { DesktopProjectLinks } from '~/app/_components/projects/links/desktop-project-links'
-import { MobileProjectLinks } from '~/app/_components/projects/links/mobile-project-links'
-import { ProjectHeader } from '~/app/_components/projects/project-header'
-import { AboutSection } from '~/app/_components/projects/sections/about-section'
-import { BadgesSection } from '~/app/_components/projects/sections/badges-section'
-import { UnderReviewBar } from '~/app/_components/projects/under-review-bar'
-import { UpcomingBar } from '~/app/_components/projects/upcoming-bar'
-import { BigPizzaRosette } from '~/app/_components/rosette/pizza/big-pizza-rosette'
-import { WarningBar } from '~/app/_components/warning-bar'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { ArchivedBar } from '~/components/projects/archived-bar'
+import { DesktopProjectLinks } from '~/components/projects/links/desktop-project-links'
+import { MobileProjectLinks } from '~/components/projects/links/mobile-project-links'
+import { ProjectHeader } from '~/components/projects/project-header'
+import { AboutSection } from '~/components/projects/sections/about-section'
+import { BadgesSection } from '~/components/projects/sections/badges-section'
+import { UnderReviewBar } from '~/components/projects/under-review-bar'
+import { UpcomingBar } from '~/components/projects/upcoming-bar'
+import { BigPizzaRosette } from '~/components/rosette/pizza/big-pizza-rosette'
+import { WarningBar } from '~/components/warning-bar'
 import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { getUnderReviewText } from '~/utils/project/get-under-review-text'
 import { ScalingProjectStats } from './scaling-project-stats'
@@ -40,16 +40,7 @@ export function ScalingProjectSummary({ project }: Props) {
             )}
             {project.header.warning && (
               <WarningBar
-                text={
-                  typeof project.header.warning === 'string'
-                    ? project.header.warning
-                    : project.header.warning.text
-                }
-                href={
-                  typeof project.header.warning !== 'string'
-                    ? project.header.warning.href
-                    : undefined
-                }
+                text={project.header.warning}
                 color="yellow"
                 className="w-full items-center justify-center p-2.5 text-xs md:text-base"
               />

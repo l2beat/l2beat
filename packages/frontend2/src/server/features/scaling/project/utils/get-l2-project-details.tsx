@@ -5,8 +5,8 @@ import {
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
 import { isEmpty } from 'lodash'
-import { type ProjectDetailsSection } from '~/app/_components/projects/sections/types'
-import { type RosetteValue } from '~/app/_components/rosette/types'
+import { type ProjectDetailsSection } from '~/components/projects/sections/types'
+import { type RosetteValue } from '~/components/rosette/types'
 import { api } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
@@ -82,12 +82,12 @@ export async function getL2ProjectDetails({
     range: '7d',
     filter: { type: 'projects', projectIds: [project.id] },
   })
+  const tokens = await getTokensForProject(project)
 
   const sortedMilestones =
     project.milestones?.sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
     ) ?? []
-  const tokens = await getTokensForProject(project)
 
   const items: ProjectDetailsSection[] = []
 
@@ -105,7 +105,7 @@ export async function getL2ProjectDetails({
     })
   }
 
-  if (!isEmpty(activityChartData.data)) {
+  if (!isEmpty(activityChartData)) {
     items.push({
       type: 'ChartSection',
       props: {
@@ -117,7 +117,7 @@ export async function getL2ProjectDetails({
     })
   }
 
-  if (!project.isUpcoming && !isEmpty(costsChartData.data)) {
+  if (!project.isUpcoming && !isEmpty(costsChartData)) {
     items.push({
       type: 'ChartSection',
       props: {
