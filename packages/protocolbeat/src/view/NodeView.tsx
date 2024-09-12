@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef } from 'react'
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
 import { NODE_WIDTH, RESIZE_HANDLE_SPACING } from '../store/utils/constants'
+import { colorToCSS } from '../utils/color'
 import { ResizeHandle } from './ResizeHandle'
 
 export interface NodeViewProps {
@@ -62,11 +63,12 @@ export function NodeView(props: NodeViewProps) {
         top: props.node.box.y,
         width: props.node.box.width,
         height: props.node.box.height + RESIZE_HANDLE_SPACING,
+        backgroundColor: colorToCSS(props.node.simpleNode.color),
       }}
       className={clsx(
-        'absolute rounded-md border-2 border-black bg-white',
+        'absolute rounded-md border-2 border-black',
         props.selected && 'outline outline-2 outline-blue-400',
-        props.discovered ? 'bg-white' : 'bg-yellow-300',
+        props.discovered ? '' : 'bg-yellow-300',
       )}
     >
       <div
