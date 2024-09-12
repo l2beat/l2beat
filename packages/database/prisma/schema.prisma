@@ -357,7 +357,6 @@ model Value {
   stablecoin                  BigInt   @default(0)
 
   @@id([projectId, timestamp, dataSource])
-  @@map("values")
 }
 
 model VerifierStatus {
