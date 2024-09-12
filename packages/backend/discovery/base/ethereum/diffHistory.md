@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x5d7a6b909e53febbbde8ba89797c41181ae3945b
+
+# Diff at Thu, 12 Sep 2024 11:31:07 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@127adf09837b5e1f2ac0ecd582a2ef874e97633f block: 20532565
+- current block number: 20734246
+
+## Description
+
+Shared changes due to OP upgrade 10.
+
+## Watched changes
+
+```diff
+    contract GuardianMultisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      values.GnosisSafe_modules.0:
+-        "0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8"
++        "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DeputyGuardianModule (0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8)
+    +++ description: allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.
+```
+
+```diff
++   Status: CREATED
+    contract DeputyGuardianModule (0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../DeputyGuardianModule.sol                         | 20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
+```
+
 Generated with discovered.json: 0x367dae5559aa723af3f65b0cf25925b26e3d5c91
 
 # Diff at Sun, 08 Sep 2024 17:24:21 GMT:
