@@ -29,6 +29,7 @@ yarn build:dependencies
 If you are running `yarn dev:mock` you do not need any environment variables.
 
 If you are running `yarn dev` or `yarn build` you need to set the following environment variables:
+- create file `.env.local` in frontend2 root folder
 - `DATABASE_URL` - database connection url (read-only access is sufficient)
 
 *if you currently work at L2BEAT: feel free to directly connect to our staging DB* 😉

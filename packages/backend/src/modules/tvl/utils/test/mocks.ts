@@ -58,7 +58,7 @@ function priceRecord(id: string, timestamp: number): PriceRecord {
 
 function priceConfiguration(v: Partial<CoingeckoPriceConfigEntry>) {
   return mockObject<CoingeckoPriceConfigEntry>({
-    assetId: AssetId('AssetId'),
+    assetId: AssetId.create(v.chain ?? 'chain', v.address),
     address: EthereumAddress.ZERO,
     chain: 'chain',
     sinceTimestamp: UnixTime.ZERO,
