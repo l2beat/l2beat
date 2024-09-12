@@ -1442,8 +1442,6 @@
       "sinceTimestamp": 1674001487,
       "values": {
         "$immutable": true,
-        "bootloaderProgramContractAddress": "0x0000000000000000000000000000000000000008",
-        "cpuFrilessVerifiers": [],
         "getBootloaderConfig": [
           "2962621603719000361370283216422448934312521782617806945663080079725495842070",
           "3178097804922730583543126053422762895998573737925004508949311089390705597156"
@@ -2716,7 +2714,6 @@
     }
   ],
   "eoas": [
-    { "address": "0x0000000000000000000000000000000000000008" },
     {
       "address": "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "receivedPermissions": [
