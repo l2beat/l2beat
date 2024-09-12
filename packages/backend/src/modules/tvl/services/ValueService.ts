@@ -1,8 +1,9 @@
-import { AmountId, AssetId, PriceId, createAssetId } from '@l2beat/config'
+import { AmountId, PriceId } from '@l2beat/config'
 import { Database, ValueRecord } from '@l2beat/database'
 import {
   assert,
   AmountConfigEntry,
+  AssetId,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -85,7 +86,7 @@ export class ValueService {
         const amountConfig = amountConfigs.get(amount.configId)
         assert(amountConfig, `Config not found for ${amount.configId}`)
 
-        const priceId = priceConfigIds.get(createAssetId(amountConfig))
+        const priceId = priceConfigIds.get(amountConfig.assetId)
         const price = pricesAtTimestamp.find((x) => x.configId === priceId)
 
         assert(price, `Price not found for ${priceId} at ${timestamp}`)

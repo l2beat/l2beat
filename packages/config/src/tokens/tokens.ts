@@ -51,6 +51,7 @@ function toToken(generated: GeneratedToken): Token {
   )
 
   return {
+    id: AssetId.create(chain.name, generated.address),
     ...generated,
     sinceTimestamp,
   }

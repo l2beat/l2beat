@@ -1,5 +1,6 @@
 import {
   AmountConfigBase,
+  AssetId,
   CirculatingSupplyEntry,
   CoingeckoId,
   EscrowEntry,
@@ -15,6 +16,7 @@ import { createAmountId } from './createAmountId'
 
 describe(createAmountId.name, () => {
   const baseFields = [
+    { key: 'assetId', newValue: 'new-assetId', shouldUpdateHash: false },
     { key: 'chain', newValue: 'new-chain', shouldUpdateHash: true },
     {
       key: 'project',
@@ -162,6 +164,7 @@ function mockPreminted(): PremintedEntry {
 
 function mockBase(): AmountConfigBase {
   return {
+    assetId: AssetId('test'),
     chain: 'chain',
     dataSource: 'chain',
     project: ProjectId('project'),

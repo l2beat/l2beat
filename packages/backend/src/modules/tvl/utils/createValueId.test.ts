@@ -94,6 +94,7 @@ describe(createValueId.name, () => {
 
 function mockAmount(v?: Partial<TotalSupplyEntry>): TotalSupplyEntry {
   return {
+    assetId: AssetId('assetId'),
     chain: 'chain',
     dataSource: 'chain',
     project: ProjectId('project'),
@@ -118,7 +119,7 @@ function mockPrice(v?: Partial<PriceConfigEntry>): PriceConfigEntry {
     type: 'coingecko',
     coingeckoId: CoingeckoId('id'),
     sinceTimestamp: UnixTime.ZERO,
-    assetId: AssetId.ARB,
+    assetId: AssetId('test'),
     ...v,
   }
 }
