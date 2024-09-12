@@ -1,6 +1,6 @@
 # @l2beat/frontend2
 
-The dynamic Next.js frontend will be the new face of L2BEAT.
+The dynamic, public-facing Next.js frontend of L2BEAT.
 
 ## Setup
 
@@ -33,13 +33,3 @@ If you are running `yarn dev` or `yarn build` you need to set the following envi
 - `DATABASE_URL` - database connection url (read-only access is sufficient)
 
 *if you currently work at L2BEAT: feel free to directly connect to our staging DB* 😉
-
-### Known issues
-
-`frontend2`, while on production, is still in the early stage of development. When running it locally and trying to navigate to a page that is not migrated yet (main page included), you'll encounter an Internal Server Error.
-
-### Work-in-progress pages:
-- /scaling/projects/[projectSlug] (available at /scaling-next/projects/[projectSlug])
-- /bridges/projects/[projectSlug] (available at /bridges-next/projects/[projectSlug])
-
-The rest of pages are still present in the legacy frontend.
