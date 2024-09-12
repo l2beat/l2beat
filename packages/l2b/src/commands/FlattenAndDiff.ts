@@ -8,7 +8,7 @@ import {
 import { assert } from '@l2beat/shared-pure'
 import { command, oneOf, option, optional, positional, string } from 'cmd-ts'
 import { powerdiff } from '../implementations/powerdiff'
-import { DiffingModeType, DisplayModeType } from './Powerdiff'
+import { DiffingModeType, DisplayModeType, diffContext } from './Powerdiff'
 import { EthereumAddressValue, HttpUrl } from './types'
 
 export const FlattenAndDiff = command({
@@ -64,6 +64,7 @@ export const FlattenAndDiff = command({
       short: 'd',
       defaultValue: () => 'inline' as const,
     }),
+    diffContext,
   },
   handler: async (args) => {
     assert(
@@ -121,6 +122,7 @@ export const FlattenAndDiff = command({
       args.difftasticPath,
       args.mode,
       args.displayMode,
+      args.diffContext,
     )
   },
 })

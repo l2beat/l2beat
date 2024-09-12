@@ -28,6 +28,7 @@ function diffToHtml(
   difftasticPath: string,
   mode: DiffingMode,
   displayMode: DisplayMode,
+  context: number,
 ): string {
   const currentDirectory = process.env.INIT_CWD ?? process.cwd()
 
@@ -42,6 +43,7 @@ function diffToHtml(
     path2: absPath2,
     displayMode,
     difftasticPath,
+    context,
   }
 
   const result = []
@@ -101,6 +103,7 @@ function diffPaths(
         filePaths.right,
         displayModeMap[config.displayMode],
         config.difftasticPath,
+        config.context,
       )
       const difftasticStatus = diff.split('\n')[1] ?? 'Error'
       if (
@@ -148,11 +151,12 @@ function compareUsingDifftastic(
   filePath2: string,
   displayMode: string,
   difftasticPath: string,
+  context: number,
 ) {
   const fileName = filePath1.split('/').slice(-1)[0]
   console.log(`Processing ${fileName}`)
   try {
-    const cmd = `${difftasticPath} --ignore-comments ${displayMode} --color=always ${filePath1} ${filePath2} --context 20`
+    const cmd = `${difftasticPath} --ignore-comments ${displayMode} --color=always "${filePath1}" "${filePath2}" --context ${context}`
     return osExec(cmd).toString()
   } catch (error) {
     console.log(error)
@@ -371,6 +375,7 @@ export function powerdiff(
   difftasticPath: string = 'difft',
   mode: DiffingMode = 'together',
   displayMode: DisplayMode = 'inline',
+  context: number = 3,
 ) {
   checkDeps()
   const htmlContent = diffToHtml(
@@ -379,6 +384,7 @@ export function powerdiff(
     difftasticPath,
     mode,
     displayMode,
+    context,
   )
 
   const server = http.createServer((_, res) => {
