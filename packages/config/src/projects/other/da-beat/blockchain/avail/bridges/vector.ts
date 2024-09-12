@@ -82,7 +82,7 @@ export const vector = {
         address: EthereumAddress(relayer),
         type: 'EOA',
       })),
-    }
+    },
   ],
   usedIn: [],
   risks: {
