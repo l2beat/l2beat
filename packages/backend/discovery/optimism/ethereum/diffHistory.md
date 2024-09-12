@@ -1,3 +1,66 @@
+Generated with discovered.json: 0x88253ac8f615733403c9bb9634aa0acb33cf7ea7
+
+# Diff at Thu, 12 Sep 2024 07:25:21 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@21748f79216eb050ed17a98d0e8a74893f478f74 block: 20726488
+- current block number: 20733024
+
+## Description
+
+Upgrade 10 part 2. Reactivates proof system and adds ability for guardian module to set anchor state.
+
+## Watched changes
+
+```diff
+    contract GuardianMultisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      values.GnosisSafe_modules.0:
+-        "0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8"
++        "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DeputyGuardianModule (0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8)
+    +++ description: allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.
+```
+
+```diff
+    contract OptimismPortal (0xbEb5Fc579115071764c7423A4f12eDde41f106Ed) {
+    +++ description: None
+      values.respectedGameType:
+-        1
++        0
+      values.respectedGameTypeUpdatedAt:
+-        1723833359
++        1726070915
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0xe5965Ab5962eDc7477C8520243A95517CD252fA9) {
+    +++ description: None
+      values.permissionedGamesTotal:
+-        610
++        617
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DeputyGuardianModule (0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../DeputyGuardianModule.sol                         | 20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
+```
+
 Generated with discovered.json: 0xebfb460cbb05426a3ff6f709f74aeef8b015a1b7
 
 # Diff at Wed, 11 Sep 2024 09:31:05 GMT:
@@ -10,7 +73,7 @@ Generated with discovered.json: 0xebfb460cbb05426a3ff6f709f74aeef8b015a1b7
 
 Upgrade #10: https://gov.optimism.io/t/upgrade-proposal-10-granite-network-upgrade/8733
 
-It fixes some bugs, reinstates the proof system and adds the ability to the Guardian to set the anchor state.
+It fixes some bugs and adds the ability to the anchor state registry to be set by the guardian.
 
 ## Watched changes
 
