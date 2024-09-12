@@ -51,7 +51,7 @@ describe(ValueService.name, () => {
     const CONFIG_B = mockObject<AmountConfigEntry>({
       assetId: AssetId.create('chain', addressB),
       sinceTimestamp: new UnixTime(300),
-      address: EthereumAddress.random(),
+      address: addressB,
       chain: 'chain',
       includeInTotal: false,
       decimals: DECIMALS,
