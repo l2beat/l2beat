@@ -42,8 +42,7 @@ export class ConfigMapping {
   getPriceConfigFromAmountConfig(
     amountConfig: AmountConfigEntry,
   ): PriceConfigEntry & { configId: string } {
-    const assetId = AssetId.create(amountConfig.chain, amountConfig.address)
-
+    const assetId = amountConfig.assetId
     const priceConfig = this.pricesByAssetId.get(assetId)
 
     assert(
@@ -65,9 +64,7 @@ export class ConfigMapping {
     assert(projectAmounts)
 
     const assetId = AssetId.create(token.chain, token.address)
-    const amountConfigs = projectAmounts.filter(
-      (x) => AssetId.create(x.chain, x.address) === assetId,
-    )
+    const amountConfigs = projectAmounts.filter((x) => x.assetId === assetId)
     assert(
       amountConfigs.every((x) => x.decimals === amountConfigs[0]?.decimals),
       'Decimals mismatch!',

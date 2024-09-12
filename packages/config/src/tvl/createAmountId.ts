@@ -33,6 +33,17 @@ export function createAmountId(amountConfig: AmountConfigEntry): AmountId {
       input.push(amountConfig.coingeckoId.toString())
       input.push(amountConfig.escrowAddress.toString())
       break
+    case 'aggLayerL2Token':
+      input.push(amountConfig.l1Address.toString())
+      input.push(amountConfig.originNetwork.toString())
+      break
+    case 'aggLayerNativeEtherPreminted':
+      input.push(amountConfig.l2BridgeAddress.toString())
+      input.push(amountConfig.premintedAmount.toString())
+      break
+    case 'aggLayerNativeEtherWrapped':
+      input.push(amountConfig.wethAddress.toString())
+      break
     default:
       assertUnreachable(amountConfig)
   }

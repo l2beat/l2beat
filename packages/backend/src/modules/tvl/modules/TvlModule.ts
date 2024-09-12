@@ -254,18 +254,26 @@ function getAssociatedTokens(
     const associatedAmounts = amounts
       .filter((x) => x.isAssociated === true)
       .filter((amount) => {
-        const u = uniqueTokens.get(`${amount.address}-${amount.chain}`)
+        const u = uniqueTokens.get(amount.assetId.toString())
         if (u) {
           assert(amount.source === u, 'Type mismatch')
           return false
         }
-        uniqueTokens.set(`${amount.address}-${amount.chain}`, amount.source)
+        uniqueTokens.set(amount.assetId.toString(), amount.source)
         return true
       })
 
     return associatedAmounts.map((amount) => {
+      const address =
+        amount.type === 'aggLayerL2Token'
+          ? amount.l1Address
+          : amount.type === 'aggLayerNativeEtherPreminted' ||
+              amount.type === 'aggLayerNativeEtherWrapped'
+            ? 'native'
+            : amount.address
+
       return {
-        address: amount.address,
+        address,
         chain: amount.chain,
         type: amount.source,
         includeInTotal: amount.includeInTotal,

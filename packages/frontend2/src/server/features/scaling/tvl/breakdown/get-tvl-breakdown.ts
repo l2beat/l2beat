@@ -100,14 +100,21 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
         case 'external': {
           const token = safeGetTokenByAssetId(priceConfig.assetId)
 
+          const address =
+            config.type === 'aggLayerL2Token'
+              ? config.l1Address
+              : config.type === 'aggLayerNativeEtherPreminted' ||
+                  config.type === 'aggLayerNativeEtherWrapped'
+                ? 'native'
+                : config.address
+
           breakdown.external.push({
             assetId: priceConfig.assetId,
             chainId: chainConverter.toChainId(config.chain),
             amount: amountAsNumber,
             usdValue: valueAsNumber,
             usdPrice: price.toString(),
-            tokenAddress:
-              config.address === 'native' ? undefined : config.address,
+            tokenAddress: address === 'native' ? undefined : address,
             bridgedUsing: config.bridgedUsing ?? {
               bridges: token?.bridgedUsing?.bridges ?? [{ name: 'Unknown' }],
               warning: token?.bridgedUsing?.warning,
@@ -115,7 +122,14 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
           })
           break
         }
-        case 'native':
+        case 'native': {
+          const address =
+            config.type === 'aggLayerL2Token'
+              ? config.l1Address
+              : config.type === 'aggLayerNativeEtherPreminted' ||
+                  config.type === 'aggLayerNativeEtherWrapped'
+                ? 'native'
+                : config.address
           breakdown.native.push({
             assetId: priceConfig.assetId,
             chainId: chainConverter.toChainId(config.chain),
@@ -123,9 +137,9 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
             usdValue: valueAsNumber,
             usdPrice: price.toString(),
             // TODO: force fe to accept "native"
-            tokenAddress:
-              config.address === 'native' ? undefined : config.address,
+            tokenAddress: address === 'native' ? undefined : address,
           })
+        }
       }
     }
 
