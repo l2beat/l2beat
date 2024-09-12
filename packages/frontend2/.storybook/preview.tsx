@@ -3,8 +3,8 @@ import React from 'react'
 
 import { withThemeByClassName } from '@storybook/addon-themes'
 
-import { GlossaryContextProvider } from '../src/app/_components/markdown/glossary-context'
-import { TooltipProvider } from '../src/app/_components/tooltip/tooltip'
+import { TooltipProvider } from '../src/components/core/tooltip/tooltip'
+import { GlossaryContextProvider } from '../src/components/markdown/glossary-context'
 import { roboto } from '../src/fonts'
 import '../src/styles/globals.css'
 import { allModes } from './modes'
