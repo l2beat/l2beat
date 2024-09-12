@@ -14,7 +14,7 @@ import {
 import { providers } from 'ethers'
 
 import { isEqual } from 'lodash'
-import { chains } from '../../src'
+import { chainConverter, chains } from '../../src'
 import { ChainConfig } from '../../src/common'
 import { GeneratedToken, Output, SourceEntry } from '../../src/tokens/types'
 import { ScriptLogger } from './utils/ScriptLogger'
@@ -42,7 +42,11 @@ async function main() {
   const result: GeneratedToken[] = output.tokens
 
   function saveToken(token: GeneratedToken) {
-    const index = result.findIndex((t) => t.id === token.id)
+    const index = result.findIndex(
+      (t) =>
+        AssetId.create(chainConverter.toName(t.chainId), t.address) ===
+        AssetId.create(chainConverter.toName(token.chainId), token.address),
+    )
 
     if (index === -1) {
       result.push(token)
@@ -141,10 +145,7 @@ async function main() {
         token.deploymentTimestamp,
       )
 
-      const assetId = getAssetId(chainConfig, token, info.name)
-
       saveToken({
-        id: assetId,
         name: info.name,
         coingeckoId: info.coingeckoId,
         address: token.address,
@@ -211,16 +212,6 @@ function getSupply(
   const formula = chain === 'ethereum' ? 'zero' : entry.supply
   tokenLogger.assert(formula !== undefined, `Missing formula`)
   return formula
-}
-
-function getAssetId(chain: ChainConfig, token: SourceEntry, name: string) {
-  const chainPrefix = chain.name === 'ethereum' ? '' : `${chain.name}:`
-
-  return AssetId(
-    `${chainPrefix}${token.symbol.replaceAll(' ', '-').toLowerCase()}-${name
-      .replaceAll(' ', '-')
-      .toLowerCase()}`,
-  )
 }
 
 function sortByChainAndName(result: GeneratedToken[]) {

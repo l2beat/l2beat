@@ -1,7 +1,12 @@
 import { Logger } from '@l2beat/backend-tools'
-import { createAmountId, createAssetId, createPriceId } from '@l2beat/config'
+import { createAmountId, createPriceId } from '@l2beat/config'
 import { Database } from '@l2beat/database'
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  AssetId,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
@@ -132,8 +137,14 @@ describe(ValueIndexer.name, () => {
           [createAmountId(amountConfigs[1]), amountConfigs[1]],
         ]),
         new Map([
-          [createAssetId(priceConfigs[0]), createPriceId(priceConfigs[0])],
-          [createAssetId(priceConfigs[1]), createPriceId(priceConfigs[1])],
+          [
+            AssetId.create(priceConfigs[0].chain, priceConfigs[0].address),
+            createPriceId(priceConfigs[0]),
+          ],
+          [
+            AssetId.create(priceConfigs[1].chain, priceConfigs[1].address),
+            createPriceId(priceConfigs[1]),
+          ],
         ]),
         timestamps,
       )

@@ -173,9 +173,7 @@ describe('tokens', () => {
       canonicalTokenList.map((token) => {
         if (token.symbol === 'ETH') {
           expect(token.coingeckoId).toEqual(CoingeckoId('ethereum'))
-        } else if (
-          token.id === AssetId('wusdm-wrapped-mountain-protocol-usd')
-        ) {
+        } else if (token.id === AssetId.WUSDM) {
           // TODO(radomski): This is a short term solution to the problem of
           // wrapped token prices. wUSDM is ~15% of Manta Pacific TVL but the
           // Coingecko price chart for the _WRAPPED_ version of this token is
