@@ -89,6 +89,14 @@ export const badges = {
     },
     type: BadgeType.RaaS,
   },
+  Alchemy: {
+    display: {
+      name: 'Alchemy',
+      description:
+        'This project was deployed via the rollup-as-a-service provider Alchemy',
+    },
+    type: BadgeType.RaaS,
+  },
   // DA
   Avail: {
     display: {
