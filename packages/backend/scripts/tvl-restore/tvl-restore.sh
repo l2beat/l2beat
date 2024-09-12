@@ -7,16 +7,17 @@ rm -rf data 2>/dev/null &&
 mkdir data &&
 
 echo "Clearing local TVL tables" &&
-psql $DEV_LOCAL_DB_URL -f reset-local.sql &&
+BASE_DB_URL="${DEV_LOCAL_DB_URL%/*}"
+psql $BASE_DB_URL -c "DROP DATABASE IF EXISTS l2beat_local" -c "CREATE DATABASE l2beat_local"
 
 echo "Migrating DB to latest" &&
-yarn db:migrate &&
+yarn prisma migrate deploy &&
 
 echo "Fetching TVL tables from remote DB" &&
-psql $DEV_REMOTE_DB_URL_READ_ONLY -f export.sql &&
+./export.sh &&
 
 echo "Restoring TVL tables" &&
-psql $DEV_LOCAL_DB_URL -f import.sql &&
+./import.sh &&
 
 echo "Removing data folder" &&
 rm -rf data &&
