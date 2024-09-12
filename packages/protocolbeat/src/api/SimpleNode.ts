@@ -1,8 +1,10 @@
+import { Color } from '../utils/color'
 import type { DiscoveryContract, DiscoveryEoa } from './paseDiscovery'
 
 interface SimpleNodeShared {
   id: string
   name: string
+  color: Color
   proxyType?: string
   discovered: boolean
   fields: {

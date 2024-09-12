@@ -24,14 +24,8 @@ describe(CoingeckoQueryService.name, () => {
       it('is called with correct parameters', async () => {
         const coingeckoClient = mockObject<CoingeckoClient>({
           getCoinMarketChartRange: mockFn().returns({
-            marketCaps: [],
-            totalVolumes: [],
-            prices: [
-              {
-                date: new Date(),
-                value: 1234567,
-              },
-            ],
+            marketCaps: [mock()],
+            prices: [mock()],
           }),
         })
         const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
@@ -64,8 +58,7 @@ describe(CoingeckoQueryService.name, () => {
               { date: START.add(1, 'hours').toDate(), value: 1000 },
               { date: START.add(2, 'hours').toDate(), value: 1100 },
             ],
-            marketCaps: [],
-            totalVolumes: [],
+            marketCaps: [mock(), mock(), mock()],
           }),
         })
         const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
@@ -88,8 +81,7 @@ describe(CoingeckoQueryService.name, () => {
           getCoinMarketChartRange: mockFn()
             .returnsOnce({
               prices: [{ date: START.toDate(), value: 1200 }],
-              marketCaps: [],
-              totalVolumes: [],
+              marketCaps: [mock()],
             })
             .returnsOnce({
               prices: [
@@ -101,8 +93,7 @@ describe(CoingeckoQueryService.name, () => {
                   value: 1800,
                 },
               ],
-              marketCaps: [],
-              totalVolumes: [],
+              marketCaps: [mock()],
             })
             .returnsOnce({
               prices: [
@@ -114,8 +105,7 @@ describe(CoingeckoQueryService.name, () => {
                   value: 2400,
                 },
               ],
-              marketCaps: [],
-              totalVolumes: [],
+              marketCaps: [mock()],
             }),
         })
         const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
@@ -158,8 +148,7 @@ describe(CoingeckoQueryService.name, () => {
               { date: START.add(2, 'hours').toDate(), value: 1100 },
               { date: START.add(2, 'hours').toDate(), value: 1100 },
             ],
-            marketCaps: [],
-            totalVolumes: [],
+            marketCaps: Array(7).fill(mock()),
           }),
         })
         const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
@@ -188,8 +177,7 @@ describe(CoingeckoQueryService.name, () => {
                 value: 1100,
               },
             ],
-            marketCaps: [],
-            totalVolumes: [],
+            marketCaps: Array(3).fill(mock()),
           }),
         })
         const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
@@ -222,8 +210,7 @@ describe(CoingeckoQueryService.name, () => {
                 value: 1100,
               },
             ],
-            marketCaps: [],
-            totalVolumes: [],
+            marketCaps: Array(3).fill(mock()),
           }),
         })
         const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
@@ -261,7 +248,6 @@ describe(CoingeckoQueryService.name, () => {
             { date: START.add(1, 'hours').toDate(), value: 234567891 },
             { date: START.add(2, 'hours').toDate(), value: 345678912 },
           ],
-          totalVolumes: [],
         }),
       })
       const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
@@ -411,58 +397,6 @@ describe(CoingeckoQueryService.name, () => {
       expect(result).toEqual(to)
     })
   })
-  describe(
-    CoingeckoQueryService.prototype.queryRawHourlyPricesAndMarketCaps.name,
-    () => {
-      it('when from not defined call until empty response', async () => {
-        const START = UnixTime.now()
-
-        const coingeckoClient = mockObject<CoingeckoClient>({
-          getCoinMarketChartRange: mockFn()
-            .returnsOnce({
-              prices: [{ date: START.add(1, 'hours').toDate(), value: 100 }],
-              marketCaps: [
-                { date: START.add(1, 'hours').toDate(), value: 200 },
-              ],
-              totalVolumes: [
-                { date: START.add(1, 'hours').toDate(), value: 300 },
-              ],
-            })
-            .returnsOnce({
-              prices: [{ date: START.toDate(), value: 100 }],
-              marketCaps: [{ date: START.toDate(), value: 200 }],
-              totalVolumes: [{ date: START.toDate(), value: 300 }],
-            })
-            .returnsOnce({
-              prices: [],
-              marketCaps: [],
-              totalVolumes: [],
-            }),
-        })
-        const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
-        const queryResult =
-          await coingeckoQueryService.queryRawHourlyPricesAndMarketCaps(
-            CoingeckoId('weth'),
-            undefined,
-            START.add(1, 'hours'),
-          )
-        expect(queryResult).toEqual({
-          prices: [
-            { date: START.toDate(), value: 100 },
-            { date: START.add(1, 'hours').toDate(), value: 100 },
-          ],
-          marketCaps: [
-            { date: START.toDate(), value: 200 },
-            { date: START.add(1, 'hours').toDate(), value: 200 },
-          ],
-          totalVolumes: [
-            { date: START.toDate(), value: 300 },
-            { date: START.add(1, 'hours').toDate(), value: 300 },
-          ],
-        })
-      })
-    },
-  )
 })
 
 describe(pickClosestValues.name, () => {
@@ -741,3 +675,10 @@ describe.skip(CoingeckoQueryService.name + ' e2e tests', function () {
     return faultyData.length / data.length
   }
 })
+
+function mock(date?: Date, value?: number) {
+  return {
+    date: date ?? new Date(),
+    value: value ?? 1234567,
+  }
+}
