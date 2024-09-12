@@ -4,7 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '~/components/core/accordion'
-import { ProductIcon } from '~/icons/products/SocialIcon'
+import { SocialIcon } from '~/icons/products/social-icon'
 import { cn } from '~/utils/cn'
 import { formatLink } from '~/utils/format-link'
 import { CustomLink } from '../../link/custom-link'
@@ -52,7 +52,7 @@ export function MobileProjectLinks({
                             href={link}
                           >
                             {parsed.platform ? (
-                              <ProductIcon
+                              <SocialIcon
                                 className="size-[1em] shrink-0 fill-current"
                                 product={parsed.platform}
                               />

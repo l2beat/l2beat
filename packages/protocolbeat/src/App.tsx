@@ -6,14 +6,15 @@ import { useState } from 'react'
 import type { SimpleNode } from './api/SimpleNode'
 import { deleteNode } from './api/delete'
 import { merge } from './api/merge'
-import { parseDiscovery } from './api/paseDiscovery'
+import { encodeProjectId, parseDiscovery } from './api/paseDiscovery'
 import { transformContracts } from './api/transform'
 import { nodeToSimpleNode } from './store/actions/updateNodes'
 import { useStore } from './store/store'
 import {
-  decodeNodeLocations,
+  decodeNodeState,
   getLayoutStorageKey,
 } from './store/utils/storageParsing'
+import { Color } from './utils/color'
 import { AutoLayoutButton } from './view/AutoLayoutButton'
 import { Sidebar } from './view/Sidebar'
 import { Viewport } from './view/Viewport'
@@ -24,6 +25,7 @@ export function App() {
   const hiddenNodesIds = useStore((state) => state.hiddenNodesIds)
   const projectId = useStore((state) => state.projectId)
   const updateNodeLocations = useStore((state) => state.updateNodeLocations)
+  const updateNodeColors = useStore((state) => state.updateNodeColors)
   const setHiddenNodes = useStore((state) => state.setHiddenNodes)
   const setProjectId = useStore((state) => state.setProjectId)
   const [nodes, setNodes] = useState<SimpleNode[]>(
@@ -69,21 +71,23 @@ export function App() {
 
     const contents = await file.text()
     try {
-      const locations = decodeNodeLocations(contents)
-      if (locations.projectId !== projectId) {
+      const state = decodeNodeState(contents)
+      if (state.projectId !== projectId) {
         console.error(
-          `Location data is for ${locations.projectId} but ${projectId} is loaded`,
+          `Location data is for ${state.projectId} but ${projectId} is loaded`,
         )
         return
       }
 
-      updateNodeLocations(locations.locations)
+      updateNodeLocations(state.locations)
+      updateNodeColors(state.colors)
     } catch (_) {
       const discovery = parseDiscovery(JSON.parse(contents))
-      const result = transformContracts(discovery)
+      const projectId = encodeProjectId(discovery)
+      const result = transformContracts(projectId, discovery)
 
       setNodes((nodes) => merge(nodes, result))
-      setProjectId(`${discovery.name}@${discovery.chain}`)
+      setProjectId(projectId)
     }
     markLoading(`${file.name} parse`, false)
   }
@@ -92,6 +96,19 @@ export function App() {
     try {
       const newNodes = deleteNode(nodes, id)
       setNodes(newNodes)
+    } catch (e: unknown) {
+      alert(e instanceof Error && e.message ? e.message : 'Unknown error')
+    }
+  }
+
+  function colorChangeAction(id: string[], color: Color) {
+    try {
+      const matching = nodes
+        .filter((n) => id.includes(n.id))
+        .map((n) => ({ ...n, color }))
+      const old = nodes.filter((n) => !id.includes(n.id))
+
+      setNodes(old.concat(matching))
     } catch (e: unknown) {
       alert(e instanceof Error && e.message ? e.message : 'Unknown error')
     }
@@ -167,6 +184,7 @@ export function App() {
             <Sidebar
               selectedNodes={selectedNodes}
               onDeleteNodes={deleteNodeAction}
+              onColorChange={colorChangeAction}
             />
           </div>
         )}

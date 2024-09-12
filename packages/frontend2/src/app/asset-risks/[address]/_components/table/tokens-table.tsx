@@ -3,7 +3,7 @@
 import { type Stage } from '@l2beat/config'
 import { type Dispatch, type SetStateAction, useState } from 'react'
 
-import { type TokenBridgedUsing } from '@l2beat/shared-pure'
+import { type AssetId, type TokenBridgedUsing } from '@l2beat/shared-pure'
 import {
   SortingArrowDownIcon,
   SortingArrowUpIcon,
@@ -21,7 +21,7 @@ import {
 
 export type Token = {
   token: {
-    id: string
+    id: AssetId
     name: string
     decimals: number
     symbol: string
@@ -116,7 +116,7 @@ export function TokensTable(props: TokensTableProps) {
           {tokens.map((token) => (
             <tbody
               className="group/body"
-              key={`${token.chain.id}-${token.token.id}`}
+              key={`${token.chain.id}-${token.token.id.toString()}`}
             >
               <TableRow token={token} />
             </tbody>

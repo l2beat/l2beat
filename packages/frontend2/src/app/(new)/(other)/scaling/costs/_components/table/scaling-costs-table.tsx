@@ -82,7 +82,7 @@ export function ScalingCostsTable(props: Props) {
 
 function mapToTableEntry(
   entry: ScalingCostsEntry,
-  data: Record<string, CostsTableData> | undefined,
+  data: CostsTableData | undefined,
   unit: CostsUnit,
 ): ScalingCostsTableEntry {
   if (!data)

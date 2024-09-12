@@ -2,10 +2,10 @@ import { type Stage, type StageConfig } from '@l2beat/config'
 import { StageBadge } from '~/components/badge/stage-badge'
 import { Callout } from '~/components/callout'
 import { WarningBar } from '~/components/warning-bar'
-import InfoIcon from '~/icons/info.svg'
-import MissingIcon from '~/icons/missing.svg'
+import { InfoIcon } from '~/icons/info'
+import { MissingIcon } from '~/icons/missing'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import UnderReviewIcon from '~/icons/under-review.svg'
+import { UnderReviewIcon } from '~/icons/under-review'
 
 export interface StageTooltipProps {
   stageConfig: StageConfig
@@ -17,15 +17,7 @@ export function StageTooltip({ stageConfig }: StageTooltipProps) {
   return (
     <div className="flex max-w-[300px] flex-col gap-4 py-1">
       <span>
-        <StageBadge
-          stage={stageConfig.stage}
-          icon={
-            stageConfig.stage !== 'UnderReview'
-              ? stageConfig.message?.type
-              : undefined
-          }
-          className="font-medium"
-        />
+        <StageBadge stage={stageConfig.stage} className="font-medium" />
         <span className="ml-2 inline-block font-medium">
           {getStageName(stageConfig.stage)}
         </span>
@@ -76,7 +68,7 @@ export function StageTooltip({ stageConfig }: StageTooltipProps) {
       <Callout
         color="blue"
         body="Please mind, stages do not reflect rollup security"
-        icon={<InfoIcon className="size-4 fill-blue-500" />}
+        icon={<InfoIcon className="size-4" variant="blue" />}
         className="p-4 font-medium"
       />
     </div>

@@ -8,7 +8,7 @@ import {
 import { EtherscanLink } from '~/components/etherscan-link'
 import { CustomLink } from '~/components/link/custom-link'
 import { Markdown } from '~/components/markdown/markdown'
-import ChevronDownIcon from '~/icons/chevron.svg'
+import { ChevronIcon } from '~/icons/chevron'
 import { getExplorerUrlByChainId } from '../../_utils/get-explorer-url'
 import { LastUsedCell } from './last-used-cell'
 import { SubVerifiersTable } from './sub-verifiers-table'
@@ -73,7 +73,7 @@ export function Verifiers(props: Props) {
                       <LastUsedCell days={item.lastUsedDaysAgo} />
                     </td>
                     <td className="pr-4">
-                      <ChevronDownIcon className="transition-transform duration-300 ease-out group-data-[state=open]/trigger:rotate-180" />
+                      <ChevronIcon className="transition-transform duration-300 ease-out group-data-[state=open]/trigger:rotate-180" />
                     </td>
                   </tr>
                 </AccordionTrigger>

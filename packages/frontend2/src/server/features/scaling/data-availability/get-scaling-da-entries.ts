@@ -3,19 +3,21 @@ import { notUndefined } from '@l2beat/shared-pure'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
-import { getLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
+import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
 import { orderByTvl } from '../tvl/utils/order-by-tvl'
 
 export async function getScalingDaEntries() {
   const activeProjects = [...layer2s, ...layer3s].filter(
     (p) => !p.isUpcoming && !(p.type === 'layer2' && p.isArchived),
   )
-  const tvl = await getLatestTvlUsd()
-  const orderedByTvl = orderByTvl(activeProjects, tvl)
-  const projectsVerificationStatuses = await getProjectsVerificationStatuses()
-  const implementationChangeReport = await getImplementationChangeReport()
+  const [tvl, projectsVerificationStatuses, implementationChangeReport] =
+    await Promise.all([
+      getProjectsLatestTvlUsd(),
+      getProjectsVerificationStatuses(),
+      getImplementationChangeReport(),
+    ])
 
-  return orderedByTvl
+  const entries = activeProjects
     .map((p) => {
       const hasImplementationChanged =
         !!implementationChangeReport.projects[p.id.toString()]
@@ -27,6 +29,8 @@ export async function getScalingDaEntries() {
       )
     })
     .filter(notUndefined)
+
+  return orderByTvl(entries, tvl)
 }
 
 function getScalingDataAvailabilityEntry(

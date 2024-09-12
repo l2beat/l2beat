@@ -88,6 +88,7 @@ export const scalingLayer2sColumns = [
       return aTvl - bTvl
     },
     meta: {
+      align: 'right',
       tooltip:
         'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
     },

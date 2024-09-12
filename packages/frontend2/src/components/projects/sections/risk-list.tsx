@@ -1,6 +1,4 @@
-import React from 'react'
-
-import ShieldIcon from '~/icons/shield.svg'
+import { ShieldIcon } from '~/icons/shield'
 
 export interface RiskList {
   risks: TechnologyRisk[]

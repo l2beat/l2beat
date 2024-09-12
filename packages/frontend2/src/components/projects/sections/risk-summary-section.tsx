@@ -1,7 +1,7 @@
 import { type ScalingProjectRiskCategory } from '@l2beat/config'
 import { WarningBar } from '~/components/warning-bar'
-import ShieldIcon from '~/icons/shield.svg'
-import UnverifiedIcon from '~/icons/unverified.svg'
+import { ShieldIcon } from '~/icons/shield'
+import { UnverifiedIcon } from '~/icons/unverified'
 import { ProjectSection } from './project-section'
 import { type ProjectSectionProps } from './types'
 

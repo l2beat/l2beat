@@ -9,7 +9,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { EM_DASH } from '~/consts/characters'
-import InfoIcon from '~/icons/info.svg'
+import { InfoIcon } from '~/icons/info'
 import { type DaProjectEntry } from '~/server/features/data-availability/project/get-da-project-entry'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/format'
@@ -101,7 +101,7 @@ function ProjectStat(props: ProjectStat) {
         {props.tooltip && (
           <Tooltip>
             <TooltipTrigger>
-              <InfoIcon className="fill-gray-500 dark:fill-gray-600 md:size-3.5" />
+              <InfoIcon className="md:size-3.5" variant="gray" />
             </TooltipTrigger>
             <TooltipContent>{props.tooltip}</TooltipContent>
           </Tooltip>

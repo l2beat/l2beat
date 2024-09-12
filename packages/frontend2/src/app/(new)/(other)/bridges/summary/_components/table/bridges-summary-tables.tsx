@@ -17,8 +17,8 @@ import {
   bridgesSummaryArchivedColumns,
 } from './columns'
 
-import ActiveIcon from '~/icons/active.svg'
-import ArchivedIcon from '~/icons/archived.svg'
+import { ActiveIcon } from '~/icons/active'
+import { ArchivedIcon } from '~/icons/archived'
 import { type BridgesSummaryEntry } from '~/server/features/bridges/get-bridge-summary-entries'
 import { useBridgesFilter } from '../../../_components/bridges-filter-context'
 import { BridgesFilters } from '../../../_components/bridges-filters'

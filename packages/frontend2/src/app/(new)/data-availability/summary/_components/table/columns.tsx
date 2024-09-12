@@ -3,7 +3,7 @@ import { PentagonRosetteCell } from '~/components/rosette/pentagon/pentagon-rose
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { EM_DASH } from '~/consts/characters'
-import ChevronDown from '~/icons/chevron.svg'
+import { ChevronIcon } from '~/icons/chevron'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/format'
@@ -33,10 +33,13 @@ export const columns = [
         return (
           <button
             className="flex flex-row items-center gap-4 italic text-gray-500 dark:text-gray-400"
-            onClick={() => ctx.row.toggleExpanded()}
+            onClick={(e) => {
+              e.preventDefault()
+              ctx.row.toggleExpanded()
+            }}
           >
             Multiple bridges
-            <ChevronDown
+            <ChevronIcon
               className={cn(
                 'fill-black transition-transform dark:fill-white',
                 ctx.row.getIsExpanded() && 'rotate-180',

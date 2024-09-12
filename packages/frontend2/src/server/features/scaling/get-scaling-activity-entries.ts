@@ -3,7 +3,7 @@ import { assert, ProjectId } from '@l2beat/shared-pure'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
 import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import {
-  type ActivityTableData,
+  type ActivityProjectTableData,
   getActivityTableData,
 } from './activity/get-activity-table-data'
 import { getActivityProjects } from './activity/utils/get-activity-projects'
@@ -13,9 +13,15 @@ type ActivityProject = Layer2 | Layer3
 
 export async function getScalingActivityEntries() {
   const projects = getActivityProjects()
-  const projectsVerificationStatuses = await getProjectsVerificationStatuses()
-  const implementationChangeReport = await getImplementationChangeReport()
-  const activityData = await getActivityTableData(projects)
+  const [
+    projectsVerificationStatuses,
+    implementationChangeReport,
+    activityData,
+  ] = await Promise.all([
+    getProjectsVerificationStatuses(),
+    getImplementationChangeReport(),
+    getActivityTableData(projects),
+  ])
 
   const ethereumData = activityData[ProjectId.ETHEREUM]
   assert(ethereumData !== undefined, 'Ethereum data not found')
@@ -43,7 +49,7 @@ export type ScalingActivityEntry = ReturnType<
 
 function getScalingProjectActivityEntry(
   project: ActivityProject,
-  data: ActivityTableData | undefined,
+  data: ActivityProjectTableData | undefined,
   isVerified: boolean,
   hasImplementationChanged: boolean,
 ) {
@@ -59,7 +65,7 @@ function getScalingProjectActivityEntry(
   }
 }
 
-function getEthereumEntry(data: ActivityTableData) {
+function getEthereumEntry(data: ActivityProjectTableData) {
   return {
     ...getCommonScalingEntry({ project: 'ethereum' }),
     entryType: 'activity' as const,

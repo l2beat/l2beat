@@ -1,19 +1,19 @@
 import { type Milestone } from '@l2beat/config'
 import { useCallback, useMemo } from 'react'
-import { type RouterOutputs } from '~/trpc/react'
+import { type ActivityChartData } from '~/server/features/scaling/activity/get-activity-chart'
 import { formatTpsWithUnit } from '~/utils/format-tps'
 import { type SeriesStyle } from '../core/styles'
 import { mapMilestones } from '../core/utils/map-milestones'
 
 interface Params {
   milestones: Milestone[]
-  chart: RouterOutputs['activity']['chart']['data'] | undefined
+  data: ActivityChartData | undefined
   showMainnet: boolean
 }
 
 export function useActivityChartRenderParams({
   milestones,
-  chart,
+  data,
   showMainnet,
 }: Params) {
   const mappedMilestones = useMemo(
@@ -28,7 +28,7 @@ export function useActivityChartRenderParams({
 
   const columns = useMemo(
     () =>
-      chart?.map((dataPoint) => {
+      data?.map((dataPoint) => {
         const [timestamp, count, ethereumCount] = dataPoint
         const milestone = mappedMilestones[timestamp]
 
@@ -40,12 +40,12 @@ export function useActivityChartRenderParams({
           milestone,
         }
       }) ?? [],
-    [chart, mappedMilestones, showMainnet],
+    [data, mappedMilestones, showMainnet],
   )
 
   const chartRange: [number, number] = useMemo(
-    () => [chart?.[0]?.[0] ?? 0, chart?.[chart.length - 1]?.[0] ?? 1],
-    [chart],
+    () => [data?.[0]?.[0] ?? 0, data?.[data.length - 1]?.[0] ?? 1],
+    [data],
   )
 
   const valuesStyle: SeriesStyle[] = useMemo(

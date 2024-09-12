@@ -1,6 +1,6 @@
 import { pluralize } from '@l2beat/shared-pure'
-import CriticalIcon from '../../_assets/critical-badge.svg'
-import WarningIcon from '../../_assets/warning-badge.svg'
+import { CriticalBadgeIcon } from '../../_assets/critical-badge'
+import { WarningBadgeIcon } from '../../_assets/warning-badge'
 
 interface WarningProps {
   count: number
@@ -9,7 +9,7 @@ interface WarningProps {
 export function CriticalWarning(props: WarningProps) {
   return (
     <div className="flex items-center gap-1 text-sm font-semibold text-red-700">
-      <CriticalIcon />
+      <CriticalBadgeIcon />
       <span>{`${props.count} ${pluralize(props.count, 'critical')}`}</span>
     </div>
   )
@@ -18,7 +18,7 @@ export function CriticalWarning(props: WarningProps) {
 export function Warning(props: WarningProps) {
   return (
     <div className="flex items-center gap-1">
-      <WarningIcon />
+      <WarningBadgeIcon />
       <span>{`${props.count} ${pluralize(props.count, 'warning')}`}</span>
     </div>
   )

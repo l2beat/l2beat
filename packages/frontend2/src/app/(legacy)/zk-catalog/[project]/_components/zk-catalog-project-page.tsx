@@ -11,7 +11,7 @@ import {
 } from '~/components/core/tooltip/tooltip'
 import { Markdown } from '~/components/markdown/markdown'
 import { OutLink } from '~/components/out-link'
-import InfoIcon from '~/icons/info.svg'
+import { InfoIcon } from '~/icons/info'
 import { type ZkCatalogProofVerification } from '../../_utils/types'
 import { ProjectHeader } from './project-header'
 import { RequiredTools } from './required-tools'

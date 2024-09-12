@@ -2,7 +2,7 @@
 
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
 import * as React from 'react'
-import ChevronIcon from '~/icons/chevron.svg'
+import { ChevronIcon } from '~/icons/chevron'
 import { cn } from '~/utils/cn'
 
 const Accordion = AccordionPrimitive.Root

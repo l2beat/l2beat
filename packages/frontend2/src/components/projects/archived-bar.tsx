@@ -1,6 +1,4 @@
-import React from 'react'
-
-import ArchivedIcon from '~/icons/archived.svg'
+import { ArchivedIcon } from '~/icons/archived'
 
 export function ArchivedBar() {
   return (

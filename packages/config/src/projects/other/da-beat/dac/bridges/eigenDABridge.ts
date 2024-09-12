@@ -34,7 +34,7 @@ export const eigenDAbridge = {
   id: 'eigenda-bridge',
   type: 'DAC',
   display: {
-    name: 'Bridge',
+    name: 'EigenDAServiceManager',
     slug: 'bridge',
     description:
       'EigenDA DA attestations are bridged to Ethereum through the EigenDAServiceManager smart contract.',

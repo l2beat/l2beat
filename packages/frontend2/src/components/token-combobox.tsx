@@ -3,8 +3,8 @@ import { useCommandState } from 'cmdk'
 import Image from 'next/image'
 import React from 'react'
 import { externalLinks } from '~/consts/external-links'
-import CheckIcon from '~/icons/check.svg'
-import ChevronIcon from '~/icons/chevron.svg'
+import { CheckIcon } from '~/icons/check'
+import { ChevronIcon } from '~/icons/chevron'
 import {
   type ProjectToken,
   type ProjectTokens,

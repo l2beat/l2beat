@@ -4,7 +4,10 @@ import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
+import { env } from '~/env'
 import { db } from '~/server/database'
+import { getRangeWithMax } from '~/utils/range/range'
+import { generateTimestamps } from '../../utils/generate-timestamps'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import {
   type ActivityProjectFilter,
@@ -12,13 +15,23 @@ import {
 } from './utils/project-filter-utils'
 import { type ActivityTimeRange } from './utils/range'
 
+/**
+ * A function that computes values for chart data of the activity over time.
+ * @returns [timestamp, count, ethereumCount][] - all numbers
+ */
 export function getActivityChart(
   ...parameters: Parameters<typeof getCachedActivityChart>
 ) {
+  if (env.MOCK) {
+    return getMockActivityChart(...parameters)
+  }
   noStore()
   return getCachedActivityChart(...parameters)
 }
 
+export type ActivityChartData = Awaited<
+  ReturnType<typeof getCachedActivityChart>
+>
 const getCachedActivityChart = cache(
   async (filter: ActivityProjectFilter, range: ActivityTimeRange) => {
     const projects = [...layer2s, ...layer3s]
@@ -36,10 +49,7 @@ const getCachedActivityChart = cache(
     )
 
     if (startIndex === -1) {
-      return {
-        types: ['timestamp', 'count', 'ethereumCount'] as const,
-        data: [],
-      }
+      return []
     }
 
     const aggregatedEntries = entries.slice(startIndex).reduce(
@@ -80,11 +90,22 @@ const getCachedActivityChart = cache(
           ] as const,
       )
 
-    return {
-      types: ['timestamp', 'count', 'ethereumCount'] as const,
-      data: result,
-    }
+    return result
   },
   ['activityChart'],
   { revalidate: UnixTime.HOUR },
 )
+
+function getMockActivityChart(
+  _: ActivityProjectFilter,
+  timeRange: ActivityTimeRange,
+): ActivityChartData {
+  const [from, to] = getRangeWithMax(timeRange, 'daily')
+  const adjustedRange: [UnixTime, UnixTime] = [
+    from ?? new UnixTime(1590883200),
+    to,
+  ]
+  const timestamps = generateTimestamps(adjustedRange, 'daily')
+
+  return timestamps.map((timestamp) => [+timestamp, 15, 11])
+}

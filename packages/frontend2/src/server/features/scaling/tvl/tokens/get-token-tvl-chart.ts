@@ -11,6 +11,7 @@ import {
   unstable_noStore as noStore,
 } from 'next/cache'
 import { z } from 'zod'
+import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
 import { getRangeWithMax } from '~/utils/range/range'
 import { getConfigMapping } from '../utils/get-config-mapping'
@@ -38,14 +39,18 @@ export type TokenTvlChartParams = z.infer<typeof TokenTvlChartParams>
 export type TokenParams = z.infer<typeof TokenParams>
 
 /**
- * Returns a chart of the token's TVL over time.
- * @returns [timestamp (number), amount (number), usdValue (number)]
+ * A function that computes values for chart of the token's TVL over time.
+ * @returns [timestamp, amount, usdValue][] - all numbers
  */
 export async function getTokenTvlChart(params: TokenTvlChartParams) {
+  if (env.MOCK) {
+    return getMockTokenTvlChart(params)
+  }
   noStore()
   return getCachedTokenTvlChart(params)
 }
 
+type TokenTvlChart = Awaited<ReturnType<typeof getCachedTokenTvlChart>>
 const getCachedTokenTvlChart = cache(
   async ({ token, range }: TokenTvlChartParams) => {
     const targetTimestamp = UnixTime.now().toStartOf('hour').add(-2, 'hours')
@@ -109,6 +114,15 @@ const getCachedTokenTvlChart = cache(
   ['tokenTvlChart'],
   { revalidate: 60 * UnixTime.MINUTE }, // Cache for 1 hour
 )
+
+function getMockTokenTvlChart(params: TokenTvlChartParams): TokenTvlChart {
+  const resolution = rangeToResolution(params.range)
+  const [from, to] = getRangeWithMax(params.range, 'hourly')
+  const adjustedRange: [UnixTime, UnixTime] = [from ?? to.add(-730, 'days'), to]
+  const timestamps = generateTimestamps(adjustedRange, resolution)
+
+  return timestamps.map((timestamp) => [timestamp.toNumber(), 30000, 50000])
+}
 
 function getAdjustedRange(
   range: TvlChartRange,

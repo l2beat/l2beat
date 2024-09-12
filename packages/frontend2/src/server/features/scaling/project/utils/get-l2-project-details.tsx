@@ -82,12 +82,12 @@ export async function getL2ProjectDetails({
     range: '7d',
     filter: { type: 'projects', projectIds: [project.id] },
   })
+  const tokens = await getTokensForProject(project)
 
   const sortedMilestones =
     project.milestones?.sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
     ) ?? []
-  const tokens = await getTokensForProject(project)
 
   const items: ProjectDetailsSection[] = []
 
@@ -105,7 +105,7 @@ export async function getL2ProjectDetails({
     })
   }
 
-  if (!isEmpty(activityChartData.data)) {
+  if (!isEmpty(activityChartData)) {
     items.push({
       type: 'ChartSection',
       props: {
@@ -117,7 +117,7 @@ export async function getL2ProjectDetails({
     })
   }
 
-  if (!project.isUpcoming && !isEmpty(costsChartData.data)) {
+  if (!project.isUpcoming && !isEmpty(costsChartData)) {
     items.push({
       type: 'ChartSection',
       props: {

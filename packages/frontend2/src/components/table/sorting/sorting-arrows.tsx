@@ -1,7 +1,7 @@
 import { type SortDirection } from '@tanstack/react-table'
 import React from 'react'
 
-import SortingArrowIcon from '~/icons/sorting-arrow.svg'
+import { SortingArrowIcon } from '~/icons/sorting-arrow'
 import { cn } from '~/utils/cn'
 
 interface Props {

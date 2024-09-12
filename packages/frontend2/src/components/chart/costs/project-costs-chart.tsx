@@ -24,14 +24,14 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
   const [scale, setScale] = useState<ChartScale>('lin')
   const [range, setRange] = useState<CostsTimeRange>('7d')
   const [unit, setUnit] = useState<CostsUnit>('usd')
-  const { data: chart, isLoading } = api.costs.chart.useQuery({
+  const { data, isLoading } = api.costs.chart.useQuery({
     range,
     filter: { type: 'projects', projectIds: [projectId] },
   })
 
   const { chartRange, columns, formatYAxisLabel, valuesStyle } =
     useCostChartRenderParams({
-      chart,
+      data,
       milestones,
       unit,
     })

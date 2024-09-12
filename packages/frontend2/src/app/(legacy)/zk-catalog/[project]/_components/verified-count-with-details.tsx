@@ -1,7 +1,7 @@
 import { assert } from '@l2beat/shared-pure'
-import CircleQuestionMark from '~/icons/circle-question-mark.svg'
-import UnverifiedIcon from '~/icons/unverified.svg'
-import VerifiedIcon from '~/icons/verified.svg'
+import { CircleQuestionMarkIcon } from '~/icons/circle-question-mark'
+import { UnverifiedIcon } from '~/icons/unverified'
+import { VerifiedIcon } from '~/icons/verified'
 
 import { type ZkCatalogProjectDetails } from './zk-catalog-project-page'
 
@@ -22,7 +22,7 @@ export function VerifiedCountWithDetails(props: Props) {
 
   const groupedByStatus = [
     { Icon: VerifiedIcon, count: successfullyVerifiedCount },
-    { Icon: CircleQuestionMark, count: notVerifiedCount },
+    { Icon: CircleQuestionMarkIcon, count: notVerifiedCount },
     { Icon: UnverifiedIcon, count: unsuccessfullyVerifiedCount },
   ].filter((item) => item.count > 0)
 
@@ -55,7 +55,7 @@ export function VerifiedCountWithDetails(props: Props) {
           {notVerifiedCount > 0 ? (
             <div className="flex items-center">
               <span>{notVerifiedCount}</span>
-              <CircleQuestionMark className="inline size-4" />
+              <CircleQuestionMarkIcon className="inline size-4" />
             </div>
           ) : null}
           {unsuccessfullyVerifiedCount > 0 ? (

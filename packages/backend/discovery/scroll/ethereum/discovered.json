@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "blockNumber": 20670849,
+  "blockNumber": 20725971,
   "configHash": "0xe468df3eac2c93917dfde6f8e4a52efb7b6d627822520d392642c25338743b81",
   "version": 14,
   "contracts": [
@@ -37,13 +37,13 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "gasOracle": "0x987e300fDfb06093859358522a79098848C33852",
-        "l2BaseFee": 49801942,
+        "l2BaseFee": 40520409,
         "maxGasLimit": 10000000,
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 932577,
-        "nextUnfinalizedQueueIndex": 932526,
+        "nextCrossDomainMessageIndex": 934852,
+        "nextUnfinalizedQueueIndex": 934837,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-        "pendingQueueIndex": 932574,
+        "pendingQueueIndex": 934847,
         "scrollChain": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "whitelistChecker": "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37"
       },
@@ -151,7 +151,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 5 (20%)",
-        "nonce": 10,
+        "nonce": 11,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -477,7 +477,10 @@
           "roles": {
             "DEFAULT_ADMIN_ROLE": {
               "adminRole": "DEFAULT_ADMIN_ROLE",
-              "members": ["0x1A658B88fD0a3c82fa1a0609fCDbD32e7dd4aB9C"]
+              "members": [
+                "0x1A658B88fD0a3c82fa1a0609fCDbD32e7dd4aB9C",
+                "0x0e58939204eEDa84F796FBc86840A50af10eC4F4"
+              ]
             },
             "SECURITY_COUNCIL_NO_DELAY_ROLE": {
               "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -526,7 +529,11 @@
               ],
               "addSequencer(address)": ["TIMELOCK_1DAY_DELAY_TOLE"],
               "addProver(address)": ["TIMELOCK_1DAY_DELAY_TOLE"],
-              "updateMaxNumTxInChunk(uint256)": ["TIMELOCK_7DAY_DELAY_ROLE"]
+              "updateMaxNumTxInChunk(uint256)": ["TIMELOCK_7DAY_DELAY_ROLE"],
+              "revertBatch(bytes,bytes)": [
+                "SCROLL_MULTISIG_NO_DELAY_ROLE",
+                "EMERGENCY_MULTISIG_NO_DELAY_ROLE"
+              ]
             },
             "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B": {
               "updateGasOracle(address)": ["TIMELOCK_1DAY_DELAY_TOLE"],
@@ -796,7 +803,7 @@
         "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
         "$implementation": "0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f",
         "$upgradeCount": 5,
-        "lastFinalizedBatchIndex": 313671,
+        "lastFinalizedBatchIndex": 317216,
         "layer2ChainId": 534352,
         "maxNumTxInChunk": 100,
         "messageQueue": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
@@ -969,7 +976,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 174,
+        "nonce": 185,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1203,7 +1210,7 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 87237994605895,
+        "totalBridgedUSDC": 92987231408533,
         "withdrawPaused": false
       },
       "derivedName": "L1USDCGateway"

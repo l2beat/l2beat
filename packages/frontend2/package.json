@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
+    "dev:mock": "MOCK=true yarn dev",
     "build": "next build",
     "build:dependencies": "cd ../.. && yarn build:dependencies",
     "start": "next start",
@@ -15,7 +16,7 @@
     "test": "mocha",
     "typecheck": "tsc --noEmit",
     "storybook": "storybook dev -p 6006 --no-open",
-    "build-storybook": "storybook build",
+    "storybook:build": "storybook build",
     "tinify-logos": "node --loader esbuild-register/loader -r esbuild-register scripts/logos/tinifyLogos.ts"
   },
   "dependencies": {
@@ -44,6 +45,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
+    "gray-matter": "^4.0.3",
     "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
     "markdown-it": "^14.1.0",
@@ -71,9 +73,10 @@
     "@storybook/nextjs": "^8.2.9",
     "@storybook/react": "^8.2.9",
     "@storybook/test": "^8.2.9",
-    "@svgr/webpack": "^8.1.0",
+    "@storybook/testing-library": "^0.2.2",
     "@types/js-cookie": "^3.0.6",
     "@types/lodash": "^4.17.4",
+    "@types/markdown-it": "^14.1.2",
     "@types/node": "^20.11.16",
     "@types/qrcode": "^1.5.5",
     "@types/react": "^18.2.79",
@@ -83,11 +86,13 @@
     "eslint-config-next": "14.2.3",
     "eslint-plugin-storybook": "^0.8.0",
     "eslint-plugin-tailwindcss": "^3.17.4",
+    "mockdate": "^3.0.5",
     "pino-pretty": "^11.1.0",
     "postcss": "^8.4.38",
     "storybook": "^8.2.9",
     "storybook-addon-pseudo-states": "^3.1.1",
     "tailwindcss": "^3.4.1",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "tinify": "^1.7.1"
   }
 }

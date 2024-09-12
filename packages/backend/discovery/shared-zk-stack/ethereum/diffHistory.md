@@ -1,3 +1,84 @@
+Generated with discovered.json: 0x5316f6730537230399f403d045aae371108b264d
+
+# Diff at Wed, 11 Sep 2024 07:44:15 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@407590ebfbad0b4f799badc3ad5fce90a7eaed11 block: 20713619
+- current block number: 20725957
+
+## Description
+
+Two child-multisigs of the SecurityCouncil have signer-changes.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (0x69462a81ba94D64c404575f1899a464F123497A2) {
+    +++ description: None
+      values.$members.11:
++        "0x663ec2BfB273447DC236A646d6dAAA333aAB08f7"
+      values.$members.10:
+-        "0x663ec2BfB273447DC236A646d6dAAA333aAB08f7"
++        "0x670B24610DF99b1685aEAC0dfD5307B92e0cF4d7"
+      values.$members.9:
+-        "0x670B24610DF99b1685aEAC0dfD5307B92e0cF4d7"
++        "0x7be0FF978bB8C96F78fb1B1fC6c04b5b572a80B8"
+      values.$members.8:
+-        "0x7be0FF978bB8C96F78fb1B1fC6c04b5b572a80B8"
++        "0xe968FB773e54f77350A427B057FDB44e6592E338"
+      values.$members.7:
+-        "0xe968FB773e54f77350A427B057FDB44e6592E338"
++        "0x6754CaFCe32a1bD1A8c88ABc19a113365b85917F"
+      values.$members.6:
+-        "0x6754CaFCe32a1bD1A8c88ABc19a113365b85917F"
++        "0x23aaaD48A6409d98Fcc2e9061CD2F437ff4E5839"
+      values.$members.5:
+-        "0x23aaaD48A6409d98Fcc2e9061CD2F437ff4E5839"
++        "0x371F6E45784E7DFBEA2dc18Edb68cD90aD530E6c"
+      values.$members.4:
+-        "0x371F6E45784E7DFBEA2dc18Edb68cD90aD530E6c"
++        "0xF3d913D11dd577DDe5da4f2AA9611Aa799185C46"
+      values.$members.3:
+-        "0xF3d913D11dd577DDe5da4f2AA9611Aa799185C46"
++        "0x7e0d106fD2Cee9aa846bc419944f5eD8F2935135"
+      values.$members.2:
+-        "0x7e0d106fD2Cee9aa846bc419944f5eD8F2935135"
++        "0x5F18752518d81E4AFbB28341EDFba9Aa0E16707C"
+      values.$members.1:
+-        "0x5F18752518d81E4AFbB28341EDFba9Aa0E16707C"
++        "0xaaAdAa000867fb883089B7e528d7eA96937b777f"
+      values.$members.0:
+-        "0xaaAdAa000867fb883089B7e528d7eA96937b777f"
++        "0x3766Ae19984f845bb149E05b6F7E14FFB4f85a1A"
+      values.multisigThreshold:
+-        "1 of 11 (9%)"
++        "1 of 12 (8%)"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xB7aC3A79A23B148c85fba259712c5A1e7ad0ca44) {
+    +++ description: None
+      values.$members.4:
++        "0x57855BeeB39C56ca4Ff41C1D039B0F022ED08cea"
+      values.$members.3:
+-        "0x57855BeeB39C56ca4Ff41C1D039B0F022ED08cea"
++        "0xA1AF6Ed43eDeE80F1913ea44E9DC2A93A738EB44"
+      values.$members.2:
+-        "0xA1AF6Ed43eDeE80F1913ea44E9DC2A93A738EB44"
++        "0x896E7D2108245ae8d5Aa7E4763024b3945AEd77F"
+      values.$members.1:
+-        "0x896E7D2108245ae8d5Aa7E4763024b3945AEd77F"
++        "0x6c25cda91Bef3A4Ba1e4488b4ac276aA02921D67"
+      values.$members.0:
+-        "0x6c25cda91Bef3A4Ba1e4488b4ac276aA02921D67"
++        "0xdF28907A6A272fa06333a197d7F0379A0f8f00aa"
+      values.multisigThreshold:
+-        "1 of 4 (25%)"
++        "1 of 5 (20%)"
+    }
+```
+
 Generated with discovered.json: 0xfebdc41677b04bf109847e17a5320f23bd01c291
 
 # Diff at Mon, 09 Sep 2024 14:22:30 GMT:
