@@ -165,11 +165,6 @@ describe(CoingeckoClient.name, () => {
         { date: new Date(1592697600000), value: 25501270877.342506 },
         { date: new Date(1592784000000), value: 25381090910.620564 },
       ],
-      totalVolumes: [
-        { date: new Date(1592611200000), value: 6840801770.229276 },
-        { date: new Date(1592697600000), value: 5400222130.457475 },
-        { date: new Date(1592784000000), value: 4995955268.45639 },
-      ],
     }
 
     it('fetches historical prices', async () => {

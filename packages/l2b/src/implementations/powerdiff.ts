@@ -152,7 +152,7 @@ function compareUsingDifftastic(
   const fileName = filePath1.split('/').slice(-1)[0]
   console.log(`Processing ${fileName}`)
   try {
-    const cmd = `${difftasticPath} --ignore-comments ${displayMode} --color=always ${filePath1} ${filePath2}`
+    const cmd = `${difftasticPath} --ignore-comments ${displayMode} --color=always ${filePath1} ${filePath2} --context 20`
     return osExec(cmd).toString()
   } catch (error) {
     console.log(error)

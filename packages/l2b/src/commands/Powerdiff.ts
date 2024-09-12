@@ -106,7 +106,7 @@ export const PowerdiffDiscovery = command({
 
     const leftPath = path.join(projectPath, '.flat')
     const rightPath = path.join(projectPath, flatAt[0])
-    powerdiff(leftPath, rightPath, difftasticPath, mode, displayMode)
+    powerdiff(rightPath, leftPath, difftasticPath, mode, displayMode)
   },
 })
 

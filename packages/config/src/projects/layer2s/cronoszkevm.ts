@@ -87,6 +87,7 @@ export const cronoszkevm: Layer2 = {
     Badge.Stack.ZKStack,
     Badge.Infra.ElasticChain,
   ],
+  isUnderReview: true,
   display: {
     tvlWarning: {
       content:
