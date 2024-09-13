@@ -791,18 +791,30 @@ export const zksyncera: Layer2 = {
   },
   permissions: [
     discovery.contractAsPermissioned(
+      discovery.getContract('SecurityCouncil'),
+      `Is one of the three signers of the EmergencyUpgradeBoard. Can freeze all ZK stack chains. Can approve governance proposals in the ProtocolUpgradeHandler. The default threshold for the members of this contract is ${scThresholdString} but can be customized per action.`,
+    ),
+    discovery.contractAsPermissioned(
+      discovery.getContract('Guardians'),
+      `Is one of the three signers of the EmergencyUpgradeBoard. Can extend the legal veto period and / or approve governance proposals in the ProtocolUpgradeHandler. Permissioned to cancel non-protocol proposals on L2. The default threshold for the members of this contract is ${guardiansThresholdString} but can be customized per action.`,
+    ),
+    ...discovery.getMultisigPermission(
+      'ZkFoundationMultisig',
+      'Is one of the three signers of the EmergencyUpgradeBoard.',
+    ),
+    discovery.contractAsPermissioned(
       discovery.getContract('ProtocolUpgradeHandler'),
       'Central upgrade Admin Governance contract of the ZK stack.',
     ),
     ...discovery.getMultisigPermission(
       'Matter Labs Multisig',
-      'This MultiSig is the current central Admin for upgradeability and configuration of the rollup system and can potentially steal all funds.',
+      'Has the Admin role in the ZKsync Era and the shared contracts through the ChainAdmin contract.',
     ),
     {
       name: 'ChainAdmin Owner',
       accounts: [discovery.getPermissionedAccount('ChainAdmin', 'owner')],
       description:
-        'Can manage fees, apply predefined upgrades, censor bridge transactions and revert batches (*Admin* role).',
+        'Can add new Chains, manage fees, apply predefined upgrades, censor bridge transactions and revert batches (*Admin* role).', // era ChainAdmin specific
     },
     {
       name: 'Validators',
