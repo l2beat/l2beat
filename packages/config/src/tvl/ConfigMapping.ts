@@ -5,8 +5,10 @@ import {
   type EthereumAddress,
   type PriceConfigEntry,
   ProjectId,
+  assertUnreachable,
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
+import { ethereum } from '../chains/ethereum'
 import { createAmountId } from './createAmountId'
 import { createPriceId } from './createPriceId'
 
@@ -42,7 +44,24 @@ export class ConfigMapping {
   getPriceConfigFromAmountConfig(
     amountConfig: AmountConfigEntry,
   ): PriceConfigEntry & { configId: string } {
-    const assetId = amountConfig.assetId
+    let assetId: AssetId
+    switch (amountConfig.type) {
+      case 'circulatingSupply':
+      case 'preminted':
+      case 'totalSupply':
+      case 'escrow':
+        assetId = amountConfig.assetId
+        break
+      case 'aggLayerL2Token':
+        assetId = AssetId.create(ethereum.name, amountConfig.l1Address)
+        break
+      case 'aggLayerNativeEtherPreminted':
+      case 'aggLayerNativeEtherWrapped':
+        assetId = AssetId.create(ethereum.name, 'native')
+        break
+      default:
+        assertUnreachable(amountConfig)
+    }
     const priceConfig = this.pricesByAssetId.get(assetId)
 
     assert(

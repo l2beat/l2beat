@@ -1,11 +1,14 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ConfigMapping, createAmountId } from '@l2beat/config'
+import {
+  AGGLAYER_L2BRIDGE_ADDRESS,
+  ConfigMapping,
+  createAmountId,
+} from '@l2beat/config'
 import {
   assert,
   AggLayerL2Token,
   AggLayerNativeEtherPreminted,
   AggLayerNativeEtherWrapped,
-  EthereumAddress,
   ProjectId,
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
@@ -26,10 +29,6 @@ import { SyncOptimizer } from '../utils/SyncOptimizer'
 interface AggLayerModule {
   start: () => Promise<void> | void
 }
-
-const BRIDGE_ADDRESS = EthereumAddress(
-  '0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe',
-)
 
 export function initAggLayerModule(
   config: TvlConfig,
@@ -112,7 +111,7 @@ export function initAggLayerModule(
         priceConfigs: [...priceConfigs],
         amountConfigs,
         project: ProjectId(project),
-        dataSource: chain,
+        dataSource: `${chain}_agglayer`,
         syncOptimizer,
         parents: [descendantPriceIndexer, aggLayerIndexer],
         indexerService,
@@ -175,7 +174,7 @@ function createPeripherals(
       rpcClient,
       chainConfig.config.multicallConfig,
     ),
-    bridgeAddress: BRIDGE_ADDRESS,
+    bridgeAddress: AGGLAYER_L2BRIDGE_ADDRESS,
   })
 
   const valueService = new ValueService(peripherals.database)

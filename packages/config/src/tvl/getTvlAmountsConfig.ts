@@ -1,5 +1,6 @@
 import {
   assert,
+  AggLayerL2Token,
   AmountConfigEntry,
   AssetId,
   ChainConverter,
@@ -11,8 +12,10 @@ import {
 import { chainToProject } from '../backend'
 import { BackendProject, BackendProjectEscrow } from '../backend/BackendProject'
 import { chains } from '../chains'
+import { ethereum } from '../chains/ethereum'
 import { ChainConfig } from '../common'
 import { tokenList } from '../tokens'
+import { AGGLAYER_L2BRIDGE_ADDRESS } from './aggLayer'
 
 export function getTvlAmountsConfig(
   projects: BackendProject[],
@@ -32,19 +35,117 @@ export function getTvlAmountsConfig(
 
   for (const project of projects) {
     for (const escrow of project.escrows) {
-      for (const token of escrow.tokens) {
-        const chain = chains.find((x) => x.chainId === +token.chainId)
-        assert(chain, `Chain not found for token ${token.id}`)
-        assert(chain.name === escrow.chain, 'Programmer error: chain mismatch')
+      if (escrow.sharedEscrow?.type === 'AggLayer') {
+        for (const token of escrow.tokens) {
+          if (token.address === undefined) {
+            continue
+          }
+          const chain = chains.find((x) => x.name === project.projectId)
+          assert(chain, `Chain not found for token ${token.id}`)
 
-        const configEntry = projectEscrowToConfigEntry(
-          chain,
-          token,
-          escrow,
-          project,
-        )
+          const configEntry = projectAggLayerEscrowToConfigEntry(
+            chain,
+            token,
+            escrow,
+            project,
+          )
 
-        entries.push(configEntry)
+          entries.push(configEntry)
+        }
+        if (escrow.sharedEscrow.nativeAsset === 'etherPreminted') {
+          const chain = chains.find((x) => x.name === project.projectId)
+          assert(chain, `Chain not found for project ${project.projectId}`)
+          assert(
+            chain.minTimestampForTvl,
+            'Chain should have minTimestampForTvl',
+          )
+
+          entries.push({
+            type: 'aggLayerNativeEtherPreminted',
+            dataSource: `${chain.name}_agglayer`,
+            l2BridgeAddress: AGGLAYER_L2BRIDGE_ADDRESS,
+            premintedAmount: escrow.sharedEscrow.premintedAmount ?? BigInt(0),
+            category: 'ether',
+            project: project.projectId,
+            chain: chain.name,
+            assetId: AssetId.create(ethereum.name, 'native'),
+            decimals: 18,
+            includeInTotal: true,
+            isAssociated: false,
+            source: 'canonical',
+            symbol: 'ETH',
+            sinceTimestamp: UnixTime.max(
+              chain.minTimestampForTvl,
+              escrow.sinceTimestamp,
+            ),
+          })
+        }
+        if (escrow.sharedEscrow.nativeAsset === 'etherWrapped') {
+          const chain = chains.find((x) => x.name === project.projectId)
+          assert(chain, `Chain not found for project ${project.projectId}`)
+          assert(escrow.sharedEscrow.wethAddress, 'WETH address is required')
+          assert(
+            chain.minTimestampForTvl,
+            'Chain should have minTimestampForTvl',
+          )
+
+          entries.push({
+            type: 'aggLayerNativeEtherWrapped',
+            dataSource: `${chain.name}_agglayer`,
+            wethAddress: escrow.sharedEscrow.wethAddress,
+            category: 'ether',
+            project: project.projectId,
+            chain: chain.name,
+            assetId: AssetId.create(
+              ethereum.name,
+              escrow.sharedEscrow.wethAddress,
+            ),
+            decimals: 18,
+            includeInTotal: true,
+            isAssociated: false,
+            source: 'canonical',
+            symbol: 'ETH',
+            sinceTimestamp: UnixTime.max(
+              chain.minTimestampForTvl,
+              escrow.sinceTimestamp,
+            ),
+          })
+        }
+        if (escrow.sharedEscrow.includeAllOKBFromL1) {
+          const token = tokenList.find(
+            (t) =>
+              AssetId.create(chainConverter.toName(t.chainId), t.address) ===
+              AssetId.OKB,
+          )
+          assert(token, 'OKB token not found')
+
+          const configEntry = projectEscrowToConfigEntry(
+            ethereum,
+            { ...token, isPreminted: false },
+            escrow,
+            project,
+          )
+
+          entries.push(configEntry)
+        }
+      } else {
+        for (const token of escrow.tokens) {
+          const chain = chains.find((x) => x.chainId === +token.chainId)
+          assert(chain, `Chain not found for token ${token.id}`)
+          assert(
+            chain.name === escrow.chain,
+            'Programmer error: chain mismatch',
+          )
+
+          const configEntry = projectEscrowToConfigEntry(
+            chain,
+            token,
+            escrow,
+            project,
+          )
+
+          entries.push(configEntry)
+        }
       }
     }
   }
@@ -126,6 +227,26 @@ function projectTokenToConfigEntry(
   }
 
   throw new Error('Invalid token supply type')
+}
+
+function projectAggLayerEscrowToConfigEntry(
+  chain: ChainConfig,
+  token: Token & { isPreminted: boolean },
+  escrow: BackendProjectEscrow,
+  project: BackendProject,
+): AggLayerL2Token {
+  assert(token.address, 'Token address is required for AggLayer escrow')
+
+  return {
+    type: 'aggLayerL2Token',
+    originNetwork: 0,
+    dataSource: `${chain.name}_agglayer`,
+    l1Address: token.address,
+    ...getEscrowTokenInfo(chain, token, escrow, project),
+    ...getBaseTokenInfo(token, project.projectId),
+    assetId: AssetId.create(ethereum.name, token.address),
+    chain: project.projectId,
+  }
 }
 
 function projectEscrowToConfigEntry(

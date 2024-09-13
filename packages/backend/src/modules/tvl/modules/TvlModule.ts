@@ -19,6 +19,7 @@ import { ApiProject, AssociatedToken } from '../api/utils/types'
 import { HourlyIndexer } from '../indexers/HourlyIndexer'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { TvlCleaner } from '../utils/TvlCleaner'
+import { initAggLayerModule } from './AggLayerModule'
 import { initBlockTimestampModule } from './BlockTimestampModule'
 import { initChainModule } from './ChainModule'
 import { initCirculatingSupplyModule } from './CirculatingSupplyModule'
@@ -114,6 +115,24 @@ export function initTvlModule(
     blockTimestampModule?.blockTimestampIndexers,
   )
 
+  const agglayerTokens = config.tvl.amounts.filter(
+    (c) =>
+      c.type === 'aggLayerL2Token' ||
+      c.type === 'aggLayerNativeEtherPreminted' ||
+      c.type === 'aggLayerNativeEtherWrapped',
+  )
+
+  const aggLayerModule = initAggLayerModule(
+    config.tvl,
+    logger,
+    peripherals,
+    syncOptimizer,
+    indexerService,
+    configMapping,
+    priceModule.descendant,
+    blockTimestampModule?.blockTimestampIndexers,
+  )
+
   const dataStatusService = new DataStatusService(peripherals.database)
 
   const pricesDataService = new PricesDataService({
@@ -177,11 +196,12 @@ export function initTvlModule(
 
   const start = async () => {
     await hourlyIndexer.start()
-    await priceModule.start()
+    // await priceModule.start()
     await blockTimestampModule?.start()
-    await chainModule?.start()
-    await premintedModule?.start()
-    await circulatingSupplyModule?.start()
+    // await chainModule?.start()
+    // await premintedModule?.start()
+    // await circulatingSupplyModule?.start()
+    await aggLayerModule?.start()
 
     if (config.tvl && config.tvl.tvlCleanerEnabled) {
       tvlCleaner.start()
