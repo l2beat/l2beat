@@ -88,6 +88,10 @@ export function getTvlAmountsConfig(
             chain.minTimestampForTvl,
             'Chain should have minTimestampForTvl',
           )
+          const l1Weth = tokenList.find(
+            (t) => AssetId.create(ethereum.name, t.address) === AssetId.WETH,
+          )
+          assert(l1Weth, 'Ethereum WETH token not found')
 
           entries.push({
             type: 'aggLayerNativeEtherWrapped',
@@ -96,10 +100,7 @@ export function getTvlAmountsConfig(
             category: 'ether',
             project: project.projectId,
             chain: chain.name,
-            assetId: AssetId.create(
-              ethereum.name,
-              escrow.sharedEscrow.wethAddress,
-            ),
+            assetId: AssetId.create(ethereum.name, l1Weth?.address),
             decimals: 18,
             includeInTotal: true,
             isAssociated: false,
