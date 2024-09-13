@@ -58,14 +58,8 @@ export function ScalingTvlChart({ entries, milestones }: Props) {
     filter,
   })
 
-  const {
-    chartRange,
-    formatYAxisLabel,
-    valuesStyle,
-    columns,
-    lastValue,
-    change,
-  } = useTvlChartRenderParams({ milestones, unit, data })
+  const { chartRange, formatYAxisLabel, valuesStyle, columns, change } =
+    useTvlChartRenderParams({ milestones, unit, data: data?.chart })
 
   return (
     <ChartProvider
@@ -80,7 +74,7 @@ export function ScalingTvlChart({ entries, milestones }: Props) {
       <section className="flex flex-col gap-4">
         <TvlChartHeader
           unit={unit}
-          value={lastValue}
+          value={data?.total[unit]}
           change={change}
           range={timeRange}
         />

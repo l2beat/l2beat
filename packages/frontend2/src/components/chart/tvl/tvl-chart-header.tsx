@@ -6,17 +6,14 @@ import { PercentChange } from '../../percent-change'
 import { useChartLoading } from '../core/chart-loading-context'
 import { tvlRangeToReadable } from './tvl-range-to-readable'
 
-export function TvlChartHeader({
-  unit,
-  value,
-  change,
-  range,
-}: {
+interface Props {
   unit: string
-  value?: number
-  change?: number
+  value: number | undefined
+  change: number | undefined
   range: TvlChartRange
-}) {
+}
+
+export function TvlChartHeader({ unit, value, change, range }: Props) {
   const loading = useChartLoading()
 
   const changeOverTime =

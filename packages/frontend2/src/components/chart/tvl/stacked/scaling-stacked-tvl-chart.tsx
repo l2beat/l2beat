@@ -57,8 +57,12 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
     filter,
   })
 
-  const { columns, chartRange, lastValue, change, valuesStyle } =
-    useStackedTvlChartRenderParams({ milestones, unit, data })
+  const { columns, chartRange, valuesStyle, change } =
+    useStackedTvlChartRenderParams({
+      milestones,
+      unit,
+      data: data?.chart,
+    })
 
   return (
     <ChartProvider
@@ -77,7 +81,7 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
       <section className="flex flex-col gap-4">
         <TvlChartHeader
           unit={unit}
-          value={lastValue}
+          value={data?.total[unit]}
           change={change}
           range={timeRange}
         />
