@@ -8,9 +8,10 @@
     "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb" // ZkGovOpsGovernor
   ],
   "names": {
-    // important EOA names:
+    // important aliases:
     // 0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D : ZKFoundationMultisig_l2Alias
     // 0xe788e09324F8bb3cc64f009973693f751C33b999 : Guardians_l2Alias
+    // 0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8 : ProtocolUpgradeHandler_l2Alias
     "0x76705327e682F2d96943280D99464Ab61219e34f": "ZkProtocolGovernor",
     "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8": "ProtocolTimelockController",
     "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89": "ZkTokenGovernor",

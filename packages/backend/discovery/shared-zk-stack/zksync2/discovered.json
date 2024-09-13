@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "chain": "zksync2",
-  "blockNumber": 44102953,
+  "blockNumber": 44113900,
   "configHash": "0x21ae6606a13e918f3d6bf6dc010d84fad998cc1ceae7eca7cb2ad993ed21d286",
   "version": 14,
   "contracts": [
@@ -20,7 +20,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1726230155,
+        "clock": 1726241615,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -140,7 +140,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1726230155,
+        "clock": 1726241615,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -217,7 +217,7 @@
         },
         "BURNER_ADMIN_ROLE": "0xc8d1ad9d415224b751d781cc8214ccfe7c47716e13229475443f04f1ebddadc6",
         "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",
-        "clock": 1726230155,
+        "clock": 1726241615,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -236,7 +236,7 @@
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "ZKsync",
         "symbol": "ZK",
-        "totalSupply": "11277840627000000000000000000"
+        "totalSupply": "11277876635000000000000000000"
       },
       "derivedName": "ZkTokenV2"
     },
@@ -255,7 +255,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1726230155,
+        "clock": 1726241615,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",

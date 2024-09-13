@@ -637,7 +637,7 @@ export const zksyncera: Layer2 = {
     For the case that the SC does not approve here, the Guardians can instead approve the proposal, or nobody. In the two latter cases, the waiting period is waited out in full. 
     A proposal cannot be actively cancelled, but will be discarded if not approved after the full waiting period. An approved proposal now enters the \*pendingExecution\* state for a final delay of 1d, and can then be executed.
     
-    There are two other tracks of Governance also starting with DAO Delegate proposals the ZKsync Era rollup: 1) Token Program Proposals (currently inactive) targeting the ZK token and 2) Governance Advisory Proposals without onchain targets. 
+    There are two other tracks of Governance also starting with DAO Delegate proposals the ZKsync Era rollup: 1) Token Program Proposals permissioned as minters for the ZK token and 2) Governance Advisory Proposals without onchain targets. 
     The protocol for these two other tracks is similar to the first part of the standard path described above (albeit having different quorum and timelock values), without passing over to the Ethereum L1.
     
     **The emergency path:** SecurityCouncil (${scThresholdString}), Guardians (${guardiansThresholdString}) and ZkFoundationMultisig (${discovery.getMultisigStats(
@@ -657,7 +657,7 @@ export const zksyncera: Layer2 = {
     ZKsync Era's ChainAdmin differs from the others as it also receives the Admin (not upgradeability admin) role in the shared ZK stack contracts.
     This gives the MatterLabs Multisig the ability to unilaterally create new chains, revert batches and change the ValidatorTimelock among other permissions.
     
-    The ZK token contract can be upgraded by an EOA.
+    The ZK token contract can be upgraded by an the ProtocolUpgradeHandler alias on L2.
     `
     return description
   })(),
