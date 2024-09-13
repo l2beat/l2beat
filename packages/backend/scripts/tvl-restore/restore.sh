@@ -1,19 +1,19 @@
 source .env 
 
 echo "IndexerState..."
-psql -d $DEV_LOCAL_DB_URL -f "./data/indexer.sql"
+pg_restore -d $DEV_LOCAL_DB_URL "./data/indexer.pgdump"
 
 echo "IndexerConfiguration..."
-psql -d $DEV_LOCAL_DB_URL -f "./data/configuration.sql"
+pg_restore -d $DEV_LOCAL_DB_URL "./data/configuration.pgdump"
 
 echo "BlockTimestamp..."
-psql -d $DEV_LOCAL_DB_URL -f "./data/block.sql"
+pg_restore -d $DEV_LOCAL_DB_URL "./data/block.pgdump"
 
 echo "Amount..."
-psql -d $DEV_LOCAL_DB_URL -f "./data/amount.sql"
+pg_restore -d $DEV_LOCAL_DB_URL "./data/amount.pgdump"
 
 echo "Price..."
-psql -d $DEV_LOCAL_DB_URL -f "./data/price.sql"
+pg_restore -d $DEV_LOCAL_DB_URL "./data/price.pgdump"
 
 echo "Value..."
-psql -d $DEV_LOCAL_DB_URL -f "./data/value.sql"
+pg_restore -d $DEV_LOCAL_DB_URL "./data/value.pgdump"
