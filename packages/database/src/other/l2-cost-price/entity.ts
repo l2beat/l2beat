@@ -10,13 +10,13 @@ export interface L2CostPriceRecord {
 export function toRecord(row: Selectable<L2CostPrice>): L2CostPriceRecord {
   return {
     timestamp: UnixTime.fromDate(row.timestamp),
-    priceUsd: row.price_usd,
+    priceUsd: row.priceUsd,
   }
 }
 
 export function toRow(record: L2CostPriceRecord): Insertable<L2CostPrice> {
   return {
     timestamp: record.timestamp.toDate(),
-    price_usd: record.priceUsd,
+    priceUsd: record.priceUsd,
   }
 }

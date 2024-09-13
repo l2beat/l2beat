@@ -18,13 +18,13 @@ export class BlockTimestampRepository extends BaseRepository {
     timestamp: UnixTime,
   ): Promise<number | undefined> {
     const row = await this.db
-      .selectFrom('block_timestamps')
-      .select('block_number')
+      .selectFrom('BlockTimestamp')
+      .select('blockNumber')
       .where('chain', '=', chain)
       .where('timestamp', '=', timestamp.toDate())
       .limit(1)
       .executeTakeFirst()
-    return row?.block_number
+    return row?.blockNumber
   }
 
   async deleteAfterExclusive(
@@ -32,7 +32,7 @@ export class BlockTimestampRepository extends BaseRepository {
     timestamp: UnixTime,
   ): Promise<number> {
     const result = await this.db
-      .deleteFrom('block_timestamps')
+      .deleteFrom('BlockTimestamp')
       .where('chain', '=', chain)
       .where('timestamp', '>', timestamp.toDate())
       .executeTakeFirst()
@@ -41,17 +41,17 @@ export class BlockTimestampRepository extends BaseRepository {
 
   // #region methods used only in TvlCleaner
   deleteHourlyUntil(dateRange: CleanDateRange): Promise<number> {
-    return deleteHourlyUntil(this.db, 'block_timestamps', dateRange)
+    return deleteHourlyUntil(this.db, 'BlockTimestamp', dateRange)
   }
 
   deleteSixHourlyUntil(dateRange: CleanDateRange): Promise<number> {
-    return deleteSixHourlyUntil(this.db, 'block_timestamps', dateRange)
+    return deleteSixHourlyUntil(this.db, 'BlockTimestamp', dateRange)
   }
   // #endregion
 
   async getAll(): Promise<BlockTimestampRecord[]> {
     const rows = await this.db
-      .selectFrom('block_timestamps')
+      .selectFrom('BlockTimestamp')
       .select(selectBlockTimestamp)
       .execute()
     return rows.map(toRecord)
@@ -62,15 +62,13 @@ export class BlockTimestampRepository extends BaseRepository {
 
     const rows = records.map(toRow)
     await this.batch(rows, 2_000, async (batch) => {
-      await this.db.insertInto('block_timestamps').values(batch).execute()
+      await this.db.insertInto('BlockTimestamp').values(batch).execute()
     })
     return rows.length
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
-      .deleteFrom('block_timestamps')
-      .executeTakeFirst()
+    const result = await this.db.deleteFrom('BlockTimestamp').executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 }

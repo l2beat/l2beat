@@ -2,7 +2,7 @@
   "name": "optimism",
   "chain": "ethereum",
   "blockNumber": 20733024,
-  "configHash": "0x38451a105f9d8535e86043d0d8690760de772e7605cf6418562d89e5df5639d3",
+  "configHash": "0xa79e8e6a94de9fe57ccc5f741635dc811567356907fdbeb1356cec21353d43a0",
   "version": 14,
   "contracts": [
     {
@@ -10,7 +10,7 @@
       "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
       "template": "gnosisSafeModules/LivenessModule",
       "descriptions": [
-        "used to remove members inactive for 8467200 while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig"
+        "used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig"
       ],
       "sinceTimestamp": 1717149791,
       "values": {
@@ -20,7 +20,7 @@
           0, 1, 2, 3, 3, 4, 5, 6, 6, 7, 8, 9, 9, 10, 11, 12, 12, 13, 14, 15
         ],
         "livenessGuard": "0x24424336F04440b1c28685a38303aC33C9D14a25",
-        "livenessInterval": 8467200,
+        "livenessInterval": "98d",
         "minOwners": 8,
         "ownershipTransferredToFallback": false,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
@@ -248,8 +248,8 @@
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
-        "OTHER_MESSENGER": "0x4200000000000000000000000000000000000007",
-        "otherMessenger": "0x4200000000000000000000000000000000000007",
+        "OTHER_MESSENGER": "optimism:0x4200000000000000000000000000000000000007",
+        "otherMessenger": "optimism:0x4200000000000000000000000000000000000007",
         "paused": false,
         "portal": "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
         "PORTAL": "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
@@ -262,7 +262,10 @@
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.3.0"
       },
-      "derivedName": "L1CrossDomainMessenger"
+      "derivedName": "L1CrossDomainMessenger",
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "optimism" } }
+      ]
     },
     {
       "name": "GnosisSafe",
@@ -298,6 +301,10 @@
       "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
       "template": "opstack/ProxyAdmin",
       "directlyReceivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+        },
         {
           "permission": "upgrade",
           "target": "0x18DAc71c228D1C32c99489B7323d441E1175e443"
@@ -355,6 +362,11 @@
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+          "via": [{ "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }]
+        },
         {
           "permission": "upgrade",
           "target": "0x18DAc71c228D1C32c99489B7323d441E1175e443",
@@ -459,12 +471,16 @@
         "$upgradeCount": 6,
         "messenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "MESSENGER": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
-        "OTHER_BRIDGE": "0x4200000000000000000000000000000000000014",
-        "otherBridge": "0x4200000000000000000000000000000000000014",
+        "OTHER_BRIDGE": "optimism:0x4200000000000000000000000000000000000014",
+        "otherBridge": "optimism:0x4200000000000000000000000000000000000014",
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.1.0"
-      }
+      },
+      "derivedName": "L1ERC721Bridge",
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "optimism" } }
+      ]
     },
     {
       "name": "SynthetixBridgeEscrow",
@@ -684,16 +700,19 @@
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF",
         "$upgradeCount": 0,
-        "l2TokenBridge": "0x4200000000000000000000000000000000000010",
+        "l2TokenBridge": "optimism:0x4200000000000000000000000000000000000010",
         "messenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "MESSENGER": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
-        "OTHER_BRIDGE": "0x4200000000000000000000000000000000000010",
-        "otherBridge": "0x4200000000000000000000000000000000000010",
+        "OTHER_BRIDGE": "optimism:0x4200000000000000000000000000000000000010",
+        "otherBridge": "optimism:0x4200000000000000000000000000000000000010",
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.1.0"
       },
-      "derivedName": "L1StandardBridge"
+      "derivedName": "L1StandardBridge",
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "optimism" } }
+      ]
     },
     {
       "name": "FoundationMultisig_2",
@@ -931,6 +950,18 @@
       "name": "AddressManager",
       "address": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
       "template": "opstack/AddressManager",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
+          "via": [
+            {
+              "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
+              "delay": 0
+            }
+          ]
+        }
+      ],
       "sinceTimestamp": 1624400033,
       "values": {
         "$immutable": true,

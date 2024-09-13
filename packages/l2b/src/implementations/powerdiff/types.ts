@@ -5,4 +5,5 @@ export interface Configuration {
   path2: string
   displayMode: DisplayMode
   difftasticPath: string
+  context: number
 }

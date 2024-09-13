@@ -16,6 +16,7 @@ export const ancient: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
   badges: [Badge.DA.Celestia, Badge.RaaS.Conduit],
   discovery,
+  associatedTokens: ['A8'],
   display: {
     name: 'Ancient8',
     slug: 'ancient8',

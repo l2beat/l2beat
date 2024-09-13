@@ -18,13 +18,8 @@ export function toRow(
   record: AggregatedLivenessRecord,
 ): Insertable<AggregatedLiveness> {
   return {
-    project_id: record.projectId,
-    subtype: record.subtype,
-    range: record.range,
-    min: record.min,
-    avg: record.avg,
-    max: record.max,
-    updated_at: record.updatedAt.toDate(),
+    ...record,
+    updatedAt: record.updatedAt.toDate(),
   }
 }
 
@@ -32,12 +27,9 @@ export function toRecord(
   row: Selectable<AggregatedLiveness>,
 ): AggregatedLivenessRecord {
   return {
-    projectId: row.project_id,
+    ...row,
     subtype: row.subtype as TrackedTxsConfigSubtype,
     range: row.range as AggregatedLivenessRange,
-    min: row.min,
-    avg: row.avg,
-    max: row.max,
-    updatedAt: UnixTime.fromDate(row.updated_at),
+    updatedAt: UnixTime.fromDate(row.updatedAt),
   }
 }

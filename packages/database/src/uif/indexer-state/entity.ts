@@ -13,20 +13,17 @@ export interface IndexerStateRecord {
 
 export function toRow(record: IndexerStateRecord): Insertable<IndexerState> {
   return {
-    indexer_id: record.indexerId,
-    safe_height: record.safeHeight,
-    config_hash: record.configHash,
-    min_timestamp: record.minTimestamp?.toDate(),
+    ...record,
+    minTimestamp: record.minTimestamp?.toDate(),
   }
 }
 
 export function toRecord(row: Selectable<IndexerState>): IndexerStateRecord {
   return {
-    indexerId: row.indexer_id,
-    safeHeight: row.safe_height,
-    configHash: row.config_hash ?? undefined,
-    minTimestamp: row.min_timestamp
-      ? UnixTime.fromDate(row.min_timestamp)
+    ...row,
+    configHash: row.configHash ?? undefined,
+    minTimestamp: row.minTimestamp
+      ? UnixTime.fromDate(row.minTimestamp)
       : undefined,
   }
 }

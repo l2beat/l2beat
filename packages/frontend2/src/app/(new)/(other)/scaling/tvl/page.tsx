@@ -16,9 +16,6 @@ export const metadata = getDefaultMetadata({
   openGraph: {
     url: '/scaling/tvl',
   },
-  robots: {
-    index: false,
-  },
 })
 
 export default async function Page() {

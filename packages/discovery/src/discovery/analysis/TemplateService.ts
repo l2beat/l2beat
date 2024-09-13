@@ -5,6 +5,7 @@ import chalk from 'chalk'
 
 import { hashJson } from '@l2beat/shared'
 import { Hash256, json, stripAnsiEscapeCodes } from '@l2beat/shared-pure'
+import { merge } from 'lodash'
 import {
   HashedFileContent,
   buildSimilarityHashmap,
@@ -22,7 +23,7 @@ import { readJsonc } from '../utils/readJsonc'
 
 const TEMPLATES_PATH = path.join('discovery', '_templates')
 const TEMPLATE_SHAPE_FOLDER = 'shape'
-const TEMPLATE_SIMILARITY_THRESHOLD = 0.999 // TODO: why two identical files are not 1.0?
+const TEMPLATE_SIMILARITY_THRESHOLD = 0.995 // TODO: why two identical files are not 1.0?
 
 export interface MatchResult {
   similarity: number
@@ -182,10 +183,7 @@ export class TemplateService {
     template: string,
   ): DiscoveryContract {
     const templateJson = this.loadContractTemplate(template)
-    return DiscoveryContract.parse({
-      ...templateJson,
-      ...contract,
-    })
+    return DiscoveryContract.parse(merge({}, templateJson, contract))
   }
 
   inlineTemplates(rawConfig: RawDiscoveryConfig): void {
