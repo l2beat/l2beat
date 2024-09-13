@@ -11,6 +11,13 @@
     "quorum"
   ],
   "fields": {
+    "currentQuorum": {
+      "handler": {
+        "type": "call",
+        "method": "quorum",
+        "args": ["{{ clock }}"]
+      }
+    },
     "accessControl": {
       "handler": {
         "type": "accessControl"

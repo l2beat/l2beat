@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "zksync2",
-  "blockNumber": 44097110,
-  "configHash": "0x8a470d08684bc31503549f6ab8c9e3e1cfad4ef424268a6c1fc160a7862e27ec",
+  "blockNumber": 44096954,
+  "configHash": "0x395ac23a6451c01d7ba2e93464e1c31be3e643ad9b5e979a3925429ff6c75d65",
   "version": 14,
   "contracts": [
     {
@@ -20,9 +20,10 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1726224019,
+        "clock": 1726223854,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
+        "currentQuorum": "630000000000000000000000000",
         "eip712Domain": {
           "fields": "0x0f",
           "name": "ZkTokenGovernor",
@@ -139,9 +140,10 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1726224019,
+        "clock": 1726223854,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
+        "currentQuorum": "630000000000000000000000000",
         "eip712Domain": {
           "fields": "0x0f",
           "name": "ZkGovOpsGovernor",
@@ -226,9 +228,10 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1726224019,
+        "clock": 1726223854,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
+        "currentQuorum": "630000000000000000000000000",
         "eip712Domain": {
           "fields": "0x0f",
           "name": "ZkProtocolGovernor",
@@ -715,7 +718,7 @@
     ]
   },
   "usedTemplates": {
-    "shared-zk-stack/ZkGovernor": "0x7a2c23188faf29f361b8f4f88dc893232c0564b369e503d1a501d3f0ba09169a"
+    "shared-zk-stack/ZkGovernor": "0x3aef147c11c82d1f65afe7b62d0827c2540d2afba53153d73523b01117d44636"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }
