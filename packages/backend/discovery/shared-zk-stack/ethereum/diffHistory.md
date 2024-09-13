@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x1589731c37bd7c0a90e2c710f552aa59eec99453
+Generated with discovered.json: 0x13b83ec4827f284bca142671d06ffaa695e69780
 
-# Diff at Fri, 13 Sep 2024 05:35:22 GMT:
+# Diff at Fri, 13 Sep 2024 10:40:14 GMT:
 
-- author: sekuba (<sekuba@users.noreply.github.com>)
-- comparing to: main@f3f080827a9c9144630c7d8b5f28745b2029ead2 block: 20725957
-- current block number: 20739638
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@e6761599b8d9e0b597372bb0e9ca885e08af7101 block: 20725957
+- current block number: 20741156
 
 ## Description
 
@@ -133,6 +133,9 @@ discovery. Values are for block 20725957 (main branch discovery), not current.
 ```diff
     contract ProtocolUpgradeHandler (0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897) {
     +++ description: None
+      values.L2_PROTOCOL_GOVERNOR:
+-        "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
++        "zksync2:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
       values.EXTENDED_LEGAL_VETO_PERIOD:
 +        604800
       values.HARD_FREEZE_PERIOD:
@@ -147,6 +150,8 @@ discovery. Values are for block 20725957 (main branch discovery), not current.
 +        2592000
       fieldMeta:
 +        {"protocolFrozenUntil":{"severity":"HIGH","description":"Timestamp until which ALL Hyperchains connected to the main STM are frozen. (Mailbox and Executor facets blocked)"}}
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"zksync2"}}]
     }
 ```
 
