@@ -69,8 +69,6 @@
             "type": "hardcoded",
             "value": 604800
           }
-        "L2_PROTOCOL_GOVERNOR": {
-          "returnType": "(ZkSyncAddress)"
         }
       }
     },

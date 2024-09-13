@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "zksync2",
-  "blockNumber": 44096954,
-  "configHash": "0x395ac23a6451c01d7ba2e93464e1c31be3e643ad9b5e979a3925429ff6c75d65",
+  "blockNumber": 44099945,
+  "configHash": "0xc60a64d8ab168941c1b54f1d9449f8c2f3c0c7180b8ee1670c6e494d39644dfa",
   "version": 14,
   "contracts": [
     {
@@ -20,7 +20,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1726223854,
+        "clock": 1726227043,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -140,7 +140,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1726223854,
+        "clock": 1726227043,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -187,7 +187,7 @@
         "$upgradeCount": 2,
         "BURNER_ADMIN_ROLE": "0xc8d1ad9d415224b751d781cc8214ccfe7c47716e13229475443f04f1ebddadc6",
         "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",
-        "clock": 1726224019,
+        "clock": 1726227043,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -207,7 +207,7 @@
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "ZKsync",
         "symbol": "ZK",
-        "totalSupply": "11277834849000000000000000000"
+        "totalSupply": "11277840627000000000000000000"
       },
       "errors": {
         "getPastTotalSupply": "Too many values. Update configuration to explore fully"
@@ -228,7 +228,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1726223854,
+        "clock": 1726227043,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -718,7 +718,7 @@
     ]
   },
   "usedTemplates": {
-    "shared-zk-stack/ZkGovernor": "0x3aef147c11c82d1f65afe7b62d0827c2540d2afba53153d73523b01117d44636"
+    "shared-zk-stack/ZkGovernor": "0xe15d64e5edc29411af258c9d294f406eed6ab8e538f5a7818a7d9c2e6784c2e2"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }
