@@ -21,13 +21,14 @@ export async function GET(
     })
   }
 
-  const chart = await getTvlChartData({
+  const data = await getTvlChartData({
     range,
+    excludeAssociatedTokens: false,
     filter: { type: 'projects', projectIds: [project.id] },
   })
 
-  const oldestTvlData = chart.at(0)
-  const latestTvlData = chart.at(-1)
+  const oldestTvlData = data.chart.at(0)
+  const latestTvlData = data.chart.at(-1)
 
   if (!oldestTvlData || !latestTvlData) {
     return NextResponse.json({
@@ -46,7 +47,7 @@ export async function GET(
       ethValue,
       chart: {
         types: ['timestamp', 'canonical', 'external', 'native', 'ethPrice'],
-        data: chart.map(
+        data: data.chart.map(
           ([timestamp, canonical, external, native, ethPrice]) => [
             timestamp,
             canonical / 100,

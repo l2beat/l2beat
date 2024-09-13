@@ -4,8 +4,9 @@ import { getTvlChartData } from '~/server/features/scaling/tvl/utils/get-tvl-cha
 
 export async function GET() {
   const entries = await getScalingSummaryEntries()
-  const chart = await getTvlChartData({
+  const data = await getTvlChartData({
     range: '30d',
+    excludeAssociatedTokens: false,
     filter: { type: 'layer2' },
   })
   return NextResponse.json({
@@ -13,7 +14,7 @@ export async function GET() {
     data: {
       chart: {
         types: ['timestamp', 'canonical', 'external', 'native', 'ethPrice'],
-        data: chart.map(
+        data: data.chart.map(
           ([timestamp, canonical, external, native, ethPrice]) => [
             timestamp,
             canonical / 100,
