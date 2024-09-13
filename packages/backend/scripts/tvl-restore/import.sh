@@ -1,19 +1,19 @@
 source .env 
 
-echo "indexer_state..."
-pg_restore -d $DEV_LOCAL_DB_URL -t indexer_state "./data/indexer_state.pgdump"
+echo "IndexerState..."
+pg_restore -d $DEV_LOCAL_DB_URL -t IndexerState "./data/indexer_state.pgdump"
 
-echo "indexer_configurations..."
-pg_restore -d $DEV_LOCAL_DB_URL -t indexer_configurations "./data/indexer_configurations.pgdump"
+echo "IndexerConfiguration..."
+pg_restore -d $DEV_LOCAL_DB_URL -t IndexerConfiguration "./data/indexer_configurations.pgdump"
 
-echo "block_timestamps..."
-pg_restore -d $DEV_LOCAL_DB_URL -t block_timestamps "./data/block_timestamps.pgdump"
+echo "BlockTimestamp..."
+pg_restore -d $DEV_LOCAL_DB_URL -t BlockTimestamp "./data/block_timestamps.pgdump"
 
-echo "amounts..."
-pg_restore -d $DEV_LOCAL_DB_URL -t amounts "./data/amounts.pgdump"
+echo "Amount..."
+pg_restore -d $DEV_LOCAL_DB_URL -t Amount "./data/amounts.pgdump"
 
-echo "prices..."
-pg_restore -d $DEV_LOCAL_DB_URL -t prices "./data/prices.pgdump"
+echo "Price..."
+pg_restore -d $DEV_LOCAL_DB_URL -t Price "./data/prices.pgdump"
 
-echo "values..."
-pg_restore -d $DEV_LOCAL_DB_URL -t values "./data/values.pgdump"
+echo "Value..."
+pg_restore -d $DEV_LOCAL_DB_URL -t Value "./data/values.pgdump"

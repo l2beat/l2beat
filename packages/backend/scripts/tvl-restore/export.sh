@@ -1,19 +1,19 @@
 source .env 
 
-echo "indexer_state..."
-pg_dump -d "$DEV_REMOTE_DB_URL_READ_ONLY" -t indexer_state -a -F c -f "./data/indexer_state.pgdump"
+echo "IndexerState..."
+pg_dump -d "$DEV_REMOTE_DB_URL_READ_ONLY" -t IndexerState -a -F c -f "./data/indexer_state.pgdump"
 
-echo "indexer_configurations..."
-pg_dump -d "$DEV_REMOTE_DB_URL_READ_ONLY" -t indexer_configurations -a -F c -f "./data/indexer_configurations.pgdump"
+echo "IndexerConfiguration..."
+pg_dump -d "$DEV_REMOTE_DB_URL_READ_ONLY" -t IndexerConfiguration -a -F c -f "./data/indexer_configurations.pgdump"
 
-echo "block_timestamps..."
-pg_dump -d "$DEV_REMOTE_DB_URL_READ_ONLY" -t block_timestamps -a -F c -f "./data/block_timestamps.pgdump"
+echo "BlockTimestamp..."
+pg_dump -d "$DEV_REMOTE_DB_URL_READ_ONLY" -t BlockTimestamp -a -F c -f "./data/block_timestamps.pgdump"
 
-echo "amounts..."
-pg_dump -d "$DEV_REMOTE_DB_URL_READ_ONLY" -t amounts -a -F c -f "./data/amounts.pgdump"
+echo "Amount..."
+pg_dump -d "$DEV_REMOTE_DB_URL_READ_ONLY" -t Amount -a -F c -f "./data/amounts.pgdump"
 
-echo "prices..."
-pg_dump -d "$DEV_REMOTE_DB_URL_READ_ONLY" -t prices -a -F c -f "./data/prices.pgdump"
+echo "Price..."
+pg_dump -d "$DEV_REMOTE_DB_URL_READ_ONLY" -t Price -a -F c -f "./data/prices.pgdump"
 
-echo "values..."
-pg_dump -d "$DEV_REMOTE_DB_URL_READ_ONLY" -t values -a -F c -f "./data/values.pgdump"
+echo "Value..."
+pg_dump -d "$DEV_REMOTE_DB_URL_READ_ONLY" -t Value -a -F c -f "./data/values.pgdump"
