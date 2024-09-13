@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x139aebec58bcca8f9c4f6647cdfe8fdbb3c523f7
+
+# Diff at Thu, 12 Sep 2024 15:35:40 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@e6761599b8d9e0b597372bb0e9ca885e08af7101 block: 20032828
+- current block number: 20032828
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20032828 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x5D1F4bbaF6D484fA9D5D9705f92dE6063bff6055) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0xc2259E7Fb719411f97aBdCdf449f6Ba3B9D75398","via":[{"address":"0x7E54107731EC43e78DA678DFa5fB6222Ad036e03","delay":0}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.target:
+-        "0xc2259E7Fb719411f97aBdCdf449f6Ba3B9D75398"
++        "0xc76C563185d01284AdbC9cF5bb909162dD2F15e7"
+      issuedPermissions.0.via.0:
+-        {"address":"0x7E54107731EC43e78DA678DFa5fB6222Ad036e03","delay":0}
+    }
+```
+
 Generated with discovered.json: 0x89bcda63da18739f704d921638bcff24d6b81e9d
 
 # Diff at Sun, 08 Sep 2024 17:24:23 GMT:

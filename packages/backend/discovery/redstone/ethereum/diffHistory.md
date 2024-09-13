@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x17eb44d0669076cb038d24643a6109214f20e9d5
+
+# Diff at Thu, 12 Sep 2024 15:38:15 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@e6761599b8d9e0b597372bb0e9ca885e08af7101 block: 19831040
+- current block number: 19831040
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19831040 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x8f2428F7189c0d92D1c4a5358903A8c80Ec6a69D) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0xCC53b447aFe07926423aB96D5496b1af30485ED2","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.target:
+-        "0xCC53b447aFe07926423aB96D5496b1af30485ED2"
++        "0xb356B146F1629c49C44344464F69BCDAfb4bb664"
+    }
+```
+
 Generated with discovered.json: 0xa3f4b7a7607ed5f77ed8a412d3d532b6dcc1685d
 
 # Diff at Sun, 08 Sep 2024 17:24:45 GMT:
