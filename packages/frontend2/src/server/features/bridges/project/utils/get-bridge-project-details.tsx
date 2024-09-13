@@ -60,7 +60,7 @@ export async function getBridgeProjectDetails(
 
   const items: ProjectDetailsSection[] = []
 
-  if (!bridge.isUpcoming && tvlChartData.length > 0) {
+  if (!bridge.isUpcoming && !isEmpty(tvlChartData.chart)) {
     items.push({
       type: 'ChartSection',
       props: {

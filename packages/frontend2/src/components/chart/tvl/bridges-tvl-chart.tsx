@@ -40,7 +40,7 @@ export function BridgesTvlChart() {
     columns,
     lastValue,
     change,
-  } = useTvlChartRenderParams({ milestones: [], unit, data })
+  } = useTvlChartRenderParams({ milestones: [], unit, data: data?.chart })
 
   return (
     <ChartProvider
