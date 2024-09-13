@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "ethereum",
   "blockNumber": 20733790,
-  "configHash": "0x783d81459f59f0885194dd53ede75781ab7abe3525c0e35e872e481f2c360cb0",
+  "configHash": "0xf49a017b44d1fa1ea587636beff1e33ea7f855787675106e045ce2f2024e4320",
   "version": 14,
   "contracts": [
     {
@@ -111,6 +111,20 @@
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x47fd660D5252Bd6F9D2c71507E46aa1d6e957c23",
         "$upgradeCount": 2,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]
+          },
+          "TIMELOCK_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]
+          },
+          "GUARDIAN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]
+          }
+        },
         "blobstreamProgramVkey": "0x0038c5c5568fe5e1ae267efb1298a7792d1cda00bccc2d1d4bfa4c1511e06380",
         "checkRelayer": true,
         "DATA_COMMITMENT_MAX": 1000,

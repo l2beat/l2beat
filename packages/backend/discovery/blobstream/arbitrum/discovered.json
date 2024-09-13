@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "arbitrum",
   "blockNumber": 252706992,
-  "configHash": "0xfb61ab8e05e1e142d2dd38d1984b8f8756e08745913c347d1847f0d7c16b4b3a",
+  "configHash": "0xc6681f85c8ca67eb72e8ce7482cc608442169e70a926a24a3e7783a979db2ae2",
   "version": 14,
   "contracts": [
     {
@@ -136,6 +136,20 @@
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x47fd660D5252Bd6F9D2c71507E46aa1d6e957c23",
         "$upgradeCount": 3,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]
+          },
+          "TIMELOCK_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]
+          },
+          "GUARDIAN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]
+          }
+        },
         "blobstreamProgramVkey": "0x0038c5c5568fe5e1ae267efb1298a7792d1cda00bccc2d1d4bfa4c1511e06380",
         "checkRelayer": true,
         "DATA_COMMITMENT_MAX": 1000,

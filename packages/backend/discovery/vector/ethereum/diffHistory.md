@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x6439fce17e3e9e6443d267d35aba6c3a3f3ca927
+
+# Diff at Fri, 13 Sep 2024 08:14:09 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@db4bedcf90d9785b74ad29fd9c12386741eb1cd5 block: 20735735
+- current block number: 20735735
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20735735 (main branch discovery), not current.
+
+```diff
+    contract SP1Vector (0x02993cdC11213985b9B13224f3aF289F03bf298d) {
+    +++ description: None
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xDEd0000E32f8F40414d3ab3a830f735a3553E18e","0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"]},"TIMELOCK_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"]},"GUARDIAN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"]}}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xc436404d20a195a814b6beef4caade0ec87eee63
 
 # Diff at Thu, 12 Sep 2024 16:30:55 GMT:

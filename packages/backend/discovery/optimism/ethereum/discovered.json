@@ -10,7 +10,7 @@
       "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
       "template": "gnosisSafeModules/LivenessModule",
       "descriptions": [
-        "used to remove members inactive for 8467200 while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig"
+        "used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig"
       ],
       "sinceTimestamp": 1717149791,
       "values": {
@@ -20,7 +20,7 @@
           0, 1, 2, 3, 3, 4, 5, 6, 6, 7, 8, 9, 9, 10, 11, 12, 12, 13, 14, 15
         ],
         "livenessGuard": "0x24424336F04440b1c28685a38303aC33C9D14a25",
-        "livenessInterval": 8467200,
+        "livenessInterval": "98d",
         "minOwners": 8,
         "ownershipTransferredToFallback": false,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
@@ -237,6 +237,7 @@
       "descriptions": [
         "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
       ],
+      "categories": ["Core"],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1624400997,
       "values": {
@@ -301,6 +302,10 @@
       "template": "opstack/ProxyAdmin",
       "directlyReceivedPermissions": [
         {
+          "permission": "configure",
+          "target": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+        },
+        {
           "permission": "upgrade",
           "target": "0x18DAc71c228D1C32c99489B7323d441E1175e443"
         },
@@ -326,7 +331,8 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
+          "target": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+          "description": "upgrading bridge implementation allows to access all funds and change every system component."
         },
         {
           "permission": "upgrade",
@@ -356,6 +362,11 @@
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+          "via": [{ "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }]
+        },
         {
           "permission": "upgrade",
           "target": "0x18DAc71c228D1C32c99489B7323d441E1175e443",
@@ -389,6 +400,7 @@
         {
           "permission": "upgrade",
           "target": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+          "description": "upgrading bridge implementation allows to access all funds and change every system component.",
           "via": [{ "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }]
         },
         {
@@ -635,6 +647,7 @@
       "descriptions": [
         "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
       ],
+      "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -676,7 +689,8 @@
           "via": [
             {
               "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
-              "delay": 0
+              "delay": 0,
+              "description": "upgrading bridge implementation allows to access all funds and change every system component."
             }
           ]
         }
@@ -936,6 +950,18 @@
       "name": "AddressManager",
       "address": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
       "template": "opstack/AddressManager",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
+          "via": [
+            {
+              "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
+              "delay": 0
+            }
+          ]
+        }
+      ],
       "sinceTimestamp": 1624400033,
       "values": {
         "$immutable": true,

@@ -2,7 +2,7 @@
   "name": "vector",
   "chain": "ethereum",
   "blockNumber": 20735735,
-  "configHash": "0xd5f85b79e499368dd9a9095c15cf812b01a17084869bdc0cda8255308559b2e6",
+  "configHash": "0x0b65e1c8a05552d3d4ae36a5645ebc6b28db18b4916089fe94e0db8e0e6f2e62",
   "version": 14,
   "contracts": [
     {
@@ -24,6 +24,23 @@
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D",
         "$upgradeCount": 2,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
+              "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
+            ]
+          },
+          "TIMELOCK_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"]
+          },
+          "GUARDIAN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"]
+          }
+        },
         "checkRelayer": true,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "frozen": false,
@@ -75,6 +92,34 @@
       }
     },
     {
+      "name": "GnosisSafe",
+      "address": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
+      "template": "GnosisSafe",
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1714943123,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0xE458b870F2F59a49915591282f1Bb688901767AD",
+          "0x340e77D5e114A9D4891d3a1EbC7419CC85Ca8E4A",
+          "0xAD379D3275a18bd4BB741C3b291a3778D51c3304",
+          "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
+          "0x1fbABAbDcFE0b40a9B5D2aDB054fB74F8fE985f5",
+          "0xBe1D614F13662Aff0a2Ec1e76f9c82D332Ae78A2",
+          "0xb9274De2305B377b437a9297D6c84eBD69f7aaCE"
+        ],
+        "$threshold": 4,
+        "domainSeparator": "0x0a3a4ca49dc98b965e6bed30f0e8c99ee93572432964da204089e65025760611",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 7 (57%)",
+        "nonce": 1,
+        "VERSION": "1.3.0"
+      }
+    },
+    {
       "name": "SP1Verifier_OLD",
       "address": "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",
       "sinceTimestamp": 1722645791,
@@ -121,10 +166,17 @@
         }
       ]
     },
+    { "address": "0x1fbABAbDcFE0b40a9B5D2aDB054fB74F8fE985f5" },
+    { "address": "0x340e77D5e114A9D4891d3a1EbC7419CC85Ca8E4A" },
     { "address": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d" },
     { "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54" },
     { "address": "0x9395e83720bf2D8ac6435f9c520b48E289Cb8885" },
-    { "address": "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126" }
+    { "address": "0xAD379D3275a18bd4BB741C3b291a3778D51c3304" },
+    { "address": "0xb9274De2305B377b437a9297D6c84eBD69f7aaCE" },
+    { "address": "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126" },
+    { "address": "0xBe1D614F13662Aff0a2Ec1e76f9c82D332Ae78A2" },
+    { "address": "0xDEd0000E32f8F40414d3ab3a830f735a3553E18e" },
+    { "address": "0xE458b870F2F59a49915591282f1Bb688901767AD" }
   ],
   "abis": {
     "0x3B6041173B80E77f038f3F2C0f9744f04837185e": [
@@ -154,6 +206,9 @@
       "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
       "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
+    "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666": [
+      "constructor(address _singleton)"
     ],
     "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB": [
       "error InvalidProof()",

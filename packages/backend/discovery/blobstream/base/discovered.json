@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "base",
   "blockNumber": 19672913,
-  "configHash": "0x7aaa2268f89056982f4623dde4887c35efc3edc718d8d5c311993b7eb07b8376",
+  "configHash": "0x89900a50def11fa9cd9cf8b3eb110936908b746d436c2b8b6a682d4a66ca2bf5",
   "version": 14,
   "contracts": [
     {
@@ -129,6 +129,20 @@
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x47fd660D5252Bd6F9D2c71507E46aa1d6e957c23",
         "$upgradeCount": 3,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"]
+          },
+          "TIMELOCK_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"]
+          },
+          "GUARDIAN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"]
+          }
+        },
         "blobstreamProgramVkey": "0x0038c5c5568fe5e1ae267efb1298a7792d1cda00bccc2d1d4bfa4c1511e06380",
         "checkRelayer": true,
         "DATA_COMMITMENT_MAX": 1000,

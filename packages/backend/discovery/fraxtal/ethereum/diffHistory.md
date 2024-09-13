@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x6a1dec98997c88bd37e91ae9f369b673995b26fa
+
+# Diff at Thu, 12 Sep 2024 15:36:07 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@e6761599b8d9e0b597372bb0e9ca885e08af7101 block: 20460352
+- current block number: 20460352
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20460352 (main branch discovery), not current.
+
+```diff
+    contract FraxtalMultisig (0xe0d7755252873c4eF5788f7f45764E0e17610508) {
+    +++ description: None
+      roles.1:
++        "Guardian"
+      roles.0:
+-        "Guardian"
++        "Challenger"
+    }
+```
+
 Generated with discovered.json: 0xe4bb44a4613bca6eae7a08874ec51d990de86fd4
 
 # Diff at Sun, 08 Sep 2024 17:24:26 GMT:
