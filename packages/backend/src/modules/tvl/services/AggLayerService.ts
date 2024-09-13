@@ -106,6 +106,13 @@ export class AggLayerService {
 
     return responses.map((response, index) => {
       const token = tokens[index]
+      if (response.data.toString() === '0x') {
+        return {
+          configId: token.id,
+          timestamp,
+          amount: 0n,
+        }
+      }
       const [value] = erc20Interface.decodeFunctionResult(
         'totalSupply',
         response.data.toString(),
