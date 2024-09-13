@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xbd0f6aa4b9a5d496f4de28c663fbdd2dfb175a4e
+Generated with discovered.json: 0x4a14f5a63e7f01813a60b885a8263dedfd72e61a
 
-# Diff at Fri, 13 Sep 2024 12:00:42 GMT:
+# Diff at Fri, 13 Sep 2024 12:22:54 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
-- current block number: 44101658
+- current block number: 44102953
 
 ## Description
 
@@ -55,6 +55,6 @@ Initial discovery: Added the three token governance contracts for the shared ZK 
 
 ```diff
 +   Status: CREATED
-    contract ProxyAdmin (0xdB1E46B448e68a5E35CB693a99D59f784aD115CC)
+    contract ZkTokenProxyAdmin (0xdB1E46B448e68a5E35CB693a99D59f784aD115CC)
     +++ description: None
 ```

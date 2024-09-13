@@ -614,8 +614,8 @@ export const zksyncera: Layer2 = {
     There are two main paths for contract upgrades in the shared ZK stack ecosystem - standard and emergency - both converging on the shared upgrade proxy contract ProtocolUpgradeHandler. 
     The standard path involves a governance proposal and voting through the DAO, multiple timelock delays and finally approval by the Guardians or ${scApprovalThreshold} SecurityCouncil participants. 
     The emergency path allows for contract upgrades without any delay by the EmergencyUpgradeBoard, which acts as a 3/3 Multisig between SecurityCouncil, Guardians and the FoundationMultisig.
-
-
+    
+    
     **The standard path:** Delegates can start new proposals by reaching a threshold of ${startProposalThresholdM}M ZK tokens on the ZKsync Era Rollup's ZkProtocolGovernor contract.
     This starts a ${formatSeconds(
       protVotingDelayS,
@@ -632,7 +632,7 @@ export const zksyncera: Layer2 = {
     This serves as a window in which a veto could be coordinated offchain, to be then enforced by non-approval of Guardians and SecurityCoucil. A threshold of ${guardiansExtendThreshold} Guardians can extend the veto period to ${formatSeconds(
       legalVetoExtendedS,
     )}. 
-    After this a proposal enters a **waiting** state of ${formatSeconds(
+    After this a proposal enters a __waiting__ state of ${formatSeconds(
       upgradeWaitOrExpireS,
     )}, from which it can be immediately approved (cancelling the delay) by ${scApprovalThreshold} participants of the SecurityCouncil. 
     For the case that the SC does not approve here, the Guardians can instead approve the proposal, or nobody. In the two latter cases, the waiting period is waited out in full. 
@@ -658,6 +658,12 @@ export const zksyncera: Layer2 = {
     Additionally to the paths that can upgrade shared implementations, the ZK stack governance system also defines roles with more restricted permissions: 
     A single *Admin* role that governs parameters in the shared contracts and a *ChainAdmin* role for managing parameters of each Hyperchain that builds on the stack.
     
+
+    ZKsync Era's ChainAdmin has differs from the others as it also receives the Admin (not upgradeability admin) role in the shared ZK stack contracts.
+    This gives the MatterLabs Multisig the ability to unilaterally create new chains, revert batches and change the ValidatorTimelock among other permissions.
+
+
+    The ZK token contract can be upgraded by an EOA.
     `
     return description
   })(),
