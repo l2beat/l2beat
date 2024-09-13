@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xb80e59bee01c91fe6b9c18dc1378dbdfe24148f2
+Generated with discovered.json: 0x87075ab461d044a431c2143eca3e60ab362bc7ad
 
-# Diff at Fri, 13 Sep 2024 11:31:49 GMT:
+# Diff at Fri, 13 Sep 2024 11:40:40 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
 - comparing to: main@f3f080827a9c9144630c7d8b5f28745b2029ead2 block: 20725957
-- current block number: 20741411
+- current block number: 20741455
 
 ## Description
 
@@ -89,6 +89,48 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 20725957 (main branch discovery), not current.
 
 ```diff
+-   Status: DELETED
+    contract GnosisSafe (0x13f07d9BF17615f6a17F272fe1A913168C275A66)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x34Ea62D4b9bBB8AD927eFB6ab31E3Ab3474aC93a)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x35eA56fd9eAd2567F339Eb9564B6940b9DD5653F)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x3888777686F0b0d8c3108fc22ad8DE9E049bE26F)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x69462a81ba94D64c404575f1899a464F123497A2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x725065b4eB99294BaaE57AdDA9c32e42F453FA8A)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x84BF0Ac41Eeb74373Ddddae8b7055Bf2bD3CE6E0)
+    +++ description: None
+```
+
+```diff
     contract ProtocolUpgradeHandler (0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897) {
     +++ description: None
       values.EXTENDED_LEGAL_VETO_PERIOD:
@@ -106,6 +148,53 @@ discovery. Values are for block 20725957 (main branch discovery), not current.
       fieldMeta:
 +        {"protocolFrozenUntil":{"severity":"HIGH","description":"Timestamp until which ALL Hyperchains connected to the main STM are frozen. (Mailbox and Executor facets blocked)"}}
     }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x9B39Ea22e838B316Ea7D74e7C4B07d91D51ccA88)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x9B8Be3278B7F0168D82059eb6BAc5991DcdfA803)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xB7aC3A79A23B148c85fba259712c5A1e7ad0ca44)
+    +++ description: None
+```
+
+```diff
+    contract ZkFoundationMultisig (0xbC1653bd3829dfEc575AfC3816D4899cd103B51c) {
+    +++ description: None
+      name:
+-        "GnosisSafe"
++        "ZkFoundationMultisig"
+    }
+```
+
+```diff
+    contract SecurityCouncil (0xBDFfCC71FE84020238F2990a6D2954e87355De0D) {
+    +++ description: None
+      fieldMeta:
++        {"softFreezeNonce":{"severity":"HIGH","description":"Increments with each softFreeze (freezes ALL Hyperchains (blocks Mailbox and Executor facets) connected to the main STM for SOFT_FREEZE_PERIOD"},"hardFreezeNonce":{"severity":"HIGH","description":"Increments with each hardFreeze (freezes ALL Hyperchains (blocks Mailbox and Executor facets) connected to the main STM for HARD_FREEZE_PERIOD"}}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xFB90Da9DC45378A1B50775Beb03aD10C7E8DC231)
+    +++ description: None
 ```
 
 Generated with discovered.json: 0x5316f6730537230399f403d045aae371108b264d

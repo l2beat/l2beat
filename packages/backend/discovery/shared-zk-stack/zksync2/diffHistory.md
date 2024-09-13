@@ -1,13 +1,13 @@
-Generated with discovered.json: 0xcdfae9f963a09d07146734f6773f468491bc3a02
+Generated with discovered.json: 0x7660dc7d01682abf78d4c568c418d312bd3ca94d
 
-# Diff at Fri, 13 Sep 2024 11:31:01 GMT:
+# Diff at Fri, 13 Sep 2024 11:40:06 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
-- current block number: 44099945
+- current block number: 44100448
 
 ## Description
 
-Initial discovery: Added the three token governance contracts for the shared ZK stack (inkluding the main ProtocolGov contract that acts through L1) and their timelocks. Wrote event alerts for all three contracts.
+Initial discovery: Added the three token governance contracts for the shared ZK stack (including the main ProtocolGov contract that acts through L1) and their timelocks. Wrote event alerts for all three contracts.
 
 ## Initial discovery
 
