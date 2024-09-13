@@ -130,7 +130,6 @@ export const zksyncera: Layer2 = {
     Badge.Other.L3HostChain,
     Badge.Infra.ElasticChain,
   ],
-  isUnderReview: true,
   display: {
     name: 'ZKsync Era',
     slug: 'zksync-era',
