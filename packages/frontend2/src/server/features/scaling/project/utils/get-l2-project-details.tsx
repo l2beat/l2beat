@@ -234,7 +234,10 @@ export async function getL2ProjectDetails({
         id: 'state-validation',
         title: 'State validation',
         stateValidation: project.stateValidation,
-        diagram: getDiagramParams('state-validation', project.display.slug),
+        diagram: getDiagramParams(
+          'state-validation',
+          project.display.stateValidationImage ?? project.display.slug,
+        ),
         isUnderReview: project.isUnderReview,
       },
     })

@@ -93,6 +93,7 @@ export const WASMVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
 
 export interface OrbitStackConfigCommon {
   discovery: ProjectDiscovery
+  stateValidationImage?: string
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
@@ -602,6 +603,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     ),
     hostChain: templateVars.hostChain,
     display: {
+      stateValidationImage: 'orbit',
       ...templateVars.display,
       warning:
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
@@ -712,6 +714,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     type: 'layer2',
     ...orbitStackCommon(templateVars, ETHEREUM_EXPLORER_URL, 12),
     display: {
+      stateValidationImage: 'orbit',
       warning:
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
       ...templateVars.display,
