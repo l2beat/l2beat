@@ -28,14 +28,26 @@ export function getUsedInProjects(
   if (projectParams.type === 'DaLayer') {
     return []
   }
+  const commonContracts = getCommonContractsIn(projectParams)
 
   if (implementationAddresses.length === 0) {
-    return evalUsedInProject(projectParams, addresses, 'implementation')
+    return evalUsedInProject(
+      projectParams,
+      commonContracts,
+      addresses,
+      'implementation',
+    )
   }
 
-  const asProxy = evalUsedInProject(projectParams, addresses, 'proxy')
+  const asProxy = evalUsedInProject(
+    projectParams,
+    commonContracts,
+    addresses,
+    'proxy',
+  )
   const asImplementation = evalUsedInProject(
     projectParams,
+    commonContracts,
     implementationAddresses,
     'implementation',
   )
@@ -44,11 +56,10 @@ export function getUsedInProjects(
 
 function evalUsedInProject(
   projectParams: ProjectParams,
+  commonContracts: ReturnType<typeof getCommonContractsIn>,
   addresses: TechnologyContractAddress[],
   type: UsedInProject['type'],
 ) {
-  const commonContracts = getCommonContractsIn(projectParams)
-
   const usedIn = [
     ...new Set(
       addresses.flatMap((address) => {
