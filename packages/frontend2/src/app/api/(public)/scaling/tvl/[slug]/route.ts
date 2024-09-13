@@ -44,11 +44,18 @@ export async function GET(
     data: {
       usdValue: centsValue / 100,
       ethValue,
-      chart: chart.map(([timestamp, canonical, external, native, ethPrice]) => [
-        timestamp,
-        canonical + external + native / 100,
-        ethPrice / 100,
-      ]),
+      chart: {
+        types: ['timestamp', 'canonical', 'external', 'native', 'ethPrice'],
+        data: chart.map(
+          ([timestamp, canonical, external, native, ethPrice]) => [
+            timestamp,
+            canonical / 100,
+            external / 100,
+            native / 100,
+            ethPrice / 100,
+          ],
+        ),
+      },
     },
   })
 }

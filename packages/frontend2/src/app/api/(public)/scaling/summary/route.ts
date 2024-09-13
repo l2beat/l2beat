@@ -11,35 +11,47 @@ export async function GET() {
   return NextResponse.json({
     success: true,
     data: {
-      chart: chart.map(([timestamp, canonical, external, native, ethPrice]) => [
-        timestamp,
-        canonical / 100,
-        external / 100,
-        native / 100,
-        ethPrice,
-      ]),
-      projects: entries.reduce<Record<string, unknown>>((acc, entry) => {
-        acc[entry.id] = {
-          ...entry,
-          // Remap change to change7d, remove TVL warnings
-          tvl: {
-            ...entry.tvl,
-            change: undefined,
-            warnings: undefined,
-            change7d: entry.tvl.change,
-          },
-          // For stage - only return the stage name
-          stage: entry.stage.stage,
-          // Strip out the following fields
-          entryType: undefined,
-          href: undefined,
-          isVerified: undefined,
-          hasImplementationChanged: undefined,
-          warning: undefined,
-          showProjectUnderReview: undefined,
-        }
-        return acc
-      }, {}),
+      chart: {
+        types: ['timestamp', 'canonical', 'external', 'native', 'ethPrice'],
+        data: chart.map(
+          ([timestamp, canonical, external, native, ethPrice]) => [
+            timestamp,
+            canonical / 100,
+            external / 100,
+            native / 100,
+            ethPrice,
+          ],
+        ),
+      },
+      projects: Object.fromEntries(
+        entries.map((entry) => {
+          return [
+            entry.id,
+            {
+              id: entry.id,
+              name: entry.name,
+              shortName: entry.shortName,
+              slug: entry.slug,
+              type: entry.type,
+              category: entry.category,
+              provider: entry.provider,
+              purposes: entry.purposes,
+              isArchived: entry.isArchived,
+              hostChain: entry.hostChain,
+              isUpcoming: entry.isUpcoming,
+              isUnderReview: entry.isUnderReview,
+              tvl: {
+                breakdown: entry.tvl.breakdown,
+                associatedTokens: entry.tvl.associatedTokens,
+                change7d: entry.tvl.change,
+              },
+              stage: entry.stage.stage,
+              marketShare: entry.marketShare,
+              risks: entry.risks,
+            },
+          ]
+        }),
+      ),
     },
   })
 }
