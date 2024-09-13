@@ -8,6 +8,8 @@ import { DaExitWindowRisk } from '../../../types/DaExitWindowRisk'
 
 const discovery = new ProjectDiscovery('vector')
 
+const relayers = discovery.getContractValue<string[]>('SP1Vector', 'relayers')
+
 const SP1Verifier = discovery.getContractValue<string>(
   'SuccinctGatewaySP1',
   'verifier',
@@ -68,7 +70,20 @@ export const vector = {
   technology: ` 
    Vector SP1 is an implementation of zero-knowledge proof circuits for Vector, Avail's Data Attestation Bridge.
    The VectorSP1 contract should be used to store the latest data from the Avail chain, including the headers and data commitments.`,
-  permissions: [],
+  permissions: [
+    ...discovery.getMultisigPermission(
+      'SuccinctGatewaySP1Multisig',
+      'This multisig is the admin of the SuccinctGatewaySP1 contract. As the manager of router for proof verification, it holds the power to affect the liveness and safety of the bridge.',
+    ),
+    {
+      name: 'Relayers',
+      description: `List of prover (relayer) addresses that are allowed to call commitHeaderRange() to commit block ranges to the Blobstream contract.`,
+      accounts: relayers.map((relayer) => ({
+        address: EthereumAddress(relayer),
+        type: 'EOA',
+      })),
+    },
+  ],
   usedIn: [],
   risks: {
     attestations: DaAttestationSecurityRisk.SigVerifiedZK(true),
