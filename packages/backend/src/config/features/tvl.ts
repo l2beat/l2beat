@@ -10,12 +10,13 @@ import {
   layer2s,
   layer3ToBackendProject,
   layer3s,
+  tokenList,
 } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { TvlConfig } from '../Config'
 import { FeatureFlags } from '../FeatureFlags'
-import { getChainTvlConfig } from './chains'
+import { getChainTvlConfig, getChainsWithTokens } from './chains'
 
 export function getTvlConfig(
   flags: FeatureFlags,
@@ -27,11 +28,14 @@ export function getTvlConfig(
     .concat(bridges.map(bridgeToBackendProject))
     .concat(layer3s.map(layer3ToBackendProject))
 
-  const chainConfigs = chains.map((chain) =>
-    getChainTvlConfig(flags.isEnabled('tvl', chain.name), env, chain.name, {
-      minTimestamp: minTimestampOverride,
-    }),
-  )
+  //TODO: how to fix it?
+  const chainConfigs = getChainsWithTokens(tokenList, chains)
+    .concat('xlayer')
+    .map((chain) =>
+      getChainTvlConfig(flags.isEnabled('tvl', chain), env, chain, {
+        minTimestamp: minTimestampOverride,
+      }),
+    )
 
   return {
     amounts: getTvlAmountsConfig(projects),

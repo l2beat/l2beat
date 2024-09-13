@@ -1,9 +1,20 @@
 import { Env } from '@l2beat/backend-tools'
-import { chains, layer2s, layer3s } from '@l2beat/config'
-import { ChainId, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainConfig, chains, layer2s, layer3s } from '@l2beat/config'
+import { ChainId, ProjectId, Token, UnixTime } from '@l2beat/shared-pure'
 
 import { toMulticallConfigEntry } from '../../peripherals/multicall/MulticallConfig'
 import { ChainTvlConfig } from '../Config'
+
+export function getChainsWithTokens(tokenList: Token[], chains: ChainConfig[]) {
+  const results = new Set<string>()
+  for (const { chainId } of tokenList) {
+    const chain = chains.find((x) => x.chainId === +chainId)
+    if (chain) {
+      results.add(chain.name)
+    }
+  }
+  return Array.from(results)
+}
 
 const DEFAULT_RPC_CALLS_PER_MINUTE = 60
 
