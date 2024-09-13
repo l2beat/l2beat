@@ -147,19 +147,6 @@ Right aligned columns
 [link with title](http://l2beat.com "title text!")
 
 Regular text https://l2beat.com doesn't autoconvert.
-
-
-## Images
-
-![L2BEAT](https://l2beat.com/favicon.svg)
-
-Like links, Images also have a footnote style syntax
-
-![Alt text][logo]
-
-With a reference later in the document defining the URL location.
-
-[logo]: https://l2beat.com/favicon.svg "Our logo"
 `,
   },
 }

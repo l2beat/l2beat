@@ -15,6 +15,9 @@ import { db } from '~/server/database'
 import { getOnDiskData } from './get-on-disk-data'
 
 export function getImplementationChangeReport() {
+  if (env.MOCK) {
+    return getImplementationChangeReportMock()
+  }
   noStore()
   return getCachedImplementationChangeReport()
 }
@@ -22,7 +25,6 @@ export function getImplementationChangeReport() {
 export type ImplementationChangeReport = Awaited<
   ReturnType<typeof getCachedImplementationChangeReport>
 >
-
 const getCachedImplementationChangeReport = cache(
   async () => {
     const onDisk = getOnDiskData()
@@ -82,6 +84,10 @@ const getCachedImplementationChangeReport = cache(
   // This is calculated from project files, so we can cache indefinitely for the same GIT_COMMIT_SHA.
   { revalidate: false },
 )
+
+function getImplementationChangeReportMock(): ImplementationChangeReport {
+  return { projects: {} }
+}
 
 function chainNameToId(chainName: string): ChainId {
   const chain = chains.find((chain) => chain.name === chainName)
