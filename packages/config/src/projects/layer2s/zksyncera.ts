@@ -615,7 +615,7 @@ export const zksyncera: Layer2 = {
     The standard path involves a governance proposal and voting through the DAO, multiple timelock delays and finally approval by the Guardians or ${scApprovalThreshold} SecurityCouncil participants. 
     The emergency path allows for contract upgrades without any delay by the EmergencyUpgradeBoard, which acts as a 3/3 Multisig between SecurityCouncil, Guardians and the FoundationMultisig.
     
-    *The standard path:* Delegates can start new proposals by reaching a threshold of ${startProposalThresholdM}M ZK tokens on the ZKsync Era Rollup's ZkProtocolGovernor contract.
+    **The standard path:** Delegates can start new proposals by reaching a threshold of ${startProposalThresholdM}M ZK tokens on the ZKsync Era Rollup's ZkProtocolGovernor contract.
     This starts a ${formatSeconds(
       protVotingDelayS,
     )} 'voting delay' (the proposer may cancel the proposal here) after which the ${formatSeconds(
@@ -631,16 +631,16 @@ export const zksyncera: Layer2 = {
     This serves as a window in which a veto could be coordinated offchain, to be then enforced by non-approval of Guardians and SecurityCoucil. A threshold of ${guardiansExtendThreshold} Guardians can extend the veto period to ${formatSeconds(
       legalVetoExtendedS,
     )}. 
-    After this a proposal enters a *waiting* state of ${formatSeconds(
+    After this a proposal enters a \*waiting\* state of ${formatSeconds(
       upgradeWaitOrExpireS,
     )}, from which it can be immediately approved (cancelling the delay) by ${scApprovalThreshold} participants of the SecurityCouncil. 
     For the case that the SC does not approve here, the Guardians can instead approve the proposal, or nobody. In the two latter cases, the waiting period is waited out in full. 
-    A proposal cannot be actively cancelled, but will be discarded if not approved after the full waiting period. An approved proposal now enters the *pendingExecution* state for a final delay of 1d, and can then be executed.
+    A proposal cannot be actively cancelled, but will be discarded if not approved after the full waiting period. An approved proposal now enters the \*pendingExecution\* state for a final delay of 1d, and can then be executed.
     
     There are two other tracks of Governance also starting with DAO Delegate proposals the ZKsync Era rollup: 1) Token Program Proposals (currently inactive) targeting the ZK token and 2) Governance Advisory Proposals without onchain targets. 
     The protocol for these two other tracks is similar to the first part of the standard path described above (albeit having different quorum and timelock values), without passing over to the Ethereum L1.
     
-    *The emergency path:* SecurityCouncil (${scThresholdString}), Guardians (${guardiansThresholdString}) and ZkFoundationMultisig (${discovery.getMultisigStats(
+    **The emergency path:** SecurityCouncil (${scThresholdString}), Guardians (${guardiansThresholdString}) and ZkFoundationMultisig (${discovery.getMultisigStats(
       'ZkFoundationMultisig',
     )}) form a de-facto 3/3 Multisig 
     by pushing an immediate upgrade proposal through the EmergencyUpgradeBoard, which circumvents all delays and executes immediately via the ProtocolUpgradeHandler.
@@ -650,8 +650,9 @@ export const zksyncera: Layer2 = {
       softFreezeS,
     )} or a hardFreeze of ${formatSeconds(hardFreezeS)}.
     
-    Additionally to the paths that can upgrade shared implementations, the ZK stack governance system also defines roles with more restricted permissions: 
+    Additionally to the paths that can upgrade shared implementations, the ZK stack governance system also defines roles with different permissions: 
     A single *Admin* role that governs parameters in the shared contracts and a *ChainAdmin* role for managing parameters of each Hyperchain that builds on the stack.
+    These chain-specific actions include setting a transaction filterer that can censor arbitrary L1 -> L2 messages, setting fee parameters and adding / removing Validators in the ValidatorTimelock.
     
     ZKsync Era's ChainAdmin differs from the others as it also receives the Admin (not upgradeability admin) role in the shared ZK stack contracts.
     This gives the MatterLabs Multisig the ability to unilaterally create new chains, revert batches and change the ValidatorTimelock among other permissions.
