@@ -7,11 +7,11 @@ import { type RosetteValue } from '../types'
 import { useIndividualRosetteTooltipContext } from './individual-rosette-tooltip-context'
 
 export type RosetteValueTuple = [
-  RosetteValue,
-  RosetteValue,
-  RosetteValue,
-  RosetteValue,
-  RosetteValue,
+  sequencerFailure: RosetteValue,
+  stateValidation: RosetteValue,
+  dataAvailability: RosetteValue,
+  exitWindow: RosetteValue,
+  proposerFailure: RosetteValue,
 ]
 
 interface Props {
@@ -34,18 +34,18 @@ export function IndividualPizzaRosetteIcon({
 
   const [
     innerSequencerFailure,
-    innerProposeFailure,
-    innerExitWindow,
-    innerDataAvailability,
     innerStateValidation,
+    innerDataAvailability,
+    innerExitWindow,
+    innerProposeFailure,
   ] = innerValues
 
   const [
     outerSequencerFailure,
-    outerProposeFailure,
-    outerExitWindow,
-    outerDataAvailability,
     outerStateValidation,
+    outerDataAvailability,
+    outerExitWindow,
+    outerProposeFailure,
   ] = outerValues
 
   const setContent = context?.setContent
