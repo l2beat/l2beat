@@ -237,6 +237,7 @@
       "descriptions": [
         "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
       ],
+      "categories": ["Core"],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1624400997,
       "values": {
@@ -330,7 +331,8 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
+          "target": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+          "description": "upgrading bridge implementation allows to access all funds and change every system component."
         },
         {
           "permission": "upgrade",
@@ -398,6 +400,7 @@
         {
           "permission": "upgrade",
           "target": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+          "description": "upgrading bridge implementation allows to access all funds and change every system component.",
           "via": [{ "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }]
         },
         {
@@ -644,6 +647,7 @@
       "descriptions": [
         "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
       ],
+      "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -685,7 +689,8 @@
           "via": [
             {
               "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
-              "delay": 0
+              "delay": 0,
+              "description": "upgrading bridge implementation allows to access all funds and change every system component."
             }
           ]
         }
