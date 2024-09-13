@@ -2,11 +2,14 @@ import {
   ContractParameters,
   ContractValue,
   FieldMeta,
+  get$PastUpgrades,
 } from '@l2beat/discovery-types'
 import { assert, EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
 
-import { get$Implementations } from '@l2beat/discovery-types'
+import {
+  get$Implementations,
+} from '@l2beat/discovery-types'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
 import {
@@ -128,6 +131,7 @@ export class AddressAnalyzer {
       overrides?.proxyType,
     )
     const implementations = get$Implementations(proxy?.values)
+    const pastUpgrades = get$PastUpgrades(proxy?.values)
 
     const sources = await this.sourceCodeService.getSources(
       provider,
@@ -188,7 +192,7 @@ export class AddressAnalyzer {
     const relatives = getRelativesWithSuggestedTemplates(
       results.concat(proxyResults),
       overrides?.ignoreRelatives,
-      implementations,
+      implementations.concat(pastUpgrades.map((e) => e[1])),
       overrides?.fields,
     )
 

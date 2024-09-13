@@ -1,5 +1,8 @@
-import { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
-import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  ContractValue,
+  ProxyDetails,
+} from '@l2beat/discovery-types'
+import { assert, Bytes, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { utils } from 'ethers'
 import { IProvider } from '../../provider/IProvider'
@@ -40,10 +43,15 @@ export async function getOwner(
   return result ?? EthereumAddress.ZERO
 }
 
-export async function getUpgradeCount(
+interface DateAddress {
+  date: string
+  address: string
+}
+
+export async function getPastUpgrades(
   provider: IProvider,
   address: EthereumAddress,
-): Promise<ContractValue> {
+): Promise<DateAddress[]> {
   const abi = new utils.Interface([
     'event Upgraded(address indexed implementation)',
   ])
@@ -51,7 +59,24 @@ export async function getUpgradeCount(
     [abi.getEventTopic('Upgraded')],
   ])
 
-  return logs.length
+  const blockNumbers = [...new Set(logs.map((l) => l.blockNumber))]
+  const blocks = await Promise.all(
+    blockNumbers.map(
+      async (blockNumber) => await provider.getBlock(blockNumber),
+    ),
+  )
+  assert(blocks.every((b) => b !== undefined))
+  const dateMap = Object.fromEntries(
+    blocks.map((b) => [
+      b.number,
+      new UnixTime(b.timestamp).toDate().toISOString(),
+    ]),
+  )
+
+  return logs.map((l) => {
+    const implementation = abi.parseLog(l).args.implementation
+    return { date: dateMap[l.blockNumber] ?? 'ERROR', address: implementation }
+  })
 }
 
 export async function detectEip1967Proxy(
@@ -62,6 +87,7 @@ export async function detectEip1967Proxy(
   if (implementation === EthereumAddress.ZERO) {
     return
   }
+  const pastUpgrades = await getPastUpgrades(provider, address)
   let admin = await getAdmin(provider, address)
   // TODO: (sz-piotr) potential for errors
   if (admin === EthereumAddress.ZERO) {
@@ -72,7 +98,8 @@ export async function detectEip1967Proxy(
     values: {
       $admin: admin.toString(),
       $implementation: implementation.toString(),
-      $upgradeCount: await getUpgradeCount(provider, address),
+      $pastUpgrades: pastUpgrades.map((v) => [v.date, v.address]),
+      $upgradeCount: Object.values(pastUpgrades).length,
     },
   }
 }
