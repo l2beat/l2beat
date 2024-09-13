@@ -1,8 +1,8 @@
 'use client'
 
 import { type Milestone } from '@l2beat/config'
-import { useCostsTimeRangeContext } from '~/app/(new)/(other)/scaling/costs/_components/costs-time-range-context'
-import { useCostsUnitContext } from '~/app/(new)/(other)/scaling/costs/_components/costs-unit-context'
+import { useCostsTimeRangeContext } from '~/app/(side-nav)/(other)/scaling/costs/_components/costs-time-range-context'
+import { useCostsUnitContext } from '~/app/(side-nav)/(other)/scaling/costs/_components/costs-unit-context'
 import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'

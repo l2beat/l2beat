@@ -31,6 +31,7 @@
     "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": "wstETHEscrowAdmin",
     "0x73b047fe6337183A454c5217241D780a932777bD": "LidoEmergencyBrakeMultisig",
     "0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "FoundationMultisig_1",
+    "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D": "L1ERC721Bridge",
     "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": "SecurityCouncilMultisig",
     "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1": "L1StandardBridge",
     "0x95703e0982140D16f8ebA6d158FccEde42f04a4C": "SuperchainConfig",
@@ -50,6 +51,29 @@
     },
     "DelayedWETH_PermissionlessGames": {
       "ignoreInWatchMode": ["totalSupply"]
+    },
+    "L1StandardBridge": {
+      "fields": {
+        "l2TokenBridge": {
+          "returnType": "(OptimismAddress)"
+        },
+        "OTHER_BRIDGE": {
+          "returnType": "(OptimismAddress)"
+        },
+        "otherBridge": {
+          "returnType": "(OptimismAddress)"
+        }
+      }
+    },
+    "L1ERC721Bridge": {
+      "fields": {
+        "OTHER_BRIDGE": {
+          "returnType": "(OptimismAddress)"
+        },
+        "otherBridge": {
+          "returnType": "(OptimismAddress)"
+        }
+      }
     },
     "AddressManager": {
       "fields": {
@@ -121,7 +145,15 @@
     },
     "L1CrossDomainMessenger": {
       "ignoreMethods": ["xDomainMessageSender"],
-      "ignoreInWatchMode": ["messageNonce"]
+      "ignoreInWatchMode": ["messageNonce"],
+      "fields": {
+        "OTHER_MESSENGER": {
+          "returnType": "(OptimismAddress)"
+        },
+        "otherMessenger": {
+          "returnType": "(OptimismAddress)"
+        }
+      }
     },
     "SystemConfig": {
       "fields": {

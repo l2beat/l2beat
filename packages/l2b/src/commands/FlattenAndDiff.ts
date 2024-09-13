@@ -6,10 +6,11 @@ import {
   getExplorerClient,
 } from '@l2beat/discovery/dist/utils/IEtherscanClient'
 import { assert } from '@l2beat/shared-pure'
-import { command, oneOf, option, optional, positional, string } from 'cmd-ts'
+import { command, option, positional, string } from 'cmd-ts'
 import { powerdiff } from '../implementations/powerdiff'
-import { DiffingModeType, DisplayModeType } from './Powerdiff'
-import { EthereumAddressValue, HttpUrl } from './types'
+import { DiffingModeType, DisplayModeType, diffContext } from './Powerdiff'
+import { explorerApiKey, explorerType, explorerUrl } from './args'
+import { EthereumAddressValue } from './types'
 
 export const FlattenAndDiff = command({
   name: 'flatten-and-diff',
@@ -24,25 +25,9 @@ export const FlattenAndDiff = command({
       type: EthereumAddressValue,
       displayName: 'rightAddress',
     }),
-    explorerUrl: option({
-      type: HttpUrl,
-      long: 'explorer-url',
-      short: 'u',
-      defaultValue: () => 'https://api.etherscan.io/api',
-      defaultValueIsSerializable: true,
-    }),
-    type: option({
-      type: oneOf(['etherscan', 'blockscout']),
-      long: 'etherscan-type',
-      short: 't',
-      defaultValue: () => 'etherscan',
-    }),
-    apiKey: option({
-      type: optional(string),
-      env: 'L2B_ETHERSCAN_API_KEY',
-      long: 'api-key',
-      short: 'k',
-    }),
+    explorerUrl,
+    type: explorerType,
+    apiKey: explorerApiKey,
     difftasticPath: option({
       type: string,
       long: 'difftastic-path',
@@ -64,6 +49,7 @@ export const FlattenAndDiff = command({
       short: 'd',
       defaultValue: () => 'inline' as const,
     }),
+    diffContext,
   },
   handler: async (args) => {
     assert(
@@ -121,6 +107,7 @@ export const FlattenAndDiff = command({
       args.difftasticPath,
       args.mode,
       args.displayMode,
+      args.diffContext,
     )
   },
 })

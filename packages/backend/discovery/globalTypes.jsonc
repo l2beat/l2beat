@@ -3,6 +3,94 @@
     "typeCaster": "Undecimal",
     "arg": { "decimals": 18 }
   },
+  "ZkSyncAddress": {
+    "typeCaster": "ChainPrefix",
+    "arg": { "prefix": "zksync2" }
+  },
+  "EthereumAddress": {
+    "typeCaster": "ChainPrefix",
+    "arg": { "prefix": "ethereum" }
+  },
+  "ArbitrumAddress": {
+    "typeCaster": "ChainPrefix",
+    "arg": { "prefix": "arbitrum" }
+  },
+  "NovaAddress": {
+    "typeCaster": "ChainPrefix",
+    "arg": { "prefix": "nova" }
+  },
+  "OptimismAddress": {
+    "typeCaster": "ChainPrefix",
+    "arg": { "prefix": "optimism" }
+  },
+  "PolygonAddress": {
+    "typeCaster": "ChainPrefix",
+    "arg": { "prefix": "polygonpos" }
+  },
+  "BSCAddress": {
+    "typeCaster": "ChainPrefix",
+    "arg": { "prefix": "bsc" }
+  },
+  "AvalancheAddress": {
+    "typeCaster": "ChainPrefix",
+    "arg": { "prefix": "avalanche" }
+  },
+  "CeloAddress": {
+    "typeCaster": "ChainPrefix",
+    "arg": { "prefix": "celo" }
+  },
+  "LineaAddress": {
+    "typeCaster": "ChainPrefix",
+    "arg": { "prefix": "linea" }
+  },
+  "BaseAddress": {
+    "typeCaster": "ChainPrefix",
+    "arg": { "prefix": "base" }
+  },
+  "PolygonZKEVMAddress": {
+    "typeCaster": "ChainPrefix",
+    "arg": { "prefix": "polygonzkevm" }
+  },
+  "GnosisAddress": {
+    "typeCaster": "ChainPrefix",
+    "arg": { "prefix": "gnosis" }
+  },
+  "SepoliaAddress": {
+    "typeCaster": "ChainPrefix",
+    "arg": { "prefix": "sepolia" }
+  },
+  "ScrollAddress": {
+    "typeCaster": "ChainPrefix",
+    "arg": { "prefix": "scroll" }
+  },
+  "MantleAddress": {
+    "typeCaster": "ChainPrefix",
+    "arg": { "prefix": "mantle" }
+  },
+  "MetisAddress": {
+    "typeCaster": "ChainPrefix",
+    "arg": { "prefix": "metis" }
+  },
+  "BobanetworkAddress": {
+    "typeCaster": "ChainPrefix",
+    "arg": { "prefix": "bobanetwork" }
+  },
+  "ModeAddress": {
+    "typeCaster": "ChainPrefix",
+    "arg": { "prefix": "mode" }
+  },
+  "ZoraAddress": {
+    "typeCaster": "ChainPrefix",
+    "arg": { "prefix": "zora" }
+  },
+  "MantapacificAddress": {
+    "typeCaster": "ChainPrefix",
+    "arg": { "prefix": "mantapacific" }
+  },
+  "BlastAddress": {
+    "typeCaster": "ChainPrefix",
+    "arg": { "prefix": "blast" }
+  },
   "ArbOsWasmModuleRoot": {
     "typeCaster": "Mapping",
     "arg": {

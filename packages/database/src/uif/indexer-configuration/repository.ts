@@ -14,16 +14,16 @@ export class IndexerConfigurationRepository extends BaseRepository {
     const rows = record.map(toRow)
     await this.batch(rows, 5_000, async (batch) => {
       await this.db
-        .insertInto('indexer_configurations')
+        .insertInto('IndexerConfiguration')
         .values(batch)
         .onConflict((cb) =>
           cb.column('id').doUpdateSet((eb) => ({
             id: eb.ref('excluded.id'),
-            indexer_id: eb.ref('excluded.indexer_id'),
+            indexerId: eb.ref('excluded.indexerId'),
             properties: eb.ref('excluded.properties'),
-            current_height: eb.ref('excluded.current_height'),
-            min_height: eb.ref('excluded.min_height'),
-            max_height: eb.ref('excluded.max_height'),
+            currentHeight: eb.ref('excluded.currentHeight'),
+            minHeight: eb.ref('excluded.minHeight'),
+            maxHeight: eb.ref('excluded.maxHeight'),
           })),
         )
         .execute()
@@ -36,7 +36,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
 
     const rows = records.map(toRow)
     await this.batch(rows, 5_000, async (batch) => {
-      await this.db.insertInto('indexer_configurations').values(batch).execute()
+      await this.db.insertInto('IndexerConfiguration').values(batch).execute()
     })
     return records.length
   }
@@ -45,9 +45,9 @@ export class IndexerConfigurationRepository extends BaseRepository {
     indexerId: string,
   ): Promise<IndexerConfigurationRecord[]> {
     const rows = await this.db
-      .selectFrom('indexer_configurations')
+      .selectFrom('IndexerConfiguration')
       .select(selectIndexerConfiguration)
-      .where('indexer_id', '=', indexerId)
+      .where('indexerId', '=', indexerId)
       .execute()
     return rows.map(toRecord)
   }
@@ -56,9 +56,9 @@ export class IndexerConfigurationRepository extends BaseRepository {
     if (indexerIds.length === 0) return []
 
     const rows = await this.db
-      .selectFrom('indexer_configurations')
+      .selectFrom('IndexerConfiguration')
       .select(selectIndexerConfiguration)
-      .where('indexer_id', 'in', indexerIds)
+      .where('indexerId', 'in', indexerIds)
       .execute()
     return rows.map(toRecord)
   }
@@ -67,15 +67,9 @@ export class IndexerConfigurationRepository extends BaseRepository {
     indexerId: string,
   ): Promise<Omit<IndexerConfigurationRecord, 'indexerId'>[]> {
     const rows = await this.db
-      .selectFrom('indexer_configurations')
-      .select([
-        'id',
-        'max_height',
-        'min_height',
-        'current_height',
-        'properties',
-      ])
-      .where('indexer_id', '=', indexerId)
+      .selectFrom('IndexerConfiguration')
+      .select(['id', 'maxHeight', 'minHeight', 'currentHeight', 'properties'])
+      .where('indexerId', '=', indexerId)
       .execute()
     return rows.map(toRecordWithoutIndexerId)
   }
@@ -85,7 +79,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
     if (configurationIds.length === 0) return []
 
     const rows = await this.db
-      .selectFrom('indexer_configurations')
+      .selectFrom('IndexerConfiguration')
       .select(selectIndexerConfiguration)
       .where('id', 'in', configurationIds)
       .execute()
@@ -94,9 +88,9 @@ export class IndexerConfigurationRepository extends BaseRepository {
 
   async getIdsByIndexer(indexerId: string): Promise<string[]> {
     const rows = await this.db
-      .selectFrom('indexer_configurations')
+      .selectFrom('IndexerConfiguration')
       .select('id')
-      .where('indexer_id', '=', indexerId)
+      .where('indexerId', '=', indexerId)
       .execute()
     return rows.map((r) => r.id)
   }
@@ -106,20 +100,20 @@ export class IndexerConfigurationRepository extends BaseRepository {
     currentHeight: number | null,
   ): Promise<void> {
     await this.db
-      .updateTable('indexer_configurations')
-      .set('current_height', currentHeight)
-      .where('indexer_id', '=', indexerId)
-      .where('min_height', '<=', currentHeight)
+      .updateTable('IndexerConfiguration')
+      .set('currentHeight', currentHeight)
+      .where('indexerId', '=', indexerId)
+      .where('minHeight', '<=', currentHeight)
       .where((eb) =>
         eb.or([
-          eb('max_height', 'is', null),
-          eb('max_height', '>=', currentHeight),
+          eb('maxHeight', 'is', null),
+          eb('maxHeight', '>=', currentHeight),
         ]),
       )
       .where((eb) =>
         eb.or([
-          eb('current_height', 'is', null),
-          eb('current_height', '<', currentHeight),
+          eb('currentHeight', 'is', null),
+          eb('currentHeight', '<', currentHeight),
         ]),
       )
       .execute()
@@ -133,8 +127,8 @@ export class IndexerConfigurationRepository extends BaseRepository {
 
     await this.batch(ids, 10_000, async (batch) => {
       await this.db
-        .deleteFrom('indexer_configurations')
-        .where('indexer_id', '=', indexerId)
+        .deleteFrom('IndexerConfiguration')
+        .where('indexerId', '=', indexerId)
         .where('id', 'in', batch)
         .executeTakeFirst()
     })
@@ -144,7 +138,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
 
   async getAll(): Promise<IndexerConfigurationRecord[]> {
     const rows = await this.db
-      .selectFrom('indexer_configurations')
+      .selectFrom('IndexerConfiguration')
       .select(selectIndexerConfiguration)
       .execute()
     return rows.map(toRecord)
@@ -152,7 +146,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
 
   async deleteAll(): Promise<number> {
     const result = await this.db
-      .deleteFrom('indexer_configurations')
+      .deleteFrom('IndexerConfiguration')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }

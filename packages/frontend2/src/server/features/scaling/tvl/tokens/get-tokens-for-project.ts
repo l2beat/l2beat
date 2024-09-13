@@ -9,6 +9,7 @@ import {
 import {
   assert,
   AssetId,
+  EthereumAddress,
   type ProjectId,
   UnixTime,
   asNumber,
@@ -96,9 +97,19 @@ const getCachedTokensForProject = cache(
 
 function getMockTokensForProject(): Record<ProjectTokenSource, AssetId[]> {
   return {
-    canonical: [AssetId('1')],
-    native: [AssetId('2')],
-    external: [AssetId('3')],
+    canonical: [AssetId.ETH],
+    native: [
+      AssetId.create(
+        'arbitrum',
+        EthereumAddress('0x912CE59144191C1204E64559FE8253a0e49E6548'),
+      ),
+    ],
+    external: [
+      AssetId.create(
+        'mode',
+        EthereumAddress('0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A'),
+      ),
+    ],
   }
 }
 

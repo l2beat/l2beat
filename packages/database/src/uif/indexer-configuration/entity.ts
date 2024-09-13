@@ -13,37 +13,23 @@ export interface IndexerConfigurationRecord {
 export function toRecord(
   row: Selectable<IndexerConfiguration>,
 ): IndexerConfigurationRecord {
-  return {
-    id: row.id,
-    indexerId: row.indexer_id,
-    properties: row.properties,
-    currentHeight: row.current_height,
-    minHeight: row.min_height,
-    maxHeight: row.max_height,
-  }
+  return row
 }
 
 export function toRecordWithoutIndexerId(
-  row: Selectable<Omit<IndexerConfiguration, 'indexer_id'>>,
+  row: Selectable<Omit<IndexerConfiguration, 'indexerId'>>,
 ): Omit<IndexerConfigurationRecord, 'indexerId'> {
   return {
     id: row.id,
     properties: row.properties,
-    currentHeight: row.current_height,
-    minHeight: row.min_height,
-    maxHeight: row.max_height,
+    currentHeight: row.currentHeight,
+    minHeight: row.minHeight,
+    maxHeight: row.maxHeight,
   }
 }
 
 export function toRow(
   record: IndexerConfigurationRecord,
 ): Insertable<IndexerConfiguration> {
-  return {
-    id: record.id,
-    indexer_id: record.indexerId,
-    properties: record.properties,
-    current_height: record.currentHeight,
-    min_height: record.minHeight,
-    max_height: record.maxHeight,
-  }
+  return record
 }

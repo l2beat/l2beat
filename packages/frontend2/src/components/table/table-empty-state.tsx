@@ -1,5 +1,5 @@
-import { useOptionalScalingFilterValues } from '~/app/(new)/(other)/_components/scaling-filter-context'
-import { useOptionalBridgesFilterValues } from '~/app/(new)/(other)/bridges/_components/bridges-filter-context'
+import { useOptionalScalingFilterValues } from '~/app/(side-nav)/(other)/_components/scaling-filter-context'
+import { useOptionalBridgesFilterValues } from '~/app/(side-nav)/(other)/bridges/_components/bridges-filter-context'
 import { linkVariants } from '../link/custom-link'
 
 export function TableEmptyState() {

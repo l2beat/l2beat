@@ -105,10 +105,11 @@ function DefaultChart({
   const { data, isLoading } = api.tvl.chart.useQuery({
     range: timeRange,
     filter: { type: 'projects', projectIds: [projectId] },
+    excludeAssociatedTokens: false,
   })
 
   const { chartRange, formatYAxisLabel, valuesStyle, columns } =
-    useTvlChartRenderParams({ milestones, unit, data })
+    useTvlChartRenderParams({ milestones, unit, data: data?.chart })
   return (
     <ChartProvider
       columns={columns}

@@ -31,6 +31,7 @@ export function BridgesTvlChart() {
   const { data, isLoading } = api.tvl.chart.useQuery({
     range: timeRange,
     filter: { type: 'bridge' },
+    excludeAssociatedTokens: false,
   })
 
   const {
@@ -40,7 +41,7 @@ export function BridgesTvlChart() {
     columns,
     lastValue,
     change,
-  } = useTvlChartRenderParams({ milestones: [], unit, data })
+  } = useTvlChartRenderParams({ milestones: [], unit, data: data?.chart })
 
   return (
     <ChartProvider

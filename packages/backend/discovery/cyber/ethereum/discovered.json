@@ -284,6 +284,11 @@
       ],
       "issuedPermissions": [
         {
+          "permission": "configure",
+          "target": "0xc76C563185d01284AdbC9cF5bb909162dD2F15e7",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0xc2259E7Fb719411f97aBdCdf449f6Ba3B9D75398",
           "via": [
@@ -294,7 +299,7 @@
           ]
         }
       ],
-      "ignoreInWatchMode": ["scalar"],
+      "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1713430403,
       "values": {
         "$admin": "0x7E54107731EC43e78DA678DFa5fB6222Ad036e03",
@@ -547,8 +552,20 @@
     { "address": "0xa8AC7D03BEb92Fa3E6030AEB21629D00Ffb66dD7" },
     { "address": "0xaC79765A73eB9dcBd3c427181E6819902AE25b48" },
     { "address": "0xB5b01E638CEF6AE50462A487d70005D6fe85eCf2" },
-    { "address": "0xc76C563185d01284AdbC9cF5bb909162dD2F15e7" },
-    { "address": "0xf0748C52EDC23135d9845CDFB91279Cf61ee14b4" },
+    {
+      "address": "0xc76C563185d01284AdbC9cF5bb909162dD2F15e7",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x5D1F4bbaF6D484fA9D5D9705f92dE6063bff6055",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+        }
+      ]
+    },
+    {
+      "address": "0xf0748C52EDC23135d9845CDFB91279Cf61ee14b4",
+      "roles": ["Sequencer"]
+    },
     {
       "address": "0xF2987f0A626c8D29dFB2E0A21144ca3026d6F1E1",
       "roles": ["Proposer"]
