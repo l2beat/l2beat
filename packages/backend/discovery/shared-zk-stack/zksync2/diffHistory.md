@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xdf08b5fc1642d0673f7f472d68e4f2453f023c89
+Generated with discovered.json: 0x1c9fdb4314b2717339783bf58b0bbd8fb5015925
 
-# Diff at Fri, 13 Sep 2024 03:53:54 GMT:
+# Diff at Fri, 13 Sep 2024 09:53:30 GMT:
 
-- author: sekuba (<sekuba@users.noreply.github.com>)
-- current block number: 44074300
+- author: Luca Donno (<donnoh99@gmail.com>)
+- current block number: 44094489
 
 ## Description
 
@@ -37,6 +37,12 @@ Initial discovery: Added the three token governance contracts for the shared ZK 
 
 ```diff
 +   Status: CREATED
+    contract ZkTokenV2 (0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract ZkProtocolGovernor (0x76705327e682F2d96943280D99464Ab61219e34f)
     +++ description: None
 ```
@@ -44,5 +50,11 @@ Initial discovery: Added the three token governance contracts for the shared ZK 
 ```diff
 +   Status: CREATED
     contract GovOpsTimelockController (0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xdB1E46B448e68a5E35CB693a99D59f784aD115CC)
     +++ description: None
 ```

@@ -8,7 +8,7 @@ Generated with discovered.json: 0x1589731c37bd7c0a90e2c710f552aa59eec99453
 
 ## Description
 
-Ownership of the four shared ZK stack contracts and their ProxyAdmin has been fully transfered to the ProtocolUpgradeHandler.
+Ownership of the four shared ZK stack contracts and their ProxyAdmin has been fully transferred to the ProtocolUpgradeHandler.
 
 ## Watched changes
 

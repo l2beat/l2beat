@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "ignoreRelatives": ["token"],
+  //"ignoreRelatives": ["token"],
   "ignoreInWatchMode": ["clock"],
   "ignoreMethods": [
     "proposalDeadline",
