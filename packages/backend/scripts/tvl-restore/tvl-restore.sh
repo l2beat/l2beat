@@ -13,10 +13,10 @@ echo "Migrating DB to latest" &&
 PRISMA_DB_URL=$PRISMA_DB_URL yarn prisma migrate deploy &&
 
 echo "Fetching TVL tables from remote DB" &&
-./export.sh &&
+./dump.sh &&
 
 echo "Restoring TVL tables" &&
-./import.sh &&
+./restore.sh &&
 
 echo "Removing data folder" &&
 rm -rf data &&
