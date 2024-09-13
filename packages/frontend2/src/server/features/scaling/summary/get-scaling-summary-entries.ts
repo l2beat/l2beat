@@ -8,9 +8,6 @@ import { get7dTokenBreakdown } from '../tvl/utils/get-7d-token-breakdown'
 import { getAssociatedTokenWarning } from '../tvl/utils/get-associated-token-warning'
 import { orderByTvl } from '../tvl/utils/order-by-tvl'
 
-/**
- * NOTE: Part of the return value of this function is public, so be careful with what you expose.
- */
 export async function getScalingSummaryEntries() {
   const implementationChangeReport = await getImplementationChangeReport()
   const projectsVerificationStatuses = await getProjectsVerificationStatuses()
