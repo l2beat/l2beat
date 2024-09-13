@@ -20,7 +20,7 @@ export async function GET() {
             canonical / 100,
             external / 100,
             native / 100,
-            ethPrice,
+            ethPrice / 100,
           ],
         ),
       },
