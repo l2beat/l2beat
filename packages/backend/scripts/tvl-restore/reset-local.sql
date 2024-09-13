@@ -2,33 +2,33 @@
 
 DO $$
 BEGIN
-    -- Checking and deleting from indexer_state
-    IF EXISTS (SELECT FROM pg_tables WHERE schemaname = 'public' AND tablename = 'indexer_state') THEN
-        DELETE FROM indexer_state;
+    -- Checking and deleting from IndexerState
+    IF EXISTS (SELECT FROM pg_tables WHERE schemaname = 'public' AND tablename = 'IndexerState') THEN
+        DELETE FROM "IndexerState";
     END IF;
 
-    -- Checking and deleting from indexer_configurations
-    IF EXISTS (SELECT FROM pg_tables WHERE schemaname = 'public' AND tablename = 'indexer_configurations') THEN
-        DELETE FROM indexer_configurations;
+    -- Checking and deleting from IndexerConfiguration
+    IF EXISTS (SELECT FROM pg_tables WHERE schemaname = 'public' AND tablename = 'IndexerConfiguration') THEN
+        DELETE FROM "IndexerConfiguration";
     END IF;
 
-    -- Checking and deleting from block_timestamps
-    IF EXISTS (SELECT FROM pg_tables WHERE schemaname = 'public' AND tablename = 'block_timestamps') THEN
-        DELETE FROM block_timestamps;
+    -- Checking and deleting from BlockTimestamp
+    IF EXISTS (SELECT FROM pg_tables WHERE schemaname = 'public' AND tablename = 'BlockTimestamp') THEN
+        DELETE FROM "BlockTimestamp";
     END IF;
 
-    -- Checking and deleting from amounts
-    IF EXISTS (SELECT FROM pg_tables WHERE schemaname = 'public' AND tablename = 'amounts') THEN
-        DELETE FROM amounts;
+    -- Checking and deleting from Amount
+    IF EXISTS (SELECT FROM pg_tables WHERE schemaname = 'public' AND tablename = 'Amount') THEN
+        DELETE FROM "Amount";
     END IF;
 
-    -- Checking and deleting from prices
-    IF EXISTS (SELECT FROM pg_tables WHERE schemaname = 'public' AND tablename = 'prices') THEN
-        DELETE FROM prices;
+    -- Checking and deleting from Price
+    IF EXISTS (SELECT FROM pg_tables WHERE schemaname = 'public' AND tablename = 'Price') THEN
+        DELETE FROM "Price";
     END IF;
 
-    -- Checking and deleting from values
-    IF EXISTS (SELECT FROM pg_tables WHERE schemaname = 'public' AND tablename = 'values') THEN
-        DELETE FROM values;
+    -- Checking and deleting from Value
+    IF EXISTS (SELECT FROM pg_tables WHERE schemaname = 'public' AND tablename = 'Value') THEN
+        DELETE FROM "Value";
     END IF;
 END $$;

@@ -4,5 +4,5 @@ export const selectDiscoveryCache = [
   'key',
   'value',
   'chain',
-  'block_number',
+  'blockNumber',
 ] as const satisfies (keyof DiscoveryCache)[]

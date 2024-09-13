@@ -9,10 +9,10 @@ export class UpdateMonitorRepository extends BaseRepository {
     chainId: ChainId,
   ): Promise<UpdateMonitorRecord | undefined> {
     const row = await this.db
-      .selectFrom('update_monitor')
+      .selectFrom('UpdateMonitor')
       .select(selectUpdateMonitor)
-      .where('project_name', '=', name)
-      .where('chain_id', '=', +chainId)
+      .where('projectName', '=', name)
+      .where('chainId', '=', +chainId)
       .limit(1)
       .executeTakeFirst()
 
@@ -27,14 +27,14 @@ export class UpdateMonitorRepository extends BaseRepository {
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
       await this.db
-        .insertInto('update_monitor')
+        .insertInto('UpdateMonitor')
         .values(batch)
         .onConflict((cb) =>
-          cb.columns(['project_name', 'chain_id']).doUpdateSet((eb) => ({
-            block_number: eb.ref('excluded.block_number'),
-            unix_timestamp: eb.ref('excluded.unix_timestamp'),
-            discovery_json_blob: eb.ref('excluded.discovery_json_blob'),
-            config_hash: eb.ref('excluded.config_hash'),
+          cb.columns(['projectName', 'chainId']).doUpdateSet((eb) => ({
+            blockNumber: eb.ref('excluded.blockNumber'),
+            timestamp: eb.ref('excluded.timestamp'),
+            discoveryJsonBlob: eb.ref('excluded.discoveryJsonBlob'),
+            configHash: eb.ref('excluded.configHash'),
             version: eb.ref('excluded.version'),
           })),
         )
@@ -45,7 +45,7 @@ export class UpdateMonitorRepository extends BaseRepository {
 
   async getAll(): Promise<UpdateMonitorRecord[]> {
     const rows = await this.db
-      .selectFrom('update_monitor')
+      .selectFrom('UpdateMonitor')
       .select(selectUpdateMonitor)
       .execute()
 
@@ -53,7 +53,7 @@ export class UpdateMonitorRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db.deleteFrom('update_monitor').executeTakeFirst()
+    const result = await this.db.deleteFrom('UpdateMonitor').executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 }

@@ -18,18 +18,18 @@ export function toRecord(
   entity: Selectable<DailyDiscovery>,
 ): DailyDiscoveryRecord {
   return {
-    projectName: entity.project_name,
-    chainId: ChainId(entity.chain_id),
-    timestamp: UnixTime.fromDate(entity.unix_timestamp),
-    blockNumber: entity.block_number,
+    projectName: entity.projectName,
+    chainId: ChainId(entity.chainId),
+    timestamp: UnixTime.fromDate(entity.timestamp),
+    blockNumber: entity.blockNumber,
     version: entity.version,
-    configHash: Hash256(entity.config_hash),
+    configHash: Hash256(entity.configHash),
     // NOTE(radomski): This has to be here, otherwise the risk of exposing our
     // API keys goes way up. Putting this in the database gives us the highest
     // chance of being secure. We still want to show that there was an error
     // so sanitize it to expose minimal information.
     discovery: sanitizeDiscoveryOutput(
-      entity.discovery_json_blob as DiscoveryOutput,
+      entity.discoveryJsonBlob as DiscoveryOutput,
     ),
   }
 }
@@ -38,12 +38,12 @@ export function toRow(
   dailyDiscovery: DailyDiscoveryRecord,
 ): Insertable<DailyDiscovery> {
   return {
-    project_name: dailyDiscovery.projectName,
-    chain_id: +dailyDiscovery.chainId,
-    unix_timestamp: dailyDiscovery.timestamp.toDate(),
-    block_number: dailyDiscovery.blockNumber,
+    projectName: dailyDiscovery.projectName,
+    chainId: +dailyDiscovery.chainId,
+    timestamp: dailyDiscovery.timestamp.toDate(),
+    blockNumber: dailyDiscovery.blockNumber,
     version: dailyDiscovery.version,
-    config_hash: dailyDiscovery.configHash.toString(),
-    discovery_json_blob: dailyDiscovery.discovery,
+    configHash: dailyDiscovery.configHash.toString(),
+    discoveryJsonBlob: dailyDiscovery.discovery,
   }
 }

@@ -1,11 +1,11 @@
 import { UpdateMonitor } from '../../kysely/generated/types'
 
 export const selectUpdateMonitor = [
-  'project_name',
-  'chain_id',
-  'block_number',
-  'unix_timestamp',
-  'discovery_json_blob',
-  'config_hash',
+  'projectName',
+  'chainId',
+  'blockNumber',
+  'timestamp',
+  'discoveryJsonBlob',
+  'configHash',
   'version',
 ] as const satisfies (keyof UpdateMonitor)[]
