@@ -13,10 +13,10 @@ export function toRow(
   record: VerifierStatusRecord,
 ): Insertable<VerifierStatus> {
   return {
-    address: record.address,
-    chain_id: +record.chainId,
-    last_used: record.lastUsed.toDate(),
-    last_updated: record.lastUpdated.toDate(),
+    ...record,
+    chainId: +record.chainId,
+    lastUsed: record.lastUsed.toDate(),
+    lastUpdated: record.lastUpdated.toDate(),
   }
 }
 
@@ -24,9 +24,9 @@ export function toRecord(
   row: Selectable<VerifierStatus>,
 ): VerifierStatusRecord {
   return {
-    address: row.address,
-    chainId: ChainId(row.chain_id),
-    lastUsed: UnixTime.fromDate(row.last_used),
-    lastUpdated: UnixTime.fromDate(row.last_updated),
+    ...row,
+    chainId: ChainId(row.chainId),
+    lastUsed: UnixTime.fromDate(row.lastUsed),
+    lastUpdated: UnixTime.fromDate(row.lastUpdated),
   }
 }

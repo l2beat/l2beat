@@ -168,6 +168,7 @@
         {
           "permission": "upgrade",
           "target": "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00",
+          "description": "upgrading bridge implementation allows to access all funds and change every system component.",
           "via": [{ "address": "0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc" }]
         }
       ],
@@ -264,7 +265,8 @@
         },
         {
           "permission": "upgrade",
-          "target": "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00"
+          "target": "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00",
+          "description": "upgrading bridge implementation allows to access all funds and change every system component."
         }
       ],
       "sinceTimestamp": 1710967823,
@@ -463,7 +465,11 @@
     {
       "name": "L1StandardBridge",
       "address": "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00",
+      "template": "opstack/L1StandardBridge",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
+      ],
       "categories": ["Gateways&Escrows"],
       "issuedPermissions": [
         {
@@ -472,7 +478,8 @@
           "via": [
             {
               "address": "0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc",
-              "delay": 0
+              "delay": 0,
+              "description": "upgrading bridge implementation allows to access all funds and change every system component."
             }
           ]
         }
@@ -879,6 +886,7 @@
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
+    "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
     "opstack/L2OutputOracle": "0x1d833a9768af12de67d65ad7dd09fc4b96db543bde5f5fdc2ff0ea0c571ceadf",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
     "opstack/OptimismPortal": "0xcc1b405a2bf545f58a88bb104ba298351e252fc507b40d0e1ef40bf6bbe34152",

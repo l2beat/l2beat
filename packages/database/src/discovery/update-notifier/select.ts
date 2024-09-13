@@ -2,10 +2,10 @@ import { UpdateNotifier } from '../../kysely/generated/types'
 
 export const selectUpdateNotifier = [
   'id',
-  'created_at',
-  'updated_at',
-  'project_name',
-  'block_number',
-  'diff_json_blob',
-  'chain_id',
+  'createdAt',
+  'updatedAt',
+  'projectName',
+  'blockNumber',
+  'diffJsonBlob',
+  'chainId',
 ] as const satisfies (keyof UpdateNotifier)[]

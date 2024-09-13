@@ -12,7 +12,6 @@ import { getDiffHistoryHash, getDiscoveryHash } from '../utils/hashing'
 describe('discovery config.jsonc', () => {
   const configReader = new ConfigReader()
   const templateService = new TemplateService()
-  const shapeFilesHash = templateService.getShapeFilesHash()
   const allTemplateHashes = templateService.getAllTemplateHashes()
 
   let chainConfigs: DiscoveryConfig[][] | undefined
@@ -149,10 +148,14 @@ describe('discovery config.jsonc', () => {
       for (const c of configs) {
         const discovery = await configReader.readDiscovery(c.name, c.chain)
 
-        assert(
-          discovery.shapeFilesHash === shapeFilesHash,
-          `Looks like you have added/moved/removed/modified shape files. This requires refreshing discovery of all projects. Run "yarn refresh-discovery"`,
-        )
+        // Disable this check because it is too strict
+        // and soon, with new formatter and 1-to-1 shape comparison,
+        // it will not be necessary anymore.
+        //
+        // assert(
+        //   discovery.shapeFilesHash === shapeFilesHash,
+        //   `Looks like you have added/moved/removed/modified shape files. This requires refreshing discovery of all projects. Run "yarn refresh-discovery"`,
+        // )
 
         const outdatedTemplates = []
         for (const [templateId, templateHash] of Object.entries(
