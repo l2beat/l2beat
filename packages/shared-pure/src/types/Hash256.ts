@@ -11,6 +11,14 @@ export function Hash256(value: string): Hash256 {
   return value as unknown as Hash256
 }
 
+Hash256.check = function check(value: string) {
+  try {
+    return Hash256(value).toString() === value
+  } catch {
+    return false
+  }
+}
+
 Hash256.random = function random() {
   const digit = (): string | undefined =>
     '0123456789abcdef'[Math.floor(Math.random() * 16)]
