@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x7660dc7d01682abf78d4c568c418d312bd3ca94d
+Generated with discovered.json: 0xbd0f6aa4b9a5d496f4de28c663fbdd2dfb175a4e
 
-# Diff at Fri, 13 Sep 2024 11:40:06 GMT:
+# Diff at Fri, 13 Sep 2024 12:00:42 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
-- current block number: 44100448
+- current block number: 44101658
 
 ## Description
 
@@ -37,7 +37,7 @@ Initial discovery: Added the three token governance contracts for the shared ZK 
 
 ```diff
 +   Status: CREATED
-    contract ZkTokenV2 (0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E)
+    contract ZkToken (0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E)
     +++ description: None
 ```
 

@@ -16,9 +16,22 @@
     "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89": "ZkTokenGovernor",
     "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6": "TokenTimelockController",
     "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb": "ZkGovOpsGovernor",
-    "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19": "GovOpsTimelockController"
+    "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19": "GovOpsTimelockController",
+    "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E": "ZkToken"
   },
   "overrides": {
+    "ZkToken": {
+      "ignoreMethods": ["getPastTotalSupply"],
+      "ignoreInWatchMode": ["clock", "totalSupply"],
+      "ignoreRelatives": ["accessControl"], // minters are noisy
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    },
     // all below shall be shapeified when there is time to run megadiscovery
     "ZkProtocolGovernor": {
       "extends": "shared-zk-stack/ZkGovernor"

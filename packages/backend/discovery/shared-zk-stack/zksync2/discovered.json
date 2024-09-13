@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "zksync2",
-  "blockNumber": 44100448,
-  "configHash": "0xc60a64d8ab168941c1b54f1d9449f8c2f3c0c7180b8ee1670c6e494d39644dfa",
+  "blockNumber": 44101658,
+  "configHash": "0x3fe8323785fb98953e767dc664b6cbf9eeac05a032bb6443d114f6491f330d34",
   "version": 14,
   "contracts": [
     {
@@ -20,7 +20,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1726227589,
+        "clock": 1726228822,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -140,7 +140,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1726227589,
+        "clock": 1726228822,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -170,7 +170,7 @@
       "derivedName": "ZkGovOpsGovernor"
     },
     {
-      "name": "ZkTokenV2",
+      "name": "ZkToken",
       "address": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -180,14 +180,44 @@
           "via": []
         }
       ],
+      "ignoreInWatchMode": ["clock", "totalSupply"],
       "sinceTimestamp": 1716317326,
       "values": {
         "$admin": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
         "$implementation": "0x01a6715d3560241E09E865a46122bf347A576c09",
         "$upgradeCount": 2,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8"]
+          },
+          "MINTER_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6"]
+          },
+          "BURNER_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "MINTER_ROLE": {
+            "adminRole": "MINTER_ADMIN_ROLE",
+            "members": [
+              "0xa97fBc75CcbC7d4353C4D2676ed18Cd0C5AaF7e6",
+              "0xD78dc27D4dB8f428C67f542216a2b23663838405",
+              "0x21b27952f8621f54f3CB652630E122Ec81dd2dc1",
+              "0x0Ad50686C159040E57ddcE137Db0b63c67473450",
+              "0x0681E3808a0aA12004fb815ebB4515DC823cfbb4",
+              "0x66Fd4FC8FA52c9bec2AbA368047A0b27e24ecfe4",
+              "0xb294F411cB52c7C6B6c0B0b61DBDf398a8b0725d",
+              "0xf29D698E74EF1904BCFDb20Ed38f9F3EF0A89E5b",
+              "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6"
+            ]
+          },
+          "BURNER_ROLE": { "adminRole": "BURNER_ADMIN_ROLE", "members": [] }
+        },
         "BURNER_ADMIN_ROLE": "0xc8d1ad9d415224b751d781cc8214ccfe7c47716e13229475443f04f1ebddadc6",
         "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",
-        "clock": 1726227589,
+        "clock": 1726228822,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -202,16 +232,13 @@
           "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "extensions": []
         },
-        "getPastTotalSupply": [0, 0, 0, 0, 0],
         "MINTER_ADMIN_ROLE": "0x70480ee89cb38eff00b7d23da25713d52ce19c6ed428691d22c58b2f615e3d67",
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "ZKsync",
         "symbol": "ZK",
         "totalSupply": "11277840627000000000000000000"
       },
-      "errors": {
-        "getPastTotalSupply": "Too many values. Update configuration to explore fully"
-      }
+      "derivedName": "ZkTokenV2"
     },
     {
       "name": "ZkProtocolGovernor",
@@ -228,7 +255,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1726227589,
+        "clock": 1726228822,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
