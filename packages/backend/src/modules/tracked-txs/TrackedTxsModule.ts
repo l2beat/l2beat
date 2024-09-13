@@ -91,7 +91,10 @@ export function createTrackedTxsModule(
       apiKey: config.trackedTxsConfig.uses.l2costs.coingeckoApiKey,
     })
 
-    const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+    const coingeckoQueryService = new CoingeckoQueryService(
+      coingeckoClient,
+      logger.tag('trackedTxs'),
+    )
 
     l2CostPricesIndexer = new L2CostsPricesIndexer({
       coingeckoQueryService,

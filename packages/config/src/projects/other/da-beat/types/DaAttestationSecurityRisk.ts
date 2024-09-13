@@ -17,7 +17,7 @@ const Enshrined = {
 
 const NoBridge = {
   type: 'NoBridge',
-  value: 'No bridge',
+  value: 'No Attestations',
   sentiment: 'bad',
   description: 'No data availability attestations are posted to Ethereum.',
 } as const

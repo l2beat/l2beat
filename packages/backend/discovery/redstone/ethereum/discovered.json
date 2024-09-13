@@ -206,12 +206,17 @@
       ],
       "issuedPermissions": [
         {
+          "permission": "configure",
+          "target": "0xb356B146F1629c49C44344464F69BCDAfb4bb664",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0xCC53b447aFe07926423aB96D5496b1af30485ED2",
           "via": []
         }
       ],
-      "ignoreInWatchMode": ["scalar"],
+      "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1712184563,
       "values": {
         "$admin": "0xCC53b447aFe07926423aB96D5496b1af30485ED2",
@@ -600,15 +605,28 @@
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x000000000000000000000000000000000000dEaD" },
-    { "address": "0x4c465E58946145bb2BFC38833154f5A3B5728CF7" },
+    {
+      "address": "0x4c465E58946145bb2BFC38833154f5A3B5728CF7",
+      "roles": ["Proposer"]
+    },
     { "address": "0x5DeB7dD12ccF0BFb3b2D26D0A4f302Fb6ACBdcA8" },
     { "address": "0x61fB1FDA30c900404CDfa22D3eAdCA86FdB95450" },
     { "address": "0x7211399b320a0417286897fCeD1ee4ba1C1771d4" },
-    { "address": "0xA31cb9Bc414601171D4537580f98F66C03aECd43" },
+    {
+      "address": "0xA31cb9Bc414601171D4537580f98F66C03aECd43",
+      "roles": ["Sequencer"]
+    },
     { "address": "0xA5bdf717af725a47Fd7378d3D9C833776951efa0" },
     {
       "address": "0xb356B146F1629c49C44344464F69BCDAfb4bb664",
-      "roles": ["Guardian"]
+      "roles": ["Challenger", "Guardian"],
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x8f2428F7189c0d92D1c4a5358903A8c80Ec6a69D",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+        }
+      ]
     },
     { "address": "0xff00000000000000000000000000000000000690" }
   ],

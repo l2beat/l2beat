@@ -1,0 +1,27 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "fields": {
+    "oldVerifier": {
+      "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This verifier route was frozen on 2024-09-04.",
+      "handler": {
+        "type": "call",
+        "method": "function routes(bytes4) view returns (address verifier, bool frozen)",
+        "args": [
+          // first 4 bytes of the blobstream proof are used as identifier
+          "0xc430ff7f"
+        ]
+      }
+    },
+    "verifier": {
+      "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen).",
+      "handler": {
+        "type": "call",
+        "method": "function routes(bytes4) view returns (address verifier, bool frozen)",
+        "args": [
+          // first 4 bytes of the blobstream proof are used as identifier
+          "0xc865c1b6"
+        ]
+      }
+    }
+  }
+}

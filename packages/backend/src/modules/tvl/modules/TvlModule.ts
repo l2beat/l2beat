@@ -19,11 +19,13 @@ import { ApiProject, AssociatedToken } from '../api/utils/types'
 import { HourlyIndexer } from '../indexers/HourlyIndexer'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { TvlCleaner } from '../utils/TvlCleaner'
-import { createChainModules } from './ChainModule'
-import { createCirculatingSupplyModule } from './CirculatingSupplyModule'
-import { createPriceModule } from './PriceModule'
+import { initBlockTimestampModule } from './BlockTimestampModule'
+import { initChainModule } from './ChainModule'
+import { initCirculatingSupplyModule } from './CirculatingSupplyModule'
+import { initPremintedModule } from './PremintedModule'
+import { initPriceModule } from './PriceModule'
 
-export function createTvlModule(
+export function initTvlModule(
   config: Config,
   logger: Logger,
   peripherals: Peripherals,
@@ -59,35 +61,57 @@ export function createTvlModule(
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
 
-  const priceModule = createPriceModule(
+  assert(config.tvl.prices.length > 0, 'Tokens should be configured')
+
+  const priceModule = initPriceModule(
     config.tvl,
     logger,
     peripherals,
-    hourlyIndexer,
     syncOptimizer,
     indexerService,
+    hourlyIndexer,
   )
 
-  const chainModules = createChainModules(
+  const circulatingSupplyModule = initCirculatingSupplyModule(
     config.tvl,
-    peripherals,
     logger,
-    hourlyIndexer,
+    peripherals,
     syncOptimizer,
     indexerService,
-    priceModule,
     configMapping,
+    hourlyIndexer,
+    priceModule.descendant,
   )
 
-  const circulatingSuppliesModule = createCirculatingSupplyModule(
+  const blockTimestampModule = initBlockTimestampModule(
     config.tvl,
     logger,
     peripherals,
-    hourlyIndexer,
     syncOptimizer,
     indexerService,
-    priceModule,
+    hourlyIndexer,
+  )
+
+  const chainModule = initChainModule(
+    config.tvl,
+    logger,
+    peripherals,
+    syncOptimizer,
+    indexerService,
     configMapping,
+    priceModule.descendant,
+    blockTimestampModule?.blockTimestampIndexers,
+  )
+
+  const premintedModule = initPremintedModule(
+    config.tvl,
+    logger,
+    peripherals,
+    syncOptimizer,
+    indexerService,
+    configMapping,
+    priceModule.descendant,
+    blockTimestampModule?.blockTimestampIndexers,
   )
 
   const dataStatusService = new DataStatusService(peripherals.database)
@@ -153,18 +177,15 @@ export function createTvlModule(
 
   const start = async () => {
     await hourlyIndexer.start()
-
     await priceModule.start()
+    await blockTimestampModule?.start()
+    await chainModule?.start()
+    await premintedModule?.start()
+    await circulatingSupplyModule?.start()
 
     if (config.tvl && config.tvl.tvlCleanerEnabled) {
       tvlCleaner.start()
     }
-
-    for (const module of chainModules) {
-      await module.start()
-    }
-
-    await circulatingSuppliesModule.start()
   }
 
   return {

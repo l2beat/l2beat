@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x512d7632880bdfb945fd5f196cae9a127e76fcd0
+
+# Diff at Thu, 12 Sep 2024 09:51:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@127adf09837b5e1f2ac0ecd582a2ef874e97633f block: 20725957
+- current block number: 20725957
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20725957 (main branch discovery), not current.
+
+```diff
+    contract ProtocolUpgradeHandler (0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897) {
+    +++ description: None
+      values.L2_PROTOCOL_GOVERNOR:
+-        "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
++        "zksync2:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"zksync2"}}]
+    }
+```
+
 Generated with discovered.json: 0x5316f6730537230399f403d045aae371108b264d
 
 # Diff at Wed, 11 Sep 2024 07:44:15 GMT:

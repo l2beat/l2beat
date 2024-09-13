@@ -71,14 +71,29 @@ export async function getL3ProjectDetails({
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
 
-  const tvlChartData = await api.tvl.chart({
-    range: '7d',
-    filter: { type: 'projects', projectIds: [project.id] },
-  })
-  const activityChartData = await api.activity.chart({
-    range: '30d',
-    filter: { type: 'projects', projectIds: [project.id] },
-  })
+  await Promise.all([
+    api.tvl.chart.prefetch({
+      range: '7d',
+      filter: { type: 'projects', projectIds: [project.id] },
+      excludeAssociatedTokens: false,
+    }),
+    api.activity.chart.prefetch({
+      range: '30d',
+      filter: { type: 'projects', projectIds: [project.id] },
+    }),
+  ])
+  const [tvlChartData, activityChartData, tokens] = await Promise.all([
+    api.tvl.chart({
+      range: '7d',
+      filter: { type: 'projects', projectIds: [project.id] },
+      excludeAssociatedTokens: false,
+    }),
+    api.activity.chart({
+      range: '30d',
+      filter: { type: 'projects', projectIds: [project.id] },
+    }),
+    getTokensForProject(project),
+  ])
 
   const sortedMilestones =
     project.milestones?.sort(
@@ -86,8 +101,6 @@ export async function getL3ProjectDetails({
     ) ?? []
 
   const items: ProjectDetailsSection[] = []
-
-  const tokens = await getTokensForProject(project)
 
   if (!project.isUpcoming && !isEmpty(tvlChartData)) {
     items.push({

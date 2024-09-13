@@ -17,10 +17,10 @@ export function toRow(
   record: Omit<UpdateNotifierRecord, 'id' | 'createdAt' | 'updatedAt'>,
 ): Insertable<Omit<UpdateNotifier, 'id' | 'created_at' | 'updated_at'>> {
   return {
-    project_name: record.projectName,
-    block_number: record.blockNumber,
-    diff_json_blob: JSON.stringify(record.diff),
-    chain_id: +record.chainId,
+    projectName: record.projectName,
+    blockNumber: record.blockNumber,
+    diffJsonBlob: JSON.stringify(record.diff),
+    chainId: +record.chainId,
   }
 }
 
@@ -29,11 +29,11 @@ export function toRecord(
 ): UpdateNotifierRecord {
   return {
     id: row.id,
-    createdAt: UnixTime.fromDate(row.created_at),
-    updatedAt: UnixTime.fromDate(row.updated_at),
-    projectName: row.project_name,
-    blockNumber: row.block_number,
-    diff: row.diff_json_blob as unknown as DiscoveryDiff[],
-    chainId: ChainId(row.chain_id),
+    createdAt: UnixTime.fromDate(row.createdAt),
+    updatedAt: UnixTime.fromDate(row.updatedAt),
+    projectName: row.projectName,
+    blockNumber: row.blockNumber,
+    diff: row.diffJsonBlob as unknown as DiscoveryDiff[],
+    chainId: ChainId(row.chainId),
   }
 }

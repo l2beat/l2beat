@@ -1,7 +1,15 @@
 import { readdirSync } from 'fs'
 import path from 'path'
 import { assert } from '@l2beat/shared-pure'
-import { Type, command, option, positional, string, subcommands } from 'cmd-ts'
+import {
+  Type,
+  command,
+  number,
+  option,
+  positional,
+  string,
+  subcommands,
+} from 'cmd-ts'
 import { readConfig } from '../config/readConfig'
 import {
   DIFFING_MODES,
@@ -57,6 +65,15 @@ const displayMode = option({
   defaultValue: () => 'inline' as const,
 })
 
+export const diffContext = option({
+  type: number,
+  description: 'number of additional lines to show around the difference',
+  long: 'context',
+  short: 'c',
+  defaultValue: () => 3,
+  defaultValueIsSerializable: true,
+})
+
 export const PowerdiffPath = command({
   name: 'path',
   description:
@@ -67,9 +84,24 @@ export const PowerdiffPath = command({
     difftasticPath,
     mode,
     displayMode,
+    diffContext,
   },
-  handler: ({ leftPath, rightPath, difftasticPath, mode, displayMode }) => {
-    powerdiff(leftPath, rightPath, difftasticPath, mode, displayMode)
+  handler: ({
+    leftPath,
+    rightPath,
+    difftasticPath,
+    mode,
+    displayMode,
+    diffContext,
+  }) => {
+    powerdiff(
+      leftPath,
+      rightPath,
+      difftasticPath,
+      mode,
+      displayMode,
+      diffContext,
+    )
   },
 })
 
@@ -83,8 +115,16 @@ export const PowerdiffDiscovery = command({
     difftasticPath,
     mode,
     displayMode,
+    diffContext,
   },
-  handler: ({ chain, project, difftasticPath, mode, displayMode }) => {
+  handler: ({
+    chain,
+    project,
+    difftasticPath,
+    mode,
+    displayMode,
+    diffContext,
+  }) => {
     const config = readConfig()
     assert(
       config.discoveryPath !== undefined,
@@ -104,9 +144,16 @@ export const PowerdiffDiscovery = command({
       'Missing .flat or .flat@<number>, rerun discovery.',
     )
 
-    const leftPath = path.join(projectPath, '.flat')
-    const rightPath = path.join(projectPath, flatAt[0])
-    powerdiff(leftPath, rightPath, difftasticPath, mode, displayMode)
+    const rightPath = path.join(projectPath, '.flat')
+    const leftPath = path.join(projectPath, flatAt[0])
+    powerdiff(
+      rightPath,
+      leftPath,
+      difftasticPath,
+      mode,
+      displayMode,
+      diffContext,
+    )
   },
 })
 

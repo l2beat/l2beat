@@ -1,8 +1,8 @@
 import { IndexerState } from '../../kysely/generated/types'
 
 export const selectIndexerState = [
-  'config_hash',
-  'indexer_id',
-  'min_timestamp',
-  'safe_height',
+  'configHash',
+  'indexerId',
+  'minTimestamp',
+  'safeHeight',
 ] as const satisfies (keyof IndexerState)[]

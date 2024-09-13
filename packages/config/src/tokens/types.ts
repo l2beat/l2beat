@@ -1,5 +1,4 @@
 import {
-  AssetId,
   ChainId,
   CoingeckoId,
   EthereumAddress,
@@ -11,7 +10,6 @@ import { z } from 'zod'
 
 export type GeneratedToken = z.infer<typeof GeneratedToken>
 export const GeneratedToken = z.object({
-  id: stringAs((s) => AssetId(s)),
   name: z.string(),
   coingeckoId: stringAs((s) => CoingeckoId(s)),
   address: stringAs((s) => EthereumAddress(s)).optional(),

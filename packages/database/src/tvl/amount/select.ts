@@ -3,5 +3,5 @@ import { Amount } from '../../kysely/generated/types'
 export const selectAmount = [
   'amount',
   'timestamp',
-  'configuration_id',
+  'configurationId',
 ] as const satisfies (keyof Amount)[]

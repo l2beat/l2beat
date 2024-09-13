@@ -81,12 +81,11 @@ export function useStackedTvlChartRenderParams({
   )
 
   return {
-    change,
     columns,
-    lastValue,
     chartRange,
     valuesStyle,
     formatYAxisLabel,
+    change,
   }
 }
 

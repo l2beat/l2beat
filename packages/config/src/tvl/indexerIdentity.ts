@@ -21,6 +21,7 @@ export const INDEXER_NAMES = {
   CHAIN_AMOUNT: 'chain_amount_indexer',
   PREMINTED: 'preminted_indexer',
   PRICE: 'price_indexer',
+  AGGLAYER: 'agglayer_indexer',
 }
 
 export function getPremintedIndexerId(
