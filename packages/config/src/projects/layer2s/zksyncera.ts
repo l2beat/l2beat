@@ -504,7 +504,7 @@ export const zksyncera: Layer2 = {
       ],
     },
     proposerFailure: {
-      ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+      ...RISK_VIEW.PROPOSER_WHITELIST_GOVERNANCE,
       sources: [
         {
           contract: 'ZKsync',
@@ -534,7 +534,7 @@ export const zksyncera: Layer2 = {
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: null,
-        fraudProofSystemIsPermissionless: null, // why not false?
+        fraudProofSystemIsPermissionless: null,
         delayWith30DExitWindow: false,
       },
     },

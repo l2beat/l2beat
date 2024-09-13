@@ -399,6 +399,14 @@ export const PROPOSER_CANNOT_WITHDRAW: ScalingProjectRiskViewEntry = {
   definingMetric: -Infinity,
 }
 
+export const PROPOSER_WHITELIST_GOVERNANCE: ScalingProjectRiskViewEntry = {
+  value: 'Cannot withdraw',
+  description:
+    'Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen. There is a decentralized Governance system that could rotate the failing Proposers.',
+  sentiment: 'warning',
+  definingMetric: -Infinity,
+}
+
 export const PROPOSER_USE_ESCAPE_HATCH_ZK: ScalingProjectRiskViewEntry = {
   value: 'Use escape hatch',
   description:
@@ -609,6 +617,7 @@ export const RISK_VIEW = {
   SEQUENCER_ENQUEUE_VIA,
   SEQUENCER_NO_MECHANISM,
   PROPOSER_CANNOT_WITHDRAW,
+  PROPOSER_WHITELIST_GOVERNANCE,
   PROPOSER_USE_ESCAPE_HATCH_ZK,
   PROPOSER_USE_ESCAPE_HATCH_MP,
   PROPOSER_USE_ESCAPE_HATCH_MP_NFT,
