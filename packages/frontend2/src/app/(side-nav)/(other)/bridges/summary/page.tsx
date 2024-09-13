@@ -19,6 +19,7 @@ export default async function Page() {
     api.tvl.chart.prefetch({
       range: getCookie('bridgesSummaryChartRange'),
       filter: { type: 'bridge' },
+      excludeAssociatedTokens: false,
     }),
   ])
 

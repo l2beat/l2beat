@@ -6,6 +6,7 @@ import { MobileProjectNavigation } from '~/components/projects/navigation/mobile
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { ProjectDetails } from '~/components/projects/project-details'
 import { getScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
+import { HydrateClient } from '~/trpc/server'
 import { getProjectMetadata } from '~/utils/metadata'
 import { ScalingProjectSummary } from './_components/scaling-project-summary'
 
@@ -56,8 +57,9 @@ export default async function Page({ params }: Props) {
   )
   const isNavigationEmpty = navigationSections.length === 0
 
+  // HydrateClient is used to hydrate the client with chart data that is fetched inside get-bridges-project-details.tsx
   return (
-    <>
+    <HydrateClient>
       {!isNavigationEmpty && (
         <div className="sticky top-0 z-100 md:hidden">
           <MobileProjectNavigation sections={navigationSections} />
@@ -85,6 +87,6 @@ export default async function Page({ params }: Props) {
           </div>
         </div>
       )}
-    </>
+    </HydrateClient>
   )
 }

@@ -31,6 +31,7 @@ export function BridgesTvlChart() {
   const { data, isLoading } = api.tvl.chart.useQuery({
     range: timeRange,
     filter: { type: 'bridge' },
+    excludeAssociatedTokens: false,
   })
 
   const {

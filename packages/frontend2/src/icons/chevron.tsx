@@ -3,8 +3,8 @@ import { SvgIcon, type SvgIconProps } from './svg-icon'
 export function ChevronIcon(props: SvgIconProps) {
   return (
     <SvgIcon
-      width="24"
-      height="24"
+      width="16"
+      height="16"
       viewBox="0 0 16 16"
       aria-label="Chevron icon"
       fill="currentColor"

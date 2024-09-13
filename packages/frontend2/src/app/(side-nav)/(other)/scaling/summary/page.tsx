@@ -20,6 +20,7 @@ export default async function Page() {
   await api.tvl.chart.prefetch({
     filter: { type: 'layer2' },
     range: getCookie('scalingSummaryChartRange'),
+    excludeAssociatedTokens: false,
   })
 
   return (

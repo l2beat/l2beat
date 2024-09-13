@@ -22,7 +22,7 @@ import { sumValuesPerSource } from './sum-values-per-source'
 export const TvlChartDataParams = z.object({
   range: TvlChartRange,
   filter: TvlProjectFilter,
-  excludeAssociatedTokens: z.boolean().optional(),
+  excludeAssociatedTokens: z.boolean(),
 })
 
 export type TvlChartDataParams = z.infer<typeof TvlChartDataParams>
