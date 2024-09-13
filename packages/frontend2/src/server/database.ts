@@ -10,4 +10,14 @@ export const db = !env.MOCK
           ? { rejectUnauthorized: false }
           : undefined,
     })
-  : ({} as Database)
+  : createThrowingProxy()
+
+function createThrowingProxy() {
+  return new Proxy({} as Database, {
+    get: () => {
+      throw new Error(
+        'DB has been called on mock! Report it to engineering team :)',
+      )
+    },
+  })
+}
