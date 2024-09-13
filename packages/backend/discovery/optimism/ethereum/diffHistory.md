@@ -1,3 +1,94 @@
+Generated with discovered.json: 0xd15cdc9ed08ac4b205c0166d7378930683f40b27
+
+# Diff at Thu, 12 Sep 2024 09:45:48 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@127adf09837b5e1f2ac0ecd582a2ef874e97633f block: 20733024
+- current block number: 20733024
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20733024 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      categories:
+-        ["Core"]
+      values.OTHER_MESSENGER:
+-        "0x4200000000000000000000000000000000000007"
++        "optimism:0x4200000000000000000000000000000000000007"
+      values.otherMessenger:
+-        "0x4200000000000000000000000000000000000007"
++        "optimism:0x4200000000000000000000000000000000000007"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"optimism"}}]
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      directlyReceivedPermissions.6.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.6.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x5a7749f83b81B301cAb5f48EB8516B986DAef23D) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.OTHER_BRIDGE:
+-        "0x4200000000000000000000000000000000000014"
++        "optimism:0x4200000000000000000000000000000000000014"
+      values.otherBridge:
+-        "0x4200000000000000000000000000000000000014"
++        "optimism:0x4200000000000000000000000000000000000014"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"optimism"}}]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      categories:
+-        ["Upgrades&Governance"]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      issuedPermissions.0.via.0.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
+      values.l2TokenBridge:
+-        "0x4200000000000000000000000000000000000010"
++        "optimism:0x4200000000000000000000000000000000000010"
+      values.OTHER_BRIDGE:
+-        "0x4200000000000000000000000000000000000010"
++        "optimism:0x4200000000000000000000000000000000000010"
+      values.otherBridge:
+-        "0x4200000000000000000000000000000000000010"
++        "optimism:0x4200000000000000000000000000000000000010"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"optimism"}}]
+    }
+```
+
 Generated with discovered.json: 0x88253ac8f615733403c9bb9634aa0acb33cf7ea7
 
 # Diff at Thu, 12 Sep 2024 07:25:21 GMT:
