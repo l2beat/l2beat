@@ -5,7 +5,7 @@ import { getTvlBreakdownForProject } from '~/server/features/scaling/tvl/breakdo
 const projects = [...layer2s, ...layer3s]
 
 export async function GET(
-  request: Request,
+  _: Request,
   { params }: { params: { slug: string } },
 ) {
   const project = projects.find((p) => p.display.slug === params.slug)
