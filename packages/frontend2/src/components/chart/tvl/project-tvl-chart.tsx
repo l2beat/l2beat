@@ -105,6 +105,7 @@ function DefaultChart({
   const { data, isLoading } = api.tvl.chart.useQuery({
     range: timeRange,
     filter: { type: 'projects', projectIds: [projectId] },
+    excludeAssociatedTokens: false,
   })
 
   const { chartRange, formatYAxisLabel, valuesStyle, columns } =

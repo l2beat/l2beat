@@ -51,12 +51,20 @@ export async function getBridgeProjectDetails(
     : undefined
   const riskSummary = getBridgesRiskSummarySection(bridge, isVerified)
   const technologySection = getBridgeTechnologySection(bridge)
-  const tvlChartData = await api.tvl.chart({
+
+  await api.tvl.chart.prefetch({
     range: '7d',
     filter: { type: 'projects', projectIds: [bridge.id] },
+    excludeAssociatedTokens: false,
   })
-
-  const tokens = await getTokensForProject(bridge)
+  const [tvlChartData, tokens] = await Promise.all([
+    api.tvl.chart({
+      range: '7d',
+      filter: { type: 'projects', projectIds: [bridge.id] },
+      excludeAssociatedTokens: false,
+    }),
+    getTokensForProject(bridge),
+  ])
 
   const items: ProjectDetailsSection[] = []
 
