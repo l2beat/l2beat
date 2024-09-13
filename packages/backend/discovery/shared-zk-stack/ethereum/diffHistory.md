@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xf097679e7476ed8ea27771dd12078e7633211e95
+Generated with discovered.json: 0x1589731c37bd7c0a90e2c710f552aa59eec99453
 
-# Diff at Fri, 13 Sep 2024 03:54:16 GMT:
+# Diff at Fri, 13 Sep 2024 05:35:22 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
 - comparing to: main@f3f080827a9c9144630c7d8b5f28745b2029ead2 block: 20725957
-- current block number: 20739133
+- current block number: 20739638
 
 ## Description
 
@@ -133,6 +133,18 @@ discovery. Values are for block 20725957 (main branch discovery), not current.
 ```diff
     contract ProtocolUpgradeHandler (0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897) {
     +++ description: None
+      values.EXTENDED_LEGAL_VETO_PERIOD:
++        604800
+      values.HARD_FREEZE_PERIOD:
++        604800
+      values.SOFT_FREEZE_PERIOD:
++        43200
+      values.STANDARD_LEGAL_VETO_PERIOD:
++        259200
+      values.UPGRADE_DELAY_PERIOD:
++        86400
+      values.UPGRADE_WAIT_OR_EXPIRE_PERIOD:
++        2592000
       fieldMeta:
 +        {"protocolFrozenUntil":{"severity":"HIGH","description":"Timestamp until which ALL Hyperchains connected to the main STM are frozen. (Mailbox and Executor facets blocked)"}}
     }

@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 20739133,
-  "configHash": "0x6c32ad7b0fffd98b9cc197fbafc7c6113515bbf91f450605687d98e0bae341cb",
+  "blockNumber": 20739638,
+  "configHash": "0x36ca50fe783f5afe2a3206884a07299b8c42cfbd43a631f3b0ce3d71fc446a99",
   "version": 14,
   "contracts": [
     {
@@ -297,13 +297,19 @@
         "$immutable": true,
         "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
         "emergencyUpgradeBoard": "0xdEFd1eDEE3E8c5965216bd59C866f7f5307C9b29",
+        "EXTENDED_LEGAL_VETO_PERIOD": 604800,
         "guardians": "0xD677e09324F8Bb3cC64F009973693f751c33A888",
-        "L2_PROTOCOL_GOVERNOR": "zksync2:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
+        "HARD_FREEZE_PERIOD": 604800,
+        "L2_PROTOCOL_GOVERNOR": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
         "lastFreezeStatusInUpgradeCycle": 0,
         "protocolFrozenUntil": 0,
         "securityCouncil": "0xBDFfCC71FE84020238F2990a6D2954e87355De0D",
         "SHARED_BRIDGE": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+        "SOFT_FREEZE_PERIOD": 43200,
+        "STANDARD_LEGAL_VETO_PERIOD": 259200,
         "STATE_TRANSITION_MANAGER": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+        "UPGRADE_DELAY_PERIOD": 86400,
+        "UPGRADE_WAIT_OR_EXPIRE_PERIOD": 2592000,
         "ZKSYNC_ERA": "0x32400084C286CF3E17e7B677ea9583e60a000324"
       },
       "fieldMeta": {

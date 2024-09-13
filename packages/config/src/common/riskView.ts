@@ -503,6 +503,23 @@ export function EXIT_WINDOW(
   }
 }
 
+export function EXIT_WINDOW_ZKSTACK(
+  upgradeDelay: number,
+): ScalingProjectRiskViewEntry {
+  // const warning: WarningValueWithSentiment = {
+  //   value: 'The EmergencyUpgradeBoard can upgrade with no delay.',
+  //   sentiment: 'bad',
+  // }
+  return {
+    value: 'None',
+    sentiment: 'bad',
+    description: `There is no window for users to exit in case of an unwanted regular upgrade because they cannot force transactions. The regular upgrade delay is ${formatSeconds(
+      upgradeDelay,
+    )}.`,
+    // warning: warning,
+  }
+}
+
 export function EXIT_WINDOW_NITRO(
   l2TimelockDelay: number,
   selfSequencingDelay: number,
@@ -602,6 +619,7 @@ export const RISK_VIEW = {
   UNDER_REVIEW_RISK,
   EXIT_WINDOW,
   EXIT_WINDOW_NITRO,
+  EXIT_WINDOW_ZKSTACK,
   EXIT_WINDOW_NON_UPGRADABLE,
   EXIT_WINDOW_UNKNOWN,
 }
