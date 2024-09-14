@@ -954,7 +954,7 @@ export const zksyncera: Layer2 = {
         // a bit hacky, but re-using the function from arbitrum (3 cases: standard (with or without extension by Guardians), emergency)
         `${formatSeconds(upgradeDelayWithScApprovalS)} - ${formatSeconds(
           upgradeDelayWithScApprovalExtendedLegalVotingS,
-        )} (standard)`,
+        )}`,
         'EmergencyUpgradeBoard',
       ),
     ],
