@@ -4,7 +4,6 @@ import {
   type ImplementationChangeReportApiResponse,
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
-import { isEmpty } from 'lodash'
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
 import { type RosetteValue } from '~/components/rosette/types'
 import { api } from '~/trpc/server'
@@ -102,7 +101,7 @@ export async function getL3ProjectDetails({
 
   const items: ProjectDetailsSection[] = []
 
-  if (!project.isUpcoming && !isEmpty(tvlChartData)) {
+  if (!project.isUpcoming && tvlChartData.chart.length > 0) {
     items.push({
       type: 'ChartSection',
       props: {
@@ -116,7 +115,7 @@ export async function getL3ProjectDetails({
     })
   }
 
-  if (!isEmpty(activityChartData)) {
+  if (activityChartData.length > 0) {
     items.push({
       type: 'ChartSection',
       props: {
@@ -131,7 +130,7 @@ export async function getL3ProjectDetails({
   if (
     !project.isUpcoming &&
     project.milestones &&
-    !isEmpty(project.milestones)
+    project.milestones.length > 0
   ) {
     items.push({
       type: 'MilestonesAndIncidentsSection',
@@ -279,7 +278,7 @@ export async function getL3ProjectDetails({
     })
   }
 
-  if (project.knowledgeNuggets && !isEmpty(project.knowledgeNuggets)) {
+  if (project.knowledgeNuggets && project.knowledgeNuggets.length > 0) {
     items.push({
       type: 'KnowledgeNuggetsSection',
       props: {
