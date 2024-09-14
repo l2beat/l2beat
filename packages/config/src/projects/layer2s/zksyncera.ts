@@ -657,6 +657,40 @@ export const zksyncera: Layer2 = {
     `
     return description
   })(),
+  permissions: [
+    discovery.contractAsPermissioned(
+      discovery.getContract('SecurityCouncil'),
+      `Is one of the three signers of the EmergencyUpgradeBoard. Can freeze all ZK stack chains. Can approve governance proposals in the ProtocolUpgradeHandler. The default threshold for the members of this contract is ${scThresholdString} but is customized for certain actions.`,
+    ),
+    discovery.contractAsPermissioned(
+      discovery.getContract('Guardians'),
+      `Is one of the three signers of the EmergencyUpgradeBoard. Can extend the legal veto period and / or approve governance proposals in the ProtocolUpgradeHandler. Permissioned to cancel non-protocolUpgrade proposals on L2. The default threshold for the members of this contract is ${guardiansThresholdString} but is customized for certain actions.`,
+    ),
+    ...discovery.getMultisigPermission(
+      'ZkFoundationMultisig',
+      'Is one of the three signers of the EmergencyUpgradeBoard.',
+    ),
+    discovery.contractAsPermissioned(
+      discovery.getContract('ProtocolUpgradeHandler'),
+      'Central upgrade Admin Governance contract of the ZK stack.',
+    ),
+    ...discovery.getMultisigPermission(
+      'Matter Labs Multisig',
+      'Has the Admin role in the ZKsync Era and the shared contracts through the ChainAdmin contract.',
+    ),
+    {
+      name: 'ChainAdmin Owner',
+      accounts: [discovery.getPermissionedAccount('ChainAdmin', 'owner')],
+      description:
+        'Can add new Chains, manage fees, apply predefined upgrades, censor bridge transactions and revert batches (*Admin* role).', // era ChainAdmin specific
+    },
+    {
+      name: 'Validators',
+      accounts: validators().map((v) => discovery.formatPermissionedAccount(v)),
+      description:
+        'Actors that are allowed to propose, execute and revert L2 batches on L1 through the ValidatorTimelock.',
+    },
+  ],
   contracts: {
     addresses: [
       discovery.getContractDetails('ZKsync', {
@@ -779,41 +813,15 @@ export const zksyncera: Layer2 = {
       ],
     },
   },
-  permissions: [
-    discovery.contractAsPermissioned(
-      discovery.getContract('SecurityCouncil'),
-      `Is one of the three signers of the EmergencyUpgradeBoard. Can freeze all ZK stack chains. Can approve governance proposals in the ProtocolUpgradeHandler. The default threshold for the members of this contract is ${scThresholdString} but is customized for certain actions.`,
-    ),
-    discovery.contractAsPermissioned(
-      discovery.getContract('Guardians'),
-      `Is one of the three signers of the EmergencyUpgradeBoard. Can extend the legal veto period and / or approve governance proposals in the ProtocolUpgradeHandler. Permissioned to cancel non-protocolUpgrade proposals on L2. The default threshold for the members of this contract is ${guardiansThresholdString} but is customized for certain actions.`,
-    ),
-    ...discovery.getMultisigPermission(
-      'ZkFoundationMultisig',
-      'Is one of the three signers of the EmergencyUpgradeBoard.',
-    ),
-    discovery.contractAsPermissioned(
-      discovery.getContract('ProtocolUpgradeHandler'),
-      'Central upgrade Admin Governance contract of the ZK stack.',
-    ),
-    ...discovery.getMultisigPermission(
-      'Matter Labs Multisig',
-      'Has the Admin role in the ZKsync Era and the shared contracts through the ChainAdmin contract.',
-    ),
-    {
-      name: 'ChainAdmin Owner',
-      accounts: [discovery.getPermissionedAccount('ChainAdmin', 'owner')],
-      description:
-        'Can add new Chains, manage fees, apply predefined upgrades, censor bridge transactions and revert batches (*Admin* role).', // era ChainAdmin specific
-    },
-    {
-      name: 'Validators',
-      accounts: validators().map((v) => discovery.formatPermissionedAccount(v)),
-      description:
-        'Actors that are allowed to propose, execute and revert L2 batches on L1 through the ValidatorTimelock.',
-    },
-  ],
   milestones: [
+    {
+      name: 'Onhchain Governance Launch',
+      link: 'https://blog.zknation.io/zksync-governance-system/',
+      date: '2024-09-12T00:00:00Z',
+      description:
+        'An onchain Governance system is introduced, including token voting, a Security Council and Guardians.',
+      type: 'general',
+    },
     {
       name: 'ZKsync Protocol Upgrade v24',
       link: 'https://github.com/ZKsync-Community-Hub/zksync-developers/discussions/519',
