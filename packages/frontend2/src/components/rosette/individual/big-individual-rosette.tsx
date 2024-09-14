@@ -20,12 +20,14 @@ import {
 } from './individual-rosette-tooltip-context'
 
 export interface Props {
-  names: {
-    inner: string
-    outer: string
+  l2: {
+    name: string
+    risks: RosetteValueTuple
   }
-  innerValues: RosetteValueTuple
-  outerValues: RosetteValueTuple
+  l3: {
+    name: string
+    risks: RosetteValueTuple
+  }
   isUpcoming?: boolean
   isUnderReview?: boolean
   className?: string
@@ -34,7 +36,7 @@ export interface Props {
 export function BigIndividualRosette(props: Props) {
   const isUnderReview =
     !!props.isUnderReview ||
-    Object.values(props.innerValues.concat(props.outerValues)).some(
+    Object.values(props.l2.risks.concat(props.l3.risks)).some(
       ({ sentiment }) => sentiment === 'UnderReview',
     )
 
@@ -43,13 +45,13 @@ export function BigIndividualRosette(props: Props) {
       <div
         data-role="rosette"
         className={cn(
-          'relative whitespace-pre text-center text-xs font-medium uppercase leading-tight',
+          'relative w-[272px] whitespace-pre p-12 text-center text-xs font-medium uppercase leading-tight',
           props.className,
         )}
       >
         <IndividualPizzaRosetteIcon
-          innerValues={props.innerValues}
-          outerValues={props.outerValues}
+          l2={props.l2}
+          l3={props.l3}
           isUnderReview={isUnderReview}
           className={cn(props.isUpcoming && 'opacity-30')}
         />
@@ -57,8 +59,8 @@ export function BigIndividualRosette(props: Props) {
           <UpcomingBadge className="absolute left-[90px] top-[130px]" />
         )}
         <PizzaRosetteLabels
-          values={props.innerValues}
-          containerSize={228}
+          values={props.l3.risks}
+          containerSize={272}
           textRadius={102}
         />
       </div>
@@ -68,21 +70,17 @@ export function BigIndividualRosette(props: Props) {
   return (
     <IndividualRosetteTooltipContextProvider>
       <Tooltip>
-        <div
-          data-role="rosette"
-          className={cn('relative', props.className)}
-          data-rosette-hover-disabled={isUnderReview || props.isUpcoming}
-        >
+        <div className={cn('relative w-[272px] p-12', props.className)}>
           <TooltipTrigger>
             <IndividualPizzaRosetteIcon
-              innerValues={props.innerValues}
-              outerValues={props.outerValues}
+              l2={props.l2}
+              l3={props.l3}
               isUnderReview={isUnderReview}
             />
           </TooltipTrigger>
           <PizzaRosetteLabels
-            values={props.innerValues}
-            containerSize={228}
+            values={props.l3.risks}
+            containerSize={272}
             textRadius={102}
           />
         </div>
@@ -104,23 +102,47 @@ function RosetteTooltipContent() {
       onPointerDownOutside={(e) => {
         e.preventDefault()
       }}
-      className="w-[300px]"
+      className="flex w-[300px] flex-col gap-2"
     >
-      <SentimentText
-        sentiment={content.inner.sentiment}
-        className="mb-2 flex items-center gap-1 font-medium"
-      >
-        {content.inner.value}
-      </SentimentText>
-      {content.inner.warning && (
-        <WarningBar
-          className="mb-2"
-          icon={RoundedWarningIcon}
-          text={content.inner.warning.value}
-          color={content.inner.warning.sentiment === 'bad' ? 'red' : 'yellow'}
-        />
-      )}
-      <span className="text-xs">{content.inner.description}</span>
+      <div className="flex flex-col gap-1">
+        <span className="text-[13px] uppercase text-[#787E8D]">
+          {context.content?.innerProjectName}
+        </span>
+        <SentimentText
+          sentiment={content.inner.sentiment}
+          className="flex items-center gap-1 font-medium"
+        >
+          {content.inner.value}
+        </SentimentText>
+        {content.inner.warning && (
+          <WarningBar
+            icon={RoundedWarningIcon}
+            text={content.inner.warning.value}
+            color={content.inner.warning.sentiment === 'bad' ? 'red' : 'yellow'}
+          />
+        )}
+
+        <span className="text-xs">{content.inner.description}</span>
+      </div>
+      <div className="flex flex-col gap-1">
+        <span className="text-[13px] uppercase text-[#787E8D]">
+          {context.content?.outerProjectName}
+        </span>
+        <SentimentText
+          sentiment={content.outer.sentiment}
+          className="flex items-center gap-1 font-medium"
+        >
+          {content.outer.value}
+        </SentimentText>
+        {content.outer.warning && (
+          <WarningBar
+            icon={RoundedWarningIcon}
+            text={content.outer.warning.value}
+            color={content.outer.warning.sentiment === 'bad' ? 'red' : 'yellow'}
+          />
+        )}
+        <span className="text-xs">{content.outer.description}</span>
+      </div>
     </TooltipContent>
   )
 }

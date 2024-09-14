@@ -4,6 +4,8 @@ import { createContext, useContext, useState } from 'react'
 import { type RosetteValue } from '../types'
 
 interface IndividualContentState {
+  innerProjectName: string
+  outerProjectName: string
   inner: RosetteValue
   outer: RosetteValue
   side: 'top' | 'bottom'

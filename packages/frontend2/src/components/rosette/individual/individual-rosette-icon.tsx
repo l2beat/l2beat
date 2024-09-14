@@ -15,16 +15,22 @@ export type RosetteValueTuple = [
 ]
 
 interface Props {
-  innerValues: RosetteValueTuple
-  outerValues: RosetteValueTuple
+  l2: {
+    name: string
+    risks: RosetteValueTuple
+  }
+  l3: {
+    name: string
+    risks: RosetteValueTuple
+  }
   isUnderReview?: boolean
   className?: string
   background?: boolean
 }
 
 export function IndividualPizzaRosetteIcon({
-  innerValues,
-  outerValues,
+  l2,
+  l3,
   className,
   isUnderReview,
   background = true,
@@ -38,7 +44,7 @@ export function IndividualPizzaRosetteIcon({
     innerDataAvailability,
     innerExitWindow,
     innerProposeFailure,
-  ] = innerValues
+  ] = l2.risks
 
   const [
     outerSequencerFailure,
@@ -46,7 +52,7 @@ export function IndividualPizzaRosetteIcon({
     outerDataAvailability,
     outerExitWindow,
     outerProposeFailure,
-  ] = outerValues
+  ] = l3.risks
 
   const setContent = context?.setContent
   const content = context?.content
@@ -61,7 +67,9 @@ export function IndividualPizzaRosetteIcon({
   ) => {
     setContent?.({
       inner,
+      innerProjectName: l2.name,
       outer,
+      outerProjectName: l3.name,
       side,
       // sideOffset: side === 'top' ? -65 : -50,
       sideOffset: 0,
@@ -70,58 +78,21 @@ export function IndividualPizzaRosetteIcon({
 
   return (
     <svg
-      width="228"
-      height="228"
-      viewBox="0 0 228 228"
+      width="181"
+      height="180"
+      viewBox="0 0 181 180"
       fill="none"
       alt-text="Rosette showing risk summary"
       ref={svgRef}
       onMouseLeave={() => setContent?.(undefined)}
-      className={className}
+      className={cn(className)}
     >
       {background ? (
-        <circle
-          cx="114"
-          cy="114"
-          r="90"
+        <path
+          d="M90 180C139.706 180 180 139.706 180 90C180 40.2944 139.706 0 90 0C40.2944 0 0 40.2944 0 90C0 139.706 40.2944 180 90 180Z"
           className="fill-gray-100 dark:fill-neutral-700"
         />
       ) : null}
-
-      <g
-        onMouseEnter={() =>
-          selectRisk(innerStateValidation, outerStateValidation, 'top')
-        }
-        onTouchStart={() =>
-          selectRisk(innerStateValidation, outerStateValidation, 'top')
-        }
-        className={cn(
-          content &&
-            content.inner.name !== innerStateValidation.name &&
-            'opacity-20',
-          content &&
-            content.outer.name !== outerStateValidation.name &&
-            'opacity-20',
-        )}
-      >
-        <path
-          d="M103.086 106.924C104.655 109.135 103.615 112.235 101.029 113.053L39.3099 132.566C37.0594 133.277 34.7135 131.896 34.3794 129.559C33.238 121.576 31.6762 103.921 36.9671 88.1505C42.7232 70.9934 54.3318 58.577 59.9235 53.3242C61.5926 51.7563 64.1872 52.112 65.5125 53.9795L103.086 106.924Z"
-          className={cn(
-            'transition-opacity',
-            sentimentToFillColor(innerStateValidation.sentiment),
-            isUnderReview && sentimentToFillColor('UnderReview'),
-          )}
-        />
-
-        <path
-          d="M103.086 106.924C104.655 109.135 103.615 112.235 101.029 113.053L64.4441 124.619C62.1936 125.331 59.8518 123.947 59.57 121.603C58.8883 115.936 58.3321 105.644 61.446 96.3631C64.8325 86.2691 71.3512 78.7123 75.2234 74.8722C76.8494 73.2597 79.4431 73.6091 80.7685 75.4767L103.086 106.924Z"
-          className={cn(
-            'transition-opacity',
-            sentimentToFillColor(outerStateValidation.sentiment),
-            isUnderReview && sentimentToFillColor('UnderReview'),
-          )}
-        />
-      </g>
 
       <g
         onMouseEnter={() =>
@@ -140,7 +111,7 @@ export function IndividualPizzaRosetteIcon({
         )}
       >
         <path
-          d="M103.536 121.765C106.124 120.954 108.752 122.898 108.733 125.611L108.271 190.339C108.254 192.7 106.217 194.505 103.891 194.103C95.9455 192.728 78.668 188.772 65.2967 178.877C50.7493 168.113 42.5158 153.242 39.2424 146.304C38.2653 144.233 39.4034 141.874 41.5886 141.189L103.536 121.765Z"
+          d="M80.1197 98.1908C82.7076 97.3794 85.3357 99.3241 85.3164 102.036L84.8545 166.765C84.8377 169.125 82.8003 170.931 80.4746 170.529C72.5287 169.154 55.2512 165.197 41.8799 155.303C27.3325 144.539 19.099 129.668 15.8256 122.729C14.8485 120.658 15.9867 118.3 18.1718 117.615L80.1197 98.1908Z"
           className={cn(
             'transition-opacity',
             sentimentToFillColor(outerSequencerFailure.sentiment),
@@ -148,7 +119,7 @@ export function IndividualPizzaRosetteIcon({
           )}
         />
         <path
-          d="M103.536 121.765C106.124 120.954 108.752 122.898 108.733 125.611L108.464 163.25C108.447 165.611 106.41 167.412 104.094 166.955C98.5649 165.866 88.8 163.261 81.0795 157.548C72.6832 151.335 67.589 142.974 65.1553 138.171C64.1202 136.129 65.252 133.769 67.4372 133.084L103.536 121.765Z"
+          d="M80.1195 98.1906C82.7074 97.3792 85.3355 99.3239 85.3162 102.036L85.0476 139.676C85.0308 142.036 82.9929 143.837 80.6771 143.381C75.1482 142.291 65.3833 139.686 57.6628 133.973C49.2666 127.76 44.1723 119.4 41.7386 114.597C40.7035 112.554 41.8354 110.195 44.0206 109.509L80.1195 98.1906Z"
           className={cn(
             'transition-opacity',
             sentimentToFillColor(innerSequencerFailure.sentiment),
@@ -174,7 +145,7 @@ export function IndividualPizzaRosetteIcon({
         )}
       >
         <path
-          d="M119.305 125.512C119.333 122.8 121.995 120.902 124.568 121.758L185.986 142.2C188.226 142.945 189.314 145.441 188.212 147.528C184.449 154.661 175.347 169.87 161.805 179.529C147.072 190.038 130.385 193.273 122.775 194.242C120.503 194.532 118.612 192.72 118.635 190.431L119.305 125.512Z"
+          d="M95.8885 101.938C95.9165 99.2258 98.5781 97.3273 101.151 98.1838L162.57 118.625C164.809 119.371 165.897 121.866 164.796 123.954C161.033 131.086 151.931 146.295 138.389 155.955C123.656 166.464 106.969 169.699 99.3581 170.668C97.0864 170.957 95.195 169.146 95.2186 166.856L95.8885 101.938Z"
           className={cn(
             'transition-opacity',
             sentimentToFillColor(outerProposeFailure.sentiment),
@@ -182,7 +153,7 @@ export function IndividualPizzaRosetteIcon({
           )}
         />
         <path
-          d="M119.305 125.512C119.333 122.8 121.995 120.902 124.568 121.758L158.772 133.142C161.011 133.888 162.094 136.382 160.94 138.441C158.264 143.216 152.981 151.315 145.491 156.658C137.347 162.467 128.232 164.666 123.065 165.486C120.803 165.845 118.908 164.04 118.931 161.75L119.305 125.512Z"
+          d="M95.8887 101.938C95.9167 99.2258 98.5783 97.3272 101.152 98.1837L135.355 109.568C137.595 110.313 138.678 112.808 137.524 114.867C134.847 119.641 129.564 127.741 122.075 133.083C113.93 138.892 104.816 141.091 99.6481 141.911C97.3864 142.27 95.4911 140.465 95.5148 138.175L95.8887 101.938Z"
           className={cn(
             'transition-opacity',
             sentimentToFillColor(innerProposeFailure.sentiment),
@@ -208,7 +179,7 @@ export function IndividualPizzaRosetteIcon({
         )}
       >
         <path
-          d="M126.232 112.63C123.669 111.743 122.713 108.617 124.342 106.448L163.215 54.6899C164.633 52.8027 167.344 52.5629 168.975 54.2698C174.544 60.1013 186.079 73.5589 190.943 89.466C196.234 106.772 194.007 123.624 192.511 131.148C192.065 133.394 189.747 134.613 187.583 133.864L126.232 112.63Z"
+          d="M102.815 89.0557C100.252 88.1686 99.2962 85.0421 100.925 82.8735L139.798 31.1155C141.216 29.2282 143.928 28.9884 145.558 30.6953C151.128 36.5269 162.663 49.9844 167.526 65.8915C172.817 83.1978 170.59 100.049 169.094 107.574C168.648 109.82 166.33 111.039 164.166 110.29L102.815 89.0557Z"
           className={cn(
             'transition-opacity',
             sentimentToFillColor(outerExitWindow.sentiment),
@@ -217,7 +188,7 @@ export function IndividualPizzaRosetteIcon({
         />
 
         <path
-          d="M126.232 112.63C123.669 111.743 122.713 108.617 124.342 106.448L147.384 75.7675C148.802 73.8803 151.512 73.6449 153.104 75.3877C156.953 79.603 163.389 87.653 166.251 97.015C169.364 107.197 168.453 117.135 167.535 122.511C167.15 124.768 164.836 125.992 162.672 125.243L126.232 112.63Z"
+          d="M102.815 89.0558C100.252 88.1687 99.2962 85.0422 100.925 82.8736L123.968 52.1931C125.385 50.3059 128.095 50.0705 129.687 51.8133C133.537 56.0286 139.972 64.0786 142.834 73.4406C145.947 83.6223 145.037 93.5606 144.119 98.9362C143.733 101.194 141.419 102.417 139.255 101.668L102.815 89.0558Z"
           className={cn(
             'transition-opacity',
             sentimentToFillColor(innerExitWindow.sentiment),
@@ -243,7 +214,7 @@ export function IndividualPizzaRosetteIcon({
         }
       >
         <path
-          d="M116.646 100.154C115.049 102.341 111.785 102.341 110.187 100.154L72.0192 47.9117C70.6249 46.0032 71.1892 43.3354 73.302 42.276C80.5171 38.6584 96.7709 31.5744 113.417 31.5744C131.526 31.5744 147.001 38.618 153.77 42.2449C155.791 43.3281 156.28 45.9054 154.927 47.7572L116.646 100.154Z"
+          d="M93.3478 76.656C91.7501 78.8477 88.4808 78.8477 86.8831 76.656L48.7521 24.3486C47.3618 22.4413 47.9253 19.7777 50.0343 18.7178C57.2394 15.0966 73.4815 8.00005 90.1154 8.00005C108.212 8.00005 123.676 15.0564 130.435 18.6869C132.452 19.7706 132.94 22.3436 131.591 24.1941L93.3478 76.656Z"
           className={cn(
             'transition-opacity',
             sentimentToFillColor(outerDataAvailability.sentiment),
@@ -252,7 +223,7 @@ export function IndividualPizzaRosetteIcon({
         />
 
         <path
-          d="M116.795 100.212C115.196 102.379 111.956 102.379 110.357 100.212L88.2188 70.2067C86.8071 68.2933 87.3785 65.6095 89.5329 64.6031C94.6379 62.2185 104.005 58.5745 113.576 58.5745C123.983 58.5745 133.023 62.194 137.85 64.579C139.919 65.6013 140.417 68.1948 139.047 70.0519L116.795 100.212Z"
+          d="M93.3779 76.6375C91.7791 78.8044 88.5392 78.8044 86.9404 76.6375L64.8022 46.6322C63.3904 44.7188 63.9619 42.035 66.1163 41.0287C71.2213 38.6441 80.5884 35 90.1592 35C100.566 35 109.606 38.6195 114.433 41.0045C116.502 42.0268 117.001 44.6203 115.63 46.4774L93.3779 76.6375Z"
           className={cn(
             'transition-opacity',
             sentimentToFillColor(innerDataAvailability.sentiment),
@@ -278,19 +249,19 @@ export function IndividualPizzaRosetteIcon({
         )}
       >
         <path
-          d="M103.086 106.924C104.655 109.135 103.615 112.235 101.029 113.053L39.3099 132.566C37.0594 133.277 34.7135 131.896 34.3794 129.559C33.238 121.576 31.6762 103.921 36.9671 88.1505C42.7232 70.9934 54.3318 58.577 59.9235 53.3242C61.5926 51.7563 64.1872 52.112 65.5125 53.9795L103.086 106.924Z"
+          d="M79.6959 83.0368C81.248 85.2609 80.1836 88.3522 77.5912 89.1492L47.1735 98.5018L15.7193 108.173C13.4632 108.867 11.1283 107.467 10.8128 105.128C9.73459 97.1361 8.31256 79.4685 13.728 63.7408C19.6198 46.6298 31.3263 34.3057 36.9594 29.0973C38.6409 27.5426 41.2325 27.9189 42.5431 29.7969L61.4845 56.9398L79.6959 83.0368Z"
           className={cn(
             'transition-opacity',
-            sentimentToFillColor(innerStateValidation.sentiment),
+            sentimentToFillColor(outerStateValidation.sentiment),
             isUnderReview && sentimentToFillColor('UnderReview'),
           )}
         />
 
         <path
-          d="M103.086 106.924C104.655 109.135 103.615 112.235 101.029 113.053L64.4441 124.619C62.1936 125.331 59.8518 123.947 59.57 121.603C58.8883 115.936 58.3321 105.644 61.446 96.3631C64.8325 86.2691 71.3512 78.7123 75.2234 74.8722C76.8494 73.2597 79.4431 73.6091 80.7685 75.4767L103.086 106.924Z"
+          d="M79.6957 83.0368C81.2478 85.2609 80.1834 88.3521 77.591 89.1492L43.0253 99.7772C40.7693 100.471 38.4389 99.0687 38.1824 96.7224C37.5864 91.2696 37.1808 81.5764 40.1853 72.8508C43.4526 63.3618 49.6174 56.2582 53.3567 52.5825C54.9899 50.9772 57.5809 51.3463 58.8914 53.2243L79.6957 83.0368Z"
           className={cn(
             'transition-opacity',
-            sentimentToFillColor(outerStateValidation.sentiment),
+            sentimentToFillColor(innerStateValidation.sentiment),
             isUnderReview && sentimentToFillColor('UnderReview'),
           )}
         />
@@ -309,12 +280,10 @@ export function IndividualPizzaRosetteIcon({
         </>
       ) : null}
 
-      <circle
-        cx="113.576"
-        cy="113.574"
-        r="52"
-        stroke-width="10"
+      <path
+        d="M90.1592 142C118.878 142 142.159 118.719 142.159 90C142.159 61.2812 118.878 38 90.1592 38C61.4404 38 38.1592 61.2812 38.1592 90C38.1592 118.719 61.4404 142 90.1592 142Z"
         className="stroke-gray-100 dark:stroke-neutral-700"
+        stroke-width="10"
       />
     </svg>
   )
