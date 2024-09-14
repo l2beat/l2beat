@@ -1,23 +1,23 @@
-import { type Bridge } from "@l2beat/config";
+import { type Bridge } from '@l2beat/config'
 import {
   type ContractsVerificationStatuses,
   type ImplementationChangeReportApiResponse,
   type ManuallyVerifiedContracts,
-} from "@l2beat/shared-pure";
-import { type ProjectDetailsSection } from "~/components/projects/sections/types";
-import { getTokensForProject } from "~/server/features/scaling/tvl/tokens/get-tokens-for-project";
-import { api } from "~/trpc/server";
-import { getContractsSection } from "~/utils/project/contracts-and-permissions/get-contracts-section";
-import { getPermissionsSection } from "~/utils/project/contracts-and-permissions/get-permissions-section";
-import { getBridgesRiskSummarySection } from "~/utils/project/risk-summary/get-bridges-risk-summary";
-import { getBridgeTechnologySection } from "~/utils/project/technology/get-technology-section";
+} from '@l2beat/shared-pure'
+import { type ProjectDetailsSection } from '~/components/projects/sections/types'
+import { getTokensForProject } from '~/server/features/scaling/tvl/tokens/get-tokens-for-project'
+import { api } from '~/trpc/server'
+import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
+import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
+import { getBridgesRiskSummarySection } from '~/utils/project/risk-summary/get-bridges-risk-summary'
+import { getBridgeTechnologySection } from '~/utils/project/technology/get-technology-section'
 
 export async function getBridgeProjectDetails(
   bridge: Bridge,
   isVerified: boolean,
   contractsVerificationStatuses: ContractsVerificationStatuses,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
-  implementationChange: ImplementationChangeReportApiResponse | undefined
+  implementationChange: ImplementationChangeReportApiResponse | undefined,
 ) {
   const permissionsSection = bridge.permissions
     ? getPermissionsSection(
@@ -29,9 +29,9 @@ export async function getBridgeProjectDetails(
           nativePermissions: bridge.nativePermissions,
         },
         contractsVerificationStatuses,
-        manuallyVerifiedContracts
+        manuallyVerifiedContracts,
       )
-    : undefined;
+    : undefined
   const contractsSection = bridge.contracts
     ? getContractsSection(
         {
@@ -45,118 +45,118 @@ export async function getBridgeProjectDetails(
         },
         contractsVerificationStatuses,
         manuallyVerifiedContracts,
-        implementationChange
+        implementationChange,
       )
-    : undefined;
-  const riskSummary = getBridgesRiskSummarySection(bridge, isVerified);
-  const technologySection = getBridgeTechnologySection(bridge);
+    : undefined
+  const riskSummary = getBridgesRiskSummarySection(bridge, isVerified)
+  const technologySection = getBridgeTechnologySection(bridge)
 
   await api.tvl.chart.prefetch({
-    range: "7d",
-    filter: { type: "projects", projectIds: [bridge.id] },
+    range: '7d',
+    filter: { type: 'projects', projectIds: [bridge.id] },
     excludeAssociatedTokens: false,
-  });
+  })
   const [tvlChartData, tokens] = await Promise.all([
     api.tvl.chart({
-      range: "7d",
-      filter: { type: "projects", projectIds: [bridge.id] },
+      range: '7d',
+      filter: { type: 'projects', projectIds: [bridge.id] },
       excludeAssociatedTokens: false,
     }),
     getTokensForProject(bridge),
-  ]);
+  ])
 
-  const items: ProjectDetailsSection[] = [];
+  const items: ProjectDetailsSection[] = []
 
   if (!bridge.isUpcoming && tvlChartData.chart.length > 0) {
     items.push({
-      type: "ChartSection",
+      type: 'ChartSection',
       props: {
-        id: "tvl",
-        title: "Value Locked",
+        id: 'tvl',
+        title: 'Value Locked',
         projectId: bridge.id,
         tokens: tokens,
         isBridge: true,
         milestones: [],
       },
-    });
+    })
   }
 
   if (bridge.milestones && bridge.milestones.length > 0) {
     items.push({
-      type: "MilestonesAndIncidentsSection",
+      type: 'MilestonesAndIncidentsSection',
       props: {
         milestones: bridge.milestones,
-        id: "milestones-and-incidents",
-        title: "Milestones & Incidents",
+        id: 'milestones-and-incidents',
+        title: 'Milestones & Incidents',
       },
-    });
+    })
   }
 
   if (bridge.display.detailedDescription) {
     items.push({
-      type: "DetailedDescriptionSection",
+      type: 'DetailedDescriptionSection',
       props: {
-        id: "detailed-description",
-        title: "Detailed description",
+        id: 'detailed-description',
+        title: 'Detailed description',
         description: bridge.display.description,
         detailedDescription: bridge.display.detailedDescription,
       },
-    });
+    })
   }
 
   if (riskSummary.riskGroups.length > 0) {
     items.push({
-      type: "RiskSummarySection",
+      type: 'RiskSummarySection',
       props: {
-        id: "risk-analysis",
-        title: "Risk summary",
+        id: 'risk-analysis',
+        title: 'Risk summary',
         ...riskSummary,
       },
-    });
+    })
   }
 
   if (technologySection) {
     items.push({
-      type: "TechnologySection",
+      type: 'TechnologySection',
       props: {
         ...technologySection,
-        id: "technology",
-        title: "Technology",
+        id: 'technology',
+        title: 'Technology',
       },
-    });
+    })
   }
 
   if (permissionsSection) {
     items.push({
-      type: "PermissionsSection",
+      type: 'PermissionsSection',
       props: {
         ...permissionsSection,
-        id: "permissions",
-        title: "Permissions",
+        id: 'permissions',
+        title: 'Permissions',
       },
-    });
+    })
   }
 
   if (contractsSection)
     items.push({
-      type: "ContractsSection",
+      type: 'ContractsSection',
       props: {
-        id: "contracts",
-        title: "Smart contracts",
+        id: 'contracts',
+        title: 'Smart contracts',
         ...contractsSection,
       },
-    });
+    })
 
   if (bridge.knowledgeNuggets && bridge.knowledgeNuggets.length > 0) {
     items.push({
-      type: "KnowledgeNuggetsSection",
+      type: 'KnowledgeNuggetsSection',
       props: {
         knowledgeNuggets: bridge.knowledgeNuggets,
-        id: "knowledge-nuggets",
-        title: "Knowledge Nuggets",
+        id: 'knowledge-nuggets',
+        title: 'Knowledge Nuggets',
       },
-    });
+    })
   }
 
-  return items;
+  return items
 }
