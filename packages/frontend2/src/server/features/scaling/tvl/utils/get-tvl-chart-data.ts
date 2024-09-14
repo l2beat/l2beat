@@ -64,7 +64,16 @@ export const getCachedTvlChartData = cache(
       !!excludeAssociatedTokens,
     )
     const latestValue = lastWeekChart.at(-1)
-    assert(latestValue, 'No latest value')
+
+    if (!latestValue) {
+      return {
+        total: {
+          usd: 0,
+          eth: 0,
+        },
+        chart: [],
+      }
+    }
 
     const total = latestValue[1] + latestValue[2] + latestValue[3]
     const ethPrice = latestValue[4]
