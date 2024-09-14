@@ -59,17 +59,24 @@ const upgradeDelayPeriodS = discovery.getContractValue<number>(
   'ProtocolUpgradeHandler',
   'UPGRADE_DELAY_PERIOD',
 )
-// minimum upgrade delay:
-// protTlMinDelayS + executionDelayS + legalVetoExtendedS + upgradeDelayPeriodS
-//       0                21h                7d                 1d         = 8d 21h
-// assumption: active guardians (2/8)
-const upgradeDelay =
-  protTlMinDelayS + executionDelayS + legalVetoExtendedS + upgradeDelayPeriodS
-
 const upgradeWaitOrExpireS = discovery.getContractValue<number>(
   'ProtocolUpgradeHandler',
   'UPGRADE_WAIT_OR_EXPIRE_PERIOD',
 )
+// protTlMinDelayS + executionDelayS + legalVetoExtendedS + upgradeDelayPeriodS
+//       0                21h                7d                 1d         = 8d 21h
+// assumption: active guardians (2/8)
+const upgradeDelayWithScApprovalExtendedLegalVoting =
+  protTlMinDelayS + executionDelayS + legalVetoExtendedS + upgradeDelayPeriodS
+const upgradeDelayWithScApproval =
+  protTlMinDelayS + executionDelayS + legalVetoStandardS + upgradeDelayPeriodS
+const upgradeDelayNormal =
+  protTlMinDelayS +
+  executionDelayS +
+  legalVetoStandardS +
+  upgradeWaitOrExpireS +
+  upgradeDelayPeriodS
+
 const softFreezeS = discovery.getContractValue<number>(
   'ProtocolUpgradeHandler',
   'SOFT_FREEZE_PERIOD',
@@ -119,7 +126,7 @@ const guardiansThresholdString = `${guardiansMemberCount} / ${guardiansMainThres
 const upgrades = {
   upgradableBy: ['ProtocolUpgradeHandler'],
   upgradeDelay: `0 through the EmergencyUpgradeBoard, else ${formatSeconds(
-    upgradeDelay,
+    upgradeDelayWithScApprovalExtendedLegalVoting,
   )}.`,
 }
 
@@ -514,7 +521,9 @@ export const zksyncera: Layer2 = {
       ],
     },
     exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW_ZKSTACK(upgradeDelay),
+      ...RISK_VIEW.EXIT_WINDOW_ZKSTACK(
+        upgradeDelayWithScApprovalExtendedLegalVoting,
+      ),
       sources: [
         {
           contract: 'ZKsync',
@@ -661,19 +670,41 @@ export const zksyncera: Layer2 = {
   permissions: [
     discovery.contractAsPermissioned(
       discovery.getContract('SecurityCouncil'),
-      `Is one of the three signers of the EmergencyUpgradeBoard. Can freeze all ZK stack chains. Can approve governance proposals in the ProtocolUpgradeHandler. The default threshold for the members of this contract is ${scThresholdString} but is customized for certain actions.`,
+      `One of the three signers of the EmergencyUpgradeBoard. Can freeze all ZK stack chains. Can approve governance proposals in the ProtocolUpgradeHandler. The default threshold for the members of this contract is ${scThresholdString} but is customized for certain actions.`,
     ),
+    {
+      name: 'SecurityCouncil members',
+      accounts: discovery.getPermissionedAccounts('SecurityCouncil', 'members'),
+      description: `Members of the SecurityCouncil. The members are mostly low-threshold multisigs themselves. `,
+      references: [
+        {
+          text: 'Security Council members - ZK Nation docs',
+          href: 'https://docs.zknation.io/zksync-governance/schedule-3-zksync-security-council',
+        },
+      ],
+    },
     discovery.contractAsPermissioned(
       discovery.getContract('Guardians'),
       `Is one of the three signers of the EmergencyUpgradeBoard. Can extend the legal veto period and / or approve governance proposals in the ProtocolUpgradeHandler. Permissioned to cancel non-protocolUpgrade proposals on L2. The default threshold for the members of this contract is ${guardiansThresholdString} but is customized for certain actions.`,
     ),
+    {
+      name: 'ZKsync Guardians',
+      accounts: discovery.getPermissionedAccounts('Guardians', 'members'),
+      description: `Members of the Guardians contract, usually 1/1 Gnosis multisigs themselves. `,
+      references: [
+        {
+          text: 'ZKsync Guardians - ZK Nation docs',
+          href: 'https://docs.zknation.io/zksync-governance/schedule-4-zksync-guardians',
+        },
+      ],
+    },
     ...discovery.getMultisigPermission(
       'ZkFoundationMultisig',
       'Is one of the three signers of the EmergencyUpgradeBoard.',
     ),
     discovery.contractAsPermissioned(
       discovery.getContract('ProtocolUpgradeHandler'),
-      'Central upgrade Admin Governance contract of the ZK stack.',
+      'Owner and upgrade Admin of all shared ZK stack contracts. Can also upgrade the individual Hyperchain diamond contracts.',
     ),
     ...discovery.getMultisigPermission(
       'Matter Labs Multisig',
@@ -711,12 +742,22 @@ export const zksyncera: Layer2 = {
       discovery.getContractDetails('Verifier', {
         description: 'Implements ZK proof verification logic.',
         ...upgrades,
-        upgradeConsiderations:
-          'Multisig can change the verifier with no delay.',
       }),
+      discovery.getContractDetails(
+        'SecurityCouncil',
+        `Custom contract acting as a Multisig. The default threshold for the members of this contract is ${scThresholdString} but is customized for certain actions.`,
+      ),
+      discovery.getContractDetails(
+        'Guardians',
+        `Custom contract acting as a Multisig. The default threshold for the members of this contract is ${guardiansThresholdString} but is customized for certain actions.`,
+      ),
+      discovery.getContractDetails(
+        'ProtocolUpgradeHandler',
+        'The main upgrade contract and Governance proxy for al ZK stack contracts.',
+      ),
       discovery.getContractDetails('L1SharedBridge', {
         description:
-          'This bridge contract escrows all ERC-20s and ETH that are deposited to ZKsync Era - and in the future - other registered ZK stack chains.',
+          'This bridge contract escrows all ERC-20s and ETH that are deposited to registered ZK stack chains like ZKsync Era.',
         ...upgrades,
       }),
       discovery.getContractDetails('BridgeHub', {
@@ -726,11 +767,21 @@ export const zksyncera: Layer2 = {
       }),
       discovery.getContractDetails('StateTransitionManager', {
         description:
-          'Defines L2 diamond contract creation and upgrade, proof verification for the `ZKsync diamond` contract connected to it (and potential other L2 diamond contracts that opt in to share this logic).',
+          'Defines L2 diamond contract creation and upgrade data, proof verification for the `ZKsync diamond` contract connected to it (and other L2 diamond contracts that share the logic).',
         ...upgrades,
       }),
     ],
-    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    risks: [
+      CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
+        // a bit hacky, but re-using the function from arbitrum (3 cases: standard, SC approves, emergency)
+        `${formatSeconds(upgradeDelayNormal)} (standard), ${formatSeconds(
+          upgradeDelayWithScApproval,
+        )} - ${formatSeconds(
+          upgradeDelayWithScApprovalExtendedLegalVoting,
+        )} (with Security Council approval)`,
+        'EmergencyUpgradeBoard',
+      ),
+    ],
   },
   stateDerivation: {
     nodeSoftware: `The node software is open-source, and its source code can be found [here](https://github.com/matter-labs/zksync-era).
@@ -820,7 +871,7 @@ export const zksyncera: Layer2 = {
       link: 'https://blog.zknation.io/zksync-governance-system/',
       date: '2024-09-12T00:00:00Z',
       description:
-        'An onchain Governance system is introduced, including token voting, a Security Council and Guardians.',
+        'An onchain Governance system is introduced, including a Security Council and Guardians.',
       type: 'general',
     },
     {
