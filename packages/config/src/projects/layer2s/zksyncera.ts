@@ -645,19 +645,15 @@ export const zksyncera: Layer2 = {
     )}) form a de-facto 3/3 Multisig 
     by pushing an immediate upgrade proposal through the EmergencyUpgradeBoard, which circumvents all delays and executes immediately via the ProtocolUpgradeHandler.
     
-    The SecurityCouncil can freeze (pause withdrawals and settlement) all chains connected to the main StateTransitionManager (currently all chains in the ZK stack). 
+    The SecurityCouncil can freeze (pause withdrawals and settlement) all chains connected to the current StateTransitionManager. 
     Either for a softFreeze of ${formatSeconds(
       softFreezeS,
     )} or a hardFreeze of ${formatSeconds(hardFreezeS)}.
     
-    Additionally to the paths that can upgrade shared implementations, the ZK stack governance system also defines roles with different permissions: 
-    A single *Admin* role that governs parameters in the shared contracts and a *ChainAdmin* role for managing parameters of each Hyperchain that builds on the stack.
-    These chain-specific actions include setting a transaction filterer that can censor arbitrary L1 -> L2 messages, setting fee parameters and adding / removing Validators in the ValidatorTimelock.
-    
-    ZKsync Era's ChainAdmin differs from the others as it also receives the Admin (not upgradeability admin) role in the shared ZK stack contracts.
-    This gives the MatterLabs Multisig the ability to unilaterally create new chains, revert batches and change the ValidatorTimelock among other permissions.
-    
-    The ZK token contract can be upgraded by an the ProtocolUpgradeHandler alias on L2.
+    Additionally to the paths that can upgrade all shared implementations, the ZK stack governance system defines other roles that can modify the system: 
+    A single *Admin* role that governs parameters in the shared contracts and a (Chain-)*Admin* role (in the chain-specific diamond contract) for managing parameters of each individual Hyperchain that builds on the stack.
+    These chain-specific actions include setting a transaction filterer that can censor L1 -> L2 messages, setting fee parameters and adding / removing Validators in the ValidatorTimelock. 
+    ZKsync Era's ChainAdmin differs from the others as it also receives the above *Admin* (not upgradeability admin) role in the shared ZK stack contracts.
     `
     return description
   })(),
@@ -786,11 +782,11 @@ export const zksyncera: Layer2 = {
   permissions: [
     discovery.contractAsPermissioned(
       discovery.getContract('SecurityCouncil'),
-      `Is one of the three signers of the EmergencyUpgradeBoard. Can freeze all ZK stack chains. Can approve governance proposals in the ProtocolUpgradeHandler. The default threshold for the members of this contract is ${scThresholdString} but can be customized per action.`,
+      `Is one of the three signers of the EmergencyUpgradeBoard. Can freeze all ZK stack chains. Can approve governance proposals in the ProtocolUpgradeHandler. The default threshold for the members of this contract is ${scThresholdString} but is customized for certain actions.`,
     ),
     discovery.contractAsPermissioned(
       discovery.getContract('Guardians'),
-      `Is one of the three signers of the EmergencyUpgradeBoard. Can extend the legal veto period and / or approve governance proposals in the ProtocolUpgradeHandler. Permissioned to cancel non-protocol proposals on L2. The default threshold for the members of this contract is ${guardiansThresholdString} but can be customized per action.`,
+      `Is one of the three signers of the EmergencyUpgradeBoard. Can extend the legal veto period and / or approve governance proposals in the ProtocolUpgradeHandler. Permissioned to cancel non-protocolUpgrade proposals on L2. The default threshold for the members of this contract is ${guardiansThresholdString} but is customized for certain actions.`,
     ),
     ...discovery.getMultisigPermission(
       'ZkFoundationMultisig',
