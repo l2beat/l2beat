@@ -481,7 +481,7 @@ export const zksyncera: Layer2 = {
   chainConfig: {
     name: 'zksync2',
     chainId: 324,
-    explorerUrl: 'https://explorer.zksync.io/',
+    explorerUrl: 'https://era.zksync.network/',
     explorerApi: {
       url: 'https://api-era.zksync.network/api',
       type: 'etherscan',
