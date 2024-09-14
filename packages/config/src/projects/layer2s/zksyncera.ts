@@ -637,7 +637,8 @@ export const zksyncera: Layer2 = {
     For the case that the SC does not approve here, the Guardians can instead approve the proposal, or nobody. In the two latter cases, the waiting period is waited out in full. 
     A proposal cannot be actively cancelled, but will be discarded if not approved after the full waiting period. An approved proposal now enters the \*pendingExecution\* state for a final delay of 1d, and can then be executed.
     
-    There are two other tracks of Governance also starting with DAO Delegate proposals the ZKsync Era rollup: 1) Token Program Proposals permissioned as minters for the ZK token and 2) Governance Advisory Proposals without onchain targets. 
+    There are two other tracks of Governance also starting with DAO Delegate proposals the ZKsync Era rollup: 1) Token Program Proposals that add new minters, allocations or upgrade the ZK token and 
+    2) Governance Advisory Proposals that e.g. change the ZK Credo or other offchain Governance Procedures without onchain targets. 
     The protocol for these two other tracks is similar to the first part of the standard path described above (albeit having different quorum and timelock values), without passing over to the Ethereum L1.
     
     **The emergency path:** SecurityCouncil (${scThresholdString}), Guardians (${guardiansThresholdString}) and ZkFoundationMultisig (${discovery.getMultisigStats(
@@ -705,7 +706,7 @@ export const zksyncera: Layer2 = {
       }),
       discovery.getContractDetails(
         'ValidatorTimelock',
-        'Intermediary contract between the *Validators* and the `ZKsync Era diamond` that delays block execution (ie withdrawals and other L2 --> L1 messages).',
+        `Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by ${executionDelay}.`,
       ),
       discovery.getContractDetails('Verifier', {
         description: 'Implements ZK proof verification logic.',
