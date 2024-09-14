@@ -74,11 +74,11 @@ const upgradeWaitOrExpireS = discovery.getContractValue<number>(
 // protTlMinDelayS + executionDelayS + legalVetoExtendedS + upgradeDelayPeriodS
 //       0                21h                7d                 1d         = 8d 21h
 // assumption: active guardians (2/8)
-const upgradeDelayWithScApprovalExtendedLegalVoting =
+const upgradeDelayWithScApprovalExtendedLegalVotingS =
   protTlMinDelayS + executionDelayS + legalVetoExtendedS + upgradeDelayPeriodS
-const upgradeDelayWithScApproval =
+const upgradeDelayWithScApprovalS =
   protTlMinDelayS + executionDelayS + legalVetoStandardS + upgradeDelayPeriodS
-const upgradeDelayNoSc =
+const upgradeDelayNoScS =
   protTlMinDelayS +
   executionDelayS +
   legalVetoStandardS +
@@ -154,7 +154,7 @@ const guardiansThresholdString = `${guardiansMemberCount} / ${guardiansMainThres
 const upgrades = {
   upgradableBy: ['ProtocolUpgradeHandler'],
   upgradeDelay: `0 through the EmergencyUpgradeBoard, else ${formatSeconds(
-    upgradeDelayWithScApproval,
+    upgradeDelayWithScApprovalS,
   )}.`,
 }
 
@@ -549,7 +549,7 @@ export const zksyncera: Layer2 = {
       ],
     },
     exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW_ZKSTACK(upgradeDelayWithScApproval),
+      ...RISK_VIEW.EXIT_WINDOW_ZKSTACK(upgradeDelayWithScApprovalS),
       sources: [
         {
           contract: 'ZKsync',
@@ -653,10 +653,10 @@ export const zksyncera: Layer2 = {
     **The standard path:** Delegates can start new proposals by reaching a threshold of ${protocolStartProposalThresholdM}M ZK tokens on the ZKsync Era Rollup's ZkProtocolGovernor contract.
     This launches a ${formatSeconds(
       protVotingDelayS,
-    )} 'voting delay' after which the ${formatSeconds(
+    )} 'voting delay' after which the ${formatSeconds(protVotingPeriodS)} voting period starts. During these first two periods, the proposal can be canceled by the proposer or if it falls below the proposing threshold.
+    A proposal is only successful if it reaches both quorum (${protocolQuorumM}M ZK tokens) and simple majority. When it reaches quorum, the voting period is reset to ${formatSeconds(
       protVotingPeriodS,
-    )} voting period starts. During these first two periods, the proposal can be canceled by the proposer or if it falls below the proposing threshold.
-    A proposal is only successful if it reaches both quorum (${protocolQuorumM}M ZK tokens) and simple majority. When it reaches quorum, the voting period is reset to ${formatSeconds(protVotingPeriodS)}. 
+    )}. 
     In the successful case, it can be queued in the ${formatSeconds(
       protTlMinDelayS,
     )} timelock which forwards it to Ethereum as an L2->L1 log. 
@@ -683,12 +683,22 @@ export const zksyncera: Layer2 = {
     )}) form a de-facto 3/3 Multisig 
     by pushing an immediate upgrade proposal through the EmergencyUpgradeBoard, which circumvents all delays and executes immediately via the ProtocolUpgradeHandler.
     
+    The cumulative duration of the upgrade paths from the moment of a voted 'successful' proposal is ${formatSeconds(
+      upgradeDelayWithScApprovalS,
+    )} - ${formatSeconds(
+      upgradeDelayWithScApprovalExtendedLegalVotingS,
+    )} (depending on Guardians extending the LegalVetoPeriod) for Standard, 0 for Emergency and ${formatSeconds(
+      upgradeDelayNoScS,
+    )} for the path in which the SecurityCouncil is not approving the proposal.
+    
     The SecurityCouncil can freeze (pause withdrawals and settlement) all chains connected to the current StateTransitionManager. 
     Either for a softFreeze of ${formatSeconds(
       softFreezeS,
-    )} or a hardFreeze of ${formatSeconds(hardFreezeS)}.
+    )} or a hardFreeze of ${formatSeconds(hardFreezeS)}. 
+    After a sofrFreeze and / or a hardFreeze, a proposal from the EmergencyUpgradeBoard has to be passed before subsequent freezes are possible. 
+    Only the SecurityCouncil can unfreeze an active freeze.
     
-    Apart from these paths that can upgrade all shared implementations, the ZK stack governance system defines other roles that can modify the system: 
+    Apart from the paths that can upgrade all shared implementations, the ZK stack governance system defines other roles that can modify the system: 
     A single *Admin* role that governs parameters in the shared contracts and a (Chain-)*Admin* role (in the chain-specific diamond contract) for managing parameters of each individual Hyperchain that builds on the stack.
     These chain-specific actions include setting a transaction filterer that can censor L1 -> L2 messages, setting fee parameters and adding / removing Validators in the ValidatorTimelock. 
     ZKsync Era's ChainAdmin differs from the others as it also receives the above *Admin* (not upgradeability admin) role in the shared ZK stack contracts.
@@ -942,8 +952,8 @@ export const zksyncera: Layer2 = {
     risks: [
       CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
         // a bit hacky, but re-using the function from arbitrum (3 cases: standard (with or without extension by Guardians), emergency)
-        `${formatSeconds(upgradeDelayWithScApproval)} - ${formatSeconds(
-          upgradeDelayWithScApprovalExtendedLegalVoting,
+        `${formatSeconds(upgradeDelayWithScApprovalS)} - ${formatSeconds(
+          upgradeDelayWithScApprovalExtendedLegalVotingS,
         )} (standard)`,
         'EmergencyUpgradeBoard',
       ),
