@@ -1,4 +1,4 @@
-import { type Layer3 } from '@l2beat/config'
+import { type Layer2, type Layer3 } from '@l2beat/config'
 import {
   type ContractsVerificationStatuses,
   type ImplementationChangeReportApiResponse,
@@ -6,6 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { isEmpty } from 'lodash'
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
+import { toRosetteTuple } from '~/components/rosette/individual/to-rosette-tuple'
 import { type RosetteValue } from '~/components/rosette/types'
 import { api } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
@@ -20,11 +21,14 @@ import { getTokensForProject } from '../../tvl/tokens/get-tokens-for-project'
 
 interface Params {
   project: Layer3
+  hostChain: Layer2
   isVerified: boolean
   contractsVerificationStatuses: ContractsVerificationStatuses
   manuallyVerifiedContracts: ManuallyVerifiedContracts
   implementationChangeReport: ImplementationChangeReportApiResponse
   rosetteValues: RosetteValue[]
+  hostChainRosetteValues: RosetteValue[]
+  combinedRosetteValues?: RosetteValue[]
 }
 
 export async function getL3ProjectDetails({
@@ -34,6 +38,9 @@ export async function getL3ProjectDetails({
   manuallyVerifiedContracts,
   implementationChangeReport,
   rosetteValues,
+  hostChain,
+  hostChainRosetteValues,
+  combinedRosetteValues,
 }: Params) {
   const permissionsSection = project.permissions
     ? getPermissionsSection(
@@ -175,12 +182,21 @@ export async function getL3ProjectDetails({
   }
 
   items.push({
-    type: 'RiskAnalysisSection',
+    type: 'L3RiskAnalysisSection',
     props: {
       id: 'risk-analysis',
       title: 'Risk analysis',
-      rosetteType: 'pizza',
-      rosetteValues,
+      l2: {
+        name: hostChain.display.name,
+        risks: toRosetteTuple(hostChainRosetteValues),
+      },
+      l3: {
+        name: project.display.name,
+        risks: toRosetteTuple(rosetteValues),
+      },
+      combined: combinedRosetteValues
+        ? toRosetteTuple(combinedRosetteValues)
+        : undefined,
       warning: project.display.warning,
       redWarning: project.display.redWarning,
       isVerified,

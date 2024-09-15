@@ -83,11 +83,14 @@ export async function getScalingProjectEntry(project: ScalingProject) {
 
   const projectDetails = await getL3ProjectDetails({
     project,
+    hostChain,
     isVerified,
-    contractsVerificationStatuses,
+    rosetteValues,
     manuallyVerifiedContracts,
     implementationChangeReport,
-    rosetteValues,
+    contractsVerificationStatuses,
+    combinedRosetteValues: stackedRosetteValues,
+    hostChainRosetteValues: baseLayerRosetteValues,
   })
 
   return {

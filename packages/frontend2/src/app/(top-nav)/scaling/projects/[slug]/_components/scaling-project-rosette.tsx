@@ -38,6 +38,7 @@ export function ScalingProjectRosette({ project }: Props) {
         setRosetteType={setRosetteType}
         // Offset for labels
         className="-ml-7 mb-3"
+        isDisabled={project.isUnderReview || project.isUpcoming}
       />
       {children}
     </div>
