@@ -1,7 +1,7 @@
 {
   "name": "mode",
   "chain": "ethereum",
-  "blockNumber": 20475234,
+  "blockNumber": 20756139,
   "configHash": "0xd89337fb874a5743d959c408e6bfb963735585df43ff1d6f30b9a7a07921cb16",
   "version": 14,
   "contracts": [
@@ -41,9 +41,9 @@
         "$threshold": 1,
         "domainSeparator": "0x441442b08d4fdc9877b881d21b5394f2af9aa0f41ef7184f54e10664ea757773",
         "getChainId": 1,
-        "GnosisSafe_modules": ["0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8"],
+        "GnosisSafe_modules": ["0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 1,
+        "nonce": 4,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -140,7 +140,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 39,
+        "nonce": 43,
         "VERSION": "1.3.0"
       }
     },
@@ -182,10 +182,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 11422800,
-        "latestOutputIndex": 6345,
-        "nextBlockNumber": 11424600,
-        "nextOutputIndex": 6346,
+        "latestBlockNumber": 13114800,
+        "latestOutputIndex": 7285,
+        "nextBlockNumber": 13116600,
+        "nextOutputIndex": 7286,
         "proposer": "0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB",
         "PROPOSER": "0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB",
         "startingBlockNumber": 0,
@@ -270,7 +270,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 47,
+        "nonce": 50,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -398,26 +398,10 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
-    },
-    {
-      "name": "DeputyGuardianModule",
-      "address": "0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8",
-      "template": "gnosisSafeModules/DeputyGuardianModule",
-      "descriptions": [
-        "allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe."
-      ],
-      "sinceTimestamp": 1717149791,
-      "values": {
-        "$immutable": true,
-        "deputyGuardian": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
-        "safe": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
-        "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
-        "version": "1.1.0"
-      }
     },
     {
       "name": "SystemConfig",
@@ -590,7 +574,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 7,
+        "nonce": 9,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -628,8 +612,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 288648,
-          "prevBlockNum": 20475203
+          "prevBoughtGas": 489262,
+          "prevBlockNum": 20755861
         },
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -687,7 +671,7 @@
         "$immutable": false,
         "$implementation": "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292826285",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292827852",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -732,7 +716,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 94,
+        "nonce": 95,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -767,10 +751,22 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 6,
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "DeputyGuardianModule",
+      "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
+      "sinceTimestamp": 1724111315,
+      "values": {
+        "$immutable": true,
+        "deputyGuardian": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
+        "safe": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
+        "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+        "version": "2.0.0"
+      }
     },
     {
       "name": "Lib_AddressManager",
@@ -1040,23 +1036,6 @@
     "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": [
       "constructor(address _singleton)"
     ],
-    "0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8": [
-      "constructor(address _safe, address _superchainConfig, address _deputyGuardian)",
-      "error ExecutionFailed(string)",
-      "error Unauthorized()",
-      "event DisputeGameBlacklisted(address indexed game)",
-      "event Paused(string identifier)",
-      "event RespectedGameTypeSet(uint32 indexed gameType, uint64 indexed updatedAt)",
-      "event Unpaused()",
-      "function blacklistDisputeGame(address _portal, address _game)",
-      "function deputyGuardian() view returns (address deputyGuardian_)",
-      "function pause()",
-      "function safe() view returns (address safe_)",
-      "function setRespectedGameType(address _portal, uint32 _gameType)",
-      "function superchainConfig() view returns (address superchainConfig_)",
-      "function unpause()",
-      "function version() view returns (string)"
-    ],
     "0x5e6432F18Bc5d497B1Ab2288a025Fbf9D69E2221": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1210,6 +1189,24 @@
     "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": [
       "constructor(address _singleton)"
     ],
+    "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B": [
+      "constructor(address _safe, address _superchainConfig, address _deputyGuardian)",
+      "error ExecutionFailed(string)",
+      "error Unauthorized()",
+      "event DisputeGameBlacklisted(address indexed game)",
+      "event Paused(string identifier)",
+      "event RespectedGameTypeSet(uint32 indexed gameType, uint64 indexed updatedAt)",
+      "event Unpaused()",
+      "function blacklistDisputeGame(address _portal, address _game)",
+      "function deputyGuardian() view returns (address deputyGuardian_)",
+      "function pause()",
+      "function safe() view returns (address safe_)",
+      "function setAnchorState(address _registry, address _game)",
+      "function setRespectedGameType(address _portal, uint32 _gameType)",
+      "function superchainConfig() view returns (address superchainConfig_)",
+      "function unpause()",
+      "function version() view returns (string)"
+    ],
     "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65": [
       "constructor()",
       "event FailedRelayedMessage(bytes32 indexed msgHash)",
@@ -1345,7 +1342,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
-    "gnosisSafeModules/DeputyGuardianModule": "0xd3930cda89001876a722ed430ea8ed07e4823c83ed910e621744eccab9becba1",
     "gnosisSafeModules/LivenessModule": "0x93a18dea68cf1d0abddfc33adec077c82356344dd7b49ae5542b16ca9319bb91",
     "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
