@@ -199,10 +199,15 @@ const validators = () => {
 }
 
 const validatorsOld = () => {
-  const validatorsAdded = discovery.getContractValue<string[]>(
-    'ValidatorTimelockOld',
-    'validatorsAdded',
-  )
+  // old validatorTL accepted validators in constructor
+  const constructorArgsValis = discovery.getContractValue<{
+    _validators: string[]
+  }>('ValidatorTimelockOld', 'constructorArgs')
+
+  const validatorsAdded = discovery
+    .getContractValue<string[]>('ValidatorTimelockOld', 'validatorsAdded')
+    .concat(constructorArgsValis._validators)
+
   const validatorsRemoved = discovery.getContractValue<string[]>(
     'ValidatorTimelockOld',
     'validatorsRemoved',
