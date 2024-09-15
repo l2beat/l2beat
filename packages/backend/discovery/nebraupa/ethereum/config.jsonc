@@ -14,7 +14,8 @@
         "claimableFees",
         "nextSubmissionIdxToVerify",
         "nextProofIdx",
-        "getNextSubmissionIdx"
+        "getNextSubmissionIdx",
+        "lastVerifiedSubmissionHeight"
       ]
     }
   }
