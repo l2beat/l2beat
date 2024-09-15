@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x23ac602e5cc33add49f501507d85408bc3f89b74
+
+# Diff at Sun, 15 Sep 2024 15:05:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ca08843b12ed576cbcc139ad58ca045f72d96ab5 block: 20440714
+- current block number: 20756791
+
+## Description
+
+Config related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20440714 (main branch discovery), not current.
+
+```diff
+    contract OldSHARPVerifier (0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6) {
+    +++ description: None
+      values.bootloaderProgramContractAddress:
++        "0x0000000000000000000000000000000000000008"
+      values.cpuFrilessVerifiers:
++        []
+    }
+```
+
 Generated with discovered.json: 0xaeb113ee3aa75cca1c42a7ad41806c76eee26522
 
 # Diff at Fri, 30 Aug 2024 07:59:26 GMT:
