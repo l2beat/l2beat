@@ -257,7 +257,7 @@ function HeaderCell({
   return (
     <td
       className={cn(
-        'dark:border-gray-750 border border-gray-50 bg-zinc-300 px-3 py-2 font-bold dark:bg-zinc-800',
+        'border border-gray-50 bg-zinc-300 px-3 py-2 font-bold dark:border-gray-750 dark:bg-zinc-800',
         className,
       )}
     >
@@ -277,7 +277,7 @@ function RiskCell(props: {
     <td
       className={cn(
         props.backgroundFill && bg,
-        'dark:border-gray-750 border border-gray-50 px-3 py-2',
+        'border border-gray-50 px-3 py-2 dark:border-gray-750',
       )}
     >
       <SentimentText sentiment={props.sentiment}>{props.value}</SentimentText>
