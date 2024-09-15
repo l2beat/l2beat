@@ -3,7 +3,7 @@ import { UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
-import { getLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
+import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
 import { orderByTvl } from '../tvl/utils/order-by-tvl'
 import { getFinality } from './get-finality'
 import { type FinalityData, type FinalityProjectData } from './schema'
@@ -17,15 +17,14 @@ export async function getScalingFinalityEntries() {
   const configurations = getFinalityConfigurations()
   const [finality, tvl, icReport, projectVerification] = await Promise.all([
     getFinality(configurations),
-    getLatestTvlUsd(),
+    getProjectsLatestTvlUsd(),
     getImplementationChangeReport(),
     getProjectsVerificationStatuses(),
   ])
 
   const includedProjects = getIncludedProjects(layer2s, finality)
-  const orderedProjects = orderByTvl(includedProjects, tvl)
 
-  return orderedProjects
+  const entries = includedProjects
     .map((project) => {
       const hasImplementationChanged =
         !!icReport.projects[project.id.toString()]
@@ -39,6 +38,8 @@ export async function getScalingFinalityEntries() {
       )
     })
     .filter(notUndefined)
+
+  return orderByTvl(entries, tvl)
 }
 
 function getFinalityData(
@@ -65,15 +66,18 @@ function getFinalityData(
       : undefined,
     syncStatus: {
       isSynced: isSynced(finalityProjectData.syncedUntil),
-      syncedUntil: finalityProjectData.syncedUntil.toNumber(),
+      syncedUntil: finalityProjectData.syncedUntil,
     },
   }
 
   return data
 }
 
-function isSynced(syncedUntil: UnixTime) {
-  return UnixTime.now().add(-1, 'days').add(-1, 'hours').lte(syncedUntil)
+function isSynced(syncedUntil: number) {
+  return UnixTime.now()
+    .add(-1, 'days')
+    .add(-1, 'hours')
+    .lte(new UnixTime(syncedUntil))
 }
 
 function getIncludedProjects(projects: Layer2[], finality: FinalityData) {

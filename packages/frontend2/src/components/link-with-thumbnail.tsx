@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Image from 'next/image'
-import ArrowRightIcon from '~/icons/arrow-right.svg'
+import { ArrowRightIcon } from '~/icons/arrow-right'
 import { cn } from '~/utils/cn'
 import { PlainLink } from './plain-link'
 

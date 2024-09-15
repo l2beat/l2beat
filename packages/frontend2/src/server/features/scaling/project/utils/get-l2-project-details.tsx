@@ -4,7 +4,6 @@ import {
   type ImplementationChangeReportApiResponse,
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
-import { isEmpty } from 'lodash'
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
 import { type RosetteValue } from '~/components/rosette/types'
 import { api } from '~/trpc/server'
@@ -70,28 +69,47 @@ export async function getL2ProjectDetails({
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
 
-  const tvlChartData = await api.tvl.chart({
-    range: '7d',
-    filter: { type: 'projects', projectIds: [project.id] },
-  })
-  const activityChartData = await api.activity.chart({
-    range: '30d',
-    filter: { type: 'projects', projectIds: [project.id] },
-  })
-  const costsChartData = await api.costs.chart({
-    range: '7d',
-    filter: { type: 'projects', projectIds: [project.id] },
-  })
+  await Promise.all([
+    api.tvl.chart.prefetch({
+      range: '7d',
+      filter: { type: 'projects', projectIds: [project.id] },
+      excludeAssociatedTokens: false,
+    }),
+    api.activity.chart.prefetch({
+      range: '30d',
+      filter: { type: 'projects', projectIds: [project.id] },
+    }),
+    api.costs.chart.prefetch({
+      range: '7d',
+      filter: { type: 'projects', projectIds: [project.id] },
+    }),
+  ])
+  const [tvlChartData, activityChartData, costsChartData, tokens] =
+    await Promise.all([
+      api.tvl.chart({
+        range: '7d',
+        filter: { type: 'projects', projectIds: [project.id] },
+        excludeAssociatedTokens: false,
+      }),
+      api.activity.chart({
+        range: '30d',
+        filter: { type: 'projects', projectIds: [project.id] },
+      }),
+      api.costs.chart({
+        range: '7d',
+        filter: { type: 'projects', projectIds: [project.id] },
+      }),
+      getTokensForProject(project),
+    ])
 
   const sortedMilestones =
     project.milestones?.sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
     ) ?? []
-  const tokens = await getTokensForProject(project)
 
   const items: ProjectDetailsSection[] = []
 
-  if (!project.isUpcoming && !isEmpty(tvlChartData)) {
+  if (!project.isUpcoming && tvlChartData.chart.length > 0) {
     items.push({
       type: 'ChartSection',
       props: {
@@ -105,7 +123,7 @@ export async function getL2ProjectDetails({
     })
   }
 
-  if (!isEmpty(activityChartData.data)) {
+  if (activityChartData.length > 0) {
     items.push({
       type: 'ChartSection',
       props: {
@@ -117,7 +135,7 @@ export async function getL2ProjectDetails({
     })
   }
 
-  if (!project.isUpcoming && !isEmpty(costsChartData.data)) {
+  if (!project.isUpcoming && costsChartData.length > 0) {
     items.push({
       type: 'ChartSection',
       props: {
@@ -132,7 +150,7 @@ export async function getL2ProjectDetails({
   if (
     !project.isUpcoming &&
     project.milestones &&
-    !isEmpty(project.milestones)
+    project.milestones.length > 0
   ) {
     items.push({
       type: 'MilestonesAndIncidentsSection',
@@ -234,7 +252,10 @@ export async function getL2ProjectDetails({
         id: 'state-validation',
         title: 'State validation',
         stateValidation: project.stateValidation,
-        diagram: getDiagramParams('state-validation', project.display.slug),
+        diagram: getDiagramParams(
+          'state-validation',
+          project.display.stateValidationImage ?? project.display.slug,
+        ),
         isUnderReview: project.isUnderReview,
       },
     })
@@ -312,7 +333,7 @@ export async function getL2ProjectDetails({
     })
   }
 
-  if (project.knowledgeNuggets && !isEmpty(project.knowledgeNuggets)) {
+  if (project.knowledgeNuggets && project.knowledgeNuggets.length > 0) {
     items.push({
       type: 'KnowledgeNuggetsSection',
       props: {

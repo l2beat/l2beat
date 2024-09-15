@@ -6,6 +6,7 @@ import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
+import { env } from '~/env'
 import { db } from '~/server/database'
 
 export type EconomicSecurityData =
@@ -17,14 +18,15 @@ export type EconomicSecurityData =
       status: 'StakeNotSynced' | 'CurrentPriceNotSynced'
     }
 
-export async function getDaProjectEconomicSecurity(
-  daLayer: DaLayer,
-): Promise<EconomicSecurityData | undefined> {
+export async function getDaProjectEconomicSecurity(daLayer: DaLayer) {
+  if (env.MOCK) {
+    return getMockDaProjectEconomicSecurity(daLayer)
+  }
   noStore()
-  return getCachedEconomicSecurity(daLayer)
+  return getCachedDaProjectEconomicSecurity(daLayer)
 }
 
-const getCachedEconomicSecurity = cache(
+const getCachedDaProjectEconomicSecurity = cache(
   async (daLayer: DaLayer) => {
     if (daLayer.kind !== 'PublicBlockchain' || !daLayer.economicSecurity) {
       return undefined
@@ -60,3 +62,11 @@ const getCachedEconomicSecurity = cache(
   ['daEconomicSecurity'],
   { revalidate: UnixTime.HOUR },
 )
+
+function getMockDaProjectEconomicSecurity(daLayer: DaLayer) {
+  return {
+    id: daLayer.id,
+    status: 'Synced' as const,
+    economicSecurity: 100,
+  }
+}

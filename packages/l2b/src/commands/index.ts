@@ -4,6 +4,7 @@ import { CompareOpStacks } from './CompareOpStacks'
 import { CompareOrbitStacks } from './CompareOrbitStacks'
 import { CountUserOperations } from './CountUserOperations'
 import { DeploymentTimestamp } from './DeploymentTimestamp'
+import { Events } from './Events'
 import { FetchFlatSources } from './FetchFlatSources'
 import { Flatten } from './Flatten'
 import { FlattenAndDiff } from './FlattenAndDiff'
@@ -26,6 +27,7 @@ export function getSubcommands() {
     SolFmt,
     FetchFlatSources,
     TVL,
+    Events,
     StarknetProgramHashes,
   ]
 }

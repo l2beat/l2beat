@@ -7,11 +7,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '~/components/core/accordion'
-import InfoIcon from '~/icons/info.svg'
-import MissingIcon from '~/icons/missing.svg'
+import { InfoIcon } from '~/icons/info'
+import { MissingIcon } from '~/icons/missing'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import SatisfiedIcon from '~/icons/satisfied.svg'
-import UnderReviewIcon from '~/icons/under-review.svg'
+import { SatisfiedIcon } from '~/icons/satisfied'
+import { UnderReviewIcon } from '~/icons/under-review'
 import { StageBadge } from '../../badge/stage-badge'
 import { Callout } from '../../callout'
 import { CustomLink } from '../../link/custom-link'
@@ -179,7 +179,7 @@ export function StageSection({
       <Callout
         color="blue"
         body="Please keep in mind that these stages do not reflect rollup security, this is an opinionated assessment of rollup maturity based on subjective criteria, created with a goal of incentivizing projects to push toward better decentralization. Each team may have taken different paths to achieve this goal."
-        icon={<InfoIcon className="size-5 fill-blue-500" />}
+        icon={<InfoIcon className="size-5" variant="blue" />}
         className="mt-6 p-4 font-medium leading-snug"
       />
     </ProjectSection>

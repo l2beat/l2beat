@@ -14,7 +14,7 @@ export function toRecord(
   return {
     chain: entity.chain,
     timestamp: UnixTime.fromDate(entity.timestamp),
-    blockNumber: entity.block_number,
+    blockNumber: entity.blockNumber,
   }
 }
 
@@ -24,6 +24,6 @@ export function toRow(
   return {
     chain: blockTimestamp.chain,
     timestamp: blockTimestamp.timestamp.toDate(),
-    block_number: blockTimestamp.blockNumber,
+    blockNumber: blockTimestamp.blockNumber,
   }
 }

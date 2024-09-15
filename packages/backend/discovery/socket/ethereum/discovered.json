@@ -1,8 +1,8 @@
 {
   "name": "socket",
   "chain": "ethereum",
-  "blockNumber": 20661696,
-  "configHash": "0x7068bb0574340f692f7beb45796f3a92e97d1e283d531fcdf19491cdf7d6218d",
+  "blockNumber": 20726203,
+  "configHash": "0xafc367342fc11c0a08e96c0e84009a12f4bc394d5216421333441fb85c6e016a",
   "version": 14,
   "contracts": [
     {
@@ -37,8 +37,8 @@
         "SEND_MESSAGE_EVENT_SIG": "0x8c5261668696ce22758910d05bab8f186d6eb247ceac2af2e82c7dc17669b036",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9",
-        "switchboardFees": 231462921222000,
-        "verificationOverheadFees": 261041872000
+        "switchboardFees": 306272313769500,
+        "verificationOverheadFees": 250614572000
       },
       "fieldMeta": {
         "switchboardFees": {
@@ -70,8 +70,8 @@
         "remoteNativeSwitchboard": "0x9Cf7443685827419B0067fb2471C24969EAA716C",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9",
-        "switchboardFees": 231462921222000,
-        "verificationOverheadFees": 57002868000
+        "switchboardFees": 306272313769500,
+        "verificationOverheadFees": 94855696000
       },
       "fieldMeta": {
         "switchboardFees": {
@@ -127,7 +127,7 @@
         "remoteNativeSwitchboard": "0x1D6811553Aff8231aDd04A84F300b89E15D99EA4",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9",
-        "switchboardFees": 231462921222000,
+        "switchboardFees": 306272313769500,
         "verificationOverheadFees": 52013000000
       },
       "fieldMeta": {
@@ -174,7 +174,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 358,
+        "nonce": 360,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -297,6 +297,25 @@
       }
     },
     {
+      "name": "USDT Vault Lyra",
+      "address": "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa",
+      "sinceTimestamp": 1705566299,
+      "values": {
+        "$immutable": true,
+        "nominee": "0x0000000000000000000000000000000000000000",
+        "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+      },
+      "derivedName": "Vault"
+    },
+    {
+      "name": "sUSDe Vault Reya",
+      "address": "0x5F3B301B4967623fDb3AE52Bb8FF4dB01C460Cd3",
+      "unverified": true,
+      "sinceTimestamp": 1724767355,
+      "values": { "$immutable": true },
+      "derivedName": ""
+    },
+    {
       "name": "sDAI Vault Lyra",
       "address": "0x613e87BE1cd75dEBC5e6e56a2AF2fED84162C142",
       "sinceTimestamp": 1724140379,
@@ -411,7 +430,7 @@
         "capacitorFactory__": "0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a",
         "chainSlug": 1,
         "executionManager__": "0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C",
-        "globalMessageCount": 5703,
+        "globalMessageCount": 5849,
         "hasher__": "0x5C71beE4a6b0D617D8c3d107D331292741789E27",
         "inboundSwitchboards": [
           "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287",
@@ -522,7 +541,8 @@
           "0xe38Dccb8Bd138c326E3Df926ADD9dE71a442837F",
           "0x457379de638CAFeB1759a22457fe893b288E2e89",
           "0x2D733e70A377FcFc249d273095250762A93F3820",
-          "0xdb1c2F432e51824b33b9269C4b1Ff6190c1e5F35"
+          "0xdb1c2F432e51824b33b9269C4b1Ff6190c1e5F35",
+          "0xd48A35a853858e344aFCbEcCDBf8FCbFaF8e1501"
         ],
         "transmitManager__": "0xeD037aFBffC65a94E9CC592947E851FB2f730341",
         "version": "0x484f1c5889188a0a81068ce8c49d8f7c3b3f1b0c1723b50ebd656a8d4f99e356"
@@ -738,7 +758,7 @@
         "remoteNativeSwitchboard": "0xaB2F8c1588ACA57bC2909512B645a860C65770d3",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9",
-        "switchboardFees": 231462921612000,
+        "switchboardFees": 306272314159500,
         "verificationOverheadFees": 6500000000000
       },
       "fieldMeta": {
@@ -1630,6 +1650,40 @@
       "function packMessage(uint32 srcChainSlug_, address srcPlug_, uint32 dstChainSlug_, address dstPlug_, tuple(bytes32 msgId, uint256 executionFee, uint256 minMsgGasLimit, bytes32 executionParams, bytes payload) messageDetails_) pure returns (bytes32)",
       "function rescueFunds(address token_, address rescueTo_, uint256 amount_)",
       "function revokeRole(bytes32 role_, address revokee_)"
+    ],
+    "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa": [
+      "constructor(address token_)",
+      "error AmountOutsideLimit()",
+      "error ConnectorUnavailable()",
+      "error InvalidTokenAddress()",
+      "error OnlyNominee()",
+      "error OnlyOwner()",
+      "error ZeroAddress()",
+      "error ZeroAmount()",
+      "event LimitParamsUpdated(tuple(bool isLock, address connector, uint256 maxLimit, uint256 ratePerSecond)[] updates)",
+      "event OwnerClaimed(address indexed claimer)",
+      "event OwnerNominated(address indexed nominee)",
+      "event PendingTokensTransferred(address connector, address receiver, uint256 unlockedAmount, uint256 pendingAmount)",
+      "event TokensDeposited(address connector, address depositor, address receiver, uint256 depositAmount)",
+      "event TokensPending(address connector, address receiver, uint256 pendingAmount, uint256 totalPendingAmount)",
+      "event TokensUnlocked(address connector, address receiver, uint256 unlockedAmount)",
+      "function claimOwner()",
+      "function connectorPendingUnlocks(address) view returns (uint256)",
+      "function depositToAppChain(address receiver_, uint256 amount_, uint256 msgGasLimit_, address connector_) payable",
+      "function getCurrentLockLimit(address connector_) view returns (uint256)",
+      "function getCurrentUnlockLimit(address connector_) view returns (uint256)",
+      "function getLockLimitParams(address connector_) view returns (tuple(uint256 lastUpdateTimestamp, uint256 ratePerSecond, uint256 maxLimit, uint256 lastUpdateLimit))",
+      "function getMinFees(address connector_, uint256 msgGasLimit_) view returns (uint256 totalFees)",
+      "function getUnlockLimitParams(address connector_) view returns (tuple(uint256 lastUpdateTimestamp, uint256 ratePerSecond, uint256 maxLimit, uint256 lastUpdateLimit))",
+      "function nominateOwner(address nominee_)",
+      "function nominee() view returns (address)",
+      "function owner() view returns (address)",
+      "function pendingUnlocks(address, address) view returns (uint256)",
+      "function receiveInbound(bytes payload_)",
+      "function rescueFunds(address token_, address rescueTo_, uint256 amount_)",
+      "function token__() view returns (address)",
+      "function unlockPendingFor(address receiver_, address connector_)",
+      "function updateLimitParams(tuple(bool isLock, address connector, uint256 maxLimit, uint256 ratePerSecond)[] updates_)"
     ],
     "0x613e87BE1cd75dEBC5e6e56a2AF2fED84162C142": [
       "constructor(address token_)",

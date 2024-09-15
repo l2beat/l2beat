@@ -2,11 +2,11 @@
 
 import { type Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
-import { useScalingAssociatedTokensContext } from '~/app/(new)/(other)/_components/scaling-associated-tokens-context'
+import { useScalingAssociatedTokensContext } from '~/app/(side-nav)/(other)/_components/scaling-associated-tokens-context'
 import {
   useScalingFilter,
   useScalingFilterValues,
-} from '~/app/(new)/(other)/_components/scaling-filter-context'
+} from '~/app/(side-nav)/(other)/_components/scaling-filter-context'
 import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { useCookieState } from '~/hooks/use-cookie-state'
@@ -58,14 +58,8 @@ export function ScalingTvlChart({ entries, milestones }: Props) {
     filter,
   })
 
-  const {
-    chartRange,
-    formatYAxisLabel,
-    valuesStyle,
-    columns,
-    lastValue,
-    change,
-  } = useTvlChartRenderParams({ milestones, unit, data })
+  const { chartRange, formatYAxisLabel, valuesStyle, columns, change } =
+    useTvlChartRenderParams({ milestones, unit, data: data?.chart })
 
   return (
     <ChartProvider
@@ -80,7 +74,7 @@ export function ScalingTvlChart({ entries, milestones }: Props) {
       <section className="flex flex-col gap-4">
         <TvlChartHeader
           unit={unit}
-          value={lastValue}
+          value={data?.total[unit]}
           change={change}
           range={timeRange}
         />

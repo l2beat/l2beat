@@ -9,7 +9,6 @@ import { keyInYN } from 'readline-sync'
 
 const configReader = new ConfigReader()
 const templateService = new TemplateService()
-const shapeFilesHash = templateService.getShapeFilesHash()
 const allTemplateHashes = templateService.getAllTemplateHashes()
 
 void main().catch((e) => {
@@ -65,9 +64,13 @@ function discoveryNeedsRefresh(
   discovery: DiscoveryOutput,
   config: DiscoveryConfig,
 ): string | undefined {
-  if (discovery.shapeFilesHash !== shapeFilesHash) {
-    return 'some shape files have changed'
-  }
+  // Disable this check because it is too strict
+  // and soon, with new formatter and 1-to-1 shape comparison,
+  // it will not be necessary anymore.
+  //
+  // if (discovery.shapeFilesHash !== shapeFilesHash) {
+  //   return 'some shape files have changed'
+  // }
 
   if (discovery.configHash !== config.hash) {
     return 'project config or used template has changed'

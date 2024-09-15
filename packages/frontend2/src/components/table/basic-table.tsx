@@ -92,7 +92,7 @@ export function BasicTable<T extends BasicEntry>({
       {groupedHeader && <ColGroup headers={groupedHeader.headers} />}
       <TableHeader>
         {groupedHeader && (
-          <TableHeaderRow key={groupedHeader.id} className="border-none">
+          <TableHeaderRow className="border-none">
             {groupedHeader.headers.map((header) => {
               return (
                 <React.Fragment key={header.id}>
@@ -118,7 +118,7 @@ export function BasicTable<T extends BasicEntry>({
             })}
           </TableHeaderRow>
         )}
-        <TableHeaderRow key={actualHeader.id}>
+        <TableHeaderRow>
           {actualHeader.headers.map((header) => {
             const groupParams = getGroupParams(header.column)
             return (
@@ -172,9 +172,8 @@ export function BasicTable<T extends BasicEntry>({
         {table.getRowModel().rows.map((row) => {
           const rowType = getRowType(row.original, rowColoringMode)
           return (
-            <>
+            <React.Fragment key={row.id}>
               <TableRow
-                key={row.id}
                 className={cn(
                   getRowTypeClassNames(rowType),
                   row.getIsExpanded() &&
@@ -224,7 +223,7 @@ export function BasicTable<T extends BasicEntry>({
                     </td>
                   </tr>
                 ))}
-            </>
+            </React.Fragment>
           )
         })}
         {groupedHeader && <RowFiller headers={groupedHeader.headers} />}

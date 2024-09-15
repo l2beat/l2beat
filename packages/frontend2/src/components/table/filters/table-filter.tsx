@@ -16,8 +16,8 @@ import {
   SelectValue,
 } from '~/components/core/select'
 import { useBreakpoint } from '~/hooks/use-is-mobile'
-import CloseIcon from '~/icons/close.svg'
-import ExpandIcon from '~/icons/expand.svg'
+import { CloseIcon } from '~/icons/close'
+import { ExpandIcon } from '~/icons/expand'
 
 const UNDEFINED_VALUE = 'undefined-value'
 

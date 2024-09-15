@@ -2,7 +2,7 @@
 
 import { type Milestone } from '@l2beat/config'
 import { useState } from 'react'
-import { ActivityTimeRangeControls } from '~/app/(new)/(other)/scaling/activity/_components/activity-time-range-controls'
+import { ActivityTimeRangeControls } from '~/app/(side-nav)/(other)/scaling/activity/_components/activity-time-range-controls'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
 import { type ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/react'
@@ -35,7 +35,7 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
   const { columns, valuesStyle, chartRange, formatYAxisLabel } =
     useActivityChartRenderParams({
       milestones,
-      chart: data?.data,
+      data: data,
       showMainnet,
     })
 

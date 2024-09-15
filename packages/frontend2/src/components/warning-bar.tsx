@@ -1,8 +1,8 @@
-import React, { type FC } from 'react'
+import { type FC } from 'react'
 
 import { cva } from 'class-variance-authority'
-import OutLinkIcon from '~/icons/outlink.svg'
-import ShieldIcon from '~/icons/shield.svg'
+import { OutLinkIcon } from '~/icons/outlink'
+import { ShieldIcon } from '~/icons/shield'
 import { cn } from '~/utils/cn'
 import { Callout } from './callout'
 import { Markdown } from './markdown/markdown'

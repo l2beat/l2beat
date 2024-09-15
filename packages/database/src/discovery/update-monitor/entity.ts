@@ -15,26 +15,24 @@ export interface UpdateMonitorRecord {
 
 export function toRow(record: UpdateMonitorRecord): Insertable<UpdateMonitor> {
   return {
-    project_name: record.projectName,
-    chain_id: +record.chainId,
-    block_number: record.blockNumber,
-    unix_timestamp: record.timestamp ? record.timestamp.toDate() : null,
-    discovery_json_blob: JSON.stringify(record.discovery),
-    config_hash: record.configHash.toString(),
+    projectName: record.projectName,
+    chainId: +record.chainId,
+    blockNumber: record.blockNumber,
+    timestamp: record.timestamp ? record.timestamp.toDate() : null,
+    discoveryJsonBlob: JSON.stringify(record.discovery),
+    configHash: record.configHash.toString(),
     version: record.version,
   }
 }
 
 export function toRecord(row: Selectable<UpdateMonitor>): UpdateMonitorRecord {
   return {
-    projectName: row.project_name,
-    chainId: ChainId(row.chain_id),
-    blockNumber: row.block_number,
-    timestamp: row.unix_timestamp
-      ? UnixTime.fromDate(row.unix_timestamp)
-      : null,
-    discovery: row.discovery_json_blob as unknown as DiscoveryOutput,
-    configHash: Hash256(row.config_hash),
+    projectName: row.projectName,
+    chainId: ChainId(row.chainId),
+    blockNumber: row.blockNumber,
+    timestamp: row.timestamp ? UnixTime.fromDate(row.timestamp) : null,
+    discovery: row.discoveryJsonBlob as unknown as DiscoveryOutput,
+    configHash: Hash256(row.configHash),
     version: row.version,
   }
 }

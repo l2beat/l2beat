@@ -1,8 +1,8 @@
-import React, { type SVGAttributes } from 'react'
+import { SvgIcon, type SvgIconProps } from '../svg-icon'
 
-export function StarknetIcon(props: SVGAttributes<SVGElement>) {
+export function StarknetIcon(props: SvgIconProps) {
   return (
-    <svg
+    <SvgIcon
       width="24"
       height="24"
       viewBox="0 0 24 24"
@@ -32,6 +32,6 @@ export function StarknetIcon(props: SVGAttributes<SVGElement>) {
           d="M 16.722656 17.179688 C 16.722656 17.933594 17.332031 18.546875 18.089844 18.546875 C 18.84375 18.546875 19.453125 17.933594 19.453125 17.179688 C 19.453125 16.425781 18.84375 15.8125 18.089844 15.8125 C 17.332031 15.8125 16.722656 16.425781 16.722656 17.179688 Z M 16.722656 17.179688 "
         />
       </g>
-    </svg>
+    </SvgIcon>
   )
 }

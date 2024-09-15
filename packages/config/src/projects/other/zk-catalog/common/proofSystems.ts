@@ -36,8 +36,24 @@ function PLONKSNARK(
   }
 }
 
+const PROGRAM: Omit<SubVerifier, 'name'> = {
+  proofSystem: '-',
+  mainArithmetization: '-',
+  mainPCS: '-',
+  trustedSetup: '-',
+}
+
+const PLONKY3: Omit<SubVerifier, 'name'> = {
+  proofSystem: 'Plonky3',
+  mainArithmetization: 'Plonk',
+  mainPCS: 'FRI',
+  trustedSetup: 'None',
+}
+
 export const PROOFS = {
   GROTH16,
   HALO2KZG,
   PLONKSNARK,
+  PLONKY3,
+  PROGRAM,
 }

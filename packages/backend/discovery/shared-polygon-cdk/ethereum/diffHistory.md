@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x3c4c51c3c32febb0ab92e52ac6d22d7110040697
+
+# Diff at Wed, 11 Sep 2024 08:36:30 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@407590ebfbad0b4f799badc3ad5fce90a7eaed11 block: 20661845
+- current block number: 20726217
+
+## Description
+
+New Validium deployed: https://haust.network/
+
+Not posting batches yet.
+
+Current rollupIDs:
+    1: pol zkEVM 1101 (type3) 🚀 ✔️
+	2: astar 3776 (type4) 🚀 ✔️
+	3: OkX X Layer 196 (type4) 🚀 ✔️
+	4: OEV network chainid 4913 (type4) X (pivoted to orbit)
+	5: gptprotocol.org 1511670449 (type4) 🚀 ✔️
+	6: witnesschain 1702448187 (type4) 🚀 ✔️
+	7: prism (by prism bridge?) 994873017 (type4) 🚀
+	8: pay network (wirex) 31415 (type4) 🚀 ✔️
+	9: silicon-zk 511252203 (type4) 🚀
+   10: silicon-zk 2355 (type4) 🚀
+   11: haust.network 999 (type4)
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1.
+      values.isVerifyingBatches.10:
++        [false]
+      values.rollupCount:
+-        10
++        11
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.10:
++        ["0xB234F18738d9531CAD6ae6d9A587d09fe200272C",999,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4]
+    }
+```
+
 Generated with discovered.json: 0x152fbc09283611d598b5ed010ea0fabefbef82d7
 
 # Diff at Mon, 02 Sep 2024 08:59:16 GMT:

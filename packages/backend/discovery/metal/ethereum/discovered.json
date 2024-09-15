@@ -290,6 +290,14 @@
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
+      "roles": ["Challenger"],
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1680797639,
       "values": {
@@ -516,6 +524,11 @@
       ],
       "issuedPermissions": [
         {
+          "permission": "configure",
+          "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
           "via": [
@@ -526,7 +539,7 @@
           ]
         }
       ],
-      "ignoreInWatchMode": ["scalar"],
+      "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1711563647,
       "values": {
         "$admin": "0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99",
@@ -779,9 +792,15 @@
     { "address": "0xb23794fd6BA1CEAd01Cf54D772b8341F2F0197A5" },
     { "address": "0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8" },
     { "address": "0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9" },
-    { "address": "0xC8187d40AD440328104A52BBed2D8Efc5ab1F1F6" },
+    {
+      "address": "0xC8187d40AD440328104A52BBed2D8Efc5ab1F1F6",
+      "roles": ["Proposer"]
+    },
     { "address": "0xc83f7D9F2D4A76E81145849381ABA02602373723" },
-    { "address": "0xC94C243f8fb37223F3EB2f7961F7072602A51B8B" },
+    {
+      "address": "0xC94C243f8fb37223F3EB2f7961F7072602A51B8B",
+      "roles": ["Sequencer"]
+    },
     { "address": "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e" },
     { "address": "0xE895076cD050F1f042d1040E47b5929bE989E514" },
     { "address": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C" },

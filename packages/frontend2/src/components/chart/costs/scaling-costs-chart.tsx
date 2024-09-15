@@ -1,8 +1,8 @@
 'use client'
 
 import { type Milestone } from '@l2beat/config'
-import { useCostsTimeRangeContext } from '~/app/(new)/(other)/scaling/costs/_components/costs-time-range-context'
-import { useCostsUnitContext } from '~/app/(new)/(other)/scaling/costs/_components/costs-unit-context'
+import { useCostsTimeRangeContext } from '~/app/(side-nav)/(other)/scaling/costs/_components/costs-time-range-context'
+import { useCostsUnitContext } from '~/app/(side-nav)/(other)/scaling/costs/_components/costs-unit-context'
 import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
@@ -25,14 +25,14 @@ export function ScalingCostsChart({ milestones, tag = 'costs' }: Props) {
   const [scale, setScale] = useLocalStorage<ChartScale>(`${tag}-scale`, 'lin')
   const { range, setRange } = useCostsTimeRangeContext()
   const { unit, setUnit } = useCostsUnitContext()
-  const { data: chart, isLoading } = api.costs.chart.useQuery({
+  const { data, isLoading } = api.costs.chart.useQuery({
     range,
     filter: { type: 'all' },
   })
 
   const { chartRange, columns, formatYAxisLabel, valuesStyle } =
     useCostChartRenderParams({
-      chart,
+      data,
       milestones,
       unit,
     })

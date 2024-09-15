@@ -2,7 +2,7 @@
 
 import { Command as CommandPrimitive } from 'cmdk'
 import * as React from 'react'
-import SearchIcon from '~/icons/search.svg'
+import { SearchIcon } from '~/icons/search'
 import { cn } from '~/utils/cn'
 import { linkVariants } from '../link/custom-link'
 

@@ -10,7 +10,7 @@ import { type LivenessProject } from './types'
 
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
-import { getLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
+import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
 import { orderByTvl } from '../tvl/utils/order-by-tvl'
 import { toAnomalyIndicatorEntries } from './utils/get-anomaly-entries'
 import { getLivenessProjects } from './utils/get-liveness-projects'
@@ -22,17 +22,14 @@ export async function getScalingLivenessEntries() {
     implementationChangeReport,
     liveness,
   ] = await Promise.all([
-    getLatestTvlUsd(),
+    getProjectsLatestTvlUsd(),
     getProjectsVerificationStatuses(),
     getImplementationChangeReport(),
     getLiveness(),
   ])
-
   const activeProjects = getLivenessProjects()
 
-  const orderedByTvl = orderByTvl(activeProjects, tvl)
-
-  return orderedByTvl
+  const entries = activeProjects
     .map((project) => {
       const hasImplementationChanged =
         !!implementationChangeReport.projects[project.id.toString()]
@@ -56,6 +53,8 @@ export async function getScalingLivenessEntries() {
       }
     })
     .filter(notUndefined)
+
+  return orderByTvl(entries, tvl)
 }
 
 export type ScalingLivenessEntry = Awaited<
