@@ -1,4 +1,4 @@
-import { assert, type UnixTime } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import { EM_DASH } from '~/consts/characters'
 
 const MONTHS: Record<
@@ -107,8 +107,8 @@ export function formatDate(date: string) {
   return toNiceDate(day, month, year)
 }
 
-export function formatTimestampToDateWithHour(timestamp: UnixTime) {
-  const { year, month, day, time } = parseTimestamp(timestamp.toNumber())
+export function formatTimestampToDateWithHour(timestamp: number) {
+  const { year, month, day, time } = parseTimestamp(timestamp)
 
   const monthRecord = MONTHS[month]
   assert(monthRecord !== undefined, `Invalid month: ${month}`)

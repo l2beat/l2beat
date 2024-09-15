@@ -1,6 +1,6 @@
-import { type SVGAttributes } from 'react'
+import { type SvgIconProps } from './svg-icon'
 
-export function IncidentIcon(props: SVGAttributes<SVGElement>) {
+export function IncidentIcon(props: SvgIconProps) {
   return (
     <svg
       width="24"

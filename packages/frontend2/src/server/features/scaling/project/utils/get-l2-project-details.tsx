@@ -4,9 +4,8 @@ import {
   type ImplementationChangeReportApiResponse,
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
-import { isEmpty } from 'lodash'
-import { type ProjectDetailsSection } from '~/app/_components/projects/sections/types'
-import { type RosetteValue } from '~/app/_components/rosette/types'
+import { type ProjectDetailsSection } from '~/components/projects/sections/types'
+import { type RosetteValue } from '~/components/rosette/types'
 import { api } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
@@ -75,6 +74,7 @@ export async function getL2ProjectDetails({
       api.tvl.chart({
         range: '7d',
         filter: { type: 'projects', projectIds: [project.id] },
+        excludeAssociatedTokens: false,
       }),
       api.activity.chart({
         range: '30d',
@@ -94,7 +94,7 @@ export async function getL2ProjectDetails({
 
   const items: ProjectDetailsSection[] = []
 
-  if (!project.isUpcoming && !isEmpty(tvlChartData)) {
+  if (!project.isUpcoming && tvlChartData.chart.length > 0) {
     items.push({
       type: 'ChartSection',
       props: {
@@ -108,7 +108,7 @@ export async function getL2ProjectDetails({
     })
   }
 
-  if (!isEmpty(activityChartData.data)) {
+  if (activityChartData.length > 0) {
     items.push({
       type: 'ChartSection',
       props: {
@@ -120,7 +120,7 @@ export async function getL2ProjectDetails({
     })
   }
 
-  if (!project.isUpcoming && !isEmpty(costsChartData.data)) {
+  if (!project.isUpcoming && costsChartData.length > 0) {
     items.push({
       type: 'ChartSection',
       props: {
@@ -135,7 +135,7 @@ export async function getL2ProjectDetails({
   if (
     !project.isUpcoming &&
     project.milestones &&
-    !isEmpty(project.milestones)
+    project.milestones.length > 0
   ) {
     items.push({
       type: 'MilestonesAndIncidentsSection',
@@ -237,7 +237,10 @@ export async function getL2ProjectDetails({
         id: 'state-validation',
         title: 'State validation',
         stateValidation: project.stateValidation,
-        diagram: getDiagramParams('state-validation', project.display.slug),
+        diagram: getDiagramParams(
+          'state-validation',
+          project.display.stateValidationImage ?? project.display.slug,
+        ),
         isUnderReview: project.isUnderReview,
       },
     })
@@ -315,7 +318,7 @@ export async function getL2ProjectDetails({
     })
   }
 
-  if (project.knowledgeNuggets && !isEmpty(project.knowledgeNuggets)) {
+  if (project.knowledgeNuggets && project.knowledgeNuggets.length > 0) {
     items.push({
       type: 'KnowledgeNuggetsSection',
       props: {

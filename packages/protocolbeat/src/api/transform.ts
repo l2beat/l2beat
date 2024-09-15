@@ -1,18 +1,46 @@
+import { recallNodeState } from '../store/utils/localStore'
+import { oklch2rgb } from '../utils/oklch'
+import { stringHash } from '../utils/stringHash'
 import type { ContractNode, EOANode, SimpleNode } from './SimpleNode'
 import type { DiscoveryContract, DiscoveryOutput } from './paseDiscovery'
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
-export function transformContracts(discovery: DiscoveryOutput): SimpleNode[] {
+function encodeChainAddress(chain: string, value: string): string {
+  if (value.includes(':')) {
+    return value
+  }
+
+  return `${chain}:${value}`
+}
+
+function isChainAddress(value: string): boolean {
+  return (
+    value.includes(':') &&
+    // biome-ignore lint/style/noNonNullAssertion: We know it's there
+    isAddress(value.split(':')[1]!)
+  )
+}
+
+export function transformContracts(
+  projectId: string,
+  discovery: DiscoveryOutput,
+): SimpleNode[] {
+  const state = recallNodeState(projectId)
+  const chain = discovery.chain
+  const baseColor = oklch2rgb(0.75, 0.12, stringHash(discovery.chain) % 360)
+
   const contractNodes: ContractNode[] = discovery.contracts.map((contract) => {
     const implementations = getAsStringArray(contract.values?.$implementation)
     return {
       type: 'Contract',
-      id: contract.address,
+      id: encodeChainAddress(chain, contract.address),
+      color: state?.colors?.[contract.address] ?? baseColor,
       name: emojifyContractName(contract),
+      proxyType: contract.proxyType,
       discovered: true,
-      fields: mapFields(contract.values).filter(
-        (x) => !x.connection || !implementations.includes(x.connection),
+      fields: mapFields(contract.values, chain).filter(
+        (x) => !x.value || !implementations.includes(x.value),
       ),
       data: contract,
     }
@@ -20,7 +48,8 @@ export function transformContracts(discovery: DiscoveryOutput): SimpleNode[] {
 
   const eoaNodes: EOANode[] = discovery.eoas.map((eoa) => ({
     type: 'EOA',
-    id: eoa.address,
+    id: encodeChainAddress(chain, eoa.address),
+    color: state?.colors?.[eoa.address] ?? baseColor,
     name: `🧍 EOA ${eoa.address}`,
     discovered: true,
     fields: [],
@@ -38,6 +67,7 @@ interface FieldProps {
 
 function mapFields(
   values: Record<string, unknown> | undefined,
+  chain: string,
   prefix = '',
 ): FieldProps[] {
   if (values === undefined) {
@@ -45,7 +75,10 @@ function mapFields(
   }
   return Object.entries(values).flatMap(
     ([key, value]: [string, unknown]): FieldProps[] => {
-      if (typeof value === 'string' && isAddress(value)) {
+      if (
+        typeof value === 'string' &&
+        (isAddress(value) || isChainAddress(value))
+      ) {
         if (value === ZERO_ADDRESS) {
           return []
         }
@@ -54,12 +87,13 @@ function mapFields(
           {
             name: concatKey(prefix, key),
             value,
-            connection: value,
+            connection: encodeChainAddress(chain, value),
           },
         ]
       } else if (typeof value === 'object' && value !== null) {
         return mapFields(
           value as Record<string, unknown>,
+          chain,
           concatKey(prefix, key),
         )
       }
@@ -83,8 +117,12 @@ function isAddress(value: string): boolean {
 }
 
 function emojifyContractName(contract: DiscoveryContract): string {
-  if (contract.name === 'GnosisSafe') {
-    return '🔐 Gnosis Safe'
+  if (contract.proxyType === 'gnosis safe') {
+    const threshold = contract.values?.['$threshold'] as number
+    const members = (contract.values?.['$members'] as string[]).length
+    const percentage = ((threshold / members) * 100).toFixed(0)
+
+    return `🔐 ${contract.name} [${threshold}/${members} @ ${percentage}%]`
   }
 
   if (contract.values?.$immutable !== true) {

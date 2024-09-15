@@ -14,14 +14,14 @@ export class AggregatedLivenessRepository extends BaseRepository {
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
       await this.db
-        .insertInto('aggregated_liveness')
+        .insertInto('AggregatedLiveness')
         .values(batch)
         .onConflict((cb) =>
-          cb.columns(['project_id', 'subtype', 'range']).doUpdateSet((eb) => ({
+          cb.columns(['projectId', 'subtype', 'range']).doUpdateSet((eb) => ({
             min: eb.ref('excluded.min'),
             avg: eb.ref('excluded.avg'),
             max: eb.ref('excluded.max'),
-            updated_at: eb.ref('excluded.updated_at'),
+            updatedAt: eb.ref('excluded.updatedAt'),
           })),
         )
         .execute()
@@ -31,14 +31,14 @@ export class AggregatedLivenessRepository extends BaseRepository {
 
   async deleteAll(): Promise<number> {
     const result = await this.db
-      .deleteFrom('aggregated_liveness')
+      .deleteFrom('AggregatedLiveness')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 
   async getAll(): Promise<AggregatedLivenessRecord[]> {
     const rows = await this.db
-      .selectFrom('aggregated_liveness')
+      .selectFrom('AggregatedLiveness')
       .select(selectAggregatedLiveness)
       .execute()
     return rows.map(toRecord)
@@ -48,9 +48,9 @@ export class AggregatedLivenessRepository extends BaseRepository {
     projectId: ProjectId,
   ): Promise<AggregatedLivenessRecord[]> {
     const rows = await this.db
-      .selectFrom('aggregated_liveness')
+      .selectFrom('AggregatedLiveness')
       .select(selectAggregatedLiveness)
-      .where('project_id', '=', projectId)
+      .where('projectId', '=', projectId)
       .execute()
     return rows.map(toRecord)
   }
@@ -59,9 +59,9 @@ export class AggregatedLivenessRepository extends BaseRepository {
     projectIds: ProjectId[],
   ): Promise<AggregatedLivenessRecord[]> {
     const rows = await this.db
-      .selectFrom('aggregated_liveness')
+      .selectFrom('AggregatedLiveness')
       .select(selectAggregatedLiveness)
-      .where('project_id', 'in', projectIds)
+      .where('projectId', 'in', projectIds)
       .execute()
     return rows.map(toRecord)
   }

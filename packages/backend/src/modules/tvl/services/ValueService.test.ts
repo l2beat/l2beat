@@ -1,7 +1,8 @@
-import { AmountId, AssetId, PriceId, createAssetId } from '@l2beat/config'
+import { AmountId, PriceId } from '@l2beat/config'
 import { Database } from '@l2beat/database'
 import {
   AmountConfigEntry,
+  AssetId,
   EthereumAddress,
   ProjectId,
   UnixTime,
@@ -34,9 +35,11 @@ describe(ValueService.name, () => {
 
     const project: ProjectId = ProjectId('project')
     const source: string = 'chain'
+    const addressA = EthereumAddress.random()
     const CONFIG_A = mockObject<AmountConfigEntry>({
+      assetId: AssetId.create('chain', addressA),
       sinceTimestamp: UnixTime.ZERO,
-      address: EthereumAddress.random(),
+      address: addressA,
       chain: 'chain',
       includeInTotal: true,
       decimals: DECIMALS,
@@ -44,9 +47,11 @@ describe(ValueService.name, () => {
       isAssociated: false,
       category: 'ether',
     })
+    const addressB = EthereumAddress.random()
     const CONFIG_B = mockObject<AmountConfigEntry>({
+      assetId: AssetId.create('chain', addressB),
       sinceTimestamp: new UnixTime(300),
-      address: EthereumAddress.random(),
+      address: addressB,
       chain: 'chain',
       includeInTotal: false,
       decimals: DECIMALS,
@@ -58,9 +63,10 @@ describe(ValueService.name, () => {
       ['a', CONFIG_A],
       ['b', CONFIG_B],
     ])
+
     const priceConfigIds: Map<AssetId, PriceId> = new Map([
-      [createAssetId(CONFIG_A), 'a'],
-      [createAssetId(CONFIG_B), 'b'],
+      [AssetId.create(CONFIG_A.chain, CONFIG_A.address), 'a'],
+      [AssetId.create(CONFIG_B.chain, CONFIG_B.address), 'b'],
     ])
     const timestamps: UnixTime[] = [
       new UnixTime(100),

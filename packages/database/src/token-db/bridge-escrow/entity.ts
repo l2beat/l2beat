@@ -1,5 +1,5 @@
 import { Insertable, Selectable } from 'kysely'
-import { BridgeEscrow } from '../../kysely/token-db/types'
+import { BridgeEscrow } from '../../kysely/generated/types'
 
 export interface BridgeEscrowRecord {
   id: string

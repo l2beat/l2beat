@@ -12,23 +12,26 @@ import { PriceIndexer } from '../indexers/PriceIndexer'
 import { PriceService } from '../services/PriceService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
-export interface PriceModule {
+interface PriceModule {
   start: () => Promise<void> | void
   descendant: DescendantIndexer
 }
 
-export function createPriceModule(
+export function initPriceModule(
   config: TvlConfig,
   logger: Logger,
   peripherals: Peripherals,
-  hourlyIndexer: HourlyIndexer,
   syncOptimizer: SyncOptimizer,
   indexerService: IndexerService,
+  hourlyIndexer: HourlyIndexer,
 ): PriceModule {
   const coingeckoClient = peripherals.getClient(CoingeckoClient, {
     apiKey: config.coingeckoApiKey,
   })
-  const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+  const coingeckoQueryService = new CoingeckoQueryService(
+    coingeckoClient,
+    logger.tag('prices'),
+  )
 
   const priceService = new PriceService({
     coingeckoQueryService,

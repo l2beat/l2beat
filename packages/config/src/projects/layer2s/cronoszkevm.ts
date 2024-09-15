@@ -87,6 +87,7 @@ export const cronoszkevm: Layer2 = {
     Badge.Stack.ZKStack,
     Badge.Infra.ElasticChain,
   ],
+  isUnderReview: true,
   display: {
     tvlWarning: {
       content:
@@ -349,8 +350,7 @@ export const cronoszkevm: Layer2 = {
         The *SecurityCouncil* role can execute arbitrary upgrade transactions immediately. 
         Currently the delay is set to ${formatSeconds(
           discovery.getContractValue<number>('Governance', 'minDelay'),
-        )}
-        ${isSCset ? '.' : ' and the *SecurityCouncil* role is not used.'}`,
+        )} ${isSCset ? '.' : ' and the *SecurityCouncil* role is not used.'}`,
         ...upgrades,
       }),
       discovery.getContractDetails('CronosZkEVMAdmin', {

@@ -1,10 +1,7 @@
-import React, { type SVGAttributes } from 'react'
 import { cn } from '~/utils/cn'
+import { type SvgIconProps } from './svg-icon'
 
-export function EthereumLineIcon({
-  className,
-  ...props
-}: SVGAttributes<SVGElement>) {
+export function EthereumLineIcon({ className, ...props }: SvgIconProps) {
   return (
     <svg
       width="10"

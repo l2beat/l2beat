@@ -1,0 +1,1 @@
+Vector is a set of smart contracts that act as an Avail ZK light client, used to verify DA attestations by projects using Avail for DA. The repo can be found [here](https://github.com/succinctlabs/sp1-vector).

@@ -1,9 +1,4 @@
-import {
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-  formatSeconds,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, formatSeconds } from '@l2beat/shared-pure'
 
 import { CONTRACTS, NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -47,36 +42,44 @@ export const polygonpos: Bridge = {
     category: 'Token Bridge',
   },
   config: {
+    associatedTokens: ['POL', 'MATIC'],
     escrows: [
+      discovery.getEscrowDetails({
+        // DepositManager
+        address: EthereumAddress('0x401F6c983eA34274ec46f84D70b31C151321188b'),
+        tokens: '*',
+        ...upgrades,
+      }),
       discovery.getEscrowDetails({
         // ERC20Predicate
         address: EthereumAddress('0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf'),
-        sinceTimestamp: new UnixTime(1598436664),
         tokens: '*',
         ...upgrades,
       }),
       discovery.getEscrowDetails({
         // MintableERC20Predicate
         address: EthereumAddress('0x9923263fA127b3d1484cFD649df8f1831c2A74e4'),
-        sinceTimestamp: new UnixTime(1613100720),
         tokens: '*',
         ...upgrades,
       }),
       discovery.getEscrowDetails({
         // EtherPredicate
         address: EthereumAddress('0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30'),
-        sinceTimestamp: new UnixTime(1598437971),
         tokens: ['ETH'],
         ...upgrades,
       }),
       discovery.getEscrowDetails({
         // ERC20EscrowPredicate for TOWER token
         address: EthereumAddress('0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4'),
-        sinceTimestamp: new UnixTime(1598437971),
         tokens: '*',
         ...upgrades,
       }),
-      // ERC20MintBurnablePredicate is for PlasmaBridge
+      // ...other predicates up until PolygonERC20MintBurnPredicate do not hold funds
+      discovery.getEscrowDetails({
+        // old MaticWETH contract escrowing ETH sent to Polygon
+        address: EthereumAddress('0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8'),
+        tokens: ['ETH'],
+      }),
     ],
   },
   riskView: {
@@ -166,18 +169,54 @@ export const polygonpos: Bridge = {
       }),
       discovery.getContractDetails('StakeManager', {
         description:
-          'Main configuration contract to manage stakers and their voting power.',
+          'Main configuration contract to manage stakers and their voting power and validate checkpoint signatures.',
         ...upgrades,
       }),
+      discovery.getContractDetails(
+        'StakingInfo',
+        'Contains logging and getter functions about staking on Polygon.',
+      ),
       discovery.getContractDetails('SlashingManager', {
         description:
           'A contract priviliged to slash validators in StakeManager via slash() method.',
         ...upgrades,
       }),
       discovery.getContractDetails('Registry', {
-        description: 'A registry of different system components.',
+        description:
+          'Maintains the addresses of the contracts used in the system.',
+      }),
+      discovery.getContractDetails(
+        'StateSender',
+        'Smart contract containing the logic for syncing the state of registered bridges to the other chain.',
+      ),
+      discovery.getContractDetails('DepositManager', {
+        description:
+          'Contract to deposit and escrow ETH, ERC20 or ERC721 tokens. Currently only used for POL.',
         ...upgrades,
       }),
+      discovery.getContractDetails('WithdrawManager', {
+        description:
+          "Contract handling users' withdrawal finalization for tokens escrowed in DepositManager.",
+        ...upgrades,
+      }),
+      discovery.getContractDetails('ERC20PredicateBurnOnly', {
+        description:
+          'Contract used to initiate ERC20 token withdrawals. The function to handle Plasma proofs is empty, meaning exits cannot be challenged.',
+      }),
+      discovery.getContractDetails('ERC721PredicateBurnOnly', {
+        description:
+          'Contract used to initiate ERC721 token withdrawals. The function to handle Plasma proofs is empty, meaning exits cannot be challenged.',
+      }),
+
+      discovery.getContractDetails('EventsHub', {
+        description: 'Contains events used by other contracts in the system.',
+        ...upgrades,
+      }),
+
+      discovery.getContractDetails(
+        'ExitNFT',
+        'NFTs used to represent a withdrawal in the withdrawal PriorityQueue (Only used for tokens initially deposited via DepositManager).',
+      ),
       discovery.getContractDetails(
         'Timelock',
         `Contract enforcing delay on code upgrades. The current delay is ${delayString}.`,

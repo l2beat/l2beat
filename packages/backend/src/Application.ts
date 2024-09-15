@@ -16,7 +16,7 @@ import { createLzOAppsModule } from './modules/lz-oapps/createLzOAppsModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createStatusModule } from './modules/status/StatusModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
-import { createTvlModule } from './modules/tvl/modules/TvlModule'
+import { initTvlModule } from './modules/tvl/modules/TvlModule'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
 import { createVerifiersModule } from './modules/verifiers/VerifiersModule'
 import { Peripherals } from './peripherals/Peripherals'
@@ -65,7 +65,7 @@ export class Application {
         trackedTxsModule?.indexer,
       ),
       createLzOAppsModule(config, logger),
-      createTvlModule(config, logger, peripherals, clock),
+      initTvlModule(config, logger, peripherals, clock),
       createVerifiersModule(config, logger, peripherals, clock),
       createFeaturesModule(config),
       createDaBeatModule(config, logger, peripherals, clock),

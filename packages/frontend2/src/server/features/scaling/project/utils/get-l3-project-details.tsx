@@ -4,9 +4,8 @@ import {
   type ImplementationChangeReportApiResponse,
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
-import { isEmpty } from 'lodash'
-import { type ProjectDetailsSection } from '~/app/_components/projects/sections/types'
-import { type RosetteValue } from '~/app/_components/rosette/types'
+import { type ProjectDetailsSection } from '~/components/projects/sections/types'
+import { type RosetteValue } from '~/components/rosette/types'
 import { api } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
@@ -71,14 +70,29 @@ export async function getL3ProjectDetails({
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
 
-  const tvlChartData = await api.tvl.chart({
-    range: '7d',
-    filter: { type: 'projects', projectIds: [project.id] },
-  })
-  const activityChartData = await api.activity.chart({
-    range: '30d',
-    filter: { type: 'projects', projectIds: [project.id] },
-  })
+  await Promise.all([
+    api.tvl.chart.prefetch({
+      range: '7d',
+      filter: { type: 'projects', projectIds: [project.id] },
+      excludeAssociatedTokens: false,
+    }),
+    api.activity.chart.prefetch({
+      range: '30d',
+      filter: { type: 'projects', projectIds: [project.id] },
+    }),
+  ])
+  const [tvlChartData, activityChartData, tokens] = await Promise.all([
+    api.tvl.chart({
+      range: '7d',
+      filter: { type: 'projects', projectIds: [project.id] },
+      excludeAssociatedTokens: false,
+    }),
+    api.activity.chart({
+      range: '30d',
+      filter: { type: 'projects', projectIds: [project.id] },
+    }),
+    getTokensForProject(project),
+  ])
 
   const sortedMilestones =
     project.milestones?.sort(
@@ -87,9 +101,7 @@ export async function getL3ProjectDetails({
 
   const items: ProjectDetailsSection[] = []
 
-  const tokens = await getTokensForProject(project)
-
-  if (!project.isUpcoming && !isEmpty(tvlChartData)) {
+  if (!project.isUpcoming && tvlChartData.chart.length > 0) {
     items.push({
       type: 'ChartSection',
       props: {
@@ -103,7 +115,7 @@ export async function getL3ProjectDetails({
     })
   }
 
-  if (!isEmpty(activityChartData.data)) {
+  if (activityChartData.length > 0) {
     items.push({
       type: 'ChartSection',
       props: {
@@ -118,7 +130,7 @@ export async function getL3ProjectDetails({
   if (
     !project.isUpcoming &&
     project.milestones &&
-    !isEmpty(project.milestones)
+    project.milestones.length > 0
   ) {
     items.push({
       type: 'MilestonesAndIncidentsSection',
@@ -266,7 +278,7 @@ export async function getL3ProjectDetails({
     })
   }
 
-  if (project.knowledgeNuggets && !isEmpty(project.knowledgeNuggets)) {
+  if (project.knowledgeNuggets && project.knowledgeNuggets.length > 0) {
     items.push({
       type: 'KnowledgeNuggetsSection',
       props: {

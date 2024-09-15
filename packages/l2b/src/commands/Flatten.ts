@@ -6,17 +6,9 @@ import {
 } from '@l2beat/discovery/dist/utils/IEtherscanClient'
 import { assert } from '@l2beat/shared-pure'
 import chalk from 'chalk'
-import {
-  boolean,
-  command,
-  flag,
-  oneOf,
-  option,
-  optional,
-  positional,
-  string,
-} from 'cmd-ts'
-import { EthereumAddressValue, HttpUrl } from './types'
+import { boolean, command, flag, option, positional, string } from 'cmd-ts'
+import { explorerApiKey, explorerType, explorerUrl } from './args'
+import { EthereumAddressValue } from './types'
 
 export const Flatten = command({
   name: 'flatten',
@@ -25,25 +17,9 @@ export const Flatten = command({
   version: '1.0.0',
   args: {
     address: positional({ type: EthereumAddressValue, displayName: 'address' }),
-    explorerUrl: option({
-      type: HttpUrl,
-      long: 'explorer-url',
-      short: 'u',
-      defaultValue: () => 'https://api.etherscan.io/api',
-      defaultValueIsSerializable: true,
-    }),
-    type: option({
-      type: oneOf(['etherscan', 'blockscout']),
-      long: 'etherscan-type',
-      short: 't',
-      defaultValue: () => 'etherscan',
-    }),
-    apiKey: option({
-      type: optional(string),
-      env: 'L2B_ETHERSCAN_API_KEY',
-      long: 'api-key',
-      short: 'k',
-    }),
+    explorerUrl,
+    type: explorerType,
+    apiKey: explorerApiKey,
     output: option({
       type: string,
       long: 'output',

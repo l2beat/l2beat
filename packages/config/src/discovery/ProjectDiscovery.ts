@@ -24,7 +24,7 @@ import {
   notUndefined,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { groupBy, isArray, isString, uniq } from 'lodash'
+import { groupBy, isArray, isString, sum, uniq } from 'lodash'
 
 import { join } from 'path'
 import {
@@ -337,7 +337,7 @@ export class ProjectDiscovery {
       .filter(notUndefined)
       .map((contract) => ({
         name: contract.name,
-        description: contract.descriptions?.join(' ').replace(/\.$/, '') ?? '', // remove trailing dot
+        description: trimTrailingDots(contract.descriptions?.join(' ') ?? ''),
       }))
       .map(
         ({ name, description }) =>
@@ -370,7 +370,7 @@ export class ProjectDiscovery {
 
     const multisigDesc = this.getMultisigDescription(identifier)
 
-    const combinedDescriptions = [...passedDescription, ...multisigDesc]
+    const combinedDescriptions = [...multisigDesc, ...passedDescription]
 
     const formattedDesc = useBulletPoints
       ? formatAsBulletPoints(combinedDescriptions)
@@ -741,27 +741,30 @@ export class ProjectDiscovery {
       groupBy(
         contractOrEoa.receivedPermissions ?? [],
         (value: ResolvedPermission) => {
-          return (
-            value.permission +
-            ':' +
-            (value.via !== undefined ? formatVia(value.via) : '')
-          )
+          return [
+            value.permission,
+            value.via !== undefined ? formatVia(value.via) : '',
+            value.description ?? '',
+          ].join(':')
         },
       ),
     ).map(([key, entries]) => {
       const permission = key.split(':')[0] as PermissionType
       const via = key.split(':')[1] ?? ''
+      const description = key.split(':', 3)[2] ?? ''
       const prefix = ultimatePermissionToPrefix[permission]
       if (prefix === undefined) {
         return ''
       }
-      const addressesString =
+      const detailsString =
         entries
           .map((entry) => this.getContract(entry.target.toString()).name)
-          .join(', ') + via
+          .join(', ') +
+        via +
+        formatPermissionDescription(description)
       return `${
         ultimatePermissionToPrefix[permission as PermissionType]
-      } ${addressesString}.`
+      } ${detailsString}.`
     })
   }
 
@@ -772,19 +775,25 @@ export class ProjectDiscovery {
       [key in PermissionType]: string | undefined
     } = {
       configure: 'Can be used to configure',
-      upgrade: 'Can be used to upgrade implementation of\n',
+      upgrade: 'Can be used to upgrade implementation of',
       act: 'Can act on behalf of',
     }
 
     return Object.entries(
-      groupBy(contractOrEoa.directlyReceivedPermissions ?? [], 'permission'),
-    ).map(([permission, entries]) => {
+      groupBy(
+        contractOrEoa.directlyReceivedPermissions ?? [],
+        (value: ResolvedPermission) =>
+          value.permission + ':' + (value.description ?? ''),
+      ),
+    ).map(([key, entries]) => {
+      const permission = key.split(':')[0] as PermissionType
+      const description = key.split(':', 2)[1] ?? ''
       const addressesString = entries
         .map((entry) => this.getContract(entry.target.toString()).name)
         .join(', ')
       return `${
-        directPermissionToPrefix[permission as PermissionType]
-      } ${addressesString}.`
+        directPermissionToPrefix[permission]
+      } ${addressesString}${formatPermissionDescription(description)}.`
     })
   }
 
@@ -894,13 +903,27 @@ export class ProjectDiscovery {
       .filter((contracts) => contracts.receivedPermissions === undefined)
       .filter((contracts) => contracts.proxyType !== 'gnosis safe')
       .map((contract) => {
-        const admins = get$Admins(contract.values)
-        const upgradableBy = admins.length > 0 && {
-          upgradableBy: admins.map(
-            (a) => this.getContractByAddress(a)?.name ?? a.toString(),
-          ),
-          upgradeDelay: 'No delay',
-        }
+        const upgradersWithDelay: Record<string, number> = Object.fromEntries(
+          contract.issuedPermissions
+            ?.filter((p) => p.permission === 'upgrade')
+            .map((p) => {
+              const address =
+                this.getContractByAddress(p.target)?.name ?? p.target.toString()
+              const delay =
+                (p.delay ?? 0) + sum(p.via?.map((v) => v.delay ?? 0) ?? [])
+              return [address, delay]
+            }) ?? [],
+        )
+
+        const upgraders = Object.keys(upgradersWithDelay)
+        const minDelay = Math.min(...Object.values(upgradersWithDelay))
+        const upgradableBy =
+          upgraders.length === 0
+            ? {}
+            : {
+                upgradableBy: upgraders,
+                upgradeDelay: minDelay === 0 ? 'No delay' : minDelay.toString(),
+              }
 
         return this.getContractDetails(contract.address.toString(), {
           description: formatAsBulletPoints(
@@ -965,10 +988,15 @@ const roleDescriptions: { [key in StackRole]: string } = {
 }
 
 export function formatAsBulletPoints(description: string[]): string {
-  // Temporarily, for clean diffs, disable bullet points.
-  // It will be enabled as part of upcoming stories.
-  return description.join(' ')
-  // return description.length > 1
-  //   ? description.map((s) => `* ${s}\n`).join('')
-  //   : description.join(' ')
+  return description.length > 1
+    ? description.map((s) => `* ${s}\n`).join('')
+    : description.join(' ')
+}
+
+export function trimTrailingDots(s: string): string {
+  return s.replace(/\.*$/, '')
+}
+
+export function formatPermissionDescription(description: string): string {
+  return description !== '' ? ` - ${trimTrailingDots(description)}` : ''
 }

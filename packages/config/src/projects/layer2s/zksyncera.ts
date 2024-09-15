@@ -96,6 +96,7 @@ export const zksyncera: Layer2 = {
     Badge.Other.L3HostChain,
     Badge.Infra.ElasticChain,
   ],
+  isUnderReview: true,
   display: {
     name: 'ZKsync Era',
     slug: 'zksync-era',
@@ -585,8 +586,7 @@ export const zksyncera: Layer2 = {
         The *SecurityCouncil* role can execute arbitrary upgrade transactions immediately. 
         Currently the delay is set to ${formatSeconds(
           discovery.getContractValue<number>('Governance', 'minDelay'),
-        )}
-        ${isSCset ? '.' : ' and the *SecurityCouncil* role is not used.'}`,
+        )} ${isSCset ? '.' : ' and the *SecurityCouncil* role is not used.'}`,
         ...upgrades,
       }),
       discovery.getContractDetails('ChainAdmin', {

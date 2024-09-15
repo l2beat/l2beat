@@ -7,7 +7,7 @@ import {
   type CommonScalingEntry,
   getCommonScalingEntry,
 } from '../get-common-scaling-entry'
-import { getLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
+import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
 import { orderByTvl } from '../tvl/utils/order-by-tvl'
 
 export type ScalingCostsEntry = CommonScalingEntry & {
@@ -18,14 +18,13 @@ export type ScalingCostsEntry = CommonScalingEntry & {
 export async function getScalingCostsEntries(): Promise<ScalingCostsEntry[]> {
   const [tvl, implementationChange, projectsVerificationStatuses] =
     await Promise.all([
-      getLatestTvlUsd(),
+      getProjectsLatestTvlUsd(),
       getImplementationChangeReport(),
       getProjectsVerificationStatuses(),
     ])
   const projects = getCostsProjects()
-  const orderedProjects = orderByTvl(projects, tvl)
 
-  return orderedProjects
+  const entries = projects
     .map((project) => {
       const isVerified = !!projectsVerificationStatuses[project.id.toString()]
       const hasImplementationChanged =
@@ -41,4 +40,6 @@ export async function getScalingCostsEntries(): Promise<ScalingCostsEntry[]> {
       }
     })
     .filter(notUndefined)
+
+  return orderByTvl(entries, tvl)
 }

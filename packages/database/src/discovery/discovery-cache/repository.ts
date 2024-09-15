@@ -6,14 +6,14 @@ export class DiscoveryCacheRepository extends BaseRepository {
   async upsert(record: DiscoveryCacheRecord): Promise<string> {
     const row = toRow(record)
     await this.db
-      .insertInto('discovery_cache')
+      .insertInto('DiscoveryCache')
       .values(row)
       .onConflict((cb) =>
         cb.column('key').doUpdateSet((eb) => ({
           key: eb.ref('excluded.key'),
           value: eb.ref('excluded.value'),
           chain: eb.ref('excluded.chain'),
-          block_number: eb.ref('excluded.block_number'),
+          blockNumber: eb.ref('excluded.blockNumber'),
         })),
       )
       .execute()
@@ -22,7 +22,7 @@ export class DiscoveryCacheRepository extends BaseRepository {
 
   async findByKey(key: string): Promise<DiscoveryCacheRecord | undefined> {
     const row = await this.db
-      .selectFrom('discovery_cache')
+      .selectFrom('DiscoveryCache')
       .select(selectDiscoveryCache)
       .where('key', '=', key)
       .limit(1)
@@ -32,7 +32,7 @@ export class DiscoveryCacheRepository extends BaseRepository {
 
   async getAll(): Promise<DiscoveryCacheRecord[]> {
     const rows = await this.db
-      .selectFrom('discovery_cache')
+      .selectFrom('DiscoveryCache')
       .select(selectDiscoveryCache)
       .execute()
     return rows.map(toRecord)
@@ -40,17 +40,15 @@ export class DiscoveryCacheRepository extends BaseRepository {
 
   async deleteAfter(blockNumber: number, chain: string): Promise<number> {
     const result = await this.db
-      .deleteFrom('discovery_cache')
-      .where('block_number', '>', blockNumber)
+      .deleteFrom('DiscoveryCache')
+      .where('blockNumber', '>', blockNumber)
       .where('chain', '=', chain)
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
-      .deleteFrom('discovery_cache')
-      .executeTakeFirst()
+    const result = await this.db.deleteFrom('DiscoveryCache').executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 }

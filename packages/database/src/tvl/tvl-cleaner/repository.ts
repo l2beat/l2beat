@@ -13,14 +13,12 @@ export class TvlCleanerRepository extends BaseRepository {
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
       await this.db
-        .insertInto('tvl_cleaner')
+        .insertInto('TvlCleaner')
         .values(batch)
         .onConflict((cb) =>
-          cb.column('repository_name').doUpdateSet((eb) => ({
-            hourly_cleaned_until: eb.ref('excluded.hourly_cleaned_until'),
-            six_hourly_cleaned_until: eb.ref(
-              'excluded.six_hourly_cleaned_until',
-            ),
+          cb.column('repositoryName').doUpdateSet((eb) => ({
+            hourlyCleanedUntil: eb.ref('excluded.hourlyCleanedUntil'),
+            sixHourlyCleanedUntil: eb.ref('excluded.sixHourlyCleanedUntil'),
           })),
         )
         .execute()
@@ -32,16 +30,16 @@ export class TvlCleanerRepository extends BaseRepository {
     repositoryName: string,
   ): Promise<TvlCleanerRecord | undefined> {
     const row = await this.db
-      .selectFrom('tvl_cleaner')
+      .selectFrom('TvlCleaner')
       .select(selectTvlCleaner)
-      .where('repository_name', '=', repositoryName)
+      .where('repositoryName', '=', repositoryName)
       .limit(1)
       .executeTakeFirst()
     return row && toRecord(row)
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db.deleteFrom('tvl_cleaner').executeTakeFirst()
+    const result = await this.db.deleteFrom('TvlCleaner').executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 }

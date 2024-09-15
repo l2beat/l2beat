@@ -22,399 +22,371 @@ model Stake {
   thresholdStake Float  @db.Real
 }
 
-// TODO: when adding back token db models below
-// - delete /kysely/token-db directory
-// - generete kysely types
-// - change references '/kysely/token-db/types' to '/kysely/generated/types'
+model BridgeEscrow {
+  id                 String          @id @db.Char(21)
+  networkId          String          @db.Char(21)
+  network            Network         @relation("network", fields: [networkId], references: [id])
+  address            String
+  externalBridgeId   String?         @db.Char(21)
+  externalBridge     ExternalBridge? @relation(fields: [externalBridgeId], references: [id])
+  canonicalNetworkId String?         @db.Char(21)
+  canonicalNetwork   Network?        @relation("canonicalNetwork", fields: [canonicalNetworkId], references: [id])
+  tokens             Token[]
+  updatedAt          DateTime        @updatedAt
+  createdAt          DateTime        @default(now())
 
-// model BridgeEscrow {
-//   id                 String          @id @db.Char(21)
-//   networkId          String          @db.Char(21)
-//   network            Network         @relation("network", fields: [networkId], references: [id])
-//   address            String
-//   externalBridgeId   String?         @db.Char(21)
-//   externalBridge     ExternalBridge? @relation(fields: [externalBridgeId], references: [id])
-//   canonicalNetworkId String?         @db.Char(21)
-//   canonicalNetwork   Network?        @relation("canonicalNetwork", fields: [canonicalNetworkId], references: [id])
-//   tokens             Token[]
-//   updatedAt          DateTime        @default(now()) @updatedAt
-//   createdAt          DateTime        @default(now())
+  @@unique([networkId, address])
+}
 
-//   @@unique([networkId, address])
-// }
+enum ExternalBridgeType {
+  Axelar
+  LayerZeroV1
+  Orbit
+  Wormhole
+}
 
-// enum ExternalBridgeType {
-//   Axelar
-//   LayerZeroV1
-//   Orbit
-//   Wormhole
-// }
+model ExternalBridge {
+  id      String             @id @db.Char(21)
+  name    String             @db.VarChar(256)
+  type    ExternalBridgeType @unique
+  tokens  TokenBridge[]
+  escrows BridgeEscrow[]
 
-// model ExternalBridge {
-//   id        String             @id @db.Char(21)
-//   name      String             @db.VarChar(256)
-//   type      ExternalBridgeType @unique
-//   tokens    TokenBridge[]
-//   escrows   BridgeEscrow[]
-//   updatedAt DateTime           @default(now()) @updatedAt
-//   createdAt DateTime           @default(now())
-// }
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
 
-// model Deployment {
-//   id              String    @id @db.Char(21)
-//   tokenId         String    @unique
-//   token           Token     @relation(fields: [tokenId], references: [id])
-//   txHash          String?   @db.Char(66)
-//   blockNumber     Int?
-//   timestamp       DateTime? @db.Timestamp(6)
-//   from            String?
-//   to              String?
-//   isDeployerEoa   Boolean?
-//   sourceAvailable Boolean
-//   updatedAt       DateTime  @default(now()) @updatedAt
-//   createdAt       DateTime  @default(now())
-// }
+model Deployment {
+  id              String    @id @db.Char(21)
+  tokenId         String    @unique
+  token           Token     @relation(fields: [tokenId], references: [id])
+  txHash          String?   @db.Char(66)
+  blockNumber     Int?
+  timestamp       DateTime? @db.Timestamp(6)
+  from            String?
+  to              String?
+  isDeployerEoa   Boolean?
+  sourceAvailable Boolean
+  updatedAt       DateTime  @updatedAt
+  createdAt       DateTime  @default(now())
+}
 
-// enum ExplorerType {
-//   Etherscan
-// }
+enum ExplorerType {
+  Etherscan
+}
 
-// model NetworkRpc {
-//   id        String   @id @db.Char(21)
-//   networkId String   @db.Char(21)
-//   network   Network  @relation(fields: [networkId], references: [id])
-//   url       String
-//   updatedAt DateTime @default(now()) @updatedAt
-//   createdAt DateTime @default(now())
-// }
+model NetworkRpc {
+  id        String   @id @db.Char(21)
+  networkId String   @db.Char(21)
+  network   Network  @relation(fields: [networkId], references: [id])
+  url       String
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
 
-// model NetworkExplorer {
-//   id        String       @id @db.Char(21)
-//   networkId String       @db.Char(21)
-//   network   Network      @relation(fields: [networkId], references: [id])
-//   type      ExplorerType
-//   url       String
-//   apiKey    String
-//   updatedAt DateTime     @default(now()) @updatedAt
-//   createdAt DateTime     @default(now())
+model NetworkExplorer {
+  id        String       @id @db.Char(21)
+  networkId String       @db.Char(21)
+  network   Network      @relation(fields: [networkId], references: [id])
+  type      ExplorerType
+  url       String
+  apiKey    String
+  updatedAt DateTime     @updatedAt
+  createdAt DateTime     @default(now())
 
-//   @@unique(networkId)
-//   @@unique([networkId, type])
-// }
+  @@unique(networkId)
+  @@unique([networkId, type])
+}
 
-// model Network {
-//   id                         String           @id @db.Char(21)
-//   chainId                    Int
-//   name                       String           @db.VarChar(256)
-//   coingeckoId                String?          @unique @db.VarChar(256)
-//   axelarId                   String?          @db.VarChar(256)
-//   axelarGatewayAddress       String?          @db.Char(42)
-//   orbitId                    String?          @db.VarChar(256)
-//   wormholeId                 String?          @db.VarChar(256)
-//   layerZeroV1EndpointAddress String?          @db.Char(42)
-//   bridgeEscrows              BridgeEscrow[]   @relation("network")
-//   canonicalBridgeEscrows     BridgeEscrow[]   @relation("canonicalNetwork")
-//   rpcs                       NetworkRpc[]
-//   explorer                   NetworkExplorer?
-//   tokens                     Token[]
-//   updatedAt                  DateTime         @default(now()) @updatedAt
-//   createdAt                  DateTime         @default(now())
+model Network {
+  id                         String           @id @db.Char(21)
+  chainId                    Int
+  name                       String           @db.VarChar(256)
+  coingeckoId                String?          @unique @db.VarChar(256)
+  axelarId                   String?          @db.VarChar(256)
+  axelarGatewayAddress       String?          @db.Char(42)
+  orbitId                    String?          @db.VarChar(256)
+  wormholeId                 String?          @db.VarChar(256)
+  layerZeroV1EndpointAddress String?          @db.Char(42)
+  logoUrl                    String?          @db.VarChar(256)
+  bridgeEscrows              BridgeEscrow[]   @relation("network")
+  canonicalBridgeEscrows     BridgeEscrow[]   @relation("canonicalNetwork")
+  rpcs                       NetworkRpc[]
+  explorer                   NetworkExplorer?
+  tokens                     Token[]
+  updatedAt                  DateTime         @updatedAt
+  createdAt                  DateTime         @default(now())
+}
 
-// }
+model TokenBridge {
+  id               String          @id @db.Char(21)
+  sourceTokenId    String          @db.Char(21)
+  sourceToken      Token           @relation("bridgedTo", fields: [sourceTokenId], references: [id])
+  targetTokenId    String          @unique @db.Char(21)
+  targetToken      Token           @relation("bridgedFrom", fields: [targetTokenId], references: [id])
+  externalBridgeId String?         @db.Char(21)
+  externalBridge   ExternalBridge? @relation(fields: [externalBridgeId], references: [id])
+  updatedAt        DateTime        @updatedAt
+  createdAt        DateTime        @default(now())
+}
 
-// model TokenBridge {
-//   id               String          @id @db.Char(21)
-//   sourceTokenId    String          @db.Char(21)
-//   sourceToken      Token           @relation("bridgedTo", fields: [sourceTokenId], references: [id])
-//   targetTokenId    String          @unique @db.Char(21)
-//   targetToken      Token           @relation("bridgedFrom", fields: [targetTokenId], references: [id])
-//   externalBridgeId String?         @db.Char(21)
-//   externalBridge   ExternalBridge? @relation(fields: [externalBridgeId], references: [id])
-//   updatedAt        DateTime        @default(now()) @updatedAt
-//   createdAt        DateTime        @default(now())
-// }
+model TokenMeta {
+  id           String   @id @db.Char(21)
+  tokenId      String   @db.Char(21)
+  token        Token    @relation(fields: [tokenId], references: [id])
+  externalId   String?  @db.VarChar(256)
+  source       String   @db.VarChar(256)
+  name         String?  @db.VarChar(256)
+  symbol       String?  @db.VarChar(32)
+  decimals     Int?
+  logoUrl      String?  @db.VarChar(256)
+  contractName String?  @db.VarChar(256)
+  updatedAt    DateTime @updatedAt
+  createdAt    DateTime @default(now())
 
-// model TokenMeta {
-//   id           String   @id @db.Char(21)
-//   tokenId      String   @db.Char(21)
-//   token        Token    @relation(fields: [tokenId], references: [id])
-//   externalId   String?  @db.VarChar(256)
-//   source       String   @db.VarChar(256)
-//   name         String?  @db.VarChar(256)
-//   symbol       String?  @db.VarChar(32)
-//   decimals     Int?
-//   logoUrl      String?  @db.VarChar(256)
-//   contractName String?  @db.VarChar(256)
-//   updatedAt    DateTime @default(now()) @updatedAt
-//   createdAt    DateTime @default(now())
+  @@unique([tokenId, source])
+}
 
-//   @@unique([tokenId, source])
-// }
+model Token {
+  id          String         @id @db.Char(21)
+  networkId   String         @db.Char(21)
+  network     Network        @relation(fields: [networkId], references: [id])
+  address     String
+  deployment  Deployment?
+  metadata    TokenMeta[]
+  bridgedTo   TokenBridge[]  @relation("bridgedTo")
+  bridgedFrom TokenBridge?   @relation("bridgedFrom")
+  escrows     BridgeEscrow[]
+  updatedAt   DateTime       @updatedAt
+  createdAt   DateTime       @default(now())
 
-// model Token {
-//   id          String         @id @db.Char(21)
-//   networkId   String         @db.Char(21)
-//   network     Network        @relation(fields: [networkId], references: [id])
-//   address     String
-//   deployment  Deployment?
-//   metadata    TokenMeta[]
-//   bridgedTo   TokenBridge[]  @relation("bridgedTo")
-//   bridgedFrom TokenBridge?   @relation("bridgedFrom")
-//   escrows     BridgeEscrow[]
-//   updatedAt   DateTime       @default(now()) @updatedAt
-//   createdAt   DateTime       @default(now())
+  @@unique([networkId, address])
+}
 
-//   @@unique([networkId, address])
-// }
-
-// model Cache {
-//   key         String   @id
-//   value       String
-//   chainId     Int
-//   blockNumber Int?
-//   updatedAt   DateTime @default(now()) @updatedAt
-//   createdAt   DateTime @default(now())
-// }
+model Cache {
+  key         String   @id
+  value       String
+  chainId     Int
+  blockNumber Int?
+  createdAt   DateTime @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime @default(now()) @db.Timestamp(6)
+}
 
 model Activity {
-  projectId String   @map("project_id") @db.VarChar(255)
-  timestamp DateTime @map("timestamp") @db.Timestamp(6)
-  count     Int      @map("count")
-  start     Int      @default(0) @map("start")
-  end       Int      @default(0) @map("end")
+  projectId String   @db.VarChar(255)
+  timestamp DateTime @db.Timestamp(6)
+  count     Int
+  start     Int      @default(0)
+  end       Int      @default(0)
 
   @@id([projectId, timestamp])
-  @@map("activity")
 }
 
 model AggregatedL2Cost {
-  timestamp      DateTime @map("timestamp") @db.Timestamp(6)
-  projectId      String   @map("project_id") @db.VarChar(255)
-  totalGas       Int      @map("total_gas")
-  totalGasEth    Float    @map("total_gas_eth") @db.Real
-  totalGasUsd    Float    @map("total_gas_usd") @db.Real
-  blobsGas       Int?     @map("blobs_gas")
-  blobsGasEth    Float?   @map("blobs_gas_eth") @db.Real
-  blobsGasUsd    Float?   @map("blobs_gas_usd") @db.Real
-  calldataGas    Int      @map("calldata_gas")
-  calldataGasEth Float    @map("calldata_gas_eth") @db.Real
-  calldataGasUsd Float    @map("calldata_gas_usd") @db.Real
-  computeGas     Int      @map("compute_gas")
-  computeGasEth  Float    @map("compute_gas_eth") @db.Real
-  computeGasUsd  Float    @map("compute_gas_usd") @db.Real
-  overheadGasEth Float    @map("overhead_gas_eth") @db.Real
-  overheadGasUsd Float    @map("overhead_gas_usd") @db.Real
-  overheadGas    Int      @map("overhead_gas")
+  timestamp      DateTime @db.Timestamp(6)
+  projectId      String   @db.VarChar(255)
+  totalGas       Int
+  totalGasEth    Float    @db.Real
+  totalGasUsd    Float    @db.Real
+  blobsGas       Int?
+  blobsGasEth    Float?   @db.Real
+  blobsGasUsd    Float?   @db.Real
+  calldataGas    Int
+  calldataGasEth Float    @db.Real
+  calldataGasUsd Float    @db.Real
+  computeGas     Int
+  computeGasEth  Float    @db.Real
+  computeGasUsd  Float    @db.Real
+  overheadGasEth Float    @db.Real
+  overheadGasUsd Float    @db.Real
+  overheadGas    Int
 
   @@id([projectId, timestamp])
-  @@index([projectId], map: "aggregated_l2_costs_project_id_index")
-  @@index([timestamp], map: "aggregated_l2_costs_timestamp_index")
-  @@map("aggregated_l2_costs")
+  @@index([projectId])
+  @@index([timestamp])
 }
 
 model Amount {
-  timestamp       DateTime @map("timestamp") @db.Timestamp(6)
-  amount          Decimal  @map("amount") @db.Decimal(80, 0)
-  configurationId String   @map("configuration_id") @db.Char(12)
+  timestamp       DateTime @db.Timestamp(6)
+  amount          Decimal  @db.Decimal(80, 0)
+  configurationId String   @db.Char(12)
 
   @@id([configurationId, timestamp])
-  @@map("amounts")
 }
 
 model BlockTimestamp {
-  chain       String   @map("chain") @db.VarChar(255)
-  timestamp   DateTime @map("timestamp") @db.Timestamp(6)
-  blockNumber Int      @map("block_number")
+  chain       String   @db.VarChar(255)
+  timestamp   DateTime @db.Timestamp(6)
+  blockNumber Int
 
   @@id([chain, timestamp])
-  @@map("block_timestamps")
 }
 
 model DailyDiscovery {
-  projectName       String   @map("project_name") @db.VarChar(255)
-  chainId           Int      @map("chain_id")
-  unixTimestamp     DateTime @map("unix_timestamp") @db.Timestamp(6)
-  blockNumber       Int      @map("block_number")
-  version           Int      @map("version")
-  configHash        String   @map("config_hash") @db.VarChar(255)
-  discoveryJsonBlob Json     @map("discovery_json_blob")
+  projectName       String   @db.VarChar(255)
+  chainId           Int
+  timestamp         DateTime @db.Timestamp(6)
+  blockNumber       Int
+  version           Int
+  configHash        String   @db.VarChar(255)
+  discoveryJsonBlob Json
 
-  @@id([projectName, chainId, unixTimestamp])
-  @@map("daily_discovery")
+  @@id([projectName, chainId, timestamp])
 }
 
 model DiscoveryCache {
-  key         String @id @map("key")
-  value       String @map("value")
-  blockNumber Int    @map("block_number")
-  chain       String @map("chain") @db.VarChar(255)
-
-  @@map("discovery_cache")
+  key         String @id
+  value       String
+  blockNumber Int
+  chain       String @db.VarChar(255)
 }
 
 model Finality {
-  projectId              String   @map("project_id") @db.VarChar(255)
-  timestamp              DateTime @map("timestamp") @db.Timestamp(6)
-  minimumTimeToInclusion Int      @map("minimum_time_to_inclusion")
-  maximumTimeToInclusion Int      @map("maximum_time_to_inclusion")
-  averageTimeToInclusion Int      @map("average_time_to_inclusion")
-  averageStateUpdate     Int?     @map("average_state_update")
+  projectId              String   @db.VarChar(255)
+  timestamp              DateTime @db.Timestamp(6)
+  minimumTimeToInclusion Int
+  maximumTimeToInclusion Int
+  averageTimeToInclusion Int
+  averageStateUpdate     Int?
 
   @@id([projectId, timestamp])
-  @@map("finality")
 }
 
 model IndexerConfiguration {
-  id            String @id @map("id") @db.Char(12)
-  indexerId     String @map("indexer_id") @db.VarChar(255)
-  currentHeight Int?   @map("current_height")
-  minHeight     Int    @map("min_height")
-  maxHeight     Int?   @map("max_height")
-  properties    String @map("properties")
+  id            String @id @db.Char(12)
+  indexerId     String @db.VarChar(255)
+  currentHeight Int?
+  minHeight     Int
+  maxHeight     Int?
+  properties    String
 
-  @@index([indexerId], map: "indexer_configurations_indexer_id_index")
-  @@map("indexer_configurations")
+  @@index([indexerId])
 }
 
 model IndexerState {
-  indexerId    String    @id @map("indexer_id") @db.VarChar(255)
-  safeHeight   Int       @map("safe_height")
-  minTimestamp DateTime? @map("min_timestamp") @db.Timestamp(6)
-  configHash   String?   @map("config_hash")
-
-  @@map("indexer_state")
+  indexerId    String    @id @db.VarChar(255)
+  safeHeight   Int
+  minTimestamp DateTime? @db.Timestamp(6)
+  configHash   String?
 }
 
 model L2Cost {
-  configurationId String   @map("configuration_id") @db.VarChar(12)
-  txHash          String   @map("tx_hash") @db.VarChar(255)
-  timestamp       DateTime @map("timestamp") @db.Timestamp(6)
-  gasUsed         Int      @map("gas_used")
-  gasPrice        BigInt   @map("gas_price")
-  calldataGasUsed Int      @map("calldata_gas_used")
-  calldataLength  Int      @map("calldata_length")
-  blobGasUsed     Int?     @map("blob_gas_used")
-  blobGasPrice    BigInt?  @map("blob_gas_price")
+  configurationId String   @db.VarChar(12)
+  txHash          String   @db.VarChar(255)
+  timestamp       DateTime @db.Timestamp(6)
+  gasUsed         Int
+  gasPrice        BigInt
+  calldataGasUsed Int
+  calldataLength  Int
+  blobGasUsed     Int?
+  blobGasPrice    BigInt?
 
   @@id([configurationId, txHash])
-  @@map("l2_costs")
 }
 
 model L2CostPrice {
-  timestamp DateTime @id @map("timestamp") @db.Timestamp(6)
-  priceUsd  Float    @map("price_usd") @db.Real
-
-  @@map("l2_costs_prices")
+  timestamp DateTime @id @db.Timestamp(6)
+  priceUsd  Float    @db.Real
 }
 
 model Liveness {
-  timestamp       DateTime @map("timestamp") @db.Timestamp(6)
-  blockNumber     Int      @map("block_number")
-  txHash          String   @map("tx_hash") @db.VarChar(255)
-  configurationId String   @map("configuration_id") @db.VarChar(12)
+  timestamp       DateTime @db.Timestamp(6)
+  blockNumber     Int
+  txHash          String   @db.VarChar(255)
+  configurationId String   @db.VarChar(12)
 
   @@id([configurationId, txHash])
-  @@map("liveness")
 }
 
 model Price {
-  timestamp       DateTime @map("timestamp") @db.Timestamp(6)
-  priceUsd        Float    @map("price_usd") @db.Real
-  configurationId String   @map("configuration_id") @db.Char(12)
+  timestamp       DateTime @db.Timestamp(6)
+  priceUsd        Float    @db.Real
+  configurationId String   @db.Char(12)
 
   @@id([configurationId, timestamp])
-  @@map("prices")
 }
 
 model TvlCleaner {
-  repositoryName        String    @id @map("repository_name") @db.VarChar(255)
-  hourlyCleanedUntil    DateTime? @map("hourly_cleaned_until") @db.Timestamp(6)
-  sixHourlyCleanedUntil DateTime? @map("six_hourly_cleaned_until") @db.Timestamp(6)
-
-  @@map("tvl_cleaner")
+  repositoryName        String    @id @db.VarChar(255)
+  hourlyCleanedUntil    DateTime? @db.Timestamp(6)
+  sixHourlyCleanedUntil DateTime? @db.Timestamp(6)
 }
 
 model UpdateMonitor {
-  projectName       String    @map("project_name") @db.VarChar(255)
-  blockNumber       Int       @map("block_number")
-  unixTimestamp     DateTime? @map("unix_timestamp") @db.Timestamp(6)
-  discoveryJsonBlob Json      @map("discovery_json_blob")
-  configHash        String    @default("") @map("config_hash") @db.VarChar(255)
-  version           Int       @default(0) @map("version")
-  chainId           Int       @default(1) @map("chain_id")
+  projectName       String    @db.VarChar(255)
+  blockNumber       Int
+  timestamp         DateTime? @db.Timestamp(6)
+  discoveryJsonBlob Json
+  configHash        String    @default("") @db.VarChar(255)
+  version           Int       @default(0)
+  chainId           Int       @default(1)
 
   @@id([projectName, chainId])
-  @@map("update_monitor")
 }
 
 model UpdateNotifier {
-  id           Int      @id @default(autoincrement()) @map("id")
-  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt    DateTime @default(now()) @map("updated_at") @db.Timestamp(6)
-  projectName  String   @map("project_name") @db.VarChar(255)
-  blockNumber  Int      @map("block_number")
-  diffJsonBlob Json     @map("diff_json_blob")
-  chainId      Int      @default(1) @map("chain_id")
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now()) @db.Timestamp(6)
+  updatedAt    DateTime @default(now()) @db.Timestamp(6)
+  projectName  String   @db.VarChar(255)
+  blockNumber  Int
+  diffJsonBlob Json
+  chainId      Int      @default(1)
 
-  @@index([blockNumber], map: "update_notifier_block_number_index")
-  @@index([projectName], map: "update_notifier_project_name_index")
-  @@map("update_notifier")
+  @@index([blockNumber])
+  @@index([projectName])
 }
 
 model Value {
-  timestamp                   DateTime @map("timestamp") @db.Timestamp(6)
-  projectId                   String   @map("project_id") @db.VarChar(255)
-  dataSource                  String   @map("data_source") @db.VarChar(255)
-  external                    BigInt?  @map("external")
-  externalAssociated          BigInt   @default(0) @map("external_associated")
-  externalForTotal            BigInt?  @map("external_for_total")
-  externalAssociatedForTotal  BigInt   @default(0) @map("external_associated_for_total")
-  canonical                   BigInt?  @map("canonical")
-  canonicalAssociated         BigInt   @default(0) @map("canonical_associated")
-  canonicalForTotal           BigInt?  @map("canonical_for_total")
-  canonicalAssociatedForTotal BigInt   @default(0) @map("canonical_associated_for_total")
-  native                      BigInt?  @map("native")
-  nativeAssociated            BigInt   @default(0) @map("native_associated")
-  nativeForTotal              BigInt?  @map("native_for_total")
-  nativeAssociatedForTotal    BigInt   @default(0) @map("native_associated_for_total")
+  timestamp                   DateTime @db.Timestamp(6)
+  projectId                   String   @db.VarChar(255)
+  dataSource                  String   @db.VarChar(255)
+  external                    BigInt?
+  externalAssociated          BigInt   @default(0)
+  externalForTotal            BigInt?
+  externalAssociatedForTotal  BigInt   @default(0)
+  canonical                   BigInt?
+  canonicalAssociated         BigInt   @default(0)
+  canonicalForTotal           BigInt?
+  canonicalAssociatedForTotal BigInt   @default(0)
+  native                      BigInt?
+  nativeAssociated            BigInt   @default(0)
+  nativeForTotal              BigInt?
+  nativeAssociatedForTotal    BigInt   @default(0)
   ether                       BigInt   @default(0)
   stablecoin                  BigInt   @default(0)
 
   @@id([projectId, timestamp, dataSource])
-  @@map("values")
 }
 
 model VerifierStatus {
-  address     String   @map("address") @db.VarChar(255)
-  chainId     Int      @map("chain_id")
-  lastUsed    DateTime @map("last_used") @db.Timestamp(6)
-  lastUpdated DateTime @map("last_updated") @db.Timestamp(6)
+  address     String   @db.VarChar(255)
+  chainId     Int
+  lastUsed    DateTime @db.Timestamp(6)
+  lastUpdated DateTime @db.Timestamp(6)
 
   @@id([address, chainId])
-  @@map("verifier_status")
 }
 
 model AggregatedLiveness {
-  projectId String   @map("project_id") @db.VarChar(255)
+  projectId String   @db.VarChar(255)
   subtype   String   @db.VarChar(255)
   range     String   @db.VarChar(255)
   min       Int
   avg       Int
   max       Int
-  updatedAt DateTime @map("updated_at") @db.Timestamp(6)
+  updatedAt DateTime @db.Timestamp(6)
 
   @@id([projectId, subtype, range])
-  @@map("aggregated_liveness")
 }
 
 model Anomaly {
   timestamp DateTime @db.Timestamp(6)
-  projectId String   @map("project_id") @db.VarChar(255)
+  projectId String   @db.VarChar(255)
   subtype   String   @db.VarChar(255)
   duration  Int
 
   @@id([timestamp, projectId, subtype])
-  @@map("anomalies")
 }
 
 model FlatSources {

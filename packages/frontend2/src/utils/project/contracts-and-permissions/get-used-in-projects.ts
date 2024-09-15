@@ -6,8 +6,8 @@ import {
   getCommonContractsIn,
 } from '@l2beat/config'
 import { uniqBy } from 'lodash'
-import { type TechnologyContractAddress } from '../../../app/_components/projects/sections/contract-entry'
-import { type UsedInProject } from '../../../app/_components/projects/sections/permissions/used-in-project'
+import { type TechnologyContractAddress } from '../../../components/projects/sections/contract-entry'
+import { type UsedInProject } from '../../../components/projects/sections/permissions/used-in-project'
 
 type ProjectParams =
   | {
@@ -28,14 +28,26 @@ export function getUsedInProjects(
   if (projectParams.type === 'DaLayer') {
     return []
   }
+  const commonContracts = getCommonContractsIn(projectParams)
 
   if (implementationAddresses.length === 0) {
-    return evalUsedInProject(projectParams, addresses, 'implementation')
+    return evalUsedInProject(
+      projectParams,
+      commonContracts,
+      addresses,
+      'implementation',
+    )
   }
 
-  const asProxy = evalUsedInProject(projectParams, addresses, 'proxy')
+  const asProxy = evalUsedInProject(
+    projectParams,
+    commonContracts,
+    addresses,
+    'proxy',
+  )
   const asImplementation = evalUsedInProject(
     projectParams,
+    commonContracts,
     implementationAddresses,
     'implementation',
   )
@@ -44,11 +56,10 @@ export function getUsedInProjects(
 
 function evalUsedInProject(
   projectParams: ProjectParams,
+  commonContracts: ReturnType<typeof getCommonContractsIn>,
   addresses: TechnologyContractAddress[],
   type: UsedInProject['type'],
 ) {
-  const commonContracts = getCommonContractsIn(projectParams)
-
   const usedIn = [
     ...new Set(
       addresses.flatMap((address) => {

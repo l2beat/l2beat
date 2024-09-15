@@ -3,37 +3,26 @@ import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
-import { type SyncStatus } from '../../../../types/sync-status'
+import { env } from '~/env'
 import { getLatestActivityForProjects } from '../activity/get-activity-for-projects'
 import { getCostsForProjects } from './get-costs-for-projects'
-import { type CostsUnit, type LatestCostsProjectResponse } from './types'
+import { type LatestCostsProjectResponse } from './types'
 import { getCostsProjects } from './utils/get-costs-projects'
 import { type CostsTimeRange } from './utils/range'
-
-interface CostsValues {
-  total: number
-  calldata: number
-  blobs: number | undefined
-  compute: number
-  overhead: number
-}
-
-export type CostsTableData = Record<CostsUnit, CostsValues> & {
-  txCount: number | undefined
-  syncStatus: SyncStatus
-}
 
 export function getCostsTableData(
   ...parameters: Parameters<typeof getCachedCostsTableData>
 ) {
+  if (env.MOCK) {
+    return getMockCostsTableData()
+  }
   noStore()
   return getCachedCostsTableData(...parameters)
 }
 
+export type CostsTableData = Awaited<ReturnType<typeof getCachedCostsTableData>>
 const getCachedCostsTableData = cache(
-  async (
-    timeRange: CostsTimeRange,
-  ): Promise<Record<string, CostsTableData>> => {
+  async (timeRange: CostsTimeRange) => {
     const projects = getCostsProjects()
     const projectsCosts = await getCostsForProjects(projects, timeRange)
 
@@ -94,4 +83,41 @@ function withTotal(data: LatestCostsProjectResponse) {
         (data.usd.blobs ?? 0),
     },
   }
+}
+
+function getMockCostsTableData(): CostsTableData {
+  const projects = getCostsProjects()
+
+  return Object.fromEntries(
+    projects.map((p) => {
+      return [
+        p.id,
+        {
+          syncStatus: getSyncStatus(UnixTime.now()),
+          txCount: 1500,
+          gas: {
+            total: 1000000,
+            overhead: 100000,
+            calldata: 300000,
+            compute: 200000,
+            blobs: 400000,
+          },
+          eth: {
+            total: 10000,
+            overhead: 2000,
+            calldata: 3000,
+            compute: 4000,
+            blobs: 1000,
+          },
+          usd: {
+            total: 100000,
+            overhead: 20000,
+            calldata: 30000,
+            compute: 40000,
+            blobs: 10000,
+          },
+        },
+      ]
+    }),
+  )
 }

@@ -1,7 +1,7 @@
 import { Activity } from '../kysely/generated/types'
 
 export const selectActivity = [
-  'project_id',
+  'projectId',
   'timestamp',
   'count',
   'start',

@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 20713619,
-  "configHash": "0x3e9838797390d2b37cef8da45ce842fa346551e78cfd78111375e77ffc7380f6",
+  "blockNumber": 20725957,
+  "configHash": "0xa719639459fbe77b16b4fb03cdc28fe661753b432341dcd6d3bb8ac05ca52111",
   "version": 14,
   "contracts": [
     {
@@ -8194,6 +8194,7 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x3766Ae19984f845bb149E05b6F7E14FFB4f85a1A",
           "0xaaAdAa000867fb883089B7e528d7eA96937b777f",
           "0x5F18752518d81E4AFbB28341EDFba9Aa0E16707C",
           "0x7e0d106fD2Cee9aa846bc419944f5eD8F2935135",
@@ -8210,8 +8211,8 @@
         "domainSeparator": "0x621efdc1151f249d5b9c743046fb22f2d68677322af6ab4ff5f75e97c246c303",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 11 (9%)",
-        "nonce": 10,
+        "multisigThreshold": "1 of 12 (8%)",
+        "nonce": 11,
         "VERSION": "1.3.0"
       }
     },
@@ -8291,7 +8292,7 @@
         "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
         "emergencyUpgradeBoard": "0xdEFd1eDEE3E8c5965216bd59C866f7f5307C9b29",
         "guardians": "0xD677e09324F8Bb3cC64F009973693f751c33A888",
-        "L2_PROTOCOL_GOVERNOR": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
+        "L2_PROTOCOL_GOVERNOR": "zksync2:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
         "lastFreezeStatusInUpgradeCycle": 0,
         "protocolFrozenUntil": 0,
         "securityCouncil": "0xBDFfCC71FE84020238F2990a6D2954e87355De0D",
@@ -8299,7 +8300,10 @@
         "STATE_TRANSITION_MANAGER": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
         "ZKSYNC_ERA": "0x32400084C286CF3E17e7B677ea9583e60a000324"
       },
-      "derivedName": "ProtocolUpgradeHandler"
+      "derivedName": "ProtocolUpgradeHandler",
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "zksync2" } }
+      ]
     },
     {
       "name": "GnosisSafe",
@@ -8362,6 +8366,7 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0xdF28907A6A272fa06333a197d7F0379A0f8f00aa",
           "0x6c25cda91Bef3A4Ba1e4488b4ac276aA02921D67",
           "0x896E7D2108245ae8d5Aa7E4763024b3945AEd77F",
           "0xA1AF6Ed43eDeE80F1913ea44E9DC2A93A738EB44",
@@ -8371,8 +8376,8 @@
         "domainSeparator": "0x23783d9d5ae0c0d12c7218ba04c50305272dd83f04c5813e3da6706fca6286c1",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 1,
+        "multisigThreshold": "1 of 5 (20%)",
+        "nonce": 2,
         "VERSION": "1.3.0"
       }
     },
@@ -8666,6 +8671,7 @@
     { "address": "0x0e621b0A275A207211e161Ee997aA80661Bc1bcf" },
     { "address": "0x0F3F84b0aaaA6f577468F6708e7A5E09e59dbfA1" },
     { "address": "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137" },
+    { "address": "0x1462112B5abdc5577Cbd25a9cAbB4C4d5979D697" },
     { "address": "0x160669864cDe95c190364ad01eDfbAA32E9DA430" },
     { "address": "0x239cCb0a6Fc59fc6A53584613707F815503a6aAF" },
     { "address": "0x23aaaD48A6409d98Fcc2e9061CD2F437ff4E5839" },
@@ -8679,6 +8685,7 @@
     { "address": "0x3620B9e7c75E09cCC37458c7B6EE6c23D8Ee4f0f" },
     { "address": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8" },
     { "address": "0x371F6E45784E7DFBEA2dc18Edb68cD90aD530E6c" },
+    { "address": "0x3766Ae19984f845bb149E05b6F7E14FFB4f85a1A" },
     { "address": "0x3846c3A30E62075Fa916216b35EF04B8F53931f6" },
     { "address": "0x3F0009D00cc78979d00Eb635490F23E8d6aCc481" },
     { "address": "0x53A26f48ED901336D7C165B85E6F43d9F8dBeAA7" },
@@ -8702,6 +8709,7 @@
     { "address": "0x896E7D2108245ae8d5Aa7E4763024b3945AEd77F" },
     { "address": "0x8b0c64CcaB94d4618Ef834F396F622f61F2b013D" },
     { "address": "0xA1AF6Ed43eDeE80F1913ea44E9DC2A93A738EB44" },
+    { "address": "0xa376AaF645dbd9b4f501B2A8a97bc21DcA15B001" },
     { "address": "0xa5D0084A766203b463b3164DFc49D91509C12daB" },
     { "address": "0xaaAdAa000867fb883089B7e528d7eA96937b777f" },
     { "address": "0xACBD581D1BedB2F71d2F5F01f881586e0623d591" },
@@ -8710,13 +8718,10 @@
     { "address": "0xB5676D771b538D8E184EaCB1Cc7a963a4bF99252" },
     { "address": "0xb799FF3DeF706045B5061B22d748E8F52737415d" },
     { "address": "0xb9d48DaF26F3CBE01A959F09f98E8a2eC8204122" },
-    { "address": "0xBab69188f07F2569A41C5B875e147216D974eB3e" },
-    { "address": "0xC2Cd2330A575af7f124E07820E7c4AbfaeD02392" },
-    { "address": "0xcb218CD15fAa4dbAc294b15C7cE99482783d7ad6" },
     { "address": "0xcD6998D20876155D37aEC0dB4C19d63EEAEf058F" },
-    { "address": "0xd757D6A02cD5af9AEF163D7eB8034f75ac22B553" },
     { "address": "0xD775a6f432f97c03718F9adf97e31D8A6431e571" },
     { "address": "0xD9b0579e2B8387fE153201631EBC4be9dEFA1A6d" },
+    { "address": "0xdF28907A6A272fa06333a197d7F0379A0f8f00aa" },
     { "address": "0xDFbD13B78010BF2110a168FA59b682c8a6D96564" },
     { "address": "0xDfe6610c2357a0BfECF788e52697554aF5F35174" },
     { "address": "0xE4F4FdaD61f192EBe9a32b2d2fB47A5802891e14" },

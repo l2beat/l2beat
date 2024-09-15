@@ -19,53 +19,16 @@ const config = {
     getAbsolutePath('@storybook/addon-themes'),
     getAbsolutePath('storybook-addon-pseudo-states'),
   ],
-  /**
-   * Keep in sync with the webpack configuration in next.config.js.
-   */
-  webpackFinal: async (config: {
-    module: {
-      rules: {
-        test: RegExp
-        issuer: unknown
-        resourceQuery: RegExp | { not: RegExp[] }
-        exclude?: RegExp
-        use: string[]
-      }[]
-    }
-  }) => {
-    const fileLoaderRule = config.module.rules.find((rule) =>
-      rule.test?.test?.('.svg'),
-    )
-
-    if (!fileLoaderRule) {
-      throw new Error('Could not find svg fileLoaderRule')
-    }
-
-    config.module.rules.push(
-      // Reapply the existing rule, but only for svg imports ending in ?url
-      {
-        ...fileLoaderRule,
-        test: /\.svg$/i,
-        resourceQuery: /url/, // *.svg?url
-      },
-      // Convert all other *.svg imports to React components
-      {
-        test: /\.svg$/i,
-        issuer: fileLoaderRule.issuer,
-        resourceQuery: { not: [/url/] }, // exclude if *.svg?url
-        use: ['@svgr/webpack'],
-      },
-    )
-
-    // Modify the file loader rule to ignore *.svg, since we have it handled now.
-    fileLoaderRule.exclude = /\.svg$/i
-
-    return config
-  },
   framework: {
     name: getAbsolutePath('@storybook/nextjs'),
     options: {},
   },
-  staticDirs: ['../public'],
+  staticDirs: [
+    '../public',
+    {
+      from: '../src/fonts',
+      to: 'src/fonts',
+    },
+  ],
 }
 export default config

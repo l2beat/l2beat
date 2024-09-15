@@ -7,7 +7,7 @@ export const eigenDA: DaLayer = {
   type: 'DaLayer',
   kind: 'DAC',
   display: {
-    name: 'Eigen DA',
+    name: 'EigenDA',
     slug: 'eigenda',
     description:
       'EigenDA is a data availability solution built on Eigen Layer.',

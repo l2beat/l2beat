@@ -1,3 +1,257 @@
+Generated with discovered.json: 0x3097550011aa805b2c77b8c91d7e28b69e1fb2ef
+
+# Diff at Thu, 12 Sep 2024 15:37:07 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@e6761599b8d9e0b597372bb0e9ca885e08af7101 block: 20475247
+- current block number: 20475247
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20475247 (main branch discovery), not current.
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      roles:
++        ["Challenger"]
+      receivedPermissions:
++        [{"permission":"configure","target":"0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."}]
+    }
+```
+
+```diff
+    contract SystemConfig (0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A","via":[{"address":"0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99","delay":0}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.target:
+-        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
++        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      issuedPermissions.0.via.0:
+-        {"address":"0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99","delay":0}
+    }
+```
+
+Generated with discovered.json: 0xa5e55f52c69fd1e6fb0e19f71b9d1422d95b73a5
+
+# Diff at Sun, 08 Sep 2024 17:24:33 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@fd881462cca0d7ef4519f907f3c6cfd5fe1cde8f block: 20475247
+- current block number: 20475247
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20475247 (main branch discovery), not current.
+
+```diff
+    contract OptimismMintableERC20Factory (0x1aaab4E20d2e4Bb992b5BCA2125e8bd3588c8730) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      issuedPermissions.0.target:
+-        "0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.via.0:
++        {"address":"0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99","delay":0}
+    }
+```
+
+```diff
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25) {
+    +++ description: None
+      descriptions:
+-        ["Liveness Guard of 0x0454092516c9A4d636d3CAfA1e82161376C8a748 - used to remove members inactive for 98d."]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99) {
+    +++ description: None
+      descriptions:
+-        ["It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component."]
+      issuedPermissions:
+-        [{"permission":"configure","target":"0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A","via":[]}]
+      receivedPermissions:
+-        [{"permission":"configure","target":"0xd4b1EC0DEc3C7F12abD3ec27B7514880ae1C3a37"},{"permission":"upgrade","target":"0x1aaab4E20d2e4Bb992b5BCA2125e8bd3588c8730"},{"permission":"upgrade","target":"0x3B1F7aDa0Fcc26B13515af752Dd07fB1CAc11426"},{"permission":"upgrade","target":"0x3F37aBdE2C6b5B2ed6F8045787Df1ED1E3753956"},{"permission":"upgrade","target":"0x50D700e97967F9115e3f999bDB263d69F6704680"},{"permission":"upgrade","target":"0x6d0f65D59b55B0FEC5d2d15365154DcADC140BF3"},{"permission":"upgrade","target":"0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA"}]
+      directlyReceivedPermissions:
++        [{"permission":"configure","target":"0xd4b1EC0DEc3C7F12abD3ec27B7514880ae1C3a37"},{"permission":"upgrade","target":"0x1aaab4E20d2e4Bb992b5BCA2125e8bd3588c8730"},{"permission":"upgrade","target":"0x3B1F7aDa0Fcc26B13515af752Dd07fB1CAc11426"},{"permission":"upgrade","target":"0x3F37aBdE2C6b5B2ed6F8045787Df1ED1E3753956"},{"permission":"upgrade","target":"0x50D700e97967F9115e3f999bDB263d69F6704680"},{"permission":"upgrade","target":"0x6d0f65D59b55B0FEC5d2d15365154DcADC140BF3","description":"upgrading bridge implementation allows to access all funds and change every system component."},{"permission":"upgrade","target":"0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA"}]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x3B1F7aDa0Fcc26B13515af752Dd07fB1CAc11426) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.0.target:
+-        "0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.via.0:
++        {"address":"0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99","delay":0}
+    }
+```
+
+```diff
+    contract OptimismPortal (0x3F37aBdE2C6b5B2ed6F8045787Df1ED1E3753956) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions.0.target:
+-        "0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.via.0:
++        {"address":"0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99","delay":0}
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x50D700e97967F9115e3f999bDB263d69F6704680) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions.0.target:
+-        "0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.via.0:
++        {"address":"0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99","delay":0}
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"configure","target":"0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A","via":[]}]
+      receivedPermissions:
+-        [{"permission":"configure","target":"0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"},{"permission":"upgrade","target":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C"}]
+      directlyReceivedPermissions:
++        [{"permission":"configure","target":"0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"},{"permission":"upgrade","target":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C"}]
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      descriptions:
+-        ["It can act on behalf of 0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99, inheriting its permissions.","It can act on behalf of 0x543bA4AADBAb8f9025686Bd03993043599c6fB04, inheriting its permissions."]
+      receivedPermissions.8:
++        {"permission":"upgrade","target":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","target":"0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA","via":[{"address":"0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","target":"0x6d0f65D59b55B0FEC5d2d15365154DcADC140BF3","description":"upgrading bridge implementation allows to access all funds and change every system component.","via":[{"address":"0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","target":"0x50D700e97967F9115e3f999bDB263d69F6704680","via":[{"address":"0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","target":"0x3F37aBdE2C6b5B2ed6F8045787Df1ED1E3753956","via":[{"address":"0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","target":"0x3B1F7aDa0Fcc26B13515af752Dd07fB1CAc11426","via":[{"address":"0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"}]}
+      receivedPermissions.2:
++        {"permission":"upgrade","target":"0x1aaab4E20d2e4Bb992b5BCA2125e8bd3588c8730","via":[{"address":"0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"}]}
+      receivedPermissions.1.target:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+      receivedPermissions.1.via:
++        [{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]
+      receivedPermissions.0.target:
+-        "0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"
++        "0xd4b1EC0DEc3C7F12abD3ec27B7514880ae1C3a37"
+      receivedPermissions.0.via:
++        [{"address":"0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"},{"permission":"act","target":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]
+    }
+```
+
+```diff
+    contract DeputyGuardianModule (0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8) {
+    +++ description: allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.
+      descriptions.0:
+-        "allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A (the deputy guardian) to act on behalf of the Gnosis Safe."
++        "allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe."
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x6d0f65D59b55B0FEC5d2d15365154DcADC140BF3) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      issuedPermissions.0.target:
+-        "0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.via.0:
++        {"address":"0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99","delay":0,"description":"upgrading bridge implementation allows to access all funds and change every system component."}
+    }
+```
+
+```diff
+    contract SystemConfig (0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.0.target:
+-        "0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.via.0:
++        {"address":"0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99","delay":0}
+    }
+```
+
+```diff
+    contract FoundationMultisig_1 (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      descriptions:
+-        ["Fallback Owner of 0x0454092516c9A4d636d3CAfA1e82161376C8a748 - takes ownership of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 if the number of members falls below 8."]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions.0.target:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.via.0:
++        {"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","delay":0}
+    }
+```
+
+```diff
+    contract FoundationMultisig_2 (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      descriptions:
+-        ["Deputy Guardian of 0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8. It can act on behalf of the 0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2."]
+    }
+```
+
+```diff
+    contract AddressManager (0xd4b1EC0DEc3C7F12abD3ec27B7514880ae1C3a37) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.via.0:
++        {"address":"0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99","delay":0}
+    }
+```
+
+```diff
+    contract Lib_AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.via.0:
++        {"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","delay":0}
+    }
+```
+
 Generated with discovered.json: 0x4e1fb70bba8cd4576881e25cff5644f2a66b152f
 
 # Diff at Fri, 30 Aug 2024 07:53:42 GMT:

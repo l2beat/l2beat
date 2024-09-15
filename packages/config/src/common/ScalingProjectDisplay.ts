@@ -12,15 +12,8 @@ export interface ScalingProjectDisplay {
   slug: string
   /** Name of the category the scaling project belongs to */
   category: ScalingProjectCategory
-  /** A warning displayed in the header of the project */
-  headerWarning?:
-    | {
-        /** Warning text */
-        text: string
-        /** Link to the warning source */
-        href: string
-      }
-    | string
+  /** A warning displayed in the header of the project. Also will be displayed as yellow shield next to project name (table view) */
+  headerWarning?: string
   /** Warning for TVL */
   tvlWarning?: WarningWithSentiment
   /** A warning displayed above the description of the project */
@@ -39,4 +32,6 @@ export interface ScalingProjectDisplay {
   activityDataSource?: 'Blockchain RPC' | 'Explorer API' | 'Closed API'
   /** Name of the architecture image to show in the contract section if present, otherwise use slug */
   architectureImage?: string
+  /** Name of the state validation image to show in the state validation section if present, otherwise use slug */
+  stateValidationImage?: string
 }

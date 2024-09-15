@@ -12,8 +12,13 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xa2DCa85BB892De55D8B262d1806114733106e8D1",
-          "via": []
+          "target": "0x3c46C05c2eba8eDd0B0f0C8B1D2fBf9fc53ea01E",
+          "via": [
+            {
+              "address": "0xa2DCa85BB892De55D8B262d1806114733106e8D1",
+              "delay": 0
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": [
@@ -50,8 +55,13 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0xa2DCa85BB892De55D8B262d1806114733106e8D1",
-          "via": []
+          "target": "0x3c46C05c2eba8eDd0B0f0C8B1D2fBf9fc53ea01E",
+          "via": [
+            {
+              "address": "0xa2DCa85BB892De55D8B262d1806114733106e8D1",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1694224835,
@@ -67,8 +77,13 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xa2DCa85BB892De55D8B262d1806114733106e8D1",
-          "via": []
+          "target": "0x3c46C05c2eba8eDd0B0f0C8B1D2fBf9fc53ea01E",
+          "via": [
+            {
+              "address": "0xa2DCa85BB892De55D8B262d1806114733106e8D1",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1694224907,
@@ -89,12 +104,36 @@
       "address": "0x3c46C05c2eba8eDd0B0f0C8B1D2fBf9fc53ea01E",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "descriptions": [
-        "It can act on behalf of 0xa2DCa85BB892De55D8B262d1806114733106e8D1, inheriting its permissions."
-      ],
       "receivedPermissions": [
         {
           "permission": "configure",
+          "target": "0x3Ad319BB4872F8cB75a26Ac30CC4bD2d56b67b05",
+          "via": [{ "address": "0xa2DCa85BB892De55D8B262d1806114733106e8D1" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x30c789674ad3B458886BBC9abf42EEe19EA05C1D",
+          "via": [{ "address": "0xa2DCa85BB892De55D8B262d1806114733106e8D1" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x3B95bC951EE0f553ba487327278cAc44f29715E5",
+          "via": [{ "address": "0xa2DCa85BB892De55D8B262d1806114733106e8D1" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x895E00269A05848F3c9889EfA677D02fF7351a5D",
+          "via": [{ "address": "0xa2DCa85BB892De55D8B262d1806114733106e8D1" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622",
+          "via": [{ "address": "0xa2DCa85BB892De55D8B262d1806114733106e8D1" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
           "target": "0xa2DCa85BB892De55D8B262d1806114733106e8D1"
         }
       ],
@@ -155,8 +194,13 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xa2DCa85BB892De55D8B262d1806114733106e8D1",
-          "via": []
+          "target": "0x3c46C05c2eba8eDd0B0f0C8B1D2fBf9fc53ea01E",
+          "via": [
+            {
+              "address": "0xa2DCa85BB892De55D8B262d1806114733106e8D1",
+              "delay": 0
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": ["scalar"],
@@ -208,8 +252,13 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xa2DCa85BB892De55D8B262d1806114733106e8D1",
-          "via": []
+          "target": "0x3c46C05c2eba8eDd0B0f0C8B1D2fBf9fc53ea01E",
+          "via": [
+            {
+              "address": "0xa2DCa85BB892De55D8B262d1806114733106e8D1",
+              "delay": 0
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": ["params"],
@@ -236,14 +285,7 @@
       "name": "ProxyAdmin",
       "address": "0xa2DCa85BB892De55D8B262d1806114733106e8D1",
       "template": "opstack/ProxyAdmin",
-      "issuedPermissions": [
-        {
-          "permission": "configure",
-          "target": "0x3c46C05c2eba8eDd0B0f0C8B1D2fBf9fc53ea01E",
-          "via": []
-        }
-      ],
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "configure",
           "target": "0x3Ad319BB4872F8cB75a26Ac30CC4bD2d56b67b05"
@@ -551,7 +593,7 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
-    "opstack/ProxyAdmin": "0x3731e451e123b81ff581a6795a991123ea030fa0841313746edc4ee05e01f0a7"
+    "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

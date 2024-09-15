@@ -19,16 +19,16 @@ import {
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
 import { concat } from 'lodash'
-import { type ProjectSectionProps } from '~/app/_components/projects/sections/types'
+import { type ProjectSectionProps } from '~/components/projects/sections/types'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
 import {
   type TechnologyContract,
   type TechnologyContractAddress,
-} from '../../../app/_components/projects/sections/contract-entry'
-import { type ContractsSectionProps } from '../../../app/_components/projects/sections/contracts/contracts-section'
-import { type Reference } from '../../../app/_components/projects/sections/reference-list'
+} from '../../../components/projects/sections/contract-entry'
+import { type ContractsSectionProps } from '../../../components/projects/sections/contracts/contracts-section'
+import { type Reference } from '../../../components/projects/sections/reference-list'
 import { getChain } from './get-chain'
 import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
@@ -73,6 +73,7 @@ export function getContractsSection(
     )
     const implementationChangeForProject =
       implementationChange?.projects[projectParams.id]
+
     return makeTechnologyContract(
       contract,
       projectParams,
@@ -211,48 +212,7 @@ function makeTechnologyContract(
       isAdmin: !!opts.isAdmin,
     }
   }
-
-  const addresses: TechnologyContractAddress[] = isSingleAddress(item)
-    ? [
-        getAddress({
-          address: item.address,
-        }),
-      ]
-    : [
-        ...item.multipleAddresses.map((address) =>
-          getAddress({
-            address: address,
-          }),
-        ),
-      ]
-
-  if (isSingleAddress(item)) {
-    const implementations = item.upgradeability?.implementations ?? []
-    for (const [i, implementation] of implementations.entries()) {
-      const upgradable = !item.upgradeability?.immutable
-      const upgradeableText = upgradable ? ' (Upgradable)' : ''
-      addresses.push(
-        getAddress({
-          name:
-            implementations.length > 1
-              ? `Implementation #${i + 1}${upgradeableText}`
-              : `Implementation${upgradeableText}`,
-          address: implementation,
-        }),
-      )
-    }
-
-    const admins = item.upgradeability?.admins ?? []
-    for (const [i, admin] of admins.entries()) {
-      addresses.push(
-        getAddress({
-          name: admins.length > 1 ? `Admin (${i + 1})` : 'Admin',
-          address: admin,
-          isAdmin: true,
-        }),
-      )
-    }
-  }
+  const addresses = getAddresses(item, getAddress)
 
   let description = item.description
 
@@ -279,7 +239,7 @@ function makeTechnologyContract(
   }
 
   const areImplementationsUnverified = addresses
-    .filter((c) => !c.isAdmin)
+    .filter((c) => !c.isAdmin && c.verificationStatus !== 'unverified')
     .map((c) => verificationStatusForChain[c.address])
     .some((c) => c === false)
 
@@ -330,15 +290,19 @@ function makeTechnologyContract(
     }
   })
 
-  const implementationAddresses = addresses.filter((c) => !c.isAdmin)
-
-  const usedInProjects = getUsedInProjects(
-    projectParams,
-    addresses,
-    implementationAddresses,
-  )
-
   if (isSingleAddress(item)) {
+    const mainAddresses = getContractMainAddresses(item, getAddress)
+    const implementationAddresses =
+      item.upgradeability?.implementations.map((implementation) =>
+        getAddress({ address: implementation }),
+      ) ?? []
+
+    const usedInProjects = getUsedInProjects(
+      projectParams,
+      mainAddresses,
+      implementationAddresses,
+    )
+
     return {
       name: item.name,
       addresses,
@@ -362,6 +326,69 @@ function makeTechnologyContract(
     chain,
     implementationHasChanged,
   }
+}
+
+function getAddresses(
+  contract: ScalingProjectContract,
+  getAddress: (opts: {
+    address: EthereumAddress
+    name?: string
+    isAdmin?: boolean
+  }) => TechnologyContractAddress,
+): TechnologyContractAddress[] {
+  const addresses = getContractMainAddresses(contract, getAddress)
+
+  if (isSingleAddress(contract)) {
+    const implementations = contract.upgradeability?.implementations ?? []
+    for (const [i, implementation] of implementations.entries()) {
+      const upgradable = !contract.upgradeability?.immutable
+      const upgradeableText = upgradable ? ' (Upgradable)' : ''
+      addresses.push(
+        getAddress({
+          name:
+            implementations.length > 1
+              ? `Implementation #${i + 1}${upgradeableText}`
+              : `Implementation${upgradeableText}`,
+          address: implementation,
+        }),
+      )
+    }
+
+    const admins = contract.upgradeability?.admins ?? []
+    for (const [i, admin] of admins.entries()) {
+      addresses.push(
+        getAddress({
+          name: admins.length > 1 ? `Admin (${i + 1})` : 'Admin',
+          address: admin,
+          isAdmin: true,
+        }),
+      )
+    }
+  }
+  return addresses
+}
+
+function getContractMainAddresses(
+  contract: ScalingProjectContract,
+  getAddress: (opts: {
+    address: EthereumAddress
+    name?: string
+    isAdmin?: boolean
+  }) => TechnologyContractAddress,
+): TechnologyContractAddress[] {
+  return isSingleAddress(contract)
+    ? [
+        getAddress({
+          address: contract.address,
+        }),
+      ]
+    : [
+        ...contract.multipleAddresses.map((address) =>
+          getAddress({
+            address: address,
+          }),
+        ),
+      ]
 }
 
 function isContractUnverified(

@@ -1,3 +1,4 @@
+import { CliLogger } from '@l2beat/shared'
 import { computeComparisonBetweenProjects } from './common'
 import { printComparisonBetweenProjects } from './output'
 
@@ -6,6 +7,7 @@ export interface CompareProjectsCommand {
   secondProjectPath: string
   forceTable: boolean
   discoveryPath: string
+  logger: CliLogger
 }
 
 export async function executeCompareProjects(
@@ -13,12 +15,19 @@ export async function executeCompareProjects(
 ): Promise<void> {
   const { matrix, firstProject, secondProject } =
     await computeComparisonBetweenProjects(
+      command.logger,
       command.firstProjectPath,
       command.secondProjectPath,
       command.discoveryPath,
     )
 
-  printComparisonBetweenProjects(matrix, firstProject, secondProject, {
-    forceTable: command.forceTable,
-  })
+  printComparisonBetweenProjects(
+    command.logger,
+    matrix,
+    firstProject,
+    secondProject,
+    {
+      forceTable: command.forceTable,
+    },
+  )
 }

@@ -206,12 +206,17 @@
       ],
       "issuedPermissions": [
         {
+          "permission": "configure",
+          "target": "0xb356B146F1629c49C44344464F69BCDAfb4bb664",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0xCC53b447aFe07926423aB96D5496b1af30485ED2",
           "via": []
         }
       ],
-      "ignoreInWatchMode": ["scalar"],
+      "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1712184563,
       "values": {
         "$admin": "0xCC53b447aFe07926423aB96D5496b1af30485ED2",
@@ -507,9 +512,6 @@
     {
       "name": "ProxyAdmin",
       "address": "0xCC53b447aFe07926423aB96D5496b1af30485ED2",
-      "descriptions": [
-        "It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component."
-      ],
       "receivedPermissions": [
         {
           "permission": "configure",
@@ -549,7 +551,8 @@
         },
         {
           "permission": "upgrade",
-          "target": "0xc473ca7E02af24c129c2eEf51F2aDf0411c1Df69"
+          "target": "0xc473ca7E02af24c129c2eEf51F2aDf0411c1Df69",
+          "description": "upgrading bridge implementation allows to access all funds and change every system component."
         },
         {
           "permission": "upgrade",
@@ -602,15 +605,28 @@
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x000000000000000000000000000000000000dEaD" },
-    { "address": "0x4c465E58946145bb2BFC38833154f5A3B5728CF7" },
+    {
+      "address": "0x4c465E58946145bb2BFC38833154f5A3B5728CF7",
+      "roles": ["Proposer"]
+    },
     { "address": "0x5DeB7dD12ccF0BFb3b2D26D0A4f302Fb6ACBdcA8" },
     { "address": "0x61fB1FDA30c900404CDfa22D3eAdCA86FdB95450" },
     { "address": "0x7211399b320a0417286897fCeD1ee4ba1C1771d4" },
-    { "address": "0xA31cb9Bc414601171D4537580f98F66C03aECd43" },
+    {
+      "address": "0xA31cb9Bc414601171D4537580f98F66C03aECd43",
+      "roles": ["Sequencer"]
+    },
     { "address": "0xA5bdf717af725a47Fd7378d3D9C833776951efa0" },
     {
       "address": "0xb356B146F1629c49C44344464F69BCDAfb4bb664",
-      "roles": ["Guardian"]
+      "roles": ["Challenger", "Guardian"],
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x8f2428F7189c0d92D1c4a5358903A8c80Ec6a69D",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+        }
+      ]
     },
     { "address": "0xff00000000000000000000000000000000000690" }
   ],
@@ -1290,12 +1306,12 @@
     "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
-    "opstack/L1StandardBridge": "0xbe6430c1d141cd6be787d53b6de6e682a9a4edf082b18775a615ecf043365319",
+    "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
     "opstack/L2OutputOracle": "0x1d833a9768af12de67d65ad7dd09fc4b96db543bde5f5fdc2ff0ea0c571ceadf",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
     "opstack/OptimismPortal": "0xcc1b405a2bf545f58a88bb104ba298351e252fc507b40d0e1ef40bf6bbe34152",
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
-    "opstack/SystemConfig": "0x64961a217667137a899a8042e685df30318be47b0a07f69792414fb528d3ffc0"
+    "opstack/SystemConfig": "0x41420d04d26fe441d4f65a2475bb9f0cca38e0f7542d45347f063f3c7cf57b39"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

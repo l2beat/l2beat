@@ -4,13 +4,11 @@
   "name": "optimism",
   "initialAddresses": [
     "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-    "0x5E4e65926BA27467555EB562121fac00D24E9dD2",
-    "0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19",
-    "0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f",
-    "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F",
-    "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
-    "0x76943C0D61395d8F2edF9060e1533529cAe05dE6",
-    "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa"
+    "0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f", // syntethix escrow
+    "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F", // dai bridge
+    "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed", // optimism portal
+    "0x76943C0D61395d8F2edF9060e1533529cAe05dE6", // wSTETH escrow
+    "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa" // FeesCollector
   ],
   "names": {
     "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": "AddressManager",
@@ -33,148 +31,57 @@
     "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": "wstETHEscrowAdmin",
     "0x73b047fe6337183A454c5217241D780a932777bD": "LidoEmergencyBrakeMultisig",
     "0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "FoundationMultisig_1",
+    "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D": "L1ERC721Bridge",
     "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": "SecurityCouncilMultisig",
     "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1": "L1StandardBridge",
     "0x95703e0982140D16f8ebA6d158FccEde42f04a4C": "SuperchainConfig",
     "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa": "FeesCollector",
     "0xe5965Ab5962eDc7477C8520243A95517CD252fA9": "DisputeGameFactory",
-    "0xf691F8A6d908B58C534B624cF16495b491E633BA": "FaultDisputeGame",
-    "0xD326E10B8186e90F4E2adc5c13a2d0C137ee8b34": "PreimageOracle",
-    "0xc307e93a7C530a184c98EaDe4545a412b857b62f": "PermissionedDisputeGame",
+    "0xA6f3DFdbf4855a43c529bc42EDE96797252879af": "FaultDisputeGame",
+    "0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277": "PreimageOracle",
+    "0x050ed6F6273c7D836a111E42153BC00D0380b87d": "PermissionedDisputeGame",
     "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": "GuardianMultisig",
     "0x0454092516c9A4d636d3CAfA1e82161376C8a748": "LivenessModule",
-    "0xE497B094d6DbB3D5E4CaAc9a14696D7572588d14": "DelayedWETH"
+    "0x82511d494B5C942BE57498a70Fdd7184Ee33B975": "DelayedWETH_PermissionlessGames",
+    "0x9F9b897e37de5052cD70Db6D08474550DDb07f39": "DelayedWETH_PermissionedGames"
   },
   "overrides": {
-    "DelayedWETH": {
+    "DelayedWETH_PermissionedGames": {
       "ignoreInWatchMode": ["totalSupply"]
+    },
+    "DelayedWETH_PermissionlessGames": {
+      "ignoreInWatchMode": ["totalSupply"]
+    },
+    "L1StandardBridge": {
+      "fields": {
+        "l2TokenBridge": {
+          "returnType": "(OptimismAddress)"
+        },
+        "OTHER_BRIDGE": {
+          "returnType": "(OptimismAddress)"
+        },
+        "otherBridge": {
+          "returnType": "(OptimismAddress)"
+        }
+      }
+    },
+    "L1ERC721Bridge": {
+      "fields": {
+        "OTHER_BRIDGE": {
+          "returnType": "(OptimismAddress)"
+        },
+        "otherBridge": {
+          "returnType": "(OptimismAddress)"
+        }
+      }
     },
     "AddressManager": {
       "fields": {
-        "BondManager": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["BondManager"]
-          }
-        },
-        "OVM_L2CrossDomainMessenger": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["OVM_L2CrossDomainMessenger"]
-          }
-        },
-        "OVM_DecompressionPrecompileAddress": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["OVM_DecompressionPrecompileAddress"]
-          }
-        },
-        "OVM_Sequencer": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["OVM_Sequencer"]
-          }
-        },
-        "OVM_Proposer": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["OVM_Proposer"]
-          }
-        },
-        "OVM_ChainStorageContainer_CTC_batches": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["OVM_ChainStorageContainer-CTC-batches"]
-          }
-        },
-        "OVM_ChainStorageContainer_CTC_queue": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["OVM_ChainStorageContainer-CTC-queue"]
-          }
-        },
-        "OVM_ChainStorageContainer_SCC_batches": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["OVM_ChainStorageContainer-SCC-batches"]
-          }
-        },
-        "OVM_CanonicalTransactionChain": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["OVM_CanonicalTransactionChain"]
-          }
-        },
-        "OVM_StateCommitmentChain": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["OVM_StateCommitmentChain"]
-          }
-        },
-        "OVM_BondManager": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["OVM_BondManager"]
-          }
-        },
         "Proxy__OVM_L1CrossDomainMessenger": {
           "handler": {
             "type": "call",
             "method": "getAddress",
             "args": ["Proxy__OVM_L1CrossDomainMessenger"]
-          }
-        },
-        "OVM_ExecutionManager": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["OVM_ExecutionManager"]
-          }
-        },
-        "OVM_FraudVerifier": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["OVM_FraudVerifier"]
-          }
-        },
-        "OVM_StateManagerFactory": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["OVM_StateManagerFactory"]
-          }
-        },
-        "OVM_StateTransitionerFactory": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["OVM_StateTransitionerFactory"]
-          }
-        },
-        "OVM_SafetyChecker": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["OVM_SafetyChecker"]
-          }
-        },
-        "OVM_L1MultiMessageRelayer": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["OVM_L1MultiMessageRelayer"]
           }
         },
         "Proxy__OVM_L1StandardBridge": {
@@ -185,45 +92,6 @@
           }
         }
       }
-    },
-    "SCCStorageContainerBatches_OLD": {
-      "ignoreMethods": ["get"]
-    },
-    "CTCStorageContainerQueue": {
-      "ignoreMethods": ["get"]
-    },
-    "CTCStorageContainerBatches_OLD": {
-      "ignoreMethods": ["get"]
-    },
-    "CTCStorageContainerBatches": {
-      "ignoreMethods": ["get"],
-      "ignoreInWatchMode": ["getGlobalMetadata", "length"]
-    },
-    "SCCStorageContainerBatches": {
-      "ignoreMethods": ["get"],
-      "ignoreInWatchMode": ["getGlobalMetadata", "length"]
-    },
-    "CanonicalTransactionChain_OLD": {
-      "ignoreMethods": ["getQueueElement"]
-    },
-    "CanonicalTransactionChain": {
-      "ignoreMethods": ["getQueueElement"],
-      "ignoreInWatchMode": [
-        "getLastBlockNumber",
-        "getLastTimestamp",
-        "getNextQueueIndex",
-        "getNumPendingQueueElements",
-        "getQueueLength",
-        "getTotalBatches",
-        "getTotalElements"
-      ]
-    },
-    "StateCommitmentChain": {
-      "ignoreInWatchMode": [
-        "getLastSequencerTimestamp",
-        "getTotalBatches",
-        "getTotalElements"
-      ]
     },
     "FoundationMultisig_2": {
       "ignoreInWatchMode": ["nonce"]
@@ -277,7 +145,15 @@
     },
     "L1CrossDomainMessenger": {
       "ignoreMethods": ["xDomainMessageSender"],
-      "ignoreInWatchMode": ["messageNonce"]
+      "ignoreInWatchMode": ["messageNonce"],
+      "fields": {
+        "OTHER_MESSENGER": {
+          "returnType": "(OptimismAddress)"
+        },
+        "otherMessenger": {
+          "returnType": "(OptimismAddress)"
+        }
+      }
     },
     "SystemConfig": {
       "fields": {
