@@ -1,10 +1,33 @@
 {
   "name": "eclipse",
   "chain": "ethereum",
-  "blockNumber": 20663231,
+  "blockNumber": 20756723,
   "configHash": "0x47f63439da6b399312c0e54a5ddf19c780f316833ebd19f0ffe82e23c73ea170",
   "version": 14,
   "contracts": [
+    {
+      "name": "GnosisSafe",
+      "address": "0x0706Ffc1722D53a85ba90f32807880ccee968Fed",
+      "template": "GnosisSafe",
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1715256563,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0x45894CeBad0a1298D44aF2B528490693E58B322E",
+          "0x825e868F5561352bC875E0C9D08d32e94F915E6b"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0x5ba0efd4c341d33a8649ec1f2cbf37987a1f2b2a3ba7d1fbfcaca214f3187660",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 2 (50%)",
+        "nonce": 0,
+        "VERSION": "1.3.0"
+      }
+    },
     {
       "name": "AuthorityMultisig",
       "address": "0x4720342419C1D316B948690d12C86D5b485C64E0",
@@ -46,6 +69,8 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0xd0615B1D3F24f691153C076d45104eEd3eF8cDb5",
+          "0x0706Ffc1722D53a85ba90f32807880ccee968Fed",
           "0x33440E53476B855A56B831e7924B5aa123981726",
           "0xDecF20b9213f5d7f16196420377d37ef5f8F9686",
           "0xEe058D13A0c25a1ce2f68eb02dE4CE7E621982D9",
@@ -55,8 +80,8 @@
         "domainSeparator": "0xe1fdfda67b202d80f38e8de79b720e0604176ff551ca60ce5476a8f0c3de9764",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 4,
+        "multisigThreshold": "2 of 6 (33%)",
+        "nonce": 5,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -174,12 +199,18 @@
     },
     { "address": "0x33440E53476B855A56B831e7924B5aa123981726" },
     { "address": "0x3392fd462d9710Fbf3A5703818b9920C119DC080" },
+    { "address": "0x45894CeBad0a1298D44aF2B528490693E58B322E" },
+    { "address": "0x825e868F5561352bC875E0C9D08d32e94F915E6b" },
     { "address": "0xAFa49B46301BaaD9152dD5aF0C05245B0FA58695" },
+    { "address": "0xd0615B1D3F24f691153C076d45104eEd3eF8cDb5" },
     { "address": "0xDecF20b9213f5d7f16196420377d37ef5f8F9686" },
     { "address": "0xEe058D13A0c25a1ce2f68eb02dE4CE7E621982D9" },
     { "address": "0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA" }
   ],
   "abis": {
+    "0x0706Ffc1722D53a85ba90f32807880ccee968Fed": [
+      "constructor(address _singleton)"
+    ],
     "0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9": [
       "constructor()",
       "error AccessControlBadConfirmation()",
