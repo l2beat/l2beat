@@ -682,6 +682,10 @@
       "address": "0x8971f9fd7196e5cEE2C1032B50F656855af7Dd26"
     },
     {
+      "symbol": "LBTC",
+      "address": "0x8236a87084f8B84306f72007F36F2618A5634494"
+    },
+    {
       "symbol": "LDO",
       "address": "0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32"
     },
@@ -1111,6 +1115,10 @@
     {
       "symbol": "SNX",
       "address": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F"
+    },
+    {
+      "symbol": "SOL",
+      "address": "0xD31a59c85aE9D8edEFeC411D448f90841571b89c"
     },
     {
       "symbol": "SOUL",

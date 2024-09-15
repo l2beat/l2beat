@@ -109,13 +109,6 @@ export const socket: Bridge = {
         tokens: ['sUSDe'],
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x613e87BE1cd75dEBC5e6e56a2AF2fED84162C142'),
-        name: 'sDAI Vault Lyra',
-        description:
-          'Socket Vault associated with Lyra and owned by LyraMultisig.',
-        tokens: ['sDAI'],
-      }),
-      discovery.getEscrowDetails({
         address: EthereumAddress('0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa'),
         name: 'USDT Vault Lyra',
         description:
@@ -165,6 +158,13 @@ export const socket: Bridge = {
         tokens: ['SNX'],
       }),
       discovery.getEscrowDetails({
+        address: EthereumAddress('0x613e87BE1cd75dEBC5e6e56a2AF2fED84162C142'),
+        name: 'sDAI Vault Lyra',
+        description:
+          'Socket Vault associated with Lyra and owned by LyraMultisig.',
+        tokens: ['sDAI'],
+      }),
+      discovery.getEscrowDetails({
         address: EthereumAddress('0x26Cf1Dc84694E04277F2Fe4C13E43597c6010C2A'),
         name: 'USDe Vault Lyra',
         description:
@@ -184,6 +184,13 @@ export const socket: Bridge = {
         description:
           'Socket Vault associated with Lyra and owned by LyraMultisig.',
         tokens: ['DAI'],
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x76624ff43D610F64177Bb9c194A2503642e9B803'),
+        name: 'LBTC Vault Lyra',
+        description:
+          'Socket Vault associated with Lyra and owned by LyraMultisig.',
+        tokens: ['LBTC'],
       }),
       // Hook
       discovery.getEscrowDetails({
@@ -263,6 +270,13 @@ export const socket: Bridge = {
         description:
           'Socket Vault associated with Kinto and owned by KintoMultisig.',
         tokens: ['weETH'],
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xA2bc0DaA9BF98820632bCa0663a9616f6bC180f8'),
+        name: 'SOL Vault Kinto',
+        description:
+          'Socket Vault associated with Kinto and owned by KintoEOA.',
+        tokens: ['SOL'],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94'),

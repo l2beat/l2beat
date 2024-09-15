@@ -2298,6 +2298,20 @@
       "supply": "zero"
     },
     {
+      "name": "Lombard Staked Bitcoin",
+      "coingeckoId": "lombard-staked-btc",
+      "address": "0x8236a87084f8B84306f72007F36F2618A5634494",
+      "symbol": "LBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1715936519,
+      "coingeckoListingTimestamp": 1724889600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39969/large/LBTC_Logo.png?1724959872",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "LooksRare Token",
       "coingeckoId": "looksrare",
       "address": "0xf4d2888d29D722226FafA5d9B24F9164c092421E",
@@ -4561,6 +4575,20 @@
       "coingeckoListingTimestamp": 1703721600,
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/33785/large/wUSDM_PNG_240px.png?1702981552",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Wrapped SOL",
+      "coingeckoId": "sol-wormhole",
+      "address": "0xD31a59c85aE9D8edEFeC411D448f90841571b89c",
+      "symbol": "SOL",
+      "decimals": 9,
+      "deploymentTimestamp": 1632316757,
+      "coingeckoListingTimestamp": 1642723200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/22876/large/SOL_wh_small.png?1696522175",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
