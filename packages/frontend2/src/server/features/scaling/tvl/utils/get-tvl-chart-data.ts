@@ -58,11 +58,14 @@ export const getCachedTvlChartData = cache(
 
     const lastWeekValues =
       range === '7d' ? values : await getTvlValuesForProjects(tvlProjects, '7d')
-    const lastWeekChart = getChartData(
-      lastWeekValues,
-      ethPrices,
-      !!excludeAssociatedTokens,
-    )
+
+    // NOTE: Quick fix for now, we should reinvestigate if this is the best way to handle this
+    const forTotal =
+      filter.type !== 'projects' || filter.projectIds.length !== 1
+    const lastWeekChart = getChartData(lastWeekValues, ethPrices, {
+      excludeAssociatedTokens,
+      forTotal,
+    })
     const latestValue = lastWeekChart.at(-1)
 
     if (!latestValue) {
@@ -83,7 +86,10 @@ export const getCachedTvlChartData = cache(
         usd: total / 100,
         eth: total / ethPrice,
       },
-      chart: getChartData(values, ethPrices, !!excludeAssociatedTokens),
+      chart: getChartData(values, ethPrices, {
+        excludeAssociatedTokens,
+        forTotal,
+      }),
     }
   },
   ['getTvlChartDataDS'],
@@ -93,7 +99,11 @@ export const getCachedTvlChartData = cache(
 function getChartData(
   values: Dictionary<Dictionary<ValueRecord[]>>,
   ethPrices: Record<number, number>,
-  excludeAssociatedTokens: boolean,
+  options: {
+    excludeAssociatedTokens: boolean
+
+    forTotal: boolean
+  },
 ) {
   const timestampValues: Record<string, ValueRecord[]> = {}
 
@@ -105,10 +115,7 @@ function getChartData(
   }
 
   return Object.entries(timestampValues).map(([timestamp, values]) => {
-    const summed = sumValuesPerSource(values, {
-      forTotal: true,
-      excludeAssociatedTokens: !!excludeAssociatedTokens,
-    })
+    const summed = sumValuesPerSource(values, options)
     const ethPrice = ethPrices[+timestamp]
     assert(ethPrice, 'No ETH price for ' + timestamp)
 
