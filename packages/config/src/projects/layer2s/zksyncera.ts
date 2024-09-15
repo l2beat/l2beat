@@ -154,8 +154,8 @@ const govOpsQuorumM =
     'ZkProtocolGovernor',
     'currentQuorum',
   ) / 1000000000000000000000000 // result: M of tokens
-const scThresholdString = `${scMemberCount} / ${scMainThreshold}`
-const guardiansThresholdString = `${guardiansMemberCount} / ${guardiansMainThreshold}`
+const scThresholdString = `${scMainThreshold} / ${scMemberCount}`
+const guardiansThresholdString = `${guardiansMainThreshold} / ${guardiansMemberCount}`
 
 const upgrades = {
   upgradableBy: ['ProtocolUpgradeHandler'],
