@@ -159,9 +159,9 @@ const guardiansThresholdString = `${guardiansMainThreshold} / ${guardiansMemberC
 
 const upgrades = {
   upgradableBy: ['ProtocolUpgradeHandler'],
-  upgradeDelay: `0 through the EmergencyUpgradeBoard, else ${formatSeconds(
+  upgradeDelay: `${formatSeconds(
     upgradeDelayWithScApprovalS,
-  )}.`,
+  )} via the standard upgrade path, but immediate through the EmergencyUpgradeBoard.`,
 }
 
 /**
