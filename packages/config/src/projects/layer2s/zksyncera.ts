@@ -55,6 +55,12 @@ const executionDelayS = discovery.getContractValue<number>(
   'executionDelay',
 )
 const executionDelay = executionDelayS > 0 && formatSeconds(executionDelayS)
+const executionDelayOldS = discovery.getContractValue<number>(
+  'ValidatorTimelockOld',
+  'executionDelay',
+)
+const executionDelayOld =
+  executionDelayOldS > 0 && formatSeconds(executionDelayOldS)
 const legalVetoStandardS = discovery.getContractValue<number>(
   'ProtocolUpgradeHandler',
   'STANDARD_LEGAL_VETO_PERIOD',
@@ -171,6 +177,35 @@ const validators = () => {
   const validatorsRemoved = discovery.getContractValue<string[]>(
     'ValidatorTimelock',
     'zksyncValidatorsRemoved',
+  )
+
+  // Create a map to track the net state of each validator (added or removed)
+  const validatorStates = new Map<string, number>()
+
+  // Increment for added validators
+  validatorsAdded.forEach((validator) => {
+    validatorStates.set(validator, (validatorStates.get(validator) || 0) + 1)
+  })
+
+  // Decrement for removed validators
+  validatorsRemoved.forEach((validator) => {
+    validatorStates.set(validator, (validatorStates.get(validator) || 0) - 1)
+  })
+
+  // Filter validators that have a net positive state (added more times than removed)
+  return Array.from(validatorStates.entries())
+    .filter(([_, state]) => state > 0)
+    .map(([validator, _]) => validator)
+}
+
+const validatorsOld = () => {
+  const validatorsAdded = discovery.getContractValue<string[]>(
+    'ValidatorTimelockOld',
+    'validatorsAdded',
+  )
+  const validatorsRemoved = discovery.getContractValue<string[]>(
+    'ValidatorTimelockOld',
+    'validatorsRemoved',
   )
 
   // Create a map to track the net state of each validator (added or removed)
@@ -755,10 +790,33 @@ export const zksyncera: Layer2 = {
         'Can add new Chains, manage fees, apply predefined upgrades, censor bridge transactions and revert batches (*Admin* role).', // era ChainAdmin specific
     },
     {
-      name: 'Validators',
+      name: 'ZKsync Validators',
+      accounts: [
+        ...discovery.getPermissionedAccounts(
+          'ZKsync',
+          'validatorsAddedManually',
+        ),
+        ...discovery.getPermissionedAccounts(
+          'ZKsync',
+          'validatorsAddedViaEvent',
+        ),
+      ],
+      description:
+        'Addresses permissioned to call the functions to propose, execute and revert L2 batches in the ZKsync Era diamond. Usually these are addresses of ValidatorTimelock contracts.',
+    },
+    {
+      name: 'ValidatorTimelock Validators',
       accounts: validators().map((v) => discovery.formatPermissionedAccount(v)),
       description:
         'Actors that are allowed to propose, execute and revert L2 batches on L1 through the ValidatorTimelock.',
+    },
+    {
+      name: 'ValidatorTimelockOld Validators',
+      accounts: validatorsOld().map((v) =>
+        discovery.formatPermissionedAccount(v),
+      ),
+      description:
+        'Actors that are allowed to propose, execute and revert L2 batches on L1 through the currently unused ValidatorTimelockOld.',
     },
   ],
   nativePermissions: {
@@ -878,6 +936,10 @@ export const zksyncera: Layer2 = {
       discovery.getContractDetails(
         'ValidatorTimelock',
         `Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by ${executionDelay}.`,
+      ),
+      discovery.getContractDetails(
+        'ValidatorTimelockOld',
+        `Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by ${executionDelayOld}.`,
       ),
       discovery.getContractDetails('Verifier', {
         description: 'Implements ZK proof verification logic.',

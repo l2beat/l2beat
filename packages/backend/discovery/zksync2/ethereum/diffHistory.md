@@ -9,6 +9,17 @@ Generated with discovered.json: 0xa22be89de3d71a28502f618331a4a8314f0255e1
 ## Description
 
 Discovery rerun on the same block number with only config-related changes.
+Generated with discovered.json: 0x7b0898b1b7bc0e395ac622b07984a65391d7141e
+
+# Diff at Sun, 15 Sep 2024 09:49:19 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@f3f080827a9c9144630c7d8b5f28745b2029ead2 block: 20663804
+- current block number: 20755221
+
+## Description
+
+Added validator tracking for the role in the diamond and both downstream ValidatorTimelocks for ZKsync Era.
 
 ## Config/verification related changes
 
