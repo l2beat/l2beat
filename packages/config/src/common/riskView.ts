@@ -402,7 +402,7 @@ export const PROPOSER_CANNOT_WITHDRAW: ScalingProjectRiskViewEntry = {
 export const PROPOSER_WHITELIST_GOVERNANCE: ScalingProjectRiskViewEntry = {
   value: 'Cannot withdraw',
   description:
-    'Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen. There is a decentralized Governance system that could rotate the failing Proposers.',
+    'Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen. There is a decentralized Governance system that can attempt changing Proposers with an upgrade.',
   sentiment: 'warning',
   definingMetric: -Infinity,
 }
@@ -521,7 +521,7 @@ export function EXIT_WINDOW_ZKSTACK(
   return {
     value: 'None',
     sentiment: 'bad',
-    description: `There is no window for users to exit in case of an unwanted regular upgrade because they cannot force transactions. The regular upgrade delay is ${formatSeconds(
+    description: `There is no window for users to exit in case of an unwanted regular upgrade because they cannot force transactions. The standard upgrade delay is ${formatSeconds(
       upgradeDelay,
     )}.`,
     // warning: warning,
