@@ -1,7 +1,7 @@
 {
   "name": "shared-eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 20733051,
+  "blockNumber": 20756772,
   "configHash": "0x17f138ea945007220ffaacd1b2e104c3259d7e89892b3022f207f889e5918663",
   "version": 14,
   "contracts": [
@@ -12,8 +12,8 @@
       "sinceTimestamp": 1602667372,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0x61a1190000000000",
-        "get_deposit_root": "0x80998120d03b7b8668a53070b27e5d05434abe048f64d4d8d112b9f75188b3a3"
+        "get_deposit_count": "0x26b5190000000000",
+        "get_deposit_root": "0x3b72081d5b3587efa3901e6e537790542765c77cd56f3ecb7f96caceef9e38c4"
       },
       "derivedName": "DepositContract"
     },
@@ -129,7 +129,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "90899030726225043133984",
+        "totalShares": "90185206177122723740137",
         "underlyingToken": "0xf951E335afb289353dc249e82926178EaC7DEd78"
       },
       "fieldMeta": {
@@ -231,7 +231,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "1083864151291086556257",
+        "totalShares": "1081114717649531255092",
         "underlyingToken": "0xE95A203B1a91a908F9B9CE46459d101078c2c3cb"
       },
       "fieldMeta": {
@@ -281,7 +281,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "37167965707150465023263",
+        "totalShares": "35320956252340332490390",
         "underlyingToken": "0xae78736Cd615f374D3085123A210448E74Fc6393"
       },
       "fieldMeta": {
@@ -400,7 +400,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "144413071670829314909814",
+        "totalShares": "144381671179190464037026",
         "underlyingToken": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa"
       },
       "fieldMeta": {
@@ -609,7 +609,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "15071135707780408570760",
+        "totalShares": "14917104482813293879390",
         "underlyingToken": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
       },
       "fieldMeta": {
@@ -659,7 +659,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "17927694969367087335418",
+        "totalShares": "17922385828140689372915",
         "underlyingToken": "0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38"
       },
       "fieldMeta": {
@@ -978,7 +978,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "38437868504445542713009",
+        "totalShares": "38383587117705542713009",
         "underlyingToken": "0xa2E3356610840701BDf5611a53974510Ae27E2e1"
       },
       "fieldMeta": {
@@ -1217,7 +1217,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "12379286695174971440271",
+        "totalShares": "12376226008211475817926",
         "underlyingToken": "0xac3E018457B222d93114458476f3E3416Abbe38F"
       },
       "fieldMeta": {
@@ -1284,7 +1284,7 @@
         "delegationManager": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "eigenPodBeacon": "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
-        "numPods": 32044,
+        "numPods": 32076,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
@@ -1324,7 +1324,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "866752785080328905363006",
+        "totalShares": "854712432702656710678955",
         "underlyingToken": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
       },
       "fieldMeta": {
@@ -1400,7 +1400,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "80433475055519815763729",
+        "totalShares": "81073232528434541405768",
         "underlyingToken": "0xA35b1B31Ce002FBF2058D22F30f95D405200A15b"
       },
       "fieldMeta": {
@@ -1476,7 +1476,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "9886217375143699821082",
+        "totalShares": "8814627141843476160530",
         "underlyingToken": "0x856c4Efb76C1D1AE02e20CEB03A2A6a08b0b8dC3"
       },
       "fieldMeta": {
@@ -1561,7 +1561,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "100367387413497599264301338",
+        "totalShares": "99360454530300821721389861",
         "underlyingToken": "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
       },
       "fieldMeta": {
@@ -1611,7 +1611,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "9877000273152547555603",
+        "totalShares": "9876809565635629951994",
         "underlyingToken": "0x8c1BEd5b9a0928467c9B1341Da1D7BD5e10b6549"
       },
       "fieldMeta": {
@@ -1682,21 +1682,19 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0xc13Ce61C12C0eF93b4165400491A719918Af1c6c",
           "0x60bbde47423D62F6d7658bb3654869dfA397bF3D",
-          "0x065Ed65389c6EC785cD89fcb2e6A7547761eBeA4",
           "0x7cF4888613F744aB4f3bD688eF54E6B31F92A09B",
           "0x76d3A362313BAd49B6380B75aB7fC142a3EFf835",
           "0x30dd80F21aD9222Ce8f33b429fC0Fe25655Fe88a",
-          "0xc49735BC14F2fEC11325AcC96ecefD69113de36d",
-          "0x68a9Ed81BD90c07bA87072fd8055BC54BeAb3B36",
           "0xb82C36F6C5a3CD345C0954d90c68e26528014aDD"
         ],
         "$threshold": 4,
         "domainSeparator": "0x1402d1fac147648503e0981151b32afe3fec9a5207c84371b09867cbdc7a67a2",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 37,
+        "multisigThreshold": "4 of 6 (67%)",
+        "nonce": 41,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1948,7 +1946,6 @@
   ],
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x065Ed65389c6EC785cD89fcb2e6A7547761eBeA4" },
     { "address": "0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256" },
     { "address": "0x17919FAC7024d5b770322E5Cb81607D247654116" },
     { "address": "0x27ff193A6A1574A611E21c39FDA636fA1d61ba30" },
@@ -1962,9 +1959,9 @@
     { "address": "0x422e2F724faFE75F3635458aD7D3Ac803DCD7ff1" },
     { "address": "0x4a3CD82B73821d075799680AcDff3e884B726777" },
     { "address": "0x57af860e3a1C16641CDDDa92898266D2df7Dfa71" },
+    { "address": "0x5b73C5498c1E3b4dbA84de0F1833c4a029d90519" },
     { "address": "0x60bbde47423D62F6d7658bb3654869dfA397bF3D" },
     { "address": "0x65C4799061c0D1e3E87ADdB65b02E92a558F842F" },
-    { "address": "0x68a9Ed81BD90c07bA87072fd8055BC54BeAb3B36" },
     { "address": "0x6A662c5DdCe0b76BD081b8A4ec3A4F8a671b0b1f" },
     { "address": "0x726b2EF6a771f452Cb1b1ac3C3acF5A46b99c02B" },
     { "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54" },
@@ -1981,7 +1978,7 @@
     { "address": "0xb7Ae34BB33da55f12797e793E01e63a17B11d108" },
     { "address": "0xb82C36F6C5a3CD345C0954d90c68e26528014aDD" },
     { "address": "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0" },
-    { "address": "0xc49735BC14F2fEC11325AcC96ecefD69113de36d" },
+    { "address": "0xc13Ce61C12C0eF93b4165400491A719918Af1c6c" },
     { "address": "0xcC82E76106647C921Ed3a6Af869740cce98EC0C7" },
     { "address": "0xcf09EA5E7625E6E3F3345CACa1d288CcD1F39084" },
     { "address": "0xe37756BEdDC89e94A8d557fd5b95a4D2a57e9D60" },

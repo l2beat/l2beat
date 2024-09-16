@@ -85,7 +85,7 @@ const disputeGameFactory = discovery.getContract('DisputeGameFactory')
 const genesisTimestamp = new UnixTime(1686074603)
 const portal = discovery.getContract('OptimismPortal')
 
-const livenessInterval = discovery.getContractValue<number>(
+const livenessInterval = discovery.getContractValue<string>(
   'LivenessModule',
   'livenessInterval',
 )
@@ -574,9 +574,7 @@ export const optimism: Layer2 = {
     ),
     ...discovery.getMultisigPermission(
       'SecurityCouncilMultisig',
-      `Member of the SuperchainProxyAdminOwner. It implements a LivenessModule used to remove inactive (${formatSeconds(
-        livenessInterval,
-      )}) members while making sure that the threshold remains above 75%. If the number of members falls below 8, the Foundation takes ownership of the Security Council.`,
+      `Member of the SuperchainProxyAdminOwner. It implements a LivenessModule used to remove inactive (${livenessInterval}) members while making sure that the threshold remains above 75%. If the number of members falls below 8, the Foundation takes ownership of the Security Council.`,
       [
         {
           text: 'Security Council members - Optimism Collective forum',
@@ -676,6 +674,15 @@ export const optimism: Layer2 = {
       discovery.getContractDetails('SuperchainConfig', {
         description:
           'The SuperchainConfig contract is used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.',
+        ...l1Upgradeability,
+      }),
+      discovery.getContractDetails('DeputyGuardianModule', {
+        description:
+          'The DeputyGuardianModule is a Gnosis Safe module that allows the OP Foundation to act through the GuardianMultisig, which is owned by the Security Council. It is used to pause withdrawals in case of an emergency, blacklist games, disable the proof system, and update the anchor state. The Security Council can disable the module if the Foundation acts maliciously.',
+        ...l1Upgradeability,
+      }),
+      discovery.getContractDetails('LivenessModule', {
+        description: `The LivenessModule is a Gnosis Safe nodule used to remove Security Council members that have been inactive for ${livenessInterval} while making sure that the threshold remains above 75%. If the number of members falls below 8, the FoundationMultisig_1 takes ownership of the multisig.`,
         ...l1Upgradeability,
       }),
     ],
