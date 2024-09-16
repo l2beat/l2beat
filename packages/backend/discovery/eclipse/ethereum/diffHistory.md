@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x06a3749952a97dd4187d39d935b01415ee491f40
+
+# Diff at Sun, 15 Sep 2024 14:50:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ca08843b12ed576cbcc139ad58ca045f72d96ab5 block: 20663231
+- current block number: 20756723
+
+## Description
+
+Add two signers to the TreasuryOwner MS.
+
+## Watched changes
+
+```diff
+    contract TreasuryOwner (0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC) {
+    +++ description: None
+      values.$members.5:
++        "0x3392fd462d9710Fbf3A5703818b9920C119DC080"
+      values.$members.4:
++        "0xEe058D13A0c25a1ce2f68eb02dE4CE7E621982D9"
+      values.$members.3:
+-        "0x3392fd462d9710Fbf3A5703818b9920C119DC080"
++        "0xDecF20b9213f5d7f16196420377d37ef5f8F9686"
+      values.$members.2:
+-        "0xEe058D13A0c25a1ce2f68eb02dE4CE7E621982D9"
++        "0x33440E53476B855A56B831e7924B5aa123981726"
+      values.$members.1:
+-        "0xDecF20b9213f5d7f16196420377d37ef5f8F9686"
++        "0x0706Ffc1722D53a85ba90f32807880ccee968Fed"
+      values.$members.0:
+-        "0x33440E53476B855A56B831e7924B5aa123981726"
++        "0xd0615B1D3F24f691153C076d45104eEd3eF8cDb5"
+      values.multisigThreshold:
+-        "2 of 4 (50%)"
++        "2 of 6 (33%)"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x0706Ffc1722D53a85ba90f32807880ccee968Fed)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/GnosisSafe/GnosisSafe.sol       | 953 +++++++++++++++++++++
+ .../.flat/GnosisSafe/GnosisSafeProxy.p.sol         |  35 +
+ 2 files changed, 988 insertions(+)
+```
+
 Generated with discovered.json: 0xd1d58883cb0cfd0b397d67fe177e27bc062d5ed2
 
 # Diff at Mon, 02 Sep 2024 14:35:26 GMT:

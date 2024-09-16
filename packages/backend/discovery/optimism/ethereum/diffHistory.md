@@ -1,3 +1,65 @@
+Generated with discovered.json: 0x7dfc191f4a5b27f971132ccfb6e195e1993cbfa5
+
+# Diff at Mon, 16 Sep 2024 14:09:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ca08843b12ed576cbcc139ad58ca045f72d96ab5 block: 20733024
+- current block number: 20763674
+
+## Description
+
+Synthetix MS signer changes.
+
+## Watched changes
+
+```diff
+    contract SynthetixMultisig (0xEb3107117FEAd7de89Cd14D463D340A2E6917769) {
+    +++ description: None
+      values.$members.7:
++        "0x562948111d50BF039A39Eea48D127f2Ae51ddF02"
+      values.$members.6:
+-        "0x562948111d50BF039A39Eea48D127f2Ae51ddF02"
++        "0x347c3190bD015FBD0e47fb90AA4917138A8A32FE"
+      values.$members.5:
+-        "0x347c3190bD015FBD0e47fb90AA4917138A8A32FE"
++        "0x599e835cbFC903eF09f3Dd5E08D1cF63c32AF8d8"
+      values.$members.4:
+-        "0x599e835cbFC903eF09f3Dd5E08D1cF63c32AF8d8"
++        "0xe1Efa5C91cA533E4a51884d805879249E3FCB2BC"
+      values.$members.3:
+-        "0xe1Efa5C91cA533E4a51884d805879249E3FCB2BC"
++        "0x0B67bab43157e53D21965Af0d83f83BeD9553E0a"
+      values.$members.2:
+-        "0x0B67bab43157e53D21965Af0d83f83BeD9553E0a"
++        "0x26E10fF641839cA457695CE955Cb90657D6E3F53"
+      values.$members.1:
+-        "0x26E10fF641839cA457695CE955Cb90657D6E3F53"
++        "0x1C8236B406911A376369e33D39189F1b4B39F27D"
+      values.$members.0:
+-        "0x1C8236B406911A376369e33D39189F1b4B39F27D"
++        "0x148a2c821687686CFBeEbC138534E05797D65984"
+      values.multisigThreshold:
+-        "4 of 7 (57%)"
++        "4 of 8 (50%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20733024 (main branch discovery), not current.
+
+```diff
+    contract DeputyGuardianModule (0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B) {
+    +++ description: allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.
+      template:
++        "gnosisSafeModules/DeputyGuardianModule"
+      descriptions:
++        ["allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe."]
+    }
+```
+
 Generated with discovered.json: 0x817e62a0e7ffde4ad58ef30a93a4fc86eba5a8d8
 
 # Diff at Fri, 13 Sep 2024 08:21:47 GMT:
