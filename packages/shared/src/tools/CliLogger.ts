@@ -1,5 +1,5 @@
 import { randomBytes } from 'crypto'
-import { fsyncSync, writeSync } from 'fs'
+import { writeSync } from 'fs'
 
 const START_SYNC: string = '\x1b[?2026h'
 const UP_ONE_LINE = '\x1bM'
@@ -96,7 +96,7 @@ export class CliLogger {
 
 function writeAllBlocking(data: string): void {
   writeSync(process.stderr.fd, data)
-  fsyncSync(process.stderr.fd)
+  //fsyncSync(process.stderr.fd)
 }
 
 function countNewlines(str: string): number {

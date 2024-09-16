@@ -100,6 +100,7 @@ import { plumenetwork } from './plumenetwork'
 import { polygonmiden } from './polygonmiden'
 import { polygonpos2 } from './polygonpos2'
 import { polygonzkevm } from './polygonzkevm'
+import { polynomial } from './polynomial'
 import { publicgoodsnetwork } from './publicgoodsnetwork'
 import { real } from './real'
 import { reddioex } from './reddioex'
@@ -254,6 +255,7 @@ export const layer2s: Layer2[] = [
   polygonmiden,
   polygonzkevm,
   polygonpos2,
+  polynomial,
   publicgoodsnetwork,
   reddioex,
   reddiozkvm,
