@@ -1,8 +1,8 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { Badge } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
 import { Layer3 } from './types'
-import { Badge } from '../badges'
 
 export const donatuz: Layer3 = underReviewL3({
   id: 'donatuz',
@@ -38,9 +38,10 @@ export const donatuz: Layer3 = underReviewL3({
   rpcUrl: 'https://rpc.donatuz.com',
   escrows: [
     {
-        chain: 'base',
-        address: EthereumAddress('0xb765Df9d2925a82678F4B7bc60eF5294c1604514'), // OptimismPortal
-        sinceTimestamp: new UnixTime(1719319541),
-        tokens: '*',
-    }]
+      chain: 'base',
+      address: EthereumAddress('0xb765Df9d2925a82678F4B7bc60eF5294c1604514'), // OptimismPortal
+      sinceTimestamp: new UnixTime(1719319541),
+      tokens: '*',
+    },
+  ],
 })
