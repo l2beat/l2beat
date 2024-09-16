@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xe695f87317d09967305c06d6e49ad20ce71091a3
+Generated with discovered.json: 0x7dfc191f4a5b27f971132ccfb6e195e1993cbfa5
 
-# Diff at Sun, 15 Sep 2024 14:58:53 GMT:
+# Diff at Mon, 16 Sep 2024 14:09:19 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@ca08843b12ed576cbcc139ad58ca045f72d96ab5 block: 20733024
-- current block number: 20756760
+- current block number: 20763674
 
 ## Description
 
@@ -41,6 +41,22 @@ Synthetix MS signer changes.
       values.multisigThreshold:
 -        "4 of 7 (57%)"
 +        "4 of 8 (50%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20733024 (main branch discovery), not current.
+
+```diff
+    contract DeputyGuardianModule (0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B) {
+    +++ description: allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.
+      template:
++        "gnosisSafeModules/DeputyGuardianModule"
+      descriptions:
++        ["allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe."]
     }
 ```
 

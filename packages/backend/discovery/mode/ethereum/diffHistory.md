@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xad308e5c683b909efd83f3fc3888de1bba747c4f
+Generated with discovered.json: 0xec28cd5c31716f29f0b859c32036ea460787730b
 
-# Diff at Sun, 15 Sep 2024 12:53:40 GMT:
+# Diff at Mon, 16 Sep 2024 14:01:54 GMT:
 
-- author: sekuba (<sekuba@users.noreply.github.com>)
-- comparing to: main@8a4a414af78cb21bf3116aa19a4e92b54c27d630 block: 20475234
-- current block number: 20756139
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ca08843b12ed576cbcc139ad58ca045f72d96ab5 block: 20475234
+- current block number: 20763637
 
 ## Description
 
@@ -30,7 +30,7 @@ DeputyGuardianModule upgrade: `setAnchorState()` is now callable by the deputy g
 ```diff
 +   Status: CREATED
     contract DeputyGuardianModule (0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B)
-    +++ description: None
+    +++ description: allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.
 ```
 
 ## Source code changes
