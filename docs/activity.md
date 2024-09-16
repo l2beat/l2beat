@@ -76,5 +76,5 @@ you need to talk to devs to handle this case.
 
 3. Run `yarn start:dev` in the `packages/backend` directory and wait till whole activity is synced.
 
-4. Go to `packages/frontend`, run `yarn start:local` to start frontend and check if activity is
+4. Go to `packages/frontend`, set `DATABASE_URL` to your local database url and run `yarn dev` to start frontend and check if activity is
    displayed correctly.

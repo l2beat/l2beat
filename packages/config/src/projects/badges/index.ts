@@ -1,7 +1,7 @@
 /**
  * In order to add a new badge, you need to:
  * - add it to the const badges object below, specifying the type and display properties
- * - add images to the respective folder in frontend2 (packages/frontend2/public/images/badges)
+ * - add images to the respective folder in frontend (packages/frontend/public/images/badges)
  *
  * In order to add a new badge type, you need to:
  * - add it to the BadgeType object below & that's it
