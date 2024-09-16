@@ -10,11 +10,11 @@ import {
 import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
 import { TokenCombobox } from '../../token-combobox'
-import { type ChartScale, type ChartUnit } from '../types'
+import { type ChartUnit } from '../types'
 import { ProjectTokenChart } from './token/project-token-chart'
 import { TvlChartHover } from './tvl-chart-hover'
 import { TvlChartTimeRangeControls } from './tvl-chart-time-range-controls'
-import { TvlChartUnitAndScaleControls } from './tvl-chart-unit-and-scale-controls'
+import { TvlChartUnitControls } from './tvl-chart-unit-and-scale-controls'
 import { useTvlChartRenderParams } from './use-tvl-chart-render-params'
 
 interface Props {
@@ -31,7 +31,6 @@ export function ProjectTvlChart({
   isBridge,
 }: Props) {
   const [token, setToken] = useState<ProjectToken>()
-  const [scale, setScale] = useState<ChartScale>('lin')
   const [unit, setUnit] = useState<ChartUnit>('usd')
 
   const [timeRange, setTimeRange] = useState<TvlChartRange>('7d')
@@ -47,8 +46,6 @@ export function ProjectTvlChart({
         setTimeRange={setTimeRange}
         unit={unit}
         setUnit={setUnit}
-        scale={scale}
-        setScale={setScale}
         milestones={milestones}
         projectId={projectId}
       />
@@ -67,8 +64,6 @@ export function ProjectTvlChart({
       setToken={setToken}
       unit={unit}
       setUnit={setUnit}
-      scale={scale}
-      setScale={setScale}
     />
   )
 }
@@ -84,8 +79,6 @@ interface DefaultChartProps {
   setToken: (token: ProjectToken | undefined) => void
   unit: ChartUnit
   setUnit: (unit: ChartUnit) => void
-  scale: ChartScale
-  setScale: (scale: ChartScale) => void
 }
 
 function DefaultChart({
@@ -94,8 +87,6 @@ function DefaultChart({
   isBridge,
   timeRange,
   setTimeRange,
-  scale,
-  setScale,
   unit,
   setUnit,
   tokens,
@@ -116,7 +107,6 @@ function DefaultChart({
       valuesStyle={valuesStyle}
       formatYAxisLabel={formatYAxisLabel}
       range={chartRange}
-      useLogScale={scale === 'log'}
       isLoading={isLoading}
       renderHoverContents={(data) => <TvlChartHover data={data} />}
     >
@@ -127,12 +117,7 @@ function DefaultChart({
           range={chartRange}
         />
         <Chart />
-        <TvlChartUnitAndScaleControls
-          unit={unit}
-          scale={scale}
-          setUnit={setUnit}
-          setScale={setScale}
-        >
+        <TvlChartUnitControls unit={unit} setUnit={setUnit}>
           {tokens && (
             <TokenCombobox
               tokens={tokens}
@@ -141,7 +126,7 @@ function DefaultChart({
               isBridge={isBridge}
             />
           )}
-        </TvlChartUnitAndScaleControls>
+        </TvlChartUnitControls>
       </section>
     </ChartProvider>
   )

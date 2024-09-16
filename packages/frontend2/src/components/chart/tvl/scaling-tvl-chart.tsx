@@ -14,11 +14,11 @@ import { useLocalStorage } from '~/hooks/use-local-storage'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { type TvlProjectFilter } from '~/server/features/scaling/tvl/utils/project-filter-utils'
 import { api } from '~/trpc/react'
-import { type ChartScale, type ChartUnit } from '../types'
+import { type ChartUnit } from '../types'
 import { TvlChartHeader } from './tvl-chart-header'
 import { TvlChartHover } from './tvl-chart-hover'
 import { TvlChartTimeRangeControls } from './tvl-chart-time-range-controls'
-import { TvlChartUnitAndScaleControls } from './tvl-chart-unit-and-scale-controls'
+import { TvlChartUnitControls } from './tvl-chart-unit-and-scale-controls'
 import { useTvlChartRenderParams } from './use-tvl-chart-render-params'
 
 interface Props {
@@ -31,10 +31,6 @@ export function ScalingTvlChart({ entries, milestones }: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
   const includeFilter = useScalingFilter()
 
-  const [scale, setScale] = useLocalStorage<ChartScale>(
-    'scaling-summary-scale',
-    'lin',
-  )
   const [unit, setUnit] = useLocalStorage<ChartUnit>(
     `scaling-summary-unit`,
     'usd',
@@ -68,7 +64,6 @@ export function ScalingTvlChart({ entries, milestones }: Props) {
       formatYAxisLabel={formatYAxisLabel}
       range={chartRange}
       isLoading={isLoading}
-      useLogScale={scale === 'log'}
       renderHoverContents={(data) => <TvlChartHover data={data} />}
     >
       <section className="flex flex-col gap-4">
@@ -84,12 +79,7 @@ export function ScalingTvlChart({ entries, milestones }: Props) {
           range={chartRange}
         />
         <Chart />
-        <TvlChartUnitAndScaleControls
-          unit={unit}
-          scale={scale}
-          setUnit={setUnit}
-          setScale={setScale}
-        />
+        <TvlChartUnitControls unit={unit} setUnit={setUnit} />
       </section>
     </ChartProvider>
   )
