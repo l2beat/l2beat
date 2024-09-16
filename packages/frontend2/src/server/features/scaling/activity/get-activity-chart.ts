@@ -44,13 +44,17 @@ const getCachedActivityChart = cache(
       getFullySyncedActivityRange(range),
     )
 
-    const startIndex = entries.findIndex(
+    const startTimestamp = entries.find(
       (e) => e.projectId !== ProjectId.ETHEREUM && e.count > 0,
-    )
+    )?.timestamp
 
-    if (startIndex === -1) {
+    if (!startTimestamp) {
       return []
     }
+
+    const startIndex = entries.findIndex(
+      (e) => e.timestamp.toNumber() === startTimestamp.toNumber(),
+    )
 
     const aggregatedEntries = entries.slice(startIndex).reduce(
       (acc, entry) => {
