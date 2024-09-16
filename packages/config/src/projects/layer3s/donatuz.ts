@@ -30,7 +30,7 @@ export const donatuz: Layer3 = underReviewL3({
       socialMedia: [
         'https://x.com/Donatuz_',
         'https://t.me/donatuzz',
-        'https://www.linkedin.com/company/donatuz/',
+        'https://linkedin.com/company/donatuz/',
       ],
     },
     activityDataSource: 'Blockchain RPC',
