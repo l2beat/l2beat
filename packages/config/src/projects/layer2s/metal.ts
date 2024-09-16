@@ -1,4 +1,4 @@
-import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import { UnixTime, } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -11,7 +11,7 @@ const superchainUpgradeability = {
   upgradeDelay: 'No delay',
 }
 
-const livenessInterval = discovery.getContractValue<number>(
+const livenessInterval = discovery.getContractValue<string>(
   'LivenessModule',
   'livenessInterval',
 )
@@ -83,9 +83,7 @@ export const metal: Layer2 = opStackL2({
     ),
     ...discovery.getMultisigPermission(
       'SecurityCouncilMultisig',
-      `Member of the ProxyAdminOwner. It implements a LivenessModule used to remove inactive (${formatSeconds(
-        livenessInterval,
-      )}) members while making sure that the threshold remains above 75%. If the number of members falls below 8, the Foundation takes ownership of the Security Council.`,
+      `Member of the ProxyAdminOwner. It implements a LivenessModule used to remove inactive (${livenessInterval}) members while making sure that the threshold remains above 75%. If the number of members falls below 8, the Foundation takes ownership of the Security Council.`,
       [
         {
           text: 'Security Council members - Optimism Collective forum',
@@ -110,9 +108,7 @@ export const metal: Layer2 = opStackL2({
       ...superchainUpgradeability,
     }),
     discovery.getContractDetails('LivenessModule', {
-      description: `The LivenessModule is a Gnosis Safe nodule used to remove Security Council members that have been inactive for ${formatSeconds(
-        livenessInterval,
-      )} while making sure that the threshold remains above 75%. If the number of members falls below 8, the FoundationMultisig_1 takes ownership of the multisig.`,
+      description: `The LivenessModule is a Gnosis Safe nodule used to remove Security Council members that have been inactive for ${livenessInterval} while making sure that the threshold remains above 75%. If the number of members falls below 8, the FoundationMultisig_1 takes ownership of the multisig.`,
       ...superchainUpgradeability,
     }),
   ],
