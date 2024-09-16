@@ -96,7 +96,7 @@ export class CliLogger {
 
 function writeAllBlocking(data: string): void {
   writeSync(process.stderr.fd, data)
-  //fsyncSync(process.stderr.fd)
+  fsyncSync(process.stderr.fd)
 }
 
 function countNewlines(str: string): number {
