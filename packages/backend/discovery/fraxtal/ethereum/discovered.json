@@ -537,7 +537,7 @@
       "address": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "roles": ["Guardian"],
+      "roles": ["Challenger", "Guardian"],
       "receivedPermissions": [
         {
           "permission": "configure",
@@ -595,7 +595,10 @@
     { "address": "0xc88138f5c82DD1bD327708C7F1c15E44Ce7FdA0C" },
     { "address": "0xc8dE9f45601DA8C76158b8CAF3E56E8A037F2228" },
     { "address": "0xcbc616D595D38483e6AdC45C7E426f44bF230928" },
-    { "address": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50" },
+    {
+      "address": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
+      "roles": ["Proposer"]
+    },
     { "address": "0xfF000000000000000000000000000000000420fC" }
   ],
   "abis": {

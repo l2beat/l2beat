@@ -12,20 +12,16 @@ export interface ActivityRecord {
 
 export function toRecord(row: Selectable<Activity>): ActivityRecord {
   return {
-    projectId: ProjectId(row.project_id),
+    ...row,
+    projectId: ProjectId(row.projectId),
     timestamp: UnixTime.fromDate(row.timestamp),
-    count: row.count,
-    start: row.start,
-    end: row.end,
   }
 }
 
 export function toRow(record: ActivityRecord): Insertable<Activity> {
   return {
-    project_id: record.projectId.toString(),
+    ...record,
+    projectId: record.projectId.toString(),
     timestamp: record.timestamp.toDate(),
-    count: record.count,
-    start: record.start,
-    end: record.end,
   }
 }

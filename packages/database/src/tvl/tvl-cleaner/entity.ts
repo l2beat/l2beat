@@ -10,20 +10,20 @@ export interface TvlCleanerRecord {
 
 export function toRow(record: TvlCleanerRecord): Insertable<TvlCleaner> {
   return {
-    repository_name: record.repositoryName,
-    hourly_cleaned_until: record.hourlyCleanedUntil?.toDate() ?? null,
-    six_hourly_cleaned_until: record.sixHourlyCleanedUntil?.toDate() ?? null,
+    repositoryName: record.repositoryName,
+    hourlyCleanedUntil: record.hourlyCleanedUntil?.toDate() ?? null,
+    sixHourlyCleanedUntil: record.sixHourlyCleanedUntil?.toDate() ?? null,
   }
 }
 
 export function toRecord(row: Selectable<TvlCleaner>): TvlCleanerRecord {
   return {
-    repositoryName: row.repository_name,
-    hourlyCleanedUntil: row.hourly_cleaned_until
-      ? UnixTime.fromDate(row.hourly_cleaned_until)
+    repositoryName: row.repositoryName,
+    hourlyCleanedUntil: row.hourlyCleanedUntil
+      ? UnixTime.fromDate(row.hourlyCleanedUntil)
       : null,
-    sixHourlyCleanedUntil: row.six_hourly_cleaned_until
-      ? UnixTime.fromDate(row.six_hourly_cleaned_until)
+    sixHourlyCleanedUntil: row.sixHourlyCleanedUntil
+      ? UnixTime.fromDate(row.sixHourlyCleanedUntil)
       : null,
   }
 }

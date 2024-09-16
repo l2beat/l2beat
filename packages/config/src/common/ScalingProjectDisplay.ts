@@ -32,4 +32,6 @@ export interface ScalingProjectDisplay {
   activityDataSource?: 'Blockchain RPC' | 'Explorer API' | 'Closed API'
   /** Name of the architecture image to show in the contract section if present, otherwise use slug */
   architectureImage?: string
+  /** Name of the state validation image to show in the state validation section if present, otherwise use slug */
+  stateValidationImage?: string
 }

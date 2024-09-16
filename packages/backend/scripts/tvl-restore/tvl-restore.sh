@@ -1,24 +1,19 @@
 #!/bin/bash
-
 source .env &&
 
-echo "Setting up data folder" &&
-rm -rf data 2>/dev/null && 
-mkdir data &&
-
 echo "Clearing local TVL tables" &&
-psql $DEV_LOCAL_DB_URL -f reset-local.sql &&
+psql $DEV_LOCAL_DB_URL -f clear-tvl.sql &&
 
 echo "Migrating DB to latest" &&
-yarn db:migrate &&
+PRISMA_DB_URL=$PRISMA_DB_URL yarn prisma migrate deploy &&
 
-echo "Fetching TVL tables from remote DB" &&
-psql $DEV_REMOTE_DB_URL_READ_ONLY -f export.sql &&
+echo "Dumping TVL tables from remote (this may take a while)..." &&
+pg_dump -d "$DEV_REMOTE_DB_URL_READ_ONLY" -t \"IndexerState\" -t \"IndexerConfiguration\" -t \"BlockTimestamp\" -t \"Amount\" -t \"Price\" -t \"Value\" -a -F c -f "./tvl.pgdump"
 
-echo "Restoring TVL tables" &&
-psql $DEV_LOCAL_DB_URL -f import.sql &&
+echo "Restoring TVL tables (this may take a while)..." &&
+pg_restore -d $DEV_LOCAL_DB_URL "./tvl.pgdump"
 
-echo "Removing data folder" &&
-rm -rf data &&
+echo "Removing dump" &&
+rm tvl.pgdump &&
 
 echo "✅ TVL data restored"

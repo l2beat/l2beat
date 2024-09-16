@@ -5,10 +5,7 @@ import { selectL2CostPrice } from './select'
 
 export class L2CostPriceRepository extends BaseRepository {
   async getAll(): Promise<L2CostPriceRecord[]> {
-    const rows = await this.db
-      .selectFrom('l2_costs_prices')
-      .selectAll()
-      .execute()
+    const rows = await this.db.selectFrom('L2CostPrice').selectAll().execute()
     return rows.map(toRecord)
   }
 
@@ -17,7 +14,7 @@ export class L2CostPriceRepository extends BaseRepository {
     to: UnixTime,
   ): Promise<L2CostPriceRecord[]> {
     const rows = await this.db
-      .selectFrom('l2_costs_prices')
+      .selectFrom('L2CostPrice')
       .select(selectL2CostPrice)
       .where('timestamp', '>=', from.toDate())
       .where('timestamp', '<=', to.toDate())
@@ -30,23 +27,21 @@ export class L2CostPriceRepository extends BaseRepository {
 
     const rows = records.map(toRow)
     await this.batch(rows, 10_000, async (batch) => {
-      await this.db.insertInto('l2_costs_prices').values(batch).execute()
+      await this.db.insertInto('L2CostPrice').values(batch).execute()
     })
     return rows.length
   }
 
   async deleteAfter(from: UnixTime): Promise<number> {
     const result = await this.db
-      .deleteFrom('l2_costs_prices')
+      .deleteFrom('L2CostPrice')
       .where('timestamp', '>', from.toDate())
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
-      .deleteFrom('l2_costs_prices')
-      .executeTakeFirst()
+    const result = await this.db.deleteFrom('L2CostPrice').executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 }

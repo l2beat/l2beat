@@ -34,7 +34,7 @@ export const risczero: ZkCatalogProject = {
             link: 'https://github.com/risc0/risc0/tree/main/risc0/circuit/recursion',
           },
           {
-            name: 'Main program',
+            name: 'Main circuit',
             proofSystem: 'STARK',
             mainArithmetization: 'RAP',
             mainPCS: 'FRI',
@@ -66,7 +66,7 @@ export const risczero: ZkCatalogProject = {
             link: 'https://github.com/risc0/risc0/tree/main/risc0/circuit/recursion',
           },
           {
-            name: 'Main program',
+            name: 'Main circuit',
             proofSystem: 'STARK',
             mainArithmetization: 'RAP',
             mainPCS: 'FRI',
@@ -98,7 +98,7 @@ export const risczero: ZkCatalogProject = {
             link: 'https://github.com/risc0/risc0/tree/main/risc0/circuit/recursion',
           },
           {
-            name: 'Main program',
+            name: 'Main circuit',
             proofSystem: 'STARK',
             mainArithmetization: 'RAP',
             mainPCS: 'FRI',
@@ -130,7 +130,7 @@ export const risczero: ZkCatalogProject = {
             link: 'https://github.com/risc0/risc0/tree/main/risc0/circuit/recursion',
           },
           {
-            name: 'Main program',
+            name: 'Main circuit',
             proofSystem: 'STARK',
             mainArithmetization: 'RAP',
             mainPCS: 'FRI',
@@ -162,7 +162,7 @@ export const risczero: ZkCatalogProject = {
             link: 'https://github.com/risc0/risc0/tree/main/risc0/circuit/recursion',
           },
           {
-            name: 'Main program',
+            name: 'Main circuit',
             proofSystem: 'STARK',
             mainArithmetization: 'RAP',
             mainPCS: 'FRI',
@@ -194,7 +194,7 @@ export const risczero: ZkCatalogProject = {
             link: 'https://github.com/risc0/risc0/tree/main/risc0/circuit/recursion',
           },
           {
-            name: 'Main program',
+            name: 'Main circuit',
             proofSystem: 'STARK',
             mainArithmetization: 'RAP',
             mainPCS: 'FRI',

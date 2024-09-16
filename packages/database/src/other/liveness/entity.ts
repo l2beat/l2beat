@@ -12,18 +12,14 @@ export interface LivenessRecord {
 
 export function toRecord(row: Selectable<Liveness>): LivenessRecord {
   return {
+    ...row,
     timestamp: UnixTime.fromDate(row.timestamp),
-    blockNumber: row.block_number,
-    txHash: row.tx_hash,
-    configurationId: row.configuration_id,
   }
 }
 
 export function toRow(record: LivenessRecord): Insertable<Liveness> {
   return {
+    ...record,
     timestamp: record.timestamp.toDate(),
-    block_number: record.blockNumber,
-    tx_hash: record.txHash,
-    configuration_id: record.configurationId.toString(),
   }
 }
