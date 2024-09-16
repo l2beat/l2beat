@@ -1,6 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { underReviewL2 } from './templates/underReview'
 import { subtractOne } from '../../common/assessCount'
+import { underReviewL2 } from './templates/underReview'
 import { Layer2 } from './types'
 
 export const alephzero: Layer2 = underReviewL2({
