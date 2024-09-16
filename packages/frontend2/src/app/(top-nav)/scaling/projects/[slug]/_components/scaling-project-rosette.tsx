@@ -95,7 +95,7 @@ export function ScalingProjectRosette({ project }: Props) {
           }}
         />
       ) : (
-        // Force under review for host chain, value doesn't matter
+        // Force under review for combined - values doesn't matter
         <BigPizzaRosette values={hostChainRisks} isUnderReview />
       )}
     </WrapperWithSelector>

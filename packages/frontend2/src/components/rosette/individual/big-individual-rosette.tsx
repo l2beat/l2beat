@@ -43,9 +43,8 @@ export function BigIndividualRosette(props: Props) {
   if (isUnderReview || props.isUpcoming) {
     return (
       <div
-        data-role="rosette"
         className={cn(
-          'relative w-[272px] whitespace-pre p-12 text-center text-xs font-medium uppercase leading-tight',
+          'relative h-[284px] w-[272px] whitespace-pre p-12 text-center text-xs font-medium uppercase leading-tight',
           props.className,
         )}
       >

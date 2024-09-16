@@ -40,9 +40,8 @@ export function BigPizzaRosette(props: BigPizzaRosetteProps) {
   if (isUnderReview || props.isUpcoming) {
     return (
       <div
-        data-role="rosette"
         className={cn(
-          'relative w-[272px] whitespace-pre p-12 text-center text-xs font-medium uppercase leading-tight',
+          'relative h-[284px] w-[272px] whitespace-pre p-12 text-center text-xs font-medium uppercase leading-tight',
           props.className,
         )}
       >
@@ -67,7 +66,6 @@ export function BigPizzaRosette(props: BigPizzaRosetteProps) {
     <RosetteTooltipContextProvider>
       <Tooltip>
         <div
-          data-role="rosette"
           className={cn('relative w-[272px] p-12', props.className)}
           data-rosette-hover-disabled={isUnderReview || props.isUpcoming}
         >
