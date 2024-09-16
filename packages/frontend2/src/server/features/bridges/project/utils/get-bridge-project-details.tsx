@@ -4,7 +4,6 @@ import {
   type ImplementationChangeReportApiResponse,
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
-import isEmpty from 'lodash/isEmpty'
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
 import { getTokensForProject } from '~/server/features/scaling/tvl/tokens/get-tokens-for-project'
 import { api } from '~/trpc/server'
@@ -68,7 +67,7 @@ export async function getBridgeProjectDetails(
 
   const items: ProjectDetailsSection[] = []
 
-  if (!bridge.isUpcoming && !isEmpty(tvlChartData.chart)) {
+  if (!bridge.isUpcoming && tvlChartData.chart.length > 0) {
     items.push({
       type: 'ChartSection',
       props: {
@@ -82,7 +81,7 @@ export async function getBridgeProjectDetails(
     })
   }
 
-  if (bridge.milestones && !isEmpty(bridge.milestones)) {
+  if (bridge.milestones && bridge.milestones.length > 0) {
     items.push({
       type: 'MilestonesAndIncidentsSection',
       props: {
@@ -148,7 +147,7 @@ export async function getBridgeProjectDetails(
       },
     })
 
-  if (bridge.knowledgeNuggets && !isEmpty(bridge.knowledgeNuggets)) {
+  if (bridge.knowledgeNuggets && bridge.knowledgeNuggets.length > 0) {
     items.push({
       type: 'KnowledgeNuggetsSection',
       props: {
