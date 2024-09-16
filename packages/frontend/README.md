@@ -1,10 +1,10 @@
-# @l2beat/frontend2
+# @l2beat/frontend
 
 The dynamic, public-facing Next.js frontend of L2BEAT.
 
 ## Setup
 
-To run or develop frontend2 you need to install and build its dependencies. You can do it by running the following
+To run or develop frontend you need to install and build its dependencies. You can do it by running the following
 commands in the repository root:
 
 ```
@@ -17,7 +17,7 @@ yarn build:dependencies
 - `yarn dev` - run the Next.js development server
 - `yarn dev:mock` - run the Next.js development server with mock data
 - `yarn build` - compile the production build
-- `yarn build:dependencies` - builds the dependencies of frontend2
+- `yarn build:dependencies` - builds the dependencies of frontend
 - `yarn format` - run biome automatic formatter
 - `yarn format:fix` - run biome automatic formatter and apply the recommended changes
 - `yarn lint` - run Next.js doctor and ESLint
@@ -29,7 +29,7 @@ yarn build:dependencies
 If you are running `yarn dev:mock` you do not need any environment variables.
 
 If you are running `yarn dev` or `yarn build` you need to set the following environment variables:
-- create file `.env.local` in frontend2 root folder
+- create file `.env.local` in frontend root folder
 - `DATABASE_URL` - database connection url (read-only access is sufficient)
 
 *if you currently work at L2BEAT: feel free to directly connect to our staging DB* 😉
