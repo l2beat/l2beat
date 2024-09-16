@@ -844,6 +844,7 @@ export const zksyncera: Layer2 = {
             type: 'EOA',
           },
         ],
+        chain: 'zksync2',
         name: 'ZkFoundationMultisig L2 alias',
         description:
           'The Layer2 alias adress through which the ZkFoundationMultisig can act.',
@@ -857,6 +858,7 @@ export const zksyncera: Layer2 = {
             type: 'EOA',
           },
         ],
+        chain: 'zksync2',
         name: 'Guardians L2 alias',
         description:
           'The Layer2 alias adress through which the Guardians contract can act.',
@@ -870,6 +872,7 @@ export const zksyncera: Layer2 = {
             type: 'EOA',
           },
         ],
+        chain: 'zksync2',
         name: 'ProtocolUpgradeHandler L2 alias',
         description:
           'The Layer2 alias adress through which the ProtocolUpgradeHandler contract can act.',
@@ -881,6 +884,7 @@ export const zksyncera: Layer2 = {
             'VETO_GUARDIAN',
           ),
         ],
+        chain: 'zksync2',
         name: 'Veto Guardian TokenGovernor',
         description:
           'This address can cancel proposals in the ZkTokenGovernor while they are pending (after having been proposed) or active (during the voting period).',
@@ -892,6 +896,7 @@ export const zksyncera: Layer2 = {
             'PROPOSE_GUARDIAN',
           ),
         ],
+        chain: 'zksync2',
         name: 'Propose Guardian TokenGovernor',
         description: `This address can make direct proposals in the ZkTokenGovernor without owning ZK tokens${
           discovery_ZKstackGovL2.getContractValue<boolean>(
@@ -909,6 +914,7 @@ export const zksyncera: Layer2 = {
             'owner',
           ),
         ],
+        chain: 'zksync2',
         name: 'ZK Token upgrade Admin',
         description:
           'Can upgrade the ZK token contract, affecting all holders of the ZK token.',
@@ -918,6 +924,7 @@ export const zksyncera: Layer2 = {
           'ZkToken',
           'MINTER_ADMIN_ROLE',
         ),
+        chain: 'zksync2',
         name: 'ZK Token minter Admin',
         description:
           'Can add and remove minters from the ZK token contract and mint unlimited amounts.',
@@ -929,6 +936,7 @@ export const zksyncera: Layer2 = {
             'VETO_GUARDIAN',
           ),
         ],
+        chain: 'zksync2',
         name: 'Veto Guardian GovOpsGovernor',
         description:
           'This address can cancel proposals in the ZkGovOpsGovernor while they are pending (after having been proposed) or active (during the voting period).',
