@@ -37,9 +37,8 @@ export function RosetteSelector({
           <InfoIcon />
         </TooltipTrigger>
         <TooltipContent>
-          {/* FIXME */}
-          Switch between combined risks and individual risks for given L3 and
-          Host Chain.
+          The combined view shows the L3 risk (based on both the L2 and the L3).
+          The individual view displays the L2 and L3 risks separately.
         </TooltipContent>
       </Tooltip>
     </div>

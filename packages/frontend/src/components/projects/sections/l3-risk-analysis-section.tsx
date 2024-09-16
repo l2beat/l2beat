@@ -51,9 +51,8 @@ export function L3RiskAnalysisSection({
   return (
     <ProjectSection {...sectionProps} isUnderReview={isUnderReview}>
       <div className="text-sm dark:text-white/80">
-        The L3 risk rosette depends on the individual L3 properties and the
-        risks of the host chain. The combined view shows the risk based on both
-        the L2 and the L3.
+        The L3 risks depend on the individual properties of L3 and those of the
+        host chain combined.
       </div>
       {isVerified === false && (
         <WarningBar
