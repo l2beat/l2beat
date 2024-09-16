@@ -3,7 +3,7 @@ name: "Chromatic"
 on:
   push:
     paths:
-      - "packages/frontend2/**"
+      - "packages/frontend/**"
 
 jobs:
   chromatic:
@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./packages/frontend2
+        working-directory: ./packages/frontend
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -28,7 +28,7 @@ jobs:
           --only-changed
           --exit-once-uploaded
           --exit-zero-on-changes
-          --externals packages/frontend2/tailwind.config.ts
+          --externals packages/frontend/tailwind.config.ts
           --externals *.css
-          --externals packages/frontend2/src/fonts/**/*
+          --externals packages/frontend/src/fonts/**/*
           --build-script-name storybook:build

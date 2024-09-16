@@ -41,7 +41,7 @@ jobs:
         run: yarn --frozen-lockfile
 
       - name: Build frontend
-        run: yarn build:frontend2
+        run: yarn build:frontend
 
   build-protocolbeat:
     name: Build protocolbeat

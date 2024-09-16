@@ -31,7 +31,16 @@ locally. To install dependencies do the following.
 
 ## Running the website locally
 
-We currently have two frontend apps because we're migrating to Next.js, so working on the website part of L2BEAT may be a bit confusing. Some pages are still in the `frontend` package, while some have been added and/or migrated to `frontend2`. For the list of pages that are present in `frontend2` and instructions on running it, check [packages/frontend2/README.md](./packages/frontend2/README.md). For the instructions how to run the legacy frontend, go to [packages/frontend/README.md](./packages/frontend/README.md).
+If you're planning working only on the frontend part of the website (i.e. you don't care what data
+is actually displayed) then it's quite easy. Just run the following commands after having cloned the
+repository:
+
+```
+yarn
+yarn build:dependencies
+cd packages/frontend
+yarn dev:mock
+```
 
 ## Add your Layer 2 project to the website
 
