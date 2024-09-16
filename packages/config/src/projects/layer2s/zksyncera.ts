@@ -245,9 +245,6 @@ export const zksyncera: Layer2 = {
   display: {
     name: 'ZKsync Era',
     slug: 'zksync-era',
-    warning: executionDelay
-      ? `Withdrawals are delayed by ${executionDelay}. The length of the delay can be arbitrarily set by a MultiSig.`
-      : undefined,
     description:
       'ZKsync Era is a general-purpose ZK Rollup with full EVM compatibility.',
     purposes: ['Universal'],
