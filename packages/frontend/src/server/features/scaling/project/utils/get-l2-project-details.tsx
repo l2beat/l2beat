@@ -69,6 +69,21 @@ export async function getL2ProjectDetails({
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
 
+  await Promise.all([
+    api.tvl.chart.prefetch({
+      range: '7d',
+      filter: { type: 'projects', projectIds: [project.id] },
+      excludeAssociatedTokens: false,
+    }),
+    api.activity.chart.prefetch({
+      range: '30d',
+      filter: { type: 'projects', projectIds: [project.id] },
+    }),
+    api.costs.chart.prefetch({
+      range: '7d',
+      filter: { type: 'projects', projectIds: [project.id] },
+    }),
+  ])
   const [tvlChartData, activityChartData, costsChartData, tokens] =
     await Promise.all([
       api.tvl.chart({
