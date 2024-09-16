@@ -658,9 +658,15 @@ export const zksyncera: Layer2 = {
     forceTransactions: {
       name: 'Users can force any transaction via L1',
       description:
-        'If a user is censored by L2 Sequencer, they can try to force transaction via L1 queue. Right now there is no mechanism that forces L2 Sequencer to include\
-        transactions from L1 queue in an L2 block.',
-      risks: FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM.risks,
+        'If a user is censored by the L2 Sequencer, they can try to force their transaction via an L1 queue. Right now there is no mechanism that forces L2 Sequencer to include\
+        transactions from the queue in an L2 block. The operator can implement a TransactionFilterer that censors forced transactions.',
+      risks: [
+        ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM.risks,
+        {
+          category: 'Users can be censored if',
+          text: 'the operator implements a TransactionFilterer, which is possible without delay.',
+        },
+      ],
       references: [
         {
           text: "L1 - L2 interoperability - Developer's documentation",
@@ -701,7 +707,7 @@ export const zksyncera: Layer2 = {
     After the execution of the proposal-containing batch (${executionDelay} delay), the proposal is now picked up by the ProtocolUpgradeHandler and enters the ${formatSeconds(
       legalVetoStandardS,
     )} 'legal veto period'.
-    This serves as a window in which a veto could be coordinated offchain, to be then enforced by non-approval of Guardians and SecurityCoucil. A threshold of ${guardiansExtendThreshold} Guardians can extend the veto period to ${formatSeconds(
+    This serves as a window in which a veto could be coordinated offchain, to be then enforced by non-approval of Guardians and SecurityCouncil. A threshold of ${guardiansExtendThreshold} Guardians can extend the veto period to ${formatSeconds(
       legalVetoExtendedS,
     )}. 
     After this a proposal enters a \*waiting\* state of ${formatSeconds(
@@ -722,7 +728,7 @@ export const zksyncera: Layer2 = {
     
     The cumulative duration of the upgrade paths from the moment of a voted 'successful' proposal is ${formatSeconds(
       upgradeDelayWithScApprovalS,
-    )} - ${formatSeconds(
+    )} or ${formatSeconds(
       upgradeDelayWithScApprovalExtendedLegalVotingS,
     )} (depending on Guardians extending the LegalVetoPeriod) for Standard, 0 for Emergency and ${formatSeconds(
       upgradeDelayNoScS,
@@ -732,13 +738,13 @@ export const zksyncera: Layer2 = {
     Either for a softFreeze of ${formatSeconds(
       softFreezeS,
     )} or a hardFreeze of ${formatSeconds(hardFreezeS)}. 
-    After a sofrFreeze and / or a hardFreeze, a proposal from the EmergencyUpgradeBoard has to be passed before subsequent freezes are possible. 
+    After a softFreeze and / or a hardFreeze, a proposal from the EmergencyUpgradeBoard has to be passed before subsequent freezes are possible. 
     Only the SecurityCouncil can unfreeze an active freeze.
     
     Apart from the paths that can upgrade all shared implementations, the ZK stack governance system defines other roles that can modify the system: 
-    A single *Admin* role that governs parameters in the shared contracts and a (Chain-)*Admin* role (in the chain-specific diamond contract) for managing parameters of each individual Hyperchain that builds on the stack.
+    A single *Elastic Chain operator* role that governs parameters in the shared contracts and a *ChainAdmin* role (in the chain-specific diamond contract) for managing parameters of each individual Hyperchain that builds on the stack.
     These chain-specific actions include setting a transaction filterer that can censor L1 -> L2 messages, setting fee parameters and adding / removing Validators in the ValidatorTimelock. 
-    ZKsync Era's ChainAdmin differs from the others as it also receives the above *Admin* (not upgradeability admin) role in the shared ZK stack contracts.
+    ZKsync Era's ChainAdmin differs from the others as it also has the above *Elastic Chain operator* (not upgradeability admin) role in the shared ZK stack contracts.
     `
     return description
   })(),
@@ -783,13 +789,19 @@ export const zksyncera: Layer2 = {
     ),
     ...discovery.getMultisigPermission(
       'Matter Labs Multisig',
-      'Has the Admin role in the ZKsync Era and the shared contracts through the ChainAdmin contract.',
+      'Has the *ChainAdmin* role in the ZKsync Era diamond and the *Elastic Chain Operator* role in the shared contracts.',
     ),
     {
-      name: 'ChainAdmin Owner',
+      name: 'ChainAdmin',
       accounts: [discovery.getPermissionedAccount('ChainAdmin', 'owner')],
       description:
-        'Can add new Chains, manage fees, apply predefined upgrades, censor bridge transactions and revert batches (*Admin* role).', // era ChainAdmin specific
+        'Can manage fees, apply predefined upgrades and censor bridge transactions (*ChainAdmin* role).',
+    },
+    {
+      name: 'Elastic Chain Operator',
+      accounts: [discovery.getPermissionedAccount('ChainAdmin', 'owner')], // is the same as Chainadmin in case of ZKsync Era
+      description:
+        'Can change the ValidatorTimelock in the StateTransitionManager, manage validators of the Hyperchain diamonds, revert batches and create new Hyperchains.',
     },
     {
       name: 'ZKsync Validators',
@@ -933,7 +945,7 @@ export const zksyncera: Layer2 = {
       }),
       discovery.getContractDetails('ChainAdmin', {
         description:
-          'Intermediary governance contract that has the *Admin* (not upgradeability admin) role for the shared contracts and for ZKsync Era.',
+          'Intermediary governance contract proxies the *Elastic Chain Operator* role for the shared contracts and the *ChainAdmin* role for ZKsync Era.',
       }),
       discovery.getContractDetails(
         'ValidatorTimelock',
@@ -1107,7 +1119,7 @@ export const zksyncera: Layer2 = {
   },
   milestones: [
     {
-      name: 'Onhchain Governance Launch',
+      name: 'Onchain Governance Launch',
       link: 'https://blog.zknation.io/zksync-governance-system/',
       date: '2024-09-12T00:00:00Z',
       description:
