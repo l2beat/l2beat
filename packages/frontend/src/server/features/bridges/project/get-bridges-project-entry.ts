@@ -52,7 +52,7 @@ export async function getBridgesProjectEntry(project: Bridge) {
 }
 
 async function getHeader(project: Bridge) {
-  const tvlProjectStats = await getTvlProjectStats(project.id)
+  const tvlProjectStats = await getTvlProjectStats(project)
 
   const associatedTokens = project.config.associatedTokens ?? []
 

@@ -35,7 +35,7 @@ export function formatTable(
   const shouldTranspose = widths[0] < widths[1]
   const header = ['IDs', ...(shouldTranspose ? aIDs : bIDs)]
   let rows = Object.values(matrix).map((row) =>
-    Object.values(row).map(colorMap),
+    Object.values(row).map((v) => colorMap(v)),
   )
 
   if (shouldTranspose) {
