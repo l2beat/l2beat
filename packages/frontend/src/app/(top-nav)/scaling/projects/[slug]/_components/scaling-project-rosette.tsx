@@ -11,9 +11,6 @@ interface Props {
 }
 
 export function ScalingProjectRosette({ project }: Props) {
-  const [rosetteType, setRosetteType] = useState<RosetteType>('individual')
-
-  // Generic L2
   if (project.type === 'layer2') {
     return (
       <BigPizzaRosette
@@ -25,11 +22,21 @@ export function ScalingProjectRosette({ project }: Props) {
     )
   }
 
+  return <L3ScalingProjectRosette project={project} />
+}
+
+function L3ScalingProjectRosette({
+  project,
+}: { project: ScalingProjectEntry & { type: 'layer3' } }) {
   const projectRisks = toRosetteTuple(project.header.rosetteValues)
   const hostChainRisks = toRosetteTuple(project.baseLayerRosetteValues)
   const stackedChainRisks = project.stackedRosetteValues
     ? toRosetteTuple(project.stackedRosetteValues)
     : undefined
+
+  const [rosetteType, setRosetteType] = useState<RosetteType>(
+    stackedChainRisks ? 'combined' : 'individual',
+  )
 
   const WrapperWithSelector = ({ children }: { children: React.ReactNode }) => (
     <div className="mt-auto flex flex-col gap-3 max-lg:hidden">
