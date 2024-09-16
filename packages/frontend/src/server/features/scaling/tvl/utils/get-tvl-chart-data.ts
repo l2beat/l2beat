@@ -53,8 +53,10 @@ export const getCachedTvlChartData = cache(
     const projectsFilter = createTvlProjectsFilter(filter)
     const tvlProjects = getTvlProjects().filter(projectsFilter)
 
-    const ethPrices = await getEthPrices()
-    const values = await getTvlValuesForProjects(tvlProjects, range)
+    const [ethPrices, values] = await Promise.all([
+      getEthPrices(),
+      getTvlValuesForProjects(tvlProjects, range),
+    ])
 
     const lastWeekValues =
       range === '7d' ? values : await getTvlValuesForProjects(tvlProjects, '7d')
