@@ -34,7 +34,7 @@ export async function getEvents(
     assert(explorerUrl !== undefined)
     assert(
       explorerType !== 'etherscan' || explorerType !== undefined,
-      'When using etherscan you should provide the API key using --api-key.',
+      'When using etherscan you should provide the API key using --etherscan-key.',
     )
 
     const httpClient = new HttpClient()

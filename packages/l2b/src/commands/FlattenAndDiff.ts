@@ -54,7 +54,7 @@ export const FlattenAndDiff = command({
   handler: async (args) => {
     assert(
       args.type !== 'etherscan' || args.apiKey !== undefined,
-      'When using etherscan you should provide the API key using --api-key.',
+      'When using etherscan you should provide the API key using --etherscan-key.',
     )
     const httpClient = new HttpClient()
     const client = getExplorerClient(httpClient, {

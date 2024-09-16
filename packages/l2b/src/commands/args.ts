@@ -32,6 +32,6 @@ export const explorerType = option({
 export const explorerApiKey = option({
   type: optional(string),
   env: 'L2B_ETHERSCAN_API_KEY',
-  long: 'api-key',
+  long: 'etherscan-key',
   short: 'k',
 })
