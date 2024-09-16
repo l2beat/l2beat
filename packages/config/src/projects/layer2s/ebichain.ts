@@ -24,7 +24,7 @@ export const ebichain: Layer2 = underReviewL2({
       socialMedia: [
         'https://x.com/ebixyzdex',
         'https://t.me/ebixyzofficial',
-        'https://discord.com/invite/ebixyz'
+        'https://discord.com/invite/ebixyz',
       ],
     },
     activityDataSource: 'Blockchain RPC',

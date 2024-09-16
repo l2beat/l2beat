@@ -27,7 +27,7 @@ export const race: Layer2 = underReviewL2({
       socialMedia: [
         'https://x.com/RACEecosystem',
         'https://facebook.com/RACEecosystem/',
-        'https://linkedin.com/company/raceecosystem'
+        'https://linkedin.com/company/raceecosystem',
       ],
     },
     activityDataSource: 'Blockchain RPC',
