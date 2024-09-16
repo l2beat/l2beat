@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x910d381be9d9df882a841629c5422c22efbea0ca
+
+# Diff at Mon, 16 Sep 2024 09:56:39 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@97c30c5200d617fc59b257b99d3ad918eb850420 block: 20663804
+- current block number: 20663804
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20663804 (main branch discovery), not current.
+
+```diff
+    contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: None
+      values.validators2:
++        "false"
+    }
+```
+
 Generated with discovered.json: 0x5270c251c79965be07e9177540990f860f341e6d
 
 # Diff at Fri, 23 Aug 2024 09:56:49 GMT:

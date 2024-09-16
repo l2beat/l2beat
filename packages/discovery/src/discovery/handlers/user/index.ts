@@ -71,6 +71,10 @@ import {
   OrbitPostsBlobsHandler,
 } from './OrbitPostsBlobsHandler'
 import {
+  PolygonCDKScheduledTransactionHandler,
+  PolygonCDKScheduledTransactionsHandlerDefinition,
+} from './PolygonCDKScheduledTransactionHandler'
+import {
   ScrollAccessControlHandler,
   ScrollAccessControlHandlerDefinition,
 } from './ScrollAccessControlHandler'
@@ -95,11 +99,10 @@ import {
   ZKsyncEraScheduledTransactionHandler,
   ZKsyncEraScheduledTransactionsHandlerDefinition,
 } from './ZKsyncEraScheduledTransactionHandler'
-
 import {
-  PolygonCDKScheduledTransactionHandler,
-  PolygonCDKScheduledTransactionsHandlerDefinition,
-} from './PolygonCDKScheduledTransactionHandler'
+  ZKsyncEraValidatorsHandler,
+  ZKsyncEraValidatorsHandlerDefinition,
+} from './ZKsyncEraValidatorsHandler'
 
 export type UserHandlerDefinition = z.infer<typeof UserHandlerDefinition>
 export const UserHandlerDefinition = z.union([
@@ -130,6 +133,7 @@ export const UserHandlerDefinition = z.union([
   ArbitrumDACKeysetHandlerDefinition,
   EIP2535FacetHandlerDefinition,
   ZKsyncEraScheduledTransactionsHandlerDefinition,
+  ZKsyncEraValidatorsHandlerDefinition,
   OrbitPostsBlobsDefinition,
   PolygonCDKScheduledTransactionsHandlerDefinition,
 ])
@@ -193,6 +197,8 @@ export function getUserHandler(
       return new EIP2535FacetHandler(field, definition, logger)
     case 'zksynceraScheduledTransactions':
       return new ZKsyncEraScheduledTransactionHandler(field, abi, logger)
+    case 'zksynceraValidators':
+      return new ZKsyncEraValidatorsHandler(field, abi, logger)
     case 'orbitPostsBlobs':
       return new OrbitPostsBlobsHandler(field, definition, logger)
     case 'polygoncdkScheduledTransactions':

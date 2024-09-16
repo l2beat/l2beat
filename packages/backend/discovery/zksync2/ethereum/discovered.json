@@ -2,7 +2,7 @@
   "name": "zksync2",
   "chain": "ethereum",
   "blockNumber": 20663804,
-  "configHash": "0x0ad84142dd4e79a6db01ea065ec0f792ac66011581e37506bc2a8a80aa13a63f",
+  "configHash": "0x8ede20b68b1e2915364949d15bc0b941ee0f00d7c782103c090f12e5258c1d42",
   "version": 14,
   "contracts": [
     {
@@ -156,7 +156,10 @@
           "layer2Tip": 0
         },
         "txFilterer": [],
-        "validators": ["0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD"]
+        "validators": [
+          "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD",
+          "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+        ]
       },
       "fieldMeta": {
         "txFilterer": {
