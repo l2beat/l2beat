@@ -3,7 +3,7 @@ import { expect } from 'earl'
 
 import { NUGGETS } from './nuggets'
 
-const THUMBNAILS_FOLDER = '../frontend2/public/images/thumbnails/'
+const THUMBNAILS_FOLDER = '../frontend/public/images/thumbnails/'
 
 describe('common/nuggets', () => {
   const thumbnails = Object.values(NUGGETS.THUMBNAILS)
