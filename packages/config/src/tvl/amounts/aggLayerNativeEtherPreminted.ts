@@ -21,7 +21,9 @@ export function getAggLayerNativeEtherPremintedEntry(
     type: 'aggLayerNativeEtherPreminted',
     dataSource: `${chain.name}_agglayer`,
     l2BridgeAddress: AGGLAYER_L2BRIDGE_ADDRESS,
-    premintedAmount: escrow.sharedEscrow.premintedAmount ?? BigInt(0),
+    premintedAmount: escrow.sharedEscrow.premintedAmount
+      ? BigInt(escrow.sharedEscrow.premintedAmount)
+      : BigInt(0),
     assetId: AssetId.create(ethereum.name, 'native'),
     chain: project.projectId,
     project: project.projectId,

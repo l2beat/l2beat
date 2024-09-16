@@ -8,7 +8,8 @@ export interface AggLayerEscrow {
   type: 'AggLayer'
   nativeAsset: 'etherPreminted' | 'etherWrapped'
   wethAddress?: EthereumAddress
-  premintedAmount?: bigint
+  /** It has to be string because frontend need to serialize it as cache key */
+  premintedAmount?: string
   includeAllOKBFromL1?: boolean
 }
 

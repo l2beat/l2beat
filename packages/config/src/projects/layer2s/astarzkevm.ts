@@ -120,7 +120,7 @@ export const astarzkevm: Layer2 = polygonCDKStack({
       sharedEscrow: {
         type: 'AggLayer',
         nativeAsset: 'etherPreminted',
-        premintedAmount: 340282366920938463463374607431768211455n,
+        premintedAmount: '340282366920938463463374607431768211455',
       },
     }),
   ],

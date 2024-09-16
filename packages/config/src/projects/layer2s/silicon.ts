@@ -41,7 +41,7 @@ export const silicon: Layer2 = underReviewL2({
       sharedEscrow: {
         type: 'AggLayer',
         nativeAsset: 'etherPreminted',
-        premintedAmount: 340282366920938463463374607431768211455n,
+        premintedAmount: '340282366920938463463374607431768211455',
       },
     }),
   ],

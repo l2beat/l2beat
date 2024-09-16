@@ -149,7 +149,7 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
       sharedEscrow: {
         type: 'AggLayer',
         nativeAsset: 'etherPreminted',
-        premintedAmount: 200000000000000000000000000n,
+        premintedAmount: '200000000000000000000000000',
       },
     }),
     discovery.getEscrowDetails({
