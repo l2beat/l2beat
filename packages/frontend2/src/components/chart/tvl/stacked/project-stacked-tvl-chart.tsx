@@ -4,7 +4,7 @@ import { type Milestone } from '@l2beat/config'
 import { useState } from 'react'
 import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
-import { TvlChartUnitAndScaleControls } from '~/components/chart/tvl/tvl-chart-unit-and-scale-controls'
+import { TvlChartUnitControls } from '~/components/chart/tvl/tvl-chart-unit-and-scale-controls'
 import { TokenCombobox } from '~/components/token-combobox'
 import {
   type ProjectToken,
@@ -13,7 +13,7 @@ import {
 import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
 import { formatCurrency } from '~/utils/format'
-import { type ChartScale, type ChartUnit } from '../../types'
+import { type ChartUnit } from '../../types'
 import { ProjectTokenChart } from '../token/project-token-chart'
 import { TvlChartTimeRangeControls } from '../tvl-chart-time-range-controls'
 import { StackedTvlChartHover } from './stacked-tvl-chart-hover'
@@ -35,7 +35,6 @@ export function ProjectStackedTvlChart({
   const [token, setToken] = useState<ProjectToken>()
   const [timeRange, setTimeRange] = useState<TvlChartRange>('7d')
   const [unit, setUnit] = useState<ChartUnit>('usd')
-  const [scale, setScale] = useState<ChartScale>('lin')
 
   if (tokens && token) {
     return (
@@ -48,8 +47,6 @@ export function ProjectStackedTvlChart({
         setTimeRange={setTimeRange}
         unit={unit}
         setUnit={setUnit}
-        scale={scale}
-        setScale={setScale}
         milestones={milestones}
         projectId={projectId}
       />
@@ -68,8 +65,6 @@ export function ProjectStackedTvlChart({
       setToken={setToken}
       unit={unit}
       setUnit={setUnit}
-      scale={scale}
-      setScale={setScale}
     />
   )
 }
@@ -85,8 +80,6 @@ interface DefaultChartProps {
   setToken: (token: ProjectToken | undefined) => void
   unit: ChartUnit
   setUnit: (unit: ChartUnit) => void
-  scale: ChartScale
-  setScale: (scale: ChartScale) => void
 }
 
 function DefaultChart({
@@ -100,8 +93,6 @@ function DefaultChart({
   setToken,
   unit,
   setUnit,
-  scale,
-  setScale,
 }: DefaultChartProps) {
   const { data, isLoading } = api.tvl.chart.useQuery({
     filter: { type: 'projects', projectIds: [projectId] },
@@ -123,7 +114,6 @@ function DefaultChart({
         formatCurrency(value, unit, { showLessThanMinimum: false })
       }
       range={chartRange}
-      useLogScale={scale === 'log'}
       isLoading={isLoading}
       renderHoverContents={(data) => (
         <StackedTvlChartHover {...data} unit={unit} />
@@ -137,12 +127,7 @@ function DefaultChart({
         />
 
         <Chart />
-        <TvlChartUnitAndScaleControls
-          unit={unit}
-          scale={scale}
-          setUnit={setUnit}
-          setScale={setScale}
-        >
+        <TvlChartUnitControls unit={unit} setUnit={setUnit}>
           {tokens && (
             <TokenCombobox
               tokens={tokens}
@@ -151,7 +136,7 @@ function DefaultChart({
               isBridge={isBridge}
             />
           )}
-        </TvlChartUnitAndScaleControls>
+        </TvlChartUnitControls>
       </section>
     </ChartProvider>
   )

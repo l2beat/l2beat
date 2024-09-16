@@ -9,14 +9,14 @@ import {
 } from '~/app/(side-nav)/(other)/_components/scaling-filter-context'
 import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
-import { TvlChartUnitAndScaleControls } from '~/components/chart/tvl/tvl-chart-unit-and-scale-controls'
+import { TvlChartUnitControls } from '~/components/chart/tvl/tvl-chart-unit-and-scale-controls'
 import { useCookieState } from '~/hooks/use-cookie-state'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 import { type TvlProjectFilter } from '~/server/features/scaling/tvl/utils/project-filter-utils'
 import { api } from '~/trpc/react'
 import { formatCurrency } from '~/utils/format'
-import { type ChartScale, type ChartUnit } from '../../types'
+import { type ChartUnit } from '../../types'
 import { TvlChartHeader } from '../tvl-chart-header'
 import { TvlChartTimeRangeControls } from '../tvl-chart-time-range-controls'
 import { StackedTvlChartHover } from './stacked-tvl-chart-hover'
@@ -35,10 +35,6 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
   const [timeRange, setTimeRange] = useCookieState('scalingTvlChartRange')
 
   const [unit, setUnit] = useLocalStorage<ChartUnit>('scaling-tvl-unit', 'usd')
-  const [scale, setScale] = useLocalStorage<ChartScale>(
-    'scaling-tvl-scale',
-    'lin',
-  )
 
   const filter = useMemo<TvlProjectFilter>(() => {
     if (filters.isEmpty) {
@@ -72,7 +68,6 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
         formatCurrency(value, unit, { showLessThanMinimum: false })
       }
       range={chartRange}
-      useLogScale={scale === 'log'}
       isLoading={isLoading}
       renderHoverContents={(data) => (
         <StackedTvlChartHover {...data} unit={unit} />
@@ -92,12 +87,7 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
         />
 
         <Chart />
-        <TvlChartUnitAndScaleControls
-          unit={unit}
-          scale={scale}
-          setUnit={setUnit}
-          setScale={setScale}
-        />
+        <TvlChartUnitControls unit={unit} setUnit={setUnit} />
       </section>
     </ChartProvider>
   )

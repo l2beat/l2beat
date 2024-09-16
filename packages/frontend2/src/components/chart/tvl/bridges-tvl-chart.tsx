@@ -10,18 +10,14 @@ import { formatCurrency } from '~/utils/format'
 import { Skeleton } from '../../core/skeleton'
 import { PercentChange } from '../../percent-change'
 import { useChartLoading } from '../core/chart-loading-context'
-import { type ChartScale, type ChartUnit } from '../types'
+import { type ChartUnit } from '../types'
 import { TvlChartHover } from './tvl-chart-hover'
 import { TvlChartTimeRangeControls } from './tvl-chart-time-range-controls'
-import { TvlChartUnitAndScaleControls } from './tvl-chart-unit-and-scale-controls'
+import { TvlChartUnitControls } from './tvl-chart-unit-and-scale-controls'
 import { tvlRangeToReadable } from './tvl-range-to-readable'
 import { useTvlChartRenderParams } from './use-tvl-chart-render-params'
 
 export function BridgesTvlChart() {
-  const [scale, setScale] = useLocalStorage<ChartScale>(
-    'bridges-summary-scale',
-    'lin',
-  )
   const [unit, setUnit] = useLocalStorage<ChartUnit>(
     'bridges-summary-unit',
     'usd',
@@ -50,7 +46,6 @@ export function BridgesTvlChart() {
       formatYAxisLabel={formatYAxisLabel}
       range={chartRange}
       isLoading={isLoading}
-      useLogScale={scale === 'log'}
       renderHoverContents={(data) => <TvlChartHover data={data} />}
     >
       <section className="flex flex-col gap-4">
@@ -66,12 +61,7 @@ export function BridgesTvlChart() {
           range={chartRange}
         />
         <Chart />
-        <TvlChartUnitAndScaleControls
-          unit={unit}
-          scale={scale}
-          setUnit={setUnit}
-          setScale={setScale}
-        />
+        <TvlChartUnitControls unit={unit} setUnit={setUnit} />
       </section>
     </ChartProvider>
   )

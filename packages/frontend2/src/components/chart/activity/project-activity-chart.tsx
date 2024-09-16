@@ -7,10 +7,8 @@ import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
 import { type ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/react'
 import { Checkbox } from '../../core/checkbox'
-import { RadioGroup, RadioGroupItem } from '../../core/radio-group'
 import { Chart } from '../core/chart'
 import { ChartProvider } from '../core/chart-provider'
-import { type ChartScale } from '../types'
 import { ActivityChartHover } from './activity-chart-hover'
 import { useActivityChartRenderParams } from './use-activity-chart-render-params'
 
@@ -21,7 +19,6 @@ interface Props {
 
 export function ProjectActivityChart({ milestones, projectId }: Props) {
   const [timeRange, setTimeRange] = useState<ActivityTimeRange>('30d')
-  const [scale, setScale] = useState<ChartScale>('lin')
   const [showMainnet, setShowMainnet] = useState(true)
 
   const { data, isLoading } = api.activity.chart.useQuery({
@@ -45,7 +42,6 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
       valuesStyle={valuesStyle}
       formatYAxisLabel={formatYAxisLabel}
       range={chartRange}
-      useLogScale={scale === 'log'}
       isLoading={isLoading}
       renderHoverContents={(data) => (
         <ActivityChartHover {...data} showEthereum={showMainnet} />
@@ -70,13 +66,6 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
               <span className="lg:hidden">ETH Txs</span>
             </div>
           </Checkbox>
-          <RadioGroup
-            value={scale}
-            onValueChange={(value) => setScale(value as ChartScale)}
-          >
-            <RadioGroupItem value="log">LOG</RadioGroupItem>
-            <RadioGroupItem value="lin">LIN</RadioGroupItem>
-          </RadioGroup>
         </div>
       </section>
     </ChartProvider>
