@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x910d381be9d9df882a841629c5422c22efbea0ca
+Generated with discovered.json: 0xa22be89de3d71a28502f618331a4a8314f0255e1
 
-# Diff at Mon, 16 Sep 2024 09:56:39 GMT:
+# Diff at Mon, 16 Sep 2024 11:03:50 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@97c30c5200d617fc59b257b99d3ad918eb850420 block: 20663804
+- comparing to: main@26927f8b5cf70a3c8035481eb028445a8787a130 block: 20663804
 - current block number: 20663804
 
 ## Description
@@ -19,8 +19,8 @@ discovery. Values are for block 20663804 (main branch discovery), not current.
 ```diff
     contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
     +++ description: None
-      values.validators2:
-+        "false"
+      values.validators.1:
++        "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
     }
 ```
 
