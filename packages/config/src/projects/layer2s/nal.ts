@@ -10,7 +10,7 @@ export const nal: Layer2 = underReviewL2({
     slug: 'nal',
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
-    description: 'Nal is a general-purpose OP stack chain.',
+    description: 'Nal is a general-purpose OP stack chain. It aims to facilitate the creation and trading of new assets, including AIGC and physical-to-digital transformations.',
     purposes: ['Universal'],
     links: {
       websites: ['https://nal.network/#/home'],
