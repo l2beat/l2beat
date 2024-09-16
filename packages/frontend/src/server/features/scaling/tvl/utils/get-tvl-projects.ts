@@ -1,12 +1,17 @@
 import {
   type BackendProject,
+  type Bridge,
+  type Layer2,
+  type Layer3,
   bridgeToBackendProject,
   bridges,
   getTvlAmountsConfig,
+  getTvlAmountsConfigForProject,
   layer2ToBackendProject,
   layer2s,
   layer3ToBackendProject,
   layer3s,
+  toBackendProject,
 } from '@l2beat/config'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 
@@ -22,6 +27,34 @@ export interface TvlProject {
       minTimestamp: UnixTime
     }
   >
+}
+
+export function toTvlProject(project: Layer2 | Layer3 | Bridge): TvlProject {
+  const backendProject = toBackendProject(project)
+  const amounts = getTvlAmountsConfigForProject(backendProject)
+
+  const minTimestamp = amounts
+    .map((x) => x.sinceTimestamp)
+    .reduce((a, b) => UnixTime.min(a, b), UnixTime.now())
+
+  const sources = new Map<string, { name: string; minTimestamp: UnixTime }>()
+  for (const amount of amounts) {
+    const source = sources.get(amount.dataSource)
+    if (!source || source.minTimestamp.gt(amount.sinceTimestamp)) {
+      sources.set(amount.dataSource, {
+        name: amount.dataSource,
+        minTimestamp: amount.sinceTimestamp,
+      })
+    }
+  }
+
+  return {
+    id: backendProject.projectId,
+    minTimestamp,
+    type: backendProject.type,
+    slug: backendProject.slug,
+    sources,
+  }
 }
 
 export function getTvlProjects(): TvlProject[] {

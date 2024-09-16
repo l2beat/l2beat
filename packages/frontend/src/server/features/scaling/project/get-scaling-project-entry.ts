@@ -78,7 +78,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
 async function getHeader(project: ScalingProject) {
   const [activityProjectStats, tvlProjectStats] = await Promise.all([
     getActivityProjectStats(project.id),
-    getTvlProjectStats(project.id),
+    getTvlProjectStats(project),
   ])
 
   const associatedTokens = project.config.associatedTokens ?? []
