@@ -1,4 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { subtractOne } from '../../common/assessCount'
 import { underReviewL2 } from './templates/underReview'
 import { Layer2 } from './types'
 
@@ -20,8 +21,17 @@ export const alephzero: Layer2 = underReviewL2({
       repositories: ['https://github.com/Cardinal-Cryptography'],
       socialMedia: ['https://x.com/Aleph__Zero'],
     },
+    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['AZERO'],
+  rpcUrl: 'https://rpc.alephzero.raas.gelato.cloud',
+  transactionApi: {
+    type: 'rpc',
+    defaultUrl: 'https://rpc.alephzero.raas.gelato.cloud',
+    startBlock: 1,
+    defaultCallsPerMinute: 1500,
+    assessCount: subtractOne,
+  },
   escrows: [
     {
       chain: 'ethereum',
