@@ -1,21 +1,18 @@
 import { type Sentiment } from '@l2beat/shared-pure'
 import { type ReactNode } from 'react'
-import { UnderReviewBadge } from '~/components/badge/under-review-badge'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import { Markdown } from '~/components/markdown/markdown'
 import { BigIndividualRosette } from '~/components/rosette/individual/big-individual-rosette'
 import { type RosetteValueTuple } from '~/components/rosette/individual/individual-rosette-icon'
 import { BigPizzaRosette } from '~/components/rosette/pizza/big-pizza-rosette'
-import { type RosetteValue } from '~/components/rosette/types'
 import { SentimentText } from '~/components/sentiment-text'
 import { EM_DASH } from '~/consts/characters'
-import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { ShieldIcon } from '~/icons/shield'
 import { UnverifiedIcon } from '~/icons/unverified'
 import { cn } from '~/utils/cn'
 import { sentimentToBgColor } from '~/utils/sentiment'
 import { WarningBar } from '../../warning-bar'
 import { ProjectSection } from './project-section'
+import { SingleRisk } from './risk-analysis-section'
 import { type ProjectSectionProps } from './types'
 
 export interface L3RiskAnalysisSectionProps extends ProjectSectionProps {
@@ -111,47 +108,6 @@ export function L3RiskAnalysisSection({
         <SingleRisk key={value.name} value={value} />
       ))}
     </ProjectSection>
-  )
-}
-
-function SingleRisk({
-  value,
-}: {
-  value: RosetteValue
-}) {
-  return (
-    <div className="mb-8">
-      <h3 className="text-xs font-semibold uppercase text-zinc-800 dark:text-white">
-        {value.name}
-      </h3>
-      {value.sentiment === 'UnderReview' ? (
-        <span className="mt-1 block">
-          {value.name} risk is currently <UnderReviewBadge />
-        </span>
-      ) : (
-        <>
-          <SentimentText
-            sentiment={value.sentiment}
-            className="mt-1 block text-lg font-bold"
-          >
-            {value.value}
-          </SentimentText>
-          {value.warning && (
-            <WarningBar
-              className="my-1"
-              icon={RoundedWarningIcon}
-              text={value.warning.value}
-              color={value.warning.sentiment === 'bad' ? 'red' : 'yellow'}
-            />
-          )}
-          {value.description && (
-            <Markdown className="mt-2 text-xs font-normal leading-snug dark:text-white/80">
-              {value.description}
-            </Markdown>
-          )}
-        </>
-      )}
-    </div>
   )
 }
 
