@@ -23,7 +23,7 @@ export function TvlChartUnitControls({ unit, setUnit, children }: Props) {
       ) : (
         <Skeleton className="h-8 w-[104.82px]" />
       )}
-      <div>{children}</div>
+      {children && <div>{children}</div>}
     </div>
   )
 }
