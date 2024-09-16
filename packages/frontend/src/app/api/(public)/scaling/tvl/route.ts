@@ -12,10 +12,9 @@ export async function GET(request: NextRequest) {
     filter: { type: 'layer2' },
   })
 
-  const oldestTvlData = data.chart.at(0)
   const latestTvlData = data.chart.at(-1)
 
-  if (!oldestTvlData || !latestTvlData) {
+  if (!latestTvlData) {
     return NextResponse.json({
       success: false,
       error: 'Missing data.',
