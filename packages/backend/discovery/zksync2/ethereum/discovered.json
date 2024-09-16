@@ -1,10 +1,22 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "blockNumber": 20663804,
-  "configHash": "0x8ede20b68b1e2915364949d15bc0b941ee0f00d7c782103c090f12e5258c1d42",
+  "blockNumber": 20763938,
+  "configHash": "0xe2054510e432dbe29b6e89dae0e4fdc84380cce9f77bc89e47a38b23fe68e052",
   "version": 14,
   "contracts": [
+    {
+      "name": "Governance",
+      "address": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
+      "sinceTimestamp": 1701258227,
+      "values": {
+        "$immutable": true,
+        "minDelay": 0,
+        "owner": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
+        "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "securityCouncil": "0x0000000000000000000000000000000000000000"
+      }
+    },
     {
       "name": "ZKsync",
       "address": "0x32400084C286CF3E17e7B677ea9583e60a000324",
@@ -123,26 +135,26 @@
         "getBaseToken": "0x0000000000000000000000000000000000000001",
         "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 3259787,
+        "getFirstUnprocessedPriorityTx": 3260531,
         "getL2BootloaderBytecodeHash": "0x010008e742608b21bf7eb23c1a9d0602047e3618b464c9b59c0fba3b3d7ab66e",
         "getL2DefaultAccountBytecodeHash": "0x01000563374c277a2c1e34659a2a1e87371bb6d852ce142022d497bfb50b9e32",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 53,
+        "getPriorityQueueSize": 49,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 103079215106,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 24, 2],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 491595,
-        "getTotalBatchesExecuted": 491560,
-        "getTotalBatchesVerified": 491592,
-        "getTotalBlocksCommitted": 491595,
-        "getTotalBlocksExecuted": 491560,
-        "getTotalBlocksVerified": 491592,
-        "getTotalPriorityTxs": 3259840,
+        "getTotalBatchesCommitted": 492120,
+        "getTotalBatchesExecuted": 492085,
+        "getTotalBatchesVerified": 492117,
+        "getTotalBlocksCommitted": 492120,
+        "getTotalBlocksExecuted": 492085,
+        "getTotalBlocksVerified": 492117,
+        "getTotalPriorityTxs": 3260580,
         "getVerifier": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
@@ -151,8 +163,8 @@
         },
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": {
-          "canonicalTxHash": "0x9caa22a9f7c28f561ec71aedb1476392c31d029635b1fae1cb20b9f0fd2f2eb7",
-          "expirationTimestamp": 1725210779,
+          "canonicalTxHash": "0xa5cb9c7eab5e347af1a05a8d060c5263765353122ca7c289e549decd393fb531",
+          "expirationTimestamp": 1726417451,
           "layer2Tip": 0
         },
         "txFilterer": [],
@@ -230,7 +242,7 @@
       }
     },
     {
-      "name": "ValidatorTimelock_deprecated",
+      "name": "ValidatorTimelockOld",
       "address": "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD",
       "sinceTimestamp": 1709850611,
       "values": {
@@ -263,6 +275,38 @@
     { "address": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092" }
   ],
   "abis": {
+    "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61": [
+      "constructor(address _admin, address _securityCouncil, uint256 _minDelay)",
+      "event ChangeMinDelay(uint256 _delayBefore, uint256 _delayAfter)",
+      "event ChangeSecurityCouncil(address _securityCouncilBefore, address _securityCouncilAfter)",
+      "event OperationCancelled(bytes32 indexed _id)",
+      "event OperationExecuted(bytes32 indexed _id)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ShadowOperationScheduled(bytes32 indexed _id, uint256 delay)",
+      "event TransparentOperationScheduled(bytes32 indexed _id, uint256 delay, tuple(tuple(address target, uint256 value, bytes data)[] calls, bytes32 predecessor, bytes32 salt) _operation)",
+      "function acceptOwnership()",
+      "function cancel(bytes32 _id)",
+      "function execute(tuple(tuple(address target, uint256 value, bytes data)[] calls, bytes32 predecessor, bytes32 salt) _operation) payable",
+      "function executeInstant(tuple(tuple(address target, uint256 value, bytes data)[] calls, bytes32 predecessor, bytes32 salt) _operation) payable",
+      "function getOperationState(bytes32 _id) view returns (uint8)",
+      "function hashOperation(tuple(tuple(address target, uint256 value, bytes data)[] calls, bytes32 predecessor, bytes32 salt) _operation) pure returns (bytes32)",
+      "function isOperation(bytes32 _id) view returns (bool)",
+      "function isOperationDone(bytes32 _id) view returns (bool)",
+      "function isOperationPending(bytes32 _id) view returns (bool)",
+      "function isOperationReady(bytes32 _id) view returns (bool)",
+      "function minDelay() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership()",
+      "function scheduleShadow(bytes32 _id, uint256 _delay)",
+      "function scheduleTransparent(tuple(tuple(address target, uint256 value, bytes data)[] calls, bytes32 predecessor, bytes32 salt) _operation, uint256 _delay)",
+      "function securityCouncil() view returns (address)",
+      "function timestamps(bytes32) view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function updateDelay(uint256 _newDelay)",
+      "function updateSecurityCouncil(address _newSecurityCouncil)"
+    ],
     "0x32400084C286CF3E17e7B677ea9583e60a000324": [
       "constructor(uint256 _chainId, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)"
     ],
@@ -503,5 +547,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xb6e46b170efd15afbf70eda9aacc79ef764a0f5216fa0bbdd72c2d37bd743e94"
 }

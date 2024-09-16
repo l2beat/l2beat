@@ -599,6 +599,7 @@ export const optimism: Layer2 = {
       ),
       {
         name: 'L2ProxyAdminOwner',
+        chain: 'optimism',
         description:
           'Owner of the L2ProxyAdmin. It can update the L2 bridge implementation potentially gaining access to all funds, and change any L2 system component. Assigned as the (aliased) L1 ProxyAdminOwner, meaning that upgrades has to be done through the L1 -> L2 bridge.',
         accounts: [l2Discovery.getPermissionedAccount('L2ProxyAdmin', 'owner')],

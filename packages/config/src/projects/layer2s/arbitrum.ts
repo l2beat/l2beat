@@ -428,8 +428,9 @@ export const arbitrum: Layer2 = orbitStackL2({
   },
 
   nonTemplateContractRisks: [
-    CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_SC(
-      Math.round(totalDelay / 86400).toString(), // delay in days
+    CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
+      formatSeconds(totalDelay),
+      'Security Council',
     ),
   ],
   nonTemplateEscrows: [
