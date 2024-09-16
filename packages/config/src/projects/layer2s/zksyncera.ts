@@ -806,16 +806,7 @@ export const zksyncera: Layer2 = {
     },
     {
       name: 'ZKsync Validators',
-      accounts: [
-        ...discovery.getPermissionedAccounts(
-          'ZKsync',
-          'validatorsAddedManually',
-        ),
-        ...discovery.getPermissionedAccounts(
-          'ZKsync',
-          'validatorsAddedViaEvent',
-        ),
-      ],
+      accounts: discovery.getPermissionedAccounts('ZKsync', 'validators'),
       description:
         'Addresses permissioned to call the functions to propose, execute and revert L2 batches in the ZKsync Era diamond. Usually these are addresses of ValidatorTimelock contracts.',
     },

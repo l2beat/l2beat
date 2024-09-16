@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xa22be89de3d71a28502f618331a4a8314f0255e1
+Generated with discovered.json: 0xfa39b895a41886cc941a0574c4d622c417d05179
 
-# Diff at Mon, 16 Sep 2024 13:59:00 GMT:
+# Diff at Mon, 16 Sep 2024 15:02:12 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@bb1c8d62bd8e55be7219cbf896b4a8459c92e616 block: 20663804
-- current block number: 20663804
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ca08843b12ed576cbcc139ad58ca045f72d96ab5 block: 20663804
+- current block number: 20763938
 
 ## Description
 
@@ -16,10 +16,6 @@ Generated with discovered.json: 0x7b0898b1b7bc0e395ac622b07984a65391d7141e
 - author: sekuba (<sekuba@users.noreply.github.com>)
 - comparing to: main@f3f080827a9c9144630c7d8b5f28745b2029ead2 block: 20663804
 - current block number: 20755221
-
-## Description
-
-Added validator tracking for the role in the diamond and both downstream ValidatorTimelocks for ZKsync Era.
 
 ## Config/verification related changes
 
@@ -33,6 +29,21 @@ discovery. Values are for block 20663804 (main branch discovery), not current.
       values.validators.1:
 +        "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
     }
+```
+
+```diff
+    contract ValidatorTimelockOld (0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD) {
+    +++ description: None
+      name:
+-        "ValidatorTimelock_deprecated"
++        "ValidatorTimelockOld"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Governance (0x0b622A2061EaccAE1c664eBC3E868b8438e03F61)
+    +++ description: None
 ```
 
 Generated with discovered.json: 0x5270c251c79965be07e9177540990f860f341e6d
