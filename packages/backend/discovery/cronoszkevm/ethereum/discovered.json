@@ -2,7 +2,7 @@
   "name": "cronoszkevm",
   "chain": "ethereum",
   "blockNumber": 20668550,
-  "configHash": "0x73bfe60b3637f99a39f9680680ea676debd3ea4758ffbf550c4dba8c00be9404",
+  "configHash": "0x85ae494b61a18682498f83ecadd443a29c263e9f981c2e6617018525c1f29e9f",
   "version": 14,
   "contracts": [
     {
@@ -243,7 +243,7 @@
             "newTransactionFilterer": "0xA8998F231a660Eca365B382943c71ad9b7619139"
           }
         ],
-        "validators": []
+        "validators": ["0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"]
       },
       "fieldMeta": {
         "txFilterer": {

@@ -60,13 +60,8 @@
           }
         },
         "validators": {
-          // this does not catch validators changed through an upgrade of the diamond, but current constructor does not have a validator field
-          // (this is about the validator role in the executor (usually held by the validatorTimelock), not the validators of the ValidatorTimelock)
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "ValidatorStatusUpdate",
-            "valueKey": "validatorAddress",
-            "flagKey": "isActive"
+            "type": "zksynceraValidators"
           }
         },
         "getProtocolVersion": {
