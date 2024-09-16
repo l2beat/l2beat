@@ -11,7 +11,6 @@ import { type CostsTimeRange } from '~/server/features/scaling/costs/utils/range
 import { api } from '~/trpc/react'
 import { useChartLoading } from '../core/chart-loading-context'
 import { ChartTimeRangeControls } from '../core/chart-time-range-controls'
-import { type ChartScale } from '../types'
 import { CostsChartHover } from './costs-chart-hover'
 import { useCostChartRenderParams } from './use-cost-chart-render-params'
 
@@ -21,7 +20,6 @@ interface Props {
 }
 
 export function ProjectCostsChart({ milestones, projectId }: Props) {
-  const [scale, setScale] = useState<ChartScale>('lin')
   const [range, setRange] = useState<CostsTimeRange>('7d')
   const [unit, setUnit] = useState<CostsUnit>('usd')
   const { data, isLoading } = api.costs.chart.useQuery({
@@ -43,7 +41,6 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
         valuesStyle={valuesStyle}
         formatYAxisLabel={formatYAxisLabel}
         range={chartRange}
-        useLogScale={scale === 'log'}
         isLoading={isLoading}
         renderHoverContents={(data) => (
           <CostsChartHover data={data} unit={unit} />
@@ -77,49 +74,31 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
           range={chartRange}
         />
         <Chart />
-        <UnitAndScaleControls
-          unit={unit}
-          scale={scale}
-          setUnit={setUnit}
-          setScale={setScale}
-        />
+        <UnitControls unit={unit} setUnit={setUnit} />
       </ChartProvider>
     </div>
   )
 }
 
-function UnitAndScaleControls({
+function UnitControls({
   unit,
-  scale,
   setUnit,
-  setScale,
 }: {
   unit: CostsUnit
-  scale: ChartScale
   setUnit: (value: CostsUnit) => void
-  setScale: (value: ChartScale) => void
 }) {
   const loading = useChartLoading()
 
   return (
     <div className="flex items-center justify-between gap-2">
       {loading ? (
-        <>
-          <Skeleton className="h-8 w-[156px]" />
-          <Skeleton className="h-8 w-[98.63px]" />
-        </>
+        <Skeleton className="h-8 w-[156px]" />
       ) : (
-        <>
-          <RadioGroup value={unit} onValueChange={setUnit}>
-            <RadioGroupItem value="usd">USD</RadioGroupItem>
-            <RadioGroupItem value="eth">ETH</RadioGroupItem>
-            <RadioGroupItem value="gas">GAS</RadioGroupItem>
-          </RadioGroup>
-          <RadioGroup value={scale} onValueChange={setScale}>
-            <RadioGroupItem value="log">LOG</RadioGroupItem>
-            <RadioGroupItem value="lin">LIN</RadioGroupItem>
-          </RadioGroup>
-        </>
+        <RadioGroup value={unit} onValueChange={setUnit}>
+          <RadioGroupItem value="usd">USD</RadioGroupItem>
+          <RadioGroupItem value="eth">ETH</RadioGroupItem>
+          <RadioGroupItem value="gas">GAS</RadioGroupItem>
+        </RadioGroup>
       )}
     </div>
   )

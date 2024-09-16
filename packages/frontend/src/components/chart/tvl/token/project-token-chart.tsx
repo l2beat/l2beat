@@ -1,3 +1,4 @@
+'use client'
 import { type Milestone } from '@l2beat/config'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
@@ -11,7 +12,7 @@ import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
 import { Chart } from '../../core/chart'
 import { ChartProvider } from '../../core/chart-provider'
-import { type ChartScale, type ChartUnit } from '../../types'
+import { type ChartUnit } from '../../types'
 import { TvlChartTimeRangeControls } from '../tvl-chart-time-range-controls'
 import { TokenChartHover } from './token-chart-hover'
 import { useTokenChartRenderParams } from './use-token-chart-render-params'
@@ -27,8 +28,6 @@ interface Props {
   setToken: (token: ProjectToken | undefined) => void
   unit: ChartUnit
   setUnit: (unit: ChartUnit) => void
-  scale: ChartScale
-  setScale: (scale: ChartScale) => void
 }
 
 export function ProjectTokenChart({
@@ -42,8 +41,6 @@ export function ProjectTokenChart({
   setToken,
   unit,
   setUnit,
-  scale,
-  setScale,
 }: Props) {
   const { data, isLoading } = api.tvl.tokenChart.useQuery({
     token: {
@@ -69,7 +66,6 @@ export function ProjectTokenChart({
       valuesStyle={valuesStyle}
       formatYAxisLabel={formatYAxisLabel}
       range={chartRange}
-      useLogScale={scale === 'log'}
       isLoading={isLoading}
       renderHoverContents={(data) => (
         <TokenChartHover
@@ -88,12 +84,10 @@ export function ProjectTokenChart({
         />
 
         <Chart />
-        <TokenChartUnitAndScaleControls
+        <TokenChartUnitControls
           isBridge={isBridge}
           unit={unit}
-          scale={scale}
           setUnit={setUnit}
-          setScale={setScale}
           tokens={tokens}
           token={token}
           setToken={setToken}
@@ -106,78 +100,36 @@ export function ProjectTokenChart({
 interface ControlsProps {
   isBridge: boolean
   unit: ChartUnit
-  scale: ChartScale
   setUnit: (value: ChartUnit) => void
-  setScale: (value: ChartScale) => void
   tokens: ProjectTokens
   token: ProjectToken
   setToken: (token: ProjectToken | undefined) => void
 }
 
-export function TokenChartUnitAndScaleControls({
+export function TokenChartUnitControls({
   isBridge,
   unit,
-  scale,
   setUnit,
-  setScale,
   tokens,
   token,
   setToken,
 }: ControlsProps) {
   const isClient = useIsClient()
 
-  if (!isClient) {
-    return (
-      <div className="space-y-2">
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <Skeleton className="h-8 w-[104.82px]" />
-            <TokenCombobox
-              tokens={tokens}
-              value={token}
-              setValue={setToken}
-              className="max-lg:hidden"
-              isBridge={isBridge}
-            />
-          </div>
-          <Skeleton className="h-8 w-[98.63px]" />
-        </div>
-        <TokenCombobox
-          tokens={tokens}
-          value={token}
-          setValue={setToken}
-          isBridge={isBridge}
-          className="lg:hidden"
-        />
-      </div>
-    )
-  }
   return (
-    <div className="space-y-2">
-      <div className="flex items-center justify-between gap-2">
-        <div className="flex items-center gap-2">
-          <RadioGroup value={unit} onValueChange={setUnit}>
-            <RadioGroupItem value="usd">USD</RadioGroupItem>
-            <RadioGroupItem value="eth">{token.symbol}</RadioGroupItem>
-          </RadioGroup>
-          <TokenCombobox
-            tokens={tokens}
-            value={token}
-            setValue={setToken}
-            className="max-lg:hidden"
-            isBridge={isBridge}
-          />
-        </div>
-        <RadioGroup value={scale} onValueChange={setScale}>
-          <RadioGroupItem value="log">LOG</RadioGroupItem>
-          <RadioGroupItem value="lin">LIN</RadioGroupItem>
+    <div className="flex flex-wrap items-center gap-2">
+      {isClient ? (
+        <RadioGroup value={unit} onValueChange={setUnit}>
+          <RadioGroupItem value="usd">USD</RadioGroupItem>
+          <RadioGroupItem value="eth">{token.symbol}</RadioGroupItem>
         </RadioGroup>
-      </div>
+      ) : (
+        <Skeleton className="h-8 w-[104.82px]" />
+      )}
       <TokenCombobox
         tokens={tokens}
         value={token}
         setValue={setToken}
-        className="lg:hidden"
         isBridge={isBridge}
       />
     </div>

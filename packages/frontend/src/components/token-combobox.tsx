@@ -60,7 +60,6 @@ export function TokenCombobox({
         {value ? (
           <TokenItem
             token={allTokens.find((t) => t.assetId === value.assetId)!}
-            truncate
           />
         ) : (
           'Tokens'
@@ -157,10 +156,9 @@ function TokenGroup({ heading, tokens, value, onSelect }: TokenGroupProps) {
 
 interface TokenItemProps {
   token: ProjectToken
-  truncate?: boolean
 }
 
-function TokenItem({ token, truncate }: TokenItemProps) {
+function TokenItem({ token }: TokenItemProps) {
   return (
     <div className="flex items-center gap-1.5">
       <Image
@@ -170,15 +168,8 @@ function TokenItem({ token, truncate }: TokenItemProps) {
         height={18}
         className="rounded-full"
       />
-      <span
-        className={cn(
-          'text-sm font-bold',
-          truncate && 'truncate max-lg:max-w-[200px]',
-        )}
-      >
-        {token.name}
-      </span>
-      {!truncate && <span className="max-xs:hidden">({token.symbol})</span>}
+      <span className="text-sm font-bold">{token.name}</span>
+      <span className="max-xs:hidden">({token.symbol})</span>
     </div>
   )
 }
