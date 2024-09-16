@@ -24,6 +24,7 @@ export function getAggLayerNativeEtherPremintedEntry(
     premintedAmount: escrow.sharedEscrow.premintedAmount
       ? BigInt(escrow.sharedEscrow.premintedAmount)
       : BigInt(0),
+    escrowAddress: escrow.address,
     assetId: AssetId.create(ethereum.name, 'native'),
     chain: project.projectId,
     project: project.projectId,

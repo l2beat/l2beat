@@ -64,15 +64,18 @@ export interface AggLayerL2Token extends AmountConfigBase {
   type: 'aggLayerL2Token'
   l1Address: EthereumAddress
   originNetwork: number
+  escrowAddress: EthereumAddress
 }
 
 export interface AggLayerNativeEtherPreminted extends AmountConfigBase {
   type: 'aggLayerNativeEtherPreminted'
   l2BridgeAddress: EthereumAddress
   premintedAmount: bigint
+  escrowAddress: EthereumAddress
 }
 
 export interface AggLayerNativeEtherWrapped extends AmountConfigBase {
   type: 'aggLayerNativeEtherWrapped'
   wethAddress: EthereumAddress
+  escrowAddress: EthereumAddress
 }

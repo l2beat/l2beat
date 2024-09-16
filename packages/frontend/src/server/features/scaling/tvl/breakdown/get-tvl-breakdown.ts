@@ -65,8 +65,12 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
         case 'canonical': {
           // The canonical logic is the most complex one
           assert(
-            config.type === 'escrow' || config.type === 'preminted',
-            'Only escrow or preminted tokens can be canonical',
+            config.type === 'escrow' ||
+              config.type === 'preminted' ||
+              config.type === 'aggLayerL2Token' ||
+              config.type === 'aggLayerNativeEtherPreminted' ||
+              config.type === 'aggLayerNativeEtherWrapped',
+            'Only escrow, preminted, AggLayer tokens can be canonical',
           )
           const asset = breakdown.canonical.get(priceConfig.assetId)
           if (asset) {

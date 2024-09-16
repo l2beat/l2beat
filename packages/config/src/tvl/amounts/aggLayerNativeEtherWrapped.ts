@@ -26,6 +26,7 @@ export function getAggLayerNativeEtherWrappedEntry(
     wethAddress: escrow.sharedEscrow.wethAddress,
     project: project.projectId,
     assetId: AssetId.create(ethereum.name, l1WETH.address),
+    escrowAddress: escrow.address,
     chain: project.projectId,
     symbol: 'ETH',
     source: 'canonical',

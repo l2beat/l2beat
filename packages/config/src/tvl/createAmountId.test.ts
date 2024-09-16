@@ -214,6 +214,7 @@ function mockAggLayerL2Token(): AggLayerL2Token {
     type: 'aggLayerL2Token',
     l1Address: EthereumAddress.random(),
     originNetwork: 0,
+    escrowAddress: EthereumAddress.random(),
   }
 }
 
@@ -223,6 +224,7 @@ function mockAggLayerNativeEtherPreminted(): AggLayerNativeEtherPreminted {
     type: 'aggLayerNativeEtherPreminted',
     l2BridgeAddress: EthereumAddress.random(),
     premintedAmount: 100n,
+    escrowAddress: EthereumAddress.random(),
   }
 }
 
@@ -231,6 +233,7 @@ function mockAggLayerNativeEtherWrapped(): AggLayerNativeEtherWrapped {
     ...mockBase(),
     type: 'aggLayerNativeEtherWrapped',
     wethAddress: EthereumAddress.random(),
+    escrowAddress: EthereumAddress.random(),
   }
 }
 
