@@ -176,7 +176,7 @@ Generated with discovered.json: 0x05e0773e2a68c8d9d3fbe9380c4598dd0064b335
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Added chain discovery.
 
 ## Initial discovery
 
