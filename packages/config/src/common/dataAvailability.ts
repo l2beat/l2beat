@@ -67,7 +67,7 @@ const LAYER_DESCRIPTION: Record<
   MEMO: ['The data is posted to MEMO (a decentralized storage).', null],
   External: ['The data is posted off chain.', null],
   MantleDA: [
-    'The data is posted to MantleDA (contracts are forked from EigenDA with significant modifications, most importantly removal of slashing conditions).',
+    'The data is posted to Mantle DA (contracts are forked from EigenDA with significant modifications, most importantly removal of slashing conditions).',
     null,
   ],
   FraxtalDA: [
