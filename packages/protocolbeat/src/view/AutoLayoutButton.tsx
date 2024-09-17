@@ -176,6 +176,12 @@ function layoutColumns(columns: LayoutNode[][]) {
       maxWidth = Math.max(node.base.box.width, maxWidth)
     }
 
+    yOffset = -yOffset / 2
+    for (const node of column) {
+      // biome-ignore lint/style/noNonNullAssertion: we know it's there
+      nodeLocations[node.id]!.y += yOffset
+    }
+
     xOffset += maxWidth + X_SPACING
   }
 
