@@ -1,13 +1,13 @@
 import {
-  TokenTvlChartParams,
-  getTokenTvlChart,
-} from '~/server/features/scaling/tvl/tokens/get-token-tvl-chart'
-import {
   TvlChartDataParams,
   getTvlChartData,
 } from '~/server/features/scaling/tvl/get-tvl-chart-data'
-import { procedure, router } from '../trpc'
 import { getTvlChartTotal } from '~/server/features/scaling/tvl/get-tvl-total'
+import {
+  TokenTvlChartParams,
+  getTokenTvlChart,
+} from '~/server/features/scaling/tvl/tokens/get-token-tvl-chart'
+import { procedure, router } from '../trpc'
 
 export const tvlRouter = router({
   chart: procedure.input(TvlChartDataParams).query(async ({ input }) => {
