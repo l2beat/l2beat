@@ -184,6 +184,7 @@ export function App() {
             <Sidebar
               selectedNodes={selectedNodes}
               onDeleteNodes={deleteNodeAction}
+              onHideNodes={(ids) => setHiddenNodes((c) => c.concat(ids))}
               onColorChange={colorChangeAction}
             />
           </div>
