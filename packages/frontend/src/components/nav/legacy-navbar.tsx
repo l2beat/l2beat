@@ -38,6 +38,7 @@ export async function LegacyNavbar({
                 />
               ),
           )}
+          
         </ul>
         <div className="flex h-full items-center gap-5">
           <ul className="hidden items-center gap-4 2xl:flex">

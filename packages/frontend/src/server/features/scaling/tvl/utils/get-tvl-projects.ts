@@ -57,12 +57,12 @@ export function toTvlProject(project: Layer2 | Layer3 | Bridge): TvlProject {
   }
 }
 
-export function getTvlProjects(): TvlProject[] {
+export function getActiveTvlProjects(): TvlProject[] {
   const projects = [
     ...layer2s.map(layer2ToBackendProject),
     ...layer3s.map(layer3ToBackendProject),
     ...bridges.map(bridgeToBackendProject),
-  ]
+  ].filter((project) => !project.isUpcoming && !project.isArchived)
 
   const tvlAmounts = getTvlAmountsConfig(projects)
 

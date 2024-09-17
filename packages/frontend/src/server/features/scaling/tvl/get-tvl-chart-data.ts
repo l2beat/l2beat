@@ -9,7 +9,7 @@ import { z } from 'zod'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
 import { getEthPrices } from './utils/get-eth-prices'
-import { getTvlProjects } from './utils/get-tvl-projects'
+import { getActiveTvlProjects } from './utils/get-tvl-projects'
 import { getTvlTargetTimestamp } from './utils/get-tvl-target-timestamp'
 import { getTvlValuesForProjects } from './utils/get-tvl-values-for-projects'
 import {
@@ -51,7 +51,7 @@ export type TvlChartData = Awaited<ReturnType<typeof getCachedTvlChartData>>
 export const getCachedTvlChartData = cache(
   async ({ range, excludeAssociatedTokens, filter }: TvlChartDataParams) => {
     const projectsFilter = createTvlProjectsFilter(filter)
-    const tvlProjects = getTvlProjects().filter(projectsFilter)
+    const tvlProjects = getActiveTvlProjects().filter(projectsFilter)
 
     const [ethPrices, values] = await Promise.all([
       getEthPrices(),

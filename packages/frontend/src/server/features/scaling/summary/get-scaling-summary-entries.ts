@@ -16,7 +16,9 @@ export async function getScalingSummaryEntries() {
   const projectsVerificationStatuses = await getProjectsVerificationStatuses()
   const tvl = await get7dTokenBreakdown({ type: 'layer2' })
 
-  const projects = [...layer2s, ...layer3s]
+  const projects = [...layer2s, ...layer3s].filter(
+    (project) => !project.isUpcoming && !project.isArchived,
+  )
 
   const entries = projects.map((project) => {
     const isVerified = !!projectsVerificationStatuses[project.id.toString()]

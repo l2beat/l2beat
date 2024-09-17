@@ -55,6 +55,19 @@ export async function NavSidebar({
                   />
                 ),
             )}
+            {group.secondaryLinks && (
+              <>
+                <NavDivider className="my-1" />
+                {group.secondaryLinks.map((link) => (
+                  <NavLink
+                    key={link.href}
+                    title={link.title}
+                    icon={link.icon}
+                    href={link.href}
+                  />
+                ))}
+              </>
+            )}
           </NavLinkGroup>
         ))}
         <NavDivider />
