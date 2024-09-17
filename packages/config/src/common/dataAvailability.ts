@@ -66,7 +66,7 @@ const LAYER_DESCRIPTION: Record<
   Celestia: ['The data is posted to Celestia.', null],
   MEMO: ['The data is posted to MEMO (a decentralized storage).', null],
   External: ['The data is posted off chain.', null],
-  MantleDA: [
+  'Mantle DA': [
     'The data is posted to Mantle DA (contracts are forked from EigenDA with significant modifications, most importantly removal of slashing conditions).',
     null,
   ],
