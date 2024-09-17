@@ -196,6 +196,7 @@ function serializeConfiguration(
       ...getBaseEntry(value),
       l1Address: value.l1Address.toString(),
       originNetwork: value.originNetwork,
+      escrowAddress: value.escrowAddress.toString(),
       type: value.type,
     }
 
@@ -207,6 +208,7 @@ function serializeConfiguration(
       ...getBaseEntry(value),
       l2BridgeAddress: value.l2BridgeAddress.toString(),
       premintedAmount: value.premintedAmount.toString(),
+      escrowAddress: value.escrowAddress.toString(),
       type: value.type,
     }
 
@@ -217,6 +219,7 @@ function serializeConfiguration(
     const obj = {
       ...getBaseEntry(value),
       wethAddress: value.wethAddress.toString(),
+      escrowAddress: value.escrowAddress.toString(),
       type: value.type,
     }
 
