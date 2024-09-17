@@ -1,4 +1,3 @@
-import { layer2s, layer3s } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   unstable_cache as cache,
@@ -8,6 +7,7 @@ import { env } from '~/env'
 import { db } from '~/server/database'
 import { getRangeWithMax } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generate-timestamps'
+import { getActivityProjects } from './utils/get-activity-projects'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import {
   type ActivityProjectFilter,
@@ -34,7 +34,7 @@ export type ActivityChartData = Awaited<
 >
 const getCachedActivityChart = cache(
   async (filter: ActivityProjectFilter, range: ActivityTimeRange) => {
-    const projects = [...layer2s, ...layer3s]
+    const projects = getActivityProjects()
       .filter(createActivityProjectsFilter(filter))
       .map((p) => p.id)
       .concat(ProjectId.ETHEREUM)

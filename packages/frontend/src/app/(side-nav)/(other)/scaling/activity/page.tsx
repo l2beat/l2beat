@@ -24,6 +24,9 @@ export default async function Page() {
     range,
     filter: { type: 'all' },
   })
+  await api.activity.scalingFactor.prefetch({
+    filter: { type: 'all' },
+  })
 
   return (
     <HydrateClient>
