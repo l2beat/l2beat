@@ -35,11 +35,14 @@ function UPGRADE_WITH_DELAY_RISK(delay: string): ScalingProjectRisk {
   }
 }
 
-function UPGRADE_WITH_DELAY_RISK_WITH_SC(delay: string): ScalingProjectRisk {
+function UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
+  delay: string,
+  who: string,
+): ScalingProjectRisk {
   return {
     category: 'Funds can be stolen if',
-    text: `a contract receives a malicious code upgrade. There is a ${delay} days delay on code upgrades unless upgrade is initiated by the \
-    Security Council in which case there is no delay.`,
+    text: `a contract receives a malicious code upgrade. There is a ${delay} delay on code upgrades unless upgrade is initiated by the \
+    ${who} in which case there is no delay.`,
   }
 }
 
@@ -79,6 +82,6 @@ export const CONTRACTS = {
   UPGRADE_NO_DELAY_RISK,
   UPGRADE_WITH_DELAY_RISK,
   UPGRADE_WITH_DELAY_SECONDS_RISK,
-  UPGRADE_WITH_DELAY_RISK_WITH_SC,
+  UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION,
   ARBITRUM_OLD_BRIDGE,
 }

@@ -1,3 +1,118 @@
+Generated with discovered.json: 0x4c060329e6eb5170679402c0a4d7d995c0a7fed8
+
+# Diff at Sun, 15 Sep 2024 15:22:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ca08843b12ed576cbcc139ad58ca045f72d96ab5 block: 20726203
+- current block number: 20756881
+
+## Description
+
+Socket adds plugs and vaults.
+
+Kinto moves three vaults from EOA to the BridgerOwnerMS. One signer is removed from the KintoMultisig.
+
+## Watched changes
+
+```diff
+    contract PAXG Vault Kinto (0x25f0D71Da51A77Ca231484eBbAD1f588A0230ef2) {
+    +++ description: None
+      values.owner:
+-        "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
++        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+    }
+```
+
+```diff
+    contract KINTO Vault Kinto (0x2f87464d5F5356dB350dcb302FE28040986783a7) {
+    +++ description: None
+      values.owner:
+-        "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
++        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+    }
+```
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.97:
++        "0x17a8Be056ca13B072AB908126D4BC38e09c7cc39"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.96:
++        "0xc706c946623C70B294b91Bd4961E91FaF7A74317"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.95:
++        "0x55033cb4583f5526704Ee4C197e99504E504712c"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.94:
++        "0xF391E487FE3958F0728436Af84455Fd4eBC9c7c9"
+    }
+```
+
+```diff
+    contract SOL Vault Kinto (0xA2bc0DaA9BF98820632bCa0663a9616f6bC180f8) {
+    +++ description: None
+      values.owner:
+-        "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
++        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+    }
+```
+
+```diff
+    contract XAUt Vault Kinto (0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF) {
+    +++ description: None
+      values.owner:
+-        "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
++        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+    }
+```
+
+```diff
+    contract KintoMultisig (0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82) {
+    +++ description: None
+      values.$members.5:
+-        "0xc31C4549356d46c37021393EeEb6f704B38061eC"
+      values.$members.4:
+-        "0x94561e98DD5E55271f91A103e4979aa6C493745E"
++        "0xc31C4549356d46c37021393EeEb6f704B38061eC"
+      values.$members.3:
+-        "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
++        "0x94561e98DD5E55271f91A103e4979aa6C493745E"
+      values.$members.2:
+-        "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8"
++        "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
+      values.$members.1:
+-        "0x78C0Ea07874F4C1Cd97cc14aE343b1ae85982259"
++        "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 5 (60%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20726203 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract LBTC Vault Lyra (0x76624ff43D610F64177Bb9c194A2503642e9B803)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SOL Vault Kinto (0xA2bc0DaA9BF98820632bCa0663a9616f6bC180f8)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xe5c9598b6d1b921c349d1bcf2b34d2e22763ad96
 
 # Diff at Wed, 11 Sep 2024 08:33:42 GMT:

@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xb37aa1ea78af1729196ed22074c1987c1422c1ec
+
+# Diff at Sun, 15 Sep 2024 15:01:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ca08843b12ed576cbcc139ad58ca045f72d96ab5 block: 20733051
+- current block number: 20756772
+
+## Description
+
+Two signers removed, one changed in EigenLayerTokenMultisig. 
+
+## Watched changes
+
+```diff
+    contract EigenLayerTokenMultisig (0xbb00DDa2832850a43840A3A86515E3Fe226865F2) {
+    +++ description: None
+      values.$members.7:
+-        "0xb82C36F6C5a3CD345C0954d90c68e26528014aDD"
+      values.$members.6:
+-        "0x68a9Ed81BD90c07bA87072fd8055BC54BeAb3B36"
+      values.$members.5:
+-        "0xc49735BC14F2fEC11325AcC96ecefD69113de36d"
++        "0xb82C36F6C5a3CD345C0954d90c68e26528014aDD"
+      values.$members.1:
+-        "0x065Ed65389c6EC785cD89fcb2e6A7547761eBeA4"
++        "0x60bbde47423D62F6d7658bb3654869dfA397bF3D"
+      values.$members.0:
+-        "0x60bbde47423D62F6d7658bb3654869dfA397bF3D"
++        "0xc13Ce61C12C0eF93b4165400491A719918Af1c6c"
+      values.multisigThreshold:
+-        "4 of 8 (50%)"
++        "4 of 6 (67%)"
+    }
+```
+
 Generated with discovered.json: 0xfebd0f616c689b49d24344eab469e383414904b6
 
 # Diff at Thu, 12 Sep 2024 07:30:35 GMT:

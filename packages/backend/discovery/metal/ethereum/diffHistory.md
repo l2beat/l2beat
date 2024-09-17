@@ -1,4 +1,46 @@
-Generated with discovered.json: 0xc5567f1a28226f7c7218b3583cf3df1e29eaf59b
+Generated with discovered.json: 0xf4e9cfef7bf7798abc7d90a8e4f9a129df642a49
+
+# Diff at Mon, 16 Sep 2024 14:08:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ca08843b12ed576cbcc139ad58ca045f72d96ab5 block: 20475247
+- current block number: 20763667
+
+## Description
+
+DeputyGuardianModule upgrade: `setAnchorState()` is now callable by the deputy guardian.
+
+## Watched changes
+
+```diff
+    contract GuardianMultisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      values.GnosisSafe_modules.0:
+-        "0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8"
++        "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DeputyGuardianModule (0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8)
+    +++ description: allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.
+```
+
+```diff
++   Status: CREATED
+    contract DeputyGuardianModule (0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B)
+    +++ description: allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.
+```
+
+## Source code changes
+
+```diff
+.../DeputyGuardianModule.sol                         | 20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
+```
+
+Generated with discovered.json: 0x3097550011aa805b2c77b8c91d7e28b69e1fb2ef
 
 # Diff at Thu, 12 Sep 2024 15:37:07 GMT:
 

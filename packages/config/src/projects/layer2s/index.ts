@@ -34,6 +34,7 @@ import { degate2 } from './degate2'
 import { degate3 } from './degate3'
 import { dydx } from './dydx'
 import { ebi } from './ebi'
+import { ebichain } from './ebichain'
 import { edgeless } from './edgeless'
 import { ethernity } from './ethernity'
 import { everclear } from './everclear'
@@ -81,6 +82,7 @@ import { morph } from './morph'
 import { move } from './move'
 import { myria } from './myria'
 import { myshell } from './myshell'
+import { nal } from './nal'
 import { network3 } from './network3'
 import { nil } from './nil'
 import { nova } from './nova'
@@ -102,6 +104,7 @@ import { polygonpos2 } from './polygonpos2'
 import { polygonzkevm } from './polygonzkevm'
 import { polynomial } from './polynomial'
 import { publicgoodsnetwork } from './publicgoodsnetwork'
+import { race } from './race'
 import { real } from './real'
 import { reddioex } from './reddioex'
 import { reddiozkvm } from './reddiozkvm'
@@ -225,6 +228,8 @@ export const layer2s: Layer2[] = [
   loopring,
   lumia,
   lyra,
+  race,
+  ebichain,
   mantapacific,
   mantle,
   metal,
@@ -236,6 +241,7 @@ export const layer2s: Layer2[] = [
   move,
   myria,
   myshell,
+  nal,
   nil,
   network3,
   nova,

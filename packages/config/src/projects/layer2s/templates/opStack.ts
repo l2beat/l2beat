@@ -110,11 +110,21 @@ export interface OpStackConfigCommon {
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
-  display: Omit<Layer2Display, 'provider' | 'category' | 'dataAvailabilityMode'>
+  display: Omit<
+    Layer2Display,
+    'provider' | 'category' | 'dataAvailabilityMode'
+  > & {
+    category?: Layer2Display['category']
+  }
 }
 
 export interface OpStackConfigL3 extends OpStackConfigCommon {
-  display: Omit<Layer3Display, 'provider' | 'category' | 'dataAvailabilityMode'>
+  display: Omit<
+    Layer3Display,
+    'provider' | 'category' | 'dataAvailabilityMode'
+  > & {
+    category?: Layer3Display['category']
+  }
   stackedRiskView?: ScalingProjectRiskView
   hostChain: ProjectId
   nativeToken?: string
@@ -421,7 +431,10 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
       architectureImage,
       ...templateVars.display,
       provider: 'OP Stack',
-      category: daProvider !== undefined ? 'Optimium' : 'Optimistic Rollup',
+      category:
+        templateVars.display.category ?? daProvider !== undefined
+          ? 'Optimium'
+          : 'Optimistic Rollup',
       warning:
         templateVars.display.warning === undefined
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
@@ -781,7 +794,10 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
       architectureImage,
       ...templateVars.display,
       provider: 'OP Stack',
-      category: daProvider !== undefined ? 'Optimium' : 'Optimistic Rollup',
+      category:
+        templateVars.display.category ?? daProvider !== undefined
+          ? 'Optimium'
+          : 'Optimistic Rollup',
       warning:
         templateVars.display.warning === undefined
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
