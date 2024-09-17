@@ -5,6 +5,7 @@ import { apechain } from './apechain'
 import { aviveworld } from './aviveworld'
 import { bugbuster } from './bugbuster'
 import { cheese } from './cheese'
+import { clique } from './clique'
 import { dcamonster } from './dcamonster'
 import { degen } from './degen'
 import { deri } from './deri'
@@ -51,6 +52,7 @@ export const layer3s: Layer3[] = [
   aviveworld,
   bugbuster,
   cheese,
+  clique,
   degen,
   dcamonster,
   deri,

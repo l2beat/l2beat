@@ -50,6 +50,7 @@
   "celo": true,
   "chainport": false,
   "cheese": true,
+  "clique": true,
   "connext": true,
   "coti": true,
   "creator": true,
