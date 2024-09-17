@@ -130,14 +130,24 @@ export interface OrbitStackConfigCommon {
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
-  display: Omit<Layer3Display, 'provider' | 'category' | 'dataAvailabilityMode'>
+  display: Omit<
+    Layer3Display,
+    'provider' | 'category' | 'dataAvailabilityMode'
+  > & {
+    category?: Layer3Display['category']
+  }
   stackedRiskView?: ScalingProjectRiskView
   hostChain: ProjectId
   nativeToken?: string
 }
 
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
-  display: Omit<Layer2Display, 'provider' | 'category' | 'dataAvailabilityMode'>
+  display: Omit<
+    Layer2Display,
+    'provider' | 'category' | 'dataAvailabilityMode'
+  > & {
+    category?: Layer2Display['category']
+  }
   nativeToken?: string
 }
 
@@ -608,7 +618,10 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
       warning:
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
       provider: 'Arbitrum',
-      category: postsToExternalDA ? 'Optimium' : 'Optimistic Rollup',
+      category:
+        templateVars.display.category ?? postsToExternalDA
+          ? 'Optimium'
+          : 'Optimistic Rollup',
     },
     dataAvailability: postsToExternalDA
       ? (() => {
@@ -708,7 +721,10 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     upgradeDelay: 'No delay',
   }
 
-  const category = postsToExternalDA ? 'Optimium' : 'Optimistic Rollup'
+  const category =
+    templateVars.display.category ?? postsToExternalDA
+      ? 'Optimium'
+      : 'Optimistic Rollup'
 
   return {
     type: 'layer2',
