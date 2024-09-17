@@ -27,8 +27,8 @@ export async function GET(
     filter: { type: 'projects', projectIds: [project.id] },
   })
 
-  const oldestTvlData = data.chart.at(0)
-  const latestTvlData = data.chart.at(-1)
+  const oldestTvlData = data.at(0)
+  const latestTvlData = data.at(-1)
 
   if (!oldestTvlData || !latestTvlData) {
     return NextResponse.json({
@@ -47,15 +47,13 @@ export async function GET(
       ethValue,
       chart: {
         types: ['timestamp', 'canonical', 'external', 'native', 'ethPrice'],
-        data: data.chart.map(
-          ([timestamp, canonical, external, native, ethPrice]) => [
-            timestamp,
-            canonical / 100,
-            external / 100,
-            native / 100,
-            ethPrice / 100,
-          ],
-        ),
+        data: data.map(([timestamp, canonical, external, native, ethPrice]) => [
+          timestamp,
+          canonical / 100,
+          external / 100,
+          native / 100,
+          ethPrice / 100,
+        ]),
       },
     },
   })

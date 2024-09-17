@@ -14,15 +14,13 @@ export async function GET() {
     data: {
       chart: {
         types: ['timestamp', 'canonical', 'external', 'native', 'ethPrice'],
-        data: data.chart.map(
-          ([timestamp, canonical, external, native, ethPrice]) => [
-            timestamp,
-            canonical / 100,
-            external / 100,
-            native / 100,
-            ethPrice / 100,
-          ],
-        ),
+        data: data.map(([timestamp, canonical, external, native, ethPrice]) => [
+          timestamp,
+          canonical / 100,
+          external / 100,
+          native / 100,
+          ethPrice / 100,
+        ]),
       },
       projects: Object.fromEntries(
         entries.map((entry) => {
