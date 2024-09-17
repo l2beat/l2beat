@@ -28,9 +28,14 @@ export function getTvlConfig(
     .concat(bridges.map(bridgeToBackendProject))
     .concat(layer3s.map(layer3ToBackendProject))
 
-  //TODO: how to fix it?
+  const aggLayerChains = layer2s
+    .filter((c) =>
+      c.config.escrows.some((e) => e.sharedEscrow?.type === 'AggLayer'),
+    )
+    .map((l) => l.id)
+
   const chainConfigs = getChainsWithTokens(tokenList, chains)
-    .concat('xlayer')
+    .concat(aggLayerChains)
     .map((chain) =>
       getChainTvlConfig(flags.isEnabled('tvl', chain), env, chain, {
         minTimestamp: minTimestampOverride,
@@ -38,6 +43,7 @@ export function getTvlConfig(
     )
 
   return {
+    aggLayerEnabled: flags.isEnabled('tvl', 'aggLayer'),
     amounts: getTvlAmountsConfig(projects),
     prices: getTvlPricesConfig(minTimestampOverride),
     chains: chainConfigs,

@@ -1,5 +1,6 @@
 import {
   MultiIndexerEntry,
+  getAggLayerIndexerId,
   getCirculatingSupplyIndexerId,
   getPremintedIndexerId,
   toIndexerId,
@@ -7,6 +8,9 @@ import {
 import { Database, IndexerStateRecord } from '@l2beat/database'
 import {
   assert,
+  AggLayerL2Token,
+  AggLayerNativeEtherPreminted,
+  AggLayerNativeEtherWrapped,
   AmountConfigEntry,
   CirculatingSupplyEntry,
   CoingeckoPriceConfigEntry,
@@ -37,16 +41,20 @@ export class DataStatusService {
       targetTimestamp,
     )
 
+    const aggLayer = await this.getAgglayerStatus(entries, targetTimestamp)
+
     return {
       lagging: [
         ...configurations.lagging,
         ...preminted.lagging,
         ...circulating.lagging,
+        ...aggLayer.lagging,
       ],
       excluded: new Set([
         ...configurations.excluded,
         ...preminted.excluded,
         ...circulating.excluded,
+        ...aggLayer.excluded,
       ]),
     }
   }
@@ -68,6 +76,30 @@ export class DataStatusService {
             cc.chain === indexer.indexerId.split('::')[1].split('_')[0] &&
             cc.address === indexer.indexerId.split('::')[1].split('_')[1],
         ),
+    )
+  }
+
+  async getAgglayerStatus(
+    entries: (AmountConfigEntry & { configId: string })[],
+    targetTimestamp: UnixTime,
+  ) {
+    return this.getStatus(
+      entries.filter(
+        (
+          c,
+        ): c is (
+          | AggLayerL2Token
+          | AggLayerNativeEtherPreminted
+          | AggLayerNativeEtherWrapped
+        ) & { configId: string } =>
+          c.type === 'aggLayerL2Token' ||
+          c.type === 'aggLayerNativeEtherPreminted' ||
+          c.type === 'aggLayerNativeEtherWrapped',
+      ),
+      targetTimestamp,
+      (c) => getAggLayerIndexerId(c.chain),
+      (indexer, entries) =>
+        entries.find((cc) => cc.chain === indexer.indexerId.split('::')[1]),
     )
   }
 

@@ -40,6 +40,10 @@ export function initAggLayerModule(
   descendantPriceIndexer: DescendantIndexer,
   blockTimestampIndexers?: Map<string, BlockTimestampIndexer>,
 ): AggLayerModule | undefined {
+  if (!config.aggLayerEnabled) {
+    logger.info('AggLayerModule disabled')
+    return
+  }
   const dataIndexers: AggLayerIndexer[] = []
   const valueIndexers: ValueIndexer[] = []
 
