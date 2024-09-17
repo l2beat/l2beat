@@ -100,7 +100,7 @@ function DefaultChart({
   })
 
   const { chartRange, formatYAxisLabel, valuesStyle, columns } =
-    useTvlChartRenderParams({ milestones, unit, data: data?.chart })
+    useTvlChartRenderParams({ milestones, unit, data })
   return (
     <ChartProvider
       columns={columns}

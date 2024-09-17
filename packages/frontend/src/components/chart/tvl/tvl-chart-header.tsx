@@ -34,7 +34,7 @@ export function TvlChartHeader({ unit, value, change, range }: Props) {
       </div>
       <div className="flex flex-row items-baseline gap-2 md:flex-col md:items-end md:gap-1">
         <div className="whitespace-nowrap text-right text-lg font-bold md:text-3xl">
-          {value === undefined || loading ? (
+          {value === undefined ? (
             <Skeleton className="h-6 w-32" />
           ) : (
             formatCurrency(value, unit, {

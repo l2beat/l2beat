@@ -47,6 +47,11 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
     }
   }, [entries, filters, includeFilter])
 
+  const { data: total } = api.tvl.total.useQuery({
+    filter,
+    excludeAssociatedTokens,
+  })
+
   const { data, isLoading } = api.tvl.chart.useQuery({
     range: timeRange,
     excludeAssociatedTokens,
@@ -57,7 +62,7 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
     useStackedTvlChartRenderParams({
       milestones,
       unit,
-      data: data?.chart,
+      data,
     })
 
   return (
@@ -76,7 +81,7 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
       <section className="flex flex-col gap-4">
         <TvlChartHeader
           unit={unit}
-          value={data?.total[unit]}
+          value={total?.[unit]}
           change={change}
           range={timeRange}
         />
