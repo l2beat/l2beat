@@ -72,7 +72,7 @@ export async function getL3ProjectDetails({
 
   await Promise.all([
     api.tvl.chart.prefetch({
-      range: '7d',
+      range: '30d',
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
     }),
@@ -83,7 +83,7 @@ export async function getL3ProjectDetails({
   ])
   const [tvlChartData, activityChartData, tokens] = await Promise.all([
     api.tvl.chart({
-      range: '7d',
+      range: '30d',
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
     }),

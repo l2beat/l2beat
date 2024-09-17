@@ -7,6 +7,7 @@ export function formatCostValue(
   value: number,
   unit: CostsUnit,
   metric: CostsMetric = 'total',
+  showLessThanMinimum = true,
 ) {
   if (unit === 'gas') {
     return formatNumber(value)
@@ -14,5 +15,5 @@ export function formatCostValue(
 
   const decimals = metric === 'total' ? 2 : 6
 
-  return formatCurrency(value, unit, { decimals })
+  return formatCurrency(value, unit, { decimals, showLessThanMinimum })
 }

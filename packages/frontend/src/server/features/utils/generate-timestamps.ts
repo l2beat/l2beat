@@ -16,11 +16,7 @@ export function generateTimestamps(
   ).map((i) => {
     return from.add(
       i * (resolution === 'sixHourly' ? 6 : 1),
-      resolution === 'hourly'
-        ? 'hours'
-        : resolution === 'sixHourly'
-          ? 'hours'
-          : 'days',
+      resolution === 'hourly' || resolution === 'sixHourly' ? 'hours' : 'days',
     )
   })
 }
