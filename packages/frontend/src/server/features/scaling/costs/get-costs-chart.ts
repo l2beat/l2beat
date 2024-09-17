@@ -146,21 +146,24 @@ function sumByTimestamp(
     })
   }
 
-  const asArray = Array.from(result.entries()).map(([timestamp, record]) => [
-    timestamp,
-    record.overheadGas,
-    record.overheadGasEth,
-    record.overheadGasUsd,
-    record.calldataGas,
-    record.calldataGasEth,
-    record.calldataGasUsd,
-    record.computeGas,
-    record.computeGasEth,
-    record.computeGasUsd,
-    record.blobsGas,
-    record.blobsGasEth,
-    record.blobsGasUsd,
-  ] as const)
+  const asArray = Array.from(result.entries()).map(
+    ([timestamp, record]) =>
+      [
+        timestamp,
+        record.overheadGas,
+        record.overheadGasEth,
+        record.overheadGasUsd,
+        record.calldataGas,
+        record.calldataGasEth,
+        record.calldataGasUsd,
+        record.computeGas,
+        record.computeGasEth,
+        record.computeGasUsd,
+        record.blobsGas,
+        record.blobsGasEth,
+        record.blobsGasUsd,
+      ] as const,
+  )
 
   return asArray
 }
