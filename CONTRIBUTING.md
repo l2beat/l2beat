@@ -116,11 +116,11 @@ token list do not worry.
 
 1. Read the token definition in `packages/config/src/tokens.ts`
 2. Check if the token matches the requirements.
-3. Add your token to the list. The order of the tokens should be kept alphabetical.
+3. Add your token to the list. The order of the tokens should be kept alphabetically.
 
 ## Contribute research
 
-Each project defined in `packages/config/src/projects` described by a set of parameters
+Each project defined in `packages/config/src/projects` is described by a set of parameters
 (`details.parameters`). Those values are a result of research conducted by the L2BEAT contributors.
 As with all research there may be mistakes, outdated information or missing data in those files.
 
