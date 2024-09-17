@@ -6,7 +6,7 @@ import { type ActivityTimeRange } from '~/server/features/scaling/activity/utils
 interface Props {
   timeRange: ActivityTimeRange
   setTimeRange: (timeRange: ActivityTimeRange) => void
-  range: [number, number]
+  range: [number, number] | undefined
 }
 
 export function ActivityTimeRangeControls({

@@ -4,10 +4,11 @@ import { useCallback, useMemo } from 'react'
 import { type ProjectToken } from '~/server/features/scaling/tvl/tokens/get-tokens-for-project'
 import { formatCurrency } from '~/utils/format'
 import { type SeriesStyle } from '../../core/styles'
+import { getChartRange } from '../../core/utils/get-chart-range-from-columns'
 import { mapMilestones } from '../../core/utils/map-milestones'
 import { type ChartUnit } from '../../types'
 
-export type TokenDataPoint = readonly [number, number, number]
+export type TokenDataPoint = [number, number, number]
 
 interface Params {
   milestones: Milestone[]
@@ -57,10 +58,7 @@ export function useTokenChartRenderParams({
     [data, mappedMilestones, unit],
   )
 
-  const chartRange: [number, number] = useMemo(
-    () => [data?.[0]?.[0] ?? 0, data?.[data.length - 1]?.[0] ?? 1],
-    [data],
-  )
+  const chartRange = useMemo(() => getChartRange(data), [data])
   const color = sourceToColor(token.source)
 
   const valuesStyle: SeriesStyle[] = [

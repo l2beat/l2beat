@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getScalingSummaryEntries } from '~/server/features/scaling/summary/get-scaling-summary-entries'
-import { getTvlChartData } from '~/server/features/scaling/tvl/utils/get-tvl-chart-data'
+import { getTvlChartData } from '~/server/features/scaling/tvl/get-tvl-chart-data'
 
 export async function GET() {
   const entries = await getScalingSummaryEntries()
@@ -14,15 +14,13 @@ export async function GET() {
     data: {
       chart: {
         types: ['timestamp', 'canonical', 'external', 'native', 'ethPrice'],
-        data: data.chart.map(
-          ([timestamp, canonical, external, native, ethPrice]) => [
-            timestamp,
-            canonical / 100,
-            external / 100,
-            native / 100,
-            ethPrice / 100,
-          ],
-        ),
+        data: data.map(([timestamp, canonical, external, native, ethPrice]) => [
+          timestamp,
+          canonical / 100,
+          external / 100,
+          native / 100,
+          ethPrice / 100,
+        ]),
       },
       projects: Object.fromEntries(
         entries.map((entry) => {

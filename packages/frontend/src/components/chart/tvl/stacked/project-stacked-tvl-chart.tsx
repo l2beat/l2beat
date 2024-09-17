@@ -103,7 +103,7 @@ function DefaultChart({
   const { columns, chartRange, valuesStyle } = useStackedTvlChartRenderParams({
     milestones,
     unit,
-    data: data?.chart,
+    data,
   })
 
   return (
@@ -113,7 +113,7 @@ function DefaultChart({
       formatYAxisLabel={(value: number) =>
         formatCurrency(value, unit, { showLessThanMinimum: false })
       }
-      range={chartRange}
+      range={timeRange}
       isLoading={isLoading}
       renderHoverContents={(data) => (
         <StackedTvlChartHover {...data} unit={unit} />

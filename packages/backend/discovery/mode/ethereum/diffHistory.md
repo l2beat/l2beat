@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xec28cd5c31716f29f0b859c32036ea460787730b
+Generated with discovered.json: 0x95d221af1c14735a4291dc26555f69f6f6dedc66
 
-# Diff at Mon, 16 Sep 2024 14:01:54 GMT:
+# Diff at Tue, 17 Sep 2024 09:54:14 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@ca08843b12ed576cbcc139ad58ca045f72d96ab5 block: 20475234
-- current block number: 20763637
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@a17234c1dfeb209a9842df2b454c07e2b8da435d block: 20475234
+- current block number: 20769559
 
 ## Description
 

@@ -132,13 +132,13 @@ export async function computeComparisonBetweenProjects(
     logger,
     firstProjectName,
     firstProjectChain,
-    discoveryPath,
+    path.dirname(discoveryPath),
   )
   const secondProject = await readProject(
     logger,
     secondProjectName,
     secondProjectChain,
-    discoveryPath,
+    path.dirname(discoveryPath),
   )
   assert(firstProject, `Project ${firstProjectPath} not found`)
   assert(secondProject, `Project ${secondProjectPath} not found`)

@@ -24,34 +24,32 @@ export function BridgesTvlChart() {
   )
   const [timeRange, setTimeRange] = useCookieState('bridgesSummaryChartRange')
 
+  const { data: total } = api.tvl.total.useQuery({
+    filter: { type: 'bridge' },
+    excludeAssociatedTokens: false,
+  })
   const { data, isLoading } = api.tvl.chart.useQuery({
     range: timeRange,
     filter: { type: 'bridge' },
     excludeAssociatedTokens: false,
   })
 
-  const {
-    chartRange,
-    formatYAxisLabel,
-    valuesStyle,
-    columns,
-    lastValue,
-    change,
-  } = useTvlChartRenderParams({ milestones: [], unit, data: data?.chart })
+  const { chartRange, formatYAxisLabel, valuesStyle, columns, change } =
+    useTvlChartRenderParams({ milestones: [], unit, data })
 
   return (
     <ChartProvider
       columns={columns}
       valuesStyle={valuesStyle}
       formatYAxisLabel={formatYAxisLabel}
-      range={chartRange}
+      range={timeRange}
       isLoading={isLoading}
       renderHoverContents={(data) => <TvlChartHover data={data} />}
     >
       <section className="flex flex-col gap-4">
         <BridgesChartHeader
           unit={unit}
-          value={lastValue}
+          value={total?.[unit]}
           change={change}
           range={timeRange}
         />

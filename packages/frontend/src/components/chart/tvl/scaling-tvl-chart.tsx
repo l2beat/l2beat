@@ -48,6 +48,10 @@ export function ScalingTvlChart({ entries, milestones }: Props) {
     }
   }, [entries, includeFilter, filters])
 
+  const { data: total } = api.tvl.total.useQuery({
+    excludeAssociatedTokens,
+    filter,
+  })
   const { data, isLoading } = api.tvl.chart.useQuery({
     range: timeRange,
     excludeAssociatedTokens,
@@ -55,21 +59,21 @@ export function ScalingTvlChart({ entries, milestones }: Props) {
   })
 
   const { chartRange, formatYAxisLabel, valuesStyle, columns, change } =
-    useTvlChartRenderParams({ milestones, unit, data: data?.chart })
+    useTvlChartRenderParams({ milestones, unit, data })
 
   return (
     <ChartProvider
       columns={columns}
       valuesStyle={valuesStyle}
       formatYAxisLabel={formatYAxisLabel}
-      range={chartRange}
+      range={timeRange}
       isLoading={isLoading}
       renderHoverContents={(data) => <TvlChartHover data={data} />}
     >
       <section className="flex flex-col gap-4">
         <TvlChartHeader
           unit={unit}
-          value={data?.total[unit]}
+          value={total?.[unit]}
           change={change}
           range={timeRange}
         />

@@ -146,7 +146,7 @@ function sumByTimestamp(
     })
   }
 
-  return Array.from(result.entries()).map(
+  const asArray = Array.from(result.entries()).map(
     ([timestamp, record]) =>
       [
         timestamp,
@@ -164,4 +164,6 @@ function sumByTimestamp(
         record.blobsGasUsd,
       ] as const,
   )
+
+  return asArray
 }

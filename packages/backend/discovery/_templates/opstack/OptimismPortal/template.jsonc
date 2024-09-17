@@ -9,6 +9,11 @@
       "target": {
         "role": "Guardian"
       }
+    },
+    "GUARDIAN": {
+      "target": {
+        "role": "Guardian"
+      }
     }
   }
 }

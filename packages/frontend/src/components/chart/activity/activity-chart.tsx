@@ -67,7 +67,7 @@ export function ActivityChart({ milestones, entries }: Props) {
       columns={columns}
       valuesStyle={valuesStyle}
       formatYAxisLabel={formatYAxisLabel}
-      range={chartRange}
+      range={timeRange}
       isLoading={isLoading}
       renderHoverContents={(data) => (
         <ActivityChartHover {...data} showEthereum={showMainnet} />
