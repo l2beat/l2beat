@@ -8,7 +8,7 @@ import {
 } from 'next/cache'
 import { env } from '~/env'
 import { getTvlBreakdown } from './get-tvl-breakdown'
-import { getActiveTvlProjects } from './get-tvl-projects'
+import { getTvlProjects } from './get-tvl-projects'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
 
 export function get7dTvlBreakdown(
@@ -27,7 +27,7 @@ export type SevenDayTvlBreakdown = Awaited<
 const getCached7dTvlBreakdown = cache(
   async () => {
     const tvlValues = await getTvlValuesForProjects(
-      getActiveTvlProjects().filter(
+      getTvlProjects().filter(
         (project) => project.type === 'layer2' || project.type === 'layer3',
       ),
       '7d',

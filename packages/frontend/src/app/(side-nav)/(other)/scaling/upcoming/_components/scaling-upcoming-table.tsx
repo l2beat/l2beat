@@ -1,23 +1,18 @@
 'use client'
 
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
-import { toTableRows } from '../../summary/_utils/to-table-rows'
+import { type ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
 import { scalingUpcomingColumns } from './table/columns'
 
-export function ScalingUpcomingTable() {
-  const upcomingProjects = useMemo(
-    () =>
-      toTableRows({
-        projects: [],
-        excludeAssociatedTokens: false,
-      }),
-    [],
-  )
+interface Props {
+  entries: ScalingUpcomingEntry[]
+}
+
+export function ScalingUpcomingTable({ entries }: Props) {
   const upcomingTable = useTable({
-    data: upcomingProjects,
+    data: entries,
     columns: scalingUpcomingColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -34,5 +29,9 @@ export function ScalingUpcomingTable() {
       },
     },
   })
-  return <BasicTable table={upcomingTable} />
+  return (
+    <section className="mt-4 space-y-6 sm:mt-8">
+      <BasicTable table={upcomingTable} />
+    </section>
+  )
 }

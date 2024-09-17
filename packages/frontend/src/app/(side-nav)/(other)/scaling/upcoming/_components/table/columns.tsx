@@ -5,9 +5,9 @@ import {
   TypeExplanationTooltip,
 } from '~/components/table/cells/type-cell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
-import { type ScalingSummaryTableRow } from '../../../summary/_utils/to-table-rows'
+import { type ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
 
-const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
+const columnHelper = createColumnHelper<ScalingUpcomingEntry>()
 
 export const scalingUpcomingColumns = [
   ...getCommonProjectColumns(columnHelper),
