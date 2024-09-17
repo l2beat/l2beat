@@ -7,17 +7,19 @@ import {
   useSearchParams,
 } from 'next/navigation'
 import NProgress from 'nprogress'
-import React, { useEffect } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import { useBreakpoint } from '~/hooks/use-is-mobile'
 
 export function ProgressBar() {
   return (
-    <Next13ProgressBar
-      height="4px"
-      color="#F9347B"
-      options={{ showSpinner: false }}
-      showOnShallow
-    />
+    <Suspense>
+      <Next13ProgressBar
+        height="4px"
+        color="#F9347B"
+        options={{ showSpinner: false }}
+        showOnShallow
+      />
+    </Suspense>
   )
 }
 
