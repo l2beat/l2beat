@@ -131,6 +131,7 @@ export const transporter: Bridge = {
         `CommitStore for storing incoming message roots from Arbitrum.
         This is an example CommitStore contract for one of the lanes. There are many more lanes in the system, please check the specific smart contract for the lane you are interested in.`,
       ),
+      discovery.getContractDetails('ARMProxy', 'The contract that manages the Risk Management Network, allowing blessing (validation) of messages and cursing (halting) the chain.'),
       discovery.getContractDetails(
         'RBACTimelock',
         (() => {
