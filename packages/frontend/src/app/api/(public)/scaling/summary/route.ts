@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getScalingSummaryEntries } from '~/server/features/scaling/summary/get-scaling-summary-entries'
-import { getTvlChartData } from '~/server/features/scaling/tvl/utils/get-tvl-chart-data'
+import { getTvlChartData } from '~/server/features/scaling/tvl/get-tvl-chart-data'
 
 export async function GET() {
   const entries = await getScalingSummaryEntries()
