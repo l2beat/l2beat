@@ -1,4 +1,5 @@
-// Compiled with solc version: v0.8.15+commit.e14f2714
+// SPDX-License-Identifier: Unknown
+pragma solidity 0.8.15;
 
 library Address {
     /**
