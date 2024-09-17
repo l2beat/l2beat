@@ -13,7 +13,7 @@ export const clique: Layer3 = underReviewL3({
     Badge.DA.Celestia,
     Badge.Stack.OPStack,
     Badge.VM.EVM,
-    Badge.RaaS.Conduit
+    Badge.RaaS.Conduit,
   ],
   display: {
     name: 'Clique',
