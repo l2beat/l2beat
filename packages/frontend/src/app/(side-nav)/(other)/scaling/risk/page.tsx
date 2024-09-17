@@ -3,7 +3,7 @@ import { getDefaultMetadata } from '~/utils/metadata'
 import { SimplePageHeader } from '~/components/simple-page-header'
 import { getScalingRiskEntries } from '~/server/features/scaling/risks/get-scaling-risk-entries'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
-import { ScalingRiskTables } from './_components/table/scaling-risk-tables'
+import { ScalingRiskTable } from './_components/table/scaling-risk-table'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -19,7 +19,7 @@ export default async function Page() {
       <div className="mb-8">
         <SimplePageHeader>Risk Analysis</SimplePageHeader>
       </div>
-      <ScalingRiskTables entries={entries} />
+      <ScalingRiskTable entries={entries} />
     </ScalingFilterContextProvider>
   )
 }
