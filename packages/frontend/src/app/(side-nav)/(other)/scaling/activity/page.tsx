@@ -18,15 +18,16 @@ export const metadata = getDefaultMetadata({
 
 export default async function Page() {
   const range = getCookie('activityTimeRange')
-  const entries = await getScalingActivityEntries()
-
-  await api.activity.chart.prefetch({
-    range,
-    filter: { type: 'all' },
-  })
-  await api.activity.scalingFactor.prefetch({
-    filter: { type: 'all' },
-  })
+  const [entries, _, __] = await Promise.all([
+    getScalingActivityEntries(),
+    api.activity.chart.prefetch({
+      range,
+      filter: { type: 'all' },
+    }),
+    api.activity.scalingFactor.prefetch({
+      filter: { type: 'all' },
+    }),
+  ])
 
   return (
     <HydrateClient>
