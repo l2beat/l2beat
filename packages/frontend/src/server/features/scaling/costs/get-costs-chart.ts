@@ -62,12 +62,12 @@ const getCachedCostsChart = cache(
       [from, to.add(-1, resolution === 'daily' ? 'days' : 'hours')],
       resolution,
     )
-    return timestamps.map(
+    const result = timestamps.map(
       (timestamp) =>
-        summedByTimestamp.find(
-          (entry) => entry[0] === timestamp.toNumber(),
-        ) ?? [timestamp.toNumber(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        summedByTimestamp.find((entry) => entry[0] === timestamp.toNumber()) ??
+        ([timestamp.toNumber(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] as const),
     )
+    return result
   },
   ['costsChartDD'],
   { revalidate: 10 * UnixTime.MINUTE },
