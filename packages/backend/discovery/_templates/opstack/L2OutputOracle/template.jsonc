@@ -30,6 +30,11 @@
         "role": "Challenger"
       }
     },
+    "CHALLENGER": {
+      "target": {
+        "role": "Challenger"
+      }
+    },
     "deletedOutputs": {
       "handler": {
         "type": "stateFromEvent",
