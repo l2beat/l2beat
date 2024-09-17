@@ -1,4 +1,3 @@
-import { EM_DASH } from '~/consts/characters'
 import { useIsClient } from '~/hooks/use-is-client'
 import { formatRange } from '~/utils/dates'
 import { RadioGroup, RadioGroupItem } from '../../core/radio-group'
@@ -27,7 +26,7 @@ export function ChartTimeRangeControls<T extends string>({
         <Skeleton className="h-8 w-40" />
       ) : (
         <p className="flex h-8 items-center font-bold transition-opacity duration-200">
-          {range ? formatRange(...range) : EM_DASH}
+          {range ? formatRange(...range) : null}
         </p>
       )}
       {!isClient ? (

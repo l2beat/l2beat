@@ -94,7 +94,7 @@ export const getCachedTvlChartData = cache(
       }),
     }
   },
-  ['getTvlChartDataDS'],
+  ['getTvlChartData'],
   { revalidate: 10 * UnixTime.MINUTE },
 )
 
