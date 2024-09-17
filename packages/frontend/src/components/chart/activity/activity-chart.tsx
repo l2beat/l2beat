@@ -64,7 +64,6 @@ export function ActivityChart({ milestones, entries }: Props) {
   const scalingFactor =
     totalTxs &&
     ((totalTxs.rest ?? 0) + (totalTxs.ethereum ?? 0)) / (totalTxs.ethereum ?? 1)
-
   return (
     <ChartProvider
       columns={columns}
