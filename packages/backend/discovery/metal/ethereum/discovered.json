@@ -1,7 +1,7 @@
 {
   "name": "metal",
   "chain": "ethereum",
-  "blockNumber": 20763667,
+  "blockNumber": 20769555,
   "configHash": "0x85be15526d61d81a7d1d4555a2bb56835c1fd6e9c3d75cdfd5d4dd2ad6dd140f",
   "version": 14,
   "contracts": [
@@ -204,10 +204,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 7452000,
-        "latestOutputIndex": 344,
-        "nextBlockNumber": 7473600,
-        "nextOutputIndex": 345,
+        "latestBlockNumber": 7495200,
+        "latestOutputIndex": 346,
+        "nextBlockNumber": 7516800,
+        "nextOutputIndex": 347,
         "proposer": "0xC8187d40AD440328104A52BBed2D8Efc5ab1F1F6",
         "PROPOSER": "0xC8187d40AD440328104A52BBed2D8Efc5ab1F1F6",
         "startingBlockNumber": 0,
@@ -1324,5 +1324,5 @@
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
     "opstack/SystemConfig": "0x41420d04d26fe441d4f65a2475bb9f0cca38e0f7542d45347f063f3c7cf57b39"
   },
-  "shapeFilesHash": "0xb6e46b170efd15afbf70eda9aacc79ef764a0f5216fa0bbdd72c2d37bd743e94"
+  "shapeFilesHash": "0xbde3658d9829dc6a2b849d26602a57c5fd2a8972a78d434d59fb754595ff1019"
 }

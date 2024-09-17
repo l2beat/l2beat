@@ -1,7 +1,7 @@
 {
   "name": "mode",
   "chain": "ethereum",
-  "blockNumber": 20763637,
+  "blockNumber": 20769559,
   "configHash": "0xd89337fb874a5743d959c408e6bfb963735585df43ff1d6f30b9a7a07921cb16",
   "version": 14,
   "contracts": [
@@ -182,10 +182,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 13161600,
-        "latestOutputIndex": 7311,
-        "nextBlockNumber": 13163400,
-        "nextOutputIndex": 7312,
+        "latestBlockNumber": 13197600,
+        "latestOutputIndex": 7331,
+        "nextBlockNumber": 13199400,
+        "nextOutputIndex": 7332,
         "proposer": "0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB",
         "PROPOSER": "0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB",
         "startingBlockNumber": 0,
@@ -612,8 +612,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 287624,
-          "prevBlockNum": 20763541
+          "prevBoughtGas": 490798,
+          "prevBlockNum": 20769471
         },
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -671,7 +671,7 @@
         "$immutable": false,
         "$implementation": "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292827883",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292827905",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1359,5 +1359,5 @@
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
     "opstack/SystemConfig": "0x41420d04d26fe441d4f65a2475bb9f0cca38e0f7542d45347f063f3c7cf57b39"
   },
-  "shapeFilesHash": "0xb6e46b170efd15afbf70eda9aacc79ef764a0f5216fa0bbdd72c2d37bd743e94"
+  "shapeFilesHash": "0xbde3658d9829dc6a2b849d26602a57c5fd2a8972a78d434d59fb754595ff1019"
 }
