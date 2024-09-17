@@ -121,9 +121,13 @@ function assignLevels(nodes: LayoutNode[]) {
     }
 
     if (!changed) {
-      const zero = nodes
-        .filter((x) => x.level === 0 && !x.isTree)
-        .sort((a, b) => b.connectionsOut.length - a.connectionsOut.length)[0]
+      let candidates = nodes.filter((x) => x.level === 0 && !x.isTree)
+      if (candidates.length === 0) {
+        candidates = nodes.filter((x) => x.level === 0)
+      }
+      const zero = candidates.sort(
+        (a, b) => b.connectionsOut.length - a.connectionsOut.length,
+      )[0]
       if (!zero) {
         break
       }
