@@ -21,24 +21,39 @@ export function AutoLayoutButton() {
   )
 }
 
-function autoLayout(baseNodes: readonly Node[]) {
-  interface Connected {
-    id: string
-    connectionsIn: Connected[]
-    connectionsOut: Connected[]
-    base: Node
-    column: number | undefined
-  }
+interface LayoutNode {
+  id: string
+  connectionsIn: LayoutNode[]
+  connectionsOut: LayoutNode[]
+  base: Node
+  level: number
+  isTree: boolean
+}
 
-  let nodes = baseNodes.map((base): Connected => {
-    return {
+function autoLayout(baseNodes: readonly Node[]) {
+  if (baseNodes.length === 0) {
+    return {}
+  }
+  const nodes = toLayoutNodes(baseNodes)
+  removeSoleParentConnection(nodes)
+  markTrees(nodes)
+  assignLevels(nodes)
+  const columns = groupByLevel(nodes)
+  return layoutColumns(columns)
+}
+
+function toLayoutNodes(baseNodes: readonly Node[]) {
+  const nodes = baseNodes.map(
+    (base): LayoutNode => ({
       id: base.simpleNode.id,
       connectionsIn: [],
       connectionsOut: [],
       base,
-      column: undefined,
-    }
-  })
+      isTree: false,
+      level: 0,
+    }),
+  )
+
   const byId = new Map(nodes.map((x) => [x.id, x]))
 
   for (const node of nodes) {
@@ -46,12 +61,20 @@ function autoLayout(baseNodes: readonly Node[]) {
       const id = field.connection?.nodeId
       const other = id && byId.get(id)
       if (other && other !== node) {
-        node.connectionsOut.push(other)
-        other.connectionsIn.push(node)
+        if (!node.connectionsOut.includes(other)) {
+          node.connectionsOut.push(other)
+        }
+        if (!other.connectionsIn.includes(node)) {
+          other.connectionsIn.push(node)
+        }
       }
     }
   }
 
+  return nodes
+}
+
+function removeSoleParentConnection(nodes: LayoutNode[]) {
   for (const node of nodes) {
     if (
       node.connectionsIn.length === 1 &&
@@ -60,35 +83,61 @@ function autoLayout(baseNodes: readonly Node[]) {
     ) {
       // This node is a child that knows about it's parent. Common pattern,
       // but we remove the sole connection to parent to simplify the logic
-      node.connectionsIn = []
+      node.connectionsOut = node.connectionsOut.filter(
+        (x) => !node.connectionsIn.includes(x),
+      )
     }
   }
+}
 
-  const columns: Connected[][] = []
-
-  while (nodes.length !== 0) {
-    const full: Connected[] = []
-    const reflected: Connected[] = []
-
+function markTrees(nodes: LayoutNode[]) {
+  while (true) {
+    let changed = false
     for (const node of nodes) {
-      if (node.connectionsIn.every((n) => n.column !== undefined)) {
-        full.push(node)
-      } else if (
-        node.connectionsIn.every(
-          (n) => n.column !== undefined || node.connectionsOut.includes(n),
-        )
-      ) {
-        reflected.push(node)
+      if (!node.isTree && node.connectionsOut.every((x) => x.isTree)) {
+        node.isTree = true
+        changed = true
+      }
+    }
+    if (!changed) {
+      break
+    }
+  }
+}
+
+function assignLevels(nodes: LayoutNode[]) {
+  while (true) {
+    let changed = false
+    for (const node of nodes) {
+      if (node.level !== 0) {
+        continue
+      }
+
+      if (node.connectionsIn.every((x) => x.level !== 0)) {
+        node.level = Math.max(1, ...node.connectionsIn.map((x) => x.level + 1))
+        changed = true
+        continue
       }
     }
 
-    const column = full.length > 0 ? full : reflected
-    for (const node of column) {
-      node.column = columns.length
+    if (!changed) {
+      const zero = nodes
+        .filter((x) => x.level === 0 && !x.isTree)
+        .sort((a, b) => b.connectionsOut.length - a.connectionsOut.length)[0]
+      if (!zero) {
+        break
+      }
+      zero.level = Math.max(1, ...zero.connectionsIn.map((x) => x.level + 1))
     }
-    nodes = nodes.filter((x) => x.column === undefined)
-    columns.push(column)
   }
+}
+
+function groupByLevel(nodes: LayoutNode[]) {
+  const maxLevel = Math.max(...nodes.map((x) => x.level))
+
+  const columns: LayoutNode[][] = Array.from({ length: maxLevel })
+    .map((_, i) => nodes.filter((x) => x.level === i + 1))
+    .filter((x) => x.length !== 0)
 
   const order: string[] = columns[0]?.map((x) => x.id) ?? []
   for (const column of columns) {
@@ -104,7 +153,10 @@ function autoLayout(baseNodes: readonly Node[]) {
   for (const column of columns) {
     column.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id))
   }
+  return columns
+}
 
+function layoutColumns(columns: LayoutNode[][]) {
   const X_SPACING = 200
   const Y_SPACING = 50
 
