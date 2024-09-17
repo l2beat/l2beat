@@ -1,3 +1,4 @@
+import { EM_DASH } from '~/consts/characters'
 import { useIsClient } from '~/hooks/use-is-client'
 import { formatRange } from '~/utils/dates'
 import { RadioGroup, RadioGroupItem } from '../../core/radio-group'
@@ -7,7 +8,7 @@ import { useChartLoading } from './chart-loading-context'
 interface Props<T extends string> {
   value: T | undefined
   setValue: (range: T) => void
-  range: readonly [number, number]
+  range: [number, number] | undefined
   options: { value: T; disabled?: boolean; label: string }[]
 }
 
@@ -26,7 +27,7 @@ export function ChartTimeRangeControls<T extends string>({
         <Skeleton className="h-8 w-40" />
       ) : (
         <p className="flex h-8 items-center font-bold transition-opacity duration-200">
-          {formatRange(...range)}
+          {range ? formatRange(...range) : EM_DASH}
         </p>
       )}
       {!isClient ? (

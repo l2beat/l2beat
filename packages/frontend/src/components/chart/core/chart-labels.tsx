@@ -10,7 +10,7 @@ export function ChartLabels({
 }: {
   className?: string
 }) {
-  const context = useChartContext()
+  const { labels } = useChartContext()
   return (
     <div
       className={cn(
@@ -18,7 +18,7 @@ export function ChartLabels({
         className,
       )}
     >
-      {context.labels.map((label, i) => (
+      {labels.map((label, i) => (
         <ChartLabel key={i}>{label}</ChartLabel>
       ))}
     </div>

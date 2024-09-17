@@ -83,16 +83,13 @@ const getCachedActivityChart = cache(
       >,
     )
 
-    const result = Object.values(aggregatedEntries)
+    const result: [number, number, number][] = Object.values(aggregatedEntries)
       .sort((a, b) => a.timestamp.toNumber() - b.timestamp.toNumber())
-      .map(
-        ({ timestamp, count, ethereumCount }) =>
-          [
-            +timestamp,
-            count / UnixTime.DAY,
-            ethereumCount / UnixTime.DAY,
-          ] as const,
-      )
+      .map(({ timestamp, count, ethereumCount }) => [
+        +timestamp,
+        count / UnixTime.DAY,
+        ethereumCount / UnixTime.DAY,
+      ])
 
     return result
   },
