@@ -9,9 +9,9 @@ import { getDefaultMetadata } from '~/utils/metadata'
 import { TooltipProvider } from '../components/core/tooltip/tooltip'
 import { GlossaryContextProvider } from '../components/markdown/glossary-context'
 import { restoreCollapsibleNavStateScript } from '../components/nav/consts'
+import { ProgressBar } from '../components/progress-bar'
 import { roboto } from '../fonts'
 import '../styles/globals.css'
-import { ProgressBar } from './_components/progress-bar'
 
 export const metadata: Metadata = getDefaultMetadata()
 
