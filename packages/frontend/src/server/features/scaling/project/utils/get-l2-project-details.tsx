@@ -109,7 +109,7 @@ export async function getL2ProjectDetails({
 
   const items: ProjectDetailsSection[] = []
 
-  if (!project.isUpcoming && tvlChartData.chart.length > 0) {
+  if (!project.isUpcoming && tvlChartData.length > 0) {
     items.push({
       type: 'ChartSection',
       props: {

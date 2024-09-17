@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from 'next/server'
-import { getTvlChartData } from '~/server/features/scaling/tvl/utils/get-tvl-chart-data'
+import { getTvlChartData } from '~/server/features/scaling/tvl/get-tvl-chart-data'
 import { TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 
 export async function GET(request: NextRequest) {
@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
     filter: { type: 'layer2' },
   })
 
-  const latestTvlData = data.chart.at(-1)
+  const latestTvlData = data.at(-1)
 
   if (!latestTvlData) {
     return NextResponse.json({
@@ -31,15 +31,13 @@ export async function GET(request: NextRequest) {
       ethValue,
       chart: {
         types: ['timestamp', 'canonical', 'external', 'native', 'ethPrice'],
-        data: data.chart.map(
-          ([timestamp, canonical, external, native, ethPrice]) => [
-            timestamp,
-            canonical / 100,
-            external / 100,
-            native / 100,
-            ethPrice / 100,
-          ],
-        ),
+        data: data.map(([timestamp, canonical, external, native, ethPrice]) => [
+          timestamp,
+          canonical / 100,
+          external / 100,
+          native / 100,
+          ethPrice / 100,
+        ]),
       },
     },
   })

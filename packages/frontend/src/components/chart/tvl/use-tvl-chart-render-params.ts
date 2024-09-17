@@ -69,7 +69,6 @@ export function useTvlChartRenderParams({ milestones, unit, data }: Params) {
   return {
     change,
     columns,
-    lastValue,
     chartRange,
     valuesStyle,
     formatYAxisLabel,

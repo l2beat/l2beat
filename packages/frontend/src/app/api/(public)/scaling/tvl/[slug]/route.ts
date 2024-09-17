@@ -1,6 +1,6 @@
 import { layer2s, layer3s } from '@l2beat/config'
 import { type NextRequest, NextResponse } from 'next/server'
-import { getTvlChartData } from '~/server/features/scaling/tvl/utils/get-tvl-chart-data'
+import { getTvlChartData } from '~/server/features/scaling/tvl/get-tvl-chart-data'
 import { TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 
 const projects = [...layer2s, ...layer3s]
@@ -27,8 +27,8 @@ export async function GET(
     filter: { type: 'projects', projectIds: [project.id] },
   })
 
-  const oldestTvlData = data.chart.at(0)
-  const latestTvlData = data.chart.at(-1)
+  const oldestTvlData = data.at(0)
+  const latestTvlData = data.at(-1)
 
   if (!oldestTvlData || !latestTvlData) {
     return NextResponse.json({
@@ -47,15 +47,13 @@ export async function GET(
       ethValue,
       chart: {
         types: ['timestamp', 'canonical', 'external', 'native', 'ethPrice'],
-        data: data.chart.map(
-          ([timestamp, canonical, external, native, ethPrice]) => [
-            timestamp,
-            canonical / 100,
-            external / 100,
-            native / 100,
-            ethPrice / 100,
-          ],
-        ),
+        data: data.map(([timestamp, canonical, external, native, ethPrice]) => [
+          timestamp,
+          canonical / 100,
+          external / 100,
+          native / 100,
+          ethPrice / 100,
+        ]),
       },
     },
   })
