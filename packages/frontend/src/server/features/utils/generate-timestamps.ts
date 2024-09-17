@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime, assertUnreachable } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 
 export function generateTimestamps(
@@ -6,17 +6,24 @@ export function generateTimestamps(
   resolution: 'hourly' | 'sixHourly' | 'daily',
 ) {
   return range(
-    (to.toNumber() - from.toNumber()) /
-      (resolution === 'hourly'
-        ? UnixTime.HOUR
-        : resolution === 'sixHourly'
-          ? UnixTime.SIX_HOURS
-          : UnixTime.DAY) +
-      1,
+    Math.floor((to.toNumber() - from.toNumber()) / divider(resolution)) + 1,
   ).map((i) => {
     return from.add(
       i * (resolution === 'sixHourly' ? 6 : 1),
       resolution === 'hourly' || resolution === 'sixHourly' ? 'hours' : 'days',
     )
   })
+}
+
+function divider(resolution: 'hourly' | 'sixHourly' | 'daily') {
+  switch (resolution) {
+    case 'hourly':
+      return UnixTime.HOUR
+    case 'sixHourly':
+      return UnixTime.SIX_HOURS
+    case 'daily':
+      return UnixTime.DAY
+    default:
+      assertUnreachable(resolution)
+  }
 }

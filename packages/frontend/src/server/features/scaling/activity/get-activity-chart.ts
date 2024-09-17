@@ -38,10 +38,10 @@ const getCachedActivityChart = cache(
       .filter(createActivityProjectsFilter(filter))
       .map((p) => p.id)
       .concat(ProjectId.ETHEREUM)
-
+    const adjustedRange = getFullySyncedActivityRange(range)
     const entries = await db.activity.getByProjectsAndTimeRange(
       projects,
-      getFullySyncedActivityRange(range),
+      adjustedRange,
     )
 
     const startTimestamp = entries.find(
@@ -82,14 +82,21 @@ const getCachedActivityChart = cache(
         { timestamp: UnixTime; count: number; ethereumCount: number }
       >,
     )
-
-    const result: [number, number, number][] = Object.values(aggregatedEntries)
-      .sort((a, b) => a.timestamp.toNumber() - b.timestamp.toNumber())
-      .map(({ timestamp, count, ethereumCount }) => [
+    const timestamps = generateTimestamps(
+      [startTimestamp, adjustedRange[1]],
+      'daily',
+    )
+    const result: [number, number, number][] = timestamps.map((timestamp) => {
+      const entry = aggregatedEntries[timestamp.toNumber()]
+      if (!entry) {
+        return [+timestamp, 0, 0]
+      }
+      return [
         +timestamp,
-        count / UnixTime.DAY,
-        ethereumCount / UnixTime.DAY,
-      ])
+        entry.count / UnixTime.DAY,
+        entry.ethereumCount / UnixTime.DAY,
+      ]
+    })
 
     return result
   },
