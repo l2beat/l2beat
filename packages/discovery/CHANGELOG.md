@@ -612,7 +612,7 @@
 
 ### Minor Changes
 
-- Etherscan like clients can now configure unsuppoted methods
+- Etherscan like clients can now configure unsupported methods
 
 ## 0.11.0
 
