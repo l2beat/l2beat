@@ -28,10 +28,10 @@ export const mantleDA: DaLayer = {
   type: 'DaLayer',
   kind: 'DAC',
   display: {
-    name: 'MantleDA',
+    name: 'Mantle DA',
     slug: 'mantle',
     description:
-      'MantleDA is a data availability solution built on EigenDA contracts, which have been forked and significantly modified.',
+      'Mantle DA is a data availability solution built on EigenDA contracts, which have been forked and significantly modified.',
     links: {
       websites: ['https://mantle.xyz'],
       documentation: ['https://docs-v2.mantle.xyz/intro/risk-management/da'],
@@ -47,7 +47,7 @@ export const mantleDA: DaLayer = {
   technology: `
     ## Architecture
 
-    MantleDA is an independent DA module that is built on top of an early version of EigenDA smart contracts.
+    Mantle DA is an independent DA module that is built on top of an early version of EigenDA smart contracts.
     The system is made up of two main component: onchain smart contracts for storing and verifying data committments, and an offchain network of permissioned nodes storing the data.
     The permissioned set of nodes is tasked with providing data availability to the Mantle network. 
     They receive Mantle network transaction data, sign it using a BLS signature scheme, and send back signatures to the sequencer to post commitments to the DataLayrServiceManager (DA Bridge) contract on Ethereum.
