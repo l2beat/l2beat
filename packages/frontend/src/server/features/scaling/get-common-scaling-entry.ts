@@ -9,6 +9,12 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { type SetOptional } from 'type-fest'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
 
+// Optional type and category is needed to support Ethereum L1 entry
+export type CommonScalingEntry = SetOptional<
+  ReturnType<typeof getCommonScalingEntry>,
+  'type' | 'category'
+>
+
 export function getCommonScalingEntry(
   params:
     | {
@@ -84,16 +90,20 @@ export function getCommonScalingEntry(
     ...common,
     type: 'layer3' as const,
     provider: project.display.provider,
-    hostChain:
-      project.hostChain === 'Multiple'
-        ? 'Multiple'
-        : layer2s.find((l) => l.id === project.hostChain)?.display.name,
+    hostChain: getHostChain(project),
     stage: { stage: 'NotApplicable' } satisfies StageConfig,
   }
 }
 
-// Optional type and category is needed to support Ethereum L1 entry
-export type CommonScalingEntry = SetOptional<
-  ReturnType<typeof getCommonScalingEntry>,
-  'type' | 'category'
->
+function getHostChain(project: Layer3) {
+  if (project.hostChain === 'Multiple') {
+    return 'Multiple'
+  }
+  const layer2 = layer2s.find((l) => l.id === project.hostChain)
+  if (!layer2) {
+    throw new Error(
+      `Unknown host chain: ${project.hostChain} for project ${project.id}`,
+    )
+  }
+  return layer2.display.name
+}

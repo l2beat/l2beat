@@ -8,6 +8,9 @@ import { get7dTokenBreakdown } from '../tvl/utils/get-7d-token-breakdown'
 import { getAssociatedTokenWarning } from '../tvl/utils/get-associated-token-warning'
 import { orderByTvl } from '../tvl/utils/order-by-tvl'
 
+export type ScalingSummaryEntry = Awaited<
+  ReturnType<typeof getScalingSummaryEntries>
+>[number]
 export async function getScalingSummaryEntries() {
   const implementationChangeReport = await getImplementationChangeReport()
   const projectsVerificationStatuses = await getProjectsVerificationStatuses()
@@ -60,7 +63,3 @@ export async function getScalingSummaryEntries() {
 
   return orderByTvl(entries, remappedForOrdering)
 }
-
-export type ScalingSummaryEntry = Awaited<
-  ReturnType<typeof getScalingSummaryEntries>
->[number]

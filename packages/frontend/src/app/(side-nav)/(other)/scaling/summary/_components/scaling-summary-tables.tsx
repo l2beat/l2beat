@@ -13,16 +13,14 @@ import { BasicTable } from '~/components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
 import { ActiveIcon } from '~/icons/active'
 import { ArchivedIcon } from '~/icons/archived'
-import { Layer3sIcon } from '~/icons/layer3s'
 import { UpcomingIcon } from '~/icons/upcoming'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { useScalingAssociatedTokensContext } from '../../../_components/scaling-associated-tokens-context'
 import { useScalingFilter } from '../../../_components/scaling-filter-context'
 import { ScalingTvlFilters } from '../../../_components/scaling-tvl-filters'
 import { toTableRows } from '../_utils/to-table-rows'
+import { scalingLayer2sColumns } from './table/active/columns'
 import { scalingArchivedColumns } from './table/archived/columns'
-import { scalingLayer2sColumns } from './table/layer2s/columns'
-import { summaryLayer3sColumns } from './table/layer3s/columns'
 import { scalingUpcomingColumns } from './table/upcoming/columns'
 
 interface Props {
@@ -38,29 +36,17 @@ export function ScalingSummaryTables({ entries }: Props) {
     [entries, includeFilters],
   )
 
-  const layer2sProjects = useMemo(
+  const active = useMemo(
     () =>
       toTableRows({
         projects: allProjects.filter(
-          (item) =>
-            item.type === 'layer2' && !item.isArchived && !item.isUpcoming,
+          (item) => !item.isArchived && !item.isUpcoming,
         ),
         excludeAssociatedTokens,
       }),
     [allProjects, excludeAssociatedTokens],
   )
 
-  const layer3sProjects = useMemo(
-    () =>
-      toTableRows({
-        projects: allProjects.filter(
-          (item) =>
-            item.type === 'layer3' && !item.isArchived && !item.isUpcoming,
-        ),
-        excludeAssociatedTokens,
-      }),
-    [allProjects, excludeAssociatedTokens],
-  )
   const upcomingProjects = useMemo(
     () =>
       toTableRows({
@@ -79,28 +65,9 @@ export function ScalingSummaryTables({ entries }: Props) {
     [allProjects, excludeAssociatedTokens],
   )
 
-  const layer2sTable = useTable({
-    data: layer2sProjects,
+  const activeTable = useTable({
+    data: active,
     columns: scalingLayer2sColumns,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    manualFiltering: true,
-    initialState: {
-      sorting: [
-        {
-          id: 'total',
-          desc: true,
-        },
-      ],
-      columnPinning: {
-        left: ['#', 'logo'],
-      },
-    },
-  })
-
-  const layer3sTable = useTable({
-    data: layer3sProjects,
-    columns: summaryLayer3sColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
@@ -158,20 +125,14 @@ export function ScalingSummaryTables({ entries }: Props) {
   return (
     <div className="space-y-2">
       <ScalingTvlFilters items={allProjects} />
-      <Tabs storeInSearchParams defaultValue="layer2s" className="w-full">
+      <Tabs storeInSearchParams defaultValue="active" className="w-full">
         <OverflowWrapper>
           <TabsList>
-            <TabsTrigger value="layer2s" className="gap-1.5">
+            <TabsTrigger value="active" className="gap-1.5">
               <ActiveIcon />
-              <span className="md:hidden">Layer2s</span>
-              <span className="max-md:hidden">Layer 2 projects</span>
-              <TabCountBadge>{layer2sTable.getRowCount()}</TabCountBadge>
-            </TabsTrigger>
-            <TabsTrigger value="layer3s" className="gap-1.5">
-              <Layer3sIcon />
-              <span className="md:hidden">Layer 3s</span>
-              <span className="max-md:hidden">Layer 3 projects</span>
-              <TabCountBadge>{layer3sTable.getRowCount()}</TabCountBadge>
+              <span className="md:hidden">Active</span>
+              <span className="max-md:hidden">Active projects</span>
+              <TabCountBadge>{activeTable.getRowCount()}</TabCountBadge>
             </TabsTrigger>
             <TabsTrigger value="upcoming" className="gap-1.5">
               <UpcomingIcon />
@@ -187,11 +148,8 @@ export function ScalingSummaryTables({ entries }: Props) {
             </TabsTrigger>
           </TabsList>
         </OverflowWrapper>
-        <TabsContent value="layer2s">
-          <BasicTable table={layer2sTable} />
-        </TabsContent>
-        <TabsContent value="layer3s">
-          <BasicTable table={layer3sTable} />
+        <TabsContent value="active">
+          <BasicTable table={activeTable} />
         </TabsContent>
         <TabsContent value="upcoming">
           <BasicTable table={upcomingTable} />
