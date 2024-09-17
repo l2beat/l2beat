@@ -9,6 +9,7 @@ Generated with discovered.json: 0x3d51ed0e555f35d54a152ced044fd6320a96f883
 ## Description
 
 Changed ARM Proxy: Renaming of ARM -> RMN. New version: RMN 1.5.0, including a new granular cursing check feature and other minor updates: isCursed() will check for a curse of the local chain (called a global curse subject). The isCursed() function can also be used with a bytes32 argument to additionally check the destination chain cursing status before forwarding messages to it.
+Also lower timelock delay for upgrades from 1 day (86400s) to 3h (10800s).
 
 ## Watched changes
 
