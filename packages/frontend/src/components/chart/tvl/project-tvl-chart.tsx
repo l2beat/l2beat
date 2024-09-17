@@ -106,7 +106,7 @@ function DefaultChart({
       columns={columns}
       valuesStyle={valuesStyle}
       formatYAxisLabel={formatYAxisLabel}
-      range={chartRange}
+      range={timeRange}
       isLoading={isLoading}
       renderHoverContents={(data) => <TvlChartHover data={data} />}
     >
