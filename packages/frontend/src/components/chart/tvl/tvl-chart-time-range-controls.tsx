@@ -4,7 +4,7 @@ import { ChartTimeRangeControls } from '../core/chart-time-range-controls'
 export interface Props {
   timeRange: TvlChartRange
   setTimeRange: (value: TvlChartRange) => void
-  range: [number, number]
+  range: [number, number] | undefined
 }
 
 export function TvlChartTimeRangeControls({

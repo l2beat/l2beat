@@ -1,8 +1,7 @@
-export function getLineDashSegments(range: [number, number]) {
-  const [start, end] = range
-  const time = end - start
-  const isMoreThanYear = time > 365 * 24 * 60 * 60
-  // TODO: Come up with nice dash segments
+export function getLineDashSegments(
+  range: '1d' | '7d' | '30d' | '90d' | '180d' | '1y' | 'max',
+) {
+  const isMoreThanYear = range === 'max'
   if (isMoreThanYear) {
     return [3, 2]
   }

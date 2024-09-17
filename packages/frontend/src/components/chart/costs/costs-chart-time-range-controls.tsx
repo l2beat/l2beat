@@ -5,7 +5,7 @@ import { ChartTimeRangeControls } from '../core/chart-time-range-controls'
 interface Props {
   timeRange: CostsTimeRange
   setTimeRange: (range: CostsTimeRange) => void
-  range: [number, number]
+  range: [number, number] | undefined
 }
 
 export function CostsChartTimeRangeControls({

@@ -64,13 +64,12 @@ export function ActivityChart({ milestones, entries }: Props) {
   const scalingFactor =
     totalTxs &&
     ((totalTxs.rest ?? 0) + (totalTxs.ethereum ?? 0)) / (totalTxs.ethereum ?? 1)
-
   return (
     <ChartProvider
       columns={columns}
       valuesStyle={valuesStyle}
       formatYAxisLabel={formatYAxisLabel}
-      range={chartRange}
+      range={timeRange}
       isLoading={isLoading}
       renderHoverContents={(data) => (
         <ActivityChartHover {...data} showEthereum={showMainnet} />

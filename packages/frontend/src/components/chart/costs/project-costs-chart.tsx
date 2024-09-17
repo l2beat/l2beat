@@ -40,7 +40,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
         columns={columns}
         valuesStyle={valuesStyle}
         formatYAxisLabel={formatYAxisLabel}
-        range={chartRange}
+        range={range}
         isLoading={isLoading}
         renderHoverContents={(data) => (
           <CostsChartHover data={data} unit={unit} />
