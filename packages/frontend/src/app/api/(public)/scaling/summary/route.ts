@@ -13,12 +13,12 @@ export async function GET() {
     success: true,
     data: {
       chart: {
-        types: ['timestamp', 'canonical', 'external', 'native', 'ethPrice'],
-        data: data.map(([timestamp, canonical, external, native, ethPrice]) => [
+        types: ['timestamp', 'native', 'canonical', 'external', 'ethPrice'],
+        data: data.map(([timestamp, native, canonical, external, ethPrice]) => [
           timestamp,
+          native / 100,
           canonical / 100,
           external / 100,
-          native / 100,
           ethPrice / 100,
         ]),
       },
