@@ -57,7 +57,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-jazzicon": "^1.0.4",
-    "sharp": "^0.33.4",
+    "sharp": "^0.33.5",
     "superjson": "^2.2.1",
     "tailwind-merge": "^2.3.0",
     "vaul": "^0.9.1",
