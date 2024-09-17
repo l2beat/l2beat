@@ -24,6 +24,7 @@ import { type ScalingLivenessEntry } from '~/server/features/scaling/liveness/ge
 import { type ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
+import { type ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
 
 export type ScalingFilterContextValue = {
   rollupsOnly: boolean
@@ -121,6 +122,33 @@ export function useScalingFilter() {
           ? entry.badges?.some(
               (badge) => badge.badge === scalingFilters.badgeRaaS,
             )
+          : undefined,
+      ].filter(notUndefined)
+      return checks.length === 0 || checks.every(Boolean)
+    },
+    [scalingFilters],
+  )
+
+  return filter
+}
+
+export function useScalingUpcomingFilter() {
+  const scalingFilters = useScalingFilterValues()
+
+  const filter = useCallback(
+    (entry: ScalingUpcomingEntry) => {
+      const checks = [
+        scalingFilters.rollupsOnly !== false
+          ? entry.category?.includes('Rollup')
+          : undefined,
+        scalingFilters.category !== undefined
+          ? entry.category === scalingFilters.category
+          : undefined,
+        scalingFilters.stack !== undefined
+          ? entry.provider === scalingFilters.stack
+          : undefined,
+        scalingFilters.purpose !== undefined
+          ? entry.purposes.some((purpose) => purpose === scalingFilters.purpose)
           : undefined,
       ].filter(notUndefined)
       return checks.length === 0 || checks.every(Boolean)

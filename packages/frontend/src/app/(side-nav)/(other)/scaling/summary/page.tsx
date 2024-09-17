@@ -7,7 +7,7 @@ import { getCookie } from '~/utils/cookies/server'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingAssociatedTokensContextProvider } from '../../_components/scaling-associated-tokens-context'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
-import { ScalingSummaryTables } from './_components/scaling-summary-tables'
+import { ScalingSummaryTables } from './_components/scaling-summary-table'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
