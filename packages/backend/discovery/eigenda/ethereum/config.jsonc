@@ -67,8 +67,7 @@
             "valueKey": "strategy",
             "arg": "quorumNumber",
             "argValue": "0"
-          },
-          "target": { "template": "eigenlayer/Strategy" }
+          }
         },
         "secondQuorumStrategies": {
           "description": "The strategies for the second quorum (EIGEN).",
@@ -78,8 +77,7 @@
             "valueKey": "strategy",
             "arg": "quorumNumber",
             "argValue": "1"
-          },
-          "target": { "template": "eigenlayer/Strategy" }
+          }
         },
         "thirdQuorumStrategies": {
           "description": "The strategies for the third quorum.",
@@ -89,8 +87,7 @@
             "valueKey": "strategy",
             "arg": "quorumNumber",
             "argValue": "2"
-          },
-          "target": { "template": "eigenlayer/Strategy" }
+          }
         },
         "fourthQuorumStrategies": {
           "description": "The strategies for the fourth quorum. Not used yet, here to catch a potential new quorum.",
@@ -100,8 +97,7 @@
             "valueKey": "strategy",
             "arg": "quorumNumber",
             "argValue": "3"
-          },
-          "target": { "template": "eigenlayer/Strategy" }
+          }
         }
       }
     },

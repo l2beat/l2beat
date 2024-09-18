@@ -1,3 +1,63 @@
+Generated with discovered.json: 0x2335f048e2daab82e3fa3ca479858c2baad1cca9
+
+# Diff at Wed, 18 Sep 2024 14:09:08 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@4e648bd4c0074d47d5b0332211bcd81db775dd7b block: 20777119
+- current block number: 20777978
+
+## Description
+
+Added EIGEN in config as without strategies it wouldn't be discovered.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20777119 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract EIGEN Timelock (0x2520C6b2C1FBE1813AB5c7c1018CDa39529e9FF2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract bEIGEN token (0x83E9115d334D248Ce39a6f36144aEaB5b3456e75)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xB8915E195121f2B5D989Ec5727fd47a5259F1CEC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenLayerTokenMultisig (0xbb00DDa2832850a43840A3A86515E3Fe226865F2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract bEIGEN Timelock (0xd6EC41E453C5E7dA5494f4d51A053Ab571712E6f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EIGEN token (0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x15b53e5d1d63506e73b32bb5cecc4f309c7d46bd
 
 # Diff at Wed, 18 Sep 2024 11:16:08 GMT:
