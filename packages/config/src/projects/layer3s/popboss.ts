@@ -17,7 +17,7 @@ export const popboss: Layer3 = orbitStackL3({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   display: {
     name: 'Proof of Play Boss',
-    shortName: 'Boss',
+    shortName: 'PoP Boss',
     slug: 'popboss',
     description:
       'Proof of Play Boss is a gaming-focused L3 settling on Arbitrum using the Orbit Stack and AnyTrust DA. It is the second L3 built by Proof of Play.',
