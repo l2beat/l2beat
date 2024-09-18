@@ -16,6 +16,7 @@ import {
   useMemo,
   useState,
 } from 'react'
+import { type ScalingArchivedEntry } from '~/server/features/scaling/archived/get-scaling-archived-entries'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
 import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/types'
@@ -84,7 +85,7 @@ type ScalingEntry =
   | ScalingTvlEntry
   | ScalingLivenessEntry
   | ScalingActivityEntry
-
+  | ScalingArchivedEntry
 export function useScalingFilter() {
   const scalingFilters = useScalingFilterValues()
 

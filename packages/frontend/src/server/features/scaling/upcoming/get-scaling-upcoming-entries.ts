@@ -12,6 +12,7 @@ export function getScalingUpcomingEntries() {
       id: project.id,
       slug: project.display.slug,
       name: project.display.name,
+      shortName: project.display.shortName,
       category: project.display.category,
       provider: project.display.provider,
       hostChain: getHostChain(project),

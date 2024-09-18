@@ -5,10 +5,11 @@ import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { TypeExplanationTooltip } from '~/components/table/cells/type-cell'
 import { TypeCell } from '~/components/table/cells/type-cell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
+import { EM_DASH } from '~/consts/characters'
+import { type ScalingArchivedEntry } from '~/server/features/scaling/archived/get-scaling-archived-entries'
 import { formatCurrency } from '~/utils/format'
-import { type ScalingSummaryTableRow } from '../../../summary/_utils/to-table-rows'
 
-const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
+const columnHelper = createColumnHelper<ScalingArchivedEntry>()
 
 export const scalingArchivedColumns = [
   ...getCommonProjectColumns(columnHelper),
@@ -16,12 +17,19 @@ export const scalingArchivedColumns = [
     cell: (ctx) => <ProjectNameCell project={ctx.row.original} type="layer2" />,
   }),
   columnHelper.accessor('risks', {
-    cell: (ctx) => (
-      <PizzaRosetteCell
-        values={ctx.getValue()}
-        isUnderReview={ctx.row.original.isUnderReview}
-      />
-    ),
+    cell: (ctx) => {
+      const risks = ctx.getValue()
+      if (!risks) {
+        return EM_DASH
+      }
+
+      return (
+        <PizzaRosetteCell
+          values={risks}
+          isUnderReview={ctx.row.original.isUnderReview}
+        />
+      )
+    },
     enableSorting: false,
     meta: {
       cellClassName: 'justify-center',
@@ -45,26 +53,26 @@ export const scalingArchivedColumns = [
       tooltip: 'Functionality supported by this project.',
     },
   }),
-  columnHelper.accessor('tvl', {
+  columnHelper.accessor('totalTvl', {
     id: 'total',
     header: 'Total',
     cell: (ctx) => {
       const value = ctx.getValue()
-      if (!value.breakdown) {
+      if (value === undefined) {
         return <UpcomingBadge />
       }
 
       return (
         <span className="text-base font-bold md:text-lg">
-          {formatCurrency(value.breakdown.total, 'usd', {
+          {formatCurrency(value, 'usd', {
             showLessThanMinimum: false,
           })}
         </span>
       )
     },
     sortingFn: ({ original: a }, { original: b }) => {
-      const aTvl = a.tvl.breakdown?.total ?? 0
-      const bTvl = b.tvl.breakdown?.total ?? 0
+      const aTvl = a.totalTvl ?? 0
+      const bTvl = b.totalTvl ?? 0
 
       if (aTvl === bTvl) {
         return b.name.localeCompare(a.name)

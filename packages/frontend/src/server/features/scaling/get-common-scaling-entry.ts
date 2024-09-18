@@ -7,7 +7,6 @@ import {
 import { ProjectId } from '@l2beat/shared-pure'
 import { type SetOptional } from 'type-fest'
 import { getHostChain } from './utils/get-host-chain'
-import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
 
 // Optional type and category is needed to support Ethereum L1 entry
 export type CommonScalingEntry = SetOptional<
@@ -66,7 +65,6 @@ export function getCommonScalingEntry(
     isUnderReview: !!project.isUnderReview,
     warning: project.display.warning,
     headerWarning: project.display.headerWarning,
-    showProjectUnderReview: isAnySectionUnderReview(project),
     redWarning: project.display.redWarning,
     purposes: project.display.purposes,
     badges:

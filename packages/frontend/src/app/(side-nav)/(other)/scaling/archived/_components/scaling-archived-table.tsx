@@ -4,19 +4,24 @@ import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
-import { toTableRows } from '../../summary/_utils/to-table-rows'
+import { type ScalingArchivedEntry } from '~/server/features/scaling/archived/get-scaling-archived-entries'
+import { useScalingFilter } from '../../../_components/scaling-filter-context'
+import { ScalingUpcomingAndArchivedFilters } from '../../../_components/scaling-upcoming-and-archived-filters'
 import { scalingArchivedColumns } from './table/columns'
 
-export function ScalingArchivedTable() {
-  const archivedProjects = useMemo(
-    () =>
-      toTableRows({
-        projects: [],
-      }),
-    [],
+interface Props {
+  entries: ScalingArchivedEntry[]
+}
+
+export function ScalingArchivedTable({ entries }: Props) {
+  const includeFilters = useScalingFilter()
+
+  const filteredEntries = useMemo(
+    () => entries.filter(includeFilters),
+    [entries, includeFilters],
   )
   const archivedTable = useTable({
-    data: archivedProjects,
+    data: filteredEntries,
     columns: scalingArchivedColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -33,5 +38,10 @@ export function ScalingArchivedTable() {
       },
     },
   })
-  return <BasicTable table={archivedTable} />
+  return (
+    <section className="mt-4 space-y-6 sm:mt-8">
+      <ScalingUpcomingAndArchivedFilters items={filteredEntries} />
+      <BasicTable table={archivedTable} />
+    </section>
+  )
 }

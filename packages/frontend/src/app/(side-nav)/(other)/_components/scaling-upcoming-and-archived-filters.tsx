@@ -1,14 +1,15 @@
 import { uniq } from 'lodash'
 import { OverflowWrapper } from '~/components/core/overflow-wrapper'
 import { TableFilter } from '~/components/table/filters/table-filter'
+import { type ScalingArchivedEntry } from '~/server/features/scaling/archived/get-scaling-archived-entries'
 import { type ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
-import { useScalingFilterValues } from '../../../_components/scaling-filter-context'
+import { useScalingFilterValues } from './scaling-filter-context'
 
 interface Props {
-  items: ScalingUpcomingEntry[]
+  items: ScalingUpcomingEntry[] | ScalingArchivedEntry[]
 }
 
-export function ScalingUpcomingFilters({ items }: Props) {
+export function ScalingUpcomingAndArchivedFilters({ items }: Props) {
   const filter = useScalingFilterValues()
   const typeOptions = uniq(items.map((item) => item.category))
     .sort()
