@@ -696,7 +696,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
           chain: 'zksync2',
           name: 'Guardians L2 alias',
           description:
-            'The Layer2 alias adress through which the Guardians contract can act.',
+            'The Layer2 alias address through which the Guardians contract can act.',
         },
         {
           accounts: [
