@@ -254,6 +254,11 @@
       "address": "0xAE12C5930881c53715B369ceC7606B70d8EB229f"
     },
     {
+      "symbol": "cbBTC",
+      "category": "ether",
+      "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
+    },
+    {
       "symbol": "cbETH",
       "category": "ether",
       "address": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
@@ -2438,6 +2443,13 @@
     }
   ],
   "base": [
+    {
+      "symbol": "cbBTC",
+      "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "stablecoin"
+    },
     {
       "symbol": "DAI",
       "address": "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
