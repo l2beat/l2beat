@@ -7004,6 +7004,28 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Mode Savings Dai",
+      "coingeckoId": "savings-dai",
+      "address": "0x3f51c6c5927B88CDEc4b61e2787F9BD0f5249138",
+      "symbol": "msDai",
+      "decimals": 18,
+      "deploymentTimestamp": 1721823785,
+      "coingeckoListingTimestamp": 1696982400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/32254/large/sdai.png?1697015278",
+      "chainId": 34443,
+      "source": "external",
+      "supply": "totalSupply",
+      "excludeFromTotal": true,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "XSwap.link"
+          }
+        ]
+      }
+    },
+    {
       "name": "Renzo Restaked ETH",
       "coingeckoId": "renzo-restaked-eth",
       "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
