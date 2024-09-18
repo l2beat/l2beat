@@ -1,28 +1,16 @@
-Generated with discovered.json: 0x0620063959c6b4a5361237190c8c74239eb5135f
+Generated with discovered.json: 0x15b53e5d1d63506e73b32bb5cecc4f309c7d46bd
 
-# Diff at Wed, 18 Sep 2024 07:22:46 GMT:
+# Diff at Wed, 18 Sep 2024 11:16:08 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@b3e705d5dab71b5b740c4e16255faa377029e669 block: 20756772
-- current block number: 20775955
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@c2aae39cbab1defe84c7155af7d521cf3c228e0d block: 20756772
+- current block number: 20777119
 
 ## Description
 
 One signer changed, threshold decreased in EigenLayerTokenMultisig. Unverified strat deployed through the Factory.
 
 ## Watched changes
-
-```diff
-    contract EigenLayerTokenMultisig (0xbb00DDa2832850a43840A3A86515E3Fe226865F2) {
-    +++ description: None
-      values.$threshold:
--        4
-+        3
-      values.multisigThreshold:
--        "4 of 6 (67%)"
-+        "3 of 6 (50%)"
-    }
-```
 
 ```diff
     contract EigenLayerOperationsMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
@@ -45,10 +33,308 @@ One signer changed, threshold decreased in EigenLayerTokenMultisig. Unverified s
     }
 ```
 
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20756772 (main branch discovery), not current.
+
 ```diff
-+   Status: CREATED
-    contract  (0xEB6CC669971d5310bEA32291d5d2087474D710ec)
+-   Status: DELETED
+    contract  (0x01F3BE8090C3f3A273c9Cd598d8CFc94854A45dd)
     +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x0858616B1a07B7c925Ba7E8F9a33475887db3A36)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract swETH-Strategy (0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract ankrETH-Strategy (0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract rETH-Strategy (0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x1Fc0DB099E3452b6c20027578CA57722815df98f)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract EIGEN Timelock (0x2520C6b2C1FBE1813AB5c7c1018CDa39529e9FF2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract METH-Strategy (0x298aFB19A105D59E74658C4C334Ff360BadE6dd2)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x2cB2201DF702B01Fec173fDe6756496aebE546F4)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x505241696AB63FaEC03ed7893246DE52EB1A8CFF)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract cbETH-Strategy (0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract osETH-Strategy (0x57ba429517c3473B6d34CA9aCd56c0e735b94c02)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract reALT-Strategy (0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x66ea956907F7ed2FD816106f2f4d8c384c6d4f92)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x6c6E8aF98a49bBaBCc17ca1dbA6b95c5D58A2ccb)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x71cB984BbcbaE0E85c8d59dB131246FA694e100D)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x7251e23983643eAB81E17e4f851c4E01ecAFD882)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x73a18a6304D05B495ecb161Dbf1ab496461bBf2e)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x752c665ae29bf52F3a162a944AE26882d03321e3)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x7AA0B2618daeCdCC3a8D74489c9a601204e1e4B7)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract wBETH-Strategy (0x7CA911E83dabf90C90dD3De5411a10F1A6112184)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract bEIGEN token (0x83E9115d334D248Ce39a6f36144aEaB5b3456e75)
+    +++ description: None
+```
+
+```diff
+    contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
+    +++ description: None
+      values.strategies:
+-        ["0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc","0x93c4b944D05dfe6df7645A86cd2206016c51564D","0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2","0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d","0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff","0xa4C637e0F704745D182e4D38cAb7E7485321d059","0x57ba429517c3473B6d34CA9aCd56c0e735b94c02","0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6","0x7CA911E83dabf90C90dD3De5411a10F1A6112184","0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6","0xAe60d8180437b5C34bB956822ac2710972584473","0x298aFB19A105D59E74658C4C334Ff360BadE6dd2","0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7","0x8fEb56C8802Bda01F3cC1802D44f6Cb469Ac9B22","0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4","0x73a18a6304D05B495ecb161Dbf1ab496461bBf2e","0x99A05F4e3Fa886A5104630e8a4b01159867ad9a1","0x1Fc0DB099E3452b6c20027578CA57722815df98f","0xC9ad499c11677Ea3815984295Dd73c0858757B8E","0x7AA0B2618daeCdCC3a8D74489c9a601204e1e4B7","0x01F3BE8090C3f3A273c9Cd598d8CFc94854A45dd","0xca18116F8Ed9081501B14C6aF3a7748E52b0E99E","0x6c6E8aF98a49bBaBCc17ca1dbA6b95c5D58A2ccb","0x752c665ae29bf52F3a162a944AE26882d03321e3","0x71cB984BbcbaE0E85c8d59dB131246FA694e100D","0x505241696AB63FaEC03ed7893246DE52EB1A8CFF","0x0858616B1a07B7c925Ba7E8F9a33475887db3A36","0x7251e23983643eAB81E17e4f851c4E01ecAFD882","0xa33600c9B9C2A4585B5A2cecD5b10d0330Cde9A2","0x2cB2201DF702B01Fec173fDe6756496aebE546F4","0x66ea956907F7ed2FD816106f2f4d8c384c6d4f92","0xa553a8198e0692b4393Ac2F64bd2E42A2061c1C5","0xB8312B0B13dC1925B6aa2dEBB432B4C3B93b1Dab"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444) {
+    +++ description: None
+      receivedPermissions.18:
+-        {"permission":"upgrade","target":"0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd"}
+      receivedPermissions.17:
+-        {"permission":"upgrade","target":"0xAe60d8180437b5C34bB956822ac2710972584473"}
+      receivedPermissions.16:
+-        {"permission":"upgrade","target":"0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7"}
+      receivedPermissions.15:
+-        {"permission":"upgrade","target":"0xa4C637e0F704745D182e4D38cAb7E7485321d059"}
+      receivedPermissions.14:
+-        {"permission":"upgrade","target":"0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d"}
+      receivedPermissions.13:
+-        {"permission":"upgrade","target":"0x93c4b944D05dfe6df7645A86cd2206016c51564D"}
+      receivedPermissions.12:
+-        {"permission":"upgrade","target":"0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"}
+      receivedPermissions.11:
+-        {"permission":"upgrade","target":"0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6"}
+      receivedPermissions.10:
+-        {"permission":"upgrade","target":"0x858646372CC42E1A627fcE94aa7A7033e7CF075A"}
+      receivedPermissions.9:
+-        {"permission":"upgrade","target":"0x7CA911E83dabf90C90dD3De5411a10F1A6112184"}
+      receivedPermissions.8:
+-        {"permission":"upgrade","target":"0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"}
+      receivedPermissions.7:
+-        {"permission":"upgrade","target":"0x57ba429517c3473B6d34CA9aCd56c0e735b94c02"}
+      receivedPermissions.6:
+-        {"permission":"upgrade","target":"0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc"}
+      receivedPermissions.5.target:
+-        "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
++        "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd"
+      receivedPermissions.4.target:
+-        "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2"
++        "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
+      receivedPermissions.3.target:
+-        "0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2"
++        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
+      receivedPermissions.2.target:
+-        "0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff"
++        "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
+      receivedPermissions.1.target:
+-        "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
++        "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
+      receivedPermissions.0.target:
+-        "0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6"
++        "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract sfrxETH-Strategy (0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract sUSDe-Strategy (0x8fEb56C8802Bda01F3cC1802D44f6Cb469Ac9B22)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract stETH-Strategy (0x93c4b944D05dfe6df7645A86cd2206016c51564D)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x99A05F4e3Fa886A5104630e8a4b01159867ad9a1)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract ETHx-Strategy (0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract  (0xa33600c9B9C2A4585B5A2cecD5b10d0330Cde9A2)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract OETH-Strategy (0xa4C637e0F704745D182e4D38cAb7E7485321d059)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract  (0xa553a8198e0692b4393Ac2F64bd2E42A2061c1C5)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract bEIGEN-Strategy (0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract RiverV1-Strategy (0xAe60d8180437b5C34bB956822ac2710972584473)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract  (0xB8312B0B13dC1925B6aa2dEBB432B4C3B93b1Dab)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xB8915E195121f2B5D989Ec5727fd47a5259F1CEC)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EigenLayerTokenMultisig (0xbb00DDa2832850a43840A3A86515E3Fe226865F2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0xC9ad499c11677Ea3815984295Dd73c0858757B8E)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract  (0xca18116F8Ed9081501B14C6aF3a7748E52b0E99E)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract bEIGEN Timelock (0xd6EC41E453C5E7dA5494f4d51A053Ab571712E6f)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EIGEN token (0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83)
+    +++ description: None
 ```
 
 Generated with discovered.json: 0xb37aa1ea78af1729196ed22074c1987c1422c1ec
