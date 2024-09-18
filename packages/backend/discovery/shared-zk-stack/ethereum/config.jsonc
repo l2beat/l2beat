@@ -12,7 +12,7 @@
     "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C": "StateTransitionManager",
     "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB": "L1SharedBridge",
     "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock",
-    "0x2cf3bD6a9056b39999F3883955E183F655345063": "ChainAdmin",
+    "0x2cf3bD6a9056b39999F3883955E183F655345063": "EraChainAdminProxy",
     "0xD677e09324F8Bb3cC64F009973693f751c33A888": "Guardians",
     "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897": "ProtocolUpgradeHandler",
     "0xBDFfCC71FE84020238F2990a6D2954e87355De0D": "SecurityCouncil",
@@ -92,7 +92,7 @@
       },
       "ignoreRelatives": ["ZKSYNC_ERA"]
     },
-    "ChainAdmin": {
+    "EraChainAdminProxy": {
       "ignoreMethods": ["protocolVersionToUpgradeTimestamp"],
       "fields": {
         "upgradeTimestamps": {

@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x6000c0e91f82353e42d690f3d482b9e384a2c0b3
+
+# Diff at Wed, 18 Sep 2024 11:29:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@14dc1d5395aaa4aca4e79a08fd6132e42e3cf1a4 block: 20668550
+- current block number: 20777184
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20668550 (main branch discovery), not current.
+
+```diff
+    contract CronosChainAdminMultisig (0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce) {
+    +++ description: None
+      name:
+-        "AdminMultisig"
++        "CronosChainAdminMultisig"
+    }
+```
+
 Generated with discovered.json: 0x4af2a68368669c3387c20071a4d0fb5d972fe239
 
 # Diff at Mon, 16 Sep 2024 13:59:08 GMT:

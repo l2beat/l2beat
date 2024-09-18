@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xc9681e2069081f5380a59667639df35872f0358c
+
+# Diff at Wed, 18 Sep 2024 11:12:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@14dc1d5395aaa4aca4e79a08fd6132e42e3cf1a4 block: 20741455
+- current block number: 20777100
+
+## Description
+
+Renamed for clarity. (has both ChainAdmin and Elastic Chain Operator roles)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20741455 (main branch discovery), not current.
+
+```diff
+    contract EraChainAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
+      name:
+-        "ChainAdmin"
++        "EraChainAdminProxy"
+    }
+```
+
 Generated with discovered.json: 0x87075ab461d044a431c2143eca3e60ab362bc7ad
 
 # Diff at Fri, 13 Sep 2024 11:40:40 GMT:
