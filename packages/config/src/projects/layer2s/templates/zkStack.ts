@@ -710,7 +710,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
           chain: 'zksync2',
           name: 'ProtocolUpgradeHandler L2 alias',
           description:
-            'The Layer2 alias adress through which the ProtocolUpgradeHandler contract can act.',
+            'The Layer2 alias address through which the ProtocolUpgradeHandler contract can act.',
         },
         {
           accounts: [
