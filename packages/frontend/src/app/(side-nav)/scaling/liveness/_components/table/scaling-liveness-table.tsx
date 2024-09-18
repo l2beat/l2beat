@@ -2,7 +2,7 @@
 
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
-import { BaseScalingFilters } from '~/app/(side-nav)/_components/base-scaling-filters'
+import { BaseScalingFilters } from '~/app/(side-nav)/scaling/_components/base-scaling-filters'
 import { useScalingFilter } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
 import { BasicTable } from '~/components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
