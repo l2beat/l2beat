@@ -31,11 +31,11 @@ const MAIN_LAYER_SENTIMENT: Record<DataAvailabilityLayer, Sentiment> = {
   'Ethereum (calldata)': 'good',
   'Ethereum (blobs)': 'good',
   'Ethereum (blobs or calldata)': 'good',
+  'Mantle DA': 'warning',
   MEMO: 'warning',
   DAC: 'warning',
   Celestia: 'warning',
   External: 'warning',
-  MantleDA: 'warning',
   FraxtalDA: 'warning',
   RedstoneDA: 'warning',
   XterioDA: 'warning',
@@ -66,8 +66,8 @@ const LAYER_DESCRIPTION: Record<
   Celestia: ['The data is posted to Celestia.', null],
   MEMO: ['The data is posted to MEMO (a decentralized storage).', null],
   External: ['The data is posted off chain.', null],
-  MantleDA: [
-    'The data is posted to MantleDA (contracts are forked from EigenDA with significant modifications, most importantly removal of slashing conditions).',
+  'Mantle DA': [
+    'The data is posted to Mantle DA (contracts are forked from EigenDA with significant modifications, most importantly removal of slashing conditions).',
     null,
   ],
   FraxtalDA: [
