@@ -1,8 +1,8 @@
 {
-  "name": "binaryholdings",
+  "name": "thebinaryholdings",
   "chain": "ethereum",
-  "blockNumber": 20776920,
-  "configHash": "0xb7de210270da14514b0e591d2a436dbedd3c80129326207a0706870a51487ffa",
+  "blockNumber": 20777124,
+  "configHash": "0xb0c4117fe18999d663d6c8d502aa5e139bdf96f44168eecf29ef59bcb1a9d215",
   "version": 14,
   "contracts": [
     {
