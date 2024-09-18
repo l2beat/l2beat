@@ -14,6 +14,7 @@ import {
   CostsProjectsFilter,
   getCostsProjects,
 } from './utils/get-costs-projects'
+import { getCostsTargetTimestamp } from './utils/get-costs-target-timestamp'
 import { CostsTimeRange, rangeToResolution } from './utils/range'
 
 export const CostsChartParams = z.object({
@@ -44,45 +45,57 @@ const getCachedCostsChart = cache(
       return []
     }
     const resolution = rangeToResolution(timeRange)
-    const range = getRange(timeRange, resolution)
-
+    const targetTimestamp = getCostsTargetTimestamp()
+    const range = getRange(timeRange, resolution, { now: targetTimestamp })
     const data = await db.aggregatedL2Cost.getByProjectsAndTimeRange(
       projects.map((p) => p.id),
       range,
     )
 
-    const summed = sumByTimestamp(data, resolution)
+    if (data.length === 0) {
+      return []
+    }
 
-    return summed
+    const summedByTimestamp = sumByTimestamp(data, resolution)
+    const [from, to] = range
+    const timestamps = generateTimestamps(
+      [from, to.add(-1, resolution === 'daily' ? 'days' : 'hours')],
+      resolution,
+    )
+    const result = timestamps.map(
+      (timestamp) =>
+        summedByTimestamp.find((entry) => entry[0] === timestamp.toNumber()) ??
+        ([timestamp.toNumber(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] as const),
+    )
+    return result
   },
-  ['costsChart'],
+  ['costsChartDD'],
   { revalidate: 10 * UnixTime.MINUTE },
 )
 
-function getMockCostsChart({ range: timeRange }: CostsChartParams) {
+function getMockCostsChart({
+  range: timeRange,
+}: CostsChartParams): CostsChartData {
   const resolution = rangeToResolution(timeRange)
   const range = getRange(timeRange, resolution)
 
   const timestamps = generateTimestamps(range, resolution)
 
-  return timestamps.map(
-    (timestamp) =>
-      [
-        timestamp.toNumber(),
-        20000,
-        0.5,
-        1000,
-        400000,
-        10,
-        20000,
-        600000,
-        15,
-        30000,
-        1000000,
-        0.25,
-        500,
-      ] as const,
-  )
+  return timestamps.map((timestamp) => [
+    timestamp.toNumber(),
+    20000,
+    0.5,
+    1000,
+    400000,
+    10,
+    20000,
+    600000,
+    15,
+    30000,
+    1000000,
+    0.25,
+    500,
+  ])
 }
 
 function sumByTimestamp(

@@ -4044,5 +4044,14 @@
         ]
       }
     }
+  ],
+  "mint": [
+    {
+      "symbol": "MST",
+      "address": "0x9f7bd1ce3412960524e86183b8f005271c09a5e0",
+      "source": "native",
+      "supply": "circulatingSupply",
+      "coingeckoId": "mintswaptoken"
+    }
   ]
 }

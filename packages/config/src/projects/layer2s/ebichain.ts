@@ -6,7 +6,7 @@ import { Layer2 } from './types'
 
 export const ebichain: Layer2 = underReviewL2({
   id: 'ebichain',
-  badges: [Badge.Stack.Orbit, Badge.VM.EVM, Badge.DA.DAC, Badge.RaaS.Gelato],
+  badges: [Badge.Stack.Orbit, Badge.VM.EVM, Badge.DA.DAC, Badge.RaaS.Conduit],
   display: {
     name: 'Ebi Chain',
     slug: 'ebichain',
