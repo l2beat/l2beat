@@ -1,7 +1,7 @@
 {
   "name": "bob",
   "chain": "ethereum",
-  "blockNumber": 20016201,
+  "blockNumber": 20775890,
   "configHash": "0xa703089081ef30a3fd1b4acef291868581ef007690cb07321cd53ee16bfb795b",
   "version": 14,
   "contracts": [
@@ -43,7 +43,8 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7"
+          "target": "0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
+          "description": "upgrading bridge implementation allows to access all funds and change every system component."
         },
         {
           "permission": "upgrade",
@@ -70,7 +71,11 @@
     {
       "name": "L1StandardBridge",
       "address": "0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
+      "template": "opstack/L1StandardBridge",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -78,7 +83,8 @@
           "via": [
             {
               "address": "0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0",
-              "delay": 0
+              "delay": 0,
+              "description": "upgrading bridge implementation allows to access all funds and change every system component."
             }
           ]
         }
@@ -149,7 +155,11 @@
     {
       "name": "OptimismPortal",
       "address": "0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E",
+      "template": "opstack/OptimismPortal",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -174,7 +184,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 490798,
-          "prevBlockNum": 20016172
+          "prevBlockNum": 20775000
         },
         "paused": false,
         "SYSTEM_CONFIG": "0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393",
@@ -185,8 +195,17 @@
     {
       "name": "SystemConfig",
       "address": "0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393",
+      "template": "opstack/SystemConfig",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
+      ],
       "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E",
@@ -198,7 +217,7 @@
           ]
         }
       ],
-      "ignoreInWatchMode": ["scalar"],
+      "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1712862095,
       "values": {
         "$admin": "0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0",
@@ -227,6 +246,12 @@
         "unsafeBlockSigner": "0xB18AD28cB78fD2eAfAc6941c24c5135515B796f0",
         "version": "1.3.1",
         "VERSION": 0
+      },
+      "fieldMeta": {
+        "gasLimit": {
+          "severity": "LOW",
+          "description": "Gas limit for blocks on L2."
+        }
       },
       "derivedName": "SystemConfig"
     },
@@ -269,7 +294,13 @@
       "address": "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
+      "roles": ["Challenger", "Guardian"],
       "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+        },
         {
           "permission": "configure",
           "target": "0xF2dc77c697e892542cC53336178a78Bb313DFDC7",
@@ -278,6 +309,7 @@
         {
           "permission": "upgrade",
           "target": "0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
+          "description": "upgrading bridge implementation allows to access all funds and change every system component.",
           "via": [{ "address": "0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0" }]
         },
         {
@@ -328,7 +360,11 @@
     {
       "name": "L2OutputOracle",
       "address": "0xdDa53E23f8a32640b04D7256e651C1db98dB11C1",
+      "template": "opstack/L2OutputOracle",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -353,12 +389,13 @@
         "$implementation": "0x59191bD38EBA4a642C9FEc308dc188731b229822",
         "$upgradeCount": 1,
         "CHALLENGER": "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E",
+        "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 2289600,
-        "latestOutputIndex": 105,
-        "nextBlockNumber": 2311200,
-        "nextOutputIndex": 106,
+        "latestBlockNumber": 6868800,
+        "latestOutputIndex": 317,
+        "nextBlockNumber": 6890400,
+        "nextOutputIndex": 318,
         "PROPOSER": "0x7cB1022D30b9860C36b243E7B181A1d46f618C69",
         "startingBlockNumber": 0,
         "startingTimestamp": 1712861987,
@@ -370,14 +407,19 @@
     {
       "name": "L1CrossDomainMessenger",
       "address": "0xE3d981643b806FB8030CDB677D6E60892E547EdA",
+      "template": "opstack/L1CrossDomainMessenger",
       "proxyType": "resolved delegate proxy",
+      "descriptions": [
+        "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
+      ],
+      "categories": ["Core"],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1712862119,
       "values": {
         "$immutable": false,
         "$implementation": "0x237853621998a33Fa5B9B820592F4c6f4c158c12",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292651866",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292658058",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -420,15 +462,19 @@
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x000000000000000000000000000000000000dEaD" },
-    { "address": "0x08F9F14fF43E112B18c96f0986F28Cb1878f1D11" },
+    {
+      "address": "0x08F9F14fF43E112B18c96f0986F28Cb1878f1D11",
+      "roles": ["Sequencer"]
+    },
     { "address": "0x32B8325b7f12ADB06763D6D04c951AC94e36C3D7" },
     { "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f" },
     { "address": "0x3A75346f81302aAc0333FB5DCDD407e12A6CfA83" },
-    { "address": "0x4200000000000000000000000000000000000007" },
-    { "address": "0x4200000000000000000000000000000000000010" },
     { "address": "0x45894CeBad0a1298D44aF2B528490693E58B322E" },
     { "address": "0x56b73FA51e09D0BBFA3A5346aaB7576Edc9d0436" },
-    { "address": "0x7cB1022D30b9860C36b243E7B181A1d46f618C69" },
+    {
+      "address": "0x7cB1022D30b9860C36b243E7B181A1d46f618C69",
+      "roles": ["Proposer"]
+    },
     { "address": "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038" },
     { "address": "0xa23366C4bDD05d6Ac5ae66503fb5AC2827eD5051" },
     { "address": "0xB18AD28cB78fD2eAfAc6941c24c5135515B796f0" },
@@ -819,7 +865,12 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
-    "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091"
+    "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
+    "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
+    "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
+    "opstack/OptimismPortal": "0x1af81e069b7721f68b8f083eb7379b6f29e7b9510bc38ed2a7e2a33ebbf876dc",
+    "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
+    "opstack/SystemConfig": "0x41420d04d26fe441d4f65a2475bb9f0cca38e0f7542d45347f063f3c7cf57b39"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xbde3658d9829dc6a2b849d26602a57c5fd2a8972a78d434d59fb754595ff1019"
 }
