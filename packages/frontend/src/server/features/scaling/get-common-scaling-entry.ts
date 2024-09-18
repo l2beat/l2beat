@@ -3,10 +3,10 @@ import {
   type Layer3,
   type StageConfig,
   badges,
-  layer2s,
 } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import { type SetOptional } from 'type-fest'
+import { getHostChain } from './utils/get-host-chain'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
 
 // Optional type and category is needed to support Ethereum L1 entry
@@ -52,7 +52,7 @@ export function getCommonScalingEntry(
 
   const { project, isVerified, hasImplementationChanged } = params
 
-  const common = {
+  return {
     id: project.id,
     name: project.display.name,
     href: `/scaling/projects/${project.display.slug}`,
@@ -74,36 +74,12 @@ export function getCommonScalingEntry(
         badge,
         kind: badges[badge].type,
       })) ?? [],
-  }
-
-  if (project.type === 'layer2') {
-    return {
-      ...common,
-      type: 'layer2' as const,
-      provider: project.display.provider,
-      stage: project.stage,
-      hostChain: undefined,
-    }
-  }
-
-  return {
-    ...common,
-    type: 'layer3' as const,
+    type: project.type,
     provider: project.display.provider,
     hostChain: getHostChain(project),
-    stage: { stage: 'NotApplicable' } satisfies StageConfig,
+    stage:
+      project.type === 'layer2'
+        ? project.stage
+        : ({ stage: 'NotApplicable' } satisfies StageConfig),
   }
-}
-
-function getHostChain(project: Layer3) {
-  if (project.hostChain === 'Multiple') {
-    return 'Multiple'
-  }
-  const layer2 = layer2s.find((l) => l.id === project.hostChain)
-  if (!layer2) {
-    throw new Error(
-      `Unknown host chain: ${project.hostChain} for project ${project.id}`,
-    )
-  }
-  return layer2.display.name
 }
