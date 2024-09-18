@@ -8,7 +8,7 @@ Generated with discovered.json: 0x2335f048e2daab82e3fa3ca479858c2baad1cca9
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Added EIGEN in config as without strategies it wouldn't be discovered.
 
 ## Config/verification related changes
 
