@@ -16,7 +16,7 @@ export const thebinaryholdings: Layer2 = opStackL2({
     warning:
       'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
-      'The Binary Holdings is a web3 infrastructure that integrates into telecommunication and banking apps to increase user engagement, retention, and ARPU (Average Revenue Per User) - while rewarding users for their engagement.',
+      'The Binary Holdings is a web3 infrastructure that integrates into telecommunication and banking apps to increase user engagement, retention, and ARPU (Average Revenue Per User) - while rewarding users for their engagement. It uses its own token (BNRY) for gas.',
     purposes: ['Universal'],
     links: {
       websites: ['https://thebinaryholdings.com/'],
@@ -46,4 +46,5 @@ export const thebinaryholdings: Layer2 = opStackL2({
   milestones: [],
   usesBlobs: true,
   useDiscoveryMetaOnly: true,
+  nonTemplateOptimismPortalEscrowTokens: [], // should add BNRY but the coingecko page doesn't report the ethereum address
 })
