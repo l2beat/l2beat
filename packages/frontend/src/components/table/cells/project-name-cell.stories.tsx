@@ -27,3 +27,12 @@ export const All: Story = {
     },
   },
 }
+
+export const Layer3: Story = {
+  args: {
+    project: {
+      name: 'Layer3 Project',
+      hostChain: 'Arbitrum One',
+    },
+  },
+}
