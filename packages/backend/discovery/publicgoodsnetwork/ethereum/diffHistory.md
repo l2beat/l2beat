@@ -1,3 +1,114 @@
+Generated with discovered.json: 0xd11409f718d2a4aac3da3174f675c2a3486d6866
+
+# Diff at Wed, 18 Sep 2024 07:18:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9345b63ac65112053065530521d70bc20d4ceb1e block: 19927728
+- current block number: 20775939
+
+## Description
+
+Shape related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19927728 (main branch discovery), not current.
+
+```diff
+    contract GuardianMultisig (0x39E13D1AB040F6EA58CE19998edCe01B3C365f84) {
+    +++ description: None
+      roles:
++        ["Challenger"]
+    }
+```
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions.5:
++        {"permission":"upgrade","target":"0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b","description":"upgrading bridge implementation allows to access all funds and change every system component.","via":[{"address":"0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4"}]}
+      receivedPermissions.4.target:
+-        "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b"
++        "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c"
+      receivedPermissions.3.target:
+-        "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c"
++        "0xA38d0c4E6319F9045F20318BA5f04CDe94208608"
+      receivedPermissions.2.target:
+-        "0xA38d0c4E6319F9045F20318BA5f04CDe94208608"
++        "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9"
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "configure"
+      receivedPermissions.1.via:
+-        [{"address":"0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4"}]
+      receivedPermissions.1.description:
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+    }
+```
+
+```diff
+    contract SystemConfig (0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4","delay":0}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.via.0:
+-        {"address":"0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4","delay":0}
+      template:
++        "opstack/SystemConfig"
+      descriptions:
++        ["Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."]
+      fieldMeta:
++        {"gasLimit":{"severity":"LOW","description":"Gas limit for blocks on L2."}}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x97BAf688E5d0465E149d1d5B497Ca99392a6760e) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      template:
++        "opstack/L1CrossDomainMessenger"
+      descriptions:
++        ["Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."]
+      categories:
++        ["Core"]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xA38d0c4E6319F9045F20318BA5f04CDe94208608) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      template:
++        "opstack/L2OutputOracle"
+      descriptions:
++        ["Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4) {
+    +++ description: None
+      directlyReceivedPermissions.4.description:
++        "upgrading bridge implementation allows to access all funds and change every system component."
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      issuedPermissions.0.via.0.description:
++        "upgrading bridge implementation allows to access all funds and change every system component."
+      template:
++        "opstack/L1StandardBridge"
+      descriptions:
++        ["The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."]
+    }
+```
+
 Generated with discovered.json: 0x94b5bc0ca795a295024e8abcf1e1c72aa66dd852
 
 # Diff at Sun, 08 Sep 2024 17:19:28 GMT:

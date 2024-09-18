@@ -1,3 +1,40 @@
+Generated with discovered.json: 0x0dab860a3d1959578632c86c3612ba6ead88f75b
+
+# Diff at Wed, 18 Sep 2024 07:09:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@eb7065b62e0bf0e8e364b8897a969ab444bac4b4 block: 20756723
+- current block number: 20775895
+
+## Description
+
+One signer removed from TreasuryOwner.
+
+## Watched changes
+
+```diff
+    contract TreasuryOwner (0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC) {
+    +++ description: None
+      values.$members.5:
+-        "0x3392fd462d9710Fbf3A5703818b9920C119DC080"
+      values.$members.4:
+-        "0xEe058D13A0c25a1ce2f68eb02dE4CE7E621982D9"
++        "0x3392fd462d9710Fbf3A5703818b9920C119DC080"
+      values.$members.3:
+-        "0xDecF20b9213f5d7f16196420377d37ef5f8F9686"
++        "0xEe058D13A0c25a1ce2f68eb02dE4CE7E621982D9"
+      values.$members.2:
+-        "0x33440E53476B855A56B831e7924B5aa123981726"
++        "0xDecF20b9213f5d7f16196420377d37ef5f8F9686"
+      values.$threshold:
+-        2
++        3
+      values.multisigThreshold:
+-        "2 of 6 (33%)"
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0x06a3749952a97dd4187d39d935b01415ee491f40
 
 # Diff at Sun, 15 Sep 2024 14:50:48 GMT:

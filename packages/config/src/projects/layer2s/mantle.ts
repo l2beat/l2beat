@@ -26,7 +26,7 @@ const threshold =
 export const mantle: Layer2 = opStackL2({
   badges: [Badge.DA.CustomDA],
   daProvider: {
-    name: 'MantleDA',
+    name: 'Mantle DA',
     bridge: {
       type: 'Staked Operators',
       requiredSignatures: threshold,
@@ -35,7 +35,7 @@ export const mantle: Layer2 = opStackL2({
     riskView: {
       value: 'External',
       description:
-        'Proof construction and state derivation rely fully on data that is NOT published on chain. MantleDA contracts are forked from EigenDA with significant modifications, most importantly removal of slashing conditions. DA fraud proof mechanism is not live yet.',
+        'Proof construction and state derivation rely fully on data that is NOT published on chain. Mantle DA contracts are forked from EigenDA with significant modifications, most importantly removal of slashing conditions. DA fraud proof mechanism is not live yet.',
       sentiment: 'bad',
     },
     technology: {

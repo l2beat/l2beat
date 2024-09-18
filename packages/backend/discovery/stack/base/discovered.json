@@ -1,7 +1,7 @@
 {
   "name": "stack",
   "chain": "base",
-  "blockNumber": 15661242,
+  "blockNumber": 19927649,
   "configHash": "0x0c0d0bcd179872a8706b012c4ecadd3454541847850f80a127ceaea39a281aea",
   "version": 14,
   "contracts": [
@@ -119,7 +119,7 @@
         "$immutable": false,
         "$implementation": "0xb079375dDB17FaBae0F3Ed6B9950f6cD626cE2a3",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619798",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619800",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -138,7 +138,11 @@
     {
       "name": "OptimismPortal",
       "address": "0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E",
+      "template": "opstack/OptimismPortal",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -163,7 +167,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 15066886
+          "prevBlockNum": 18994023
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x52c901666Cfc8AeE9b46A3b7C101688351529B37",
@@ -176,6 +180,7 @@
       "address": "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
+      "roles": ["Guardian"],
       "receivedPermissions": [
         {
           "permission": "configure",
@@ -226,7 +231,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 7,
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -291,10 +296,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 1,
-        "latestBlockNumber": 8424000,
-        "latestOutputIndex": 194,
-        "nextBlockNumber": 8467200,
-        "nextOutputIndex": 195,
+        "latestBlockNumber": 16934400,
+        "latestOutputIndex": 391,
+        "nextBlockNumber": 16977600,
+        "nextOutputIndex": 392,
         "PROPOSER": "0x28750b59d304e6ce7d3866eF9a0DbFBCfaE56A6E",
         "startingBlockNumber": 0,
         "startingTimestamp": 1709680111,
@@ -578,7 +583,8 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
+    "opstack/OptimismPortal": "0x1af81e069b7721f68b8f083eb7379b6f29e7b9510bc38ed2a7e2a33ebbf876dc",
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xbde3658d9829dc6a2b849d26602a57c5fd2a8972a78d434d59fb754595ff1019"
 }

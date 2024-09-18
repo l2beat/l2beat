@@ -18,7 +18,7 @@ export type DataAvailabilityLayer =
   | 'DAC'
   | 'Celestia'
   | 'External'
-  | 'MantleDA'
+  | 'Mantle DA'
   | 'FraxtalDA'
   | 'RedstoneDA'
   | 'XterioDA'

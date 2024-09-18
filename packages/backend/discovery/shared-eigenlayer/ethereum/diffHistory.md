@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x0620063959c6b4a5361237190c8c74239eb5135f
+
+# Diff at Wed, 18 Sep 2024 07:22:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b3e705d5dab71b5b740c4e16255faa377029e669 block: 20756772
+- current block number: 20775955
+
+## Description
+
+One signer changed, threshold decreased in EigenLayerTokenMultisig. Unverified strat deployed through the Factory.
+
+## Watched changes
+
+```diff
+    contract EigenLayerTokenMultisig (0xbb00DDa2832850a43840A3A86515E3Fe226865F2) {
+    +++ description: None
+      values.$threshold:
+-        4
++        3
+      values.multisigThreshold:
+-        "4 of 6 (67%)"
++        "3 of 6 (50%)"
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      values.$members.4:
+-        "0xeD7Ef087d1C01ecCA9a9688a44aaeDDEf4ea560E"
++        "0x422e2F724faFE75F3635458aD7D3Ac803DCD7ff1"
+      values.$members.3:
+-        "0x422e2F724faFE75F3635458aD7D3Ac803DCD7ff1"
++        "0x27ff193A6A1574A611E21c39FDA636fA1d61ba30"
+      values.$members.2:
+-        "0x27ff193A6A1574A611E21c39FDA636fA1d61ba30"
++        "0xb7Ae34BB33da55f12797e793E01e63a17B11d108"
+      values.$members.1:
+-        "0xb7Ae34BB33da55f12797e793E01e63a17B11d108"
++        "0xa2425B00F9A9457AEdd51d4C36d9917eA1Aa7a02"
+      values.$members.0:
+-        "0xa2425B00F9A9457AEdd51d4C36d9917eA1Aa7a02"
++        "0xdC541e2B4adD96888b2C79006F49A9748A4f1bDF"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract  (0xEB6CC669971d5310bEA32291d5d2087474D710ec)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
 Generated with discovered.json: 0xb37aa1ea78af1729196ed22074c1987c1422c1ec
 
 # Diff at Sun, 15 Sep 2024 15:01:35 GMT:

@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x78ab65cc0592bc7401db39601d61d0045ca2ad7e
+
+# Diff at Wed, 18 Sep 2024 07:30:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6e2d68b26301ad9eaaf8acc0e8b480482b8cc712 block: 15661242
+- current block number: 19927649
+
+## Description
+
+Shape related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 15661242 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      template:
++        "opstack/OptimismPortal"
+      descriptions:
++        ["The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."]
+    }
+```
+
+```diff
+    contract StackMultisig (0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104) {
+    +++ description: None
+      roles:
++        ["Guardian"]
+    }
+```
+
 Generated with discovered.json: 0x901e7495e893d7530117a915b119450806557380
 
 # Diff at Sun, 08 Sep 2024 17:20:01 GMT:
