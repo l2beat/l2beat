@@ -41,5 +41,6 @@
       }
     }
   },
-  "ignoreInWatchMode": ["scalar", "overhead"]
+  "ignoreInWatchMode": ["scalar", "overhead"],
+  "ignoreRelatives": ["gasPayingToken"]
 }
