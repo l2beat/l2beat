@@ -1,8 +1,8 @@
 {
   "name": "eigenda",
   "chain": "ethereum",
-  "blockNumber": 20776777,
-  "configHash": "0xab69cd8814c2598538285ee961f7bcbf1484fe36d437bb0e1914911bf0ccf288",
+  "blockNumber": 20777108,
+  "configHash": "0x04694fc4e69f24d674ab86027c2e14767b94a40d8d6ab993218e4a5403da0d45",
   "version": 14,
   "contracts": [
     {
@@ -37,6 +37,7 @@
           "0xAe60d8180437b5C34bB956822ac2710972584473",
           "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2"
         ],
+        "fourthQuorumStrategies": [],
         "MAX_WEIGHING_FUNCTION_LENGTH": 32,
         "registryCoordinator": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
         "secondQuorumStrategies": [
@@ -54,6 +55,9 @@
         },
         "thirdQuorumStrategies": {
           "description": "The strategies for the third quorum."
+        },
+        "fourthQuorumStrategies": {
+          "description": "The strategies for the fourth quorum. Not used yet, here to catch a potential new quorum."
         }
       },
       "derivedName": "StakeRegistry"
@@ -504,7 +508,7 @@
           "0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED",
           "0x454Ef2f69f91527856E06659f92a66f464C1ca4e"
         ],
-        "batchId": 33808,
+        "batchId": 33830,
         "BLOCK_STALE_MEASURE": 300,
         "blsApkRegistry": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
@@ -536,7 +540,7 @@
         "stakeRegistry": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
         "staleStakesForbidden": false,
         "STORE_DURATION_BLOCKS": 100800,
-        "taskNumber": 33808,
+        "taskNumber": 33830,
         "THRESHOLD_DENOMINATOR": 100
       },
       "fieldMeta": {

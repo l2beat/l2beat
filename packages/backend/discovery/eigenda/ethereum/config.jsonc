@@ -91,6 +91,17 @@
             "argValue": "2"
           },
           "target": { "template": "eigenlayer/Strategy" }
+        },
+        "fourthQuorumStrategies": {
+          "description": "The strategies for the fourth quorum. Not used yet, here to catch a potential new quorum.",
+          "handler": {
+            "type": "arrayFromOneEventWithArg",
+            "event": "StrategyAddedToQuorum",
+            "valueKey": "strategy",
+            "arg": "quorumNumber",
+            "argValue": "3"
+          },
+          "target": { "template": "eigenlayer/Strategy" }
         }
       }
     },

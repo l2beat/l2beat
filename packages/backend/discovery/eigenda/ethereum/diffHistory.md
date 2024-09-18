@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x238529c4ea11879889d8fd5d8ee8fc01b79ee0b8
+Generated with discovered.json: 0x9fbc162dcba18856455a482b45c2a33b4f650c9c
 
-# Diff at Wed, 18 Sep 2024 10:07:11 GMT:
+# Diff at Wed, 18 Sep 2024 11:14:04 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@c2aae39cbab1defe84c7155af7d521cf3c228e0d block: 20661957
-- current block number: 20776777
+- current block number: 20777108
 
 ## Description
 
@@ -53,6 +53,9 @@ discovery. Values are for block 20661957 (main branch discovery), not current.
 +++ description: The strategies for the first quorum (ETH).
       values.firstQuorumStrategies:
 +        ["0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0","0x93c4b944D05dfe6df7645A86cd2206016c51564D","0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2","0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc","0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d","0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff","0xa4C637e0F704745D182e4D38cAb7E7485321d059","0x57ba429517c3473B6d34CA9aCd56c0e735b94c02","0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6","0x7CA911E83dabf90C90dD3De5411a10F1A6112184","0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6","0xAe60d8180437b5C34bB956822ac2710972584473","0x298aFB19A105D59E74658C4C334Ff360BadE6dd2"]
++++ description: The strategies for the fourth quorum. Not used yet, here to catch a potential new quorum.
+      values.fourthQuorumStrategies:
++        []
 +++ description: The strategies for the second quorum (EIGEN).
       values.secondQuorumStrategies:
 +        ["0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7"]
@@ -60,7 +63,7 @@ discovery. Values are for block 20661957 (main branch discovery), not current.
       values.thirdQuorumStrategies:
 +        ["0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4"]
       fieldMeta:
-+        {"firstQuorumStrategies":{"description":"The strategies for the first quorum (ETH)."},"secondQuorumStrategies":{"description":"The strategies for the second quorum (EIGEN)."},"thirdQuorumStrategies":{"description":"The strategies for the third quorum."}}
++        {"firstQuorumStrategies":{"description":"The strategies for the first quorum (ETH)."},"secondQuorumStrategies":{"description":"The strategies for the second quorum (EIGEN)."},"thirdQuorumStrategies":{"description":"The strategies for the third quorum."},"fourthQuorumStrategies":{"description":"The strategies for the fourth quorum. Not used yet, here to catch a potential new quorum."}}
     }
 ```
 
