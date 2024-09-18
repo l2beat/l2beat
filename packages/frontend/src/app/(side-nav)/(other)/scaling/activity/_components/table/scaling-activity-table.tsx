@@ -3,6 +3,7 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { useScalingFilter } from '~/app/(side-nav)/(other)/_components/scaling-filter-context'
+import { ScalingFilters } from '~/app/(side-nav)/(other)/_components/scaling-filters'
 import { BasicTable } from '~/components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
@@ -29,6 +30,10 @@ export function ScalingActivityTable({ entries }: Props) {
       sorting: [{ id: 'data_pastDayTps', desc: true }],
     },
   })
-
-  return <BasicTable table={table} />
+  return (
+    <div className="space-y-3 md:space-y-6">
+      <ScalingFilters showRollupsOnly items={filteredEntries} />
+      <BasicTable table={table} />
+    </div>
+  )
 }

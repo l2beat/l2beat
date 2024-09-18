@@ -6,7 +6,6 @@ import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
-import { ScalingFilters } from '../../_components/scaling-filters'
 import { ActivityTimeRangeContextProvider } from './_components/activity-time-range-context'
 import { ScalingActivityTable } from './_components/table/scaling-activity-table'
 
@@ -35,10 +34,7 @@ export default async function Page() {
         <ActivityTimeRangeContextProvider>
           <ActivityChart milestones={HOMEPAGE_MILESTONES} entries={entries} />
           <HorizontalSeparator className="my-4 md:mt-6" />
-          <div className="space-y-3 md:space-y-6">
-            <ScalingFilters showRollupsOnly items={entries} />
-            <ScalingActivityTable entries={entries} />
-          </div>
+          <ScalingActivityTable entries={entries} />
         </ActivityTimeRangeContextProvider>
       </ScalingFilterContextProvider>
     </HydrateClient>

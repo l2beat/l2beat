@@ -12,7 +12,7 @@ const columnHelper = createColumnHelper<ScalingUpcomingEntry>()
 export const scalingUpcomingColumns = [
   ...getCommonProjectColumns(columnHelper),
   columnHelper.accessor('name', {
-    cell: (ctx) => <ProjectNameCell project={ctx.row.original} type="layer2" />,
+    cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
   }),
   columnHelper.accessor('category', {
     header: 'Type',

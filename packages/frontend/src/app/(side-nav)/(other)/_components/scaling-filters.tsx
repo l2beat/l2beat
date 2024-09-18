@@ -22,7 +22,7 @@ export function ScalingFilters({ items, showRollupsOnly }: Props) {
       value,
     }))
 
-  const hostChainFilter = hostChainOptions.length > 1 && (
+  const hostChainFilter = (
     <TableFilter
       title="Host Chain"
       options={hostChainOptions}

@@ -10,12 +10,7 @@ const columnHelper = createColumnHelper<ScalingRiskEntry>()
 export const scalingRiskColumns = [
   ...getCommonProjectColumns(columnHelper),
   columnHelper.accessor('name', {
-    cell: (ctx) => (
-      <ProjectNameCell
-        project={ctx.row.original}
-        type={ctx.row.original.type}
-      />
-    ),
+    cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
   }),
   columnHelper.accessor('risks.stateValidation', {
     header: 'State\nValidation',

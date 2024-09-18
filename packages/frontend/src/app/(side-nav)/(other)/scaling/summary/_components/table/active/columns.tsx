@@ -19,7 +19,7 @@ const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 export const scalingLayer2sColumns = [
   ...getCommonProjectColumns(columnHelper),
   columnHelper.accessor('name', {
-    cell: (ctx) => <ProjectNameCell project={ctx.row.original} type="layer2" />,
+    cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
   }),
   columnHelper.accessor('risks', {
     cell: (ctx) =>

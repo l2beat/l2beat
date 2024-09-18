@@ -13,13 +13,7 @@ const columnHelper = createColumnHelper<ScalingActivityEntry>()
 export const scalingActivityColumns = [
   ...getCommonProjectColumns(columnHelper),
   columnHelper.accessor('name', {
-    cell: (ctx) => (
-      <ProjectNameCell
-        project={ctx.row.original}
-        type={ctx.row.original.type}
-        showIsL3
-      />
-    ),
+    cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
   }),
   columnHelper.accessor('data.pastDayTps', {
     header: 'Past day TPS',

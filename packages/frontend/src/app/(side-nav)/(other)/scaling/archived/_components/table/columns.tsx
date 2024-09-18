@@ -14,7 +14,7 @@ const columnHelper = createColumnHelper<ScalingArchivedEntry>()
 export const scalingArchivedColumns = [
   ...getCommonProjectColumns(columnHelper),
   columnHelper.accessor('name', {
-    cell: (ctx) => <ProjectNameCell project={ctx.row.original} type="layer2" />,
+    cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
   }),
   columnHelper.accessor('risks', {
     cell: (ctx) => {

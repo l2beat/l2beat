@@ -27,12 +27,7 @@ const columnHelper = createColumnHelper<ScalingFinalityEntry>()
 export const scalingFinalityColumns = [
   ...getCommonProjectColumns(columnHelper),
   columnHelper.accessor('name', {
-    cell: (ctx) => (
-      <ProjectNameCell
-        project={ctx.row.original}
-        type={ctx.row.original.type}
-      />
-    ),
+    cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
   }),
   columnHelper.accessor('category', {
     header: 'Type',

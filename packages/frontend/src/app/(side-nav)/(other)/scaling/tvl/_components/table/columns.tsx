@@ -39,13 +39,7 @@ const totalColumn = columnHelper.accessor('tvl', {
 export const scalingTvlColumns = [
   ...getCommonProjectColumns(columnHelper),
   columnHelper.accessor('name', {
-    cell: (ctx) => (
-      <ProjectNameCell
-        project={ctx.row.original}
-        type={ctx.row.original.type}
-        showIsL3={true}
-      />
-    ),
+    cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
   }),
   columnHelper.group({
     id: 'data',

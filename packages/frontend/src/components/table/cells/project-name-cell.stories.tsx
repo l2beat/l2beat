@@ -4,15 +4,6 @@ import { ProjectNameCell } from './project-name-cell'
 const meta = {
   title: 'Components/ProjectNameCell',
   component: ProjectNameCell,
-  argTypes: {
-    type: {
-      control: 'select',
-      options: ['layer2', 'layer3', 'bridge'],
-    },
-    showIsL3: {
-      control: 'boolean',
-    },
-  },
 } satisfies Meta<typeof ProjectNameCell>
 
 export default meta
@@ -34,7 +25,5 @@ export const All: Story = {
         },
       },
     },
-    type: 'layer3',
-    showIsL3: true,
   },
 }
