@@ -1,3 +1,103 @@
+Generated with discovered.json: 0x4ac51724c912f782e3c537935307722e2cef95f4
+
+# Diff at Wed, 18 Sep 2024 07:13:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@bfae7c261ceef465bee8c9bd7ef728a49221d1da block: 19531966
+- current block number: 20775915
+
+## Description
+
+Shape related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531966 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x30c789674ad3B458886BBC9abf42EEe19EA05C1D) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      template:
++        "opstack/L2OutputOracle"
+      descriptions:
++        ["Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x3B95bC951EE0f553ba487327278cAc44f29715E5) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      issuedPermissions.0.via.0.description:
++        "upgrading bridge implementation allows to access all funds and change every system component."
+      template:
++        "opstack/L1StandardBridge"
+      descriptions:
++        ["The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."]
+    }
+```
+
+```diff
+    contract AdminMultisig (0x3c46C05c2eba8eDd0B0f0C8B1D2fBf9fc53ea01E) {
+    +++ description: None
+      receivedPermissions.2.description:
++        "upgrading bridge implementation allows to access all funds and change every system component."
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x635ba609680c55C3bDd0B3627b4c5dB21b13c310) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      template:
++        "opstack/L1CrossDomainMessenger"
+      descriptions:
++        ["Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."]
+      categories:
++        ["Core"]
+    }
+```
+
+```diff
+    contract SystemConfig (0x895E00269A05848F3c9889EfA677D02fF7351a5D) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x3c46C05c2eba8eDd0B0f0C8B1D2fBf9fc53ea01E","via":[{"address":"0xa2DCa85BB892De55D8B262d1806114733106e8D1","delay":0}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.target:
+-        "0x3c46C05c2eba8eDd0B0f0C8B1D2fBf9fc53ea01E"
++        "0x4b1A788B20bb85eb19f8e9B69B8a584e7fA29fe5"
+      issuedPermissions.0.via.0:
+-        {"address":"0xa2DCa85BB892De55D8B262d1806114733106e8D1","delay":0}
+      fieldMeta.gasLimit:
++        {"severity":"LOW","description":"Gas limit for blocks on L2."}
+      template:
++        "opstack/SystemConfig"
+      descriptions:
++        ["Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      template:
++        "opstack/OptimismPortal"
+      descriptions:
++        ["The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xa2DCa85BB892De55D8B262d1806114733106e8D1) {
+    +++ description: None
+      directlyReceivedPermissions.2.description:
++        "upgrading bridge implementation allows to access all funds and change every system component."
+    }
+```
+
 Generated with discovered.json: 0xcfa19a8819d5e117936e5949d42a77b36a58123a
 
 # Diff at Sun, 08 Sep 2024 17:18:26 GMT:

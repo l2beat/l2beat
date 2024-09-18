@@ -1,3 +1,145 @@
+Generated with discovered.json: 0x5d172fbec0897a0a44a3b49514db643e48f9e794
+
+# Diff at Wed, 18 Sep 2024 07:07:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7c1bc3f61e4e26296e8ae6143576df7802fbccfe block: 19927693
+- current block number: 20775882
+
+## Description
+
+Config/shape related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19927693 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x012c341506ee1939e56084F43Ae5dbCe224Ce2af) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      template:
++        "opstack/L1CrossDomainMessenger"
+      descriptions:
++        ["Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."]
+      categories:
++        ["Core"]
+    }
+```
+
+```diff
+    contract SystemConfig (0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0x75a223Fb459461B9Fa61dd25109EA05522b4b492","delay":0}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.via.0:
+-        {"address":"0x75a223Fb459461B9Fa61dd25109EA05522b4b492","delay":0}
+      template:
++        "opstack/SystemConfig"
+      descriptions:
++        ["Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."]
+      fieldMeta:
++        {"gasLimit":{"severity":"LOW","description":"Gas limit for blocks on L2."}}
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x12d4E64E1B46d27A00fe392653A894C1dd36fb80) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      issuedPermissions.0.via.0.description:
++        "upgrading bridge implementation allows to access all funds and change every system component."
+      template:
++        "opstack/L1StandardBridge"
+      descriptions:
++        ["The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."]
+    }
+```
+
+```diff
+    contract ChallengerMultisig (0x1B1ecDdbd5F9601b34262Aa3Ca346209E61aA68f) {
+    +++ description: None
+      roles:
++        ["Challenger","Guardian"]
+    }
+```
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions.6:
++        {"permission":"upgrade","target":"0xd5e3eDf5b68135D559D572E26bF863FBC1950033","via":[{"address":"0x75a223Fb459461B9Fa61dd25109EA05522b4b492"}]}
+      receivedPermissions.5.target:
+-        "0xd5e3eDf5b68135D559D572E26bF863FBC1950033"
++        "0xB09DC08428C8b4EFB4ff9C0827386CDF34277996"
+      receivedPermissions.4.target:
+-        "0xB09DC08428C8b4EFB4ff9C0827386CDF34277996"
++        "0x639F2AECE398Aa76b07e59eF6abe2cFe32bacb68"
+      receivedPermissions.3.target:
+-        "0x639F2AECE398Aa76b07e59eF6abe2cFe32bacb68"
++        "0x12d4E64E1B46d27A00fe392653A894C1dd36fb80"
+      receivedPermissions.3.description:
++        "upgrading bridge implementation allows to access all funds and change every system component."
+      receivedPermissions.2.target:
+-        "0x12d4E64E1B46d27A00fe392653A894C1dd36fb80"
++        "0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec"
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "configure"
+      receivedPermissions.1.target:
+-        "0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec"
++        "0x15A52Fed1c448028A240b603dD93f2697E12Dc82"
+      receivedPermissions.0.target:
+-        "0x15A52Fed1c448028A240b603dD93f2697E12Dc82"
++        "0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec"
+      receivedPermissions.0.via:
+-        [{"address":"0x75a223Fb459461B9Fa61dd25109EA05522b4b492"}]
+      receivedPermissions.0.description:
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+    }
+```
+
+```diff
+    contract OptimismPortal (0x639F2AECE398Aa76b07e59eF6abe2cFe32bacb68) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      template:
++        "opstack/OptimismPortal"
+      descriptions:
++        ["The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x75a223Fb459461B9Fa61dd25109EA05522b4b492) {
+    +++ description: None
+      directlyReceivedPermissions.2.description:
++        "upgrading bridge implementation allows to access all funds and change every system component."
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xB09DC08428C8b4EFB4ff9C0827386CDF34277996) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      template:
++        "opstack/L2OutputOracle"
+      descriptions:
++        ["Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0xd5e3eDf5b68135D559D572E26bF863FBC1950033) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      template:
++        "opstack/L1ERC721Bridge"
+      descriptions:
++        ["Used to bridge ERC-721 tokens from host chain to this chain."]
+    }
+```
+
 Generated with discovered.json: 0xafb5da06b9f1c86060fdb372b0e3bc8af83de857
 
 # Diff at Sun, 08 Sep 2024 17:17:49 GMT:
