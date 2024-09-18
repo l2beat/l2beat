@@ -33,7 +33,7 @@ export function ProjectTvlChart({
   const [token, setToken] = useState<ProjectToken>()
   const [unit, setUnit] = useState<ChartUnit>('usd')
 
-  const [timeRange, setTimeRange] = useState<TvlChartRange>('7d')
+  const [timeRange, setTimeRange] = useState<TvlChartRange>('30d')
 
   if (tokens && token) {
     return (

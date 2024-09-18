@@ -8,7 +8,7 @@ Generated with discovered.json: 0x4854af0c60fc633c9d090f5cba3ac0be8bb48e05
 
 ## Description
 
-Threshold multisig and address change.
+One signer changed, threshold decreased in EigenLayerTokenMultisig. Unverified strat deployed through the Factory.
 
 ## Watched changes
 

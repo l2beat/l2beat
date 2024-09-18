@@ -5578,6 +5578,20 @@
       "supply": "zero"
     },
     {
+      "name": "MintSwap404NFT",
+      "coingeckoId": "mintswaptoken",
+      "address": "0x9f7bd1Ce3412960524e86183B8F005271C09a5E0",
+      "symbol": "MST",
+      "decimals": 18,
+      "deploymentTimestamp": 1721792027,
+      "coingeckoListingTimestamp": 1725321600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39838/large/400.png?1724260451",
+      "chainId": 185,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Renzo Restaked ETH",
       "coingeckoId": "renzo-restaked-eth",
       "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
