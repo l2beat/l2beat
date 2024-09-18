@@ -12,6 +12,7 @@ export const thebinaryholdings: Layer2 = opStackL2({
   display: {
     name: 'The Binary Holdings',
     slug: 'thebinaryholdings',
+    shortName: 'Binary',
     warning:
       'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
