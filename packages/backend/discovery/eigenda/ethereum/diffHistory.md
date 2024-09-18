@@ -8,7 +8,7 @@ Generated with discovered.json: 0x238529c4ea11879889d8fd5d8ee8fc01b79ee0b8
 
 ## Description
 
-New quorum added for Restaked ALT (reALT).
+New quorum added for Restaked ALT (reALT). This new third quorum is not used in latest confirmBatch transactions.
 
 ## Watched changes
 
