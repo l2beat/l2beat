@@ -14,7 +14,7 @@ interface Props {
   entries: ScalingSummaryEntry[]
 }
 
-export function ScalingSummaryTables({ entries }: Props) {
+export function ScalingSummaryTable({ entries }: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
   const includeFilters = useScalingFilter()
 

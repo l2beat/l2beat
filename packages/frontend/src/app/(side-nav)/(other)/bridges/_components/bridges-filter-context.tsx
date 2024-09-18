@@ -7,8 +7,8 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { type BridgesRiskEntry } from '~/server/features/bridges/get-bridge-risk-entries'
 import { type BridgesSummaryEntry } from '~/server/features/bridges/get-bridge-summary-entries'
+import { type BridgesRiskEntry } from '~/server/features/bridges/get-bridges-risk-entries'
 
 export type BridgesFilterContextValue = {
   validatedBy?: string

@@ -2,24 +2,29 @@
 
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
-import { useScalingFilter } from '~/app/(side-nav)/(other)/_components/scaling-filter-context'
 import { BasicTable } from '~/components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
-import { type ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
-import { ScalingFilters } from '../../../../_components/scaling-filters'
-import { scalingRiskColumns } from './columns'
+import { bridgesRisksColumns } from './columns'
 
-export function ScalingRiskTable({ entries }: { entries: ScalingRiskEntry[] }) {
-  const includeFilters = useScalingFilter()
+import { type BridgesRiskEntry } from '~/server/features/bridges/get-bridges-risk-entries'
+import { useBridgesFilter } from '../../../_components/bridges-filter-context'
+import { BridgesFilters } from '../../../_components/bridges-filters'
+
+export interface Props {
+  entries: BridgesRiskEntry[]
+}
+
+export function BridgesRiskTable({ entries }: Props) {
+  const includeFilters = useBridgesFilter()
 
   const filteredEntries = useMemo(
-    () => entries.filter((item) => includeFilters(item)),
+    () => entries.filter(includeFilters),
     [entries, includeFilters],
   )
 
   const table = useTable({
     data: filteredEntries,
-    columns: scalingRiskColumns,
+    columns: bridgesRisksColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
@@ -38,7 +43,7 @@ export function ScalingRiskTable({ entries }: { entries: ScalingRiskEntry[] }) {
 
   return (
     <div className="mt-4 space-y-6 sm:mt-8">
-      <ScalingFilters items={filteredEntries} />
+      <BridgesFilters entries={filteredEntries} />
       <BasicTable table={table} />
     </div>
   )

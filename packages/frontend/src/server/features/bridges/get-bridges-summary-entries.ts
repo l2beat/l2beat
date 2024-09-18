@@ -45,7 +45,10 @@ function getBridges(params: Params) {
     implementationChangeReport,
     projectsVerificationStatuses,
   } = params
-  const entries = bridges.map((bridge) => {
+  const activeBridges = bridges.filter(
+    (bridge) => !bridge.isArchived && !bridge.isUpcoming,
+  )
+  const entries = activeBridges.map((bridge) => {
     const bridgeTvl = tvl7dBreakdown.projects[bridge.id.toString()]
 
     const associatedTokenWarning =

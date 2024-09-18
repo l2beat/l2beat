@@ -15,7 +15,9 @@ export async function getBridgeRiskEntries() {
       getImplementationChangeReport(),
     ])
 
-  const included = bridges.filter((project) => !project.isUpcoming)
+  const included = bridges.filter(
+    (project) => !project.isUpcoming && !project.isArchived,
+  )
 
   const entries = included
     .map((project) => {

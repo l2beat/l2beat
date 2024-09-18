@@ -5,7 +5,7 @@ import { RiskCell } from '~/components/table/cells/risk-cell'
 import { TypeCell } from '~/components/table/cells/type-cell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { sortSentiments } from '~/components/table/sorting/functions/sentiment-sorting'
-import { type BridgesRiskEntry } from '~/server/features/bridges/get-bridge-risk-entries'
+import { type BridgesRiskEntry } from '~/server/features/bridges/get-bridges-risk-entries'
 
 const sortBridgeRisks =
   (key: 'validatedBy' | 'sourceUpgradeability' | 'destinationToken') =>

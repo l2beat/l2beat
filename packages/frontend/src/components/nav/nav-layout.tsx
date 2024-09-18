@@ -99,6 +99,13 @@ export async function NavLayout({
           href: '/bridges/risk',
         },
       ],
+      secondaryLinks: [
+        {
+          title: 'Archived',
+          icon: <ArchivedIcon className="size-5" />,
+          href: '/bridges/archived',
+        },
+      ],
     },
     env.NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT && {
       title: 'Data Availability',

@@ -1,5 +1,4 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { TotalCell } from '~/app/(side-nav)/(other)/scaling/summary/_components/table/total-cell'
 import { UpcomingBadge } from '~/components/badge/upcoming-badge'
 import { NoInfoCell } from '~/components/table/cells/no-info-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
@@ -7,13 +6,12 @@ import { RiskCell } from '~/components/table/cells/risk-cell'
 import { TypeCell } from '~/components/table/cells/type-cell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { sortSentiments } from '~/components/table/sorting/functions/sentiment-sorting'
-import { EM_DASH } from '~/consts/characters'
-import { type BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-summary-entries'
-import { formatPercent } from '~/utils/get-percentage-change'
+import { type BridgesArchivedEntry } from '~/server/features/bridges/get-bridges-archived-entries'
+import { formatCurrency } from '~/utils/format'
 
-const columnHelper = createColumnHelper<BridgesSummaryEntry>()
+const columnHelper = createColumnHelper<BridgesArchivedEntry>()
 
-export const bridgesSummaryActiveColumns = [
+export const bridgesArchivedColumns = [
   ...getCommonProjectColumns(columnHelper),
   columnHelper.accessor('name', {
     cell: (ctx) => (
@@ -49,27 +47,26 @@ export const bridgesSummaryActiveColumns = [
         'Token bridges use escrows and mint tokens. Liquidity Networks use pools and swap tokens. Hybrid do both.',
     },
   }),
-  columnHelper.accessor('tvl', {
+  columnHelper.accessor('totalTvl', {
     id: 'total',
     header: 'Total',
     cell: (ctx) => {
-      const value = ctx.row.original.tvl
-      if (!value.breakdown) {
+      const value = ctx.getValue()
+      if (value === undefined) {
         return <UpcomingBadge />
       }
 
       return (
-        <TotalCell
-          associatedTokenSymbols={value.associatedTokens}
-          tvlWarnings={value.warnings}
-          breakdown={value.breakdown}
-          change={value.change}
-        />
+        <span className="text-base font-bold md:text-lg">
+          {formatCurrency(value, 'usd', {
+            showLessThanMinimum: false,
+          })}
+        </span>
       )
     },
     sortingFn: ({ original: a }, { original: b }) => {
-      const aTvl = a.tvl.breakdown?.total ?? 0
-      const bTvl = b.tvl.breakdown?.total ?? 0
+      const aTvl = a.totalTvl ?? 0
+      const bTvl = b.totalTvl ?? 0
 
       if (aTvl === bTvl) {
         return b.name.localeCompare(a.name)
@@ -80,23 +77,7 @@ export const bridgesSummaryActiveColumns = [
     meta: {
       align: 'right',
       tooltip:
-        'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago.',
-    },
-  }),
-  columnHelper.accessor('marketShare', {
-    header: 'MKT Share',
-    cell: (ctx) => {
-      const value = ctx.getValue()
-      if (!value) {
-        return EM_DASH
-      }
-
-      return formatPercent(value)
-    },
-    sortUndefined: 'last',
-    meta: {
-      align: 'right',
-      tooltip: 'Share of the sum of total value locked of all projects.',
+        'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
     },
   }),
 ]

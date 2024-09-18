@@ -1,8 +1,8 @@
 import { SimplePageHeader } from '~/components/simple-page-header'
-import { getBridgeRiskEntries } from '~/server/features/bridges/get-bridge-risk-entries'
+import { getBridgeRiskEntries } from '~/server/features/bridges/get-bridges-risk-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { BridgesFilterContextProvider } from '../_components/bridges-filter-context'
-import { BridgesRiskTables } from './_components/table/bridges-risks-tables'
+import { BridgesRiskTable } from './_components/table/bridges-risks-table'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -19,7 +19,7 @@ export default async function Page() {
         <SimplePageHeader className="!mt-0 mb-4">
           Risk Analysis
         </SimplePageHeader>
-        <BridgesRiskTables entries={entries} />
+        <BridgesRiskTable entries={entries} />
       </BridgesFilterContextProvider>
     </div>
   )

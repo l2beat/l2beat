@@ -29,8 +29,8 @@ export function ScalingArchivedTable({ entries }: Props) {
     initialState: {
       sorting: [
         {
-          id: '#',
-          desc: false,
+          id: 'total',
+          desc: true,
         },
       ],
       columnPinning: {
