@@ -1,6 +1,6 @@
 import { layer2s, layer3s } from '@l2beat/config'
 import { compact } from 'lodash'
-import { getL2Risks } from '~/app/(side-nav)/(other)/scaling/_utils/get-l2-risks'
+import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
