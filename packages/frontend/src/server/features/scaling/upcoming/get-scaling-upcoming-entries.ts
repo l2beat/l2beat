@@ -11,6 +11,7 @@ export function getScalingUpcomingEntries() {
     .map((project) => ({
       id: project.id,
       slug: project.display.slug,
+      href: `/scaling/projects/${project.display.slug}`,
       name: project.display.name,
       shortName: project.display.shortName,
       category: project.display.category,
