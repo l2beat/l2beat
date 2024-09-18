@@ -225,9 +225,43 @@ export const allbridge: Bridge = {
   },
   permissions: [
     {
+      name: 'TokenBridge Admin',
+      description:
+        'Allowed to grant and revoke all roles in the TokenBridge (Can steal all funds).',
+      accounts: discovery.getAccessControlRolePermission(
+        'TokenBridge',
+        'DEFAULT_ADMIN_ROLE',
+      ),
+    },
+    {
+      name: 'TokenBridge Manager',
+      description:
+        'Allowed to set Validators, unlockSigners and unpause in the TokenBridge (Can steal all funds).',
+      accounts: discovery.getAccessControlRolePermission(
+        'TokenBridge',
+        'BRIDGE_MANAGER',
+      ),
+    },
+    {
+      name: 'TokenBridge Token Manager',
+      description: 'Allowed add and remove token support in the TokenBridge.',
+      accounts: discovery.getAccessControlRolePermission(
+        'TokenBridge',
+        'TOKEN_MANAGER',
+      ),
+    },
+    {
+      name: 'TokenBridge Stop Manager',
+      description: 'Can pause the TokenBridge.',
+      accounts: discovery.getAccessControlRolePermission(
+        'TokenBridge',
+        'STOP_MANAGER',
+      ),
+    },
+    {
       name: 'Allbridge Owner EOA.',
       description:
-        'Owner of all system contracts, privileged to update messengers and other bridge parameters. As a result this account can drain all funds from the pools and the token bridge.',
+        'Owner of all system contracts except TokenBridge, privileged to update messengers and other bridge parameters. As a result this account can drain all funds from the pools.',
       accounts: [discovery.getPermissionedAccount('LPBridge', 'owner')],
     },
     {
