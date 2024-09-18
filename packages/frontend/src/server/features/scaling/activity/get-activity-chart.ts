@@ -1,4 +1,3 @@
-import { layer2s, layer3s } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   unstable_cache as cache,
@@ -8,6 +7,7 @@ import { env } from '~/env'
 import { db } from '~/server/database'
 import { getRangeWithMax } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generate-timestamps'
+import { getActivityProjects } from './utils/get-activity-projects'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import {
   type ActivityProjectFilter,
@@ -34,14 +34,14 @@ export type ActivityChartData = Awaited<
 >
 const getCachedActivityChart = cache(
   async (filter: ActivityProjectFilter, range: ActivityTimeRange) => {
-    const projects = [...layer2s, ...layer3s]
+    const projects = getActivityProjects()
       .filter(createActivityProjectsFilter(filter))
       .map((p) => p.id)
       .concat(ProjectId.ETHEREUM)
-
+    const adjustedRange = getFullySyncedActivityRange(range)
     const entries = await db.activity.getByProjectsAndTimeRange(
       projects,
-      getFullySyncedActivityRange(range),
+      adjustedRange,
     )
 
     const startTimestamp = entries.find(
@@ -82,14 +82,21 @@ const getCachedActivityChart = cache(
         { timestamp: UnixTime; count: number; ethereumCount: number }
       >,
     )
-
-    const result: [number, number, number][] = Object.values(aggregatedEntries)
-      .sort((a, b) => a.timestamp.toNumber() - b.timestamp.toNumber())
-      .map(({ timestamp, count, ethereumCount }) => [
+    const timestamps = generateTimestamps(
+      [startTimestamp, adjustedRange[1]],
+      'daily',
+    )
+    const result: [number, number, number][] = timestamps.map((timestamp) => {
+      const entry = aggregatedEntries[timestamp.toNumber()]
+      if (!entry) {
+        return [+timestamp, 0, 0]
+      }
+      return [
         +timestamp,
-        count / UnixTime.DAY,
-        ethereumCount / UnixTime.DAY,
-      ])
+        entry.count / UnixTime.DAY,
+        entry.ethereumCount / UnixTime.DAY,
+      ]
+    })
 
     return result
   },

@@ -60,6 +60,18 @@ export function BaseScalingFilters({
     item.category?.includes('Rollup'),
   )
 
+  const raasOptions = uniq(
+    items
+      .flatMap((item) => item.badges ?? [])
+      .filter((badge) => badge.kind === 'RaaS')
+      .map((badge) => badge.badge),
+  )
+    .sort()
+    .map((badge) => ({
+      label: badge,
+      value: badge,
+    }))
+
   return (
     <OverflowWrapper>
       <div className="flex flex-row space-x-2">
@@ -97,6 +109,12 @@ export function BaseScalingFilters({
           options={purposeOptions}
           value={filter.purpose}
           onValueChange={(value) => filter.set({ purpose: value })}
+        />
+        <TableFilter
+          title="RaaS"
+          options={raasOptions}
+          value={filter.badgeRaaS}
+          onValueChange={(value) => filter.set({ badgeRaaS: value })}
         />
         {additionalFilters}
       </div>

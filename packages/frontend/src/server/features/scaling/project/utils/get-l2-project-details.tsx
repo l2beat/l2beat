@@ -71,7 +71,7 @@ export async function getL2ProjectDetails({
 
   await Promise.all([
     api.tvl.chart.prefetch({
-      range: '7d',
+      range: '30d',
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
     }),
@@ -80,14 +80,14 @@ export async function getL2ProjectDetails({
       filter: { type: 'projects', projectIds: [project.id] },
     }),
     api.costs.chart.prefetch({
-      range: '7d',
+      range: '30d',
       filter: { type: 'projects', projectIds: [project.id] },
     }),
   ])
   const [tvlChartData, activityChartData, costsChartData, tokens] =
     await Promise.all([
       api.tvl.chart({
-        range: '7d',
+        range: '30d',
         filter: { type: 'projects', projectIds: [project.id] },
         excludeAssociatedTokens: false,
       }),
@@ -96,7 +96,7 @@ export async function getL2ProjectDetails({
         filter: { type: 'projects', projectIds: [project.id] },
       }),
       api.costs.chart({
-        range: '7d',
+        range: '30d',
         filter: { type: 'projects', projectIds: [project.id] },
       }),
       getTokensForProject(project),
@@ -109,7 +109,7 @@ export async function getL2ProjectDetails({
 
   const items: ProjectDetailsSection[] = []
 
-  if (!project.isUpcoming && tvlChartData.chart.length > 0) {
+  if (!project.isUpcoming && tvlChartData.length > 0) {
     items.push({
       type: 'ChartSection',
       props: {

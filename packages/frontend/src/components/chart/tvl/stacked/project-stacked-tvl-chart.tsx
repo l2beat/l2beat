@@ -103,7 +103,7 @@ function DefaultChart({
   const { columns, chartRange, valuesStyle } = useStackedTvlChartRenderParams({
     milestones,
     unit,
-    data: data?.chart,
+    data,
   })
 
   return (

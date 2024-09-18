@@ -1,20 +1,16 @@
 import { InfoIcon } from '~/icons/info'
-import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { Skeleton } from '../../core/skeleton'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '../../core/tooltip/tooltip'
-import { tvlRangeToReadable } from '../tvl/tvl-range-to-readable'
 
-export function ActivityChartHeader({
-  scalingFactor,
-  range,
-}: {
+interface Props {
   scalingFactor: number | undefined
-  range: TvlChartRange
-}) {
+}
+
+export function ActivityChartHeader({ scalingFactor }: Props) {
   return (
     <header className="mb-4" data-role="chart-header">
       <div className="flex items-baseline justify-between">
@@ -35,9 +31,7 @@ export function ActivityChartHeader({
           Transactions per second
         </p>
         <div className="flex w-full items-center gap-1.5 text-right text-gray-500 group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0 dark:text-gray-600 md:w-auto">
-          {range === 'max'
-            ? 'All time'
-            : `Observed over the last ${tvlRangeToReadable(range)}`}
+          Observed over the last 7 days
           <Tooltip>
             <TooltipTrigger>
               <InfoIcon className="fill-current" />
@@ -51,9 +45,7 @@ export function ActivityChartHeader({
                 <div className="flex flex-col gap-1">
                   <div className="text-xs font-bold">Exact formula:</div>
                   <div className="text-xs">
-                    {range === 'max'
-                      ? '(projext txs + ETH txs) / ETX txs'
-                      : `(project txs/${range} + ETH txs/${range}) / ETH txs/${range}`}
+                    (project txs/7d + ETH txs/7d) / ETH txs/7d
                   </div>
                 </div>
               </div>

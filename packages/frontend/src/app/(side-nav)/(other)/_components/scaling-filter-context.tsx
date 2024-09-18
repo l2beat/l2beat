@@ -1,6 +1,7 @@
 'use client'
 
 import {
+  type BadgeId,
   type Layer2Provider,
   type Layer3Provider,
   type ScalingProjectCategory,
@@ -32,6 +33,7 @@ export type ScalingFilterContextValue = {
   purpose?: ScalingProjectPurpose
   hostChain?: string
   daLayer?: string
+  badgeRaaS?: BadgeId
 }
 
 export type MutableScalingFilterContextValue = ScalingFilterContextValue & {
@@ -52,6 +54,8 @@ const defaultValues: ScalingFilterContextValue = {
   purpose: undefined,
   hostChain: undefined,
   daLayer: undefined,
+  // badges
+  badgeRaaS: undefined,
 }
 
 export function useScalingFilterValues() {
@@ -111,6 +115,12 @@ export function useScalingFilter() {
           ? entry.entryType === 'data-availability'
             ? entry.dataAvailability.layer.value === scalingFilters.daLayer
             : undefined
+          : undefined,
+        // Badges
+        scalingFilters.badgeRaaS
+          ? entry.badges?.some(
+              (badge) => badge.badge === scalingFilters.badgeRaaS,
+            )
           : undefined,
       ].filter(notUndefined)
       return checks.length === 0 || checks.every(Boolean)

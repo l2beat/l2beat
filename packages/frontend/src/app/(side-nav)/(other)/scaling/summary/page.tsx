@@ -16,12 +16,18 @@ export const metadata = getDefaultMetadata({
 })
 
 export default async function Page() {
-  const entries = await getScalingSummaryEntries()
-  await api.tvl.chart.prefetch({
-    filter: { type: 'layer2' },
-    range: getCookie('scalingSummaryChartRange'),
-    excludeAssociatedTokens: false,
-  })
+  const [entries] = await Promise.all([
+    getScalingSummaryEntries(),
+    api.tvl.chart.prefetch({
+      filter: { type: 'layer2' },
+      range: getCookie('scalingSummaryChartRange'),
+      excludeAssociatedTokens: false,
+    }),
+    api.tvl.total.prefetch({
+      filter: { type: 'layer2' },
+      excludeAssociatedTokens: false,
+    }),
+  ])
 
   return (
     <HydrateClient>

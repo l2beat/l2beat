@@ -33,6 +33,16 @@ export function ActivityChart({ milestones, entries }: Props) {
     true,
   )
 
+  const { data: scalingFactor } = api.activity.scalingFactor.useQuery({
+    filter: filters.isEmpty
+      ? { type: 'all' }
+      : {
+          type: 'projects',
+          projectIds: entries
+            .filter(includeFilter)
+            .map((project) => project.id),
+        },
+  })
   const { data, isLoading } = api.activity.chart.useQuery({
     range: timeRange,
     filter: filters.isEmpty
@@ -52,18 +62,6 @@ export function ActivityChart({ milestones, entries }: Props) {
       showMainnet,
     })
 
-  const totalTxs = data?.reduce(
-    (acc, curr) => {
-      acc.ethereum += curr[2]
-      acc.rest += curr[1]
-      return acc
-    },
-    { ethereum: 0, rest: 0 },
-  )
-
-  const scalingFactor =
-    totalTxs &&
-    ((totalTxs.rest ?? 0) + (totalTxs.ethereum ?? 0)) / (totalTxs.ethereum ?? 1)
   return (
     <ChartProvider
       columns={columns}
@@ -76,7 +74,7 @@ export function ActivityChart({ milestones, entries }: Props) {
       )}
     >
       <section className="flex flex-col gap-4">
-        <ActivityChartHeader scalingFactor={scalingFactor} range={timeRange} />
+        <ActivityChartHeader scalingFactor={scalingFactor} />
         <ActivityTimeRangeControls
           timeRange={timeRange}
           setTimeRange={setTimeRange}
