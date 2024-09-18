@@ -580,7 +580,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     Apart from the paths that can upgrade all shared implementations, the ZK stack governance system defines other roles that can modify the system: 
     A single *Elastic Chain operator* role that governs parameters in the shared contracts and a *ChainAdmin* role (in the chain-specific diamond contract) for managing parameters of each individual Hyperchain that builds on the stack.
     These chain-specific actions include setting a transaction filterer that can censor L1 -> L2 messages, setting fee parameters and adding / removing Validators in the ValidatorTimelock. 
-    ZKsync Era's ChainAdmin differs from the others as it also has the above *Elastic Chain operator* (not upgradeability admin) role in the shared ZK stack contracts.
+    ZKsync Era's ChainAdmin differs from the others as it also has the above *Elastic Chain Operator* role in the shared ZK stack contracts.
     `
       return description
     })(),
