@@ -369,28 +369,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       dataAvailability:
         daProvider !== undefined
           ? {
-              ...RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
-              sources: [
-                {
-                  contract: 'ValidatorTimelock',
-                  references: [
-                    'https://etherscan.io/address/0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E#code#F1#L120',
-                    'https://etherscan.io/tx/0x9dbf29985eae00b7a1b7dbd5b21eedfb287be17310eb8bef6c524990b6928f63', // example tx (see calldata, blob)
-                  ],
-                },
-                {
-                  contract: templateVars.diamondContract.name,
-                  references: [
-                    'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L216',
-                    'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F11#L120',
-                  ],
-                },
-              ],
-              otherReferences: [
-                'https://docs.zksync.io/build/developer-reference/era-contracts/l1-contracts#executorfacet',
-              ],
-            }
-          : {
               ...RISK_VIEW.DATA_EXTERNAL,
               sources: [
                 {
@@ -412,6 +390,28 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
               otherReferences: [
                 'https://docs.zksync.io/build/developer-reference/era-contracts/l1-contracts#executorfacet',
                 'https://docs.zksync.io/zk-stack/concepts/data-availability/validiums',
+              ],
+            }
+          : {
+              ...RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
+              sources: [
+                {
+                  contract: 'ValidatorTimelock',
+                  references: [
+                    'https://etherscan.io/address/0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E#code#F1#L120',
+                    'https://etherscan.io/tx/0x9dbf29985eae00b7a1b7dbd5b21eedfb287be17310eb8bef6c524990b6928f63', // example tx (see calldata, blob)
+                  ],
+                },
+                {
+                  contract: templateVars.diamondContract.name,
+                  references: [
+                    'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L216',
+                    'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F11#L120',
+                  ],
+                },
+              ],
+              otherReferences: [
+                'https://docs.zksync.io/build/developer-reference/era-contracts/l1-contracts#executorfacet',
               ],
             },
       exitWindow: {
