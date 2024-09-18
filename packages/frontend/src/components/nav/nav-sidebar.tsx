@@ -42,34 +42,36 @@ export async function NavSidebar({
         </div>
       </div>
       <nav className="flex flex-1 flex-col gap-6">
-        {groups.map((group) => (
-          <NavLinkGroup key={group.title} title={group.title}>
-            {group.links.map(
-              (link) =>
-                !link.disabled && (
-                  <NavLink
-                    key={link.href}
-                    title={link.title}
-                    icon={link.icon}
-                    href={link.href}
-                  />
-                ),
-            )}
-            {group.secondaryLinks && (
-              <>
-                <NavDivider className="my-1" />
-                {group.secondaryLinks.map((link) => (
-                  <NavLink
-                    key={link.href}
-                    title={link.title}
-                    icon={link.icon}
-                    href={link.href}
-                  />
-                ))}
-              </>
-            )}
-          </NavLinkGroup>
-        ))}
+        {groups.map((group) => {
+          return (
+            <NavLinkGroup key={group.title} group={group}>
+              {group.links.map(
+                (link) =>
+                  !link.disabled && (
+                    <NavLink
+                      key={link.href}
+                      title={link.title}
+                      icon={link.icon}
+                      href={link.href}
+                    />
+                  ),
+              )}
+              {group.secondaryLinks && (
+                <>
+                  <NavDivider className="my-1" />
+                  {group.secondaryLinks.map((link) => (
+                    <NavLink
+                      key={link.href}
+                      title={link.title}
+                      icon={link.icon}
+                      href={link.href}
+                    />
+                  ))}
+                </>
+              )}
+            </NavLinkGroup>
+          )
+        })}
         <NavDivider />
         <NavSmallLinkGroup>
           <NavSmallLink title="Forum" href={externalLinks.forum} />

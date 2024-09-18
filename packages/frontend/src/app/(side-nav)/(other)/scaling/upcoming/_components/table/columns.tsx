@@ -28,7 +28,6 @@ export const scalingUpcomingColumns = [
     cell: (ctx) => ctx.getValue().join(', '),
     enableSorting: false,
     meta: {
-      align: 'right',
       tooltip: 'Functionality supported by this project.',
     },
   }),
