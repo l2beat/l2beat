@@ -1,3 +1,140 @@
+Generated with discovered.json: 0x7b529538fe6fe3ac17e184b0ee43c258f87a8f9a
+
+# Diff at Wed, 18 Sep 2024 07:17:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@14c205b8c5ed432f46bca9d694386b839078e6ea block: 20389626
+- current block number: 20775932
+
+## Description
+
+Shape related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20389626 (main branch discovery), not current.
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions.6:
++        {"permission":"upgrade","target":"0xe07eA0436100918F157DF35D01dCE5c11b16D1F1","description":"upgrading bridge implementation allows to access all funds and change every system component.","via":[{"address":"0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9"}]}
+      receivedPermissions.5.target:
+-        "0xe07eA0436100918F157DF35D01dCE5c11b16D1F1"
++        "0x934Ab59Ef14b638653b1C0FEf7aB9a72186393DC"
+      receivedPermissions.4.target:
+-        "0x934Ab59Ef14b638653b1C0FEf7aB9a72186393DC"
++        "0x91493a61ab83b62943E6dCAa5475Dd330704Cc84"
+      receivedPermissions.3.target:
+-        "0x91493a61ab83b62943E6dCAa5475Dd330704Cc84"
++        "0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664"
+      receivedPermissions.2.target:
+-        "0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664"
++        "0x5e76821C3c1AbB9fD6E310224804556C61D860e0"
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "configure"
+      receivedPermissions.1.target:
+-        "0x5e76821C3c1AbB9fD6E310224804556C61D860e0"
++        "0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664"
+      receivedPermissions.1.via:
+-        [{"address":"0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9"}]
+      receivedPermissions.1.description:
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x5e76821C3c1AbB9fD6E310224804556C61D860e0) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      template:
++        "opstack/L2OutputOracle"
+      descriptions:
++        ["Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."]
+    }
+```
+
+```diff
+    contract SystemConfig (0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9","delay":0}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.via.0:
+-        {"address":"0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9","delay":0}
+      fieldMeta.gasLimit:
++        {"severity":"LOW","description":"Gas limit for blocks on L2."}
+      template:
++        "opstack/SystemConfig"
+      descriptions:
++        ["Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x91493a61ab83b62943E6dCAa5475Dd330704Cc84) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      template:
++        "opstack/OptimismPortal"
+      descriptions:
++        ["The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x934Ab59Ef14b638653b1C0FEf7aB9a72186393DC) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      template:
++        "opstack/L1ERC721Bridge"
+      descriptions:
++        ["Used to bridge ERC-721 tokens from host chain to this chain."]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9) {
+    +++ description: None
+      directlyReceivedPermissions.5.description:
++        "upgrading bridge implementation allows to access all funds and change every system component."
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0xc76543A64666d9a073FaEF4e75F651c88e7DBC08) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      template:
++        "opstack/L1CrossDomainMessenger"
+      descriptions:
++        ["Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."]
+      categories:
++        ["Core"]
+    }
+```
+
+```diff
+    contract ChallengerMultisig (0xcE10372313Ca39Fbf75A09e7f4c0E57F070259f4) {
+    +++ description: None
+      roles:
++        ["Challenger","Guardian"]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xe07eA0436100918F157DF35D01dCE5c11b16D1F1) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      issuedPermissions.0.via.0.description:
++        "upgrading bridge implementation allows to access all funds and change every system component."
+      template:
++        "opstack/L1StandardBridge"
+      descriptions:
++        ["The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."]
+    }
+```
+
 Generated with discovered.json: 0x3e7c965c6264d54c688e01f8ba4dd0f5e60c8c14
 
 # Diff at Sun, 08 Sep 2024 17:19:25 GMT:
