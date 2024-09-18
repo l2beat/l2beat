@@ -1,4 +1,4 @@
-import { ProjectId, formatSeconds } from '@l2beat/shared-pure'
+import { formatSeconds } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
   EXITS,
@@ -13,6 +13,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { zkStackL2 } from './templates/zkStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('cronoszkevm')
@@ -64,9 +65,7 @@ const validators = () => {
     .map(([validator, _]) => validator)
 }
 
-export const cronoszkevm: Layer2 = {
-  type: 'layer2',
-  id: ProjectId('cronoszkevm'),
+export const cronoszkevm: Layer2 = zkStackL2({
   badges: [
     Badge.VM.EVM,
     Badge.DA.CustomDA,
@@ -85,8 +84,6 @@ export const cronoszkevm: Layer2 = {
     description:
       'Cronos zkEVM is a general-purpose Validium on Ethereum built on the ZK Stack, scaling the existing portfolio of Cronos apps and chains.',
     purposes: ['Universal'],
-    category: 'Validium',
-    provider: 'ZK Stack',
     links: {
       websites: ['https://cronos.org/zkevm'],
       apps: ['https://zkevm.cronos.org/bridge'],
@@ -451,4 +448,4 @@ export const cronoszkevm: Layer2 = {
       thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
     },
   ],
-}
+})

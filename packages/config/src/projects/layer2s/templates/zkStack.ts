@@ -1,10 +1,9 @@
 import { ContractParameters } from '@l2beat/discovery-types'
 import {
+  ChainId,
   EthereumAddress,
   ProjectId,
-  UnixTime,
   formatSeconds,
-  ChainId,
 } from '@l2beat/shared-pure'
 
 import {
@@ -32,10 +31,15 @@ import {
 import { ChainConfig } from '../../../common/ChainConfig'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { BadgeId } from '../../badges'
+import { PROOFS } from '../../other/zk-catalog/common/proofSystems'
 import { getStage } from '../common/stages/getStage'
 import { StageConfig } from '../common/stages/types'
-import { type Layer2, type Layer2Display, Layer2FinalityConfig } from '../types'
-import { PROOFS } from '../../other/zk-catalog/common/proofSystems'
+import {
+  type Layer2,
+  type Layer2Display,
+  Layer2FinalityConfig,
+  Layer2TxConfig,
+} from '../types'
 
 export interface DAProvider {
   name: DataAvailabilityLayer
@@ -63,6 +67,7 @@ export interface ZkStackConfigCommon {
   l1StandardBridgePremintedTokens?: string[]
   rpcUrl?: string
   transactionApi?: ScalingProjectTransactionApi
+  nonTemplateTrackedTxs?: Layer2TxConfig[]
   finality?: Layer2FinalityConfig
   l2OutputOracle?: ContractParameters
   portal?: ContractParameters
@@ -71,7 +76,7 @@ export interface ZkStackConfigCommon {
   roleOverrides?: Record<string, string>
   nonTemplatePermissions?: ScalingProjectPermission[]
   nonTemplateContracts?: (upgrades: Upgradeability) => ScalingProjectContract[]
-  nonTemplateEscrows?: ScalingProjectEscrow[]
+  nonTemplateEscrows?: (upgrades: Upgradeability) => ScalingProjectEscrow[]
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
@@ -291,243 +296,27 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       },
     },
     config: {
-      associatedTokens: ['ZK'],
+      associatedTokens: templateVars.associatedTokens,
       escrows: [
-        discovery.getEscrowDetails({
-          address: EthereumAddress(
-            '0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB',
-          ),
-          tokens: '*',
-          description:
-            'Shared bridge for depositing tokens to ZKsync Era and, in the future, other ZK stack chains.',
-          ...upgrades,
-        }),
-        discovery.getEscrowDetails({
-          address: EthereumAddress(
-            '0x41527B2d03844dB6b0945f25702cB958b6d55989',
-          ),
-          sinceTimestamp: new UnixTime(1698058151),
-          tokens: ['wstETH'],
-          description:
-            'Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the new shared BridgeHub.',
-          upgradableBy: ['Lido (Lido Agent)'],
-          upgradeDelay: 'No delay',
-        }),
-        discovery.getEscrowDetails({
-          address: EthereumAddress(
-            '0x32400084C286CF3E17e7B677ea9583e60a000324',
-          ),
-          sinceTimestamp: new UnixTime(1676268575),
-          tokens: ['ETH'],
-          description: 'Main rollup contract of ZKsync Era.',
-          ...upgrades,
-          isHistorical: true,
-          untilTimestamp: new UnixTime(1717922458),
-        }),
-        discovery.getEscrowDetails({
-          address: EthereumAddress(
-            '0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063',
-          ),
-          sinceTimestamp: new UnixTime(1676367083),
-          tokens: '*',
-          description:
-            'Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.',
-          ...upgrades,
-        }),
-        ...(templateVars.nonTemplateEscrows ?? []),
+        ...(templateVars.nonTemplateEscrows !== undefined
+          ? templateVars.nonTemplateEscrows(upgrades)
+          : []),
       ],
-      transactionApi: {
-        type: 'rpc',
-        defaultUrl: 'https://mainnet.era.zksync.io',
-        defaultCallsPerMinute: 1500,
-        startBlock: 1,
-      },
+      transactionApi:
+        templateVars.transactionApi ??
+        (templateVars.rpcUrl !== undefined
+          ? {
+              type: 'rpc',
+              startBlock: 1,
+              defaultUrl: templateVars.rpcUrl,
+              defaultCallsPerMinute: 1500,
+            }
+          : undefined),
       trackedTxs:
         daProvider !== undefined
           ? undefined
-          : [
-              {
-                uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
-                query: {
-                  formula: 'functionCall',
-                  address: EthereumAddress(
-                    '0xa0425d71cB1D6fb80E65a5361a04096E0672De03',
-                  ),
-                  selector: '0x701f58c5',
-                  functionSignature:
-                    'function commitBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32), (uint64,uint64,uint64,bytes32,uint256,bytes32,bytes32,bytes32,bytes,bytes)[])',
-                  sinceTimestamp: new UnixTime(1701721931),
-                  untilTimestamp: new UnixTime(1710169104),
-                },
-              },
-              {
-                uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
-                query: {
-                  formula: 'functionCall',
-                  address: EthereumAddress(
-                    '0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD',
-                  ),
-                  selector: '0x701f58c5',
-                  functionSignature:
-                    'function commitBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32), (uint64,uint64,uint64,bytes32,uint256,bytes32,bytes32,bytes32,bytes,bytes)[])',
-                  sinceTimestamp: new UnixTime(1710169104),
-                  untilTimestamp: new UnixTime(1717681823),
-                },
-              },
-              {
-                uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
-                query: {
-                  formula: 'functionCall',
-                  address: EthereumAddress(
-                    '0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E',
-                  ),
-                  selector: '0x6edd4f12',
-                  functionSignature:
-                    'function commitBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment), (uint64 batchNumber, uint64 timestamp, uint64 indexRepeatedStorageChanges, bytes32 newStateRoot, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 bootloaderHeapInitialContentsHash, bytes32 eventsQueueStateHash, bytes systemLogs, bytes pubdataCommitments)[] _newBatchesData)',
-                  sinceTimestamp: new UnixTime(1717681823),
-                },
-              },
-              {
-                uses: [
-                  { type: 'liveness', subtype: 'proofSubmissions' },
-                  { type: 'l2costs', subtype: 'proofSubmissions' },
-                ],
-                query: {
-                  formula: 'functionCall',
-                  address: EthereumAddress(
-                    '0x3dB52cE065f728011Ac6732222270b3F2360d919',
-                  ),
-                  selector: '0x7739cbe7',
-                  functionSignature:
-                    'function proveBlocks((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32) calldata,(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[] calldata,(uint256[],uint256[]) calldata)',
-                  sinceTimestamp: new UnixTime(1679602559),
-                  untilTimestamp: new UnixTime(1701718427),
-                },
-              },
-              {
-                uses: [
-                  { type: 'liveness', subtype: 'proofSubmissions' },
-                  { type: 'l2costs', subtype: 'proofSubmissions' },
-                ],
-                query: {
-                  formula: 'functionCall',
-                  address: EthereumAddress(
-                    '0xa0425d71cB1D6fb80E65a5361a04096E0672De03',
-                  ),
-                  selector: '0x7f61885c',
-                  functionSignature:
-                    'function proveBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32), tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[], tuple(uint256[], uint256[]))',
-                  sinceTimestamp: new UnixTime(1701258299),
-                  untilTimestamp: new UnixTime(1710165419),
-                },
-              },
-              {
-                uses: [
-                  { type: 'liveness', subtype: 'proofSubmissions' },
-                  { type: 'l2costs', subtype: 'proofSubmissions' },
-                ],
-                query: {
-                  formula: 'functionCall',
-                  address: EthereumAddress(
-                    '0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD',
-                  ),
-                  selector: '0x7f61885c',
-                  functionSignature:
-                    'function proveBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32), tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[], tuple(uint256[], uint256[]))',
-                  sinceTimestamp: new UnixTime(1710165419),
-                  untilTimestamp: new UnixTime(1717694375),
-                },
-              },
-              {
-                uses: [
-                  { type: 'liveness', subtype: 'proofSubmissions' },
-                  { type: 'l2costs', subtype: 'proofSubmissions' },
-                ],
-                query: {
-                  formula: 'functionCall',
-                  address: EthereumAddress(
-                    '0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E',
-                  ),
-                  selector: '0xc37533bb',
-                  functionSignature:
-                    'function proveBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment), (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[], (uint256[] recursiveAggregationInput, uint256[] serializedProof))',
-                  sinceTimestamp: new UnixTime(1717694375),
-                },
-              },
-              {
-                uses: [
-                  { type: 'liveness', subtype: 'stateUpdates' },
-                  { type: 'l2costs', subtype: 'stateUpdates' },
-                ],
-                query: {
-                  formula: 'functionCall',
-                  address: EthereumAddress(
-                    '0x3dB52cE065f728011Ac6732222270b3F2360d919',
-                  ),
-                  selector: '0xce9dcf16',
-                  functionSignature:
-                    'function executeBlocks((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[] calldata _newBlocksData)',
-                  sinceTimestamp: new UnixTime(1679602559),
-                  untilTimestamp: new UnixTime(1701719687),
-                },
-              },
-              {
-                uses: [
-                  { type: 'liveness', subtype: 'stateUpdates' },
-                  { type: 'l2costs', subtype: 'stateUpdates' },
-                ],
-                query: {
-                  formula: 'functionCall',
-                  address: EthereumAddress(
-                    '0xa0425d71cB1D6fb80E65a5361a04096E0672De03',
-                  ),
-                  selector: '0xc3d93e7c',
-                  functionSignature:
-                    'function executeBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[] _newBatchesData)',
-                  sinceTimestamp: new UnixTime(1701258299),
-                  untilTimestamp: new UnixTime(1710167255),
-                },
-              },
-              {
-                uses: [
-                  { type: 'liveness', subtype: 'stateUpdates' },
-                  { type: 'l2costs', subtype: 'stateUpdates' },
-                ],
-                query: {
-                  formula: 'functionCall',
-                  address: EthereumAddress(
-                    '0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD',
-                  ),
-                  selector: '0xc3d93e7c',
-                  functionSignature:
-                    'function executeBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[] _newBatchesData)',
-                  sinceTimestamp: new UnixTime(1710167255),
-                  untilTimestamp: new UnixTime(1717683407),
-                },
-              },
-              {
-                uses: [
-                  { type: 'liveness', subtype: 'stateUpdates' },
-                  { type: 'l2costs', subtype: 'stateUpdates' },
-                ],
-                query: {
-                  formula: 'functionCall',
-                  address: EthereumAddress(
-                    '0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E',
-                  ),
-                  selector: '0x6f497ac6',
-                  functionSignature:
-                    'function executeBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _newBatchesData)',
-                  sinceTimestamp: new UnixTime(1717683407),
-                },
-              },
-            ],
-      finality: {
-        type: 'zkSyncEra',
-        stateUpdate: 'zeroed',
-        minTimestamp: new UnixTime(1708556400),
-        lag: 0,
-      },
+          : templateVars.nonTemplateTrackedTxs ?? [],
+      finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
     chainConfig: templateVars.chainConfig,
     dataAvailability:
