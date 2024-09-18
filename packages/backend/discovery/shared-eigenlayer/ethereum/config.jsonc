@@ -73,19 +73,6 @@
         }
       }
     },
-    "StrategyManager": {
-      "ignoreInWatchMode": ["strategies"],
-      "fields": {
-        "strategies": {
-          "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "StrategyAddedToDepositWhitelist",
-            "valueKey": "strategy"
-          },
-          "target": { "template": "eigenlayer/Strategy" }
-        }
-      }
-    },
     "DepositContract": {
       "ignoreInWatchMode": ["get_deposit_count", "get_deposit_root"]
     },
