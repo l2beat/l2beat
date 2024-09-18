@@ -95,6 +95,7 @@ export const zksyncera: Layer2 = zkStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
+  diamondContract: discovery.getContract('ZKsync'),
   chainConfig: {
     name: 'zksync2',
     chainId: 324,
@@ -306,6 +307,12 @@ export const zksyncera: Layer2 = zkStackL2({
     lag: 0,
   },
   nonTemplatePermissions: [
+    {
+      name: 'ChainAdmin Owner',
+      accounts: [discovery.getPermissionedAccount('ChainAdmin', 'owner')],
+      description:
+        'Can manage fees, apply predefined upgrades and censor bridge transactions (*ChainAdmin* role).',
+    },
     {
       name: 'ValidatorTimelockOld Validators',
       accounts: validatorsOld().map((v) =>

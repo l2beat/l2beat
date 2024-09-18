@@ -1,4 +1,6 @@
-import { ContractParameters } from '@l2beat/discovery-types'
+import {
+  ContractParameters,
+} from '@l2beat/discovery-types'
 import {
   ChainId,
   EthereumAddress,
@@ -65,6 +67,7 @@ export interface ZkStackConfigCommon {
   l1StandardBridgeEscrow?: EthereumAddress
   l1StandardBridgeTokens?: string[]
   l1StandardBridgePremintedTokens?: string[]
+  diamondContract: ContractParameters
   rpcUrl?: string
   transactionApi?: ScalingProjectTransactionApi
   nonTemplateTrackedTxs?: Layer2TxConfig[]
@@ -326,7 +329,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
               ? [daProvider.name, daProvider.fallback]
               : [daProvider.name],
             bridge: daProvider.bridge,
-            mode: 'Transaction data',
+            mode: 'State diffs (compressed)',
           })
         : addSentimentToDataAvailability({
             layers: ['Ethereum (blobs or calldata)'],
@@ -347,7 +350,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
             ],
           },
           {
-            contract: 'ZKsync',
+            contract: templateVars.diamondContract.name,
             references: [
               'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L448',
               'https://etherscan.io/address/0xE60E94fCCb18a81D501a38959E532C0A85A1be89#code#F6#L23',
@@ -365,33 +368,59 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
           'https://docs.zksync.io/build/developer-reference/era-contracts/l1-contracts#executorfacet',
         ],
       },
-      dataAvailability: {
-        ...RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
-        sources: [
-          {
-            contract: 'ValidatorTimelock',
-            references: [
-              'https://etherscan.io/address/0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E#code#F1#L120',
-              'https://etherscan.io/tx/0x9dbf29985eae00b7a1b7dbd5b21eedfb287be17310eb8bef6c524990b6928f63', // example tx (see calldata, blob)
-            ],
-          },
-          {
-            contract: 'ZKsync',
-            references: [
-              'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L216',
-              'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F11#L120',
-            ],
-          },
-        ],
-        otherReferences: [
-          'https://docs.zksync.io/build/developer-reference/era-contracts/l1-contracts#executorfacet',
-        ],
-      },
+      dataAvailability:
+        daProvider !== undefined
+          ? {
+              ...RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
+              sources: [
+                {
+                  contract: 'ValidatorTimelock',
+                  references: [
+                    'https://etherscan.io/address/0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E#code#F1#L120',
+                    'https://etherscan.io/tx/0x9dbf29985eae00b7a1b7dbd5b21eedfb287be17310eb8bef6c524990b6928f63', // example tx (see calldata, blob)
+                  ],
+                },
+                {
+                  contract: templateVars.diamondContract.name,
+                  references: [
+                    'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L216',
+                    'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F11#L120',
+                  ],
+                },
+              ],
+              otherReferences: [
+                'https://docs.zksync.io/build/developer-reference/era-contracts/l1-contracts#executorfacet',
+              ],
+            }
+          : {
+              ...RISK_VIEW.DATA_EXTERNAL,
+              sources: [
+                {
+                  contract: 'ValidatorTimelock',
+                  references: [
+                    'https://etherscan.io/address/0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E#code#F1#L120',
+                    'https://etherscan.io/tx/0x9dbf29985eae00b7a1b7dbd5b21eedfb287be17310eb8bef6c524990b6928f63', // example tx (see calldata, blob)
+                  ],
+                },
+                {
+                  contract: templateVars.diamondContract.name,
+                  references: [
+                    'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L216',
+                    'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L52', // validiumMode
+                    'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F11#L120',
+                  ],
+                },
+              ],
+              otherReferences: [
+                'https://docs.zksync.io/build/developer-reference/era-contracts/l1-contracts#executorfacet',
+                'https://docs.zksync.io/zk-stack/concepts/data-availability/validiums',
+              ],
+            },
       exitWindow: {
         ...RISK_VIEW.EXIT_WINDOW_ZKSTACK(upgradeDelayWithScApprovalS),
         sources: [
           {
-            contract: 'ZKsync',
+            contract: templateVars.diamondContract.name,
             references: [
               'https://etherscan.io/address/0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a#code#F1#L114', // upgradeChainFromVersion() onlyAdminOrStateTransitionManager
               'https://etherscan.io/address/0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a#code#F1#L128', // executeUpgrade() onlyStateTransitionManager
@@ -403,7 +432,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
         ...RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
         sources: [
           {
-            contract: 'ZKsync',
+            contract: templateVars.diamondContract.name,
             references: [
               'https://etherscan.io/address/0xCDB6228b616EEf8Df47D69A372C4f725C43e718C#code#F1#L53',
               'https://etherscan.io/address/0xE60E94fCCb18a81D501a38959E532C0A85A1be89#code#F1#L95',
@@ -418,7 +447,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
         ...RISK_VIEW.PROPOSER_WHITELIST_GOVERNANCE,
         sources: [
           {
-            contract: 'ZKsync',
+            contract: templateVars.diamondContract.name,
             references: [
               'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L219',
             ],
@@ -605,13 +634,13 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       ),
       {
         name: 'ChainAdmin',
-        accounts: [discovery.getPermissionedAccount('ChainAdmin', 'owner')],
+        accounts: [discovery.getPermissionedAccount(templateVars.diamondContract.name, 'getAdmin')],
         description:
           'Can manage fees, apply predefined upgrades and censor bridge transactions (*ChainAdmin* role).',
       },
       {
         name: 'Elastic Chain Operator',
-        accounts: [discovery.getPermissionedAccount('ChainAdmin', 'owner')], // is the same as Chainadmin in case of ZKsync Era
+        accounts: [discovery.getPermissionedAccount('EraChainAdminProxy', 'owner')], // This Era contract has both ChainAdmin and Elastic Chain Operator roles
         description:
           'Can change the ValidatorTimelock in the StateTransitionManager, manage validators of the Hyperchain diamonds, revert batches and create new Hyperchains.',
       },
