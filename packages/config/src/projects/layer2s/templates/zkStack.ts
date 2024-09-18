@@ -1,6 +1,4 @@
-import {
-  ContractParameters,
-} from '@l2beat/discovery-types'
+import { ContractParameters } from '@l2beat/discovery-types'
 import {
   ChainId,
   EthereumAddress,
@@ -633,22 +631,32 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
         'Has the *ChainAdmin* role in the ZKsync Era diamond and the *Elastic Chain Operator* role in the shared contracts.',
       ),
       {
-        name: 'ChainAdmin',
-        accounts: [discovery.getPermissionedAccount(templateVars.diamondContract.name, 'getAdmin')],
-        description:
-          'Can manage fees, apply predefined upgrades and censor bridge transactions (*ChainAdmin* role).',
-      },
-      {
         name: 'Elastic Chain Operator',
-        accounts: [discovery.getPermissionedAccount('EraChainAdminProxy', 'owner')], // This Era contract has both ChainAdmin and Elastic Chain Operator roles
+        accounts: [
+          discovery.getPermissionedAccount('EraChainAdminProxy', 'owner'),
+        ], // This Era contract has both ChainAdmin and Elastic Chain Operator roles
         description:
           'Can change the ValidatorTimelock in the StateTransitionManager, manage validators of the Hyperchain diamonds, revert batches and create new Hyperchains.',
       },
       {
-        name: 'ZKsync Validators',
-        accounts: discovery.getPermissionedAccounts('ZKsync', 'validators'),
+        name: 'ChainAdmin',
+        accounts: [
+          discovery.getPermissionedAccount(
+            templateVars.diamondContract.name,
+            'getAdmin',
+          ),
+        ],
         description:
-          'Addresses permissioned to call the functions to propose, execute and revert L2 batches in the ZKsync Era diamond. Usually these are addresses of ValidatorTimelock contracts.',
+          'Can manage fees, apply predefined upgrades and censor bridge transactions (*ChainAdmin* role).',
+      },
+      {
+        name: 'Diamond Contract Validators',
+        accounts: discovery.getPermissionedAccounts(
+          templateVars.diamondContract.name,
+          'validators',
+        ),
+        description:
+          'Addresses permissioned to call the functions to propose, execute and revert L2 batches in the ${chainname} diamond. Usually these are addresses of a proxying ValidatorTimelock contracts.',
       },
       {
         name: 'ValidatorTimelock Validators',

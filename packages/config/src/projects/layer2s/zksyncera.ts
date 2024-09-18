@@ -309,7 +309,9 @@ export const zksyncera: Layer2 = zkStackL2({
   nonTemplatePermissions: [
     {
       name: 'ChainAdmin Owner',
-      accounts: [discovery.getPermissionedAccount('ChainAdmin', 'owner')],
+      accounts: [
+        discovery.getPermissionedAccount('EraChainAdminProxy', 'owner'),
+      ],
       description:
         'Can manage fees, apply predefined upgrades and censor bridge transactions (*ChainAdmin* role).',
     },
@@ -329,7 +331,7 @@ export const zksyncera: Layer2 = zkStackL2({
           then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.',
       ...zkStackUpgrades,
     }),
-    discovery.getContractDetails('ChainAdmin', {
+    discovery.getContractDetails('EraChainAdminProxy', {
       description:
         'Intermediary governance contract proxies the *Elastic Chain Operator* role for the shared contracts and the *ChainAdmin* role for ZKsync Era.',
     }),

@@ -1,12 +1,12 @@
 {
   "name": "cronoszkevm",
   "chain": "ethereum",
-  "blockNumber": 20668550,
-  "configHash": "0x85ae494b61a18682498f83ecadd443a29c263e9f981c2e6617018525c1f29e9f",
+  "blockNumber": 20777184,
+  "configHash": "0x20df2368413a2d48f66af6b288a963f4f0d782b613562841ced24b1e3a14caa4",
   "version": 14,
   "contracts": [
     {
-      "name": "AdminMultisig",
+      "name": "CronosChainAdminMultisig",
       "address": "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -205,26 +205,26 @@
         "getBaseToken": "0x28Ff2E4dD1B58efEB0fC138602A28D5aE81e44e2",
         "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 2430,
+        "getFirstUnprocessedPriorityTx": 2752,
         "getL2BootloaderBytecodeHash": "0x010008e742608b21bf7eb23c1a9d0602047e3618b464c9b59c0fba3b3d7ab66e",
         "getL2DefaultAccountBytecodeHash": "0x01000563374c277a2c1e34659a2a1e87371bb6d852ce142022d497bfb50b9e32",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 50,
+        "getPriorityQueueSize": 16,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 103079215105,
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 24, 1],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 55,
-        "getTotalBatchesExecuted": 53,
-        "getTotalBatchesVerified": 54,
-        "getTotalBlocksCommitted": 55,
-        "getTotalBlocksExecuted": 53,
-        "getTotalBlocksVerified": 54,
-        "getTotalPriorityTxs": 2480,
+        "getTotalBatchesCommitted": 78,
+        "getTotalBatchesExecuted": 76,
+        "getTotalBatchesVerified": 77,
+        "getTotalBlocksCommitted": 78,
+        "getTotalBlocksExecuted": 76,
+        "getTotalBlocksVerified": 77,
+        "getTotalPriorityTxs": 2768,
         "getVerifier": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
@@ -233,8 +233,8 @@
         },
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": {
-          "canonicalTxHash": "0xe2b32b42abe06fec6015c307a9b86653074ed5489813c3a362e75ef58249dfbc",
-          "expirationTimestamp": 1725222155,
+          "canonicalTxHash": "0x9c574f6dd4e9d17f7c2bc54665197960e59ca6d6914813f8f8825b618d6b9fff",
+          "expirationTimestamp": 1726589471,
           "layer2Tip": 0
         },
         "txFilterer": [
@@ -524,5 +524,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xb6e46b170efd15afbf70eda9aacc79ef764a0f5216fa0bbdd72c2d37bd743e94"
 }

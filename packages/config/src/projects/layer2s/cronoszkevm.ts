@@ -118,26 +118,19 @@ export const cronoszkevm: Layer2 = zkStackL2({
   //     'Details on data format can be found [here](https://github.com/matter-labs/zksync-era/blob/main/docs/guides/advanced/pubdata.md).',
   // },
   nonTemplatePermissions: [
-    {
-      name: 'CronosZkEVMAdmin',
-      accounts: [discovery.getPermissionedAccount('ChainAdmin', 'owner')],
-      description:
-        'Can manage fees, apply predefined upgrades, censor bridge transactions and revert batches (*ChainAdmin* role in the CronosZkEvm contract).',
-    },
     ...discovery.getMultisigPermission(
-      'AdminMultisig',
-      'Inherits all permissions of the CronosZkEVMAdmin contract.',
+      'CronosChainAdminMultisig',
+      'Inherits all *ChainAdmin* permissions.',
     ),
     {
-      name: 'AdminEOA',
+      name: 'CronosChainAdminEOA',
       accounts: [
         discovery.getAccessControlRolePermission(
           'CronosZkEVMAdmin',
           'ADMIN',
         )[0],
       ],
-      description:
-        'Inherits all *ChainAdmin* permissions of the CronosZkEVMAdmin contract.',
+      description: 'Inherits all *ChainAdmin* permissions.',
     },
   ],
   milestones: [
