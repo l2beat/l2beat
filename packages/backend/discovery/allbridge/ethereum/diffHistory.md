@@ -8,7 +8,7 @@ Generated with discovered.json: 0xb421cf837e2d8ea6b08d9c6aaac885d2b809f339
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+One TokenManager is added. (Added to permissions section)
 
 ## Watched changes
 
