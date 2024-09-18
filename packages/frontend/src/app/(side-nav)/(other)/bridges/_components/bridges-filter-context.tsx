@@ -7,6 +7,7 @@ import {
   useMemo,
   useState,
 } from 'react'
+import { type BridgesArchivedEntry } from '~/server/features/bridges/get-bridges-archived-entries'
 import { type BridgesRiskEntry } from '~/server/features/bridges/get-bridges-risk-entries'
 import { type BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-summary-entries'
 
@@ -44,7 +45,10 @@ export function useOptionalBridgesFilterValues() {
   return context
 }
 
-export type BridgesFilterEntry = BridgesSummaryEntry | BridgesRiskEntry
+export type BridgesFilterEntry =
+  | BridgesSummaryEntry
+  | BridgesRiskEntry
+  | BridgesArchivedEntry
 
 export function useBridgesFilter() {
   const bridgesFilters = useBridgesFilterValues()
