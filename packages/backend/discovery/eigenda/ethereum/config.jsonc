@@ -77,7 +77,7 @@
             "valueKey": "strategy",
             "arg": "quorumNumber",
             "argValue": "1"
-          },
+          }
         },
         "thirdQuorumStrategies": {
           "description": "The strategies for the third quorum.",
