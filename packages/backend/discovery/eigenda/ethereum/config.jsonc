@@ -14,7 +14,11 @@
     "0x369e6F597e22EaB55fFb173C6d9cD234BD699111": "EigenLayerExecutorMultisig",
     "0xFEA47018D632A77bA579846c840d5706705Dc598": "EigenLayerCommunityMultisig",
     "0x130d8EA0052B45554e4C99079B84df292149Bd5E": "EjectionManager",
-    "0x006124Ae7976137266feeBFb3F4D2BE4C073139D": "StakeRegistry"
+    "0x006124Ae7976137266feeBFb3F4D2BE4C073139D": "StakeRegistry",
+    "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83": "EIGEN token",
+    "0x2520C6b2C1FBE1813AB5c7c1018CDa39529e9FF2": "EIGEN Timelock",
+    "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75": "bEIGEN token",
+    "0xd6EC41E453C5E7dA5494f4d51A053Ab571712E6f": "bEIGEN Timelock"
   },
   "sharedModules": {
     "EigenLayerOperationsMultisig": "shared-eigenlayer",
@@ -155,6 +159,31 @@
     },
     "EjectionManager": {
       "extends": "eigenlayer/EjectionManager"
-    }
+    },
+    "bEIGEN token": {
+      "ignoreMethods": ["getPastTotalSupply", "clock"]
+    },
+    "bEIGEN Timelock": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    },
+    "EIGEN token": {
+      "ignoreMethods": ["getPastTotalSupply", "clock"]
+    },
+    "EIGEN Timelock": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    },
   }
+  
 }
