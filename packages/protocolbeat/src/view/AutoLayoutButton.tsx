@@ -76,7 +76,7 @@ function autoLayout(baseNodes: readonly Node[]) {
   for (let i = 0; i < SIMULATION_STEPS; i++) {
     let top = 0
     for (const nodes of clusters) {
-      const maxY = physicsStep(nodes, top)
+      const maxY = physicsStep(nodes, top, i)
       top = maxY + Y_SPACING_CLUSTER
     }
 
@@ -340,7 +340,7 @@ function layoutColumns(columns: LayoutNode[][], x = 0, y = 0) {
   return maxHeight
 }
 
-function physicsStep(nodes: LayoutNode[], top: number) {
+function physicsStep(nodes: LayoutNode[], top: number, step: number) {
   for (const node of nodes) {
     const positions: number[] = []
     for (const other of [...node.connectionsIn, ...node.connectionsOut]) {
@@ -361,15 +361,32 @@ function physicsStep(nodes: LayoutNode[], top: number) {
     node.force = 0
   }
 
-  let minY = Infinity
-  for (const [i, node] of nodes.entries()) {
-    const previous = nodes[i - 1]
-    if (previous && node.level === previous.level) {
-      const bottom = previous.y + previous.height + previous.margin
-      if (node.y < bottom) {
-        node.y = bottom
+  if (step % 2 === 0) {
+    for (let i = 0; i < nodes.length; i++) {
+      const previous = nodes[i - 1]
+      const current = nodes[i]
+      if (previous && current && current.level === previous.level) {
+        const bottom = previous.y + previous.height + previous.margin
+        if (current.y < bottom) {
+          current.y = bottom
+        }
       }
     }
+  } else {
+    for (let i = nodes.length - 1; i >= 0; i--) {
+      const next = nodes[i + 1]
+      const current = nodes[i]
+      if (next && current && current.level === next.level) {
+        const top = next.y - current.height - current.margin
+        if (current.y > top) {
+          current.y = top
+        }
+      }
+    }
+  }
+
+  let minY = Infinity
+  for (const node of nodes) {
     minY = Math.min(node.y, minY)
   }
 
