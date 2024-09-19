@@ -15,6 +15,22 @@ export class TokenBridgeRepository extends BaseRepository {
     return rows
   }
 
+  async upsert(record: UpsertableTokenBridgeRecord): Promise<{ id: string }> {
+    const row = upsertableToRecord(record)
+    return await this.db
+      .insertInto('TokenBridge')
+      .values(row)
+      .onConflict((cb) =>
+        cb.doUpdateSet((eb) => ({
+          sourceTokenId: eb.ref('excluded.sourceTokenId'),
+          targetTokenId: eb.ref('excluded.targetTokenId'),
+          externalBridgeId: eb.ref('excluded.externalBridgeId'),
+        })),
+      )
+      .returning('id')
+      .executeTakeFirstOrThrow()
+  }
+
   async upsertMany(records: UpsertableTokenBridgeRecord[]): Promise<number> {
     if (records.length === 0) return 0
 

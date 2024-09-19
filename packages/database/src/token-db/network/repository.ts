@@ -55,6 +55,16 @@ export class NetworkRepository extends BaseRepository {
     }))
   }
 
+  async getAllWithConfigsAndAxelarGatewayAddress(): Promise<
+    (NetworkRecord & {
+      explorers: NetworkExplorerRecord[]
+      rpc?: NetworkRpcRecord
+    })[]
+  > {
+    const allNetworks = await this.getAllWithConfigs()
+    return allNetworks.filter((n) => n.axelarGatewayAddress)
+  }
+
   async getAllWithCoingeckoId(): Promise<
     SetRequired<NetworkRecord, 'coingeckoId'>[]
   > {

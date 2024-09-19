@@ -1,6 +1,7 @@
-import { Insertable, Selectable } from 'kysely'
+import { Insertable } from 'kysely'
 import { ExternalBridgeType } from '../../kysely/generated/enums'
 import { ExternalBridge } from '../../kysely/generated/types'
+import { nanoid } from 'nanoid'
 
 export interface ExternalBridgeRecord {
   id: string
@@ -10,14 +11,18 @@ export interface ExternalBridgeRecord {
   createdAt: Date
 }
 
-export function toRecord(
-  row: Selectable<ExternalBridge>,
-): ExternalBridgeRecord {
-  return row
-}
+export type UpsertableExternalBridgeRecord = Omit<
+  ExternalBridgeRecord,
+  'id' | 'createdAt' | 'updatedAt'
+>
 
-export function toRow(
-  record: ExternalBridgeRecord,
+export function upsertableToRecord(
+  record: UpsertableExternalBridgeRecord,
 ): Insertable<ExternalBridge> {
-  return record
+  return {
+    ...record,
+    id: nanoid(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  }
 }

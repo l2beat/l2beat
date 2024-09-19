@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 import { z } from 'zod'
 
 import { assert } from '@l2beat/shared-pure'
-import { nanoid } from 'nanoid'
 import { upsertTokenWithMeta } from '../db/helpers.js'
 import { Database } from '@l2beat/database'
 import { env } from '../env.js'
@@ -32,29 +31,12 @@ export function buildAxelarConfigSource({ logger, db, queue }: Dependencies) {
     logger.info('Upserting bridge info')
 
     const { id: externalBridgeId } = await db.externalBridge.upsert({
-      select: { id: true },
-      where: {
-        type: 'Axelar',
-      },
-      create: {
-        id: nanoid(),
-        name: 'Axelar',
-        type: 'Axelar',
-      },
-      update: {},
+      name: 'Axelar',
+      type: 'Axelar',
     })
 
     const networks = await db.network
-      .findMany({
-        include: {
-          rpcs: true,
-        },
-        where: {
-          axelarGatewayAddress: {
-            not: null,
-          },
-        },
-      })
+      .getAllWithConfigsAndAxelarGatewayAddress()
       .then((result) =>
         result.map((r) => {
           const { axelarGatewayAddress } = r
@@ -69,7 +51,7 @@ export function buildAxelarConfigSource({ logger, db, queue }: Dependencies) {
     const tokenIds = new Set<string>()
 
     for (const definition of Object.values(res)) {
-      // Find the native chain aliast in the defintion
+      // Find the native chain alias in the defintion
       const sourceToken = definition.chain_aliases[definition.native_chain]
 
       if (!sourceToken) {
@@ -105,22 +87,10 @@ export function buildAxelarConfigSource({ logger, db, queue }: Dependencies) {
       // Upsert bridge escrow (once per network)
       // TODO: move it higher to avoid multiple upserts
       await db.bridgeEscrow.upsert({
-        select: { id: true },
-        where: {
-          networkId_address: {
-            networkId: sourceNetwork.id,
-            address: sourceToken.tokenAddress,
-          },
-        },
-        create: {
-          id: nanoid(),
-          networkId: sourceNetwork.id,
-          address: sourceToken.tokenAddress,
-          externalBridgeId,
-        },
-        update: {},
+        networkId: sourceNetwork.id,
+        address: sourceToken.tokenAddress,
+        externalBridgeId,
       })
-
       // Upsert the source token and its metadata
       const { tokenId: sourceTokenId } = await upsertTokenWithMeta(db, {
         networkId: sourceNetwork.id,
@@ -129,6 +99,9 @@ export function buildAxelarConfigSource({ logger, db, queue }: Dependencies) {
         externalId: sourceToken.fullDenomPath,
         symbol: sourceToken.assetSymbol,
         name: sourceToken.assetName,
+        decimals: null,
+        logoUrl: null,
+        contractName: null,
       })
 
       tokenIds.add(sourceTokenId)
@@ -148,7 +121,6 @@ export function buildAxelarConfigSource({ logger, db, queue }: Dependencies) {
 
         const networkId = network.id
         const address = token.tokenAddress
-
         // Upsert the target token and its metadata
         const { tokenId: targetTokenId } = await upsertTokenWithMeta(db, {
           networkId,
@@ -157,22 +129,18 @@ export function buildAxelarConfigSource({ logger, db, queue }: Dependencies) {
           externalId: token.fullDenomPath,
           symbol: token.assetSymbol,
           name: token.assetName,
+          decimals: null,
+          logoUrl: null,
+          contractName: null,
         })
 
         tokenIds.add(targetTokenId)
 
         // Upsert the bridge entry
         await db.tokenBridge.upsert({
-          where: {
-            targetTokenId,
-          },
-          create: {
-            id: nanoid(),
-            sourceTokenId,
-            targetTokenId,
-            externalBridgeId,
-          },
-          update: {},
+          sourceTokenId,
+          targetTokenId,
+          externalBridgeId,
         })
       }
     }

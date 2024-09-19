@@ -1,5 +1,9 @@
 import { BaseRepository } from '../../BaseRepository'
-import { ExternalBridgeRecord, toRow } from './entity'
+import {
+  ExternalBridgeRecord,
+  UpsertableExternalBridgeRecord,
+  upsertableToRecord,
+} from './entity'
 import { selectExternalBridge } from './select'
 
 export class ExternalBridgeRepository extends BaseRepository {
@@ -11,12 +15,15 @@ export class ExternalBridgeRepository extends BaseRepository {
     return rows
   }
 
-  async upsert(record: ExternalBridgeRecord): Promise<void> {
-    const row = toRow(record)
-    await this.db
+  async upsert(
+    record: UpsertableExternalBridgeRecord,
+  ): Promise<{ id: string }> {
+    const row = upsertableToRecord(record)
+    return await this.db
       .insertInto('ExternalBridge')
       .values(row)
       .onConflict((cb) => cb.doNothing())
-      .execute()
+      .returning('id')
+      .executeTakeFirstOrThrow()
   }
 }
