@@ -7,7 +7,7 @@ import {
   NetworkExplorerClient,
   instantiateExplorer,
 } from './explorers/index.js'
-import { notUndefined } from './notUndefined.js'
+import { notUndefined } from '@l2beat/shared-pure'
 
 type Dependencies = {
   logger: Logger
