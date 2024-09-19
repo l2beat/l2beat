@@ -24,7 +24,7 @@ export const dbk: Layer2 = opStackL2({
       repositories: [],
       socialMedia: [
         'https://x.com/dbkchain',
-        'https://debank.com/official/117425'
+        'https://debank.com/official/117425',
       ],
     },
     activityDataSource: 'Blockchain RPC',
