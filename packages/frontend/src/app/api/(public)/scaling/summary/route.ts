@@ -39,6 +39,10 @@ export async function GET() {
               hostChain: entry.hostChain,
               isUpcoming: entry.isUpcoming,
               isUnderReview: entry.isUnderReview,
+              badges: entry.badges.map(({ badge, kind }) => ({
+                category: kind,
+                name: badge,
+              })),
               tvl: {
                 breakdown: entry.tvl.breakdown,
                 associatedTokens: entry.tvl.associatedTokens,
