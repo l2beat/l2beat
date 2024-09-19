@@ -21,6 +21,7 @@ import { popapexDac } from './dac/popapex'
 import { rariDac } from './dac/rari'
 import { realDac } from './dac/real'
 import { redsonicDac } from './dac/redsonic'
+import { redstoneDA } from './dac/redstoneDA'
 import { reyaDac } from './dac/reya'
 import { rhinofiDac } from './dac/rhinofi'
 import { sankoDac } from './dac/sanko'
@@ -29,6 +30,7 @@ import { tanxDac } from './dac/tanx'
 import { witnessDac } from './dac/witness'
 import { xaiDac } from './dac/xai'
 import { xlayerDac } from './dac/xlayer'
+import { xterioDA } from './dac/xterioDA'
 import { zkfairDac } from './dac/zkfair'
 import { DaLayer } from './types/DaLayer'
 
@@ -67,4 +69,6 @@ export const daLayers: DaLayer[] = [
   playblockDac,
   mantleDA,
   eigenDA,
+  redstoneDA,
+  xterioDA,
 ]
