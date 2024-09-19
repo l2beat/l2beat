@@ -1,6 +1,5 @@
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
-import { FIELD_HEIGHT, HEADER_HEIGHT } from '../store/utils/constants'
 import type { NodeLocations } from '../store/utils/storageParsing'
 
 let timeout: ReturnType<typeof setTimeout>
@@ -344,18 +343,7 @@ function layoutColumns(columns: LayoutNode[][], x = 0, y = 0) {
 function physicsStep(nodes: LayoutNode[], top: number) {
   for (const node of nodes) {
     const positions: number[] = []
-    for (const parent of node.connectionsIn) {
-      if (parent.level === node.level) {
-        continue
-      }
-      const index = parent.base.fields.findIndex(
-        (x) => x.connection?.nodeId === node.id,
-      )
-      if (index !== -1) {
-        positions.push(parent.y + HEADER_HEIGHT + FIELD_HEIGHT * (index + 0.5))
-      }
-    }
-    for (const other of node.connectionsOut) {
+    for (const other of [...node.connectionsIn, ...node.connectionsOut]) {
       if (other.level !== node.level) {
         positions.push(other.y + other.height / 2)
       }
@@ -380,14 +368,6 @@ function physicsStep(nodes: LayoutNode[], top: number) {
       const bottom = previous.y + previous.height + previous.margin
       if (node.y < bottom) {
         node.y = bottom
-      }
-    } else {
-      const next = nodes[i + 1]
-      if (next && node.level === next.level) {
-        const top = next.y - node.margin - node.height
-        if (node.y > top) {
-          node.y = top
-        }
       }
     }
     minY = Math.min(node.y, minY)
