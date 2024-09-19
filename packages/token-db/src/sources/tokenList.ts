@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { getAddress } from 'viem'
 import { z } from 'zod'
 import { upsertManyTokensWithMeta } from '../db/helpers.js'
-import { PrismaClient } from '../db/prisma.js'
+import { Database } from '@l2beat/database'
 import { TokenUpdateQueue } from '../utils/queue/wrap.js'
 import { zodFetch } from '../utils/zodFetch.js'
 
@@ -12,7 +12,7 @@ type Dependencies = {
   url: string
   tag: string
   logger: Logger
-  db: PrismaClient
+  db: Database
   queue: TokenUpdateQueue
 }
 

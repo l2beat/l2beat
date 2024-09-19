@@ -1,8 +1,8 @@
-import { PrismaClient } from '../db/prisma.js'
+import { Database } from '@l2beat/database'
 import { NetworkConfig, WithExplorer } from './getNetworksConfig.js'
 
 type Dependencies = {
-  db: PrismaClient
+  db: Database
   networkConfig: WithExplorer<NetworkConfig>
 }
 

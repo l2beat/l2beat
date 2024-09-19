@@ -1,12 +1,12 @@
 import { Logger } from '@l2beat/backend-tools'
 import { assert } from '@l2beat/shared-pure'
 import { nanoid } from 'nanoid'
-import { PrismaClient } from '../db/prisma.js'
+import { Database } from '@l2beat/database'
 import { NetworkConfig, WithExplorer } from '../utils/getNetworksConfig.js'
 import { TokenUpdateQueue } from '../utils/queue/wrap.js'
 
 type Dependencies = {
-  db: PrismaClient
+  db: Database
   logger: Logger
   networkConfig: WithExplorer<NetworkConfig>
   queue: TokenUpdateQueue

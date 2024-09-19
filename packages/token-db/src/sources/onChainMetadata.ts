@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 
 import { getContract, parseAbiItem } from 'viem'
 import { upsertManyTokenMeta } from '../db/helpers.js'
-import { PrismaClient } from '../db/prisma.js'
+import { Database } from '@l2beat/database'
 import { NetworkConfig } from '../utils/getNetworksConfig.js'
 import { notUndefined } from '../utils/notUndefined.js'
 
@@ -16,7 +16,7 @@ const abi = [
 
 type Dependencies = {
   logger: Logger
-  db: PrismaClient
+  db: Database
   networkConfig: NetworkConfig
 }
 

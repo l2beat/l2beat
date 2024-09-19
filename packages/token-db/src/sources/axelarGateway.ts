@@ -3,7 +3,7 @@ import { assert } from '@l2beat/shared-pure'
 import { SetRequired } from 'type-fest'
 import { isAddress, parseAbiItem } from 'viem'
 import { upsertManyTokensWithMeta } from '../db/helpers.js'
-import { PrismaClient } from '../db/prisma.js'
+import { Database } from '@l2beat/database'
 import { NetworkConfig } from '../utils/getNetworksConfig.js'
 import { TokenUpdateQueue } from '../utils/queue/wrap.js'
 
@@ -11,7 +11,7 @@ export { buildAxelarGatewaySource }
 
 type Dependencies = {
   logger: Logger
-  db: PrismaClient
+  db: Database
   networkConfig: NetworkConfig
   queue: TokenUpdateQueue
 }
