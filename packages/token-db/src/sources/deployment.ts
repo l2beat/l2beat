@@ -1,10 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
-import { Token } from '@prisma/client'
-import { nanoid } from 'nanoid'
 import { setTimeout } from 'timers/promises'
 import { PublicClient } from 'viem'
 import { upsertTokenMeta } from '../db/helpers.js'
-import { Database } from '@l2beat/database'
+import { Database, TokenRecord } from '@l2beat/database'
 import { NetworkExplorerClient } from '../utils/explorers/index.js'
 import { NetworkConfig, WithExplorer } from '../utils/getNetworksConfig.js'
 import { DeploymentUpdatedQueue } from '../utils/queue/wrap.js'
@@ -25,11 +23,7 @@ export function buildDeploymentSource({
   logger = logger.for('DeploymentSource').tag(networkConfig.name)
 
   return async function (tokenId: string) {
-    const token = await db.token.findFirst({
-      where: {
-        id: tokenId,
-      },
-    })
+    const token = await db.token.findById(tokenId)
 
     if (!token) {
       logger.error('Token not found', { tokenId })
@@ -49,18 +43,15 @@ export function buildDeploymentSource({
       source: { type: 'Deployment' },
       externalId: deploymentInfo.txHash,
       contractName: metaInfo.contractName,
+      symbol: null,
+      name: null,
+      decimals: null,
+      logoUrl: null,
     })
 
     await db.deployment.upsert({
-      where: { tokenId: token.id },
-      create: {
-        id: nanoid(),
-        tokenId: token.id,
-        ...deploymentInfo,
-      },
-      update: {
-        ...deploymentInfo,
-      },
+      ...deploymentInfo,
+      tokenId: token.id,
     })
 
     await queue.add(token.id)
@@ -75,7 +66,7 @@ function getDeploymentDataWithRetries(
   publicClient: PublicClient,
   logger: Logger,
 ) {
-  return async function (token: Token) {
+  return async function (token: TokenRecord) {
     while (true) {
       try {
         return await getDeploymentData(explorer, publicClient)(token)
@@ -91,7 +82,7 @@ function getDeploymentData(
   explorer: NetworkExplorerClient,
   publicClient: PublicClient,
 ) {
-  return async function (token: Token) {
+  return async function (token: TokenRecord) {
     const tokenAddress = token.address as `0x${string}`
     const [source, deployment] = await Promise.all([
       explorer.getContractSource(tokenAddress),

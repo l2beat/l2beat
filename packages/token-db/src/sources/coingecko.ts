@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import { assert } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 import { upsertManyTokensWithMeta } from '../db/helpers.js'
@@ -26,24 +25,7 @@ function buildCoingeckoSource({ db, logger, queue }: Dependencies) {
     )
     logger.info('Coingecko token list fetched', { count: res.length })
 
-    const networks = await db.network
-      .findMany({
-        where: {
-          coingeckoId: {
-            not: null,
-          },
-        },
-      })
-      .then((result) =>
-        result.map((r) => {
-          const { coingeckoId } = r
-          assert(coingeckoId, 'Expected coingeckoId')
-          return {
-            ...r,
-            coingeckoId: coingeckoId,
-          }
-        }),
-      )
+    const networks = await db.network.getAllWithCoingeckoId()
 
     const tokens = res
       .map((token) => ({
@@ -66,6 +48,9 @@ function buildCoingeckoSource({ db, logger, queue }: Dependencies) {
         token.platforms
           .filter((platform) => platform.address.length > 0)
           .map((platform) => ({
+            logoUrl: null,
+            decimals: null,
+            contractName: null,
             networkId: platform.network.id,
             address: platform.address,
             externalId: token.id,

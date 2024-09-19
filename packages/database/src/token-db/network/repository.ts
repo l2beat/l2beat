@@ -87,6 +87,16 @@ export class NetworkRepository extends BaseRepository {
     return row
   }
 
+  async findByChainId(chainId: number): Promise<NetworkRecord | undefined> {
+    const row = await this.db
+      .selectFrom('Network')
+      .select(selectNetwork)
+      .where('Network.chainId', '=', chainId)
+      .limit(1)
+      .executeTakeFirst()
+    return row
+  }
+
   async findByName(name: string): Promise<NetworkRecord | undefined> {
     const row = await this.db
       .selectFrom('Network')
