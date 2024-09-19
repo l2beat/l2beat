@@ -1,8 +1,8 @@
 {
   "name": "dbk",
   "chain": "ethereum",
-  "blockNumber": 20784029,
-  "configHash": "0xe5c89c674ac771a2def699717c330bdd9067b3bd5c54e200ff9df47ceac12a59",
+  "blockNumber": 20784107,
+  "configHash": "0x3eadffec303bb697373223a4fa8880fefb7490a666f722a30d544089429b3620",
   "version": 14,
   "contracts": [
     {
@@ -289,7 +289,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "DeBankChainMultisig",
       "address": "0xfB04A190dC7D91E86109433858A48E0B98EF1450",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -350,7 +350,8 @@
         "multisigThreshold": "2 of 4 (50%)",
         "nonce": 19,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     }
   ],
   "eoas": [

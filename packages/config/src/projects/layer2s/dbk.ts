@@ -1,42 +1,40 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
-const discovery = new ProjectDiscovery('superlumio')
+const discovery = new ProjectDiscovery('dbk')
 
-export const superlumio: Layer2 = opStackL2({
+export const dbk: Layer2 = opStackL2({
   discovery,
-  badges: [Badge.RaaS.Conduit],
+  badges: [],
   display: {
-    name: 'SuperLumio',
-    slug: 'superlumio',
+    name: 'DeBank Chain',
+    slug: 'dbk',
     warning:
       'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
-      'SuperLumio (сanary mainnet) marks the initial phase of the Lumio Layer 2 on the Optimism Superchain, launched as a pure Ethereum Virtual Machine fork with the support of Conduit technology. This platform is designed to serve as a testnet-in-production. Lumio is a rollup technology suite that enables developers to build with any VM on any chain.',
+      'DeBank Chain is an OP stack Layer 2 on Ethereum that is deeply integrated into the DeBank ecosystem, allowing bridging directly from inside the Rabby Wallet.',
     purposes: ['Universal'],
     links: {
-      websites: ['https://lumio.io/'],
+      websites: ['https://dbkchain.io/'],
       apps: [],
-      documentation: ['https://docs.lumio.io/'],
-      explorers: ['https://explorer.lumio.io/'],
-      repositories: ['https://github.com/pontem-network'],
+      documentation: ['https://docs.dbkchain.io/'],
+      explorers: ['https://scan.dbkchain.io/'],
+      repositories: [],
       socialMedia: [
-        'https://x.com/lumiofdn',
-        'https://t.me/pontemnetworkchat',
-        'https://discord.com/invite/44QgPFHYqs',
+        'https://x.com/dbkchain',
+        'https://debank.com/official/117425'
       ],
     },
     activityDataSource: 'Blockchain RPC',
   },
-  rpcUrl: 'https://mainnet.lumio.io',
-  genesisTimestamp: new UnixTime(1708984633),
+  rpcUrl: 'https://rpc.mainnet.dbkchain.io/',
+  genesisTimestamp: new UnixTime(1717461337),
   finality: {
     type: 'OPStack-blob',
-    genesisTimestamp: new UnixTime(1708984633),
-    minTimestamp: new UnixTime(1708984751),
+    genesisTimestamp: new UnixTime(1717461337),
+    minTimestamp: new UnixTime(1717461337), // fix when contracts verified
     l2BlockTimeSeconds: 2,
     lag: 0,
     stateUpdate: 'disabled',
@@ -44,13 +42,13 @@ export const superlumio: Layer2 = opStackL2({
   isNodeAvailable: 'UnderReview',
   milestones: [
     {
-      name: 'SuperLumio Launch',
-      link: 'https://x.com/PontemNetwork/status/1762887219235127612',
-      date: '2024-02-28T00:00:00Z',
-      description: 'SuperLumio launch is announced on X.',
+      name: 'DeBank Chain Launch',
+      link: 'https://debank.com/stream/2539393',
+      date: '2024-07-19T00:00:00Z',
+      description: 'DeBank mainnet is open fopr users.',
       type: 'general',
     },
   ],
-  usesBlobs: true,
+  usesBlobs: true, // check
   useDiscoveryMetaOnly: true,
 })

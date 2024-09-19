@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x94610551b68cec44d8b937f4e9602e83c27bb3b9
+Generated with discovered.json: 0xbc06268c12c468be51fda6f9e97a9d06b2da844c
 
-# Diff at Thu, 19 Sep 2024 10:25:56 GMT:
+# Diff at Thu, 19 Sep 2024 10:41:31 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 20784029
+- current block number: 20784107
 
 ## Description
 
@@ -61,6 +61,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0xfB04A190dC7D91E86109433858A48E0B98EF1450)
+    contract DeBankChainMultisig (0xfB04A190dC7D91E86109433858A48E0B98EF1450)
     +++ description: None
 ```
