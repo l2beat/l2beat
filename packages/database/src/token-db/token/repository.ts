@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { TokenRecord, UpsertableTokenRecord, upsertableToRow } from './entity'
 import { joinDeployment, joinNetwork, joinTokenMeta } from './join'
@@ -100,22 +101,46 @@ export class TokenRepository extends BaseRepository {
     return rows
   }
 
-  async getByDeploymentTarget(target: {
-    to: string[]
+  async getByDeployment({
+    networkId,
+    deploymentConstraints,
+  }: {
     networkId: string
+    deploymentConstraints: (
+      | { to: string; from: string }
+      | { from: string; to?: undefined }
+      | { to: string; from?: undefined }
+    )[]
   }): Promise<TokenRecord[]> {
-    const rows = await this.db
+    let statement = this.db
       .selectFrom('Token')
       .select(selectToken)
       .innerJoin(...joinDeployment)
       .innerJoin(...joinTokenMeta)
       .innerJoin(...joinNetwork)
-      .where((eb) =>
-        eb.or(target.to.map((to) => eb('Deployment.to', 'ilike', to))),
-      )
-      .where('Network.id', '=', target.networkId)
-      .execute()
-    return rows
+      .where('Network.id', '=', networkId)
+
+    for (const constraint of deploymentConstraints) {
+      statement = statement.where((eb) => {
+        if (constraint.to && constraint.from) {
+          return eb('Deployment.to', 'ilike', constraint.to).and(
+            'Deployment.from',
+            'ilike',
+            constraint.from,
+          )
+        }
+
+        if (constraint.to) {
+          return eb('Deployment.to', 'ilike', constraint.to)
+        }
+
+        assert(constraint.from, 'Invalid constraint')
+
+        return eb('Deployment.from', 'ilike', constraint.from)
+      })
+    }
+
+    return await statement.execute()
   }
 
   async getByDeploymentTargetAndContractName(target: {

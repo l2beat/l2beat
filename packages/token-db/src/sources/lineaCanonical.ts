@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { assert } from '@l2beat/shared-pure'
 
-import { nanoid } from 'nanoid'
 import { getContract, parseAbiItem } from 'viem'
 import { Database } from '@l2beat/database'
 import { NetworkConfig } from '../utils/getNetworksConfig.js'
@@ -45,36 +44,15 @@ function buildLineaCanonicalSource({
     )?.publicClient
     assert(lineaClient, 'Linea client not found')
 
-    const lineaNetwork = await db.network.findFirst({
-      select: { id: true },
-      where: {
-        name: 'Linea',
-      },
-    })
+    const lineaNetwork = await db.network.findByName('Linea')
     assert(lineaNetwork, 'Linea network not found')
 
-    const tokens = await db.token.findMany({
-      where: {
-        deployment: {
-          OR: [
-            {
-              to: {
-                equals: LINEA_MESSAGE_SERVICE,
-                mode: 'insensitive',
-              },
-            },
-            {
-              from: {
-                equals: LINEA_TOKEN_DEPLOYER,
-                mode: 'insensitive',
-              },
-            },
-          ],
-        },
-        network: {
-          id: lineaNetwork.id,
-        },
-      },
+    const tokens = await db.token.getByDeployment({
+      networkId: lineaNetwork.id,
+      deploymentConstraints: [
+        { to: LINEA_MESSAGE_SERVICE },
+        { from: LINEA_TOKEN_DEPLOYER },
+      ],
     })
 
     logger.info('Matching L2 tokens with L1 addresses...')
@@ -107,17 +85,15 @@ function buildLineaCanonicalSource({
             .bridgedToNativeToken([token.address as `0x${string}`])
             .catch(() => undefined)
 
-          const l1Token = await db.token.findFirst({
-            where: {
-              network: {
-                name: 'Ethereum',
-              },
-              address: {
-                equals: l1Address,
-                mode: 'insensitive',
-              },
-            },
+          if (!l1Address) {
+            return
+          }
+
+          const l1Token = await db.token.findByNetwork({
+            network: 'Ethereum',
+            address: l1Address,
           })
+
           if (!l1Token) {
             return
           }
@@ -125,15 +101,13 @@ function buildLineaCanonicalSource({
           return {
             sourceTokenId: l1Token.id,
             targetTokenId: token.id,
+            externalBridgeId: null,
           }
         }),
       )
     ).filter(notUndefined)
 
-    await db.tokenBridge.upsertMany({
-      data: tokensBridgeToUpsert.map((t) => ({ id: nanoid(), ...t })),
-      conflictPaths: ['targetTokenId'],
-    })
+    await db.tokenBridge.upsertMany(tokensBridgeToUpsert)
 
     logger.info(
       `Synced ${tokensBridgeToUpsert.length} Linea canonical tokens data`,

@@ -65,6 +65,16 @@ export class NetworkRepository extends BaseRepository {
     return allNetworks.filter((n) => n.axelarGatewayAddress)
   }
 
+  async getAllWithOrbitId(): Promise<NetworkRecord[]> {
+    const rows = await this.db
+      .selectFrom('Network')
+      .select(selectNetwork)
+      .where('Network.orbitId', 'is not', null)
+      .$narrowType<{ orbitId: string }>()
+      .execute()
+    return rows
+  }
+
   async getAllWithCoingeckoId(): Promise<
     SetRequired<NetworkRecord, 'coingeckoId'>[]
   > {
