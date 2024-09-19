@@ -65,12 +65,8 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
         case 'canonical': {
           // The canonical logic is the most complex one
           assert(
-            config.type === 'escrow' ||
-              config.type === 'preminted' ||
-              config.type === 'aggLayerL2Token' ||
-              config.type === 'aggLayerNativeEtherPreminted' ||
-              config.type === 'aggLayerNativeEtherWrapped',
-            'Only escrow, preminted, AggLayer tokens can be canonical',
+            config.type === 'escrow' || config.type === 'preminted',
+            'Only escrow or preminted tokens can be canonical',
           )
           const asset = breakdown.canonical.get(priceConfig.assetId)
           if (asset) {
@@ -104,21 +100,14 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
         case 'external': {
           const token = safeGetTokenByAssetId(priceConfig.assetId)
 
-          const address =
-            config.type === 'aggLayerL2Token'
-              ? config.l1Address
-              : config.type === 'aggLayerNativeEtherPreminted' ||
-                  config.type === 'aggLayerNativeEtherWrapped'
-                ? 'native'
-                : config.address
-
           breakdown.external.push({
             assetId: priceConfig.assetId,
             chainId: chainConverter.toChainId(config.chain),
             amount: amountAsNumber,
             usdValue: valueAsNumber,
             usdPrice: price.toString(),
-            tokenAddress: address === 'native' ? undefined : address,
+            tokenAddress:
+              config.address === 'native' ? undefined : config.address,
             bridgedUsing: config.bridgedUsing ?? {
               bridges: token?.bridgedUsing?.bridges ?? [{ name: 'Unknown' }],
               warning: token?.bridgedUsing?.warning,
@@ -126,14 +115,7 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
           })
           break
         }
-        case 'native': {
-          const address =
-            config.type === 'aggLayerL2Token'
-              ? config.l1Address
-              : config.type === 'aggLayerNativeEtherPreminted' ||
-                  config.type === 'aggLayerNativeEtherWrapped'
-                ? 'native'
-                : config.address
+        case 'native':
           breakdown.native.push({
             assetId: priceConfig.assetId,
             chainId: chainConverter.toChainId(config.chain),
@@ -141,9 +123,9 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
             usdValue: valueAsNumber,
             usdPrice: price.toString(),
             // TODO: force fe to accept "native"
-            tokenAddress: address === 'native' ? undefined : address,
+            tokenAddress:
+              config.address === 'native' ? undefined : config.address,
           })
-        }
       }
     }
 
