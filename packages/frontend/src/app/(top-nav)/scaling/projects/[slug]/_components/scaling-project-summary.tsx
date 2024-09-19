@@ -7,10 +7,10 @@ import { AboutSection } from '~/components/projects/sections/about-section'
 import { BadgesSection } from '~/components/projects/sections/badges-section'
 import { UnderReviewBar } from '~/components/projects/under-review-bar'
 import { UpcomingBar } from '~/components/projects/upcoming-bar'
-import { BigPizzaRosette } from '~/components/rosette/pizza/big-pizza-rosette'
 import { WarningBar } from '~/components/warning-bar'
 import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { getUnderReviewText } from '~/utils/project/get-under-review-text'
+import { ScalingProjectRosette } from './scaling-project-rosette'
 import { ScalingProjectStats } from './scaling-project-stats'
 import { ValueLockedSummary } from './value-locked-summary'
 
@@ -71,12 +71,7 @@ export function ScalingProjectSummary({ project }: Props) {
             <ScalingProjectStats project={project} className="md:col-span-2" />
           </div>
         </div>
-        <BigPizzaRosette
-          className="mt-auto max-lg:hidden"
-          values={project.header.rosetteValues}
-          isUnderReview={project.isUnderReview}
-          isUpcoming={project.isUpcoming}
-        />
+        <ScalingProjectRosette project={project} />
       </div>
 
       <HorizontalSeparator className="mt-6 max-md:-mx-4 max-md:w-screen md:mb-6" />
