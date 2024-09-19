@@ -32,6 +32,13 @@ export function AutoLayoutButton() {
   )
 }
 
+const X_SPACING = 200
+const Y_SPACING_SM = 20
+const Y_SPACING_LG = 60
+const Y_SPACING_CLUSTER = 100
+const FORCE_MULTIPLIER = 2
+const SIMULATION_STEPS = 100
+
 interface LayoutNode {
   id: string
   connectionsIn: LayoutNode[]
@@ -50,16 +57,28 @@ function autoLayout(baseNodes: readonly Node[]) {
   if (baseNodes.length === 0) {
     return []
   }
+
   const nodes = toLayoutNodes(baseNodes)
-  removeSoleParentConnection(nodes)
-  markTrees(nodes)
-  assignLevels(nodes)
-  const columns = groupByLevel(nodes)
-  layoutColumns(columns)
+  const clusters = clusterNodes(nodes)
+
+  let top = 0
+  for (const nodes of clusters) {
+    removeSoleParentConnection(nodes)
+    markTrees(nodes)
+    assignLevels(nodes)
+    const columns = groupByLevel(nodes)
+    const maxHeight = layoutColumns(columns, 0, top)
+    top += maxHeight + Y_SPACING_CLUSTER
+  }
 
   const animation: NodeLocations[] = []
-  for (let i = 0; i < 1000; i++) {
-    physicsStep(columns)
+  for (let i = 0; i < SIMULATION_STEPS; i++) {
+    let top = 0
+    for (const nodes of clusters) {
+      const maxHeight = physicsStep(nodes, top)
+      top += maxHeight + Y_SPACING_CLUSTER
+    }
+
     const nodeLocations: NodeLocations = {}
     for (const node of nodes) {
       nodeLocations[node.id] = { x: node.x, y: node.y }
@@ -104,6 +123,36 @@ function toLayoutNodes(baseNodes: readonly Node[]) {
   }
 
   return nodes
+}
+
+function clusterNodes(nodes: LayoutNode[]) {
+  const visited = new Set<LayoutNode>()
+
+  function addToCluster(cluster: LayoutNode[], node: LayoutNode) {
+    if (visited.has(node)) {
+      return
+    }
+    visited.add(node)
+    cluster.push(node)
+    for (const other of node.connectionsIn) {
+      addToCluster(cluster, other)
+    }
+    for (const other of node.connectionsOut) {
+      addToCluster(cluster, other)
+    }
+  }
+
+  const clusters: LayoutNode[][] = []
+  for (const node of nodes) {
+    if (visited.has(node)) {
+      continue
+    }
+    const cluster: LayoutNode[] = []
+    addToCluster(cluster, node)
+    clusters.push(cluster)
+  }
+
+  return clusters
 }
 
 function removeSoleParentConnection(nodes: LayoutNode[]) {
@@ -239,17 +288,18 @@ function groupByLevel(nodes: LayoutNode[]) {
     }
   }
 
-  for (const column of columns) {
+  nodes.length = 0
+  for (const [i, column] of columns.entries()) {
     column.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id))
+    for (const node of column) {
+      node.level = i + 1
+      nodes.push(node)
+    }
   }
   return columns
 }
 
 function layoutColumns(columns: LayoutNode[][], x = 0, y = 0) {
-  const X_SPACING = 200
-  const Y_SPACING_SM = 20
-  const Y_SPACING_LG = 60
-
   let xOffset = x
   let maxHeight = 0
   for (const column of columns) {
@@ -285,53 +335,51 @@ function layoutColumns(columns: LayoutNode[][], x = 0, y = 0) {
       node.y += (maxHeight - maxColumnHeight) / 2
     }
   }
+
+  return maxHeight
 }
 
-function physicsStep(columns: LayoutNode[][]) {
-  for (const column of columns) {
-    for (const node of column) {
-      let averagePosition = 0
-      for (const parent of node.connectionsIn) {
-        averagePosition += parent.y + parent.height / 2
+function physicsStep(nodes: LayoutNode[], top: number) {
+  for (const node of nodes) {
+    let averagePosition = 0
+    for (const parent of node.connectionsIn) {
+      averagePosition += parent.y + parent.height / 2
+    }
+    for (const child of node.connectionsOut) {
+      averagePosition += child.y + child.height / 2
+    }
+    if (node.connectionsIn.length !== 0 || node.connectionsOut.length !== 0) {
+      averagePosition /= node.connectionsIn.length + node.connectionsOut.length
+      const distance = averagePosition - (node.y + node.height / 2)
+      if (node.id === 'ethereum:0x75575Dc1adD71eA794A52D83f836a13F7891C527') {
+        console.log(distance)
       }
-      for (const child of node.connectionsOut) {
-        averagePosition += child.y + child.height / 2
-      }
-      if (node.connectionsIn.length !== 0 || node.connectionsOut.length !== 0) {
-        averagePosition /=
-          node.connectionsIn.length + node.connectionsOut.length
-        const distance = averagePosition - (node.y + node.height / 2)
-        if (node.id === 'ethereum:0x961B513dfD3e363c238E0f98219eE02552A847BD') {
-          console.log(distance)
-        }
-        node.force = Math.sign(distance) * Math.sqrt(Math.abs(distance))
-      }
+      node.force = Math.sign(distance) * Math.sqrt(Math.abs(distance))
     }
   }
-
-  const STRENGTH = 2
-  const TOP = 0
 
   let minY = Infinity
-  for (const column of columns) {
-    let previous: LayoutNode | undefined
-    for (const node of column) {
-      node.y += node.force * STRENGTH
-      if (previous && node.y < previous.y + previous.height + previous.margin) {
-        node.y = previous.y + previous.height + previous.margin
-      } else if (!previous && node.y < TOP) {
-        node.y = TOP
-      }
-      minY = Math.min(node.y, minY)
-      previous = node
+  let previous: LayoutNode | undefined
+  for (const node of nodes) {
+    node.y += node.force * FORCE_MULTIPLIER
+    if (
+      previous?.level === node.level &&
+      node.y < previous.y + previous.height + previous.margin
+    ) {
+      node.y = previous.y + previous.height + previous.margin
+    } else if (!previous && node.y < top) {
+      node.y = top
     }
+    minY = Math.min(node.y, minY)
+    previous = node
   }
 
-  for (const column of columns) {
-    for (const node of column) {
-      node.y -= minY - TOP
-    }
+  let maxHeight = top
+  for (const node of nodes) {
+    node.y -= minY - top
+    maxHeight = Math.max(maxHeight, node.y + node.height)
   }
+  return maxHeight
 }
 
 function equalMembers<T>(a: T[], b: T[]) {
