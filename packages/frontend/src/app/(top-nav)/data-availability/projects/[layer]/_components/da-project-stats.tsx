@@ -28,7 +28,7 @@ export function DaProjectStats({ project }: Props) {
         }
       : {
           value: project.header.durationStorage
-            ? round(project.header.durationStorage / UnixTime.DAY, 2)
+            ? round(project.header.durationStorage / UnixTime.DAY, 2) + ' days'
             : EM_DASH,
         }
 
