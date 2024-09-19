@@ -1,6 +1,6 @@
-import { argv } from 'process'
-import { writeFile } from 'fs/promises'
 import { createDatabase } from '@l2beat/database'
+import { writeFile } from 'fs/promises'
+import { argv } from 'process'
 
 const path = argv[2]
 

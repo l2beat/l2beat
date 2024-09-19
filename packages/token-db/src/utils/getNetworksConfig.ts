@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
+import { Database } from '@l2beat/database'
 import { http, PublicClient, createPublicClient } from 'viem'
 import * as viemChains from 'viem/chains'
-import { Database } from '@l2beat/database'
 import { DatabaseCache } from './cache/database-cache.js'
 import {
   NetworkExplorerClient,

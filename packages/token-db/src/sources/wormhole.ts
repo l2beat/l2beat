@@ -3,8 +3,8 @@ import { getAddress } from 'viem'
 import { z } from 'zod'
 
 import { Logger } from '@l2beat/backend-tools'
-import { upsertTokenWithMeta } from '../db/helpers.js'
 import { Database } from '@l2beat/database'
+import { upsertTokenWithMeta } from '../db/helpers.js'
 import { env } from '../env.js'
 import { TokenUpdateQueue } from '../utils/queue/wrap.js'
 

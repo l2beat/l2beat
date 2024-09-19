@@ -1,3 +1,5 @@
+import { createDatabase } from '@l2beat/database'
+import { UpsertableNetworkRecord } from '@l2beat/database/src/token-db/network/entity.js'
 import intersectionWith from 'lodash/intersectionWith.js'
 import { nanoid } from 'nanoid'
 import {
@@ -21,8 +23,6 @@ import { env } from '../env.js'
 import { isExplorerType } from '../utils/isExplorerType.js'
 import { notUndefined } from '../utils/notUndefined.js'
 import { zodFetch } from '../utils/zodFetch.js'
-import { createDatabase } from '@l2beat/database'
-import { UpsertableNetworkRecord } from '@l2beat/database/src/token-db/network/entity.js'
 
 export const chainsConfig = [
   arbitrum,

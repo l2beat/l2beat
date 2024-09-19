@@ -1,10 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
 
+import { Database } from '@l2beat/database'
+import { notUndefined } from '@l2beat/shared-pure'
 import { getContract, parseAbiItem } from 'viem'
 import { upsertManyTokenMeta } from '../db/helpers.js'
-import { Database } from '@l2beat/database'
 import { NetworkConfig } from '../utils/getNetworksConfig.js'
-import { notUndefined } from '@l2beat/shared-pure'
 
 export { buildOnChainMetadataSource }
 

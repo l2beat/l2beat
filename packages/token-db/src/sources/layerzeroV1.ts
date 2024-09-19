@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
+import { Database } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
 import { nanoid } from 'nanoid'
-import { Database } from '@l2beat/database'
 import { NetworkConfig, WithExplorer } from '../utils/getNetworksConfig.js'
 import { TokenUpdateQueue } from '../utils/queue/wrap.js'
 

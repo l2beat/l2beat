@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { Promisable } from 'type-fest'
 import { Database } from '@l2beat/database'
+import type { Promisable } from 'type-fest'
 
 export interface SourceContext {
   logger: Logger

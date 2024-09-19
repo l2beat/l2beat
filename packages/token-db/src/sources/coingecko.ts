@@ -1,8 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 import { z } from 'zod'
 
-import { upsertManyTokensWithMeta } from '../db/helpers.js'
 import { Database } from '@l2beat/database'
+import { upsertManyTokensWithMeta } from '../db/helpers.js'
 import { TokenUpdateQueue } from '../utils/queue/wrap.js'
 import { zodFetch } from '../utils/zodFetch.js'
 

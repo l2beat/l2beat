@@ -1,9 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
 import { z } from 'zod'
 
+import { Database } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
 import { upsertTokenWithMeta } from '../db/helpers.js'
-import { Database } from '@l2beat/database'
 import { env } from '../env.js'
 import { TokenUpdateQueue } from '../utils/queue/wrap.js'
 import { zodFetch } from '../utils/zodFetch.js'

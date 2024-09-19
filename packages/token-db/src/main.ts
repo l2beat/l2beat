@@ -1,4 +1,5 @@
 import { LogFormatterPretty, Logger } from '@l2beat/backend-tools'
+import { TokenRecord, createDatabase } from '@l2beat/database'
 import { env } from './env.js'
 import { connection } from './redis/redis.js'
 import { buildArbitrumCanonicalSource } from './sources/arbitrumCanonical.js'
@@ -25,7 +26,6 @@ import {
   wrapDeploymentUpdatedQueue,
   wrapTokenQueue,
 } from './utils/queue/wrap.js'
-import { createDatabase, TokenRecord } from '@l2beat/database'
 
 type TokenPayload = { tokenId: TokenRecord['id'] }
 type BatchTokenPayload = { tokenIds: TokenRecord['id'][] }
