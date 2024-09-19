@@ -39,7 +39,8 @@ function autoLayout(baseNodes: readonly Node[]) {
   markTrees(nodes)
   assignLevels(nodes)
   const columns = groupByLevel(nodes)
-  return layoutColumns(columns)
+  const { nodeLocations } = layoutColumns(columns)
+  return nodeLocations
 }
 
 function toLayoutNodes(baseNodes: readonly Node[]) {
@@ -146,9 +147,13 @@ function groupByLevel(nodes: LayoutNode[]) {
   const order: string[] = columns[0]?.map((x) => x.id) ?? []
   for (const column of columns) {
     for (const node of column) {
-      const index = order.indexOf(node.id)
-      const uniqueChildren = node.connectionsOut
-        .map((x) => x.id)
+      let index = order.indexOf(node.id)
+      if (index === -1) {
+        index = order.push(node.id) - 1
+      }
+
+      const uniqueChildren = node.base.simpleNode.fields
+        .flatMap((f) => (f.connection ? [f.connection] : []))
         .filter((id) => order.indexOf(id) === -1)
       order.splice(index, 0, ...uniqueChildren)
     }
@@ -160,34 +165,61 @@ function groupByLevel(nodes: LayoutNode[]) {
   return columns
 }
 
-function layoutColumns(columns: LayoutNode[][]) {
+function layoutColumns(columns: LayoutNode[][], x = 0, y = 0) {
   const X_SPACING = 200
-  const Y_SPACING = 50
+  const Y_SPACING_SM = 20
+  const Y_SPACING_LG = 60
 
   const nodeLocations: NodeLocations = {}
-  let xOffset = 0
+  let xOffset = x
+  let maxHeight = 0
   for (const column of columns) {
-    let yOffset = 0
+    let yOffset = y
     let maxWidth = 0
 
-    for (const node of column) {
+    for (const [i, node] of column.entries()) {
       nodeLocations[node.id] = {
         x: xOffset,
         y: yOffset,
       }
 
-      yOffset += node.base.box.height + Y_SPACING
-      maxWidth = Math.max(node.base.box.width, maxWidth)
+      yOffset += node.base.box.height
+      maxHeight = Math.max(maxHeight, yOffset)
+      const next = column[i + 1]
+      if (
+        next &&
+        node.connectionsIn.length === 1 &&
+        next.connectionsIn.length === 1 &&
+        node.connectionsIn[0]?.id === next.connectionsIn[0]?.id
+      ) {
+        yOffset += Y_SPACING_SM
+      } else {
+        yOffset += Y_SPACING_LG
+      }
+      maxWidth = Math.max(maxWidth, node.base.box.width)
     }
-
-    yOffset = -yOffset / 2
-    for (const node of column) {
-      // biome-ignore lint/style/noNonNullAssertion: we know it's there
-      nodeLocations[node.id]!.y += yOffset
-    }
-
     xOffset += maxWidth + X_SPACING
   }
 
-  return nodeLocations
+  for (const column of columns) {
+    let maxColumnHeight = 0
+    for (const node of column) {
+      maxColumnHeight = Math.max(
+        maxColumnHeight,
+        // biome-ignore lint/style/noNonNullAssertion: we know it's there
+        nodeLocations[node.id]!.y + node.base.box.height,
+      )
+    }
+
+    for (const node of column) {
+      // biome-ignore lint/style/noNonNullAssertion: we know it's there
+      nodeLocations[node.id]!.y += (maxHeight - maxColumnHeight) / 2
+    }
+  }
+
+  return {
+    nodeLocations,
+    width: xOffset - X_SPACING,
+    height: maxHeight,
+  }
 }
