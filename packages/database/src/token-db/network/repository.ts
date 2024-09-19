@@ -1,13 +1,14 @@
 import { type SetRequired } from 'type-fest'
 import { BaseRepository } from '../../BaseRepository'
-import {
-  NetworkExplorerRecord,
-  toRecord as toNetworkExplorerRecord,
-} from '../network-explorer/entity'
+import { NetworkExplorerRecord } from '../network-explorer/entity'
 import { selectNetworkExplorer } from '../network-explorer/select'
 import { NetworkRpcRecord } from '../network-rpc/entity'
 import { selectNetworkRpc } from '../network-rpc/select'
-import { NetworkRecord, toRecord, toRow } from './entity'
+import {
+  NetworkRecord,
+  UpsertableNetworkRecord,
+  upsertableToRow,
+} from './entity'
 import { selectNetwork } from './select'
 
 export class NetworkRepository extends BaseRepository {
@@ -16,7 +17,7 @@ export class NetworkRepository extends BaseRepository {
       .selectFrom('Network')
       .select(selectNetwork)
       .execute()
-    return rows.map(toRecord)
+    return rows
   }
 
   async getAllWithConfigs(): Promise<
@@ -46,10 +47,10 @@ export class NetworkRepository extends BaseRepository {
     ])
 
     return allNetworks.map((network) => ({
-      ...toRecord(network),
-      explorers: explorers
-        .filter((explorer) => explorer.networkId === network.id)
-        .map(toNetworkExplorerRecord),
+      ...network,
+      explorers: explorers.filter(
+        (explorer) => explorer.networkId === network.id,
+      ),
       rpc: rpcs.find((rpc) => rpc.networkId === network.id),
     }))
   }
@@ -63,13 +64,13 @@ export class NetworkRepository extends BaseRepository {
       .select(selectNetwork)
       .$narrowType<{ coingeckoId: string }>()
       .execute()
-    return rows.map(toRecord) as SetRequired<NetworkRecord, 'coingeckoId'>[]
+    return rows as SetRequired<NetworkRecord, 'coingeckoId'>[]
   }
 
-  async upsertMany(networks: NetworkRecord[]): Promise<number> {
+  async upsertMany(networks: UpsertableNetworkRecord[]): Promise<number> {
     if (networks.length === 0) return 0
 
-    const rows = networks.map(toRow)
+    const rows = networks.map(upsertableToRow)
     await this.batch(rows, 1_000, async (batch) => {
       await this.db
         .insertInto('Network')
@@ -86,9 +87,9 @@ export class NetworkRepository extends BaseRepository {
 
   async updateByCoingeckoId(
     coingeckoId: string,
-    record: NetworkRecord,
+    record: UpsertableNetworkRecord,
   ): Promise<void> {
-    const row = toRow(record)
+    const row = upsertableToRow(record)
     await this.db
       .updateTable('Network')
       .set(row)

@@ -12,7 +12,7 @@ if (!path) {
 const db = createDatabase()
 
 const tokens = await db.token.getAll()
-const networks = await db.networks.getAll()
+const networks = await db.network.getAll()
 const deployments = await db.deployment.getAll()
 const metadata = await db.tokenMeta.getAll()
 const tokenBridges = await db.tokenBridge.getAll()

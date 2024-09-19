@@ -1,5 +1,6 @@
-import { Insertable, Selectable } from 'kysely'
+import { Insertable } from 'kysely'
 import { Network } from '../../kysely/generated/types'
+import { nanoid } from 'nanoid'
 
 export interface NetworkRecord {
   id: string
@@ -16,10 +17,18 @@ export interface NetworkRecord {
   createdAt: Date
 }
 
-export function toRecord(row: Selectable<Network>): NetworkRecord {
-  return row
-}
+export type UpsertableNetworkRecord = Omit<
+  Insertable<NetworkRecord>,
+  'id' | 'updatedAt' | 'createdAt'
+>
 
-export function toRow(record: NetworkRecord): Insertable<Network> {
-  return record
+export function upsertableToRow(
+  record: UpsertableNetworkRecord,
+): Insertable<Network> {
+  return {
+    ...record,
+    id: nanoid(),
+    updatedAt: new Date(),
+    createdAt: new Date(),
+  }
 }
