@@ -1,4 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { NEW_CRYPTOGRAPHY, RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -6,9 +5,6 @@ import { polygonCDKStack } from './templates/polygonCDKStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('wirex')
-
-const shared = new ProjectDiscovery('shared-polygon-cdk')
-const bridge = shared.getContract('Bridge')
 
 const membersCountDAC = discovery.getContractValue<number>(
   'WirexPayChainDAC',
@@ -54,12 +50,6 @@ export const wirex: Layer2 = polygonCDKStack({
       ],
     },
     activityDataSource: 'Blockchain RPC',
-  },
-  chainConfig: {
-    name: 'wirex',
-    chainId: 31415,
-    explorerUrl: 'https://pay-chain-blockscout.wirexpaychain.com',
-    minTimestampForTvl: new UnixTime(1720093223),
   },
   // associatedTokens: ['WPAY'], // not launched yet
   rpcUrl: 'https://pay-chain-rpc.wirexpaychain.com', // tested at over 10k requests per minute with no ratelimit (we default to 1500/min)
@@ -107,17 +97,7 @@ export const wirex: Layer2 = polygonCDKStack({
   rollupModuleContract: discovery.getContract('WirexPayChainValidium'),
   rollupVerifierContract: discovery.getContract('Verifier'),
   isForcedBatchDisallowed,
-  nonTemplateEscrows: [
-    shared.getEscrowDetails({
-      address: bridge.address,
-      tokens: '*',
-      sharedEscrow: {
-        type: 'AggLayer',
-        nativeAsset: 'etherPreminted',
-        premintedAmount: '340282366920938463463374607431768211455',
-      },
-    }),
-  ],
+  nonTemplateEscrows: [],
   nonTemplateTechnology: {
     newCryptography: {
       ...NEW_CRYPTOGRAPHY.ZK_BOTH,
@@ -132,7 +112,6 @@ export const wirex: Layer2 = polygonCDKStack({
     dataFormat:
       'The trusted sequencer request signatures from DAC members off-chain, and posts hashed batches with signatures to the WirexPayChainValidium contract.',
   },
-
   nonTemplatePermissions: [
     {
       name: 'LocalAdmin',

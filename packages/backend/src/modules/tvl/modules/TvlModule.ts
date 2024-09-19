@@ -19,7 +19,6 @@ import { ApiProject, AssociatedToken } from '../api/utils/types'
 import { HourlyIndexer } from '../indexers/HourlyIndexer'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { TvlCleaner } from '../utils/TvlCleaner'
-import { initAggLayerModule } from './AggLayerModule'
 import { initBlockTimestampModule } from './BlockTimestampModule'
 import { initChainModule } from './ChainModule'
 import { initCirculatingSupplyModule } from './CirculatingSupplyModule'
@@ -115,17 +114,6 @@ export function initTvlModule(
     blockTimestampModule?.blockTimestampIndexers,
   )
 
-  const aggLayerModule = initAggLayerModule(
-    config.tvl,
-    logger,
-    peripherals,
-    syncOptimizer,
-    indexerService,
-    configMapping,
-    priceModule.descendant,
-    blockTimestampModule?.blockTimestampIndexers,
-  )
-
   const dataStatusService = new DataStatusService(peripherals.database)
 
   const pricesDataService = new PricesDataService({
@@ -194,7 +182,6 @@ export function initTvlModule(
     await chainModule?.start()
     await premintedModule?.start()
     await circulatingSupplyModule?.start()
-    await aggLayerModule?.start()
 
     if (config.tvl && config.tvl.tvlCleanerEnabled) {
       tvlCleaner.start()
@@ -267,26 +254,18 @@ function getAssociatedTokens(
     const associatedAmounts = amounts
       .filter((x) => x.isAssociated === true)
       .filter((amount) => {
-        const u = uniqueTokens.get(amount.assetId.toString())
+        const u = uniqueTokens.get(`${amount.address}-${amount.chain}`)
         if (u) {
           assert(amount.source === u, 'Type mismatch')
           return false
         }
-        uniqueTokens.set(amount.assetId.toString(), amount.source)
+        uniqueTokens.set(`${amount.address}-${amount.chain}`, amount.source)
         return true
       })
 
     return associatedAmounts.map((amount) => {
-      const address =
-        amount.type === 'aggLayerL2Token'
-          ? amount.l1Address
-          : amount.type === 'aggLayerNativeEtherPreminted' ||
-              amount.type === 'aggLayerNativeEtherWrapped'
-            ? 'native'
-            : amount.address
-
       return {
-        address,
+        address: amount.address,
         chain: amount.chain,
         type: amount.source,
         includeInTotal: amount.includeInTotal,

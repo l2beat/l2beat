@@ -146,11 +146,6 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
     shared.getEscrowDetails({
       address: bridge.address,
       tokens: '*',
-      sharedEscrow: {
-        type: 'AggLayer',
-        nativeAsset: 'etherPreminted',
-        premintedAmount: '200000000000000000000000000',
-      },
     }),
     discovery.getEscrowDetails({
       address: EthereumAddress(ESCROW_wstETH_ADDRESS),
