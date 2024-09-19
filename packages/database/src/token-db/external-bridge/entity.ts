@@ -1,7 +1,7 @@
 import { Insertable } from 'kysely'
+import { nanoid } from 'nanoid'
 import { ExternalBridgeType } from '../../kysely/generated/enums'
 import { ExternalBridge } from '../../kysely/generated/types'
-import { nanoid } from 'nanoid'
 
 export interface ExternalBridgeRecord {
   id: string

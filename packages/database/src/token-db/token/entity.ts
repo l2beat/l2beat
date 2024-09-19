@@ -1,6 +1,6 @@
 import { Insertable } from 'kysely'
-import { Token } from '../../kysely/generated/types'
 import { nanoid } from 'nanoid'
+import { Token } from '../../kysely/generated/types'
 
 export interface TokenRecord {
   id: string

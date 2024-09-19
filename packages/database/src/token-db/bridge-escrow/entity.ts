@@ -1,6 +1,6 @@
 import { Insertable } from 'kysely'
-import { BridgeEscrow } from '../../kysely/generated/types'
 import { nanoid } from 'nanoid'
+import { BridgeEscrow } from '../../kysely/generated/types'
 
 export interface BridgeEscrowRecord {
   id: string

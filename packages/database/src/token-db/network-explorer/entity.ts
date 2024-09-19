@@ -1,7 +1,7 @@
 import { Insertable } from 'kysely'
+import { nanoid } from 'nanoid'
 import { ExplorerType } from '../../kysely/generated/enums'
 import { NetworkExplorer } from '../../kysely/generated/types'
-import { nanoid } from 'nanoid'
 
 export interface NetworkExplorerRecord {
   id: string

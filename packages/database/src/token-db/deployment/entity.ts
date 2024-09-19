@@ -1,6 +1,6 @@
 import { Insertable } from 'kysely'
-import { Deployment } from '../../kysely/generated/types'
 import { nanoid } from 'nanoid'
+import { Deployment } from '../../kysely/generated/types'
 
 export interface DeploymentRecord {
   id: string
