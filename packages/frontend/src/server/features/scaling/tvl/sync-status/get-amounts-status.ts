@@ -1,4 +1,5 @@
 import { type AmountConfigEntry, type UnixTime } from '@l2beat/shared-pure'
+import { getAggLayerStatus } from './get-agglayer-status'
 import { getCirculatingSupplyStatus } from './get-circulating-supply-status'
 import { getConfigurationsStatus } from './get-configurations-status'
 import { getPremintedStatus } from './get-preminted-status'
@@ -7,10 +8,11 @@ export async function getAmountsStatus(
   entries: (AmountConfigEntry & { configId: string })[],
   targetTimestamp: UnixTime,
 ) {
-  const [configurations, preminted, circulating] = await Promise.all([
+  const [configurations, preminted, circulating, aggLayer] = await Promise.all([
     getConfigurationsStatus(entries, targetTimestamp),
     getPremintedStatus(entries, targetTimestamp),
     getCirculatingSupplyStatus(entries, targetTimestamp),
+    getAggLayerStatus(entries, targetTimestamp),
   ])
 
   return {
@@ -18,11 +20,13 @@ export async function getAmountsStatus(
       ...configurations.lagging,
       ...preminted.lagging,
       ...circulating.lagging,
+      ...aggLayer.lagging,
     ],
     excluded: new Set([
       ...configurations.excluded,
       ...preminted.excluded,
       ...circulating.excluded,
+      ...aggLayer.excluded,
     ]),
   }
 }
