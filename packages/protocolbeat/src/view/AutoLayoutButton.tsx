@@ -7,7 +7,18 @@ export function AutoLayoutButton() {
   const updateNodeLocations = useStore((state) => state.updateNodeLocations)
 
   function handleAutoLayout() {
-    updateNodeLocations(autoLayout(nodes))
+    const animation = autoLayout(nodes)
+    const STEP_TIME_MS = 50
+    let i = 0
+    function animate() {
+      const step = animation[i]
+      if (step) {
+        updateNodeLocations(step)
+        i++
+        setTimeout(animate, STEP_TIME_MS)
+      }
+    }
+    setTimeout(animate, STEP_TIME_MS)
   }
 
   return (
@@ -32,19 +43,30 @@ interface LayoutNode {
   y: number
   height: number
   margin: number
+  force: number
 }
 
 function autoLayout(baseNodes: readonly Node[]) {
   if (baseNodes.length === 0) {
-    return {}
+    return []
   }
   const nodes = toLayoutNodes(baseNodes)
   removeSoleParentConnection(nodes)
   markTrees(nodes)
   assignLevels(nodes)
   const columns = groupByLevel(nodes)
-  const { nodeLocations } = layoutColumns(columns)
-  return nodeLocations
+  layoutColumns(columns)
+
+  const animation: NodeLocations[] = []
+  for (let i = 0; i < 1000; i++) {
+    physicsStep(columns)
+    const nodeLocations: NodeLocations = {}
+    for (const node of nodes) {
+      nodeLocations[node.id] = { x: node.x, y: node.y }
+    }
+    animation.push(nodeLocations)
+  }
+  return animation
 }
 
 function toLayoutNodes(baseNodes: readonly Node[]) {
@@ -60,6 +82,7 @@ function toLayoutNodes(baseNodes: readonly Node[]) {
       y: 0,
       height: base.box.height,
       margin: 0,
+      force: 0,
     }),
   )
 
@@ -227,7 +250,6 @@ function layoutColumns(columns: LayoutNode[][], x = 0, y = 0) {
   const Y_SPACING_SM = 20
   const Y_SPACING_LG = 60
 
-  const nodeLocations: NodeLocations = {}
   let xOffset = x
   let maxHeight = 0
   for (const column of columns) {
@@ -261,14 +283,54 @@ function layoutColumns(columns: LayoutNode[][], x = 0, y = 0) {
 
     for (const node of column) {
       node.y += (maxHeight - maxColumnHeight) / 2
-      nodeLocations[node.id] = { x: node.x, y: node.y }
+    }
+  }
+}
+
+function physicsStep(columns: LayoutNode[][]) {
+  for (const column of columns) {
+    for (const node of column) {
+      let averagePosition = 0
+      for (const parent of node.connectionsIn) {
+        averagePosition += parent.y + parent.height / 2
+      }
+      for (const child of node.connectionsOut) {
+        averagePosition += child.y + child.height / 2
+      }
+      if (node.connectionsIn.length !== 0 || node.connectionsOut.length !== 0) {
+        averagePosition /=
+          node.connectionsIn.length + node.connectionsOut.length
+        const distance = averagePosition - (node.y + node.height / 2)
+        if (node.id === 'ethereum:0x961B513dfD3e363c238E0f98219eE02552A847BD') {
+          console.log(distance)
+        }
+        node.force = Math.sign(distance) * Math.sqrt(Math.abs(distance))
+      }
     }
   }
 
-  return {
-    nodeLocations,
-    width: xOffset - X_SPACING,
-    height: maxHeight,
+  const STRENGTH = 2
+  const TOP = 0
+
+  let minY = Infinity
+  for (const column of columns) {
+    let previous: LayoutNode | undefined
+    for (const node of column) {
+      node.y += node.force * STRENGTH
+      if (previous && node.y < previous.y + previous.height + previous.margin) {
+        node.y = previous.y + previous.height + previous.margin
+      } else if (!previous && node.y < TOP) {
+        node.y = TOP
+      }
+      minY = Math.min(node.y, minY)
+      previous = node
+    }
+  }
+
+  for (const column of columns) {
+    for (const node of column) {
+      node.y -= minY - TOP
+    }
   }
 }
 
