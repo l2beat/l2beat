@@ -7,7 +7,7 @@ Generated with discovered.json: 0x9487c18c1d17b81e0e06559883359d3be5b8dd21
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery of a standard type 4 PolygonCDK validium. LocalAdmin / Chain Owner is an EOA.
 
 ## Initial discovery
 
