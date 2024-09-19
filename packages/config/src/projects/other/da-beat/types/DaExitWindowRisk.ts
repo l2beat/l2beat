@@ -110,7 +110,7 @@ const Enshrined = {
   value: 'Immutable',
   sentiment: 'good',
   description:
-    'Blob commitments posted to Ethereum become irreversible after the block that includes them is finalized.',
+    'Blob commitments posted to Ethereum become irreversible after the block that includes them is finalized. Under normal network conditions, finalization takes two epochs, equivalent to 12.8 minutes.',
 } as const
 
 export const DaExitWindowRisk = {
