@@ -15,6 +15,15 @@ export class DeploymentRepository extends BaseRepository {
     return rows
   }
 
+  async getByTokenIds(tokenIds: string[]): Promise<DeploymentRecord[]> {
+    const rows = await this.db
+      .selectFrom('Deployment')
+      .select(selectDeployment)
+      .where('Deployment.tokenId', 'in', tokenIds)
+      .execute()
+    return rows
+  }
+
   async upsert(record: UpsertableDeploymentRecord): Promise<void> {
     const row = upsertableToRow(record)
     await this.db

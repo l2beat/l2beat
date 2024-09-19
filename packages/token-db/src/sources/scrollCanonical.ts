@@ -4,7 +4,7 @@ import { assert } from '@l2beat/shared-pure'
 import { getContract, parseAbiItem } from 'viem'
 import { Database } from '@l2beat/database'
 import { NetworkConfig } from '../utils/getNetworksConfig.js'
-import { notUndefined } from '../utils/notUndefined.js'
+import { notUndefined } from '@l2beat/shared-pure'
 
 export { buildScrollCanonicalSource }
 

@@ -1,11 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
 import { assert } from '@l2beat/shared-pure'
 
-import { nanoid } from 'nanoid'
 import { getContract, parseAbiItem } from 'viem'
 import { Database } from '@l2beat/database'
 import { NetworkConfig } from '../utils/getNetworksConfig.js'
-import { notUndefined } from '../utils/notUndefined.js'
+import { notUndefined } from '@l2beat/shared-pure'
 
 export { buildZkSyncCanonicalSource }
 
@@ -36,30 +35,12 @@ function buildZkSyncCanonicalSource({
     )?.publicClient
     assert(zkSyncClient, 'zkSync client not found')
 
-    const zkSyncNetwork = await db.network.findFirst({
-      select: { id: true },
-      where: {
-        name: 'zkSync',
-      },
-    })
+    const zkSyncNetwork = await db.network.findByName('zkSync')
     assert(zkSyncNetwork, 'zkSync network not found')
 
-    const tokens = await db.token.findMany({
-      where: {
-        deployment: {
-          OR: [
-            {
-              from: {
-                equals: ZKSYNC_DEPLOYER,
-                mode: 'insensitive',
-              },
-            },
-          ],
-        },
-        network: {
-          id: zkSyncNetwork.id,
-        },
-      },
+    const tokens = await db.token.getByDeployment({
+      deploymentConstraints: [{ from: ZKSYNC_DEPLOYER }],
+      networkId: zkSyncNetwork.id,
     })
 
     logger.info('Matching L2 tokens with L1 addresses...')
@@ -72,16 +53,14 @@ function buildZkSyncCanonicalSource({
         })
 
         const l1Address = await contract.read.l1Address().catch(() => undefined)
-        const l1Token = await db.token.findFirst({
-          where: {
-            network: {
-              name: 'Ethereum',
-            },
-            address: {
-              equals: l1Address,
-              mode: 'insensitive',
-            },
-          },
+
+        if (!l1Address) {
+          return
+        }
+
+        const l1Token = await db.token.findByNetwork({
+          network: 'Ethereum',
+          address: l1Address,
         })
         if (!l1Token) {
           return
@@ -90,16 +69,12 @@ function buildZkSyncCanonicalSource({
         return {
           sourceTokenId: l1Token.id,
           targetTokenId: token.id,
+          externalBridgeId: null,
         }
       }),
     )
 
-    await db.tokenBridge.upsertMany({
-      data: tokensBridgeToUpsert
-        .filter(notUndefined)
-        .map((t) => ({ id: nanoid(), ...t })),
-      conflictPaths: ['targetTokenId'],
-    })
+    await db.tokenBridge.upsertMany(tokensBridgeToUpsert.filter(notUndefined))
 
     logger.info(
       `Synced ${tokensBridgeToUpsert.length} zkSync canonical tokens data`,

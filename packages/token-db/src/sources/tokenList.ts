@@ -25,7 +25,7 @@ function buildTokenListSource({ db, url, tag, logger, queue }: Dependencies) {
 
     logger.info('Token list fetched', { count: result.tokens.length })
 
-    const networks = await db.network.findMany()
+    const networks = await db.network.getAll()
 
     const tokens = result.tokens.flatMap((token) => {
       const chain = networks.find((n) => n.chainId === token.chainId)
@@ -45,7 +45,9 @@ function buildTokenListSource({ db, url, tag, logger, queue }: Dependencies) {
         decimals: token.decimals,
         name: token.name,
         source: { type: 'TokenList' as const, details: tag },
-        logoUrl: token.logoURI,
+        logoUrl: token.logoURI ?? null,
+        externalId: null,
+        contractName: null,
       }
     })
 

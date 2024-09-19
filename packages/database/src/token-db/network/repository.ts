@@ -75,6 +75,16 @@ export class NetworkRepository extends BaseRepository {
     return rows
   }
 
+  async getAllWithWormholeId(): Promise<NetworkRecord[]> {
+    const rows = await this.db
+      .selectFrom('Network')
+      .select(selectNetwork)
+      .where('Network.wormholeId', 'is not', null)
+      .$narrowType<{ wormholeId: string }>()
+      .execute()
+    return rows
+  }
+
   async getAllWithCoingeckoId(): Promise<
     SetRequired<NetworkRecord, 'coingeckoId'>[]
   > {
