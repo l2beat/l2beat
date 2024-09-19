@@ -82,7 +82,6 @@ export interface ClockConfig {
 }
 
 export interface TvlConfig {
-  readonly aggLayerEnabled: boolean
   readonly prices: PriceConfigEntry[]
   readonly amounts: AmountConfigEntry[]
   readonly chains: ChainTvlConfig[]

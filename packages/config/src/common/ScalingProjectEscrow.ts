@@ -4,15 +4,6 @@ import { ScalingProjectContractSingleAddress } from './ScalingProjectContracts'
 
 export type ScalingProjectEscrow = OldProjectEscrow | NewProjectEscrow
 
-export interface AggLayerEscrow {
-  type: 'AggLayer'
-  nativeAsset: 'etherPreminted' | 'etherWrapped'
-  wethAddress?: EthereumAddress
-  /** It has to be string because frontend need to serialize it as cache key */
-  premintedAmount?: string
-  includeAllOKBFromL1?: boolean
-}
-
 interface OldProjectEscrow {
   address: EthereumAddress
   /** Timestamp of the deployment transaction of the escrow contract. */
@@ -43,7 +34,6 @@ interface OldProjectEscrow {
     }[]
     warning?: string
   }
-  sharedEscrow?: AggLayerEscrow
 }
 
 interface NewProjectEscrow {
@@ -81,5 +71,4 @@ interface NewProjectEscrow {
     }[]
     warning?: string
   }
-  sharedEscrow?: AggLayerEscrow
 }
