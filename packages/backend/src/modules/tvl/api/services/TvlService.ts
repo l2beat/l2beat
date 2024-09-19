@@ -363,10 +363,17 @@ export class TvlService {
         priceUsd: price,
         decimals: config.decimals,
       })
+      const address =
+        config.type === 'aggLayerL2Token'
+          ? config.l1Address.toString()
+          : config.type === 'aggLayerNativeEtherPreminted' ||
+              config.type === 'aggLayerNativeEtherWrapped'
+            ? 'native'
+            : config.address.toString()
 
       breakdown[config.source].push({
         assetId: priceConfig.assetId,
-        address: config.address.toString(),
+        address,
         chain: config.chain,
         chainId: this.$.chainConverter.toChainId(config.chain),
         source: config.source,

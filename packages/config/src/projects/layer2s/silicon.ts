@@ -1,6 +1,11 @@
+import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { underReviewL2 } from './templates/underReview'
 import { Layer2 } from './types'
+
+const shared = new ProjectDiscovery('shared-polygon-cdk')
+const bridge = shared.getContract('Bridge')
 
 export const silicon: Layer2 = underReviewL2({
   id: 'silicon',
@@ -23,6 +28,22 @@ export const silicon: Layer2 = underReviewL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
+  chainConfig: {
+    name: 'silicon',
+    chainId: 2355,
+    explorerUrl: 'https://scope.silicon.network/',
+    minTimestampForTvl: new UnixTime(1724183531),
+  },
+  escrows: [
+    shared.getEscrowDetails({
+      address: bridge.address,
+      tokens: '*',
+      sharedEscrow: {
+        type: 'AggLayer',
+        nativeAsset: 'etherPreminted',
+        premintedAmount: '340282366920938463463374607431768211455',
+      },
+    }),
+  ],
   rpcUrl: 'https://rpc.silicon.network',
-  //shared polygon bridge
 })

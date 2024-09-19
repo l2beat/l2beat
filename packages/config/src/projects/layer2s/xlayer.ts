@@ -1,3 +1,4 @@
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { NEW_CRYPTOGRAPHY, RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -5,6 +6,9 @@ import { polygonCDKStack } from './templates/polygonCDKStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('xlayer')
+
+const shared = new ProjectDiscovery('shared-polygon-cdk')
+const bridge = shared.getContract('Bridge')
 
 const membersCountDAC = discovery.getContractValue<number>(
   'XLayerValidiumDAC',
@@ -68,6 +72,20 @@ export const xlayer: Layer2 = polygonCDKStack({
       ],
     },
   },
+  chainConfig: {
+    name: 'xlayer',
+    chainId: 196,
+    explorerUrl: 'https://rpc.xlayer.tech',
+    minTimestampForTvl: new UnixTime(1679679015),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 47416,
+        version: '3',
+      },
+    ],
+  },
   display: {
     name: 'X Layer',
     slug: 'xlayer',
@@ -86,7 +104,20 @@ export const xlayer: Layer2 = polygonCDKStack({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  nonTemplateEscrows: [],
+  nonTemplateEscrows: [
+    shared.getEscrowDetails({
+      address: bridge.address,
+      tokens: '*',
+      sharedEscrow: {
+        type: 'AggLayer',
+        nativeAsset: 'etherWrapped',
+        wethAddress: EthereumAddress(
+          '0x5a77f1443d16ee5761d310e38b62f77f726bc71c',
+        ),
+        includeAllOKBFromL1: true,
+      },
+    }),
+  ],
   milestones: [
     {
       name: 'X Layer Public Launch',

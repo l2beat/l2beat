@@ -1,159 +1,259 @@
-import {
-  assert,
-  AmountConfigEntry,
-  AssetId,
-  ChainConverter,
-  ChainId,
-  ProjectId,
-  Token,
-  UnixTime,
-} from '@l2beat/shared-pure'
-import { chainToProject } from '../backend'
-import { BackendProject, BackendProjectEscrow } from '../backend/BackendProject'
+import { assert, AmountConfigEntry, AssetId, Token } from '@l2beat/shared-pure'
+import { chainConverter, chainToProject } from '../backend'
+import { BackendProject } from '../backend/BackendProject'
 import { chains } from '../chains'
-import { ChainConfig } from '../common'
+import { ethereum } from '../chains/ethereum'
 import { tokenList } from '../tokens'
+import { getAggLayerL2TokenEntry } from './amounts/aggLayerL2Tokens'
+import { getAggLayerNativeEtherPremintedEntry } from './amounts/aggLayerNativeEtherPreminted'
+import { getAggLayerNativeEtherWrappedEntry } from './amounts/aggLayerNativeEtherWrapped'
+import { getCirculatingSupplyEntry } from './amounts/circulatingSupply'
+import { getEscrowEntry } from './amounts/escrow'
+import { getPremintedEntry } from './amounts/preminted'
+import { getTotalSupplyEntry } from './amounts/totalSupply'
 
 export function getTvlAmountsConfig(
   projects: BackendProject[],
 ): AmountConfigEntry[] {
-  const entries: AmountConfigEntry[] = []
+  const tokenAmounts = tokenList
+    .filter((token) => token.supply !== 'zero')
+    .map((token) => {
+      const projectAndChain = findProjectAndChain(token, projects)
+      const { chain, project } = projectAndChain
 
-  const nonZeroSupplyTokens = tokenList.filter((t) => t.supply !== 'zero')
-  for (const token of nonZeroSupplyTokens) {
-    const projectAndChain = findProjectAndChain(token, projects)
+      switch (token.supply) {
+        case 'totalSupply':
+          return getTotalSupplyEntry(chain, token, project)
+        case 'circulatingSupply':
+          return getCirculatingSupplyEntry(chain, token, project)
+        case 'zero':
+          throw new Error('Zero supply tokens should not have config entry')
+      }
+    })
 
-    const { chain, project } = projectAndChain
-
-    const configEntry = projectTokenToConfigEntry(chain, token, project)
-
-    entries.push(configEntry)
-  }
+  const entries: AmountConfigEntry[] = [...tokenAmounts]
 
   for (const project of projects) {
     for (const escrow of project.escrows) {
+      if (escrow.sharedEscrow?.type === 'AggLayer') {
+        for (const token of escrow.tokens) {
+          if (token.address === undefined) {
+            continue
+          }
+          const chain = chains.find((x) => x.chainId === +token.chainId)
+          assert(chain, `Chain not found for token ${token.id}`)
+          assert(
+            chain.name === escrow.chain,
+            'Programmer error: chain mismatch',
+          )
+
+          const configEntry = getAggLayerL2TokenEntry(
+            chain,
+            token,
+            escrow,
+            project,
+          )
+
+          entries.push(configEntry)
+        }
+        if (escrow.sharedEscrow.nativeAsset === 'etherPreminted') {
+          const chain = chains.find((x) => x.name === project.projectId)
+          assert(chain, `Chain not found for project ${project.projectId}`)
+          assert(
+            chain.minTimestampForTvl,
+            'Chain should have minTimestampForTvl',
+          )
+
+          const configEntry = getAggLayerNativeEtherPremintedEntry(
+            chain,
+            escrow,
+            project,
+          )
+
+          entries.push(configEntry)
+        }
+        if (escrow.sharedEscrow.nativeAsset === 'etherWrapped') {
+          const chain = chains.find((x) => x.name === project.projectId)
+          assert(chain, `Chain not found for project ${project.projectId}`)
+          assert(
+            chain.minTimestampForTvl,
+            'Chain should have minTimestampForTvl',
+          )
+          const l1Weth = tokenList.find(
+            (t) => AssetId.create(ethereum.name, t.address) === AssetId.WETH,
+          )
+          assert(l1Weth, 'Ethereum WETH token not found')
+
+          const configEntry = getAggLayerNativeEtherWrappedEntry(
+            chain,
+            l1Weth,
+            escrow,
+            project,
+          )
+
+          entries.push(configEntry)
+        }
+      } else {
+        for (const token of escrow.tokens) {
+          const chain = chains.find((x) => x.chainId === +token.chainId)
+          assert(chain, `Chain not found for token ${token.id}`)
+          assert(
+            chain.name === escrow.chain,
+            'Programmer error: chain mismatch',
+          )
+
+          const configEntry = token.isPreminted
+            ? getPremintedEntry(chain, token, escrow, project)
+            : getEscrowEntry(chain, token, escrow, project)
+
+          entries.push(configEntry)
+        }
+      }
+    }
+  }
+
+  const projectsWithOKBConfig = projects.filter((p) =>
+    p.escrows.some((e) => e.sharedEscrow?.includeAllOKBFromL1),
+  )
+
+  if (projectsWithOKBConfig.length > 0) {
+    return handleOKBentries(projectsWithOKBConfig, entries)
+  }
+
+  return entries
+}
+
+export function getTvlAmountsConfigForProject(
+  backendProject: BackendProject,
+): AmountConfigEntry[] {
+  const tokenAmounts = tokenList
+    .filter((token) => token.supply !== 'zero')
+    .filter(
+      (t) =>
+        chainToProject.get(chainConverter.toName(t.chainId)) ===
+        backendProject.projectId,
+    )
+    .map((token) => {
+      const projectAndChain = findProjectAndChain(token, [backendProject])
+      const { chain, project } = projectAndChain
+
+      switch (token.supply) {
+        case 'totalSupply':
+          return getTotalSupplyEntry(chain, token, project)
+        case 'circulatingSupply':
+          return getCirculatingSupplyEntry(chain, token, project)
+        case 'zero':
+          throw new Error('Zero supply tokens should not have config entry')
+      }
+    })
+
+  const entries: AmountConfigEntry[] = [...tokenAmounts]
+
+  for (const escrow of backendProject.escrows) {
+    if (escrow.sharedEscrow?.type === 'AggLayer') {
+      for (const token of escrow.tokens) {
+        if (token.address === undefined) {
+          continue
+        }
+        const chain = chains.find((x) => x.chainId === +token.chainId)
+        assert(chain, `Chain not found for token ${token.id}`)
+        assert(chain.name === escrow.chain, 'Programmer error: chain mismatch')
+
+        const configEntry = getAggLayerL2TokenEntry(
+          chain,
+          token,
+          escrow,
+          backendProject,
+        )
+
+        entries.push(configEntry)
+      }
+      if (escrow.sharedEscrow.nativeAsset === 'etherPreminted') {
+        const chain = chains.find((x) => x.name === backendProject.projectId)
+        assert(chain, `Chain not found for project ${backendProject.projectId}`)
+        assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
+
+        const configEntry = getAggLayerNativeEtherPremintedEntry(
+          chain,
+          escrow,
+          backendProject,
+        )
+
+        entries.push(configEntry)
+      }
+      if (escrow.sharedEscrow.nativeAsset === 'etherWrapped') {
+        const chain = chains.find((x) => x.name === backendProject.projectId)
+        assert(chain, `Chain not found for project ${backendProject.projectId}`)
+        assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
+        const l1Weth = tokenList.find(
+          (t) => AssetId.create(ethereum.name, t.address) === AssetId.WETH,
+        )
+        assert(l1Weth, 'Ethereum WETH token not found')
+
+        const configEntry = getAggLayerNativeEtherWrappedEntry(
+          chain,
+          l1Weth,
+          escrow,
+          backendProject,
+        )
+
+        entries.push(configEntry)
+      }
+    } else {
       for (const token of escrow.tokens) {
         const chain = chains.find((x) => x.chainId === +token.chainId)
         assert(chain, `Chain not found for token ${token.id}`)
         assert(chain.name === escrow.chain, 'Programmer error: chain mismatch')
 
-        const configEntry = projectEscrowToConfigEntry(
-          chain,
-          token,
-          escrow,
-          project,
-        )
+        const configEntry = token.isPreminted
+          ? getPremintedEntry(chain, token, escrow, backendProject)
+          : getEscrowEntry(chain, token, escrow, backendProject)
 
         entries.push(configEntry)
       }
     }
   }
 
-  return entries
-}
-
-/** Lighter version of `getTvlAmountsConfig`, does not that much nor enforces full configuration compatibility  */
-export function getTvlAmountsConfigForProject(
-  project: BackendProject,
-): AmountConfigEntry[] {
-  const entries: AmountConfigEntry[] = []
-
-  const nonZeroSupplyTokens = tokenList.filter((t) => t.supply !== 'zero')
-
-  const projectTokens = nonZeroSupplyTokens.filter(
-    (t) =>
-      chainToProject.get(chainConverter.toName(t.chainId)) ===
-      project.projectId,
+  const projectWithOKBConfig = backendProject.escrows.some(
+    (e) => e.sharedEscrow?.includeAllOKBFromL1,
   )
 
-  for (const token of projectTokens) {
-    const chain = chains.find((x) => x.chainId === +token.chainId)
-    assert(chain, `Chain not found for token ${token.symbol}`)
-
-    const configEntry = projectTokenToConfigEntry(chain, token, project)
-
-    entries.push(configEntry)
-  }
-
-  for (const escrow of project.escrows) {
-    for (const token of escrow.tokens) {
-      const chain = chains.find((x) => x.chainId === +token.chainId)
-      assert(chain, `Chain not found for token ${token.id}`)
-      assert(chain.name === escrow.chain, 'Programmer error: chain mismatch')
-
-      const configEntry = projectEscrowToConfigEntry(
-        chain,
-        token,
-        escrow,
-        project,
-      )
-
-      entries.push(configEntry)
-    }
+  if (projectWithOKBConfig) {
+    return handleOKBentries([backendProject], entries)
   }
 
   return entries
 }
 
-const chainConverter = new ChainConverter(
-  chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
-)
+function handleOKBentries(
+  projectWithOKBConfig: BackendProject[],
+  entries: AmountConfigEntry[],
+) {
+  assert(projectWithOKBConfig.length === 1)
+  const okbToken = tokenList.find(
+    (t) =>
+      AssetId.create(chainConverter.toName(t.chainId), t.address) ===
+      AssetId.OKB,
+  )
+  assert(okbToken)
 
-function projectTokenToConfigEntry(
-  chain: ChainConfig,
-  token: Token,
-  project: BackendProject,
-): AmountConfigEntry {
-  if (token.supply === 'totalSupply') {
-    assert(token.address, 'Token address is required for total supply')
+  const escrow = projectWithOKBConfig[0].escrows.find(
+    (e) => e.sharedEscrow?.includeAllOKBFromL1,
+  )
+  assert(escrow)
 
-    return {
-      type: 'totalSupply',
-      address: token.address,
-      ...getSupplyTokenInfo(chain, token, project),
-      ...getBaseTokenInfo(token, project.projectId),
-    }
-  }
+  const l1OKBEntry = getEscrowEntry(
+    ethereum,
+    okbToken,
+    escrow,
+    projectWithOKBConfig[0],
+  )
 
-  if (token.supply === 'circulatingSupply') {
-    return {
-      type: 'circulatingSupply',
-      address: token.address ?? 'native',
-      coingeckoId: token.coingeckoId,
-      ...getSupplyTokenInfo(chain, token, project),
-      ...getBaseTokenInfo(token, project.projectId),
-    }
-  }
+  entries.push(l1OKBEntry)
 
-  throw new Error('Invalid token supply type')
-}
-
-function projectEscrowToConfigEntry(
-  chain: ChainConfig,
-  token: Token & { isPreminted: boolean },
-  escrow: BackendProjectEscrow,
-  project: BackendProject,
-): AmountConfigEntry {
-  if (token.isPreminted) {
-    return {
-      type: 'preminted',
-      address: token.address ?? 'native',
-      escrowAddress: escrow.address,
-      coingeckoId: token.coingeckoId,
-      dataSource: `${chain.name}_preminted_${token.address}`,
-      ...getEscrowTokenInfo(chain, token, escrow, project),
-      ...getBaseTokenInfo(token, project.projectId),
-    }
-  }
-
-  return {
-    type: 'escrow',
-    address: token.address ?? 'native',
-    escrowAddress: escrow.address,
-    dataSource: chain.name,
-    ...getEscrowTokenInfo(chain, token, escrow, project),
-    ...getBaseTokenInfo(token, project.projectId),
-  }
+  return entries.filter(
+    (e) => e.type !== 'aggLayerL2Token' || e.assetId !== AssetId.OKB,
+  )
 }
 
 function findProjectAndChain(token: Token, projects: BackendProject[]) {
@@ -168,103 +268,4 @@ function findProjectAndChain(token: Token, projects: BackendProject[]) {
   assert(chain, `Chain not found for token ${token.symbol}`)
 
   return { chain, project }
-}
-
-function getSupplyTokenInfo(
-  chain: ChainConfig,
-  token: Token,
-  project: BackendProject,
-) {
-  assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
-
-  const sinceTimestamp = UnixTime.max(
-    chain.minTimestampForTvl,
-    token.sinceTimestamp,
-  )
-  const untilTimestamp = token.untilTimestamp
-
-  const isAssociated = !!project.associatedTokens?.includes(token.symbol)
-  const includeInTotal = true
-  const source = token.source
-
-  const dataSource =
-    token.supply === 'circulatingSupply' ? 'coingecko' : chain.name
-
-  return {
-    sinceTimestamp,
-    untilTimestamp,
-    includeInTotal,
-    isAssociated,
-    source,
-    dataSource,
-  }
-}
-
-function getEscrowTokenInfo(
-  chain: ChainConfig,
-  token: Token & { isPreminted: boolean },
-  escrow: BackendProjectEscrow,
-  project: BackendProject,
-) {
-  assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
-  const tokenSinceTimestamp = UnixTime.max(
-    chain.minTimestampForTvl,
-    token.sinceTimestamp,
-  )
-  const sinceTimestamp = UnixTime.max(
-    tokenSinceTimestamp,
-    escrow.sinceTimestamp,
-  )
-
-  const untilTimestamp = getUntilTimestamp(
-    token.untilTimestamp,
-    escrow.untilTimestamp,
-  )
-
-  const isAssociated = !!project.associatedTokens?.includes(token.symbol)
-  const includeInTotal = escrow.includeInTotal ?? true
-  const bridgedUsing = escrow.bridgedUsing
-  const source = escrow.source ?? 'canonical'
-
-  return {
-    sinceTimestamp,
-    untilTimestamp,
-    includeInTotal: token.excludeFromTotal ? false : includeInTotal,
-    isAssociated,
-    bridgedUsing,
-    source,
-  }
-}
-
-function getBaseTokenInfo(token: Token, project: ProjectId) {
-  return {
-    assetId: AssetId.create(
-      chainConverter.toName(token.chainId),
-      token.address,
-    ),
-    chain: chainConverter.toName(token.chainId),
-    project,
-    decimals: token.decimals,
-    symbol: token.symbol,
-    category: token.category,
-  }
-}
-
-function getUntilTimestamp(
-  tokenUntil: UnixTime | undefined,
-  escrowUntil: UnixTime | undefined,
-): UnixTime | undefined {
-  if (tokenUntil === undefined && escrowUntil === undefined) {
-    return undefined
-  }
-
-  if (tokenUntil === undefined) {
-    return escrowUntil
-  }
-
-  if (escrowUntil === undefined) {
-    return tokenUntil
-  }
-
-  return UnixTime.max(tokenUntil, escrowUntil)
 }

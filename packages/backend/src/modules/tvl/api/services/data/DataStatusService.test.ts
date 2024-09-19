@@ -4,6 +4,9 @@ import {
   IndexerStateRecord,
 } from '@l2beat/database'
 import {
+  AggLayerL2Token,
+  AggLayerNativeEtherPreminted,
+  AggLayerNativeEtherWrapped,
   CirculatingSupplyEntry,
   CoingeckoId,
   CoingeckoPriceConfigEntry,
@@ -18,7 +21,7 @@ import { mockDatabase } from '../../../../../test/database'
 import { DataStatusService } from './DataStatusService'
 
 describe(DataStatusService.name, () => {
-  it(DataStatusService.prototype.getAmountsStatus.name, async () => {
+  it.only(DataStatusService.prototype.getAmountsStatus.name, async () => {
     const targetTimestamp = UnixTime.now()
 
     const indexerConfigurationsRepository = mockObject<
@@ -30,6 +33,9 @@ describe(DataStatusService.name, () => {
         configuration('c', 0, 100, 100),
         configuration('d', 0, 100, targetTimestamp.add(-1, 'hours').toNumber()),
         configuration('e', 0, 100, targetTimestamp.add(-10, 'days').toNumber()),
+        configuration('o', 0, 100, targetTimestamp.toNumber()),
+        configuration('p', 0, 100, targetTimestamp.add(-1, 'hours').toNumber()),
+        configuration('r', 0, 100, targetTimestamp.add(-10, 'days').toNumber()),
       ],
     })
 
@@ -88,12 +94,16 @@ describe(DataStatusService.name, () => {
         preminted('l', 'l', EthereumAddress.unsafe('l')),
         preminted('m', 'm', EthereumAddress.unsafe('m')),
         preminted('n', 'n', EthereumAddress.unsafe('n')),
+        agglayer('o', 'o'),
+        agglayer('p', 'p'),
+        agglayer('r', 'r'),
+        agglayer('s', 's'),
       ],
       targetTimestamp,
     )
 
     expect(result.excluded).toEqual(
-      new Set(['a', 'e', 'f', 'i', 'j', 'm', 'n']),
+      new Set(['a', 'e', 'f', 'i', 'j', 'm', 'n', 'r', 's']),
     )
 
     expect(result.lagging).toEqualUnsorted([
@@ -109,11 +119,26 @@ describe(DataStatusService.name, () => {
         id: 'l',
         latestTimestamp: targetTimestamp.add(-1, 'hours'),
       },
+      {
+        id: 'p',
+        latestTimestamp: targetTimestamp.add(-1, 'hours'),
+      },
     ])
 
     expect(
       indexerConfigurationsRepository.getByConfigurationIds,
-    ).toHaveBeenOnlyCalledWith(['a', 'b', 'c', 'd', 'e', 'f'])
+    ).toHaveBeenOnlyCalledWith([
+      'a',
+      'b',
+      'c',
+      'd',
+      'e',
+      'f',
+      'o',
+      'p',
+      'r',
+      's',
+    ])
 
     expect(indexerStateRepository.getByIndexerIds).toHaveBeenNthCalledWith(1, [
       'preminted_indexer::k_k',
@@ -280,6 +305,28 @@ function preminted(configId: string, chain: string, address: EthereumAddress) {
     type: 'preminted',
     chain,
     address,
+  })
+}
+
+function agglayer(
+  configId: string,
+  chain: string,
+  type?: (
+    | AggLayerL2Token
+    | AggLayerNativeEtherPreminted
+    | AggLayerNativeEtherWrapped
+  )['type'],
+) {
+  return mockObject<
+    (
+      | AggLayerL2Token
+      | AggLayerNativeEtherPreminted
+      | AggLayerNativeEtherWrapped
+    ) & { configId: string }
+  >({
+    configId,
+    type: type ?? 'aggLayerL2Token',
+    chain,
   })
 }
 
