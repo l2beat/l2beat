@@ -40,7 +40,7 @@ const ErasureCodingProof = {
 
 const NoFraudDetection = {
   type: 'NoFraudDetection',
-  value: 'No fraud detection',
+  value: 'None',
   sentiment: 'bad',
   description:
     'There is no fraud detection mechanism in place. A data withholding attack can only be detected by nodes downloading the full data from the DA layer.',
