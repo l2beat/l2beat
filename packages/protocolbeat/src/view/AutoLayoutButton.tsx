@@ -1,5 +1,6 @@
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
+import { FIELD_HEIGHT, HEADER_HEIGHT } from '../store/utils/constants'
 import type { NodeLocations } from '../store/utils/storageParsing'
 
 let timeout: ReturnType<typeof setTimeout>
@@ -9,7 +10,7 @@ export function AutoLayoutButton() {
 
   function handleAutoLayout() {
     const animation = autoLayout(nodes)
-    const STEP_TIME_MS = 50
+    const STEP_TIME_MS = 20
     let i = 0
     clearTimeout(timeout)
     function animate() {
@@ -38,8 +39,7 @@ const X_SPACING = 200
 const Y_SPACING_SM = 20
 const Y_SPACING_LG = 60
 const Y_SPACING_CLUSTER = 100
-const FORCE_MULTIPLIER = 2
-const SIMULATION_STEPS = 50
+const SIMULATION_STEPS = 200
 
 interface LayoutNode {
   id: string
@@ -76,10 +76,8 @@ function autoLayout(baseNodes: readonly Node[]) {
   const animation: NodeLocations[] = []
   for (let i = 0; i < SIMULATION_STEPS; i++) {
     let top = 0
-    console.log('---')
     for (const nodes of clusters) {
       const maxY = physicsStep(nodes, top)
-      console.log(nodes.length, maxY)
       top = maxY + Y_SPACING_CLUSTER
     }
 
@@ -346,29 +344,50 @@ function layoutColumns(columns: LayoutNode[][], x = 0, y = 0) {
 function physicsStep(nodes: LayoutNode[], top: number) {
   for (const node of nodes) {
     const positions: number[] = []
-    for (const other of [...node.connectionsIn, ...node.connectionsOut]) {
+    for (const parent of node.connectionsIn) {
+      if (parent.level === node.level) {
+        continue
+      }
+      const index = parent.base.fields.findIndex(
+        (x) => x.connection?.nodeId === node.id,
+      )
+      if (index !== -1) {
+        positions.push(parent.y + HEADER_HEIGHT + FIELD_HEIGHT * (index + 0.5))
+      }
+    }
+    for (const other of node.connectionsOut) {
       if (other.level !== node.level) {
         positions.push(other.y + other.height / 2)
       }
     }
     if (positions.length !== 0) {
+      const position = node.y + node.height / 2
       const target = positions.reduce((a, b) => a + b) / positions.length
-      const distance = target - (node.y + node.height / 2)
-      node.force =
-        (Math.sign(distance) * Math.sqrt(Math.abs(distance))) / positions.length
+      const distance = target - position
+      node.force = Math.sign(distance) * Math.sqrt(Math.abs(distance))
     }
+  }
+
+  for (const node of nodes) {
+    node.y += node.force
+    node.force = 0
   }
 
   let minY = Infinity
   for (const [i, node] of nodes.entries()) {
-    node.y += node.force * FORCE_MULTIPLIER
-    node.force = 0
-
     const previous = nodes[i - 1]
     if (previous && node.level === previous.level) {
       const bottom = previous.y + previous.height + previous.margin
       if (node.y < bottom) {
         node.y = bottom
+      }
+    } else {
+      const next = nodes[i + 1]
+      if (next && node.level === next.level) {
+        const top = next.y - node.margin - node.height
+        if (node.y > top) {
+          node.y = top
+        }
       }
     }
     minY = Math.min(node.y, minY)
