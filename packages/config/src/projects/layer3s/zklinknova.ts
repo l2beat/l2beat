@@ -432,6 +432,15 @@ export const zklinknova: Layer3 = {
     sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L2'),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   }),
+  stackedRiskView: makeBridgeCompatible({
+    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
+    stateValidation: RISK_VIEW.STATE_ZKP_L3('Linea'),
+    dataAvailability: RISK_VIEW.DATA_EXTERNAL_L3,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0), // TODO(donnoh): something smarter if things change. should be (min(zklink, linea), sum(zklink, linea))
+    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(),
+    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+  }),
   technology: {
     newCryptography: NEW_CRYPTOGRAPHY.ZK_BOTH,
     dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.GENERIC_OFF_CHAIN,
