@@ -6,7 +6,7 @@
   "names": {
     "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc": "CronosZkEvm",
     "0x66eF951aEC26987915582340bCAA569E5Be67cDC": "CronosZkEVMAdmin",
-    "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce": "AdminMultisig",
+    "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce": "CronosChainAdminMultisig",
     "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b": "DenyListOwnerMultisig"
   },
   "sharedModules": {
@@ -60,13 +60,8 @@
           }
         },
         "validators": {
-          // this does not catch validators changed through an upgrade of the diamond, but current constructor does not have a validator field
-          // (this is about the validator role in the executor (usually held by the validatorTimelock), not the validators of the ValidatorTimelock)
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "ValidatorStatusUpdate",
-            "valueKey": "validatorAddress",
-            "flagKey": "isActive"
+            "type": "zksynceraValidators"
           }
         },
         "getProtocolVersion": {
@@ -91,12 +86,6 @@
           }
         }
       }
-    },
-    "AdminMultisig": {
-      "ignoreInWatchMode": ["nonce"]
-    },
-    "DenyListOwnerMultisig": {
-      "ignoreInWatchMode": ["nonce"]
     }
   }
 }

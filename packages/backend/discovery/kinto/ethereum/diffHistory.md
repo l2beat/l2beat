@@ -1,3 +1,51 @@
+Generated with discovered.json: 0xe37f1f654e8ff1efaa734238d523de5b48be6763
+
+# Diff at Sun, 15 Sep 2024 14:53:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ca08843b12ed576cbcc139ad58ca045f72d96ab5 block: 20654590
+- current block number: 20756734
+
+## Description
+
+One validator added (funded by kintoxyz.eth), one BridgerOwnerMultisig signer removed.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      values.setValidatorCount:
+-        1
++        2
+      values.validators.1:
++        "0x944eB0a2829A859959586b10D54229278534a696"
+    }
+```
+
+```diff
+    contract BridgerOwnerMultisig (0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82) {
+    +++ description: None
+      values.$members.5:
+-        "0xc31C4549356d46c37021393EeEb6f704B38061eC"
+      values.$members.4:
+-        "0x94561e98DD5E55271f91A103e4979aa6C493745E"
++        "0xc31C4549356d46c37021393EeEb6f704B38061eC"
+      values.$members.3:
+-        "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
++        "0x94561e98DD5E55271f91A103e4979aa6C493745E"
+      values.$members.2:
+-        "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8"
++        "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
+      values.$members.1:
+-        "0x78C0Ea07874F4C1Cd97cc14aE343b1ae85982259"
++        "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0x6b0d48950c5ffab4b06009b6671f2315fd96d1b6
 
 # Diff at Sun, 01 Sep 2024 08:42:21 GMT:

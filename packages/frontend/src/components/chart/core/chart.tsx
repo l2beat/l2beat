@@ -6,6 +6,7 @@ import { ChartInteractionZone } from './chart-interaction-zone'
 import { ChartLabels } from './chart-labels'
 import { ChartLoader } from './chart-loader'
 import { ChartMilestones } from './chart-milestones'
+import { ChartNoDataState } from './chart-no-data-state'
 import { ChartRenderer } from './chart-renderer'
 
 interface Props {
@@ -25,6 +26,7 @@ export function Chart({ className }: Props) {
       <ChartInteractionZone />
       <ChartHover />
       <ChartMilestones />
+      <ChartNoDataState />
       <Logo
         animated={false}
         className="absolute bottom-2 right-2 z-30 h-[25px] w-[60px] opacity-20"

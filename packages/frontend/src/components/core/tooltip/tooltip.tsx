@@ -54,6 +54,7 @@ const TooltipTrigger = React.forwardRef<
     <TooltipPrimitive.Trigger
       ref={mergeRefs(ref, localRef)}
       onClick={onClick}
+      data-role="tooltip-trigger"
       {...props}
     />
   )

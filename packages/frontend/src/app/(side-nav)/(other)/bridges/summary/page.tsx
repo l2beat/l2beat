@@ -21,6 +21,10 @@ export default async function Page() {
       filter: { type: 'bridge' },
       excludeAssociatedTokens: false,
     }),
+    api.tvl.total.prefetch({
+      filter: { type: 'bridge' },
+      excludeAssociatedTokens: false,
+    }),
   ])
 
   return (

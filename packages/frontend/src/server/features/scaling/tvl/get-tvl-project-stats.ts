@@ -1,4 +1,5 @@
-import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { type Bridge, type Layer2, type Layer3 } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
 import {
   unstable_cache as cache,
   unstable_noStore as noStore,
@@ -6,25 +7,25 @@ import {
 import { env } from '~/env'
 import { getTokenBreakdown } from './utils/get-token-breakdown'
 import { getTvlBreakdown } from './utils/get-tvl-breakdown'
-import { getTvlProjects } from './utils/get-tvl-projects'
+import { toTvlProject } from './utils/get-tvl-projects'
 import { getTvlValuesForProjects } from './utils/get-tvl-values-for-projects'
 
-export async function getTvlProjectStats(id: ProjectId) {
+export async function getTvlProjectStats(project: Layer2 | Layer3 | Bridge) {
   if (env.MOCK) {
     return getMockTvlProjectStats()
   }
   noStore()
-  return getCachedTvlProjectStats(id)
+  return getCachedTvlProjectStats(project)
 }
 
 export type TvlProjectStats = Awaited<
   ReturnType<typeof getCachedTvlProjectStats>
 >
 const getCachedTvlProjectStats = cache(
-  async (id: ProjectId) => {
-    const projects = getTvlProjects().filter((project) => project.id === id)
-    const tvlValues = await getTvlValuesForProjects(projects, '7d')
-    const projectTvlValues = tvlValues[id]
+  async (project: Layer2 | Layer3 | Bridge) => {
+    const tvlProject = toTvlProject(project)
+    const tvlValues = await getTvlValuesForProjects([tvlProject], '7d')
+    const projectTvlValues = tvlValues[project.id]
     if (!projectTvlValues) {
       return
     }

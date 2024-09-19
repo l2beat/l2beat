@@ -1,0 +1,75 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "zksync2",
+  "name": "shared-zk-stack",
+  "initialAddresses": [
+    "0x76705327e682F2d96943280D99464Ab61219e34f", // L2_PROTOCOL_GOVERNOR from L1 (TimelockController on L2)
+    "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89", // ZkTokenGovernor
+    "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb" // ZkGovOpsGovernor
+  ],
+  "names": {
+    // important aliases:
+    // 0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D : ZKFoundationMultisig_l2Alias
+    // 0xe788e09324F8bb3cc64f009973693f751C33b999 : Guardians_l2Alias
+    // 0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8 : ProtocolUpgradeHandler_l2Alias
+    "0x76705327e682F2d96943280D99464Ab61219e34f": "ZkProtocolGovernor",
+    "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8": "ProtocolTimelockController",
+    "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89": "ZkTokenGovernor",
+    "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6": "TokenTimelockController",
+    "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb": "ZkGovOpsGovernor",
+    "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19": "GovOpsTimelockController",
+    "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E": "ZkToken",
+    "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC": "ZkTokenProxyAdmin"
+  },
+  "overrides": {
+    "ZkToken": {
+      "ignoreMethods": ["getPastTotalSupply"],
+      "ignoreInWatchMode": ["clock", "totalSupply"],
+      "ignoreRelatives": ["accessControl"], // minters are noisy
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    },
+    // all below shall be shapeified when there is time to run megadiscovery
+    "ZkProtocolGovernor": {
+      "extends": "shared-zk-stack/ZkGovernor"
+    },
+    "ZkTokenGovernor": {
+      "extends": "shared-zk-stack/ZkGovernor"
+    },
+    "ZkGovOpsGovernor": {
+      "extends": "shared-zk-stack/ZkGovernor"
+    },
+    "ProtocolTimelockController": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    },
+    "TokenTimelockController": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    },
+    "GovOpsTimelockController": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    }
+  }
+}

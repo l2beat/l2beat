@@ -6,6 +6,7 @@ import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import { formatCurrency } from '~/utils/format'
 import { formatNumber } from '~/utils/format-number'
 import { type SeriesStyle } from '../core/styles'
+import { getChartRange } from '../core/utils/get-chart-range-from-columns'
 import { mapMilestones } from '../core/utils/map-milestones'
 import { type CostsChartPointData } from './costs-chart-hover'
 
@@ -45,10 +46,7 @@ export function useCostChartRenderParams({ milestones, unit, data }: Params) {
     [data, mappedMilestones, unit],
   )
 
-  const chartRange: [number, number] = useMemo(
-    () => [data?.[0]?.[0] ?? 0, data?.[data.length - 1]?.[0] ?? 1],
-    [data],
-  )
+  const chartRange = useMemo(() => getChartRange(data), [data])
 
   const valuesStyle: SeriesStyle[] = useMemo(
     () => [

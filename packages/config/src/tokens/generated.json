@@ -787,6 +787,20 @@
       "supply": "zero"
     },
     {
+      "name": "Coinbase Wrapped BTC",
+      "coingeckoId": "coinbase-wrapped-btc",
+      "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+      "symbol": "cbBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1724165531,
+      "coingeckoListingTimestamp": 1726099200,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40143/large/cbbtc.webp?1726136727",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Coinbase Wrapped Staked ETH",
       "coingeckoId": "coinbase-wrapped-staked-eth",
       "address": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
@@ -2293,6 +2307,20 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/7137/large/logo-circle-green.png?1696507437",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Lombard Staked Bitcoin",
+      "coingeckoId": "lombard-staked-btc",
+      "address": "0x8236a87084f8B84306f72007F36F2618A5634494",
+      "symbol": "LBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1715936519,
+      "coingeckoListingTimestamp": 1724889600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39969/large/LBTC_Logo.png?1724959872",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -4566,6 +4594,20 @@
       "supply": "zero"
     },
     {
+      "name": "Wrapped SOL",
+      "coingeckoId": "sol-wormhole",
+      "address": "0xD31a59c85aE9D8edEFeC411D448f90841571b89c",
+      "symbol": "SOL",
+      "decimals": 9,
+      "deploymentTimestamp": 1632316757,
+      "coingeckoListingTimestamp": 1642723200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/22876/large/SOL_wh_small.png?1696522175",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Wrapped TIA",
       "coingeckoId": "trestle-wrapped-tia",
       "address": "0x6aD2d2C22Bb58eA94Be18Cff11EF67e8bb97B652",
@@ -5548,6 +5590,20 @@
       "chainId": 169,
       "source": "canonical",
       "supply": "zero"
+    },
+    {
+      "name": "MintSwap404NFT",
+      "coingeckoId": "mintswaptoken",
+      "address": "0x9f7bd1Ce3412960524e86183B8F005271C09a5E0",
+      "symbol": "MST",
+      "decimals": 18,
+      "deploymentTimestamp": 1721792027,
+      "coingeckoListingTimestamp": 1725321600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39838/large/400.png?1724260451",
+      "chainId": 185,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "Renzo Restaked ETH",
@@ -6562,6 +6618,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Coinbase Wrapped BTC",
+      "coingeckoId": "coinbase-wrapped-btc",
+      "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+      "symbol": "cbBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1724165535,
+      "coingeckoListingTimestamp": 1726099200,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40143/large/cbbtc.webp?1726136727",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Dai Stablecoin",
       "coingeckoId": "dai",
       "address": "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
@@ -6932,6 +7002,28 @@
       "chainId": 34443,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "Mode Savings Dai",
+      "coingeckoId": "savings-dai",
+      "address": "0x3f51c6c5927B88CDEc4b61e2787F9BD0f5249138",
+      "symbol": "msDai",
+      "decimals": 18,
+      "deploymentTimestamp": 1721823785,
+      "coingeckoListingTimestamp": 1696982400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/32254/large/sdai.png?1697015278",
+      "chainId": 34443,
+      "source": "external",
+      "supply": "totalSupply",
+      "excludeFromTotal": true,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "XSwap.link"
+          }
+        ]
+      }
     },
     {
       "name": "Renzo Restaked ETH",

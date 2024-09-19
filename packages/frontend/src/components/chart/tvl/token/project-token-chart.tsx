@@ -65,7 +65,7 @@ export function ProjectTokenChart({
       columns={columns}
       valuesStyle={valuesStyle}
       formatYAxisLabel={formatYAxisLabel}
-      range={chartRange}
+      range={timeRange}
       isLoading={isLoading}
       renderHoverContents={(data) => (
         <TokenChartHover

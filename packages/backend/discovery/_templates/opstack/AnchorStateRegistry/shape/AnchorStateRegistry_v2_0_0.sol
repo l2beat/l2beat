@@ -1,4 +1,53 @@
-// Compiled with solc version: v0.8.15+commit.e14f2714
+// SPDX-License-Identifier: Unknown
+pragma solidity 0.8.15;
+
+enum GameStatus {
+    // The game is currently in progress, and has not been resolved.
+    IN_PROGRESS,
+    // The game has concluded, and the `rootClaim` was challenged successfully.
+    CHALLENGER_WINS,
+    // The game has concluded, and the `rootClaim` could not be contested.
+    DEFENDER_WINS
+}
+
+type Claim is bytes32;
+
+struct OutputRoot {
+    Hash root;
+    uint256 l2BlockNumber;
+}
+
+interface ISemver {
+    /// @notice Getter for the semantic version of the contract. This is not
+    ///         meant to be used onchain but instead meant to be used by offchain
+    ///         tooling.
+    /// @return Semver contract version as a string.
+    function version() external view returns (string memory);
+}
+
+type GameType is uint32;
+
+type Hash is bytes32;
+
+interface IAnchorStateRegistry {
+    /// @notice Returns the anchor state for the given game type.
+    /// @param _gameType The game type to get the anchor state for.
+    /// @return The anchor state for the given game type.
+    function anchors(GameType _gameType) external view returns (Hash, uint256);
+
+    /// @notice Returns the DisputeGameFactory address.
+    /// @return DisputeGameFactory address.
+    function disputeGameFactory() external view returns (IDisputeGameFactory);
+
+    /// @notice Callable by FaultDisputeGame contracts to update the anchor state. Pulls the anchor state directly from
+    ///         the FaultDisputeGame contract and stores it in the registry if the new anchor state is valid and the
+    ///         state is newer than the current anchor state.
+    function tryUpdateAnchorState() external;
+
+    /// @notice Sets the anchor state given the game.
+    /// @param _game The game to set the anchor state for.
+    function setAnchorState(IFaultDisputeGame _game) external;
+}
 
 library Address {
     /**
@@ -298,129 +347,102 @@ abstract contract Initializable {
     }
 }
 
-interface ISemver {
-    /// @notice Getter for the semantic version of the contract. This is not
-    ///         meant to be used onchain but instead meant to be used by offchain
-    ///         tooling.
-    /// @return Semver contract version as a string.
-    function version() external view returns (string memory);
-}
+contract AnchorStateRegistry is Initializable, IAnchorStateRegistry, ISemver {
+    /// @notice Describes an initial anchor state for a game type.
+    struct StartingAnchorRoot {
+        GameType gameType;
+        OutputRoot outputRoot;
+    }
 
-contract OptimismMintableERC20Factory is ISemver, Initializable {
-    /// @custom:spacer OptimismMintableERC20Factory's initializer slot spacing
-    /// @notice Spacer to avoid packing into the initializer slot
-    bytes30 private spacer_0_2_30;
-
-    /// @notice Address of the StandardBridge on this chain.
-    /// @custom:network-specific
-    address public bridge;
-
-    /// @notice Reserve extra slots in the storage layout for future upgrades.
-    ///         A gap size of 49 was chosen here, so that the first slot used in a child contract
-    ///         would be 1 plus a multiple of 50.
-    uint256[49] private __gap;
-
-    /// @custom:legacy
-    /// @notice Emitted whenever a new OptimismMintableERC20 is created. Legacy version of the newer
-    ///         OptimismMintableERC20Created event. We recommend relying on that event instead.
-    /// @param remoteToken Address of the token on the remote chain.
-    /// @param localToken  Address of the created token on the local chain.
-    event StandardL2TokenCreated(address indexed remoteToken, address indexed localToken);
-
-    /// @notice Emitted whenever a new OptimismMintableERC20 is created.
-    /// @param localToken  Address of the created token on the local chain.
-    /// @param remoteToken Address of the corresponding token on the remote chain.
-    /// @param deployer    Address of the account that deployed the token.
-    event OptimismMintableERC20Created(address indexed localToken, address indexed remoteToken, address deployer);
-
-    /// @notice The semver MUST be bumped any time that there is a change in
-    ///         the OptimismMintableERC20 token contract since this contract
-    ///         is responsible for deploying OptimismMintableERC20 contracts.
     /// @notice Semantic version.
-    /// @custom:semver 1.9.0
-    string public constant version = "1.9.0";
+    /// @custom:semver 2.0.0
+    string public constant version = "2.0.0";
 
-    /// @notice Constructs the OptimismMintableERC20Factory contract.
-    constructor() {
-        initialize({ _bridge: address(0) });
+    /// @notice DisputeGameFactory address.
+    IDisputeGameFactory internal immutable DISPUTE_GAME_FACTORY;
+
+    /// @inheritdoc IAnchorStateRegistry
+    mapping(GameType => OutputRoot) public anchors;
+
+    /// @notice Address of the SuperchainConfig contract.
+    SuperchainConfig public superchainConfig;
+
+    /// @param _disputeGameFactory DisputeGameFactory address.
+    constructor(IDisputeGameFactory _disputeGameFactory) {
+        DISPUTE_GAME_FACTORY = _disputeGameFactory;
+        _disableInitializers();
     }
 
     /// @notice Initializes the contract.
-    /// @param _bridge Address of the StandardBridge on this chain.
-    function initialize(address _bridge) public initializer {
-        bridge = _bridge;
-    }
-
-    /// @notice Getter function for the address of the StandardBridge on this chain.
-    ///         Public getter is legacy and will be removed in the future. Use `bridge` instead.
-    /// @return Address of the StandardBridge on this chain.
-    /// @custom:legacy
-    function BRIDGE() external view returns (address) {
-        return bridge;
-    }
-
-    /// @custom:legacy
-    /// @notice Creates an instance of the OptimismMintableERC20 contract. Legacy version of the
-    ///         newer createOptimismMintableERC20 function, which has a more intuitive name.
-    /// @param _remoteToken Address of the token on the remote chain.
-    /// @param _name        ERC20 name.
-    /// @param _symbol      ERC20 symbol.
-    /// @return Address of the newly created token.
-    function createStandardL2Token(
-        address _remoteToken,
-        string memory _name,
-        string memory _symbol
-    )
-        external
-        returns (address)
-    {
-        return createOptimismMintableERC20(_remoteToken, _name, _symbol);
-    }
-
-    /// @notice Creates an instance of the OptimismMintableERC20 contract.
-    /// @param _remoteToken Address of the token on the remote chain.
-    /// @param _name        ERC20 name.
-    /// @param _symbol      ERC20 symbol.
-    /// @return Address of the newly created token.
-    function createOptimismMintableERC20(
-        address _remoteToken,
-        string memory _name,
-        string memory _symbol
+    /// @param _startingAnchorRoots An array of starting anchor roots.
+    /// @param _superchainConfig The address of the SuperchainConfig contract.
+    function initialize(
+        StartingAnchorRoot[] memory _startingAnchorRoots,
+        SuperchainConfig _superchainConfig
     )
         public
-        returns (address)
+        initializer
     {
-        return createOptimismMintableERC20WithDecimals(_remoteToken, _name, _symbol, 18);
+        for (uint256 i = 0; i < _startingAnchorRoots.length; i++) {
+            StartingAnchorRoot memory startingAnchorRoot = _startingAnchorRoots[i];
+            anchors[startingAnchorRoot.gameType] = startingAnchorRoot.outputRoot;
+        }
+        superchainConfig = _superchainConfig;
     }
 
-    /// @notice Creates an instance of the OptimismMintableERC20 contract, with specified decimals.
-    /// @param _remoteToken Address of the token on the remote chain.
-    /// @param _name        ERC20 name.
-    /// @param _symbol      ERC20 symbol.
-    /// @param _decimals    ERC20 decimals
-    /// @return Address of the newly created token.
-    function createOptimismMintableERC20WithDecimals(
-        address _remoteToken,
-        string memory _name,
-        string memory _symbol,
-        uint8 _decimals
-    )
-        public
-        returns (address)
-    {
-        require(_remoteToken != address(0), "OptimismMintableERC20Factory: must provide remote token address");
+    /// @inheritdoc IAnchorStateRegistry
+    function disputeGameFactory() external view returns (IDisputeGameFactory) {
+        return DISPUTE_GAME_FACTORY;
+    }
 
-        bytes32 salt = keccak256(abi.encode(_remoteToken, _name, _symbol, _decimals));
-        address localToken =
-            address(new OptimismMintableERC20{ salt: salt }(bridge, _remoteToken, _name, _symbol, _decimals));
+    /// @inheritdoc IAnchorStateRegistry
+    function tryUpdateAnchorState() external {
+        // Grab the game and game data.
+        IFaultDisputeGame game = IFaultDisputeGame(msg.sender);
+        (GameType gameType, Claim rootClaim, bytes memory extraData) = game.gameData();
 
-        // Emit the old event too for legacy support.
-        emit StandardL2TokenCreated(_remoteToken, localToken);
+        // Grab the verified address of the game based on the game data.
+        // slither-disable-next-line unused-return
+        (IDisputeGame factoryRegisteredGame,) =
+            DISPUTE_GAME_FACTORY.games({ _gameType: gameType, _rootClaim: rootClaim, _extraData: extraData });
 
-        // Emit the updated event. The arguments here differ from the legacy event, but
-        // are consistent with the ordering used in StandardBridge events.
-        emit OptimismMintableERC20Created(localToken, _remoteToken, msg.sender);
+        // Must be a valid game.
+        if (address(factoryRegisteredGame) != address(game)) revert UnregisteredGame();
 
-        return localToken;
+        // No need to update anything if the anchor state is already newer.
+        if (game.l2BlockNumber() <= anchors[gameType].l2BlockNumber) {
+            return;
+        }
+
+        // Must be a game that resolved in favor of the state.
+        if (game.status() != GameStatus.DEFENDER_WINS) {
+            return;
+        }
+
+        // Actually update the anchor state.
+        anchors[gameType] = OutputRoot({ l2BlockNumber: game.l2BlockNumber(), root: Hash.wrap(game.rootClaim().raw()) });
+    }
+
+    /// @inheritdoc IAnchorStateRegistry
+    function setAnchorState(IFaultDisputeGame _game) external {
+        if (msg.sender != superchainConfig.guardian()) revert Unauthorized();
+
+        // Get the metadata of the game.
+        (GameType gameType, Claim rootClaim, bytes memory extraData) = _game.gameData();
+
+        // Grab the verified address of the game based on the game data.
+        // slither-disable-next-line unused-return
+        (IDisputeGame factoryRegisteredGame,) =
+            DISPUTE_GAME_FACTORY.games({ _gameType: gameType, _rootClaim: rootClaim, _extraData: extraData });
+
+        // Must be a valid game.
+        if (address(factoryRegisteredGame) != address(_game)) revert UnregisteredGame();
+
+        // The game must have resolved in favor of the root claim.
+        if (_game.status() != GameStatus.DEFENDER_WINS) revert InvalidGameStatus();
+
+        // Update the anchor.
+        anchors[gameType] =
+            OutputRoot({ l2BlockNumber: _game.l2BlockNumber(), root: Hash.wrap(_game.rootClaim().raw()) });
     }
 }

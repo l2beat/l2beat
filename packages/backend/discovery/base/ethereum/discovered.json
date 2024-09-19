@@ -1,7 +1,7 @@
 {
   "name": "base",
   "chain": "ethereum",
-  "blockNumber": 20532565,
+  "blockNumber": 20769544,
   "configHash": "0x4fbbc917890f4d3f2087e5cb09da4c68de323d988c3afd191d1c8572878bc105",
   "version": 14,
   "contracts": [
@@ -115,9 +115,9 @@
         "$threshold": 1,
         "domainSeparator": "0x441442b08d4fdc9877b881d21b5394f2af9aa0f41ef7184f54e10664ea757773",
         "getChainId": 1,
-        "GnosisSafe_modules": ["0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8"],
+        "GnosisSafe_modules": ["0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 1,
+        "nonce": 4,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -157,7 +157,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 11 (27%)",
-        "nonce": 29,
+        "nonce": 31,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -229,7 +229,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 39,
+        "nonce": 43,
         "VERSION": "1.3.0"
       }
     },
@@ -266,8 +266,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 491310,
-          "prevBlockNum": 20532532
+          "prevBoughtGas": 796584,
+          "prevBlockNum": 20769519
         },
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -341,10 +341,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 18457200,
-        "latestOutputIndex": 10253,
-        "nextBlockNumber": 18459000,
-        "nextOutputIndex": 10254,
+        "latestBlockNumber": 19886400,
+        "latestOutputIndex": 11047,
+        "nextBlockNumber": 19888200,
+        "nextOutputIndex": 11048,
         "proposer": "0x642229f238fb9dE03374Be34B0eD8D9De80752c5",
         "PROPOSER": "0x642229f238fb9dE03374Be34B0eD8D9De80752c5",
         "startingBlockNumber": 0,
@@ -392,26 +392,10 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
-    },
-    {
-      "name": "DeputyGuardianModule",
-      "address": "0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8",
-      "template": "gnosisSafeModules/DeputyGuardianModule",
-      "descriptions": [
-        "allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe."
-      ],
-      "sinceTimestamp": 1717149791,
-      "values": {
-        "$immutable": true,
-        "deputyGuardian": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
-        "safe": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
-        "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
-        "version": "1.1.0"
-      }
     },
     {
       "name": "L1ERC721Bridge",
@@ -631,7 +615,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 7,
+        "nonce": 9,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -651,7 +635,7 @@
         "$immutable": false,
         "$implementation": "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292874862",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292893201",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -779,7 +763,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 94,
+        "nonce": 95,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -869,10 +853,26 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 6,
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "DeputyGuardianModule",
+      "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
+      "template": "gnosisSafeModules/DeputyGuardianModule",
+      "descriptions": [
+        "allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe."
+      ],
+      "sinceTimestamp": 1724111315,
+      "values": {
+        "$immutable": true,
+        "deputyGuardian": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
+        "safe": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
+        "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+        "version": "2.0.0"
+      }
     },
     {
       "name": "Lib_AddressManager",
@@ -1206,23 +1206,6 @@
     "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": [
       "constructor(address _singleton)"
     ],
-    "0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8": [
-      "constructor(address _safe, address _superchainConfig, address _deputyGuardian)",
-      "error ExecutionFailed(string)",
-      "error Unauthorized()",
-      "event DisputeGameBlacklisted(address indexed game)",
-      "event Paused(string identifier)",
-      "event RespectedGameTypeSet(uint32 indexed gameType, uint64 indexed updatedAt)",
-      "event Unpaused()",
-      "function blacklistDisputeGame(address _portal, address _game)",
-      "function deputyGuardian() view returns (address deputyGuardian_)",
-      "function pause()",
-      "function safe() view returns (address safe_)",
-      "function setRespectedGameType(address _portal, uint32 _gameType)",
-      "function superchainConfig() view returns (address superchainConfig_)",
-      "function unpause()",
-      "function version() view returns (string)"
-    ],
     "0x608d94945A64503E642E6370Ec598e519a2C1E53": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1397,6 +1380,24 @@
     "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": [
       "constructor(address _singleton)"
     ],
+    "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B": [
+      "constructor(address _safe, address _superchainConfig, address _deputyGuardian)",
+      "error ExecutionFailed(string)",
+      "error Unauthorized()",
+      "event DisputeGameBlacklisted(address indexed game)",
+      "event Paused(string identifier)",
+      "event RespectedGameTypeSet(uint32 indexed gameType, uint64 indexed updatedAt)",
+      "event Unpaused()",
+      "function blacklistDisputeGame(address _portal, address _game)",
+      "function deputyGuardian() view returns (address deputyGuardian_)",
+      "function pause()",
+      "function safe() view returns (address safe_)",
+      "function setAnchorState(address _registry, address _game)",
+      "function setRespectedGameType(address _portal, uint32 _gameType)",
+      "function superchainConfig() view returns (address superchainConfig_)",
+      "function unpause()",
+      "function version() view returns (string)"
+    ],
     "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65": [
       "constructor()",
       "event FailedRelayedMessage(bytes32 indexed msgHash)",
@@ -1538,12 +1539,12 @@
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
-    "opstack/L2OutputOracle": "0x1d833a9768af12de67d65ad7dd09fc4b96db543bde5f5fdc2ff0ea0c571ceadf",
+    "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
-    "opstack/OptimismPortal": "0xcc1b405a2bf545f58a88bb104ba298351e252fc507b40d0e1ef40bf6bbe34152",
+    "opstack/OptimismPortal": "0x1af81e069b7721f68b8f083eb7379b6f29e7b9510bc38ed2a7e2a33ebbf876dc",
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
-    "opstack/SystemConfig": "0x41420d04d26fe441d4f65a2475bb9f0cca38e0f7542d45347f063f3c7cf57b39"
+    "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc2b2af326d311f3d03fc7620f421703794cce7b4ddb9f30cdcf6d025b4cdec01"
 }

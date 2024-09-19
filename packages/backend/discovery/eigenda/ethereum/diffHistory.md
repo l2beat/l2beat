@@ -1,3 +1,186 @@
+Generated with discovered.json: 0xf57bca95bc2f9c5a0ff66a0694131823eb2943bd
+
+# Diff at Wed, 18 Sep 2024 14:02:13 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@4e648bd4c0074d47d5b0332211bcd81db775dd7b block: 20777108
+- current block number: 20777943
+
+## Description
+
+Added shapes to strategy template to automatically apply the template. Templetized ignoring eigen() token method to prevent custom strategy from spamming.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20777108 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract StrategyBaseTVLLimits (0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract StrategyBaseTVLLimits (0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract StrategyBaseTVLLimits (0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract StrategyBaseTVLLimits (0x298aFB19A105D59E74658C4C334Ff360BadE6dd2)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract StrategyBaseTVLLimits (0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract StrategyBaseTVLLimits (0x57ba429517c3473B6d34CA9aCd56c0e735b94c02)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract  (0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StrategyBaseTVLLimits (0x7CA911E83dabf90C90dD3De5411a10F1A6112184)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract StrategyBaseTVLLimits (0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract StrategyBaseTVLLimits (0x93c4b944D05dfe6df7645A86cd2206016c51564D)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract StrategyBaseTVLLimits (0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract StrategyBaseTVLLimits (0xa4C637e0F704745D182e4D38cAb7E7485321d059)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract EigenStrategy (0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract StrategyBaseTVLLimits (0xAe60d8180437b5C34bB956822ac2710972584473)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+Generated with discovered.json: 0x9fbc162dcba18856455a482b45c2a33b4f650c9c
+
+# Diff at Wed, 18 Sep 2024 11:14:04 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@c2aae39cbab1defe84c7155af7d521cf3c228e0d block: 20661957
+- current block number: 20777108
+
+## Description
+
+New quorum added for Restaked ALT (reALT). This new third quorum is not used in latest confirmBatch transactions.
+
+## Watched changes
+
+```diff
+    contract EigenDAServiceManager (0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
+    +++ description: None
+      values.$implementation:
+-        "0x0D2C5FD4Bb956cDD48A23fC3Ef77a768a5cDbAf7"
++        "0x58fDE694Db83e589ABb21A6Fe66cb20Ce5554a07"
+      values.$upgradeCount:
+-        5
++        6
++++ description: The maximum percentage of the stake which can be held by adversarial nodes before the availability of a blob is affected. First bytes is hex value for the first quorum, second byte is for the second quorum and so on.
++++ severity: MEDIUM
+      values.quorumAdversaryThresholdPercentages:
+-        "0x2121"
++        "0x212121"
++++ description: The minimum percentage of stake that must attest in order to consider the blob dispersal successful. First bytes is hex value for the first quorum, second byte is for the second quorum and so on.
++++ severity: MEDIUM
+      values.quorumConfirmationThresholdPercentages:
+-        "0x3737"
++        "0x373737"
+    }
+```
+
+## Source code changes
+
+```diff
+.../EigenDAServiceManager/EigenDAServiceManager.sol                   | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20661957 (main branch discovery), not current.
+
+```diff
+    contract StakeRegistry (0x006124Ae7976137266feeBFb3F4D2BE4C073139D) {
+    +++ description: None
++++ description: The strategies for the first quorum (ETH).
+      values.firstQuorumStrategies:
++        ["0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0","0x93c4b944D05dfe6df7645A86cd2206016c51564D","0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2","0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc","0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d","0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff","0xa4C637e0F704745D182e4D38cAb7E7485321d059","0x57ba429517c3473B6d34CA9aCd56c0e735b94c02","0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6","0x7CA911E83dabf90C90dD3De5411a10F1A6112184","0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6","0xAe60d8180437b5C34bB956822ac2710972584473","0x298aFB19A105D59E74658C4C334Ff360BadE6dd2"]
++++ description: The strategies for the fourth quorum. Not used yet, here to catch a potential new quorum.
+      values.fourthQuorumStrategies:
++        []
++++ description: The strategies for the second quorum (EIGEN).
+      values.secondQuorumStrategies:
++        ["0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7"]
++++ description: The strategies for the third quorum.
+      values.thirdQuorumStrategies:
++        ["0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4"]
+      fieldMeta:
++        {"firstQuorumStrategies":{"description":"The strategies for the first quorum (ETH)."},"secondQuorumStrategies":{"description":"The strategies for the second quorum (EIGEN)."},"thirdQuorumStrategies":{"description":"The strategies for the third quorum."},"fourthQuorumStrategies":{"description":"The strategies for the fourth quorum. Not used yet, here to catch a potential new quorum."}}
+    }
+```
+
+```diff
+    contract EigenDAServiceManager (0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
+    +++ description: None
+      fieldMeta.quorumAdversaryThresholdPercentages.description:
+-        "The maximum percentage of the stake which can be held by adversarial nodes before the availability of a blob is affected. First bytes is hex value for the first quorum, second byte is for the second quorum."
++        "The maximum percentage of the stake which can be held by adversarial nodes before the availability of a blob is affected. First bytes is hex value for the first quorum, second byte is for the second quorum and so on."
+      fieldMeta.quorumConfirmationThresholdPercentages.description:
+-        "The minimum percentage of stake that must attest in order to consider the blob dispersal successful. First bytes is hex value for the first quorum, second byte is for the second quorum."
++        "The minimum percentage of stake that must attest in order to consider the blob dispersal successful. First bytes is hex value for the first quorum, second byte is for the second quorum and so on."
+    }
+```
+
 Generated with discovered.json: 0x8e81bf69871f9c75df3876cc95e439c7edc13416
 
 # Diff at Mon, 02 Sep 2024 09:21:51 GMT:

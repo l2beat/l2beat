@@ -349,7 +349,7 @@ export const taiko: Layer2 = {
       }),
       discovery.getContractDetails('ProverSetProxy', {
         description:
-          "A contract that holds TAIKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TAIKO.",
+          "A contract that holds TAIKO token and acts as a Taiko prover for Taiko Labs. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TAIKO. There are several instances of this contract operated by different entities.",
         ...upgradesTaikoMultisig,
       }),
       discovery.getContractDetails('SignalService', {

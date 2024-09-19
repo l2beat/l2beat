@@ -1,93 +1,28 @@
-import { assert, ProjectId, formatSeconds } from '@l2beat/shared-pure'
-import {
-  CONTRACTS,
-  EXITS,
-  FORCE_TRANSACTIONS,
-  NEW_CRYPTOGRAPHY,
-  NUGGETS,
-  OPERATOR,
-  RISK_VIEW,
-  TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
-  makeBridgeCompatible,
-} from '../../common'
+import { RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { Upgradeability, zkStackL2 } from './templates/zkStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('cronoszkevm')
-
-const executionDelaySeconds = discovery.getContractValue<number>(
-  'ValidatorTimelock',
-  'executionDelay',
+const discovery_ZKstackGovL2 = new ProjectDiscovery(
+  'shared-zk-stack',
+  'zksync2',
 )
 
-const executionDelay =
-  executionDelaySeconds > 0 && formatSeconds(executionDelaySeconds)
-
-const upgrades = {
-  upgradableBy: ['Matter Labs Multisig'],
-  upgradeDelay: 'No delay',
-}
-
-const upgradeDelay = discovery.getContractValue<number>(
-  'Governance',
-  'minDelay',
-)
-
-const discoveredSecurityCouncilAddress = discovery.getContractValue<string>(
-  'Governance',
-  'securityCouncil',
-)
-
-const isSCset =
-  discoveredSecurityCouncilAddress !==
-  '0x0000000000000000000000000000000000000000'
-
-/**
- * Fetches Validators from ValidatorTimelock events:
- * It is more complicated to accomodate the case in which
- * a validator is added and removed more than once.
- */
-const validators = () => {
-  const validatorsAdded = discovery.getContractValue<string[]>(
-    'ValidatorTimelock',
-    'cronosValidatorsAdded',
-  )
-  const validatorsRemoved = discovery.getContractValue<string[]>(
-    'ValidatorTimelock',
-    'cronosValidatorsRemoved',
-  )
-
-  // Create a map to track the net state of each validator (added or removed)
-  const validatorStates = new Map<string, number>()
-
-  // Increment for added validators
-  validatorsAdded.forEach((validator) => {
-    validatorStates.set(validator, (validatorStates.get(validator) || 0) + 1)
-  })
-
-  // Decrement for removed validators
-  validatorsRemoved.forEach((validator) => {
-    validatorStates.set(validator, (validatorStates.get(validator) || 0) - 1)
-  })
-
-  // Filter validators that have a net positive state (added more times than removed)
-  return Array.from(validatorStates.entries())
-    .filter(([_, state]) => state > 0)
-    .map(([validator, _]) => validator)
-}
-
-export const cronoszkevm: Layer2 = {
-  type: 'layer2',
-  id: ProjectId('cronoszkevm'),
+export const cronoszkevm: Layer2 = zkStackL2({
+  discovery,
+  discovery_ZKstackGovL2,
+  validatorsEvents: {
+    added: 'cronosValidatorsAdded',
+    removed: 'cronosValidatorsRemoved',
+  },
   badges: [
     Badge.VM.EVM,
     Badge.DA.CustomDA,
     Badge.Stack.ZKStack,
     Badge.Infra.ElasticChain,
   ],
-  isUnderReview: true,
   display: {
     tvlWarning: {
       content:
@@ -99,8 +34,6 @@ export const cronoszkevm: Layer2 = {
     description:
       'Cronos zkEVM is a general-purpose Validium on Ethereum built on the ZK Stack, scaling the existing portfolio of Cronos apps and chains.',
     purposes: ['Universal'],
-    category: 'Validium',
-    provider: 'ZK Stack',
     links: {
       websites: ['https://cronos.org/zkevm'],
       apps: ['https://zkevm.cronos.org/bridge'],
@@ -113,85 +46,9 @@ export const cronoszkevm: Layer2 = {
       ],
     },
     activityDataSource: 'Blockchain RPC',
-    liveness: {
-      explanation: executionDelay
-        ? `Cronos zkEVM is a ZK Validium that posts state diffs to the L1. Transactions within a state diff can be considered final when proven on L1 using a ZK proof, except that an operator can revert them if not executed yet. Currently, there is at least a ${executionDelay} delay between state diffs verification and the execution of the corresponding state actions.`
-        : undefined,
-    },
-    finality: {
-      finalizationPeriod: executionDelaySeconds,
-      warnings: {
-        timeToInclusion: {
-          sentiment: 'warning',
-          value:
-            'Proven but not executed batches can be reverted by the validator(s) or the StateTransitionManager.',
-        },
-      },
-    },
   },
-  config: {
-    associatedTokens: ['zkCRO'],
-    escrows: [], // shared escrow with zk stack
-    transactionApi: {
-      type: 'rpc',
-      defaultUrl: 'https://mainnet.zkevm.cronos.org',
-      defaultCallsPerMinute: 500, // tested rate-limit
-      startBlock: 1,
-    },
-    trackedTxs: [
-      // {
-      //   uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
-      //   query: {
-      //     formula: 'functionCall',
-      //     address: EthereumAddress(
-      //       '0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E',
-      //     ),
-      //     selector: '0x6edd4f12',
-      //     functionSignature:
-      //       'function commitBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment), (uint64 batchNumber, uint64 timestamp, uint64 indexRepeatedStorageChanges, bytes32 newStateRoot, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 bootloaderHeapInitialContentsHash, bytes32 eventsQueueStateHash, bytes systemLogs, bytes pubdataCommitments)[] _newBatchesData)',
-      //     sinceTimestamp: new UnixTime(1717681823),
-      //   },
-      // },
-      // {
-      //   uses: [
-      //     { type: 'liveness', subtype: 'proofSubmissions' },
-      //     { type: 'l2costs', subtype: 'proofSubmissions' },
-      //   ],
-      //   query: {
-      //     formula: 'functionCall',
-      //     address: EthereumAddress(
-      //       '0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E',
-      //     ),
-      //     selector: '0xc37533bb',
-      //     functionSignature:
-      //       'function proveBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment), (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[], (uint256[] recursiveAggregationInput, uint256[] serializedProof))',
-      //     sinceTimestamp: new UnixTime(1717694375),
-      //   },
-      // },
-      // {
-      //   uses: [
-      //     { type: 'liveness', subtype: 'stateUpdates' },
-      //     { type: 'l2costs', subtype: 'stateUpdates' },
-      //   ],
-      //   query: {
-      //     formula: 'functionCall',
-      //     address: EthereumAddress(
-      //       '0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E',
-      //     ),
-      //     selector: '0x6f497ac6',
-      //     functionSignature:
-      //       'function executeBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _newBatchesData)',
-      //     sinceTimestamp: new UnixTime(1717683407),
-      //   },
-      // },
-    ],
-    // finality: {
-    //   type: 'zkSyncEra',
-    //   stateUpdate: 'zeroed',
-    //   minTimestamp: new UnixTime(1708556400),
-    //   lag: 0,
-    // },
-  },
+  associatedTokens: ['zkCRO'],
+  rpcUrl: 'https://mainnet.zkevm.cronos.org',
   // chainConfig: {
   //   name: 'cronoszkevm',
   //   chainId: 388,
@@ -202,190 +59,55 @@ export const cronoszkevm: Layer2 = {
   //   },
   //   minTimestampForTvl: new UnixTime(),
   //   coingeckoPlatform: '',
-  // },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: ['External'],
-    bridge: { type: 'None' },
-    mode: 'State diffs (compressed)',
-  }),
-  riskView: makeBridgeCompatible({
-    stateValidation: {
-      value: 'ZK proofs',
-      description:
-        'Uses PLONK zero-knowledge proof system with KZG commitments.',
-      sentiment: 'good',
-      sources: [
-        {
-          contract: 'ValidatorTimelock',
-          references: [
-            'https://etherscan.io/address/0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E#code#F1#L169',
-          ],
-        },
-        {
-          contract: 'CronosZkEvm',
-          references: [
-            'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L448',
-            'https://etherscan.io/address/0xE60E94fCCb18a81D501a38959E532C0A85A1be89#code#F6#L23',
-          ],
-        },
-        {
-          contract: 'Verifier',
-          references: [
-            'https://etherscan.io/address/0x70F3FBf8a427155185Ec90BED8a3434203de9604#code#F1#L343',
-          ],
-        },
-      ],
-      otherReferences: [
-        'https://docs.zksync.io/zk-stack/concepts/transaction-lifecycle#transaction-types',
-        'https://docs.zksync.io/build/developer-reference/era-contracts/l1-contracts#executorfacet',
-      ],
+  diamondContract: discovery.getContract('CronosZkEvm'),
+  daProvider: {
+    name: 'External',
+    bridge: {
+      type: 'None',
     },
-    dataAvailability: {
+    riskView: {
       ...RISK_VIEW.DATA_EXTERNAL,
       sources: [
         {
-          contract: 'ValidatorTimelock',
+          contract: 'ExecutorFacet',
           references: [
-            'https://etherscan.io/address/0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E#code#F1#L120',
-            'https://etherscan.io/tx/0x9dbf29985eae00b7a1b7dbd5b21eedfb287be17310eb8bef6c524990b6928f63', // example tx (see calldata, blob)
-          ],
-        },
-        {
-          contract: 'CronosZkEvm',
-          references: [
-            'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L216',
-            'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L52', // validiumMode
-            'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F11#L120',
-          ],
-        },
-      ],
-      otherReferences: [
-        'https://docs.zksync.io/build/developer-reference/era-contracts/l1-contracts#executorfacet',
-        'https://docs.zksync.io/zk-stack/concepts/data-availability/validiums',
-      ],
-    },
-    exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, executionDelaySeconds),
-      sources: [
-        {
-          contract: 'CronosZkEvm',
-          references: [
-            'https://etherscan.io/address/0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a#code#F1#L114', // upgradeChainFromVersion() onlyAdminOrStateTransitionManager
-            'https://etherscan.io/address/0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a#code#F1#L128', // executeUpgrade() onlyStateTransitionManager
+            'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L53',
           ],
         },
       ],
     },
-    sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
-      sources: [
-        {
-          contract: 'CronosZkEvm',
-          references: [
-            'https://etherscan.io/address/0xCDB6228b616EEf8Df47D69A372C4f725C43e718C#code#F1#L53',
-            'https://etherscan.io/address/0xE60E94fCCb18a81D501a38959E532C0A85A1be89#code#F1#L95',
-          ],
-        },
-      ],
-      otherReferences: [
-        'https://docs.zksync.io/build/developer-reference/l1-l2-interoperability#priority-queue',
-      ],
-    },
-    proposerFailure: {
-      ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-      sources: [
-        {
-          contract: 'CronosZkEvm',
-          references: [
-            'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L219',
-          ],
-        },
-      ],
-    },
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-  }),
-  stage: { stage: 'NotApplicable' },
-  technology: {
-    newCryptography: NEW_CRYPTOGRAPHY.ZK_BOTH,
-    dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.GENERIC_OFF_CHAIN,
-    operator: OPERATOR.CENTRALIZED_OPERATOR,
-    forceTransactions: {
-      name: 'Users can force any transaction via L1',
+    technology: {
+      name: 'Data is not stored on chain',
       description:
-        'If a user is censored by L2 Sequencer, they can try to force transaction via L1 queue. Right now there is no mechanism that forces L2 Sequencer to include\
-        transactions from L1 queue in an L2 block.',
-      risks: FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM.risks,
+        'The transaction data is not recorded on the Ethereum main chain. Transaction data is stored off-chain and only the hashes are posted on-chain by the centralized Sequencer.',
+      risks: [
+        {
+          category: 'Funds can be lost if',
+          text: 'the external data becomes unavailable.',
+          isCritical: true,
+        },
+      ],
       references: [
         {
-          text: "L1 - L2 interoperability - Developer's documentation",
-          href: 'https://docs.zksync.io/build/developer-reference/l1-l2-interoperability#priority-queue',
+          text: 'ExecutorFacet - _commitOneBatch() function',
+          href: 'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L53',
         },
       ],
     },
-    exitMechanisms: [
-      {
-        ...EXITS.REGULAR('zk', 'merkle proof'),
-        references: [
-          {
-            text: 'Withdrawing funds - ZKsync documentation',
-            href: 'https://docs.zksync.io/build/developer-reference/bridging-assets',
-          },
-        ],
-      },
-      EXITS.FORCED('forced-withdrawals'),
-    ],
   },
-  contracts: {
-    addresses: [
-      discovery.getContractDetails('CronosZkEvm', {
-        description:
-          'The main Rollup contract. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract \
+  nonTemplateContracts: (zkStackUpgrades: Upgradeability) => [
+    discovery.getContractDetails('CronosZkEvm', {
+      description:
+        'The main Rollup contract. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract \
           then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.',
-        ...upgrades,
-      }),
-      discovery.getContractDetails('Governance', {
-        description: `Intermediary governance contract with two roles and a customizable delay. 
-        This delay is only mandatory for transactions scheduled by the *Owner* role and can be set by the *SecurityCouncil* role. 
-        The *SecurityCouncil* role can execute arbitrary upgrade transactions immediately. 
-        Currently the delay is set to ${formatSeconds(
-          discovery.getContractValue<number>('Governance', 'minDelay'),
-        )} ${isSCset ? '.' : ' and the *SecurityCouncil* role is not used.'}`,
-        ...upgrades,
-      }),
-      discovery.getContractDetails('CronosZkEVMAdmin', {
-        description:
-          'Intermediary governance contract that has the *Admin* (not upgradeability admin) role for the Cronos zkEVM diamond contract.',
-      }),
-      discovery.getContractDetails(
-        'ValidatorTimelock',
-        'Intermediary contract between the *Validators* and `CronosZkEvm` that delays block execution (ie. withdrawals and other L2 --> L1 messages).',
-      ),
-      discovery.getContractDetails('Verifier', {
-        description: 'Implements ZK proof verification logic.',
-        ...upgrades,
-        upgradeConsiderations:
-          'ML Multisig can change the verifier with no delay.',
-      }),
-      discovery.getContractDetails('L1SharedBridge', {
-        description:
-          'This bridge contract escrows all assets that are deposited to Cronos zkEVM and other chains in the Hyperchain Ecosystem.',
-        ...upgrades,
-      }),
-      discovery.getContractDetails('BridgeHub', {
-        description:
-          'Sits between the single shared bridge and the StateTransitionManager(s) and relays L1 <-> L2 messages from the shared bridge or other ZK stack chains to their respective destinations.',
-        ...upgrades,
-      }),
-      discovery.getContractDetails('StateTransitionManager', {
-        description:
-          'Defines shared L2 diamond contract creation and upgrade implementations and the verifier for the Hyperchain contracts connected to it.',
-        ...upgrades,
-      }),
-    ],
-    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
-  },
-  // currently unclear if state derivation is significantly different from ZKsync Era
+      ...zkStackUpgrades,
+    }),
+    discovery.getContractDetails('CronosZkEVMAdmin', {
+      description:
+        'Intermediary governance contract that has the *ChainAdmin* role in the Cronos zkEVM diamond contract.',
+    }),
+  ],
+  // currently unclear if state derivation is significantly different from ZKsync Era, see telegram chat
   // stateDerivation: {
   //   nodeSoftware: `The node software is open-source, and its source code can be found [here](https://github.com/matter-labs/zksync-era).
   //   The main node software does not rely on Layer 1 (L1) to reconstruct the state, but you can use [this tool](https://github.com/eqlabs/zksync-state-reconstruct) for that purpose. Currently, there is no straightforward method to inject the state into the main node, but ZKsync is actively working on a solution for this.`,
@@ -395,96 +117,20 @@ export const cronoszkevm: Layer2 = {
   //   dataFormat:
   //     'Details on data format can be found [here](https://github.com/matter-labs/zksync-era/blob/main/docs/guides/advanced/pubdata.md).',
   // },
-  upgradesAndGovernance: (() => {
-    assert(
-      !isSCset,
-      'There is a Security Council set up for the ZK stack. Change the governance description to reflect that.',
-    )
-    const description = `
-    The Matter Labs multisig (${discovery.getMultisigStats(
-      'Matter Labs Multisig',
-    )}) is able to instantly upgrade all contracts and manage all parameters and roles. This includes upgrading the shared contracts, the \`CronosZkEvm diamond\` and other ZK stack diamonds and their facets and censoring transactions or stealing locked funds. Most permissions are inherited by it being the indirect *Owner* of the \`StateTransitionManager\` (\`STM\`) and Governor (owner) of the \`Governance\` contract. A security council is currently not used.
-    
-    The current deployment allows for a subset of the permissions currently held by the *Matter Labs Multisig* to be held by a *ChainAdmin* role.
-    This role can manage fees, apply predefined upgrades, censor bridge transactions, manage Validator addresses and revert batches. It cannot make arbitrary updates or access funds in the escrows. This *Admin* role is usually set to a \`ChainAdmin\` contract which is itself owned by the *Matter Labs Multisig* (Thus not affecting their full permissions).
-    
-    Other roles include:
-    
-    *Validator:* Proposes batches from L2 through the \`ValidatorTimelock\`, from where they can be proven and finally executed (by the *Validator* through the \`ExecutorFacet\` of the diamond) after a predefined delay (currently ${formatSeconds(
-      discovery.getContractValue('ValidatorTimelock', 'executionDelay'),
-    )}). This allows for freezing the L2 chain and reverting batches within the delay if any suspicious activity was detected, but also delays finality. The \`ValidatorTimelock\` has the single *Validator* role in the Zk stack diamond contracts and can be set by the *Matter Labs Multisig* through the \`STM\`. The actual *Validator* actors can be added and removed by the *ChainAdmin* in the \`ValidatorTimelock\` contract.
-    
-    *Verifier:* Verifies the zk proofs that were provided by a *Validator*. Can be changed by calling \`executeUpgrade()\` on the \`AdminFacet\` from the \`STM\`.
-    
-    A \`Governance\` smart contract is used as the intermediary for most of the critical permissions of the *Matter Labs Multisig*. It includes logic for planning upgrades with parameters like transparency and/or a delay. 
-    ${
-      discovery.getContractValue<number>('Governance', 'minDelay') === 0
-        ? 'Currently the delay is optional and not used by the multisig.'
-        : `Currently the minimum delay is ${formatSeconds(
-            discovery.getContractValue('Governance', 'minDelay'),
-          )}.`
-    }
-    The optional transparency may be used in the future to hide instant emergency upgrades by the *Security Council* or delay transparent (thus auditable) governance upgrades. The \`Governance\` smart contract has two roles, an *Owner* (*Governor* role in the picture, resolves to *Matter Labs Multisig*) role and a *SecurityCouncil* role.
-`
-    return description
-  })(),
-  stateValidation: {
-    description:
-      'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
-    categories: [
-      {
-        title: 'Prover Architecture',
-        description:
-          'ZK stack proof system Boojum can be found [here](https://github.com/matter-labs/era-boojum/tree/main) and contains essential tools like the Prover, the Verifier, and other backend components. The specs of the system can be found [here](https://github.com/matter-labs/zksync-era/tree/main/docs/specs/prover).',
-      },
-      {
-        title: 'ZK Circuits',
-        description:
-          'ZK stack circuits are built from Boojum and are designed to replicate the behavior of the EVM. The source code can be found [here](https://github.com/matter-labs/era-zkevm_circuits/tree/main). The circuits are checked against tests that can be found [here](https://github.com/matter-labs/era-zkevm_test_harness/tree/main).',
-        risks: [
-          {
-            category: 'Funds can be lost if',
-            text: 'the proof system is implemented incorrectly.',
-          },
-        ],
-      },
-      {
-        title: 'Verification Keys Generation',
-        description:
-          'SNARK verification keys can be generated and checked against the Ethereum verifier contract using [this tool](https://github.com/matter-labs/zksync-era/tree/main/prover/vk_setup_data_generator_server_fri). The system requires a trusted setup.',
-      },
-    ],
-  },
-  permissions: [
+  nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
-      'Matter Labs Multisig',
-      'This MultiSig is the current central Governor for upgradeability and configuration of all shared ZK stack contracts and each Hyperchain under it and can potentially steal all funds.',
+      'CronosChainAdminMultisig',
+      'Inherits all *ChainAdmin* permissions.',
     ),
     {
-      name: 'CronosZkEVMAdmin',
-      accounts: [discovery.getPermissionedAccount('ChainAdmin', 'owner')],
-      description:
-        'Can manage fees, apply predefined upgrades, censor bridge transactions and revert batches (*Admin* role in the CronosZkEvm contract).',
-    },
-    ...discovery.getMultisigPermission(
-      'AdminMultisig',
-      'Inherits all permissions of the CronosZkEVMAdmin contract.',
-    ),
-    {
-      name: 'AdminEOA',
+      name: 'CronosChainAdminEOA',
       accounts: [
         discovery.getAccessControlRolePermission(
           'CronosZkEVMAdmin',
           'ADMIN',
         )[0],
       ],
-      description: 'Inherits all permissions of the CronosZkEVMAdmin contract.',
-    },
-    {
-      name: 'Validators',
-      accounts: validators().map((v) => discovery.formatPermissionedAccount(v)),
-      description:
-        'Actors that are allowed to propose, execute and revert L2 batches on L1 through the ValidatorTimelock.',
+      description: 'Inherits all *ChainAdmin* permissions.',
     },
   ],
   milestones: [
@@ -496,11 +142,4 @@ export const cronoszkevm: Layer2 = {
       type: 'general',
     },
   ],
-  knowledgeNuggets: [
-    {
-      title: 'State diffs vs raw tx data',
-      url: 'https://twitter.com/krzKaczor/status/1641505354600046594',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-    },
-  ],
-}
+})

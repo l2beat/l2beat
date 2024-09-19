@@ -20,7 +20,17 @@
         "role": "Proposer"
       }
     },
+    "PROPOSER": {
+      "target": {
+        "role": "Proposer"
+      }
+    },
     "challenger": {
+      "target": {
+        "role": "Challenger"
+      }
+    },
+    "CHALLENGER": {
       "target": {
         "role": "Challenger"
       }

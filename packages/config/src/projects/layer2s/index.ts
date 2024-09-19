@@ -34,6 +34,7 @@ import { degate2 } from './degate2'
 import { degate3 } from './degate3'
 import { dydx } from './dydx'
 import { ebi } from './ebi'
+import { ebichain } from './ebichain'
 import { edgeless } from './edgeless'
 import { ethernity } from './ethernity'
 import { everclear } from './everclear'
@@ -81,6 +82,7 @@ import { morph } from './morph'
 import { move } from './move'
 import { myria } from './myria'
 import { myshell } from './myshell'
+import { nal } from './nal'
 import { network3 } from './network3'
 import { nil } from './nil'
 import { nova } from './nova'
@@ -100,7 +102,9 @@ import { plumenetwork } from './plumenetwork'
 import { polygonmiden } from './polygonmiden'
 import { polygonpos2 } from './polygonpos2'
 import { polygonzkevm } from './polygonzkevm'
+import { polynomial } from './polynomial'
 import { publicgoodsnetwork } from './publicgoodsnetwork'
+import { race } from './race'
 import { real } from './real'
 import { reddioex } from './reddioex'
 import { reddiozkvm } from './reddiozkvm'
@@ -118,6 +122,7 @@ import { sorare } from './sorare'
 import { specular } from './specular'
 import { starknet } from './starknet'
 import { stealthchain } from './stealthchain'
+import { superlumio } from './superlumio'
 import { superseed } from './superseed'
 import { swan } from './swan'
 import { swell } from './swell'
@@ -128,6 +133,7 @@ import { tanx } from './tanx'
 import { telos } from './telos'
 import { ten } from './ten'
 import { termstructure } from './termstructure'
+import { thebinaryholdings } from './thebinaryholdings'
 import { treasure } from './treasure'
 import { Layer2 } from './types'
 import { wirex } from './wirex'
@@ -224,6 +230,8 @@ export const layer2s: Layer2[] = [
   loopring,
   lumia,
   lyra,
+  race,
+  ebichain,
   mantapacific,
   mantle,
   metal,
@@ -235,6 +243,7 @@ export const layer2s: Layer2[] = [
   move,
   myria,
   myshell,
+  nal,
   nil,
   network3,
   nova,
@@ -254,6 +263,7 @@ export const layer2s: Layer2[] = [
   polygonmiden,
   polygonzkevm,
   polygonpos2,
+  polynomial,
   publicgoodsnetwork,
   reddioex,
   reddiozkvm,
@@ -272,6 +282,7 @@ export const layer2s: Layer2[] = [
   specular,
   starknet,
   stealthchain,
+  superlumio,
   superseed,
   swan,
   swell,
@@ -282,6 +293,7 @@ export const layer2s: Layer2[] = [
   telos,
   ten,
   termstructure,
+  thebinaryholdings,
   treasure,
   wirex,
   witness,

@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xba373ac533983b9f92ed90035a92df2f631da3df
+
+# Diff at Sun, 15 Sep 2024 15:07:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ca08843b12ed576cbcc139ad58ca045f72d96ab5 block: 20726217
+- current block number: 20756803
+
+## Description
+
+haust.network is verifying batches. (No launch announcement from them yet)
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1.
+      values.isVerifyingBatches.10.0:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x3c4c51c3c32febb0ab92e52ac6d22d7110040697
 
 # Diff at Wed, 11 Sep 2024 08:36:30 GMT:

@@ -33,7 +33,7 @@ export function ProjectTvlChart({
   const [token, setToken] = useState<ProjectToken>()
   const [unit, setUnit] = useState<ChartUnit>('usd')
 
-  const [timeRange, setTimeRange] = useState<TvlChartRange>('7d')
+  const [timeRange, setTimeRange] = useState<TvlChartRange>('30d')
 
   if (tokens && token) {
     return (
@@ -100,13 +100,13 @@ function DefaultChart({
   })
 
   const { chartRange, formatYAxisLabel, valuesStyle, columns } =
-    useTvlChartRenderParams({ milestones, unit, data: data?.chart })
+    useTvlChartRenderParams({ milestones, unit, data })
   return (
     <ChartProvider
       columns={columns}
       valuesStyle={valuesStyle}
       formatYAxisLabel={formatYAxisLabel}
-      range={chartRange}
+      range={timeRange}
       isLoading={isLoading}
       renderHoverContents={(data) => <TvlChartHover data={data} />}
     >

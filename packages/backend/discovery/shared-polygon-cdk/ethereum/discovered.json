@@ -1,7 +1,7 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 20726217,
+  "blockNumber": 20756803,
   "configHash": "0x5943efe0a05ae0ecfd3ac11cd0516f29678b9935af12c82b1488fc8272b45d0d",
   "version": 14,
   "contracts": [
@@ -84,7 +84,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0x06f88383c8790d036b24a7c9d5ebe02e75a2f4b2eea4050a991d7b54eccfa4b7",
+        "getRoot": "0x01d6a342e676c608617d7e81fdd225bece8fe255f7ee11a146bd2edaf82316e2",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -144,14 +144,14 @@
           "extensions": []
         },
         "EMISSION_ROLE": "0x573321b8a13c75b2702bc4b0ad9afaae98bf6985285411964a564e68bf6da1c9",
-        "lastMint": 1725861467,
+        "lastMint": 1726194083,
         "mintPerSecondCap": "13370000000000000000",
         "name": "Polygon Ecosystem Token",
         "PERMIT2": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
         "PERMIT2_REVOKER_ROLE": "0xbd4c1461ef59750b24719a44d7e2a7948c57fd12c98e333541b7ea7b61f07cb7",
         "permit2Enabled": true,
         "symbol": "POL",
-        "totalSupply": "10253601875854469064786370358",
+        "totalSupply": "10256272646397046419185476714",
         "version": "1.1.0"
       },
       "derivedName": "PolygonEcosystemToken"
@@ -246,7 +246,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x81fb9da021e015a5a1a47c4d2b5d26b7b033772b26cc3b4942da914eab550de2",
+        "getRollupExitRoot": "0xff5f6944ecae2243ea567dc3567e0f9fe9c54e4a44e3ec14bdfe5f9e779831b5",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "isVerifyingBatches": [
@@ -260,9 +260,9 @@
           [true],
           [true],
           [true],
-          [false]
+          [true]
         ],
-        "lastAggregationTimestamp": 1726043195,
+        "lastAggregationTimestamp": 1726412723,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "nondeterministicPendingState": [],
         "pendingStateTimeout": 432000,
@@ -355,8 +355,8 @@
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
           ]
         ],
-        "totalSequencedBatches": 342546,
-        "totalVerifiedBatches": 341720,
+        "totalSequencedBatches": 352027,
+        "totalVerifiedBatches": 351113,
         "trustedAggregatorTimeout": 432000,
         "verifyBatchTimeTarget": 1800
       },
@@ -393,8 +393,8 @@
         "$implementation": "0x2E38cD55163137483E30580Cb468C2dFf1d85077",
         "$upgradeCount": 2,
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 44623,
-        "getRoot": "0xbb4320f45e1d6e317a6480db74b2272f50badf9685e8a4bc52aa8eef4fbda036",
+        "depositCount": 45090,
+        "getRoot": "0xa39b0679e0adfb410ef985ad05a6f705c3954c320bba6b903c781e2f27b710b3",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "derivedName": "PolygonZkEVMGlobalExitRootV2"

@@ -8,16 +8,16 @@ import {
 import { z } from 'zod'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
-import { getEthPrices } from './get-eth-prices'
-import { getTvlProjects } from './get-tvl-projects'
-import { getTvlTargetTimestamp } from './get-tvl-target-timestamp'
-import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
+import { getEthPrices } from './utils/get-eth-prices'
+import { getTvlProjects } from './utils/get-tvl-projects'
+import { getTvlTargetTimestamp } from './utils/get-tvl-target-timestamp'
+import { getTvlValuesForProjects } from './utils/get-tvl-values-for-projects'
 import {
   TvlProjectFilter,
   createTvlProjectsFilter,
-} from './project-filter-utils'
-import { TvlChartRange, getRangeConfig } from './range'
-import { sumValuesPerSource } from './sum-values-per-source'
+} from './utils/project-filter-utils'
+import { TvlChartRange, getRangeConfig } from './utils/range'
+import { sumValuesPerSource } from './utils/sum-values-per-source'
 
 export const TvlChartDataParams = z.object({
   range: TvlChartRange,
@@ -53,46 +53,21 @@ export const getCachedTvlChartData = cache(
     const projectsFilter = createTvlProjectsFilter(filter)
     const tvlProjects = getTvlProjects().filter(projectsFilter)
 
-    const ethPrices = await getEthPrices()
-    const values = await getTvlValuesForProjects(tvlProjects, range)
-
-    const lastWeekValues =
-      range === '7d' ? values : await getTvlValuesForProjects(tvlProjects, '7d')
+    const [ethPrices, values] = await Promise.all([
+      getEthPrices(),
+      getTvlValuesForProjects(tvlProjects, range),
+    ])
 
     // NOTE: Quick fix for now, we should reinvestigate if this is the best way to handle this
     const forTotal =
       filter.type !== 'projects' || filter.projectIds.length !== 1
-    const lastWeekChart = getChartData(lastWeekValues, ethPrices, {
+
+    return getChartData(values, ethPrices, {
       excludeAssociatedTokens,
       forTotal,
     })
-    const latestValue = lastWeekChart.at(-1)
-
-    if (!latestValue) {
-      return {
-        total: {
-          usd: 0,
-          eth: 0,
-        },
-        chart: [],
-      }
-    }
-
-    const total = latestValue[1] + latestValue[2] + latestValue[3]
-    const ethPrice = latestValue[4]
-
-    return {
-      total: {
-        usd: total / 100,
-        eth: total / ethPrice,
-      },
-      chart: getChartData(values, ethPrices, {
-        excludeAssociatedTokens,
-        forTotal,
-      }),
-    }
   },
-  ['getTvlChartDataDS'],
+  ['getTvlChartData'],
   { revalidate: 10 * UnixTime.MINUTE },
 )
 
@@ -136,13 +111,7 @@ function getMockTvlChartData({ range }: TvlChartDataParams): TvlChartData {
     days !== Infinity ? target.add(-days, 'days') : new UnixTime(1573776000)
   const timestamps = generateTimestamps([from, target], resolution)
 
-  return {
-    total: {
-      usd: 60,
-      eth: 5,
-    },
-    chart: timestamps.map((timestamp) => {
-      return [timestamp.toNumber(), 3000, 2000, 1000, 1200]
-    }),
-  }
+  return timestamps.map((timestamp) => {
+    return [timestamp.toNumber(), 3000, 2000, 1000, 1200]
+  })
 }

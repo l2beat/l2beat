@@ -17,7 +17,7 @@ export const popapex: Layer3 = orbitStackL3({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   display: {
     name: 'Proof of Play Apex',
-    shortName: 'Apex',
+    shortName: 'PoP Apex',
     slug: 'popapex',
     description:
       'Proof of Play Apex is a gaming-focused L3 settling on Arbitrum using the Orbit Stack and AnyTrust DA.',

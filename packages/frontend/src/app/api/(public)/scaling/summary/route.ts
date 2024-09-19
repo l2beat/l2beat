@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getScalingSummaryEntries } from '~/server/features/scaling/summary/get-scaling-summary-entries'
-import { getTvlChartData } from '~/server/features/scaling/tvl/utils/get-tvl-chart-data'
+import { getTvlChartData } from '~/server/features/scaling/tvl/get-tvl-chart-data'
 
 export async function GET() {
   const entries = await getScalingSummaryEntries()
@@ -13,16 +13,14 @@ export async function GET() {
     success: true,
     data: {
       chart: {
-        types: ['timestamp', 'canonical', 'external', 'native', 'ethPrice'],
-        data: data.chart.map(
-          ([timestamp, canonical, external, native, ethPrice]) => [
-            timestamp,
-            canonical / 100,
-            external / 100,
-            native / 100,
-            ethPrice / 100,
-          ],
-        ),
+        types: ['timestamp', 'native', 'canonical', 'external', 'ethPrice'],
+        data: data.map(([timestamp, native, canonical, external, ethPrice]) => [
+          timestamp,
+          native / 100,
+          canonical / 100,
+          external / 100,
+          ethPrice / 100,
+        ]),
       },
       projects: Object.fromEntries(
         entries.map((entry) => {
@@ -41,6 +39,10 @@ export async function GET() {
               hostChain: entry.hostChain,
               isUpcoming: entry.isUpcoming,
               isUnderReview: entry.isUnderReview,
+              badges: entry.badges.map(({ badge, kind }) => ({
+                category: kind,
+                name: badge,
+              })),
               tvl: {
                 breakdown: entry.tvl.breakdown,
                 associatedTokens: entry.tvl.associatedTokens,

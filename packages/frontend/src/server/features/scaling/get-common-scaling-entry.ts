@@ -2,6 +2,7 @@ import {
   type Layer2,
   type Layer3,
   type StageConfig,
+  badges,
   layer2s,
 } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
@@ -39,6 +40,7 @@ export function getCommonScalingEntry(
       isUpcoming: false,
       isUnderReview: false,
       stage: { stage: 'NotApplicable' as const },
+      badges: [],
     }
   }
 
@@ -61,6 +63,11 @@ export function getCommonScalingEntry(
     showProjectUnderReview: isAnySectionUnderReview(project),
     redWarning: project.display.redWarning,
     purposes: project.display.purposes,
+    badges:
+      project.badges?.map((badge) => ({
+        badge,
+        kind: badges[badge].type,
+      })) ?? [],
   }
 
   if (project.type === 'layer2') {

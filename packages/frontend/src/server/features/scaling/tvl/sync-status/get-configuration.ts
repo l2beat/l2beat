@@ -1,7 +1,7 @@
 import { type MultiIndexerEntry, toIndexerId } from '@l2beat/config'
 import { db } from '~/server/database'
 
-const MAX_CONFIGURATIONS_LENGTH_FOR_QUERY = 100
+const MAX_CONFIGURATIONS_LENGTH_FOR_QUERY = 1000
 
 export async function getConfigurations(
   entries: (MultiIndexerEntry & { configId: string })[],

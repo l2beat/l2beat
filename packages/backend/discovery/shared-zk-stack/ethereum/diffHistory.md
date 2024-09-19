@@ -1,14 +1,113 @@
-Generated with discovered.json: 0x512d7632880bdfb945fd5f196cae9a127e76fcd0
+Generated with discovered.json: 0xc9681e2069081f5380a59667639df35872f0358c
 
-# Diff at Thu, 12 Sep 2024 09:51:20 GMT:
+# Diff at Wed, 18 Sep 2024 11:12:36 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@127adf09837b5e1f2ac0ecd582a2ef874e97633f block: 20725957
-- current block number: 20725957
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@14dc1d5395aaa4aca4e79a08fd6132e42e3cf1a4 block: 20741455
+- current block number: 20777100
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Renamed for clarity. (has both ChainAdmin and Elastic Chain Operator roles)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20741455 (main branch discovery), not current.
+
+```diff
+    contract EraChainAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
+      name:
+-        "ChainAdmin"
++        "EraChainAdminProxy"
+    }
+```
+
+Generated with discovered.json: 0x87075ab461d044a431c2143eca3e60ab362bc7ad
+
+# Diff at Fri, 13 Sep 2024 11:40:40 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@f3f080827a9c9144630c7d8b5f28745b2029ead2 block: 20725957
+- current block number: 20741455
+
+## Description
+
+Ownership of the four shared ZK stack contracts and their ProxyAdmin has been fully transferred to the ProtocolUpgradeHandler.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract Governance (0x0b622A2061EaccAE1c664eBC3E868b8438e03F61)
+    +++ description: None
+```
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
+      values.owner:
+-        "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61"
++        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
+      values.pendingOwner:
+-        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
+      values.owner:
+-        "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61"
++        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
+      values.pendingOwner:
+-        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
+    +++ description: None
+      values.owner:
+-        "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61"
++        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
+    }
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: None
+      values.owner:
+-        "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61"
++        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
+      values.pendingOwner:
+-        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L1SharedBridge (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: None
+      values.owner:
+-        "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61"
++        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
+      values.pendingOwner:
+-        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+## Source code changes
+
+```diff
+.../.flat@20725957/Governance.sol => /dev/null     | 440 ---------------------
+ 1 file changed, 440 deletions(-)
+```
 
 ## Config/verification related changes
 
@@ -17,14 +116,112 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 20725957 (main branch discovery), not current.
 
 ```diff
+-   Status: DELETED
+    contract GnosisSafe (0x13f07d9BF17615f6a17F272fe1A913168C275A66)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x34Ea62D4b9bBB8AD927eFB6ab31E3Ab3474aC93a)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x35eA56fd9eAd2567F339Eb9564B6940b9DD5653F)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x3888777686F0b0d8c3108fc22ad8DE9E049bE26F)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x69462a81ba94D64c404575f1899a464F123497A2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x725065b4eB99294BaaE57AdDA9c32e42F453FA8A)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x84BF0Ac41Eeb74373Ddddae8b7055Bf2bD3CE6E0)
+    +++ description: None
+```
+
+```diff
     contract ProtocolUpgradeHandler (0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897) {
     +++ description: None
-      values.L2_PROTOCOL_GOVERNOR:
--        "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
-+        "zksync2:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
-      usedTypes:
-+        [{"typeCaster":"ChainPrefix","arg":{"prefix":"zksync2"}}]
+      values.EXTENDED_LEGAL_VETO_PERIOD:
++        604800
+      values.HARD_FREEZE_PERIOD:
++        604800
+      values.SOFT_FREEZE_PERIOD:
++        43200
+      values.STANDARD_LEGAL_VETO_PERIOD:
++        259200
+      values.UPGRADE_DELAY_PERIOD:
++        86400
+      values.UPGRADE_WAIT_OR_EXPIRE_PERIOD:
++        2592000
+      fieldMeta:
++        {"protocolFrozenUntil":{"severity":"HIGH","description":"Timestamp until which ALL Hyperchains connected to the main STM are frozen. (Mailbox and Executor facets blocked)"}}
     }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x9B39Ea22e838B316Ea7D74e7C4B07d91D51ccA88)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x9B8Be3278B7F0168D82059eb6BAc5991DcdfA803)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xB7aC3A79A23B148c85fba259712c5A1e7ad0ca44)
+    +++ description: None
+```
+
+```diff
+    contract ZkFoundationMultisig (0xbC1653bd3829dfEc575AfC3816D4899cd103B51c) {
+    +++ description: None
+      name:
+-        "GnosisSafe"
++        "ZkFoundationMultisig"
+    }
+```
+
+```diff
+    contract SecurityCouncil (0xBDFfCC71FE84020238F2990a6D2954e87355De0D) {
+    +++ description: None
+      fieldMeta:
++        {"softFreezeNonce":{"severity":"HIGH","description":"Increments with each softFreeze (freezes ALL Hyperchains (blocks Mailbox and Executor facets) connected to the main STM for SOFT_FREEZE_PERIOD"},"hardFreezeNonce":{"severity":"HIGH","description":"Increments with each hardFreeze (freezes ALL Hyperchains (blocks Mailbox and Executor facets) connected to the main STM for HARD_FREEZE_PERIOD"}}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xFB90Da9DC45378A1B50775Beb03aD10C7E8DC231)
+    +++ description: None
 ```
 
 Generated with discovered.json: 0x5316f6730537230399f403d045aae371108b264d

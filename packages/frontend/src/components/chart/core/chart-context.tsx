@@ -16,7 +16,7 @@ export interface ChartColumn<T> {
 
 export interface ChartContextProviderParams<T> {
   columns: ChartColumn<T>[]
-  range: [number, number]
+  range: '1d' | '7d' | '30d' | '90d' | '180d' | '1y' | 'max'
   valuesStyle: SeriesStyle[]
   formatYAxisLabel: (value: number) => string
   children?: ReactNode
