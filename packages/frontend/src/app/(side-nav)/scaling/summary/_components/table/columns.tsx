@@ -41,6 +41,17 @@ export const scalingLayer2sColumns = [
     meta: {
       tooltip: <TypeExplanationTooltip />,
     },
+    sortingFn: (rowA, rowB) => {
+      // Sort by category first, then by provider
+      const categoryComparison = (rowA.original.category ?? '').localeCompare(
+        rowB.original.category ?? '',
+      )
+      return categoryComparison !== 0
+        ? categoryComparison
+        : (rowA.original.provider ?? '').localeCompare(
+            rowB.original.provider ?? '',
+          )
+    },
   }),
   columnHelper.accessor('stage', {
     cell: (ctx) => <StageCell stageConfig={ctx.getValue()} />,
