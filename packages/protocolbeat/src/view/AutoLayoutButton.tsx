@@ -28,6 +28,10 @@ interface LayoutNode {
   base: Node
   level: number
   isTree: boolean
+  x: number
+  y: number
+  height: number
+  margin: number
 }
 
 function autoLayout(baseNodes: readonly Node[]) {
@@ -52,6 +56,10 @@ function toLayoutNodes(baseNodes: readonly Node[]) {
       base,
       isTree: false,
       level: 0,
+      x: 0,
+      y: 0,
+      height: base.box.height,
+      margin: 0,
     }),
   )
 
@@ -107,6 +115,7 @@ function markTrees(nodes: LayoutNode[]) {
 }
 
 function assignLevels(nodes: LayoutNode[]) {
+  // first pass - everyone gets a level, left-heavy
   while (true) {
     let changed = false
     for (const node of nodes) {
@@ -133,6 +142,54 @@ function assignLevels(nodes: LayoutNode[]) {
         break
       }
       zero.level = Math.max(1, ...zero.connectionsIn.map((x) => x.level + 1))
+    }
+  }
+
+  function adjustTreeLevel(node: LayoutNode) {
+    node.level = Math.max(...node.connectionsIn.map((x) => x.level + 1), 0)
+    for (const child of node.connectionsOut) {
+      adjustTreeLevel(child)
+    }
+  }
+
+  // second pass, pushes nodes right, closer to children
+  while (true) {
+    let changed = false
+    for (const node of nodes) {
+      if (node.connectionsOut.length === 0) {
+        continue
+      }
+
+      const treeLevels = node.connectionsOut
+        .filter((x) => x.isTree && x.connectionsIn.length === 1)
+        .map((x) => x.level)
+      const maxTreeLevel = Math.max(...treeLevels)
+      const nonTreeLevels = node.connectionsOut
+        .filter((x) => !x.isTree)
+        .map((x) => x.level)
+      const minNonTreeLevel = Math.min(...nonTreeLevels)
+
+      let newLevel = node.level
+
+      if (nonTreeLevels.length > 0 && node.level < minNonTreeLevel - 1) {
+        newLevel = minNonTreeLevel - 1
+      } else if (treeLevels.length > 0 && node.level < maxTreeLevel - 1) {
+        newLevel = maxTreeLevel - 1
+      }
+
+      if (newLevel !== node.level) {
+        node.level = newLevel
+        changed = true
+        for (const child of node.connectionsOut) {
+          if (child.isTree) {
+            adjustTreeLevel(child)
+          }
+        }
+      }
+    }
+
+    if (!changed) {
+      break
     }
   }
 }
@@ -178,23 +235,18 @@ function layoutColumns(columns: LayoutNode[][], x = 0, y = 0) {
     let maxWidth = 0
 
     for (const [i, node] of column.entries()) {
-      nodeLocations[node.id] = {
-        x: xOffset,
-        y: yOffset,
-      }
+      node.x = xOffset
+      node.y = yOffset
 
       yOffset += node.base.box.height
       maxHeight = Math.max(maxHeight, yOffset)
       const next = column[i + 1]
-      if (
-        next &&
-        node.connectionsIn.length === 1 &&
-        next.connectionsIn.length === 1 &&
-        node.connectionsIn[0]?.id === next.connectionsIn[0]?.id
-      ) {
+      if (next && equalMembers(node.connectionsIn, next.connectionsIn)) {
         yOffset += Y_SPACING_SM
+        node.margin = Y_SPACING_SM
       } else {
         yOffset += Y_SPACING_LG
+        node.margin = Y_SPACING_LG
       }
       maxWidth = Math.max(maxWidth, node.base.box.width)
     }
@@ -204,16 +256,12 @@ function layoutColumns(columns: LayoutNode[][], x = 0, y = 0) {
   for (const column of columns) {
     let maxColumnHeight = 0
     for (const node of column) {
-      maxColumnHeight = Math.max(
-        maxColumnHeight,
-        // biome-ignore lint/style/noNonNullAssertion: we know it's there
-        nodeLocations[node.id]!.y + node.base.box.height,
-      )
+      maxColumnHeight = Math.max(maxColumnHeight, node.y + node.height)
     }
 
     for (const node of column) {
-      // biome-ignore lint/style/noNonNullAssertion: we know it's there
-      nodeLocations[node.id]!.y += (maxHeight - maxColumnHeight) / 2
+      node.y += (maxHeight - maxColumnHeight) / 2
+      nodeLocations[node.id] = { x: node.x, y: node.y }
     }
   }
 
@@ -222,4 +270,17 @@ function layoutColumns(columns: LayoutNode[][], x = 0, y = 0) {
     width: xOffset - X_SPACING,
     height: maxHeight,
   }
+}
+
+function equalMembers<T>(a: T[], b: T[]) {
+  if (a.length !== b.length) {
+    return false
+  }
+  const aSet = new Set(a)
+  for (const item of b) {
+    if (!aSet.has(item)) {
+      return false
+    }
+  }
+  return true
 }
