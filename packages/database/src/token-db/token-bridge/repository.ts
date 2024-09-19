@@ -1,5 +1,9 @@
 import { BaseRepository } from '../../BaseRepository'
-import { TokenBridgeRecord, toRow } from './entity'
+import {
+  TokenBridgeRecord,
+  UpsertableTokenBridgeRecord,
+  upsertableToRecord,
+} from './entity'
 import { selectTokenBridge } from './select'
 
 export class TokenBridgeRepository extends BaseRepository {
@@ -11,10 +15,10 @@ export class TokenBridgeRepository extends BaseRepository {
     return rows
   }
 
-  async upsertMany(records: TokenBridgeRecord[]): Promise<number> {
+  async upsertMany(records: UpsertableTokenBridgeRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
-    const rows = records.map(toRow)
+    const rows = records.map(upsertableToRecord)
     await this.batch(rows, 1_000, async (batch) => {
       await this.db
         .insertInto('TokenBridge')

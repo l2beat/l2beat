@@ -77,6 +77,16 @@ export class NetworkRepository extends BaseRepository {
     return row
   }
 
+  async findByName(name: string): Promise<NetworkRecord | undefined> {
+    const row = await this.db
+      .selectFrom('Network')
+      .select(selectNetwork)
+      .where('Network.name', '=', name)
+      .limit(1)
+      .executeTakeFirst()
+    return row
+  }
+
   async upsertMany(networks: UpsertableNetworkRecord[]): Promise<number> {
     if (networks.length === 0) return 0
 
