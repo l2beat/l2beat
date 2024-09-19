@@ -33,6 +33,8 @@ export const silicon: Layer2 = polygonCDKStack({
   display: {
     name: 'Silicon',
     slug: 'silicon',
+    headerWarning:
+      'GPT Protocol is using AggLayer, meaning it shares the TVL escrow contracts with Polygon zkEVM and other connected chains.',
     description:
       'Silicon is a Validium built on the Polygon CDK Stack, aiming to become the social network of the future.',
     purposes: ['Universal'],
