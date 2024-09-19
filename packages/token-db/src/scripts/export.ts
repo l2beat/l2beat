@@ -1,7 +1,6 @@
-import { Prisma } from '@prisma/client'
-import { writeFile } from 'fs/promises'
 import { argv } from 'process'
-import { createPrismaClient } from '../db/prisma.js'
+import { writeFile } from 'fs/promises'
+import { createDatabase } from '@l2beat/database'
 
 const path = argv[2]
 
@@ -10,71 +9,44 @@ if (!path) {
   process.exit(1)
 }
 
-const db = createPrismaClient()
+const db = createDatabase()
 
-const selectNetworkMeta = {
-  id: true,
-  chainId: true,
-  name: true,
-} satisfies Prisma.NetworkSelect
+const tokens = await db.token.getAll()
+const networks = await db.networks.getAll()
+const deployments = await db.deployment.getAll()
+const metadata = await db.tokenMeta.getAll()
+const tokenBridges = await db.tokenBridge.getAll()
+const externalBridges = await db.externalBridge.getAll()
 
-const selectExternalBridgeMeta = {
-  id: true,
-  name: true,
-  type: true,
-} satisfies Prisma.ExternalBridgeSelect
-
-const tokens = await db.token.findMany({
-  select: {
-    id: true,
-    network: { select: selectNetworkMeta },
-    address: true,
-    deployment: {
-      select: {
-        id: true,
-        txHash: true,
-        blockNumber: true,
-        timestamp: true,
-        from: true,
-        to: true,
-        isDeployerEoa: true,
-        sourceAvailable: true,
-      },
-    },
-    metadata: {
-      select: {
-        id: true,
-        source: true,
-        externalId: true,
-        name: true,
-        symbol: true,
-        decimals: true,
-        logoUrl: true,
-        contractName: true,
-      },
-    },
-    bridgedFrom: {
-      select: {
-        id: true,
-        sourceTokenId: true,
-        externalBridge: {
-          select: selectExternalBridgeMeta,
-        },
-      },
-    },
-  },
+const result = tokens.map((token) => {
+  const network = networks.find((n) => n.id === token.networkId)
+  const deployment = deployments.find((d) => d.tokenId === token.id)
+  const meta = metadata.filter((m) => m.tokenId === token.id)
+  const bridgedFrom = tokenBridges
+    .filter((b) => b.targetTokenId === token.id)
+    .map((b) => ({
+      ...b,
+      externalBridge: externalBridges.find((e) => e.id === b.externalBridgeId),
+    }))
+  return {
+    ...token,
+    network,
+    deployment,
+    metadata: meta,
+    bridgedFrom,
+  }
 })
 
-await db.$disconnect()
+await db.close()
 
-await writeFile(path, JSON.stringify(tokens, null, 2))
+await writeFile(path, JSON.stringify(result, null, 2))
 
-const counts = tokens.reduce<
+const counts = result.reduce<
   Record<'externallyBridged' | 'canonicallyBridged' | 'native', number>
 >(
   (acc, token) => {
     if (token.bridgedFrom) {
-      if (token.bridgedFrom.externalBridge) {
+      if (token.bridgedFrom.some((b) => b.externalBridge)) {
         acc.externallyBridged++
       } else {
         acc.canonicallyBridged++

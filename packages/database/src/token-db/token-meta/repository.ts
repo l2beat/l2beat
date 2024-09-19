@@ -4,8 +4,17 @@ import {
   UpsertableTokenMetaRecord,
   upsertableToRow,
 } from './entity'
+import { selectTokenMeta } from './select'
 
 export class TokenMetaRepository extends BaseRepository {
+  async getAll(): Promise<TokenMetaRecord[]> {
+    const rows = await this.db
+      .selectFrom('TokenMeta')
+      .select(selectTokenMeta)
+      .execute()
+    return rows
+  }
+
   async upsert(record: UpsertableTokenMetaRecord): Promise<{ id: string }> {
     const row = upsertableToRow(record)
 

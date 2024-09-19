@@ -39,6 +39,11 @@ export class TokenRepository extends BaseRepository {
     return records.length
   }
 
+  async getAll(): Promise<TokenRecord[]> {
+    const rows = await this.db.selectFrom('Token').select(selectToken).execute()
+    return rows
+  }
+
   async getByChainId(chainId: number): Promise<TokenRecord[]> {
     const rows = await this.db
       .selectFrom('Token')

@@ -1,7 +1,16 @@
 import { BaseRepository } from '../../BaseRepository'
 import { TokenBridgeRecord, toRow } from './entity'
+import { selectTokenBridge } from './select'
 
 export class TokenBridgeRepository extends BaseRepository {
+  async getAll(): Promise<TokenBridgeRecord[]> {
+    const rows = await this.db
+      .selectFrom('TokenBridge')
+      .select(selectTokenBridge)
+      .execute()
+    return rows
+  }
+
   async upsertMany(records: TokenBridgeRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
