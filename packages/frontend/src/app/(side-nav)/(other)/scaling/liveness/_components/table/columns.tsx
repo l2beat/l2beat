@@ -82,6 +82,12 @@ export const columns = [
     meta: {
       tooltip: <TypeExplanationTooltip showOnlyRollupsDefinitions />,
     },
+    sortingFn: (rowA, rowB) => {
+      // Sort by category first, then by provider
+      const categoryComparison = (rowA.original.category ?? '').localeCompare(rowB.original.category ?? '');
+      return categoryComparison !== 0 ? categoryComparison :
+        (rowA.original.provider ?? '').localeCompare(rowB.original.provider ?? '');
+    },
   }),
   columnHelper.accessor('anomalies', {
     header: '30-day\nanomalies',
