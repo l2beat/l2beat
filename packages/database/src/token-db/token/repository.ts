@@ -1,13 +1,28 @@
 import { BaseRepository } from '../../BaseRepository'
-import { TokenRecord, toRecord, toRow } from './entity'
+import { TokenRecord, UpsertableTokenRecord, upsertableToRow } from './entity'
 import { joinDeployment, joinNetwork, joinTokenMeta } from './join'
 import { selectToken } from './select'
 
 export class TokenRepository extends BaseRepository {
-  async upsertMany(records: TokenRecord[]): Promise<number> {
+  async upsert(record: UpsertableTokenRecord): Promise<{ id: string }> {
+    const row = upsertableToRow(record)
+    return await this.db
+      .insertInto('Token')
+      .values(row)
+      .onConflict((cb) =>
+        cb.columns(['networkId', 'address']).doUpdateSet((eb) => ({
+          networkId: eb.ref('excluded.networkId'),
+          address: eb.ref('excluded.address'),
+        })),
+      )
+      .returning('Token.id')
+      .executeTakeFirstOrThrow()
+  }
+
+  async upsertMany(records: UpsertableTokenRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
-    const rows = records.map(toRow)
+    const rows = records.map(upsertableToRow)
     await this.batch(rows, 1_000, async (batch) => {
       await this.db
         .insertInto('Token')
@@ -31,7 +46,7 @@ export class TokenRepository extends BaseRepository {
       .select(selectToken)
       .where('Network.chainId', '=', chainId)
       .execute()
-    return rows.map(toRecord)
+    return rows
   }
 
   async getByNetworks(
@@ -53,7 +68,7 @@ export class TokenRepository extends BaseRepository {
         ),
       )
       .execute()
-    return rows.map(toRecord)
+    return rows
   }
 
   async getByDeploymentTarget(target: {
@@ -73,7 +88,7 @@ export class TokenRepository extends BaseRepository {
       .where('TokenMeta.contractName', '=', target.contractName)
       .where('Network.id', '=', target.networkId)
       .execute()
-    return rows.map(toRecord)
+    return rows
   }
 
   async findByNetwork(network: { network: string; address: string }): Promise<
@@ -87,7 +102,7 @@ export class TokenRepository extends BaseRepository {
       .where('Token.address', 'ilike', network.address)
       .limit(1)
       .executeTakeFirst()
-    return row && toRecord(row)
+    return row
   }
 
   async findById(id: string): Promise<TokenRecord | undefined> {
@@ -97,7 +112,7 @@ export class TokenRepository extends BaseRepository {
       .where('Token.id', '=', id)
       .limit(1)
       .executeTakeFirst()
-    return row && toRecord(row)
+    return row
   }
 
   async getByIds(ids: string[]): Promise<TokenRecord[]> {
@@ -108,6 +123,6 @@ export class TokenRepository extends BaseRepository {
       .select(selectToken)
       .where('Token.id', 'in', ids)
       .execute()
-    return rows.map(toRecord)
+    return rows
   }
 }

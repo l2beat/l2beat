@@ -19,9 +19,10 @@
   },
   "dependencies": {
     "@l2beat/discovery": "*",
-    "@l2beat/shared-pure": "*",
     "@l2beat/shared": "*",
-    "kysely": "^0.27.3"
+    "@l2beat/shared-pure": "*",
+    "kysely": "^0.27.3",
+    "nanoid": "^5.0.7"
   },
   "devDependencies": {
     "prisma": "^5.15.0",
