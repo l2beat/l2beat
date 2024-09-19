@@ -21,7 +21,7 @@ import { mockDatabase } from '../../../../../test/database'
 import { DataStatusService } from './DataStatusService'
 
 describe(DataStatusService.name, () => {
-  it.only(DataStatusService.prototype.getAmountsStatus.name, async () => {
+  it(DataStatusService.prototype.getAmountsStatus.name, async () => {
     const targetTimestamp = UnixTime.now()
 
     const indexerConfigurationsRepository = mockObject<
