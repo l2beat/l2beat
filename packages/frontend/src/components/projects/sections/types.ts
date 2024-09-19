@@ -2,6 +2,7 @@ import { type ChartSectionProps } from './chart-section'
 import { type ContractsSectionProps } from './contracts/contracts-section'
 import { type DetailedDescriptionSectionProps } from './detailed-description-section'
 import { type KnowledgeNuggetsSectionProps } from './knowledge-nuggets-section'
+import { type L3RiskAnalysisSectionProps } from './l3-risk-analysis-section'
 import { type MarkdownSectionProps } from './markdown-section'
 import { type MilestonesAndIncidentsSectionProps } from './milestones-and-incidents-section'
 import { type PermissionsSectionProps } from './permissions/permissions-section'
@@ -21,6 +22,7 @@ export type ProjectSectionId =
   | 'milestones-and-incidents'
   | 'risk-summary'
   | 'risk-analysis'
+  | 'l3-risk-analysis'
   | 'stage'
   | 'technology'
   | 'da-layer-technology'
@@ -65,6 +67,11 @@ export interface ProjectDetailsRiskSummarySection {
 export interface ProjectDetailsRiskAnalysisSection {
   type: 'RiskAnalysisSection'
   props: ProjectDetailsProps<RiskAnalysisSectionProps>
+}
+
+export interface L3ProjectDetailsRiskAnalysisSection {
+  type: 'L3RiskAnalysisSection'
+  props: ProjectDetailsProps<L3RiskAnalysisSectionProps>
 }
 
 export interface ProjectDetailsStageSection {
@@ -120,6 +127,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsMilestonesAndIncidentsSection
   | ProjectDetailsRiskSummarySection
   | ProjectDetailsRiskAnalysisSection
+  | L3ProjectDetailsRiskAnalysisSection
   | ProjectDetailsStageSection
   | ProjectDetailsTechnologySection
   | ProjectDetailsStateDerivationSection
