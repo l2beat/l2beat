@@ -7,7 +7,7 @@ const Enshrined = {
   value: 'Enshrined',
   sentiment: 'good',
   description:
-    'Blob data is directly available on the consensus layer, with data availability ensured by Ethereum’s consensus rules without the need for additional trust assumptions.',
+    'Blob data on Ethereum can natively be accessed by a bridge since they live on the same network. Data availability is ensured by Ethereum’s consensus rules without the need for additional trust assumptions.',
 } as const
 
 const NotEnshrined = {
