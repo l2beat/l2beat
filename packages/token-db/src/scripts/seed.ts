@@ -21,8 +21,8 @@ import {
 import { z } from 'zod'
 import { env } from '../env.js'
 import { isExplorerType } from '../utils/isExplorerType.js'
-import { notUndefined } from '../utils/notUndefined.js'
 import { zodFetch } from '../utils/zodFetch.js'
+import { notUndefined } from '@l2beat/shared-pure'
 
 export const chainsConfig = [
   arbitrum,
