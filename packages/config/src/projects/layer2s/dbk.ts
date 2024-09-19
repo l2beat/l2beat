@@ -34,7 +34,7 @@ export const dbk: Layer2 = opStackL2({
   finality: {
     type: 'OPStack-blob',
     genesisTimestamp: new UnixTime(1717461337),
-    minTimestamp: new UnixTime(1717461337), // fix when contracts verified
+    minTimestamp: new UnixTime(1717485635), // first blob https://etherscan.io/tx/0x5206806df7d2124910f2c44f38bb34b6ab99b9dfbea94c6ae6a793f1600e3363
     l2BlockTimeSeconds: 2,
     lag: 0,
     stateUpdate: 'disabled',
@@ -49,6 +49,6 @@ export const dbk: Layer2 = opStackL2({
       type: 'general',
     },
   ],
-  usesBlobs: true, // check
+  usesBlobs: true, // check inbox here https://etherscan.io/address/0xFf00000000000000000000000000000020240603
   useDiscoveryMetaOnly: true,
 })
