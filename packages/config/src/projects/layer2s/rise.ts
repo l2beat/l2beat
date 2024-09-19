@@ -14,10 +14,14 @@ export const rise: Layer2 = upcomingL2({
     links: {
       websites: ['https://riselabs.xyz/'],
       apps: [],
-      documentation: ['https://riselabs.xyz/'],
+      documentation: ['https://docs.riselabs.xyz/'],
       explorers: [],
       repositories: ['https://github.com/risechain'],
-      socialMedia: ['https://twitter.com/rise_chain'],
+      socialMedia: [
+        'https://discord.com/invite/4yWVabz63y',
+        'https://medium.com/@rise_chain',
+        'https://x.com/rise_chain',
+      ],
     },
   },
 })
