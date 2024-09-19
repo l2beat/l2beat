@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Database } from '@l2beat/database'
+import { notUndefined } from '@l2beat/shared-pure'
 import { http, PublicClient, createPublicClient } from 'viem'
 import * as viemChains from 'viem/chains'
 import { DatabaseCache } from './cache/database-cache.js'
@@ -7,7 +8,6 @@ import {
   NetworkExplorerClient,
   instantiateExplorer,
 } from './explorers/index.js'
-import { notUndefined } from '@l2beat/shared-pure'
 
 type Dependencies = {
   logger: Logger

@@ -1,5 +1,6 @@
 import { createDatabase } from '@l2beat/database'
 import { UpsertableNetworkRecord } from '@l2beat/database/src/token-db/network/entity.js'
+import { notUndefined } from '@l2beat/shared-pure'
 import intersectionWith from 'lodash/intersectionWith.js'
 import { nanoid } from 'nanoid'
 import {
@@ -22,7 +23,6 @@ import { z } from 'zod'
 import { env } from '../env.js'
 import { isExplorerType } from '../utils/isExplorerType.js'
 import { zodFetch } from '../utils/zodFetch.js'
-import { notUndefined } from '@l2beat/shared-pure'
 
 export const chainsConfig = [
   arbitrum,
