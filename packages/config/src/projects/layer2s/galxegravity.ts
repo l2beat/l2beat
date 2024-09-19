@@ -20,7 +20,11 @@ export const galxegravity: Layer2 = orbitStackL2({
     purposes: ['Universal'],
     links: {
       websites: ['https://gravity.xyz'],
-      apps: ['https://bridge.gravity.xyz/'],
+      apps: [
+        'https://bridge.gravity.xyz/',
+        'https://safe.gravity.xyz/',
+        'https://ecosystem.gravity.xyz/',
+      ],
       documentation: ['https://docs.gravity.xyz/'],
       explorers: ['https://gscan.xyz/', 'https://explorer.gravity.xyz/'],
       repositories: ['https://github.com/Galxe'],
