@@ -72,7 +72,7 @@ export function RiskAnalysisSection({
   )
 }
 
-function SingleRisk({
+export function SingleRisk({
   value,
 }: {
   value: RosetteValue
