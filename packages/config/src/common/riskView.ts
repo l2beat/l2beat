@@ -78,6 +78,15 @@ export const STATE_ZKP_ST: ScalingProjectRiskViewEntry = {
   definingMetric: Infinity,
 }
 
+export function STATE_ZKP_L3(L2: string): ScalingProjectRiskViewEntry {
+  return {
+    value: 'ZK proofs',
+    description: `Zero knowledge cryptography is used to ensure state correctness. Proofs are first verified on ${L2} and finally on Ethereum.`,
+    sentiment: 'good',
+    definingMetric: Infinity,
+  }
+}
+
 export const STATE_EXITS_ONLY: ScalingProjectRiskViewEntry = {
   value: 'Exits only',
   description:
@@ -127,7 +136,7 @@ export function STATE_ARBITRUM_FRAUD_PROOFS(
 // Data availability
 
 export const DATA_ON_CHAIN: ScalingProjectRiskViewEntry = {
-  value: 'On chain',
+  value: 'Onchain',
   description:
     'All of the data needed for proof construction is published on Ethereum L1.',
   sentiment: 'good',
@@ -135,7 +144,7 @@ export const DATA_ON_CHAIN: ScalingProjectRiskViewEntry = {
 }
 
 export const DATA_ON_CHAIN_L3: ScalingProjectRiskViewEntry = {
-  value: 'On chain',
+  value: 'Onchain',
   description:
     'All of the data needed for proof construction is published on the base chain, which ultimately gets published on Ethereum.',
   sentiment: 'good',
@@ -143,9 +152,9 @@ export const DATA_ON_CHAIN_L3: ScalingProjectRiskViewEntry = {
 }
 
 export const DATA_ON_CHAIN_STATE_DIFFS: ScalingProjectRiskViewEntry = {
-  value: 'On chain (SD)',
+  value: 'Onchain (SD)',
   description:
-    'All of the data (SD = state diffs) needed for proof construction is published on chain.',
+    'All of the data (SD = state diffs) needed for proof construction is published onchain.',
   sentiment: 'good',
   definingMetric: Infinity,
 }
@@ -153,7 +162,7 @@ export const DATA_ON_CHAIN_STATE_DIFFS: ScalingProjectRiskViewEntry = {
 export const DATA_MIXED: ScalingProjectRiskViewEntry = {
   value: 'Mixed',
   description:
-    'Some of the data needed for proof construction is not published on chain.',
+    'Some of the data needed for proof construction is not published onchain.',
   sentiment: 'warning',
   definingMetric: 0,
 }
@@ -176,7 +185,7 @@ export function DATA_EXTERNAL_DAC(DAC?: {
 
   return {
     value: 'External (DAC)',
-    description: `Proof construction relies fully on data that is NOT published on chain. There exists a Data Availability Committee (DAC)${additionalString} that is tasked with protecting and supplying the data.`,
+    description: `Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC)${additionalString} that is tasked with protecting and supplying the data.`,
     sentiment: DATA_AVAILABILITY.DAC_SENTIMENT(DAC),
     definingMetric: DAC ? DAC.requiredSignatures / DAC.membersCount : -Infinity,
   }
@@ -185,7 +194,14 @@ export function DATA_EXTERNAL_DAC(DAC?: {
 export const DATA_EXTERNAL: ScalingProjectRiskViewEntry = {
   value: 'External',
   description:
-    'Proof construction and state derivation rely fully on data that is NOT published on chain.',
+    'Proof construction and state derivation rely fully on data that is NOT published onchain.',
+  sentiment: 'bad',
+}
+
+export const DATA_EXTERNAL_L3: ScalingProjectRiskViewEntry = {
+  value: 'External',
+  description:
+    'Proof construction and state derivation rely fully on data that is ultimately NOT published on Ethereum.',
   sentiment: 'bad',
 }
 
@@ -593,6 +609,7 @@ export const RISK_VIEW = {
   STATE_FP_INT_ZK,
   STATE_ZKP_SN,
   STATE_ZKP_ST,
+  STATE_ZKP_L3,
   STATE_EXITS_ONLY,
   STATE_ARBITRUM_FRAUD_PROOFS,
   DATA_ON_CHAIN,
@@ -602,6 +619,7 @@ export const RISK_VIEW = {
   DATA_EXTERNAL_DAC,
   DATA_EXTERNAL_MEMO,
   DATA_EXTERNAL,
+  DATA_EXTERNAL_L3,
   DATA_CELESTIA,
   UPGRADABLE_YES,
   VALIDATED_BY_ETHEREUM,
