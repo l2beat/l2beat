@@ -1,7 +1,7 @@
 {
   "name": "transporter",
   "chain": "ethereum",
-  "blockNumber": 20725912,
+  "blockNumber": 20769260,
   "configHash": "0xf391f2cbf95d4fb92da983d6f036a5b740c4de59baec4f13d9f56f06a92b5685",
   "version": 14,
   "contracts": [
@@ -953,8 +953,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 3134,
-        "getLatestPriceEpochAndRound": 1882114,
+        "getExpectedNextSequenceNumber": 3253,
+        "getLatestPriceEpochAndRound": 2373889,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "avalanche",
@@ -1155,16 +1155,16 @@
             0, 0, 0, 0, 0, 0, 0, 0, 0
           ]
         },
-        "getOpCount": 165,
+        "getOpCount": 176,
         "getRoot": {
-          "root": "0x96613e6465af6035f9d24761b30b45aae7d4bb8cba74d7943db8e52b15fe7fbd",
-          "validUntil": 1725300685
+          "root": "0xbbcb3604a6f4d81325fb0625d7d6f4fd19e232bdbbdc3c50dd5b3256aa704d2c",
+          "validUntil": 1726500461
         },
         "getRootMetadata": {
           "chainId": 1,
           "multiSig": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-          "preOpCount": 154,
-          "postOpCount": 165,
+          "preOpCount": 165,
+          "postOpCount": 176,
           "overridePreviousRoot": false
         },
         "MAX_NUM_SIGNERS": 200,
@@ -1187,7 +1187,7 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 1593,
+        "getExpectedNextSequenceNumber": 1693,
         "getLatestPriceEpochAndRound": 469761,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -1343,10 +1343,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 2737,
-        "getNopFeesJuels": "5050544971165811866",
+        "getExpectedNextSequenceNumber": 2832,
+        "getNopFeesJuels": "2848104992831238277",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "7531530766065339373",
+        "linkAvailableForPayment": "3612061292887430238",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -1605,7 +1605,7 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 29,
+        "getExpectedNextSequenceNumber": 30,
         "getLatestPriceEpochAndRound": 468737,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -1678,10 +1678,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 2244,
-        "getNopFeesJuels": "9346703161377240206",
+        "getExpectedNextSequenceNumber": 2320,
+        "getNopFeesJuels": "3447573744351147932",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "6793154581132400037",
+        "linkAvailableForPayment": "1176910537778325703",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -1800,7 +1800,7 @@
       "sinceTimestamp": 1688661563,
       "values": {
         "$immutable": true,
-        "getARM": "0x8B63b3DE93431C0f756A493644d128134291fA1b",
+        "getARM": "0xdCD48419bD5Cd9d1b097695F2af4Ee125aADF84F",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "typeAndVersion": "ARMProxy 1.0.0"
       }
@@ -1931,7 +1931,7 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getBlockedFunctionSelectorAt": [],
         "getBlockedFunctionSelectorCount": 0,
-        "getMinDelay": 86400,
+        "getMinDelay": 10800,
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
       },
       "derivedName": "RBACTimelock"
@@ -2025,10 +2025,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 75,
-        "getNopFeesJuels": "46097228435290651",
+        "getExpectedNextSequenceNumber": 77,
+        "getNopFeesJuels": 1,
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "1105496575450625242",
+        "linkAvailableForPayment": "9009899511622213247",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -2084,7 +2084,7 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 2327,
+        "getExpectedNextSequenceNumber": 2428,
         "getLatestPriceEpochAndRound": 467715,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -2278,7 +2278,7 @@
         "getArmProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81",
         "getBridgeLimit": "20000000000000000000000000",
         "getBridgeLimitAdmin": "0x0000000000000000000000000000000000000000",
-        "getCurrentBridgedAmount": "4158347992063683536601188",
+        "getCurrentBridgedAmount": "4664201606256359456514283",
         "getLockReleaseInterfaceId": "0x98a47177",
         "getRateLimitAdmin": "0x0000000000000000000000000000000000000000",
         "getRebalancer": "0x0000000000000000000000000000000000000000",
@@ -2612,7 +2612,7 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 7,
+        "getExpectedNextSequenceNumber": 8,
         "getLatestPriceEpochAndRound": 467714,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -3126,10 +3126,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 1556,
-        "getNopFeesJuels": "3551444009351364375",
+        "getExpectedNextSequenceNumber": 1616,
+        "getNopFeesJuels": "1976454420539931550",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "3872484420409803654",
+        "linkAvailableForPayment": "9980519091730781558",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -3206,7 +3206,7 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 2507,
+        "getExpectedNextSequenceNumber": 2597,
         "getLatestPriceEpochAndRound": 469761,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -3253,25 +3253,6 @@
           }
         }
       ]
-    },
-    {
-      "name": "ARM",
-      "address": "0x8B63b3DE93431C0f756A493644d128134291fA1b",
-      "sinceTimestamp": 1688661551,
-      "values": {
-        "$immutable": true,
-        "getCurseProgress": {
-          "curseVoteAddrs": [],
-          "voteCounts": [],
-          "cursesHashes": [],
-          "accumulatedWeight": 0,
-          "cursed": false
-        },
-        "isCursed": false,
-        "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-        "typeAndVersion": "ARM 1.0.0"
-      },
-      "derivedName": "ARM"
     },
     {
       "name": "BurnMintTokenPool",
@@ -3426,7 +3407,7 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 3749,
+        "getExpectedNextSequenceNumber": 3873,
         "getLatestPriceEpochAndRound": 464897,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -3500,10 +3481,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 2763,
-        "getNopFeesJuels": "10273706525100392037",
+        "getExpectedNextSequenceNumber": 2864,
+        "getNopFeesJuels": "4985747807652713705",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "4329682641907377991",
+        "linkAvailableForPayment": "7672010713623861659",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -3594,10 +3575,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 4990,
-        "getNopFeesJuels": "22943534170174781395",
+        "getExpectedNextSequenceNumber": 5183,
+        "getNopFeesJuels": "5572124392949435842",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "7600824407851792217",
+        "linkAvailableForPayment": "9224774087220349227",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -3762,7 +3743,7 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 3813,
+        "getExpectedNextSequenceNumber": 3995,
         "getLatestPriceEpochAndRound": 462083,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -3939,7 +3920,7 @@
           "maxPerMsgGasLimit": 3000000
         },
         "getExpectedNextSequenceNumber": 28,
-        "getNopFeesJuels": "146176243536552355",
+        "getNopFeesJuels": 3,
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "8280976454551762232",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
@@ -4786,10 +4767,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 1820,
-        "getNopFeesJuels": "2990544245603259893",
+        "getExpectedNextSequenceNumber": 1886,
+        "getNopFeesJuels": "2015606237050102843",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "5240224207848902504",
+        "linkAvailableForPayment": "1941945919008588729",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -5099,7 +5080,7 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 1248,
+        "getExpectedNextSequenceNumber": 1328,
         "getLatestPriceEpochAndRound": 466435,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -5233,10 +5214,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 13,
-        "getNopFeesJuels": "162709501897406484",
+        "getExpectedNextSequenceNumber": 14,
+        "getNopFeesJuels": "54077231942756634",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "8790259185484139015",
+        "linkAvailableForPayment": "8736181953541382385",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -5373,6 +5354,72 @@
         "getToken": "0xDcEe70654261AF21C44c093C300eD3Bb97b78192",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "typeAndVersion": "LockReleaseTokenPool 1.2.0"
+      }
+    },
+    {
+      "name": "RMN",
+      "address": "0xdCD48419bD5Cd9d1b097695F2af4Ee125aADF84F",
+      "sinceTimestamp": 1724945447,
+      "values": {
+        "$immutable": true,
+        "getConfigDetails": {
+          "version": 1,
+          "blockNumber": 20635146,
+          "config": {
+            "voters": [
+              {
+                "blessVoteAddr": "0x23ccf5a7309A9bA850F877313CFF35B690360944",
+                "curseVoteAddr": "0x0B59Fa90337B8c1DfcF83A60be93Df36d3022bf2",
+                "blessWeight": 1,
+                "curseWeight": 1
+              },
+              {
+                "blessVoteAddr": "0xeAA2691fE9C8CEF93CcBc1b4B1E4F3ce02678942",
+                "curseVoteAddr": "0x0cb702A32e380e6bBE578d73928db35F27Dfd0d1",
+                "blessWeight": 1,
+                "curseWeight": 1
+              },
+              {
+                "blessVoteAddr": "0xF5d5840ce35ED1E408B26df1f5Eb74D6641DfAe6",
+                "curseVoteAddr": "0x38eA6cEa45D30F9a4Ba1B7fa28CE840135Fe3118",
+                "blessWeight": 1,
+                "curseWeight": 1
+              },
+              {
+                "blessVoteAddr": "0x9F199d8A106a220D483BD548Ef862b15eCd3BFAc",
+                "curseVoteAddr": "0x1DCA94f408BC850524a320988721642D64870B62",
+                "blessWeight": 1,
+                "curseWeight": 1
+              },
+              {
+                "blessVoteAddr": "0x8749F722d74b2a8d9AF5e4F8011287DA3DC058a1",
+                "curseVoteAddr": "0x699E53aba4543726E487771def1781C89Dbd30Cf",
+                "blessWeight": 1,
+                "curseWeight": 1
+              },
+              {
+                "blessVoteAddr": "0x0bc0fb2faa891D3C48e494BfFd3B0BCD53B99cE5",
+                "curseVoteAddr": "0x12119A85235939C6d28182f198AdD16e9C1d7B11",
+                "blessWeight": 1,
+                "curseWeight": 1
+              },
+              {
+                "blessVoteAddr": "0xd6c690713DC1B3995C200E600D3A00b30299Ae08",
+                "curseVoteAddr": "0xC5f450a270DceFdcb990851A280a8A2A3d9403Df",
+                "blessWeight": 1,
+                "curseWeight": 1
+              }
+            ],
+            "blessWeightThreshold": 2,
+            "curseWeightThreshold": 2
+          }
+        },
+        "getCursedSubjectsCount": 0,
+        "getPermaBlessedCommitStores": [],
+        "getRecordedCurseRelatedOpsCount": 1,
+        "isCursed": false,
+        "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+        "typeAndVersion": "RMN 1.5.0"
       }
     },
     {
@@ -5523,10 +5570,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 6811,
-        "getNopFeesJuels": "13689913836266204840",
+        "getExpectedNextSequenceNumber": 6945,
+        "getNopFeesJuels": "4056075468437394288",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "4136444436351694295",
+        "linkAvailableForPayment": "6981994915681810040",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -5827,16 +5874,16 @@
             0, 0, 0, 0, 0, 0, 0, 0, 0
           ]
         },
-        "getOpCount": 1042,
+        "getOpCount": 1044,
         "getRoot": {
-          "root": "0x5698c475286cb517eabcca1dc2ed771b8fca0392647b99b8c8ee207b83438e3d",
-          "validUntil": 1726155101
+          "root": "0x9fb4db83b0c95174e56e7dcbbecbbb1503e11165edf7f48ec3cd51975116234a",
+          "validUntil": 1726500266
         },
         "getRootMetadata": {
           "chainId": 1,
           "multiSig": "0xE53289F32c8E690b7173aA33affE9B6B0CB0012F",
-          "preOpCount": 1041,
-          "postOpCount": 1042,
+          "preOpCount": 1043,
+          "postOpCount": 1044,
           "overridePreviousRoot": false
         },
         "MAX_NUM_SIGNERS": 200,
@@ -6041,7 +6088,7 @@
           "maxPerMsgGasLimit": 3000000
         },
         "getExpectedNextSequenceNumber": 28,
-        "getNopFeesJuels": "144604761749265477",
+        "getNopFeesJuels": 2,
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "9158208968672587566",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
@@ -6351,18 +6398,24 @@
     { "address": "0x0000000000000000000000000000000000000001" },
     { "address": "0x0669d4d05Fc5bCF261DBADc3b41854a6ee7E2E85" },
     { "address": "0x06e5891D9b2Ee77740355A309BAF49caaB672f98" },
+    { "address": "0x0B59Fa90337B8c1DfcF83A60be93Df36d3022bf2" },
+    { "address": "0x0bc0fb2faa891D3C48e494BfFd3B0BCD53B99cE5" },
     { "address": "0x0Bf40b034872D0b364f3DCec04C7434a4Da1C8d9" },
     { "address": "0x0c44E75A018d846C12CDcFFcD15C34aC0bd7eB60" },
+    { "address": "0x0cb702A32e380e6bBE578d73928db35F27Dfd0d1" },
     { "address": "0x0F246651F1c2275B4E14d8ae166D1fd3Af05c405" },
+    { "address": "0x12119A85235939C6d28182f198AdD16e9C1d7B11" },
     { "address": "0x124BA7e2188074335A0e9b12B449AD5781A73D60" },
     { "address": "0x14a8f3B302Bbfa7F2f2AC2F4515548370bc7bAdC" },
     { "address": "0x162A8E51E69D72a4bA462220aE9A2E94e44d753F" },
     { "address": "0x180159135c9b93C59d16eA1A690e465D22c5EB67" },
     { "address": "0x190bcE84CF2d500B878966F4Cf98a50d78f2675E" },
     { "address": "0x1c6460cfe32916196f6977b5442b0F98A826D880" },
+    { "address": "0x1DCA94f408BC850524a320988721642D64870B62" },
     { "address": "0x1f17D464652f5Bd74a03446FeA20590CCfB3332D" },
     { "address": "0x20a446033409CeB9c541A89b2B4F114d79Aa1840" },
     { "address": "0x21Ac2a1d6ee437FB11a6F1933C5D1d22c714B922" },
+    { "address": "0x23ccf5a7309A9bA850F877313CFF35B690360944" },
     { "address": "0x27C96A8a2f70a8408aD6c620717a3bDaA54bb10b" },
     { "address": "0x2b73763722378AB2013CB0877946f69fC3727Fd8" },
     { "address": "0x2B88575011C5E11389ddB50D28d31C7d06B352A0" },
@@ -6371,6 +6424,7 @@
     { "address": "0x31e16F375531F8d77E027ff935e1114eD62D797b" },
     { "address": "0x326377a6B92eC69AcbbFe2De1eB1d7c9008E4C89" },
     { "address": "0x36FdBDA6085d4DFA63Da90839432dDe9373970F0" },
+    { "address": "0x38eA6cEa45D30F9a4Ba1B7fa28CE840135Fe3118" },
     { "address": "0x3B80Fe300c9A611abA0496e2543B66Ff7bD4B9e9" },
     { "address": "0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3" },
     { "address": "0x3D3817270db2b89e9F68bA27297fb4672082f942" },
@@ -6388,6 +6442,7 @@
     { "address": "0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6" },
     { "address": "0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8" },
     { "address": "0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7" },
+    { "address": "0x699E53aba4543726E487771def1781C89Dbd30Cf" },
     { "address": "0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae" },
     { "address": "0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4" },
     { "address": "0x6F9dc914D7E124FF68c8618CC3C00b17B15F9b4C" },
@@ -6398,12 +6453,14 @@
     { "address": "0x776D5B14ef1D5C58B0d48b53114f2Aa0faccB307" },
     { "address": "0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374" },
     { "address": "0x803CBD1e4d722eCf8247c6c9CDab4fC87DBAf429" },
+    { "address": "0x8749F722d74b2a8d9AF5e4F8011287DA3DC058a1" },
     { "address": "0x9079410666ED02725ee9d148398Cee26397c2A36" },
     { "address": "0x925d7Ea0ADe586DBFd56a942bb297286cE428C79" },
     { "address": "0x9453E18f03A36E2A2c70598De520bD24434D2d1D" },
     { "address": "0x98dd9E9b8AE458225119Ab5B8c947A9d1cd0B648" },
     { "address": "0x9d0D65cd6e46B86f88fF021d8f5EE58fe8ce2882" },
     { "address": "0x9E318D85D42F7e5b8B4fb2fB2d706C4c04D1549e" },
+    { "address": "0x9F199d8A106a220D483BD548Ef862b15eCd3BFAc" },
     { "address": "0xa2E004594939e2Dd4cBb680536576f6d5B435077" },
     { "address": "0xA3177f64efE98422E782bC17BE7971F01187B7cF" },
     { "address": "0xa35B7219521134cAF52DccAD44d604335b64a4fB" },
@@ -6418,6 +6475,7 @@
     { "address": "0xBd6934b2DF4B6926FA7161f72A7DC599b9A2E581" },
     { "address": "0xBD9bf9AA79adF083BB7100848Eb15F4e8282E27e" },
     { "address": "0xC19Beb494BA0bC57e5F967706A24bAFb6Da7BCD7" },
+    { "address": "0xC5f450a270DceFdcb990851A280a8A2A3d9403Df" },
     { "address": "0xc90788d9168f83dec518Ab7c0445Ad1Ec53554D7" },
     { "address": "0xcD5868dD3dEe0f0A31c38D088dd562F5d4ea2386" },
     { "address": "0xCe11020D56e5FDbfE46D9FC3021641FfbBB5AdEE" },
@@ -6425,13 +6483,16 @@
     { "address": "0xd3094f770579AFd66711847cE9E9C42D10BA2264" },
     { "address": "0xd3E2da792E806556517124f03F12e557045951E7" },
     { "address": "0xD44371bFDe87f2db3eA6Df242091351A06c2e181" },
+    { "address": "0xd6c690713DC1B3995C200E600D3A00b30299Ae08" },
     { "address": "0xd844665361adBa29CD1259ebDe9b547ECe2ab0E7" },
     { "address": "0xDEA286dc0E01Cb4755650A6CF8d1076b454eA1cb" },
     { "address": "0xE062e7D123AC8dF480C56147f911144F55C10f88" },
     { "address": "0xE0a8ABcf65e6212abFd659d5D857CFbA62a14771" },
     { "address": "0xE43f9eD3146d76E627C2504E5140005027992De6" },
+    { "address": "0xeAA2691fE9C8CEF93CcBc1b4B1E4F3ce02678942" },
     { "address": "0xECDd1737E54530D7b05Ad309B9B365CDc0084FD0" },
     { "address": "0xF081825b65C366D2bD3Ee7ebC28a66C76474cdEA" },
+    { "address": "0xF5d5840ce35ED1E408B26df1f5Eb74D6641DfAe6" },
     { "address": "0xFd77c53AA4eF0E3C01f5Ac012BF7Cc7A3ECf5168" }
   ],
   "abis": {
@@ -10694,46 +10755,6 @@
       "function unpause()",
       "function verify(bytes32[] hashedLeaves, bytes32[] proofs, uint256 proofFlagBits) view returns (uint256 timestamp)"
     ],
-    "0x8B63b3DE93431C0f756A493644d128134291fA1b": [
-      "constructor(tuple(tuple(address blessVoteAddr, address curseVoteAddr, address curseUnvoteAddr, uint8 blessWeight, uint8 curseWeight)[] voters, uint16 blessWeightThreshold, uint16 curseWeightThreshold) config)",
-      "error AlreadyVotedToCurse(address voter, bytes32 curseId)",
-      "error InvalidConfig()",
-      "error InvalidCurseState()",
-      "error InvalidCursesHash(bytes32 expectedCursesHash, bytes32 actualCursesHash)",
-      "error InvalidVoter(address voter)",
-      "error MustRecoverFromCurse()",
-      "event AlreadyBlessed(uint32 indexed configVersion, address indexed voter, tuple(address commitStore, bytes32 root) taggedRoot)",
-      "event AlreadyVotedToBless(uint32 indexed configVersion, address indexed voter, tuple(address commitStore, bytes32 root) taggedRoot)",
-      "event ConfigSet(uint32 indexed configVersion, tuple(tuple(address blessVoteAddr, address curseVoteAddr, address curseUnvoteAddr, uint8 blessWeight, uint8 curseWeight)[] voters, uint16 blessWeightThreshold, uint16 curseWeightThreshold) config)",
-      "event Cursed(uint32 indexed configVersion, uint256 timestamp)",
-      "event OwnerCursed(uint256 timestamp)",
-      "event OwnershipTransferRequested(address indexed from, address indexed to)",
-      "event OwnershipTransferred(address indexed from, address indexed to)",
-      "event RecoveredFromCurse()",
-      "event ReusedVotesToCurse(uint32 indexed configVersion, address indexed voter, uint8 weight, uint32 voteCount, bytes32 cursesHash, uint16 accumulatedWeight)",
-      "event SkippedUnvoteToCurse(address indexed voter, bytes32 expectedCursesHash, bytes32 actualCursesHash)",
-      "event TaggedRootBlessVotesReset(uint32 indexed configVersion, tuple(address commitStore, bytes32 root) taggedRoot, bool wasBlessed)",
-      "event TaggedRootBlessed(uint32 indexed configVersion, tuple(address commitStore, bytes32 root) taggedRoot, uint16 accumulatedWeight)",
-      "event UnvotedToCurse(uint32 indexed configVersion, address indexed voter, uint8 weight, uint32 voteCount, bytes32 cursesHash)",
-      "event VotedToBless(uint32 indexed configVersion, address indexed voter, tuple(address commitStore, bytes32 root) taggedRoot, uint8 weight)",
-      "event VotedToCurse(uint32 indexed configVersion, address indexed voter, uint8 weight, uint32 voteCount, bytes32 curseId, bytes32 cursesHash, uint16 accumulatedWeight)",
-      "function acceptOwnership()",
-      "function getBlessProgress(tuple(address commitStore, bytes32 root) taggedRoot) view returns (address[] blessVoteAddrs, uint16 accumulatedWeight, bool blessed)",
-      "function getConfigDetails() view returns (uint32 version, uint32 blockNumber, tuple(tuple(address blessVoteAddr, address curseVoteAddr, address curseUnvoteAddr, uint8 blessWeight, uint8 curseWeight)[] voters, uint16 blessWeightThreshold, uint16 curseWeightThreshold) config)",
-      "function getCurseProgress() view returns (address[] curseVoteAddrs, uint32[] voteCounts, bytes32[] cursesHashes, uint16 accumulatedWeight, bool cursed)",
-      "function isBlessed(tuple(address commitStore, bytes32 root) taggedRoot) view returns (bool)",
-      "function isCursed() view returns (bool)",
-      "function owner() view returns (address)",
-      "function ownerCurse()",
-      "function ownerResetBlessVotes(tuple(address commitStore, bytes32 root)[] taggedRoots)",
-      "function ownerUnvoteToCurse(tuple(address curseVoteAddr, bytes32 cursesHash, bool forceUnvote)[] unvoteRecords)",
-      "function setConfig(tuple(tuple(address blessVoteAddr, address curseVoteAddr, address curseUnvoteAddr, uint8 blessWeight, uint8 curseWeight)[] voters, uint16 blessWeightThreshold, uint16 curseWeightThreshold) config)",
-      "function transferOwnership(address to)",
-      "function typeAndVersion() view returns (string)",
-      "function unvoteToCurse(address curseVoteAddr, bytes32 cursesHash)",
-      "function voteToBless(tuple(address commitStore, bytes32 root)[] taggedRoots)",
-      "function voteToCurse(bytes32 curseId)"
-    ],
     "0x8BcD7e48Dd2104ed83eb1CE0c6E7610604AE9062": [
       "constructor(address token, address[] allowlist, address armProxy, address router)",
       "error AggregateValueMaxCapacityExceeded(uint256 capacity, uint256 requested)",
@@ -13471,6 +13492,54 @@
       "function transferOwnership(address to)",
       "function typeAndVersion() view returns (string)"
     ],
+    "0xdCD48419bD5Cd9d1b097695F2af4Ee125aADF84F": [
+      "constructor(tuple(tuple(address blessVoteAddr, address curseVoteAddr, uint8 blessWeight, uint8 curseWeight)[] voters, uint16 blessWeightThreshold, uint16 curseWeightThreshold) config)",
+      "error InvalidConfig()",
+      "error ReusedCurseId(address voter, bytes16 curseId)",
+      "error SubjectsMustBeStrictlyIncreasing()",
+      "error UnauthorizedVoter(address voter)",
+      "error UnvoteToCurseNoop()",
+      "error VoteToBlessForbiddenDuringActiveGlobalCurse()",
+      "error VoteToBlessNoop()",
+      "error VoteToCurseNoop()",
+      "event AlreadyBlessed(uint32 indexed configVersion, address indexed voter, tuple(address commitStore, bytes32 root) taggedRoot)",
+      "event AlreadyVotedToBless(uint32 indexed configVersion, address indexed voter, tuple(address commitStore, bytes32 root) taggedRoot)",
+      "event ConfigSet(uint32 indexed configVersion, tuple(tuple(address blessVoteAddr, address curseVoteAddr, uint8 blessWeight, uint8 curseWeight)[] voters, uint16 blessWeightThreshold, uint16 curseWeightThreshold) config)",
+      "event CurseLifted(bytes16 subject)",
+      "event Cursed(uint32 indexed configVersion, bytes16 subject, uint64 blockTimestamp)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "event PermaBlessedCommitStoreAdded(address commitStore)",
+      "event PermaBlessedCommitStoreRemoved(address commitStore)",
+      "event SkippedUnvoteToCurse(address indexed voter, bytes16 subject, bytes28 onchainCursesHash, bytes28 cursesHash)",
+      "event TaggedRootBlessVotesReset(uint32 indexed configVersion, tuple(address commitStore, bytes32 root) taggedRoot, bool wasBlessed)",
+      "event TaggedRootBlessed(uint32 indexed configVersion, tuple(address commitStore, bytes32 root) taggedRoot, uint16 accumulatedWeight)",
+      "event UnvotedToCurse(uint32 indexed configVersion, address indexed voter, bytes16 subject, uint8 weight, bytes28 cursesHash, uint16 remainingAccumulatedWeight)",
+      "event VotedToBless(uint32 indexed configVersion, address indexed voter, tuple(address commitStore, bytes32 root) taggedRoot, uint8 weight)",
+      "event VotedToCurse(uint32 indexed configVersion, address indexed voter, bytes16 subject, bytes16 curseId, uint8 weight, uint64 blockTimestamp, bytes28 cursesHash, uint16 accumulatedWeight)",
+      "function acceptOwnership()",
+      "function getBlessProgress(tuple(address commitStore, bytes32 root) taggedRoot) view returns (address[] blessVoteAddrs, uint16 accumulatedWeight, bool blessed)",
+      "function getConfigDetails() view returns (uint32 version, uint32 blockNumber, tuple(tuple(address blessVoteAddr, address curseVoteAddr, uint8 blessWeight, uint8 curseWeight)[] voters, uint16 blessWeightThreshold, uint16 curseWeightThreshold) config)",
+      "function getCurseProgress(bytes16 subject) view returns (address[] curseVoteAddrs, bytes28[] cursesHashes, uint16 accumulatedWeight, bool cursed)",
+      "function getCursedSubjectsCount() view returns (uint256)",
+      "function getPermaBlessedCommitStores() view returns (address[])",
+      "function getRecordedCurseRelatedOps(uint256 offset, uint256 limit) view returns (tuple(uint8 tag, uint64 blockTimestamp, bool cursed, address curseVoteAddr, bytes16 subject, bytes16 curseId)[])",
+      "function getRecordedCurseRelatedOpsCount() view returns (uint256)",
+      "function isBlessed(tuple(address commitStore, bytes32 root) taggedRoot) view returns (bool)",
+      "function isCursed(bytes16 subject) view returns (bool)",
+      "function isCursed() view returns (bool)",
+      "function owner() view returns (address)",
+      "function ownerCurse(bytes16 curseId, bytes16[] subjects)",
+      "function ownerRemoveThenAddPermaBlessedCommitStores(address[] removes, address[] adds)",
+      "function ownerResetBlessVotes(tuple(address commitStore, bytes32 root)[] taggedRoots)",
+      "function ownerUnvoteToCurse(tuple(address curseVoteAddr, tuple(bytes16 subject, bytes28 cursesHash) unit, bool forceUnvote)[] ownerUnvoteToCurseRequests)",
+      "function setConfig(tuple(tuple(address blessVoteAddr, address curseVoteAddr, uint8 blessWeight, uint8 curseWeight)[] voters, uint16 blessWeightThreshold, uint16 curseWeightThreshold) config)",
+      "function transferOwnership(address to)",
+      "function typeAndVersion() view returns (string)",
+      "function unvoteToCurse(tuple(bytes16 subject, bytes28 cursesHash)[] unvoteToCurseRequests)",
+      "function voteToBless(tuple(address commitStore, bytes32 root)[] taggedRoots)",
+      "function voteToCurse(bytes16 curseId, bytes16[] subjects)"
+    ],
     "0xdF1d7FD22aC3aB5171E275796f123224039f3b24": [
       "constructor(tuple(address linkToken, uint64 chainSelector, uint64 destChainSelector, uint64 defaultTxGasLimit, uint96 maxNopFeesJuels, address prevOnRamp, address armProxy) staticConfig, tuple(address router, uint16 maxTokensLength, address priceRegistry, uint32 maxDataSize, uint64 maxGasLimit) dynamicConfig, tuple(address token, address pool)[] tokensAndPools, address[] allowlist, tuple(bool isEnabled, uint128 capacity, uint128 rate) rateLimiterConfig, tuple(address token, uint64 gasMultiplier, uint96 networkFeeAmountUSD, uint32 destGasOverhead, uint16 destGasPerPayloadByte, bool enabled)[] feeTokenConfigs, tuple(address token, uint32 minFee, uint32 maxFee, uint16 ratio)[] tokenTransferFeeConfigArgs, tuple(address nop, uint16 weight)[] nopsAndWeights)",
       "error AggregateValueMaxCapacityExceeded(uint256 capacity, uint256 requested)",
@@ -14631,5 +14700,5 @@
     "transporter/RouterV2": "0xee15dacd73fd23851cb4d8631874857a1d737e026d068f579f57f95a53c6df64",
     "transporter/TokenPool": "0x2e81a3f9299ca0620790b11a5985d7d9152d63f0e8b609092c48cd1774d159b3"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xb6e46b170efd15afbf70eda9aacc79ef764a0f5216fa0bbdd72c2d37bd743e94"
 }
