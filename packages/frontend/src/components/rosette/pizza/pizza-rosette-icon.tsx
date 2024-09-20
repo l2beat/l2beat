@@ -52,7 +52,7 @@ export function PizzaRosetteIcon({
     >
       <defs>
         <clipPath id="outer-clip">
-          <rect width="180" height="180" rx="90" fill="white" />
+          <rect width="180" height="180" rx="90" />
         </clipPath>
         <clipPath id="inner-clip">
           <rect
@@ -62,7 +62,6 @@ export function PizzaRosetteIcon({
             height="162.422"
             rx="81.2112"
             transform="rotate(36.4535 73.0898 -23.5745)"
-            fill="white"
           />
         </clipPath>
       </defs>
