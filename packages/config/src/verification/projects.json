@@ -252,6 +252,7 @@
   "ten": true,
   "termstructure": true,
   "teva": true,
+  "thanos": true,
   "thebinaryholdings": true,
   "transporter": true,
   "treasure": true,
