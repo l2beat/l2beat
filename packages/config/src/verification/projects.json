@@ -155,6 +155,7 @@
   "near": true,
   "near-no-bridge": true,
   "network3": true,
+  "neva": true,
   "nomad": true,
   "nova": true,
   "nova-dac-layer-nova-dac-bridge": true,
