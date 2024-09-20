@@ -1,13 +1,13 @@
-Generated with discovered.json: 0xbc06268c12c468be51fda6f9e97a9d06b2da844c
+Generated with discovered.json: 0xeec51188f25afd9660ac5c21ff0644557b3829ab
 
-# Diff at Thu, 19 Sep 2024 10:41:31 GMT:
+# Diff at Fri, 20 Sep 2024 07:37:32 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 20784107
+- current block number: 20790352
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery of a highly custom OP stack deployment: Beta version of Systemconfig with gas token support (not used) and a deployed dispute game factory without support for it in the OptimismPortal (and an active legacy L2OutputOracle).
 
 ## Initial discovery
 
@@ -37,8 +37,20 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract OptimismMintableERC20Factory (0x7F7a01cBE67a31625B0C137e835a12d494E293c2)
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+```
+
+```diff
++   Status: CREATED
     contract ProxyAdmin (0x830e68669019a05F41676546417D2A06fdfFF9fB)
     +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC721Bridge (0xc4C9bfB77DAC8d8d03Fd24E1C2b86bb6A0664b02)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
 ```
 
 ```diff
@@ -50,7 +62,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract SystemConfig (0xcCcc98e93CeE060a03604D3916EE527a57078c8b)
-    +++ description: None
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
 ```
 
 ```diff
