@@ -11,7 +11,7 @@ export type DaExitWindowRisk =
 
 const Immutable = {
   type: 'Immutable',
-  value: 'Immutable',
+  value: '∞',
   sentiment: 'good',
   description: 'The bridge smart contract is immutable and cannot be updated.',
 } as const
@@ -94,7 +94,7 @@ function LowOrNoDelay(delaySeconds?: number) {
   const value =
     delaySeconds && delaySeconds < SEVEN_DAYS_SECONDS
       ? formatSeconds(delaySeconds)
-      : 'No delay'
+      : 'None'
 
   return {
     type: 'LowOrNoDelay',
@@ -107,7 +107,7 @@ function LowOrNoDelay(delaySeconds?: number) {
 
 const Enshrined = {
   type: 'Enshrined',
-  value: 'Immutable',
+  value: '∞',
   sentiment: 'good',
   description:
     'Blob commitments posted to Ethereum become irreversible after the block that includes them is finalized. Under normal network conditions, finalization takes two epochs, equivalent to 12.8 minutes.',
