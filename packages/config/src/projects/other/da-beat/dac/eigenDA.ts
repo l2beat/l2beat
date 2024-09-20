@@ -1,5 +1,8 @@
+import { donatuz } from '../../../layer3s/donatuz'
+import { NO_BRIDGE } from '../templates/no-bridge-template'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DaLayer } from '../types/DaLayer'
+import { toUsedInProject } from '../utils/to-used-in-project'
 import { eigenDAbridge } from './bridges/eigenDABridge'
 
 export const eigenDA: DaLayer = {
@@ -42,8 +45,15 @@ export const eigenDA: DaLayer = {
     The EigenDARollupUtils.sol library's verifyBlob() function can then used by scaling solutions to verify that a data blob is included within a confirmed batch in the EigenDAServiceManager. 
 
   `,
-  bridges: [eigenDAbridge],
-  usedIn: [],
+  bridges: [
+    NO_BRIDGE({
+      layer: 'EigenDA',
+      description:
+        'The risk profile in this page refers to scaling solutions that do not integrate with a data availability bridge.',
+      technology: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
+    }),
+    eigenDAbridge],
+  usedIn: [...toUsedInProject([donatuz])],
   risks: {
     economicSecurity: DaEconomicSecurityRisk.Unknown,
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
