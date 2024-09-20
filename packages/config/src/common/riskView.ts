@@ -23,7 +23,7 @@ export function makeBridgeCompatible(
 // State validation
 
 export const STATE_NONE: ScalingProjectRiskViewEntry = {
-  value: 'In development',
+  value: 'None',
   description:
     'Currently the system permits invalid state roots. More details in project overview.',
   sentiment: 'bad',
