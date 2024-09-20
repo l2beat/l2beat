@@ -1,7 +1,7 @@
 {
   "name": "dbk",
   "chain": "ethereum",
-  "blockNumber": 20790352,
+  "blockNumber": 20792021,
   "configHash": "0xcdb94d9d9f367e196ed435078b64c6911718fc1813d9ab5a9af9c53d9758499a",
   "version": 14,
   "contracts": [
@@ -43,10 +43,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 4676400,
-        "latestOutputIndex": 2452,
-        "nextBlockNumber": 4678200,
-        "nextOutputIndex": 2453,
+        "latestBlockNumber": 4685400,
+        "latestOutputIndex": 2457,
+        "nextBlockNumber": 4687200,
+        "nextOutputIndex": 2458,
         "proposer": "0x322C9a45368FdcdF358a4Ba340f88073Dc239e24",
         "PROPOSER": "0x322C9a45368FdcdF358a4Ba340f88073Dc239e24",
         "startingBlockNumber": 0,
@@ -136,20 +136,20 @@
           ]
         }
       ],
-      "ignoreInWatchMode": ["params"],
+      "ignoreInWatchMode": ["params", "balance"],
       "sinceTimestamp": 1717462691,
       "values": {
         "$admin": "0x830e68669019a05F41676546417D2A06fdfFF9fB",
         "$implementation": "0xF666CE8Bf4d1b1be67eCe022132B36ee2e89c031",
         "$upgradeCount": 3,
-        "balance": "273731965608868189754",
+        "balance": "273734465608868189754",
         "guardian": "0xfdA4cCC8dCE3f4b9ACE21d030Ed345e975b8a7B8",
         "l2Oracle": "0x0341bb689CB8a4c16c61307F4BdA254E1bFD525e",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 490798,
-          "prevBlockNum": 20787882
+          "prevBlockNum": 20791284
         },
         "paused": false,
         "superchainConfig": "0xC8271C3Be50B9D575220dA2F9FE2f670DD6483D6",
@@ -405,7 +405,7 @@
         "$immutable": false,
         "$implementation": "0x307c7773097445400d2F2a51D65e38AEa8231868",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639571",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639573",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -927,7 +927,7 @@
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
     "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
-    "opstack/OptimismPortal": "0x1af81e069b7721f68b8f083eb7379b6f29e7b9510bc38ed2a7e2a33ebbf876dc",
+    "opstack/OptimismPortal": "0x1315e81ef1787a2576b730b4524412ebda810cc572b9737a9c9c90c0ba6efe33",
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
