@@ -9,10 +9,7 @@ export function getZkCatalogProjectDetails(
   project: Project,
   verifiersStatues: VerifiersStatuses,
 ): ZkCatalogProjectDetails {
-  const descriptionEntry = getCollectionEntry(
-    'zk-catalog-descriptions',
-    project.display.slug,
-  )
+  const descriptionEntry = getSafeCollectionEntry(project.display.slug)
 
   const proofVerification = getProofVerification(project, verifiersStatues)
 
@@ -24,7 +21,15 @@ export function getZkCatalogProjectDetails(
         ? undefined
         : `/scaling/projects/${project.display.slug}`,
     trustedSetup: getTrustedSetup(proofVerification.verifiers),
-    description: descriptionEntry.content,
+    description: descriptionEntry?.content ?? '',
     ...proofVerification,
+  }
+}
+
+function getSafeCollectionEntry(slug: string) {
+  try {
+    return getCollectionEntry('zk-catalog-descriptions', slug)
+  } catch (e) {
+    return
   }
 }
