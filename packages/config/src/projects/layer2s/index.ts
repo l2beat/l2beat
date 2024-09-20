@@ -117,6 +117,7 @@ import { rss3 } from './rss3'
 import { scroll } from './scroll'
 import { silicon } from './silicon'
 import { socialnetwork } from './socialnetwork'
+import { soon } from './soon'
 import { soneium } from './soneium'
 import { sophon } from './sophon'
 import { sorare } from './sorare'
@@ -280,6 +281,7 @@ export const layer2s: Layer2[] = [
   sophon,
   soneium,
   socialnetwork,
+  soon,
   sorare,
   specular,
   starknet,
