@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef } from 'react'
 
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
-import { NODE_WIDTH, RESIZE_HANDLE_SPACING } from '../store/utils/constants'
+import { NODE_WIDTH } from '../store/utils/constants'
 import { colorToCSS } from '../utils/color'
 import { ResizeHandle } from './ResizeHandle'
 
@@ -62,7 +62,7 @@ export function NodeView(props: NodeViewProps) {
         left: props.node.box.x,
         top: props.node.box.y,
         width: props.node.box.width,
-        height: props.node.box.height + RESIZE_HANDLE_SPACING,
+        height: props.node.box.height,
         backgroundColor: colorToCSS(props.node.simpleNode.color),
       }}
       className={clsx(

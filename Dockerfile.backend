@@ -1,6 +1,10 @@
 ARG ARCH=x86_64
+ARG TURBO_TEAM
+ARG TURBO_TOKEN
 
 FROM node:18 as pruner
+ARG TURBO_TEAM
+ARG TURBO_TOKEN
 WORKDIR /src/
 COPY . .
 RUN yarn global add turbo
@@ -8,6 +12,8 @@ RUN turbo prune --docker @l2beat/backend
 
 FROM node:18 as builder
 ARG ARCH
+ARG TURBO_TEAM
+ARG TURBO_TOKEN
 WORKDIR /src/
 COPY --from=pruner /src/out/json/ .
 RUN yarn install
