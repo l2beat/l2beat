@@ -228,7 +228,7 @@
   "specular": true,
   "stack": true,
   "stargate": false,
-  "stargatev2": false,
+  "stargatev2": true,
   "starknet": true,
   "stealthchain": true,
   "superlumio": true,
