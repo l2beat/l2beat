@@ -2,6 +2,7 @@ import { donatuz } from '../../../layer3s/donatuz'
 import { NO_BRIDGE } from '../templates/no-bridge-template'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DaLayer } from '../types/DaLayer'
+import { linkByDA } from '../utils/link-by-da'
 import { toUsedInProject } from '../utils/to-used-in-project'
 import { eigenDAbridge } from './bridges/eigenDABridge'
 
@@ -51,9 +52,13 @@ export const eigenDA: DaLayer = {
       description:
         'The risk profile in this page refers to scaling solutions that do not integrate with a data availability bridge.',
       technology: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
+      usedIn: [...toUsedInProject([donatuz])],
     }),
-    eigenDAbridge],
-  usedIn: [...toUsedInProject([donatuz])],
+    eigenDAbridge,
+  ],
+  usedIn: linkByDA({
+    layer: (layer) => layer === 'EigenDA',
+  }),
   risks: {
     economicSecurity: DaEconomicSecurityRisk.Unknown,
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
