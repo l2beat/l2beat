@@ -16,10 +16,7 @@ export const neva: Layer2 = upcomingL2({
       documentation: ['https://docs.neva.network/'],
       explorers: [],
       repositories: ['https://github.com/NevaNetwork'],
-      socialMedia: [
-        'https://x.com/NevaNetwork',
-        'https://t.me/NevaPortal',
-      ],
+      socialMedia: ['https://x.com/NevaNetwork','https://t.me/NevaPortal'],
     },
   },
 })
