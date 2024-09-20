@@ -133,7 +133,11 @@ import { tanx } from './tanx'
 import { telos } from './telos'
 import { ten } from './ten'
 import { termstructure } from './termstructure'
+<<<<<<< HEAD
 import { thebinaryholdings } from './thebinaryholdings'
+=======
+import { thanos } from './thanos'
+>>>>>>> d20932a0e (Integrate Thanos to L2beat)
 import { treasure } from './treasure'
 import { Layer2 } from './types'
 import { wirex } from './wirex'
@@ -293,7 +297,11 @@ export const layer2s: Layer2[] = [
   telos,
   ten,
   termstructure,
+<<<<<<< HEAD
   thebinaryholdings,
+=======
+  thanos,
+>>>>>>> d20932a0e (Integrate Thanos to L2beat)
   treasure,
   wirex,
   witness,

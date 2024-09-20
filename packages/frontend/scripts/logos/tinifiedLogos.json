@@ -260,6 +260,7 @@
   "SP1Blobstream.png": "0d30e9b8757ea586823637ad7a5d6205",
   "arithmic.png": "7d3f971cfd268076be50267755f24717",
   "avail.png": "71d3ef1a2b8d71ddd97c49d49f11ddc2",
+<<<<<<< HEAD:packages/frontend/scripts/logos/tinifiedLogos.json
   "SP1Vector.png": "af0592ee3395c8cc13044d8da267f605",
   "memo.png": "9f4d80e3a496c7f30863d7d5823e6e61",
   "polynomial.png": "162e18a83237f92aceedf4db811c4af8",
@@ -270,4 +271,8 @@
   "thebinaryholdings.png": "2bf249fc615f667df4b5b33dd6c9bbbf",
   "superlumio.png": "32c7571a3bbeb63ee4da57bfc3a30956",
   "clique.png": "a7ae03c4d261739036f98efdc6301740"
+=======
+  "memo.png": "9f4d80e3a496c7f30863d7d5823e6e61",
+  "thanos.png": "82d0272d897f0cb9a21a6f3d540e75ef"
+>>>>>>> d20932a0e (Integrate Thanos to L2beat):packages/frontend2/scripts/logos/tinifiedLogos.json
 }
