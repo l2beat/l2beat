@@ -73,3 +73,9 @@ export interface AggLayerNativeEtherWrapped extends AmountConfigBase {
   type: 'aggLayerNativeEtherWrapped'
   wethAddress: EthereumAddress
 }
+
+export interface ElasticChainL2Token extends AmountConfigBase {
+  type: 'elasticChainL2Token'
+  l1Address: EthereumAddress
+  escrowAddress: EthereumAddress
+}
