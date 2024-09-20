@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x6761afe95cc65b2d57facf739411497e0c79d266
+
+# Diff at Fri, 20 Sep 2024 13:25:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c1f8c9b7beabeba1a847fb9e1064a356593cfe16 block: 20756803
+- current block number: 20792084
+
+## Description
+
+Queue tx for adding a new rollupType. This is one of two steps to upgrade existing rollups, the second being to call `updateRollup(rollupTypeId,...)` on the RollupManager. The new consensusImplementation is identical to the one used by Polygon zkEVM, the new verifier has a two-constants diff. This rollupType is theoretically compatible with both current type 3 and current type 4 rollups. 
+See [this changelog](https://github.com/0xPolygonHermez/zkevm-contracts/releases/tag/v7.0.0-fork.10-fork.11) for an overview of changes.
+
+
+## Watched changes
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: None
+      values.scheduledTransactionsDecoded.14:
++        {"target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":"0","function":"addNewRollupType","inputs":{"consensusImplementation":"0x2650a9a4fC64f63F573EF0F405064EF54BC46f71","verifier":"0xc521580cd8586Cc688A7430F9DcE0f6A803F2883","forkID":11,"rollupCompatibilityID":0,"genesis":"0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272","description":"Type: zkEVM, Version: eggfruit N=25 , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+    }
+```
+
 Generated with discovered.json: 0xba373ac533983b9f92ed90035a92df2f631da3df
 
 # Diff at Sun, 15 Sep 2024 15:07:29 GMT:
