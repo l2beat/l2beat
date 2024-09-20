@@ -57,7 +57,7 @@ export const celestia: DaLayer = {
 
     To ensure data availability, Celestia light nodes perform sampling on the 2k x 2k data matrix. Each light node randomly selects a set of unique coordinates within the extended matrix and requests the corresponding data shares and Merkle proofs from full nodes.
     Currently, a Celestia light node must perform a minimum of 16 samples before declaring that a block is available.
-    This sampling rate ensures that given the minimum of unavailable number of shares, a light client will sample at least one unavailable share with a 99% probability.\n
+    This sampling rate ensures that given the minimum number of unavailable shares, a light client will sample at least one unavailable share with a 99% probability.\n
     
     ![DAS](/images/da-layer-technology/celestia/das.png#center)
 
