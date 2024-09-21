@@ -7,7 +7,7 @@ export const neva: Layer2 = upcomingL2({
     name: 'Neva',
     slug: 'neva',
     description:
-      'Neva is an EVM-equivalent ZK-application network that provides scalability and security through Celestia DA and Polygon zkEVM, transforming GameFi and streamlining DeFi.',
+      'Neva is an EVM-equivalent ZK-application network that provides scalability through Celestia DA and Polygon zkEVM, transforming GameFi and streamlining DeFi.',
     purposes: ['Universal', 'Gaming'],
     category: 'ZK Rollup',
     links: {
