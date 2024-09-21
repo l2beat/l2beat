@@ -2,6 +2,8 @@ import { CustomLink } from './link/custom-link'
 import { SocialLinks } from './social-links'
 
 export function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer>
       <div className="flex flex-row items-center border-t border-gray-200 dark:border-gray-850 max-xl:py-4 xl:h-20">
@@ -15,7 +17,7 @@ export function Footer() {
             <SocialLinks />
           </ul>
           <p className="text-center text-sm font-medium md:text-right">
-            Copyright 2024 L2BEAT
+            Copyright {currentYear} L2BEAT
           </p>
         </div>
       </div>
