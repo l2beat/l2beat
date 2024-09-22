@@ -385,7 +385,7 @@ export const scroll: Layer2 = {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'ScrollChain.sol - Etherscan source code, verifyAggregateProof4844() and verifyBundleProof() calls',
+          text: 'ScrollChain.sol - Etherscan source code, verifyAggregateProof() and verifyBundleProof() calls',
           href: 'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
         },
       ],
@@ -412,8 +412,12 @@ export const scroll: Layer2 = {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
       references: [
         {
-          text: 'EnforcedTxGateway.sol - Etherscan source code, EnforcedTxGateway is paused',
+          text: 'EnforcedTxGateway.sol - Etherscan source code',
           href: 'https://etherscan.io/address/0x642af405bF64660665B37977449C9C536B806318#code',
+        },
+        {
+          text: 'EnforcedTxGateway is paused - Etherscan proxy contract',
+          href: 'https://etherscan.io/address/0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d#readProxyContract#F7',
         },
       ],
     },
@@ -425,6 +429,38 @@ export const scroll: Layer2 = {
           {
             text: 'L1ETHGateway.sol - Etherscan source code, finalizeWithdrawETH function',
             href: 'https://etherscan.io/address/0x1fcbE079c4Bbab37406daB7Dfd35AcAe37D5C55d#code',
+          },
+          {
+            text: 'L1StandardERC20Gateway.sol - Etherscan source code, finalizeWithdrawERC20 function',
+            href: 'https://etherscan.io/address/0x4015Fc868C06689ABEba4a9dC8FA43B804F6239c#code',
+          },
+          {
+            text: 'L1CustomERC20Gateway.sol - Etherscan source code, finalizeWithdrawERC20 function',
+            href: 'https://etherscan.io/address/0x7F512E2E9dfC4552941D99A5b2405BBcF5781C2c#code',
+          },
+          {
+            text: 'L1USDCGateway.sol - Etherscan source code, finalizeWithdrawERC20 function',
+            href: 'https://etherscan.io/address/0x56ce8A8E8399f6cD5e7e4f549E8BfD673f2AfF5e#code',
+          },
+          {
+            text: 'L1DAIGateway.sol - Etherscan source code, finalizeWithdrawERC20 function',
+            href: 'https://etherscan.io/address/0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb#code',
+          },
+          {
+            text: 'L1LidoGateway.sol - Etherscan source code, finalizeWithdrawERC20 function',
+            href: 'https://etherscan.io/address/0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb#code',
+          },
+          {
+            text: 'L1PufferGateway.sol - Etherscan source code, finalizeWithdrawERC20 function',
+            href: 'https://etherscan.io/address/0x08D77Ea90DB9BF6c0d3f66E6b8394DA2E81B9a03#code',
+          },
+          {
+            text: 'L1ERC721Gateway.sol - Etherscan source code, finalizeWithdrawERC721 function',
+            href: 'https://etherscan.io/address/0xd1841c5756428812233eEA78afC17cb2D3e392bb#code',
+          },
+          {
+            text: 'L1ERC1155Gateway.sol - Etherscan source code, finalizeWithdrawERC1155 function',
+            href: 'https://etherscan.io/address/0x244BF7aEf29F03916569470a51fA0794B62F8cd7#code',
           },
         ],
       },
@@ -438,7 +474,7 @@ export const scroll: Layer2 = {
     genesisState:
       'The genesis file can be found [here](https://scrollzkp.notion.site/genesis-json-f89ca24b123f462f98c8844d17bdbb74), which contains two prefunded addresses and five predeployed contracts.',
     dataFormat:
-      'Blocks are grouped into chunks and chunks are grouped into batches. Chunk encoding format can be found [here](https://github.com/scroll-tech/scroll/blob/develop/contracts/src/libraries/codec/ChunkCodec.sol#L5), and batch encoding format can be found [here](https://github.com/scroll-tech/scroll/blob/develop/contracts/src/libraries/codec/BatchHeaderV0Codec.sol#L7).',
+      'Blocks are grouped into chunks and chunks are grouped into batches. Chunk encoding format can be found [here](https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/ChunkCodecV0.sol#L5), and batch encoding format can be found [here](https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/BatchHeaderV0Codec.sol#L7).',
   },
   stateValidation: {
     description:
