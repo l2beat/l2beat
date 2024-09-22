@@ -23,7 +23,7 @@ export const aptos: Bridge = {
         'https://github.com/aptos-labs',
       ],
       socialMedia: [
-        'https://twitter.com/Aptos_Network',
+        'https://x.com/Aptos',
         'https://discord.com/invite/aptosnetwork',
         'https://www.linkedin.com/company/aptos-foundation/',
         'https://t.me/aptos'
