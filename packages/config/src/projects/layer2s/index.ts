@@ -107,7 +107,6 @@ import { polynomial } from './polynomial'
 import { publicgoodsnetwork } from './publicgoodsnetwork'
 import { race } from './race'
 import { real } from './real'
-import { reddioex } from './reddioex'
 import { reddiozkvm } from './reddiozkvm'
 import { redstone } from './redstone'
 import { reya } from './reya'
@@ -269,7 +268,6 @@ export const layer2s: Layer2[] = [
   polygonpos2,
   polynomial,
   publicgoodsnetwork,
-  reddioex,
   reddiozkvm,
   redstone,
   real,

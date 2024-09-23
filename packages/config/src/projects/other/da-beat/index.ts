@@ -20,7 +20,6 @@ import { playblockDac } from './dac/playblock'
 import { popapexDac } from './dac/popapex'
 import { rariDac } from './dac/rari'
 import { realDac } from './dac/real'
-import { redsonicDac } from './dac/redsonic'
 import { redstoneDA } from './dac/redstoneDA'
 import { reyaDac } from './dac/reya'
 import { rhinofiDac } from './dac/rhinofi'
@@ -58,7 +57,6 @@ export const daLayers: DaLayer[] = [
   sankoDac,
   myriaDac,
   edgelessDac,
-  redsonicDac,
   witnessDac,
   degenDac,
   rariDac,
