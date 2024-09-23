@@ -4081,5 +4081,39 @@
       "supply": "circulatingSupply",
       "coingeckoId": "mintswaptoken"
     }
+  ],
+  "taiko": [
+    {
+      "symbol": "USDC.e",
+      "address": "0x19e26B0638bf63aa9fa4d14c6baF8D52eBE86C5C",
+      "source": "external",
+      "category": "stablecoin",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2 (Hydra mode)",
+            "slug": "stargatev2"
+          }
+        ]
+      },
+      "supply": "totalSupply",
+      "coingeckoId": "usd-coin"
+    },
+    {
+      "symbol": "USDT",
+      "address": "0x9c2dc7377717603eB92b2655c5f2E7997a4945BD",
+      "source": "external",
+      "category": "stablecoin",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2 (Hydra mode)",
+            "slug": "stargatev2"
+          }
+        ]
+      },
+      "supply": "totalSupply",
+      "coingeckoId": "tether"
+    }
   ]
 }
