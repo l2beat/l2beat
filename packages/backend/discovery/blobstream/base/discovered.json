@@ -1,7 +1,7 @@
 {
   "name": "blobstream",
   "chain": "base",
-  "blockNumber": 20147235,
+  "blockNumber": 20147343,
   "configHash": "0xe8845a7394a7ef4a9fad5125be66d7ede88afb7bf0342312f912ff4245f41eb1",
   "version": 14,
   "contracts": [
