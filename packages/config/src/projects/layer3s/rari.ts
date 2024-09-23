@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -60,6 +60,17 @@ export const rari: Layer3 = orbitStackL3({
       'Rollup Owner: Can execute upgrades for the entire rollup system via the UpgradeExecutor.',
     ),
   ],
+  chainConfig: {
+    name: 'rari',
+    chainId: 1380012617,
+    explorerUrl: 'https://taikoscan.io',
+    explorerApi: {
+      url: 'https://rari.calderaexplorer.xyz/api',
+      type: 'blockscout',
+    },
+    blockscoutV2ApiUrl: 'https://rari.calderaexplorer.xyz/api/v2',
+    minTimestampForTvl: new UnixTime(1705716145),
+  },
   milestones: [
     {
       name: 'RARI Chain Mainnet Launch',

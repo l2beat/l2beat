@@ -9075,6 +9075,50 @@
           }
         ]
       }
+    },
+    {
+      "name": "Bridged USDC (Stargate)",
+      "coingeckoId": "usd-coin",
+      "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
+      "symbol": "USDC.e",
+      "decimals": 6,
+      "deploymentTimestamp": 1716939237,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "chainId": 1380012617,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2 (Hydra mode)",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Tether USD",
+      "coingeckoId": "tether",
+      "address": "0x362FAE9A75B27BBc550aAc28a7c1F96C8D483120",
+      "symbol": "USDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1716939239,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "chainId": 1380012617,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2 (Hydra mode)",
+            "slug": "stargatev2"
+          }
+        ]
+      }
     }
   ]
 }
