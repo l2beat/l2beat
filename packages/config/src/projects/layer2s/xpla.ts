@@ -14,9 +14,9 @@ export const xpla: Layer2 = upcomingL2({
     links: {
       websites: ['https://xpla.io'],
       apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
+      documentation: ['https://docs.xpla.io'],
+      explorers: ['https://explorer.xpla.io'],
+      repositories: ['https://github.com/xpladev'],
       socialMedia: ['https://x.com/XPLA_Official'],
     },
   },
