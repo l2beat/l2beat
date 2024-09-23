@@ -8838,7 +8838,8 @@
             "slug": "stargatev2"
           }
         ]
-      }
+      },
+      "excludeFromTotal": true
     },
     {
       "name": "Tether USD",
@@ -8860,7 +8861,8 @@
             "slug": "stargatev2"
           }
         ]
-      }
+      },
+      "excludeFromTotal": true
     },
     {
       "name": "Ether",
@@ -9096,7 +9098,8 @@
             "slug": "stargatev2"
           }
         ]
-      }
+      },
+      "excludeFromTotal": true
     },
     {
       "name": "Tether USD",
@@ -9118,7 +9121,8 @@
             "slug": "stargatev2"
           }
         ]
-      }
+      },
+      "excludeFromTotal": true
     }
   ]
 }
