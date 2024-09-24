@@ -63,7 +63,7 @@ export const rari: Layer3 = orbitStackL3({
   chainConfig: {
     name: 'rari',
     chainId: 1380012617,
-    explorerUrl: 'https://taikoscan.io',
+    explorerUrl: 'https://mainnet.explorer.rarichain.org',
     explorerApi: {
       url: 'https://rari.calderaexplorer.xyz/api',
       type: 'blockscout',
