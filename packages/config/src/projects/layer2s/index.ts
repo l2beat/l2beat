@@ -137,6 +137,7 @@ import { tanx } from './tanx'
 import { telos } from './telos'
 import { ten } from './ten'
 import { termstructure } from './termstructure'
+import { ternoa } from './ternoa'
 import { thanos } from './thanos'
 import { thebinaryholdings } from './thebinaryholdings'
 import { treasure } from './treasure'
@@ -302,6 +303,7 @@ export const layer2s: Layer2[] = [
   telos,
   ten,
   termstructure,
+  ternoa,
   thebinaryholdings,
   thanos,
   treasure,
