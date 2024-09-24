@@ -69,22 +69,27 @@ function getDataCollection<T extends DataCollectionKey>(
 export function getCollectionEntry<T extends CollectionKey>(
   key: T,
   id: string,
-): CollectionEntry<T> {
-  const collection = collections[key]
+): CollectionEntry<T> | undefined {
+  try {
+    const collection = collections[key]
 
-  switch (collection.type) {
-    case 'data':
-      return getDataCollectionEntry(
-        key as DataCollectionKey,
-        id,
-      ) as CollectionEntry<T>
-    case 'content':
-      return getContentCollectionEntry(
-        key as ContentCollectionKey,
-        id,
-      ) as CollectionEntry<T>
-    default:
-      assertUnreachable(collection)
+    switch (collection.type) {
+      case 'data':
+        return getDataCollectionEntry(
+          key as DataCollectionKey,
+          id,
+        ) as CollectionEntry<T>
+      case 'content':
+        return getContentCollectionEntry(
+          key as ContentCollectionKey,
+          id,
+        ) as CollectionEntry<T>
+      default:
+        assertUnreachable(collection)
+    }
+  } catch (e) {
+    console.error(`Error getting collection entry ${key} ${id}`, e)
+    return undefined
   }
 }
 
