@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
+import { notFound } from 'next/navigation'
 import { ContentWrapper } from '~/components/content-wrapper'
 import { FullPageHeader } from '~/components/full-page-header'
 import { Article } from '~/components/markdown/article'
@@ -30,6 +31,9 @@ export async function generateMetadata({
   params,
 }: Props): Promise<Metadata | null> {
   const publication = getCollectionEntry('publications', params.slug)
+  if (!publication) {
+    return null
+  }
   return getDefaultMetadata({
     title: `${publication.data.shortTitle ?? publication.data.title} - L2BEAT`,
     description: publication.data.description ?? publication.excerpt,
@@ -43,6 +47,9 @@ export async function generateMetadata({
 
 export default function Page({ params }: Props) {
   const publication = getCollectionEntry('publications', params.slug)
+  if (!publication) {
+    return notFound()
+  }
   const publicationEntry = getGovernancePublicationEntry(publication)
   return (
     <>
