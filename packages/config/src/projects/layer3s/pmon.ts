@@ -11,6 +11,7 @@ export const pmon: Layer3 = underReviewL3({
     Badge.DA.Celestia,
     Badge.Stack.Orbit,
     Badge.VM.EVM,
+    Badge.RaaS.AltLayer,
   ],
   display: {
     category: 'Optimium',
