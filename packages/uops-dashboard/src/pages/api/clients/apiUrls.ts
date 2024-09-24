@@ -1,4 +1,4 @@
-import type { ChainId } from "@/chains";
+import type { ChainId } from '@/chains'
 
 const API_URLS: Map<ChainId, string> = new Map([
   ['starknet', 'https://starknet-mainnet.public.blastapi.io'],
@@ -8,7 +8,7 @@ const API_URLS: Map<ChainId, string> = new Map([
   ['taiko', 'https://rpc.taiko.xyz'],
   ['arbitrum', 'https://cold-fluent-card.arbitrum-mainnet.quiknode.pro'],
   ['gravity', 'https://rpc.gravity.xyz'],
-]);
+])
 
 const SCAN_URLS: Map<ChainId, string> = new Map([
   ['base', 'https://api.basescan.org'],
@@ -17,9 +17,9 @@ const SCAN_URLS: Map<ChainId, string> = new Map([
   ['taiko', 'https://api.taikoscan.io/'],
   ['arbitrum', 'https://api.arbiscan.io'],
   ['gravity', 'https://explorer.gravity.xyz/api'],
-]);
+])
 
-export type ApiKeyType = 'RPC' | 'SCAN';
+export type ApiKeyType = 'RPC' | 'SCAN'
 
 export function getApiUrl(chainId: ChainId): string {
   const url = API_URLS.get(chainId)
@@ -51,5 +51,3 @@ export function getApiKey(chainId: ChainId, type: ApiKeyType): string {
 
   return value
 }
-  
-

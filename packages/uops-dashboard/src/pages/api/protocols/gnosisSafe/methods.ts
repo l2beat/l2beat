@@ -1,8 +1,8 @@
 import type { Method, Operation } from '@/types'
 import { ethers } from 'ethers'
 import { parseAbiItem } from 'viem'
-import { SAFE_EXEC_TRANSACTION_SIGNATURE } from './const'
 import { defineMethod } from '../defineMetod'
+import { SAFE_EXEC_TRANSACTION_SIGNATURE } from './const'
 
 export const SAFE_methods: Method[] = [
   defineMethod(
@@ -94,4 +94,3 @@ function decodeMultiSendInput(data: string): MultiSendTransaction[] {
   }
   return txs
 }
-

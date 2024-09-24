@@ -1,4 +1,4 @@
-import type { Block, StatResults } from "@/types"
+import type { Block, StatResults } from '@/types'
 
 export interface Analyzer {
   getBlockNumber(): Promise<number>

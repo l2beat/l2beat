@@ -1,4 +1,3 @@
-import { number } from 'zod'
 import type { Chain, ChainId } from './chains'
 
 export type UserOperationsApiRequest = {
@@ -93,7 +92,7 @@ export type StatResults = {
   numberOfTransactions: number
   numberOfOperations: number
   topBlocks: BlockRatio[]
-  smartAccountUsage?: { signature: string; count: number; }[]
+  smartAccountUsage?: { signature: string; count: number }[]
 }
 
 export type Stats = StatParams & StatResults

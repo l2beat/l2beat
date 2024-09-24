@@ -1,7 +1,7 @@
-import type { BlockRatio } from '@/types'
 import type { Chain } from '@/chains'
+import type { BlockRatio } from '@/types'
 import { BatchIcon } from './icons/batchIcon'
-import { UnknownIcon } from './icons/unknownIcon';
+import { UnknownIcon } from './icons/unknownIcon'
 
 export function BlockList({
   blocks,
@@ -47,16 +47,18 @@ export function BlockList({
                 <>
                   <td className="px-6 py-2">
                     {block.ratio.toFixed(4)}
-                    {block.includesBatch && <BatchIcon tooltipContent="Block contains batch execution"  />}
-                    {block.includesUnknown && <UnknownIcon tooltipContent="Block contains unknown Smart Account implementation" />}
+                    {block.includesBatch && (
+                      <BatchIcon tooltipContent="Block contains batch execution" />
+                    )}
+                    {block.includesUnknown && (
+                      <UnknownIcon tooltipContent="Block contains unknown Smart Account implementation" />
+                    )}
                   </td>
                 </>
               )}
               {!block.includesBatch && !block.includesUnknown && (
                 <>
-                  <td className="px-6 py-4">
-                    {block.ratio.toFixed(4)}
-                  </td>
+                  <td className="px-6 py-4">{block.ratio.toFixed(4)}</td>
                 </>
               )}
             </tr>

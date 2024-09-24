@@ -1,3 +1,4 @@
+import { SUPPORTED_CHAINS } from '@/chains'
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type {
   ApiError,
@@ -7,9 +8,8 @@ import type {
   UserOperationsApiRequest,
 } from '@/types'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { ChainService } from './services/ChainService'
-import { SUPPORTED_CHAINS } from '@/chains'
 import { loadDb } from './db/db'
+import { ChainService } from './services/ChainService'
 
 export default async function handler(
   req: NextApiRequest,
@@ -29,7 +29,9 @@ export default async function handler(
     }
 
     const chainService = new ChainService(chain, db)
-    const lastToFetch = input.lastFetched ? input.lastFetched - 1 : await chainService.getBlockNumber()
+    const lastToFetch = input.lastFetched
+      ? input.lastFetched - 1
+      : await chainService.getBlockNumber()
     const startBlock = lastToFetch - input.count + 1
 
     const results = await chainService.analyzeBlocks(startBlock, input.count)
@@ -38,7 +40,7 @@ export default async function handler(
       startBlock,
       endBlock: lastToFetch,
       numberOfBlocks: input.count,
-      ...results
+      ...results,
     }
 
     res.status(200).json(stats)

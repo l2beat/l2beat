@@ -5,9 +5,8 @@ export function BlockCountInput({
   handleSetBlockCount,
 }: {
   value: number
-  handleSetBlockCount: (mode:InputMode,  count?: number) => void
+  handleSetBlockCount: (mode: InputMode, count?: number) => void
 }) {
-
   const handlePlus = () => {
     handleSetBlockCount('plus')
   }
@@ -16,15 +15,15 @@ export function BlockCountInput({
     handleSetBlockCount('minus')
   }
 
-	const handleSet = (input: string) => {
-		const newCount = Number.parseInt(input.replace(/\D/g,''))
-		handleSetBlockCount('edit', newCount)
-	}
+  const handleSet = (input: string) => {
+    const newCount = Number.parseInt(input.replace(/\D/g, ''))
+    handleSetBlockCount('edit', newCount)
+  }
 
   return (
     <div className="mb-5 flex items-center w-full">
       <button
-				onClick={handleMinus}
+        onClick={handleMinus}
         type="button"
         id="decrement-button"
         data-input-counter-decrement="quantity-input"
@@ -57,7 +56,7 @@ export function BlockCountInput({
         required
       />
       <button
-				onClick={handlePlus}
+        onClick={handlePlus}
         type="button"
         id="increment-button"
         data-input-counter-increment="quantity-input"

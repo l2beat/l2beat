@@ -1,13 +1,12 @@
-
+import type { Chain } from '@/chains'
 import type { Block, StatResults, Stats } from '@/types'
+import { getApiUrl } from '../../clients/apiUrls'
+import type { Analyzer } from '../analyzer'
 import {
   StarknetGetBlockResponseBodySchema,
   StarknetGetBlockWithTxsResponseBodySchema,
   type StarknetTransaction,
 } from './schemas'
-import type { Analyzer } from '../analyzer'
-import type { Chain } from '@/chains'
-import { getApiUrl } from '../../clients/apiUrls'
 
 export class StarknetAnalyzer implements Analyzer {
   constructor(private readonly chain: Chain) {}
@@ -91,7 +90,7 @@ export class StarknetAnalyzer implements Analyzer {
       dateEnd: new Date(),
       numberOfTransactions: 0,
       numberOfOperations: 0,
-      topBlocks: []
+      topBlocks: [],
     }
 
     for (let i = 0; i < count; i++) {
@@ -99,9 +98,10 @@ export class StarknetAnalyzer implements Analyzer {
 
       const uops = block.transactions.reduce(
         (acc, tx) => acc + tx.operationsCount,
-        0,)
+        0,
+      )
 
-      if(i === 0) {
+      if (i === 0) {
         results.dateStart = new Date(block.timestamp * 1000)
       }
 
@@ -110,12 +110,14 @@ export class StarknetAnalyzer implements Analyzer {
       results.numberOfOperations += uops
       results.topBlocks.push({
         number: block.number,
-        ratio: uops / block.transactions.length
+        ratio: uops / block.transactions.length,
       })
     }
 
     // get top ten only
-    results.topBlocks = results.topBlocks.sort((a, b) => b.ratio - a.ratio).slice(0, 10)
+    results.topBlocks = results.topBlocks
+      .sort((a, b) => b.ratio - a.ratio)
+      .slice(0, 10)
 
     return results
   }

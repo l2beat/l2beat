@@ -12,5 +12,3 @@ export const SAFE_EXEC_TRANSACTION_SIGNATURE = parseAbiItem(
 export const SAFE_EXEC_TRANSACTION_SELECTOR = toFunctionSelector(
   SAFE_EXEC_TRANSACTION_SIGNATURE,
 )
-
-

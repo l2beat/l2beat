@@ -3,9 +3,9 @@ import { SmartAccountList } from '@/components/smartAccountList'
 import { StatsDetails } from '@/components/statsDetails'
 import { StatsForm } from '@/components/statsForm'
 import type { Stats, StatsWithChain } from '@/types'
+import { Flowbite } from 'flowbite-react'
 import { useState } from 'react'
 import { rankBlocks } from '../api/utils/rankBlocks'
-import { Flowbite } from 'flowbite-react'
 
 export default function StatsPage() {
   const [stats, setStats] = useState<StatsWithChain>()

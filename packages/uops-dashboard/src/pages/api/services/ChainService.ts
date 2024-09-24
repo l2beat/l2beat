@@ -1,9 +1,9 @@
-import type { Block, StatResults } from '@/types'
-import { RpcAnalyzer } from '../analyzers/rpc/RpcAnalyzer'
-import type { DB } from '../db/db'
-import type { Analyzer } from '../analyzers/analyzer'
-import { StarknetAnalyzer } from '../analyzers/starknet/StarknetAnalyzer'
 import type { Chain } from '@/chains'
+import type { Block, StatResults } from '@/types'
+import type { Analyzer } from '../analyzers/analyzer'
+import { RpcAnalyzer } from '../analyzers/rpc/RpcAnalyzer'
+import { StarknetAnalyzer } from '../analyzers/starknet/StarknetAnalyzer'
+import type { DB } from '../db/db'
 
 export class ChainService {
   private readonly analyzer: Analyzer
@@ -16,8 +16,8 @@ export class ChainService {
       case 'base':
       case 'ethereum':
       case 'xai':
-      case 'taiko': 
-      case 'arbitrum': 
+      case 'taiko':
+      case 'arbitrum':
       case 'gravity': {
         this.analyzer = new RpcAnalyzer(chain, db)
         break

@@ -1,7 +1,7 @@
 import type { Method, Operation } from '@/types'
+import { ethers } from 'ethers'
 import { decodeAbiParameters, parseAbiItem, parseAbiParameters } from 'viem'
 import { defineMethod } from '../defineMetod'
-import { ethers } from 'ethers'
 
 export const ERC4337_methods: Method[] = [
   defineMethod(
@@ -154,9 +154,7 @@ export const ERC4337_methods: Method[] = [
     'SmartAccount',
   ),
   defineMethod(
-    parseAbiItem(
-      'function execute(bytes32 execMode, bytes executionCalldata)',
-    ),
+    parseAbiItem('function execute(bytes32 execMode, bytes executionCalldata)'),
     ([execMode, executionCalldata]) => {
       return decodeCalldata(execMode, executionCalldata)
     },
@@ -207,7 +205,6 @@ export const ERC4337_methods: Method[] = [
     },
     'SmartAccount',
   ),
-
 ]
 
 function decodeCalldata(
@@ -298,4 +295,3 @@ function decodeCalldata(
     ]
   }
 }
-

@@ -19,9 +19,7 @@ const StarknetTransaction = z.object({
   transaction_hash: z.string(),
 })
 
-export type StarknetTransaction = z.infer<
-  typeof StarknetTransaction
->
+export type StarknetTransaction = z.infer<typeof StarknetTransaction>
 
 const StarknetBlock = z.object({
   block_hash: z.string(),
@@ -31,14 +29,12 @@ const StarknetBlock = z.object({
   transactions: z.array(StarknetTransaction),
 })
 
-export type StarknetBlock = z.infer<
-  typeof StarknetBlock
->
+export type StarknetBlock = z.infer<typeof StarknetBlock>
 
 export const StarknetGetBlockWithTxsResponseBodySchema = z.object({
   jsonrpc: z.literal('2.0'),
   id: z.number().int(),
-  result: StarknetBlock
+  result: StarknetBlock,
 })
 
 export type StarknetGetBlockWithTxsResponseBodySchema = z.infer<

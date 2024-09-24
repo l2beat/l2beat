@@ -1,8 +1,8 @@
 import type { Method, Operation } from '@/types'
 import {
   type AbiFunction,
-  decodeFunctionData,
   type DecodeFunctionDataReturnType,
+  decodeFunctionData,
   toFunctionSelector,
   toFunctionSignature,
 } from 'viem'

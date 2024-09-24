@@ -1,11 +1,11 @@
+import { type ChainId, SUPPORTED_CHAINS } from '@/chains'
 import type { ApiError, Stats, StatsApiRequest, StatsWithChain } from '@/types'
 import { useState } from 'react'
-import { ChainDropdown } from './chainDropdown'
-import { SubmitButton } from './submitButton'
-import { type ChainId, SUPPORTED_CHAINS } from '@/chains'
-import { ErrorModal } from './errorModal'
 import { BlockCountInput, type InputMode } from './blockCountInput'
+import { ChainDropdown } from './chainDropdown'
+import { ErrorModal } from './errorModal'
 import { ProgressBar } from './progressBar'
+import { SubmitButton } from './submitButton'
 
 export function StatsForm({
   lastFetched,
@@ -49,7 +49,7 @@ export function StatsForm({
       return
     }
 
-    if(!newCount) {
+    if (!newCount) {
       setBlockCount(100)
       return
     }

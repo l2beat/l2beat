@@ -1,7 +1,6 @@
 import { z } from 'zod'
 import type { ContractClient } from './ContractClient'
 
-
 const Response = z.object({
   message: z.string(),
   result: z.array(
@@ -12,7 +11,10 @@ const Response = z.object({
 })
 
 export class ScanClient implements ContractClient {
-  constructor(private readonly apiUrl: string, private readonly apiKey: string) {}
+  constructor(
+    private readonly apiUrl: string,
+    private readonly apiKey: string,
+  ) {}
 
   async getName(address: string): Promise<string> {
     const url = `${this.apiUrl}/api?module=contract&action=getsourcecode&address=${address}&apikey=${this.apiKey}`
@@ -26,7 +28,7 @@ export class ScanClient implements ContractClient {
     const data = await res.json()
     const parsed = Response.parse(data)
 
-    if (parsed.message !== "OK") {
+    if (parsed.message !== 'OK') {
       return ''
     }
 

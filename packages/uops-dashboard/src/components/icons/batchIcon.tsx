@@ -1,4 +1,4 @@
-import { Tooltip } from "flowbite-react";
+import { Tooltip } from 'flowbite-react'
 
 export function BatchIcon({ tooltipContent }: { tooltipContent: string }) {
   return (

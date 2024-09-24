@@ -1,11 +1,16 @@
-import type { ApiError, Block, BlockWithChain, UserOperationsApiRequest } from '@/types'
-import { useEffect, useState } from 'react'
-import { ChainDropdown } from './chainDropdown'
-import { BlockNumberInput } from './blockNumberInput'
-import { SubmitButton } from './submitButton'
 import { type ChainId, SUPPORTED_CHAINS } from '@/chains'
-import { ErrorModal } from './errorModal'
+import type {
+  ApiError,
+  Block,
+  BlockWithChain,
+  UserOperationsApiRequest,
+} from '@/types'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { BlockNumberInput } from './blockNumberInput'
+import { ChainDropdown } from './chainDropdown'
+import { ErrorModal } from './errorModal'
+import { SubmitButton } from './submitButton'
 
 export function BlockForm({
   onComplete,
@@ -16,15 +21,15 @@ export function BlockForm({
   const [isLoading, setIsLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
 
-	const searchParams = useSearchParams()
-  const pathname = usePathname();
-  const { replace } = useRouter();
-  
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
+  const { replace } = useRouter()
+
   useEffect(() => {
     // useSearchParams return empty values on first render
-    const urlParams = new URLSearchParams(window.location.search);
-    const chainParam = urlParams.get('chain');
-    const blockParam = urlParams.get('block');
+    const urlParams = new URLSearchParams(window.location.search)
+    const chainParam = urlParams.get('chain')
+    const blockParam = urlParams.get('block')
 
     if (chainParam && blockParam) {
       setChain(chainParam as ChainId)
@@ -39,19 +44,19 @@ export function BlockForm({
     onComplete(undefined)
   }
 
-  const handleSetBlockNumber = (blockNumber: string) => { 
+  const handleSetBlockNumber = (blockNumber: string) => {
     setBlockNumber(blockNumber)
     onComplete(undefined)
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     getBlock(chainId, blockNumber)
 
-    const params = new URLSearchParams(searchParams);
-    params.set('chain', chainId);
-    params.set('block', blockNumber);
-    replace(`${pathname}?${params.toString()}`);
+    const params = new URLSearchParams(searchParams)
+    params.set('chain', chainId)
+    params.set('block', blockNumber)
+    replace(`${pathname}?${params.toString()}`)
   }
 
   const getBlock = async (chainId: ChainId, blockNumber: string) => {
@@ -73,7 +78,7 @@ export function BlockForm({
         if (!chain) {
           throw new Error(`Unsupported chain: ${chain}`)
         }
-        
+
         onComplete({
           ...block,
           chain,

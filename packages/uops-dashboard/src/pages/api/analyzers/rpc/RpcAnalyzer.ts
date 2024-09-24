@@ -1,4 +1,4 @@
-import { providers } from 'ethers'
+import type { Chain } from '@/chains'
 import type {
   Block,
   BlockRatio,
@@ -8,27 +8,27 @@ import type {
   StatResults,
   Transaction,
 } from '@/types'
+import { providers } from 'ethers'
+import { getApiKey, getApiUrl, getScanUrl } from '../../clients/apiUrls'
+import { ScanClient } from '../../clients/contract/ScanClient'
 import { EtherfaceClient } from '../../clients/signature/EtherfaceClient'
 import { FourByteClient } from '../../clients/signature/FourByteClient'
 import { OpenChainClient } from '../../clients/signature/OpenChainClient'
-import { ScanClient } from '../../clients/contract/ScanClient'
-import { getApiKey, getApiUrl, getScanUrl } from '../../clients/apiUrls'
-import type { Chain } from '@/chains'
+import type { DB } from '../../db/db'
 import {
   ENTRY_POINT_ADDRESS_0_6_0,
   ENTRY_POINT_ADDRESS_0_7_0,
 } from '../../protocols/erc-4337/const'
-import type { DB } from '../../db/db'
-import type { Analyzer } from '../analyzer'
+import { ERC4337_methods } from '../../protocols/erc-4337/methods'
 import {
   SAFE_EXEC_TRANSACTION_SELECTOR,
   SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
 } from '../../protocols/gnosisSafe/const'
-import { generateId } from '../../utils/generateId'
-import { ERC4337_methods } from '../../protocols/erc-4337/methods'
 import { SAFE_methods } from '../../protocols/gnosisSafe/methods'
-import { traverseOperationTree } from '../../utils/traverseOperationTree'
+import { generateId } from '../../utils/generateId'
 import { rankBlocks } from '../../utils/rankBlocks'
+import { traverseOperationTree } from '../../utils/traverseOperationTree'
+import type { Analyzer } from '../analyzer'
 
 export class RpcAnalyzer implements Analyzer {
   private readonly provider: providers.Provider
@@ -92,7 +92,8 @@ export class RpcAnalyzer implements Analyzer {
         0,
       )
 
-      const currentSmartAccountUsage = this.generateSmartAccountUsageForBlock(current)
+      const currentSmartAccountUsage =
+        this.generateSmartAccountUsageForBlock(current)
       for (const [signature, count] of currentSmartAccountUsage) {
         const currentCount = smartAccountUsage.get(signature) ?? 0
         smartAccountUsage.set(signature, currentCount + count)
@@ -105,7 +106,6 @@ export class RpcAnalyzer implements Analyzer {
         includesBatch: current.transactions.some((tx) => tx.includesBatch),
         includesUnknown: currentSmartAccountUsage.has('unknown'),
       })
-
     }
 
     return {
@@ -192,8 +192,7 @@ export class RpcAnalyzer implements Analyzer {
         if (
           operation.contractAddress.toLowerCase() !==
             ENTRY_POINT_ADDRESS_0_6_0 &&
-          operation.contractAddress.toLowerCase() !==
-            ENTRY_POINT_ADDRESS_0_7_0
+          operation.contractAddress.toLowerCase() !== ENTRY_POINT_ADDRESS_0_7_0
         ) {
           return
         }
@@ -206,7 +205,7 @@ export class RpcAnalyzer implements Analyzer {
           if (!child.methodSignature) {
             unknownOperations.push(operation.id)
             break
-          } 
+          }
         }
       },
     )
@@ -403,9 +402,7 @@ export class RpcAnalyzer implements Analyzer {
     return rootOperation
   }
 
-  private generateSmartAccountUsageForBlock(
-    block: Block,
-  ): Map<string, number> {
+  private generateSmartAccountUsageForBlock(block: Block): Map<string, number> {
     const smartAccountUsage = new Map<string, number>()
 
     for (const tx of block.transactions) {
@@ -445,6 +442,5 @@ export class RpcAnalyzer implements Analyzer {
     }
 
     return smartAccountUsage
-  } 
-
+  }
 }

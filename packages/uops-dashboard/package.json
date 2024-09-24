@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "format": "biome format .",
+    "format:fix": "biome format --write .",
+    "lint:fix": "biome check --formatter-enabled=false --apply .",
+    "lint": "biome check --formatter-enabled=false .",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@types/uuid": "^10.0.0",

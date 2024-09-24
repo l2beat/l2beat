@@ -1,4 +1,3 @@
-
 import type { Chain } from '@/chains'
 
 export function SmartAccountList({
@@ -6,7 +5,6 @@ export function SmartAccountList({
 }: {
   smartAccountUsage: { signature: string; count: number }[]
 }) {
-
   const sum = smartAccountUsage.reduce((acc, item) => acc + item.count, 0)
 
   return (
@@ -23,28 +21,33 @@ export function SmartAccountList({
           </tr>
         </thead>
         <tbody>
-          {smartAccountUsage.sort((a,b) => b.count - a.count).map((item) => {
-            const percentage = ((item.count / sum) * 100)
-            let percentageString = percentage.toFixed(0)
+          {smartAccountUsage
+            .sort((a, b) => b.count - a.count)
+            .map((item) => {
+              const percentage = (item.count / sum) * 100
+              let percentageString = percentage.toFixed(0)
 
-            if(percentage < 1) { 
-              percentageString = '< 1'
-            }
+              if (percentage < 1) {
+                percentageString = '< 1'
+              }
 
-            return (
-            <tr
-              key={item.signature}
-              className="border-b bg-white dark:border-gray-700 dark:bg-gray-800"
-            >
-              <th
-                scope="row"
-                className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
-              >
-                {item.signature}
-              </th>
-              <td className="px-6 py-2">{item.count} ({percentageString}%)</td>
-            </tr>
-          )})}
+              return (
+                <tr
+                  key={item.signature}
+                  className="border-b bg-white dark:border-gray-700 dark:bg-gray-800"
+                >
+                  <th
+                    scope="row"
+                    className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
+                  >
+                    {item.signature}
+                  </th>
+                  <td className="px-6 py-2">
+                    {item.count} ({percentageString}%)
+                  </td>
+                </tr>
+              )
+            })}
         </tbody>
       </table>
     </div>

@@ -1,9 +1,9 @@
-import { useState } from 'react'
-import { BlockForm } from '../components/blockForm'
-import type { BlockWithChain } from '@/types'
 import { BlockDetails } from '@/components/blockDetails'
 import { TransactionList } from '@/components/transactionList'
+import type { BlockWithChain } from '@/types'
 import { Flowbite } from 'flowbite-react'
+import { useState } from 'react'
+import { BlockForm } from '../components/blockForm'
 
 export default function HomePage() {
   const [block, setBlock] = useState<BlockWithChain>()
