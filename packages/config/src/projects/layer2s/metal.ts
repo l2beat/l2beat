@@ -35,7 +35,7 @@ export const metal: Layer2 = opStackL2({
       ],
       documentation: ['https://docs.metall2.com'],
       explorers: ['https://explorer.metall2.com'],
-      repositories: ['https://github.com/MetalLayer2'],
+      repositories: ['https://github.com/MetalPay'],
       socialMedia: [
         'https://twitter.com/metalpaysme',
         'https://reddit.com/r/metalpay/',
