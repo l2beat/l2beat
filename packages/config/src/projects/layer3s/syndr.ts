@@ -22,7 +22,7 @@ export const syndr: Layer3 = upcomingL3({
       socialMedia: [
         'https://x.com/SyndrHQ',
         'https://medium.com/syndr',
-        'https://t.me/syndr_official'
+        'https://t.me/syndr_official',
       ],
     },
   },
