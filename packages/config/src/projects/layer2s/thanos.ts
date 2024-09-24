@@ -10,7 +10,7 @@ export const thanos: Layer2 = {
   display: {
     name: 'THANOS',
     slug: 'thanos',
-    description:'Thanos L2 solution specializes in building and maintaining customized Layer 2 networks using Optimistic Rollup technology. By utilizing its native token within the L2 network, it enables the creation of tailored Layer 2 environments where the token is used for transactions, offering a more efficient and cost-effective blockchain experience.',
+    description: 'Thanos L2 solution specializes in building and maintaining customized Layer 2 networks using Optimistic Rollup technology. By utilizing its native token within the L2 network, it enables the creation of tailored Layer 2 environments where the token is used for transactions, offering a more efficient and cost-effective blockchain experience.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
     provider: 'OVM',
