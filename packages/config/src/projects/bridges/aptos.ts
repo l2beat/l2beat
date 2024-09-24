@@ -26,7 +26,7 @@ export const aptos: Bridge = {
         'https://x.com/Aptos',
         'https://discord.com/invite/aptosnetwork',
         'https://www.linkedin.com/company/aptos-foundation/',
-        'https://t.me/aptos'
+        'https://t.me/aptos',
       ],
     },
     description:
