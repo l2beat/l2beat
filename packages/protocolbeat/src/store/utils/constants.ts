@@ -13,11 +13,10 @@ export const IS_MACOS = navigator.userAgent.toLowerCase().includes('mac os')
 export const HEADER_HEIGHT = 28
 export const BORDER_WIDTH = 2
 export const FIELD_HEIGHT = 24
+export const RESIZE_HANDLE_HEIGHT = 15
 
 export const NODE_WIDTH = 200
 export const NODE_SPACING = 25
-
-export const RESIZE_HANDLE_SPACING = 15
 
 export const ZOOM_SENSITIVITY = 0.002
 export const MAX_ZOOM = 10

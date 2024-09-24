@@ -10,15 +10,15 @@ const OnChainQuantifiable = {
   type: 'OnChainQuantifiable',
   value: 'Staked assets',
   sentiment: 'good',
-  description:
-    'There are staked assets on the DA layer that can be slashed in case of a data withholding attack.',
+  description: `There are staked assets on the DA layer that can be slashed in case of a data withholding attack. A dishonest majority of validators must collude to validate a block with missing or invalid data. The invalid block would be added to the chain but rejected by honest full nodes.
+    `,
 } as const
 
 const OnChainNotSlashable = (token?: string) => {
   const tokenExpression = token ? ` ${token} tokens` : 'tokens'
   return {
     type: 'OnChainNotSlashable',
-    value: `Staked Assets`,
+    value: `No slashing`,
     sentiment: 'bad',
     description: `Although node operators are required to stake ${tokenExpression} to become members of the DA network, there is no slashing mechanism in place for misbehaving nodes.`,
   } as const
@@ -26,7 +26,7 @@ const OnChainNotSlashable = (token?: string) => {
 
 const OffChainVerifiable = {
   type: 'OffChainVerifiable',
-  value: 'Public Committee',
+  value: 'Public committee',
   sentiment: 'warning',
   description:
     'There are no onchain assets at risk of being slashed in case of a data withholding attack. The committee members are publicly known, and their reputation is at stake should they behave maliciously.',

@@ -1,7 +1,7 @@
 {
   "name": "allbridge",
   "chain": "ethereum",
-  "blockNumber": 20382669,
+  "blockNumber": 20785156,
   "configHash": "0x849d1c199ab72e8c4bfcbd944c1df393655ea421b29a431a4d7b3bf1604946d2",
   "version": 14,
   "contracts": [
@@ -76,28 +76,28 @@
             "members": []
           }
         },
-        "accRewardPerShareP": "844183275167424967",
-        "adminFeeAmount": 7048771453,
+        "accRewardPerShareP": "895095638480028852",
+        "adminFeeAmount": 7260606974,
         "adminFeeShareBP": 2000,
         "balanceRatioMinBP": 1000,
         "canDeposit": 1,
         "canWithdraw": 1,
-        "d": 6095712216,
+        "d": 9917865452,
         "decimals": 3,
         "feeShareBP": 15,
-        "getPrice": 9963,
+        "getPrice": 9990,
         "getY": [
-          26607913790058, 18815517932238, 15363358459213, 13305462029346
+          55219293611088, 39047371400578, 31882943974507, 27612095604307
         ],
         "name": "Allbridge LP",
         "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0",
-        "reserves": 6173257146,
+        "reserves": 9815551954,
         "router": "0x609c690e8F7D68a59885c9132e812eEbDaAf0c9e",
         "symbol": "LP-USDT",
         "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "tokenBalance": 3275995330,
-        "totalSupply": 6095308501,
-        "vUsdBalance": 2820134854
+        "tokenBalance": 5052203970,
+        "totalSupply": 9917429499,
+        "vUsdBalance": 4865704265
       }
     },
     {
@@ -158,28 +158,28 @@
             "members": []
           }
         },
-        "accRewardPerShareP": "1079285358712389282",
-        "adminFeeAmount": 9799344928,
+        "accRewardPerShareP": "1122288684932117625",
+        "adminFeeAmount": 3215683279,
         "adminFeeShareBP": 2000,
         "balanceRatioMinBP": 1000,
         "canDeposit": 1,
         "canWithdraw": 1,
-        "d": 7547604082,
+        "d": 5917417564,
         "decimals": 3,
         "feeShareBP": 15,
-        "getPrice": 9981,
+        "getPrice": 9962,
         "getY": [
-          36659187064470, 25923051404539, 21166766797648, 18331457131146
+          25449145284395, 17996119078021, 14694305940526, 12726033756260
         ],
         "name": "Allbridge LP",
         "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0",
-        "reserves": 7467103131,
+        "reserves": 5908603835,
         "router": "0x609c690e8F7D68a59885c9132e812eEbDaAf0c9e",
         "symbol": "LP-USDC",
         "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "tokenBalance": 3914509312,
-        "totalSupply": 7546857525,
-        "vUsdBalance": 3633222782
+        "tokenBalance": 3182895308,
+        "totalSupply": 5916568965,
+        "vUsdBalance": 2734938073
       }
     },
     {
@@ -591,5 +591,5 @@
   "usedTemplates": {
     "allbridge/pool": "0xbb30bf6f8a272cfbe6959733a828fa750a29898e627c9a1aa4ef1a5ed4e223f8"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0x758ecb4ea0d8bb2a1e8607d280316516dd4d1c682ace9d04170aa23a9f5f3498"
 }

@@ -254,6 +254,11 @@
       "address": "0xAE12C5930881c53715B369ceC7606B70d8EB229f"
     },
     {
+      "symbol": "cbBTC",
+      "category": "ether",
+      "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
+    },
+    {
       "symbol": "cbETH",
       "category": "ether",
       "address": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
@@ -2439,6 +2444,13 @@
   ],
   "base": [
     {
+      "symbol": "cbBTC",
+      "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "stablecoin"
+    },
+    {
       "symbol": "DAI",
       "address": "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
       "source": "canonical",
@@ -3307,6 +3319,22 @@
     }
   ],
   "mode": [
+    {
+      "symbol": "msDai",
+      "coingeckoId": "savings-dai",
+      "address": "0x3f51c6c5927B88CDEc4b61e2787F9BD0f5249138",
+      "excludeFromTotal": true, // lock-mint (although currently focused on ethereum, this bridge supports other l2s)
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "XSwap.link"
+          }
+        ]
+      }
+    },
     {
       "symbol": "aBTC",
       "address": "0x7A087e75807F2E5143C161a817E64dF6dC5EAFe0",

@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x3d51ed0e555f35d54a152ced044fd6320a96f883
+
+# Diff at Tue, 17 Sep 2024 08:54:01 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@42b8cd22e0127dd1f4c91ae6676145120f15e80f block: 20725912
+- current block number: 20769260
+
+## Description
+
+Changed ARM Proxy: Renaming of ARM -> RMN. New version: RMN 1.5.0, including a new granular cursing check feature and other minor updates: isCursed() will check for a curse of the local chain (called a global curse subject). The isCursed() function can also be used with a bytes32 argument to additionally check the destination chain cursing status before forwarding messages to it.
+Also lower timelock delay for upgrades from 1 day (86400s) to 3h (10800s).
+
+## Watched changes
+
+```diff
+    contract ARMProxy (0x411dE17f12D1A34ecC7F45f49844626267c75e81) {
+    +++ description: None
+      values.getARM:
+-        "0x8B63b3DE93431C0f756A493644d128134291fA1b"
++        "0xdCD48419bD5Cd9d1b097695F2af4Ee125aADF84F"
+    }
+```
+
+```diff
+    contract RBACTimelock (0x44835bBBA9D40DEDa9b64858095EcFB2693c9449) {
+    +++ description: None
+      values.getMinDelay:
+-        86400
++        10800
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ARM (0x8B63b3DE93431C0f756A493644d128134291fA1b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RMN (0xdCD48419bD5Cd9d1b097695F2af4Ee125aADF84F)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat@20725912/ARM.sol => /dev/null   |  697 ----------
+ .../transporter/ethereum/.flat/RMN.sol             | 1376 ++++++++++++++++++++
+ 2 files changed, 1376 insertions(+), 697 deletions(-)
+```
+
 Generated with discovered.json: 0x814b0f10578cc8ba5cbccc110ca0d5ed9fbc3890
 
 # Diff at Wed, 11 Sep 2024 07:36:12 GMT:

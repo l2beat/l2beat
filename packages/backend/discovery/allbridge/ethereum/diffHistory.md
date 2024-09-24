@@ -1,3 +1,47 @@
+Generated with discovered.json: 0x1351a3363ce305c21e9dd6e5f53421bfd7fb37f6
+
+# Diff at Thu, 19 Sep 2024 14:12:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c189b6a22dcead98913a50430e61a1c3146ee01e block: 20776249
+- current block number: 20785156
+
+## Description
+
+The previously added TokenManager is removed.
+
+## Watched changes
+
+```diff
+    contract TokenBridge (0xBBbD1BbB4f9b936C3604906D7592A644071dE884) {
+    +++ description: None
+      values.accessControl.TOKEN_MANAGER.members.1:
+-        "0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E"
+    }
+```
+
+Generated with discovered.json: 0xb421cf837e2d8ea6b08d9c6aaac885d2b809f339
+
+# Diff at Wed, 18 Sep 2024 08:21:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@14dc1d5395aaa4aca4e79a08fd6132e42e3cf1a4 block: 20382669
+- current block number: 20776249
+
+## Description
+
+One TokenManager is added. (Added to permissions section)
+
+## Watched changes
+
+```diff
+    contract TokenBridge (0xBBbD1BbB4f9b936C3604906D7592A644071dE884) {
+    +++ description: None
+      values.accessControl.TOKEN_MANAGER.members.1:
++        "0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E"
+    }
+```
+
 Generated with discovered.json: 0x68791e83cbb4b3d36d21874996c7db797997eb61
 
 # Diff at Thu, 25 Jul 2024 09:28:43 GMT:

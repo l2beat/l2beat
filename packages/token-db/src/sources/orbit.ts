@@ -1,17 +1,15 @@
 import { Logger } from '@l2beat/backend-tools'
-import { assert } from '@l2beat/shared-pure'
-import { nanoid } from 'nanoid'
+import { Database } from '@l2beat/database'
 import { getAddress } from 'viem'
 import { z } from 'zod'
 import { upsertTokenWithMeta } from '../db/helpers.js'
-import { PrismaClient } from '../db/prisma.js'
 import { env } from '../env.js'
 import { TokenUpdateQueue } from '../utils/queue/wrap.js'
 import { zodFetch } from '../utils/zodFetch.js'
 
 type Dependencies = {
   logger: Logger
-  db: PrismaClient
+  db: Database
   queue: TokenUpdateQueue
 }
 
@@ -21,44 +19,15 @@ export function buildOrbitSource({ logger, db, queue }: Dependencies) {
   return async () => {
     logger.info(`Syncing tokens from Orbit...`)
 
-    const networks = await db.network
-      .findMany({
-        include: {
-          rpcs: true,
-        },
-        where: {
-          orbitId: {
-            not: null,
-          },
-        },
-      })
-      .then((result) =>
-        result.map((r) => {
-          const { orbitId } = r
-          assert(orbitId, 'Expected orbitId')
-          return {
-            ...r,
-            orbitId,
-          }
-        }),
-      )
+    const networks = await db.network.getAllWithOrbitId()
 
     const res = await zodFetch(env.ORBIT_LIST_URL, OrbitResponse)
 
     logger.info('Upserting bridge info')
 
     const { id: externalBridgeId } = await db.externalBridge.upsert({
-      select: { id: true },
-      where: {
-        name: 'Orbit',
-        type: 'Orbit',
-      },
-      create: {
-        id: nanoid(),
-        name: 'Orbit',
-        type: 'Orbit',
-      },
-      update: {},
+      name: 'Orbit',
+      type: 'Orbit',
     })
 
     let count = 0
@@ -82,6 +51,9 @@ export function buildOrbitSource({ logger, db, queue }: Dependencies) {
       logger.debug('Upserting source token', { symbol: token.symbol })
 
       const { tokenId: sourceTokenId } = await upsertTokenWithMeta(db, {
+        name: null,
+        logoUrl: null,
+        contractName: null,
         networkId: sourceNetwork.id,
         address: getAddress(token.address),
         source: { type: 'Orbit' },
@@ -114,6 +86,9 @@ export function buildOrbitSource({ logger, db, queue }: Dependencies) {
           })
 
           const { tokenId: targetTokenId } = await upsertTokenWithMeta(db, {
+            name: null,
+            logoUrl: null,
+            contractName: null,
             networkId: targetNetwork.id,
             address: getAddress(minter.address),
             source: { type: 'Orbit' },
@@ -124,18 +99,9 @@ export function buildOrbitSource({ logger, db, queue }: Dependencies) {
           tokenIds.add(targetTokenId)
 
           await db.tokenBridge.upsert({
-            where: {
-              targetTokenId,
-            },
-            create: {
-              id: nanoid(),
-              sourceTokenId,
-              targetTokenId,
-              externalBridgeId,
-            },
-            update: {
-              sourceTokenId,
-            },
+            sourceTokenId,
+            targetTokenId,
+            externalBridgeId,
           })
         }
 

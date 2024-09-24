@@ -37,7 +37,7 @@ export async function getScalingSummaryEntries() {
           })
         : undefined
 
-    return {
+    const common = {
       entryType: 'scaling' as const,
       ...getCommonScalingEntry({
         project,
@@ -54,7 +54,33 @@ export async function getScalingSummaryEntries() {
         ]),
       },
       marketShare: latestTvl && latestTvl.breakdown.total / tvl.total,
-      risks: project.type === 'layer2' ? getL2Risks(project.riskView) : [],
+    }
+
+    if (project.type === 'layer2') {
+      return {
+        ...common,
+        risks: getL2Risks(project.riskView),
+        baseLayerRisks: undefined,
+        stackedRisks: undefined,
+      }
+    }
+
+    const baseLayer = projects
+      .filter((layer) => layer.type === 'layer2')
+      .find((p) => p.id === project.hostChain)
+
+    const projectRisks = getL2Risks(project.riskView)
+    const baseLayerRisks = baseLayer
+      ? getL2Risks(baseLayer.riskView)
+      : undefined
+    const stackedRisks =
+      project.type === 'layer3' ? project.stackedRiskView : undefined
+    // L3
+    return {
+      ...common,
+      risks: projectRisks,
+      baseLayerRisks,
+      stackedRisks,
     }
   })
 

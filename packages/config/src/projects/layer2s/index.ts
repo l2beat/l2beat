@@ -28,6 +28,7 @@ import { coti } from './coti'
 import { creator } from './creator'
 import { cronoszkevm } from './cronoszkevm'
 import { cyber } from './cyber'
+import { dbk } from './dbk'
 import { debank } from './debank'
 import { degate } from './degate'
 import { degate2 } from './degate2'
@@ -117,6 +118,7 @@ import { scroll } from './scroll'
 import { silicon } from './silicon'
 import { socialnetwork } from './socialnetwork'
 import { soneium } from './soneium'
+import { soon } from './soon'
 import { sophon } from './sophon'
 import { sorare } from './sorare'
 import { specular } from './specular'
@@ -133,6 +135,8 @@ import { tanx } from './tanx'
 import { telos } from './telos'
 import { ten } from './ten'
 import { termstructure } from './termstructure'
+import { thanos } from './thanos'
+import { thebinaryholdings } from './thebinaryholdings'
 import { treasure } from './treasure'
 import { Layer2 } from './types'
 import { wirex } from './wirex'
@@ -187,6 +191,7 @@ export const layer2s: Layer2[] = [
   coti,
   creator,
   cronoszkevm,
+  dbk,
   debank,
   honeypot,
   degate,
@@ -277,6 +282,7 @@ export const layer2s: Layer2[] = [
   sophon,
   soneium,
   socialnetwork,
+  soon,
   sorare,
   specular,
   starknet,
@@ -292,6 +298,8 @@ export const layer2s: Layer2[] = [
   telos,
   ten,
   termstructure,
+  thebinaryholdings,
+  thanos,
   treasure,
   wirex,
   witness,

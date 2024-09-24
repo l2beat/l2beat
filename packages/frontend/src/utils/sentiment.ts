@@ -14,6 +14,20 @@ export function sentimentToFillColor(sentiment: Sentiment): string {
   }
 }
 
+export function sentimentToBgColor(sentiment: Sentiment): string {
+  switch (sentiment) {
+    case 'bad':
+      return 'bg-orange-600/15'
+    case 'warning':
+      return 'bg-yellow-200/15'
+    case 'good':
+      return 'bg-green-300/15 dark:bg-green-450/15'
+    case 'neutral':
+    case 'UnderReview':
+      return 'bg-gray-400/15 dark:bg-zinc-700/15'
+  }
+}
+
 export function sentimentToTextColor(sentiment: Sentiment): string {
   switch (sentiment) {
     case 'bad':

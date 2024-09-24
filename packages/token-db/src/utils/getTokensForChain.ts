@@ -1,8 +1,8 @@
-import { PrismaClient } from '../db/prisma.js'
+import { Database, DeploymentRecord } from '@l2beat/database'
 import { NetworkConfig, WithExplorer } from './getNetworksConfig.js'
 
 type Dependencies = {
-  db: PrismaClient
+  db: Database
   networkConfig: WithExplorer<NetworkConfig>
 }
 
@@ -17,17 +17,21 @@ export async function getTokensForChain(
   { db, networkConfig }: Dependencies,
   { flush }: Options = { flush: false },
 ) {
-  const whereClause = flush
-    ? { network: { chainId: networkConfig.chainId } }
-    : {
-        AND: {
-          network: { chainId: networkConfig.chainId },
-          deployment: { is: null },
-        },
-      }
+  const tokens = await db.token.getByChainId(networkConfig.chainId)
 
-  const tokens = await db.token.findMany({
-    where: whereClause,
-  })
+  if (!flush) {
+    const deployments = await db.deployment.getByTokenIds(
+      tokens.map((token) => token.id),
+    )
+    const deploymentsByTokenId = deployments.reduce(
+      (acc, deployment) => {
+        acc[deployment.tokenId] = deployment
+        return acc
+      },
+      {} as Record<string, DeploymentRecord>,
+    )
+    return tokens.filter((token) => deploymentsByTokenId[token.id])
+  }
+
   return tokens
 }
