@@ -1,22 +1,20 @@
-Generated with discovered.json: 0xe2f22a607d4cbe826775b91c69a3dd649d91ecf6
+Generated with discovered.json: 0x4dd77bd22bcfe00a9ad4a44139763c4a6ad3a105
 
-# Diff at Mon, 23 Sep 2024 16:52:36 GMT:
+# Diff at Tue, 24 Sep 2024 08:15:14 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
 - comparing to: main@d3382cfb14234950671011f2a61630973cab3e07 block: 225981507
-- current block number: 256577934
+- current block number: 256798281
 
 ## Description
 
-Caldera MS on Arbi: 1 signer added.
+Caldera MS on Arbi: 1 signer changed.
 
 ## Watched changes
 
 ```diff
     contract Caldera Multisig (0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
     +++ description: None
-      values.$members.4:
-+        "0xB2a5970fB30dc34AD65c914db855766ea62f1f41"
       values.$members.3:
 -        "0xB2a5970fB30dc34AD65c914db855766ea62f1f41"
 +        "0x356000Cec4fC967f8FC372381D983426760A0391"
@@ -29,9 +27,6 @@ Caldera MS on Arbi: 1 signer added.
       values.$members.0:
 -        "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
 +        "0xbf853295743511e8DC5F03809d209C33fC136d24"
-      values.multisigThreshold:
--        "3 of 4 (75%)"
-+        "3 of 5 (60%)"
     }
 ```
 

@@ -1,7 +1,7 @@
 {
   "name": "rari",
   "chain": "arbitrum",
-  "blockNumber": 256577934,
+  "blockNumber": 256798281,
   "configHash": "0x1cf58d49761799de47d9b462a4e07a947fdece9053ae61a6ce6225150a4e510f",
   "version": 14,
   "contracts": [
@@ -141,11 +141,11 @@
           "0x3bC4894370dE0Aa304ed717c2e01866c46F1CEa6"
         ],
         "allowedOutboxList": ["0x91591BB66075BCfF94AA128B003134165C3Ab83a"],
-        "delayedMessageCount": 88834,
+        "delayedMessageCount": 91663,
         "rollup": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
         "sequencerInbox": "0xA436f1867adD490BF1530c636f2FB090758bB6B3",
-        "sequencerMessageCount": 6025,
-        "sequencerReportedSubMessageCount": 510611
+        "sequencerMessageCount": 6041,
+        "sequencerReportedSubMessageCount": 514148
       },
       "derivedName": "Bridge"
     },
@@ -208,12 +208,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 5639,
+        "firstUnresolvedNode": 5648,
         "inbox": "0x37e60F80d921dc5E7f501a7130F31f6548dBa564",
         "isERC20Enabled": false,
         "lastStakeBlock": 19045354,
-        "latestConfirmed": 5638,
-        "latestNodeCreated": 5766,
+        "latestConfirmed": 5647,
+        "latestNodeCreated": 5782,
         "loserStakeEscrow": "0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552",
         "minimumAssertionPeriod": 75,
         "outbox": "0x91591BB66075BCfF94AA128B003134165C3Ab83a",
@@ -364,15 +364,14 @@
           "0xbf853295743511e8DC5F03809d209C33fC136d24",
           "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A",
           "0x4919167EA334BE84B1604Cbc82A26A7746D5943e",
-          "0x356000Cec4fC967f8FC372381D983426760A0391",
-          "0xB2a5970fB30dc34AD65c914db855766ea62f1f41"
+          "0x356000Cec4fC967f8FC372381D983426760A0391"
         ],
         "$threshold": 3,
         "domainSeparator": "0xeb75286128f8b958bb9a8db0f4f446758af4c721059060ccbd44ff0cb027027e",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 11,
+        "multisigThreshold": "3 of 4 (75%)",
+        "nonce": 12,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -458,7 +457,7 @@
         "$admin": "0x003e70B041abb993006C03E56c8515622a02928C",
         "$implementation": "0x1d182075d07744D71E37f77f1654165f6DAFad08",
         "$upgradeCount": 1,
-        "batchCount": 6025,
+        "batchCount": 6041,
         "batchPosters": ["0x974533F82B7BADF54Fb91C15f07F3f095e35321C"],
         "bridge": "0x255f80Ef2F09FCE0944faBb292b8510F01316Cf0",
         "dacKeyset": {
@@ -481,7 +480,7 @@
         "rollup": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 88715
+        "totalDelayedMessagesRead": 91376
       },
       "derivedName": "SequencerInbox"
     },
@@ -548,7 +547,6 @@
     },
     { "address": "0x9a2859B2a83148b8DE25d26643B5407555D219E1" },
     { "address": "0xaCB337daF123938A337B125f680C9A78F88e21E0" },
-    { "address": "0xB2a5970fB30dc34AD65c914db855766ea62f1f41" },
     { "address": "0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552" },
     { "address": "0xbf853295743511e8DC5F03809d209C33fC136d24" },
     {
