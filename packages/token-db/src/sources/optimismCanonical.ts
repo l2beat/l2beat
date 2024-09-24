@@ -1,11 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
 import { assert } from '@l2beat/shared-pure'
 
-import { nanoid } from 'nanoid'
+import { Database } from '@l2beat/database'
+import { notUndefined } from '@l2beat/shared-pure'
 import { getContract, parseAbiItem } from 'viem'
-import { PrismaClient } from '../db/prisma.js'
 import { NetworkConfig } from '../utils/getNetworksConfig.js'
-import { notUndefined } from '../utils/notUndefined.js'
 
 export { buildOptimismCanonicalSource }
 
@@ -16,7 +15,7 @@ const abi = [parseAbiItem('function l1Token() external view returns (address)')]
 
 type Dependencies = {
   logger: Logger
-  db: PrismaClient
+  db: Database
   networksConfig: NetworkConfig[]
 }
 
@@ -35,36 +34,15 @@ function buildOptimismCanonicalSource({
     )?.publicClient
     assert(optimismClient, 'Optimism client not found')
 
-    const optimismNetwork = await db.network.findFirst({
-      select: { id: true },
-      where: {
-        name: 'Optimism',
-      },
-    })
+    const optimismNetwork = await db.network.findByName('Optimism')
     assert(optimismNetwork, 'Optimism network not found')
 
-    const tokens = await db.token.findMany({
-      where: {
-        deployment: {
-          OR: [
-            {
-              to: {
-                equals: OPTIMISM_BRIDGE_3,
-                mode: 'insensitive',
-              },
-            },
-            {
-              to: {
-                equals: OVM_TOKEN_FACTORY,
-                mode: 'insensitive',
-              },
-            },
-          ],
-        },
-        network: {
-          id: optimismNetwork.id,
-        },
-      },
+    const tokens = await db.token.getByDeployment({
+      networkId: optimismNetwork.id,
+      deploymentConstraints: [
+        { to: OPTIMISM_BRIDGE_3 },
+        { to: OVM_TOKEN_FACTORY },
+      ],
     })
 
     logger.info('Matching L2 tokens with L1 addresses...')
@@ -77,17 +55,16 @@ function buildOptimismCanonicalSource({
         })
 
         const l1Address = await contract.read.l1Token().catch(() => undefined)
-        const l1Token = await db.token.findFirst({
-          where: {
-            network: {
-              name: 'Ethereum',
-            },
-            address: {
-              equals: l1Address,
-              mode: 'insensitive',
-            },
-          },
+
+        if (!l1Address) {
+          return
+        }
+
+        const l1Token = await db.token.findByNetwork({
+          network: optimismNetwork.name,
+          address: l1Address,
         })
+
         if (!l1Token) {
           return
         }
@@ -95,16 +72,12 @@ function buildOptimismCanonicalSource({
         return {
           sourceTokenId: l1Token.id,
           targetTokenId: token.id,
+          externalBridgeId: optimismNetwork.id,
         }
       }),
     )
 
-    await db.tokenBridge.upsertMany({
-      data: tokensBridgeToUpsert
-        .filter(notUndefined)
-        .map((t) => ({ id: nanoid(), ...t })),
-      conflictPaths: ['targetTokenId'],
-    })
+    await db.tokenBridge.upsertMany(tokensBridgeToUpsert.filter(notUndefined))
 
     logger.info(
       `Synced ${tokensBridgeToUpsert.length} Optimism canonical tokens data`,
