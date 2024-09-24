@@ -28,13 +28,9 @@ export async function NavSidebar({
     <NavSideBarWrapper legacyNav={legacyNav}>
       <div className="flex flex-row items-center justify-between">
         <Link href={logoLink}>
-          <Logo className="block h-8 w-auto xl:sidenav-collapsed:hidden" />
-          <Logo
-            small
-            className="hidden h-8 w-auto xl:sidenav-collapsed:block"
-          />
+          <Logo className="block h-8 w-auto" />
         </Link>
-        <div className="flex flex-row items-center gap-4 xl:sidenav-collapsed:hidden">
+        <div className="flex flex-row items-center gap-4">
           <DarkThemeToggle />
           <div className="size-6 xl:hidden">
             <MobileNavTriggerClose />
@@ -94,7 +90,7 @@ export async function NavSidebar({
           <NavSmallLink title="FAQ" href="/faq" />
         </NavSmallLinkGroup>
         <NavDivider />
-        <ul className="flex gap-2 text-2xl sidenav-collapsed:hidden xl:justify-between">
+        <ul className="flex gap-2 text-2xl xl:justify-between">
           <SocialLinks />
         </ul>
       </nav>

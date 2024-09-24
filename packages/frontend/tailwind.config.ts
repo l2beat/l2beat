@@ -243,9 +243,6 @@ const config: Config = {
     },
   },
   plugins: [
-    plugin(function ({ addVariant }) {
-      addVariant('sidenav-collapsed', '.sidenav-collapsed &')
-    }),
     require('tailwindcss-animate'),
     require('@tailwindcss/container-queries'),
   ],
