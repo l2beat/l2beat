@@ -22,9 +22,9 @@ export const ternoa: Layer2 = upcomingL2({
       socialMedia: [
         'https://x.com/ternoa_',
         'https://t.me/ternoa',
-        'https://discord.com/invite/cNZTGtGJNR'
-        'https://www.linkedin.com/company/ternoa/mycompany/'
-        'https://www.youtube.com/channel/UCUYvbtRE5HoWPz7z88V7Khw'
+        'https://discord.com/invite/cNZTGtGJNR',
+        'https://linkedin.com/company/ternoa/mycompany/',
+        'https://youtube.com/channel/UCUYvbtRE5HoWPz7z88V7Khw',
       ],
     },
   },
