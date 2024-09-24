@@ -19,7 +19,7 @@ export const hybrid: Layer2 = upcomingL2({
       repositories: ['https://github.com/buildonhybrid'],
       socialMedia: [
         'https://x.com/BuildOnHybrid',
-        'https://t.me/HybridCommunity'
+        'https://t.me/HybridCommunity',
       ],
     },
   },
