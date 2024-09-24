@@ -8,7 +8,7 @@ import { useScalingAssociatedTokensContext } from '../../_components/scaling-ass
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingTvlFilters } from '../../_components/scaling-tvl-filters'
 import { toTableRows } from '../_utils/to-table-rows'
-import { scalingLayer2sColumns } from './table/active/columns'
+import { scalingLayer2sColumns } from './table/columns'
 
 interface Props {
   entries: ScalingSummaryEntry[]

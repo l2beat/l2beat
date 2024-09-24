@@ -11,8 +11,8 @@ import { getCommonProjectColumns } from '~/components/table/common-project-colum
 import { sortStages } from '~/components/table/sorting/functions/stage-sorting'
 import { EM_DASH } from '~/consts/characters'
 import { formatPercent } from '~/utils/get-percentage-change'
-import { type ScalingSummaryTableRow } from '../../../_utils/to-table-rows'
-import { TotalCell } from '../total-cell'
+import { type ScalingSummaryTableRow } from '../../_utils/to-table-rows'
+import { TotalCell } from './total-cell'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 
@@ -22,13 +22,12 @@ export const scalingLayer2sColumns = [
     cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
   }),
   columnHelper.accessor('risks', {
-    cell: (ctx) =>
-      ctx.row.original.type === 'layer2' ? (
-        <PizzaRosetteCell
-          values={ctx.getValue()}
-          isUnderReview={ctx.row.original.isUnderReview}
-        />
-      ) : null,
+    cell: (ctx) => (
+      <PizzaRosetteCell
+        values={ctx.getValue()}
+        isUnderReview={ctx.row.original.isUnderReview}
+      />
+    ),
     enableSorting: false,
     meta: {
       cellClassName: 'justify-center',
