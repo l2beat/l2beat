@@ -1218,7 +1218,8 @@
       "iconUrl": "https://assets.coingecko.com/coins/images/16414/large/rhinologo.png?1697736807",
       "chainId": 1,
       "source": "canonical",
-      "supply": "zero"
+      "supply": "zero",
+      "untilTimestamp": 1725840000
     },
     {
       "name": "DEXTF Token",
