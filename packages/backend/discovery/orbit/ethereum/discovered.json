@@ -1,7 +1,7 @@
 {
   "name": "orbit",
   "chain": "ethereum",
-  "blockNumber": 20362600,
+  "blockNumber": 20792032,
   "configHash": "0x2eec4bf11f15af3314b396b1fca83a67a70e09cd7b429a0be66f522678b530db",
   "version": 14,
   "contracts": [
@@ -20,8 +20,8 @@
       "sinceTimestamp": 1708655927,
       "values": {
         "$admin": "0xc045b35d1cf9501B2fc95e7c489FDA96345A4D70",
-        "$implementation": "0xb4D37E8f6e970344c1cc99F65D8D1Afd5F7590D9",
-        "$upgradeCount": 3
+        "$implementation": "0x59fF8Eb9B384a6e1146194D7b2e754694957c5Af",
+        "$upgradeCount": 4
       }
     },
     {
@@ -39,7 +39,7 @@
         "depositCount": 118404,
         "edai": "0xC355fe6E4e99C0B93577F08c4e9a599714435912",
         "feeGovernance": "0x0000000000000000000000000000000000000000",
-        "gasLimitForBridgeReceiver": 300000,
+        "gasLimitForBridgeReceiver": 600000,
         "getOwners": [
           "0x35f720fd3042EC8b05b7c8C8c0B33e45d71ad5Ba",
           "0x98A86EB9Ff3B473E61B7b7a82Dd2c328323A66D0",
@@ -392,5 +392,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xb3e808e6410511e5cdb557ab187aac264a51956c695f8cc327ebaa202f7514fd"
 }

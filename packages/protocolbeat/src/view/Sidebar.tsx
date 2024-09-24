@@ -5,12 +5,14 @@ import { ColorPicker } from './ColorPicker'
 interface SidebarProps {
   selectedNodes: SimpleNode[]
   onDeleteNodes: (ids: string[]) => void
+  onHideNodes: (ids: string[]) => void
   onColorChange: (ids: string[], color: Color) => void
 }
 
 export function Sidebar({
   selectedNodes,
   onDeleteNodes,
+  onHideNodes,
   onColorChange,
 }: SidebarProps) {
   const selectedNode = selectedNodes[0]
@@ -23,6 +25,7 @@ export function Sidebar({
       <SidebarForSingleNode
         node={selectedNode}
         onDeleteNodes={onDeleteNodes}
+        onHideNodes={onHideNodes}
         onColorChange={onColorChange}
       />
     )
@@ -32,6 +35,7 @@ export function Sidebar({
     <SidebarForMultipleNodes
       selectedNodes={selectedNodes}
       onDeleteNodes={onDeleteNodes}
+      onHideNodes={onHideNodes}
       onColorChange={onColorChange}
     />
   )
@@ -40,23 +44,32 @@ export function Sidebar({
 function SidebarForSingleNode({
   node,
   onDeleteNodes,
+  onHideNodes,
   onColorChange,
 }: {
   node: SimpleNode
   onDeleteNodes: SidebarProps['onDeleteNodes']
+  onHideNodes: SidebarProps['onHideNodes']
   onColorChange: SidebarProps['onColorChange']
 }) {
   if (node.type === 'Unknown') {
     return (
       <>
         <div>Click on the "🔍" to discover</div>{' '}
-        <p>
+        <p className="flex gap-2">
           <button
             className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
             type="button"
             onClick={() => onDeleteNodes([node.id])}
           >
             Delete
+          </button>
+          <button
+            className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+            type="button"
+            onClick={() => onHideNodes([node.id])}
+          >
+            Hide
           </button>
         </p>
       </>
@@ -108,6 +121,13 @@ function SidebarForSingleNode({
         >
           Delete
         </button>
+        <button
+          className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+          type="button"
+          onClick={() => onHideNodes([node.id])}
+        >
+          Hide
+        </button>
 
         {node.proxyType === 'gnosis safe' && (
           <button
@@ -136,20 +156,28 @@ function SidebarForSingleNode({
 
 function SidebarForMultipleNodes({
   selectedNodes,
-  onDeleteNodes: onDeleteNode,
+  onDeleteNodes,
+  onHideNodes,
   onColorChange,
 }: SidebarProps) {
   const ids = selectedNodes.map((n) => n.id)
   return (
     <div className="flex flex-col gap-2">
       Selected <span className="font-bold">{selectedNodes.length}</span> nodes
-      <p>
+      <p className="flex gap-2">
         <button
           className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
           type="button"
-          onClick={() => onDeleteNode(ids)}
+          onClick={() => onDeleteNodes(ids)}
         >
           Delete all
+        </button>
+        <button
+          className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+          type="button"
+          onClick={() => onHideNodes(ids)}
+        >
+          Hide all
         </button>
       </p>
       <hr />

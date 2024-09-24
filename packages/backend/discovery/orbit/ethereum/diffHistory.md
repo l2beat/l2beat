@@ -1,3 +1,38 @@
+Generated with discovered.json: 0xac54d983e1bb572e4fb773ca0797b11461ff5438
+
+# Diff at Fri, 20 Sep 2024 13:15:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c1f8c9b7beabeba1a847fb9e1064a356593cfe16 block: 20362600
+- current block number: 20792032
+
+## Description
+
+Gas limit doubled (ETH Vault) and implementation of the PolicyAdmin changed (remains unverified). The Policy Admin 'can set bridging fees, gas limits and can pause / unpause the bridge or censor individual withdrawals.'
+
+## Watched changes
+
+```diff
+    contract  (0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8) {
+    +++ description: None
+      values.$implementation:
+-        "0xb4D37E8f6e970344c1cc99F65D8D1Afd5F7590D9"
++        "0x59fF8Eb9B384a6e1146194D7b2e754694957c5Af"
+      values.$upgradeCount:
+-        3
++        4
+    }
+```
+
+```diff
+    contract ETH Vault (0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a) {
+    +++ description: None
+      values.gasLimitForBridgeReceiver:
+-        300000
++        600000
+    }
+```
+
 Generated with discovered.json: 0xe61e5c603a688c56a6bcdaf85392b5d8984a8648
 
 # Diff at Fri, 30 Aug 2024 07:54:20 GMT:

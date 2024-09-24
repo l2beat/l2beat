@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xb811399244fc3368f440ad84ecf3d16859b4723b
+
+# Diff at Fri, 20 Sep 2024 14:14:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c1f8c9b7beabeba1a847fb9e1064a356593cfe16 block: 20777124
+- current block number: 20777124
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20777124 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (0x5ff88fcF8e9947f45F4cAf8FFd5231B5DdF05e0A) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.balance:
+-        "201500019999999990000"
+    }
+```
+
 Generated with discovered.json: 0x05f3ebb5712b0e093b826ca60272e24451766c70
 
 # Diff at Wed, 18 Sep 2024 11:17:11 GMT:
