@@ -13,7 +13,7 @@ export const xpla: Layer2 = upcomingL2({
     provider: 'ZK Stack',
     links: {
       websites: ['https://xpla.io'],
-      apps: [],
+      apps: ['https://vault.xpla.io/'],
       documentation: ['https://docs.xpla.io'],
       explorers: ['https://explorer.xpla.io'],
       repositories: ['https://github.com/xpladev'],
