@@ -17,6 +17,7 @@ import { ham } from './ham'
 import { hook } from './hook'
 import { invm } from './invm'
 import { l3x } from './l3x'
+import { lumiterra } from './lumiterra'
 import { meliora } from './meliora'
 import { molten } from './molten'
 import { muster } from './muster'
@@ -81,6 +82,7 @@ export const layer3s: Layer3[] = [
   mxc,
   unite,
   l3x,
+  lumiterra,
   oursong,
   playblock,
   songprotocol,
