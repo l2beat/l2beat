@@ -13,10 +13,10 @@ export const treasure: Layer2 = upcomingL2({
     provider: 'Arbitrum',
     links: {
       websites: ['https://treasure.lol/'],
-      apps: [],
-      documentation: [],
+      apps: ['https://app.treasure.lol'],
+      documentation: ['https://docs.treasure.lol'],
       explorers: [],
-      repositories: [],
+      repositories: ['https://github.com/TreasureProject'],
       socialMedia: ['https://x.com/Treasure_DAO'],
     },
   },

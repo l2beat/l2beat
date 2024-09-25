@@ -1,4 +1,4 @@
-import { BridgesMvpWarning } from '~/app/(side-nav)/(other)/bridges/_components/bridges-mvp-warning'
+import { BridgesMvpWarning } from '~/app/(side-nav)/bridges/_components/bridges-mvp-warning'
 import { ContentWrapper } from '~/components/content-wrapper'
 import { ScrollToTopButton } from '~/components/scroll-to-top-button'
 

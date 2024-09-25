@@ -4,7 +4,6 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { Markdown } from '~/components/markdown/markdown'
-import { Layer3sIcon } from '~/icons/layer3s'
 import { ShieldIcon } from '~/icons/shield'
 import { UnderReviewIcon } from '~/icons/under-review'
 import { UnverifiedIcon } from '~/icons/unverified'
@@ -22,30 +21,24 @@ export interface ProjectCellProps {
     showProjectUnderReview?: boolean
     hasImplementationChanged?: boolean
     data?: { syncStatus?: SyncStatus }
+    hostChain?: string
   }
-  type?: 'layer2' | 'layer3' | 'bridge'
-  showIsL3?: boolean
   className?: string
 }
 
-export function ProjectNameCell({
-  project,
-  showIsL3,
-  type,
-  className,
-}: ProjectCellProps) {
+export function ProjectNameCell({ project, className }: ProjectCellProps) {
   return (
     <div className={cn('flex items-center pl-2 2xl:pl-3', className)}>
-      <span className="text-base font-bold md:text-lg">
-        {project.shortName ?? project.name}
-      </span>
-      {showIsL3 && type === 'layer3' && (
-        <span className="pl-1.5">
-          <div className="inline-block">
-            <Layer3sIcon className="relative top-px size-4" />
-          </div>
+      <div>
+        <span className="text-base font-bold leading-none md:text-lg">
+          {project.shortName ?? project.name}
         </span>
-      )}
+        {project.hostChain && (
+          <span className="block text-[0.8125rem] font-medium leading-[0.9375rem] text-gray-500 dark:text-zinc-400">
+            L3 on {project.hostChain}
+          </span>
+        )}
+      </div>
       {project.isVerified === false && (
         <span className="pl-1.5">
           <Tooltip>
