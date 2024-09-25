@@ -6,9 +6,5 @@ export interface NavSmallLinkGroupProps {
  * Group of small nav links.
  */
 export function NavSmallLinkGroup({ children }: NavSmallLinkGroupProps) {
-  return (
-    <ul className="ml-1 flex flex-col gap-2 xl:sidenav-collapsed:hidden">
-      {children}
-    </ul>
-  )
+  return <ul className="ml-1 flex flex-col gap-2">{children}</ul>
 }

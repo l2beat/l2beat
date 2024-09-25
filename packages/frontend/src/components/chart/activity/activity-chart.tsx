@@ -4,9 +4,9 @@ import { type Milestone } from '@l2beat/config'
 import {
   useScalingFilter,
   useScalingFilterValues,
-} from '~/app/(side-nav)/(other)/_components/scaling-filter-context'
-import { useActivityTimeRangeContext } from '~/app/(side-nav)/(other)/scaling/activity/_components/activity-time-range-context'
-import { ActivityTimeRangeControls } from '~/app/(side-nav)/(other)/scaling/activity/_components/activity-time-range-controls'
+} from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
+import { useActivityTimeRangeContext } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-context'
+import { ActivityTimeRangeControls } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-controls'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
 import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'

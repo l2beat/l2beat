@@ -1,8 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
+import { Database } from '@l2beat/database'
 import { getAddress } from 'viem'
 import { z } from 'zod'
 import { upsertManyTokensWithMeta } from '../db/helpers.js'
-import { PrismaClient } from '../db/prisma.js'
 import { TokenUpdateQueue } from '../utils/queue/wrap.js'
 import { zodFetch } from '../utils/zodFetch.js'
 
@@ -12,7 +12,7 @@ type Dependencies = {
   url: string
   tag: string
   logger: Logger
-  db: PrismaClient
+  db: Database
   queue: TokenUpdateQueue
 }
 
@@ -25,7 +25,7 @@ function buildTokenListSource({ db, url, tag, logger, queue }: Dependencies) {
 
     logger.info('Token list fetched', { count: result.tokens.length })
 
-    const networks = await db.network.findMany()
+    const networks = await db.network.getAll()
 
     const tokens = result.tokens.flatMap((token) => {
       const chain = networks.find((n) => n.chainId === token.chainId)
@@ -45,7 +45,9 @@ function buildTokenListSource({ db, url, tag, logger, queue }: Dependencies) {
         decimals: token.decimals,
         name: token.name,
         source: { type: 'TokenList' as const, details: tag },
-        logoUrl: token.logoURI,
+        logoUrl: token.logoURI ?? null,
+        externalId: null,
+        contractName: null,
       }
     })
 

@@ -3,16 +3,14 @@ import { getAddress } from 'viem'
 import { z } from 'zod'
 
 import { Logger } from '@l2beat/backend-tools'
-import { assert } from '@l2beat/shared-pure'
-import { nanoid } from 'nanoid'
+import { Database } from '@l2beat/database'
 import { upsertTokenWithMeta } from '../db/helpers.js'
-import { PrismaClient } from '../db/prisma.js'
 import { env } from '../env.js'
 import { TokenUpdateQueue } from '../utils/queue/wrap.js'
 
 type Dependencies = {
   logger: Logger
-  db: PrismaClient
+  db: Database
   queue: TokenUpdateQueue
 }
 
@@ -21,42 +19,13 @@ export function buildWormholeSource({ logger, db, queue }: Dependencies) {
 
   return async () => {
     logger.info(`Syncing tokens from Wormhole...`)
-    const networks = await db.network
-      .findMany({
-        include: {
-          rpcs: true,
-        },
-        where: {
-          wormholeId: {
-            not: null,
-          },
-        },
-      })
-      .then((result) =>
-        result.map((r) => {
-          const { wormholeId } = r
-          assert(wormholeId, 'Expected wormholeId')
-          return {
-            ...r,
-            wormholeId,
-          }
-        }),
-      )
+    const networks = await db.network.getAllWithWormholeId()
 
     logger.info('Upserting bridge info')
 
     const { id: externalBridgeId } = await db.externalBridge.upsert({
-      select: { id: true },
-      where: {
-        name: 'Wormhole',
-        type: 'Wormhole',
-      },
-      create: {
-        id: nanoid(),
-        name: 'Wormhole',
-        type: 'Wormhole',
-      },
-      update: {},
+      name: 'Wormhole',
+      type: 'Wormhole',
     })
 
     const res = await fetch(env.WORMHOLE_LIST_URL)
@@ -112,6 +81,8 @@ export function buildWormholeSource({ logger, db, queue }: Dependencies) {
         symbol: token.symbol,
         name: token.name,
         logoUrl: token.logo,
+        decimals: null,
+        contractName: null,
       })
 
       tokenIds.add(sourceTokenId)
@@ -129,21 +100,16 @@ export function buildWormholeSource({ logger, db, queue }: Dependencies) {
             symbol: token.symbol,
             name: token.name,
             logoUrl: token.logo,
+            decimals: null,
+            contractName: null,
           })
 
           tokenIds.add(targetTokenId)
 
           await db.tokenBridge.upsert({
-            where: {
-              targetTokenId,
-            },
-            create: {
-              id: nanoid(),
-              sourceTokenId,
-              targetTokenId,
-              externalBridgeId,
-            },
-            update: {},
+            sourceTokenId,
+            targetTokenId,
+            externalBridgeId,
           })
         }
       }

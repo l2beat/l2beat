@@ -1,4 +1,5 @@
-import { Insertable, Selectable } from 'kysely'
+import { Insertable } from 'kysely'
+import { nanoid } from 'nanoid'
 import { Token } from '../../kysely/generated/types'
 
 export interface TokenRecord {
@@ -9,10 +10,18 @@ export interface TokenRecord {
   createdAt: Date
 }
 
-export function toRecord(row: Selectable<Token>): TokenRecord {
-  return row
-}
+export type UpsertableTokenRecord = Omit<
+  TokenRecord,
+  'id' | 'createdAt' | 'updatedAt'
+>
 
-export function toRow(record: TokenRecord): Insertable<Token> {
-  return record
+export function upsertableToRow(
+  record: UpsertableTokenRecord,
+): Insertable<Token> {
+  return {
+    ...record,
+    id: nanoid(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  }
 }

@@ -9,13 +9,13 @@ export interface DarkThemeToggleProps {
 }
 
 export function DarkThemeToggle({ withText }: DarkThemeToggleProps) {
-  const { theme, setTheme } = useTheme()
+  const { resolvedTheme, setTheme } = useTheme()
   return (
     <button
       className="flex gap-4 font-medium"
       title="Change color scheme"
       onClick={() => {
-        setTheme(theme === 'dark' ? 'light' : 'dark')
+        setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
       }}
     >
       <SunIcon

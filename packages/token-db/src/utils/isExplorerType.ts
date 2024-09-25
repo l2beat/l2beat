@@ -1,4 +1,4 @@
-import { ExplorerType } from '@prisma/client'
+import { ExplorerType } from '@l2beat/database'
 
 export { isExplorerType }
 
