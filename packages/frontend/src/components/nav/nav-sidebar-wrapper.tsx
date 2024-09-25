@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useEventCallback } from '~/hooks/use-event-callback'
 import { useEventListener } from '~/hooks/use-event-listener'
 import { cn } from '~/utils/cn'
@@ -30,6 +30,14 @@ export const NavSideBarWrapper = ({
     )
     timeout.current = setTimeout(() => setResizing(false), 300)
   })
+
+  useEffect(() => {
+    if (open) {
+      document.body.classList.add('max-xl:overflow-hidden')
+    } else {
+      document.body.classList.remove('max-xl:overflow-hidden')
+    }
+  }, [open])
 
   useEventListener('resize', onResize)
 
