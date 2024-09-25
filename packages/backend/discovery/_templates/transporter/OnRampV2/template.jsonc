@@ -20,15 +20,7 @@
     "tokenPools"
   ],
   "fields": {
-    "getTokenLimitAdmin": {
-      "target": {
-        "template": "transporter/ManyChainMultiSig"
-      }
-    },
     "tokenPools": {
-      "target": {
-        "template": "transporter/TokenPool"
-      },
       "handler": {
         "type": "arrayFromTwoEvents",
         "addEvent": "PoolAdded",
