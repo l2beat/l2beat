@@ -48,6 +48,7 @@ const freezeGracePeriod = discovery.getContractValue<number>(
 const committee = getCommittee(discovery)
 
 export const reddioex: Layer2 = {
+  isArchived: true,
   type: 'layer2',
   id: ProjectId('reddioex'),
   badges: [
