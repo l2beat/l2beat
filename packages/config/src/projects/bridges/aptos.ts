@@ -25,7 +25,7 @@ export const aptos: Bridge = {
       socialMedia: [
         'https://x.com/Aptos',
         'https://discord.com/invite/aptosnetwork',
-        'https://www.linkedin.com/company/aptos-foundation/',
+        'https://linkedin.com/company/aptos-foundation/',
         'https://t.me/aptos',
       ],
     },
