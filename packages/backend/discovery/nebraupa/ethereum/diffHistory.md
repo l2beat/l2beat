@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x93694ce8fa8ba9c589bf7831a22fdc813a009529
+
+# Diff at Wed, 25 Sep 2024 08:18:25 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@e8c4fe6b10f7918ebbd761bc35018ba84053b08c block: 20756756
+- current block number: 20826378
+
+## Description
+
+Two new circuitIDs added.
+
+## Watched changes
+
+```diff
+    contract UpaVerifier (0x3B946743DEB7B6C97F05B7a31B23562448047E3E) {
+    +++ description: None
+      values.getCircuitIds.4:
++        "0xce48e1cc84d60e97002a3a2cf4922518d29807902411c8fab5717ba51e0a3fa4"
+      values.getCircuitIds.3:
++        "0x6dd87ed53c75bcf4b71ea175076439d03ce87fd155ef425a77f53b8e95c60e38"
+    }
+```
+
 Generated with discovered.json: 0xcd08c465cd0b402f9140081649f6f0509db9da75
 
 # Diff at Fri, 06 Sep 2024 11:07:39 GMT:
