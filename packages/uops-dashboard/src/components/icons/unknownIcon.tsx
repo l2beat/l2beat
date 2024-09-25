@@ -6,7 +6,7 @@ export function UnknownIcon({ tooltipContent }: { tooltipContent: string }) {
       <Tooltip content={tooltipContent}>
         {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
         <svg
-          className="h-8 w-8 text-red-500 text-center inline-flex items-center ml-2"
+          className="ml-2 inline-flex h-8 w-8 items-center text-center text-red-500"
           width="24"
           height="24"
           viewBox="0 0 24 24"

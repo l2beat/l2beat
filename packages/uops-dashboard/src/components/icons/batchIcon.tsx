@@ -6,7 +6,7 @@ export function BatchIcon({ tooltipContent }: { tooltipContent: string }) {
       <Tooltip content={tooltipContent}>
         {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
         <svg
-          className="h-8 w-8 text-gray-900 dark:text-white text-center inline-flex items-center ml-2"
+          className="ml-2 inline-flex h-8 w-8 items-center text-center text-gray-900 dark:text-white"
           width="24"
           height="24"
           viewBox="0 0 24 24"

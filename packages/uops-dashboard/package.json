@@ -15,7 +15,7 @@
   "dependencies": {
     "@types/uuid": "^10.0.0",
     "ethers": "^5.7.2",
-    "flowbite-react": "^0.10.1",
+    "flowbite-react": "0.10.1",
     "next": "14.2.6",
     "react": "^18",
     "react-dom": "^18",
@@ -30,7 +30,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.6",
     "postcss": "^8",
-    "tailwindcss": "^3.4.1",
+    "tailwindcss": "3.4.1",
     "typescript": "^5"
   }
 }
