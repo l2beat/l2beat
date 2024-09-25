@@ -66,7 +66,7 @@ export function createDatabase(config?: PoolConfig) {
     externalBridge: new ExternalBridgeRepository(db),
     networkExplorer: new NetworkExplorerRepository(db),
     networkRpc: new NetworkRpcRepository(db),
-    networks: new NetworkRepository(db),
+    network: new NetworkRepository(db),
     token: new TokenRepository(db),
     tokenBridge: new TokenBridgeRepository(db),
     tokenMeta: new TokenMetaRepository(db),

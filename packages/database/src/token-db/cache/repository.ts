@@ -1,10 +1,10 @@
 import { BaseRepository } from '../../BaseRepository'
-import { CacheRecord, toRecord, toRow } from './entity'
+import { CacheRecord, UpsertableCacheRecord, upsertableToRow } from './entity'
 import { selectCache } from './select'
 
 export class CacheRepository extends BaseRepository {
-  async upsert(record: CacheRecord): Promise<void> {
-    const row = toRow(record)
+  async upsert(record: UpsertableCacheRecord): Promise<void> {
+    const row = upsertableToRow(record)
     await this.db
       .insertInto('Cache')
       .values(row)
@@ -26,6 +26,6 @@ export class CacheRepository extends BaseRepository {
       .where('Cache.key', '=', key)
       .limit(1)
       .executeTakeFirst()
-    return row && toRecord(row)
+    return row
   }
 }

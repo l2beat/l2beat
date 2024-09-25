@@ -8,7 +8,7 @@ import {
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { utils } from 'ethers'
-import { startsWith } from 'lodash'
+import { startsWith, uniq } from 'lodash'
 
 import { get$Implementations } from '@l2beat/discovery-types'
 import { chains } from '../../chains'
@@ -580,6 +580,17 @@ describe('layer2s', () => {
         })
       }
     })
+  })
+
+  describe('badges', () => {
+    for (const layer2 of layer2s) {
+      if (layer2.badges === undefined) {
+        continue
+      }
+      it(`${layer2.display.name} does not have duplicated badges`, () => {
+        expect(layer2.badges?.length).toEqual(uniq(layer2.badges).length)
+      })
+    }
   })
 })
 

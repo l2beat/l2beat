@@ -44,7 +44,7 @@ export default async function Page(props: Props) {
 
   return (
     <ContentWrapper mobileFull asChild>
-      <main className="md:mt-12">
+      <main>
         <ZkCatalogProjectPage {...projectDetails} />
       </main>
     </ContentWrapper>

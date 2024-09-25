@@ -1,6 +1,7 @@
 import compact from 'lodash/compact'
 import { type ReactNode } from 'react'
 import { env } from '~/env'
+import { ArchivedIcon } from '~/icons/archived'
 import { ActivityIcon } from '~/icons/pages/activity'
 import { CostsIcon } from '~/icons/pages/costs'
 import { DataAvailabilityIcon } from '~/icons/pages/data-availability'
@@ -9,6 +10,7 @@ import { LivenessIcon } from '~/icons/pages/liveness'
 import { RiskIcon } from '~/icons/pages/risk'
 import { SummaryIcon } from '~/icons/pages/summary'
 import { TvlIcon } from '~/icons/pages/tvl'
+import { UpcomingIcon } from '~/icons/upcoming'
 import { cn } from '~/utils/cn'
 import { LegacyNavbar } from './legacy-navbar'
 import { MobileNavProvider } from './mobile-nav-context'
@@ -70,6 +72,18 @@ export async function NavLayout({
           href: '/scaling/costs',
         },
       ],
+      secondaryLinks: [
+        {
+          title: 'Upcoming',
+          icon: <UpcomingIcon className="size-5" />,
+          href: '/scaling/upcoming',
+        },
+        {
+          title: 'Archived',
+          icon: <ArchivedIcon className="size-5" />,
+          href: '/scaling/archived',
+        },
+      ],
     },
     {
       title: 'Bridges',
@@ -83,6 +97,13 @@ export async function NavLayout({
           title: 'Risk Analysis',
           icon: <RiskIcon />,
           href: '/bridges/risk',
+        },
+      ],
+      secondaryLinks: [
+        {
+          title: 'Archived',
+          icon: <ArchivedIcon className="size-5" />,
+          href: '/bridges/archived',
         },
       ],
     },

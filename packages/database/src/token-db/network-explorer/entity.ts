@@ -1,4 +1,5 @@
-import { Insertable, Selectable } from 'kysely'
+import { Insertable } from 'kysely'
+import { nanoid } from 'nanoid'
 import { ExplorerType } from '../../kysely/generated/enums'
 import { NetworkExplorer } from '../../kysely/generated/types'
 
@@ -12,14 +13,18 @@ export interface NetworkExplorerRecord {
   createdAt: Date
 }
 
-export function toRecord(
-  row: Selectable<NetworkExplorer>,
-): NetworkExplorerRecord {
-  return row
-}
+export type UpsertableNetworkExplorerRecord = Omit<
+  Insertable<NetworkExplorer>,
+  'id' | 'updatedAt' | 'createdAt'
+>
 
-export function toRow(
-  record: NetworkExplorerRecord,
-): Insertable<NetworkExplorer> {
-  return record
+export function upsertableToRow(
+  record: UpsertableNetworkExplorerRecord,
+): NetworkExplorerRecord {
+  return {
+    ...record,
+    id: nanoid(),
+    updatedAt: new Date(),
+    createdAt: new Date(),
+  }
 }

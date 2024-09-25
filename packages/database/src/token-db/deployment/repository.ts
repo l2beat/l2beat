@@ -1,9 +1,31 @@
 import { BaseRepository } from '../../BaseRepository'
-import { DeploymentRecord, toRow } from './entity'
+import {
+  DeploymentRecord,
+  UpsertableDeploymentRecord,
+  upsertableToRow,
+} from './entity'
+import { selectDeployment } from './select'
 
 export class DeploymentRepository extends BaseRepository {
-  async upsert(record: DeploymentRecord): Promise<void> {
-    const row = toRow(record)
+  async getAll(): Promise<DeploymentRecord[]> {
+    const rows = await this.db
+      .selectFrom('Deployment')
+      .select(selectDeployment)
+      .execute()
+    return rows
+  }
+
+  async getByTokenIds(tokenIds: string[]): Promise<DeploymentRecord[]> {
+    const rows = await this.db
+      .selectFrom('Deployment')
+      .select(selectDeployment)
+      .where('Deployment.tokenId', 'in', tokenIds)
+      .execute()
+    return rows
+  }
+
+  async upsert(record: UpsertableDeploymentRecord): Promise<void> {
+    const row = upsertableToRow(record)
     await this.db
       .insertInto('Deployment')
       .values(row)

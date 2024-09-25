@@ -1,10 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
 
+import { Database } from '@l2beat/database'
+import { notUndefined } from '@l2beat/shared-pure'
 import { getContract, parseAbiItem } from 'viem'
 import { upsertManyTokenMeta } from '../db/helpers.js'
-import { PrismaClient } from '../db/prisma.js'
 import { NetworkConfig } from '../utils/getNetworksConfig.js'
-import { notUndefined } from '../utils/notUndefined.js'
 
 export { buildOnChainMetadataSource }
 
@@ -16,7 +16,7 @@ const abi = [
 
 type Dependencies = {
   logger: Logger
-  db: PrismaClient
+  db: Database
   networkConfig: NetworkConfig
 }
 
@@ -29,13 +29,7 @@ function buildOnChainMetadataSource({
 
   return async function (tokenIds: string[]) {
     logger.info(`Syncing tokens metadata...`)
-    const tokens = await db.token.findMany({
-      where: {
-        OR: tokenIds.map((id) => ({
-          id,
-        })),
-      },
-    })
+    const tokens = await db.token.getByIds(tokenIds)
 
     const tokensWithMetadata = await Promise.all(
       tokens.map(async (token) => {
@@ -76,10 +70,13 @@ function buildOnChainMetadataSource({
 
     const data = tokensWithMetadata.filter(notUndefined).map((token) => ({
       tokenId: token.id,
-      name: token.name,
-      symbol: token.symbol,
-      decimals: token.decimals,
+      name: token.name ?? null,
+      symbol: token.symbol ?? null,
+      decimals: token.decimals ?? null,
       source: { type: 'OnChain' as const },
+      externalId: null,
+      logoUrl: null,
+      contractName: null,
     }))
 
     logger.info('Inserting tokens', { count: tokens.length })

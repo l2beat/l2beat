@@ -1,11 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
 import { assert } from '@l2beat/shared-pure'
 
-import { nanoid } from 'nanoid'
+import { Database } from '@l2beat/database'
+import { notUndefined } from '@l2beat/shared-pure'
 import { getContract, parseAbiItem } from 'viem'
-import { PrismaClient } from '../db/prisma.js'
 import { NetworkConfig } from '../utils/getNetworksConfig.js'
-import { notUndefined } from '../utils/notUndefined.js'
 
 export { buildScrollCanonicalSource }
 
@@ -17,7 +16,7 @@ const abi = [
 
 type Dependencies = {
   logger: Logger
-  db: PrismaClient
+  db: Database
   networksConfig: NetworkConfig[]
 }
 
@@ -36,30 +35,12 @@ function buildScrollCanonicalSource({
     )?.publicClient
     assert(scrollClient, 'Scroll client not found')
 
-    const scrollNetwork = await db.network.findFirst({
-      select: { id: true },
-      where: {
-        name: 'Scroll',
-      },
-    })
+    const scrollNetwork = await db.network.findByName('Scroll')
     assert(scrollNetwork, 'Scroll network not found')
 
-    const tokens = await db.token.findMany({
-      where: {
-        deployment: {
-          OR: [
-            {
-              to: {
-                equals: SCROLL_MESSENGER,
-                mode: 'insensitive',
-              },
-            },
-          ],
-        },
-        network: {
-          id: scrollNetwork.id,
-        },
-      },
+    const tokens = await db.token.getByDeployment({
+      deploymentConstraints: [{ to: SCROLL_MESSENGER }],
+      networkId: scrollNetwork.id,
     })
 
     logger.info('Matching L2 tokens with L1 addresses...')
@@ -74,17 +55,16 @@ function buildScrollCanonicalSource({
         const l1Address = await contract.read
           .counterpart()
           .catch(() => undefined)
-        const l1Token = await db.token.findFirst({
-          where: {
-            network: {
-              name: 'Ethereum',
-            },
-            address: {
-              equals: l1Address,
-              mode: 'insensitive',
-            },
-          },
+
+        if (!l1Address) {
+          return
+        }
+
+        const l1Token = await db.token.findByNetwork({
+          network: 'Ethereum',
+          address: l1Address,
         })
+
         if (!l1Token) {
           return
         }
@@ -92,16 +72,12 @@ function buildScrollCanonicalSource({
         return {
           sourceTokenId: l1Token.id,
           targetTokenId: token.id,
+          externalBridgeId: null,
         }
       }),
     )
 
-    await db.tokenBridge.upsertMany({
-      data: tokensBridgeToUpsert
-        .filter(notUndefined)
-        .map((t) => ({ id: nanoid(), ...t })),
-      conflictPaths: ['targetTokenId'],
-    })
+    await db.tokenBridge.upsertMany(tokensBridgeToUpsert.filter(notUndefined))
 
     logger.info(
       `Synced ${tokensBridgeToUpsert.length} Scroll canonical tokens data`,
