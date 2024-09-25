@@ -1,12 +1,12 @@
 import { Logger } from '@l2beat/backend-tools'
+import { Database } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
 import { nanoid } from 'nanoid'
-import { PrismaClient } from '../db/prisma.js'
 import { NetworkConfig, WithExplorer } from '../utils/getNetworksConfig.js'
 import { TokenUpdateQueue } from '../utils/queue/wrap.js'
 
 type Dependencies = {
-  db: PrismaClient
+  db: Database
   logger: Logger
   networkConfig: WithExplorer<NetworkConfig>
   queue: TokenUpdateQueue
@@ -25,24 +25,12 @@ export function buildLayerZeroV1Source({
 
     logger.info('Upserting bridge info')
     const { id: externalBridgeId } = await db.externalBridge.upsert({
-      select: { id: true },
-      where: {
-        type: 'LayerZeroV1',
-      },
-      create: {
-        id: nanoid(),
-        name: 'LayerZeroV1',
-        type: 'LayerZeroV1',
-      },
-      update: {},
+      name: 'LayerZeroV1',
+      type: 'LayerZeroV1',
     })
 
     // TODO We have to decide whether we inject required data, filter it out or something else
-    const network = await db.network.findFirst({
-      where: {
-        AND: { chainId, layerZeroV1EndpointAddress: { not: null } },
-      },
-    })
+    const network = await db.network.findByChainId(chainId)
 
     if (!network || !network.layerZeroV1EndpointAddress) {
       logger.warn('Network has no layer zero v1 endpoint assigned')
@@ -116,36 +104,31 @@ export function buildLayerZeroV1Source({
     logger.info('ERC20 addresses fetched', { count: ercAddresses.length })
 
     logger.info('Inserting tokens', { count: ercAddresses.length })
-    await db.token.upsertMany({
-      data: ercAddresses.map((address) => ({
+    await db.token.upsertMany(
+      ercAddresses.map((address) => ({
         id: nanoid(),
         address,
         networkId,
       })),
-      conflictPaths: ['networkId', 'address'],
-    })
+    )
 
     logger.info('Inserting bridge escrows', { count: ercAddresses.length })
-    const tokenEntities = await db.token.findMany({
-      select: { id: true, networkId: true, address: true },
-      where: {
-        OR: ercAddresses.map((address) => ({
-          networkId: networkId,
-          address: address,
-        })),
-      },
-    })
+    const tokenEntities = await db.token.getByNetworks(
+      ercAddresses.map((address) => ({
+        address,
+        networkId,
+      })),
+    )
 
     logger.info('Upserting bridge escrows', { count: ercAddresses.length })
-    await db.bridgeEscrow.upsertMany({
-      data: ercAddresses.map((address) => ({
+    await db.bridgeEscrow.upsertMany(
+      ercAddresses.map((address) => ({
         id: nanoid(),
         externalBridgeId,
         address,
         networkId,
       })),
-      conflictPaths: ['networkId', 'address'],
-    })
+    )
 
     await Promise.all(tokenEntities.map((token) => queue.add(token.id)))
 

@@ -14,7 +14,6 @@
     "0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B": "Outbox",
     "0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2": "SequencerInbox",
     "0x92ff91308F5f1036435f23c2F4F136Bb7475425d": "UpgradeExecutor",
-    "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF": "Caldera Multisig",
     "0x66E535e8D2ebf13F49F3D49e5c50395a97C137b1": "Molten Token",
     "0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80": "L1OrbitERC20Gateway"
   },

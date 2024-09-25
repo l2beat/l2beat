@@ -1,17 +1,17 @@
 import { Logger } from '@l2beat/backend-tools'
+import { Database } from '@l2beat/database'
+import { notUndefined } from '@l2beat/shared-pure'
 import { http, PublicClient, createPublicClient } from 'viem'
 import * as viemChains from 'viem/chains'
-import { PrismaClient } from '../db/prisma.js'
 import { DatabaseCache } from './cache/database-cache.js'
 import {
   NetworkExplorerClient,
   instantiateExplorer,
 } from './explorers/index.js'
-import { notUndefined } from './notUndefined.js'
 
 type Dependencies = {
   logger: Logger
-  db: PrismaClient
+  db: Database
 }
 
 export type NetworkConfig = {
@@ -32,17 +32,12 @@ export async function getNetworksConfig({
 
   logger.info(`Getting networks config...`)
 
-  const networks = await db.network.findMany({
-    include: {
-      rpcs: true,
-      explorer: true,
-    },
-  })
+  const networks = await db.network.getAllWithConfigs()
 
   const chains = Object.values(viemChains) as viemChains.Chain[]
 
   const result = networks
-    .filter((network) => network.rpcs[0]?.url)
+    .filter((network) => network.rpc?.url)
     .map((network) => {
       const chain = chains.find((c) => c.id === network.chainId)
 
@@ -50,8 +45,8 @@ export async function getNetworksConfig({
         return
       }
 
-      const explorerClient = network.explorer
-        ? instantiateExplorer(network.explorer, {
+      const explorerClient = network.explorers[0]
+        ? instantiateExplorer(network.explorers[0], {
             cache: cache,
             chainId: network.chainId,
           })
@@ -63,7 +58,7 @@ export async function getNetworksConfig({
         chainId: network.chainId,
         publicClient: createPublicClient({
           chain,
-          transport: http(network.rpcs[0]?.url, {
+          transport: http(network.rpc?.url, {
             retryCount: 15,
             retryDelay: 1000,
           }),
