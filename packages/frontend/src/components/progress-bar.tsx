@@ -23,6 +23,11 @@ export function ProgressBar() {
   )
 }
 
+/**
+ * This code is copied from next13-progressbar to fix some edge cases for our app
+ * https://github.com/ndungtse/next13-progressbar
+ */
+
 export function useRouterWithProgressBar() {
   const router = useNextRouter()
   const pathname = usePathname()
@@ -152,10 +157,11 @@ const Next13ProgressBar = React.memo(
         // Skip anchors with download attribute
         if (anchorElement.hasAttribute('download')) return
 
-        const hasTooltip = Array.from(anchorElement.children).some(
-          (child) => child.getAttribute('data-role') === 'tooltip-trigger',
+        const hasTooltip = isTooltipTrigger(
+          event.target as HTMLElement,
+          anchorElement,
         )
-
+        console.log('hasTooltip', hasTooltip, isMobile)
         // Skip anchors with tooltip as children on mobile
         if (isMobile && hasTooltip) {
           return
@@ -217,6 +223,8 @@ const Next13ProgressBar = React.memo(
         mutationObserver.disconnect()
       }
     }, [delay, isMobile, showOnShallow])
+
+    if (breakpoint === undefined) return null
 
     return (
       <style>
@@ -301,3 +309,25 @@ const Next13ProgressBar = React.memo(
   () => true,
 )
 Next13ProgressBar.displayName = 'Next13ProgressBar'
+
+function isTooltipTrigger(
+  target: HTMLElement,
+  currentTarget: HTMLAnchorElement,
+) {
+  if (currentTarget.getAttribute('data-role') === 'tooltip-trigger') {
+    return true
+  }
+
+  let tempElement: HTMLElement | null = target
+  while (tempElement) {
+    if (tempElement.getAttribute('data-role') === 'tooltip-trigger') {
+      return true
+    }
+    if (tempElement.isEqualNode(currentTarget)) {
+      return false
+    }
+    tempElement = tempElement.parentElement
+  }
+
+  return false
+}
