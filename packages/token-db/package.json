@@ -17,7 +17,7 @@
     "lint": "biome lint .",
     "lint:fix": "biome lint . --apply",
     "start": "tsx src/main.ts",
-    "typecheck": "prisma generate && tsc --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@bull-board/api": "^5.17.1",
