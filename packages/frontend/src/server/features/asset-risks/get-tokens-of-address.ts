@@ -105,8 +105,8 @@ async function getAllLogs(
 ): ReturnType<typeof getAllLogsInner> {
   if (!mode) {
     return Promise.all([
-      await getAllLogs(client, address, fromBlock, toBlock, 'from'),
-      await getAllLogs(client, address, fromBlock, toBlock, 'to'),
+      getAllLogs(client, address, fromBlock, toBlock, 'from'),
+      getAllLogs(client, address, fromBlock, toBlock, 'to'),
     ]).then((logs) => logs.flat())
   }
 
@@ -114,9 +114,9 @@ async function getAllLogs(
     return await getAllLogsInner(client, address, fromBlock, toBlock, mode)
   } catch (e) {
     const half = (fromBlock + toBlock) / 2n
-    return [
-      ...(await getAllLogs(client, address, fromBlock, half, mode)),
-      ...(await getAllLogs(client, address, half + 1n, toBlock, mode)),
-    ]
+    return await Promise.all([
+      getAllLogs(client, address, fromBlock, half, mode),
+      getAllLogs(client, address, half + 1n, toBlock, mode),
+    ]).then((logs) => logs.flat())
   }
 }
