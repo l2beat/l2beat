@@ -41,7 +41,7 @@ export async function getTokensOfAddress(address: Address) {
 
   const tokens = Object.fromEntries(
     (
-      await Promise.all(
+      await Promise.allSettled(
         chains.map<Promise<[number, Address[]]>>(async (chainId) => {
           const chain = getChain(chainId)
           if (!chain) return [chainId, []]
@@ -66,7 +66,10 @@ export async function getTokensOfAddress(address: Address) {
           return [chainId, Array.from(tokens)] as [number, Address[]]
         }),
       )
-    ).filter(([_, tokens]) => tokens.length > 0),
+    )
+      .filter((p) => p.status === 'fulfilled')
+      .map((p) => p.value)
+      .filter(([_, tokens]) => tokens.length > 0),
   )
 
   return tokens
