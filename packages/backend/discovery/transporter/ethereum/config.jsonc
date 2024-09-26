@@ -37,7 +37,8 @@
     */
     "0x66598216D8E4d9AFE0F06d525B335b762229842f": "EtherSenderReceiver",
     "0xB9281d9d494EE5b8b06f5ECb43bE37684804b818": "ChainlinkCcipGateway",
-    "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449": "RBACTimelock"
+    "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449": "RBACTimelock",
+    "0xE561d5E02207fb5eB32cca20a699E0d8919a1476": "RouterOld"
   },
   "overrides": {
     "ARM": {
