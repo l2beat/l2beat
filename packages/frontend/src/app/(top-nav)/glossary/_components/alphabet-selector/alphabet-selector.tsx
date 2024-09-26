@@ -1,9 +1,8 @@
 'use client'
 
-import { useEffect, useMemo, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { OverflowWrapper } from '~/components/core/overflow-wrapper'
 
-import debounce from 'lodash/debounce'
 import { glossarySectionTreshold } from '~/components/nav/consts'
 import { useCurrentSection } from '~/hooks/use-current-section'
 import { scrollHorizontallyToItem } from '~/utils/scroll-to-item'
@@ -21,13 +20,9 @@ export function AlphabetSelector<T extends { id: string }>(props: Props<T>) {
   const overflowContainer = useRef<HTMLDivElement>(null)
   const currentSection = useCurrentSection(glossarySectionTreshold)
 
-  const scrollToItem = useMemo(
-    () =>
-      debounce(
-        (item: HTMLLIElement, overflowingContainer: HTMLElement) =>
-          scrollHorizontallyToItem({ item, overflowingContainer }),
-        200,
-      ),
+  const scrollToItem = useCallback(
+    (item: HTMLLIElement, overflowingContainer: HTMLElement) =>
+      scrollHorizontallyToItem({ item, overflowingContainer }),
     [],
   )
 
