@@ -136,14 +136,14 @@ export async function NavLayout({
       >
         {!!legacyNav && topChildren}
         {!!legacyNav && <LegacyNavbar logoLink={logoLink} groups={groups} />}
-        <MobileNavbar logoLink={logoLink} groups={groups} />
+        <MobileNavbar {...{ groups, logoLink }} />
         <NavSidebar
           logoLink={logoLink}
           groups={groups}
           legacyNav={!!legacyNav}
         />
         <div className="min-w-0 flex-1">
-          {!legacyNav && topChildren}
+          {!legacyNav && topChildren && <div className="hidden xl:block">{topChildren}</div>}
           {children}
         </div>
       </div>
