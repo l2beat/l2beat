@@ -38,9 +38,17 @@
     "0x66598216D8E4d9AFE0F06d525B335b762229842f": "EtherSenderReceiver",
     "0xB9281d9d494EE5b8b06f5ECb43bE37684804b818": "ChainlinkCcipGateway",
     "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449": "RBACTimelock",
-    "0xE561d5E02207fb5eB32cca20a699E0d8919a1476": "RouterOld"
+    "0xE561d5E02207fb5eB32cca20a699E0d8919a1476": "RouterOld",
+    "0x514910771AF9Ca656af840dff83E8264EcF986CA": "LinkToken",
+    "0x3a129e6C18b23d18BA9E6Aa14Dc2e79d1f91c6c5": "OffRamp1",
+    "0x86B47d8411006874eEf8E4584BdFD7be8e5549d1": "OnRamp1",
+    "0x31f6ab382DDeb9A316Ab61C3945a5292a50a89AB": "CommitStore1",
+    "0x8B63b3DE93431C0f756A493644d128134291fA1b": "ARM"
   },
   "overrides": {
+    "LinkToken": {
+      "ignoreDiscovery": true
+    },
     "ARM": {
       "ignoreMethods": ["getConfigDetails"] // information about voters - bless, curse, curseUnvote
     },

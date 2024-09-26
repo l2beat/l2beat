@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x73ed92356cb513a129b69239d4dc763008705edd
+Generated with discovered.json: 0x4ed4705a64fb2e0531efb1e85a7c1dad812046b2
 
-# Diff at Wed, 25 Sep 2024 17:26:03 GMT:
+# Diff at Thu, 26 Sep 2024 08:52:02 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
 - comparing to: main@374d77799a44e3b2fcc4828675ccc0b0ff6146d0 block: 20769260
-- current block number: 20829091
+- current block number: 20833633
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+New (unknown) supported chain added, new arm-related contracts. Added shape based discovery.
 
 ## Watched changes
 
@@ -22,13 +22,6 @@ Provide description of changes. This section will be preserved.
       values.getOffRamps.1:
 -        "0x1C207dabc46902dF9028b27D6d301c3849b2D12c"
 +        "0xB095900fB91db00E6abD247A5A5AD1cee3F20BF7"
-      values.getOnRamps.3:
--        "0x86B47d8411006874eEf8E4584BdFD7be8e5549d1"
-      values.getOnRamps.2:
--        "0x0f27c8532457b66D6037141DEB0ed479Dad04B3c"
-      values.getOnRamps.1:
--        "0xd0B5Fc9790a6085b048b8Aa1ED26ca2b3b282CF2"
-+        "0x86B47d8411006874eEf8E4584BdFD7be8e5549d1"
     }
 ```
 
@@ -47,6 +40,14 @@ Provide description of changes. This section will be preserved.
 ```
 
 ```diff
+    contract BurnMintTokenPool (0x80Cc104119901fd66088C9a8219E50D9547dE2d4) {
+    +++ description: None
+      values.getSupportedChains.3:
++        "15971525489660198786"
+    }
+```
+
+```diff
     contract PriceRegistry (0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad) {
     +++ description: None
       values.getPriceUpdaters.14:
@@ -57,11 +58,10 @@ Provide description of changes. This section will be preserved.
 ```
 
 ```diff
-    contract BETS (0x94025780a1aB58868D9B2dBBB775f44b32e8E6e5) {
+    contract BurnMintTokenPool (0xd8f734c938200BA294d0De5B555E8ff77d66c351) {
     +++ description: None
-      values.totalSupply:
--        "2496749749164565146010116299"
-+        "2496749949164565146010116299"
+      values.getSupportedChains.3:
++        "15971525489660198786"
     }
 ```
 
@@ -76,14 +76,6 @@ Provide description of changes. This section will be preserved.
 -        "0x569940e02D4425eac61A7601632eC00d69f75c17"
       values.getOffRamps.4:
 -        "0x0af338F0E314c7551bcE0EF516d46d855b0Ee395"
-      values.getOnRamps.7:
--        "0x925228D7B82d883Dde340A55Fe8e6dA56244A22C"
-      values.getOnRamps.6:
--        "0x91D25A56Db77aD5147437d8B83Eb563D46eBFa69"
-      values.getOnRamps.5:
--        "0x3df8dAe2d123081c4D5E946E655F7c109B9Dd630"
-      values.getOnRamps.4:
--        "0x35F0ca9Be776E4B38659944c257bDd0ba75F1B8B"
     }
 ```
 
@@ -102,12 +94,6 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract EVM2EVMOffRamp (0x418dcbCf229897d0CCf1B8B464Db06C23879FBB4)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract LinkToken (0x514910771AF9Ca656af840dff83E8264EcF986CA)
     +++ description: None
 ```
 
@@ -144,9 +130,8 @@ Provide description of changes. This section will be preserved.
  ...-0x418dcbCf229897d0CCf1B8B464Db06C23879FBB4.sol | 3430 ++++++++++++++++++++
  ...-0x362A221C3cfd7F992DFE221687323F0BA9BA8187.sol | 2982 +++++++++++++++++
  ...-0x626189C882A80fF0D036d8D9f6447555e81F78E9.sol | 2982 +++++++++++++++++
- .../transporter/ethereum/.flat/LinkToken.sol       |  266 ++
  .../ethereum/.flat/TokenAdminRegistry.sol          |  640 ++++
- 8 files changed, 16324 insertions(+)
+ 7 files changed, 16058 insertions(+)
 ```
 
 ## Config/verification related changes
@@ -154,14 +139,6 @@ Provide description of changes. This section will be preserved.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 20769260 (main branch discovery), not current.
-
-```diff
-    contract BurnMintTokenPool (0x057152DB365B47851B0A0bd431644b8eE21fE1b4) {
-    +++ description: None
-      template:
--        "transporter/TokenPool"
-    }
-```
 
 ```diff
     contract EVM2EVMOffRamp (0x0af338F0E314c7551bcE0EF516d46d855b0Ee395) {
@@ -193,14 +170,6 @@ discovery. Values are for block 20769260 (main branch discovery), not current.
       template:
 -        "transporter/CommitStore"
 +        "transporter/CommitStoreV1"
-    }
-```
-
-```diff
-    contract BurnMintTokenPool (0x123ed44f3B863a684437Ebf18F8a744c250Ee5cA) {
-    +++ description: None
-      template:
--        "transporter/TokenPool"
     }
 ```
 
@@ -262,19 +231,8 @@ discovery. Values are for block 20769260 (main branch discovery), not current.
 ```
 
 ```diff
-    contract BurnMintTokenPool (0x2dd317E7e36544C5222818F228d607c209517470) {
+    contract CommitStore1 (0x31f6ab382DDeb9A316Ab61C3945a5292a50a89AB) {
     +++ description: None
-      template:
--        "transporter/TokenPool"
-    }
-```
-
-```diff
-    contract CommitStore (0x31f6ab382DDeb9A316Ab61C3945a5292a50a89AB) {
-    +++ description: None
-      name:
--        "CommitStore1"
-+        "CommitStore"
       template:
 -        "transporter/CommitStore"
 +        "transporter/CommitStoreV1"
@@ -303,11 +261,8 @@ discovery. Values are for block 20769260 (main branch discovery), not current.
 ```
 
 ```diff
-    contract EVM2EVMOffRamp (0x3a129e6C18b23d18BA9E6Aa14Dc2e79d1f91c6c5) {
+    contract OffRamp1 (0x3a129e6C18b23d18BA9E6Aa14Dc2e79d1f91c6c5) {
     +++ description: None
-      name:
--        "OffRamp1"
-+        "EVM2EVMOffRamp"
       template:
 -        "transporter/OffRamp"
 +        "transporter/OffRampV1"
@@ -423,14 +378,6 @@ discovery. Values are for block 20769260 (main branch discovery), not current.
 ```
 
 ```diff
-    contract BurnMintTokenPool (0x57D3bb46aF4A9b210FAE046796013090D428475F) {
-    +++ description: None
-      template:
--        "transporter/TokenPool"
-    }
-```
-
-```diff
     contract EVM2EVMOffRamp (0x61135E701a2214C170c5F596D0067798FEfbaaE4) {
     +++ description: None
       name:
@@ -480,7 +427,7 @@ discovery. Values are for block 20769260 (main branch discovery), not current.
     +++ description: None
       template:
 -        "transporter/Router"
-+        "transporter/RouterV1"
++        "transporter/RouterV1_2_0"
     }
 ```
 
@@ -494,11 +441,8 @@ discovery. Values are for block 20769260 (main branch discovery), not current.
 ```
 
 ```diff
-    contract EVM2EVMOnRamp (0x86B47d8411006874eEf8E4584BdFD7be8e5549d1) {
+    contract OnRamp1 (0x86B47d8411006874eEf8E4584BdFD7be8e5549d1) {
     +++ description: None
-      name:
--        "OnRamp1"
-+        "EVM2EVMOnRamp"
       template:
 -        "transporter/OnRamp"
 +        "transporter/OnRampV1"
@@ -668,14 +612,6 @@ discovery. Values are for block 20769260 (main branch discovery), not current.
 ```
 
 ```diff
-    contract BurnMintTokenPool (0xcd196D3905AfA0eCB4e0e62C2D7d6c52f9C73526) {
-    +++ description: None
-      template:
--        "transporter/TokenPool"
-    }
-```
-
-```diff
     contract EVM2EVMOffRamp (0xCe6364dBe64D2789D916180131fAda2ABFF702E8) {
     +++ description: None
       template:
@@ -766,11 +702,14 @@ discovery. Values are for block 20769260 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Router (0xE561d5E02207fb5eB32cca20a699E0d8919a1476) {
+    contract RouterOld (0xE561d5E02207fb5eB32cca20a699E0d8919a1476) {
     +++ description: None
       name:
 -        "Router2"
-+        "Router"
++        "RouterOld"
+      template:
+-        "transporter/RouterV2"
++        "transporter/RouterV1_0_0"
     }
 ```
 
@@ -817,14 +756,6 @@ discovery. Values are for block 20769260 (main branch discovery), not current.
 ```
 
 ```diff
-    contract BurnMintTokenPool (0xf0D19c04f04382048fC9ad157C529CeB2c7be823) {
-    +++ description: None
-      template:
--        "transporter/TokenPool"
-    }
-```
-
-```diff
     contract EVM2EVMOnRamp (0xF538dA6c673A30338269655f4e019B71ba58CFd4) {
     +++ description: None
       name:
@@ -846,66 +777,6 @@ discovery. Values are for block 20769260 (main branch discovery), not current.
 -        "transporter/OffRamp"
 +        "transporter/OffRampV1"
     }
-```
-
-```diff
-+   Status: CREATED
-    contract ERC20MintablePauseableUpgradeable (0x1c22531AA9747d76fFF8F0A43b37954ca67d28e0)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract ERC20MintablePauseableUpgradeable (0x8BF591Eae535f93a242D5A954d3Cde648b48A5A8)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract BETS (0x94025780a1aB58868D9B2dBBB775f44b32e8E6e5)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract  (0xb2F30A7C980f052f02563fb518dcc39e6bf38175)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract BridgedNuon (0xCA160D11087E03fd398d40f561cd4768825f4958)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract GnosisSafe (0xe04Cd8884098Ac5f8237642B8e999269468092aA)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract ERC20MintablePauseableUpgradeable (0xe85411C030fB32A9D8b14Bbbc6CB19417391F711)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract ProxyAdmin (0xf70B2473e7808eDAeA4A5Cea95996A9B1843D96C)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract CCIPTokenProxy (0xF9F5bcd3a50653387ee0b9d60C1905854093e8Fb)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract Proxy (0xffffffaEff0B96Ea8e4f94b2253f31abdD875847)
-    +++ description: None
 ```
 
 Generated with discovered.json: 0x3d51ed0e555f35d54a152ced044fd6320a96f883
