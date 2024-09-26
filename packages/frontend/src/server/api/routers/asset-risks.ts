@@ -1,6 +1,6 @@
 import { getAddress } from 'viem'
 import { z } from 'zod'
-import { getTokensOfAddress } from '~/server/features/asset-risk/get-tokens-of-address'
+import { getTokensOfAddress } from '~/server/features/asset-risks/get-tokens-of-address'
 import { procedure, router } from '../trpc'
 
 export const assetRisksRouter = router({

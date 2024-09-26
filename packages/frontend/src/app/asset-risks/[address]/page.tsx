@@ -9,7 +9,7 @@ import { AssetId, ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import {
   getChain,
   getChainStage,
-} from '~/server/features/asset-risk/utils/chains'
+} from '~/server/features/asset-risks/utils/chains'
 import { Footer } from '../_components/footer'
 import { DetailsHeader } from './_components/details-header'
 import { Disclaimer } from './_components/disclaimer'
