@@ -43,7 +43,7 @@ export default async function RootLayout({
               storageKey="l2beat-theme"
               disableTransitionOnChange
             >
-              <TooltipProvider delayDuration={300}>
+              <TooltipProvider delayDuration={300} disableHoverableContent>
                 <GlossaryContextProvider
                   terms={terms.map((term) => ({
                     id: term.id,
