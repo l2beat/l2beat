@@ -161,7 +161,7 @@ const Next13ProgressBar = React.memo(
           event.target as HTMLElement,
           anchorElement,
         )
-        console.log('hasTooltip', hasTooltip, isMobile)
+
         // Skip anchors with tooltip as children on mobile
         if (isMobile && hasTooltip) {
           return
