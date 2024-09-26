@@ -3,9 +3,9 @@ import generatedJson from '@l2beat/config/src/tokens/generated.json'
 import { AssetId, ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import {
   http,
-  Address,
-  Hex,
-  PublicClient,
+  type Address,
+  type Hex,
+  type PublicClient,
   createPublicClient,
   getAddress,
   parseAbiItem,
@@ -54,7 +54,7 @@ export async function getTokensOfAddress(address: string) {
 
           const blockNumber = await client.getBlockNumber()
           const logs = await getAllLogs(
-            client as any,
+            client as unknown as PublicClient,
             zeroAddress,
             0n,
             blockNumber,

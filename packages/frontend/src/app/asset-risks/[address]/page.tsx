@@ -6,11 +6,14 @@ import { http, type Hex, createPublicClient, isAddress, parseAbi } from 'viem'
 import { type ScalingProjectRisk, chainConverter } from '@l2beat/config'
 import { layer2s } from '@l2beat/config/build/src/projects/layer2s'
 import { AssetId, ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  getChain,
+  getChainStage,
+} from '~/server/features/asset-risk/utils/chains'
 import { Footer } from '../_components/footer'
 import { DetailsHeader } from './_components/details-header'
 import { Disclaimer } from './_components/disclaimer'
 import { TokensTable } from './_components/table/tokens-table'
-import { getChain, getChainStage } from './_utils/chains'
 
 type Token = Omit<(typeof generatedJson.tokens)[number], 'address'> & {
   address?: Hex
