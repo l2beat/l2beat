@@ -9,7 +9,6 @@ import {
   createPublicClient,
   getAddress,
   parseAbiItem,
-  zeroAddress,
 } from 'viem'
 import { getChain } from './utils/chains'
 
@@ -17,7 +16,7 @@ type Token = Omit<(typeof generatedJson.tokens)[number], 'address'> & {
   address?: Hex
 } & { id: AssetId }
 
-export async function getTokensOfAddress(address: string) {
+export async function getTokensOfAddress(address: Address) {
   const groupedTokens = Object.entries(
     generatedJson.tokens.reduce<Record<number, Token[]>>((acc, token) => {
       const { chainId, address } = token
@@ -55,7 +54,7 @@ export async function getTokensOfAddress(address: string) {
           const blockNumber = await client.getBlockNumber()
           const logs = await getAllLogs(
             client as unknown as PublicClient,
-            zeroAddress,
+            address,
             0n,
             blockNumber,
           )
