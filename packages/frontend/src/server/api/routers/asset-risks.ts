@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { procedure, router } from '../trpc'
 import { getTokensOfAddress } from '~/server/features/asset-risk/get-tokens-of-address'
+import { procedure, router } from '../trpc'
 
 export const assetRisksRouter = router({
   tokens: procedure
