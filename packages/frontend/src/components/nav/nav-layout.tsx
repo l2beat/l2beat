@@ -143,7 +143,9 @@ export async function NavLayout({
           legacyNav={!!legacyNav}
         />
         <div className="min-w-0 flex-1">
-          {!legacyNav && topChildren && <div className="hidden xl:block">{topChildren}</div>}
+          {!legacyNav && topChildren && (
+            <div className="hidden xl:block">{topChildren}</div>
+          )}
           {children}
         </div>
       </div>

@@ -1,10 +1,10 @@
 import Link from 'next/link'
+import { ReactNode } from 'react'
 import { Logo } from '../logo'
 import { MobileNavLink } from './mobile-nav-link'
 import { MobileNavTabs } from './mobile-nav-tabs'
 import { MobileNavTriggerOpen } from './mobile-nav-trigger'
 import { type NavGroup } from './types'
-import { ReactNode } from 'react'
 
 /**
  * Mobile navigation bar that is shown on the very top on small screens.
