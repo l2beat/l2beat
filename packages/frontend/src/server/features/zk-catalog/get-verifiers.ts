@@ -5,9 +5,14 @@ import {
   unstable_noStore as noStore,
 } from 'next/cache'
 import { z } from 'zod'
+import { env } from '~/env'
 import { db } from '~/server/database'
 
 export async function getVerifiers() {
+  if (env.MOCK) {
+    return getMockVerifiers()
+  }
+
   noStore()
 
   // unstable-cache is limited - uses JSON.stringify under the hood causing
@@ -38,6 +43,14 @@ const getCachedVerifiersStatus = cache(
   ['zkCatalogVerifiers'],
   { revalidate: 10 * UnixTime.MINUTE },
 )
+
+function getMockVerifiers() {
+  const verifiers = getVerifiersFromConfig()
+  return verifiers.map((v) => ({
+    address: v.contractAddress.toString(),
+    timestamp: UnixTime.now(),
+  }))
+}
 
 export const VerifierStatus = z.object({
   address: z.string(),
