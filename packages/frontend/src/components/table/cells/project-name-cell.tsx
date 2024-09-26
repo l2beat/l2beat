@@ -32,14 +32,7 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
       <div>
         <span className="text-base font-bold leading-none md:text-lg">
           {project.shortName ?? project.name}
-        </span>
-        {project.hostChain && (
-          <span className="block text-[0.8125rem] font-medium leading-[0.9375rem] text-gray-500 dark:text-zinc-400">
-            L3 on {project.hostChain}
-          </span>
-        )}
-      </div>
-      {project.isVerified === false && (
+          {project.isVerified === false && (
         <span className="pl-1.5">
           <Tooltip>
             <TooltipTrigger>
@@ -96,6 +89,13 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
           <NotSyncedBadge syncedUntil={project.data?.syncStatus.syncedUntil} />
         </div>
       )}
+        </span>
+        {project.hostChain && (
+          <span className="block text-[0.8125rem] font-medium leading-[0.9375rem] text-gray-500 dark:text-zinc-400">
+            L3 on {project.hostChain}
+          </span>
+        )}
+      </div>
     </div>
   )
 }
