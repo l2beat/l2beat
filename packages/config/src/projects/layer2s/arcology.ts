@@ -3,6 +3,7 @@ import { Layer2 } from './types'
 
 export const arcology: Layer2 = upcomingL2({
   id: 'arcology',
+  createdAt: '2024-07-02T14:49:31',
   display: {
     name: 'Arcology Network',
     slug: 'arcology',

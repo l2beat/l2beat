@@ -3,6 +3,7 @@ import { Layer2 } from './types'
 
 export const polygonpos2: Layer2 = upcomingL2({
   id: 'polygon-pos-2',
+  createdAt: '2023-08-01T13:29:14Z',
   display: {
     name: 'Polygon PoS 2.0',
     slug: 'polygon-pos-2',

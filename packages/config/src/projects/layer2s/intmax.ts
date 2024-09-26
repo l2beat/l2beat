@@ -3,6 +3,7 @@ import { Layer2 } from './types'
 
 export const intmax: Layer2 = upcomingL2({
   id: 'intmax',
+  createdAt: '2024-07-29T12:27:51',
   display: {
     name: 'INTMAX',
     slug: 'intmax',

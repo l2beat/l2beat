@@ -3,6 +3,7 @@ import { Layer2 } from './types'
 
 export const oev: Layer2 = upcomingL2({
   id: 'oev',
+  createdAt: '2024-02-07T13:39:29',
   display: {
     name: 'OEV Network',
     slug: 'oev',

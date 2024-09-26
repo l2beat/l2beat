@@ -3,6 +3,7 @@ import { Layer2 } from './types'
 
 export const superseed: Layer2 = upcomingL2({
   id: 'superseed',
+  createdAt: '2024-04-28T14:57:18',
   display: {
     name: 'Superseed',
     slug: 'superseed',

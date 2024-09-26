@@ -3,6 +3,7 @@ import { Layer2 } from './types'
 
 export const debank: Layer2 = upcomingL2({
   id: 'debank',
+  createdAt: '2023-09-28T12:40:49',
   display: {
     name: 'Debank Chain',
     slug: 'debank',

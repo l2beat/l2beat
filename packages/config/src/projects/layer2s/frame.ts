@@ -3,6 +3,7 @@ import { Layer2 } from './types'
 
 export const frame: Layer2 = upcomingL2({
   id: 'frame',
+  createdAt: '2023-09-28T12:40:49',
   display: {
     name: 'Frame',
     slug: 'frame',

@@ -3,6 +3,7 @@ import { Layer2 } from './types'
 
 export const align: Layer2 = upcomingL2({
   id: 'align',
+  createdAt: '2024-07-02T14:50:43',
   display: {
     name: 'Align Network',
     slug: 'align',

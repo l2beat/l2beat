@@ -3,6 +3,7 @@ import { Layer2 } from './types'
 
 export const ethernity: Layer2 = upcomingL2({
   id: 'ethernity',
+  createdAt: '2024-06-12T08:54:32',
   display: {
     name: 'Ethernity',
     slug: 'ethernity',

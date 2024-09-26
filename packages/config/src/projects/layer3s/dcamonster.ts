@@ -3,6 +3,7 @@ import { Layer3 } from './types'
 
 export const dcamonster: Layer3 = upcomingL3({
   id: 'dcamonster',
+  createdAt: '2024-04-08T12:02:20',
   hostChain: 'Multiple',
   display: {
     name: 'DCA.Monster',

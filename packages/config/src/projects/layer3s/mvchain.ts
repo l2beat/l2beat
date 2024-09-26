@@ -4,6 +4,7 @@ import { Layer3 } from './types'
 
 export const mvchain: Layer3 = upcomingL3({
   id: 'mvchain',
+  createdAt: '2024-07-05T15:04:22',
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'MV Chain',

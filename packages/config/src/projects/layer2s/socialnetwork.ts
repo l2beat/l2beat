@@ -3,6 +3,7 @@ import { Layer2 } from './types'
 
 export const socialnetwork: Layer2 = upcomingL2({
   id: 'socialnetwork',
+  createdAt: '2024-07-05T15:04:22',
   display: {
     name: 'Social Network',
     slug: 'social-network',

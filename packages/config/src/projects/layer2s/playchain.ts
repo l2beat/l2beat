@@ -3,6 +3,7 @@ import { Layer2 } from './types'
 
 export const playchain: Layer2 = upcomingL2({
   id: 'playchain',
+  createdAt: '2024-05-08T09:53:06',
   display: {
     name: 'PlayChain',
     slug: 'playchain',

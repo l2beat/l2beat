@@ -3,6 +3,7 @@ import { Layer2 } from './types'
 
 export const sxt: Layer2 = upcomingL2({
   id: 'sxt',
+  createdAt: '2024-05-27T14:18:31',
   display: {
     name: 'Space and Time',
     slug: 'sxt',

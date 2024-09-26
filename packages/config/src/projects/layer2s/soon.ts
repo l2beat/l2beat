@@ -3,6 +3,7 @@ import { Layer2 } from './types'
 
 export const soon: Layer2 = upcomingL2({
   id: 'soon',
+  createdAt: '2024-09-20T12:55:04',
   display: {
     name: 'Soon Mainet',
     slug: 'soon',

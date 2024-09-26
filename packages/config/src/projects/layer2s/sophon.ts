@@ -3,6 +3,7 @@ import { Layer2 } from './types'
 
 export const sophon: Layer2 = upcomingL2({
   id: 'sophon',
+  createdAt: '2024-05-24T07:35:40',
   display: {
     name: 'Sophon',
     slug: 'sophon',

@@ -3,6 +3,7 @@ import { Layer2 } from './types'
 
 export const zklighter: Layer2 = upcomingL2({
   id: 'zklighter',
+  createdAt: '2024-03-27T15:05:33',
   display: {
     name: 'zkLighter',
     slug: 'zklighter',

@@ -3,6 +3,7 @@ import { Layer2 } from './types'
 
 export const zentachain: Layer2 = upcomingL2({
   id: 'zentachain',
+  createdAt: '2024-01-26T14:01:11',
   display: {
     name: 'Zentachain',
     slug: 'zentachain',

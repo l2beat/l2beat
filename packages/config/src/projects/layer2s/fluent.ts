@@ -3,6 +3,7 @@ import { Layer2 } from './types'
 
 export const fluent: Layer2 = upcomingL2({
   id: 'fluent',
+  createdAt: '2024-07-17T12:22:51',
   display: {
     name: 'Fluent',
     slug: 'fluent',

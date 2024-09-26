@@ -4,6 +4,7 @@ import { Layer3 } from './types'
 
 export const anomaly: Layer3 = upcomingL3({
   id: 'anomaly',
+  createdAt: '2024-07-02T17:01:57',
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Anomaly Network',

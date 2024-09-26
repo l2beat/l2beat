@@ -4,6 +4,7 @@ import { Layer2 } from './types'
 
 export const lumia: Layer2 = upcomingL2({
   id: 'lumia',
+  createdAt: '2024-06-12T08:42:53',
   badges: [Badge.Infra.AggLayer],
   display: {
     name: 'Lumia',

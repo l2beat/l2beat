@@ -3,6 +3,7 @@ import { Layer2 } from './types'
 
 export const zkcandy: Layer2 = upcomingL2({
   id: 'zkcandy',
+  createdAt: '2024-01-24T09:23:50',
   display: {
     name: 'zkCandy',
     slug: 'zkcandy',

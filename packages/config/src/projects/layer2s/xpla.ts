@@ -3,6 +3,7 @@ import { Layer2 } from './types'
 
 export const xpla: Layer2 = upcomingL2({
   id: 'xpla',
+  createdAt: '2024-05-27T14:06:06',
   display: {
     name: 'zkXPLA',
     slug: 'xpla',

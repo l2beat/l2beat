@@ -3,6 +3,7 @@ import { Layer2 } from './types'
 
 export const morph: Layer2 = upcomingL2({
   id: 'morph',
+  createdAt: '2023-12-11T11:59:52',
   display: {
     name: 'Morph',
     slug: 'morph',

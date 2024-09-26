@@ -3,6 +3,7 @@ import { Layer2 } from './types'
 
 export const layerai: Layer2 = upcomingL2({
   id: 'layerai',
+  createdAt: '2024-08-05T12:33:19',
   display: {
     name: 'LayerAI',
     slug: 'layerai',

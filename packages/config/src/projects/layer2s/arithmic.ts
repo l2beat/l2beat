@@ -3,6 +3,7 @@ import { Layer2 } from './types'
 
 export const arithmic: Layer2 = upcomingL2({
   id: 'arithmic',
+  createdAt: '2024-09-05T15:32:23',
   display: {
     name: 'Arithmic',
     slug: 'arithmic',

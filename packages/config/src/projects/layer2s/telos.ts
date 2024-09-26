@@ -3,6 +3,7 @@ import { Layer2 } from './types'
 
 export const telos: Layer2 = upcomingL2({
   id: 'telos',
+  createdAt: '2024-06-10T11:23:41',
   display: {
     name: 'Telos zkEVM',
     slug: 'telos',

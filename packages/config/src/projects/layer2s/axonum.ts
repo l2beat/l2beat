@@ -3,6 +3,7 @@ import { Layer2 } from './types'
 
 export const axonum: Layer2 = upcomingL2({
   id: 'axonum',
+  createdAt: '2024-05-16T15:06:09',
   display: {
     name: 'Axonum',
     slug: 'axonum',

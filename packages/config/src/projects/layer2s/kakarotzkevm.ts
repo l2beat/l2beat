@@ -3,6 +3,7 @@ import { Layer2 } from './types'
 
 export const kakarotzkevm: Layer2 = upcomingL2({
   id: 'kakarotzkevm',
+  createdAt: '2024-04-12T17:30:35',
   display: {
     name: 'Kakarot zkEVM',
     slug: 'kakarotzkevm',

@@ -3,6 +3,7 @@ import { Layer2 } from './types'
 
 export const plumenetwork: Layer2 = upcomingL2({
   id: 'plumenetwork',
+  createdAt: '2024-06-24T10:17:19',
   display: {
     name: 'Plume Network',
     slug: 'plumenetwork',

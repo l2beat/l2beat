@@ -4,6 +4,7 @@ import { Layer3 } from './types'
 
 export const animechain: Layer3 = upcomingL3({
   id: 'animechain',
+  createdAt: '2024-07-05T15:04:22',
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'AnimeChain',

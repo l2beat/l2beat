@@ -3,6 +3,7 @@ import { Layer2 } from './types'
 
 export const polygonmiden: Layer2 = upcomingL2({
   id: 'polygon-miden',
+  createdAt: '2023-08-01T13:29:14Z',
   display: {
     name: 'Polygon Miden',
     slug: 'polygon-miden',
