@@ -48,7 +48,7 @@ function getMockVerifiers() {
   const verifiers = getVerifiersFromConfig()
   return verifiers.map((v) => ({
     address: v.contractAddress.toString(),
-    timestamp: UnixTime.now()
+    timestamp: UnixTime.now(),
   }))
 }
 
