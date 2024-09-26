@@ -1,3 +1,784 @@
+Generated with discovered.json: 0xaf16d62140236d3e2fee1d39f1866108230558d9
+
+# Diff at Thu, 26 Sep 2024 11:49:41 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@374d77799a44e3b2fcc4828675ccc0b0ff6146d0 block: 20769260
+- current block number: 20834586
+
+## Description
+
+New (unknown) supported chain added, new arm-related contracts. Added shape based discovery.
+
+## Watched changes
+
+```diff
+    contract BurnMintTokenPool (0x057152DB365B47851B0A0bd431644b8eE21fE1b4) {
+    +++ description: None
+      values.getOffRamps.3:
+-        "0xB095900fB91db00E6abD247A5A5AD1cee3F20BF7"
+      values.getOffRamps.2:
+-        "0xBDd822f3bC2EAB6818CfA3053107831D4E93fE72"
+      values.getOffRamps.1:
+-        "0x1C207dabc46902dF9028b27D6d301c3849b2D12c"
++        "0xB095900fB91db00E6abD247A5A5AD1cee3F20BF7"
+    }
+```
+
+```diff
+    contract Router (0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.14:
++        {"sourceChainSelector":"13204309965629103672","offRamp":"0x26a10137A54F4Ea01D20758Ac5AdBf9326340Fc3"}
+      values.offRamps.13:
++        {"sourceChainSelector":"4627098889531055414","offRamp":"0x418dcbCf229897d0CCf1B8B464Db06C23879FBB4"}
+      values.onRamps.4627098889531055414:
++        "0x626189C882A80fF0D036d8D9f6447555e81F78E9"
+      values.onRamps.13204309965629103672:
++        "0x362A221C3cfd7F992DFE221687323F0BA9BA8187"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (0x80Cc104119901fd66088C9a8219E50D9547dE2d4) {
+    +++ description: None
+      values.getSupportedChains.3:
++        "15971525489660198786"
+    }
+```
+
+```diff
+    contract PriceRegistry (0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad) {
+    +++ description: None
+      values.getPriceUpdaters.14:
++        "0x9f592c28590595F3F78a8881E8Dbb9984ed705cD"
+      values.getPriceUpdaters.13:
++        "0x57d6cD9CD44770C807b2763Dbe4CFDA0113dd114"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (0xd8f734c938200BA294d0De5B555E8ff77d66c351) {
+    +++ description: None
+      values.getSupportedChains.3:
++        "15971525489660198786"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (0xf0D19c04f04382048fC9ad157C529CeB2c7be823) {
+    +++ description: None
+      values.getOffRamps.7:
+-        "0xeFC4a18af59398FF23bfe7325F2401aD44286F4d"
+      values.getOffRamps.6:
+-        "0x7Afe7088aff57173565F4b034167643AA8b9171c"
+      values.getOffRamps.5:
+-        "0x569940e02D4425eac61A7601632eC00d69f75c17"
+      values.getOffRamps.4:
+-        "0x0af338F0E314c7551bcE0EF516d46d855b0Ee395"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0x26a10137A54F4Ea01D20758Ac5AdBf9326340Fc3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0x362A221C3cfd7F992DFE221687323F0BA9BA8187)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0x418dcbCf229897d0CCf1B8B464Db06C23879FBB4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0x57d6cD9CD44770C807b2763Dbe4CFDA0113dd114)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0x626189C882A80fF0D036d8D9f6447555e81F78E9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0x9f592c28590595F3F78a8881E8Dbb9984ed705cD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenAdminRegistry (0xb22764f98dD05c789929716D677382Df22C05Cb6)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0x57d6cD9CD44770C807b2763Dbe4CFDA0113dd114.sol | 1297 ++++++++
+ ...-0x9f592c28590595F3F78a8881E8Dbb9984ed705cD.sol | 1297 ++++++++
+ ...-0x26a10137A54F4Ea01D20758Ac5AdBf9326340Fc3.sol | 3430 ++++++++++++++++++++
+ ...-0x418dcbCf229897d0CCf1B8B464Db06C23879FBB4.sol | 3430 ++++++++++++++++++++
+ ...-0x362A221C3cfd7F992DFE221687323F0BA9BA8187.sol | 2982 +++++++++++++++++
+ ...-0x626189C882A80fF0D036d8D9f6447555e81F78E9.sol | 2982 +++++++++++++++++
+ .../ethereum/.flat/TokenAdminRegistry.sol          |  640 ++++
+ 7 files changed, 16058 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20769260 (main branch discovery), not current.
+
+```diff
+    contract EVM2EVMOffRamp (0x0af338F0E314c7551bcE0EF516d46d855b0Ee395) {
+    +++ description: None
+      name:
+-        "OffRamp7"
++        "EVM2EVMOffRamp"
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0x0f27c8532457b66D6037141DEB0ed479Dad04B3c) {
+    +++ description: None
+      name:
+-        "OnRamp11"
++        "EVM2EVMOnRamp"
+    }
+```
+
+```diff
+    contract CommitStore (0x118a9389960F86390A4F14ce4C95D6ff076C6bFC) {
+    +++ description: None
+      name:
+-        "CommitStore2"
++        "CommitStore"
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0x1a904DbbaDdE629a1460e2F6E2E485Ce06Ed7599) {
+    +++ description: None
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0x1C207dabc46902dF9028b27D6d301c3849b2D12c) {
+    +++ description: None
+      name:
+-        "OffRamp10"
++        "EVM2EVMOffRamp"
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract CommitStore (0x20718EfbC25Dba60FD51c2c81362b83f7C411A6D) {
+    +++ description: None
+      name:
+-        "CommitStore11"
++        "CommitStore"
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract CommitStore (0x2aa101BF99CaeF7fc1355D4c493a1fe187A007cE) {
+    +++ description: None
+      name:
+-        "CommitStore5"
++        "CommitStore"
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract CommitStore (0x2D1708ff2a15adbE313eA8C6035aA24d0FBA1c77) {
+    +++ description: None
+      name:
+-        "CommitStore14"
++        "CommitStore"
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract CommitStore1 (0x31f6ab382DDeb9A316Ab61C3945a5292a50a89AB) {
+    +++ description: None
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0x333f976915195ba9044fD0cd603cEcE936f6264e) {
+    +++ description: None
+      name:
+-        "OnRamp12"
++        "EVM2EVMOnRamp"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0x35F0ca9Be776E4B38659944c257bDd0ba75F1B8B) {
+    +++ description: None
+      name:
+-        "OnRamp2"
++        "EVM2EVMOnRamp"
+      template:
+-        "transporter/OnRamp"
++        "transporter/OnRampV1"
+    }
+```
+
+```diff
+    contract OffRamp1 (0x3a129e6C18b23d18BA9E6Aa14Dc2e79d1f91c6c5) {
+    +++ description: None
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract CommitStore (0x3CB2A81bb8a188C5353CdFa9994ed8666556FC53) {
+    +++ description: None
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract CommitStore (0x3d3467e1036Ee25F6F4aa15e3Abf77443A23144C) {
+    +++ description: None
+      name:
+-        "CommitStore12"
++        "CommitStore"
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract CommitStore (0x3d8a95adA63D406ee8232562AbD83CEdb0B90466) {
+    +++ description: None
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0x3df8dAe2d123081c4D5E946E655F7c109B9Dd630) {
+    +++ description: None
+      name:
+-        "OnRamp4"
++        "EVM2EVMOnRamp"
+      template:
+-        "transporter/OnRamp"
++        "transporter/OnRampV1"
+    }
+```
+
+```diff
+    contract CommitStore (0x40c558575093eC1099CC21B020d9b8D13c74417F) {
+    +++ description: None
+      name:
+-        "CommitStore10"
++        "CommitStore"
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0x41627a90f2c6238f2BADAB72D5aB050B857fdAb5) {
+    +++ description: None
+      name:
+-        "OffRamp9"
++        "EVM2EVMOffRamp"
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0x4545F9a17DA50110632C14704a15d893BF9CBD27) {
+    +++ description: None
+      template:
+-        "transporter/OnRamp"
++        "transporter/OnRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0x466a078d17e3706a9414ACc48029EE9Bae4C9b65) {
+    +++ description: None
+      template:
+-        "transporter/OnRamp"
++        "transporter/OnRampV1"
+    }
+```
+
+```diff
+    contract CommitStore (0x4af4B497c998007eF83ad130318eB2b925a79dc8) {
+    +++ description: None
+      name:
+-        "CommitStore4"
++        "CommitStore"
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0x569940e02D4425eac61A7601632eC00d69f75c17) {
+    +++ description: None
+      name:
+-        "OffRamp5"
++        "EVM2EVMOffRamp"
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0x61135E701a2214C170c5F596D0067798FEfbaaE4) {
+    +++ description: None
+      name:
+-        "OffRamp12"
++        "EVM2EVMOffRamp"
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract CommitStore (0x76264869a3eBF51a59FCa5ABa84ee2867c7F190e) {
+    +++ description: None
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract CommitStore (0x7986C9892389854cAAbAC785ff18123B0070a5Fd) {
+    +++ description: None
+      name:
+-        "CommitStore13"
++        "CommitStore"
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0x7Afe7088aff57173565F4b034167643AA8b9171c) {
+    +++ description: None
+      name:
+-        "OffRamp3"
++        "EVM2EVMOffRamp"
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract Router (0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      template:
+-        "transporter/Router"
++        "transporter/RouterV1_2_0"
+    }
+```
+
+```diff
+    contract CommitStore (0x831097033C88c82a7F1897b168Aa88cC44540C8f) {
+    +++ description: None
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract OnRamp1 (0x86B47d8411006874eEf8E4584BdFD7be8e5549d1) {
+    +++ description: None
+      template:
+-        "transporter/OnRamp"
++        "transporter/OnRampV1"
+    }
+```
+
+```diff
+    contract CommitStore (0x87c55D48DF6EF7B08153Ab079e76bFEcbb793D75) {
+    +++ description: None
+      name:
+-        "CommitStore3"
++        "CommitStore"
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract CommitStore (0x8bEFCa744c6f2b567b1863dcF055C593afdC11A0) {
+    +++ description: None
+      name:
+-        "CommitStore9"
++        "CommitStore"
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract CommitStore (0x8DC27D621c41a32140e22E2a4dAf1259639BAe04) {
+    +++ description: None
+      name:
+-        "CommitStore6"
++        "CommitStore"
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0x91D25A56Db77aD5147437d8B83Eb563D46eBFa69) {
+    +++ description: None
+      name:
+-        "OnRamp5"
++        "EVM2EVMOnRamp"
+      template:
+-        "transporter/OnRamp"
++        "transporter/OnRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0x925228D7B82d883Dde340A55Fe8e6dA56244A22C) {
+    +++ description: None
+      name:
+-        "OnRamp3"
++        "EVM2EVMOnRamp"
+      template:
+-        "transporter/OnRamp"
++        "transporter/OnRampV1"
+    }
+```
+
+```diff
+    contract CommitStore (0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749) {
+    +++ description: None
+      name:
+-        "CommitStore8"
++        "CommitStore"
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract CommitStore (0xa4d264470a67D9f6682EE12Bdc9c35Df44e3F194) {
+    +++ description: None
+      name:
+-        "CommitStore15"
++        "CommitStore"
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0xa5ef33B57dD8B653F9A9EA7114f46376d18264aC) {
+    +++ description: None
+      template:
+-        "transporter/OnRamp"
++        "transporter/OnRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0xB095900fB91db00E6abD247A5A5AD1cee3F20BF7) {
+    +++ description: None
+      name:
+-        "OffRamp4"
++        "EVM2EVMOffRamp"
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0xb368c8946D9fa5A497cDe1Dff7213f9CdfD143Bf) {
+    +++ description: None
+      name:
+-        "OffRamp15"
++        "EVM2EVMOffRamp"
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0xBDd822f3bC2EAB6818CfA3053107831D4E93fE72) {
+    +++ description: None
+      name:
+-        "OffRamp11"
++        "EVM2EVMOffRamp"
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0xC7176620daf49A39a17FF9A6C2DE1eAA6033EE94) {
+    +++ description: None
+      name:
+-        "OffRamp13"
++        "EVM2EVMOffRamp"
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0xCbE7e5DA76dC99Ac317adF6d99137005FDA4E2C4) {
+    +++ description: None
+      name:
+-        "OnRamp7"
++        "EVM2EVMOnRamp"
+      template:
+-        "transporter/OnRamp"
++        "transporter/OnRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0xCC19bC4D43d17eB6859F0d22BA300967C97780b0) {
+    +++ description: None
+      name:
+-        "OnRamp9"
++        "EVM2EVMOnRamp"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0xCe6364dBe64D2789D916180131fAda2ABFF702E8) {
+    +++ description: None
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0xd0B5Fc9790a6085b048b8Aa1ED26ca2b3b282CF2) {
+    +++ description: None
+      name:
+-        "OnRamp10"
++        "EVM2EVMOnRamp"
+    }
+```
+
+```diff
+    contract CommitStore (0xD37a60E8C36E802D2E1a6321832Ee85556Beeb76) {
+    +++ description: None
+      name:
+-        "CommitStore7"
++        "CommitStore"
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0xd5083684eE92dDeA117636ae5E2F1cb7fE4dfd46) {
+    +++ description: None
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0xD54C93A99CBCb8D865E13DA321B540171795A89f) {
+    +++ description: None
+      template:
+-        "transporter/OnRamp"
++        "transporter/OnRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0xdF1d7FD22aC3aB5171E275796f123224039f3b24) {
+    +++ description: None
+      name:
+-        "OnRamp13"
++        "EVM2EVMOnRamp"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0xdf85c8381954694E74abD07488f452b4c2Cddfb3) {
+    +++ description: None
+      name:
+-        "OffRamp6"
++        "EVM2EVMOffRamp"
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0xe2c2AB221AA0b957805f229d2AA57fBE2f4dADf7) {
+    +++ description: None
+      name:
+-        "OnRamp6"
++        "EVM2EVMOnRamp"
+      template:
+-        "transporter/OnRamp"
++        "transporter/OnRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0xe2Eb229e88F56691e96bb98256707Bc62160FE73) {
+    +++ description: None
+      name:
+-        "OnRamp14"
++        "EVM2EVMOnRamp"
+    }
+```
+
+```diff
+    contract RouterOld (0xE561d5E02207fb5eB32cca20a699E0d8919a1476) {
+    +++ description: None
+      name:
+-        "Router2"
++        "RouterOld"
+      template:
+-        "transporter/RouterV2"
++        "transporter/RouterV1_0_0"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0xE8af3b68eDfFf65Ce48648009982380701f09B92) {
+    +++ description: None
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0xE93ec2A57e38C8541c893348cCafEAB01F7D47d4) {
+    +++ description: None
+      name:
+-        "OffRamp2"
++        "EVM2EVMOffRamp"
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0xEd5bE9508ae56531cc0EDe6A3bD588Eb9E2e3cfa) {
+    +++ description: None
+      template:
+-        "transporter/OnRamp"
++        "transporter/OnRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0xeFC4a18af59398FF23bfe7325F2401aD44286F4d) {
+    +++ description: None
+      name:
+-        "OffRamp8"
++        "EVM2EVMOffRamp"
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0xF538dA6c673A30338269655f4e019B71ba58CFd4) {
+    +++ description: None
+      name:
+-        "OnRamp8"
++        "EVM2EVMOnRamp"
+      template:
+-        "transporter/OnRamp"
++        "transporter/OnRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0xfF51C00546AA3d9051a4B96Ae81346E14709CD24) {
+    +++ description: None
+      name:
+-        "OffRamp14"
++        "EVM2EVMOffRamp"
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
 Generated with discovered.json: 0x3d51ed0e555f35d54a152ced044fd6320a96f883
 
 # Diff at Tue, 17 Sep 2024 08:54:01 GMT:

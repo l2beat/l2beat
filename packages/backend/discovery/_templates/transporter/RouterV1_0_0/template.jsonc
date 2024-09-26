@@ -2,9 +2,6 @@
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "fields": {
     "onRamps": {
-      "target": {
-        "template": "transporter/OnRamp"
-      },
       "handler": {
         "type": "stateFromEvent",
         "event": "OnRampSet",
@@ -14,15 +11,11 @@
       }
     },
     "offRamps": {
-      "target": {
-        "template": "transporter/OffRamp"
-      },
       "handler": {
         "type": "call",
         "args": [],
         "method": "getOffRamps"
-      },
-      "returnType": "(tuple(ChainIdMap sourceChainSelector, address offRamp)[])"
+      }
     }
   },
   "ignoreMethods": ["getOffRamps"],

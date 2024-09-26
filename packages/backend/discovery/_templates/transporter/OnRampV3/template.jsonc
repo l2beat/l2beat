@@ -1,11 +1,6 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "ignoreMethods": [
-    "getNops",
-    "getAllowList",
-    "getStaticConfig",
-    "currentRateLimiterState"
-  ],
+  "ignoreMethods": ["getNops", "currentRateLimiterState"],
   "ignoreRelatives": [
     "getSupportedTokens",
     "tokenAddresses",
@@ -13,7 +8,6 @@
     "owner"
   ],
   "ignoreInWatchMode": [
-    "getExpectedNextSequenceNumber",
     "getNopFeesJuels",
     "linkAvailableForPayment",
     "tokenAddresses",
@@ -22,11 +16,8 @@
   "fields": {
     "tokenPools": {
       "handler": {
-        "type": "arrayFromTwoEvents",
-        "addEvent": "PoolAdded",
-        "addKey": "pool",
-        "removeEvent": "PoolRemoved",
-        "removeKey": "pool"
+        "type": "hardcoded",
+        "value": [] // this OnRamp version does not have tokenPools
       }
     },
     "linkToken": {
@@ -42,7 +33,7 @@
         "type": "call",
         "args": [],
         "method": "getStaticConfig",
-        "pickFields": ["prevOnRamp", "armProxy"]
+        "pickFields": ["prevOnRamp", "rmnProxy"]
       }
     },
     "staticConfigChains": {
@@ -53,14 +44,6 @@
         "pickFields": ["chainSelector", "destChainSelector"]
       },
       "returnType": "(ChainIdMap[])"
-    },
-    "tokenAddresses": {
-      "handler": {
-        "type": "call",
-        "method": "getSupportedTokens",
-        "args": [],
-        "ignoreRelative": true
-      }
     }
   }
 }
