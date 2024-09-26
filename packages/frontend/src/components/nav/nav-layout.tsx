@@ -22,10 +22,12 @@ export async function NavLayout({
   children,
   logoLink,
   legacyNav,
+  topChildren,
 }: {
   children: ReactNode
   logoLink: string
   legacyNav?: boolean
+  topChildren?: ReactNode
 }) {
   const groups: NavGroup[] = compact([
     {
@@ -132,14 +134,20 @@ export async function NavLayout({
           legacyNav && 'xl:flex-col',
         )}
       >
+        {!!legacyNav && topChildren}
         {!!legacyNav && <LegacyNavbar logoLink={logoLink} groups={groups} />}
-        <MobileNavbar logoLink={logoLink} groups={groups} />
+        <MobileNavbar {...{ groups, logoLink }} />
         <NavSidebar
           logoLink={logoLink}
           groups={groups}
           legacyNav={!!legacyNav}
         />
-        <div className="min-w-0 flex-1">{children}</div>
+        <div className="min-w-0 flex-1">
+          {!legacyNav && topChildren && (
+            <div className="hidden xl:block">{topChildren}</div>
+          )}
+          {children}
+        </div>
       </div>
     </MobileNavProvider>
   )
