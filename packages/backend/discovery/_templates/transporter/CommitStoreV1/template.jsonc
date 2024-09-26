@@ -7,9 +7,6 @@
   ],
   "fields": {
     "priceRegistry": {
-      "target": {
-        "template": "transporter/PriceRegistry"
-      },
       "handler": {
         "type": "call",
         "args": [],
