@@ -3,5 +3,5 @@ const nextConfig = {
   reactStrictMode: true,
 }
 
-// biome-ignore lint/style/noDefaultExport: <explanation>
+// biome-ignore lint/style/noDefaultExport: config file
 export default nextConfig

@@ -121,7 +121,7 @@ export class RpcAnalyzer implements Analyzer {
     }
   }
 
-  private async mapTransaction(
+  private mapTransaction(
     tx: providers.TransactionResponse,
     includeDetails: boolean,
   ): Promise<Transaction> {

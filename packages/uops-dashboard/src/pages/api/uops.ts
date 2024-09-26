@@ -5,6 +5,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { loadDb, saveDb } from './db/db'
 import { ChainService } from './services/ChainService'
 
+// biome-ignore lint/style/noDefaultExport: api handler
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Block | ApiError>,

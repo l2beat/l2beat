@@ -228,7 +228,7 @@ function decodeCalldata(
       )
 
       // Next 32 bytes is the value (amount in wei to send)
-      const value = ethers.BigNumber.from(
+      const _value = ethers.BigNumber.from(
         executionCalldataBuffer.slice(20, 52),
       ).toBigInt()
 
@@ -254,7 +254,6 @@ function decodeCalldata(
         executionCalldata,
       )
 
-      // biome-ignore lint/complexity/noForEach: <explanation>
       decodedParams[0].forEach((value) => {
         operations.push({
           type: 'recursive',
@@ -285,7 +284,7 @@ function decodeCalldata(
     }
 
     throw new Error('Kernel - Unknown call type')
-  } catch (e) {
+  } catch {
     return [
       {
         type: 'static',
