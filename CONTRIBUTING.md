@@ -53,7 +53,7 @@ If you want to add a new Layer 2 project you can do that by opening a PR. To do 
 3. Add your project into `packages/config/src/projects/layer2s/index.ts`. The order of the projects should be
    kept alphabetical.
 4. Add a square PNG project icon with a minimum size of 128x128 pixels into
-   packages/frontend/src/static/icons. From the `packages/frontend` directory
+   `packages/frontend/public/icons`. From the `packages/frontend` directory
    run `yarn tinify-logos` afterwards to reduce its size.
 5. If your project is a fork of an already existing project (like Boba Network that is on top of
    Optimism) or it was built using a Rollups SDK/framework (like ImmutableX that is on top of
@@ -69,12 +69,13 @@ If you want to add a new Layer 2 project you can do that by opening a PR. To do 
      - Import the Icon component created in `packages/frontend/src/components/icons/index.ts`.
      - To finish, add the technology provider icon in the technology column of the project's table
        that is located at `packages/frontend/src/components/table/TechnologyCell.tsx`.
-6. Make sure that things like linting, formatting and tests are all passing. To
+6. Add your project to `packages/config/src/verification/projects.json`.
+7. Make sure that things like linting, formatting and tests are all passing. To
    check their status you can run `yarn lint:fix`, `yarn format:fix` or `yarn test`
    respectively. We greatly encourage doing this before the last step as it
    shortens the amount of time needed for your project to be added.
-7. Open a PR :D
-8. If your changes contain any errors we might want to fix them ourselves. To
+8. Open a PR :D
+9. If your changes contain any errors we might want to fix them ourselves. To
    make this as easy as possible please enable **"Allow edits by maintainers"**.
    Otherwise the latency before we can merge a PR greatly increases.
 
