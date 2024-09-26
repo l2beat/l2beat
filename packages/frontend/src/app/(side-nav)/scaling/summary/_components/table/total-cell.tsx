@@ -34,7 +34,7 @@ export function TotalCell(data: TotalCellProps) {
   if (totalTvl === 0) {
     return (
       <div className="flex flex-col items-end">
-        <span className="text-base font-bold md:text-lg">{EM_DASH}</span>
+        <span className="text-base md:text-lg">{EM_DASH}</span>
       </div>
     )
   }
