@@ -10,8 +10,6 @@ export function getScalingUpcomingEntries() {
 
   return projects
     .sort((a, b) => {
-      console.log(a.display.name, b.display.name)
-      console.log(a.createdAt, b.createdAt)
       assert(a.createdAt && b.createdAt, 'Project has no createdAt')
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     })
