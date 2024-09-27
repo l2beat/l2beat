@@ -85,6 +85,7 @@ import { myria } from './myria'
 import { myshell } from './myshell'
 import { nal } from './nal'
 import { network3 } from './network3'
+import { neva } from './neva'
 import { nil } from './nil'
 import { nova } from './nova'
 import { oev } from './oev'
@@ -250,6 +251,7 @@ export const layer2s: Layer2[] = [
   nal,
   nil,
   network3,
+  neva,
   nova,
   oev,
   ola,
