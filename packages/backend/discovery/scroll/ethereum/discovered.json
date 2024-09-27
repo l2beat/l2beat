@@ -902,6 +902,29 @@
       "derivedName": "L1CustomERC20Gateway"
     },
     {
+      "name": "DAIEscrow",
+      "address": "0x67260A8B73C5B77B55c1805218A42A7A6F98F515",
+      "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1696920095,
+      "values": {
+        "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+        "$implementation": "0xbad002fb13adffcbcba57a4d4a43886f3f4c56cb",
+        "$upgradeCount": 1,
+        "counterpart": "0xaC78dff3A87b5b534e366A93E785a0ce8fA6Cc62",
+        "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
+        "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
+        "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
+      },
+      "derivedName": "L1CustomERC20Gateway"
+    },
+    {
       "name": "L1ERC1155Gateway",
       "address": "0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6",
       "proxyType": "EIP1967 proxy",
@@ -1676,6 +1699,12 @@
       "function transferOwnership(address newOwner)",
       "function withdraw(address _token, uint256 _amount, address _recipient)"
     ],
+    "0x67260A8B73C5B77B55c1805218A42A7A6F98F515": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1990,6 +2019,14 @@
       "function renounceOwnership()",
       "function router() view returns (address)",
       "function transferOwnership(address newOwner)"
+    ],
+    "0xaC78dff3A87b5b534e366A93E785a0ce8fA6Cc62": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function execute(address _target, bytes _data) payable",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function withdraw(address _token, uint256 _amount, address _recipient)"
     ],
     "0xb2b10a289A229415a124EFDeF310C10cb004B6ff": [
       "constructor(address _logic, address admin_, bytes _data) payable",

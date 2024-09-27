@@ -174,6 +174,11 @@ export const scroll: Layer2 = {
         ...upgradesScrollMultisig,
       }),
       discovery.getEscrowDetails({
+        address: EthereumAddress('0x67260A8B73C5B77B55c1805218A42A7A6F98F515'),
+        tokens: ['DAI'],
+        ...upgradesScrollMultisig,
+      }),
+      discovery.getEscrowDetails({
         address: EthereumAddress('0x6625C6332c9F91F2D27c304E729B86db87A3f504'),
         tokens: ['wstETH'],
         upgradableBy: ['Lido (Lido Agent)'],
