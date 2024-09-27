@@ -2,7 +2,7 @@
   "name": "scroll",
   "chain": "ethereum",
   "blockNumber": 20725971,
-  "configHash": "0xe468df3eac2c93917dfde6f8e4a52efb7b6d627822520d392642c25338743b81",
+  "configHash": "0x89948df6acd4ad56acc18d489340ea969f841b8a1684b5c39954dc161a4b03de",
   "version": 14,
   "contracts": [
     {
@@ -367,6 +367,29 @@
         "owner": "0xF9062b8a30e0d7722960e305049FA50b86ba6253"
       },
       "derivedName": "Fallback"
+    },
+    {
+      "name": "DAIEscrow",
+      "address": "0x67260A8B73C5B77B55c1805218A42A7A6F98F515",
+      "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1696920095,
+      "values": {
+        "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+        "$implementation": "0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb",
+        "$upgradeCount": 1,
+        "counterpart": "0xaC78dff3A87b5b534e366A93E785a0ce8fA6Cc62",
+        "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
+        "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
+        "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
+      },
+      "derivedName": "L1CustomERC20Gateway"
     },
     {
       "name": "L1ScrollMessenger",
@@ -902,29 +925,6 @@
       "derivedName": "L1CustomERC20Gateway"
     },
     {
-      "name": "DAIEscrow",
-      "address": "0x67260A8B73C5B77B55c1805218A42A7A6F98F515",
-      "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
-          "via": []
-        }
-      ],
-      "sinceTimestamp": 1696920095,
-      "values": {
-        "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
-        "$implementation": "0xbad002fb13adffcbcba57a4d4a43886f3f4c56cb",
-        "$upgradeCount": 1,
-        "counterpart": "0xaC78dff3A87b5b534e366A93E785a0ce8fA6Cc62",
-        "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-        "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
-      },
-      "derivedName": "L1CustomERC20Gateway"
-    },
-    {
       "name": "L1ERC1155Gateway",
       "address": "0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6",
       "proxyType": "EIP1967 proxy",
@@ -1133,6 +1133,10 @@
         },
         {
           "permission": "upgrade",
+          "target": "0x67260A8B73C5B77B55c1805218A42A7A6F98F515"
+        },
+        {
+          "permission": "upgrade",
           "target": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"
         },
         {
@@ -1279,6 +1283,7 @@
     { "address": "0x8F97Bf67182122D2f1745216a81724143db97E43" },
     { "address": "0x9337B41709c1C2B938Cb460ea3fA9DB586B172E0" },
     { "address": "0xa1a12158bE6269D7580C63eC5E609Cdc0ddD82bC" },
+    { "address": "0xaC78dff3A87b5b534e366A93E785a0ce8fA6Cc62" },
     { "address": "0xcF2898225ED05Be911D3709d9417e86E0b4Cfc8f" },
     { "address": "0xD6475ce37d964d4816715FdafFEeAAf2958948bE" },
     { "address": "0xD70aa9d7280E6FEe89B86f53c0B2A363478D5e94" },
@@ -2020,14 +2025,6 @@
       "function router() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0xaC78dff3A87b5b534e366A93E785a0ce8fA6Cc62": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function execute(address _target, bytes _data) payable",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function withdraw(address _token, uint256 _amount, address _recipient)"
-    ],
     "0xb2b10a289A229415a124EFDeF310C10cb004B6ff": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2075,6 +2072,30 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb": [
+      "constructor()",
+      "event DepositERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data)",
+      "event FinalizeWithdrawERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RefundERC20(address indexed token, address indexed recipient, uint256 amount)",
+      "event UpdateTokenMapping(address indexed l1Token, address indexed oldL2Token, address indexed newL2Token)",
+      "function counterpart() view returns (address)",
+      "function depositERC20(address _token, uint256 _amount, uint256 _gasLimit) payable",
+      "function depositERC20(address _token, address _to, uint256 _amount, uint256 _gasLimit) payable",
+      "function depositERC20AndCall(address _token, address _to, uint256 _amount, bytes _data, uint256 _gasLimit) payable",
+      "function finalizeWithdrawERC20(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _data) payable",
+      "function getL2ERC20Address(address _l1Token) view returns (address)",
+      "function initialize(address _counterpart, address _router, address _messenger)",
+      "function messenger() view returns (address)",
+      "function onDropMessage(bytes _message) payable",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function router() view returns (address)",
+      "function tokenMapping(address) view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function updateTokenMapping(address _l1Token, address _l2Token)"
     ],
     "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc": [
       "constructor(address _singleton)"
@@ -2356,5 +2377,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
 }
