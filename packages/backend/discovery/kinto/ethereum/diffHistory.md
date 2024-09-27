@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x3b19a1236807f46f2117249263404871458f5451
+
+# Diff at Fri, 27 Sep 2024 15:14:59 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@4cb14cc1bdc343d171a7988f9f91f11edbf568a8 block: 20756734
+- current block number: 20842784
+
+## Description
+
+Bridger upgrade: Formatting, libraries, removal of a USDM curve pool slot and Solv SFT wrapper.
+
+## Watched changes
+
+```diff
+    contract Bridger (0x0f1b7bd7762662B23486320AA91F30312184f70C) {
+    +++ description: None
+      values.$implementation:
+-        "0x47e28e296BE2EE69b4579d5eecbABA38217a2b03"
++        "0x21D3921B50617BDef223207118950B0b577e4007"
+      values.$upgradeCount:
+-        10
++        11
+      values.SOLV_SFT_WRAP_ROUTER:
+-        "0x6Ea88D4D0c4bC06F6A51f427eF295c93e10D0b36"
++        "0xe9eD7530427Cb41A56C9e004e00e074cCc168C44"
+      values.usdmCurvePool:
+-        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@20756734 => .flat}/Bridger/Bridger.sol  | 1909 +++-----------------
+ 1 file changed, 228 insertions(+), 1681 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20756734 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      usedTypes.0.arg.0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39:
++        "ArbOS v32 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0xe37f1f654e8ff1efaa734238d523de5b48be6763
 
 # Diff at Sun, 15 Sep 2024 14:53:00 GMT:
