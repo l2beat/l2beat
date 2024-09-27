@@ -14,7 +14,7 @@ export const ternoa: Layer2 = upcomingL2({
     category: 'Validium',
     provider: 'Polygon',
     links: {
-      websites: ['https://www.ternoa.network/'],
+      websites: ['https://ternoa.network/'],
       apps: [],
       documentation: ['https://docs.ternoa.network/learn/ternoa-zkevm+'],
       explorers: [],
