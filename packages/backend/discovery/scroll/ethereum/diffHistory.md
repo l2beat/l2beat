@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x5b40ff4fdc8ce73985cd2e6c5f2488c74a587bdc
+Generated with discovered.json: 0x87d0f2eb7b884f3d92f8dc8fcfa8a99554854f51
 
-# Diff at Fri, 27 Sep 2024 03:10:30 GMT:
+# Diff at Fri, 27 Sep 2024 14:39:22 GMT:
 
-- author: zimpha (<zimpha@gmail.com>)
-- comparing to: main@1a59a32ecfaf7f5ae7729b84004a58d5a381b710 block: 20725971
-- current block number: 20725971
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@4cb14cc1bdc343d171a7988f9f91f11edbf568a8 block: 20725971
+- current block number: 20842609
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Add DAI escrow, upgradeable by ScrollMultisig.
 
 ## Config/verification related changes
 
