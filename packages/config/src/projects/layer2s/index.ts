@@ -51,6 +51,7 @@ import { gluon } from './gluon'
 import { gpt } from './gpt'
 import { grvt } from './grvt'
 import { gwyneth } from './gwyneth'
+import { hemi } from './hemi'
 import { hermez } from './hermez'
 import { honeypot } from './honeypot'
 import { hybrid } from './hybrid'
@@ -215,6 +216,7 @@ export const layer2s: Layer2[] = [
   galxegravity,
   grvt,
   gwyneth,
+  hemi,
   hermez,
   hybrid,
   hychain,
