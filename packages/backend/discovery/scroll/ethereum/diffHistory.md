@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x87d0f2eb7b884f3d92f8dc8fcfa8a99554854f51
+Generated with discovered.json: 0xe6b73b280820baf18ebcfc54742ab25d435f0f0d
 
-# Diff at Fri, 27 Sep 2024 14:39:22 GMT:
+# Diff at Fri, 27 Sep 2024 15:09:56 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
 - comparing to: main@4cb14cc1bdc343d171a7988f9f91f11edbf568a8 block: 20725971
-- current block number: 20842609
+- current block number: 20842760
 
 ## Description
 
@@ -59,7 +59,7 @@ discovery. Values are for block 20725971 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract DAIEscrow (0x67260A8B73C5B77B55c1805218A42A7A6F98F515)
+    contract DaiEscrow (0x67260A8B73C5B77B55c1805218A42A7A6F98F515)
     +++ description: None
 ```
 

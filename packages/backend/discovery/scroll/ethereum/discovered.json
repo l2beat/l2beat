@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "blockNumber": 20842638,
+  "blockNumber": 20842760,
   "configHash": "0x8abee84c5b32887999783f595502a4fadc670b4cdd316121257055efb96ce929",
   "version": 14,
   "contracts": [
@@ -37,13 +37,13 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "gasOracle": "0x987e300fDfb06093859358522a79098848C33852",
-        "l2BaseFee": 99299215,
+        "l2BaseFee": 157246832,
         "maxGasLimit": 10000000,
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 938782,
+        "nextCrossDomainMessageIndex": 938792,
         "nextUnfinalizedQueueIndex": 938774,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-        "pendingQueueIndex": 938780,
+        "pendingQueueIndex": 938789,
         "scrollChain": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "whitelistChecker": "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37"
       },
@@ -1237,7 +1237,7 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 96995663440887,
+        "totalBridgedUSDC": 97035657440887,
         "withdrawPaused": false
       },
       "derivedName": "L1USDCGateway"
