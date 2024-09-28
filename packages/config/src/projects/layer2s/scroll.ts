@@ -430,38 +430,6 @@ export const scroll: Layer2 = {
             text: 'L1ETHGateway.sol - Etherscan source code, finalizeWithdrawETH function',
             href: 'https://etherscan.io/address/0x1fcbE079c4Bbab37406daB7Dfd35AcAe37D5C55d#code',
           },
-          {
-            text: 'L1StandardERC20Gateway.sol - Etherscan source code, finalizeWithdrawERC20 function',
-            href: 'https://etherscan.io/address/0x4015Fc868C06689ABEba4a9dC8FA43B804F6239c#code',
-          },
-          {
-            text: 'L1CustomERC20Gateway.sol - Etherscan source code, finalizeWithdrawERC20 function',
-            href: 'https://etherscan.io/address/0x7F512E2E9dfC4552941D99A5b2405BBcF5781C2c#code',
-          },
-          {
-            text: 'L1USDCGateway.sol - Etherscan source code, finalizeWithdrawERC20 function',
-            href: 'https://etherscan.io/address/0x56ce8A8E8399f6cD5e7e4f549E8BfD673f2AfF5e#code',
-          },
-          {
-            text: 'L1DAIGateway.sol - Etherscan source code, finalizeWithdrawERC20 function',
-            href: 'https://etherscan.io/address/0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb#code',
-          },
-          {
-            text: 'L1WstETHGateway.sol - Etherscan source code, finalizeWithdrawERC20 function',
-            href: 'https://etherscan.io/address/0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb#code',
-          },
-          {
-            text: 'L1PufETHGateway.sol - Etherscan source code, finalizeWithdrawERC20 function',
-            href: 'https://etherscan.io/address/0x08D77Ea90DB9BF6c0d3f66E6b8394DA2E81B9a03#code',
-          },
-          {
-            text: 'L1ERC721Gateway.sol - Etherscan source code, finalizeWithdrawERC721 function',
-            href: 'https://etherscan.io/address/0xd1841c5756428812233eEA78afC17cb2D3e392bb#code',
-          },
-          {
-            text: 'L1ERC1155Gateway.sol - Etherscan source code, finalizeWithdrawERC1155 function',
-            href: 'https://etherscan.io/address/0x244BF7aEf29F03916569470a51fA0794B62F8cd7#code',
-          },
         ],
       },
     ],
