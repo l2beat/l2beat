@@ -12,8 +12,8 @@ export const happychain: Layer2 = upcomingL2({
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
     links: {
-      websites: [],
-      apps: ['https://linktr.ee/happychaindevs'],
+      websites: ['https://linktr.ee/happychaindevs'],
+      apps: [],
       documentation: [],
       explorers: [],
       repositories: [],
