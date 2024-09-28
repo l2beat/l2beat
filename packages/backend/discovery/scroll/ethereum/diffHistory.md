@@ -425,7 +425,7 @@ discovery. Values are for block 20369470 (main branch discovery), not current.
 ```
 
 ```diff
-    contract pufETHEscrow (0xA033Ff09f2da45f0e9ae495f525363722Df42b2a) {
+    contract pufEthEscrow (0xA033Ff09f2da45f0e9ae495f525363722Df42b2a) {
     +++ description: None
       values.$upgradeCount:
 +        3
@@ -581,7 +581,7 @@ discovery. Values are for block 20369470 (main branch discovery), not current.
 ```
 
 ```diff
-    contract pufETHEscrow (0xA033Ff09f2da45f0e9ae495f525363722Df42b2a) {
+    contract pufEthEscrow (0xA033Ff09f2da45f0e9ae495f525363722Df42b2a) {
     +++ description: None
       issuedPermissions:
 +        [{"permission":"upgrade","target":"0x9eBf2f33526CD571f8b2ad312492cb650870CFd6","via":[]}]
@@ -946,7 +946,7 @@ discovery. Values are for block 20311071 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract pufETHEscrow (0xA033Ff09f2da45f0e9ae495f525363722Df42b2a)
+    contract pufEthEscrow (0xA033Ff09f2da45f0e9ae495f525363722Df42b2a)
     +++ description: None
 ```
 
