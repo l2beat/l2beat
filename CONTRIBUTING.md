@@ -65,7 +65,7 @@ If you want to add a new Layer 2 project you can do that by opening a PR. To do 
      - Add the new provider in the file `packages/config/src/projects/layer2s/types/Layer2.ts` (find the
        optional property `provider`).
      - Create a simple React component to render the technology provider Icon (SVG format required)
-       inside `packages/frontend/src/components/icons/providers`.
+       inside `packages/frontend/src/icons/providers`.
      - Import the Icon component created in `packages/frontend/src/components/icons/index.ts`.
      - To finish, add the technology provider icon in the technology column of the project's table
        that is located at `packages/frontend/src/components/table/TechnologyCell.tsx`.
@@ -115,7 +115,7 @@ If you want to add a new Layer 3 project you can do that by opening a PR. To do 
 If while adding your project you find that some of the tokens locked in it are missing from our
 token list do not worry.
 
-1. Read the token definition in `packages/config/src/tokens.ts`
+1. Read the token definition in `packages/config/src/tokens/tokens.ts`
 2. Check if the token matches the requirements.
 3. Add your token to the list. The order of the tokens should be kept alphabetical.
 
