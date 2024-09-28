@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x36a12dafee14dee93f5c5f29881e9560cfd5724e
+
+# Diff at Sat, 28 Sep 2024 05:28:23 GMT:
+
+- author: colinlyguo (<colinlyguo@scroll.io>)
+- comparing to: main@afa5e20848cf900fa119917c047b482e17a154ee block: 20842760
+- current block number: 20842760
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20842760 (main branch discovery), not current.
+
+```diff
+    contract pufETHEscrow (0xA033Ff09f2da45f0e9ae495f525363722Df42b2a) {
+    +++ description: None
+      name:
+-        "pufEthEscrow"
++        "pufETHEscrow"
+    }
+```
+
 Generated with discovered.json: 0xe6b73b280820baf18ebcfc54742ab25d435f0f0d
 
 # Diff at Fri, 27 Sep 2024 15:09:56 GMT:
