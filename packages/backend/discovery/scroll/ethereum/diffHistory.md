@@ -1,14 +1,34 @@
-Generated with discovered.json: 0x36a12dafee14dee93f5c5f29881e9560cfd5724e
+Generated with discovered.json: 0x1138ed1c264dc3d7d38d5979f5b35487ff768d7b
 
-# Diff at Sat, 28 Sep 2024 05:28:23 GMT:
+# Diff at Sat, 28 Sep 2024 05:59:58 GMT:
 
-- author: colinlyguo (<colinlyguo@scroll.io>)
-- comparing to: main@afa5e20848cf900fa119917c047b482e17a154ee block: 20842760
-- current block number: 20842760
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@f2cc4f81d34dcc94ba050327e26d02cce77f37f4 block: 20842760
+- current block number: 20847193
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Rename pufETHEscrow (external), fix references, single signer change in Executor- and EmergencyMultisig.
+
+## Watched changes
+
+```diff
+    contract ExecutorMultisig (0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) {
+    +++ description: None
+      values.$members.4:
+-        "0xdA66Df3920091eF4B54782B9463587c314DAdD41"
++        "0x568993632c34604098e35a184C52aD390c70f754"
+    }
+```
+
+```diff
+    contract EmergencyMultisig (0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) {
+    +++ description: None
+      values.$members.4:
+-        "0xdA66Df3920091eF4B54782B9463587c314DAdD41"
++        "0x568993632c34604098e35a184C52aD390c70f754"
+    }
+```
 
 ## Config/verification related changes
 
