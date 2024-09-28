@@ -447,11 +447,11 @@ export const scroll: Layer2 = {
             href: 'https://etherscan.io/address/0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb#code',
           },
           {
-            text: 'L1LidoGateway.sol - Etherscan source code, finalizeWithdrawERC20 function',
+            text: 'L1WstETHGateway.sol - Etherscan source code, finalizeWithdrawERC20 function',
             href: 'https://etherscan.io/address/0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb#code',
           },
           {
-            text: 'L1PufferGateway.sol - Etherscan source code, finalizeWithdrawERC20 function',
+            text: 'L1PufETHGateway.sol - Etherscan source code, finalizeWithdrawERC20 function',
             href: 'https://etherscan.io/address/0x08D77Ea90DB9BF6c0d3f66E6b8394DA2E81B9a03#code',
           },
           {

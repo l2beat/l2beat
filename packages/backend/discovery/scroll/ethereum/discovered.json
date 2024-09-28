@@ -787,7 +787,7 @@
       }
     },
     {
-      "name": "pufEthEscrow",
+      "name": "pufETHEscrow",
       "address": "0xA033Ff09f2da45f0e9ae495f525363722Df42b2a",
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
