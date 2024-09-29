@@ -4224,6 +4224,13 @@
       }
     },
     {
+      "symbol": "DAMN",
+      "address": "0xeCe898EdCc0AF91430603175F945D8de75291c70",
+      "coingeckoId": "sol-killer",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "symbol": "esBONE",
       "address": "0x545d817F799092DbA53af785d79Bc95d296Af52e",
       "supply": "totalSupply",
@@ -4279,6 +4286,12 @@
           }
         ]
       }
+    },
+    {
+      "symbol": "PIKA",
+      "address": "0x0b4FD6288b6d32171CC515bfFC9340026F56A358",
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "symbol": "SHIB",
@@ -4364,6 +4377,12 @@
           }
         ]
       }
+    },
+    {
+      "symbol": "WOOF",
+      "address": "0xD0daa7B6ff1B40d3cc6F0B2Cf7E85cB993D1c834",
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "symbol": "xFUND",
