@@ -184,6 +184,11 @@
       "address": "0xAC57De9C1A09FeC648E93EB98875B212DB0d460B"
     },
     {
+      "symbol": "BAD",
+      "address": "0x32b86b99441480a7E5BD3A26c124ec2373e3F015",
+      "coingeckoId": "bad-idea-ai"
+    },
+    {
       "symbol": "BAL",
       "address": "0xba100000625a3754423978a60c9317c58a424e3D"
     },
@@ -230,6 +235,11 @@
     {
       "symbol": "BOBA",
       "address": "0x42bBFa2e77757C645eeaAd1655E0911a7553Efbc"
+    },
+    {
+      "symbol": "BONE",
+      "address": "0x9813037ee2218799597d83D4a5B6F3b6778218d9",
+      "coingeckoId": "bone-shibaswap"
     },
     {
       "symbol": "BORG",
@@ -533,6 +543,11 @@
       "address": "0x50D1c9771902476076eCFc8B2A83Ad6b9355a4c9"
     },
     {
+      "symbol": "FUND",
+      "address": "0xe9B076B476D8865cDF79D1Cf7DF420EE397a7f75",
+      "coingeckoId": "unification"
+    },
+    {
       "symbol": "FX",
       "address": "0x8c15Ef5b4B21951d50E53E4fbdA8298FFAD25057"
     },
@@ -675,6 +690,11 @@
       "address": "0xdeFA4e8a7bcBA345F687a2f1456F5Edd9CE97202"
     },
     {
+      "symbol": "KNINE",
+      "address": "0x91fbB2503AC69702061f1AC6885759Fc853e6EaE",
+      "coingeckoId": "k9-finance-dao"
+    },
+    {
       "symbol": "KOI",
       "address": "0x9d14bce1daddf408d77295bb1be9b343814f44de"
     },
@@ -697,6 +717,11 @@
     {
       "symbol": "LDY",
       "address": "0x482dF7483a52496F4C65AB499966dfcdf4DDFDbc"
+    },
+    {
+      "symbol": "LEASH",
+      "address": "0x27C70Cd1946795B66be9d954418546998b546634",
+      "coingeckoId": "leash"
     },
     {
       "symbol": "LEO",
@@ -1095,7 +1120,8 @@
     },
     {
       "symbol": "SHIB",
-      "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE"
+      "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+      "coingeckoId": "shiba-inu"
     },
     {
       "symbol": "Silo",
@@ -1397,6 +1423,11 @@
       "symbol": "XDB",
       "address": "0xB9EefC4b0d472A44be93970254Df4f4016569d27",
       "coingeckoId": "digitalbits"
+    },
+    {
+      "symbol": "xFUND",
+      "address": "0x892A6f9dF0147e5f079b0993F486F9acA3c87881",
+      "coingeckoId": "xfund"
     },
     {
       "symbol": "xSUSHI",
@@ -4152,6 +4183,202 @@
       "supply": "totalSupply",
       "excludeFromTotal": true,
       "coingeckoId": "tether"
+    }
+  ],
+  "shibarium": [
+    {
+      "symbol": "BAD",
+      "address": "0xef99cd3e619C058658043F8775ED9077105D8581",
+      "coingeckoId": "bad-idea-ai",
+      "supply": "totalSupply",
+      "source": "external",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Shibarium",
+            "slug": "shibarium"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "BONE",
+      "source": "canonical",
+      "supply": "zero",
+      "coingeckoId": "bone-shibaswap"
+    },
+    {
+      "symbol": "DAI",
+      "address": "0x0726959d22361B79e4D50A5D157b044A83eC870d",
+      "coingeckoId": "dai",
+      "supply": "totalSupply",
+      "source": "external",
+      "category": "stablecoin",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Shibarium",
+            "slug": "shibarium"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "esBONE",
+      "address": "0x545d817F799092DbA53af785d79Bc95d296Af52e",
+      "supply": "totalSupply",
+      "source": "native"
+    },
+    {
+      "symbol": "FUND",
+      "address": "0xaDA0fA1f9A4Ea8513B3b607EFD31792336c09507",
+      "coingeckoId": "unification",
+      "supply": "totalSupply",
+      "source": "external",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Shibarium",
+            "slug": "shibarium"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "knBONE",
+      "address": "0x3358FCA51d7C0408750FBbE7777012E0b67C027F",
+      "supply": "totalSupply",
+      "source": "native"
+    },
+    {
+      "symbol": "KNINE",
+      "address": "0x91fbB2503AC69702061f1AC6885759Fc853e6EaE",
+      "coingeckoId": "k9-finance-dao",
+      "supply": "totalSupply",
+      "source": "external",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Shibarium",
+            "slug": "shibarium"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "LEASH",
+      "address": "0x65218A41Fb92637254B4f8c97448d3dF343A3064",
+      "coingeckoId": "leash",
+      "supply": "totalSupply",
+      "source": "external",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Shibarium",
+            "slug": "shibarium"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "SHIB",
+      "address": "0x495eea66B0f8b636D441dC6a98d8F5C3D455C4c0",
+      "coingeckoId": "shiba-inu",
+      "supply": "totalSupply",
+      "source": "external",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Shibarium",
+            "slug": "shibarium"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USDC",
+      "address": "0xf010f12dcA0b96D2d6685bf4dB3dbB4Ad500B6Ad",
+      "coingeckoId": "usd-coin",
+      "supply": "totalSupply",
+      "source": "external",
+      "category": "stablecoin",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Shibarium",
+            "slug": "shibarium"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USDT",
+      "address": "0xaB082b8ad96c7f47ED70ED971Ce2116469954cFB",
+      "coingeckoId": "tether",
+      "supply": "totalSupply",
+      "source": "external",
+      "category": "stablecoin",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Shibarium",
+            "slug": "shibarium"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "WBONE",
+      "address": "0xC76F4c819D820369Fb2d7C1531aB3Bb18e6fE8d8",
+      "coingeckoId": "shibarium-wrapped-bone",
+      "supply": "totalSupply",
+      "source": "native"
+    },
+    {
+      "symbol": "WETH",
+      "address": "0x8ed7d143Ef452316Ab1123d28Ab302dC3b80d3ce",
+      "coingeckoId": "weth",
+      "source": "external",
+      "supply": "totalSupply",
+      "category": "ether",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Shibarium",
+            "slug": "shibarium"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "WBTC",
+      "address": "0xE984D89fb00D0B44E798A55dc41EA598B0b0899d",
+      "coingeckoId": "wrapped-bitcoin",
+      "source": "canonical",
+      "supply": "zero",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Shibarium",
+            "slug": "shibarium"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "xFUND",
+      "address": "0x89dc93C6c12CaE47aCAf4aD9305d7A442C30dBB2",
+      "coingeckoId": "xfund",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Shibarium",
+            "slug": "shibarium"
+          }
+        ]
+      }
     }
   ]
 }
