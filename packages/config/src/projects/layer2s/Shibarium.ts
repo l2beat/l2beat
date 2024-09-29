@@ -12,7 +12,6 @@ const shibarium: Layer2 = {
   explorer: "https://shibariumscan.io",
   supportsEIP1559: true,
   stakingAPI: "https://shibarium-api.shib.io",
-  subgraphUrl: "https://thegraph.com/explorer/subgraphs/CWHxeaQWCSchW1BX5JHivrjythBwJYCxgkjGV6EhKwcs?v=0&view=Playground&chain=mainnet",
   contracts: {
     childChain: "0x32262DDD01fFF9bb367586317A5e40Dbe2bCcbe2",
     tokens: {
