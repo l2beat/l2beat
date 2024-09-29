@@ -59,7 +59,7 @@ const shibarium: Layer2 = {
       url: "https://shibarium.shib.io/",
     },
   },
-  icon: "/icons/shibarium.png", // Add the PNG icon to the appropriate directory
+  icon: "packages/frontend/public/icons/shibarium.png", // Add the PNG icon to the appropriate directory
 };
 
 export default shibarium;
