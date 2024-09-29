@@ -2,7 +2,7 @@ import { CustomLink } from './link/custom-link'
 import { SocialLinks } from './social-links'
 
 export function Footer() {
-  const currentYear = new Date().getFullYear();
+  const currentYear = new Date().getFullYear()
 
   return (
     <footer>
