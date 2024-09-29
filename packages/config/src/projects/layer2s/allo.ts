@@ -16,9 +16,9 @@ export const allo: Layer2 = upcomingL2({
       apps: [],
       explorers: [],
       repositories: [],
-      documentation: ['https://docs.axonum.io'],
+      documentation: [],
       socialMedia: [
-        'https://twitter.com/axonum_io',
+        'https://x.com/allo_xyz',
       ],
     },
   },
