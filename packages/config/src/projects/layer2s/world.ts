@@ -1,8 +1,10 @@
+import { Badge } from '../badges'
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
 export const world: Layer2 = upcomingL2({
   id: 'world',
+  badges: [Badge.Stack.OPStack, Badge.Infra.Superchain, Badge.VM.EVM],
   display: {
     name: 'World Chain',
     slug: 'world',
