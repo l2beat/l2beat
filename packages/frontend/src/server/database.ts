@@ -21,7 +21,8 @@ function createThrowingProxy() {
 }
 
 function createConnectionTag() {
-  const base = `l2beat-frontend-${env.NODE_ENV}`
+  // Tag is limited to 63 characters, so it will cut off the excess
+  const base = `FE-${toShort()}`
 
   if (env.VERCEL_ENV === 'preview') {
     return `${base}-${env.VERCEL_GIT_COMMIT_REF}-${env.VERCEL_GIT_COMMIT_SHA}`
@@ -49,4 +50,8 @@ function pool() {
     min: 2,
     max: 5,
   }
+}
+
+function toShort() {
+  return env.NODE_ENV === 'production' ? 'prod' : 'dev'
 }
