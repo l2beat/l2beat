@@ -1,8 +1,8 @@
 {
   "name": "cronoszkevm",
   "chain": "ethereum",
-  "blockNumber": 20861883,
-  "configHash": "0xcddd29c1604e8954632d8230b0ecd6ac697fb61143ef4e714daaf667fb1cfe68",
+  "blockNumber": 20862570,
+  "configHash": "0x7a789bc124be6456459090c6b58224c6681e9c3839189815b3039ea531d50615",
   "version": 14,
   "contracts": [
     {
@@ -76,11 +76,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "FEE_ADMIN": "0xa1496c3abf9cd93b84db10ae569b57fafa04deeeb7ece4167616ad50e35bc56e",
         "ORACLE": "0x352d05fe3946dbe49277552ba941e744d5a96d9c60bc1ba0ea5f1d3ae000f7c8",
-        "protocolVersionToUpgradeTimestamp": [0, 0, 0, 0, 0],
         "UPGRADER": "0xa615a8afb6fffcb8c6809ac0997b5c9c12b8cc97651150f14c8f6203168cff4c"
-      },
-      "errors": {
-        "protocolVersionToUpgradeTimestamp": "Too many values. Update configuration to explore fully"
       },
       "derivedName": "CronosZkEVMAdmin"
     },
