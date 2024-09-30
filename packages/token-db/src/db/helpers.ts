@@ -3,7 +3,7 @@ import { UpsertableTokenMetaRecord } from '@l2beat/database/src/token-db/token-m
 import { UpsertableTokenRecord } from '@l2beat/database/src/token-db/token/entity.js'
 import { nanoid } from 'nanoid'
 import { Simplify } from 'type-fest'
-import { SourceTagParams, sourceTag } from '../utils/sourceTag.js'
+import { SourceTagParams, sourceTag } from '../utils/source-tag.js'
 
 export type UpsertTokenMetaInput = Simplify<
   Omit<UpsertableTokenMetaRecord, 'source'> & {

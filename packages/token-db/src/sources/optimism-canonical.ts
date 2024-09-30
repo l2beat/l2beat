@@ -4,15 +4,14 @@ import { assert } from '@l2beat/shared-pure'
 import { Database } from '@l2beat/database'
 import { notUndefined } from '@l2beat/shared-pure'
 import { getContract, parseAbiItem } from 'viem'
-import { NetworkConfig } from '../utils/getNetworksConfig.js'
+import { NetworkConfig } from '../utils/get-networks-config.js'
 
-export { buildZkSyncCanonicalSource }
+export { buildOptimismCanonicalSource }
 
-const ZKSYNC_DEPLOYER = '0x689a1966931eb4bb6fb81430e6ce0a03aabdf174'
+const OPTIMISM_BRIDGE_3 = '0x4200000000000000000000000000000000000012'
+const OVM_TOKEN_FACTORY = '0x2e985AcD6C8Fa033A4c5209b0140940E24da7C5C'
 
-const abi = [
-  parseAbiItem('function l1Address() external view returns (address)'),
-]
+const abi = [parseAbiItem('function l1Token() external view returns (address)')]
 
 type Dependencies = {
   logger: Logger
@@ -20,27 +19,30 @@ type Dependencies = {
   networksConfig: NetworkConfig[]
 }
 
-function buildZkSyncCanonicalSource({
+function buildOptimismCanonicalSource({
   db,
   logger,
   networksConfig,
 }: Dependencies) {
-  logger = logger.for('ZkSyncCanonicalSource')
+  logger = logger.for('OptimismCanonicalSource')
 
   return async function () {
-    logger.info(`Syncing ZkSync canonical tokens data...`)
+    logger.info(`Syncing Optimism canonical tokens data...`)
 
-    const zkSyncClient = networksConfig.find(
-      (c) => c.name === 'zkSync',
+    const optimismClient = networksConfig.find(
+      (c) => c.name === 'Optimism',
     )?.publicClient
-    assert(zkSyncClient, 'zkSync client not found')
+    assert(optimismClient, 'Optimism client not found')
 
-    const zkSyncNetwork = await db.network.findByName('zkSync')
-    assert(zkSyncNetwork, 'zkSync network not found')
+    const optimismNetwork = await db.network.findByName('Optimism')
+    assert(optimismNetwork, 'Optimism network not found')
 
     const tokens = await db.token.getByDeployment({
-      deploymentConstraints: [{ from: ZKSYNC_DEPLOYER }],
-      networkId: zkSyncNetwork.id,
+      networkId: optimismNetwork.id,
+      deploymentConstraints: [
+        { to: OPTIMISM_BRIDGE_3 },
+        { to: OVM_TOKEN_FACTORY },
+      ],
     })
 
     logger.info('Matching L2 tokens with L1 addresses...')
@@ -49,19 +51,20 @@ function buildZkSyncCanonicalSource({
         const contract = getContract({
           address: token.address as `0x${string}`,
           abi,
-          client: zkSyncClient,
+          client: optimismClient,
         })
 
-        const l1Address = await contract.read.l1Address().catch(() => undefined)
+        const l1Address = await contract.read.l1Token().catch(() => undefined)
 
         if (!l1Address) {
           return
         }
 
         const l1Token = await db.token.findByNetwork({
-          network: 'Ethereum',
+          network: optimismNetwork.name,
           address: l1Address,
         })
+
         if (!l1Token) {
           return
         }
@@ -69,7 +72,7 @@ function buildZkSyncCanonicalSource({
         return {
           sourceTokenId: l1Token.id,
           targetTokenId: token.id,
-          externalBridgeId: null,
+          externalBridgeId: optimismNetwork.id,
         }
       }),
     )
@@ -77,7 +80,7 @@ function buildZkSyncCanonicalSource({
     await db.tokenBridge.upsertMany(tokensBridgeToUpsert.filter(notUndefined))
 
     logger.info(
-      `Synced ${tokensBridgeToUpsert.length} zkSync canonical tokens data`,
+      `Synced ${tokensBridgeToUpsert.length} Optimism canonical tokens data`,
     )
   }
 }
