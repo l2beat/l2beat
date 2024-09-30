@@ -361,11 +361,11 @@ export function getRowTypeClassNamesWithoutOpacity(rowType: RowType | null) {
     case 'ethereum':
       return 'bg-blue-400 group-hover/row:bg-blue-400 dark:bg-blue-900 dark:border-b-blue-500 dark:group-hover/row:bg-blue-900'
     case 'unverified':
-      return 'bg-[#FDDDDD] dark:bg-[#311413] group-hover/row:bg-[#FDDDDD] dark:group-hover/row:bg-[#3F1111]'
+      return 'bg-[#FDDDDD] v2:bg-[#FEE4E4] dark:bg-[#311413] v2:dark:bg-[#391617] group-hover/row:bg-[#FDDDDD] dark:group-hover/row:bg-[#3F1111] v2:dark:group-hover/row:bg-[#401213]'
     case 'under-review':
     case 'implementation-changed':
-      return 'bg-[#faf5e6] dark:bg-[#2a2418] group-hover/row:!bg-[#FBEFC9] dark:group-hover/row:!bg-[#3f351b]'
+      return 'bg-[#faf5e6] dark:bg-[#2a2418] v2:dark:bg-[#363122] group-hover/row:!bg-[#FBEFC9] dark:group-hover/row:!bg-[#3f351b] v2:dark:group-hover/row:!bg-[#4C411F]'
     default:
-      return 'bg-white dark:bg-neutral-900 group-hover/row:shadow-sm group-hover/row:bg-[#EEEEEE] dark:group-hover/row:bg-[#2a292c]'
+      return 'bg-white v2:bg-pure-white dark:bg-neutral-900 v2:dark:bg-[#1F2025] group-hover/row:shadow-sm group-hover/row:bg-[#EEEEEE] dark:group-hover/row:bg-[#2a292c] v2:dark:group-hover/row:bg-[#35363A]'
   }
 }

@@ -1,4 +1,6 @@
-import { Network, Prisma } from '@prisma/client'
+import { createDatabase } from '@l2beat/database'
+import { UpsertableNetworkRecord } from '@l2beat/database/src/token-db/network/entity.js'
+import { notUndefined } from '@l2beat/shared-pure'
 import intersectionWith from 'lodash/intersectionWith.js'
 import { nanoid } from 'nanoid'
 import {
@@ -14,15 +16,13 @@ import {
   optimism,
   polygonZkEvm,
   scroll,
-  zkSync,
+  zksync,
   zora,
 } from 'viem/chains'
 import { z } from 'zod'
-import { createPrismaClient } from '../db/prisma.js'
 import { env } from '../env.js'
-import { isExplorerType } from '../utils/isExplorerType.js'
-import { notUndefined } from '../utils/notUndefined.js'
-import { zodFetch } from '../utils/zodFetch.js'
+import { isExplorerType } from '../utils/is-explorer-type.js'
+import { zodFetch } from '../utils/zod-fetch.js'
 
 export const chainsConfig = [
   arbitrum,
@@ -31,7 +31,7 @@ export const chainsConfig = [
   base,
   blast,
   mantle,
-  zkSync,
+  zksync,
   manta,
   linea,
   mode,
@@ -67,45 +67,10 @@ async function seed() {
     ({ chain_identifier }, { id }) => id === chain_identifier,
   )
 
-  await db.network.upsertMany({
-    data: desiredNetworks
-      .filter((n) => n.chain_identifier !== null)
-      .map((network) => ({
-        id: nanoid(),
-        coingeckoId: network.id,
-        name: network.name,
-        // biome-ignore lint/style/noNonNullAssertion: checked above
-        chainId: network.chain_identifier!,
-      })),
-    conflictPaths: ['coingeckoId'],
-  })
-
-  const allNetworks = await db.network.findMany()
-
-  await db.networkRpc.createMany({
-    data: allNetworks
-      .map((network) => {
-        let rpcUrl: string | undefined =
-          process.env[
-            network.name.toUpperCase().split(' ').join('_') + '_RPC_URL'
-          ]
-        if (!rpcUrl) {
-          const chain = chainsConfig.find((c) => c.id === network.chainId)
-          rpcUrl = chain?.rpcUrls.default.http[0]
-          if (!rpcUrl) {
-            return undefined
-          }
-        }
-        return {
-          id: nanoid(),
-          networkId: network.id,
-          url: rpcUrl,
-        }
-      })
-      .filter(notUndefined),
-  })
-
-  const consts: Record<string, Partial<Network>> = {
+  const consts: Record<
+    string,
+    Omit<UpsertableNetworkRecord, 'name' | 'chainId'>
+  > = {
     ethereum: {
       axelarGatewayAddress: '0x4F4495243837681061C4743b74B3eEdf548D56A5',
       axelarId: 'ethereum',
@@ -149,22 +114,47 @@ async function seed() {
     },
   } as const
 
-  await db.$transaction(
-    Object.entries(consts).map(([coingeckoId, consts]) =>
-      db.network.update({
-        where: {
-          coingeckoId,
-        },
-        data: {
-          ...consts,
-        },
-      }),
-    ),
+  await db.network.upsertMany(
+    desiredNetworks
+      .filter((n) => n.chain_identifier !== null)
+      .map((network) => ({
+        id: nanoid(),
+        coingeckoId: network.id,
+        name: network.name,
+        // biome-ignore lint/style/noNonNullAssertion: checked above
+        chainId: network.chain_identifier!,
+        ...consts[network.id],
+      })),
+  )
+
+  const allNetworks = await db.network.getAll()
+
+  await db.networkRpc.insertMany(
+    allNetworks
+      .map((network) => {
+        let rpcUrl: string | undefined =
+          process.env[
+            network.name.toUpperCase().split(' ').join('_') + '_RPC_URL'
+          ]
+        if (!rpcUrl) {
+          const chain = chainsConfig.find((c) => c.id === network.chainId)
+          rpcUrl = chain?.rpcUrls.default.http[0]
+          if (!rpcUrl) {
+            return undefined
+          }
+        }
+        return {
+          id: nanoid(),
+          networkId: network.id,
+          url: rpcUrl,
+        }
+      })
+      .filter(notUndefined),
   )
 
   console.log(`Database seeded with ${desiredNetworks.length} networks ✅`)
-  await db.networkExplorer.createMany({
-    data: allNetworks
+  await db.networkExplorer.insertMany(
+    allNetworks
       .map((network) => {
         const networkSlug = network.name
           .toLowerCase()
@@ -198,8 +188,12 @@ async function seed() {
         }
       })
       .filter(notUndefined),
-  })
+  )
 }
+
+/**
+ * It's probably not a good idea to truncate the database if it's shared between different projects,
+ * hence this code is left commented out.
 
 async function resetDb() {
   const dbUrl = new URL(env.DATABASE_URL)
@@ -216,8 +210,10 @@ async function resetDb() {
   console.log('Database emptied ✅')
 }
 
-const db = createPrismaClient()
+*/
 
-await resetDb()
+const db = createDatabase()
+
+// await resetDb()
 await seed()
-db.$disconnect()
+await db.close()

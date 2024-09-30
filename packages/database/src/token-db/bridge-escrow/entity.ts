@@ -1,4 +1,5 @@
-import { Insertable, Selectable } from 'kysely'
+import { Insertable } from 'kysely'
+import { nanoid } from 'nanoid'
 import { BridgeEscrow } from '../../kysely/generated/types'
 
 export interface BridgeEscrowRecord {
@@ -11,10 +12,18 @@ export interface BridgeEscrowRecord {
   createdAt: Date
 }
 
-export function toRecord(row: Selectable<BridgeEscrow>): BridgeEscrowRecord {
-  return row
-}
+export type UpsertableBridgeEscrowRecord = Omit<
+  Insertable<BridgeEscrow>,
+  'id' | 'updatedAt' | 'createdAt'
+>
 
-export function toRow(record: BridgeEscrowRecord): Insertable<BridgeEscrow> {
-  return record
+export function upsertableToRecord(
+  record: UpsertableBridgeEscrowRecord,
+): Insertable<BridgeEscrow> {
+  return {
+    ...record,
+    id: nanoid(),
+    updatedAt: new Date(),
+    createdAt: new Date(),
+  }
 }

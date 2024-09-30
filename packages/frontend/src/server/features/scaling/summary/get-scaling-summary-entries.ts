@@ -1,6 +1,6 @@
 import { layer2s, layer3s } from '@l2beat/config'
 import { compact } from 'lodash'
-import { getL2Risks } from '~/app/(side-nav)/(other)/scaling/_utils/get-l2-risks'
+import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
@@ -8,12 +8,17 @@ import { get7dTokenBreakdown } from '../tvl/utils/get-7d-token-breakdown'
 import { getAssociatedTokenWarning } from '../tvl/utils/get-associated-token-warning'
 import { orderByTvl } from '../tvl/utils/order-by-tvl'
 
+export type ScalingSummaryEntry = Awaited<
+  ReturnType<typeof getScalingSummaryEntries>
+>[number]
 export async function getScalingSummaryEntries() {
   const implementationChangeReport = await getImplementationChangeReport()
   const projectsVerificationStatuses = await getProjectsVerificationStatuses()
   const tvl = await get7dTokenBreakdown({ type: 'layer2' })
 
-  const projects = [...layer2s, ...layer3s]
+  const projects = [...layer2s, ...layer3s].filter(
+    (project) => !project.isUpcoming && !project.isArchived,
+  )
 
   const entries = projects.map((project) => {
     const isVerified = !!projectsVerificationStatuses[project.id.toString()]
@@ -86,7 +91,3 @@ export async function getScalingSummaryEntries() {
 
   return orderByTvl(entries, remappedForOrdering)
 }
-
-export type ScalingSummaryEntry = Awaited<
-  ReturnType<typeof getScalingSummaryEntries>
->[number]

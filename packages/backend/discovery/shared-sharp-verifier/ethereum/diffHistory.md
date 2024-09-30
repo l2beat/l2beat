@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xb29a39303bfc9827c15a8514e8c3e6f06ac66853
+
+# Diff at Fri, 27 Sep 2024 15:54:28 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@4cb14cc1bdc343d171a7988f9f91f11edbf568a8 block: 20756791
+- current block number: 20842982
+
+## Description
+
+Add signer to SHARPVerifierGovernorMultisig.
+
+## Watched changes
+
+```diff
+    contract SHARPVerifierGovernorMultisig (0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4) {
+    +++ description: None
+      values.$members.3:
++        "0x955B978F3ee7818dA71fA25c676062E6BC462Fec"
+      values.$members.2:
+-        "0x955B978F3ee7818dA71fA25c676062E6BC462Fec"
++        "0xebc8416179fE90854fe8B3f774801165572cfD7F"
+      values.$members.1:
+-        "0xebc8416179fE90854fe8B3f774801165572cfD7F"
++        "0x59232aC80E6d403b6381393e52f4665ECA328558"
+      values.$members.0:
+-        "0x59232aC80E6d403b6381393e52f4665ECA328558"
++        "0x0405107a60391Eb51821be373ff978115Ee58488"
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "2 of 4 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x23ac602e5cc33add49f501507d85408bc3f89b74
 
 # Diff at Sun, 15 Sep 2024 15:05:41 GMT:

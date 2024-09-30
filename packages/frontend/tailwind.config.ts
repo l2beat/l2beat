@@ -43,6 +43,7 @@ const config: Config = {
       zinc: {
         100: '#F3F3F3',
         300: '#DBDBDB',
+        400: '#868B98',
         500: '#5F6470',
         700: '#393C43',
         800: '#272A2F',
@@ -243,7 +244,7 @@ const config: Config = {
   },
   plugins: [
     plugin(function ({ addVariant }) {
-      addVariant('sidenav-collapsed', '.sidenav-collapsed &')
+      addVariant('v2', '.v2 &')
     }),
     require('tailwindcss-animate'),
     require('@tailwindcss/container-queries'),

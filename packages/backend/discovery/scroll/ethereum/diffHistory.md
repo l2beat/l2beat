@@ -1,3 +1,115 @@
+Generated with discovered.json: 0x1138ed1c264dc3d7d38d5979f5b35487ff768d7b
+
+# Diff at Sat, 28 Sep 2024 05:59:58 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@f2cc4f81d34dcc94ba050327e26d02cce77f37f4 block: 20842760
+- current block number: 20847193
+
+## Description
+
+Rename pufETHEscrow (external), fix references, single signer change in Executor- and EmergencyMultisig.
+
+## Watched changes
+
+```diff
+    contract ExecutorMultisig (0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) {
+    +++ description: None
+      values.$members.4:
+-        "0xdA66Df3920091eF4B54782B9463587c314DAdD41"
++        "0x568993632c34604098e35a184C52aD390c70f754"
+    }
+```
+
+```diff
+    contract EmergencyMultisig (0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) {
+    +++ description: None
+      values.$members.4:
+-        "0xdA66Df3920091eF4B54782B9463587c314DAdD41"
++        "0x568993632c34604098e35a184C52aD390c70f754"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20842760 (main branch discovery), not current.
+
+```diff
+    contract pufETHEscrow (0xA033Ff09f2da45f0e9ae495f525363722Df42b2a) {
+    +++ description: None
+      name:
+-        "pufEthEscrow"
++        "pufETHEscrow"
+    }
+```
+
+Generated with discovered.json: 0xe6b73b280820baf18ebcfc54742ab25d435f0f0d
+
+# Diff at Fri, 27 Sep 2024 15:09:56 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@4cb14cc1bdc343d171a7988f9f91f11edbf568a8 block: 20725971
+- current block number: 20842760
+
+## Description
+
+Add DAI escrow, upgradeable by ScrollMultisig.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20725971 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0xEB803eb3F501998126bf37bB823646Ed3D59d072) {
+    +++ description: None
+      receivedPermissions.14:
++        {"permission":"upgrade","target":"0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"}
+      receivedPermissions.13.target:
+-        "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
++        "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B"
+      receivedPermissions.12.target:
+-        "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B"
++        "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9"
+      receivedPermissions.11.target:
+-        "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9"
++        "0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6"
+      receivedPermissions.10.target:
+-        "0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6"
++        "0xb2b10a289A229415a124EFDeF310C10cb004B6ff"
+      receivedPermissions.9.target:
+-        "0xb2b10a289A229415a124EFDeF310C10cb004B6ff"
++        "0xa13BAF47339d63B743e7Da8741db5456DAc1E556"
+      receivedPermissions.8.target:
+-        "0xa13BAF47339d63B743e7Da8741db5456DAc1E556"
++        "0x987e300fDfb06093859358522a79098848C33852"
+      receivedPermissions.7.target:
+-        "0x987e300fDfb06093859358522a79098848C33852"
++        "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905"
+      receivedPermissions.6.target:
+-        "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905"
++        "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE"
+      receivedPermissions.5.target:
+-        "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE"
++        "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d"
+      receivedPermissions.4.target:
+-        "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d"
++        "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"
+      receivedPermissions.3.target:
+-        "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"
++        "0x67260A8B73C5B77B55c1805218A42A7A6F98F515"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DaiEscrow (0x67260A8B73C5B77B55c1805218A42A7A6F98F515)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x6b5bd6fa0124dd6da49839e5d834a8f046e373fe
 
 # Diff at Wed, 11 Sep 2024 07:47:40 GMT:

@@ -16,10 +16,14 @@ export const syndr: Layer3 = upcomingL3({
     links: {
       websites: ['https://syndr.com/'],
       apps: [],
-      documentation: [],
+      documentation: ['https://docs.syndr.com'],
       explorers: [],
-      repositories: [],
-      socialMedia: ['https://x.com/SyndrHQ'],
+      repositories: ['https://github.com/0xSyndr'],
+      socialMedia: [
+        'https://x.com/SyndrHQ',
+        'https://medium.com/syndr',
+        'https://t.me/syndr_official',
+      ],
     },
   },
 })

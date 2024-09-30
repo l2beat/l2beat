@@ -24,14 +24,21 @@ html {
   scroll-padding-top: var(--header-height);
 }
 
-
 body {
   @apply bg-white dark:bg-neutral-900 text-base text-black dark:text-white md:text-lg font-sans transition-colors;
+}
+
+body:has(.v2){
+  @apply bg-[#E6E7EC] dark:bg-[#090A0B];
 }
 
 @layer utilities {
   .transition-duration-50 {
     transition-duration: 50ms !important;
+  }
+
+  .scrollbar-gutter-stable {
+    scrollbar-gutter: stable;
   }
 
   /* Masks for overflow wrapper */

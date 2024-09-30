@@ -24,7 +24,9 @@ export function getGovernancePublicationEntry(
   post: CollectionEntry<'publications'>,
 ): GovernancePublicationEntry {
   const author = getCollectionEntry('authors', post.data.authorId)
-
+  if (!author) {
+    throw new Error(`Author not found for ${post.id}`)
+  }
   return {
     id: post.id,
     content: post.content,

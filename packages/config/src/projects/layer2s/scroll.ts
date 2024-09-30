@@ -174,6 +174,11 @@ export const scroll: Layer2 = {
         ...upgradesScrollMultisig,
       }),
       discovery.getEscrowDetails({
+        address: EthereumAddress('0x67260A8B73C5B77B55c1805218A42A7A6F98F515'),
+        tokens: ['DAI'],
+        ...upgradesScrollMultisig,
+      }),
+      discovery.getEscrowDetails({
         address: EthereumAddress('0x6625C6332c9F91F2D27c304E729B86db87A3f504'),
         tokens: ['wstETH'],
         upgradableBy: ['Lido (Lido Agent)'],
@@ -380,7 +385,7 @@ export const scroll: Layer2 = {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'ScrollChain.sol - Etherscan source code, verifyAggregateProof4844() and verifyBundleProof() calls',
+          text: 'ScrollChain.sol - Etherscan source code, verifyAggregateProof() and verifyBundleProof() calls',
           href: 'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
         },
       ],
@@ -407,8 +412,12 @@ export const scroll: Layer2 = {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
       references: [
         {
-          text: 'EnforcedTxGateway.sol - Etherscan source code, EnforcedTxGateway is paused',
+          text: 'EnforcedTxGateway.sol - Etherscan source code',
           href: 'https://etherscan.io/address/0x642af405bF64660665B37977449C9C536B806318#code',
+        },
+        {
+          text: 'EnforcedTxGateway is paused - Etherscan proxy contract',
+          href: 'https://etherscan.io/address/0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d#readProxyContract#F7',
         },
       ],
     },
@@ -433,7 +442,7 @@ export const scroll: Layer2 = {
     genesisState:
       'The genesis file can be found [here](https://scrollzkp.notion.site/genesis-json-f89ca24b123f462f98c8844d17bdbb74), which contains two prefunded addresses and five predeployed contracts.',
     dataFormat:
-      'Blocks are grouped into chunks and chunks are grouped into batches. Chunk encoding format can be found [here](https://github.com/scroll-tech/scroll/blob/develop/contracts/src/libraries/codec/ChunkCodec.sol#L5), and batch encoding format can be found [here](https://github.com/scroll-tech/scroll/blob/develop/contracts/src/libraries/codec/BatchHeaderV0Codec.sol#L7).',
+      'Blocks are grouped into chunks and chunks are grouped into batches. Chunk encoding format can be found [here](https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/ChunkCodecV0.sol#L5), and batch encoding format can be found [here](https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/BatchHeaderV0Codec.sol#L7).',
   },
   stateValidation: {
     description:

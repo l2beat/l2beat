@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x7739dd387f09b162dfd31f9caa7e750639621a36
+
+# Diff at Wed, 25 Sep 2024 10:35:52 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@e8c4fe6b10f7918ebbd761bc35018ba84053b08c block: 20619826
+- current block number: 20827058
+
+## Description
+
+Limits changed. The maximum total deposit limit is removed (unlimited) and withdrawal limits per period are raised.
+
+## Watched changes
+
+```diff
+    contract OptimismPortal (0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.ethThrottleDeposits.maxAmountTotal:
+-        "3000000000000000000000"
++        0
+      values.ethThrottleWithdrawals.maxAmountPerPeriod:
+-        "500000000000000000000"
++        "1000000000000000000000"
+      values.getEthThrottleWithdrawalsCredits:
+-        "500000000000000000000"
++        "1000000000000000000000"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      values.ethThrottleDeposits.maxAmountPerPeriod:
+-        "50000000000000000000"
++        0
+    }
+```
+
 Generated with discovered.json: 0x8ec193a124244817461cb28bc56248ba72ba973e
 
 # Diff at Sun, 08 Sep 2024 17:24:52 GMT:

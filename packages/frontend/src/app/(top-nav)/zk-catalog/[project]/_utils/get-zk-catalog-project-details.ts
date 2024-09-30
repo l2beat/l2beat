@@ -24,7 +24,7 @@ export function getZkCatalogProjectDetails(
         ? undefined
         : `/scaling/projects/${project.display.slug}`,
     trustedSetup: getTrustedSetup(proofVerification.verifiers),
-    description: descriptionEntry.content,
+    description: descriptionEntry?.content,
     ...proofVerification,
   }
 }

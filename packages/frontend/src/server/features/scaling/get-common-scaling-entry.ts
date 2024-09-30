@@ -3,11 +3,17 @@ import {
   type Layer3,
   type StageConfig,
   badges,
-  layer2s,
 } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import { type SetOptional } from 'type-fest'
+import { getHostChain } from './utils/get-host-chain'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
+
+// Optional type and category is needed to support Ethereum L1 entry
+export type CommonScalingEntry = SetOptional<
+  ReturnType<typeof getCommonScalingEntry>,
+  'type' | 'category' | 'purposes'
+>
 
 export function getCommonScalingEntry(
   params:
@@ -46,7 +52,7 @@ export function getCommonScalingEntry(
 
   const { project, isVerified, hasImplementationChanged } = params
 
-  const common = {
+  return {
     id: project.id,
     name: project.display.name,
     href: `/scaling/projects/${project.display.slug}`,
@@ -68,32 +74,12 @@ export function getCommonScalingEntry(
         badge,
         kind: badges[badge].type,
       })) ?? [],
-  }
-
-  if (project.type === 'layer2') {
-    return {
-      ...common,
-      type: 'layer2' as const,
-      provider: project.display.provider,
-      stage: project.stage,
-      hostChain: undefined,
-    }
-  }
-
-  return {
-    ...common,
-    type: 'layer3' as const,
+    type: project.type,
     provider: project.display.provider,
-    hostChain:
-      project.hostChain === 'Multiple'
-        ? 'Multiple'
-        : layer2s.find((l) => l.id === project.hostChain)?.display.name,
-    stage: { stage: 'NotApplicable' } satisfies StageConfig,
+    hostChain: getHostChain(project),
+    stage:
+      project.type === 'layer2'
+        ? project.stage
+        : ({ stage: 'NotApplicable' } satisfies StageConfig),
   }
 }
-
-// Optional type and category is needed to support Ethereum L1 entry
-export type CommonScalingEntry = SetOptional<
-  ReturnType<typeof getCommonScalingEntry>,
-  'type' | 'category'
->

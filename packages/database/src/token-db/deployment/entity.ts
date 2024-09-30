@@ -1,4 +1,5 @@
-import { Insertable, Selectable } from 'kysely'
+import { Insertable } from 'kysely'
+import { nanoid } from 'nanoid'
 import { Deployment } from '../../kysely/generated/types'
 
 export interface DeploymentRecord {
@@ -15,10 +16,18 @@ export interface DeploymentRecord {
   createdAt: Date
 }
 
-export function toRecord(row: Selectable<Deployment>): DeploymentRecord {
-  return row
-}
+export type UpsertableDeploymentRecord = Omit<
+  DeploymentRecord,
+  'id' | 'updatedAt' | 'createdAt'
+>
 
-export function toRow(record: DeploymentRecord): Insertable<Deployment> {
-  return record
+export function upsertableToRow(
+  record: UpsertableDeploymentRecord,
+): Insertable<Deployment> {
+  return {
+    ...record,
+    id: nanoid(),
+    updatedAt: new Date(),
+    createdAt: new Date(),
+  }
 }
