@@ -17,9 +17,7 @@ export const allo: Layer2 = upcomingL2({
       explorers: [],
       repositories: [],
       documentation: [],
-      socialMedia: [
-        'https://x.com/allo_xyz',
-      ],
+      socialMedia: ['https://x.com/allo_xyz'],
     },
   },
 })
