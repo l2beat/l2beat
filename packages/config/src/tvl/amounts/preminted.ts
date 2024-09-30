@@ -12,6 +12,7 @@ import {
 } from '../../backend'
 import { ChainConfig } from '../../common'
 import { getEscrowUntilTimestamp } from '../../utils/getEscrowUntilTimestamp'
+
 export function getPremintedEntry(
   chain: ChainConfig,
   token: Token & { isPreminted: boolean },
@@ -19,47 +20,41 @@ export function getPremintedEntry(
   project: BackendProject,
 ): PremintedEntry {
   assert(token.isPreminted)
-
   assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
-  const tokenSinceTimestamp = UnixTime.max(
-    chain.minTimestampForTvl,
-    token.sinceTimestamp,
-  )
+
+  const bridgedUsing = escrow.bridgedUsing
+  const includeInTotal = escrow.includeInTotal ?? true
+  const isAssociated = !!project.associatedTokens?.includes(token.symbol)
   const sinceTimestamp = UnixTime.max(
-    tokenSinceTimestamp,
+    UnixTime.max(chain.minTimestampForTvl, token.sinceTimestamp),
     escrow.sinceTimestamp,
   )
-
+  const source = escrow.source ?? 'canonical'
   const untilTimestamp = getEscrowUntilTimestamp(
     token.untilTimestamp,
     escrow.untilTimestamp,
   )
 
-  const isAssociated = !!project.associatedTokens?.includes(token.symbol)
-  const includeInTotal = escrow.includeInTotal ?? true
-  const bridgedUsing = escrow.bridgedUsing
-  const source = escrow.source ?? 'canonical'
-
   return {
-    type: 'preminted',
     address: token.address ?? 'native',
-    escrowAddress: escrow.address,
-    coingeckoId: token.coingeckoId,
-    dataSource: `${chain.name}_preminted_${token.address}`,
-    sinceTimestamp,
-    untilTimestamp,
-    includeInTotal: token.excludeFromTotal ? false : includeInTotal,
-    isAssociated,
-    bridgedUsing,
-    source,
     assetId: AssetId.create(
       chainConverter.toName(token.chainId),
       token.address,
     ),
-    chain: chainConverter.toName(token.chainId),
-    project: project.projectId,
-    decimals: token.decimals,
-    symbol: token.symbol,
+    bridgedUsing,
     category: token.category,
+    chain: chainConverter.toName(token.chainId),
+    coingeckoId: token.coingeckoId,
+    dataSource: `${chain.name}_preminted_${token.address}`,
+    decimals: token.decimals,
+    escrowAddress: escrow.address,
+    includeInTotal: token.excludeFromTotal ? false : includeInTotal,
+    isAssociated,
+    project: project.projectId,
+    sinceTimestamp,
+    source,
+    symbol: token.symbol,
+    type: 'preminted',
+    untilTimestamp,
   }
 }

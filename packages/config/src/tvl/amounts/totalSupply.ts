@@ -16,31 +16,30 @@ export function getTotalSupplyEntry(
   assert(token.supply === 'totalSupply' && token.address)
   assert(chain.minTimestampForTvl, 'Chain with token should have minTimestamp')
 
+  const includeInTotal = true
+  const isAssociated = !!project.associatedTokens?.includes(token.symbol)
   const sinceTimestamp = UnixTime.max(
     chain.minTimestampForTvl,
     token.sinceTimestamp,
   )
 
-  const isAssociated = !!project.associatedTokens?.includes(token.symbol)
-  const includeInTotal = true
-
   return {
+    address: token.address,
     assetId: AssetId.create(
       chainConverter.toName(token.chainId),
       token.address,
     ),
-    chain: chainConverter.toName(token.chainId),
-    project: project.projectId,
-    decimals: token.decimals,
-    symbol: token.symbol,
     category: token.category,
-    type: 'totalSupply',
-    address: token.address,
-    sinceTimestamp,
-    untilTimestamp: token.untilTimestamp,
+    chain: chainConverter.toName(token.chainId),
+    dataSource: chain.name,
+    decimals: token.decimals,
     includeInTotal,
     isAssociated,
+    project: project.projectId,
+    sinceTimestamp,
     source: token.source,
-    dataSource: chain.name,
+    symbol: token.symbol,
+    type: 'totalSupply',
+    untilTimestamp: token.untilTimestamp,
   }
 }
