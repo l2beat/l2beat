@@ -175,6 +175,7 @@ export const optimism: Layer2 = {
         'https://twitter.com/OPLabsPBC',
         'https://youtube.com/playlist?list=PLX_rXoLYCf5HqTWygUfoMfzRirGz5lekH',
         'https://twitch.tv/optimismpbc',
+        'https://discord.gg/optimism',
       ],
       rollupCodes: 'https://rollup.codes/optimism',
     },
