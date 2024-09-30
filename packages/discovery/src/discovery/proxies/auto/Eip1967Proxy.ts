@@ -1,8 +1,9 @@
-import { ProxyDetails } from '@l2beat/discovery-types'
+import { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
 import { assert, Bytes, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { utils } from 'ethers'
 import { IProvider } from '../../provider/IProvider'
+import { DateAddresses } from '../pastUpgrades'
 
 // keccak256('eip1967.proxy.implementation') - 1)
 const IMPLEMENTATION_SLOT = Bytes.fromHex(
@@ -40,15 +41,10 @@ export async function getOwner(
   return result ?? EthereumAddress.ZERO
 }
 
-interface DateAddress {
-  date: string
-  addresses: string[]
-}
-
 export async function getPastUpgrades(
   provider: IProvider,
   address: EthereumAddress,
-): Promise<DateAddress[]> {
+): Promise<DateAddresses[]> {
   const abi = new utils.Interface([
     'event Upgraded(address indexed implementation)',
   ])
@@ -72,10 +68,7 @@ export async function getPastUpgrades(
 
   return logs.map((l) => {
     const implementation = abi.parseLog(l).args.implementation
-    return {
-      date: dateMap[l.blockNumber] ?? 'ERROR',
-      addresses: [implementation],
-    }
+    return [dateMap[l.blockNumber] ?? 'ERROR', [implementation]]
   })
 }
 
@@ -98,8 +91,8 @@ export async function detectEip1967Proxy(
     values: {
       $admin: admin.toString(),
       $implementation: implementation.toString(),
-      $pastUpgrades: pastUpgrades.map((v) => [v.date, v.addresses]),
-      $upgradeCount: Object.values(pastUpgrades).length,
+      $pastUpgrades: pastUpgrades as ContractValue,
+      $upgradeCount: pastUpgrades.length,
     },
   }
 }
