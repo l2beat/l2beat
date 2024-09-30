@@ -44,17 +44,15 @@ export function BlockList({
                 </a>
               </th>
               {(block.includesBatch || block.includesUnknown) && (
-                <>
-                  <td className="px-6 py-2">
-                    {block.ratio.toFixed(4)}
-                    {block.includesBatch && (
-                      <BatchIcon tooltipContent="Block contains batch execution" />
-                    )}
-                    {block.includesUnknown && (
-                      <UnknownIcon tooltipContent="Block contains unknown Smart Account implementation" />
-                    )}
-                  </td>
-                </>
+                <td className="inline-flex items-center px-6 py-2">
+                  {block.ratio.toFixed(4)}
+                  {block.includesBatch && (
+                    <BatchIcon tooltipContent="Block contains batch execution" />
+                  )}
+                  {block.includesUnknown && (
+                    <UnknownIcon tooltipContent="Block contains unknown Smart Account implementation" />
+                  )}
+                </td>
               )}
               {!block.includesBatch && !block.includesUnknown && (
                 <>
