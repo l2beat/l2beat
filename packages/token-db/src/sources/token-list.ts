@@ -4,7 +4,7 @@ import { getAddress } from 'viem'
 import { z } from 'zod'
 import { upsertManyTokensWithMeta } from '../db/helpers.js'
 import { TokenUpdateQueue } from '../utils/queue/wrap.js'
-import { zodFetch } from '../utils/zodFetch.js'
+import { zodFetch } from '../utils/zod-fetch.js'
 
 export { buildTokenListSource }
 

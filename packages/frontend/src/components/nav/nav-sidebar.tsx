@@ -68,8 +68,11 @@ export async function NavSidebar({
             </NavLinkGroup>
           )
         })}
-        <NavDivider />
-        <NavSmallLinkGroup>
+      </nav>
+      <div>
+        {/* Width calculated: 100% + 3rem (padding) + 4px (scrollbar - since we use gutter, we need to subtract it) */}
+        <NavDivider className="-mx-6 w-[calc(100%+3rem+4px)]" />
+        <NavSmallLinkGroup className="mt-5">
           <NavSmallLink title="Forum" href={externalLinks.forum} />
           <NavSmallLink title="ZK Catalog" href="/zk-catalog" />
           <NavSmallLink title="Donate" href="/donate" />
@@ -89,11 +92,10 @@ export async function NavSidebar({
           />
           <NavSmallLink title="FAQ" href="/faq" />
         </NavSmallLinkGroup>
-        <NavDivider />
-        <ul className="flex gap-2 text-2xl xl:justify-between">
-          <SocialLinks />
+        <ul className="mb-[14px] mt-6 flex gap-2 text-2xl xl:justify-between">
+          <SocialLinks variant="gray" />
         </ul>
-      </nav>
+      </div>
     </NavSideBarWrapper>
   )
 }

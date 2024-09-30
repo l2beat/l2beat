@@ -62,8 +62,8 @@ function getBridges(params: Params) {
         : undefined
 
     const isVerified = !!projectsVerificationStatuses[bridge.id.toString()]
-    const hasImplementationChanged =
-      !!implementationChangeReport.projects[bridge.id.toString()]
+    const changes = implementationChangeReport.projects[bridge.id.toString()]
+    const hasImplementationChanged = !!changes?.ethereum
 
     return {
       id: bridge.id,

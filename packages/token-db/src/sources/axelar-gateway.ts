@@ -3,7 +3,7 @@ import { Database } from '@l2beat/database'
 import { SetRequired } from 'type-fest'
 import { getAddress, parseAbiItem } from 'viem'
 import { upsertManyTokensWithMeta } from '../db/helpers.js'
-import { NetworkConfig } from '../utils/getNetworksConfig.js'
+import { NetworkConfig } from '../utils/get-networks-config.js'
 import { TokenUpdateQueue } from '../utils/queue/wrap.js'
 
 export { buildAxelarGatewaySource }

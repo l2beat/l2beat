@@ -1,5 +1,3 @@
-import type { Chain } from '@/chains'
-
 export function SmartAccountList({
   smartAccountUsage,
 }: {

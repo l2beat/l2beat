@@ -44,7 +44,7 @@ function L3ScalingProjectRosette({
         rosetteType={rosetteType}
         setRosetteType={setRosetteType}
         // Offset for labels
-        className="-ml-7 mb-3"
+        className="mb-3"
         isDisabled={project.isUnderReview || project.isUpcoming}
       />
       {children}
