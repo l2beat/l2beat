@@ -45,7 +45,7 @@ export function SocialLinks() {
       <a rel="noopener noreferrer" href={href} target="_blank">
         <Icon
           aria-label={title}
-          className="size-6 fill-zinc-500 dark:fill-[#D3D5D9]"
+          className="size-6 fill-zinc-500 transition-colors hover:fill-zinc-400 dark:fill-[#D3D5D9] dark:hover:fill-zinc-400"
         />
       </a>
     </li>
