@@ -106,6 +106,10 @@ export const cronoszkevm: Layer2 = zkStackL2({
       description:
         'Intermediary governance contract that has the *ChainAdmin* role in the Cronos zkEVM diamond contract.',
     }),
+    discovery.getContractDetails('TransactionFiltererDenyList', {
+      description:
+        'Censorship contract that is registered as the TransactionFilterer in the Cronos zkEVM diamond contract. Keeps a list of addresses that are not allowed to force transactions to the Layer 2 (`requestL2Transaction()`).',
+    }),
   ],
   // currently unclear if state derivation is significantly different from ZKsync Era, see telegram chat
   // stateDerivation: {
@@ -132,6 +136,10 @@ export const cronoszkevm: Layer2 = zkStackL2({
       ],
       description: 'Inherits all *ChainAdmin* permissions.',
     },
+    ...discovery.getMultisigPermission(
+      'TxFiltererOwnerMultisig',
+      'Owns the TransactionFiltererDenyList contract and can manage addresses in the censoring list. Currently also has all *ChainAdmin* permissions through the CronosZkEVMAdmin contract.',
+    ),
   ],
   milestones: [
     {
