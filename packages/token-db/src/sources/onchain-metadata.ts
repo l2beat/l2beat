@@ -4,7 +4,7 @@ import { Database } from '@l2beat/database'
 import { notUndefined } from '@l2beat/shared-pure'
 import { getContract, parseAbiItem } from 'viem'
 import { upsertManyTokenMeta } from '../db/helpers.js'
-import { NetworkConfig } from '../utils/getNetworksConfig.js'
+import { NetworkConfig } from '../utils/get-networks-config.js'
 
 export { buildOnChainMetadataSource }
 

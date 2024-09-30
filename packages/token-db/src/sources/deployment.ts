@@ -4,7 +4,7 @@ import { setTimeout } from 'timers/promises'
 import { PublicClient } from 'viem'
 import { upsertTokenMeta } from '../db/helpers.js'
 import { NetworkExplorerClient } from '../utils/explorers/index.js'
-import { NetworkConfig, WithExplorer } from '../utils/getNetworksConfig.js'
+import { NetworkConfig, WithExplorer } from '../utils/get-networks-config.js'
 import { DeploymentUpdatedQueue } from '../utils/queue/wrap.js'
 
 type Dependencies = {
