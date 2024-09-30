@@ -353,7 +353,7 @@ export function opStackCommon(
       },
       {
         title: 'Superchain Explainer',
-        url: 'https://community.optimism.io/docs/developers/bedrock/explainer/',
+        url: 'https://docs.optimism.io/stack/explainer',
         thumbnail: NUGGETS.THUMBNAILS.OPTIMISM_03,
       },
       {
