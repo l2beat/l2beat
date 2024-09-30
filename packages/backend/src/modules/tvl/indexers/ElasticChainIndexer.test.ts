@@ -121,7 +121,7 @@ describe(ElasticChainIndexer.name, () => {
       expect(safeHeight).toEqual(to)
     })
 
-    it('returns if optimized timestamp later than to', async () => {
+    it('returns if optimized timestamp later than to with multiple configs', async () => {
       const from = 100
       const to = 1000
 
