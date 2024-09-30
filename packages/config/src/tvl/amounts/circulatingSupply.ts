@@ -20,7 +20,8 @@ export function getCirculatingSupplyEntry(
   const chainName = chainConverter.toName(token.chainId)
   const assetId = AssetId.create(chainName, address)
   const dataSource = 'coingecko'
-  const includeInTotal = true
+  const includeInTotal =
+    token.excludeFromTotal === undefined ? true : !token.excludeFromTotal
   const isAssociated = !!project.associatedTokens?.includes(token.symbol)
   const sinceTimestamp = UnixTime.max(
     chain.minTimestampForTvl,
