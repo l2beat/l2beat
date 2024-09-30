@@ -3,16 +3,16 @@
 import { type Milestone } from '@l2beat/config'
 import { useState } from 'react'
 import { ActivityTimeRangeControls } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-controls'
+import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
 import { type ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/react'
 import { Checkbox } from '../../core/checkbox'
 import { Chart } from '../core/chart'
 import { ChartProvider } from '../core/chart-provider'
+import { type ChartScale } from '../types'
 import { ActivityChartHover } from './activity-chart-hover'
 import { useActivityChartRenderParams } from './use-activity-chart-render-params'
-import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
-import { type ChartScale } from '../types'
 
 interface Props {
   milestones: Milestone[]
@@ -69,7 +69,8 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
               <span className="max-lg:hidden">ETH Mainnet Transactions</span>
               <span className="lg:hidden">ETH Txs</span>
             </div>
-          </Checkbox><RadioGroup
+          </Checkbox>
+          <RadioGroup
             value={scale}
             onValueChange={(value) => setScale(value as ChartScale)}
           >
