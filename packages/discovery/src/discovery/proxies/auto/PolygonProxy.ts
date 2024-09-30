@@ -1,9 +1,9 @@
 import { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
 import { assert, Bytes, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
+import { utils } from 'ethers'
 import { IProvider } from '../../provider/IProvider'
 import { DateAddresses } from '../pastUpgrades'
-import { utils } from 'ethers'
 
 // keccak256("matic.network.proxy.implementation")
 const IMPLEMENTATION_SLOT = Bytes.fromHex(

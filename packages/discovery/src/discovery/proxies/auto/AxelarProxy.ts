@@ -1,9 +1,9 @@
 import { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
 import { assert, Bytes, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
+import { utils } from 'ethers'
 import { IProvider } from '../../provider/IProvider'
 import { DateAddresses } from '../pastUpgrades'
-import { utils } from 'ethers'
 
 // keccak256(abi.encode(uint256(keccak256('eip1967.proxy.implementation')) - 1, s))
 // where `s` is the slot of the `_addressStorage`, so in this case it's s = 2

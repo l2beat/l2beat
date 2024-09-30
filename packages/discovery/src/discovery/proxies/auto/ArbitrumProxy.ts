@@ -1,10 +1,10 @@
 import { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
 import { assert, Bytes, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
-import { IProvider } from '../../provider/IProvider'
-import { getAdmin, getImplementation } from './Eip1967Proxy'
 import { providers, utils } from 'ethers'
+import { IProvider } from '../../provider/IProvider'
 import { DateAddresses } from '../pastUpgrades'
+import { getAdmin, getImplementation } from './Eip1967Proxy'
 
 // keccak256('eip1967.proxy.implementation.secondary') - 1)
 const SECONDARY_IMPLEMENTATION_SLOT = Bytes.fromHex(
