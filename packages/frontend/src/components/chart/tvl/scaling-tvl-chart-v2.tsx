@@ -73,14 +73,14 @@ function Header({ total, unit, change, timeRange }: Props) {
       <div className="flex items-center gap-3">
         <span className="text-xl font-bold">Value Locked</span>
         <Link
-          className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-[#1459CB] px-3 py-2 text-[13px] leading-none text-[#1459CB]"
+          className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-[#1459CB] px-3 py-2 text-[13px] leading-none text-[#1459CB] max-md:hidden"
           href="/scaling/tvl"
         >
           View details{' '}
           <ChevronIcon className="size-[10px] -rotate-90 fill-[#1459CB]" />
         </Link>
       </div>
-      <div className="flex flex-row items-baseline gap-2 md:flex-col md:items-end md:gap-1">
+      <div className="flex flex-col items-end gap-1">
         <div className="whitespace-nowrap text-right text-xl font-bold leading-[1.15]">
           {value === undefined ? (
             <Skeleton className="h-[23px] w-32" />
