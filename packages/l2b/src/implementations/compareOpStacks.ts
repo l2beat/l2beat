@@ -41,6 +41,9 @@ export async function analyseAllOpStackChains(
     const l1CrossDomainMessenger = discovery.contracts.find(
       (obj) => obj.name === 'L1CrossDomainMessenger',
     )
+    const disputeGameFactory = discovery.contracts.find(
+      (obj) => obj.name === 'DisputeGameFactory',
+    )
 
     if (
       L2OutputOracle === undefined &&
@@ -48,7 +51,8 @@ export async function analyseAllOpStackChains(
       l1StandardBridge === undefined &&
       l1ERC721Bridge === undefined &&
       systemConfig === undefined &&
-      l1CrossDomainMessenger === undefined
+      l1CrossDomainMessenger === undefined &&
+      disputeGameFactory === undefined
     ) {
       continue
     }
@@ -61,6 +65,7 @@ export async function analyseAllOpStackChains(
       SystemConfig: systemConfig?.values?.version,
       L1CrossDomainMessenger: l1CrossDomainMessenger?.values?.version,
       L2OutputOracle: L2OutputOracle?.values?.version,
+      DisputeGameFactory: disputeGameFactory?.values?.version,
     }
     opStackChains.push(opStackChain as OpStackProject)
   }

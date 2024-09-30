@@ -2,7 +2,7 @@
   "name": "xterio",
   "chain": "ethereum",
   "blockNumber": 20327427,
-  "configHash": "0xa6c48eaa12a1e2643a7c52e424acd7f20a0f46ee1584c93a0548d96d87ff5224",
+  "configHash": "0x7181063f5ee8b59137abf1f98d885f1aefb2f4bd6003a7a714a6001d930a17ee",
   "version": 14,
   "contracts": [
     {
@@ -1429,10 +1429,10 @@
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
     "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
-    "opstack/OptimismPortal": "0x1af81e069b7721f68b8f083eb7379b6f29e7b9510bc38ed2a7e2a33ebbf876dc",
+    "opstack/OptimismPortal": "0x2a32f6874a8c0e85e685fa944143e7968d675fed43b46e7385411ad11f8a1a43",
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
-    "opstack/SystemConfig": "0x41420d04d26fe441d4f65a2475bb9f0cca38e0f7542d45347f063f3c7cf57b39"
+    "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0xa720fc1b517f7b277ae0384f1ffa84357d3798553a72edc98445c0f634cd9c66"
+  "shapeFilesHash": "0xb3e808e6410511e5cdb557ab187aac264a51956c695f8cc327ebaa202f7514fd"
 }

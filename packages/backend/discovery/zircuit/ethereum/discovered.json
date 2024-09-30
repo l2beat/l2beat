@@ -1,8 +1,8 @@
 {
   "name": "zircuit",
   "chain": "ethereum",
-  "blockNumber": 20619826,
-  "configHash": "0x8e217d654c260d18c1a20569411c7c97e22c9b7d7e2e2986a9a2e4365741def1",
+  "blockNumber": 20827058,
+  "configHash": "0x330c9a4c080f7df41bcc8d1a7e0bd71f6ea13408e4589b56d9be2e7b823394a9",
   "version": 14,
   "contracts": [
     {
@@ -29,22 +29,22 @@
         "ethThrottleDeposits": {
           "maxAmountPerPeriod": 0,
           "periodLength": 0,
-          "maxAmountTotal": "3000000000000000000000"
+          "maxAmountTotal": 0
         },
         "ethThrottleWithdrawals": {
-          "maxAmountPerPeriod": "500000000000000000000",
+          "maxAmountPerPeriod": "1000000000000000000000",
           "periodLength": 3600,
           "maxAmountTotal": 0
         },
         "getEthThrottleDepositsCredits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "getEthThrottleWithdrawalsCredits": "500000000000000000000",
+        "getEthThrottleWithdrawalsCredits": "1000000000000000000000",
         "guardian": "0x2c0B27F7C8F083B539557a0bA787041BF22DB276",
         "l2Oracle": "0x92Ef6Af472b39F1b363da45E35530c24619245A4",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 287624,
-          "prevBlockNum": 20619685,
+          "prevBlockNum": 20825616,
           "prevTxCount": 1
         },
         "paused": false,
@@ -77,7 +77,7 @@
         "$implementation": "0x6c01D349d3010Cc2953fFA0A5e8d176fc273B834",
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621836",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622800",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -118,7 +118,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 6,
+        "nonce": 7,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -222,7 +222,7 @@
         "$upgradeCount": 4,
         "accessController": "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
         "ethThrottleDeposits": {
-          "maxAmountPerPeriod": "50000000000000000000",
+          "maxAmountPerPeriod": 0,
           "periodLength": 2592000,
           "maxAmountTotal": 0
         },
@@ -383,10 +383,10 @@
         "finalizationPeriodSeconds": 18000,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 2411100,
-        "latestOutputIndex": 5974,
-        "nextBlockNumber": 2411101,
-        "nextOutputIndex": 5975,
+        "latestBlockNumber": 3661348,
+        "latestOutputIndex": 9374,
+        "nextBlockNumber": 3661349,
+        "nextOutputIndex": 9375,
         "proposer": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "PROPOSER": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "startingBlockNumber": 0,
@@ -966,8 +966,8 @@
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
     "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
-    "opstack/OptimismPortal": "0x1af81e069b7721f68b8f083eb7379b6f29e7b9510bc38ed2a7e2a33ebbf876dc",
-    "opstack/SystemConfig": "0x41420d04d26fe441d4f65a2475bb9f0cca38e0f7542d45347f063f3c7cf57b39"
+    "opstack/OptimismPortal": "0x2a32f6874a8c0e85e685fa944143e7968d675fed43b46e7385411ad11f8a1a43",
+    "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0xa720fc1b517f7b277ae0384f1ffa84357d3798553a72edc98445c0f634cd9c66"
+  "shapeFilesHash": "0xb3e808e6410511e5cdb557ab187aac264a51956c695f8cc327ebaa202f7514fd"
 }

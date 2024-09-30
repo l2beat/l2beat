@@ -4,7 +4,8 @@
   "name": "shared-eigenlayer",
   "initialAddresses": [
     "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-    "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
+    "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
+    "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
   ],
   "names": {
     "0x858646372CC42E1A627fcE94aa7A7033e7CF075A": "StrategyManager",
@@ -70,19 +71,6 @@
           "handler": {
             "type": "accessControl"
           }
-        }
-      }
-    },
-    "StrategyManager": {
-      "ignoreInWatchMode": ["strategies"],
-      "fields": {
-        "strategies": {
-          "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "StrategyAddedToDepositWhitelist",
-            "valueKey": "strategy"
-          },
-          "target": { "template": "eigenlayer/Strategy" }
         }
       }
     },

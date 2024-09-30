@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x05d95882cf858d5d7268d1c3f342a3c9caa5f530
+
+# Diff at Mon, 23 Sep 2024 16:30:22 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d3382cfb14234950671011f2a61630973cab3e07 block: 247630663
+- current block number: 256572673
+
+## Description
+
+Minor totalSupply decrease. (burn tx: https://app.blocksec.com/explorer/tx/arbitrum/0xd2d26f3463e636c2aff495aaebb86ca44d6f27a38bafbf5e105eb22c4a940b18?line=43)
+
+## Watched changes
+
+```diff
+    contract L2ArbitrumToken (0x912CE59144191C1204E64559FE8253a0e49E6548) {
+    +++ description: None
+      values.totalSupply:
+-        "9999999998999999999999999996"
++        "9999998977630224104158908096"
+    }
+```
+
 Generated with discovered.json: 0xad35b43ba5ab6554cb7c6f83235c64a99450a340
 
 # Diff at Fri, 30 Aug 2024 08:06:04 GMT:

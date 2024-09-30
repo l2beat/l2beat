@@ -1,4 +1,5 @@
-import { Insertable, Selectable } from 'kysely'
+import { Insertable } from 'kysely'
+import { nanoid } from 'nanoid'
 import { NetworkRpc } from '../../kysely/generated/types'
 
 export interface NetworkRpcRecord {
@@ -9,10 +10,18 @@ export interface NetworkRpcRecord {
   createdAt: Date
 }
 
-export function toRecord(row: Selectable<NetworkRpc>): NetworkRpcRecord {
-  return row
-}
+export type UpsertableNetworkRpcRecord = Omit<
+  Insertable<NetworkRpcRecord>,
+  'id' | 'updatedAt' | 'createdAt'
+>
 
-export function toRow(record: NetworkRpcRecord): Insertable<NetworkRpc> {
-  return record
+export function upsertableToRow(
+  record: UpsertableNetworkRpcRecord,
+): Insertable<NetworkRpc> {
+  return {
+    ...record,
+    id: nanoid(),
+    updatedAt: new Date(),
+    createdAt: new Date(),
+  }
 }

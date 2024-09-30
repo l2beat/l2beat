@@ -28,6 +28,7 @@ import { coti } from './coti'
 import { creator } from './creator'
 import { cronoszkevm } from './cronoszkevm'
 import { cyber } from './cyber'
+import { dbk } from './dbk'
 import { debank } from './debank'
 import { degate } from './degate'
 import { degate2 } from './degate2'
@@ -50,6 +51,8 @@ import { gluon } from './gluon'
 import { gpt } from './gpt'
 import { grvt } from './grvt'
 import { gwyneth } from './gwyneth'
+import { happychain } from './happychain'
+import { hemi } from './hemi'
 import { hermez } from './hermez'
 import { honeypot } from './honeypot'
 import { hybrid } from './hybrid'
@@ -84,6 +87,7 @@ import { myria } from './myria'
 import { myshell } from './myshell'
 import { nal } from './nal'
 import { network3 } from './network3'
+import { neva } from './neva'
 import { nil } from './nil'
 import { nova } from './nova'
 import { oev } from './oev'
@@ -117,6 +121,7 @@ import { scroll } from './scroll'
 import { silicon } from './silicon'
 import { socialnetwork } from './socialnetwork'
 import { soneium } from './soneium'
+import { soon } from './soon'
 import { sophon } from './sophon'
 import { sorare } from './sorare'
 import { specular } from './specular'
@@ -133,6 +138,9 @@ import { tanx } from './tanx'
 import { telos } from './telos'
 import { ten } from './ten'
 import { termstructure } from './termstructure'
+import { ternoa } from './ternoa'
+import { thanos } from './thanos'
+import { thebinaryholdings } from './thebinaryholdings'
 import { treasure } from './treasure'
 import { Layer2 } from './types'
 import { wirex } from './wirex'
@@ -187,6 +195,7 @@ export const layer2s: Layer2[] = [
   coti,
   creator,
   cronoszkevm,
+  dbk,
   debank,
   honeypot,
   degate,
@@ -209,6 +218,8 @@ export const layer2s: Layer2[] = [
   galxegravity,
   grvt,
   gwyneth,
+  hemi,
+  happychain,
   hermez,
   hybrid,
   hychain,
@@ -245,6 +256,7 @@ export const layer2s: Layer2[] = [
   nal,
   nil,
   network3,
+  neva,
   nova,
   oev,
   ola,
@@ -277,6 +289,7 @@ export const layer2s: Layer2[] = [
   sophon,
   soneium,
   socialnetwork,
+  soon,
   sorare,
   specular,
   starknet,
@@ -292,6 +305,9 @@ export const layer2s: Layer2[] = [
   telos,
   ten,
   termstructure,
+  ternoa,
+  thebinaryholdings,
+  thanos,
   treasure,
   wirex,
   witness,

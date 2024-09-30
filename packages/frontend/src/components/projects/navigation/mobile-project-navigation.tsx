@@ -1,7 +1,6 @@
 'use client'
 
-import debounce from 'lodash/debounce'
-import { useEffect, useMemo, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { OverflowWrapper } from '~/components/core/overflow-wrapper'
 import { useCurrentSection } from '~/hooks/use-current-section'
 import { cn } from '~/utils/cn'
@@ -19,13 +18,9 @@ export function MobileProjectNavigation({ sections }: Props) {
   const currentSection = useCurrentSection()
   const isSummarySection = currentSection && currentSection.id === 'summary'
 
-  const scrollToItem = useMemo(
-    () =>
-      debounce(
-        (item: HTMLLIElement, overflowingContainer: HTMLElement) =>
-          scrollHorizontallyToItem({ item, overflowingContainer }),
-        200,
-      ),
+  const scrollToItem = useCallback(
+    (item: HTMLLIElement, overflowingContainer: HTMLElement) =>
+      scrollHorizontallyToItem({ item, overflowingContainer }),
     [],
   )
 

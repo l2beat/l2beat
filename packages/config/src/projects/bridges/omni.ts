@@ -85,7 +85,7 @@ export const omni: Bridge = {
         {
           contract: 'ForeignAMB',
           references: [
-            'https://etherscan.io/address/0x82b67a43b69914e611710c62e629dabb2f7ac6ab#code#L1608',
+            'https://etherscan.io/address/0x098f51bdfb5D6d319DD4FDf06b64773d25bD1316#code#F14#L94',
           ],
         },
       ],

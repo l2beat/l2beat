@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xd5da3238a98b6bb75172e763fdcaaa6304a97e06
+
+# Diff at Fri, 27 Sep 2024 15:17:34 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@4cb14cc1bdc343d171a7988f9f91f11edbf568a8 block: 20711478
+- current block number: 20842798
+
+## Description
+
+Config.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20711478 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x6594085ca55a2B3a5fAD1C57A270D060eEa99877) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      usedTypes.0.arg.0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39:
++        "ArbOS v32 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0xad2104162b7b0ea2e26cc67df7a5f5c5021f6be0
 
 # Diff at Mon, 09 Sep 2024 07:12:30 GMT:

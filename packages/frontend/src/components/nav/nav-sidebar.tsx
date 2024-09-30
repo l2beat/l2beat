@@ -28,13 +28,9 @@ export async function NavSidebar({
     <NavSideBarWrapper legacyNav={legacyNav}>
       <div className="flex flex-row items-center justify-between">
         <Link href={logoLink}>
-          <Logo className="block h-8 w-auto xl:sidenav-collapsed:hidden" />
-          <Logo
-            small
-            className="hidden h-8 w-auto xl:sidenav-collapsed:block"
-          />
+          <Logo className="block h-8 w-auto" />
         </Link>
-        <div className="flex flex-row items-center gap-4 xl:sidenav-collapsed:hidden">
+        <div className="flex flex-row items-center gap-4">
           <DarkThemeToggle />
           <div className="size-6 xl:hidden">
             <MobileNavTriggerClose />
@@ -42,21 +38,36 @@ export async function NavSidebar({
         </div>
       </div>
       <nav className="flex flex-1 flex-col gap-6">
-        {groups.map((group) => (
-          <NavLinkGroup key={group.title} title={group.title}>
-            {group.links.map(
-              (link) =>
-                !link.disabled && (
-                  <NavLink
-                    key={link.href}
-                    title={link.title}
-                    icon={link.icon}
-                    href={link.href}
-                  />
-                ),
-            )}
-          </NavLinkGroup>
-        ))}
+        {groups.map((group) => {
+          return (
+            <NavLinkGroup key={group.title} group={group}>
+              {group.links.map(
+                (link) =>
+                  !link.disabled && (
+                    <NavLink
+                      key={link.href}
+                      title={link.title}
+                      icon={link.icon}
+                      href={link.href}
+                    />
+                  ),
+              )}
+              {group.secondaryLinks && (
+                <>
+                  <NavDivider className="mx-1.5 my-1 w-auto" />
+                  {group.secondaryLinks.map((link) => (
+                    <NavLink
+                      key={link.href}
+                      title={link.title}
+                      icon={link.icon}
+                      href={link.href}
+                    />
+                  ))}
+                </>
+              )}
+            </NavLinkGroup>
+          )
+        })}
         <NavDivider />
         <NavSmallLinkGroup>
           <NavSmallLink title="Forum" href={externalLinks.forum} />
@@ -79,7 +90,7 @@ export async function NavSidebar({
           <NavSmallLink title="FAQ" href="/faq" />
         </NavSmallLinkGroup>
         <NavDivider />
-        <ul className="flex gap-2 text-2xl sidenav-collapsed:hidden xl:justify-between">
+        <ul className="flex gap-2 text-2xl xl:justify-between">
           <SocialLinks />
         </ul>
       </nav>

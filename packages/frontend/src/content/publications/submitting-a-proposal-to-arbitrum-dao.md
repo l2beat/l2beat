@@ -137,7 +137,7 @@ The on-chain vote is executed permissionlessly after the vote concludes. For exa
 
 **Post-vote implementation**
 
-Keep in mind that if your proposal is successful, it won’t be executed for another 14 days after the on-chain vote has concluded. This waiting period is because of the L2 waiting period, the L2-to-L1 message, and the L1 waiting period. You can learn more about the lifecycle of a the proposal and the different waiting periods[ here](https://docs.arbitrum.foundation/concepts/lifecycle-anatomy-aip-proposal).
+Keep in mind that if your proposal is successful, it won’t be executed for another 14 days after the on-chain vote has concluded. This waiting period is because of the L2 waiting period, the L2-to-L1 message, and the L1 waiting period. You can learn more about the lifecycle of the proposal and the different waiting periods[ here](https://docs.arbitrum.foundation/concepts/lifecycle-anatomy-aip-proposal).
 
 ## **Resubmitting a proposal**
 

@@ -98,6 +98,7 @@ function TableFilterSelect<T extends string>({
           | undefined
         onValueChange(mappedValue)
       }}
+      disabled={options.length === 0}
     >
       <SelectTrigger>
         <SelectValue placeholder={title} />
