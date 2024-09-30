@@ -30,7 +30,7 @@ export function TransactionDetails({
           key={op.id}
           className={`${
             padding
-            // biome-ignore lint/nursery/useSortedClasses: <explanation>
+            // biome-ignore lint/nursery/useSortedClasses: space in front unnecessarily triggers the rule
           } mt-0 text-gray-500 dark:text-gray-400`}
         >
           {!op.contractAddress && `${op.methodName} (${op.count})`}
