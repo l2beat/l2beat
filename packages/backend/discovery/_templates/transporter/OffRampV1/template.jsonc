@@ -11,9 +11,6 @@
   "ignoreRelatives": ["owner"],
   "fields": {
     "commitStore": {
-      "target": {
-        "template": "transporter/CommitStore"
-      },
       "handler": {
         "type": "call",
         "method": "getStaticConfig",

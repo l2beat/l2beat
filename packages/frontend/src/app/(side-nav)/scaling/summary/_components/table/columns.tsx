@@ -31,7 +31,6 @@ export const scalingLayer2sColumns = [
     enableSorting: false,
     meta: {
       cellClassName: 'justify-center',
-      tooltip: 'Risks associated with this project.',
     },
   }),
   columnHelper.accessor('category', {
@@ -47,7 +46,6 @@ export const scalingLayer2sColumns = [
     cell: (ctx) => <StageCell stageConfig={ctx.getValue()} />,
     sortingFn: sortStages,
     meta: {
-      tooltip: 'Rollup stage based on its features and maturity.',
       hash: 'stage',
     },
   }),
@@ -55,9 +53,6 @@ export const scalingLayer2sColumns = [
     header: 'Purpose',
     cell: (ctx) => ctx.getValue().join(', '),
     enableSorting: false,
-    meta: {
-      tooltip: 'Functionality supported by this project.',
-    },
   }),
   columnHelper.accessor('tvl', {
     id: 'total',

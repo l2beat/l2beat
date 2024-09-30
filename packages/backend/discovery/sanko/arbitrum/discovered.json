@@ -1,7 +1,7 @@
 {
   "name": "sanko",
   "chain": "arbitrum",
-  "blockNumber": 251657470,
+  "blockNumber": 257934843,
   "configHash": "0x22d5409de9ec2ed8989d6ffc9b7aa1197344c488351b8c3ebcc90c2d6fa8c36e",
   "version": 14,
   "contracts": [
@@ -64,7 +64,7 @@
         "$admin": "0xd18b1C6376633000c85541F7c15c591Ffe5f9556",
         "$implementation": "0x1d182075d07744D71E37f77f1654165f6DAFad08",
         "$upgradeCount": 1,
-        "batchCount": 2971,
+        "batchCount": 3278,
         "batchPosters": ["0x2f4dDaD3aB0AC4225fd8023EE07d04e2A758017a"],
         "bridge": "0x2f285781B8d58678a3483de52D618198E4d27532",
         "dacKeyset": {
@@ -87,7 +87,7 @@
         "rollup": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 11761
+        "totalDelayedMessagesRead": 12578
       },
       "fieldMeta": {
         "maxTimeVariation": {
@@ -123,12 +123,12 @@
           "0x365ce7234CE515c2e0139f3578b6c5989da1a863"
         ],
         "allowedOutboxList": ["0x575d32f7ff0C72921645e302cb14d2757E300786"],
-        "delayedMessageCount": 11764,
+        "delayedMessageCount": 12583,
         "nativeToken": "0x8B0E6f19Ee57089F7649A455D89D7bC6314D04e8",
         "rollup": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
         "sequencerInbox": "0x24B68936C13A414cd91437aE7AA730321B9ff159",
-        "sequencerMessageCount": 2971,
-        "sequencerReportedSubMessageCount": 1455530
+        "sequencerMessageCount": 3278,
+        "sequencerReportedSubMessageCount": 1643212
       },
       "derivedName": "ERC20Bridge"
     },
@@ -348,12 +348,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 952,
+        "firstUnresolvedNode": 1025,
         "inbox": "0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD",
         "isERC20Enabled": false,
         "lastStakeBlock": 19642604,
-        "latestConfirmed": 951,
-        "latestNodeCreated": 977,
+        "latestConfirmed": 1024,
+        "latestNodeCreated": 1050,
         "loserStakeEscrow": "0xe8216687Ef40C65F64D6dcd335b0aaab4A1Bc400",
         "minimumAssertionPeriod": 75,
         "outbox": "0x575d32f7ff0C72921645e302cb14d2757E300786",
@@ -408,7 +408,8 @@
             "0x68e4fe5023f792d4ef584796c84d710303a5e12ea02d6e37e2b5e9c4332507c4": "ArbOS v11.1 wasmModuleRoot",
             "0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4": "ArbOS v20 wasmModuleRoot",
             "0xb0de9cb89e4d944ae6023a3b62276e54804c242fd8c4c2d8e6cc4450f5fa8b1b": "ArbOS v30 wasmModuleRoot",
-            "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot"
+            "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
+            "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot"
           }
         }
       ]
@@ -1207,5 +1208,5 @@
     "orbitstack/RollupProxy": "0xdd22b1785ae5df34e829d0b04131559e112131325c3f223825d0fe61e675fb1a",
     "orbitstack/SequencerInbox": "0x096f13a8297d3243cf02cbc39d065c1c6f37b23602fce0c63f3ff74d7d65b1ee"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
 }
