@@ -78,8 +78,8 @@ function toBlockContexts(chunk: string) {
 }
 
 /**
- * @see https://github.com/scroll-tech/scroll/blob/develop/contracts/src/libraries/codec/ChunkCodecV0.sol
- * @see https://github.com/scroll-tech/scroll/blob/develop/contracts/src/libraries/codec/ChunkCodecV1.sol
+ * @see https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/BatchHeaderV0Codec.sol
+ * @see https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/BatchHeaderV1Codec.sol
  */
 function decodeBlockContext(rawBlockContext: string) {
   const TIMESTAMP_START = 8 * 2 // 8th byte inclusive

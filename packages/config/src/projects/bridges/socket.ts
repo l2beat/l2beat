@@ -20,7 +20,7 @@ export const socket: Bridge = {
       websites: ['https://socketscan.io/'],
       repositories: [
         'https://github.com/SocketDotTech/socket-DL',
-        'https://github.com/SocketDotTech/socket-plugs/blob/main/contracts/superbridge',
+        'https://github.com/SocketDotTech/socket-plugs/tree/main/contracts/bridge',
       ],
       documentation: ['https://developer.socket.tech/Learn/protocol-design'],
       socialMedia: ['https://twitter.com/SocketDotTech'],

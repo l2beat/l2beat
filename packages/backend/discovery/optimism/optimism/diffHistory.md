@@ -677,7 +677,7 @@ Generated with discovered.json: 0xbb4c91641c0bf25a3e6c9e69893a5e2edc9eb451
 
 The changes are due to the [OP Mainnet 'Fjord' upgrade](https://gov.optimism.io/t/upgrade-proposal-9-fjord-network-upgrade/8236).
 
-The GasPriceOracle predeploy is changed to use a FastLZ-based compression estimator for gas price estimation. (compare [the spec](https://github.com/ethereum-optimism/specs/blob/main/specs/fjord/exec-engine.md#fees))
+The GasPriceOracle predeploy is changed to use a FastLZ-based compression estimator for gas price estimation. (compare [the spec](https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/fjord/exec-engine.md#fees))
 
 ## Watched changes
 

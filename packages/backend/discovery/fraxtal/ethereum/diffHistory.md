@@ -702,7 +702,7 @@ Generated with discovered.json: 0xf0c97ee110e8ec5c671f43cd04bf06c74a0ebd67
 
 ## Description
 
-One signer of fraxtal Multisig is replaced and L2 fee calculation is switched to [post-Ecotone encoding](https://specs.optimism.io/protocol/system_config.html#ecotone-scalar-overhead-uint256uint256-change).
+One signer of fraxtal Multisig is replaced and L2 fee calculation is switched to [post-Ecotone encoding](https://specs.optimism.io/protocol/system-config.html#ecotone-scalar-overhead-uint256uint256-change).
 
 ## Watched changes
 

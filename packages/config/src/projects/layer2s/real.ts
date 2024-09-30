@@ -18,7 +18,7 @@ export const real: Layer2 = orbitStackL2({
     purposes: ['RWA', 'Universal'],
     links: {
       websites: ['https://re.al'],
-      apps: ['https://re.al/bridge', 'https://re.al/app/bridge'],
+      apps: ['https://re.al/bridge/', 'https://re.al/app/bridge/'],
       documentation: ['https://docs.re.al/'],
       explorers: ['https://explorer.re.al'],
       repositories: ['https://github.com/re-al-Foundation'],
