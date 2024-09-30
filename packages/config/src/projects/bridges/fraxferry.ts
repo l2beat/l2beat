@@ -460,7 +460,7 @@ export const fraxferry: Bridge = {
       references: [
         {
           text: 'Fraxferry documentation',
-          href: 'https://docs.frax.com/fraxferry',
+          href: 'https://docs.frax.finance/cross-chain/bridge',
         },
         {
           text: 'Fraxferry.sol - Etherscan source code',

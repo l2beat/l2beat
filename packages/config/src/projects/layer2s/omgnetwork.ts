@@ -38,7 +38,6 @@ export const omgnetwork: Layer2 = {
         'https://twitter.com/omgnetworkhq',
         'https://discord.gg/m7NysJjKhm',
         'https://t.me/omgnetwork',
-        'https://linkedin.com/company/omgnetwork/',
       ],
     },
   },

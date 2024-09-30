@@ -15,10 +15,7 @@ export const gravity: Bridge = {
     category: 'Token Bridge',
     links: {
       websites: ['https://gravitybridge.net/'],
-      explorers: [
-        'https://mintscan.io/gravity-bridge',
-        'https://skynetexplorers.com/gravity-bridge',
-      ],
+      explorers: ['https://mintscan.io/gravity-bridge'],
       apps: [
         'https://spacestation.zone/',
         'https://bridge.blockscape.network/',

@@ -184,7 +184,7 @@ export const bobanetwork: Layer2 = opStackL2({
     {
       name: 'Mainnet launch',
       date: '2021-09-20T00:00:00Z',
-      link: 'https://www.enya.ai/press/public-mainnet',
+      link: 'https://www.firstraysvc.com/news/enya-launches-mainnet-beta-boba-network',
       description:
         'Layer 2 Optimistic Rollup based on the Optimism codebase is live on Ethereum.',
       type: 'general',
@@ -192,7 +192,7 @@ export const bobanetwork: Layer2 = opStackL2({
     {
       name: 'BOBA Token launched',
       date: '2021-11-18T00:00:00Z',
-      link: 'https://boba.network/Boba-airdrop-live/',
+      link: 'https://x.com/bobanetwork/status/1461839296785051648',
       description: 'BOBA token launched by OMG Foundation.',
       type: 'general',
     },

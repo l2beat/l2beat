@@ -237,10 +237,6 @@ export function opStackCommon(
               l2OutputOracle,
             )}#code`,
           },
-          {
-            text: 'Decentralizing the sequencer - OP Stack docs',
-            href: 'https://community.optimism.io/docs/protocol/#decentralizing-the-sequencer',
-          },
         ],
       },
       forceTransactions: templateVars.nonTemplateTechnology
@@ -356,9 +352,9 @@ export function opStackCommon(
         thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
       },
       {
-        title: 'Bedrock Explainer',
+        title: 'Superchain Explainer',
         url: 'https://community.optimism.io/docs/developers/bedrock/explainer/',
-        thumbnail: NUGGETS.THUMBNAILS.OPTIMISM_04,
+        thumbnail: NUGGETS.THUMBNAILS.OPTIMISM_03,
       },
       {
         title: 'Modular Rollup Theory',
