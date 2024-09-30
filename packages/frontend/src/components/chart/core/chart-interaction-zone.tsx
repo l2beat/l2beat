@@ -75,5 +75,10 @@ export function ChartInteractionZone() {
     ref,
   )
 
-  return <div ref={ref} className="absolute -inset-x-4 -bottom-4 top-0 z-40" />
+  return (
+    <div
+      ref={ref}
+      className="absolute -inset-x-4 inset-y-0 z-40 lg:-bottom-4"
+    />
+  )
 }

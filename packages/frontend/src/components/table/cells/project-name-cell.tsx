@@ -30,7 +30,7 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
   return (
     <div className={cn('pl-2 2xl:pl-3', className)}>
       <div className="flex items-baseline gap-1.5">
-        <span className="text-base font-bold leading-none md:text-lg">
+        <span className="text-base font-bold !leading-none v2:text-xs md:!text-lg">
           {project.shortName ?? project.name}
         </span>
         {project.isVerified === false && (
