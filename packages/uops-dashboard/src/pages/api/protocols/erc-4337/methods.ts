@@ -205,6 +205,19 @@ export const ERC4337_methods: Method[] = [
     },
     'SmartAccount',
   ),
+  defineMethod(
+    parseAbiItem('function execute_ncC(address to, uint256 value, bytes data)'),
+    ([to, , data]) => {
+      return [
+        {
+          type: 'recursive',
+          calldata: data,
+          to,
+        },
+      ]
+    },
+    'SmartAccount',
+  ),
 ]
 
 function decodeCalldata(

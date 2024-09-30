@@ -58,7 +58,7 @@ export function TransactionList({
               >
                 {tx.hash}
               </th>
-              <td className="px-6 py-4">
+              <td className="inline-flex items-center px-6 py-4">
                 {tx.type}
                 {tx.includesBatch && (
                   <BatchIcon tooltipContent="Transaction contains batch execution" />
