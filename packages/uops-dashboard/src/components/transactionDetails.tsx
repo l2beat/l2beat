@@ -28,7 +28,10 @@ export function TransactionDetails({
       <>
         <p
           key={op.id}
-          className={`${padding}mt-0 text-gray-500 dark:text-gray-400`}
+          className={`${
+            padding
+            // biome-ignore lint/nursery/useSortedClasses: <explanation>
+          } mt-0 text-gray-500 dark:text-gray-400`}
         >
           {!op.contractAddress && `${op.methodName} (${op.count})`}
 
