@@ -17,6 +17,10 @@ export const columns = [
   ...getCommonProjectColumns(columnHelper),
   columnHelper.accessor('name', {
     header: 'DA Layer',
+    meta: {
+      tooltip:
+        'The data availability layer where the data (transaction data or state diffs) is posted.',
+    },
     cell: (ctx) => (
       <ProjectNameCell
         project={{
@@ -62,6 +66,8 @@ export const columns = [
     meta: {
       cellClassName: 'pl-8',
       headClassName: 'pl-8',
+      tooltip:
+        'The DA bridge through which Ethereum is informed that data has been made available. ',
     },
   }),
   columnHelper.accessor('risks', {
@@ -107,6 +113,10 @@ export const columns = [
   }),
   columnHelper.accessor('layerType', {
     header: 'Layer type',
+    meta: {
+      tooltip:
+        'The type of the DA Layer - Public blockchain or Data availability committee.',
+    },
   }),
   columnHelper.accessor('tvs', {
     header: 'Total value secured',
@@ -116,10 +126,17 @@ export const columns = [
             showLessThanMinimum: false,
           })
         : EM_DASH,
+    meta: {
+      tooltip: 'The total value locked of all L2s using this layer.',
+    },
   }),
   columnHelper.accessor('economicSecurity', {
     header: 'Economic security',
     cell: (ctx) => <DaEconomicSecurityCell value={ctx.getValue()} />,
+    meta: {
+      tooltip:
+        'The assets that are slashable in case of a data withholding attack (the amount of funds a committee would need to burn to successfully deceive the DA bridge). It’s equal to 2/3 of the total validating stake, if any.',
+    },
   }),
   columnHelper.accessor('usedIn', {
     header: 'Used in',
