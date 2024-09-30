@@ -1,3 +1,79 @@
+Generated with discovered.json: 0x736a463babd8554909ecaef0387b71d50c3db699
+
+# Diff at Mon, 30 Sep 2024 10:30:09 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@1b36e3940f187732c93e699538f4dd635753a212 block: 20685269
+- current block number: 20862724
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract L1CrossDomainMessenger (0xA30eAe91b9184Bb5e14b86Dd10d463F67c699C38) {
+    +++ description: None
+      values.messageNonce:
+-        "1766847064778384329583297500742918515827483896875618958121606201292619776"
++        "1766847064778384329583297500742918515827483896875618958121606201292619778"
+    }
+```
+
+```diff
+    contract LightLinkPortal (0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE) {
+    +++ description: None
+      values.balance:
+-        0
++        1900000000000000
+      values.params.prevBoughtGas:
+-        0
++        490798
+      values.params.prevBlockNum:
+-        20684514
++        20765664
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20685269 (main branch discovery), not current.
+
+```diff
+    contract CanonicalStateChain (0x65E325A22c0F519041db69F5693EbAc3b4AE71bE) {
+    +++ description: None
+      values.getHead:
+-        {"epoch":20684672,"l2Height":100829311,"prevHash":"0x746df606d5eec19cefcb82296e4238ea7f334bb0f7d2f5e02f3ce6ac16f512fd","outputRoot":"0x0ed48e37810867d0d3281ee52bac5432e37b939539df6864d6abc0d84603f779","celestiaPointers":[{"height":2276465,"shareStart":256,"shareLen":3664},{"height":2276469,"shareStart":128,"shareLen":3664},{"height":2276473,"shareStart":384,"shareLen":3596},{"height":2276476,"shareStart":128,"shareLen":3665},{"height":2276479,"shareStart":192,"shareLen":3665},{"height":2276483,"shareStart":192,"shareLen":3664},{"height":2276486,"shareStart":320,"shareLen":3661},{"height":2276489,"shareStart":128,"shareLen":3664},{"height":2276492,"shareStart":384,"shareLen":3664},{"height":2276495,"shareStart":384,"shareLen":3662},{"height":2276498,"shareStart":128,"shareLen":3665},{"height":2276502,"shareStart":64,"shareLen":3664},{"height":2276506,"shareStart":64,"shareLen":3665},{"height":2276510,"shareStart":128,"shareLen":3665},{"height":2276513,"shareStart":192,"shareLen":3654},{"height":2276517,"shareStart":384,"shareLen":3551},{"height":2276520,"shareStart":128,"shareLen":3664},{"height":2276523,"shareStart":448,"shareLen":3344},{"height":2276526,"shareStart":320,"shareLen":3664},{"height":2276529,"shareStart":384,"shareLen":3649},{"height":2276532,"shareStart":64,"shareLen":3663}]}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0x670E1C42A7A5962348138110E3ede3F422c10e2f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0xA30eAe91b9184Bb5e14b86Dd10d463F67c699C38)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LightLinkPortal (0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0xc7a7199bb5F0aA7B54eca90fC793Ec83E5683b0c)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x3e7db4030a9e68b02999c798868fa8c2066511dc
 
 # Diff at Thu, 05 Sep 2024 15:26:03 GMT:
