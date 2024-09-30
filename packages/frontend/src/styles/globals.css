@@ -34,6 +34,10 @@ body {
     transition-duration: 50ms !important;
   }
 
+  .scrollbar-gutter-stable {
+    scrollbar-gutter: stable;
+  }
+
   /* Masks for overflow wrapper */
   .fade-out-to-left {
     -webkit-mask-image: linear-gradient(to left, transparent 0, black 0px, black calc(100% - 30px), transparent 100%);

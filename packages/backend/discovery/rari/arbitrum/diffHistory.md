@@ -1,3 +1,61 @@
+Generated with discovered.json: 0xa0f4ede5d37c72843c2dfba45e8aefcd49525996
+
+# Diff at Fri, 27 Sep 2024 15:34:20 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@4cb14cc1bdc343d171a7988f9f91f11edbf568a8 block: 256798281
+- current block number: 257934615
+
+## Description
+
+Config.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 256798281 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x2e988Ea0873C9d712628F0bf38DAFdE754927C89) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      usedTypes.0.arg.0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39:
++        "ArbOS v32 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0x4dd77bd22bcfe00a9ad4a44139763c4a6ad3a105
+
+# Diff at Tue, 24 Sep 2024 08:15:14 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d3382cfb14234950671011f2a61630973cab3e07 block: 225981507
+- current block number: 256798281
+
+## Description
+
+Caldera MS on Arbi: 1 signer changed.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig (0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      values.$members.3:
+-        "0xB2a5970fB30dc34AD65c914db855766ea62f1f41"
++        "0x356000Cec4fC967f8FC372381D983426760A0391"
+      values.$members.2:
+-        "0x356000Cec4fC967f8FC372381D983426760A0391"
++        "0x4919167EA334BE84B1604Cbc82A26A7746D5943e"
+      values.$members.1:
+-        "0x4919167EA334BE84B1604Cbc82A26A7746D5943e"
++        "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
+      values.$members.0:
+-        "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
++        "0xbf853295743511e8DC5F03809d209C33fC136d24"
+    }
+```
+
 Generated with discovered.json: 0x1905705acf81b4890c0e7beeb7e42d6ccfcd0098
 
 # Diff at Sun, 01 Sep 2024 08:47:10 GMT:

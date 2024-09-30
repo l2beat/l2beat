@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xc97d3bc9db68bf215aa669c14b6ff99153c688cf
+
+# Diff at Wed, 25 Sep 2024 09:34:30 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@e8c4fe6b10f7918ebbd761bc35018ba84053b08c block: 20785025
+- current block number: 20826753
+
+## Description
+
+Single signer change in SNX MS (SNX escrow owner).
+
+## Watched changes
+
+```diff
+    contract SynthetixMultisig (0xEb3107117FEAd7de89Cd14D463D340A2E6917769) {
+    +++ description: None
+      values.$members.3:
+-        "0x0B67bab43157e53D21965Af0d83f83BeD9553E0a"
++        "0xcC934A54A2Dc516B2bb0CFE2F73bfA9A87F5341f"
+    }
+```
+
 Generated with discovered.json: 0x225b2dce43e2ef7ecd0848d32f679a6bf29f6f43
 
 # Diff at Thu, 19 Sep 2024 13:46:26 GMT:

@@ -1,3 +1,113 @@
+Generated with discovered.json: 0x8f49e53941fb4c3ff0d7384b60069a702bf5c035
+
+# Diff at Mon, 23 Sep 2024 15:37:51 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d3382cfb14234950671011f2a61630973cab3e07 block: 20792026
+- current block number: 20814221
+
+## Description
+
+ForeignAMB implementation change: Adds opt-in [Hashi](https://crosschain-alliance.gitbook.io/hashi) support for message sending / encoding and message receiving / validation. Hashi is a block header and message aggregator across chains that has a configurable threshold over various message sources after which to consider a message / blockHash valid. (Current threshold is 1)
+
+This is added strictly on top of the existing message infra, which means that as long as `HASHI_IS_ENABLED=true`, all incoming messages will be validated as usual and, additionally, by Hashi. The Hashi validation result is purely informational while `HASHI_IS_MANDATORY=false`. (In the `true` case execution is only possible with successful Hashi validation) The Hashi settings and validation take place via a separate contract (HashiManager). Outgoing messages are emitted both as usual and via Hashi AMB.
+
+One signer of the BridgeValidators is removed, effectively replacing it by the new external Hashi validator. (This one being optional as long as `HASHI_IS_MANDATORY=false`)
+
+As this current setup has no practical impact and [there is a later upgrade planned to fully support Hashi](https://forum.gnosis.io/t/gip-93-should-gnosisdao-support-the-integration-of-hashi-within-gnosis-chains-canonical-bridges/8245/7), there are currently no description changes needed.
+
+## Watched changes
+
+```diff
+    contract ForeignAMB (0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e) {
+    +++ description: None
+      values.$implementation:
+-        "0x82B67a43b69914E611710C62e629dAbB2f7AC6AB"
++        "0x098f51bdfb5D6d319DD4FDf06b64773d25bD1316"
+      values.implementation:
+-        "0x82B67a43b69914E611710C62e629dAbB2f7AC6AB"
++        "0x098f51bdfb5D6d319DD4FDf06b64773d25bD1316"
+      values.version:
+-        5
++        6
+      values.HASHI_IS_ENABLED:
++        true
+      values.HASHI_IS_MANDATORY:
++        false
+      values.hashiManager:
++        "0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9"
+    }
+```
+
+```diff
+    contract BridgeValidators (0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064) {
+    +++ description: None
+      values.validatorCount:
+-        8
++        7
++++ description: Array of the signers in the validator multisig
++++ severity: MEDIUM
+      values.validatorList.7:
+-        "0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d"
++++ description: Array of the signers in the validator multisig
++++ severity: MEDIUM
+      values.validatorList.6:
+-        "0x459A3bd49F1ff109bc90b76125533699AaAAf9A6"
++        "0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d"
++++ description: Array of the signers in the validator multisig
++++ severity: MEDIUM
+      values.validatorList.5:
+-        "0x258667E543C913264388B33328337257aF208a8f"
++        "0x459A3bd49F1ff109bc90b76125533699AaAAf9A6"
++++ description: Array of the signers in the validator multisig
++++ severity: MEDIUM
+      values.validatorList.4:
+-        "0x674c97db4cE6caC04A124d745979f3E4cBa0E9f0"
++        "0x258667E543C913264388B33328337257aF208a8f"
++++ description: Array of the signers in the validator multisig
++++ severity: MEDIUM
+      values.validatorList.3:
+-        "0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe"
++        "0x674c97db4cE6caC04A124d745979f3E4cBa0E9f0"
++++ description: Array of the signers in the validator multisig
++++ severity: MEDIUM
+      values.validatorList.2:
+-        "0xfA98B60E02A61B6590f073cAD56e68326652d094"
++        "0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe"
++++ description: Array of the signers in the validator multisig
++++ severity: MEDIUM
+      values.validatorList.1:
+-        "0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6"
++        "0xfA98B60E02A61B6590f073cAD56e68326652d094"
++++ description: Array of the signers in the validator multisig
++++ severity: MEDIUM
+      values.validatorList.0:
+-        "0x456c255A8BC1F33778603A2a48Eb6B0C69F4d48E"
++        "0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract HashiManager (0x159B36Ed5BA327fd269Fb93c75918257DCfe686d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EternalStorageProxy (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../omni/ethereum/.flat/EternalStorageProxy.sol    | 264 +++++++++++++++++++++
+ .../ForeignAMB/ForeignAMB.sol                      | 159 ++++++++++++-
+ .../omni/ethereum/.flat/HashiManager.sol           | 195 +++++++++++++++
+ 3 files changed, 608 insertions(+), 10 deletions(-)
+```
+
 Generated with discovered.json: 0x3713c8bf50673886b0fd11fc68ecbca0759d4b77
 
 # Diff at Fri, 20 Sep 2024 13:14:14 GMT:

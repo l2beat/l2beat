@@ -49,10 +49,10 @@ async function tinifyLogo(fileName: string) {
   console.time(`Tinifying ${fileName}`)
   const logoPath = path.join(iconDirectory, fileName)
 
-  const source = tinify.fromFile(logoPath)
-
   const sourceBuffer = readFileSync(logoPath)
   if (checkIfWasTinified(fileName, sourceBuffer)) return 0
+
+  const source = tinify.fromFile(logoPath)
 
   const width = sourceBuffer.readUInt32BE(16)
   const height = sourceBuffer.readUInt32BE(20)

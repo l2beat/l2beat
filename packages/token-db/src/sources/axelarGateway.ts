@@ -1,9 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
-import { assert } from '@l2beat/shared-pure'
+import { Database } from '@l2beat/database'
 import { SetRequired } from 'type-fest'
-import { isAddress, parseAbiItem } from 'viem'
+import { getAddress, parseAbiItem } from 'viem'
 import { upsertManyTokensWithMeta } from '../db/helpers.js'
-import { PrismaClient } from '../db/prisma.js'
 import { NetworkConfig } from '../utils/getNetworksConfig.js'
 import { TokenUpdateQueue } from '../utils/queue/wrap.js'
 
@@ -11,7 +10,7 @@ export { buildAxelarGatewaySource }
 
 type Dependencies = {
   logger: Logger
-  db: PrismaClient
+  db: Database
   networkConfig: NetworkConfig
   queue: TokenUpdateQueue
 }
@@ -27,32 +26,9 @@ function buildAxelarGatewaySource({
   return async function () {
     logger.info(`Syncing tokens from Axelar Gateway...`)
 
-    const network = await db.network
-      .findFirst({
-        include: {
-          rpcs: true,
-        },
-        where: {
-          axelarGatewayAddress: {
-            not: null,
-          },
-          chainId: networkConfig.chainId,
-        },
-      })
-      .then((result) => {
-        if (!result) {
-          return
-        }
-        const { axelarGatewayAddress } = result
-        assert(axelarGatewayAddress, 'Expected axelarGatewayAddress')
-        assert(isAddress(axelarGatewayAddress), 'Expected address')
-        return {
-          ...result,
-          axelarGatewayAddress,
-        }
-      })
+    const network = await db.network.findByChainId(networkConfig.chainId)
 
-    if (!network) {
+    if (!network || !network.axelarGatewayAddress) {
       logger.info(`Syncing tokens from Axelar Gateway skipped`)
       return
     }
@@ -62,7 +38,7 @@ function buildAxelarGatewaySource({
         event: parseAbiItem(
           'event TokenDeployed(string symbol, address tokenAddresses)',
         ),
-        address: network.axelarGatewayAddress,
+        address: getAddress(network.axelarGatewayAddress),
         fromBlock: 0n,
         toBlock: 'latest',
       })
@@ -76,10 +52,14 @@ function buildAxelarGatewaySource({
           } => !!log.args.tokenAddresses,
         )
         .map((log) => ({
+          name: null,
+          decimals: null,
+          logoUrl: null,
+          contractName: null,
           networkId: network.id,
           address: log.args.tokenAddresses,
           source: { type: 'AxelarGateway' as const },
-          symbol: log.args.symbol,
+          symbol: log.args.symbol ?? null,
           externalId: `${log.transactionHash}-${log.logIndex.toString()}`,
         }))
 

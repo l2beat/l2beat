@@ -1,7 +1,7 @@
 {
   "name": "xai",
   "chain": "arbitrum",
-  "blockNumber": 245317770,
+  "blockNumber": 257934975,
   "configHash": "0x080307e0f4a47cf961d913101713b8d01c22d29dbbaa58163b576c9fd66006ca",
   "version": 14,
   "contracts": [
@@ -381,12 +381,12 @@
           "0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8"
         ],
         "allowedOutboxList": ["0x1E400568AD4840dbE50FB32f306B842e9ddeF726"],
-        "delayedMessageCount": 84190,
+        "delayedMessageCount": 89611,
         "nativeToken": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66",
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerInbox": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-        "sequencerMessageCount": 65908,
-        "sequencerReportedSubMessageCount": 29829274
+        "sequencerMessageCount": 89179,
+        "sequencerReportedSubMessageCount": 42268706
       },
       "derivedName": "ERC20Bridge"
     },
@@ -442,7 +442,7 @@
         "$admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
         "$implementation": "0x7a299aD29499736994Aa3a9aFa3f476445FAEB2c",
         "$upgradeCount": 2,
-        "batchCount": 65908,
+        "batchCount": 89179,
         "batchPosterManager": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871",
         "batchPosters": ["0x7F68dba68E72a250004812fe04F1123Fca89aBa9"],
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
@@ -474,7 +474,7 @@
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 84190,
+        "totalDelayedMessagesRead": 89611,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -629,12 +629,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 5187,
+        "firstUnresolvedNode": 6038,
         "inbox": "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
         "isERC20Enabled": false,
         "lastStakeBlock": 18944658,
-        "latestConfirmed": 5186,
-        "latestNodeCreated": 5336,
+        "latestConfirmed": 6037,
+        "latestNodeCreated": 6189,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x1E400568AD4840dbE50FB32f306B842e9ddeF726",
@@ -689,7 +689,8 @@
             "0x68e4fe5023f792d4ef584796c84d710303a5e12ea02d6e37e2b5e9c4332507c4": "ArbOS v11.1 wasmModuleRoot",
             "0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4": "ArbOS v20 wasmModuleRoot",
             "0xb0de9cb89e4d944ae6023a3b62276e54804c242fd8c4c2d8e6cc4450f5fa8b1b": "ArbOS v30 wasmModuleRoot",
-            "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot"
+            "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
+            "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot"
           }
         }
       ]
@@ -759,7 +760,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "deployerAddress": "0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD",
         "esXaiAddress": "0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c",
-        "getPoolsCount": 248,
+        "getPoolsCount": 259,
         "nodeLicenseAddress": "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66",
         "refereeAddress": "0xfD41041180571C5D371BEA3D9550E55653671198",
         "stakingEnabled": true,
@@ -837,13 +838,13 @@
           "35673515981735159817351",
           "625000000000000000000000000"
         ],
-        "challengeCounter": 6079,
+        "challengeCounter": 6930,
         "CHALLENGER_ROLE": "0xe752add323323eb13e36c71ee508dfd16d74e9e4c4fd78786ba97989e5e13818",
         "challengerPublicKey": "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "esXaiAddress": "0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c",
         "gasSubsidyRecipient": "0x94F4aBC83eae00b693286B6eDCa09e1D76183C97",
-        "getKycWalletCount": 6555,
+        "getKycWalletCount": 6558,
         "isCheckingAssertions": true,
         "KYC_ADMIN_ROLE": "0x811427a0fa4932aef534bba16bc34e9b7b2d7d2a79c475fca1765f6cc1faebea",
         "maxKeysPerPool": 1000,
@@ -2035,5 +2036,5 @@
     "orbitstack/RollupProxy": "0xdd22b1785ae5df34e829d0b04131559e112131325c3f223825d0fe61e675fb1a",
     "orbitstack/SequencerInbox": "0x096f13a8297d3243cf02cbc39d065c1c6f37b23602fce0c63f3ff74d7d65b1ee"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
 }
