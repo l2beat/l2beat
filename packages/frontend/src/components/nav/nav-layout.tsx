@@ -18,17 +18,21 @@ import { MobileNavbar } from './mobile-navbar'
 import { NavSidebar } from './nav-sidebar'
 import { type NavGroup } from './types'
 
-export async function NavLayout({
-  children,
-  logoLink,
-  legacyNav,
-  topChildren,
-}: {
+interface Props {
   children: ReactNode
+  className?: string
   logoLink: string
   legacyNav?: boolean
   topChildren?: ReactNode
-}) {
+}
+
+export async function NavLayout({
+  children,
+  className,
+  logoLink,
+  legacyNav,
+  topChildren,
+}: Props) {
   const groups: NavGroup[] = compact([
     {
       title: 'Scaling',
@@ -132,6 +136,7 @@ export async function NavLayout({
         className={cn(
           'relative flex flex-col overflow-x-clip xl:flex-row',
           legacyNav && 'xl:flex-col',
+          className,
         )}
       >
         {!!legacyNav && topChildren}
