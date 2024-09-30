@@ -25,7 +25,11 @@ html {
 }
 
 body {
-  @apply bg-white dark:bg-neutral-900 text-base text-black dark:text-white md:text-lg font-sans transition-colors v2:bg-[#E6E7EC] v2:dark:bg-[#090A0B];
+  @apply bg-white dark:bg-neutral-900 text-base text-black dark:text-white md:text-lg font-sans transition-colors;
+}
+
+body:has(.v2){
+  @apply bg-[#E6E7EC] dark:bg-[#090A0B];
 }
 
 @layer utilities {
