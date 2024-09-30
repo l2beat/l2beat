@@ -53,7 +53,9 @@ export async function getDaSummaryEntries() {
           redWarning: daBridge.display.redWarning,
           tvs,
           economicSecurity: projectEconomicSecurity,
-          usedIn: daBridge.usedIn,
+          usedIn: daBridge.usedIn.sort(
+            (a, b) => getSumFor([b.id]) - getSumFor([a.id]),
+          ),
           subRows: [],
         }
       })
