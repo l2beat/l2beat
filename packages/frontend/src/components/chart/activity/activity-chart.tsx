@@ -17,6 +17,8 @@ import { ChartProvider } from '../core/chart-provider'
 import { ActivityChartHeader } from './activity-chart-header'
 import { ActivityChartHover } from './activity-chart-hover'
 import { useActivityChartRenderParams } from './use-activity-chart-render-params'
+import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
+import { type ChartScale } from '../types'
 
 interface Props {
   milestones: Milestone[]
@@ -27,6 +29,10 @@ export function ActivityChart({ milestones, entries }: Props) {
   const { timeRange, setTimeRange } = useActivityTimeRangeContext()
   const filters = useScalingFilterValues()
   const includeFilter = useScalingFilter()
+  const [scale, setScale] = useLocalStorage<ChartScale>(
+    'scaling-tvl-scale',
+    'lin',
+  )
 
   const [showMainnet, setShowMainnet] = useLocalStorage(
     'scaling-activity-show-mainnet',
@@ -71,8 +77,7 @@ export function ActivityChart({ milestones, entries }: Props) {
       isLoading={isLoading}
       renderHoverContents={(data) => (
         <ActivityChartHover {...data} showEthereum={showMainnet} />
-      )}
-    >
+      )} useLogScale={scale === 'log'}>
       <section className="flex flex-col gap-4">
         <ActivityChartHeader scalingFactor={scalingFactor} />
         <ActivityTimeRangeControls
@@ -92,7 +97,13 @@ export function ActivityChart({ milestones, entries }: Props) {
               <span className="hidden md:inline">ETH Mainnet Transactions</span>
               <span className="md:hidden">ETH Txs</span>
             </div>
-          </Checkbox>
+          </Checkbox><RadioGroup
+            value={scale}
+            onValueChange={(value) => setScale(value as ChartScale)}
+          >
+            <RadioGroupItem value="log">LOG</RadioGroupItem>
+            <RadioGroupItem value="lin">LIN</RadioGroupItem>
+          </RadioGroup>
         </div>
       </section>
     </ChartProvider>
