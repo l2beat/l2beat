@@ -171,6 +171,7 @@ export const optimism: Layer2 = {
       ],
       repositories: ['https://github.com/ethereum-optimism/optimism'],
       socialMedia: [
+        'https://x.com/Optimism',
         'https://optimism.mirror.xyz/',
         'https://twitter.com/OPLabsPBC',
         'https://youtube.com/playlist?list=PLX_rXoLYCf5HqTWygUfoMfzRirGz5lekH',
