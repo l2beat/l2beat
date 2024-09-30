@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { Database } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
 import { nanoid } from 'nanoid'
-import { NetworkConfig, WithExplorer } from '../utils/getNetworksConfig.js'
+import { NetworkConfig, WithExplorer } from '../utils/get-networks-config.js'
 import { TokenUpdateQueue } from '../utils/queue/wrap.js'
 
 type Dependencies = {

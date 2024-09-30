@@ -21,8 +21,9 @@ export async function getBridgeRiskEntries() {
 
   const entries = included
     .map((project) => {
-      const hasImplementationChanged =
-        !!implementationChangeReport.projects[project.id.toString()]
+      const changes = implementationChangeReport.projects[project.id.toString()]
+      const hasImplementationChanged = !!changes?.ethereum
+
       const isVerified = !!projectsVerificationStatuses[project.id.toString()]
 
       return getBridgesRiskEntry(project, hasImplementationChanged, isVerified)

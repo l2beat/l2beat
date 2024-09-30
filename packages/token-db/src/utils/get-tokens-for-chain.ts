@@ -1,5 +1,5 @@
 import { Database, DeploymentRecord } from '@l2beat/database'
-import { NetworkConfig, WithExplorer } from './getNetworksConfig.js'
+import { NetworkConfig, WithExplorer } from './get-networks-config.js'
 
 type Dependencies = {
   db: Database

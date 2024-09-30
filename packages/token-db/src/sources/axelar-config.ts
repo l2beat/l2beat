@@ -6,7 +6,7 @@ import { assert } from '@l2beat/shared-pure'
 import { upsertTokenWithMeta } from '../db/helpers.js'
 import { env } from '../env.js'
 import { TokenUpdateQueue } from '../utils/queue/wrap.js'
-import { zodFetch } from '../utils/zodFetch.js'
+import { zodFetch } from '../utils/zod-fetch.js'
 
 type Dependencies = {
   logger: Logger

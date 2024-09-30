@@ -73,7 +73,7 @@ export const myria: Layer2 = {
     category: 'Validium',
     links: {
       websites: ['https://myria.com/'],
-      apps: ['https://market.x.immutable.com/'],
+      apps: ['https://hub.immutable.com/'],
       documentation: ['https://docs.starkware.co/starkex/index.html'],
       explorers: [],
       repositories: ['https://github.com/starkware-libs/starkex-contracts'],
