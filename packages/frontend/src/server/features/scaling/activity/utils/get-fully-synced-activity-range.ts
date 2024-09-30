@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { type StringWithAutocomplete, UnixTime } from '@l2beat/shared-pure'
 import { type TimeRange } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/range-to-days'
 
@@ -8,7 +8,7 @@ import { rangeToDays } from '~/utils/range/range-to-days'
  * Fully synced means that the day is synced to the midnight. Current day is not included.
  */
 export function getFullySyncedActivityRange(
-  range: TimeRange,
+  range: StringWithAutocomplete<TimeRange>,
 ): [UnixTime, UnixTime] {
   const end = UnixTime.now().toStartOf('day')
 
