@@ -43,7 +43,10 @@ export function SocialLinks() {
   return links.map(({ href, title, icon: Icon }) => (
     <li key={title}>
       <a rel="noopener noreferrer" href={href} target="_blank">
-        <Icon aria-label={title} className="size-6" />
+        <Icon
+          aria-label={title}
+          className="size-6 fill-zinc-500 dark:fill-[#D3D5D9]"
+        />
       </a>
     </li>
   ))
