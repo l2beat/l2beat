@@ -21,9 +21,13 @@ function createThrowingProxy() {
 }
 
 function createConnectionTag() {
-  const base = 'l2beat-frontend'
+  const base = `l2beat-frontend-${env.NODE_ENV}`
 
-  return `${base}-${env.NODE_ENV}`
+  if (env.VERCEL_ENV === 'preview') {
+    return `${base}-${env.VERCEL_GIT_COMMIT_REF}-${env.VERCEL_GIT_COMMIT_SHA}`
+  }
+
+  return base
 }
 
 function ssl() {
