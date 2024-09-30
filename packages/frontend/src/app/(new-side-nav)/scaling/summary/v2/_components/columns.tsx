@@ -98,7 +98,7 @@ export const scalingLayer2sColumnsV2 = [
           <NumberCell className="font-bold">
             {formatNumber(ctx.getValue())}
           </NumberCell>
-          <NumberCell signed className="ml-1 !text-base font-medium">
+          <NumberCell signed className="ml-1 font-medium">
             {data.change}
           </NumberCell>
         </div>

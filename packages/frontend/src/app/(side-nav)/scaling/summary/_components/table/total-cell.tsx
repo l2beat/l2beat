@@ -34,7 +34,7 @@ export function TotalCell(data: TotalCellProps) {
   if (totalTvl === 0) {
     return (
       <div className="flex flex-col items-end">
-        <span className="text-base md:text-lg">{EM_DASH}</span>
+        <span className="text-base v2:text-xs md:!text-lg">{EM_DASH}</span>
       </div>
     )
   }
@@ -50,7 +50,7 @@ export function TotalCell(data: TotalCellProps) {
                 sentiment={anyBadWarnings ? 'bad' : 'warning'}
               />
             ) : null}
-            <span className="text-base font-bold md:text-lg">
+            <span className="text-base font-bold v2:text-xs md:!text-lg">
               {formatCurrency(totalTvl, 'usd', {
                 showLessThanMinimum: false,
               })}
@@ -58,7 +58,7 @@ export function TotalCell(data: TotalCellProps) {
             {data.change !== undefined && (
               <PercentChange
                 value={data.change}
-                className="ml-1 !text-base font-medium"
+                className="ml-1 text-base font-medium v2:text-xs"
               />
             )}
           </div>

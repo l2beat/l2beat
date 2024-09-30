@@ -29,7 +29,10 @@ export function Chart({
 }: Props) {
   return (
     <div
-      className={cn('relative h-[160px] xs:h-[200px] sm:h-[260px]', className)}
+      className={cn(
+        'relative h-[160px] select-none xs:h-[200px] sm:h-[260px]',
+        className,
+      )}
       role="img"
       aria-label="chart"
     >
