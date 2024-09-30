@@ -1,7 +1,9 @@
-import { ProxyDetails } from '@l2beat/discovery-types'
-import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
+import { assert, Bytes, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { IProvider } from '../../provider/IProvider'
+import { DateAddresses } from '../pastUpgrades'
+import { utils } from 'ethers'
 
 // keccak256('org.zeppelinos.proxy.implementation')
 const IMPLEMENTATION_SLOT = Bytes.fromHex(
@@ -17,6 +19,37 @@ const OWNER_SLOT = Bytes.fromHex(
 const ADMIN_SLOT = Bytes.fromHex(
   '0x10d6a54a4754c8869d6886b5f5d7fbfa5b4522237ea5c60d11bc4e7a1ff9390b',
 )
+
+export async function getPastUpgrades(
+  provider: IProvider,
+  address: EthereumAddress,
+): Promise<DateAddresses[]> {
+  const abi = new utils.Interface([
+    'event Upgraded(address indexed implementation)',
+  ])
+  const logs = await provider.getLogs(address, [
+    [abi.getEventTopic('Upgraded')],
+  ])
+
+  const blockNumbers = [...new Set(logs.map((l) => l.blockNumber))]
+  const blocks = await Promise.all(
+    blockNumbers.map(
+      async (blockNumber) => await provider.getBlock(blockNumber),
+    ),
+  )
+  assert(blocks.every((b) => b !== undefined))
+  const dateMap = Object.fromEntries(
+    blocks.map((b) => [
+      b.number,
+      new UnixTime(b.timestamp).toDate().toISOString(),
+    ]),
+  )
+
+  return logs.map((l) => {
+    const implementation = abi.parseLog(l).args.implementation
+    return [dateMap[l.blockNumber] ?? 'ERROR', [implementation]]
+  })
+}
 
 export async function detectZeppelinOSProxy(
   provider: IProvider,
@@ -35,6 +68,7 @@ export async function detectZeppelinOSProxy(
   ])
 
   const admins = [owner, admin].filter((a) => a !== EthereumAddress.ZERO)
+  const pastUpgrades = await getPastUpgrades(provider, address)
 
   return {
     type: 'ZeppelinOS proxy',
@@ -42,6 +76,8 @@ export async function detectZeppelinOSProxy(
       $immutable: admins.length === 0,
       $implementation: implementation.toString(),
       $admin: admins.map((a) => a.toString()),
+      $pastUpgrades: pastUpgrades as ContractValue,
+      $upgradeCount: pastUpgrades.length,
     },
   }
 }
