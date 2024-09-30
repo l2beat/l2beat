@@ -93,7 +93,7 @@ export async function NavSidebar({
           <NavSmallLink title="FAQ" href="/faq" />
         </NavSmallLinkGroup>
         <ul className="mb-[14px] mt-6 flex gap-2 text-2xl xl:justify-between">
-          <SocialLinks />
+          <SocialLinks variant="gray" />
         </ul>
       </div>
     </NavSideBarWrapper>
