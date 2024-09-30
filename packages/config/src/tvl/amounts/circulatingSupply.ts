@@ -32,7 +32,7 @@ export function getCirculatingSupplyEntry(
     category: token.category,
     chain: chainConverter.toName(token.chainId),
     coingeckoId: token.coingeckoId,
-    dataSource: chain.name,
+    dataSource: 'coingecko',
     decimals: token.decimals,
     includeInTotal,
     isAssociated,
