@@ -8,7 +8,7 @@ Generated with discovered.json: 0xc9692571aec67bd25ab9438b82272a7c15a33947
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+1 Polygon validator unstaked (removed).
 
 ## Watched changes
 
@@ -1413,7 +1413,7 @@ Generated with discovered.json: 0xfe133444b6608c15f9e11dfb4d0676627004fd3b
 
 ## Description
 
-1 Polygon validator unstaked (removed).
+Provide description of changes. This section will be preserved.
 
 ## Watched changes
 
