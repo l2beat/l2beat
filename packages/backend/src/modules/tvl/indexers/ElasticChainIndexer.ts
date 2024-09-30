@@ -16,7 +16,7 @@ export class ElasticChainIndexer extends ManagedMultiIndexer<ElasticChainAmountC
   constructor(private readonly $: ElasticChainAmountIndexerDeps) {
     super({
       ...$,
-      name: INDEXER_NAMES.AGGLAYER,
+      name: INDEXER_NAMES.ELASTIC_CHAIN,
       tag: $.chain,
       updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
     })
@@ -45,7 +45,7 @@ export class ElasticChainIndexer extends ManagedMultiIndexer<ElasticChainAmountC
       configurations.map((c) => ({ id: c.id, ...c.properties })),
     )
 
-    this.logger.info('Fetched AggLayer amounts for timestamp', {
+    this.logger.info('Fetched Elastic Chain amounts for timestamp', {
       timestamp: timestamp.toNumber(),
       blockNumber,
       tokens: configurations.length,
@@ -56,7 +56,7 @@ export class ElasticChainIndexer extends ManagedMultiIndexer<ElasticChainAmountC
 
     return async () => {
       await this.$.db.amount.insertMany(nonZeroAmounts)
-      this.logger.info('Saved AggLayer amounts for timestamp into DB', {
+      this.logger.info('Saved Elastic Chain amounts for timestamp into DB', {
         timestamp: timestamp.toNumber(),
         records: nonZeroAmounts.length,
       })
