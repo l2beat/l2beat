@@ -7,7 +7,7 @@ export const allo: Layer2 = upcomingL2({
     name: 'Allo',
     slug: 'allo',
     description:
-      'Allo is an OP Stack L2 which will be a part of Super Chain. It is used to tokenize Real World Assets seamlessly - unlocking reduced transaction times, lower costs, and enhanced security.',
+      'Allo is an OP Stack L2 which will be a part of Superchain. It is used to tokenize Real World Assets seamlessly - unlocking reduced transaction times and lower costs.',
     purposes: ['RWA'],
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
