@@ -1,18 +1,19 @@
 import {
   assert,
   AmountConfigEntry,
-  AssetId,
   ChainConverter,
   ChainId,
-  ProjectId,
   Token,
-  UnixTime,
 } from '@l2beat/shared-pure'
 import { chainToProject } from '../backend'
 import { BackendProject, BackendProjectEscrow } from '../backend/BackendProject'
 import { chains } from '../chains'
 import { ChainConfig } from '../common'
 import { tokenList } from '../tokens'
+import { getCirculatingSupplyEntry } from './amounts/circulatingSupply'
+import { getEscrowEntry } from './amounts/escrow'
+import { getPremintedEntry } from './amounts/preminted'
+import { getTotalSupplyEntry } from './amounts/totalSupply'
 
 export function getTvlAmountsConfig(
   projects: BackendProject[],
@@ -107,22 +108,11 @@ function projectTokenToConfigEntry(
   if (token.supply === 'totalSupply') {
     assert(token.address, 'Token address is required for total supply')
 
-    return {
-      type: 'totalSupply',
-      address: token.address,
-      ...getSupplyTokenInfo(chain, token, project),
-      ...getBaseTokenInfo(token, project.projectId),
-    }
+    return getTotalSupplyEntry(chain, token, project)
   }
 
   if (token.supply === 'circulatingSupply') {
-    return {
-      type: 'circulatingSupply',
-      address: token.address ?? 'native',
-      coingeckoId: token.coingeckoId,
-      ...getSupplyTokenInfo(chain, token, project),
-      ...getBaseTokenInfo(token, project.projectId),
-    }
+    return getCirculatingSupplyEntry(chain, token, project)
   }
 
   throw new Error('Invalid token supply type')
@@ -135,25 +125,9 @@ function projectEscrowToConfigEntry(
   project: BackendProject,
 ): AmountConfigEntry {
   if (token.isPreminted) {
-    return {
-      type: 'preminted',
-      address: token.address ?? 'native',
-      escrowAddress: escrow.address,
-      coingeckoId: token.coingeckoId,
-      dataSource: `${chain.name}_preminted_${token.address}`,
-      ...getEscrowTokenInfo(chain, token, escrow, project),
-      ...getBaseTokenInfo(token, project.projectId),
-    }
+    return getPremintedEntry(chain, token, escrow, project)
   }
-
-  return {
-    type: 'escrow',
-    address: token.address ?? 'native',
-    escrowAddress: escrow.address,
-    dataSource: chain.name,
-    ...getEscrowTokenInfo(chain, token, escrow, project),
-    ...getBaseTokenInfo(token, project.projectId),
-  }
+  return getEscrowEntry(chain, token, escrow, project)
 }
 
 function findProjectAndChain(token: Token, projects: BackendProject[]) {
@@ -168,103 +142,4 @@ function findProjectAndChain(token: Token, projects: BackendProject[]) {
   assert(chain, `Chain not found for token ${token.symbol}`)
 
   return { chain, project }
-}
-
-function getSupplyTokenInfo(
-  chain: ChainConfig,
-  token: Token,
-  project: BackendProject,
-) {
-  assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
-
-  const sinceTimestamp = UnixTime.max(
-    chain.minTimestampForTvl,
-    token.sinceTimestamp,
-  )
-  const untilTimestamp = token.untilTimestamp
-
-  const isAssociated = !!project.associatedTokens?.includes(token.symbol)
-  const includeInTotal = true
-  const source = token.source
-
-  const dataSource =
-    token.supply === 'circulatingSupply' ? 'coingecko' : chain.name
-
-  return {
-    sinceTimestamp,
-    untilTimestamp,
-    includeInTotal,
-    isAssociated,
-    source,
-    dataSource,
-  }
-}
-
-function getEscrowTokenInfo(
-  chain: ChainConfig,
-  token: Token & { isPreminted: boolean },
-  escrow: BackendProjectEscrow,
-  project: BackendProject,
-) {
-  assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
-  const tokenSinceTimestamp = UnixTime.max(
-    chain.minTimestampForTvl,
-    token.sinceTimestamp,
-  )
-  const sinceTimestamp = UnixTime.max(
-    tokenSinceTimestamp,
-    escrow.sinceTimestamp,
-  )
-
-  const untilTimestamp = getUntilTimestamp(
-    token.untilTimestamp,
-    escrow.untilTimestamp,
-  )
-
-  const isAssociated = !!project.associatedTokens?.includes(token.symbol)
-  const includeInTotal = escrow.includeInTotal ?? true
-  const bridgedUsing = escrow.bridgedUsing
-  const source = escrow.source ?? 'canonical'
-
-  return {
-    sinceTimestamp,
-    untilTimestamp,
-    includeInTotal: token.excludeFromTotal ? false : includeInTotal,
-    isAssociated,
-    bridgedUsing,
-    source,
-  }
-}
-
-function getBaseTokenInfo(token: Token, project: ProjectId) {
-  return {
-    assetId: AssetId.create(
-      chainConverter.toName(token.chainId),
-      token.address,
-    ),
-    chain: chainConverter.toName(token.chainId),
-    project,
-    decimals: token.decimals,
-    symbol: token.symbol,
-    category: token.category,
-  }
-}
-
-function getUntilTimestamp(
-  tokenUntil: UnixTime | undefined,
-  escrowUntil: UnixTime | undefined,
-): UnixTime | undefined {
-  if (tokenUntil === undefined && escrowUntil === undefined) {
-    return undefined
-  }
-
-  if (tokenUntil === undefined) {
-    return escrowUntil
-  }
-
-  if (escrowUntil === undefined) {
-    return tokenUntil
-  }
-
-  return UnixTime.max(tokenUntil, escrowUntil)
 }
