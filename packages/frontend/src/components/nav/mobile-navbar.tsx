@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { ReactNode } from 'react'
 import { Logo } from '../logo'
 import { MobileNavLink } from './mobile-nav-link'
 import { MobileNavTabs } from './mobile-nav-tabs'
