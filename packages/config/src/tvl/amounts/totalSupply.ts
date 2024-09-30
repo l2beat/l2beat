@@ -18,8 +18,7 @@ export function getTotalSupplyEntry(
 
   const chainName = chainConverter.toName(token.chainId)
   const assetId = AssetId.create(chainName, token.address)
-  const includeInTotal =
-    token.excludeFromTotal === undefined ? true : !token.excludeFromTotal
+  const includeInTotal = !token.excludeFromTotal
   const isAssociated = !!project.associatedTokens?.includes(token.symbol)
   const sinceTimestamp = UnixTime.max(
     chain.minTimestampForTvl,
