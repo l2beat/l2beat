@@ -18,7 +18,16 @@ export const scalingTvlColumns = [
     id: 'data',
     header: undefined,
     columns: [
-      columnHelper.accessor('tvl', {
+      columnHelper.accessor((col) => {
+        if (!col.tvl.data) {
+          return undefined
+        }
+        const { breakdown } = col.tvl.data
+        if (breakdown.canonical + breakdown.external + breakdown.native === 0) {
+          return undefined
+        }
+        return breakdown.canonical + breakdown.external + breakdown.native
+      }, {
         id: 'total',
         header: 'Total',
         cell: (ctx) => {
