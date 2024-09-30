@@ -1,7 +1,4 @@
-import {
-  ContractValue,
-  ProxyDetails,
-} from '@l2beat/discovery-types'
+import { ProxyDetails } from '@l2beat/discovery-types'
 import { assert, Bytes, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { utils } from 'ethers'
@@ -45,7 +42,7 @@ export async function getOwner(
 
 interface DateAddress {
   date: string
-  address: string
+  addresses: string[]
 }
 
 export async function getPastUpgrades(
@@ -75,7 +72,10 @@ export async function getPastUpgrades(
 
   return logs.map((l) => {
     const implementation = abi.parseLog(l).args.implementation
-    return { date: dateMap[l.blockNumber] ?? 'ERROR', address: implementation }
+    return {
+      date: dateMap[l.blockNumber] ?? 'ERROR',
+      addresses: [implementation],
+    }
   })
 }
 
@@ -98,7 +98,7 @@ export async function detectEip1967Proxy(
     values: {
       $admin: admin.toString(),
       $implementation: implementation.toString(),
-      $pastUpgrades: pastUpgrades.map((v) => [v.date, v.address]),
+      $pastUpgrades: pastUpgrades.map((v) => [v.date, v.addresses]),
       $upgradeCount: Object.values(pastUpgrades).length,
     },
   }

@@ -7,9 +7,7 @@ import {
 import { assert, EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
 
-import {
-  get$Implementations,
-} from '@l2beat/discovery-types'
+import { get$Implementations } from '@l2beat/discovery-types'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
 import {
@@ -192,7 +190,7 @@ export class AddressAnalyzer {
     const relatives = getRelativesWithSuggestedTemplates(
       results.concat(proxyResults),
       overrides?.ignoreRelatives,
-      implementations.concat(pastUpgrades.map((e) => e[1])),
+      implementations.concat(pastUpgrades.flatMap((e) => e[1])),
       overrides?.fields,
     )
 

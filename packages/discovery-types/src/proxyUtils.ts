@@ -9,7 +9,7 @@ export function get$Implementations(
 
 export function get$PastUpgrades(
   values: Record<string, ContractValue | undefined> | undefined,
-): [string, EthereumAddress][] {
+): [string, EthereumAddress[]][] {
   return toAddressRecord(values?.$pastUpgrades)
 }
 
@@ -23,9 +23,9 @@ export function toAddressRecord(value: ContractValue | undefined) {
   if (Array.isArray(value) && value.every((v) => Array.isArray(v))) {
     return value.map(
       (e) =>
-        [e[0] as string, e[1] as unknown as EthereumAddress] as [
+        [e[0] as string, e[1] as unknown as EthereumAddress[]] as [
           string,
-          EthereumAddress,
+          EthereumAddress[],
         ],
     )
   }
