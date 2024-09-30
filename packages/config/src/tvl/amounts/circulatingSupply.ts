@@ -28,17 +28,17 @@ export function getCirculatingSupplyEntry(
   )
 
   return {
-    address,
-    assetId,
+    address: address,
+    assetId: assetId,
     category: token.category,
     chain: chainName,
     coingeckoId: token.coingeckoId,
-    dataSource,
+    dataSource: dataSource,
     decimals: token.decimals,
-    includeInTotal,
-    isAssociated,
+    includeInTotal: includeInTotal,
+    isAssociated: isAssociated,
     project: project.projectId,
-    sinceTimestamp,
+    sinceTimestamp: sinceTimestamp,
     source: token.source,
     symbol: token.symbol,
     type: token.supply,

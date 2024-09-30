@@ -41,21 +41,21 @@ export function getEscrowEntry(
   )
 
   return {
-    address,
-    assetId,
-    bridgedUsing,
+    address: address,
+    assetId: assetId,
+    bridgedUsing: bridgedUsing,
     category: token.category,
     chain: chainName,
     dataSource: chain.name,
     decimals: token.decimals,
     escrowAddress: escrow.address,
-    includeInTotal,
-    isAssociated,
+    includeInTotal: includeInTotal,
+    isAssociated: isAssociated,
     project: project.projectId,
-    sinceTimestamp,
-    source,
+    sinceTimestamp: sinceTimestamp,
+    source: source,
     symbol: token.symbol,
-    type,
-    untilTimestamp,
+    type: type,
+    untilTimestamp: untilTimestamp,
   }
 }
