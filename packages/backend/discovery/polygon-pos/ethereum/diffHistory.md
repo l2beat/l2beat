@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xc9692571aec67bd25ab9438b82272a7c15a33947
+
+# Diff at Mon, 30 Sep 2024 09:42:21 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@eec6993b988ab9a9f325d04da2e9717ed24ad0b9 block: 20719990
+- current block number: 20862639
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract StakingNFT (0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F) {
+    +++ description: None
+      values.totalSupply:
+-        127
++        126
+    }
+```
+
 Generated with discovered.json: 0x3d35e33e8d7c7a42b99c510b19d0ecafea220295
 
 # Diff at Tue, 10 Sep 2024 11:43:09 GMT:
@@ -1390,7 +1413,7 @@ Generated with discovered.json: 0xfe133444b6608c15f9e11dfb4d0676627004fd3b
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+1 Polygon validator unstaked (removed).
 
 ## Watched changes
 
