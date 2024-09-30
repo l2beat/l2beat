@@ -58,7 +58,7 @@ export function TotalCell(data: TotalCellProps) {
             {data.change !== undefined && (
               <PercentChange
                 value={data.change}
-                className="ml-1 text-base font-medium v2:text-xs"
+                className="ml-1 text-base font-medium v2:max-md:text-xs"
               />
             )}
           </div>
