@@ -403,12 +403,6 @@ export const optimism: Layer2 = {
     },
     operator: {
       ...OPERATOR.CENTRALIZED_SEQUENCER,
-      references: [
-        {
-          text: 'Decentralizing the sequencer - OP Stack docs',
-          href: 'https://community.optimism.io/docs/protocol/#decentralizing-the-sequencer',
-        },
-      ],
     },
     forceTransactions: {
       ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
@@ -479,7 +473,7 @@ export const optimism: Layer2 = {
   stateDerivation: {
     ...DERIVATION.OPSTACK('OP_MAINNET'),
     genesisState:
-      'Since OP Mainnet has migrated from the OVM to Bedrock, a node must be synced using a data directory that can be found [here](https://community.optimism.io/docs/useful-tools/networks/#links). To reproduce the migration itself, see this [guide](https://blog.oplabs.co/reproduce-bedrock-migration/).',
+      'Since OP Mainnet has migrated from the OVM to Bedrock, a node must be synced using a data directory that can be found [here](https://docs.optimism.io/builders/node-operators/management/snapshots). To reproduce the migration itself, see this [guide](https://blog.oplabs.co/reproduce-bedrock-migration/).',
   },
   stateValidation: {
     description:
