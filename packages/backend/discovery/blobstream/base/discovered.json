@@ -2,8 +2,8 @@
   "name": "blobstream",
   "chain": "base",
   "blockNumber": 20147451,
-  "configHash": "0xe8845a7394a7ef4a9fad5125be66d7ede88afb7bf0342312f912ff4245f41eb1",
-  "version": 15,
+  "configHash": "0x9b907e4fc32177873443c0f64c40e269ec7a3143880ec39a0f92196346fa326f",
+  "version": 14,
   "contracts": [
     {
       "name": "SP1Verifier",
@@ -41,10 +41,10 @@
           "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This verifier route was frozen on 2024-09-04."
         },
         "oldVerifier2": {
-          "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen)."
+          "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-09-21."
         },
         "verifier": {
-          "description": "The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-09-04."
+          "description": "The prover contract address for SP1, and whether it is frozen (true if frozen)."
         }
       },
       "derivedName": "SP1VerifierGateway"
@@ -664,7 +664,7 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "succinct/SP1Blobstream": "0xb0717b3e2a9ebc9678d934fa77de178537019305cf6fd12950b8f116da2a0e9c",
-    "succinct/SP1SuccinctGateway": "0x469434d0a8618a0831610020a584f9b833db48951a4e6605e45baff5b764ee77"
+    "succinct/SP1SuccinctGateway": "0xe0ec8df0fec605a6cb059948b08432aee71379584a5fa43412fa24a07701c877"
   },
   "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
 }
