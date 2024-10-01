@@ -2,10 +2,10 @@ import { uniq } from 'lodash'
 import { Checkbox } from '~/components/core/checkbox'
 import { TableFilter } from '~/components/table/filters/table-filter'
 import { type CommonScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
+import { cn } from '~/utils/cn'
 import { BaseScalingFilters } from './base-scaling-filters'
 import { useScalingAssociatedTokensContext } from './scaling-associated-tokens-context'
 import { useScalingFilterValues } from './scaling-filter-context'
-import { cn } from '~/utils/cn'
 
 interface Props {
   items: CommonScalingEntry[]

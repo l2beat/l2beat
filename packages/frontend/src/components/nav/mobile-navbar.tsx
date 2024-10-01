@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import { Logo } from '../logo'
-import { MobileSelectedLink } from './mobile-selected-link'
 import { MobileNavTabs } from './mobile-nav-tabs'
 import { MobileNavTriggerOpen } from './mobile-nav-trigger'
+import { MobileSelectedLink } from './mobile-selected-link'
 import { type NavGroup } from './types'
 
 /**

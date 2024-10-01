@@ -81,7 +81,6 @@ type ScalingEntry =
   | ScalingFinalityEntry
   | ScalingDataAvailabilityEntry
   | ScalingSummaryEntry
-  | ScalingSummaryEntry
   | ScalingCostsEntry
   | ScalingTvlEntry
   | ScalingLivenessEntry
