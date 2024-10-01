@@ -10,7 +10,7 @@ import { getCookie } from '~/utils/cookies/server'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingAssociatedTokensContextProvider } from '../_components/scaling-associated-tokens-context'
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
-import { ScalingTvlTable } from './_components/scaling-tvl-table'
+import { ScalingTvlTable } from './_components/table/scaling-tvl-table'
 
 export const metadata = getDefaultMetadata({
   openGraph: {

@@ -5,9 +5,9 @@ import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
-import { useScalingUpcomingFilter } from '../../_components/scaling-filter-context'
-import { ScalingUpcomingAndArchivedFilters } from '../../_components/scaling-upcoming-and-archived-filters'
-import { scalingUpcomingColumns } from './table/columns'
+import { useScalingUpcomingFilter } from '../../../_components/scaling-filter-context'
+import { ScalingUpcomingAndArchivedFilters } from '../../../_components/scaling-upcoming-and-archived-filters'
+import { scalingUpcomingColumns } from './columns'
 
 interface Props {
   entries: ScalingUpcomingEntry[]
@@ -39,7 +39,7 @@ export function ScalingUpcomingTable({ entries }: Props) {
     },
   })
   return (
-    <section className="space-y-6">
+    <section className="space-y-3 md:space-y-6">
       <ScalingUpcomingAndArchivedFilters items={filteredEntries} />
       <BasicTable table={upcomingTable} />
     </section>

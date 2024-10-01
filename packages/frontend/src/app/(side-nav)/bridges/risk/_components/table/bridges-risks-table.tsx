@@ -42,7 +42,7 @@ export function BridgesRiskTable({ entries }: Props) {
   })
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-3 md:space-y-6">
       <BridgesFilters entries={filteredEntries} />
       <BasicTable table={table} />
     </div>

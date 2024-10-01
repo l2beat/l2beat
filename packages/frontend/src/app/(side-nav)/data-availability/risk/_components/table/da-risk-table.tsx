@@ -59,7 +59,7 @@ export function DaRiskTable({ items }: Props) {
    */
 
   return (
-    <>
+    <div className="space-y-3 md:space-y-6">
       <DaFilters items={filteredEntries} />
       <BasicTable
         table={table}
@@ -152,6 +152,6 @@ export function DaRiskTable({ items }: Props) {
           )
         }}
       />
-    </>
+    </div>
   )
 }

@@ -5,9 +5,9 @@ import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingArchivedEntry } from '~/server/features/scaling/archived/get-scaling-archived-entries'
-import { useScalingFilter } from '../../_components/scaling-filter-context'
-import { ScalingUpcomingAndArchivedFilters } from '../../_components/scaling-upcoming-and-archived-filters'
-import { scalingArchivedColumns } from './table/columns'
+import { useScalingFilter } from '../../../_components/scaling-filter-context'
+import { ScalingUpcomingAndArchivedFilters } from '../../../_components/scaling-upcoming-and-archived-filters'
+import { scalingArchivedColumns } from './columns'
 
 interface Props {
   entries: ScalingArchivedEntry[]
@@ -39,7 +39,7 @@ export function ScalingArchivedTable({ entries }: Props) {
     },
   })
   return (
-    <section className="space-y-6">
+    <section className="space-y-3 md:space-y-6">
       <ScalingUpcomingAndArchivedFilters items={filteredEntries} />
       <BasicTable table={archivedTable} />
     </section>

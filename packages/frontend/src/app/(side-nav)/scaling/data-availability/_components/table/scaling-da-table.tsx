@@ -41,7 +41,7 @@ export function ScalingDataAvailabilityTable({ entries }: Props) {
   })
 
   return (
-    <section className="space-y-6">
+    <section className="space-y-3 md:space-y-6">
       <ScalingDaFilters items={projects} />
       <BasicTable table={table} />
     </section>
