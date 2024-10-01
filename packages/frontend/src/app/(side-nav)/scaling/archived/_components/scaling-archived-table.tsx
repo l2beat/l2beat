@@ -39,7 +39,7 @@ export function ScalingArchivedTable({ entries }: Props) {
     },
   })
   return (
-    <section className="mt-4 space-y-6 sm:mt-8">
+    <section className="space-y-6">
       <ScalingUpcomingAndArchivedFilters items={filteredEntries} />
       <BasicTable table={archivedTable} />
     </section>

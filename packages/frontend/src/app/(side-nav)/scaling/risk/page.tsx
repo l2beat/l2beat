@@ -1,5 +1,6 @@
 import { getDefaultMetadata } from '~/utils/metadata'
 
+import { MainPageCard } from '~/components/main-page-card'
 import { SimplePageHeader } from '~/components/simple-page-header'
 import { getScalingRiskEntries } from '~/server/features/scaling/risks/get-scaling-risk-entries'
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
@@ -16,10 +17,10 @@ export default async function Page() {
 
   return (
     <ScalingFilterContextProvider>
-      <div className="mb-8">
-        <SimplePageHeader>Risk Analysis</SimplePageHeader>
-      </div>
-      <ScalingRiskTable entries={entries} />
+      <SimplePageHeader>Risk Analysis</SimplePageHeader>
+      <MainPageCard>
+        <ScalingRiskTable entries={entries} />
+      </MainPageCard>
     </ScalingFilterContextProvider>
   )
 }

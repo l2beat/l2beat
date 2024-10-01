@@ -70,8 +70,6 @@ export async function NavSidebar({
         })}
       </nav>
       <div>
-        {/* Width calculated: 100% + 3rem (padding) + 4px (scrollbar - since we use gutter, we need to subtract it) */}
-        <NavDivider className="-mx-6 w-[calc(100%+3rem+4px)]" />
         <NavSmallLinkGroup className="mt-5">
           <NavSmallLink title="Forum" href={externalLinks.forum} />
           <NavSmallLink title="ZK Catalog" href="/zk-catalog" />

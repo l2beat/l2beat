@@ -29,7 +29,7 @@ body {
 }
 
 body:has(.v2){
-  @apply bg-[#E6E7EC] dark:bg-[#090A0B];
+  @apply bg-n-gray-200 dark:bg-[#090A0B];
 }
 
 @layer utilities {

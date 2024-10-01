@@ -1,6 +1,7 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import { ScalingCostsChart } from '~/components/chart/costs/scaling-costs-chart'
-import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { MainPageCard } from '~/components/main-page-card'
+import { SimplePageHeader } from '~/components/simple-page-header'
 import { getScalingCostsEntries } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
@@ -29,9 +30,15 @@ export default async function Page() {
         <CostsTimeRangeContextProvider>
           <CostsUnitContextProvider>
             <CostsMetricContextProvider>
-              <ScalingCostsChart milestones={HOMEPAGE_MILESTONES} />
-              <HorizontalSeparator className="my-4 md:my-6" />
-              <ScalingCostsTable entries={entries} />
+              <SimplePageHeader description="The page shows the costs that L2s pay to Ethereum for security.">
+                Onchain costs
+              </SimplePageHeader>
+              <MainPageCard>
+                <ScalingCostsChart milestones={HOMEPAGE_MILESTONES} />
+              </MainPageCard>
+              <MainPageCard className="mt-6">
+                <ScalingCostsTable entries={entries} />
+              </MainPageCard>
             </CostsMetricContextProvider>
           </CostsUnitContextProvider>
         </CostsTimeRangeContextProvider>

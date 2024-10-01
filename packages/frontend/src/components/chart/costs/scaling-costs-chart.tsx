@@ -36,7 +36,6 @@ export function ScalingCostsChart({ milestones }: Props) {
 
   return (
     <section className="flex flex-col gap-4">
-      <Header />
       <ChartProvider
         columns={columns}
         valuesStyle={valuesStyle}
@@ -56,18 +55,6 @@ export function ScalingCostsChart({ milestones }: Props) {
         <UnitControls unit={unit} setUnit={setUnit} />
       </ChartProvider>
     </section>
-  )
-}
-
-function Header() {
-  return (
-    <header>
-      <h1 className="mb-1 text-3xl font-bold">Onchain costs</h1>
-      <p className="hidden text-base text-gray-500 dark:text-gray-600 md:block">
-        The page shows the costs that L2s pay to Ethereum for security. By
-        default, the projects are sorted by TVL.
-      </p>
-    </header>
   )
 }
 

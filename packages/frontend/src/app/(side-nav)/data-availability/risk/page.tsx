@@ -1,3 +1,4 @@
+import { MainPageCard } from '~/components/main-page-card'
 import { SimplePageHeader } from '~/components/simple-page-header'
 import { getDaRiskEntries } from '~/server/features/data-availability/risks/get-da-risk-entries'
 import { DaFilterContextProvider } from '../_components/filters/da-filter-context'
@@ -9,10 +10,10 @@ export default async function Page() {
   return (
     <div>
       <DaFilterContextProvider>
-        <SimplePageHeader className="mb-4 sm:mb-8">
-          Risk Analysis
-        </SimplePageHeader>
-        <DaRiskTable items={items} />
+        <SimplePageHeader>Risk Analysis</SimplePageHeader>
+        <MainPageCard>
+          <DaRiskTable items={items} />
+        </MainPageCard>
       </DaFilterContextProvider>
     </div>
   )

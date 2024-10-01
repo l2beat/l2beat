@@ -68,6 +68,9 @@ const config: Config = {
         900: '#2F2F2F',
         950: '#111111',
       },
+      'n-gray': {
+        200: '#E6E7EC',
+      },
       black: '#1B1B1B',
       yellow: {
         100: '#FFDD28',

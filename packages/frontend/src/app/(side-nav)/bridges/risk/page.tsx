@@ -1,7 +1,9 @@
+import { MainPageCard } from '~/components/main-page-card'
 import { SimplePageHeader } from '~/components/simple-page-header'
 import { getBridgeRiskEntries } from '~/server/features/bridges/get-bridges-risk-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { BridgesFilterContextProvider } from '../_components/bridges-filter-context'
+import { BridgesMvpWarning } from '../_components/bridges-mvp-warning'
 import { BridgesRiskTable } from './_components/table/bridges-risks-table'
 
 export const metadata = getDefaultMetadata({
@@ -14,13 +16,15 @@ export default async function Page() {
   const entries = await getBridgeRiskEntries()
 
   return (
-    <div className="mb-8">
+    <>
       <BridgesFilterContextProvider>
-        <SimplePageHeader className="!mt-0 mb-4">
-          Risk Analysis
-        </SimplePageHeader>
-        <BridgesRiskTable entries={entries} />
+        <SimplePageHeader>Risk Analysis</SimplePageHeader>
+        <BridgesMvpWarning />
+
+        <MainPageCard>
+          <BridgesRiskTable entries={entries} />
+        </MainPageCard>
       </BridgesFilterContextProvider>
-    </div>
+    </>
   )
 }

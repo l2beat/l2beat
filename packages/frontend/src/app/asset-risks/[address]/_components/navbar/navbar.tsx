@@ -9,7 +9,7 @@ import { WalletDrawer } from '../wallet-drawer'
 export function Navbar() {
   return (
     <>
-      <div className="sticky top-0 z-30 h-14 min-w-fit border-b border-[#272A3133] bg-[#E6E7EC] text-base dark:border-gray-850 lg:h-16">
+      <div className="sticky top-0 z-30 h-14 min-w-fit border-b border-[#272A3133] bg-n-gray-200 text-base dark:border-gray-850 lg:h-16">
         <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-4 lg:px-8">
           <ul className="flex h-full items-center">
             <li className="mr-4 lg:mr-8">

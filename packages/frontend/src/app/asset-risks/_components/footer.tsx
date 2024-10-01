@@ -4,7 +4,7 @@ import { cn } from '~/utils/cn'
 
 export function Footer({ className }: { className?: ClassNameValue }) {
   return (
-    <footer className="flex w-full justify-center bg-[#E6E7EC] py-4 md:py-6">
+    <footer className="flex w-full justify-center bg-n-gray-200 py-4 md:py-6">
       <div
         className={cn(
           'flex w-full flex-row justify-between gap-4 px-[8px] text-xs font-medium text-zinc-500 dark:text-gray-50',

@@ -88,7 +88,7 @@ export function DaRiskTable({ items }: Props) {
                     <td colSpan={3} className="pointer-events-none"></td>
                     <td
                       className={cn(
-                        'group whitespace-pre bg-black/[0.05] pr-3 align-middle group-hover:bg-black/[0.1] dark:bg-white/[0.1] dark:group-hover:bg-white/[0.2]',
+                        'group whitespace-pre bg-n-gray-200 pr-3 align-middle group-hover:bg-black/[0.1] dark:bg-white/[0.1] dark:group-hover:bg-white/[0.2]',
                         !lastRow &&
                           'border-b border-b-gray-200 dark:border-b-zinc-700',
                         firstRow && 'rounded-tl-xl',

@@ -1,3 +1,4 @@
+import { MainPageCard } from '~/components/main-page-card'
 import { SimplePageHeader } from '~/components/simple-page-header'
 import { getScalingUpcomingEntries } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
@@ -8,7 +9,9 @@ export default function Page() {
   return (
     <ScalingFilterContextProvider>
       <SimplePageHeader>Upcoming</SimplePageHeader>
-      <ScalingUpcomingTable entries={entries} />
+      <MainPageCard>
+        <ScalingUpcomingTable entries={entries} />
+      </MainPageCard>
     </ScalingFilterContextProvider>
   )
 }

@@ -1,3 +1,4 @@
+import { MainPageCard } from '~/components/main-page-card'
 import { SimplePageHeader } from '~/components/simple-page-header'
 import { getScalingArchivedEntries } from '~/server/features/scaling/archived/get-scaling-archived-entries'
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
@@ -8,7 +9,9 @@ export default async function Page() {
   return (
     <ScalingFilterContextProvider>
       <SimplePageHeader>Archived</SimplePageHeader>
-      <ScalingArchivedTable entries={entries} />
+      <MainPageCard>
+        <ScalingArchivedTable entries={entries} />
+      </MainPageCard>
     </ScalingFilterContextProvider>
   )
 }

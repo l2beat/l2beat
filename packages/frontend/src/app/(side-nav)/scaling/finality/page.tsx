@@ -1,11 +1,10 @@
+import { MainPageCard } from '~/components/main-page-card'
 import { SimplePageHeader } from '~/components/simple-page-header'
 import { getScalingFinalityEntries } from '~/server/features/scaling/finality/get-scaling-finality-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
-import { FinalityDiagramsSection } from './_components/diagram-section'
 import { ScalingFinalityTable } from './_components/table/scaling-finality-table'
 import { FinalityWarning } from './_components/warning'
-import { finalityDiagrams } from './_utils/finality-diagrams'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -20,8 +19,10 @@ export default async function Page() {
     <ScalingFilterContextProvider>
       <SimplePageHeader>Finality</SimplePageHeader>
       <FinalityWarning />
-      <ScalingFinalityTable projects={projects} />
-      <FinalityDiagramsSection className="mt-20" diagrams={finalityDiagrams} />
+      <MainPageCard>
+        <ScalingFinalityTable projects={projects} />
+      </MainPageCard>
+      {/* <FinalityDiagramsSection className="mt-20" diagrams={finalityDiagrams} /> */}
     </ScalingFilterContextProvider>
   )
 }

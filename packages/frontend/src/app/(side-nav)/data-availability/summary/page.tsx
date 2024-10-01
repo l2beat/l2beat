@@ -1,3 +1,4 @@
+import { MainPageCard } from '~/components/main-page-card'
 import { SimplePageHeader } from '~/components/simple-page-header'
 import { getDaSummaryEntries } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { DaFilterContextProvider } from '../_components/filters/da-filter-context'
@@ -9,8 +10,10 @@ export default async function Page() {
   return (
     <div>
       <DaFilterContextProvider>
-        <SimplePageHeader className="mb-4 sm:mb-8">Summary</SimplePageHeader>
-        <DaSummaryTable items={items} />
+        <SimplePageHeader>Summary</SimplePageHeader>
+        <MainPageCard>
+          <DaSummaryTable items={items} />
+        </MainPageCard>
       </DaFilterContextProvider>
     </div>
   )
