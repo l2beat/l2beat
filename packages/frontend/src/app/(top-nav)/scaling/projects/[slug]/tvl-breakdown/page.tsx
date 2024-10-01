@@ -9,6 +9,7 @@ import { ExternallyBridgedTable } from './_components/tables/externally-bridges-
 import { NativelyMintedTable } from './_components/tables/natively-minted-table'
 import { TvlBreakdownPageHeader } from './_components/tvl-breakdown-page-header'
 import { TvlBreakdownSummaryBox } from './_components/tvl-breakdown-summary-box'
+import { env } from '~/env'
 
 const scalingProjects = [...layer2s, ...layer3s]
 
@@ -36,7 +37,7 @@ interface Props {
 export default async function Page({ params }: Props) {
   const project = scalingProjects.find((p) => p.display.slug === params.slug)
 
-  if (!project) {
+  if (!project || env.EXCLUDED_TVL_PROJECTS?.includes(project.id.toString())) {
     notFound()
   }
 

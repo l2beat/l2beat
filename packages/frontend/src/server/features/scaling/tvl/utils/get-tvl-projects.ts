@@ -14,6 +14,7 @@ import {
   toBackendProject,
 } from '@l2beat/config'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { env } from '~/env'
 
 export interface TvlProject {
   id: ProjectId
@@ -62,7 +63,7 @@ export function getTvlProjects(): TvlProject[] {
     ...layer2s.map(layer2ToBackendProject),
     ...layer3s.map(layer3ToBackendProject),
     ...bridges.map(bridgeToBackendProject),
-  ]
+  ].filter((project) => !env.EXCLUDED_TVL_PROJECTS?.includes(project.projectId))
 
   const tvlAmounts = getTvlAmountsConfig(projects)
 
