@@ -104,7 +104,7 @@ export async function NavLayout({
     },
     env.NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT && {
       type: 'multiple',
-      title: 'Data Availability',
+      title: 'DA',
       icon: (
         <DataAvailabilityIcon className="transition-colors duration-300 group-data-[active=true]:fill-pink-900 dark:group-data-[active=true]:fill-pink-200" />
       ),
