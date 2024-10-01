@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20432514,
   "configHash": "0x49d0dd9e1f3e81d463d5c70dd88cf44ea1b64ad4bf2656a6374146f6e44bc04e",
-  "version": 14,
+  "version": 15,
   "contracts": [
     {
       "name": "DeleteIdentitiesVerifierLookupTable",
@@ -94,6 +94,20 @@
       "values": {
         "$admin": "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A",
         "$implementation": "0x521e8FB3A32Ea44237DC8b1E506dd78accFDf8Bd",
+        "$pastUpgrades": [
+          [
+            "2023-07-06T19:19:11.000Z",
+            ["0xa3cD15EBed6075E33a54483C59818bC43D57c556"]
+          ],
+          [
+            "2023-08-18T17:12:23.000Z",
+            ["0x2Ad412A1dF96434Eed0779D2dB4A8694a06132f8"]
+          ],
+          [
+            "2024-01-12T00:00:23.000Z",
+            ["0x521e8FB3A32Ea44237DC8b1E506dd78accFDf8Bd"]
+          ]
+        ],
         "$upgradeCount": 3,
         "getDeleteIdentitiesVerifierLookupTableAddress": "0x39CcB3b670651a14da8b3835f42924f49C2C5986",
         "getRegisterIdentitiesVerifierLookupTableAddress": "0x4055B6d4018e92e4d000865e61e87B57A4E5Ab49",
@@ -282,5 +296,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
 }

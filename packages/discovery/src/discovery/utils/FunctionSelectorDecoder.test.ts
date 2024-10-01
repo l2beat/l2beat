@@ -115,6 +115,7 @@ describe(FunctionSelectorDecoder.name, () => {
           abi: [],
           source: 'name',
         }),
+        getLogs: mockFn().resolvesTo([]),
       })
       const decoder = new FunctionSelectorDecoder(provider)
 
@@ -179,6 +180,7 @@ describe(FunctionSelectorDecoder.name, () => {
           abi: [],
           source: 'name',
         }),
+        getLogs: mockFn().resolvesTo([]),
       })
       const decoder = new FunctionSelectorDecoder(provider)
 

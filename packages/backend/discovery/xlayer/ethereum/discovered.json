@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20832964,
   "configHash": "0x44089e74887a0b7cff4d60e42ec30908ccc4bbda5a190d87b0b495495d3902ab",
-  "version": 14,
+  "version": 15,
   "contracts": [
     {
       "name": "XLayerValidiumDAC",
@@ -20,6 +20,12 @@
       "values": {
         "$admin": "0x1e37EA18e9515db29b3E94A00eD31484A3130204",
         "$implementation": "0xd620Ca1ad5c3888e4521c3374cE4088Cb78079b8",
+        "$pastUpgrades": [
+          [
+            "2024-03-30T08:28:47.000Z",
+            ["0xd620Ca1ad5c3888e4521c3374cE4088Cb78079b8"]
+          ]
+        ],
         "$upgradeCount": 1,
         "committeeHash": "0xfa0cdb192e4e3d5bda14ab176fe857843eda35d462548ac406f8e2be43d29ec7",
         "getAmountOfMembers": 2,
@@ -70,6 +76,12 @@
       "values": {
         "$admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "$implementation": "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
+        "$pastUpgrades": [
+          [
+            "2024-03-30T08:02:35.000Z",
+            ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
+          ]
+        ],
         "$upgradeCount": 1,
         "admin": "0x491619874b866c3cDB7C8553877da223525ead01",
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
@@ -292,5 +304,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xb3e808e6410511e5cdb557ab187aac264a51956c695f8cc327ebaa202f7514fd"
+  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
 }

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20812440,
   "configHash": "0x4d2db40fb06d17ad8c917a661b77dd8194358db87ed1173c1173da4433ab5cc5",
-  "version": 14,
+  "version": 15,
   "contracts": [
     {
       "name": "SP1Vector",
@@ -22,6 +22,16 @@
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D",
+        "$pastUpgrades": [
+          [
+            "2024-07-04T21:23:47.000Z",
+            ["0x2434564f3524b44258B11643729343Ef57D60989"]
+          ],
+          [
+            "2024-07-20T01:29:35.000Z",
+            ["0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D"]
+          ]
+        ],
         "$upgradeCount": 2,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -375,5 +385,5 @@
     "succinct/SP1SuccinctGateway": "0x469434d0a8618a0831610020a584f9b833db48951a4e6605e45baff5b764ee77",
     "succinct/SP1Vector": "0xe1b6515d881fe5c6bf2819550b85bc508c9adf9df527c4be5cf4e0ed65cd4533"
   },
-  "shapeFilesHash": "0xb3e808e6410511e5cdb557ab187aac264a51956c695f8cc327ebaa202f7514fd"
+  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
 }

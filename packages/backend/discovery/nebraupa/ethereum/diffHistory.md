@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x9e15c1cdf6aa6db07114b4624da0e4adceb8f49a
+
+# Diff at Tue, 01 Oct 2024 10:53:17 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20826378
+- current block number: 20826378
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20826378 (main branch discovery), not current.
+
+```diff
+    contract UpaVerifier (0x3B946743DEB7B6C97F05B7a31B23562448047E3E) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-08-14T16:32:47.000Z",["0xB6cD7eD75c008d0033ED241872639a1D8a35020a"]]]
+    }
+```
+
 Generated with discovered.json: 0x93694ce8fa8ba9c589bf7831a22fdc813a009529
 
 # Diff at Wed, 25 Sep 2024 08:18:25 GMT:

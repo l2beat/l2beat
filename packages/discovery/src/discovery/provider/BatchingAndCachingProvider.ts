@@ -399,6 +399,25 @@ export class BatchingAndCachingProvider {
     }
   }
 
+  async getBlock(blockNumber: number): Promise<providers.Block | undefined> {
+    const entry = await this.cache.entry('getBlock', [blockNumber], undefined)
+    const cached = entry.read()
+    if (cached !== undefined) {
+      this.stats.getBlockCount++
+      // This recovers BigNumber instances from the cache
+      // BigNumbers are saved in JSON as { type: 'BigNumber', hex: '0x123' }
+      return parseCacheEntry(cached)
+    }
+
+    const block = await this.provider.getBlock(blockNumber)
+    if (block === undefined) {
+      return undefined
+    }
+
+    entry.write(JSON.stringify(block))
+    return block
+  }
+
   async getTransaction(
     transactionHash: Hash256,
   ): Promise<providers.TransactionResponse | undefined> {

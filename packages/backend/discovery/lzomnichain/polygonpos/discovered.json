@@ -3,7 +3,7 @@
   "chain": "polygonpos",
   "blockNumber": 58991670,
   "configHash": "0xce744ee7bc25cb5f9f0d45db11af4edfd1f88023463e53fc1c4ea11f4bc426b5",
-  "version": 14,
+  "version": 15,
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -1331,6 +1331,16 @@
       "values": {
         "$admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
         "$implementation": "0x674875DB7a89C7676188DCB590498DEC7AED7881",
+        "$pastUpgrades": [
+          [
+            "2023-02-08T19:53:29.000Z",
+            ["0xf618dAe6049AEB8348A509dfd73cd7f823FA1DC1"]
+          ],
+          [
+            "2023-04-27T02:35:03.000Z",
+            ["0x674875DB7a89C7676188DCB590498DEC7AED7881"]
+          ]
+        ],
         "$upgradeCount": 2
       }
     },
@@ -1373,6 +1383,28 @@
       "values": {
         "$admin": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
         "$implementation": "0x6963Cc1424FCAa13356cE04be0AC5ddf03E3e3B9",
+        "$pastUpgrades": [
+          [
+            "2023-02-03T23:03:03.000Z",
+            ["0x35e1752B043fcc0A0c4478ce8dE062DbF27511B6"]
+          ],
+          [
+            "2023-04-23T05:13:41.000Z",
+            ["0x4E0b66a662b659898eBFD403623EA55f5a2BF495"]
+          ],
+          [
+            "2023-06-26T23:14:21.000Z",
+            ["0x443CAa8CD23D8CC1e04B3Ce897822AEa6ad3EbDA"]
+          ],
+          [
+            "2023-09-20T20:10:21.000Z",
+            ["0x63FDE6562629e98fB5E0C2C374CC5f25A492Ee38"]
+          ],
+          [
+            "2023-09-22T14:14:50.000Z",
+            ["0x6963Cc1424FCAa13356cE04be0AC5ddf03E3e3B9"]
+          ]
+        ],
         "$upgradeCount": 5
       }
     },
@@ -1798,5 +1830,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
 }
