@@ -73,12 +73,16 @@ function Header({ scalingFactor }: { scalingFactor: number | undefined }) {
         </Link>
       </div>
       <div className="flex flex-col items-end gap-1">
-        <div className="whitespace-nowrap text-right font-bold leading-[1.15]">
+        <div className="flex items-baseline gap-1">
           {scalingFactor !== undefined ? (
-            <p className="text-right">
-              <span className="text-base max-md:hidden">Scaling factor: </span>
-              <span className="text-xl">{scalingFactor.toFixed(2)}x</span>
-            </p>
+            <>
+              <span className="whitespace-nowrap text-right text-base font-bold leading-[1.15] max-md:hidden">
+                Scaling factor:
+              </span>
+              <div className="whitespace-nowrap text-right text-xl font-bold leading-[1.15]">
+                {scalingFactor.toFixed(2)}x
+              </div>
+            </>
           ) : (
             <Skeleton className="h-[23px] w-20 md:w-[243px]" />
           )}
