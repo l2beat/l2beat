@@ -8,7 +8,6 @@ import {
   getSortedRowModel,
 } from '@tanstack/react-table'
 import Link from 'next/link'
-import { useMemo } from 'react'
 import { PentagonRosetteCell } from '~/components/rosette/pentagon/pentagon-rosette-cell'
 import { BasicTable } from '~/components/table/basic-table'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
