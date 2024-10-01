@@ -119,6 +119,10 @@ export function getTvlAmountsConfigForProject(
     }
   }
 
+  if (project.escrows.some((e) => e.sharedEscrow?.includeAllOKBFromL1)) {
+    return handleOKBentries([project], entries)
+  }
+
   return entries
 }
 
