@@ -24,11 +24,11 @@ function isChainAddress(value: string): boolean {
 }
 
 function getChainColor(chain: string): Color {
-    if(chain === 'ethereum') {
-        return White;
-    }
+  if (chain === 'ethereum') {
+    return White
+  }
 
-    return oklch2rgb(0.75, 0.12, (stringHash(chain) % 360))
+  return oklch2rgb(0.75, 0.12, stringHash(chain) % 360)
 }
 
 export function transformContracts(
