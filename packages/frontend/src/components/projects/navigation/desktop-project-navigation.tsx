@@ -1,5 +1,12 @@
 'use client'
-import { type CSSProperties, useEffect, useMemo, useRef, useState } from 'react'
+import {
+  type CSSProperties,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 
 import Image from 'next/image'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
@@ -84,13 +91,45 @@ function ProjectNavigationList({
   sections,
   style,
 }: Pick<ProjectNavigationProps, 'sections'> & { style?: CSSProperties }) {
+  const containerRef = useRef<HTMLDivElement>(null)
   const currentSection = useCurrentSection()
+
+  const followSectionMenuEntry = useCallback(() => {
+    const container = containerRef.current
+
+    if (container) {
+      // Select all navigation entries
+      const navigationEntries = [...container.querySelectorAll('a')]
+
+      // Find the current section in the navigation entries, using data-section attribute
+      // since id attribute would collied with the actual section id nav-jump relies on
+      const menuEntry = navigationEntries.find((el) => {
+        const section = el.getAttribute('data-section')
+        return section === currentSection?.id
+      })
+
+      // Special case for explicitly injected summary section
+      const isSummary = currentSection?.id === 'summary'
+
+      if (menuEntry) {
+        const offsetTop = isSummary ? 0 : menuEntry.offsetTop
+        container.scroll({ top: offsetTop, behavior: 'smooth' })
+      }
+    }
+  }, [containerRef, currentSection])
+
+  useEffect(() => {
+    followSectionMenuEntry()
+  }, [currentSection, followSectionMenuEntry])
+
   return (
     <div
-      className="absolute top-0 flex flex-col gap-3 leading-none transition-[top] duration-300"
+      className="absolute top-0 flex max-h-[calc(100vh-220px)] flex-col gap-3 overflow-y-auto leading-none transition-[top] duration-300"
       style={style}
+      ref={containerRef}
     >
       <a
+        data-section="summary"
         href="#"
         className={cn(
           'flex flex-row items-center gap-3 transition-opacity hover:opacity-100',
@@ -102,8 +141,10 @@ function ProjectNavigationList({
       </a>
       {sections.map((section, i) => {
         const selected = currentSection?.id === section.id
+
         return (
           <a
+            data-section={section.id}
             key={section.id}
             href={`#${section.id}`}
             className={cn(
