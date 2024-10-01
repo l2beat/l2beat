@@ -63,29 +63,34 @@ export function getTvlProjects(): TvlProject[] {
     ...layer2s.map(layer2ToBackendProject),
     ...layer3s.map(layer3ToBackendProject),
     ...bridges.map(bridgeToBackendProject),
-  ].filter((project) => !env.EXCLUDED_TVL_PROJECTS?.includes(project.projectId))
+  ]
 
   const tvlAmounts = getTvlAmountsConfig(projects)
 
-  return projects.flatMap(({ projectId, type, slug }) => {
-    const amounts = tvlAmounts.filter((o) => o.project === projectId)
-    if (!amounts) {
-      return []
-    }
-    const minTimestamp = amounts
-      .map((x) => x.sinceTimestamp)
-      .reduce((a, b) => UnixTime.min(a, b), UnixTime.now())
-
-    const sources = new Map<string, { name: string; minTimestamp: UnixTime }>()
-    for (const amount of amounts) {
-      const source = sources.get(amount.dataSource)
-      if (!source || source.minTimestamp.gt(amount.sinceTimestamp)) {
-        sources.set(amount.dataSource, {
-          name: amount.dataSource,
-          minTimestamp: amount.sinceTimestamp,
-        })
+  return projects
+    .flatMap(({ projectId, type, slug }) => {
+      const amounts = tvlAmounts.filter((o) => o.project === projectId)
+      if (!amounts) {
+        return []
       }
-    }
-    return { id: projectId, minTimestamp, type, slug, sources }
-  })
+      const minTimestamp = amounts
+        .map((x) => x.sinceTimestamp)
+        .reduce((a, b) => UnixTime.min(a, b), UnixTime.now())
+
+      const sources = new Map<
+        string,
+        { name: string; minTimestamp: UnixTime }
+      >()
+      for (const amount of amounts) {
+        const source = sources.get(amount.dataSource)
+        if (!source || source.minTimestamp.gt(amount.sinceTimestamp)) {
+          sources.set(amount.dataSource, {
+            name: amount.dataSource,
+            minTimestamp: amount.sinceTimestamp,
+          })
+        }
+      }
+      return { id: projectId, minTimestamp, type, slug, sources }
+    })
+    .filter((project) => !env.EXCLUDED_TVL_PROJECTS?.includes(project.id))
 }

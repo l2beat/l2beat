@@ -1,5 +1,6 @@
 import { layer2s, layer3s } from '@l2beat/config'
 import { notFound } from 'next/navigation'
+import { env } from '~/env'
 import { getTvlBreakdownForProject } from '~/server/features/scaling/tvl/breakdown/get-tvl-breakdown-for-project'
 import { get7dTvlBreakdown } from '~/server/features/scaling/tvl/utils/get-7d-tvl-breakdown'
 import { getDefaultMetadata } from '~/utils/metadata'
@@ -9,7 +10,6 @@ import { ExternallyBridgedTable } from './_components/tables/externally-bridges-
 import { NativelyMintedTable } from './_components/tables/natively-minted-table'
 import { TvlBreakdownPageHeader } from './_components/tvl-breakdown-page-header'
 import { TvlBreakdownSummaryBox } from './_components/tvl-breakdown-summary-box'
-import { env } from '~/env'
 
 const scalingProjects = [...layer2s, ...layer3s]
 

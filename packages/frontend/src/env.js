@@ -32,7 +32,7 @@ export const env = createEnv({
     VERCEL_URL: z.string().optional(),
     VERCEL_ENV: z.enum(['production', 'preview', 'development']).optional(),
     EXCLUDED_ACTIVITY_PROJECTS: stringArray.optional(),
-    EXCLUDED_TVL_PROJECTS: stringArray.optional()
+    EXCLUDED_TVL_PROJECTS: stringArray.optional(),
   },
 
   /**

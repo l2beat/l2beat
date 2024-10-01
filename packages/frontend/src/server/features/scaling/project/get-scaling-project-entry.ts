@@ -5,6 +5,7 @@ import {
   layer2s,
 } from '@l2beat/config'
 import { compact } from 'lodash'
+import { env } from '~/env'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getContractsVerificationStatuses } from '../../verification-status/get-contracts-verification-statuses'
@@ -16,7 +17,6 @@ import { getAssociatedTokenWarning } from '../tvl/utils/get-associated-token-war
 import { getL2ProjectDetails } from './utils/get-l2-project-details'
 import { getL3ProjectDetails } from './utils/get-l3-project-details'
 import { getScalingRosetteValues } from './utils/get-scaling-rosette-values'
-import { env } from '~/env'
 
 type ScalingProject = Layer2 | Layer3
 
