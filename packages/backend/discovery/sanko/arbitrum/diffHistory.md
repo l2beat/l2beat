@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x9359fb351744ddda12b7f8dcac29dd0e03904ccc
+Generated with discovered.json: 0x47cc844d1f050b93848c0eab1bf4709b7c447671
 
-# Diff at Tue, 01 Oct 2024 14:21:51 GMT:
+# Diff at Tue, 01 Oct 2024 15:47:56 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@974999225bba0722b5e81edd4c1b80928d80ef33 block: 257934843
-- current block number: 259291282
+- current block number: 259311792
 
 ## Description
 
@@ -24,6 +24,8 @@ Upgrade of SequencerInbox and OSP to newer versions that are known from other or
       values.$implementation:
 -        "0x935239e066F4F449D87D600e6d7c1a4F24c50f97"
 +        "0x63AB51383384a09734b8B8F6646647213bdD54aC"
+      values.$pastUpgrades.1:
++        ["2024-09-30T15:15:30.000Z",["0x63AB51383384a09734b8B8F6646647213bdD54aC"]]
       values.$upgradeCount:
 -        1
 +        2
@@ -39,6 +41,8 @@ Upgrade of SequencerInbox and OSP to newer versions that are known from other or
       values.$implementation:
 -        "0x1d182075d07744D71E37f77f1654165f6DAFad08"
 +        "0x083c2b4D0C745224E8E484Dfd41eDC9b19f21Feb"
+      values.$pastUpgrades.1:
++        ["2024-09-30T15:15:30.000Z",["0x083c2b4D0C745224E8E484Dfd41eDC9b19f21Feb"]]
       values.$upgradeCount:
 -        1
 +        2
@@ -126,6 +130,94 @@ Upgrade of SequencerInbox and OSP to newer versions that are known from other or
  .../OneStepProverHostIo.sol                        | 107 +++-
  .../SequencerInbox/SequencerInbox.sol              | 662 ++++++++++++++++-----
  3 files changed, 611 insertions(+), 164 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 257934843 (main branch discovery), not current.
+
+```diff
+    contract ChallengeManager (0x1f269F38196484ef81e58C0144AaD2c5F6394bB4) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-12T21:49:58.000Z",["0x935239e066F4F449D87D600e6d7c1a4F24c50f97"]]]
+    }
+```
+
+```diff
+    contract SequencerInbox (0x24B68936C13A414cd91437aE7AA730321B9ff159) {
+    +++ description: State batches / commitments get posted here.
+      values.$pastUpgrades:
++        [["2024-04-12T21:49:58.000Z",["0x1d182075d07744D71E37f77f1654165f6DAFad08"]]]
+    }
+```
+
+```diff
+    contract Bridge (0x2f285781B8d58678a3483de52D618198E4d27532) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-12T21:49:58.000Z",["0xC5Db571093C4600559e239497d147476F7543b15"]]]
+    }
+```
+
+```diff
+    contract ERC20RollupEventInbox (0x365ce7234CE515c2e0139f3578b6c5989da1a863) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-12T21:49:58.000Z",["0xf2bCB26dbb571EBC82CFAe6453AeF0DE90d93421"]]]
+    }
+```
+
+```diff
+    contract Outbox (0x575d32f7ff0C72921645e302cb14d2757E300786) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-12T21:49:58.000Z",["0xCa2F31F3C6553c2FD9897f7AA464406a431959A9"]]]
+    }
+```
+
+```diff
+    contract Inbox (0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-12T21:49:58.000Z",["0x2675b9DEb473ECaC13ddd71dF8A0Ef13FeF6a75D"]]]
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-12T21:49:58.000Z",["0x20C6be2A0429A82a7bF113905a29d36CF6753B10"]]]
+    }
+```
+
+```diff
+    contract L1OrbitGatewayRouter (0x847186fbeEBf41eEe9c230360D0bF8585c0Db57B) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-12T21:50:11.000Z",["0x922db00d292477AD99Ef8A0c41101a664Ee79D2b"]]]
+    }
+```
+
+```diff
+    contract RollupProxy (0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      values.$pastUpgrades:
++        [["2024-04-12T21:49:58.000Z",["0xc326D023758d7D212d529D1E58D7f271CAe49fcf","0xD92D49e8A2230E2C7a73c3ff4Df1AED09dA32a07"]]]
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract L1OrbitERC20Gateway (0xb4951c0C41CFceB0D195A95FE66280457A80a990) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-12T21:50:11.000Z",["0x652F65f950b71d7aD04AffB1725F43786ed5f6Cc"]],["2024-04-26T01:40:32.000Z",["0xF5CE2B2a046f5C5440506F76d512375fdB301BCa"]]]
+    }
 ```
 
 Generated with discovered.json: 0xdefe742156380a642fd956abd8d242a3e8c303c9

@@ -1,7 +1,7 @@
 {
   "name": "sanko",
   "chain": "arbitrum",
-  "blockNumber": 259291282,
+  "blockNumber": 259311792,
   "configHash": "0x22d5409de9ec2ed8989d6ffc9b7aa1197344c488351b8c3ebcc90c2d6fa8c36e",
   "version": 15,
   "contracts": [
@@ -36,6 +36,16 @@
       "values": {
         "$admin": "0xd18b1C6376633000c85541F7c15c591Ffe5f9556",
         "$implementation": "0x63AB51383384a09734b8B8F6646647213bdD54aC",
+        "$pastUpgrades": [
+          [
+            "2024-04-12T21:49:58.000Z",
+            ["0x935239e066F4F449D87D600e6d7c1a4F24c50f97"]
+          ],
+          [
+            "2024-09-30T15:15:30.000Z",
+            ["0x63AB51383384a09734b8B8F6646647213bdD54aC"]
+          ]
+        ],
         "$upgradeCount": 2,
         "bridge": "0x2f285781B8d58678a3483de52D618198E4d27532",
         "osp": "0xc78778b1D7416FB8211e864dBA3e277DF39f2c71",
@@ -63,6 +73,16 @@
       "values": {
         "$admin": "0xd18b1C6376633000c85541F7c15c591Ffe5f9556",
         "$implementation": "0x083c2b4D0C745224E8E484Dfd41eDC9b19f21Feb",
+        "$pastUpgrades": [
+          [
+            "2024-04-12T21:49:58.000Z",
+            ["0x1d182075d07744D71E37f77f1654165f6DAFad08"]
+          ],
+          [
+            "2024-09-30T15:15:30.000Z",
+            ["0x083c2b4D0C745224E8E484Dfd41eDC9b19f21Feb"]
+          ]
+        ],
         "$upgradeCount": 2,
         "batchCount": 3343,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
@@ -132,7 +152,7 @@
           "0x365ce7234CE515c2e0139f3578b6c5989da1a863"
         ],
         "allowedOutboxList": ["0x575d32f7ff0C72921645e302cb14d2757E300786"],
-        "delayedMessageCount": 12738,
+        "delayedMessageCount": 12743,
         "nativeToken": "0x8B0E6f19Ee57089F7649A455D89D7bC6314D04e8",
         "rollup": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
         "sequencerInbox": "0x24B68936C13A414cd91437aE7AA730321B9ff159",
@@ -402,7 +422,7 @@
         "isERC20Enabled": false,
         "lastStakeBlock": 19642604,
         "latestConfirmed": 1040,
-        "latestNodeCreated": 1065,
+        "latestNodeCreated": 1066,
         "loserStakeEscrow": "0xe8216687Ef40C65F64D6dcd335b0aaab4A1Bc400",
         "minimumAssertionPeriod": 75,
         "outbox": "0x575d32f7ff0C72921645e302cb14d2757E300786",
