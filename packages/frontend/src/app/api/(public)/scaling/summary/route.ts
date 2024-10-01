@@ -49,7 +49,6 @@ export async function GET() {
                 change7d: entry.tvl.change,
               },
               stage: entry.stage.stage,
-              marketShare: entry.marketShare,
               risks: entry.risks,
             },
           ]
