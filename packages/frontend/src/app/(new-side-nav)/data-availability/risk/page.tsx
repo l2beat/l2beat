@@ -1,20 +1,40 @@
 import { SimplePageHeader } from '~/components/simple-page-header'
-import { getDaRiskEntries } from '~/server/features/data-availability/risks/get-da-risk-entries'
+import {
+  type DaRiskEntry,
+  getDaRiskEntries,
+} from '~/server/features/data-availability/risks/get-da-risk-entries'
 import { DaRiskTable } from './_components/table/da-risk-table'
-import { groupBy } from 'lodash'
+import { MainPageCard } from '~/components/main-page-card'
 
 export default async function Page() {
   const items = await getDaRiskEntries()
-  const grouped = groupBy(items, (item) => item.layerType)
+  const { dacs, other } = items.reduce<Record<'dacs' | 'other', DaRiskEntry[]>>(
+    (acc, item) => {
+      if (item.kind === 'DAC') {
+        acc.dacs.push(item)
+      } else {
+        acc.other.push(item)
+      }
+      return acc
+    },
+    { dacs: [], other: [] },
+  )
 
   return (
     <div>
-        <SimplePageHeader className="mb-4 sm:mb-8">
-          Risk Analysis
-        </SimplePageHeader>
-        {Object.entries(grouped).map(([layerType, items]) => (
-          <DaRiskTable key={layerType} items={items} />
-        ))}
+      <SimplePageHeader className="mb-4 sm:mb-8">
+        Risk Analysis
+      </SimplePageHeader>
+      <div className="flex flex-col gap-6">
+        <MainPageCard className="flex flex-col gap-4">
+          <h2 className="text-xl font-bold">Public blockchains</h2>
+          <DaRiskTable items={other} />
+        </MainPageCard>
+        <MainPageCard className="flex flex-col gap-4">
+          <h2 className="text-xl font-bold">DACs</h2>
+          <DaRiskTable items={dacs} />
+        </MainPageCard>
+      </div>
     </div>
   )
 }
