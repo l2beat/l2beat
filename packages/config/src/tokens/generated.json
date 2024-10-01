@@ -423,6 +423,20 @@
       "supply": "zero"
     },
     {
+      "name": "BAD IDEA AI",
+      "coingeckoId": "bad-idea-ai",
+      "address": "0x32b86b99441480a7E5BD3A26c124ec2373e3F015",
+      "symbol": "BAD",
+      "decimals": 18,
+      "deploymentTimestamp": 1683324095,
+      "coingeckoListingTimestamp": 1696291200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30871/large/BadIdea-Logo_Icon-Emblem.png?1723167526",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Bag",
       "coingeckoId": "bag",
       "address": "0x808688c820AB080A6Ff1019F03E5EC227D9b522B",
@@ -614,6 +628,20 @@
       "coingeckoListingTimestamp": 1637280000,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/20285/large/Boba-200x200---white.png?1696519690",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "BONE SHIBASWAP",
+      "coingeckoId": "bone-shibaswap",
+      "address": "0x9813037ee2218799597d83D4a5B6F3b6778218d9",
+      "symbol": "BONE",
+      "decimals": 18,
+      "deploymentTimestamp": 1625542925,
+      "coingeckoListingTimestamp": 1696291200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16916/large/bone_icon.png?1696516487",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -1214,12 +1242,12 @@
       "decimals": 18,
       "deploymentTimestamp": 1615354524,
       "coingeckoListingTimestamp": 1625875200,
+      "untilTimestamp": 1725840000,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/16414/large/rhinologo.png?1697736807",
       "chainId": 1,
       "source": "canonical",
-      "supply": "zero",
-      "untilTimestamp": 1725840000
+      "supply": "zero"
     },
     {
       "name": "DEXTF Token",
@@ -1273,6 +1301,20 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/8089/large/XDB_CHAIN_LOGO.jpeg?1702723430",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "DOGE KILLER",
+      "coingeckoId": "leash",
+      "address": "0x27C70Cd1946795B66be9d954418546998b546634",
+      "symbol": "LEASH",
+      "decimals": 18,
+      "deploymentTimestamp": 1598998068,
+      "coingeckoListingTimestamp": 1696291200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/15802/large/Leash.png?1696515425",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -2140,6 +2182,20 @@
       "coingeckoListingTimestamp": 1651708800,
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/25388/large/iusd-logo-symbol-10k%E5%A4%A7%E5%B0%8F.png?1696524521",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "K9 Finance DAO",
+      "coingeckoId": "k9-finance-dao",
+      "address": "0x91fbB2503AC69702061f1AC6885759Fc853e6EaE",
+      "symbol": "KNINE",
+      "decimals": 18,
+      "deploymentTimestamp": 1708949747,
+      "coingeckoListingTimestamp": 1709856000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35824/large/k9_200_X_200.png?1709886958",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -4301,6 +4357,34 @@
       "supply": "zero"
     },
     {
+      "name": "Unification",
+      "coingeckoId": "unification",
+      "address": "0xe9B076B476D8865cDF79D1Cf7DF420EE397a7f75",
+      "symbol": "FUND",
+      "decimals": 9,
+      "deploymentTimestamp": 1667308307,
+      "coingeckoListingTimestamp": 1696291200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7845/large/DV80FOp.png?1696508079",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "unification.com/xfund",
+      "coingeckoId": "xfund",
+      "address": "0x892A6f9dF0147e5f079b0993F486F9acA3c87881",
+      "symbol": "xFUND",
+      "decimals": 9,
+      "deploymentTimestamp": 1601307673,
+      "coingeckoListingTimestamp": 1696291200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13770/large/xfund.png?1696513512",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Uniswap",
       "coingeckoId": "uniswap",
       "address": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
@@ -5369,6 +5453,304 @@
       "chainId": 10,
       "source": "canonical",
       "supply": "zero"
+    },
+    {
+      "name": "BAD IDEA AI",
+      "coingeckoId": "bad-idea-ai",
+      "address": "0xef99cd3e619C058658043F8775ED9077105D8581",
+      "symbol": "BAD",
+      "decimals": 18,
+      "deploymentTimestamp": 1721745379,
+      "coingeckoListingTimestamp": 1696291200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30871/large/BadIdea-Logo_Icon-Emblem.png?1723167526",
+      "chainId": 109,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Shibarium",
+            "slug": "shibarium"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Dai Stablecoin",
+      "coingeckoId": "dai",
+      "address": "0x0726959d22361B79e4D50A5D157b044A83eC870d",
+      "symbol": "DAI",
+      "decimals": 18,
+      "deploymentTimestamp": 1693597028,
+      "coingeckoListingTimestamp": 1696291200,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "chainId": 109,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Shibarium",
+            "slug": "shibarium"
+          }
+        ]
+      }
+    },
+    {
+      "name": "DOGE KILLER",
+      "coingeckoId": "leash",
+      "address": "0x65218A41Fb92637254B4f8c97448d3dF343A3064",
+      "symbol": "LEASH",
+      "decimals": 18,
+      "deploymentTimestamp": 1692216897,
+      "coingeckoListingTimestamp": 1696291200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/15802/large/Leash.png?1696515425",
+      "chainId": 109,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Shibarium",
+            "slug": "shibarium"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Escrowed KNINE",
+      "coingeckoId": "k9-finance-dao",
+      "address": "0x545d817F799092DbA53af785d79Bc95d296Af52e",
+      "symbol": "esKNINE",
+      "decimals": 18,
+      "deploymentTimestamp": 1725540380,
+      "coingeckoListingTimestamp": 1709856000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35824/large/k9_200_X_200.png?1709886958",
+      "chainId": 109,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "K9 Finance DAO",
+      "coingeckoId": "k9-finance-dao",
+      "address": "0x91fbB2503AC69702061f1AC6885759Fc853e6EaE",
+      "symbol": "KNINE",
+      "decimals": 18,
+      "deploymentTimestamp": 1718978633,
+      "coingeckoListingTimestamp": 1709856000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35824/large/k9_200_X_200.png?1709886958",
+      "chainId": 109,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Shibarium",
+            "slug": "shibarium"
+          }
+        ]
+      }
+    },
+    {
+      "name": "K9 Staked BONE",
+      "coingeckoId": "bone-shibaswap",
+      "address": "0x3358FCA51d7C0408750FBbE7777012E0b67C027F",
+      "symbol": "knBONE",
+      "decimals": 18,
+      "deploymentTimestamp": 1725536944,
+      "coingeckoListingTimestamp": 1696291200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16916/large/bone_icon.png?1696516487",
+      "chainId": 109,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "SHIBA INU",
+      "coingeckoId": "shiba-inu",
+      "address": "0x495eea66B0f8b636D441dC6a98d8F5C3D455C4c0",
+      "symbol": "SHIB",
+      "decimals": 18,
+      "deploymentTimestamp": 1691862485,
+      "coingeckoListingTimestamp": 1696291200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11939/large/shiba.png?1696511800",
+      "chainId": 109,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Shibarium",
+            "slug": "shibarium"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Shibarium Wrapped BONE",
+      "coingeckoId": "shibarium-wrapped-bone",
+      "address": "0xC76F4c819D820369Fb2d7C1531aB3Bb18e6fE8d8",
+      "symbol": "WBONE",
+      "decimals": 18,
+      "deploymentTimestamp": 1693425261,
+      "coingeckoListingTimestamp": 1696291200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31634/large/wbone.png?1696530450",
+      "chainId": 109,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Sol Killer",
+      "coingeckoId": "sol-killer",
+      "address": "0xeCe898EdCc0AF91430603175F945D8de75291c70",
+      "symbol": "DAMN",
+      "decimals": 18,
+      "deploymentTimestamp": 1710746482,
+      "coingeckoListingTimestamp": 1712448000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36243/large/DAMN.png?1710921102",
+      "chainId": 109,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Tether USD",
+      "coingeckoId": "tether",
+      "address": "0xaB082b8ad96c7f47ED70ED971Ce2116469954cFB",
+      "symbol": "USDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1693596160,
+      "coingeckoListingTimestamp": 1696291200,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "chainId": 109,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Shibarium",
+            "slug": "shibarium"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Unification",
+      "coingeckoId": "unification",
+      "address": "0xaDA0fA1f9A4Ea8513B3b607EFD31792336c09507",
+      "symbol": "FUND",
+      "decimals": 9,
+      "deploymentTimestamp": 1720439153,
+      "coingeckoListingTimestamp": 1696291200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7845/large/DV80FOp.png?1696508079",
+      "chainId": 109,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Shibarium",
+            "slug": "shibarium"
+          }
+        ]
+      }
+    },
+    {
+      "name": "unification.com/xfund",
+      "coingeckoId": "xfund",
+      "address": "0x89dc93C6c12CaE47aCAf4aD9305d7A442C30dBB2",
+      "symbol": "xFUND",
+      "decimals": 9,
+      "deploymentTimestamp": 1693595654,
+      "coingeckoListingTimestamp": 1696291200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13770/large/xfund.png?1696513512",
+      "chainId": 109,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Shibarium",
+            "slug": "shibarium"
+          }
+        ]
+      }
+    },
+    {
+      "name": "USD Coin",
+      "coingeckoId": "usd-coin",
+      "address": "0xf010f12dcA0b96D2d6685bf4dB3dbB4Ad500B6Ad",
+      "symbol": "USDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1693596682,
+      "coingeckoListingTimestamp": 1696291200,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "chainId": 109,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Shibarium",
+            "slug": "shibarium"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Wrapped BTC",
+      "coingeckoId": "wrapped-bitcoin",
+      "address": "0xE984D89fb00D0B44E798A55dc41EA598B0b0899d",
+      "symbol": "WBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1693597229,
+      "coingeckoListingTimestamp": 1696291200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "chainId": 109,
+      "source": "canonical",
+      "supply": "zero",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Shibarium",
+            "slug": "shibarium"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Wrapped Ether",
+      "coingeckoId": "weth",
+      "address": "0x8ed7d143Ef452316Ab1123d28Ab302dC3b80d3ce",
+      "symbol": "WETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1692217418,
+      "coingeckoListingTimestamp": 1696291200,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "chainId": 109,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Shibarium",
+            "slug": "shibarium"
+          }
+        ]
+      }
     },
     {
       "name": "Ether",
@@ -8832,6 +9214,7 @@
       "chainId": 167000,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
@@ -8839,8 +9222,7 @@
             "slug": "stargatev2"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     },
     {
       "name": "Tether USD",
@@ -8855,6 +9237,7 @@
       "chainId": 167000,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
@@ -8862,8 +9245,7 @@
             "slug": "stargatev2"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     },
     {
       "name": "Ether",
@@ -9092,6 +9474,7 @@
       "chainId": 1380012617,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
@@ -9099,8 +9482,7 @@
             "slug": "stargatev2"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     },
     {
       "name": "Tether USD",
@@ -9115,6 +9497,7 @@
       "chainId": 1380012617,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
@@ -9122,8 +9505,7 @@
             "slug": "stargatev2"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     }
   ]
 }

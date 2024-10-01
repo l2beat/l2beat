@@ -4202,12 +4202,6 @@
       }
     },
     {
-      "symbol": "BONE",
-      "source": "canonical",
-      "supply": "zero",
-      "coingeckoId": "bone-shibaswap"
-    },
-    {
       "symbol": "DAI",
       "address": "0x0726959d22361B79e4D50A5D157b044A83eC870d",
       "coingeckoId": "dai",
@@ -4231,8 +4225,9 @@
       "supply": "totalSupply"
     },
     {
-      "symbol": "esBONE",
+      "symbol": "esKNINE",
       "address": "0x545d817F799092DbA53af785d79Bc95d296Af52e",
+      "coingeckoId": "k9-finance-dao",
       "supply": "totalSupply",
       "source": "native"
     },
@@ -4254,6 +4249,7 @@
     {
       "symbol": "knBONE",
       "address": "0x3358FCA51d7C0408750FBbE7777012E0b67C027F",
+      "coingeckoId": "bone-shibaswap",
       "supply": "totalSupply",
       "source": "native"
     },
@@ -4286,12 +4282,6 @@
           }
         ]
       }
-    },
-    {
-      "symbol": "PIKA",
-      "address": "0x0b4FD6288b6d32171CC515bfFC9340026F56A358",
-      "source": "native",
-      "supply": "totalSupply"
     },
     {
       "symbol": "SHIB",
@@ -4377,12 +4367,6 @@
           }
         ]
       }
-    },
-    {
-      "symbol": "WOOF",
-      "address": "0xD0daa7B6ff1B40d3cc6F0B2Cf7E85cB993D1c834",
-      "source": "native",
-      "supply": "totalSupply"
     },
     {
       "symbol": "xFUND",
