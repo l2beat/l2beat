@@ -1,20 +1,30 @@
-Generated with discovered.json: 0x6e5da1ca9a70ecbd0762a685f36ae45c8b03d0f4
+Generated with discovered.json: 0xd1d060dab65cecc759ae332c79d0d2de90afeac6
 
-# Diff at Tue, 01 Oct 2024 10:19:50 GMT:
+# Diff at Tue, 01 Oct 2024 15:22:20 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@974999225bba0722b5e81edd4c1b80928d80ef33 block: 20792084
-- current block number: 20870005
+- current block number: 20871507
 
 ## Description
 
-New RollupType with FflonkVerifier_11 and a PolygonZkEvm code-identical consensus implementation is added. See last update for context.
+New RollupType with FflonkVerifier_11 and a PolygonZkEvm code-identical consensus implementation is added. PolygonZkEvm is upgraded to the new type. See last update for context.
 
 ## Watched changes
 
 ```diff
     contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
     +++ description: None
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.0.3:
+-        3
++        5
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.0.2:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883"
       values.rollupTypeCount:
 -        4
 +        5

@@ -1,14 +1,38 @@
-Generated with discovered.json: 0x34d9eb905745f21c747f80b011dbd56d79ea3adc
+Generated with discovered.json: 0xa760a04883d11c39cc3bf1679f318c7c600c090f
 
-# Diff at Tue, 01 Oct 2024 10:54:13 GMT:
+# Diff at Tue, 01 Oct 2024 15:20:04 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 19976289
-- current block number: 19976289
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@974999225bba0722b5e81edd4c1b80928d80ef33 block: 19976289
+- current block number: 20871496
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+PolygonZkEVMEtrog upgrades to RollupType 5. The consensus implementation is identical but the verifier was upgraded for the [Eggfruit upgrade](https://polygon.technology/blog/eggfruit-upgrade-incoming-polygon-zkevm-mainnet-beta-will-see-the-cdk-erigon-sequencer-go-live). TLDR: New Sequencer algo, double zkCounters for proofs. New verifier added to ZKCatalog
+
+## Watched changes
+
+```diff
+    contract PolygonZkEVMEtrog (0x519E42c24163192Dca44CD3fBDCEBF6be9130987) {
+    +++ description: None
+      values.$upgradeCount:
+-        3
++        4
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PolygonzkEVMVerifier (0xc521580cd8586Cc688A7430F9DcE0f6A803F2883)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/PolygonzkEVMVerifier.sol        | 1225 ++++++++++++++++++++
+ 1 file changed, 1225 insertions(+)
+```
 
 ## Config/verification related changes
 
@@ -17,35 +41,9 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 19976289 (main branch discovery), not current.
 
 ```diff
-    contract daiBridge (0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98) {
+-   Status: DELETED
+    contract PolygonzkEVMVerifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81)
     +++ description: None
-      values.$pastUpgrades:
-+        [["2023-09-20T08:44:59.000Z",["0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b"]]]
-    }
-```
-
-```diff
-    contract PolygonZkEVMEtrog (0x519E42c24163192Dca44CD3fBDCEBF6be9130987) {
-    +++ description: None
-      values.$pastUpgrades:
-+        [["2024-01-27T14:16:11.000Z",["0x79BCB82B35A335cD8A8Ec433b304a0c91f67CDE0"]],["2024-03-14T12:25:35.000Z",["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"]],["2024-03-24T23:36:47.000Z",["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"]]]
-    }
-```
-
-```diff
-    contract usdcBridge (0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB) {
-    +++ description: None
-      values.$pastUpgrades:
-+        [["2023-11-16T09:12:59.000Z",["0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6"]]]
-    }
-```
-
-```diff
-    contract wstETHBridge (0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01) {
-    +++ description: None
-      values.$pastUpgrades:
-+        [["2023-12-30T14:05:35.000Z",["0x18FED1E19dC564DC917D203be9d40790472D22e9"]]]
-    }
 ```
 
 Generated with discovered.json: 0x1dcae3247ace42c350c893c2e841c55da2fea9e5
