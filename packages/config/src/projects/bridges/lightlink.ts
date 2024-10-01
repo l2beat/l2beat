@@ -5,9 +5,9 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { RISK_VIEW } from '../../common/riskView'
+import { makeBridgeCompatible, RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { Bridge } from './types'
+import { Layer2 } from '../layer2s'
 
 const discovery = new ProjectDiscovery('lightlink')
 
@@ -70,15 +70,15 @@ const CHALLENGE_FEE = utils.formatEther(
   discovery.getContractValue<number>('Challenge', 'challengeFee'),
 )
 
-export const lightlink: Bridge = {
-  type: 'bridge',
+export const lightlink: Layer2 = {
+  type: 'layer2',
   id: ProjectId('lightlink'),
   display: {
     name: 'LightLink',
     slug: 'lightlink',
     description:
       'LightLink is a sidechain that lets dApps and enterprises offer users instant, gasless transactions. It aims at becoming an Ethereum Layer 2.',
-    category: 'Token Bridge',
+    category: 'Optimium',
     links: {
       websites: ['https://lightlink.io'],
       apps: ['https://phoenix.lightlink.io/apps'],
@@ -92,19 +92,32 @@ export const lightlink: Bridge = {
         'https://linkedin.com/company/lightlinkchain',
       ],
     },
+    purposes: ['Universal'],
   },
   config: {
     associatedTokens: ['LL'],
     escrows: [
       discovery.getEscrowDetails({
+        // L1NativeTokenPredicate
         address: EthereumAddress('0x3ca373F5ecB92ac762f9876f6e773082A4589995'),
         sinceTimestamp: new UnixTime(1692181067),
         tokens: ['ETH'],
       }),
       discovery.getEscrowDetails({
+        // L1ERC20Predicate
         address: EthereumAddress('0x63105ee97bfb22dfe23033b3b14a4f8fed121ee9'),
         sinceTimestamp: new UnixTime(1692185219),
         tokens: '*',
+      }),
+      discovery.getEscrowDetails({
+        // L1StandardBridge
+        address: EthereumAddress('0xc7a7199bb5F0aA7B54eca90fC793Ec83E5683b0c'),
+        tokens: '*',
+      }),
+      discovery.getEscrowDetails({
+        // LightLinkPortal
+        address: EthereumAddress('0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE'),
+        tokens: ['ETH'],
       }),
     ],
   },
@@ -118,16 +131,25 @@ export const lightlink: Bridge = {
   //   },
   //   minTimestampForTvl: new UnixTime(1692181067),
   // },
-  riskView: {
-    validatedBy: {
-      value: 'Third Party',
-      description: `${validatorThresholdPercentage}% of Signers Voting Power`,
-      sentiment: 'bad',
-    },
+  riskView: makeBridgeCompatible({
+    stateValidation: undefined,
+    dataAvailability: undefined,
+    exitWindow: undefined,
+    sequencerFailure: undefined,
+    proposerFailure: undefined,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
+    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+  }),
+  stage: {
+    stage: 'NotApplicable',
   },
   technology: {
-    destination: ['LightLink'],
+    stateCorrectness: undefined,
+    dataAvailability: undefined,
+    operator: undefined,
+    forceTransactions: undefined,
+    exitMechanisms: undefined,
+    otherConsiderations: undefined,
     principleOfOperation: {
       name: 'Principle of Operation',
       description: `
@@ -174,24 +196,6 @@ export const lightlink: Bridge = {
         {
           category: 'Funds can be stolen if',
           text: "validators relay a withdraw request that wasn't originated on the source chain.",
-          isCritical: true,
-        },
-      ],
-    },
-    destinationToken: {
-      name: 'Destination tokens are upgradable',
-      description:
-        'Tokens on the destination end up as wrapped ERC20 proxies that are upgradable by the LightLinkMultisig, using EIP-1967.',
-      references: [
-        {
-          text: 'Token Implementation - requireMultisig()',
-          href: 'https://phoenix.lightlink.io/address/0x468b89D930ca7974196D7195033600B658011756?tab=contract',
-        },
-      ],
-      risks: [
-        {
-          category: 'Funds can be stolen if',
-          text: 'destination token contract is maliciously upgraded.',
           isCritical: true,
         },
       ],
