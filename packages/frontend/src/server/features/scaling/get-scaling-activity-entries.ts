@@ -41,7 +41,7 @@ export async function getScalingActivityEntries() {
       )
     }),
   ]
-    .filter((e) => e.data !== undefined)
+    .filter((e) => e.data)
     .sort((a, b) => (b.data?.pastDayTps ?? 0) - (a.data?.pastDayTps ?? 0))
 }
 
