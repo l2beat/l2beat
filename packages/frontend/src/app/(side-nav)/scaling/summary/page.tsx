@@ -8,7 +8,7 @@ import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingAssociatedTokensContextProvider } from '../_components/scaling-associated-tokens-context'
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
 import { ChartTabs } from './_components/chart-tabs'
-import { ScalingSummaryTable } from './_components/table/scaling-summary-table-v2'
+import { ScalingSummaryTable } from './_components/table/scaling-summary-table'
 
 export const metadata = getDefaultMetadata({
   openGraph: {

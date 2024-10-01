@@ -65,11 +65,11 @@ function Header({ scalingFactor }: { scalingFactor: number | undefined }) {
       <div className="flex items-center gap-3">
         <span className="text-xl font-bold">Activity</span>
         <Link
-          className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-[#1459CB] px-3 py-2 text-[13px] leading-none text-[#1459CB] max-md:hidden"
-          href="/scaling/tvl"
+          className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-current px-3 py-2 text-[13px] leading-none text-[#1459CB] dark:text-blue-500 max-md:hidden"
+          href="/scaling/activity"
         >
           View details{' '}
-          <ChevronIcon className="size-[10px] -rotate-90 fill-[#1459CB]" />
+          <ChevronIcon className="size-[10px] -rotate-90 fill-current" />
         </Link>
       </div>
       <div className="flex flex-col items-end gap-1">

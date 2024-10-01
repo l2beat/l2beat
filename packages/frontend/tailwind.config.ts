@@ -157,7 +157,7 @@ const config: Config = {
       sm: '550px',
       md: '750px',
       lg: '1120px',
-      xl: '1280px',
+      xl: '1200px',
       '2xl': '1920px',
     },
     zIndex: {

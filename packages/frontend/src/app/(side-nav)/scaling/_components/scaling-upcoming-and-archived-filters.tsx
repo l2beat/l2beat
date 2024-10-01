@@ -7,9 +7,10 @@ import { useScalingFilterValues } from './scaling-filter-context'
 
 interface Props {
   items: ScalingUpcomingEntry[] | ScalingArchivedEntry[]
+  className?: string
 }
 
-export function ScalingUpcomingAndArchivedFilters({ items }: Props) {
+export function ScalingUpcomingAndArchivedFilters({ items, className }: Props) {
   const filter = useScalingFilterValues()
   const typeOptions = uniq(items.map((item) => item.category))
     .sort()
@@ -34,7 +35,7 @@ export function ScalingUpcomingAndArchivedFilters({ items }: Props) {
     }))
 
   return (
-    <OverflowWrapper>
+    <OverflowWrapper className={className}>
       <div className="flex flex-row space-x-2">
         <TableFilter
           title="Type"
