@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20862628,
   "configHash": "0x14c79194c71d47265a9c65c71355062cbea0a7a60e2cf4d4531350eaba9baf7c",
-  "version": 14,
+  "version": 15,
   "contracts": [
     {
       "name": "PriceRegistry",
@@ -2454,6 +2454,12 @@
       "values": {
         "$admin": "0xD3cF979e676265e4f6379749DECe4708B9A22476",
         "$implementation": "0x72427dA7EFBa1585E94F30C72221d8d394aE3Bb7",
+        "$pastUpgrades": [
+          [
+            "2024-06-22T17:51:35.000Z",
+            ["0x72427dA7EFBa1585E94F30C72221d8d394aE3Bb7"]
+          ]
+        ],
         "$upgradeCount": 1,
         "canAcceptLiquidity": true,
         "getAllowList": [],

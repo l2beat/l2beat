@@ -1,3 +1,44 @@
+Generated with discovered.json: 0xc5419332d8ee4300900983d3bad5d6a451d7c2bc
+
+# Diff at Tue, 01 Oct 2024 11:12:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 256474144
+- current block number: 256474144
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 256474144 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (0x1764C29FBd94865198588f10FC75D4f6636d158d) {
+    +++ description: None
+      name:
+-        ""
++        "SP1Verifier"
+      unverified:
+-        true
+      values.VERIFIER_HASH:
++        "0x4aca240a3e5296e6a565f98dc728c6f48f8de4792a8fa365038c3b86952176f5"
+      values.VERSION:
++        "v2.0.0"
+    }
+```
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-17T04:51:20.000Z",["0x7C3A9b466FF5c02582fa32d4aD1b2Cb431fB7c9b"]],["2024-03-18T01:19:36.000Z",["0xfb19439fBa9f16aA720be6bE0e53465a9733C964"]],["2024-08-26T18:53:22.000Z",["0x47fd660D5252Bd6F9D2c71507E46aa1d6e957c23"]]]
+    }
+```
+
 Generated with discovered.json: 0x782d0cf059fbf2869273ae775339321776852aac
 
 # Diff at Mon, 23 Sep 2024 09:37:30 GMT:

@@ -1,5 +1,6 @@
 import { layer2s, layer3s } from '@l2beat/config'
 import { notFound } from 'next/navigation'
+import { env } from '~/env'
 import { getTvlBreakdownForProject } from '~/server/features/scaling/tvl/breakdown/get-tvl-breakdown-for-project'
 import { get7dTvlBreakdown } from '~/server/features/scaling/tvl/utils/get-7d-tvl-breakdown'
 import { getDefaultMetadata } from '~/utils/metadata'
@@ -36,7 +37,7 @@ interface Props {
 export default async function Page({ params }: Props) {
   const project = scalingProjects.find((p) => p.display.slug === params.slug)
 
-  if (!project) {
+  if (!project || env.EXCLUDED_TVL_PROJECTS?.includes(project.id.toString())) {
     notFound()
   }
 
