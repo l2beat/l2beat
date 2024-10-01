@@ -1,7 +1,7 @@
 'use client'
 import * as Tabs from '@radix-ui/react-tabs'
-import { ActivityChartV2 } from '~/components/chart/activity/activity-chart-v2'
-import { ScalingTvlChartV2 } from '~/components/chart/tvl/scaling-tvl-chart-v2'
+import { SummaryActivityChart } from '~/components/chart/activity/summary-activity-chart'
+import { ScalingTvlChart } from '~/components/chart/tvl/scaling-tvl-chart'
 import { type ChartUnit } from '~/components/chart/types'
 import { MainPageCard } from '~/components/main-page-card'
 import { type ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
@@ -19,10 +19,10 @@ export function ChartTabs({ unit, timeRange, className }: Props) {
     <MainPageCard className={cn(className, 'pb-1')}>
       <Tabs.Root defaultValue="tvl">
         <Tabs.Content value="tvl">
-          <ScalingTvlChartV2 unit={unit} timeRange={timeRange} />
+          <ScalingTvlChart unit={unit} timeRange={timeRange} />
         </Tabs.Content>
         <Tabs.Content value="activity">
-          <ActivityChartV2 timeRange={timeRange} />
+          <SummaryActivityChart timeRange={timeRange} />
         </Tabs.Content>
         <Tabs.List className="flex gap-1.5">
           <Tabs.Trigger value="tvl" className="group w-full py-3">

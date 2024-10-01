@@ -7,7 +7,11 @@ import { OtherSites } from '~/components/other-sites'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <NavLayout logoLink="/scaling/summary" topChildren={<Banner />}>
+    <NavLayout
+      logoLink="/scaling/summary"
+      topChildren={<Banner />}
+      className="v2"
+    >
       <div className="min-h-screen">
         <ContentWrapper className="mt-4 md:mt-12">
           <div className="mb-20">

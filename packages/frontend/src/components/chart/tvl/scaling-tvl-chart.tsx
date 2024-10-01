@@ -1,65 +1,35 @@
 'use client'
 
-import { type Milestone } from '@l2beat/config'
-import { useMemo } from 'react'
-import { useScalingAssociatedTokensContext } from '~/app/(side-nav)/scaling/_components/scaling-associated-tokens-context'
-import {
-  useScalingFilter,
-  useScalingFilterValues,
-} from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
+import Link from 'next/link'
 import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
-import { useCookieState } from '~/hooks/use-cookie-state'
-import { useLocalStorage } from '~/hooks/use-local-storage'
-import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
-import { type TvlProjectFilter } from '~/server/features/scaling/tvl/utils/project-filter-utils'
+import { Skeleton } from '~/components/core/skeleton'
+import { PercentChange } from '~/components/percent-change'
+import { ChevronIcon } from '~/icons/chevron'
+import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
+import { formatCurrency } from '~/utils/format'
+import { useChartLoading } from '../core/chart-loading-context'
 import { type ChartUnit } from '../types'
-import { TvlChartHeader } from './tvl-chart-header'
 import { TvlChartHover } from './tvl-chart-hover'
-import { TvlChartTimeRangeControls } from './tvl-chart-time-range-controls'
-import { TvlChartUnitControls } from './tvl-chart-unit-and-scale-controls'
 import { useTvlChartRenderParams } from './use-tvl-chart-render-params'
 
-interface Props {
-  entries: ScalingSummaryEntry[]
-  milestones: Milestone[]
-}
-
-export function ScalingTvlChart({ entries, milestones }: Props) {
-  const filters = useScalingFilterValues()
-  const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
-  const includeFilter = useScalingFilter()
-
-  const [unit, setUnit] = useLocalStorage<ChartUnit>(
-    `scaling-summary-unit`,
-    'usd',
-  )
-  const [timeRange, setTimeRange] = useCookieState('scalingSummaryChartRange')
-
-  const filter = useMemo<TvlProjectFilter>(() => {
-    if (filters.isEmpty) {
-      return { type: 'layer2' }
-    }
-
-    return {
-      type: 'projects',
-      projectIds: entries.filter(includeFilter).map((project) => project.id),
-    }
-  }, [entries, includeFilter, filters])
-
+export function ScalingTvlChart({
+  unit,
+  timeRange,
+}: { unit: ChartUnit; timeRange: TvlChartRange }) {
   const { data: total } = api.tvl.total.useQuery({
-    excludeAssociatedTokens,
-    filter,
+    excludeAssociatedTokens: false,
+    filter: { type: 'layer2' },
   })
   const { data, isLoading } = api.tvl.chart.useQuery({
     range: timeRange,
-    excludeAssociatedTokens,
-    filter,
+    excludeAssociatedTokens: false,
+    filter: { type: 'layer2' },
   })
 
-  const { chartRange, formatYAxisLabel, valuesStyle, columns, change } =
-    useTvlChartRenderParams({ milestones, unit, data })
+  const { formatYAxisLabel, valuesStyle, columns, change } =
+    useTvlChartRenderParams({ data, unit: unit, milestones: [] })
 
   return (
     <ChartProvider
@@ -67,24 +37,68 @@ export function ScalingTvlChart({ entries, milestones }: Props) {
       valuesStyle={valuesStyle}
       formatYAxisLabel={formatYAxisLabel}
       range={timeRange}
+      labelCount={3}
       isLoading={isLoading}
       renderHoverContents={(data) => <TvlChartHover data={data} />}
     >
-      <section className="flex flex-col gap-4">
-        <TvlChartHeader
-          unit={unit}
-          value={total?.[unit]}
+      <section className="flex max-h-[290px] flex-col gap-4 2xl:max-h-[320px]">
+        <Header
+          total={total}
           change={change}
-          range={timeRange}
-        />
-        <TvlChartTimeRangeControls
+          unit={unit}
           timeRange={timeRange}
-          setTimeRange={setTimeRange}
-          range={chartRange}
         />
-        <Chart />
-        <TvlChartUnitControls unit={unit} setUnit={setUnit} />
+        <Chart
+          hideBottomLabel
+          logo={{ position: 'center', className: 'w-20 h-8' }}
+          disableMilestones
+        />
       </section>
     </ChartProvider>
+  )
+}
+
+interface Props {
+  total: Record<ChartUnit, number | undefined> | undefined
+  change: number
+  unit: ChartUnit
+  timeRange: TvlChartRange
+}
+
+function Header({ total, unit, change, timeRange }: Props) {
+  const loading = useChartLoading()
+  const value = total?.[unit]
+  return (
+    <div className="flex items-start justify-between">
+      <div className="flex items-center gap-3">
+        <span className="text-xl font-bold">Value Locked</span>
+        <Link
+          className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-[#1459CB] px-3 py-2 text-[13px] leading-none text-[#1459CB] max-md:hidden"
+          href="/scaling/tvl"
+        >
+          View details{' '}
+          <ChevronIcon className="size-[10px] -rotate-90 fill-[#1459CB]" />
+        </Link>
+      </div>
+      <div className="flex flex-col items-end gap-1">
+        <div className="whitespace-nowrap text-right text-xl font-bold leading-[1.15]">
+          {value === undefined ? (
+            <Skeleton className="h-[23px] w-32" />
+          ) : (
+            formatCurrency(value, unit, {
+              showLessThanMinimum: false,
+            })
+          )}
+        </div>
+        {loading ? (
+          <Skeleton className="h-6 w-40" />
+        ) : (
+          <p className="whitespace-nowrap text-right text-xs leading-[1.15]">
+            <PercentChange value={change} />
+            <span className="text-[#929CAF]"> / {timeRange}</span>
+          </p>
+        )}
+      </div>
+    </div>
   )
 }

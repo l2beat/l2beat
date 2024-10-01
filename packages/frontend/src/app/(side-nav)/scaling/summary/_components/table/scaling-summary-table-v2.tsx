@@ -1,14 +1,14 @@
 'use client'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
+import { useScalingAssociatedTokensContext } from '~/app/(side-nav)/scaling/_components/scaling-associated-tokens-context'
+import { useScalingFilter } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
+import { ScalingTvlFilters } from '~/app/(side-nav)/scaling/_components/scaling-tvl-filters'
 import { BasicTable } from '~/components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
-import { useScalingAssociatedTokensContext } from '../../_components/scaling-associated-tokens-context'
-import { useScalingFilter } from '../../_components/scaling-filter-context'
-import { ScalingTvlFilters } from '../../_components/scaling-tvl-filters'
-import { toTableRows } from '../_utils/to-table-rows'
-import { scalingLayer2sColumns } from './table/columns'
+import { toTableRows } from '../../_utils/to-table-rows'
+import { scalingLayer2sColumnsV2 } from './columns'
 
 interface Props {
   entries: ScalingSummaryEntry[]
@@ -34,7 +34,7 @@ export function ScalingSummaryTable({ entries }: Props) {
 
   const table = useTable({
     data: tableEntries,
-    columns: scalingLayer2sColumns,
+    columns: scalingLayer2sColumnsV2,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
