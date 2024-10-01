@@ -26,11 +26,11 @@ export function ActivityChartHeader({ scalingFactor }: Props) {
           <Skeleton className="h-[29px] w-20 md:w-[243px]" />
         )}
       </div>
-      <div className="flex items-baseline justify-between text-xs md:text-base">
+      <div className="flex items-baseline justify-end text-xs md:justify-between md:text-base">
         <p className="hidden text-gray-500 dark:text-gray-600 md:block">
           Transactions per second
         </p>
-        <div className="flex w-full items-center gap-1.5 text-right text-gray-500 group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0 dark:text-gray-600 md:w-auto">
+        <div className="flex items-center gap-1.5 text-right text-gray-500 group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0 dark:text-gray-600 md:w-auto">
           Observed over the last 7 days
           <Tooltip>
             <TooltipTrigger>

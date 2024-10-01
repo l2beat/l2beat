@@ -619,9 +619,8 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
       provider: 'Arbitrum',
       category:
-        templateVars.display.category ?? postsToExternalDA
-          ? 'Optimium'
-          : 'Optimistic Rollup',
+        templateVars.display.category ??
+        (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup'),
     },
     dataAvailability: postsToExternalDA
       ? (() => {
@@ -722,9 +721,8 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
   }
 
   const category =
-    templateVars.display.category ?? postsToExternalDA
-      ? 'Optimium'
-      : 'Optimistic Rollup'
+    templateVars.display.category ??
+    (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup')
 
   return {
     type: 'layer2',

@@ -1,3 +1,44 @@
+Generated with discovered.json: 0x6fb49fa9f653a03748769b71130514d6b11e57cb
+
+# Diff at Wed, 25 Sep 2024 08:10:46 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@e8c4fe6b10f7918ebbd761bc35018ba84053b08c block: 20669257
+- current block number: 20826339
+
+## Description
+
+Emergency upgrade of the wasmModuleRoot to ArbOS 32 ([compare here](https://github.com/OffchainLabs/nitro/blob/master/Dockerfile)). 
+
+Changelog below from telegram, post-mortem will follow: 
+(1) a mispricing issue in Arbitrum Stylus, which could have caused a denial of service attack, (2) an issue that would allow a malicious contract to cause nodes to crash and (3) a mispricing error in which Stylus contracts were overcharged for SLOAD operations
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x5eF0D09d1E6204141B4d37530808eD19f60FBa35) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "ArbOS v31 wasmModuleRoot"
++        "ArbOS v32 wasmModuleRoot"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20669257 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x5eF0D09d1E6204141B4d37530808eD19f60FBa35) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      usedTypes.0.arg.0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39:
++        "ArbOS v32 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0x90ed8b3337543681e2de654c139eb284e40c5948
 
 # Diff at Sun, 01 Sep 2024 08:43:35 GMT:

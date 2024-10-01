@@ -77,9 +77,11 @@ export const xlayer: Layer2 = polygonCDKStack({
       'X Layer is using AggLayer, meaning it shares the TVL escrow contracts with Polygon zkEVM and other connected chains.',
     purposes: ['Universal'],
     links: {
-      websites: ['https://okx.com/x1'],
+      websites: ['https://okx.com/xlayer'],
       apps: [],
-      documentation: ['https://okx.com/xlayer/docs'],
+      documentation: [
+        'https://okx.com/xlayer/docs/users/welcome/about-x-layer',
+      ],
       explorers: ['https://okx.com/explorer/xlayer'],
       repositories: [],
       socialMedia: ['https://twitter.com/XLayerOfficial'],

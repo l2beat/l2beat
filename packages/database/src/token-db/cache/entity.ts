@@ -1,4 +1,4 @@
-import { Insertable, Selectable } from 'kysely'
+import { Insertable } from 'kysely'
 import { Cache } from '../../kysely/generated/types'
 
 export interface CacheRecord {
@@ -10,10 +10,17 @@ export interface CacheRecord {
   createdAt: Date
 }
 
-export function toRecord(row: Selectable<Cache>): CacheRecord {
-  return row
-}
+export type UpsertableCacheRecord = Omit<
+  Insertable<Cache>,
+  'createdAt' | 'updatedAt'
+>
 
-export function toRow(record: CacheRecord): Insertable<Cache> {
-  return record
+export function upsertableToRow(
+  upsertable: UpsertableCacheRecord,
+): Insertable<Cache> {
+  return {
+    ...upsertable,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  }
 }

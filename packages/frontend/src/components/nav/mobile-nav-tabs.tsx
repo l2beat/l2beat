@@ -14,16 +14,21 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
   const currentGroup = groups.find((g) =>
     pathname.startsWith(`/${g.links[0]?.href.split('/')[1]}`),
   )
+  if (!currentGroup) return null
 
   // Do not display the tabs if the current group is not found,
   // or the current group does not have a link that matche the current path.
-  const display = currentGroup?.links.some(({ href }) => href === pathname)
+  const allLinks = [
+    ...currentGroup.links,
+    ...(currentGroup.secondaryLinks ?? []),
+  ]
+  const display = allLinks.some(({ href }) => href === pathname)
   if (!display) return null
 
   return (
     <OverflowWrapper>
       <div className="mx-auto flex w-min items-center gap-2 px-4 py-2">
-        {currentGroup?.links
+        {allLinks
           .filter((link) => !link.disabled)
           .map((link) => (
             <Link href={link.href} key={link.href}>

@@ -29,7 +29,8 @@
       }
     },
     "XLayerValidium": {
-      "ignoreInWatchMode": ["lastAccInputHash"]
+      "ignoreInWatchMode": ["lastAccInputHash"],
+      "ignoreRelatives": ["gasTokenAddress"]
     }
   }
 }

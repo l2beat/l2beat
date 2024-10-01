@@ -130,6 +130,7 @@ export const arbitrum: Layer2 = orbitStackL2({
         'https://arbitrumfoundation.medium.com/',
         'https://discord.gg/Arbitrum',
         'https://youtube.com/@Arbitrum',
+        'https://t.me/arbitrum',
       ],
       rollupCodes: 'https://rollup.codes/arbitrum-one',
     },
@@ -549,6 +550,14 @@ export const arbitrum: Layer2 = orbitStackL2({
     ],
   },
   milestones: [
+    {
+      name: 'ArbOS 32 Emergency upgrade',
+      link: 'https://github.com/OffchainLabs/nitro/releases/tag/v3.2.0',
+      date: '2024-09-25T00:00:00Z',
+      description:
+        'SecurityCouncil emergency upgrades to fix attack vectors related to Stylus resource pricing.',
+      type: 'incident',
+    },
     {
       name: 'ArbOS 31 Bianca upgrade',
       link: 'https://www.tally.xyz/gov/arbitrum/proposal/108288822474129076868455956066667369439381709547570289793612729242368710728616',

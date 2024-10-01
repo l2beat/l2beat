@@ -10,6 +10,7 @@ import { BigNumber, utils } from 'ethers'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { MulticallRequest } from '../../../peripherals/multicall/types'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
+import { ElasticChainAmountConfig } from '../indexers/types'
 
 export const erc20Interface = new utils.Interface([
   'function balanceOf(address account) view returns (uint256)',
@@ -19,8 +20,6 @@ export const erc20Interface = new utils.Interface([
 export const bridgeInterface = new utils.Interface([
   'function l2TokenAddress(address _l1Token) view returns (address)',
 ])
-
-type ElasticChainAmountConfig = ElasticChainL2Token
 
 export type Config<T extends ElasticChainAmountConfig['type']> =
   ElasticChainAmountConfig & { type: T } & { id: string }
