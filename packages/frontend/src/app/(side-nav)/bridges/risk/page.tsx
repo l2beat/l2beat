@@ -19,7 +19,7 @@ export default async function Page() {
     <>
       <BridgesFilterContextProvider>
         <MainPageHeader>Risk Analysis</MainPageHeader>
-        <BridgesMvpWarning />
+        <BridgesMvpWarning className="mb-3" v2 />
 
         <MainPageCard>
           <BridgesRiskTable entries={entries} />

@@ -10,7 +10,7 @@ export default async function Page() {
   return (
     <BridgesFilterContextProvider>
       <MainPageHeader>Archived</MainPageHeader>
-      <BridgesMvpWarning />
+      <BridgesMvpWarning className="md:mb-3" v2 />
       <MainPageCard>
         <BridgesArchivedTable entries={entries} />
       </MainPageCard>

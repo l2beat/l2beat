@@ -1,5 +1,4 @@
 import { type Stage } from '@l2beat/config'
-import React from 'react'
 import { cn } from '~/utils/cn'
 
 export interface StageBadgeProps {
@@ -32,7 +31,7 @@ function getColorClassName(
     case 'Stage 2':
       return 'bg-green-800 text-white'
     case 'Stage 1':
-      return 'bg-[#FFC61B] text-[#684E00] border border-[#D9AA1E]'
+      return 'bg-[#FFC61B] text-yellow-900 border border-[#D9AA1E]'
     case 'Stage 0':
       return 'bg-orange-600 text-white border border-[#F98A24]'
     case 'UnderReview':

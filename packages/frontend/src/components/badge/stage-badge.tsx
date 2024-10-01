@@ -33,7 +33,7 @@ function getClassNames(stage: Stage | 'UnderReview' | 'NotApplicable'): string {
     case 'Stage 2':
       return 'bg-green-900 border border-[#179323] text-white'
     case 'Stage 1':
-      return 'bg-[#FFC61B] border border-[#D9AA1E] text-[#684E00]'
+      return 'bg-[#FFC61B] border border-[#D9AA1E] text-yellow-900'
     case 'Stage 0':
       return 'bg-orange-600 border border-[#F98A24] text-white'
     case 'UnderReview':
