@@ -1,16 +1,20 @@
 import { cn } from '~/utils/cn'
-import { HorizontalSeparator } from './core/horizontal-separator'
 
 interface PageHeaderProps {
   children: string
+  description?: string
   className?: string
 }
 
-export function SimplePageHeader({ children, className }: PageHeaderProps) {
+export function SimplePageHeader({
+  children,
+  description,
+  className,
+}: PageHeaderProps) {
   return (
-    <header className={cn('mt-4 md:mt-12', className)}>
-      <h1 className="mb-1 text-3xl font-bold">{children}</h1>
-      <HorizontalSeparator className="mt-2 md:hidden" />
+    <header className={cn('ml-6 flex h-20 items-center', className)}>
+      <h1 className="mb-0.5 text-3xl font-bold">{children}</h1>
+      {description && <p className="text-xs text-zinc-500">{description}</p>}
     </header>
   )
 }
