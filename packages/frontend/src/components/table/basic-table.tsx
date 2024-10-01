@@ -107,7 +107,10 @@ export function BasicTable<T extends BasicEntry>({
                       !header.isPlaceholder &&
                         !!header.column.columnDef.header &&
                         'rounded-t-lg px-6 pt-4',
+                      header.column.getIsPinned() &&
+                        getRowTypeClassNamesWithoutOpacity(null),
                     )}
+                    style={getCommonPinningStyles(header.column)}
                   >
                     {!header.isPlaceholder &&
                       !!header.column.columnDef.header &&
