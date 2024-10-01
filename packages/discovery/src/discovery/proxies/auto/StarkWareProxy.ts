@@ -121,15 +121,10 @@ async function getPastProxyUpgrades(
     ]),
   )
 
-  return await Promise.all(
-    logs.map(async (l) => {
-      const implementation = abi.parseLog(l).args.implementation
-      const facets = await getStarkWareDiamondFacets(provider, address, l)
-      assert(facets !== false)
-
-      return [dateMap[l.blockNumber] ?? 'ERROR', [implementation, ...Object.values(facets)]]
-    }),
-  )
+  return logs.map((l) => {
+    const implementation = abi.parseLog(l).args.implementation
+    return [dateMap[l.blockNumber] ?? 'ERROR', [implementation]]
+  })
 }
 
 export async function detectStarkWareProxy(
