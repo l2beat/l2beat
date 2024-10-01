@@ -53,7 +53,7 @@ export function SocialLinks({ variant }: Props) {
           className={cn(
             'size-6',
             variant === 'gray' &&
-              'fill-zinc-500 transition-colors hover:fill-zinc-400 dark:fill-[#D3D5D9] dark:hover:fill-zinc-400',
+              'fill-zinc-500 transition-colors hover:fill-zinc-400 dark:fill-n-zinc-300 dark:hover:fill-zinc-400',
           )}
         />
       </a>

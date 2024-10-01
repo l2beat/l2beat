@@ -48,6 +48,9 @@ const config: Config = {
         800: '#272A2F',
         900: '#1D1E22',
       },
+      'n-zinc': {
+        300: '#D3D5D9',
+      },
       gray: {
         50: '#AEAEAE',
         100: '#EDEDED',

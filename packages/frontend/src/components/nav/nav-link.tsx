@@ -21,7 +21,7 @@ export function NavLink({ icon, title, href, activeBehavior }: NavLinkProps) {
       <li
         className={cn(
           'flex h-8 items-center gap-2.5 rounded p-1.5 text-black transition-colors duration-300 ease-out hover:bg-[#F1D6FF] dark:text-white dark:hover:bg-[#272A2F]',
-          active && 'bg-[#d3d5d9] dark:bg-[#393C43]',
+          active && 'bg-n-zinc-300 dark:bg-[#393C43]',
         )}
       >
         <span className="flex flex-row items-center text-xl leading-none">
