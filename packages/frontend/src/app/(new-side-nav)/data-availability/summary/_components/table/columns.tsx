@@ -111,13 +111,6 @@ export const columns = [
       hash: 'risk-analysis',
     },
   }),
-  columnHelper.accessor('layerType', {
-    header: 'Layer type',
-    meta: {
-      tooltip:
-        'The type of the DA Layer - Public blockchain or Data availability committee.',
-    },
-  }),
   columnHelper.accessor('tvs', {
     header: 'Total value secured',
     cell: (ctx) =>
