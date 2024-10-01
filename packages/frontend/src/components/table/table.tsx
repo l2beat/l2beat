@@ -119,7 +119,7 @@ const TableCell = React.forwardRef<
   <td
     ref={ref}
     className={cn(
-      'group h-9 whitespace-pre align-middle md:h-14',
+      'group h-9 whitespace-pre align-middle text-xs md:h-14 md:text-lg',
       !href && [
         'pr-3 first:pl-2 last:pr-2 md:pr-4',
         align === 'center' && 'text-center',
