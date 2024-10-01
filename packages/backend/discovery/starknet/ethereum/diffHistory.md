@@ -8,7 +8,7 @@ Generated with discovered.json: 0x7aad04026d3f22df1f40dbc971bb6b6292e458f3
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+SECURITY_AGENT role given to new Multisig. Can only activate the withdrawLimit for the ETH escrow (added to permissions). Higher perms are EOA-governed.
 
 ## Watched changes
 
