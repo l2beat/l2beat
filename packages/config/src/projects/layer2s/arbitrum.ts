@@ -130,6 +130,7 @@ export const arbitrum: Layer2 = orbitStackL2({
         'https://arbitrumfoundation.medium.com/',
         'https://discord.gg/Arbitrum',
         'https://youtube.com/@Arbitrum',
+        'https://t.me/arbitrum',
       ],
       rollupCodes: 'https://rollup.codes/arbitrum-one',
     },
