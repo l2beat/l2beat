@@ -81,6 +81,14 @@ export function L3RiskAnalysisSection({
       <div className="mt-8 flex flex-col gap-6 md:flex-row">
         <RosetteTile>
           <span className="w-full text-sm dark:text-gray-600">
+            L2 & L3 individual risks
+          </span>
+          <div className="flex items-center justify-between">
+            <BigIndividualRosette className="mx-auto my-6" l2={l2} l3={l3} />
+          </div>
+        </RosetteTile>
+        <RosetteTile>
+          <span className="w-full text-sm dark:text-gray-600">
             L3 combined risks
           </span>
           <div className="flex items-center justify-between">
@@ -91,17 +99,9 @@ export function L3RiskAnalysisSection({
             />
           </div>
         </RosetteTile>
-        <RosetteTile>
-          <span className="w-full text-sm dark:text-gray-600">
-            L2 & L3 individual risks
-          </span>
-          <div className="flex items-center justify-between">
-            <BigIndividualRosette className="mx-auto my-6" l2={l2} l3={l3} />
-          </div>
-        </RosetteTile>
       </div>
       <HorizontalSeparator className="my-6" />
-      <div className="mb-4 text-xs text-gray-600">
+      <div className="mb-4 text-[28px] font-bold text-gray-600 dark:text-white">
         L3 {combined ? 'combined' : 'individual'} risks
       </div>
       {(combined ?? l3.risks).map((value) => (
