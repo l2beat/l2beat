@@ -9,37 +9,26 @@ import {
 } from '@tanstack/react-table'
 import Link from 'next/link'
 import { useMemo } from 'react'
-import { PentagonRosetteCell } from '~/components/rosette/pentagon/pentagon-rosette-cell'
 import { BasicTable } from '~/components/table/basic-table'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
-import { EM_DASH } from '~/consts/characters'
+import { RiskCell } from '~/components/table/cells/risk-cell'
 import { useBreakpoint } from '~/hooks/use-is-mobile'
 import { useTable } from '~/hooks/use-table'
-import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
+import { type DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/format'
 import { DaTableLastSubRowCell } from '../../../_components/da-table-last-sub-row-cell'
 import { DaTableSubRowCell } from '../../../_components/da-table-sub-row-cell'
-import { useDaFilter } from '../../../_components/filters/da-filter-context'
-import { DaFilters } from '../../../_components/filters/da-filters'
-import { mapRisksToRosetteValues } from '../../../_utils/map-risks-to-rosette-values'
 import { columns } from './columns'
-import { ProjectsUsedIn } from './projects-used-in'
 
 interface Props {
-  items: DaSummaryEntry[]
+  items: DaRiskEntry[]
 }
 
-export function DaSummaryTable({ items }: Props) {
-  const filter = useDaFilter()
-
-  const filteredEntries = useMemo(() => {
-    return items.filter(filter)
-  }, [items, filter])
-
+export function DaRiskTable({ items }: Props) {
   const breakpoint = useBreakpoint()
+
   const table = useTable({
-    data: filteredEntries,
+    data: items,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -48,22 +37,21 @@ export function DaSummaryTable({ items }: Props) {
     getFacetedUniqueValues: getFacetedUniqueValues(),
     getExpandedRowModel: getExpandedRowModel(),
     initialState: {
-      sorting: [
-        {
-          id: 'tvs',
-          desc: true,
-        },
-      ],
+      expanded: breakpoint !== 'mobile' ? true : undefined,
       columnPinning: {
         left: ['#', 'logo'],
       },
-      expanded: breakpoint !== 'mobile' ? true : undefined,
     },
   })
 
+  /**
+   * NOTE: This table uses a custom sub-component to render the sub-rows. This is done mainly
+   * because of some specific requirements for the layout of the sub-rows. Always keep this layout
+   * in sync with columns.tsx.
+   */
+
   return (
     <>
-      <DaFilters items={filteredEntries} />
       <BasicTable
         table={table}
         rowColoringMode="ethereum-only"
@@ -112,34 +100,38 @@ export function DaSummaryTable({ items }: Props) {
                       </Link>
                     </td>
                     <DaTableSubRowCell href={href} lastRow={lastRow}>
-                      <PentagonRosetteCell
-                        values={mapRisksToRosetteValues(subRow.risks)}
-                        isUnderReview={subRow.isUnderReview}
+                      <RiskCell
+                        risk={subRow.risks.economicSecurity}
+                        emptyMode="em-dash"
                       />
                     </DaTableSubRowCell>
                     <DaTableSubRowCell href={href} lastRow={lastRow}>
-                      {EM_DASH}
+                      <RiskCell
+                        risk={subRow.risks.fraudDetection}
+                        emptyMode="em-dash"
+                      />
                     </DaTableSubRowCell>
                     <DaTableSubRowCell href={href} lastRow={lastRow}>
-                      {subRow.usedIn.length > 0
-                        ? formatCurrency(subRow.tvs, 'usd', {
-                            showLessThanMinimum: false,
-                          })
-                        : EM_DASH}
+                      <RiskCell
+                        risk={subRow.risks.attestations}
+                        emptyMode="em-dash"
+                      />
                     </DaTableSubRowCell>
                     <DaTableSubRowCell href={href} lastRow={lastRow}>
-                      {EM_DASH}
+                      <RiskCell
+                        risk={subRow.risks.exitWindow}
+                        emptyMode="em-dash"
+                      />
                     </DaTableSubRowCell>
                     <DaTableLastSubRowCell
                       href={href}
                       firstRow={firstRow}
                       lastRow={lastRow}
                     >
-                      {subRow.usedIn.length > 0 ? (
-                        <ProjectsUsedIn usedIn={subRow.usedIn} />
-                      ) : (
-                        EM_DASH
-                      )}
+                      <RiskCell
+                        risk={subRow.risks.accessibility}
+                        emptyMode="em-dash"
+                      />
                     </DaTableLastSubRowCell>
                   </tr>
                 )
