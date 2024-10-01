@@ -1,9 +1,7 @@
 import { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
-import { assert, Bytes, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-
-import { utils } from 'ethers'
+import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { IProvider } from '../../provider/IProvider'
-import { DateAddresses } from '../pastUpgrades'
+import { getPastUpgradesSingleEvent } from '../pastUpgrades'
 
 // keccak256('eip1967.proxy.implementation') - 1)
 const IMPLEMENTATION_SLOT = Bytes.fromHex(
@@ -41,37 +39,6 @@ export async function getOwner(
   return result ?? EthereumAddress.ZERO
 }
 
-export async function getPastUpgrades(
-  provider: IProvider,
-  address: EthereumAddress,
-): Promise<DateAddresses[]> {
-  const abi = new utils.Interface([
-    'event Upgraded(address indexed implementation)',
-  ])
-  const logs = await provider.getLogs(address, [
-    [abi.getEventTopic('Upgraded')],
-  ])
-
-  const blockNumbers = [...new Set(logs.map((l) => l.blockNumber))]
-  const blocks = await Promise.all(
-    blockNumbers.map(
-      async (blockNumber) => await provider.getBlock(blockNumber),
-    ),
-  )
-  assert(blocks.every((b) => b !== undefined))
-  const dateMap = Object.fromEntries(
-    blocks.map((b) => [
-      b.number,
-      new UnixTime(b.timestamp).toDate().toISOString(),
-    ]),
-  )
-
-  return logs.map((l) => {
-    const implementation = abi.parseLog(l).args.implementation
-    return [dateMap[l.blockNumber] ?? 'ERROR', [implementation]]
-  })
-}
-
 export async function detectEip1967Proxy(
   provider: IProvider,
   address: EthereumAddress,
@@ -80,7 +47,11 @@ export async function detectEip1967Proxy(
   if (implementation === EthereumAddress.ZERO) {
     return
   }
-  const pastUpgrades = await getPastUpgrades(provider, address)
+  const pastUpgrades = await getPastUpgradesSingleEvent(
+    provider,
+    address,
+    'event Upgraded(address indexed implementation)',
+  )
   let admin = await getAdmin(provider, address)
   // TODO: (sz-piotr) potential for errors
   if (admin === EthereumAddress.ZERO) {

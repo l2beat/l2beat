@@ -1,42 +1,11 @@
 import { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
-import { assert, Bytes, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { ethers, utils } from 'ethers'
+import { assert, Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import { ethers } from 'ethers'
 
 import { serializeResult } from '../../handlers/user/ConstructorArgsHandler'
 import { IProvider } from '../../provider/IProvider'
 import { bytes32ToAddress } from '../../utils/address'
-import { DateAddresses } from '../pastUpgrades'
-
-async function getPastUpgrades(
-  provider: IProvider,
-  address: EthereumAddress,
-): Promise<DateAddresses[]> {
-  const abi = new utils.Interface([
-    'event Upgrade(address indexed implementation)',
-  ])
-  const logs = await provider.getLogs(address, [
-    [abi.getEventTopic('Upgrade')],
-  ])
-
-  const blockNumbers = [...new Set(logs.map((l) => l.blockNumber))]
-  const blocks = await Promise.all(
-    blockNumbers.map(
-      async (blockNumber) => await provider.getBlock(blockNumber),
-    ),
-  )
-  assert(blocks.every((b) => b !== undefined))
-  const dateMap = Object.fromEntries(
-    blocks.map((b) => [
-      b.number,
-      new UnixTime(b.timestamp).toDate().toISOString(),
-    ]),
-  )
-
-  return logs.map((l) => {
-    const implementation = abi.parseLog(l).args.implementation
-    return [dateMap[l.blockNumber] ?? 'ERROR', [implementation]]
-  })
-}
+import { getPastUpgradesSingleEvent } from '../pastUpgrades'
 
 export async function getOpticsBeaconProxy(
   provider: IProvider,
@@ -69,7 +38,11 @@ export async function getOpticsBeaconProxy(
 
   // TODO: (sz-piotr) what about reverts?
   const implementation = bytes32ToAddress(implementationCallResult)
-  const pastUpgrades = await getPastUpgrades(provider, upgradeBeacon)
+  const pastUpgrades = await getPastUpgradesSingleEvent(
+    provider,
+    upgradeBeacon,
+    'event Upgrade(address indexed implementation)',
+  )
 
   return {
     type: 'Optics Beacon proxy',

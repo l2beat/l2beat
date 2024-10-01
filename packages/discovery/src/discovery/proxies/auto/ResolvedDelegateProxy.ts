@@ -9,11 +9,12 @@ It does not have an owner
 
 */
 import { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
-import { assert, Bytes, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { assert, Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
+import { Indexed, LogDescription } from 'ethers/lib/utils'
 import { IProvider } from '../../provider/IProvider'
-import { DateAddresses } from '../pastUpgrades'
+import { getPastUpgradesSingleEvent } from '../pastUpgrades'
 
 async function getAddressManager(
   provider: IProvider,
@@ -63,41 +64,6 @@ async function getImplementation(
   return implementation
 }
 
-export async function getPastUpgrades(
-  provider: IProvider,
-  address: EthereumAddress,
-  implementationName: string,
-): Promise<DateAddresses[]> {
-  const abi = new utils.Interface([
-    'event AddressSet(string indexed name, address newAddress, address oldAddress)',
-  ])
-  const encodedImplementationName = utils.id(implementationName);
-  const logs = await provider.getLogs(address, [
-    [abi.getEventTopic('AddressSet')],
-    encodedImplementationName,
-  ])
-
-  const blockNumbers = [...new Set(logs.map((l) => l.blockNumber))]
-  const blocks = await Promise.all(
-    blockNumbers.map(
-      async (blockNumber) => await provider.getBlock(blockNumber),
-    ),
-  )
-  assert(blocks.every((b) => b !== undefined))
-  const dateMap = Object.fromEntries(
-    blocks.map((b) => [
-      b.number,
-      new UnixTime(b.timestamp).toDate().toISOString(),
-    ]),
-  )
-
-  return logs.map((l) => {
-    const implementation = abi.parseLog(l).args[1]
-    console.log(abi.parseLog(l))
-    return [dateMap[l.blockNumber] ?? 'ERROR', [implementation]]
-  })
-}
-
 export async function detectResolvedDelegateProxy(
   provider: IProvider,
   address: EthereumAddress,
@@ -116,10 +82,19 @@ export async function detectResolvedDelegateProxy(
     implementationName,
   )
 
-  const pastUpgrades = await getPastUpgrades(
+  const pastUpgrades = await getPastUpgradesSingleEvent(
     provider,
     addressManager,
-    implementationName,
+    'event AddressSet(string indexed name, address implementation, address oldAddress)',
+    (log: LogDescription) => {
+      let name: Indexed | undefined
+      log.eventFragment.inputs.forEach((input, index) => {
+        if (input.name === 'name') {
+          name = log.args[index] as Indexed
+        }
+      })
+      return name?.hash === utils.id(implementationName)
+    },
   )
 
   return {

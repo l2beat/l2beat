@@ -1,10 +1,9 @@
 import { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
-import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
 
 import { IProvider } from '../../provider/IProvider'
 import { getImplementation } from '../auto/Eip1967Proxy'
-import { DateAddresses } from '../pastUpgrades'
-import { utils } from 'ethers'
+import { getPastUpgradesSingleEvent } from '../pastUpgrades'
 
 async function getRegistryAddress(
   provider: IProvider,
@@ -38,37 +37,6 @@ async function getAdminMultisig(
   return EthereumAddress(multisig.toString())
 }
 
-export async function getPastUpgrades(
-  provider: IProvider,
-  address: EthereumAddress,
-): Promise<DateAddresses[]> {
-  const abi = new utils.Interface([
-    'event Upgraded(address indexed implementation)',
-  ])
-  const logs = await provider.getLogs(address, [
-    [abi.getEventTopic('Upgraded')],
-  ])
-
-  const blockNumbers = [...new Set(logs.map((l) => l.blockNumber))]
-  const blocks = await Promise.all(
-    blockNumbers.map(
-      async (blockNumber) => await provider.getBlock(blockNumber),
-    ),
-  )
-  assert(blocks.every((b) => b !== undefined))
-  const dateMap = Object.fromEntries(
-    blocks.map((b) => [
-      b.number,
-      new UnixTime(b.timestamp).toDate().toISOString(),
-    ]),
-  )
-
-  return logs.map((l) => {
-    const implementation = abi.parseLog(l).args.implementation
-    return [dateMap[l.blockNumber] ?? 'ERROR', [implementation]]
-  })
-}
-
 export async function getLightLinkProxy(
   provider: IProvider,
   address: EthereumAddress,
@@ -78,7 +46,12 @@ export async function getLightLinkProxy(
     return
   }
   const admin = await getAdminMultisig(provider, address)
-  const pastUpgrades = await getPastUpgrades(provider, address)
+  const pastUpgrades = await getPastUpgradesSingleEvent(
+    provider,
+    address,
+    'event Upgraded(address indexed implementation)',
+  )
+
   return {
     type: 'LightLink proxy',
     values: {
