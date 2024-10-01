@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20775910,
   "configHash": "0xb054397b11aa00d2891531ffcd51382503645937e8dd928600b01bd5835322b9",
-  "version": 14,
+  "version": 15,
   "contracts": [
     {
       "name": "OptimismMintableERC20Factory",
@@ -29,6 +29,12 @@
       "values": {
         "$admin": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
         "$implementation": "0x81C2645D347a67c089169a4Da074aF7788650955",
+        "$pastUpgrades": [
+          [
+            "2023-11-15T04:14:35.000Z",
+            ["0x81C2645D347a67c089169a4Da074aF7788650955"]
+          ]
+        ],
         "$upgradeCount": 1,
         "BRIDGE": "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
         "version": "1.1.1"
@@ -64,6 +70,12 @@
       "values": {
         "$admin": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
         "$implementation": "0x81CCFC10CB55B58449A3FEE870D63C4D61941DaC",
+        "$pastUpgrades": [
+          [
+            "2023-11-15T04:14:35.000Z",
+            ["0x81CCFC10CB55B58449A3FEE870D63C4D61941DaC"]
+          ]
+        ],
         "$upgradeCount": 1,
         "batcherHash": "0x14e4E97bDc195d399Ad8E7FC14451C279FE04c8e",
         "gasLimit": 120000000,
@@ -127,6 +139,12 @@
       "values": {
         "$admin": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
         "$implementation": "0xad206309916Fe08A27221133dde05a8F30f75e29",
+        "$pastUpgrades": [
+          [
+            "2023-11-15T04:14:35.000Z",
+            ["0xad206309916Fe08A27221133dde05a8F30f75e29"]
+          ]
+        ],
         "$upgradeCount": 1,
         "CHALLENGER": "0x91F4be0C264FAFA1fEd75c4440910Cba2cAd98e8",
         "deletedOutputs": [],
@@ -279,6 +297,17 @@
       "values": {
         "$immutable": false,
         "$implementation": "0x93f5d9CD5BE592F1DC602E0CF4A38148b880cd13",
+        "$pastUpgrades": [
+          [
+            "2023-11-15T04:14:35.000Z",
+            ["0x5456f02c08e9A018E42C39b351328E5AA864174A"]
+          ],
+          [
+            "2023-11-15T04:14:35.000Z",
+            ["0x93f5d9CD5BE592F1DC602E0CF4A38148b880cd13"]
+          ]
+        ],
+        "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
         "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620102",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
@@ -321,6 +350,7 @@
       "values": {
         "$admin": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
         "$implementation": "0xff7E236F171131cCB7a5149cE4645aBc92E0D8fb",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x5456f02c08e9A018E42C39b351328E5AA864174A",
@@ -354,6 +384,12 @@
       "values": {
         "$admin": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
         "$implementation": "0x4f993d43f697Cb4c63D719Bb8Dc762dcbbB11476",
+        "$pastUpgrades": [
+          [
+            "2023-11-15T04:14:35.000Z",
+            ["0x4f993d43f697Cb4c63D719Bb8Dc762dcbbB11476"]
+          ]
+        ],
         "$upgradeCount": 1,
         "messenger": "0x5456f02c08e9A018E42C39b351328E5AA864174A",
         "MESSENGER": "0x5456f02c08e9A018E42C39b351328E5AA864174A",
@@ -387,6 +423,12 @@
       "values": {
         "$admin": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
         "$implementation": "0x4Ec5C80Fa12d04DB3A208DD0Fa5C01178FF5a16e",
+        "$pastUpgrades": [
+          [
+            "2023-11-15T04:14:35.000Z",
+            ["0x4Ec5C80Fa12d04DB3A208DD0Fa5C01178FF5a16e"]
+          ]
+        ],
         "$upgradeCount": 1,
         "GUARDIAN": "0x91F4be0C264FAFA1fEd75c4440910Cba2cAd98e8",
         "L2_ORACLE": "0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba",
@@ -794,5 +836,5 @@
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0xb3e808e6410511e5cdb557ab187aac264a51956c695f8cc327ebaa202f7514fd"
+  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
 }

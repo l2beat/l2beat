@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x84721c53bbe8b2edf73e74b5359212d475f328d2
+
+# Diff at Tue, 01 Oct 2024 10:55:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20792084
+- current block number: 20792084
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20792084 (main branch discovery), not current.
+
+```diff
+    contract Bridge (0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-03-24T10:18:47.000Z",["0x5ac4182A1dd41AeEf465E40B82fd326BF66AB82C"]],["2024-02-13T11:00:59.000Z",["0x0FeB850B183C57534b56b7d56520133C8f9BDB65"]]]
+    }
+```
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-03-24T10:19:23.000Z",["0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF"]],["2023-09-20T08:30:35.000Z",["0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F"]],["2023-11-09T09:22:59.000Z",["0xb1585916487AcEdD99952086f2950763D253b923"]],["2024-02-13T11:00:59.000Z",["0x3b82Da772c825283d85d5d6717A77C6Ff582053b"]]]
+    }
+```
+
+```diff
+    contract GlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-03-24T10:19:11.000Z",["0xbc1ea504fC54D078514eFCCA1F6860B5219B6BC3"]],["2024-02-13T11:00:59.000Z",["0x2E38cD55163137483E30580Cb468C2dFf1d85077"]]]
+    }
+```
+
 Generated with discovered.json: 0x6761afe95cc65b2d57facf739411497e0c79d266
 
 # Diff at Fri, 20 Sep 2024 13:25:57 GMT:
