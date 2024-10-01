@@ -16,32 +16,32 @@ export function getCirculatingSupplyEntry(
   assert(token.supply === 'circulatingSupply')
   assert(chain.minTimestampForTvl, 'Chain with token should have minTimestamp')
 
+  const address = token.address ?? 'native'
+  const chainName = chainConverter.toName(token.chainId)
+  const assetId = AssetId.create(chainName, address)
+  const dataSource = 'coingecko'
+  const includeInTotal = !token.excludeFromTotal
+  const isAssociated = !!project.associatedTokens?.includes(token.symbol)
   const sinceTimestamp = UnixTime.max(
     chain.minTimestampForTvl,
     token.sinceTimestamp,
   )
 
-  const isAssociated = !!project.associatedTokens?.includes(token.symbol)
-  const includeInTotal = true
-
   return {
-    assetId: AssetId.create(
-      chainConverter.toName(token.chainId),
-      token.address,
-    ),
-    chain: chainConverter.toName(token.chainId),
-    project: project.projectId,
-    decimals: token.decimals,
-    symbol: token.symbol,
+    address: address,
+    assetId: assetId,
     category: token.category,
-    type: 'circulatingSupply',
-    address: token.address ?? 'native',
+    chain: chainName,
     coingeckoId: token.coingeckoId,
-    sinceTimestamp,
-    untilTimestamp: token.untilTimestamp,
-    includeInTotal,
-    isAssociated,
+    dataSource: dataSource,
+    decimals: token.decimals,
+    includeInTotal: includeInTotal,
+    isAssociated: isAssociated,
+    project: project.projectId,
+    sinceTimestamp: sinceTimestamp,
     source: token.source,
-    dataSource: chain.name,
+    symbol: token.symbol,
+    type: token.supply,
+    untilTimestamp: token.untilTimestamp,
   }
 }

@@ -20,17 +20,14 @@ export function NavLink({ icon, title, href, activeBehavior }: NavLinkProps) {
     <Link href={href}>
       <li
         className={cn(
-          'flex items-center gap-2.5 rounded p-1.5 text-black transition-colors duration-300 ease-out hover:bg-[#F1D6FF] dark:text-white dark:hover:bg-[#272A2F]',
-          'h-8 xl:sidenav-collapsed:size-8 xl:sidenav-collapsed:justify-center xl:sidenav-collapsed:p-0',
+          'flex h-8 items-center gap-2.5 rounded p-1.5 text-black transition-colors duration-300 ease-out hover:bg-[#F1D6FF] dark:text-white dark:hover:bg-[#272A2F]',
           active && 'bg-[#d3d5d9] dark:bg-[#393C43]',
         )}
       >
         <span className="flex flex-row items-center text-xl leading-none">
           {icon}
         </span>
-        <span className="text-base font-semibold leading-none xl:sidenav-collapsed:hidden">
-          {title}
-        </span>
+        <span className="text-base font-semibold leading-none">{title}</span>
       </li>
     </Link>
   )

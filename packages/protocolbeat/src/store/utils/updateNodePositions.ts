@@ -1,5 +1,10 @@
 import type { Box, Connection, State } from '../State'
-import { BORDER_WIDTH, FIELD_HEIGHT, HEADER_HEIGHT } from './constants'
+import {
+  BORDER_WIDTH,
+  FIELD_HEIGHT,
+  HEADER_HEIGHT,
+  RESIZE_HANDLE_HEIGHT,
+} from './constants'
 
 export function updateNodePositions(state: State): State {
   let dx = state.mouseMove.currentX - state.mouseMove.startX
@@ -17,7 +22,11 @@ export function updateNodePositions(state: State): State {
     const start = state.selectedPositions[node.simpleNode.id]
     nodeDimensions[node.simpleNode.id] = {
       width: node.box.width,
-      height: HEADER_HEIGHT + BORDER_WIDTH + node.fields.length * FIELD_HEIGHT,
+      height:
+        HEADER_HEIGHT +
+        BORDER_WIDTH +
+        node.fields.length * FIELD_HEIGHT +
+        RESIZE_HANDLE_HEIGHT,
       x: start ? start.x + dx : node.box.x,
       y: start ? start.y + dy : node.box.y,
     }

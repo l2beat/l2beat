@@ -26,7 +26,7 @@ export interface ZkCatalogProjectPageProps {
 export interface ZkCatalogProjectDetails extends ZkCatalogProofVerification {
   title: string
   icon: string
-  description: string
+  description: string | undefined
   trustedSetup: string
   linkToMainProjectDetails: string | undefined
 }
@@ -45,12 +45,14 @@ export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
             askForVerificationLink={props.askForVerificationLink}
           />
         </Section>
-        <Section title="Description">
-          <p className="mb-2">{props.details.shortDescription}</p>
-          <Markdown className="zk-description">
-            {props.details.description}
-          </Markdown>
-        </Section>
+        {props.details.description && (
+          <Section title="Description">
+            <p className="mb-2">{props.details.shortDescription}</p>
+            <Markdown className="zk-description">
+              {props.details.description}
+            </Markdown>
+          </Section>
+        )}
         {props.details.requiredTools.length > 0 && (
           <Section title="List of required tools">
             <RequiredTools items={props.details.requiredTools} />

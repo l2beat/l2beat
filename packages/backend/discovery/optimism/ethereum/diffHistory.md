@@ -1,3 +1,98 @@
+Generated with discovered.json: 0xc97d3bc9db68bf215aa669c14b6ff99153c688cf
+
+# Diff at Wed, 25 Sep 2024 09:34:30 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@e8c4fe6b10f7918ebbd761bc35018ba84053b08c block: 20785025
+- current block number: 20826753
+
+## Description
+
+Single signer change in SNX MS (SNX escrow owner).
+
+## Watched changes
+
+```diff
+    contract SynthetixMultisig (0xEb3107117FEAd7de89Cd14D463D340A2E6917769) {
+    +++ description: None
+      values.$members.3:
+-        "0x0B67bab43157e53D21965Af0d83f83BeD9553E0a"
++        "0xcC934A54A2Dc516B2bb0CFE2F73bfA9A87F5341f"
+    }
+```
+
+Generated with discovered.json: 0x225b2dce43e2ef7ecd0848d32f679a6bf29f6f43
+
+# Diff at Thu, 19 Sep 2024 13:46:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c189b6a22dcead98913a50430e61a1c3146ee01e block: 20763674
+- current block number: 20785025
+
+## Description
+
+Shape related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20763674 (main branch discovery), not current.
+
+```diff
+    contract MIPS (0x16e83cE5Ce29BF90AD9Da06D2fE6a15d5f344ce4) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      template:
++        "opstack/MIPS"
+      descriptions:
++        ["The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute."]
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (0x18DAc71c228D1C32c99489B7323d441E1175e443) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+      template:
++        "opstack/AnchorStateRegistry"
+      descriptions:
++        ["Contains the latest confirmed state root that can be used as a starting point in a dispute game."]
+    }
+```
+
+```diff
+    contract DelayedWETH_PermissionlessGames (0x82511d494B5C942BE57498a70Fdd7184Ee33B975) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      template:
++        "opstack/DelayedWETH"
+      displayName:
++        "DelayedWETH"
+      descriptions:
++        ["Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds."]
+    }
+```
+
+```diff
+    contract DelayedWETH_PermissionedGames (0x9F9b897e37de5052cD70Db6D08474550DDb07f39) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      template:
++        "opstack/DelayedWETH"
+      displayName:
++        "DelayedWETH"
+      descriptions:
++        ["Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds."]
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0xe5965Ab5962eDc7477C8520243A95517CD252fA9) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      template:
++        "opstack/DisputeGameFactory"
+      descriptions:
++        ["The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them."]
+    }
+```
+
 Generated with discovered.json: 0x7dfc191f4a5b27f971132ccfb6e195e1993cbfa5
 
 # Diff at Mon, 16 Sep 2024 14:09:19 GMT:

@@ -13,7 +13,6 @@ export function scrollHorizontallyToItem({
     item.offsetWidth / 2
   overflowingContainer.scrollTo({
     left: scrollPosition,
-    behavior: 'smooth',
   })
 }
 
@@ -27,6 +26,5 @@ export function scrollVerticallyToItem({
     item.offsetHeight / 2
   overflowingContainer.scrollTo({
     top: scrollPosition,
-    behavior: 'smooth',
   })
 }

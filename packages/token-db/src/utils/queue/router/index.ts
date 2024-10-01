@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { Redis } from 'ioredis'
 import { broadcast } from './broadcast.js'
 import { forward } from './forward.js'
-import { routingKey } from './routingKey.js'
+import { routingKey } from './routing-key.js'
 
 export function eventRouter({
   connection,

@@ -10,12 +10,12 @@ import { type ChartUnit } from '../types'
 export type TvlDataPoint = readonly [number, number, number, number, number]
 
 interface Params {
+  data: TvlDataPoint[] | undefined
   milestones: Milestone[]
   unit: ChartUnit
-  data?: TvlDataPoint[]
 }
 
-export function useTvlChartRenderParams({ milestones, unit, data }: Params) {
+export function useTvlChartRenderParams({ data, milestones, unit }: Params) {
   const mappedMilestones = useMemo(
     () => mapMilestones(milestones),
     [milestones],

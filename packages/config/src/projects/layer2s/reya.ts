@@ -28,7 +28,7 @@ export const reya: Layer2 = orbitStackL2({
       socialMedia: [
         'https://twitter.com/Reya_xyz',
         'https://discord.gg/reyaxyz',
-        'https://medium.com/reya-labs',
+        'https://medium.com/@reyalabs123',
       ],
     },
     activityDataSource: 'Blockchain RPC',
@@ -97,7 +97,7 @@ export const reya: Layer2 = orbitStackL2({
     },
     {
       name: 'Reya LGE',
-      link: 'https://medium.com/reya-labs/reya-network-the-first-trading-optimised-l2-liquidity-generation-event-launch-f3cd958302ec',
+      link: 'https://medium.com/@reyalabs123/reya-network-the-first-trading-optimised-l2-liquidity-generation-event-launch-f3cd958302ec',
       date: '2024-04-22T00:00:00Z',
       description:
         'Reya launches with a Liquidity Generation Event (LGE) where users can provide USDC to the network.',

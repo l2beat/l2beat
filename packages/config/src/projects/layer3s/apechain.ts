@@ -14,9 +14,9 @@ export const apechain: Layer3 = upcomingL3({
     category: 'Optimium',
     provider: 'Arbitrum',
     links: {
-      websites: ['https://apecoin.com/'],
+      websites: ['https://apechain.com/'],
       apps: [],
-      documentation: [],
+      documentation: ['https://docs.apechain.com/'],
       explorers: [],
       repositories: [],
       socialMedia: ['https://twitter.com/apecoin'],

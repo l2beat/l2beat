@@ -39,6 +39,7 @@ export const INDEXER_NAMES = {
   PREMINTED: 'preminted_indexer',
   PRICE: 'price_indexer',
   AGGLAYER: 'agglayer_indexer',
+  ELASTIC_CHAIN: 'elastic_chain_indexer',
 }
 
 export function getPremintedIndexerId(

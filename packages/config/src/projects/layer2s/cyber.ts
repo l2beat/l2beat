@@ -29,7 +29,7 @@ const daResolveWindow = formatSeconds(
 export const cyber: Layer2 = opStackL2({
   associatedTokens: ['CYBER'],
   discovery,
-  badges: [Badge.DA.CustomDA, Badge.Infra.Superchain],
+  badges: [Badge.DA.CustomDA, Badge.Infra.Superchain, Badge.RaaS.AltLayer],
   display: {
     name: 'Cyber',
     slug: 'cyber',
@@ -69,7 +69,7 @@ export const cyber: Layer2 = opStackL2({
       references: [
         {
           text: 'OP Plasma specification',
-          href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/experimental/plasma.md',
+          href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/experimental/alt-da.md',
         },
         {
           text: 'Universal Plasma and DA Challenges - Ethresear.ch',
@@ -95,7 +95,7 @@ export const cyber: Layer2 = opStackL2({
     explorerUrl: 'https://cyberscan.co/',
     coingeckoPlatform: 'cyber',
     explorerApi: {
-      url: 'https://api.routescan.io/v2/network/mainnet/evm/7560/etherscan/api', // alternative https://api.socialscan.io/cyber (supposedly etherscan-like)
+      url: 'https://api.routescan.io/v2/network/mainnet/evm/7560/etherscan/api',
       type: 'etherscan',
     },
     minTimestampForTvl: new UnixTime(1713428569), // block 1 ts

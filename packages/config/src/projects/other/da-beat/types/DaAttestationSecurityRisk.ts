@@ -12,12 +12,12 @@ const Enshrined = {
   value: 'Enshrined',
   sentiment: 'good',
   description:
-    'Validators and full nodes directly validate blobs data availability. On the consensus layer, block validity rules ensure that blobs are retrievable and their KZG proofs are verified. Execution clients validate blob gas values and transaction parameters.',
+    'Validators and full nodes directly validate blobs data availability. On the consensus layer, block validity rules ensure that blobs are retrievable and their KZG proofs are verified, while execution clients validate blob gas values and transaction parameters.',
 } as const
 
 const NoBridge = {
   type: 'NoBridge',
-  value: 'No Attestations',
+  value: 'None',
   sentiment: 'bad',
   description: 'No data availability attestations are posted to Ethereum.',
 } as const

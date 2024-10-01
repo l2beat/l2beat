@@ -64,6 +64,10 @@ export function getHoveredColumn({
   return {
     left,
     yValues,
-    column,
+    column: {
+      ...column,
+      milestone:
+        milestoneHoverIndex !== undefined ? column.milestone : undefined,
+    },
   }
 }

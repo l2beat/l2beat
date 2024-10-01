@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react'
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
 import type { NodeLocations } from '../store/utils/storageParsing'
+import { autoLayout } from './autoLayout'
 
 // d3 assumes each node is a single point (no width and height),
 // so we scale the coordinates of the simulation to move the nodes
@@ -88,14 +89,27 @@ export function AutoLayoutButton() {
     draw()
   }, [updatingLayout])
 
+  function handleAutoLayout() {
+    updateNodeLocations(autoLayout(nodes))
+  }
+
   return (
-    <button
-      className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-      type="button"
-      disabled={updatingLayout}
-      onClick={() => setUpdatingLayout(true)}
-    >
-      {updatingLayout ? 'wait...' : 'Auto-layout'}
-    </button>
+    <>
+      <button
+        className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+        type="button"
+        disabled={updatingLayout}
+        onClick={() => setUpdatingLayout(true)}
+      >
+        {updatingLayout ? 'wait...' : 'Slow layout'}
+      </button>
+      <button
+        className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+        type="button"
+        onClick={handleAutoLayout}
+      >
+        Fast layout
+      </button>
+    </>
   )
 }

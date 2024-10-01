@@ -44,7 +44,6 @@ export const zkswap: Layer2 = {
         'https://discord.gg/rpjpeq4Y47',
         'https://t.me/zkswapofficial',
         'https://reddit.com/r/ZKSwap_Official/',
-        'https://zks.org/en/blog',
       ],
     },
   },

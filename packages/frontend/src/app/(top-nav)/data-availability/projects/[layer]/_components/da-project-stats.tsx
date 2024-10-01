@@ -28,7 +28,7 @@ export function DaProjectStats({ project }: Props) {
         }
       : {
           value: project.header.durationStorage
-            ? round(project.header.durationStorage / UnixTime.DAY, 2)
+            ? round(project.header.durationStorage / UnixTime.DAY, 2) + ' days'
             : EM_DASH,
         }
 
@@ -40,9 +40,11 @@ export function DaProjectStats({ project }: Props) {
         value={formatCurrency(project.header.tvs, 'usd', {
           showLessThanMinimum: false,
         })}
+        tooltip="The total value locked of all L2s using this layer."
       />
       <ProjectStat
         title="Economic security"
+        tooltip="The assets that are slashable in case of a data withholding attack (the amount of funds a committee would need to burn to successfully deceive the DA bridge). It’s equal to 2/3 of the total validating stake, if any."
         value={
           // EC not set
           project.header.economicSecurity

@@ -154,7 +154,7 @@ export const astarzkevm: Layer2 = polygonCDKStack({
   milestones: [
     {
       name: 'Astar zkEVM Launch',
-      link: 'https://polygon.technology/blog/astar-zkevm-built-with-polygon-cdk-connects-to-agglayer-and-taps-unified-liquidity-with-polygon-zkevm',
+      link: 'https://astar.network/blog/astars-zkevm-mainnet-is-live-86096',
       date: '2024-03-06',
       description:
         'Astar Network launched Astar zkEVM, integrated with Polygon AggLayer.',

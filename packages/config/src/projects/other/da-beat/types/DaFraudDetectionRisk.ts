@@ -22,7 +22,7 @@ function DasWithBlobsReconstruction(erasureCoding: boolean) {
 function DasWithNoBlobsReconstruction(erasureCoding: boolean) {
   return {
     type: 'DasWithNoBlobsReconstruction',
-    value: 'DAS with no blobs reconstruction',
+    value: 'DAS with no reconstruction',
     sentiment: erasureCoding ? 'warning' : 'bad',
     description: `
     The DA layer uses data availability sampling (DAS) to protect against data withholding attacks. However, there is no mechanism in place to reconstruct the data if some of it is withheld or the minimum number of light nodes
@@ -40,7 +40,7 @@ const ErasureCodingProof = {
 
 const NoFraudDetection = {
   type: 'NoFraudDetection',
-  value: 'No fraud detection',
+  value: 'None',
   sentiment: 'bad',
   description:
     'There is no fraud detection mechanism in place. A data withholding attack can only be detected by nodes downloading the full data from the DA layer.',

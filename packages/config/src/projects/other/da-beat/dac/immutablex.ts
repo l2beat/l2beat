@@ -14,7 +14,7 @@ export const immutableXDac = DAC({
   links: {
     websites: ['https://immutablex.xyz/'],
     documentation: ['https://docs.immutablex.xyz/'],
-    repositories: ['https://github.com/Immutablex/immutablex'],
+    repositories: ['https://github.com/Immutable'],
     apps: ['https://app.immutable.com/'],
     explorers: ['https://explorer.immutable.com/'],
   },
