@@ -14,12 +14,14 @@ export function SimplePageHeader({
   return (
     <header
       className={cn(
-        'ml-6 flex h-20 flex-col justify-center max-md:hidden',
+        'mb-6 ml-6 mt-[18px] flex flex-col justify-center max-md:hidden',
         className,
       )}
     >
-      <h1 className="mb-0.5 text-3xl font-bold">{children}</h1>
-      {description && <p className="text-xs text-zinc-500">{description}</p>}
+      <h1 className="text-3xl font-bold">{children}</h1>
+      {description && (
+        <p className="mt-0.5 text-xs text-zinc-500">{description}</p>
+      )}
     </header>
   )
 }

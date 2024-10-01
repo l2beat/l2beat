@@ -45,7 +45,7 @@ export default async function Page() {
     <HydrateClient>
       <ScalingFilterContextProvider>
         <ScalingAssociatedTokensContextProvider>
-          <MainPageCard>
+          <MainPageCard className="md:mt-20">
             <ScalingStackedTvlChart
               milestones={HOMEPAGE_MILESTONES}
               entries={entries}
