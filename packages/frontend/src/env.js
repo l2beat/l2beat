@@ -4,6 +4,12 @@ import { z } from 'zod'
 const coerceBoolean = z.string().transform((val) => {
   return val !== 'false' && val !== '0'
 })
+const stringArray = z.string().transform((val) => {
+  if (!val) {
+    return []
+  }
+  return val.split(',')
+})
 
 const featureFlag = coerceBoolean.optional()
 
@@ -25,7 +31,8 @@ export const env = createEnv({
     VERCEL_GIT_COMMIT_SHA: z.string().default('local'),
     VERCEL_URL: z.string().optional(),
     VERCEL_ENV: z.enum(['production', 'preview', 'development']).optional(),
-    EXCLUDED_ACTIVITY_PROJECTS: z.string().array().optional(),
+    EXCLUDED_ACTIVITY_PROJECTS: stringArray.optional(),
+    EXCLUDED_TVL_PROJECTS: stringArray.optional(),
   },
 
   /**
@@ -56,6 +63,7 @@ export const env = createEnv({
     VERCEL_ENV: process.env.VERCEL_ENV,
     VERCEL_URL: process.env.VERCEL_URL,
     EXCLUDED_ACTIVITY_PROJECTS: process.env.EXCLUDED_ACTIVITY_PROJECTS,
+    EXCLUDED_TVL_PROJECTS: process.env.EXCLUDED_TVL_PROJECTS,
     // Client
     NEXT_PUBLIC_FEATURE_FLAG_ASSET_RISKS:
       process.env.NEXT_PUBLIC_FEATURE_FLAG_ASSET_RISKS,
