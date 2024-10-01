@@ -1,5 +1,5 @@
 import { MainPageCard } from '~/components/main-page-card'
-import { SimplePageHeader } from '~/components/simple-page-header'
+import { MainPageHeader } from '~/components/main-page-header'
 import { getScalingFinalityEntries } from '~/server/features/scaling/finality/get-scaling-finality-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
@@ -17,7 +17,7 @@ export default async function Page() {
 
   return (
     <ScalingFilterContextProvider>
-      <SimplePageHeader>Finality</SimplePageHeader>
+      <MainPageHeader>Finality</MainPageHeader>
       <FinalityWarning />
       <MainPageCard>
         <ScalingFinalityTable projects={projects} />

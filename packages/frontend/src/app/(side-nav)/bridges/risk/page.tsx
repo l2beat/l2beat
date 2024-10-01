@@ -1,5 +1,5 @@
 import { MainPageCard } from '~/components/main-page-card'
-import { SimplePageHeader } from '~/components/simple-page-header'
+import { MainPageHeader } from '~/components/main-page-header'
 import { getBridgeRiskEntries } from '~/server/features/bridges/get-bridges-risk-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { BridgesFilterContextProvider } from '../_components/bridges-filter-context'
@@ -18,7 +18,7 @@ export default async function Page() {
   return (
     <>
       <BridgesFilterContextProvider>
-        <SimplePageHeader>Risk Analysis</SimplePageHeader>
+        <MainPageHeader>Risk Analysis</MainPageHeader>
         <BridgesMvpWarning />
 
         <MainPageCard>

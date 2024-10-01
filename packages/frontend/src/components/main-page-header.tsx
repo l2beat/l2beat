@@ -1,16 +1,12 @@
 import { cn } from '~/utils/cn'
 
-interface PageHeaderProps {
+interface Props {
   children: string
   description?: string
   className?: string
 }
 
-export function SimplePageHeader({
-  children,
-  description,
-  className,
-}: PageHeaderProps) {
+export function MainPageHeader({ children, description, className }: Props) {
   return (
     <header
       className={cn(

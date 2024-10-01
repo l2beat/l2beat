@@ -1,5 +1,5 @@
 import { MainPageCard } from '~/components/main-page-card'
-import { SimplePageHeader } from '~/components/simple-page-header'
+import { MainPageHeader } from '~/components/main-page-header'
 import { getScalingLivenessEntries } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
@@ -19,7 +19,7 @@ export default async function Page() {
   return (
     <ScalingFilterContextProvider>
       <LivenessTimeRangeContextProvider>
-        <SimplePageHeader>Liveness</SimplePageHeader>
+        <MainPageHeader>Liveness</MainPageHeader>
         <LivenessWarning />
         <MainPageCard>
           <ScalingLivenessTable entries={entries} />

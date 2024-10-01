@@ -1,7 +1,7 @@
 import { SummaryActivityChart } from '~/components/chart/activity/summary-activity-chart'
 import { ScalingTvlChart } from '~/components/chart/tvl/scaling-tvl-chart'
 import { MainPageCard } from '~/components/main-page-card'
-import { SimplePageHeader } from '~/components/simple-page-header'
+import { MainPageHeader } from '~/components/main-page-header'
 import { getScalingSummaryEntries } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
@@ -36,7 +36,7 @@ export default async function Page() {
     <HydrateClient>
       <ScalingFilterContextProvider>
         <ScalingAssociatedTokensContextProvider>
-          <SimplePageHeader>Summary</SimplePageHeader>
+          <MainPageHeader>Summary</MainPageHeader>
           <div className="grid grid-cols-2 gap-4 max-lg:hidden">
             <MainPageCard>
               <ScalingTvlChart unit={UNIT} timeRange={TIME_RANGE} />

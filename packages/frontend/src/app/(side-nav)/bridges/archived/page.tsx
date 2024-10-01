@@ -1,5 +1,5 @@
 import { MainPageCard } from '~/components/main-page-card'
-import { SimplePageHeader } from '~/components/simple-page-header'
+import { MainPageHeader } from '~/components/main-page-header'
 import { getBridgesArchivedEntries } from '~/server/features/bridges/get-bridges-archived-entries'
 import { BridgesFilterContextProvider } from '../_components/bridges-filter-context'
 import { BridgesMvpWarning } from '../_components/bridges-mvp-warning'
@@ -9,7 +9,7 @@ export default async function Page() {
   const entries = await getBridgesArchivedEntries()
   return (
     <BridgesFilterContextProvider>
-      <SimplePageHeader>Archived</SimplePageHeader>
+      <MainPageHeader>Archived</MainPageHeader>
       <BridgesMvpWarning />
       <MainPageCard>
         <BridgesArchivedTable entries={entries} />
