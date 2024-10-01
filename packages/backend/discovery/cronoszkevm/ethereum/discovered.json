@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20862570,
   "configHash": "0x7a789bc124be6456459090c6b58224c6681e9c3839189815b3039ea531d50615",
-  "version": 14,
+  "version": 15,
   "contracts": [
     {
       "name": "CronosChainAdminMultisig",
@@ -114,6 +114,27 @@
           "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C",
           "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
         ],
+        "$pastUpgrades": [
+          [
+            "2024-07-30T16:30:35.000Z",
+            [
+              "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
+              "0xE60E94fCCb18a81D501a38959E532C0A85A1be89",
+              "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C",
+              "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
+            ]
+          ],
+          [
+            "2024-07-30T16:30:35.000Z",
+            [
+              "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
+              "0xE60E94fCCb18a81D501a38959E532C0A85A1be89",
+              "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C",
+              "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
+            ]
+          ]
+        ],
+        "$upgradeCount": 2,
         "baseTokenGasPriceMultiplierDenominator": 1,
         "baseTokenGasPriceMultiplierNominator": 25000,
         "daMode": 1,

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xcac4ddb91386e24d9df8772abd28dbc995f5f1f1
+
+# Diff at Tue, 01 Oct 2024 11:11:43 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20812440
+- current block number: 20812440
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20812440 (main branch discovery), not current.
+
+```diff
+    contract SP1Vector (0x02993cdC11213985b9B13224f3aF289F03bf298d) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-07-04T21:23:47.000Z",["0x2434564f3524b44258B11643729343Ef57D60989"]],["2024-07-20T01:29:35.000Z",["0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D"]]]
+    }
+```
+
 Generated with discovered.json: 0xdefba8303d4a6620d5ddddf55bba42f2f6cb3110
 
 # Diff at Mon, 23 Sep 2024 09:38:09 GMT:
