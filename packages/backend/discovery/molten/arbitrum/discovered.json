@@ -3,7 +3,7 @@
   "chain": "arbitrum",
   "blockNumber": 257933728,
   "configHash": "0xf16ffdc485c9d6df9d5a481cc2377170b320804654993dd2a332af59cab571cb",
-  "version": 14,
+  "version": 15,
   "contracts": [
     {
       "name": "OneStepProverMemory",
@@ -48,6 +48,16 @@
           "0xc326D023758d7D212d529D1E58D7f271CAe49fcf",
           "0xD92D49e8A2230E2C7a73c3ff4Df1AED09dA32a07"
         ],
+        "$pastUpgrades": [
+          [
+            "2024-04-02T00:51:22.000Z",
+            [
+              "0xc326D023758d7D212d529D1E58D7f271CAe49fcf",
+              "0xD92D49e8A2230E2C7a73c3ff4Df1AED09dA32a07"
+            ]
+          ]
+        ],
+        "$upgradeCount": 1,
         "baseStake": "100000000000000000",
         "bridge": "0xE1d32C985825562edAa906fAC39295370Db72195",
         "chainId": 360,
@@ -138,6 +148,12 @@
       "values": {
         "$admin": "0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238",
         "$implementation": "0x1d182075d07744D71E37f77f1654165f6DAFad08",
+        "$pastUpgrades": [
+          [
+            "2024-04-02T00:51:22.000Z",
+            ["0x1d182075d07744D71E37f77f1654165f6DAFad08"]
+          ]
+        ],
         "$upgradeCount": 1,
         "batchCount": 15898,
         "batchPosters": ["0x451f05C41BC5CC10d7D63ed88bA0A522FE183074"],
@@ -181,6 +197,12 @@
       "values": {
         "$admin": "0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238",
         "$implementation": "0x2675b9DEb473ECaC13ddd71dF8A0Ef13FeF6a75D",
+        "$pastUpgrades": [
+          [
+            "2024-04-02T00:51:22.000Z",
+            ["0x2675b9DEb473ECaC13ddd71dF8A0Ef13FeF6a75D"]
+          ]
+        ],
         "$upgradeCount": 1,
         "allowListEnabled": false,
         "bridge": "0xE1d32C985825562edAa906fAC39295370Db72195",
@@ -213,6 +235,12 @@
       "values": {
         "$admin": "0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238",
         "$implementation": "0x652F65f950b71d7aD04AffB1725F43786ed5f6Cc",
+        "$pastUpgrades": [
+          [
+            "2024-04-02T00:51:38.000Z",
+            ["0x652F65f950b71d7aD04AffB1725F43786ed5f6Cc"]
+          ]
+        ],
         "$upgradeCount": 1,
         "cloneableProxyHash": "0xce61ab08155a3a368bfd165ba9e1151d023608a155fce1ec0d87bba89a59cb4d",
         "counterpartGateway": "0x939b292EE930f62E3C8f7040Df9A8b3B872E1602",
@@ -291,6 +319,12 @@
       "values": {
         "$admin": "0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238",
         "$implementation": "0x935239e066F4F449D87D600e6d7c1a4F24c50f97",
+        "$pastUpgrades": [
+          [
+            "2024-04-02T00:51:22.000Z",
+            ["0x935239e066F4F449D87D600e6d7c1a4F24c50f97"]
+          ]
+        ],
         "$upgradeCount": 1,
         "bridge": "0xE1d32C985825562edAa906fAC39295370Db72195",
         "osp": "0xD16048EC58016FAbaC4d4E4C1203e49c0d9090E4",
@@ -374,6 +408,12 @@
       "values": {
         "$admin": "0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238",
         "$implementation": "0x20C6be2A0429A82a7bF113905a29d36CF6753B10",
+        "$pastUpgrades": [
+          [
+            "2024-04-02T00:51:22.000Z",
+            ["0x20C6be2A0429A82a7bF113905a29d36CF6753B10"]
+          ]
+        ],
         "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -410,6 +450,12 @@
       "values": {
         "$admin": "0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238",
         "$implementation": "0xf2bCB26dbb571EBC82CFAe6453AeF0DE90d93421",
+        "$pastUpgrades": [
+          [
+            "2024-04-02T00:51:22.000Z",
+            ["0xf2bCB26dbb571EBC82CFAe6453AeF0DE90d93421"]
+          ]
+        ],
         "$upgradeCount": 1,
         "bridge": "0xE1d32C985825562edAa906fAC39295370Db72195",
         "rollup": "0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0"
@@ -436,6 +482,12 @@
       "values": {
         "$admin": "0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238",
         "$implementation": "0x922db00d292477AD99Ef8A0c41101a664Ee79D2b",
+        "$pastUpgrades": [
+          [
+            "2024-04-02T00:51:38.000Z",
+            ["0x922db00d292477AD99Ef8A0c41101a664Ee79D2b"]
+          ]
+        ],
         "$upgradeCount": 1,
         "counterpartGateway": "0x56f4046f9271Ec59787Ecd22b00630c028D93301",
         "defaultGateway": "0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80",
@@ -460,6 +512,12 @@
       "values": {
         "$admin": "0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238",
         "$implementation": "0xCa2F31F3C6553c2FD9897f7AA464406a431959A9",
+        "$pastUpgrades": [
+          [
+            "2024-04-02T00:51:22.000Z",
+            ["0xCa2F31F3C6553c2FD9897f7AA464406a431959A9"]
+          ]
+        ],
         "$upgradeCount": 1,
         "bridge": "0xE1d32C985825562edAa906fAC39295370Db72195",
         "l2ToL1BatchNum": 0,
@@ -512,6 +570,12 @@
       "values": {
         "$admin": "0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238",
         "$implementation": "0xC5Db571093C4600559e239497d147476F7543b15",
+        "$pastUpgrades": [
+          [
+            "2024-04-02T00:51:22.000Z",
+            ["0xC5Db571093C4600559e239497d147476F7543b15"]
+          ]
+        ],
         "$upgradeCount": 1,
         "activeOutbox": "0x0000000000000000000000000000000000000000",
         "allowedDelayedInboxList": [

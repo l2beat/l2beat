@@ -3,7 +3,7 @@
   "chain": "base",
   "blockNumber": 20147451,
   "configHash": "0xe8845a7394a7ef4a9fad5125be66d7ede88afb7bf0342312f912ff4245f41eb1",
-  "version": 14,
+  "version": 15,
   "contracts": [
     {
       "name": "SP1Verifier",
@@ -142,6 +142,20 @@
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x47fd660D5252Bd6F9D2c71507E46aa1d6e957c23",
+        "$pastUpgrades": [
+          [
+            "2024-03-17T04:53:27.000Z",
+            ["0x7C3A9b466FF5c02582fa32d4aD1b2Cb431fB7c9b"]
+          ],
+          [
+            "2024-03-18T01:20:33.000Z",
+            ["0xfb19439fBa9f16aA720be6bE0e53465a9733C964"]
+          ],
+          [
+            "2024-08-26T18:52:49.000Z",
+            ["0x47fd660D5252Bd6F9D2c71507E46aa1d6e957c23"]
+          ]
+        ],
         "$upgradeCount": 3,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -652,5 +666,5 @@
     "succinct/SP1Blobstream": "0xb0717b3e2a9ebc9678d934fa77de178537019305cf6fd12950b8f116da2a0e9c",
     "succinct/SP1SuccinctGateway": "0x469434d0a8618a0831610020a584f9b833db48951a4e6605e45baff5b764ee77"
   },
-  "shapeFilesHash": "0xb3e808e6410511e5cdb557ab187aac264a51956c695f8cc327ebaa202f7514fd"
+  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
 }

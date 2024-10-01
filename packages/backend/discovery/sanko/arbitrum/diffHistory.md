@@ -1,3 +1,103 @@
+Generated with discovered.json: 0x0db87207c3fa9b655e10ed08a17e46e00cc124db
+
+# Diff at Tue, 01 Oct 2024 11:13:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 257934843
+- current block number: 257934843
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 257934843 (main branch discovery), not current.
+
+```diff
+    contract ChallengeManager (0x1f269F38196484ef81e58C0144AaD2c5F6394bB4) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-12T21:49:58.000Z",["0x935239e066F4F449D87D600e6d7c1a4F24c50f97"]]]
+    }
+```
+
+```diff
+    contract SequencerInbox (0x24B68936C13A414cd91437aE7AA730321B9ff159) {
+    +++ description: State batches / commitments get posted here.
+      values.$pastUpgrades:
++        [["2024-04-12T21:49:58.000Z",["0x1d182075d07744D71E37f77f1654165f6DAFad08"]]]
+    }
+```
+
+```diff
+    contract Bridge (0x2f285781B8d58678a3483de52D618198E4d27532) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-12T21:49:58.000Z",["0xC5Db571093C4600559e239497d147476F7543b15"]]]
+    }
+```
+
+```diff
+    contract ERC20RollupEventInbox (0x365ce7234CE515c2e0139f3578b6c5989da1a863) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-12T21:49:58.000Z",["0xf2bCB26dbb571EBC82CFAe6453AeF0DE90d93421"]]]
+    }
+```
+
+```diff
+    contract Outbox (0x575d32f7ff0C72921645e302cb14d2757E300786) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-12T21:49:58.000Z",["0xCa2F31F3C6553c2FD9897f7AA464406a431959A9"]]]
+    }
+```
+
+```diff
+    contract Inbox (0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-12T21:49:58.000Z",["0x2675b9DEb473ECaC13ddd71dF8A0Ef13FeF6a75D"]]]
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-12T21:49:58.000Z",["0x20C6be2A0429A82a7bF113905a29d36CF6753B10"]]]
+    }
+```
+
+```diff
+    contract L1OrbitGatewayRouter (0x847186fbeEBf41eEe9c230360D0bF8585c0Db57B) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-12T21:50:11.000Z",["0x922db00d292477AD99Ef8A0c41101a664Ee79D2b"]]]
+    }
+```
+
+```diff
+    contract RollupProxy (0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      values.$pastUpgrades:
++        [["2024-04-12T21:49:58.000Z",["0xc326D023758d7D212d529D1E58D7f271CAe49fcf","0xD92D49e8A2230E2C7a73c3ff4Df1AED09dA32a07"]]]
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract L1OrbitERC20Gateway (0xb4951c0C41CFceB0D195A95FE66280457A80a990) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-12T21:50:11.000Z",["0x652F65f950b71d7aD04AffB1725F43786ed5f6Cc"]],["2024-04-26T01:40:32.000Z",["0xF5CE2B2a046f5C5440506F76d512375fdB301BCa"]]]
+    }
+```
+
 Generated with discovered.json: 0xdefe742156380a642fd956abd8d242a3e8c303c9
 
 # Diff at Fri, 27 Sep 2024 15:35:20 GMT:

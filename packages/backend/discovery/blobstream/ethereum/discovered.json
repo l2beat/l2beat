@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20812437,
   "configHash": "0x5fb696e30ac20eb52ba0c15dd0336f8dd6a7a67c38bc1732fb658b41527a8336",
-  "version": 14,
+  "version": 15,
   "contracts": [
     {
       "name": "FunctionVerifier",
@@ -124,6 +124,16 @@
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x47fd660D5252Bd6F9D2c71507E46aa1d6e957c23",
+        "$pastUpgrades": [
+          [
+            "2024-06-05T19:21:47.000Z",
+            ["0x41a87C543EBcbD93706CF5260AD057D9eCBA1caE"]
+          ],
+          [
+            "2024-08-26T18:55:23.000Z",
+            ["0x47fd660D5252Bd6F9D2c71507E46aa1d6e957c23"]
+          ]
+        ],
         "$upgradeCount": 2,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -543,5 +553,5 @@
     "succinct/SP1Blobstream": "0xb0717b3e2a9ebc9678d934fa77de178537019305cf6fd12950b8f116da2a0e9c",
     "succinct/SP1SuccinctGateway": "0x469434d0a8618a0831610020a584f9b833db48951a4e6605e45baff5b764ee77"
   },
-  "shapeFilesHash": "0xb3e808e6410511e5cdb557ab187aac264a51956c695f8cc327ebaa202f7514fd"
+  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
 }
