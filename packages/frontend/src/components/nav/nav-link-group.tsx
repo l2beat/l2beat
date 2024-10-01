@@ -24,7 +24,7 @@ export function NavLinkGroup({ group, children }: NavLinkGroupProps) {
   )
   return (
     <Collapsible className="flex flex-col gap-2" defaultOpen={defaultOpen}>
-      <CollapsibleTrigger className="group flex items-center justify-between gap-1.5">
+      <CollapsibleTrigger className="group flex items-baseline gap-1.5">
         <span className="ml-1 text-[0.9375rem] font-medium uppercase leading-[0.9375rem] tracking-tight text-slate-600 dark:text-gray-50">
           {group.title}
         </span>

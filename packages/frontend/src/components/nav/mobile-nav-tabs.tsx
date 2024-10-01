@@ -27,7 +27,7 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
 
   return (
     <OverflowWrapper>
-      <div className="mx-auto flex w-min items-center gap-2 px-4 py-2">
+      <div className="mx-auto flex w-min items-center gap-2 bg-pure-white px-4 py-2 dark:bg-[#1F2025]">
         {allLinks
           .filter((link) => !link.disabled)
           .map((link) => (
