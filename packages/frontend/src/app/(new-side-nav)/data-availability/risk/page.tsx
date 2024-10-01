@@ -1,4 +1,3 @@
-import { SimplePageHeader } from '~/components/simple-page-header'
 import {
   type DaRiskEntry,
   getDaRiskEntries,
@@ -22,9 +21,9 @@ export default async function Page() {
 
   return (
     <div>
-      <SimplePageHeader className="mb-4 sm:mb-8">
+      <h1 className="my-5 ml-6 text-3xl font-bold max-lg:hidden">
         Risk Analysis
-      </SimplePageHeader>
+      </h1>
       <div className="flex flex-col gap-6">
         <MainPageCard className="flex flex-col gap-4">
           <h2 className="text-xl font-bold">Public blockchains</h2>
