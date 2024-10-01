@@ -12,7 +12,7 @@ interface Props {
 
 export function ActivityChartHeader({ scalingFactor }: Props) {
   return (
-    <header className="mb-4" data-role="chart-header">
+    <header data-role="chart-header">
       <div className="flex items-baseline justify-between">
         <h1 className="mb-1 text-3xl font-bold">Activity</h1>
         {scalingFactor !== undefined ? (

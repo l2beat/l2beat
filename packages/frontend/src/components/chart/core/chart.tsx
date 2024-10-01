@@ -15,6 +15,7 @@ interface Props {
     position?: 'bottom-right' | 'center'
     className?: string
   }
+  v2?: boolean
   hideBottomLabel?: boolean
   disableHovers?: boolean
   disableMilestones?: boolean
@@ -23,6 +24,7 @@ interface Props {
 export function Chart({
   className,
   logo,
+  v2,
   disableHovers,
   disableMilestones,
   hideBottomLabel,
@@ -37,7 +39,7 @@ export function Chart({
       aria-label="chart"
     >
       <ChartRenderer />
-      <ChartLabels hideBottomLabel={hideBottomLabel} />
+      <ChartLabels hideBottomLabel={hideBottomLabel} v2={v2} />
       <ChartLoader />
       {!disableHovers && <ChartInteractionZone />}
       {!disableHovers && <ChartHover />}

@@ -47,6 +47,7 @@ export function SummaryActivityChart({ timeRange }: Props) {
       <section className="flex max-h-[290px] flex-col gap-4 2xl:max-h-[320px]">
         <Header scalingFactor={scalingFactor} />
         <Chart
+          v2
           logo={{
             position: 'center',
             className: 'h-8 w-20',
@@ -73,11 +74,11 @@ function Header({ scalingFactor }: { scalingFactor: number | undefined }) {
         </Link>
       </div>
       <div className="flex flex-col items-end gap-1">
-        <div className="whitespace-nowrap text-right text-xl font-bold leading-[1.15]">
+        <div className="whitespace-nowrap text-right font-bold leading-[1.15]">
           {scalingFactor !== undefined ? (
             <p className="text-right">
-              <span className="max-md:hidden">Scaling factor: </span>
-              <span>{scalingFactor.toFixed(2)}x</span>
+              <span className="text-base max-md:hidden">Scaling factor: </span>
+              <span className="text-xl">{scalingFactor.toFixed(2)}x</span>
             </p>
           ) : (
             <Skeleton className="h-[23px] w-20 md:w-[243px]" />

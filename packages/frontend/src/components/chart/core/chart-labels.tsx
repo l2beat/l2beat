@@ -8,9 +8,10 @@ export const FIRST_LABEL_HEIGHT_PX = 20
 interface Props {
   className?: string
   hideBottomLabel?: boolean
+  v2?: boolean
 }
 
-export function ChartLabels({ className, hideBottomLabel }: Props) {
+export function ChartLabels({ className, hideBottomLabel, v2 }: Props) {
   const { labels, columns } = useChartContext()
   const isLoading = useChartLoading()
   return (
@@ -25,7 +26,8 @@ export function ChartLabels({ className, hideBottomLabel }: Props) {
         <ChartLabel
           key={i}
           isLoading={isLoading}
-          className={cn(hideBottomLabel && i === 0 && 'invisible')}
+          className={cn(hideBottomLabel && i === 0 && '!text-transparent')}
+          v2={v2}
         >
           {label}
         </ChartLabel>
@@ -38,15 +40,32 @@ function ChartLabel({
   children,
   isLoading,
   className,
-}: { children?: ReactNode; isLoading: boolean; className?: string }) {
+  v2,
+}: {
+  children?: ReactNode
+  isLoading: boolean
+  className?: string
+  v2?: boolean
+}) {
   return (
-    <div className={cn('relative', className)}>
+    <div className="relative">
       {!isLoading ? (
-        <span className="absolute bottom-0 left-0 pb-0.5 text-sm text-gray-500 text-opacity-50 dark:text-white dark:text-opacity-50">
+        <span
+          className={cn(
+            'absolute bottom-0 left-0 pb-0.5 text-sm text-gray-500 dark:text-white',
+            v2 && 'text-zinc-500 dark:text-zinc-300',
+            className,
+          )}
+        >
           {children}
         </span>
       ) : null}
-      <hr className="border-gray-850/30 dark:border-white/30" />
+      <hr
+        className={cn(
+          'border-gray-850/30 dark:border-white/30',
+          v2 && 'border-zinc-500/30 dark:border-zinc-300/30',
+        )}
+      />
     </div>
   )
 }
