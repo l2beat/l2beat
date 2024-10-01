@@ -1,7 +1,7 @@
 {
   "name": "polygonzkevm",
   "chain": "ethereum",
-  "blockNumber": 20871496,
+  "blockNumber": 20871583,
   "configHash": "0x9f2a63feb17b6a63ff3e04a613e6e10404800c34a80bf98d0951ee464c231d4b",
   "version": 14,
   "contracts": [
@@ -21,12 +21,6 @@
       "values": {
         "$admin": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
         "$implementation": "0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b",
-        "$pastUpgrades": [
-          [
-            "2023-09-20T08:44:59.000Z",
-            ["0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b"]
-          ]
-        ],
         "$upgradeCount": 1,
         "beneficiary": "0xF29Ff96aaEa6C9A1fBa851f74737f3c069d4f1a9",
         "dai": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
@@ -108,12 +102,6 @@
       "values": {
         "$admin": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
         "$implementation": "0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6",
-        "$pastUpgrades": [
-          [
-            "2023-11-16T09:12:59.000Z",
-            ["0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6"]
-          ]
-        ],
         "$upgradeCount": 1,
         "bridge": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
         "l1USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -146,12 +134,6 @@
       "values": {
         "$admin": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
         "$implementation": "0x18FED1E19dC564DC917D203be9d40790472D22e9",
-        "$pastUpgrades": [
-          [
-            "2023-12-30T14:05:35.000Z",
-            ["0x18FED1E19dC564DC917D203be9d40790472D22e9"]
-          ]
-        ],
         "$upgradeCount": 1,
         "counterpartContract": "0xDB5D9c10FD2a92692DB51853e06058EE0436d69B",
         "counterpartNetwork": 1,
