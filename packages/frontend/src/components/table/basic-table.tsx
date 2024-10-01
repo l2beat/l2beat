@@ -118,7 +118,7 @@ export function BasicTable<T extends BasicEntry>({
             })}
           </TableHeaderRow>
         )}
-        <TableHeaderRow>
+        <TableHeaderRow className="border-b-2 border-b-zinc-400 dark:border-b-zinc-700">
           {actualHeader.headers.map((header) => {
             const groupParams = getGroupParams(header.column)
             return (

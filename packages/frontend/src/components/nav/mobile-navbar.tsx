@@ -14,7 +14,7 @@ export function MobileNavbar({
 }: { groups: NavGroup[]; logoLink: string }) {
   return (
     <div className="xl:hidden">
-      <div className="relative flex h-16 flex-row items-stretch justify-between gap-8 border-b border-gray-200 px-3.5 v2:bg-pure-white dark:border-gray-850 v2:dark:bg-[#1F2025]">
+      <div className="relative flex h-16 flex-row items-stretch justify-between gap-8 border-b border-gray-200 bg-pure-white px-3.5 dark:border-gray-850 dark:bg-[#1F2025]">
         {/* Left side */}
         <div className="flex flex-row gap-4">
           <div className="py-4">
