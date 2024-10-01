@@ -184,8 +184,8 @@ function CombinedRiskTable(props: {
               <RiskCell key={risk.name} {...risk} />
             ))}
           </tr>
-          <tr className="[&>td:not(:last-child)]:border-r-0">
-            <HeaderCell className="rounded-bl">
+          <tr className="border-zinc-700 dark:border-zinc-300 [&>td:not(:last-child)]:border-r-0 [&>td]:border-t-2">
+            <HeaderCell className="rounded-bl border-t-zinc-700 dark:border-t-zinc-300">
               <span className="font-medium">{props.l3.name}</span>
               <div className="whitespace-nowrap text-xs font-normal text-gray-500">
                 L3 • Combined
@@ -193,10 +193,20 @@ function CombinedRiskTable(props: {
             </HeaderCell>
             {props.combined
               ? props.combined.map((risk) => (
-                  <RiskCell key={risk.name} {...risk} backgroundFill />
+                  <RiskCell
+                    key={risk.name}
+                    {...risk}
+                    backgroundFill
+                    className="border-t-zinc-700 dark:border-t-zinc-300"
+                  />
                 ))
               : Array.from({ length: 5 }).map((_, i) => (
-                  <RiskCell key={i} value={EM_DASH} sentiment="UnderReview" />
+                  <RiskCell
+                    key={i}
+                    value={EM_DASH}
+                    sentiment="UnderReview"
+                    className="border-t-zinc-700 dark:border-t-zinc-300"
+                  />
                 ))}
           </tr>
         </tbody>
@@ -225,17 +235,21 @@ function RiskCell(props: {
   sentiment: Sentiment
   value: string
   backgroundFill?: boolean
+  className?: string
 }) {
   const bg = sentimentToBgColor(props.sentiment)
 
   return (
     <td
       className={cn(
-        props.backgroundFill && bg,
         'border border-gray-50 px-3 py-2 dark:border-gray-750',
+        props.backgroundFill && bg,
+        props.className,
       )}
     >
-      <SentimentText sentiment={props.sentiment}>{props.value}</SentimentText>
+      <SentimentText sentiment={props.sentiment} vibrant>
+        {props.value}
+      </SentimentText>
     </td>
   )
 }

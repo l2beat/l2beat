@@ -28,13 +28,17 @@ export function sentimentToBgColor(sentiment: Sentiment): string {
   }
 }
 
-export function sentimentToTextColor(sentiment: Sentiment): string {
+export function sentimentToTextColor(
+  sentiment: Sentiment,
+  opts?: { vibrant?: boolean },
+): string {
   switch (sentiment) {
     case 'bad':
       return 'text-red-550 dark:text-orange-600'
     case 'warning':
       return 'text-yellow-700 dark:text-yellow-200'
     case 'good':
+      return opts?.vibrant ? 'text-green-700 dark:text-green-450' : ''
     case 'neutral':
     case 'UnderReview':
       return ''
