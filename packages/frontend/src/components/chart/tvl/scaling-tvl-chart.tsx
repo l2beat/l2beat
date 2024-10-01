@@ -50,7 +50,6 @@ export function ScalingTvlChart({
         />
         <Chart
           hideBottomLabel
-          v2
           logo={{ position: 'center', className: 'w-20 h-8' }}
           disableMilestones
         />

@@ -49,7 +49,7 @@ export function ScalingTvlTable({ entries }: Props) {
   return (
     <div className="space-y-3 md:space-y-6">
       <ScalingTvlFilters items={allProjects} />
-      <BasicTable table={table} />
+      <BasicTable table={table} insideMainPageCard />
     </div>
   )
 }

@@ -41,7 +41,7 @@ export function ScalingUpcomingTable({ entries }: Props) {
   return (
     <section className="space-y-3 md:space-y-6">
       <ScalingUpcomingAndArchivedFilters items={filteredEntries} />
-      <BasicTable table={upcomingTable} />
+      <BasicTable table={upcomingTable} insideMainPageCard />
     </section>
   )
 }

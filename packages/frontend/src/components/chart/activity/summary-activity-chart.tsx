@@ -47,7 +47,6 @@ export function SummaryActivityChart({ timeRange }: Props) {
       <section className="flex max-h-[290px] flex-col gap-4 2xl:max-h-[320px]">
         <Header scalingFactor={scalingFactor} />
         <Chart
-          v2
           logo={{
             position: 'center',
             className: 'h-8 w-20',

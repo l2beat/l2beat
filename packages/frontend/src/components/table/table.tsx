@@ -6,17 +6,24 @@ import { TableTooltip } from './table-tooltip'
 const Table = React.forwardRef<
   HTMLTableElement,
   React.HTMLAttributes<HTMLTableElement>
->(({ className, ...props }, ref) => (
-  <div className="relative w-full overflow-auto pb-3">
-    <table
-      ref={ref}
-      className={cn('w-full border-collapse text-left text-base', className)}
-      cellPadding={0}
-      cellSpacing={0}
-      {...props}
-    />
-  </div>
-))
+>(({ className, ...props }, ref) => {
+  return (
+    <div className="max-md:-mr-4">
+      <div className={cn('relative w-full overflow-auto pb-3 max-md:pr-4')}>
+        <table
+          ref={ref}
+          className={cn(
+            'w-full border-collapse text-left text-base',
+            className,
+          )}
+          cellPadding={0}
+          cellSpacing={0}
+          {...props}
+        />
+      </div>
+    </div>
+  )
+})
 Table.displayName = 'Table'
 
 const TableHeader = React.forwardRef<

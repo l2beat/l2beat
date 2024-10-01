@@ -6,7 +6,6 @@ interface Props {
 }
 
 export function MainPageCard({ children, className }: Props) {
-  // TODO (summary-v2): add to tailwind config
   return (
     <div
       className={cn(

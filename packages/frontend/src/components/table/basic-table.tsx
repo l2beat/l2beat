@@ -42,6 +42,10 @@ interface Props<T extends BasicEntry> {
    * If the sub component is a raw component (e.g. renders a tr element), false by default
    */
   rawSubComponent?: boolean
+  /**
+   * If the table is inside a main page card - bypass right margin by adding classes
+   */
+  insideMainPageCard?: boolean
   rowColoringMode?: 'default' | 'ethereum-only'
 }
 

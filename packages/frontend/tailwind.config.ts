@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+import plugin from 'tailwindcss/plugin'
 
 const config: Config = {
   content: [
@@ -249,6 +250,9 @@ const config: Config = {
     },
   },
   plugins: [
+    plugin(function ({ addVariant }) {
+      addVariant('v2', '.v2 &')
+    }),
     require('tailwindcss-animate'),
     require('@tailwindcss/container-queries'),
   ],
