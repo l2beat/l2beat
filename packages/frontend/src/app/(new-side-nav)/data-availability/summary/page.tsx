@@ -1,10 +1,10 @@
+import { MainPageCard } from '~/components/main-page-card'
 import {
   type DaSummaryEntry,
   getDaSummaryEntries,
 } from '~/server/features/data-availability/summary/get-da-summary-entries'
-import { DaSummaryTable } from './_components/table/da-summary-table'
-import { MainPageCard } from '~/components/main-page-card'
 import { DaSummaryDacsTable } from './_components/table/da-summary-dacs-table'
+import { DaSummaryTable } from './_components/table/da-summary-table'
 
 export default async function Page() {
   const items = await getDaSummaryEntries()

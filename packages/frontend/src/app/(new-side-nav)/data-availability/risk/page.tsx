@@ -1,9 +1,9 @@
+import { MainPageCard } from '~/components/main-page-card'
 import {
   type DaRiskEntry,
   getDaRiskEntries,
 } from '~/server/features/data-availability/risks/get-da-risk-entries'
 import { DaRiskTable } from './_components/table/da-risk-table'
-import { MainPageCard } from '~/components/main-page-card'
 
 export default async function Page() {
   const items = await getDaRiskEntries()
