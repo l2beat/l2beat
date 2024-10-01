@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Logo } from '../logo'
-import { MobileNavLink } from './mobile-nav-link'
+import { MobileSelectedLink } from './mobile-selected-link'
 import { MobileNavTabs } from './mobile-nav-tabs'
 import { MobileNavTriggerOpen } from './mobile-nav-trigger'
 import { type NavGroup } from './types'
@@ -14,26 +14,15 @@ export function MobileNavbar({
 }: { groups: NavGroup[]; logoLink: string }) {
   return (
     <div className="xl:hidden">
-      <div className="relative flex h-16 flex-row items-stretch justify-between gap-8 border-b border-gray-200 bg-pure-white px-3.5 dark:border-gray-850 dark:bg-[#1F2025]">
+      <div className="relative flex h-16 flex-row items-stretch justify-between gap-8 border-b border-gray-200 px-3.5 v2:bg-pure-white dark:border-gray-850 v2:dark:bg-[#1F2025]">
         {/* Left side */}
-        <div className="flex flex-row gap-4">
+        <div className="flex items-center gap-4">
           <div className="py-4">
             <Link href={logoLink}>
               <Logo className="h-8 w-auto" />
             </Link>
           </div>
-          <ul className="flex flex-row">
-            <MobileNavLink
-              title="Scaling"
-              href="/scaling/summary"
-              activeBehavior={{ type: 'prefix', prefix: '/scaling' }}
-            />
-            <MobileNavLink
-              title="Bridges"
-              href="/bridges/summary"
-              activeBehavior={{ type: 'prefix', prefix: '/bridges' }}
-            />
-          </ul>
+          <MobileSelectedLink groups={groups} />
         </div>
         {/* Right side */}
         <div className="flex flex-row items-center">

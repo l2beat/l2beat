@@ -6,23 +6,19 @@ import { DarkThemeToggle } from '../dark-theme-toggle'
 import { Logo } from '../logo'
 import { SocialLinks } from '../social-links'
 import { MobileNavTriggerClose } from './mobile-nav-trigger'
-import { NavDivider } from './nav-divider'
-import { NavLink } from './nav-link'
 import { NavLinkGroup } from './nav-link-group'
 import { NavSideBarWrapper } from './nav-sidebar-wrapper'
 import { NavSmallLink } from './nav-small-link'
 import { NavSmallLinkGroup } from './nav-small-link-group'
 import { type NavGroup } from './types'
 
-export async function NavSidebar({
-  groups,
-  logoLink,
-  legacyNav,
-}: {
+interface Props {
   groups: NavGroup[]
   logoLink: string
   legacyNav: boolean
-}) {
+}
+
+export async function NavSidebar({ groups, logoLink, legacyNav }: Props) {
   const hiringBadge = env.NEXT_PUBLIC_SHOW_HIRING_BADGE
   return (
     <NavSideBarWrapper legacyNav={legacyNav}>
@@ -37,42 +33,14 @@ export async function NavSidebar({
           </div>
         </div>
       </div>
-      <nav className="flex flex-1 flex-col gap-6">
-        {groups.map((group) => {
-          return (
-            <NavLinkGroup key={group.title} group={group}>
-              {group.links.map(
-                (link) =>
-                  !link.disabled && (
-                    <NavLink
-                      key={link.href}
-                      title={link.title}
-                      icon={link.icon}
-                      href={link.href}
-                    />
-                  ),
-              )}
-              {group.secondaryLinks && (
-                <>
-                  <NavDivider className="mx-1.5 my-1 w-auto" />
-                  {group.secondaryLinks.map((link) => (
-                    <NavLink
-                      key={link.href}
-                      title={link.title}
-                      icon={link.icon}
-                      href={link.href}
-                    />
-                  ))}
-                </>
-              )}
-            </NavLinkGroup>
-          )
-        })}
+      <nav className="ml-1 flex flex-1 flex-col gap-6">
+        {groups.map((group) => (
+          <NavLinkGroup key={group.title} group={group} />
+        ))}
       </nav>
       <div>
         <NavSmallLinkGroup className="mt-5">
           <NavSmallLink title="Forum" href={externalLinks.forum} />
-          <NavSmallLink title="ZK Catalog" href="/zk-catalog" />
           <NavSmallLink title="Donate" href="/donate" />
           <NavSmallLink
             title="Governance"

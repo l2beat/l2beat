@@ -1,12 +1,18 @@
-export interface NavGroup {
-  title: string
-  links: NavLink[]
-  secondaryLinks?: NavLink[]
-}
+export type NavGroup =
+  | {
+      type: 'multiple'
+      title: string
+      icon: React.ReactNode
+      links: NavLink[]
+      secondaryLinks?: NavLink[]
+    }
+  | ({
+      type: 'single'
+      icon: React.ReactNode
+    } & NavLink)
 
 interface NavLink {
   title: string
-  icon: React.ReactNode
   href: string
   disabled?: boolean
 }

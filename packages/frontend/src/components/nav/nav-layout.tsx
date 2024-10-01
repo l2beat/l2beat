@@ -1,16 +1,10 @@
 import compact from 'lodash/compact'
 import { type ReactNode } from 'react'
 import { env } from '~/env'
-import { ArchivedIcon } from '~/icons/archived'
-import { ActivityIcon } from '~/icons/pages/activity'
-import { CostsIcon } from '~/icons/pages/costs'
+import { BridgesIcon } from '~/icons/pages/bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/data-availability'
-import FinalityIcon from '~/icons/pages/finality'
-import { LivenessIcon } from '~/icons/pages/liveness'
-import { RiskIcon } from '~/icons/pages/risk'
-import { SummaryIcon } from '~/icons/pages/summary'
-import { TvlIcon } from '~/icons/pages/tvl'
-import { UpcomingIcon } from '~/icons/upcoming'
+import { ScalingIcon } from '~/icons/pages/scaling'
+import { ZkCatalogIcon } from '~/icons/pages/zk-catalog'
 import { cn } from '~/utils/cn'
 import { LegacyNavbar } from './legacy-navbar'
 import { MobileNavProvider } from './mobile-nav-context'
@@ -35,98 +29,103 @@ export async function NavLayout({
 }: Props) {
   const groups: NavGroup[] = compact([
     {
+      type: 'multiple',
       title: 'Scaling',
+      icon: (
+        <ScalingIcon className="transition-colors duration-300 group-data-[active=true]:stroke-pink-900 dark:group-data-[active=true]:stroke-pink-200" />
+      ),
       links: [
         {
           title: 'Summary',
-          icon: <SummaryIcon />,
           href: '/scaling/summary',
         },
         {
           title: 'Value Locked',
-          icon: <TvlIcon />,
           href: '/scaling/tvl',
         },
         {
           title: 'Risk Analysis',
-          icon: <RiskIcon />,
           href: '/scaling/risk',
         },
         {
           title: 'Data Availability',
-          icon: <DataAvailabilityIcon />,
           href: '/scaling/data-availability',
         },
         {
           title: 'Liveness',
-          icon: <LivenessIcon />,
           href: '/scaling/liveness',
         },
         {
           title: 'Finality',
-          icon: <FinalityIcon />,
           href: '/scaling/finality',
         },
         {
           title: 'Activity',
-          icon: <ActivityIcon />,
           href: '/scaling/activity',
         },
         {
           title: 'Costs',
-          icon: <CostsIcon />,
           href: '/scaling/costs',
         },
       ],
       secondaryLinks: [
         {
           title: 'Upcoming',
-          icon: <UpcomingIcon className="size-5" />,
           href: '/scaling/upcoming',
         },
         {
           title: 'Archived',
-          icon: <ArchivedIcon className="size-5" />,
           href: '/scaling/archived',
         },
       ],
     },
     {
+      type: 'multiple',
       title: 'Bridges',
+      icon: (
+        <BridgesIcon className="transition-colors duration-300 group-data-[active=true]:stroke-pink-900 dark:group-data-[active=true]:stroke-pink-200" />
+      ),
       links: [
         {
           title: 'Summary',
-          icon: <SummaryIcon />,
           href: '/bridges/summary',
         },
         {
           title: 'Risk Analysis',
-          icon: <RiskIcon />,
           href: '/bridges/risk',
         },
       ],
       secondaryLinks: [
         {
           title: 'Archived',
-          icon: <ArchivedIcon className="size-5" />,
           href: '/bridges/archived',
         },
       ],
     },
     env.NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT && {
+      type: 'multiple',
       title: 'Data Availability',
+      icon: (
+        <DataAvailabilityIcon className="transition-colors duration-300 group-data-[active=true]:fill-pink-900 dark:group-data-[active=true]:fill-pink-200" />
+      ),
       links: [
         {
           title: 'Summary',
-          icon: <SummaryIcon />,
           href: '/data-availability/summary',
         },
         {
           title: 'Risk Analysis',
-          icon: <RiskIcon />,
           href: '/data-availability/risk',
         },
       ],
+    },
+    {
+      type: 'single',
+      title: 'ZK Catalog',
+      href: '/zk-catalog',
+      icon: (
+        <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-pink-900 dark:group-data-[active=true]:stroke-pink-200" />
+      ),
     },
   ])
 

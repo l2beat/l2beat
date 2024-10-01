@@ -13,9 +13,6 @@ import { type NavGroup } from './types'
 export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
   const ref = useRef<HTMLDivElement>(null)
   const pathname = usePathname()
-  const currentGroup = groups.find((g) =>
-    pathname.startsWith(`/${g.links[0]?.href.split('/')[1]}`),
-  )
 
   useEffect(() => {
     const tab = document.querySelector('[data-state=selected]')
@@ -26,6 +23,9 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
     }
   }, [])
 
+  const currentGroup = groups
+    .filter((g) => g.type === 'multiple')
+    .find((g) => pathname.startsWith(`/${g.links[0]?.href.split('/')[1]}`))
   if (!currentGroup) return null
 
   // Do not display the tabs if the current group is not found,

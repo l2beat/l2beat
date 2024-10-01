@@ -18,13 +18,13 @@ export function StageCell({ stageConfig }: StageCellProps) {
   const isMobile = breakpoint === 'mobile'
 
   if (stageConfig.stage === 'NotApplicable' || isMobile) {
-    return <StageBadge stage={stageConfig.stage} oneSize />
+    return <StageBadge stage={stageConfig.stage} />
   }
 
   return (
     <Tooltip>
       <TooltipTrigger>
-        <StageBadge stage={stageConfig.stage} oneSize />
+        <StageBadge stage={stageConfig.stage} />
       </TooltipTrigger>
       <TooltipContent>
         <StageTooltip stageConfig={stageConfig} />

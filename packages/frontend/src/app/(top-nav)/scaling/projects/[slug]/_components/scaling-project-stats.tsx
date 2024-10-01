@@ -67,7 +67,7 @@ export function ScalingProjectStats({ project, className }: Props) {
           value={
             <span className="relative -top-0.5 flex items-center">
               <a href="#stage">
-                <StageBadge stage={project.stageConfig.stage} big />
+                <StageBadge stage={project.stageConfig.stage} />
               </a>
               <Tooltip>
                 <TooltipTrigger className="inline-block px-2">
