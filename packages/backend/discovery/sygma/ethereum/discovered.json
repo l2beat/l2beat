@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19532229,
   "configHash": "0xab514b0310c481b6a325f6922fdd16a9bddd9aa666b3392e430d15f61def83c7",
-  "version": 14,
+  "version": 15,
   "contracts": [
     {
       "name": "FeeHandlerRouter",
@@ -354,5 +354,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
 }

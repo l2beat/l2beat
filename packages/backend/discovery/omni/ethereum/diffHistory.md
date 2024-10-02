@@ -1,3 +1,76 @@
+Generated with discovered.json: 0x1ee6e62af8033db28f96636fad340c2ee316efcf
+
+# Diff at Tue, 01 Oct 2024 15:42:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@974999225bba0722b5e81edd4c1b80928d80ef33 block: 20814221
+- current block number: 20871607
+
+## Description
+
+Fix Hashi EternalProxy. No changes on FE because Hashi is still optional (see previous update below).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20814221 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract HashiManager (0x159B36Ed5BA327fd269Fb93c75918257DCfe686d)
+    +++ description: None
+```
+
+```diff
+    contract HashiManager (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9) {
+    +++ description: None
+      name:
+-        "EternalStorageProxy"
++        "HashiManager"
+      values.$immutable:
+-        true
+      values.$admin:
++        "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E"
+      values.$implementation:
++        "0x159B36Ed5BA327fd269Fb93c75918257DCfe686d"
+      values.adapters:
++        ["0x0000000000000000000000000000000000000000"]
+      values.deployedAtBlock:
++        0
+      values.expectedAdaptersHash:
++        "0x290decd9548b62a8d60345a988386fc84ba6bc95484008f6362f93160ef3e563"
+      values.expectedThreshold:
++        1
+      values.isInitialized:
++        true
+      values.owner:
++        "0x933d5CD392CDA19b481071a4aaf5Bc34324AB9a5"
+      values.reporters:
++        ["0x0000000000000000000000000000000000000000"]
+      values.targetAddress:
++        "0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59"
+      values.targetChainId:
++        100
+      values.threshold:
++        1
+      values.yaho:
++        "0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8"
+      values.yaru:
++        "0x30f64a297cc66a873FB603d1e89D5891962C25ba"
+      proxyType:
++        "Eternal Storage proxy"
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E","via":[]}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract HashiOwnerMS (0x933d5CD392CDA19b481071a4aaf5Bc34324AB9a5)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x8f49e53941fb4c3ff0d7384b60069a702bf5c035
 
 # Diff at Mon, 23 Sep 2024 15:37:51 GMT:

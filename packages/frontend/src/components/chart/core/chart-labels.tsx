@@ -5,11 +5,12 @@ import { useChartLoading } from './chart-loading-context'
 
 export const FIRST_LABEL_HEIGHT_PX = 20
 
-export function ChartLabels({
-  className,
-}: {
+interface Props {
   className?: string
-}) {
+  hideBottomLabel?: boolean
+}
+
+export function ChartLabels({ className, hideBottomLabel }: Props) {
   const { labels, columns } = useChartContext()
   const isLoading = useChartLoading()
   return (
@@ -21,7 +22,11 @@ export function ChartLabels({
       )}
     >
       {labels.map((label, i) => (
-        <ChartLabel key={i} isLoading={isLoading}>
+        <ChartLabel
+          key={i}
+          isLoading={isLoading}
+          className={cn(hideBottomLabel && i === 0 && 'invisible')}
+        >
           {label}
         </ChartLabel>
       ))}
@@ -32,9 +37,10 @@ export function ChartLabels({
 function ChartLabel({
   children,
   isLoading,
-}: { children?: ReactNode; isLoading: boolean }) {
+  className,
+}: { children?: ReactNode; isLoading: boolean; className?: string }) {
   return (
-    <div className="relative">
+    <div className={cn('relative', className)}>
       {!isLoading ? (
         <span className="absolute bottom-0 left-0 pb-0.5 text-sm text-gray-500 text-opacity-50 dark:text-white dark:text-opacity-50">
           {children}

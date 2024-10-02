@@ -1,17 +1,10 @@
 {
   "name": "polygonzkevm",
   "chain": "ethereum",
-  "blockNumber": 19976289,
-  "configHash": "0x8660573ec3e06fd6350670ae40ed0bd1067e4751b1b00a633cbc91f86ec05fde",
+  "blockNumber": 20871583,
+  "configHash": "0x9f2a63feb17b6a63ff3e04a613e6e10404800c34a80bf98d0951ee464c231d4b",
   "version": 14,
   "contracts": [
-    {
-      "name": "PolygonzkEVMVerifier",
-      "address": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-      "sinceTimestamp": 1711291211,
-      "values": { "$immutable": true },
-      "derivedName": "FflonkVerifier"
-    },
     {
       "name": "daiBridge",
       "address": "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
@@ -45,7 +38,7 @@
         },
         "pendingDefaultAdminDelay": { "newDelay": 0, "schedule": 0 },
         "sdai": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
-        "totalBridgedDAI": "254032905626934742210448",
+        "totalBridgedDAI": "1198788545272906667807037",
         "totalProtocolDAI": "1000000000000000000",
         "zkEvmBridge": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
       },
@@ -60,7 +53,7 @@
       "values": {
         "$admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "$implementation": "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "admin": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
         "calculatePolPerForceBatch": 0,
@@ -78,7 +71,7 @@
         "INITIALIZE_TX_CONSTANT_BYTES_EMPTY_METADATA": 31,
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
-        "lastAccInputHash": "0xadc2b474c1301bee6c8c89fbe30a3c6e7365cc594a229d2bdf6331d9db5cbb28",
+        "lastAccInputHash": "0x715cecd4f4d4f9b0fb67542bf70d4a42912ddc4d1abb3f48a6e6e01f2bf4e5df",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "polygon zkEVM",
@@ -118,6 +111,13 @@
         "zkNetworkId": 1
       },
       "derivedName": "L1Escrow"
+    },
+    {
+      "name": "PolygonzkEVMVerifier",
+      "address": "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883",
+      "sinceTimestamp": 1726821035,
+      "values": { "$immutable": true },
+      "derivedName": "FflonkVerifier_11"
     },
     {
       "name": "wstETHBridge",
@@ -228,9 +228,6 @@
     { "address": "0xf56AE6520776934127AB68438d1b4652BCe07F8f" }
   ],
   "abis": {
-    "0x0775e11309d75aA6b0967917fB0213C5673eDf81": [
-      "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
-    ],
     "0x18FED1E19dC564DC917D203be9d40790472D22e9": [
       "constructor()",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -447,6 +444,9 @@
       "function zkMinterBurner() view returns (address)",
       "function zkNetworkId() view returns (uint32)"
     ],
+    "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883": [
+      "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
+    ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
@@ -569,5 +569,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
 }

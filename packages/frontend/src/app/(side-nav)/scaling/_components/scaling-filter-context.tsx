@@ -24,6 +24,7 @@ import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling
 import { type ScalingLivenessEntry } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
 import { type ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
+import { type ScalingSummaryEntryV2 } from '~/server/features/scaling/summary/get-scaling-summary-entries-v2'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 import { type ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
 
@@ -81,6 +82,7 @@ type ScalingEntry =
   | ScalingFinalityEntry
   | ScalingDataAvailabilityEntry
   | ScalingSummaryEntry
+  | ScalingSummaryEntryV2
   | ScalingCostsEntry
   | ScalingTvlEntry
   | ScalingLivenessEntry
@@ -105,7 +107,9 @@ export function useScalingFilter() {
           ? entry.stage?.stage === scalingFilters.stage
           : undefined,
         scalingFilters.purpose !== undefined
-          ? entry.purposes.some((purpose) => purpose === scalingFilters.purpose)
+          ? entry.purposes?.some(
+              (purpose) => purpose === scalingFilters.purpose,
+            )
           : undefined,
         scalingFilters.hostChain !== undefined
           ? scalingFilters.hostChain === 'Ethereum'

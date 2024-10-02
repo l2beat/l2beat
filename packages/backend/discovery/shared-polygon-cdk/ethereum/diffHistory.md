@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xa05eff9760fe0c1b81a11c3826d3a0970b9e9ebf
+
+# Diff at Tue, 01 Oct 2024 15:39:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@974999225bba0722b5e81edd4c1b80928d80ef33 block: 20792084
+- current block number: 20871594
+
+## Description
+
+New RollupType with FflonkVerifier_11 and a PolygonZkEvm code-identical consensus implementation is added. PolygonZkEvm is upgraded to the new type. See last update for context.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.0.3:
+-        3
++        5
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.0.2:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883"
+      values.rollupTypeCount:
+-        4
++        5
++++ description: struct consensusImplementation, verifier, forkID, rollupCompatibilityID, bool obsolete, genesisBlock
+      values.rollupTypes.4:
++        ["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71","0xc521580cd8586Cc688A7430F9DcE0f6A803F2883"]
+    }
+```
+
 Generated with discovered.json: 0x6761afe95cc65b2d57facf739411497e0c79d266
 
 # Diff at Fri, 20 Sep 2024 13:25:57 GMT:

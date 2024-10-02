@@ -428,9 +428,8 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
       ...templateVars.display,
       provider: 'OP Stack',
       category:
-        templateVars.display.category ?? daProvider !== undefined
-          ? 'Optimium'
-          : 'Optimistic Rollup',
+        templateVars.display.category ??
+        (daProvider !== undefined ? 'Optimium' : 'Optimistic Rollup'),
       warning:
         templateVars.display.warning === undefined
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
@@ -791,9 +790,8 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
       ...templateVars.display,
       provider: 'OP Stack',
       category:
-        templateVars.display.category ?? daProvider !== undefined
-          ? 'Optimium'
-          : 'Optimistic Rollup',
+        templateVars.display.category ??
+        (daProvider !== undefined ? 'Optimium' : 'Optimistic Rollup'),
       warning:
         templateVars.display.warning === undefined
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'

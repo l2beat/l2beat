@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19531626,
   "configHash": "0xf3064f249b7da6c6840d0ab6b1c33caf9555132bdcab0d8d85cac937cb20db0c",
-  "version": 14,
+  "version": 15,
   "contracts": [
     {
       "name": "L2OutputOracle",
@@ -31,6 +31,12 @@
       "values": {
         "$admin": "0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C",
         "$implementation": "0x394317B191f5c7A371e74594776B1EfDc33d10D6",
+        "$pastUpgrades": [
+          [
+            "2023-12-21T07:31:23.000Z",
+            ["0x394317B191f5c7A371e74594776B1EfDc33d10D6"]
+          ]
+        ],
         "$upgradeCount": 1,
         "challenger": "0x28A227d4faF0f4f75897438E24C43EF1CDABb920",
         "CHALLENGER": "0x28A227d4faF0f4f75897438E24C43EF1CDABb920",
@@ -185,6 +191,12 @@
       "values": {
         "$admin": "0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C",
         "$implementation": "0x01D5303F326B992845eef2782D4c9a7c6DdE4470",
+        "$pastUpgrades": [
+          [
+            "2023-12-21T03:15:11.000Z",
+            ["0x01D5303F326B992845eef2782D4c9a7c6DdE4470"]
+          ]
+        ],
         "$upgradeCount": 1,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "0x84BdFb21ed7C8B332a42bFD595744a84F3101e4E",
@@ -247,6 +259,12 @@
       "values": {
         "$admin": "0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C",
         "$implementation": "0xc4550911Df26E604aA560dee6a9b66D0CA933482",
+        "$pastUpgrades": [
+          [
+            "2023-12-21T07:23:35.000Z",
+            ["0xc4550911Df26E604aA560dee6a9b66D0CA933482"]
+          ]
+        ],
         "$upgradeCount": 1,
         "messenger": "0x9BFfA66a8FcAAd7AC9ea7c7d4b9a6fc46777022d",
         "MESSENGER": "0x9BFfA66a8FcAAd7AC9ea7c7d4b9a6fc46777022d",
@@ -264,6 +282,17 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xc5c3DF92714aAf510F8dD9a4c9C67D35f7d7376b",
+        "$pastUpgrades": [
+          [
+            "2023-12-20T05:04:47.000Z",
+            ["0x9BFfA66a8FcAAd7AC9ea7c7d4b9a6fc46777022d"]
+          ],
+          [
+            "2023-12-21T07:29:11.000Z",
+            ["0xc5c3DF92714aAf510F8dD9a4c9C67D35f7d7376b"]
+          ]
+        ],
+        "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
         "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292631180",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
@@ -302,6 +331,7 @@
       "values": {
         "$admin": "0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C",
         "$implementation": "0xC4De51792746960FC0ac78360b8e9c6E103F3B13",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x9BFfA66a8FcAAd7AC9ea7c7d4b9a6fc46777022d",
@@ -333,6 +363,12 @@
       "values": {
         "$admin": "0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C",
         "$implementation": "0x3fe449Ef47228F03f979F9D955196494243cdf7E",
+        "$pastUpgrades": [
+          [
+            "2023-12-21T07:32:47.000Z",
+            ["0x3fe449Ef47228F03f979F9D955196494243cdf7E"]
+          ]
+        ],
         "$upgradeCount": 1,
         "guardian": "0x28A227d4faF0f4f75897438E24C43EF1CDABb920",
         "GUARDIAN": "0x28A227d4faF0f4f75897438E24C43EF1CDABb920",
@@ -371,6 +407,12 @@
       "values": {
         "$admin": "0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C",
         "$implementation": "0xe1863A873f61fDD16560cAa7692a2A994b51E76A",
+        "$pastUpgrades": [
+          [
+            "2023-12-21T07:25:47.000Z",
+            ["0xe1863A873f61fDD16560cAa7692a2A994b51E76A"]
+          ]
+        ],
         "$upgradeCount": 1,
         "bridge": "0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3",
         "BRIDGE": "0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3",
@@ -755,5 +797,5 @@
     "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
 }

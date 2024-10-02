@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x469f25ff62470643e6bf703e44cf4a67fc26b66f
+
+# Diff at Tue, 01 Oct 2024 15:37:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@974999225bba0722b5e81edd4c1b80928d80ef33 block: 19976289
+- current block number: 20871583
+
+## Description
+
+PolygonZkEVMEtrog upgrades to RollupType 5. The consensus implementation is identical but the verifier was upgraded for the [Eggfruit upgrade](https://polygon.technology/blog/eggfruit-upgrade-incoming-polygon-zkevm-mainnet-beta-will-see-the-cdk-erigon-sequencer-go-live). TLDR: New Sequencer algo, double zkCounters for proofs. New verifier added to ZKCatalog
+
+## Watched changes
+
+```diff
+    contract PolygonZkEVMEtrog (0x519E42c24163192Dca44CD3fBDCEBF6be9130987) {
+    +++ description: None
+      values.$upgradeCount:
+-        3
++        4
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PolygonzkEVMVerifier (0xc521580cd8586Cc688A7430F9DcE0f6A803F2883)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/PolygonzkEVMVerifier.sol        | 1225 ++++++++++++++++++++
+ 1 file changed, 1225 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19976289 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract PolygonzkEVMVerifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x1dcae3247ace42c350c893c2e841c55da2fea9e5
 
 # Diff at Fri, 30 Aug 2024 07:54:46 GMT:

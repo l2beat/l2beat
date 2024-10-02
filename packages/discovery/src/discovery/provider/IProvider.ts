@@ -69,6 +69,7 @@ export interface IProvider {
     // biome-ignore lint/suspicious/noExplicitAny: TODO: LogDescription
   ): Promise<{ log: providers.Log; event: any }[]>
 
+  getBlock(blockNumber: number): Promise<providers.Block | undefined>
   getTransaction(
     transactionHash: Hash256,
   ): Promise<providers.TransactionResponse | undefined>
