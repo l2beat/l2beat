@@ -29,8 +29,6 @@ export function getTvlConfig(
     .concat(bridges.map(bridgeToBackendProject))
     .concat(layer3s.map(layer3ToBackendProject))
 
-  const aggLayerEnabled = flags.isEnabled('tvl', 'aggLayer')
-
   const aggLayerChains = layer2s
     .filter((c) =>
       c.config.escrows.some((e) => e.sharedEscrow?.type === 'AggLayer'),
@@ -38,9 +36,7 @@ export function getTvlConfig(
     .map((l) => l.id)
 
   const chainConfigs = uniq(
-    getChainsWithTokens(tokenList, chains).concat(
-      aggLayerEnabled ? aggLayerChains : [],
-    ),
+    getChainsWithTokens(tokenList, chains).concat(aggLayerChains),
   ).map((chain) =>
     getChainTvlConfig(flags.isEnabled('tvl', chain), env, chain, {
       minTimestamp: minTimestampOverride,
@@ -48,7 +44,6 @@ export function getTvlConfig(
   )
 
   return {
-    aggLayerEnabled,
     amounts: getTvlAmountsConfig(projects),
     prices: getTvlPricesConfig(minTimestampOverride),
     chains: chainConfigs,
