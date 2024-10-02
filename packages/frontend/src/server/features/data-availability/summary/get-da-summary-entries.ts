@@ -25,7 +25,9 @@ export async function getDaSummaryEntries() {
     // Calculate total TVS for each bridge
     .map((daLayer) => ({
       ...daLayer,
-      usedIn: daLayer.bridges.flatMap((bridge) => bridge.usedIn),
+      usedIn: daLayer.bridges
+        .flatMap((bridge) => bridge.usedIn)
+        .sort((a, b) => getSumFor([b.id]) - getSumFor([a.id])),
       tvs: getSumFor(
         daLayer.bridges.flatMap((bridge) =>
           bridge.usedIn.map((project) => project.id),
