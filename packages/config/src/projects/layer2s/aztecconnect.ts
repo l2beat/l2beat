@@ -175,7 +175,7 @@ export const aztecconnect: Layer2 = {
       references: [
         {
           text: 'Verifier28x32.sol#L150 - Etherscan source code',
-          href: 'https://etherscan.io/address/0xB656f4219f565b93DF57D531B574E17FE0F25939#code#F3#L150',
+          href: 'https://etherscan.io/address/0xb7baA1420f88b7758E341c93463426A2b7651CFB#code#F3#L150',
         },
       ],
     },

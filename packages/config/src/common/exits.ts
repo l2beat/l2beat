@@ -199,7 +199,7 @@ const STARKEX_BLOCKLIST: ScalingProjectTechnologyChoice = {
   references: [
     {
       text: 'Blocklist - Implementation on etherscan',
-      href: 'https://etherscan.io/address/0x654cEF88e1EDD4B5a6d10815439768c60ca109a1#code#F4#L27',
+      href: 'https://etherscan.io/address/0x5524cB52490e01CBa4EB64F230CC661780cB6298#code#F4#L33',
     },
   ],
 }
