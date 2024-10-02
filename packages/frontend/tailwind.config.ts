@@ -28,11 +28,9 @@ const config: Config = {
     colors: {
       current: 'currentColor',
       transparent: 'transparent',
-      brand: {
-        red: '#F9347B',
-        'red-dark': '#BD114F',
-        black: '#222222',
-      },
+      'brand-red': '#F9347B',
+      'brand-red-dark': '#BD114F',
+      'brand-black': '#222222',
       'pure-white': '#FFFFFF',
       white: '#FAFAFA',
       neutral: {
@@ -156,6 +154,12 @@ const config: Config = {
       },
       sky: { 500: '#0074FD', 550: '#2670FF', 600: '#2083C1' },
       fuchsia: { 700: '#860CB0' },
+
+      // New colors
+      brand: 'var(--brand)',
+      background: 'var(--background)',
+      'surface-secondary': 'var(--surface-secondary)',
+      'surface-tertiary': 'var(--surface-tertiary)',
     },
     screens: {
       xs: '400px',

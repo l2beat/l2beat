@@ -14,7 +14,7 @@ export function MobileSelectedLink({ groups }: { groups: NavGroup[] }) {
   if (!selectedGroup) return null
 
   return (
-    <span className="text-base font-bold text-pink-900 dark:text-pink-200">
+    <span className="text-base font-bold text-brand">
       {selectedGroup.title}
     </span>
   )

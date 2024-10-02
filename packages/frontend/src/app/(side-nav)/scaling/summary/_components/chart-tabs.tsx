@@ -26,10 +26,10 @@ export function ChartTabs({ unit, timeRange, className }: Props) {
         </Tabs.Content>
         <Tabs.List className="flex gap-1.5">
           <Tabs.Trigger value="tvl" className="group w-full py-3">
-            <div className="my-auto h-1 w-full rounded-full bg-[#CCD0DA] group-data-[state=active]:bg-pink-900 dark:group-data-[state=active]:bg-pink-200" />
+            <div className="my-auto h-1 w-full rounded-full bg-surface-tertiary group-data-[state=active]:bg-brand" />
           </Tabs.Trigger>
           <Tabs.Trigger value="activity" className="group w-full py-3">
-            <div className="my-auto h-1 w-full rounded-full bg-[#CCD0DA] group-data-[state=active]:bg-pink-900 dark:group-data-[state=active]:bg-pink-200" />
+            <div className="my-auto h-1 w-full rounded-full bg-surface-tertiary group-data-[state=active]:bg-brand" />
           </Tabs.Trigger>
         </Tabs.List>
       </Tabs.Root>

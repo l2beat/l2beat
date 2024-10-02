@@ -46,7 +46,7 @@ export const NavSideBarWrapper = ({
     >
       <div
         className={cn(
-          'scrollbar-gutter-stable flex flex-col gap-6 overflow-y-auto overflow-x-clip bg-n-gray-200 px-3.5 py-4 transition-all duration-300 ease-out dark:bg-[#090A0B] lg:fixed lg:px-6 lg:py-[1.125rem]',
+          'scrollbar-gutter-stable flex flex-col gap-6 overflow-y-auto overflow-x-clip bg-background px-3.5 py-4 transition-all duration-300 ease-out lg:fixed lg:px-6 lg:py-[1.125rem]',
           sharedSizeClasses,
           resizing && 'transition-none',
         )}

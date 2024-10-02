@@ -244,9 +244,7 @@ function ColGroup<T, V>(props: { headers: Header<T, V>[] }) {
     return (
       <React.Fragment key={header.id}>
         <colgroup
-          className={cn(
-            !header.isPlaceholder && 'bg-n-gray-200 dark:bg-zinc-800',
-          )}
+          className={cn(!header.isPlaceholder && 'bg-surface-secondary')}
         >
           {range(header.colSpan).map((i) => (
             <col key={`${header.id}-${i}`} />

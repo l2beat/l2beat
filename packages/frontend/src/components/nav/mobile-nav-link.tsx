@@ -26,12 +26,12 @@ export function MobileNavLink({
         href={href}
         className={cn(
           'relative flex h-full flex-col justify-center px-2 text-base font-medium md:px-4 md:text-lg',
-          active && 'text-pink-900 dark:text-pink-200',
+          active && 'text-brand',
         )}
       >
         {title}
         {active && (
-          <div className="absolute bottom-0 left-0 h-[3px] w-full bg-pink-900" />
+          <div className="absolute bottom-0 left-0 h-[3px] w-full bg-brand" />
         )}
       </Link>
     </li>

@@ -32,7 +32,7 @@ export async function NavLayout({
       type: 'multiple',
       title: 'Scaling',
       icon: (
-        <ScalingIcon className="transition-colors duration-300 group-data-[active=true]:stroke-pink-900 dark:group-data-[active=true]:stroke-pink-200" />
+        <ScalingIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
       ),
       links: [
         {
@@ -83,7 +83,7 @@ export async function NavLayout({
       type: 'multiple',
       title: 'Bridges',
       icon: (
-        <BridgesIcon className="transition-colors duration-300 group-data-[active=true]:stroke-pink-900 dark:group-data-[active=true]:stroke-pink-200" />
+        <BridgesIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
       ),
       links: [
         {
@@ -106,7 +106,7 @@ export async function NavLayout({
       type: 'multiple',
       title: 'DA',
       icon: (
-        <DataAvailabilityIcon className="transition-colors duration-300 group-data-[active=true]:fill-pink-900 dark:group-data-[active=true]:fill-pink-200" />
+        <DataAvailabilityIcon className="transition-colors duration-300 group-data-[active=true]:fill-brand" />
       ),
       links: [
         {
@@ -124,7 +124,7 @@ export async function NavLayout({
       title: 'ZK Catalog',
       href: '/zk-catalog',
       icon: (
-        <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-pink-900 dark:group-data-[active=true]:stroke-pink-200" />
+        <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
       ),
     },
   ])
