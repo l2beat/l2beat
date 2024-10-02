@@ -1,3 +1,4 @@
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { NEW_CRYPTOGRAPHY, RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -5,6 +6,9 @@ import { polygonCDKStack } from './templates/polygonCDKStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('astarzkevm')
+
+const shared = new ProjectDiscovery('shared-polygon-cdk')
+const bridge = shared.getContract('Bridge')
 
 const membersCountDAC = discovery.getContractValue<number>(
   'AstarValidiumDAC',
@@ -75,8 +79,6 @@ export const astarzkevm: Layer2 = polygonCDKStack({
     description:
       "Astar zkEVM is a Validium that leverages Polygon's CDK and zero-knowledge cryptography to enable off-chain transactions while maintaining EVM equivalence.",
     purposes: ['Universal'],
-    headerWarning:
-      'Astar zkEVM is using AggLayer, meaning it shares the TVL escrow contracts with Polygon zkEVM and other connected chains. For now, you can check its TVL [here](https://dune.com/hashed_official/astar-zkevm). We have not verified it so proceed with caution.',
     links: {
       websites: ['https://astar.network/astar2'],
       apps: [],
@@ -92,10 +94,34 @@ export const astarzkevm: Layer2 = polygonCDKStack({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  rpcUrl: 'https://evm.astar.network',
+  chainConfig: {
+    name: 'astarzkevm',
+    chainId: 3776,
+    explorerUrl: 'https://astar-zkevm.explorer.startale.com',
+    minTimestampForTvl: new UnixTime(1708632059),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 183817,
+        version: '3',
+      },
+    ],
+  },
+  rpcUrl: 'https://rpc.startale.com/astar-zkevm',
   discovery,
   isForcedBatchDisallowed,
-  nonTemplateEscrows: [],
+  nonTemplateEscrows: [
+    shared.getEscrowDetails({
+      address: bridge.address,
+      tokens: '*',
+      sharedEscrow: {
+        type: 'AggLayer',
+        nativeAsset: 'etherPreminted',
+        premintedAmount: '340282366920938463463374607431768211455',
+      },
+    }),
+  ],
   nonTemplateTechnology: {
     newCryptography: {
       ...NEW_CRYPTOGRAPHY.ZK_BOTH,

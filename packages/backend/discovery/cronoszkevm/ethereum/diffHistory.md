@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x94fa59118b88752205637a2b6454460d2c28b0da
+
+# Diff at Tue, 01 Oct 2024 10:50:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20862570
+- current block number: 20862570
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20862570 (main branch discovery), not current.
+
+```diff
+    contract CronosZkEvm (0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-07-30T16:30:35.000Z",["0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a","0xE60E94fCCb18a81D501a38959E532C0A85A1be89","0xCDB6228b616EEf8Df47D69A372C4f725C43e718C","0xaD193aDe635576d8e9f7ada71Af2137b16c64075"]],["2024-07-30T16:30:35.000Z",["0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a","0xE60E94fCCb18a81D501a38959E532C0A85A1be89","0xCDB6228b616EEf8Df47D69A372C4f725C43e718C","0xaD193aDe635576d8e9f7ada71Af2137b16c64075"]]]
+      values.$upgradeCount:
++        2
+    }
+```
+
 Generated with discovered.json: 0xab96172d00f6f2326ada7aab90076ea973d78e84
 
 # Diff at Mon, 30 Sep 2024 09:28:14 GMT:

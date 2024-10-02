@@ -34,7 +34,10 @@ export default async function Page() {
                 Onchain costs
               </MainPageHeader>
               <MainPageCard>
-                <ScalingCostsChart milestones={HOMEPAGE_MILESTONES} />
+                <ScalingCostsChart
+                  entries={entries}
+                  milestones={HOMEPAGE_MILESTONES}
+                />
               </MainPageCard>
               <MainPageCard className="mt-6">
                 <ScalingCostsTable entries={entries} />

@@ -30,7 +30,7 @@ export function CostsBreakdownValueCell({ data, type }: Props) {
     }
   }
   const value = data[type]
-  if (!value) return <Badge type="gray">N/A</Badge>
+  if (value === undefined) return <Badge type="gray">N/A</Badge>
 
   const formatted = formatCostValue(value, unit, metric)
 

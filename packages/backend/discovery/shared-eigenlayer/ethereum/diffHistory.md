@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x175cbdb8024fd1348562ca7a1cc64739065bbb6c
+Generated with discovered.json: 0x07b71986b33f7690da5cafb2ff0200cf78ba090b
 
-# Diff at Mon, 30 Sep 2024 09:24:50 GMT:
+# Diff at Tue, 01 Oct 2024 15:42:01 GMT:
 
-- author: sekuba (<sekuba@users.noreply.github.com>)
-- comparing to: main@eec6993b988ab9a9f325d04da2e9717ed24ad0b9 block: 20777978
-- current block number: 20862552
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@974999225bba0722b5e81edd4c1b80928d80ef33 block: 20777978
+- current block number: 20871604
 
 ## Description
 
@@ -33,6 +33,11 @@ New public `mint()` for `isMinter()` addresses and public `burn()` for all. Curr
       values.totalSupply:
 -        "1673646668284660000000000000"
 +        "1681371191369050738461538468"
++++ description: Timestamp after which transfer restrictions (whitelist) are disabled. Preset to uint256 max. Restrictions disabled if == 0.
++++ severity: HIGH
+      values.transferRestrictionsDisabledAfter:
+-        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
++        0
       values.Minters:
 +        ["0x708230Be53c08b270F43e068116EBacc4C13F577"]
       errors:
@@ -69,6 +74,11 @@ New public `mint()` for `isMinter()` addresses and public `burn()` for all. Curr
       values.totalSupply:
 -        "1673646668284660000000000000"
 +        "1681371191369050738461538468"
++++ description: Timestamp after which transfer restrictions (whitelist) are disabled. Preset to uint256 max. Restrictions disabled if == 0.
++++ severity: HIGH
+      values.transferRestrictionsDisabledAfter:
+-        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
++        0
     }
 ```
 

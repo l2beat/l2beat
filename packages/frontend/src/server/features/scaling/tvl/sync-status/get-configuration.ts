@@ -1,5 +1,5 @@
+import { type MultiIndexerEntry, toIndexerId } from '@l2beat/config'
 import { db } from '~/server/database'
-import { type MultiIndexerEntry, toIndexerId } from './to-indexer-entry'
 
 const MAX_CONFIGURATIONS_LENGTH_FOR_QUERY = 1000
 

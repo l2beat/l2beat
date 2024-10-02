@@ -14,6 +14,7 @@ import {
 } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 
+import { uniq } from 'lodash'
 import { TvlConfig } from '../Config'
 import { FeatureFlags } from '../FeatureFlags'
 import { getChainTvlConfig, getChainsWithTokens } from './chains'
@@ -28,7 +29,15 @@ export function getTvlConfig(
     .concat(bridges.map(bridgeToBackendProject))
     .concat(layer3s.map(layer3ToBackendProject))
 
-  const chainConfigs = getChainsWithTokens(tokenList, chains).map((chain) =>
+  const aggLayerChains = layer2s
+    .filter((c) =>
+      c.config.escrows.some((e) => e.sharedEscrow?.type === 'AggLayer'),
+    )
+    .map((l) => l.id)
+
+  const chainConfigs = uniq(
+    getChainsWithTokens(tokenList, chains).concat(aggLayerChains),
+  ).map((chain) =>
     getChainTvlConfig(flags.isEnabled('tvl', chain), env, chain, {
       minTimestamp: minTimestampOverride,
     }),

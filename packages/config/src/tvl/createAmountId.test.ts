@@ -1,4 +1,7 @@
 import {
+  AggLayerL2Token,
+  AggLayerNativeEtherPreminted,
+  AggLayerNativeEtherWrapped,
   AmountConfigBase,
   AssetId,
   CirculatingSupplyEntry,
@@ -104,6 +107,49 @@ describe(createAmountId.name, () => {
         },
       ],
     },
+    {
+      name: 'AggLayerL2Token',
+      mockFn: mockAggLayerL2Token,
+      extraFields: [
+        {
+          key: 'l1Address',
+          newValue: EthereumAddress.random(),
+          shouldUpdateHash: true,
+        },
+        {
+          key: 'originNetwork',
+          newValue: 2,
+          shouldUpdateHash: true,
+        },
+      ],
+    },
+    {
+      name: 'AggLayerNativeEtherPreminted',
+      mockFn: mockAggLayerNativeEtherPreminted,
+      extraFields: [
+        {
+          key: 'l2BridgeAddress',
+          newValue: EthereumAddress.random(),
+          shouldUpdateHash: true,
+        },
+        {
+          key: 'premintedAmount',
+          newValue: 200n,
+          shouldUpdateHash: true,
+        },
+      ],
+    },
+    {
+      name: 'AggLayerNativeEtherWrapped',
+      mockFn: mockAggLayerNativeEtherWrapped,
+      extraFields: [
+        {
+          key: 'wethAddress',
+          newValue: EthereumAddress.random(),
+          shouldUpdateHash: true,
+        },
+      ],
+    },
   ]
 
   testCases.forEach(({ name, mockFn, extraFields }) => {
@@ -158,6 +204,35 @@ function mockPreminted(): PremintedEntry {
     type: 'preminted',
     address: EthereumAddress.random(),
     coingeckoId: CoingeckoId('id'),
+    escrowAddress: EthereumAddress.random(),
+  }
+}
+
+function mockAggLayerL2Token(): AggLayerL2Token {
+  return {
+    ...mockBase(),
+    type: 'aggLayerL2Token',
+    l1Address: EthereumAddress.random(),
+    originNetwork: 0,
+    escrowAddress: EthereumAddress.random(),
+  }
+}
+
+function mockAggLayerNativeEtherPreminted(): AggLayerNativeEtherPreminted {
+  return {
+    ...mockBase(),
+    type: 'aggLayerNativeEtherPreminted',
+    l2BridgeAddress: EthereumAddress.random(),
+    premintedAmount: 100n,
+    escrowAddress: EthereumAddress.random(),
+  }
+}
+
+function mockAggLayerNativeEtherWrapped(): AggLayerNativeEtherWrapped {
+  return {
+    ...mockBase(),
+    type: 'aggLayerNativeEtherWrapped',
+    wethAddress: EthereumAddress.random(),
     escrowAddress: EthereumAddress.random(),
   }
 }

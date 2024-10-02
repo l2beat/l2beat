@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19918622,
   "configHash": "0x851dcefde7568133fa263a9fffe22037cc44668d4ad094c716282c29d4b5ba2a",
-  "version": 14,
+  "version": 15,
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -71,6 +71,12 @@
       "values": {
         "$admin": "0x1075B29e5F7a911128C77F3989702E150C988904",
         "$implementation": "0xa5a46DAaDAF1b2ae96F6FE85Ae81470126967A0E",
+        "$pastUpgrades": [
+          [
+            "2024-03-08T01:05:47.000Z",
+            ["0xa5a46DAaDAF1b2ae96F6FE85Ae81470126967A0E"]
+          ]
+        ],
         "$upgradeCount": 1,
         "bridge": "0x4cbab69108Aa72151EDa5A3c164eA86845f18438",
         "BRIDGE": "0x4cbab69108Aa72151EDa5A3c164eA86845f18438",
@@ -98,6 +104,12 @@
       "values": {
         "$admin": "0x1075B29e5F7a911128C77F3989702E150C988904",
         "$implementation": "0x314774a6Cfc3838E5a5a1DE3723EEa995aAD4e8f",
+        "$pastUpgrades": [
+          [
+            "2024-03-08T01:05:35.000Z",
+            ["0x314774a6Cfc3838E5a5a1DE3723EEa995aAD4e8f"]
+          ]
+        ],
         "$upgradeCount": 1,
         "guardian": "0x7ef00577fAAa44D0491970D6516eB7b90EC3c80E",
         "GUARDIAN_SLOT": "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68",
@@ -126,6 +138,7 @@
       "values": {
         "$admin": "0x1075B29e5F7a911128C77F3989702E150C988904",
         "$implementation": "0xE27083804bFf17Ec05f4300a43b7c40F3E01e486",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x892CAa506c86C5101f5eC11C6f09589c9dC8A85C",
@@ -159,6 +172,12 @@
       "values": {
         "$admin": "0x1075B29e5F7a911128C77F3989702E150C988904",
         "$implementation": "0xc5b17F1DF579D033DB17174B837fe4D2dF05b050",
+        "$pastUpgrades": [
+          [
+            "2024-03-08T01:05:59.000Z",
+            ["0xc5b17F1DF579D033DB17174B837fe4D2dF05b050"]
+          ]
+        ],
         "$upgradeCount": 1,
         "guardian": "0x7ef00577fAAa44D0491970D6516eB7b90EC3c80E",
         "GUARDIAN": "0x7ef00577fAAa44D0491970D6516eB7b90EC3c80E",
@@ -221,6 +240,12 @@
       "values": {
         "$admin": "0x1075B29e5F7a911128C77F3989702E150C988904",
         "$implementation": "0x164883d49DaEe18b3D621A24560D9bcD19Ad5407",
+        "$pastUpgrades": [
+          [
+            "2024-03-08T01:05:47.000Z",
+            ["0x164883d49DaEe18b3D621A24560D9bcD19Ad5407"]
+          ]
+        ],
         "$upgradeCount": 1,
         "batcherHash": "0x0244f7204b9c554306053Cc557e14D6Cbd40a33C",
         "gasLimit": 30000000,
@@ -257,6 +282,13 @@
       "values": {
         "$immutable": false,
         "$implementation": "0x4795EaC1a2581F2Db6419203D063711C5a90aD50",
+        "$pastUpgrades": [
+          [
+            "2024-03-08T01:05:59.000Z",
+            ["0x4795EaC1a2581F2Db6419203D063711C5a90aD50"]
+          ]
+        ],
+        "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
         "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620770",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
@@ -372,6 +404,12 @@
       "values": {
         "$admin": "0x1075B29e5F7a911128C77F3989702E150C988904",
         "$implementation": "0xf3EF9B6eE32366A625d84910c53eB20024043A70",
+        "$pastUpgrades": [
+          [
+            "2024-03-08T01:05:47.000Z",
+            ["0xf3EF9B6eE32366A625d84910c53eB20024043A70"]
+          ]
+        ],
         "$upgradeCount": 1,
         "messenger": "0x892CAa506c86C5101f5eC11C6f09589c9dC8A85C",
         "MESSENGER": "0x892CAa506c86C5101f5eC11C6f09589c9dC8A85C",
@@ -409,6 +447,12 @@
       "values": {
         "$admin": "0x1075B29e5F7a911128C77F3989702E150C988904",
         "$implementation": "0x5Fe6BFbb2C2c78c0baF0bFbb86420903E2E9f8a5",
+        "$pastUpgrades": [
+          [
+            "2024-03-08T01:05:59.000Z",
+            ["0x5Fe6BFbb2C2c78c0baF0bFbb86420903E2E9f8a5"]
+          ]
+        ],
         "$upgradeCount": 1,
         "challenger": "0xB5C248B428f9b2D8E8a03eE016760145b84098a9",
         "CHALLENGER": "0xB5C248B428f9b2D8E8a03eE016760145b84098a9",
@@ -789,5 +833,5 @@
     "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
 }
