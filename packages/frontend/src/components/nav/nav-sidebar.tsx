@@ -22,7 +22,7 @@ export async function NavSidebar({ groups, logoLink, legacyNav }: Props) {
   const hiringBadge = env.NEXT_PUBLIC_SHOW_HIRING_BADGE
   return (
     <NavSideBarWrapper legacyNav={legacyNav}>
-      <div className="flex flex-row items-center justify-between">
+      <div className="flex h-[38px] flex-row items-center justify-between">
         <Link href={logoLink}>
           <Logo className="block h-8 w-auto" />
         </Link>
