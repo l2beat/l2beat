@@ -1,14 +1,136 @@
-Generated with discovered.json: 0x0db87207c3fa9b655e10ed08a17e46e00cc124db
+Generated with discovered.json: 0x47cc844d1f050b93848c0eab1bf4709b7c447671
 
-# Diff at Tue, 01 Oct 2024 11:13:01 GMT:
+# Diff at Tue, 01 Oct 2024 15:47:56 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 257934843
-- current block number: 257934843
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@974999225bba0722b5e81edd4c1b80928d80ef33 block: 257934843
+- current block number: 259311792
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Upgrade of SequencerInbox and OSP to newer versions that are known from other orbit chains. No overall logic / config changes.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMemory (0x0aE035b3aAFFd8419d043920635Fe9CAdf179615)
+    +++ description: None
+```
+
+```diff
+    contract ChallengeManager (0x1f269F38196484ef81e58C0144AaD2c5F6394bB4) {
+    +++ description: None
+      values.$implementation:
+-        "0x935239e066F4F449D87D600e6d7c1a4F24c50f97"
++        "0x63AB51383384a09734b8B8F6646647213bdD54aC"
+      values.$pastUpgrades.1:
++        ["2024-09-30T15:15:30.000Z",["0x63AB51383384a09734b8B8F6646647213bdD54aC"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.osp:
+-        "0xD16048EC58016FAbaC4d4E4C1203e49c0d9090E4"
++        "0xc78778b1D7416FB8211e864dBA3e277DF39f2c71"
+    }
+```
+
+```diff
+    contract SequencerInbox (0x24B68936C13A414cd91437aE7AA730321B9ff159) {
+    +++ description: State batches / commitments get posted here.
+      values.$implementation:
+-        "0x1d182075d07744D71E37f77f1654165f6DAFad08"
++        "0x083c2b4D0C745224E8E484Dfd41eDC9b19f21Feb"
+      values.$pastUpgrades.1:
++        ["2024-09-30T15:15:30.000Z",["0x083c2b4D0C745224E8E484Dfd41eDC9b19f21Feb"]]
+      values.$upgradeCount:
+-        1
++        2
++++ description: Struct: delayBlocks, futureBlocks, delaySeconds, futureSeconds. onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed.
+      values.maxTimeVariation:
+-        {"delayBlocks":17280,"futureBlocks":48,"delaySeconds":86400,"futureSeconds":3600}
++        [17280,48,86400,3600]
+      values.batchPosterManager:
++        "0x0000000000000000000000000000000000000000"
+      values.BROTLI_MESSAGE_HEADER_FLAG:
++        "0x00"
+      values.DAS_MESSAGE_HEADER_FLAG:
++        "0x80"
+      values.DATA_BLOB_HEADER_FLAG:
++        "0x50"
+      values.isUsingFeeToken:
++        true
+      values.reader4844:
++        "0x0000000000000000000000000000000000000000"
+      values.TREE_DAS_MESSAGE_HEADER_FLAG:
++        "0x08"
+      values.ZERO_HEAVY_MESSAGE_HEADER_FLAG:
++        "0x20"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverHostIo (0x8D90460169D34d34a441F765A246a3C7f54C77C1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProofEntry (0xD16048EC58016FAbaC4d4E4C1203e49c0d9090E4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProver0 (0xd49141eB2c63D210b70542D6CE8453b049aab03A)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMath (0xF07A4a947E1ca7B9e46D99Dbe625C30f5b60C706)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (0x19c077b3269D988f87DBe3E0FAE2937a3aA37De4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (0x6322893cf9Eb2A7cF5A2C34bd7cC77064e8fB9BE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProofEntry (0xc78778b1D7416FB8211e864dBA3e277DF39f2c71)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMath (0xdeC2bEA51D608C1Fb2cCBC4F654eE0ffF848A73d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (0xF0981852f26053B6506582f819b54cF2DD6b8cC3)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ChallengeManager/ChallengeManager.sol          |   6 +
+ .../OneStepProverHostIo.sol                        | 107 +++-
+ .../SequencerInbox/SequencerInbox.sol              | 662 ++++++++++++++++-----
+ 3 files changed, 611 insertions(+), 164 deletions(-)
+```
 
 ## Config/verification related changes
 

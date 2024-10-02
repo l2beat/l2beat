@@ -987,6 +987,10 @@ At present, the StarkNet Foundation hosts voting for STRK token holders (or thei
         'Can upgrade implementation of the ETH escrow, potentially gaining access to all funds stored in the bridge. ' +
         delayDescriptionFromSeconds(escrowETHDelaySeconds),
     },
+    ...discovery.getMultisigPermission(
+      'StarkgateETHSecurityAgentMultisig',
+      'Can enable the token withdrawal limit of the Starkgate escrow for ETH.',
+    ),
     {
       name: 'StarkGate WBTC owner',
       accounts: getProxyGovernance(discovery, ESCROW_WBTC_ADDRESS),
