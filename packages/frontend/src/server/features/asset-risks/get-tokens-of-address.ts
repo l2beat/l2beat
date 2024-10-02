@@ -17,8 +17,8 @@ type Token = Omit<(typeof generatedJson.tokens)[number], 'address'> & {
 } & { id: AssetId }
 
 export async function getTokensOfAddress(address: Address) {
-  const groupedTokens = 
-    generatedJson.tokens.reduce<Record<number, Token[]>>((acc, token) => {
+  const groupedTokens = generatedJson.tokens.reduce<Record<number, Token[]>>(
+    (acc, token) => {
       const { chainId, address } = token
 
       if (!acc[chainId]) {
@@ -34,7 +34,9 @@ export async function getTokensOfAddress(address: Address) {
       })
 
       return acc
-    }, {})
+    },
+    {},
+  )
 
   const chains = Object.keys(groupedTokens).map(Number)
 
@@ -69,7 +71,7 @@ export async function getTokensOfAddress(address: Address) {
       .filter((p) => p.status === 'fulfilled')
       .map((p) => p.value)
       //.map(([chainId, tokens]) => ([chainId, tokens.filter(token => groupedTokens[chainId]?.some(t => t.address?.toLowerCase() === token.toLowerCase()))] as const))
-      .filter(([_, tokens]) => tokens.length > 0)
+      .filter(([_, tokens]) => tokens.length > 0),
   )
 
   return tokens
@@ -117,10 +119,10 @@ async function getAllLogs(
       e instanceof Error &&
       e.message.includes('Log response size exceeded')
     ) {
-    const half = (fromBlock + toBlock) / 2n
-    return await Promise.all([
-      getAllLogs(client, address, fromBlock, half, mode),
-      getAllLogs(client, address, half + 1n, toBlock, mode),
+      const half = (fromBlock + toBlock) / 2n
+      return await Promise.all([
+        getAllLogs(client, address, fromBlock, half, mode),
+        getAllLogs(client, address, half + 1n, toBlock, mode),
       ]).then((logs) => logs.flat())
     } else {
       throw e
