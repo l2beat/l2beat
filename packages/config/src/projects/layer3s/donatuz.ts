@@ -1,9 +1,9 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { subtractOne } from '../../common/assessCount'
 import { Badge } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
 import { Layer3 } from './types'
-import { subtractOne } from '../../common/assessCount'
 
 export const donatuz: Layer3 = underReviewL3({
   id: 'donatuz',
