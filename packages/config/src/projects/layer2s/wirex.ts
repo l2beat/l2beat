@@ -38,8 +38,6 @@ export const wirex: Layer2 = polygonCDKStack({
     slug: 'wirex',
     description:
       'Pay Chain is a Validium built on the Polygon CDK stack. It is used as the infrastructure for the Wirex non-custodial debit cards.',
-    headerWarning:
-      'Wirex Pay Chain is using AggLayer, meaning it shares the TVL escrow contracts with Polygon zkEVM and other connected chains.',
     purposes: ['Payments'],
     links: {
       websites: ['https://wirexpaychain.com/'],
