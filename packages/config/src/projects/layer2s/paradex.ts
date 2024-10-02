@@ -191,11 +191,24 @@ export const paradex: Layer2 = {
           sinceTimestamp: new UnixTime(1710346919),
         },
       },
+      {
+        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xF338cad020D506e8e3d9B4854986E0EcE6C23640',
+          ),
+          selector: '0x507ee528',
+          functionSignature:
+            'function updateStateKzgDA(uint256[] programOutput, bytes[] kzgProofs)',
+          sinceTimestamp: new UnixTime(1725811667),
+        },
+      },
     ],
     finality: {
       lag: 0,
       type: 'Starknet',
-      minTimestamp: new UnixTime(1710346920),
+      minTimestamp: new UnixTime(1725811667),
       stateUpdate: 'disabled',
     },
   },
