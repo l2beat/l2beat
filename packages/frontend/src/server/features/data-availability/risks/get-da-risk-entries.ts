@@ -43,6 +43,7 @@ export async function getDaRiskEntries() {
           return {
             name: daLayer.display.name,
             slug: daLayer.display.slug,
+            kind: daLayer.kind,
             layerType: kindToType(daLayer.kind),
             href: `/data-availability/projects/${daLayer.display.slug}/${daBridge.display.slug}`,
             daBridge: toDaBridge(daBridge),
@@ -74,6 +75,7 @@ export async function getDaRiskEntries() {
         {
           name: daLayer.display.name,
           slug: daLayer.display.slug,
+          kind: daLayer.kind,
           layerType: kindToType(daLayer.kind),
           daBridge: 'multiple' as const,
           href: daBridges[0]?.href,
