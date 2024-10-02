@@ -1,3 +1,63 @@
+Generated with discovered.json: 0xe956de0c0e5db3d8e01b0e16206dc738dd1722ef
+
+# Diff at Tue, 01 Oct 2024 11:13:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 19927684
+- current block number: 19927684
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19927684 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x0ED44be59Ea62a9960CB97f8aC54088304D05791) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-02-08T05:15:41.000Z",["0x0ED44be59Ea62a9960CB97f8aC54088304D05791"]],["2024-02-08T05:17:55.000Z",["0x06DDDA853506cECa671a06136f955f7f042FD667"]]]
+      values.$upgradeCount:
++        2
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x520D972B4A7C1CE4d5e01bCd4349a93a8AeaEAC5) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-02-08T05:18:07.000Z",["0x6042DE5a64709d8d4bBb227891AD886ECff49c6d"]]]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x52fA397D799f1CE416a2089B964Aa293c347994F) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.$pastUpgrades:
++        [["2024-02-08T05:18:21.000Z",["0x44Ce95273E69246fe258b02a68E3a6FfCA66fdf2"]]]
+    }
+```
+
+```diff
+    contract SystemConfig (0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-02-08T05:17:07.000Z",["0x5581A42BAF9bd77e1c56aFB2c74dEF20dfe26f9A"]]]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xF7Cb313CB6D146dAbB8c5E31798BDCeFc67B831b) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+    }
+```
+
 Generated with discovered.json: 0x552b6c3bb1972dd039722ceab4f45023d1d30e81
 
 # Diff at Wed, 18 Sep 2024 07:32:14 GMT:

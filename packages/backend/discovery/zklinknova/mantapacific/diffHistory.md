@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x699c3d23d4ad3baffbf5bea2af39db7808a12f50
+
+# Diff at Tue, 01 Oct 2024 11:15:00 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 3121124
+- current block number: 3121124
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 3121124 (main branch discovery), not current.
+
+```diff
+    contract L1ERC20Bridge (0x44a65dc12865A1e5249b45b4868f32b0E37168FF) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-01T12:23:59.000Z",["0x0d53cE63f3A72879d543ed6272A081308A731470"]],["2024-04-04T06:40:49.000Z",["0x5f58BcCE409CDaFBbD705e720743b1EfF9fef28c"]]]
+    }
+```
+
+```diff
+    contract zkLink (0xD784d7128B46B60Ca7d8BdC17dCEC94917455657) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-01T07:44:59.000Z",["0x5715Dec4cd747675E47b969D3a15aab909b8ce05"]],["2024-03-09T10:17:09.000Z",["0xe89635a7339bf46198f76b17bCFdAD977699cc13"]],["2024-04-22T02:31:49.000Z",["0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585"]]]
+    }
+```
+
+```diff
+    contract MantaL2Gateway (0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-01T07:46:29.000Z",["0x55fa5276c44c1B465196898b144524C9c852235E"]],["2024-03-01T11:22:39.000Z",["0xbfa352a683D82a04233Cc45AC1308621BA63283f"]],["2024-03-01T11:29:29.000Z",["0x55fa5276c44c1B465196898b144524C9c852235E"]],["2024-03-09T10:52:49.000Z",["0x50efC7f1290479cb879473512D89fDC80B726211"]]]
+    }
+```
+
 Generated with discovered.json: 0x7de113d773adcde00ce7f0b90bd20c96a3767383
 
 # Diff at Wed, 04 Sep 2024 07:33:36 GMT:

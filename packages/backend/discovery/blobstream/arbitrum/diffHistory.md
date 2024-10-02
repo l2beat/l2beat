@@ -1,25 +1,25 @@
-Generated with discovered.json: 0x782d0cf059fbf2869273ae775339321776852aac
+Generated with discovered.json: 0x7c625db0b4e4f64e52d05c87e29ca4fe2a1a4e54
 
-# Diff at Mon, 23 Sep 2024 09:37:30 GMT:
+# Diff at Tue, 01 Oct 2024 15:44:43 GMT:
 
-- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@d3382cfb14234950671011f2a61630973cab3e07 block: 252706992
-- current block number: 256474144
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@974999225bba0722b5e81edd4c1b80928d80ef33 block: 252706992
+- current block number: 259311089
 
 ## Description
 
-New verifier.
+New verifier used, oldVerifier2 frozen.
 
 ## Watched changes
 
 ```diff
     contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
     +++ description: None
-+++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen).
++++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-09-21.
       values.oldVerifier2.1:
 -        false
 +        true
-+++ description: The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-09-04.
++++ description: The prover contract address for SP1, and whether it is frozen (true if frozen).
       values.verifier.0:
 -        "0x0000000000000000000000000000000000000000"
 +        "0x1764C29FBd94865198588f10FC75D4f6636d158d"
@@ -28,8 +28,16 @@ New verifier.
 
 ```diff
 +   Status: CREATED
-    contract  (0x1764C29FBd94865198588f10FC75D4f6636d158d)
+    contract SP1Verifier (0x1764C29FBd94865198588f10FC75D4f6636d158d)
     +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0x1764C29FBd94865198588f10FC75D4f6636d158d.sol | 1428 ++++++++++++++++++++
+ ...0xc350F063C13a3Ca21331610fe159E697a5c9c2FB.sol} |    0
+ 2 files changed, 1428 insertions(+)
 ```
 
 ## Config/verification related changes
@@ -41,18 +49,18 @@ discovery. Values are for block 252706992 (main branch discovery), not current.
 ```diff
     contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
     +++ description: None
-+++ description: The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-09-04.
++++ description: The prover contract address for SP1, and whether it is frozen (true if frozen).
       values.verifier.0:
 -        "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc"
 +        "0x0000000000000000000000000000000000000000"
-+++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen).
++++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-09-21.
       values.oldVerifier2:
 +        ["0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",false]
       fieldMeta.verifier.description:
 -        "The verifier contract address for SP1, and whether it is frozen (true if frozen)."
-+        "The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-09-04."
++        "The prover contract address for SP1, and whether it is frozen (true if frozen)."
       fieldMeta.oldVerifier2:
-+        {"description":"The verifier contract address for SP1, and whether it is frozen (true if frozen)."}
++        {"description":"The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-09-21."}
     }
 ```
 

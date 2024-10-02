@@ -41,10 +41,6 @@ export class ZKsyncEraValidatorsHandler implements Handler {
       ],
     ])
 
-    console.log('shrek', abi.getEventTopic('UpgradeComplete'))
-    console.log('shrek', abi.getEventTopic('ValidatorStatusUpdate'))
-    console.log('shrek', abi.getEventTopic('DiamondCut'))
-
     const validators: Set<string> = new Set()
 
     for (const rawLog of logs) {

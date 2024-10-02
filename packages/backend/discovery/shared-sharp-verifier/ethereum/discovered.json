@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20842982,
   "configHash": "0x899e53b29b077d1af0417c2dcf901f5a4bfdb20a2598939c95c06827ec471499",
-  "version": 14,
+  "version": 15,
   "contracts": [
     {
       "name": "EcdsaPointsXColumn",
@@ -406,6 +406,41 @@
         ],
         "$immutable": false,
         "$implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
+        "$pastUpgrades": [
+          [
+            "2021-10-24T13:06:25.000Z",
+            ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
+          ],
+          [
+            "2022-05-02T16:49:21.000Z",
+            ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
+          ],
+          [
+            "2022-08-07T10:50:09.000Z",
+            ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
+          ],
+          [
+            "2023-03-06T12:34:23.000Z",
+            ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
+          ],
+          [
+            "2024-02-26T09:25:23.000Z",
+            ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
+          ],
+          [
+            "2024-02-26T09:25:23.000Z",
+            ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
+          ],
+          [
+            "2024-07-28T10:07:47.000Z",
+            ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
+          ],
+          [
+            "2024-07-28T20:08:35.000Z",
+            ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
+          ]
+        ],
+        "$upgradeCount": 8,
         "CALL_PROXY_VERSION": "3.1.0",
         "callProxyImplementation": "0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942",
         "getUpgradeActivationDelay": 0,
