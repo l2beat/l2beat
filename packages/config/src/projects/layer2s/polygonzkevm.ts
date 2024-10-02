@@ -250,7 +250,41 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
       ],
       verifiers: [
         {
-          name: 'PolygonZkEvmVerifier',
+          name: 'PolygonZkEvmVerifier (current RollupType 5)',
+          description:
+            'Polygon zkEVM utilizes [PIL-STARK](https://github.com/0xPolygonHermez/pil-stark) as the main proving stack for their system. PIL-STARK is an implementation of the [eSTARK](https://eprint.iacr.org/2023/474) protocol. The circuits and the computations are represented using the PIL and zkASM custom languages. The protocol makes use of recursive proof aggregation. The final eSTARK proof is wrapped in a fflonk proof.',
+          verified: 'no',
+          contractAddress: EthereumAddress(
+            '0xc521580cd8586Cc688A7430F9DcE0f6A803F2883',
+          ),
+          chainId: ChainId.ETHEREUM,
+          subVerifiers: [
+            {
+              name: 'Final wrap',
+              proofSystem: 'fflonk',
+              mainArithmetization: 'Plonkish',
+              mainPCS: 'KZG-fflonk',
+              trustedSetup: 'Powers of Tau 28',
+            },
+            {
+              name: 'Aggregation circuit',
+              proofSystem: 'eSTARK',
+              mainArithmetization: 'eAIR',
+              mainPCS: 'FRI',
+              trustedSetup: 'None',
+            },
+            {
+              name: 'Polygon zkEVM ROM',
+              proofSystem: 'eSTARK',
+              mainArithmetization: 'eAIR',
+              mainPCS: 'FRI',
+              trustedSetup: 'None',
+              link: 'https://github.com/0xPolygonHermez/zkevm-rom',
+            },
+          ],
+        },
+        {
+          name: 'PolygonZkEvmVerifier (old RollupType 3)',
           description:
             'Polygon zkEVM utilizes [PIL-STARK](https://github.com/0xPolygonHermez/pil-stark) as the main proving stack for their system. PIL-STARK is an implementation of the [eSTARK](https://eprint.iacr.org/2023/474) protocol. The circuits and the computations are represented using the PIL and zkASM custom languages. The protocol makes use of recursive proof aggregation. The final eSTARK proof is wrapped in a fflonk proof.',
           verified: 'no',
