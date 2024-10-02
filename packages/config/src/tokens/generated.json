@@ -1123,6 +1123,20 @@
       "supply": "zero"
     },
     {
+      "name": "Pencils Protocol",
+      "coingeckoId": "pencils-protocol",
+      "address": "0x5FC429110A64bC51b57Ca86dCE1714FD0fBec303",
+      "symbol": "DAPP",
+      "decimals": 18,
+      "deploymentTimestamp": 1726245971,
+      "coingeckoListingTimestamp": 1727431650,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36569/large/Pencils_Protocol_Profile_Pic.png?1722658792",
+      "chainId": 534352,
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Decentraland MANA",
       "coingeckoId": "decentraland",
       "address": "0x0F5D2fB29fb7d3CFeE444a200298f468908cC942",

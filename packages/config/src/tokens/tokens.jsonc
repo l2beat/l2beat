@@ -3506,6 +3506,13 @@
   ],
   "scroll": [
     {
+      "symbol": "DAPP",
+      "address": "0x5FC429110A64bC51b57Ca86dCE1714FD0fBec303",
+      "source": "native",
+      "supply": "totalSupply",
+      "coingeckoId": "penpad-token"
+    },
+    {
       "symbol": "SolvBTC",
       "address": "0x3Ba89d490AB1C0c9CC2313385b30710e838370a4",
       "supply": "totalSupply",
