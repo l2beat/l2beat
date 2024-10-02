@@ -9,7 +9,7 @@ export function ScalingIcon({ className, ...props }: SvgIconProps) {
       viewBox="0 0 20 20"
       fill="none"
       aria-label="Scaling icon"
-      className={cn('stroke-[#131215] dark:stroke-white', className)}
+      className={cn('stroke-primary', className)}
       {...props}
     >
       <path

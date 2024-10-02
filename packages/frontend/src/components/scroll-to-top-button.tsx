@@ -39,7 +39,7 @@ export function ScrollToTopButton() {
         isVisible && 'bottom-8',
       )}
     >
-      <ChevronIcon className="mx-auto rotate-180 fill-pure-white dark:fill-neutral-900" />
+      <ChevronIcon className="mx-auto rotate-180 fill-primary" />
     </button>
   )
 }

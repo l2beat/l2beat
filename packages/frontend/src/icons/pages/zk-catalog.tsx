@@ -8,7 +8,7 @@ export function ZkCatalogIcon({ className, ...props }: SvgIconProps) {
       height="20"
       viewBox="0 0 20 20"
       aria-label="ZK Catalog icon"
-      className={cn('stroke-[#131215] dark:stroke-white', className)}
+      className={cn('stroke-primary', className)}
       fill="none"
       {...props}
     >

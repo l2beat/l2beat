@@ -9,7 +9,7 @@ export function BridgesIcon({ className, ...props }: SvgIconProps) {
       viewBox="0 0 20 20"
       aria-label="Bridges icon"
       fill="none"
-      className={cn('stroke-[#131215] dark:stroke-white', className)}
+      className={cn('stroke-primary', className)}
       {...props}
     >
       <g clipPath="url(#clip0_4632_30109)">

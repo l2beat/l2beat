@@ -34,7 +34,7 @@ export function NavLinkGroup({ group }: NavLinkGroupProps) {
         {group.icon}
         <span
           className={cn(
-            'ml-1 text-base font-medium uppercase tracking-tight text-[#131215] transition-colors duration-300 dark:text-white',
+            'ml-1 text-base font-medium uppercase tracking-tight text-primary transition-colors duration-300',
             isSelected && 'text-brand',
           )}
         >
@@ -58,7 +58,7 @@ export function NavLinkGroup({ group }: NavLinkGroupProps) {
         <div className="flex items-baseline gap-1.5">
           <span
             className={cn(
-              'ml-1 text-base font-medium uppercase tracking-tight text-[#131215] transition-colors duration-300  dark:text-white',
+              'ml-1 text-base font-medium uppercase tracking-tight text-primary transition-colors duration-300 ',
               isSelected && 'text-brand',
             )}
           >
@@ -66,7 +66,7 @@ export function NavLinkGroup({ group }: NavLinkGroupProps) {
           </span>
           <ChevronIcon
             className={cn(
-              'size-3 -rotate-90 fill-[#131215] transition-[transform,_color,_fill] duration-300 group-data-[state=open]:rotate-0 dark:fill-white',
+              'size-3 -rotate-90 fill-primary transition-[transform,_color,_fill] duration-300 group-data-[state=open]:rotate-0',
               isSelected && 'fill-brand',
             )}
           />
