@@ -34,7 +34,7 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
   if (!display) return null
 
   return (
-    <OverflowWrapper className="bg-pure-white dark:bg-[#1F2025]">
+    <OverflowWrapper className="bg-surface-primary">
       <div className="flex" ref={ref}>
         {currentGroup.links
           .filter((link) => !link.disabled)

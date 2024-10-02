@@ -161,6 +161,7 @@ const config: Config = {
       secondary: 'var(--secondary)',
       brand: 'var(--brand)',
       background: 'var(--background)',
+      'surface-primary': 'var(--surface-primary)',
       'surface-secondary': 'var(--surface-secondary)',
       'surface-tertiary': 'var(--surface-tertiary)',
     },

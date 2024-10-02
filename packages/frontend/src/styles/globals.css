@@ -11,6 +11,7 @@
     --secondary: #5F6470;
     --brand: #860CB0;
     --background: #E6E7EC;
+    --surface-primary: #FAFAFA;
     --surface-secondary: #E6E7EC;
     --surface-tertiary: #CCD0DA;
   }
@@ -20,6 +21,7 @@
     --secondary: #5F6470;
     --brand: #DB8BF7;
     --background: #090A0B;
+    --surface-primary: #1F2025;
     --surface-secondary: #393C43;
     --surface-tertiary: #464A52;
   }

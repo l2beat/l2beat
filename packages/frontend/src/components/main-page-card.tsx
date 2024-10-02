@@ -9,7 +9,7 @@ export function MainPageCard({ children, className }: Props) {
   return (
     <div
       className={cn(
-        'bg-pure-white p-4 dark:bg-[#1F2025] md:rounded-xl md:px-6 md:py-5',
+        'bg-surface-primary p-4 md:rounded-xl md:px-6 md:py-5',
         className,
       )}
     >
