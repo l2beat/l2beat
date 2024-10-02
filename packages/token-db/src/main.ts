@@ -30,7 +30,9 @@ import {
 type TokenPayload = { tokenId: TokenRecord['id'] }
 type BatchTokenPayload = { tokenIds: TokenRecord['id'][] }
 
-const db = createDatabase()
+const db = createDatabase({
+  connectionString: env.DATABASE_URL,
+})
 
 const logger = new Logger({
   transports: [
@@ -100,7 +102,7 @@ const deploymentProcessors = networksConfig
     })
 
     const bus = queueWithProcessor<TokenPayload>({
-      name: `DeploymentProcessor:${networkConfig.name}`,
+      name: `DeploymentProcessor-${networkConfig.name}`,
       processor: (job) => {
         return processor(job.data.tokenId)
       },
@@ -280,12 +282,12 @@ const onChainMetadataBuses = networksConfig
   .map((networkConfig) => {
     // Per-chain events will be collected here
     const eventCollectorInbox = queue<TokenPayload>({
-      name: `OnChainMetadataEventCollector:${networkConfig.name}`,
+      name: `OnChainMetadataEventCollector-${networkConfig.name}`,
     })
 
     // Batch processor for the collected events
     const batchEventProcessor = queueWithProcessor<BatchTokenPayload>({
-      name: `OnChainMetadataBatchProcessor:${networkConfig.name}`,
+      name: `OnChainMetadataBatchProcessor-${networkConfig.name}`,
       processor: (job) =>
         buildOnChainMetadataSource({
           logger,
@@ -342,7 +344,7 @@ const wormholeSource = buildWormholeSource({
 const orbitSource = buildOrbitSource({ logger, db, queue: tokenUpdateQueue })
 const tokenListSources = lists.map(({ tag, url }) =>
   queueWithProcessor({
-    name: `TokenListProcessor:${tag}`,
+    name: `TokenListProcessor-${tag}`,
     processor: buildTokenListSource({
       tag,
       url,
@@ -355,7 +357,7 @@ const tokenListSources = lists.map(({ tag, url }) =>
 
 // const lzV1Sources = networksConfig.filter(withExplorer).map((networkConfig) => {
 //   return {
-//     name: `LayerZeroV1Processor:${networkConfig.name}`,
+//     name: `LayerZeroV1Processor-${networkConfig.name}`,
 //     processor: buildLayerZeroV1Source({
 //       logger,
 //       db,
@@ -369,7 +371,7 @@ const tokenListSources = lists.map(({ tag, url }) =>
 
 const axelarGatewayQueues = networksConfig.map((networkConfig) =>
   queueWithProcessor({
-    name: `AxelarGatewayProcessor:${networkConfig.name}`,
+    name: `AxelarGatewayProcessor-${networkConfig.name}`,
     processor: buildAxelarGatewaySource({
       logger,
       db,
