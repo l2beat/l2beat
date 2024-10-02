@@ -114,7 +114,7 @@ function ProjectNavigationList({
 
   return (
     <div
-      className="absolute top-0 flex max-h-[calc(100vh-220px)] flex-col gap-3 overflow-y-auto leading-none transition-[top] duration-300"
+      className="absolute top-0 flex max-h-[calc(100vh-220px)] w-[246px] min-w-[246px] flex-col gap-3 overflow-y-auto leading-none transition-[top] duration-300"
       style={style}
       ref={menuContainer}
     >
