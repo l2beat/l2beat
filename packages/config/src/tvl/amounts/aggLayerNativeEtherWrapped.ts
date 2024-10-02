@@ -20,23 +20,35 @@ export function getAggLayerNativeEtherWrappedEntry(
   assert(escrow.sharedEscrow.wethAddress, 'WETH address is required')
   assert(l1WETH.address, 'Ethereum WETH token not found')
 
+  // We are hardcoding assetId because aggLayerNativeEtherWrapped is an canonical token
+  const assetId = AssetId.create(ethereum.name, l1WETH.address)
+  const type = 'aggLayerNativeEtherWrapped'
+  const dataSource = `${chain.name}_agglayer`
+  const symbol = 'ETH'
+  const source = 'canonical'
+  const includeInTotal = true
+  const sinceTimestamp = UnixTime.max(
+    chain.minTimestampForTvl,
+    escrow.sinceTimestamp,
+  )
+  const decimals = 18
+  const isAssociated = false
+  const category = 'ether'
+
   return {
-    type: 'aggLayerNativeEtherWrapped',
-    dataSource: `${chain.name}_agglayer`,
+    type: type,
+    dataSource: dataSource,
     wethAddress: escrow.sharedEscrow.wethAddress,
     project: project.projectId,
-    assetId: AssetId.create(ethereum.name, l1WETH.address),
+    assetId: assetId,
     escrowAddress: escrow.address,
     chain: project.projectId,
-    symbol: 'ETH',
-    source: 'canonical',
-    includeInTotal: true,
-    sinceTimestamp: UnixTime.max(
-      chain.minTimestampForTvl,
-      escrow.sinceTimestamp,
-    ),
-    decimals: 18,
-    isAssociated: false,
-    category: 'ether',
+    symbol: symbol,
+    source: source,
+    includeInTotal: includeInTotal,
+    sinceTimestamp: sinceTimestamp,
+    decimals: decimals,
+    isAssociated: isAssociated,
+    category: category,
   }
 }

@@ -29,12 +29,18 @@ export function getAggLayerL2TokenEntry(
     : escrow.includeInTotal ?? true
   const isAssociated = !!project.associatedTokens?.includes(token.symbol)
 
+  // We are hardcoding assetId because aggLayerL2Token is an canonical token
+  const assetId = AssetId.create(ethereum.name, token.address)
+  const type = 'aggLayerL2Token'
+  const originNetwork = 0
+  const dataSource = `${chain.name}_agglayer`
+
   return {
-    type: 'aggLayerL2Token',
-    originNetwork: 0,
-    dataSource: `${chain.name}_agglayer`,
+    type: type,
+    originNetwork: originNetwork,
+    dataSource: dataSource,
     l1Address: token.address,
-    assetId: AssetId.create(ethereum.name, token.address),
+    assetId: assetId,
     chain: project.projectId,
     escrowAddress: escrow.address,
     project: project.projectId,

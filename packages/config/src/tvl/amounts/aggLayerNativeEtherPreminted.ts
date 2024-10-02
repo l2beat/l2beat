@@ -17,26 +17,39 @@ export function getAggLayerNativeEtherPremintedEntry(
   assert(escrow.sharedEscrow?.type === 'AggLayer')
   assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
 
+  // We are hardcoding assetId because aggLayerNativeEtherPreminted is an canonical token
+  const assetId = AssetId.create(ethereum.name, 'native')
+  const type = 'aggLayerNativeEtherPreminted'
+  const dataSource = `${chain.name}_agglayer`
+  const premintedAmount = escrow.sharedEscrow.premintedAmount
+    ? BigInt(escrow.sharedEscrow.premintedAmount)
+    : BigInt(0)
+  const source = 'canonical'
+  const category = 'ether'
+  const decimals = 18
+  const includeInTotal = true
+  const isAssociated = false
+  const symbol = 'ETH'
+  const sinceTimestamp = UnixTime.max(
+    chain.minTimestampForTvl,
+    escrow.sinceTimestamp,
+  )
+
   return {
-    type: 'aggLayerNativeEtherPreminted',
-    dataSource: `${chain.name}_agglayer`,
+    type: type,
+    dataSource: dataSource,
     l2BridgeAddress: AGGLAYER_L2BRIDGE_ADDRESS,
-    premintedAmount: escrow.sharedEscrow.premintedAmount
-      ? BigInt(escrow.sharedEscrow.premintedAmount)
-      : BigInt(0),
+    premintedAmount: premintedAmount,
     escrowAddress: escrow.address,
-    assetId: AssetId.create(ethereum.name, 'native'),
+    assetId: assetId,
     chain: project.projectId,
     project: project.projectId,
-    source: 'canonical',
-    category: 'ether',
-    decimals: 18,
-    includeInTotal: true,
-    isAssociated: false,
-    symbol: 'ETH',
-    sinceTimestamp: UnixTime.max(
-      chain.minTimestampForTvl,
-      escrow.sinceTimestamp,
-    ),
+    source: source,
+    category: category,
+    decimals: decimals,
+    includeInTotal: includeInTotal,
+    isAssociated: isAssociated,
+    symbol: symbol,
+    sinceTimestamp: sinceTimestamp,
   }
 }
