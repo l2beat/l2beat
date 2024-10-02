@@ -24,7 +24,7 @@ export function UsedInProjectEntry({
   return (
     <div className="mt-2 flex flex-row items-center">
       <p className="text-gray-850 dark:text-gray-400">
-        <strong className="text-black dark:text-white">{label}: </strong>
+        <strong className="text-primary">{label}: </strong>
       </p>
       <div className="flex flex-row items-center">
         {implementations.map((project, i) => (

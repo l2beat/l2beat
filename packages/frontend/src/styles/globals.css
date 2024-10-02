@@ -7,6 +7,8 @@
 
 @layer base {
   :root {
+    --primary: #131215;
+    --secondary: #5F6470;
     --brand: #860CB0;
     --background: #E6E7EC;
     --surface-secondary: #E6E7EC;
@@ -14,15 +16,16 @@
   }
   
   .dark {
+    --primary: #FAFAFA;
+    --secondary: #5F6470;
     --brand: #DB8BF7;
     --background: #090A0B;
     --surface-secondary: #393C43;
-    --surface-tertiary: #393C43;
+    --surface-tertiary: #464A52;
   }
 }
 
 @layer base {
-
   :root {
     --header-height: 4rem;
   }
@@ -45,7 +48,7 @@
   }
   
   body {
-    @apply bg-white dark:bg-neutral-900 text-base text-black dark:text-white md:text-lg font-sans transition-colors;
+    @apply bg-white dark:bg-neutral-900 text-base text-primary md:text-lg font-sans transition-colors;
   }
   
   body:has(.sidebar){

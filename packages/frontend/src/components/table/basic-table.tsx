@@ -103,7 +103,7 @@ export function BasicTable<T extends BasicEntry>({
                   <th
                     colSpan={header.colSpan}
                     className={cn(
-                      'text-base text-black dark:text-white',
+                      'text-base text-primary',
                       !header.isPlaceholder &&
                         !!header.column.columnDef.header &&
                         'rounded-t-lg px-6 pt-4',
@@ -125,7 +125,7 @@ export function BasicTable<T extends BasicEntry>({
             })}
           </TableHeaderRow>
         )}
-        <TableHeaderRow className="border-b-2 border-b-zinc-400 dark:border-b-zinc-700">
+        <TableHeaderRow className="!border-b-2 border-b-surface-tertiary">
           {actualHeader.headers.map((header) => {
             const groupParams = getGroupParams(header.column)
             return (

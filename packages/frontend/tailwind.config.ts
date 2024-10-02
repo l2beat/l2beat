@@ -157,6 +157,8 @@ const config: Config = {
       fuchsia: { 700: '#860CB0' },
 
       // New colors
+      primary: 'var(--primary)',
+      secondary: 'var(--secondary)',
       brand: 'var(--brand)',
       background: 'var(--background)',
       'surface-secondary': 'var(--surface-secondary)',

@@ -9,10 +9,9 @@ import { useScalingFilterValues } from './scaling-filter-context'
 interface Props {
   items: CommonScalingEntry[]
   showRollupsOnly?: boolean
-  className?: string
 }
 
-export function ScalingFilters({ items, showRollupsOnly, className }: Props) {
+export function ScalingFilters({ items, showRollupsOnly }: Props) {
   const state = useScalingFilterValues()
   const hostChainOptions = uniq(
     items.map((item) => item.hostChain ?? 'Ethereum'),

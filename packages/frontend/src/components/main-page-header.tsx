@@ -23,7 +23,7 @@ export function MainPageHeader({ children, description, className }: Props) {
         {children}
       </h1>
       {description && (
-        <p className="mt-0.5 text-xs leading-[1.15] text-zinc-500">
+        <p className="mt-0.5 text-xs leading-[1.15] text-secondary">
           {description}
         </p>
       )}
