@@ -37,7 +37,7 @@ export default async function Page() {
       <ScalingFilterContextProvider>
         <ScalingAssociatedTokensContextProvider>
           <MainPageHeader>Summary</MainPageHeader>
-          <div className="grid grid-cols-2 gap-4 max-xl:hidden">
+          <div className="grid grid-cols-2 gap-4 max-lg:hidden">
             <MainPageCard>
               <ScalingSummaryTvlChart unit={UNIT} timeRange={TIME_RANGE} />
             </MainPageCard>
@@ -45,7 +45,7 @@ export default async function Page() {
               <ScalingSummaryActivityChart timeRange={TIME_RANGE} />
             </MainPageCard>
           </div>
-          <ChartTabs className="xl:hidden" unit={UNIT} timeRange={TIME_RANGE} />
+          <ChartTabs className="lg:hidden" unit={UNIT} timeRange={TIME_RANGE} />
           <MainPageCard className="mt-6">
             <ScalingSummaryTable entries={entries} />
           </MainPageCard>

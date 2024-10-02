@@ -44,7 +44,7 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
         <ActivityChartHover {...data} showEthereum={SHOW_MAINNET} />
       )}
     >
-      <section className="flex max-h-[290px] flex-col gap-4 2xl:max-h-[320px]">
+      <section className="flex max-h-[290px] flex-col gap-4 xl:max-h-[320px]">
         <Header scalingFactor={scalingFactor} />
         <Chart
           logo={{

@@ -13,7 +13,7 @@ export function MobileNavbar({
   logoLink,
 }: { groups: NavGroup[]; logoLink: string }) {
   return (
-    <div className="md:mb-5 xl:hidden">
+    <div className="v2:md:mb-5 lg:hidden">
       <div className="relative flex h-16 flex-row items-stretch justify-between gap-8 border-b border-gray-200 px-3.5 v2:bg-pure-white dark:border-gray-850 v2:dark:bg-[#1F2025]">
         {/* Left side */}
         <div className="flex items-center gap-4">

@@ -32,7 +32,7 @@ export default async function Page() {
     <HydrateClient>
       <ScalingFilterContextProvider>
         <ActivityTimeRangeContextProvider>
-          <MainPageCard className="xl:mt-20">
+          <MainPageCard className="lg:mt-20">
             <ActivityChart milestones={HOMEPAGE_MILESTONES} entries={entries} />
           </MainPageCard>
           <MainPageCard className="mt-6">

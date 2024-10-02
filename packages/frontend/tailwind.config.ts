@@ -157,10 +157,9 @@ const config: Config = {
     screens: {
       xs: '400px',
       sm: '550px',
-      md: '750px',
-      lg: '1120px',
-      xl: '1200px',
-      '2xl': '1920px',
+      md: '768px',
+      lg: '1200px',
+      xl: '1920px',
     },
     zIndex: {
       1: '1',

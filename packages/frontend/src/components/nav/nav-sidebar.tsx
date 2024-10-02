@@ -28,7 +28,7 @@ export async function NavSidebar({ groups, logoLink, legacyNav }: Props) {
         </Link>
         <div className="flex flex-row items-center gap-4">
           <DarkThemeToggle />
-          <div className="size-6 xl:hidden">
+          <div className="size-6 lg:hidden">
             <MobileNavTriggerClose />
           </div>
         </div>
@@ -58,7 +58,7 @@ export async function NavSidebar({ groups, logoLink, legacyNav }: Props) {
           />
           <NavSmallLink title="FAQ" href="/faq" />
         </NavSmallLinkGroup>
-        <ul className="mb-[14px] mt-6 flex gap-2 text-2xl xl:justify-between">
+        <ul className="mb-[14px] mt-6 flex gap-2 text-2xl lg:justify-between">
           <SocialLinks variant="gray" />
         </ul>
       </div>

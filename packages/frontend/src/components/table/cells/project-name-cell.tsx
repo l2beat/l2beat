@@ -28,7 +28,7 @@ export interface ProjectCellProps {
 
 export function ProjectNameCell({ project, className }: ProjectCellProps) {
   return (
-    <div className={cn('pl-2 2xl:pl-3', className)}>
+    <div className={cn('pl-2 xl:pl-3', className)}>
       <div className="flex items-baseline gap-1.5">
         <span className="text-xs font-bold !leading-none md:!text-lg">
           {project.shortName ?? project.name}

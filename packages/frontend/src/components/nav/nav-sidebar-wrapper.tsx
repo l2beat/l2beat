@@ -15,8 +15,8 @@ export const NavSideBarWrapper = ({
   const [resizing, setResizing] = useState(false)
 
   const sharedSizeClasses = cn(
-    'h-screen w-full xl:w-[240px] 2xl:w-[280px] [@supports(height:100dvh)]:h-dvh',
-    legacyNav && 'xl:hidden',
+    'h-screen w-full lg:w-[240px] xl:w-[280px] [@supports(height:100dvh)]:h-dvh',
+    legacyNav && 'lg:hidden',
   )
 
   const onResize = useEventCallback(() => {
@@ -27,9 +27,9 @@ export const NavSideBarWrapper = ({
 
   useEffect(() => {
     if (open) {
-      document.body.classList.add('max-xl:overflow-hidden')
+      document.body.classList.add('max-lg:overflow-hidden')
     } else {
-      document.body.classList.remove('max-xl:overflow-hidden')
+      document.body.classList.remove('max-lg:overflow-hidden')
     }
   }, [open])
 
@@ -38,7 +38,7 @@ export const NavSideBarWrapper = ({
   return (
     <div
       className={cn(
-        'custom-scrollbar absolute z-999 flex shrink-0 translate-x-full flex-col items-stretch transition-all duration-300 ease-out xl:static xl:transform-none',
+        'custom-scrollbar absolute z-999 flex shrink-0 translate-x-full flex-col items-stretch transition-all duration-300 ease-out lg:static lg:transform-none',
         sharedSizeClasses,
         open && 'translate-x-0',
         resizing && 'transition-none',
@@ -46,7 +46,7 @@ export const NavSideBarWrapper = ({
     >
       <div
         className={cn(
-          'scrollbar-gutter-stable flex flex-col gap-6 overflow-y-auto overflow-x-clip bg-n-gray-200 px-3.5 py-4 transition-all duration-300 ease-out dark:bg-[#090A0B] xl:fixed xl:px-6 xl:py-[1.125rem]',
+          'scrollbar-gutter-stable flex flex-col gap-6 overflow-y-auto overflow-x-clip bg-n-gray-200 px-3.5 py-4 transition-all duration-300 ease-out dark:bg-[#090A0B] lg:fixed lg:px-6 lg:py-[1.125rem]',
           sharedSizeClasses,
           resizing && 'transition-none',
         )}

@@ -133,8 +133,8 @@ export async function NavLayout({
     <MobileNavProvider>
       <div
         className={cn(
-          'relative flex flex-col overflow-x-clip xl:flex-row',
-          legacyNav && 'xl:flex-col',
+          'relative flex flex-col overflow-x-clip lg:flex-row',
+          legacyNav && 'lg:flex-col',
           className,
         )}
       >
@@ -148,7 +148,7 @@ export async function NavLayout({
         />
         <div className="min-w-0 flex-1">
           {!legacyNav && topChildren && (
-            <div className="hidden xl:block">{topChildren}</div>
+            <div className="hidden lg:block">{topChildren}</div>
           )}
           {children}
         </div>

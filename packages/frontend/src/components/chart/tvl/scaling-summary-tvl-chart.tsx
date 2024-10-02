@@ -41,7 +41,7 @@ export function ScalingSummaryTvlChart({
       isLoading={isLoading}
       renderHoverContents={(data) => <TvlChartHover data={data} />}
     >
-      <section className="flex max-h-[290px] flex-col gap-4 2xl:max-h-[320px]">
+      <section className="flex max-h-[290px] flex-col gap-4 xl:max-h-[320px]">
         <Header
           total={total}
           change={change}
