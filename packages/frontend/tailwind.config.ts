@@ -71,6 +71,7 @@ const config: Config = {
       },
       'n-gray': {
         200: '#E6E7EC',
+        400: '#AEB1C2',
       },
       black: '#1B1B1B',
       yellow: {
