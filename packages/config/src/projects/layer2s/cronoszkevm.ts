@@ -106,16 +106,20 @@ export const cronoszkevm: Layer2 = zkStackL2({
       description:
         'Intermediary governance contract that has the *ChainAdmin* role in the Cronos zkEVM diamond contract.',
     }),
+    discovery.getContractDetails('TransactionFiltererDenyList', {
+      description:
+        'Censorship contract that is registered as the TransactionFilterer in the Cronos zkEVM diamond contract. Keeps a list of addresses that are not allowed to force transactions to the Layer 2 (`requestL2Transaction()`).',
+    }),
   ],
   // currently unclear if state derivation is significantly different from ZKsync Era, see telegram chat
   // stateDerivation: {
   //   nodeSoftware: `The node software is open-source, and its source code can be found [here](https://github.com/matter-labs/zksync-era).
   //   The main node software does not rely on Layer 1 (L1) to reconstruct the state, but you can use [this tool](https://github.com/eqlabs/zksync-state-reconstruct) for that purpose. Currently, there is no straightforward method to inject the state into the main node, but ZKsync is actively working on a solution for this.`,
   //   compressionScheme:
-  //     'Bytecodes undergo compression before deployment on Layer 1 (L1). You can find additional information on this process [here](https://github.com/matter-labs/zksync-era/blob/main/docs/guides/advanced/compression.md).',
+  //     'Bytecodes undergo compression before deployment on Layer 1 (L1). You can find additional information on this process [here](https://github.com/matter-labs/zksync-era/blob/main/docs/guides/advanced/11_compression.md).',
   //   genesisState: 'There have been neither genesis states nor regenesis.',
   //   dataFormat:
-  //     'Details on data format can be found [here](https://github.com/matter-labs/zksync-era/blob/main/docs/guides/advanced/pubdata.md).',
+  //     'Details on data format can be found [here](https://github.com/matter-labs/zksync-era/blob/main/docs/guides/advanced/09_pubdata.md).',
   // },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
@@ -132,6 +136,10 @@ export const cronoszkevm: Layer2 = zkStackL2({
       ],
       description: 'Inherits all *ChainAdmin* permissions.',
     },
+    ...discovery.getMultisigPermission(
+      'TxFiltererOwnerMultisig',
+      'Owns the TransactionFiltererDenyList contract and can manage addresses in the censoring list. Currently also has all *ChainAdmin* permissions through the CronosZkEVMAdmin contract.',
+    ),
   ],
   milestones: [
     {

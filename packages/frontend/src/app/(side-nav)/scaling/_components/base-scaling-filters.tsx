@@ -49,7 +49,7 @@ export function BaseScalingFilters({
       value,
     }))
 
-  const purposeOptions = uniq(items.flatMap((item) => item.purposes))
+  const purposeOptions = uniq(items.flatMap((item) => item.purposes ?? []))
     .sort()
     .map((value) => ({
       label: value,

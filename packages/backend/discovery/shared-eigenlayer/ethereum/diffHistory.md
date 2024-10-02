@@ -1,3 +1,141 @@
+Generated with discovered.json: 0x07b71986b33f7690da5cafb2ff0200cf78ba090b
+
+# Diff at Tue, 01 Oct 2024 15:42:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@974999225bba0722b5e81edd4c1b80928d80ef33 block: 20777978
+- current block number: 20871604
+
+## Description
+
+Minor upgrade of the token contracts. Added monitoring of transferRestrictions.
+
+### EIGEN
+
+EIGEN is now burn-/mint when bEIGEN is unwrapped / wrapped. (before, any EIGEN supply had to be preminted to the contract in advance). `EIGEN.totalSupply()` now returns the total supply of bEIGEN. (Which will be confusing because the two can be vastly different)
+
+### bEIGEN
+
+New public `mint()` for `isMinter()` addresses and public `burn()` for all. Currently the single Minter (event `IsMinterModified` or `0x0124b12503bddc2616c0f3f54fd23ed283f5ef0c1483a75409e42612176b8bde`) is a helper contract (TokenHopper with 7d cooldown) that allows minting staking rewards. Before, there was no way to mint new bEIGEN apart from the initial mint.
+
+
+## Watched changes
+
+```diff
+    contract bEIGEN token (0x83E9115d334D248Ce39a6f36144aEaB5b3456e75) {
+    +++ description: None
+      values.$implementation:
+-        "0xB91c69Af3eE022bd0a59Da082945914BFDcEFFE3"
++        "0xF2b225815F70c9b327DC9db758A36c92A4279b17"
+      values.$upgradeCount:
+-        1
++        2
+      values.totalSupply:
+-        "1673646668284660000000000000"
++        "1681371191369050738461538468"
++++ description: Timestamp after which transfer restrictions (whitelist) are disabled. Preset to uint256 max. Restrictions disabled if == 0.
++++ severity: HIGH
+      values.transferRestrictionsDisabledAfter:
+-        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
++        0
+      values.Minters:
++        ["0x708230Be53c08b270F43e068116EBacc4C13F577"]
+      errors:
+-        {"Minters":"Cannot find a matching event for IsMinterModified"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444) {
+    +++ description: None
+      receivedPermissions.6:
++        {"permission":"upgrade","target":"0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd"}
+      receivedPermissions.5.target:
+-        "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd"
++        "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
+      receivedPermissions.4.target:
+-        "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
++        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
+      receivedPermissions.3.target:
+-        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
++        "0x7750d328b314EfFa365A0402CcfD489B80B0adda"
+    }
+```
+
+```diff
+    contract EIGEN token (0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83) {
+    +++ description: None
+      values.$implementation:
+-        "0x7EC354C84680112d3cfF1544ec1Eb19ca583700b"
++        "0x17f56E911C279bad67eDC08acbC9cf3DC4eF26A0"
+      values.$upgradeCount:
+-        3
++        4
+      values.totalSupply:
+-        "1673646668284660000000000000"
++        "1681371191369050738461538468"
++++ description: Timestamp after which transfer restrictions (whitelist) are disabled. Preset to uint256 max. Restrictions disabled if == 0.
++++ severity: HIGH
+      values.transferRestrictionsDisabledAfter:
+-        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
++        0
+    }
+```
+
+```diff
++   Status: CREATED
+    contract TokenHopper (0x708230Be53c08b270F43e068116EBacc4C13F577)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RewardsCoordinator (0x7750d328b314EfFa365A0402CcfD489B80B0adda)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RewardAllStakersActionGenerator (0xF2eB394c4e04ff19422EB27411f78d00e216a88d)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../EIGEN token/Eigen.sol                          |   47 +-
+ .../.flat/RewardAllStakersActionGenerator.sol      |  203 ++
+ .../RewardsCoordinator/RewardsCoordinator.sol      | 2074 ++++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 ++++++
+ .../ethereum/.flat/TokenHopper.sol                 |  629 ++++++
+ .../bEIGEN token/BackingEigen.sol                  |   40 +-
+ 6 files changed, 3607 insertions(+), 17 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20777978 (main branch discovery), not current.
+
+```diff
+    contract bEIGEN token (0x83E9115d334D248Ce39a6f36144aEaB5b3456e75) {
+    +++ description: None
+      errors:
++        {"Minters":"Cannot find a matching event for IsMinterModified"}
+      fieldMeta:
++        {"transferRestrictionsDisabledAfter":{"severity":"HIGH","description":"Timestamp after which transfer restrictions (whitelist) are disabled. Preset to uint256 max. Restrictions disabled if == 0."}}
+    }
+```
+
+```diff
+    contract EIGEN token (0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83) {
+    +++ description: None
+      fieldMeta:
++        {"transferRestrictionsDisabledAfter":{"severity":"HIGH","description":"Timestamp after which transfer restrictions (whitelist) are disabled. Preset to uint256 max. Restrictions disabled if == 0."}}
+    }
+```
+
 Generated with discovered.json: 0x2335f048e2daab82e3fa3ca479858c2baad1cca9
 
 # Diff at Wed, 18 Sep 2024 14:09:08 GMT:

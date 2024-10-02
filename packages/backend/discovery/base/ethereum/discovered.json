@@ -1,7 +1,7 @@
 {
   "name": "base",
   "chain": "ethereum",
-  "blockNumber": 20769544,
+  "blockNumber": 20871599,
   "configHash": "0x4fbbc917890f4d3f2087e5cb09da4c68de323d988c3afd191d1c8572878bc105",
   "version": 14,
   "contracts": [
@@ -157,7 +157,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 11 (27%)",
-        "nonce": 31,
+        "nonce": 32,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -266,8 +266,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 796584,
-          "prevBlockNum": 20769519
+          "prevBoughtGas": 491310,
+          "prevBlockNum": 20871597
         },
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -341,10 +341,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 19886400,
-        "latestOutputIndex": 11047,
-        "nextBlockNumber": 19888200,
-        "nextOutputIndex": 11048,
+        "latestBlockNumber": 20502000,
+        "latestOutputIndex": 11389,
+        "nextBlockNumber": 20503800,
+        "nextOutputIndex": 11390,
         "proposer": "0x642229f238fb9dE03374Be34B0eD8D9De80752c5",
         "PROPOSER": "0x642229f238fb9dE03374Be34B0eD8D9De80752c5",
         "startingBlockNumber": 0,
@@ -478,7 +478,7 @@
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "0x5050F69a9786F081509234F1a7F4684b5E5b76C9",
         "batchInbox": "0xFf00000000000000000000000000000000008453",
-        "gasLimit": 120000000,
+        "gasLimit": 132000000,
         "L1_CROSS_DOMAIN_MESSENGER_SLOT": "0x383f291819e6d54073bc9a648251d97421076bdd101933c0c022219ce9580636",
         "L1_ERC_721_BRIDGE_SLOT": "0x46adcbebc6be8ce551740c29c47c8798210f23f7f4086c41752944352568d5a7",
         "L1_STANDARD_BRIDGE_SLOT": "0x9904ba90dde5696cda05c9e0dab5cbaa0fea005ace4d11218a02ac668dad6376",
@@ -635,7 +635,7 @@
         "$immutable": false,
         "$implementation": "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292893201",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292898714",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1546,5 +1546,5 @@
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0xb3e808e6410511e5cdb557ab187aac264a51956c695f8cc327ebaa202f7514fd"
+  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
 }

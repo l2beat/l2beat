@@ -1,5 +1,5 @@
 import type { Chain } from '@/chains'
-import type { CountedOperation, Operation, Transaction } from '@/types'
+import type { Transaction } from '@/types'
 import { BatchIcon } from './icons/batchIcon'
 import { UnknownIcon } from './icons/unknownIcon'
 import { TransactionDetails } from './transactionDetails'
@@ -58,7 +58,7 @@ export function TransactionList({
               >
                 {tx.hash}
               </th>
-              <td className="px-6 py-4">
+              <td className="inline-flex items-center px-6 py-4">
                 {tx.type}
                 {tx.includesBatch && (
                   <BatchIcon tooltipContent="Transaction contains batch execution" />

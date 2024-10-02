@@ -5,4 +5,5 @@ const config = {
   },
 }
 
+// biome-ignore lint/style/noDefaultExport: config file
 export default config

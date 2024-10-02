@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20775904,
   "configHash": "0x13459d3d441c15286942077c1d443e8c8e890e3b2a9bb3dad48a509d9b138acb",
-  "version": 14,
+  "version": 15,
   "contracts": [
     {
       "name": "L1StandardBridge",
@@ -30,6 +30,7 @@
       "values": {
         "$admin": "0x20D697b63d7747cF78C94ad9ee75C1436781E27E",
         "$implementation": "0xa1D67ED34D6485cf59C5aA4AC3AE555959A0adA1",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x9f6F58F07863D72C47D001066C65528C27D3AE19",
@@ -135,6 +136,12 @@
       "values": {
         "$admin": "0x20D697b63d7747cF78C94ad9ee75C1436781E27E",
         "$implementation": "0x384BA1d14cDdE620d309AcA9B154e6CACbF27d11",
+        "$pastUpgrades": [
+          [
+            "2024-01-17T17:27:11.000Z",
+            ["0x384BA1d14cDdE620d309AcA9B154e6CACbF27d11"]
+          ]
+        ],
         "$upgradeCount": 1,
         "messenger": "0x9f6F58F07863D72C47D001066C65528C27D3AE19",
         "MESSENGER": "0x9f6F58F07863D72C47D001066C65528C27D3AE19",
@@ -173,6 +180,12 @@
       "values": {
         "$admin": "0x20D697b63d7747cF78C94ad9ee75C1436781E27E",
         "$implementation": "0x2246d85AC397d289d49a92C804201738C4Bd2d73",
+        "$pastUpgrades": [
+          [
+            "2024-01-17T17:27:11.000Z",
+            ["0x2246d85AC397d289d49a92C804201738C4Bd2d73"]
+          ]
+        ],
         "$upgradeCount": 1,
         "CHALLENGER": "0x28fB4D0e436874F4107948E358df3C242De06788",
         "deletedOutputs": [],
@@ -292,6 +305,12 @@
       "values": {
         "$admin": "0x20D697b63d7747cF78C94ad9ee75C1436781E27E",
         "$implementation": "0x2A033B70a4D7FAbc6E651E964D18fcf65D9d2aED",
+        "$pastUpgrades": [
+          [
+            "2024-01-17T17:27:11.000Z",
+            ["0x2A033B70a4D7FAbc6E651E964D18fcf65D9d2aED"]
+          ]
+        ],
         "$upgradeCount": 1,
         "BRIDGE": "0x1bBde518ad01BaABFE30020407A7630FB17B545d",
         "version": "1.1.1"
@@ -311,6 +330,17 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xdf3CEeA6357eb051c7D5C6aA0E31908C99Ec4E7e",
+        "$pastUpgrades": [
+          [
+            "2024-01-17T17:27:11.000Z",
+            ["0x9f6F58F07863D72C47D001066C65528C27D3AE19"]
+          ],
+          [
+            "2024-01-17T17:27:11.000Z",
+            ["0xdf3CEeA6357eb051c7D5C6aA0E31908C99Ec4E7e"]
+          ]
+        ],
+        "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
         "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620188",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
@@ -353,6 +383,12 @@
       "values": {
         "$admin": "0x20D697b63d7747cF78C94ad9ee75C1436781E27E",
         "$implementation": "0xC3fE3e0Ea967B2878faB2fEc7e1067b32aDf1C03",
+        "$pastUpgrades": [
+          [
+            "2024-01-17T17:27:11.000Z",
+            ["0xC3fE3e0Ea967B2878faB2fEc7e1067b32aDf1C03"]
+          ]
+        ],
         "$upgradeCount": 1,
         "GUARDIAN": "0x28fB4D0e436874F4107948E358df3C242De06788",
         "L2_ORACLE": "0x3E4F4Eb77a9c1f88c0e1F5aDCc9d3521Ce157FdD",
@@ -398,6 +434,12 @@
       "values": {
         "$admin": "0x20D697b63d7747cF78C94ad9ee75C1436781E27E",
         "$implementation": "0xd136b83fd10735AB0001B8F8B361900c3717d6C2",
+        "$pastUpgrades": [
+          [
+            "2024-01-17T17:27:11.000Z",
+            ["0xd136b83fd10735AB0001B8F8B361900c3717d6C2"]
+          ]
+        ],
         "$upgradeCount": 1,
         "batcherHash": "0x994c288de8418c8D3c5a4D21A69f35bF9641781C",
         "gasLimit": 30000000,
@@ -793,5 +835,5 @@
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0xb3e808e6410511e5cdb557ab187aac264a51956c695f8cc327ebaa202f7514fd"
+  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
 }

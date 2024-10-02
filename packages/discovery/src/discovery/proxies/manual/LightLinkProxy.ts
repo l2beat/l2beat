@@ -1,8 +1,9 @@
-import { ProxyDetails } from '@l2beat/discovery-types'
+import { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 
 import { IProvider } from '../../provider/IProvider'
 import { getImplementation } from '../auto/Eip1967Proxy'
+import { getPastUpgradesSingleEvent } from '../pastUpgrades'
 
 async function getRegistryAddress(
   provider: IProvider,
@@ -45,11 +46,19 @@ export async function getLightLinkProxy(
     return
   }
   const admin = await getAdminMultisig(provider, address)
+  const pastUpgrades = await getPastUpgradesSingleEvent(
+    provider,
+    address,
+    'event Upgraded(address indexed implementation)',
+  )
+
   return {
     type: 'LightLink proxy',
     values: {
       $admin: admin.toString(),
       $implementation: implementation.toString(),
+      $pastUpgrades: pastUpgrades as ContractValue,
+      $upgradeCount: pastUpgrades.length,
     },
   }
 }

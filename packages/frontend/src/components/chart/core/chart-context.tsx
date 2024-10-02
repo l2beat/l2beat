@@ -3,7 +3,6 @@ import { type ReactNode, createContext, useContext, useMemo } from 'react'
 import { type SeriesStyle } from './styles'
 import { getYAxis } from './utils/get-y-axis'
 
-const LABEL_COUNT = 5
 interface Value {
   value: number
   dashed?: boolean
@@ -17,8 +16,10 @@ export interface ChartColumn<T> {
 export interface ChartContextProviderParams<T> {
   columns: ChartColumn<T>[]
   range: '1d' | '7d' | '30d' | '90d' | '180d' | '1y' | 'max'
+  labelCount?: number
   valuesStyle: SeriesStyle[]
   formatYAxisLabel: (value: number) => string
+  useLogScale?: boolean
   children?: ReactNode
 }
 
@@ -37,12 +38,13 @@ export function ChartContextProvider<T>({
   children,
   ...params
 }: ChartContextProviderParams<T>) {
-  const { columns, formatYAxisLabel } = params
+  const { columns, useLogScale, formatYAxisLabel, labelCount } = params
   const values = columns.flatMap((column) => column.values)
   const { labels, getY } = getYAxis(
     values.map((v) => v.value),
+    !!useLogScale,
     formatYAxisLabel,
-    LABEL_COUNT,
+    labelCount,
   )
 
   const value = useMemo(

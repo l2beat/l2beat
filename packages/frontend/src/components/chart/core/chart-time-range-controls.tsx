@@ -23,9 +23,9 @@ export function ChartTimeRangeControls<T extends string>({
   return (
     <div className="flex flex-wrap-reverse justify-between gap-2">
       {loading ? (
-        <Skeleton className="h-8 w-40" />
+        <Skeleton className="h-8 w-52" />
       ) : (
-        <p className="flex h-8 items-center font-bold transition-opacity duration-200">
+        <p className="flex h-8 items-center font-bold transition-opacity duration-200 max-md:w-52">
           {range ? formatRange(...range) : null}
         </p>
       )}

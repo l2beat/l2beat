@@ -30,7 +30,7 @@ export const gluon: Layer2 = {
     links: {
       websites: ['https://gluon.network/', 'https://leverj.io/'],
       apps: ['https://live.leverj.io/'],
-      documentation: ['https://leverj.io/assets/documents/Gluon-Layer2.pdf'],
+      documentation: ['https://leverj.github.io/claim-gluon-balances/'],
       explorers: ['https://gluon.leverj.io/'],
       repositories: [],
       socialMedia: [

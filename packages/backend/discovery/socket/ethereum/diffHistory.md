@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x9b4f75a1a9988e34fa54d9b52bd97b60b289328c
+
+# Diff at Fri, 27 Sep 2024 15:52:26 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@4cb14cc1bdc343d171a7988f9f91f11edbf568a8 block: 20756881
+- current block number: 20842973
+
+## Description
+
+Add new plugs / vaults.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.99:
++        "0x094570E556C8E58119E21f47759F02F50Ae3bB49"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.98:
++        "0xBc978f47AD1122bdFE85855fcc40b3afdF4b5df3"
+    }
+```
+
 Generated with discovered.json: 0x4c060329e6eb5170679402c0a4d7d995c0a7fed8
 
 # Diff at Sun, 15 Sep 2024 15:22:34 GMT:

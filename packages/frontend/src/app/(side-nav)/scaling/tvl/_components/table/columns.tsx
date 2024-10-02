@@ -9,33 +9,6 @@ import { ValueLockedCell } from './value-locked-cell'
 
 const columnHelper = createColumnHelper<ScalingTvlTableRow>()
 
-const totalColumn = columnHelper.accessor('tvl', {
-  id: 'total',
-  header: 'Total',
-  cell: (ctx) => {
-    const value = ctx.getValue()
-    if (!value.data) {
-      return <UpcomingBadge />
-    }
-    return (
-      <TotalValueLockedCell
-        tvlWarnings={value.warnings}
-        breakdown={{
-          canonical: value.data.breakdown.canonical,
-          external: value.data.breakdown.external,
-          native: value.data.breakdown.native,
-        }}
-        change={value.data.totalChange}
-      />
-    )
-  },
-  sortUndefined: 'last',
-  meta: {
-    align: 'center',
-    tooltip: 'Total = Canonical + External + Native',
-  },
-})
-
 export const scalingTvlColumns = [
   ...getCommonProjectColumns(columnHelper),
   columnHelper.accessor('name', {
@@ -44,21 +17,63 @@ export const scalingTvlColumns = [
   columnHelper.group({
     id: 'data',
     header: undefined,
-    columns: [totalColumn],
+    columns: [
+      columnHelper.accessor(
+        (col) => {
+          if (!col.tvl.data) {
+            return undefined
+          }
+          const { breakdown } = col.tvl.data
+          if (
+            breakdown.canonical + breakdown.external + breakdown.native ===
+            0
+          ) {
+            return undefined
+          }
+          return breakdown.canonical + breakdown.external + breakdown.native
+        },
+        {
+          id: 'total',
+          header: 'Total',
+          cell: (ctx) => {
+            const data = ctx.row.original.tvl.data
+            if (!data) {
+              return <UpcomingBadge />
+            }
+            return (
+              <TotalValueLockedCell
+                tvlWarnings={ctx.row.original.tvl.warnings}
+                breakdown={{
+                  canonical: data.breakdown.canonical,
+                  external: data.breakdown.external,
+                  native: data.breakdown.native,
+                }}
+                change={data.totalChange}
+              />
+            )
+          },
+          sortUndefined: 'last',
+          meta: {
+            align: 'center',
+            tooltip: 'Total = Canonical + External + Native',
+          },
+        },
+      ),
+    ],
   }),
-  columnHelper.accessor('tvl', {
+  columnHelper.accessor('tvl.data.breakdown.canonical', {
     id: 'canonical',
     header: 'Canonical',
     cell: (ctx) => {
-      const value = ctx.getValue()
-      if (!value.data) {
+      const data = ctx.row.original.tvl.data
+      if (!data) {
         return <UpcomingBadge />
       }
 
       return (
         <ValueLockedCell
-          value={value.data.breakdown.canonical}
-          change={value.data.change.canonical}
+          value={data.breakdown.canonical}
+          change={data.change.canonical}
         />
       )
     },
@@ -70,19 +85,19 @@ export const scalingTvlColumns = [
       headClassName: getColumnHeaderUnderline('before:bg-purple-100'),
     },
   }),
-  columnHelper.accessor('tvl', {
+  columnHelper.accessor('tvl.data.breakdown.external', {
     id: 'external',
     header: 'External',
     cell: (ctx) => {
-      const value = ctx.getValue()
-      if (!value.data) {
+      const data = ctx.row.original.tvl.data
+      if (!data) {
         return <UpcomingBadge />
       }
 
       return (
         <ValueLockedCell
-          value={value.data.breakdown.external}
-          change={value.data.change.external}
+          value={data.breakdown.external}
+          change={data.change.external}
         />
       )
     },
@@ -94,19 +109,19 @@ export const scalingTvlColumns = [
       headClassName: getColumnHeaderUnderline('before:bg-yellow-200'),
     },
   }),
-  columnHelper.accessor('tvl', {
+  columnHelper.accessor('tvl.data.breakdown.native', {
     id: 'native',
     header: 'Native',
     cell: (ctx) => {
-      const value = ctx.getValue()
-      if (!value.data) {
+      const data = ctx.row.original.tvl.data
+      if (!data) {
         return <UpcomingBadge />
       }
 
       return (
         <ValueLockedCell
-          value={value.data.breakdown.native}
-          change={value.data.change.native}
+          value={data.breakdown.native}
+          change={data.change.native}
         />
       )
     },

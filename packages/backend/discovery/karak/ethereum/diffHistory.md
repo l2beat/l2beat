@@ -1,3 +1,79 @@
+Generated with discovered.json: 0xaffe70c7ae82ff9e32ff8bae15e4e3017fe5dbae
+
+# Diff at Tue, 01 Oct 2024 10:51:39 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 19531626
+- current block number: 19531626
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531626 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x0a23342520Aa8Ca963c4201801F4D3E95e731637) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-12-21T07:31:23.000Z",["0x394317B191f5c7A371e74594776B1EfDc33d10D6"]]]
+    }
+```
+
+```diff
+    contract SystemConfig (0x622333688CC1878C7ff4205c89bDe051798788A7) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-12-21T03:15:11.000Z",["0x01D5303F326B992845eef2782D4c9a7c6DdE4470"]]]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x952851CecB07705A5bb483C1CE080F97e1E7491E) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-12-21T07:23:35.000Z",["0xc4550911Df26E604aA560dee6a9b66D0CA933482"]]]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x9BFfA66a8FcAAd7AC9ea7c7d4b9a6fc46777022d) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-12-20T05:04:47.000Z",["0x9BFfA66a8FcAAd7AC9ea7c7d4b9a6fc46777022d"]],["2023-12-21T07:29:11.000Z",["0xc5c3DF92714aAf510F8dD9a4c9C67D35f7d7376b"]]]
+      values.$upgradeCount:
++        2
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract OptimismPortal (0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-12-21T07:32:47.000Z",["0x3fe449Ef47228F03f979F9D955196494243cdf7E"]]]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xF04a74899FF4c4410fAF3B5faa29B8Fd199C13DB) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-12-21T07:25:47.000Z",["0xe1863A873f61fDD16560cAa7692a2A994b51E76A"]]]
+    }
+```
+
 Generated with discovered.json: 0x7247231f22dd6a438b3dfde265a730810bfcfd8f
 
 # Diff at Sun, 08 Sep 2024 17:18:13 GMT:

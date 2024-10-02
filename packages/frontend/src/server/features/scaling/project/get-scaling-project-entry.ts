@@ -5,6 +5,7 @@ import {
   layer2s,
 } from '@l2beat/config'
 import { compact } from 'lodash'
+import { env } from '~/env'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getContractsVerificationStatuses } from '../../verification-status/get-contracts-verification-statuses'
@@ -121,28 +122,30 @@ async function getHeader(project: ScalingProject) {
     activity: activityProjectStats,
     rosetteValues: getScalingRosetteValues(project.riskView),
     links: getProjectLinks(project.display.links),
-    tvl: tvlProjectStats
-      ? {
-          tokenBreakdown: {
-            ...tvlProjectStats.tokenBreakdown,
-            warnings: compact([
-              tvlProjectStats.tokenBreakdown.total > 0 &&
-                getAssociatedTokenWarning({
-                  associatedRatio:
-                    tvlProjectStats.tokenBreakdown.associated /
-                    tvlProjectStats.tokenBreakdown.total,
-                  name: project.display.name,
-                  associatedTokens,
-                }),
-            ]),
-            associatedTokens,
-          },
-          tvlBreakdown: {
-            ...tvlProjectStats.tvlBreakdown,
-            warning: project.display.tvlWarning,
-          },
-        }
-      : undefined,
+    tvl:
+      !env.EXCLUDED_TVL_PROJECTS?.includes(project.id.toString()) &&
+      tvlProjectStats
+        ? {
+            tokenBreakdown: {
+              ...tvlProjectStats.tokenBreakdown,
+              warnings: compact([
+                tvlProjectStats.tokenBreakdown.total > 0 &&
+                  getAssociatedTokenWarning({
+                    associatedRatio:
+                      tvlProjectStats.tokenBreakdown.associated /
+                      tvlProjectStats.tokenBreakdown.total,
+                    name: project.display.name,
+                    associatedTokens,
+                  }),
+              ]),
+              associatedTokens,
+            },
+            tvlBreakdown: {
+              ...tvlProjectStats.tvlBreakdown,
+              warning: project.display.tvlWarning,
+            },
+          }
+        : undefined,
     badges:
       project.badges && project.badges.length !== 0
         ? project.badges?.sort(badgesCompareFn)

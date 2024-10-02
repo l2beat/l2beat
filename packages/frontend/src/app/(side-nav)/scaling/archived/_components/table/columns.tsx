@@ -33,7 +33,6 @@ export const scalingArchivedColumns = [
     enableSorting: false,
     meta: {
       cellClassName: 'justify-center',
-      tooltip: 'Risks associated with this project.',
     },
   }),
   columnHelper.accessor('category', {
@@ -49,9 +48,6 @@ export const scalingArchivedColumns = [
     header: 'Purpose',
     cell: (ctx) => ctx.getValue().join(', '),
     enableSorting: false,
-    meta: {
-      tooltip: 'Functionality supported by this project.',
-    },
   }),
   columnHelper.accessor('totalTvl', {
     id: 'total',

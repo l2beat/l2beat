@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x91f6afaf24fc1e2434d43f9d7e5a81ee661d5b16
+
+# Diff at Tue, 01 Oct 2024 15:40:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@974999225bba0722b5e81edd4c1b80928d80ef33 block: 20634500
+- current block number: 20871596
+
+## Description
+
+SECURITY_AGENT role given to new Multisig. Can only activate the withdrawLimit for the ETH escrow (added to permissions). Higher perms are EOA-governed.
+
+## Watched changes
+
+```diff
+    contract ETHBridge (0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) {
+    +++ description: None
+      values.accessControl.SECURITY_AGENT.members.0:
++        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract StarkgateETHSecurityAgentMultisig (0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol                                 | 953 +++++++++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |  35 +
+ 2 files changed, 988 insertions(+)
+```
+
 Generated with discovered.json: 0x2c4b0cd0339b8c428f9a437291bccbded87a1c38
 
 # Diff at Thu, 29 Aug 2024 13:21:54 GMT:

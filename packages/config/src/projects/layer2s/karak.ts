@@ -26,9 +26,7 @@ export const karak: Layer2 = opStackL2({
     links: {
       websites: ['https://karak.network/'],
       apps: ['https://karak.network/karak-xp/'],
-      documentation: [
-        'https://docs.karak.network/karak/general/karak-overview',
-      ],
+      documentation: ['https://docs.karak.network/'],
       explorers: ['https://explorer.karak.network/'],
       repositories: [],
       socialMedia: [

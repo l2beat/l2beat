@@ -4,6 +4,12 @@ import { z } from 'zod'
 const coerceBoolean = z.string().transform((val) => {
   return val !== 'false' && val !== '0'
 })
+const stringArray = z.string().transform((val) => {
+  if (!val) {
+    return []
+  }
+  return val.split(',')
+})
 
 const featureFlag = coerceBoolean.optional()
 
@@ -21,9 +27,12 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(['development', 'test', 'production'])
       .default('development'),
+    VERCEL_GIT_COMMIT_REF: z.string().optional(),
     VERCEL_GIT_COMMIT_SHA: z.string().default('local'),
     VERCEL_URL: z.string().optional(),
-    EXCLUDED_ACTIVITY_PROJECTS: z.string().array().optional(),
+    VERCEL_ENV: z.enum(['production', 'preview', 'development']).optional(),
+    EXCLUDED_ACTIVITY_PROJECTS: stringArray.optional(),
+    EXCLUDED_TVL_PROJECTS: stringArray.optional(),
   },
 
   /**
@@ -49,9 +58,12 @@ export const env = createEnv({
     ETHEREUM_RPC_URL: process.env.ETHEREUM_RPC_URL,
     MOCK: process.env.MOCK,
     NODE_ENV: process.env.NODE_ENV,
+    VERCEL_GIT_COMMIT_REF: process.env.VERCEL_GIT_COMMIT_REF,
     VERCEL_GIT_COMMIT_SHA: process.env.VERCEL_GIT_COMMIT_SHA,
+    VERCEL_ENV: process.env.VERCEL_ENV,
     VERCEL_URL: process.env.VERCEL_URL,
     EXCLUDED_ACTIVITY_PROJECTS: process.env.EXCLUDED_ACTIVITY_PROJECTS,
+    EXCLUDED_TVL_PROJECTS: process.env.EXCLUDED_TVL_PROJECTS,
     // Client
     NEXT_PUBLIC_FEATURE_FLAG_ASSET_RISKS:
       process.env.NEXT_PUBLIC_FEATURE_FLAG_ASSET_RISKS,
