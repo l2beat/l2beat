@@ -6,12 +6,12 @@ import {
 } from '@l2beat/discovery'
 import { default as React } from 'react'
 
-import { Page } from '../../../status/Page'
-import { reactToHtml } from '../../../status/reactToHtml'
 import { DashboardContract } from '../props/getDashboardContracts'
 import { Contract } from './components/Contract'
 import { Diff } from './components/Diff'
+import { Page } from './components/Page'
 import { UnverifiedContract } from './components/UnverifiedContract'
+import { reactToHtml } from './components/reactToHtml'
 
 interface ConfigPageProps {
   chain: string

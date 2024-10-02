@@ -14,7 +14,6 @@ import { createHealthModule } from './modules/health/HealthModule'
 import { createImplementationChangeModule } from './modules/implementation-change-report/createImplementationChangeModule'
 import { createLzOAppsModule } from './modules/lz-oapps/createLzOAppsModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
-import { createStatusModule } from './modules/status/StatusModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
 import { initTvlModule } from './modules/tvl/modules/TvlModule'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
@@ -56,7 +55,6 @@ export class Application {
       createUpdateMonitorModule(config, logger, peripherals, clock),
       createImplementationChangeModule(config, logger, peripherals),
       createFlatSourcesModule(config, logger, peripherals),
-      createStatusModule(config, logger, peripherals),
       trackedTxsModule,
       createFinalityModule(
         config,

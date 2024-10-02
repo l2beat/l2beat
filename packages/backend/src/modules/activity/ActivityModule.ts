@@ -3,7 +3,6 @@ import { BlockExplorerClient } from '@l2beat/shared'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { Config } from '../../config'
 import {
-  ActivityConfig,
   BlockscoutChainConfig,
   EtherscanChainConfig,
 } from '../../config/Config'
@@ -22,8 +21,6 @@ import {
   BaseClient,
   BlockTimestampProvider,
 } from '../tvl/services/BlockTimestampProvider'
-import { ActivityController } from './api/ActivityController'
-import { createActivityRouter } from './api/ActivityRouter'
 import { BlockActivityIndexer } from './indexers/BlockActivityIndexer'
 import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
 import { DayActivityIndexer } from './indexers/DayActivityIndexer'
@@ -63,46 +60,9 @@ export function createActivityModule(
     )
   }
 
-  const includedInApiProjectIds = getIncludedInApiProjectIds(
-    config.activity.projects,
-    config.activity,
-    logger,
-  )
-
-  const activityController = new ActivityController(
-    includedInApiProjectIds,
-    peripherals.database,
-    clock,
-  )
-  const activityRouter = createActivityRouter(activityController)
-
   return {
-    routers: [activityRouter],
     start,
   }
-}
-
-function getIncludedInApiProjectIds(
-  projects: { id: ProjectId }[],
-  activity: ActivityConfig,
-  logger: Logger,
-): ProjectId[] {
-  const projectIds: ProjectId[] = []
-
-  for (const project of projects) {
-    const isExcludedInEnv = activity.projectsExcludedFromAPI.some(
-      (p) => p === project.id.toString(),
-    )
-
-    if (isExcludedInEnv) {
-      logger.info(
-        `Project ${project.id.toString()} excluded from activity v2 api via .env - will not be present in the response, but will continue syncing`,
-      )
-      continue
-    }
-    projectIds.push(project.id)
-  }
-  return projectIds
 }
 
 function createActivityIndexers(

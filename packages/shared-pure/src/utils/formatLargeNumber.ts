@@ -7,11 +7,11 @@ const units = ['', 'K', 'M', 'B', 'T']
 
 const HAIR_SPACE = '\u200a'
 
-export function formatLargeNumberShared(value: number): string {
+export function formatLargeNumber(value: number): string {
   if (value === 0) {
     return '0.00'
   } else if (value < 0) {
-    return `-${formatLargeNumberShared(-value)}`
+    return `-${formatLargeNumber(-value)}`
   }
   const str = Math.floor(value * 100).toString()
   for (const [i, unit] of units.entries()) {
