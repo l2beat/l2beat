@@ -16,7 +16,7 @@ interface Props {
   timeRange: ActivityTimeRange
 }
 
-export function SummaryActivityChart({ timeRange }: Props) {
+export function ScalingSummaryActivityChart({ timeRange }: Props) {
   const { data: scalingFactor } = api.activity.scalingFactor.useQuery({
     filter: { type: 'all' },
   })

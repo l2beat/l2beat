@@ -14,7 +14,7 @@ import { type ChartUnit } from '../types'
 import { TvlChartHover } from './tvl-chart-hover'
 import { useTvlChartRenderParams } from './use-tvl-chart-render-params'
 
-export function ScalingTvlChart({
+export function ScalingSummaryTvlChart({
   unit,
   timeRange,
 }: { unit: ChartUnit; timeRange: TvlChartRange }) {

@@ -1,5 +1,5 @@
-import { SummaryActivityChart } from '~/components/chart/activity/summary-activity-chart'
-import { ScalingTvlChart } from '~/components/chart/tvl/scaling-tvl-chart'
+import { ScalingSummaryActivityChart } from '~/components/chart/activity/scaling-summary-activity-chart'
+import { ScalingSummaryTvlChart } from '~/components/chart/tvl/scaling-summary-tvl-chart'
 import { MainPageCard } from '~/components/main-page-card'
 import { MainPageHeader } from '~/components/main-page-header'
 import { getScalingSummaryEntries } from '~/server/features/scaling/summary/get-scaling-summary-entries'
@@ -39,10 +39,10 @@ export default async function Page() {
           <MainPageHeader>Summary</MainPageHeader>
           <div className="grid grid-cols-2 gap-4 max-lg:hidden">
             <MainPageCard>
-              <ScalingTvlChart unit={UNIT} timeRange={TIME_RANGE} />
+              <ScalingSummaryTvlChart unit={UNIT} timeRange={TIME_RANGE} />
             </MainPageCard>
             <MainPageCard>
-              <SummaryActivityChart timeRange={TIME_RANGE} />
+              <ScalingSummaryActivityChart timeRange={TIME_RANGE} />
             </MainPageCard>
           </div>
           <ChartTabs
