@@ -16,7 +16,6 @@ const ZBigNumber = z.instanceof(BigNumber).transform((n) => n.toBigInt())
 
 const StarknetStateUpdate = z.object({
   programOutput: z.array(ZBigNumber),
-  kzgProofs: z.array(z.string()),
 })
 type StarknetStateUpdate = z.infer<typeof StarknetStateUpdate>
 
@@ -59,7 +58,6 @@ function decodeTransaction(data: string) {
 
   return StarknetStateUpdate.parse({
     programOutput: decodedInput.programOutput,
-    kzgProofs: decodedInput.kzgProofs,
   })
 }
 
