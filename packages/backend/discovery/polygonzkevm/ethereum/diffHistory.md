@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x15c3a6a9e1251031b322ddd5f5bbd884102d242d
+
+# Diff at Wed, 02 Oct 2024 14:16:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d101c705b5f4fd0b3af2e251678b85e1005b31d8 block: 20871583
+- current block number: 20878349
+
+## Description
+
+Config related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20871583 (main branch discovery), not current.
+
+```diff
+    contract daiBridge (0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-09-20T08:44:59.000Z",["0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b"]]]
+    }
+```
+
+```diff
+    contract PolygonZkEVMEtrog (0x519E42c24163192Dca44CD3fBDCEBF6be9130987) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-01-27T14:16:11.000Z",["0x79BCB82B35A335cD8A8Ec433b304a0c91f67CDE0"]],["2024-03-14T12:25:35.000Z",["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"]],["2024-03-24T23:36:47.000Z",["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"]],["2024-10-01T14:22:59.000Z",["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"]]]
+    }
+```
+
+```diff
+    contract usdcBridge (0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-11-16T09:12:59.000Z",["0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6"]]]
+    }
+```
+
+```diff
+    contract wstETHBridge (0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-12-30T14:05:35.000Z",["0x18FED1E19dC564DC917D203be9d40790472D22e9"]]]
+    }
+```
+
 Generated with discovered.json: 0x469f25ff62470643e6bf703e44cf4a67fc26b66f
 
 # Diff at Tue, 01 Oct 2024 15:37:34 GMT:
