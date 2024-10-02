@@ -13,7 +13,7 @@ const RadioGroup = React.forwardRef<
   return (
     <RadioGroupPrimitive.Root
       className={cn(
-        'group/radio-group inline-flex w-max items-center gap-1 rounded-lg bg-surface-secondary p-1 text-base font-medium',
+        'group/radio-group inline-flex w-max items-center gap-1 rounded-lg bg-gray-200 p-1 text-base font-medium sidebar:!bg-surface-secondary dark:bg-zinc-700',
         className,
       )}
       {...props}

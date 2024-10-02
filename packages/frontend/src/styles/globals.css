@@ -56,6 +56,18 @@
   body:has(.sidebar){
     @apply bg-background;
   }
+
+  /* 
+   It has to be done this way because we want to keep the old styles for select component for top nav pages.
+   It can not be achieved by using sidebar variant as the content is rendered inside a portal (outside div containing sidebar classname).
+   Temporary solution until project page is redesigned to new colors.
+  */
+  body:has(.sidebar) [data-radix-select-viewport] {
+    @apply bg-surface-secondary;
+  }
+  body:has(.sidebar) [data-radix-select-viewport] [role="option"] {
+    @apply focus:bg-surface-tertiary
+  }
 }
 
 @layer utilities {
