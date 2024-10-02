@@ -28,7 +28,7 @@ body {
   @apply bg-white dark:bg-neutral-900 text-base text-black dark:text-white md:text-lg font-sans transition-colors;
 }
 
-body:has(.v2){
+body:has(.sidebar){
   @apply bg-n-gray-200 dark:bg-[#090A0B];
 }
 

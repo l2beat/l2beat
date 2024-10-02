@@ -17,7 +17,7 @@ import { type ScalingSummaryTableRow } from '../../_utils/to-table-rows'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 
-export const scalingLayer2sColumnsV2 = [
+export const scalingLayer2sColumns = [
   ...getCommonProjectColumns(columnHelper),
   columnHelper.accessor('name', {
     cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,

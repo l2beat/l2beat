@@ -4,9 +4,9 @@ import { externalLinks } from '~/consts/external-links'
 
 export function BridgesMvpWarning({
   className,
-  v2,
-}: { className?: string; v2?: boolean }) {
-  if (v2) {
+  sidebar,
+}: { className?: string; sidebar?: boolean }) {
+  if (sidebar) {
     return (
       <MainPageWarning className={className}>
         L2BEAT Bridges is a work in progress. You might find incomplete research

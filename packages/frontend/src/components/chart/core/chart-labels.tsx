@@ -49,7 +49,7 @@ function ChartLabel({
         <span
           className={cn(
             'absolute bottom-0 left-0 pb-0.5 text-sm text-gray-500 dark:text-white',
-            'v2:text-zinc-500 v2:dark:text-zinc-300',
+            'sidebar:text-zinc-500 sidebar:dark:text-zinc-300',
             className,
           )}
         >
@@ -59,7 +59,7 @@ function ChartLabel({
       <hr
         className={cn(
           'border-gray-850/30 dark:border-white/30',
-          'v2:border-zinc-500/30 v2:dark:border-zinc-300/30',
+          'sidebar:border-zinc-500/30 sidebar:dark:border-zinc-300/30',
         )}
       />
     </div>
