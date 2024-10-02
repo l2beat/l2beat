@@ -7,7 +7,6 @@ import { Config } from './config'
 import { ApplicationModule } from './modules/ApplicationModule'
 import { createActivityModule } from './modules/activity/ActivityModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
-import { createFeaturesModule } from './modules/features/FeaturesModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
 import { createHealthModule } from './modules/health/HealthModule'
@@ -65,7 +64,6 @@ export class Application {
       createLzOAppsModule(config, logger),
       initTvlModule(config, logger, peripherals, clock),
       createVerifiersModule(config, logger, peripherals, clock),
-      createFeaturesModule(config),
       createDaBeatModule(config, logger, peripherals, clock),
     ]
 

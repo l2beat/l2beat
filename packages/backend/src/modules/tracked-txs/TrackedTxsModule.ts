@@ -154,7 +154,6 @@ export function createTrackedTxsModule(
 
   return {
     start,
-    routers: [...subModules.flatMap((m) => m?.routers ?? [])],
     indexer: trackedTxsIndexer,
   }
 }
