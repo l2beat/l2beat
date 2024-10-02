@@ -1,9 +1,26 @@
-import { CoingeckoId, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  AggLayerL2Token,
+  AggLayerNativeEtherPreminted,
+  AggLayerNativeEtherWrapped,
+  CoingeckoId,
+  CoingeckoPriceConfigEntry,
+  EscrowEntry,
+  EthereumAddress,
+  TotalSupplyEntry,
+} from '@l2beat/shared-pure'
 
 /**
  * This whole file is a pack of common utilities extracted from backend - it enables the frontend
  * to query the data in status-aware fashion. Most notably TVL before aggregation.
  */
+
+export type MultiIndexerEntry =
+  | TotalSupplyEntry
+  | EscrowEntry
+  | CoingeckoPriceConfigEntry
+  | AggLayerL2Token
+  | AggLayerNativeEtherPreminted
+  | AggLayerNativeEtherWrapped
 
 export function createIndexerId(name: string, tag: string | undefined) {
   return tag === undefined ? name : `${name}::${tag}`
@@ -35,12 +52,30 @@ export function getPremintedIndexerId(
   )
 }
 
+export function toIndexerId(config: MultiIndexerEntry) {
+  switch (config.type) {
+    case 'coingecko':
+      return getPriceIndexerId(config.coingeckoId)
+    case 'escrow':
+    case 'totalSupply':
+      return getChainAmountIndexerId(config.chain)
+    case 'aggLayerL2Token':
+    case 'aggLayerNativeEtherPreminted':
+    case 'aggLayerNativeEtherWrapped':
+      return getAggLayerIndexerId(config.chain)
+  }
+}
+
 export function getPriceIndexerId(coingeckoId: CoingeckoId) {
   return createIndexerId(INDEXER_NAMES.PRICE, coingeckoId.toString())
 }
 
 export function getChainAmountIndexerId(chain: string) {
   return createIndexerId(INDEXER_NAMES.CHAIN_AMOUNT, chain)
+}
+
+export function getAggLayerIndexerId(chain: string) {
+  return createIndexerId(INDEXER_NAMES.AGGLAYER, chain)
 }
 
 export function getCirculatingSupplyIndexerId(coingeckoId: CoingeckoId) {

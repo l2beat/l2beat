@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { NEW_CRYPTOGRAPHY, RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -5,6 +6,9 @@ import { polygonCDKStack } from './templates/polygonCDKStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('witness')
+
+const shared = new ProjectDiscovery('shared-polygon-cdk')
+const bridge = shared.getContract('Bridge')
 
 const membersCountDAC = discovery.getContractValue<number>(
   'WitnessValidiumDAC',
@@ -90,8 +94,23 @@ export const witness: Layer2 = polygonCDKStack({
     },
     activityDataSource: 'Blockchain RPC',
   },
+  chainConfig: {
+    chainId: 1702448187,
+    name: 'witness',
+    minTimestampForTvl: new UnixTime(1718569535),
+  },
   rpcUrl: 'https://witnesschain-sequencer.eu-north-2.gateway.fm/',
-  nonTemplateEscrows: [],
+  nonTemplateEscrows: [
+    shared.getEscrowDetails({
+      address: bridge.address,
+      tokens: '*',
+      sharedEscrow: {
+        type: 'AggLayer',
+        nativeAsset: 'etherPreminted',
+        premintedAmount: '340282366920938463463374607431768211455',
+      },
+    }),
+  ],
   milestones: [
     {
       name: 'Witness Chain Mainnet Launch',
