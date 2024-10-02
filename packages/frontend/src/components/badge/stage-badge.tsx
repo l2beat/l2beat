@@ -10,7 +10,7 @@ export interface StageBadgeProps {
 export function StageBadge({ stage, className }: StageBadgeProps) {
   const value =
     stage === 'UnderReview'
-      ? 'Coming'
+      ? 'Review'
       : stage === 'NotApplicable'
         ? undefined
         : stage
@@ -37,7 +37,7 @@ function getClassNames(stage: Stage | 'UnderReview' | 'NotApplicable'): string {
     case 'Stage 0':
       return 'bg-orange-600 border border-[#F98A24] dark:bg-[#E03109] dark:border-[#F25430] text-white'
     case 'UnderReview':
-      return 'border border-[#935EC9] text-[#935EC9]'
+      return 'border border-current text-n-yellow-700 dark:text-yellow-200'
     case 'NotApplicable':
       return 'bg-[#B4C7D5] border border-[#D1E1EC] text-zinc-800'
     default:

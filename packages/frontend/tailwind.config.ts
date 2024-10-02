@@ -85,6 +85,9 @@ const config: Config = {
         800: '#382D11',
         900: '#684E00',
       },
+      'n-yellow': {
+        700: '#AB8000',
+      },
       orange: { 400: '#FF8B36', 500: '#FF7D1F', 600: '#F94A24' },
       purple: {
         50: '#6C57BF',
