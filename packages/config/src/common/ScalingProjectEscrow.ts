@@ -13,6 +13,15 @@ export interface AggLayerEscrow {
   includeAllOKBFromL1?: boolean
 }
 
+export interface ElasticChainEscrow {
+  type: 'ElasticChian'
+  l2BridgeAddress: EthereumAddress
+  /** ERC20 address of ether on L2 */
+  l2EtherAddress: EthereumAddress
+}
+
+export type SharedEscrow = AggLayerEscrow | ElasticChainEscrow
+
 interface OldProjectEscrow {
   address: EthereumAddress
   /** Timestamp of the deployment transaction of the escrow contract. */
@@ -43,7 +52,7 @@ interface OldProjectEscrow {
     }[]
     warning?: string
   }
-  sharedEscrow?: AggLayerEscrow
+  sharedEscrow?: SharedEscrow
 }
 
 interface NewProjectEscrow {
@@ -81,5 +90,5 @@ interface NewProjectEscrow {
     }[]
     warning?: string
   }
-  sharedEscrow?: AggLayerEscrow
+  sharedEscrow?: SharedEscrow
 }
