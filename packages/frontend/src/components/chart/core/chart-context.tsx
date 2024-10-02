@@ -19,6 +19,7 @@ export interface ChartContextProviderParams<T> {
   labelCount?: number
   valuesStyle: SeriesStyle[]
   formatYAxisLabel: (value: number) => string
+  useLogScale?: boolean
   children?: ReactNode
 }
 
@@ -37,10 +38,11 @@ export function ChartContextProvider<T>({
   children,
   ...params
 }: ChartContextProviderParams<T>) {
-  const { columns, formatYAxisLabel, labelCount } = params
+  const { columns, useLogScale, formatYAxisLabel, labelCount } = params
   const values = columns.flatMap((column) => column.values)
   const { labels, getY } = getYAxis(
     values.map((v) => v.value),
+    !!useLogScale,
     formatYAxisLabel,
     labelCount,
   )
