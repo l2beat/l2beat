@@ -23,7 +23,15 @@
   "overrides": {
     "HomeBeaconProxy": {
       "proxyType": "Optics Beacon proxy",
-      "ignoreInWatchMode": ["committedRoot", "count", "root", "tree"]
+      "ignoreInWatchMode": [
+        "committedRoot",
+        "count",
+        "root",
+        "tree",
+        "queueEnd",
+        "queueLength",
+        "suggestUpdate"
+      ]
     },
     "ReplicaBeaconProxy": {
       "proxyType": "Optics Beacon proxy",
