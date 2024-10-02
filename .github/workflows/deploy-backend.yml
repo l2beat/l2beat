@@ -1,16 +1,17 @@
-name: Deploy update monitor
+name: Deploy backend
 
 concurrency:
-  group: update-monitor-deployment
+  group: backend-deployment
 permissions: {}
 
 on:
-  schedule:
-    - cron: "45 * * * *"
+  push:
+    branches:
+      - main
 
 jobs:
-  deploy-update-monitor:
-    name: Deploy update monitor
+  deploy-backend:
+    name: Deploy backend
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -32,12 +33,12 @@ jobs:
             TURBO_TEAM=${{ vars.TURBO_TEAM }}
             TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
           tags: |
-            registry.heroku.com/${{ secrets.HEROKU_UPDATE_MONITOR_DEV }}/web
-            registry.heroku.com/${{ secrets.HEROKU_UPDATE_MONITOR_PROD }}/web
+            registry.heroku.com/${{ secrets.HEROKU_BACKEND_DEV }}/web
+            registry.heroku.com/${{ secrets.HEROKU_BACKEND_PROD }}/web
       - name: Release published containers
         run: |
-          heroku container:release -a ${{ secrets.HEROKU_UPDATE_MONITOR_DEV }} -v web
-          heroku container:release -a ${{ secrets.HEROKU_UPDATE_MONITOR_PROD }} -v web
+          heroku container:release -a ${{ secrets.HEROKU_BACKEND_DEV }} -v web
+          heroku container:release -a ${{ secrets.HEROKU_BACKEND_PROD }} -v web
         env:
           HEROKU_ORGANIZATION: ${{ vars.HEROKU_ORG }}
           HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}
