@@ -108,6 +108,7 @@ export const xlayer: Layer2 = polygonCDKStack({
     shared.getEscrowDetails({
       address: bridge.address,
       tokens: '*',
+      sinceTimestamp: new UnixTime(1712620800),
       sharedEscrow: {
         type: 'AggLayer',
         nativeAsset: 'etherWrapped',
