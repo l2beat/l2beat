@@ -13,6 +13,7 @@ import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { useCurrentSection } from '~/hooks/use-current-section'
 import { SummaryIcon } from '~/icons/pages/summary'
 import { cn } from '~/utils/cn'
+import { scrollVerticallyToItem } from '~/utils/scroll-to-item'
 import { UnderReviewCallout } from '../under-review-callout'
 import { type ProjectNavigationSection } from './types'
 
@@ -91,45 +92,33 @@ function ProjectNavigationList({
   sections,
   style,
 }: Pick<ProjectNavigationProps, 'sections'> & { style?: CSSProperties }) {
-  const containerRef = useRef<HTMLDivElement>(null)
+  const currentMenuEntry = useRef<HTMLAnchorElement>(null)
+  const menuContainer = useRef<HTMLDivElement>(null)
   const currentSection = useCurrentSection()
 
-  const followSectionMenuEntry = useCallback(() => {
-    const container = containerRef.current
-
-    if (container) {
-      // Select all navigation entries
-      const navigationEntries = [...container.querySelectorAll('a')]
-
-      // Find the current section in the navigation entries, using data-section attribute
-      // since id attribute would collied with the actual section id nav-jump relies on
-      const menuEntry = navigationEntries.find((el) => {
-        const section = el.getAttribute('data-section')
-        return section === currentSection?.id
-      })
-
-      // Special case for explicitly injected summary section
-      const isSummary = currentSection?.id === 'summary'
-
-      if (menuEntry) {
-        const offsetTop = isSummary ? 0 : menuEntry.offsetTop
-        container.scroll({ top: offsetTop, behavior: 'smooth' })
-      }
-    }
-  }, [containerRef, currentSection])
+  const scrollToItem = useCallback(
+    (item: HTMLElement, overflowingContainer: HTMLElement) =>
+      scrollVerticallyToItem({
+        item,
+        overflowingContainer,
+        behavior: 'smooth',
+      }),
+    [],
+  )
 
   useEffect(() => {
-    followSectionMenuEntry()
-  }, [currentSection, followSectionMenuEntry])
+    if (currentMenuEntry.current && menuContainer.current) {
+      scrollToItem(currentMenuEntry.current, menuContainer.current)
+    }
+  }, [currentSection, scrollToItem])
 
   return (
     <div
       className="absolute top-0 flex max-h-[calc(100vh-220px)] flex-col gap-3 overflow-y-auto leading-none transition-[top] duration-300"
       style={style}
-      ref={containerRef}
+      ref={menuContainer}
     >
       <a
-        data-section="summary"
         href="#"
         className={cn(
           'flex flex-row items-center gap-3 transition-opacity hover:opacity-100',
@@ -144,9 +133,9 @@ function ProjectNavigationList({
 
         return (
           <a
-            data-section={section.id}
             key={section.id}
             href={`#${section.id}`}
+            ref={selected ? currentMenuEntry : null}
             className={cn(
               'flex flex-row items-center transition-opacity hover:opacity-100',
               !selected && 'opacity-60',
