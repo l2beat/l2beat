@@ -62,10 +62,10 @@
    It can not be achieved by using sidebar variant as the content is rendered inside a portal (outside div containing sidebar classname).
    Temporary solution until project page is redesigned to new colors.
   */
-  body:has(.sidebar) [data-radix-select-viewport] {
+  body:has(.sidebar) [data-role="select-content"] {
     @apply bg-surface-secondary;
   }
-  body:has(.sidebar) [data-radix-select-viewport] [role="option"] {
+  body:has(.sidebar) [data-role="select-content"] [role="option"] {
     @apply focus:bg-surface-tertiary
   }
 }
