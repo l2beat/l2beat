@@ -16,7 +16,6 @@ const Table = React.forwardRef<
             'w-full border-collapse text-left text-base',
             className,
           )}
-          cellPadding={0}
           cellSpacing={0}
           {...props}
         />
@@ -33,7 +32,7 @@ const TableHeader = React.forwardRef<
   <thead
     ref={ref}
     className={cn(
-      'group/header whitespace-pre py-2 align-bottom text-xs font-semibold uppercase text-zinc-500 dark:text-n-zinc-300 [&_tr]:border-b',
+      'group/header whitespace-pre py-2 align-bottom text-xs font-semibold uppercase text-zinc-500 dark:text-n-zinc-300',
       className,
     )}
     {...props}
@@ -57,14 +56,7 @@ const TableHeaderRow = React.forwardRef<
   HTMLTableRowElement,
   React.HTMLAttributes<HTMLTableRowElement>
 >(({ className, ...props }, ref) => (
-  <tr
-    ref={ref}
-    className={cn(
-      'border-b border-b-gray-200 dark:border-b-gray-850',
-      className,
-    )}
-    {...props}
-  />
+  <tr ref={ref} className={className} {...props} />
 ))
 TableHeaderRow.displayName = 'TableHeaderRow'
 
@@ -74,7 +66,10 @@ const TableRow = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <TableHeaderRow
     ref={ref}
-    className={cn('group/row hover:shadow-sm', className)}
+    className={cn(
+      'group/row border-b border-b-gray-200 hover:shadow-sm dark:border-b-gray-850',
+      className,
+    )}
     {...props}
   />
 ))
@@ -119,7 +114,7 @@ const TableCell = React.forwardRef<
   <td
     ref={ref}
     className={cn(
-      'group h-9 whitespace-pre align-middle text-xs md:h-14 md:text-base',
+      'group h-9 whitespace-pre px-0 align-middle text-xs md:h-14 md:text-base',
       !href && [
         'pr-3 first:pl-2 last:pr-2 md:pr-4',
         align === 'center' && 'text-center',

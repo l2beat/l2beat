@@ -95,37 +95,41 @@ export function BasicTable<T extends BasicEntry>({
     <Table className={className}>
       {groupedHeader && <ColGroup headers={groupedHeader.headers} />}
       <TableHeader>
-        {groupedHeader && (
-          <TableHeaderRow className="border-none">
-            {groupedHeader.headers.map((header) => {
-              return (
-                <React.Fragment key={header.id}>
-                  <th
-                    colSpan={header.colSpan}
-                    className={cn(
-                      'text-base text-primary',
-                      !header.isPlaceholder &&
-                        !!header.column.columnDef.header &&
-                        'rounded-t-lg px-6 pt-4',
-                      header.column.getIsPinned() &&
-                        getRowTypeClassNamesWithoutOpacity(null),
-                    )}
-                    style={getCommonPinningStyles(header.column)}
-                  >
-                    {!header.isPlaceholder &&
-                      !!header.column.columnDef.header &&
-                      flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
+        {groupedHeader &&
+          groupedHeader.headers.some(
+            (header) =>
+              !header.isPlaceholder && !!header.column.columnDef.header,
+          ) && (
+            <TableHeaderRow>
+              {groupedHeader.headers.map((header) => {
+                return (
+                  <React.Fragment key={header.id}>
+                    <th
+                      colSpan={header.colSpan}
+                      className={cn(
+                        'text-base text-primary',
+                        !header.isPlaceholder &&
+                          !!header.column.columnDef.header &&
+                          'rounded-t-lg px-6 pt-4',
+                        header.column.getIsPinned() &&
+                          getRowTypeClassNamesWithoutOpacity(null),
                       )}
-                  </th>
-                  {!header.isPlaceholder && <ColumnFiller as="th" />}
-                </React.Fragment>
-              )
-            })}
-          </TableHeaderRow>
-        )}
-        <TableHeaderRow className="!border-b-2 border-b-surface-tertiary">
+                      style={getCommonPinningStyles(header.column)}
+                    >
+                      {!header.isPlaceholder &&
+                        !!header.column.columnDef.header &&
+                        flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
+                    </th>
+                    {!header.isPlaceholder && <ColumnFiller as="th" />}
+                  </React.Fragment>
+                )
+              })}
+            </TableHeaderRow>
+          )}
+        <TableHeaderRow>
           {actualHeader.headers.map((header) => {
             const groupParams = getGroupParams(header.column)
             return (
@@ -173,6 +177,12 @@ export function BasicTable<T extends BasicEntry>({
               </React.Fragment>
             )
           })}
+        </TableHeaderRow>
+        <TableHeaderRow>
+          <th
+            colSpan={actualHeader.headers.length}
+            className="mx-0.5 h-0.5 rounded-full bg-surface-tertiary"
+          />
         </TableHeaderRow>
       </TableHeader>
       <TableBody>
