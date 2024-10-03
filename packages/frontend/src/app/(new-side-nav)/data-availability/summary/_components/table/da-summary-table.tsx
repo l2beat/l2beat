@@ -103,6 +103,7 @@ export function DaSummaryTable({ items }: Props) {
                     </td>
                     <DaTableSubRowCell href={href} lastRow={lastRow}>
                       <PentagonRosetteCell
+                        className="justify-start"
                         values={mapRisksToRosetteValues(subRow.risks)}
                         isUnderReview={subRow.isUnderReview}
                       />
