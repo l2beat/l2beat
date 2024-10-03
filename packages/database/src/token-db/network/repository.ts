@@ -31,6 +31,10 @@ export class NetworkRepository extends BaseRepository {
       .select([...selectNetwork])
       .execute()
 
+    if (allNetworks.length === 0) {
+      return []
+    }
+
     const networkIds = allNetworks.map((network) => network.id)
 
     const [explorers, rpcs] = await Promise.all([

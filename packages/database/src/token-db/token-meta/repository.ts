@@ -43,7 +43,7 @@ export class TokenMetaRepository extends BaseRepository {
 
     const rows = records.map(upsertableToRow)
 
-    await this.batch(rows, 1_000, async (batch) => {
+    await this.batch(rows, 200, async (batch) => {
       await this.db
         .insertInto('TokenMeta')
         .values(batch)

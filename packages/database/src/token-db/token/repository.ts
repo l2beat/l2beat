@@ -12,8 +12,7 @@ export class TokenRepository extends BaseRepository {
       .values(row)
       .onConflict((cb) =>
         cb.columns(['networkId', 'address']).doUpdateSet((eb) => ({
-          networkId: eb.ref('excluded.networkId'),
-          address: eb.ref('excluded.address'),
+          updatedAt: eb.ref('excluded.updatedAt'),
         })),
       )
       .returning('Token.id')
@@ -30,8 +29,7 @@ export class TokenRepository extends BaseRepository {
         .values(batch)
         .onConflict((cb) =>
           cb.columns(['networkId', 'address']).doUpdateSet((eb) => ({
-            networkId: eb.ref('excluded.networkId'),
-            address: eb.ref('excluded.address'),
+            updatedAt: eb.ref('excluded.updatedAt'),
           })),
         )
         .returning('Token.id')
