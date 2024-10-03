@@ -7,9 +7,7 @@ import { RiskCell } from '~/components/table/cells/risk-cell'
 import { TypeCell } from '~/components/table/cells/type-cell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { sortSentiments } from '~/components/table/sorting/functions/sentiment-sorting'
-import { EM_DASH } from '~/consts/characters'
 import { type BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-summary-entries'
-import { formatPercent } from '~/utils/get-percentage-change'
 
 const columnHelper = createColumnHelper<BridgesSummaryEntry>()
 
@@ -76,22 +74,6 @@ export const bridgesSummaryActiveColumns = [
       align: 'right',
       tooltip:
         'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago.',
-    },
-  }),
-  columnHelper.accessor('marketShare', {
-    header: 'MKT Share',
-    cell: (ctx) => {
-      const value = ctx.getValue()
-      if (!value) {
-        return EM_DASH
-      }
-
-      return formatPercent(value)
-    },
-    sortUndefined: 'last',
-    meta: {
-      align: 'right',
-      tooltip: 'Share of the sum of total value locked of all projects.',
     },
   }),
 ]

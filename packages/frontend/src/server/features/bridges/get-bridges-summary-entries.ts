@@ -91,9 +91,6 @@ function getBridges(params: Params) {
           associatedTokenWarning?.sentiment === 'bad' && associatedTokenWarning,
         ]),
       },
-      marketShare: bridgeTvl
-        ? bridgeTvl.breakdown.total / tvl7dBreakdown.total
-        : undefined,
       validatedBy: bridge.riskView?.validatedBy,
       category: bridge.display.category,
       warning: bridge.display.warning,
