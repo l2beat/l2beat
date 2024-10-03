@@ -100,7 +100,7 @@ function BridgesChartHeader({
       <div className="flex flex-col items-end">
         <div className="whitespace-nowrap text-right text-xl font-bold md:text-2xl">
           {!value || loading ? (
-            <Skeleton className="h-6 w-32" />
+            <Skeleton className="my-0.5 h-[26px] w-32 md:h-8" />
           ) : (
             formatCurrency(value, unit, {
               showLessThanMinimum: false,
@@ -108,7 +108,7 @@ function BridgesChartHeader({
           )}
         </div>
         {loading ? (
-          <Skeleton className="h-[14px] w-40 md:h-6" />
+          <Skeleton className="h-5 w-32 lg:h-6" />
         ) : (
           <p className="whitespace-nowrap text-right text-xs font-bold lg:text-base">
             {changeOverTime} / {tvlRangeToReadable(range)}

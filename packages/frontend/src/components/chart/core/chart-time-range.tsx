@@ -9,7 +9,7 @@ interface Props {
 export function ChartTimeRange({ range }: Props) {
   const loading = useChartLoading()
   if (loading) {
-    return <Skeleton className="h-5 w-44 md:h-6 lg:w-52" />
+    return <Skeleton className="h-5 w-44 lg:h-6 lg:w-52" />
   }
 
   return (

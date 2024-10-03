@@ -15,7 +15,7 @@ interface Props {
 export function ActivityChartHeader({ scalingFactor, range }: Props) {
   return (
     <header data-role="chart-header">
-      <div className="flex items-baseline justify-between">
+      <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold max-md:hidden">
           Daily average transactions per second
         </h1>
@@ -30,7 +30,7 @@ export function ActivityChartHeader({ scalingFactor, range }: Props) {
             </span>
           </p>
         ) : (
-          <Skeleton className="h-[29px] w-20 lg:w-[243px]" />
+          <Skeleton className="h-[30px] w-20 md:h-9 md:w-[200px] lg:w-[243px]" />
         )}
       </div>
 
