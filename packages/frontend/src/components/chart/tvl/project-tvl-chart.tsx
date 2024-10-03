@@ -14,7 +14,7 @@ import { type ChartUnit } from '../types'
 import { ProjectTokenChart } from './token/project-token-chart'
 import { TvlChartHover } from './tvl-chart-hover'
 import { TvlChartTimeRangeControls } from './tvl-chart-time-range-controls'
-import { TvlChartUnitControls } from './tvl-chart-unit-and-scale-controls'
+import { TvlChartUnitControls } from './tvl-chart-unit-controls'
 import { useTvlChartRenderParams } from './use-tvl-chart-render-params'
 
 interface Props {

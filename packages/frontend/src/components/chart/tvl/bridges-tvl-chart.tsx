@@ -13,7 +13,7 @@ import { useChartLoading } from '../core/chart-loading-context'
 import { type ChartUnit } from '../types'
 import { TvlChartHover } from './tvl-chart-hover'
 import { TvlChartTimeRangeControls } from './tvl-chart-time-range-controls'
-import { TvlChartUnitControls } from './tvl-chart-unit-and-scale-controls'
+import { TvlChartUnitControls } from './tvl-chart-unit-controls'
 import { tvlRangeToReadable } from './tvl-range-to-readable'
 import { useTvlChartRenderParams } from './use-tvl-chart-render-params'
 

@@ -8,9 +8,9 @@ export function useBreakpoint() {
 
   function onResize() {
     const breakpoint =
-      window.innerWidth >= 1120
+      window.innerWidth >= 1200
         ? 'desktop'
-        : window.innerWidth >= 750
+        : window.innerWidth >= 768
           ? 'tablet'
           : 'mobile'
     setBreakpoint(breakpoint)

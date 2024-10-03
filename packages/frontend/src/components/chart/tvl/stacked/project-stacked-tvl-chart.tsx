@@ -4,7 +4,7 @@ import { type Milestone } from '@l2beat/config'
 import { useState } from 'react'
 import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
-import { TvlChartUnitControls } from '~/components/chart/tvl/tvl-chart-unit-and-scale-controls'
+import { TvlChartUnitControls } from '~/components/chart/tvl/tvl-chart-unit-controls'
 import { TokenCombobox } from '~/components/token-combobox'
 import {
   type ProjectToken,
