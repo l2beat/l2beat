@@ -74,7 +74,7 @@ function L3ScalingProjectRosette({
     )
   }
 
-  // L3 - no host chain
+  // L3 - no host chain (Multiple), should not happen
   if (!hostChainRisks || !project.hostChainName) {
     return (
       <Wrapper hideSelector>
