@@ -428,7 +428,7 @@ export const scroll: Layer2 = {
         references: [
           {
             text: 'L1ETHGateway.sol - Etherscan source code, finalizeWithdrawETH function',
-            href: 'https://etherscan.io/address/0x1fcbE079c4Bbab37406daB7Dfd35AcAe37D5C55d#code',
+            href: 'https://etherscan.io/address/0x546E0bF31FB6e7babD493452e4e6999191367B42#code',
           },
         ],
       },
