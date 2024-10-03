@@ -47,7 +47,7 @@ export function buildEtherscanExplorer(apiUrl: string, apiKey: string) {
       return undefined
     }
     if (response.message !== 'OK') {
-      throw new Error(`Unexpected response: ${response.message}`)
+      throw new Error(`Unexpected response: ${JSON.stringify(response)}`)
     }
     // biome-ignore lint/style/noNonNullAssertion: enforced by zod
     return GetContractCreationResult.parse(response.result)[0]!
@@ -64,7 +64,7 @@ export function buildEtherscanExplorer(apiUrl: string, apiKey: string) {
       if (response.result === 'Contract source code not verified') {
         return undefined
       }
-      throw new Error(`Unexpected response: ${response.message}`)
+      throw new Error(`Unexpected response: ${JSON.stringify(response)}`)
     }
     // biome-ignore lint/style/noNonNullAssertion: enforced by zod
     return GetSourceCodeResult.parse(response.result)[0]!
