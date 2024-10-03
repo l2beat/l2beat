@@ -75,7 +75,7 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
           <CostsChartHover data={data} unit={unit} />
         )}
       >
-        <ChartTimeRange range={chartRange} />
+        <Header chartRange={chartRange} />
         <Chart />
         <ChartControlsWrapper>
           <UnitControls unit={unit} setUnit={setUnit} />
@@ -87,6 +87,15 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
         </ChartControlsWrapper>
       </ChartProvider>
     </section>
+  )
+}
+
+function Header({ chartRange }: { chartRange: [number, number] | undefined }) {
+  return (
+    <header>
+      <h1 className="text-2xl font-bold max-md:hidden">Placeholder header</h1>
+      <ChartTimeRange range={chartRange} />
+    </header>
   )
 }
 

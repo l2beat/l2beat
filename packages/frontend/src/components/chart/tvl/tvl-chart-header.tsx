@@ -34,9 +34,7 @@ export function TvlChartHeader({
   return (
     <header className="flex justify-between text-base">
       <div>
-        <h1 className="text-2xl font-bold max-md:hidden">
-          Daily value locked stacked by type
-        </h1>
+        <h1 className="text-2xl font-bold max-md:hidden">Placeholder header</h1>
         <h1 className="text-xl font-bold md:hidden">Daily value locked</h1>
         <ChartTimeRange range={timeRange} />
       </div>

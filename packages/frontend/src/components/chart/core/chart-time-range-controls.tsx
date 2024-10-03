@@ -29,7 +29,7 @@ export function ChartTimeRangeControls<T extends string>({
   const showSelect = projectSection
     ? breakpoint === 'tablet' || breakpoint === 'mobile'
     : breakpoint === 'mobile'
-  console.log(showSelect)
+
   if (!isClient) {
     return (
       <Skeleton
