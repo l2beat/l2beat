@@ -61,12 +61,23 @@ export async function upsertManyTokensWithMeta(
   db: Database,
   tokens: UpsertTokenWithMetaInput[],
 ) {
+  const keySet = new Set<string>()
+
   await db.token.upsertMany(
-    tokens.map((token) => ({
-      id: nanoid(),
-      networkId: token.networkId,
-      address: token.address,
-    })),
+    tokens
+      .map((token) => ({
+        id: nanoid(),
+        networkId: token.networkId,
+        address: token.address,
+      }))
+      .filter((token) => {
+        const key = `${token.networkId}_${token.address}`
+        if (keySet.has(key)) {
+          return false
+        }
+        keySet.add(key)
+        return true
+      }),
   )
 
   const tokenEntities = await db.token.getByNetworks(
