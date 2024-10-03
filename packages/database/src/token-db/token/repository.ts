@@ -195,4 +195,8 @@ export class TokenRepository extends BaseRepository {
       .execute()
     return rows
   }
+
+  async deleteAll(): Promise<void> {
+    await this.db.deleteFrom('Token').execute()
+  }
 }

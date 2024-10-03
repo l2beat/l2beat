@@ -33,6 +33,8 @@ import { TvlCleanerRepository } from './tvl/tvl-cleaner/repository'
 import { ValueRepository } from './tvl/value/repository'
 import { IndexerConfigurationRepository } from './uif/indexer-configuration/repository'
 import { IndexerStateRepository } from './uif/indexer-state/repository'
+import { AssetRisksBalanceRepository } from './asset-risks/balance/repository'
+import { AssetRisksUserRepository } from './asset-risks/user/repository'
 
 export type Database = ReturnType<typeof createDatabase>
 export function createDatabase(config?: PoolConfig) {
@@ -44,6 +46,11 @@ export function createDatabase(config?: PoolConfig) {
 
     // #region Activity
     activity: new ActivityRepository(db),
+    // #endregion
+
+    // #region Asset Risks
+    assetRisksUser: new AssetRisksUserRepository(db),
+    assetRisksBalance: new AssetRisksBalanceRepository(db),
     // #endregion
 
     // #region DA BEAT

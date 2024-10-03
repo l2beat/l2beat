@@ -131,6 +131,20 @@ export class NetworkRepository extends BaseRepository {
     return row
   }
 
+  async upsert(network: UpsertableNetworkRecord): Promise<{ id: string }> {
+    const row = upsertableToRow(network)
+    return await this.db
+      .insertInto('Network')
+      .values(row)
+      .onConflict((cb) =>
+        cb.column('coingeckoId').doUpdateSet((eb) => ({
+          coingeckoId: eb.ref('excluded.coingeckoId'),
+        })),
+      )
+      .returning('id')
+      .executeTakeFirstOrThrow()
+  }
+
   async upsertMany(networks: UpsertableNetworkRecord[]): Promise<number> {
     if (networks.length === 0) return 0
 
@@ -159,5 +173,9 @@ export class NetworkRepository extends BaseRepository {
       .set(row)
       .where('coingeckoId', '=', coingeckoId)
       .execute()
+  }
+
+  async deleteAll(): Promise<void> {
+    await this.db.deleteFrom('Network').execute()
   }
 }
