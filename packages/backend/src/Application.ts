@@ -9,7 +9,6 @@ import { createActivityModule } from './modules/activity/ActivityModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
-import { createImplementationChangeModule } from './modules/implementation-change-report/createImplementationChangeModule'
 import { createLzOAppsModule } from './modules/lz-oapps/createLzOAppsModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
@@ -50,7 +49,6 @@ export class Application {
       createMetricsModule(config),
       createActivityModule(config, logger, peripherals, clock),
       createUpdateMonitorModule(config, logger, peripherals, clock),
-      createImplementationChangeModule(config, logger, peripherals),
       createFlatSourcesModule(config, logger, peripherals),
       trackedTxsModule,
       createFinalityModule(
