@@ -35,6 +35,7 @@ export function IndividualPizzaRosetteIcon({
   isUnderReview,
   background = true,
 }: Props) {
+  console.dir({ context: 'rosette', l2, l3 }, { depth: null })
   const context = useIndividualRosetteTooltipContext()
   const svgRef = useRef(null)
 
@@ -305,7 +306,7 @@ export function IndividualPizzaRosetteIcon({
             cy="90"
             r="52"
             className="stroke-gray-100 dark:stroke-neutral-700"
-            stroke-width="10"
+            strokeWidth="10"
           />
         </g>
       </g>
