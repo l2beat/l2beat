@@ -137,7 +137,7 @@ model TokenMeta {
   externalId   String?  @db.VarChar(256)
   source       String   @db.VarChar(256)
   name         String?  @db.VarChar(256)
-  symbol       String?  @db.VarChar(32)
+  symbol       String?  @db.VarChar(256)
   decimals     Int?
   logoUrl      String?  @db.VarChar(256)
   contractName String?  @db.VarChar(256)

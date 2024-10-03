@@ -57,21 +57,28 @@ export class TokenRepository extends BaseRepository {
   ): Promise<TokenRecord[]> {
     if (networks.length === 0) return []
 
-    const rows = await this.db
-      .selectFrom('Token')
-      .select(selectToken)
-      .where((eb) =>
-        eb.or(
-          networks.map(({ address, networkId }) =>
-            eb.and([
-              eb('address', '=', address),
-              eb('networkId', '=', networkId),
-            ]),
+    const allRows: TokenRecord[] = []
+
+    await this.batch(networks, 1000, async (batch) => {
+      const rows = await this.db
+        .selectFrom('Token')
+        .select(selectToken)
+        .where((eb) =>
+          eb.or(
+            batch.map(({ address, networkId }) =>
+              eb.and([
+                eb('address', '=', address),
+                eb('networkId', '=', networkId),
+              ]),
+            ),
           ),
-        ),
-      )
-      .execute()
-    return rows
+        )
+        .execute()
+
+      allRows.push(...rows)
+    })
+
+    return allRows
   }
 
   async getByNetworksAndContractName(

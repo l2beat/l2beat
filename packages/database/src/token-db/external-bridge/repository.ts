@@ -19,11 +19,21 @@ export class ExternalBridgeRepository extends BaseRepository {
     record: UpsertableExternalBridgeRecord,
   ): Promise<{ id: string }> {
     const row = upsertableToRecord(record)
-    return await this.db
+    const result = await this.db
       .insertInto('ExternalBridge')
       .values(row)
       .onConflict((cb) => cb.doNothing())
       .returning('id')
-      .executeTakeFirstOrThrow()
+      .executeTakeFirst()
+
+    return (
+      result ??
+      (await this.db
+        .selectFrom('ExternalBridge')
+        .select('id')
+        .where('ExternalBridge.name', '=', record.name)
+        .where('ExternalBridge.type', '=', record.type)
+        .executeTakeFirstOrThrow())
+    )
   }
 }
