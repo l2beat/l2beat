@@ -6,7 +6,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <NavLayout
       logoLink="/scaling/summary"
-      topChildren={<Banner />}
+      topChildren={<Banner className="lg:rounded-b-xl xl:rounded-br-none" />}
       className="sidebar"
     >
       <div className="mx-auto mb-20 min-h-screen max-w-[1648px] md:px-6 lg:pl-0 lg:pr-6 xl:pr-0">

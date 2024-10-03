@@ -3,12 +3,13 @@ import { useIsClient } from '~/hooks/use-is-client'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { ArrowRightIcon } from '~/icons/arrow-right'
 import { CloseIcon } from '~/icons/close'
+import { cn } from '~/utils/cn'
 import { OutLink } from './out-link'
 
 const localStorageTag = 'top-banner'
 const purpose = 'fraud-proof-wars'
 
-export function Banner() {
+export function Banner({ className }: { className?: string }) {
   const isClient = useIsClient()
   const [isHidden, setIsHidden] = useLocalStorage(
     `${localStorageTag}-${purpose}-is-hidden`,
@@ -20,7 +21,12 @@ export function Banner() {
   }
 
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-1 bg-gradient-to-r from-[#7F39B6] to-[#CD1BD3] py-1.5 text-white dark:text-white md:flex-row md:gap-3">
+    <div
+      className={cn(
+        'relative flex w-full flex-col items-center justify-center gap-1 bg-gradient-to-r from-[#7F39B6] to-[#CD1BD3] py-1.5 text-white dark:text-white md:flex-row md:gap-3',
+        className,
+      )}
+    >
       <div className="absolute right-3">
         <CloseIcon
           onClick={() => setIsHidden(true)}
