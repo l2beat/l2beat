@@ -39,7 +39,7 @@ export interface Layer3 {
   /** Risk view values for this layer3 */
   riskView: ScalingProjectRiskView
   /** Stacked risk view values for this layer3 and it's base chain */
-  stackedRiskView?: ScalingProjectRiskView
+  stackedRiskView: ScalingProjectRiskView
   /** Data availability of scaling project */
   dataAvailability?: DataAvailabilityWithSentiment
   /** Deep dive into layer3 technology */
