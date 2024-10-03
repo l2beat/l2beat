@@ -77,7 +77,7 @@ function L3ScalingProjectRosette({
             }}
             l3={{
               name: project.name,
-              risks: stackedChainRisks,
+              risks: projectRisks,
             }}
           />
         ) : (
