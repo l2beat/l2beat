@@ -30,6 +30,16 @@ const pausers = eigenDiscovery.getContractValue<string[]>(
   'pausers',
 )
 
+const churnApprover = discovery.getContractValue<string>(
+  'RegistryCoordinator',
+  'churnApprover',
+)
+
+const ejectors = discovery.getContractValue<string[]>(
+  'EjectionManager',
+  'ejectors',
+)
+
 export const eigenDAbridge = {
   id: 'eigenda-bridge',
   type: 'DAC',
@@ -68,8 +78,29 @@ export const eigenDAbridge = {
         description:
           'The BLSApkRegistry contract keeps track of the BLS public keys of each operator and the quorum aggregated keys.',
       }),
+      discovery.getContractDetails('EjectionManager', {
+        description:
+          'The EjectionManager contract is responsible for ejecting operators from a quorum for violating the Service Legal Agreement (SLA).',
+      }),
     ],
-    risks: [],
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: 'the bridge contract receives a malicious code upgrade. There is no delay on code upgrades.',
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'the disperser posts an invalid commitment and EigenDA operators do not make the data available for verification.',
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'the churn approver or ejectors act maliciously and eject EigenDA operators from a quorum without cause.',
+      },
+      {
+        category: 'Users can be censored if',
+        text: 'the disperser does not distribute data to EigenDA operators.',
+      },
+    ],
   },
   technology: `## DA Bridge
     The EigenDAServiceManager acts as a DA bridge smart contract verifying data availability claims from operators via signature verification.
@@ -88,7 +119,7 @@ export const eigenDAbridge = {
       'This multisig is the owner of the EigenDAServiceManager contract. It holds the power to change the contract state and upgrade the bridge.',
     ),
     {
-      name: 'batchConfirmers',
+      name: 'BatchConfirmers',
       description: `The list of addresses authorized to confirm the availability of blobs batches to the DA bridge.`,
       accounts: batchConfirmers.map((batchConfirmer) => ({
         address: EthereumAddress(batchConfirmer),
@@ -96,10 +127,28 @@ export const eigenDAbridge = {
       })),
     },
     {
-      name: 'pausers',
+      name: 'Pausers',
       description: `The list of addresses authorized to pause the EigenDAServiceManager contract.`,
       accounts: pausers.map((pauser) => ({
         address: EthereumAddress(pauser),
+        type: 'EOA',
+      })),
+    },
+    {
+      name: 'ChurnApprover',
+      description: `The address authorized to approve the replacement of churned EigenDA operators from a quorum.`,
+      accounts: [
+        {
+          address: EthereumAddress(churnApprover),
+          type: 'EOA',
+        },
+      ],
+    },
+    {
+      name: 'Ejectors',
+      description: `The list of addresses authorized to eject EigenDA operators from a quorum.`,
+      accounts: ejectors.map((ejectors) => ({
+        address: EthereumAddress(ejectors),
         type: 'EOA',
       })),
     },
