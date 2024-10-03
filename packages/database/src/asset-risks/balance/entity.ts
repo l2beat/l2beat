@@ -1,5 +1,6 @@
-import { Insertable, Selectable } from 'kysely'
+import { Insertable } from 'kysely'
 import { AssetRisksBalance } from '../../kysely/generated/types'
+import { nanoid } from 'nanoid'
 
 export interface AssetRisksBalanceRecord {
   id: string
@@ -10,17 +11,18 @@ export interface AssetRisksBalanceRecord {
   createdAt: Date
 }
 
-export function toRecord(
-  entity: Selectable<AssetRisksBalance>,
-): AssetRisksBalanceRecord {
-  return entity
-}
+export type UpsertableAssetRisksBalanceRecord = Omit<
+  Insertable<AssetRisksBalance>,
+  'id' | 'updatedAt' | 'createdAt'
+>
 
-export function toRow(
-  record: Omit<AssetRisksBalanceRecord, 'updatedAt'>,
+export function upsertableToRecord(
+  record: UpsertableAssetRisksBalanceRecord,
 ): Insertable<AssetRisksBalance> {
   return {
     ...record,
+    id: nanoid(),
     updatedAt: new Date(),
+    createdAt: new Date(),
   }
 }
