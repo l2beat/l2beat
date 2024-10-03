@@ -82,7 +82,6 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
           <CostsChartTimeRangeControls
             timeRange={range}
             setTimeRange={setRange}
-            range={chartRange}
           />
         </ChartControlsWrapper>
       </ChartProvider>
