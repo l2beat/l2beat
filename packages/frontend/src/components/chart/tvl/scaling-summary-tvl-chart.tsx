@@ -83,7 +83,7 @@ function Header({ total, unit, change, timeRange }: Props) {
       <div className="flex flex-col items-end">
         <div className="whitespace-nowrap text-right text-xl font-bold">
           {value === undefined ? (
-            <Skeleton className="h-[23px] w-32" />
+            <Skeleton className="my-[5px] h-5 w-32" />
           ) : (
             formatCurrency(value, unit, {
               showLessThanMinimum: false,
@@ -91,7 +91,7 @@ function Header({ total, unit, change, timeRange }: Props) {
           )}
         </div>
         {loading ? (
-          <Skeleton className="h-[16px] w-40" />
+          <Skeleton className="my-px h-3.5 w-40" />
         ) : (
           <p className="whitespace-nowrap text-right text-xs leading-[1.15]">
             <PercentChange value={change} />
