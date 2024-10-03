@@ -72,14 +72,14 @@ function Header({ scalingFactor }: { scalingFactor: number | undefined }) {
           <ChevronIcon className="size-[10px] -rotate-90 fill-current" />
         </Link>
       </div>
-      <div className="flex flex-col items-end gap-1">
-        <div className="flex items-baseline gap-1">
+      <div className="flex flex-col items-end">
+        <div className="flex items-baseline">
           {scalingFactor !== undefined ? (
             <>
-              <span className="whitespace-nowrap text-right text-base font-bold leading-[1.15] max-md:hidden">
-                Scaling factor:
+              <span className="whitespace-nowrap text-right text-base font-bold max-md:hidden">
+                Scaling factor:{' '}
               </span>
-              <div className="whitespace-nowrap text-right text-xl font-bold leading-[1.15]">
+              <div className="whitespace-nowrap text-right text-xl font-bold">
                 {scalingFactor.toFixed(2)}x
               </div>
             </>

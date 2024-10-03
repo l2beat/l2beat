@@ -80,8 +80,8 @@ function Header({ total, unit, change, timeRange }: Props) {
           <ChevronIcon className="size-[10px] -rotate-90 fill-current" />
         </Link>
       </div>
-      <div className="flex flex-col items-end gap-1">
-        <div className="whitespace-nowrap text-right text-xl font-bold leading-[1.15]">
+      <div className="flex flex-col items-end">
+        <div className="whitespace-nowrap text-right text-xl font-bold">
           {value === undefined ? (
             <Skeleton className="h-[23px] w-32" />
           ) : (
@@ -91,7 +91,7 @@ function Header({ total, unit, change, timeRange }: Props) {
           )}
         </div>
         {loading ? (
-          <Skeleton className="h-6 w-40" />
+          <Skeleton className="h-[16px] w-40" />
         ) : (
           <p className="whitespace-nowrap text-right text-xs leading-[1.15]">
             <PercentChange value={change} />
