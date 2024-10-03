@@ -15,7 +15,7 @@ export const NavSideBarWrapper = ({
   const [resizing, setResizing] = useState(false)
 
   const sharedSizeClasses = cn(
-    'h-screen w-full lg:w-[240px] xl:w-[280px] [@supports(height:100dvh)]:h-dvh',
+    'h-screen w-full lg:w-[240px] [@supports(height:100dvh)]:h-dvh',
     legacyNav && 'lg:hidden',
   )
 
@@ -46,7 +46,7 @@ export const NavSideBarWrapper = ({
     >
       <div
         className={cn(
-          'scrollbar-gutter-stable flex flex-col gap-6 overflow-y-auto overflow-x-clip bg-background px-3.5 py-4 transition-all duration-300 ease-out lg:fixed lg:px-6 lg:py-[1.125rem]',
+          'scrollbar-gutter-stable flex flex-col gap-6 overflow-y-auto overflow-x-clip bg-background px-3.5 py-4 transition-all duration-300 ease-out lg:fixed lg:px-5 lg:py-[1.125rem]',
           sharedSizeClasses,
           resizing && 'transition-none',
         )}

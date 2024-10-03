@@ -33,7 +33,7 @@ export async function NavSidebar({ groups, logoLink, legacyNav }: Props) {
           </div>
         </div>
       </div>
-      <nav className="ml-1 flex flex-1 flex-col gap-6">
+      <nav className="flex flex-1 flex-col gap-1">
         {groups.map((group) => (
           <NavLinkGroup key={group.title} group={group} />
         ))}
