@@ -35,7 +35,6 @@ export function IndividualPizzaRosetteIcon({
   isUnderReview,
   background = true,
 }: Props) {
-  console.dir({ context: 'rosette', l2, l3 }, { depth: null })
   const context = useIndividualRosetteTooltipContext()
   const svgRef = useRef(null)
 
