@@ -159,6 +159,7 @@ model Token {
   escrows     BridgeEscrow[]
   updatedAt   DateTime       @updatedAt
   createdAt   DateTime       @default(now())
+  assetRisksBalances AssetRisksBalance[]
 
   @@unique([networkId, address])
 }
@@ -170,6 +171,29 @@ model Cache {
   blockNumber Int?
   createdAt   DateTime @default(now()) @db.Timestamp(6)
   updatedAt   DateTime @default(now()) @db.Timestamp(6)
+}
+
+model AssetRisksUser {
+  id String @id @db.Char(21)
+  address String @db.Char(42)
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  balances AssetRisksBalance[]
+  
+  @@unique([address])
+}
+
+model AssetRisksBalance {
+  id String @id @db.Char(21)
+  userId String @db.Char(21)
+  user AssetRisksUser @relation(fields: [userId], references: [id])
+  tokenId String @db.Char(21)
+  token Token @relation(fields: [tokenId], references: [id])
+  balance Int
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+
+  @@unique([tokenId, userId])
 }
 
 model Activity {
