@@ -149,7 +149,7 @@ export class NetworkRepository extends BaseRepository {
     if (networks.length === 0) return 0
 
     const rows = networks.map(upsertableToRow)
-    await this.batch(rows, 1_000, async (batch) => {
+    await this.batch(rows, 100, async (batch) => {
       await this.db
         .insertInto('Network')
         .values(batch)
