@@ -109,9 +109,6 @@ export function DaSummaryTable({ items }: Props) {
                       />
                     </DaTableSubRowCell>
                     <DaTableSubRowCell href={href} lastRow={lastRow}>
-                      {EM_DASH}
-                    </DaTableSubRowCell>
-                    <DaTableSubRowCell href={href} lastRow={lastRow}>
                       {subRow.usedIn.length > 0
                         ? formatCurrency(subRow.tvs, 'usd', {
                             showLessThanMinimum: false,
