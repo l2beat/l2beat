@@ -305,7 +305,7 @@ export function IndividualPizzaRosetteIcon({
             cy="90"
             r="52"
             className="stroke-gray-100 dark:stroke-neutral-700"
-            stroke-width="10"
+            strokeWidth="10"
           />
         </g>
       </g>
