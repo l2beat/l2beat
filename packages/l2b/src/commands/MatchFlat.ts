@@ -47,7 +47,7 @@ const MatchFlatFile = command({
 
 const MatchFlatAddress = command({
   name: 'address',
-  description: 'Using a address as base input.',
+  description: 'Using an address as base input.',
   args: {
     address: positional({ type: EthereumAddressValue, displayName: 'address' }),
     directory: positional({ type: Directory, displayName: 'flat-database' }),
