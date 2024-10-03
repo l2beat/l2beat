@@ -8,8 +8,9 @@
 @layer base {
   :root {
     --primary: #131215;
+    --primary-invert: #FAFAFA;
     --secondary: #5F6470;
-    --brand: #860CB0;
+    --brand: #AB3BD2;
     --background: #E6E7EC;
     --surface-primary: #FAFAFA;
     --surface-secondary: #E6E7EC;
@@ -18,6 +19,7 @@
   
   .dark {
     --primary: #FAFAFA;
+    --primary-invert: #131215;
     --secondary: #5F6470;
     --brand: #DB8BF7;
     --background: #090A0B;

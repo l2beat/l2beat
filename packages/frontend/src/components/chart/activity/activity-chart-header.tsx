@@ -53,7 +53,6 @@ export function ActivityChartHeader({ scalingFactor }: Props) {
           </Tooltip>
         </div>
       </div>
-      <hr className="mt-2 w-full border-gray-200 dark:border-zinc-700 md:hidden md:border-t" />
     </header>
   )
 }

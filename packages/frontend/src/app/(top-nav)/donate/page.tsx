@@ -110,6 +110,9 @@ async function Header(props: HeaderProps) {
                     alt="QR Code of donate address"
                     src={props.qrCodeUrl}
                     className="size-40"
+                    style={{
+                      imageRendering: 'pixelated',
+                    }}
                   />
                 </div>
                 <p className="mx-auto mt-8 inline-block w-[21ch] break-all font-mono text-lg">
@@ -148,6 +151,9 @@ async function Header(props: HeaderProps) {
                   alt="QR Code of donate address"
                   src={props.qrCodeUrl}
                   className="size-[212px]"
+                  style={{
+                    imageRendering: 'pixelated',
+                  }}
                 />
               </div>
               <p className="mx-auto mt-8 inline-block w-[21ch] break-all font-mono">
