@@ -34,4 +34,6 @@ export interface ScalingProjectDisplay {
   architectureImage?: string
   /** Name of the state validation image to show in the state validation section if present, otherwise use slug */
   stateValidationImage?: string
+  /** Name of the upgrades and governance image to show in the upgrades and governance section if present, otherwise use slug */
+  upgradesAndGovernanceImage?: string
 }

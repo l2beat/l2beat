@@ -25,7 +25,9 @@ export async function getDaSummaryEntries() {
     // Calculate total TVS for each bridge
     .map((daLayer) => ({
       ...daLayer,
-      usedIn: daLayer.bridges.flatMap((bridge) => bridge.usedIn),
+      usedIn: daLayer.bridges
+        .flatMap((bridge) => bridge.usedIn)
+        .sort((a, b) => getSumFor([b.id]) - getSumFor([a.id])),
       tvs: getSumFor(
         daLayer.bridges.flatMap((bridge) =>
           bridge.usedIn.map((project) => project.id),
@@ -44,6 +46,7 @@ export async function getDaSummaryEntries() {
           name: daLayer.display.name,
           href: `/data-availability/projects/${daLayer.display.slug}/${daBridge.display.slug}`,
           daBridge: toDaBridge(daBridge),
+          kind: daLayer.kind,
           layerType: kindToType(daLayer.kind),
           risks: getDaRisks(daLayer, daBridge, tvs, projectEconomicSecurity),
           isUnderReview: !!daLayer.isUnderReview || daBridge.isUnderReview,
@@ -75,6 +78,7 @@ export async function getDaSummaryEntries() {
           href: daBridges[0]?.href,
           daBridge: 'multiple' as const,
           layerType: kindToType(daLayer.kind),
+          kind: daLayer.kind,
           isUnderReview: !!daLayer.isUnderReview,
           isVerified: true,
           warning: undefined,

@@ -5,6 +5,7 @@ interface Props {
   count: number
   ethereumCount: number
   showEthereum: boolean
+  singleProject?: boolean
 }
 
 export function ActivityChartHover(props: Props) {
@@ -25,7 +26,7 @@ export function ActivityChartHover(props: Props) {
         <div className="flex items-center gap-1">
           <div className="relative -top-px inline-block size-2 rounded-full border-2 border-current bg-red-300"></div>
           <span className="text-sm text-gray-700 dark:text-gray-50 ">
-            Projects
+            {props.singleProject ? 'Project' : 'Projects'}
           </span>
         </div>
         <span className="whitespace-nowrap font-bold tabular-nums">

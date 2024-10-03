@@ -1,13 +1,20 @@
 'use client'
 
 import { type Milestone } from '@l2beat/config'
+import { useMemo } from 'react'
+import {
+  useScalingFilter,
+  useScalingFilterValues,
+} from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
 import { useCostsTimeRangeContext } from '~/app/(side-nav)/scaling/costs/_components/costs-time-range-context'
 import { useCostsUnitContext } from '~/app/(side-nav)/scaling/costs/_components/costs-unit-context'
 import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
+import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { type CostsUnit } from '~/server/features/scaling/costs/types'
+import { type CostsProjectsFilter } from '~/server/features/scaling/costs/utils/get-costs-projects'
 import { api } from '~/trpc/react'
 import { useChartLoading } from '../core/chart-loading-context'
 import { CostsChartHover } from './costs-chart-hover'
@@ -15,16 +22,36 @@ import { CostsChartTimeRangeControls } from './costs-chart-time-range-controls'
 import { useCostChartRenderParams } from './use-cost-chart-render-params'
 
 interface Props {
+  entries: ScalingCostsEntry[]
   milestones: Milestone[]
-  tag?: string
 }
 
-export function ScalingCostsChart({ milestones }: Props) {
+export function ScalingCostsChart({ milestones, entries }: Props) {
   const { range, setRange } = useCostsTimeRangeContext()
   const { unit, setUnit } = useCostsUnitContext()
+
+  const includeFilters = useScalingFilter()
+  const filters = useScalingFilterValues()
+
+  const filteredEntries = useMemo(
+    () => entries.filter((item) => includeFilters(item)),
+    [entries, includeFilters],
+  )
+
+  const filter = useMemo<CostsProjectsFilter>(() => {
+    if (filters.isEmpty) {
+      return { type: 'all' }
+    }
+
+    return {
+      type: 'projects',
+      projectIds: filteredEntries.map((project) => project.id),
+    }
+  }, [filteredEntries, filters])
+
   const { data, isLoading } = api.costs.chart.useQuery({
     range,
-    filter: { type: 'all' },
+    filter,
   })
 
   const { chartRange, columns, formatYAxisLabel, valuesStyle } =
