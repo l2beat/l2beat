@@ -92,9 +92,8 @@ export async function getScalingSummaryEntries() {
     // L3
     return {
       ...common,
-      risks: projectRisks,
+      risks: stackedRisks ? getL2Risks(stackedRisks) : projectRisks,
       baseLayerRisks,
-      stackedRisks,
     }
   })
 

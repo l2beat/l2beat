@@ -5,7 +5,14 @@ import { setupWorker } from '../setup-worker.js'
 import { InferQueueDataType } from '../types.js'
 
 type RoutedQueue<Event, RoutingKey> = {
-  queue: Queue<Event>
+  /**
+   * The queue or queues to route the event to.
+   */
+  queue: Queue<Event> | Queue<Event>[]
+
+  /**
+   * The routing key to use for this queue.
+   */
   routingKey: RoutingKey
 }
 
@@ -32,8 +39,11 @@ export function routingKey({
     to: RoutedQueue<InputEvent, RoutingKey>[]
     extractRoutingKey: (data: InputEvent) => Promise<RoutingKey>
   }) => {
-    const queueMap = new Map<RoutingKey, Queue>(
-      to.map(({ queue, routingKey }) => [routingKey, queue]),
+    const queueMap = new Map<RoutingKey, Queue[]>(
+      to.map(({ queue, routingKey }) => [
+        routingKey,
+        Array.isArray(queue) ? queue : [queue],
+      ]),
     )
 
     if (queueMap.size !== to.length) {
@@ -43,6 +53,7 @@ export function routingKey({
     if (to.length === 0) {
       logger.warn(
         'No queues has been set for routing, messages will be dropped',
+        { source: from.name },
       )
     }
 
@@ -51,9 +62,11 @@ export function routingKey({
       connection,
       processor: async (job: Job<InputEvent>) => {
         const routingKey = await extractRoutingKey(job.data)
-        const queue = queueMap.get(routingKey)
-        if (queue) {
-          await queue.add(job.name, job.data, job.opts)
+        const queues = queueMap.get(routingKey)
+        if (queues) {
+          await Promise.all(
+            queues.map((queue) => queue.add(job.name, job.data, job.opts)),
+          )
         } else {
           logger
             .tag(from.name)
@@ -63,7 +76,10 @@ export function routingKey({
     })
 
     const mapToLog = Object.fromEntries(
-      Array.from(queueMap.entries()).map(([key, queue]) => [key, queue.name]),
+      Array.from(queueMap.entries()).map(([key, queue]) => [
+        key,
+        queue.map((queue) => queue.name),
+      ]),
     )
 
     logger.info('Routing key rule set', {

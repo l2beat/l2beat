@@ -50,7 +50,11 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
       useLogScale={scale === 'log'}
       isLoading={isLoading}
       renderHoverContents={(data) => (
-        <ActivityChartHover {...data} showEthereum={showMainnet} />
+        <ActivityChartHover
+          {...data}
+          showEthereum={showMainnet}
+          singleProject
+        />
       )}
     >
       <section className="flex flex-col gap-4">

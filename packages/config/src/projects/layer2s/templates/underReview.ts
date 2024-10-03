@@ -89,6 +89,7 @@ export function underReviewL3(templateVars: UnderReviewConfigL3): Layer3 {
           : undefined),
     },
     riskView: UNDER_REVIEW_RISK_VIEW,
+    stackedRiskView: UNDER_REVIEW_RISK_VIEW,
     technology: TECHNOLOGY.UNDER_REVIEW,
     contracts: CONTRACTS.UNDER_REVIEW,
     chainConfig: templateVars.chainConfig,
