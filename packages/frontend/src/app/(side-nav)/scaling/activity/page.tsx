@@ -1,6 +1,7 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import { ActivityChart } from '~/components/chart/activity/activity-chart'
 import { MainPageCard } from '~/components/main-page-card'
+import { MainPageHeader } from '~/components/main-page-header'
 import { getScalingActivityEntries } from '~/server/features/scaling/get-scaling-activity-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
@@ -32,7 +33,8 @@ export default async function Page() {
     <HydrateClient>
       <ScalingFilterContextProvider>
         <ActivityTimeRangeContextProvider>
-          <MainPageCard className="lg:mt-20">
+          <MainPageHeader>Activity</MainPageHeader>
+          <MainPageCard>
             <ActivityChart milestones={HOMEPAGE_MILESTONES} entries={entries} />
           </MainPageCard>
           <MainPageCard className="mt-6">

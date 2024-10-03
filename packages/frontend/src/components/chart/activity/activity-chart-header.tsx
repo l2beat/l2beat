@@ -5,22 +5,27 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '../../core/tooltip/tooltip'
+import { ChartTimeRange } from '../core/chart-time-range'
 
 interface Props {
   scalingFactor: number | undefined
+  range: [number, number] | undefined
 }
 
-export function ActivityChartHeader({ scalingFactor }: Props) {
+export function ActivityChartHeader({ scalingFactor, range }: Props) {
   return (
     <header data-role="chart-header">
       <div className="flex items-baseline justify-between">
-        <h1 className="text-xl font-bold max-lg:leading-none md:text-2xl lg:text-3xl">
-          Activity
+        <h1 className="text-2xl font-bold max-md:hidden">
+          Daily average transactions per second
         </h1>
+        <h1 className="text-xl font-bold md:hidden">Daily average TPS</h1>
         {scalingFactor !== undefined ? (
           <p className="text-right font-bold group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0">
-            <span className="text-base lg:text-2xl">Scaling factor: </span>
-            <span className="text-xl md:text-2xl lg:text-3xl">
+            <span className="text-base max-md:hidden md:text-lg">
+              Scaling factor:{' '}
+            </span>
+            <span className="text-xl md:text-2xl">
               {scalingFactor.toFixed(2)}x
             </span>
           </p>
@@ -28,11 +33,10 @@ export function ActivityChartHeader({ scalingFactor }: Props) {
           <Skeleton className="h-[29px] w-20 lg:w-[243px]" />
         )}
       </div>
-      <div className="flex items-baseline justify-end text-xs lg:justify-between lg:text-base">
-        <p className="hidden text-gray-500 dark:text-gray-600 lg:block">
-          Transactions per second
-        </p>
-        <div className="flex items-center gap-1.5 text-right text-gray-500 group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0 dark:text-gray-600 lg:w-auto">
+
+      <div className="flex justify-between text-xs lg:text-base">
+        <ChartTimeRange range={range} />
+        <div className="flex items-center gap-1.5 text-right text-gray-500 group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0 dark:text-gray-600 max-md:hidden lg:w-auto">
           Observed over the last 7 days
           <Tooltip>
             <TooltipTrigger>

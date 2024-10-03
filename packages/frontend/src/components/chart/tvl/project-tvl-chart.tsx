@@ -10,6 +10,8 @@ import {
 import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
 import { TokenCombobox } from '../../token-combobox'
+import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
+import { ProjectChartTimeRange } from '../core/chart-time-range'
 import { type ChartUnit } from '../types'
 import { ProjectTokenChart } from './token/project-token-chart'
 import { TvlChartHover } from './tvl-chart-hover'
@@ -111,11 +113,14 @@ function DefaultChart({
       renderHoverContents={(data) => <TvlChartHover data={data} />}
     >
       <section className="flex flex-col gap-4">
-        <TvlChartTimeRangeControls
-          timeRange={timeRange}
-          setTimeRange={setTimeRange}
-          range={chartRange}
-        />
+        <ChartControlsWrapper>
+          <ProjectChartTimeRange range={chartRange} />
+          <TvlChartTimeRangeControls
+            projectSection
+            timeRange={timeRange}
+            setTimeRange={setTimeRange}
+          />
+        </ChartControlsWrapper>
         <Chart />
         <TvlChartUnitControls unit={unit} setUnit={setUnit}>
           {tokens && (

@@ -16,6 +16,7 @@ import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-
 import { type TvlProjectFilter } from '~/server/features/scaling/tvl/utils/project-filter-utils'
 import { api } from '~/trpc/react'
 import { formatCurrency } from '~/utils/format'
+import { ChartControlsWrapper } from '../../core/chart-controls-wrapper'
 import { type ChartUnit } from '../../types'
 import { TvlChartHeader } from '../tvl-chart-header'
 import { TvlChartTimeRangeControls } from '../tvl-chart-time-range-controls'
@@ -84,15 +85,16 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
           value={total?.[unit]}
           change={change}
           range={timeRange}
+          timeRange={chartRange}
         />
-        <TvlChartTimeRangeControls
-          timeRange={timeRange}
-          setTimeRange={setTimeRange}
-          range={chartRange}
-        />
-
         <Chart />
-        <TvlChartUnitControls unit={unit} setUnit={setUnit} />
+        <ChartControlsWrapper>
+          <TvlChartUnitControls unit={unit} setUnit={setUnit} />
+          <TvlChartTimeRangeControls
+            timeRange={timeRange}
+            setTimeRange={setTimeRange}
+          />
+        </ChartControlsWrapper>
       </section>
     </ChartProvider>
   )

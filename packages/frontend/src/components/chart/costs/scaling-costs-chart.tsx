@@ -16,7 +16,9 @@ import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scal
 import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import { type CostsProjectsFilter } from '~/server/features/scaling/costs/utils/get-costs-projects'
 import { api } from '~/trpc/react'
+import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
 import { useChartLoading } from '../core/chart-loading-context'
+import { ChartTimeRange } from '../core/chart-time-range'
 import { CostsChartHover } from './costs-chart-hover'
 import { CostsChartTimeRangeControls } from './costs-chart-time-range-controls'
 import { useCostChartRenderParams } from './use-cost-chart-render-params'
@@ -73,13 +75,16 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
           <CostsChartHover data={data} unit={unit} />
         )}
       >
-        <CostsChartTimeRangeControls
-          timeRange={range}
-          setTimeRange={setRange}
-          range={chartRange}
-        />
+        <ChartTimeRange range={chartRange} />
         <Chart />
-        <UnitControls unit={unit} setUnit={setUnit} />
+        <ChartControlsWrapper>
+          <UnitControls unit={unit} setUnit={setUnit} />
+          <CostsChartTimeRangeControls
+            timeRange={range}
+            setTimeRange={setRange}
+            range={chartRange}
+          />
+        </ChartControlsWrapper>
       </ChartProvider>
     </section>
   )

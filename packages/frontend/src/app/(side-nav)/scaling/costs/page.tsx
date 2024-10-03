@@ -30,9 +30,7 @@ export default async function Page() {
         <CostsTimeRangeContextProvider>
           <CostsUnitContextProvider>
             <CostsMetricContextProvider>
-              <MainPageHeader description="The page shows the costs that L2s pay to Ethereum for security.">
-                Onchain costs
-              </MainPageHeader>
+              <MainPageHeader>Onchain costs</MainPageHeader>
               <MainPageCard>
                 <ScalingCostsChart
                   entries={entries}

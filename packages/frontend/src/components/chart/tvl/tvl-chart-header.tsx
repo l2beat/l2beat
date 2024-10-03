@@ -4,6 +4,7 @@ import { formatCurrency } from '~/utils/format'
 import { Skeleton } from '../../core/skeleton'
 import { PercentChange } from '../../percent-change'
 import { useChartLoading } from '../core/chart-loading-context'
+import { ChartTimeRange } from '../core/chart-time-range'
 import { tvlRangeToReadable } from './tvl-range-to-readable'
 
 interface Props {
@@ -11,9 +12,16 @@ interface Props {
   value: number | undefined
   change: number | undefined
   range: TvlChartRange
+  timeRange: [number, number] | undefined
 }
 
-export function TvlChartHeader({ unit, value, change, range }: Props) {
+export function TvlChartHeader({
+  unit,
+  value,
+  change,
+  range,
+  timeRange,
+}: Props) {
   const loading = useChartLoading()
 
   const changeOverTime =
@@ -26,16 +34,14 @@ export function TvlChartHeader({ unit, value, change, range }: Props) {
   return (
     <header className="flex justify-between text-base">
       <div>
-        <h1 className="text-xl font-bold max-lg:leading-none md:text-2xl lg:text-3xl">
-          Value Locked
+        <h1 className="text-2xl font-bold max-md:hidden">
+          Daily value locked stacked by type
         </h1>
-        <p className="hidden text-xs text-gray-500 dark:text-gray-600 lg:block lg:text-base">
-          Sum of all canonically bridged, externally bridged, and natively
-          minted tokens, converted to {unit.toUpperCase()}
-        </p>
+        <h1 className="text-xl font-bold md:hidden">Daily value locked</h1>
+        <ChartTimeRange range={timeRange} />
       </div>
       <div className="flex flex-col items-end">
-        <div className="whitespace-nowrap text-right text-xl font-bold md:text-2xl lg:text-3xl">
+        <div className="whitespace-nowrap text-right text-xl font-bold md:text-2xl">
           {value === undefined ? (
             <Skeleton className="h-6 w-32" />
           ) : (
@@ -45,9 +51,9 @@ export function TvlChartHeader({ unit, value, change, range }: Props) {
           )}
         </div>
         {loading ? (
-          <Skeleton className="h-6 w-40" />
+          <Skeleton className="h-[14px] w-32 lg:h-6" />
         ) : (
-          <p className="whitespace-nowrap text-right text-xs font-bold lg:text-base">
+          <p className="whitespace-nowrap text-right text-xs font-bold leading-none lg:text-base">
             {changeOverTime} / {tvlRangeToReadable(range)}
           </p>
         )}

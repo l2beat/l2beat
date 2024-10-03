@@ -9,7 +9,9 @@ import { api } from '~/trpc/react'
 import { formatCurrency } from '~/utils/format'
 import { Skeleton } from '../../core/skeleton'
 import { PercentChange } from '../../percent-change'
+import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
 import { useChartLoading } from '../core/chart-loading-context'
+import { ChartTimeRange } from '../core/chart-time-range'
 import { type ChartUnit } from '../types'
 import { TvlChartHover } from './tvl-chart-hover'
 import { TvlChartTimeRangeControls } from './tvl-chart-time-range-controls'
@@ -52,14 +54,16 @@ export function BridgesTvlChart() {
           value={total?.[unit]}
           change={change}
           range={timeRange}
-        />
-        <TvlChartTimeRangeControls
-          timeRange={timeRange}
-          setTimeRange={setTimeRange}
-          range={chartRange}
+          timeRange={chartRange}
         />
         <Chart />
-        <TvlChartUnitControls unit={unit} setUnit={setUnit} />
+        <ChartControlsWrapper>
+          <TvlChartUnitControls unit={unit} setUnit={setUnit} />
+          <TvlChartTimeRangeControls
+            timeRange={timeRange}
+            setTimeRange={setTimeRange}
+          />
+        </ChartControlsWrapper>
       </section>
     </ChartProvider>
   )
@@ -70,11 +74,13 @@ function BridgesChartHeader({
   value,
   change,
   range,
+  timeRange,
 }: {
   unit: string
   value?: number
   change?: number
   range: TvlChartRange
+  timeRange: [number, number] | undefined
 }) {
   const loading = useChartLoading()
 
@@ -88,15 +94,11 @@ function BridgesChartHeader({
   return (
     <header className="flex justify-between">
       <div>
-        <h1 className="text-xl font-bold max-lg:leading-none md:text-2xl lg:text-3xl">
-          Value Locked
-        </h1>
-        <p className="text-xs text-gray-500 dark:text-gray-600 max-md:hidden lg:text-base">
-          Sum of all funds locked on Ethereum converted to {unit.toUpperCase()}
-        </p>
+        <h1 className="text-xl font-bold md:text-2xl">Daily value locked</h1>
+        <ChartTimeRange range={timeRange} />
       </div>
       <div className="flex flex-col items-end">
-        <div className="whitespace-nowrap text-right text-xl font-bold md:text-2xl lg:text-3xl">
+        <div className="whitespace-nowrap text-right text-xl font-bold md:text-2xl">
           {!value || loading ? (
             <Skeleton className="h-6 w-32" />
           ) : (
@@ -106,7 +108,7 @@ function BridgesChartHeader({
           )}
         </div>
         {loading ? (
-          <Skeleton className="h-6 w-40" />
+          <Skeleton className="h-[14px] w-40 md:h-6" />
         ) : (
           <p className="whitespace-nowrap text-right text-xs font-bold lg:text-base">
             {changeOverTime} / {tvlRangeToReadable(range)}

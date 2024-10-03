@@ -9,7 +9,9 @@ import { type ActivityTimeRange } from '~/server/features/scaling/activity/utils
 import { api } from '~/trpc/react'
 import { Checkbox } from '../../core/checkbox'
 import { Chart } from '../core/chart'
+import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
 import { ChartProvider } from '../core/chart-provider'
+import { ProjectChartTimeRange } from '../core/chart-time-range'
 import { type ChartScale } from '../types'
 import { ActivityChartHover } from './activity-chart-hover'
 import { useActivityChartRenderParams } from './use-activity-chart-render-params'
@@ -52,11 +54,14 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
       )}
     >
       <section className="flex flex-col gap-4">
-        <ActivityTimeRangeControls
-          timeRange={timeRange}
-          setTimeRange={setTimeRange}
-          range={chartRange}
-        />
+        <ChartControlsWrapper>
+          <ProjectChartTimeRange range={chartRange} />
+          <ActivityTimeRangeControls
+            timeRange={timeRange}
+            setTimeRange={setTimeRange}
+            projectSection
+          />
+        </ChartControlsWrapper>
         <Chart />
         <div className="flex justify-between gap-4">
           <Checkbox

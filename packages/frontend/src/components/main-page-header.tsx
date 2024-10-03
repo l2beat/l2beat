@@ -10,7 +10,7 @@ export function MainPageHeader({ children, description, className }: Props) {
   return (
     <header
       className={cn(
-        'ml-6 flex h-20 flex-col justify-center max-lg:hidden',
+        'mb-1.5 ml-6 flex h-20 flex-col justify-center max-lg:hidden',
         className,
       )}
     >
@@ -23,9 +23,7 @@ export function MainPageHeader({ children, description, className }: Props) {
         {children}
       </h1>
       {description && (
-        <p className="mt-0.5 text-xs leading-[1.15] text-secondary">
-          {description}
-        </p>
+        <p className="mt-0.5 text-xs text-secondary">{description}</p>
       )}
     </header>
   )

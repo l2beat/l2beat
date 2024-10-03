@@ -7,45 +7,41 @@ import {
 } from '~/components/core/select'
 import { useIsClient } from '~/hooks/use-is-client'
 import { useBreakpoint } from '~/hooks/use-is-mobile'
-import { formatRange } from '~/utils/dates'
+import { cn } from '~/utils/cn'
 import { RadioGroup, RadioGroupItem } from '../../core/radio-group'
 import { Skeleton } from '../../core/skeleton'
-import { useChartLoading } from './chart-loading-context'
 
 interface Props<T extends string> {
   value: T | undefined
   setValue: (range: T) => void
-  range: [number, number] | undefined
   options: { value: T; disabled?: boolean; label: string }[]
+  projectSection?: boolean
 }
 
-export function ChartTimeRangeControls<T extends string>(props: Props<T>) {
-  const loading = useChartLoading()
+export function ChartTimeRangeControls<T extends string>({
+  value,
+  setValue,
+  options,
+  projectSection,
+}: Props<T>) {
   const isClient = useIsClient()
-
-  return (
-    <div className="flex flex-wrap-reverse justify-between gap-2">
-      {loading ? (
-        <Skeleton className="h-8 w-52" />
-      ) : (
-        <p className="flex h-8 items-center font-bold transition-opacity duration-200 max-md:w-52">
-          {props.range ? formatRange(...props.range) : null}
-        </p>
-      )}
-      {!isClient ? (
-        <Skeleton className="h-8 w-20 md:w-[292px]" />
-      ) : (
-        <Controls {...props} />
-      )}
-    </div>
-  )
-}
-
-function Controls<T extends string>({ value, setValue, options }: Props<T>) {
   const breakpoint = useBreakpoint()
-  const isMobile = breakpoint === 'mobile'
+  const showSelect = projectSection
+    ? breakpoint === 'tablet' || breakpoint === 'mobile'
+    : breakpoint === 'mobile'
+  console.log(showSelect)
+  if (!isClient) {
+    return (
+      <Skeleton
+        className={cn(
+          'h-8 w-20',
+          projectSection ? 'lg:w-[292px]' : 'md:w-[292px]',
+        )}
+      />
+    )
+  }
 
-  if (isMobile) {
+  if (showSelect) {
     return (
       <Select value={value} onValueChange={setValue}>
         <SelectTrigger>

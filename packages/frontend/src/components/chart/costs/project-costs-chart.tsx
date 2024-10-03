@@ -9,7 +9,9 @@ import { Skeleton } from '~/components/core/skeleton'
 import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import { type CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
 import { api } from '~/trpc/react'
+import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
 import { useChartLoading } from '../core/chart-loading-context'
+import { ProjectChartTimeRange } from '../core/chart-time-range'
 import { ChartTimeRangeControls } from '../core/chart-time-range-controls'
 import { CostsChartHover } from './costs-chart-hover'
 import { useCostChartRenderParams } from './use-cost-chart-render-params'
@@ -46,33 +48,36 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
           <CostsChartHover data={data} unit={unit} />
         )}
       >
-        <ChartTimeRangeControls
-          value={range}
-          setValue={setRange}
-          options={[
-            {
-              value: '1d',
-              label: '1D',
-            },
-            {
-              value: '7d',
-              label: '7D',
-            },
-            {
-              value: '30d',
-              label: '30D',
-            },
-            {
-              value: '90d',
-              label: '90D',
-            },
-            {
-              value: '180d',
-              label: '180D',
-            },
-          ]}
-          range={chartRange}
-        />
+        <ChartControlsWrapper>
+          <ProjectChartTimeRange range={chartRange} />
+          <ChartTimeRangeControls
+            projectSection
+            value={range}
+            setValue={setRange}
+            options={[
+              {
+                value: '1d',
+                label: '1D',
+              },
+              {
+                value: '7d',
+                label: '7D',
+              },
+              {
+                value: '30d',
+                label: '30D',
+              },
+              {
+                value: '90d',
+                label: '90D',
+              },
+              {
+                value: '180d',
+                label: '180D',
+              },
+            ]}
+          />
+        </ChartControlsWrapper>
         <Chart />
         <UnitControls unit={unit} setUnit={setUnit} />
       </ChartProvider>
