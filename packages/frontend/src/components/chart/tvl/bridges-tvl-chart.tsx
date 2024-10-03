@@ -86,15 +86,17 @@ function BridgesChartHeader({
     ) : null
 
   return (
-    <header className="flex flex-col justify-between text-base md:flex-row">
+    <header className="flex justify-between">
       <div>
-        <h1 className="mb-1 text-3xl font-bold">Value Locked</h1>
-        <p className="hidden text-gray-500 dark:text-gray-600 md:block">
+        <h1 className="text-xl font-bold max-lg:leading-none md:text-2xl lg:text-3xl">
+          Value Locked
+        </h1>
+        <p className="text-xs text-gray-500 dark:text-gray-600 max-md:hidden lg:text-base">
           Sum of all funds locked on Ethereum converted to {unit.toUpperCase()}
         </p>
       </div>
-      <div className="flex flex-row items-baseline gap-2 md:flex-col md:items-end md:gap-1">
-        <div className="whitespace-nowrap text-right text-lg font-bold md:text-3xl">
+      <div className="flex flex-col items-end">
+        <div className="whitespace-nowrap text-right text-xl font-bold md:text-2xl lg:text-3xl">
           {!value || loading ? (
             <Skeleton className="h-6 w-32" />
           ) : (
@@ -106,12 +108,11 @@ function BridgesChartHeader({
         {loading ? (
           <Skeleton className="h-6 w-40" />
         ) : (
-          <p className="whitespace-nowrap text-right text-xs font-bold md:text-base">
+          <p className="whitespace-nowrap text-right text-xs font-bold lg:text-base">
             {changeOverTime} / {tvlRangeToReadable(range)}
           </p>
         )}
       </div>
-      <hr className="mt-2 w-full border-gray-200 dark:border-zinc-700 md:hidden md:border-t" />
     </header>
   )
 }

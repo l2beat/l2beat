@@ -14,23 +14,25 @@ export function ActivityChartHeader({ scalingFactor }: Props) {
   return (
     <header data-role="chart-header">
       <div className="flex items-baseline justify-between">
-        <h1 className="mb-1 text-3xl font-bold">Activity</h1>
+        <h1 className="text-xl font-bold max-lg:leading-none md:text-2xl lg:text-3xl">
+          Activity
+        </h1>
         {scalingFactor !== undefined ? (
-          <p className="text-right text-3xl font-bold group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0">
-            <span className="hidden text-sm md:inline md:text-2xl">
-              Scaling factor:{' '}
+          <p className="text-right font-bold group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0">
+            <span className="text-base lg:text-2xl">Scaling factor: </span>
+            <span className="text-xl md:text-2xl lg:text-3xl">
+              {scalingFactor.toFixed(2)}x
             </span>
-            <span>{scalingFactor.toFixed(2)}x</span>
           </p>
         ) : (
-          <Skeleton className="h-[29px] w-20 md:w-[243px]" />
+          <Skeleton className="h-[29px] w-20 lg:w-[243px]" />
         )}
       </div>
-      <div className="flex items-baseline justify-end text-xs md:justify-between md:text-base">
-        <p className="hidden text-gray-500 dark:text-gray-600 md:block">
+      <div className="flex items-baseline justify-end text-xs lg:justify-between lg:text-base">
+        <p className="hidden text-gray-500 dark:text-gray-600 lg:block">
           Transactions per second
         </p>
-        <div className="flex items-center gap-1.5 text-right text-gray-500 group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0 dark:text-gray-600 md:w-auto">
+        <div className="flex items-center gap-1.5 text-right text-gray-500 group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0 dark:text-gray-600 lg:w-auto">
           Observed over the last 7 days
           <Tooltip>
             <TooltipTrigger>
