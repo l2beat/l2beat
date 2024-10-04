@@ -68,6 +68,8 @@ export interface Layer2 {
   knowledgeNuggets?: KnowledgeNugget[]
   /** List of badges */
   badges?: BadgeId[]
+  /** Indicates whether the data inside comes from fully templatized source */
+  fullyTemplatized?: boolean
 }
 
 export interface Layer2Display extends ScalingProjectDisplay {
