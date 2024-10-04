@@ -47,7 +47,7 @@ export async function getScalingSummaryEntries() {
         : undefined
 
     const common = {
-      entryType: 'scalingV2' as const,
+      entryType: 'scaling' as const,
       ...getCommonScalingEntry({
         project,
         isVerified,
