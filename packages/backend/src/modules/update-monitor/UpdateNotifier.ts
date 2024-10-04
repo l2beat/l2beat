@@ -266,11 +266,11 @@ export function generateTemplatizedStatus(): string {
     const isFullyTemplatizedL2 = layer2s
       .filter((l2) => l2.display.provider === provider)
       .filter((l2) => !l2.isUpcoming && !l2.isArchived && !l2.isUnderReview)
-      .map((l2) => l2.fullyTemplatized === true)
+      .map((l2) => l2.usesDiscoveryForMeta === true)
     const isFullyTemplatizedL3 = layer3s
       .filter((l3) => l3.display.provider === provider)
       .filter((l3) => !l3.isUpcoming && !l3.isArchived && !l3.isUnderReview)
-      .map((l3) => l3.fullyTemplatized === true)
+      .map((l3) => l3.usesDiscoveryForMeta === true)
     const isFullyTemplatized = isFullyTemplatizedL2.concat(isFullyTemplatizedL3)
 
     const fullyTemplatizedCount = isFullyTemplatized.filter((t) => t).length

@@ -61,7 +61,7 @@ export interface Layer3 {
   /** List of badges */
   badges?: BadgeId[]
   /** Indicates whether the data inside comes from fully templatized source */
-  fullyTemplatized?: boolean
+  usesDiscoveryForMeta?: boolean
 }
 
 export interface Layer3Config extends ScalingProjectConfig {

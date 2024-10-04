@@ -366,7 +366,7 @@ export function opStackCommon(
       [Badge.Stack.OPStack, Badge.VM.EVM, daBadge],
       templateVars.badges ?? [],
     ),
-    fullyTemplatized: templateVars.useDiscoveryMetaOnly,
+    usesDiscoveryForMeta: templateVars.useDiscoveryMetaOnly,
   }
 }
 
