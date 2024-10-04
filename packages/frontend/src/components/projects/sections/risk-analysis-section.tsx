@@ -104,7 +104,7 @@ export function SingleRisk({
             />
           )}
           {value.description && (
-            <Markdown className="mt-1.5 font-normal leading-7 text-black/80 dark:text-white/80 md:text-lg">
+            <Markdown className="mt-1.5 font-normal leading-snug text-black/80 dark:text-white/80 md:text-lg">
               {value.description}
             </Markdown>
           )}
