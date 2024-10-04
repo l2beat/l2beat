@@ -22,3 +22,6 @@ dist
 # .env files
 .env
 .env.local
+
+# l2b
+cache/
