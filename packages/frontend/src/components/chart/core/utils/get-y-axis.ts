@@ -5,7 +5,7 @@ export function getYAxis(
   values: number[],
   isLogScale: boolean,
   format: (value: number) => string,
-  labelCount = 5,
+  labelCount = 3,
 ) {
   if (values.length === 0) {
     return {

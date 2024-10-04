@@ -11,22 +11,11 @@ import { ChartRenderer } from './chart-renderer'
 
 interface Props {
   className?: string
-  logo?: {
-    position?: 'bottom-right' | 'center'
-    className?: string
-  }
-  hideBottomLabel?: boolean
   disableHovers?: boolean
   disableMilestones?: boolean
 }
 
-export function Chart({
-  className,
-  logo,
-  disableHovers,
-  disableMilestones,
-  hideBottomLabel,
-}: Props) {
+export function Chart({ className, disableHovers, disableMilestones }: Props) {
   return (
     <div
       className={cn(
@@ -37,7 +26,7 @@ export function Chart({
       aria-label="chart"
     >
       <ChartRenderer />
-      <ChartLabels hideBottomLabel={hideBottomLabel} />
+      <ChartLabels />
       <ChartLoader />
       {!disableHovers && <ChartInteractionZone />}
       {!disableHovers && <ChartHover />}
@@ -45,12 +34,7 @@ export function Chart({
       <ChartNoDataState />
       <Logo
         animated={false}
-        className={cn(
-          'absolute z-30 h-[25px] w-[60px] opacity-20',
-          logo?.position === 'bottom-right' || (!logo && 'bottom-2 right-2'),
-          logo?.position === 'center' && 'left-1/2 top-1/4 -translate-x-1/2',
-          logo?.className,
-        )}
+        className="absolute left-1/2 top-1/4 z-30 h-8 w-20 -translate-x-1/2 opacity-[0.33]"
       />
     </div>
   )

@@ -7,10 +7,9 @@ export const FIRST_LABEL_HEIGHT_PX = 20
 
 interface Props {
   className?: string
-  hideBottomLabel?: boolean
 }
 
-export function ChartLabels({ className, hideBottomLabel }: Props) {
+export function ChartLabels({ className }: Props) {
   const { labels, columns } = useChartContext()
   const isLoading = useChartLoading()
   return (
@@ -25,7 +24,7 @@ export function ChartLabels({ className, hideBottomLabel }: Props) {
         <ChartLabel
           key={i}
           isLoading={isLoading}
-          className={cn(hideBottomLabel && i === 0 && '!text-transparent')}
+          className={cn(i === 0 && '!text-transparent')}
         >
           {label}
         </ChartLabel>

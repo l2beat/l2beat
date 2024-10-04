@@ -37,7 +37,6 @@ export function ScalingSummaryTvlChart({
       valuesStyle={valuesStyle}
       formatYAxisLabel={formatYAxisLabel}
       range={timeRange}
-      labelCount={3}
       isLoading={isLoading}
       renderHoverContents={(data) => <TvlChartHover data={data} />}
     >
@@ -48,11 +47,7 @@ export function ScalingSummaryTvlChart({
           unit={unit}
           timeRange={timeRange}
         />
-        <Chart
-          hideBottomLabel
-          logo={{ position: 'center', className: 'w-20 h-8' }}
-          disableMilestones
-        />
+        <Chart disableMilestones />
       </section>
     </ChartProvider>
   )

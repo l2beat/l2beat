@@ -39,21 +39,13 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
       formatYAxisLabel={formatYAxisLabel}
       range={timeRange}
       isLoading={isLoading}
-      labelCount={3}
       renderHoverContents={(data) => (
         <ActivityChartHover {...data} showEthereum={SHOW_MAINNET} />
       )}
     >
       <section className="flex max-h-[290px] flex-col gap-4 xl:max-h-[320px]">
         <Header scalingFactor={scalingFactor} />
-        <Chart
-          logo={{
-            position: 'center',
-            className: 'h-8 w-20',
-          }}
-          disableMilestones
-          hideBottomLabel
-        />
+        <Chart disableMilestones />
       </section>
     </ChartProvider>
   )

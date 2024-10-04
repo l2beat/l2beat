@@ -16,7 +16,6 @@ export interface ChartColumn<T> {
 export interface ChartContextProviderParams<T> {
   columns: ChartColumn<T>[]
   range: '1d' | '7d' | '30d' | '90d' | '180d' | '1y' | 'max'
-  labelCount?: number
   valuesStyle: SeriesStyle[]
   formatYAxisLabel: (value: number) => string
   useLogScale?: boolean
@@ -38,13 +37,12 @@ export function ChartContextProvider<T>({
   children,
   ...params
 }: ChartContextProviderParams<T>) {
-  const { columns, useLogScale, formatYAxisLabel, labelCount } = params
+  const { columns, useLogScale, formatYAxisLabel } = params
   const values = columns.flatMap((column) => column.values)
   const { labels, getY } = getYAxis(
     values.map((v) => v.value),
     !!useLogScale,
     formatYAxisLabel,
-    labelCount,
   )
 
   const value = useMemo(
