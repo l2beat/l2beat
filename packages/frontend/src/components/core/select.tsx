@@ -22,7 +22,7 @@ const SelectTrigger = React.forwardRef<
     ref={ref}
     className={cn(
       'group/trigger flex min-h-8 select-none items-center justify-between gap-1.5 whitespace-nowrap rounded-lg px-3 py-1 shadow-sm focus:outline-none focus:ring-1 focus:ring-zinc-300 disabled:cursor-not-allowed disabled:opacity-50 dark:focus:ring-zinc-800 [&>span]:line-clamp-1',
-      'bg-gray-200 text-base font-semibold data-[state=open]:hover:bg-gray-400 sidebar:!bg-surface-secondary sidebar:data-[state=open]:hover:!bg-surface-tertiary dark:bg-zinc-700 dark:data-[state=open]:hover:bg-slate-600',
+      'bg-gray-200 text-sm font-semibold leading-none data-[state=open]:hover:bg-gray-400 sidebar:!bg-surface-secondary sidebar:data-[state=open]:hover:!bg-surface-tertiary dark:bg-zinc-700 dark:data-[state=open]:hover:bg-slate-600',
       'transition-colors',
       className,
     )}
@@ -30,7 +30,7 @@ const SelectTrigger = React.forwardRef<
   >
     {children}
     <SelectPrimitive.Icon asChild>
-      <ChevronIcon className="size-4 fill-current transition-transform group-data-[state=open]/trigger:rotate-180" />
+      <ChevronIcon className="size-3 fill-current stroke-[1.8px] transition-transform group-data-[state=open]/trigger:rotate-180" />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ))

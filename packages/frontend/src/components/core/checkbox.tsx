@@ -11,7 +11,7 @@ const Checkbox = React.forwardRef<
     id: string
   }
 >(({ className, id, children, ...props }, ref) => (
-  <div className="flex h-8 w-max select-none items-center space-x-2 rounded-lg bg-gray-200 py-1 pl-2 pr-3 text-base font-semibold sidebar:!bg-surface-secondary dark:bg-zinc-700">
+  <div className="flex h-8 w-max select-none items-center space-x-2 rounded-lg bg-gray-200 py-1 pl-2 pr-3 sidebar:!bg-surface-secondary dark:bg-zinc-700">
     <CheckboxPrimitive.Root
       ref={ref}
       id={id}
@@ -28,7 +28,7 @@ const Checkbox = React.forwardRef<
     </CheckboxPrimitive.Root>
     <label
       htmlFor={id}
-      className="cursor-pointer whitespace-pre leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+      className="cursor-pointer whitespace-pre text-sm font-semibold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
     >
       {children}
     </label>
