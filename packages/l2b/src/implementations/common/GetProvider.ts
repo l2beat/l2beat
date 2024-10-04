@@ -12,15 +12,7 @@ import {
 import { ExplorerConfig } from '@l2beat/discovery/dist/utils/IEtherscanClient'
 import { readConfig } from '../../config/readConfig'
 
-// NOTE(radomski): Since the assumption is that there always is a chain that
-// we're working on in the IProvider abstraction and this class works on an
-// rpcUrl without knowing what chain it actually is underneath we need to
-// create a _virtual_ chain. Ideally the user should never try to switch the
-// used chain so we can just assert that the used chain is always the magic
-// one. This class is written with the assumption that it's used from a place
-// that only operates on a rpcUrl. An example would be l2b - which is a cli
-// application.
-const MAGIC_CHAIN = 'ThisIsAMagicChainThatDoesNotExist'
+const UNKNOWN_CHAIN_NAME = 'UnknownChainName'
 
 export async function getProvider(
   rpcUrl: string,
@@ -42,7 +34,7 @@ export async function getProvider(
 
   const chainConfigs: DiscoveryChainConfig[] = [
     {
-      name: MAGIC_CHAIN,
+      name: UNKNOWN_CHAIN_NAME,
       rpcUrl,
       multicall: getMulticall3Config(Number.MAX_SAFE_INTEGER),
       explorer: explorer,
@@ -50,6 +42,7 @@ export async function getProvider(
   ]
 
   const allProviders = new AllProviders(chainConfigs, httpClient, cache)
-  const blockNumber = await allProviders.getLatestBlockNumber(MAGIC_CHAIN)
-  return allProviders.get(MAGIC_CHAIN, blockNumber)
+  const blockNumber =
+    await allProviders.getLatestBlockNumber(UNKNOWN_CHAIN_NAME)
+  return allProviders.get(UNKNOWN_CHAIN_NAME, blockNumber)
 }
