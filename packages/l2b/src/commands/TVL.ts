@@ -1,4 +1,4 @@
-import { formatLargeNumberShared } from '@l2beat/shared-pure'
+import { formatLargeNumber } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { command, flag, positional } from 'cmd-ts'
 import { estimateTVL } from '../implementations/estimateTVL'
@@ -31,7 +31,7 @@ export const TVL = command({
       for (const { symbol, value } of sorted) {
         const formattedSymbol = `${symbol}:`.padEnd(longestSymbol + 1)
         const formattedValue = chalk.green(
-          `$${formatLargeNumberShared(Number(value / 100n))}`,
+          `$${formatLargeNumber(Number(value / 100n))}`,
         )
 
         console.log(`${formattedSymbol} ${formattedValue}`)
@@ -42,9 +42,7 @@ export const TVL = command({
       usdValue.reduce((acc, { value }) => acc + Number(value), 0) / 100
 
     console.log(
-      `Estimated TVL: ${chalk.green(
-        `$${formatLargeNumberShared(totalValue)}`,
-      )}`,
+      `Estimated TVL: ${chalk.green(`$${formatLargeNumber(totalValue)}`)}`,
     )
   },
 })
