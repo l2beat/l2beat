@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "TokenMeta" ALTER COLUMN "symbol" SET DATA TYPE VARCHAR(256);

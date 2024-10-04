@@ -1,3 +1,6 @@
+-- AlterTable
+ALTER TABLE "TokenMeta" ALTER COLUMN "symbol" SET DATA TYPE VARCHAR(256);
+
 -- CreateTable
 CREATE TABLE "AssetRisksUser" (
     "id" CHAR(21) NOT NULL,
@@ -13,7 +16,7 @@ CREATE TABLE "AssetRisksBalance" (
     "id" CHAR(21) NOT NULL,
     "userId" CHAR(21) NOT NULL,
     "tokenId" CHAR(21) NOT NULL,
-    "balance" INTEGER NOT NULL,
+    "balance" DECIMAL(80,0) NOT NULL,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
