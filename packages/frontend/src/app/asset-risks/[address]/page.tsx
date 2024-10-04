@@ -1,11 +1,9 @@
-import generatedJson from '@l2beat/config/src/tokens/generated.json'
 import { redirect } from 'next/navigation'
 import type { SetOptional, SetRequired } from 'type-fest'
-import { http, type Hex, createPublicClient, isAddress, parseAbi } from 'viem'
+import { http, type Hex, createPublicClient, isAddress } from 'viem'
 
-import { type ScalingProjectRisk, chainConverter } from '@l2beat/config'
+import { type ScalingProjectRisk } from '@l2beat/config'
 import { layer2s } from '@l2beat/config/build/src/projects/layer2s'
-import { AssetId, ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import {
   getChain,
   getChainStage,
@@ -14,10 +12,6 @@ import { Footer } from '../_components/footer'
 import { DetailsHeader } from './_components/details-header'
 import { Disclaimer } from './_components/disclaimer'
 import { TokensTable } from './_components/table/tokens-table'
-
-type Token = Omit<(typeof generatedJson.tokens)[number], 'address'> & {
-  address?: Hex
-} & { id: AssetId }
 
 export type Risk = SetOptional<ScalingProjectRisk, 'category'>
 
@@ -56,177 +50,6 @@ export default async function Page({ params: { address } }: Props) {
     return redirect('/')
   }
 
-  const groupedTokens = Object.entries(
-    generatedJson.tokens.reduce<Record<number, Token[]>>((acc, token) => {
-      const { chainId, address } = token
-
-      if (!acc[chainId]) {
-        acc[chainId] = []
-      }
-      acc[chainId]?.push({
-        ...token,
-        id: AssetId.create(
-          chainConverter.toName(ChainId(token.chainId)),
-          address ? EthereumAddress(address) : 'native',
-        ),
-        // To make TypeScript happy
-        address: address && isAddress(address) ? address : undefined,
-      })
-
-      return acc
-    }, {}),
-  ).map(([chainId, arr]) => [Number(chainId), arr] as const)
-
-  const erc20Abi = parseAbi([
-    'function balanceOf(address) external view returns (uint256)',
-  ])
-  const tokens = (
-    await Promise.all(
-      groupedTokens.map(async ([chainId, arr]) => {
-        const chain = getChain(chainId)
-        if (!chain) return []
-
-        const publicClient = createPublicClient({
-          chain,
-          transport: http(),
-        })
-
-        if (arr.length < 1) return []
-
-        const nativeToken: Omit<Token, 'address'> | undefined = arr.find(
-          (token) => !token.address,
-        )
-
-        const tokenAddresses = arr.filter(
-          (token): token is SetRequired<Token, 'address'> =>
-            Boolean(token.address),
-        )
-
-        const results = await (chain.contracts?.multicall3
-          ? // Use multicall if available
-            publicClient.multicall({
-              contracts: tokenAddresses.map((token) => ({
-                address: token.address,
-                abi: erc20Abi,
-                functionName: 'balanceOf',
-                args: [address],
-              })),
-            })
-          : // Otherwise, call each contract individually in parallel
-            Promise.all(
-              tokenAddresses.map(async (token) => {
-                try {
-                  const result = await publicClient.readContract({
-                    address: token.address,
-                    abi: erc20Abi,
-                    functionName: 'balanceOf',
-                    args: [address],
-                  })
-                  return { result, status: 'success' as const }
-                } catch (error) {
-                  return { status: 'failure' as const, error }
-                }
-              }),
-            ))
-
-        const nativeTokenBalance =
-          nativeToken &&
-          (await publicClient.getBalance({ address }).catch(() => null))
-
-        return [
-          ...(nativeToken
-            ? [
-                {
-                  token: {
-                    id: nativeToken.id,
-                    name: nativeToken.name,
-                    decimals: nativeToken.decimals,
-                    symbol: nativeToken.symbol,
-                    iconUrl: nativeToken.iconUrl,
-                    bridge: null,
-                  },
-                  chain: {
-                    id: chainId,
-                    name: chain.name,
-                  },
-                  balance: nativeTokenBalance ?? null,
-                },
-              ]
-            : []),
-          ...results.map((data, i) => {
-            const token = tokenAddresses[i]
-            if (!token) throw new Error('Token not found')
-            return {
-              token: {
-                id: token.id,
-                name: token.name,
-                decimals: token.decimals,
-                symbol: token.symbol,
-                iconUrl: token.iconUrl,
-                bridgedUsing: token.bridgedUsing,
-                address: token.address,
-              },
-              chain: {
-                id: chainId,
-                name: chain.name,
-              },
-              balance: data.status === 'success' ? data.result : null,
-            }
-          }),
-        ]
-      }),
-    )
-  ).flat()
-
-  const hasPositiveBalance = <T extends { balance?: bigint | null }>(
-    token: T,
-  ): token is T & { balance: bigint } => !!token.balance
-
-  const tokensToDisplay = tokens.filter(hasPositiveBalance).map((token) => {
-    const chain = layer2s.find(
-      (l2) => l2.chainConfig?.chainId === token.chain.id,
-    )
-    if (!chain)
-      return {
-        ...token,
-        chain: {
-          ...token.chain,
-          risks: [],
-          stage: undefined,
-        },
-      }
-
-    let risks: SetOptional<ScalingProjectRisk, 'category'>[] = []
-    risks = chain.technology
-      ? [
-          chain.technology.stateCorrectness,
-          chain.technology.newCryptography,
-          chain.technology.dataAvailability,
-          chain.technology.operator,
-          chain.technology.forceTransactions,
-          ...(chain.technology.exitMechanisms ?? []),
-          chain.technology.massExit,
-          ...(chain.technology.otherConsiderations ?? []),
-        ].flatMap((choice) => choice?.risks ?? [])
-      : []
-
-    risks = risks.map((r) => ({
-      text: `${r.category} ${r.text}`,
-      isCritical: r.isCritical,
-    }))
-
-    const stage = getChainStage(token.chain.id)
-
-    return {
-      ...token,
-      chain: {
-        ...token.chain,
-        risks,
-        stage,
-      },
-    }
-  })
-
   const vanityAddress = await getAddressDisplayName(address)
 
   return (
@@ -235,10 +58,10 @@ export default async function Page({ params: { address } }: Props) {
         <DetailsHeader
           // TODO: Replace with real data when we have it
           dolarValue={0}
-          tokens={tokensToDisplay}
+          tokens={[]}
           walletAddress={vanityAddress}
         />
-        <TokensTable tokens={tokensToDisplay} />
+        <TokensTable tokens={[]} />
         <Disclaimer />
       </div>
       <Footer />

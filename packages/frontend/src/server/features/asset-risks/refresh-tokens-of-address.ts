@@ -1,16 +1,24 @@
-import { notUndefined } from '@l2beat/shared-pure'
+import { assert, notUndefined } from '@l2beat/shared-pure'
 import {
   http,
   type Address,
   type PublicClient,
   createPublicClient,
   parseAbiItem,
+  getAddress,
 } from 'viem'
 import { getChain } from './utils/chains'
 import { db } from '~/server/database'
 import { type TokenRecord } from '@l2beat/database'
 
-export async function getTokensOfAddress(address: Address) {
+export async function refreshTokensOfAddress(address: Address) {
+  await db.assetRisksUser.upsert({
+    address
+  });
+  const user = await db.assetRisksUser.findUserByAddress(address)
+
+  assert(user, 'User not found')
+
   // All tokens grouped by network
   const tokensByNetwork = (await db.token.getAll()).reduce<
     Record<string, TokenRecord[]>
@@ -83,14 +91,14 @@ export async function getTokensOfAddress(address: Address) {
       .filter(([_, tokens]) => tokens.length > 0),
   )
 
-  return networksToCheck
-    .map((network) => {
-      return {
-        network,
-        tokens: tokens[network.id] ?? [],
-      }
-    })
-    .filter(({ tokens }) => tokens.length > 0)
+  await db.assetRisksBalance.upsertMany(
+    Object.entries(tokensByNetwork).flatMap(([networkId, tokens]) => tokens.map((token) => ({
+      userId: user.id,
+      networkId,
+      tokenId: token.id,
+      balance: 0,
+    })))
+  )
 }
 
 async function getAllLogsInner(
