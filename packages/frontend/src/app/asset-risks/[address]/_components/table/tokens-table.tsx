@@ -95,7 +95,7 @@ export function TokensTable(props: TokensTableProps) {
           {tokens.map((token) => (
             <tbody
               className="group/body"
-              key={`${token.chain.id}-${token.token.id.toString()}`}
+              key={token.token.id.toString()}
             >
               <TableRow token={token} />
             </tbody>
