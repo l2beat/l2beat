@@ -208,6 +208,7 @@ export function BasicTable<T extends BasicEntry>({
                   const { meta } = cell.column.columnDef
                   const groupParams = getGroupParams(cell.column)
                   const href = getHref(row.original.href, meta?.hash)
+
                   return (
                     <React.Fragment key={`${row.id}-${cell.id}`}>
                       <TableCell
@@ -218,6 +219,12 @@ export function BasicTable<T extends BasicEntry>({
                             getRowTypeClassNamesWithoutOpacity(rowType),
                           groupParams?.isFirstInGroup && 'pl-6',
                           groupParams?.isLastInGroup && 'pr-6',
+                          cell.column.getCanSort() && meta?.align !== 'right'
+                            ? groupParams?.isFirstInGroup
+                              ? 'pl-10'
+                              : 'pl-4'
+                            : undefined,
+
                           meta?.cellClassName,
                         )}
                         style={getCommonPinningStyles(cell.column)}

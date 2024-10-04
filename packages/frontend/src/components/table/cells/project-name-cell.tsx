@@ -8,7 +8,6 @@ import { ShieldIcon } from '~/icons/shield'
 import { UnderReviewIcon } from '~/icons/under-review'
 import { UnverifiedIcon } from '~/icons/unverified'
 import { type SyncStatus } from '~/types/sync-status'
-import { cn } from '~/utils/cn'
 import { NotSyncedBadge } from '../../badge/not-synced-badge'
 
 export interface ProjectCellProps {
@@ -28,7 +27,7 @@ export interface ProjectCellProps {
 
 export function ProjectNameCell({ project, className }: ProjectCellProps) {
   return (
-    <div className={cn('pl-2 xl:pl-3', className)}>
+    <div className={className}>
       <div className="flex items-baseline gap-1.5">
         <span className="text-xs font-bold !leading-none md:!text-lg">
           {project.shortName ?? project.name}

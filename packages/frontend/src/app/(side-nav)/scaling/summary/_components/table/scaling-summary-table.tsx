@@ -8,7 +8,7 @@ import { BasicTable } from '~/components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { toTableRows } from '../../_utils/to-table-rows'
-import { scalingLayer2sColumns } from './columns'
+import { scalingSummaryColumns } from './columns'
 
 interface Props {
   entries: ScalingSummaryEntry[]
@@ -34,7 +34,7 @@ export function ScalingSummaryTable({ entries }: Props) {
 
   const table = useTable({
     data: tableEntries,
-    columns: scalingLayer2sColumns,
+    columns: scalingSummaryColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
