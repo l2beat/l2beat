@@ -76,18 +76,21 @@ const getCachedLiveness = cache(
           'stateUpdates',
           project,
           configurations,
+          anomalies,
         ),
         batchSubmissions: mapAggregatedLivenessRecords(
           projectRecords,
           'batchSubmissions',
           project,
           configurations,
+          anomalies,
         ),
         proofSubmissions: mapAggregatedLivenessRecords(
           projectRecords,
           'proofSubmissions',
           project,
           configurations,
+          anomalies,
         ),
         anomalies: mapAnomalyRecords(anomalies),
       }
@@ -115,6 +118,7 @@ function mapAggregatedLivenessRecords(
   subtype: TrackedTxsConfigSubtype,
   project: TrackedTxsProject,
   configurations: IndexerConfigurationRecord[],
+  anomalies: AnomalyRecord[],
 ): LivenessDetails | undefined {
   const filteredConfigurations = configurations.filter((c) => {
     const config = project.trackedTxsConfigs?.find((pc) => pc.id === c.id)
@@ -124,6 +128,13 @@ function mapAggregatedLivenessRecords(
   if (!syncedUntil) {
     return undefined
   }
+
+  const todaysAnomalies = anomalies.filter(
+    (a) =>
+      a.subtype === subtype &&
+      a.timestamp.toNumber() >= UnixTime.now().toStartOf('day').toNumber(),
+  )
+  const maxAnomalyDuration = Math.max(...todaysAnomalies.map((a) => a.duration))
 
   const last30Days = records.find(
     (r) => r.subtype === subtype && r.range === '30D',
@@ -137,21 +148,21 @@ function mapAggregatedLivenessRecords(
       ? {
           averageInSeconds: last30Days.avg,
           minimumInSeconds: last30Days.min,
-          maximumInSeconds: last30Days.max,
+          maximumInSeconds: Math.max(last30Days.max, maxAnomalyDuration),
         }
       : undefined,
     '90d': last90Days
       ? {
           averageInSeconds: last90Days.avg,
           minimumInSeconds: last90Days.min,
-          maximumInSeconds: last90Days.max,
+          maximumInSeconds: Math.max(last90Days.max, maxAnomalyDuration),
         }
       : undefined,
     max: max
       ? {
           averageInSeconds: max.avg,
           minimumInSeconds: max.min,
-          maximumInSeconds: max.max,
+          maximumInSeconds: Math.max(max.max, maxAnomalyDuration),
         }
       : undefined,
     syncedUntil: syncedUntil.toNumber(),

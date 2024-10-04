@@ -6,7 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getLiveness } from './get-liveness'
-import { type LivenessDataPoint, type LivenessProject } from './types'
+import { type LivenessProject } from './types'
 
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
@@ -111,37 +111,13 @@ function getSubTypeData(
 ) {
   const typeData = data[type]
   if (!typeData) return undefined
-
-  const todaysAnomalies = data.anomalies.filter(
-    (anomaly) =>
-      anomaly.type === type &&
-      anomaly.timestamp >= syncTarget.toStartOf('day').toNumber(),
-  )
-  const maxAnomalyDuration = Math.max(
-    ...todaysAnomalies.map((a) => a.durationInSeconds),
-  )
   return {
-    '30d': getDetailsAndCompareAnomalies(typeData['30d'], maxAnomalyDuration),
-    '90d': getDetailsAndCompareAnomalies(typeData['90d'], maxAnomalyDuration),
-    max: getDetailsAndCompareAnomalies(typeData.max, maxAnomalyDuration),
+    '30d': typeData['30d'],
+    '90d': typeData['90d'],
+    max: typeData.max,
     syncStatus: getSyncStatus(typeData.syncedUntil, syncTarget),
     warning: project.display.liveness?.warnings?.[type],
   }
-}
-
-function getDetailsAndCompareAnomalies(
-  typeData: LivenessDataPoint | undefined,
-  maxAnomalyDuration: number,
-) {
-  return typeData
-    ? {
-        ...typeData,
-        maximumInSeconds: Math.max(
-          typeData.maximumInSeconds,
-          maxAnomalyDuration,
-        ),
-      }
-    : undefined
 }
 
 function getSyncStatus(syncedUntil: number, syncTarget: UnixTime) {
