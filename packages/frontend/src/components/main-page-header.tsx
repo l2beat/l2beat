@@ -10,7 +10,7 @@ export function MainPageHeader({ children, description, className }: Props) {
   return (
     <header
       className={cn(
-        'mb-1.5 ml-6 flex h-20 flex-col justify-center max-lg:hidden',
+        'ml-6 flex h-20 flex-col justify-center max-lg:hidden',
         className,
       )}
     >
