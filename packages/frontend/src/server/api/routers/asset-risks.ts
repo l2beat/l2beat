@@ -47,6 +47,9 @@ export const assetRisksRouter = router({
       }),
     )
     .query(async ({ input }) => {
+      await db.assetRisksUser.upsert({
+        address: input.address,
+      })
       const user = await db.assetRisksUser.findUserByAddress(input.address)
       if (!user) {
         throw new TRPCError({
@@ -70,7 +73,7 @@ export const assetRisksRouter = router({
           const network = networks.find(n => n.id === token.networkId)
           assert(network, 'Chain not found')
           const project = projects.find(p => p.chainConfig?.chainId === network.chainId)
-          assert(project, 'Project not found')
+          
           return {
             token,
             meta: tokenMeta.find(m => m.tokenId === token.id && m.name),
