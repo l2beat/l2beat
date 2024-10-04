@@ -52,7 +52,7 @@ export async function getEvents(
     )
     assert(explorerUrl !== undefined)
     assert(
-      explorerType !== 'etherscan' || explorerType !== undefined,
+      explorerType !== 'etherscan' || explorerApiKey !== undefined,
       'When using etherscan you should provide the API key using --etherscan-key.',
     )
 
