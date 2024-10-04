@@ -132,7 +132,8 @@ function mapAggregatedLivenessRecords(
   const todaysAnomalies = anomalies.filter(
     (a) =>
       a.subtype === subtype &&
-      a.timestamp.toNumber() >= UnixTime.now().toStartOf('day').toNumber(),
+      a.timestamp.toNumber() + a.duration >=
+        UnixTime.now().toStartOf('day').toNumber(),
   )
   const maxAnomalyDuration = Math.max(...todaysAnomalies.map((a) => a.duration))
 
