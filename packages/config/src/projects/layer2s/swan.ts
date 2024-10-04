@@ -45,7 +45,7 @@ export const swan: Layer2 = opStackL2({
   usesBlobs: true,
   isNodeAvailable: true,
   rpcUrl: 'https://mainnet-rpc01.swanchain.io',
-  useDiscoveryMetaOnly: true,
+  discoveryDrivenData: true,
   milestones: [
     {
       name: 'Mainnet launch',
