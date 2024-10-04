@@ -20,12 +20,9 @@ export function ChartLabels({ className }: Props) {
         className,
       )}
     >
+      <ChartLabel isLoading={isLoading} />
       {labels.map((label, i) => (
-        <ChartLabel
-          key={i}
-          isLoading={isLoading}
-          className={cn(i === 0 && '!text-transparent')}
-        >
+        <ChartLabel key={i} isLoading={isLoading}>
           {label}
         </ChartLabel>
       ))}
@@ -44,7 +41,7 @@ function ChartLabel({
 }) {
   return (
     <div className="relative">
-      {!isLoading ? (
+      {!isLoading && children ? (
         <span
           className={cn(
             'absolute bottom-0 left-1 pb-0.5 text-sm text-gray-500 dark:text-white',
