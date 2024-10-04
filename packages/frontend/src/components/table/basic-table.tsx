@@ -113,7 +113,7 @@ export function BasicTable<T extends BasicEntry>({
                     <th
                       colSpan={header.colSpan}
                       className={cn(
-                        'text-base text-primary',
+                        'font-semibold tracking-[-0.13px] text-primary',
                         !header.isPlaceholder &&
                           !!header.column.columnDef.header &&
                           'rounded-t-lg px-6 pt-4',
