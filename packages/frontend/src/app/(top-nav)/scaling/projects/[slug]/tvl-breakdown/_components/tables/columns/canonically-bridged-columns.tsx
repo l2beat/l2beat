@@ -1,3 +1,4 @@
+import { notUndefined } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { formatNumberWithCommas } from '~/utils/format-number'
 import { type CanonicallyBridgedTokenEntry } from '../canonically-bridged-table'
@@ -81,17 +82,17 @@ export const canonicallyBridgedColumns = [
         ctx.row.getParentRow()?.original.escrows.length ?? 0 > 1,
       )
 
-      const { amount } = ctx.row.original
+      const { amount, escrows } = ctx.row.original
 
-      const isPreminted = ctx.row.original.escrows.some(
-        (escrow) => escrow.isPreminted,
-      )
+      const isPreminted = escrows.some((escrow) => escrow.isPreminted)
+      const warnings = escrows.map((e) => e.warning).filter(notUndefined)
 
       return (
         <TokenCanonicalAmountCell
           amount={amount}
           isPreminted={isPreminted}
           isDescendant={isParentMultiEscrow}
+          warnings={warnings}
         />
       )
     },
