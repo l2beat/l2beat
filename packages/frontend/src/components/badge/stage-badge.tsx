@@ -39,7 +39,7 @@ function getClassNames(stage: Stage | 'UnderReview' | 'NotApplicable'): string {
     case 'UnderReview':
       return 'border border-current text-n-yellow-700 dark:text-yellow-200'
     case 'NotApplicable':
-      return 'bg-[#B4C7D5] dark:bg-[#3D4361] border border-[#D1E1EC] dark:border-[#343955] text-zinc-800 dark:text-primary  '
+      return 'bg-[#B4C7D5] dark:bg-[#3D4361] border border-[#D1E1EC] dark:border-[#343955] text-zinc-800 dark:text-primary'
     default:
       return ''
   }
