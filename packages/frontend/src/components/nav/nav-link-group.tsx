@@ -49,7 +49,7 @@ export function NavLinkGroup({ group }: NavLinkGroupProps) {
   )
 
   return (
-    <Collapsible className="flex flex-col gap-2" defaultOpen={isSelected}>
+    <Collapsible className="flex flex-col" defaultOpen={isSelected}>
       <CollapsibleTrigger
         className="group flex items-center gap-2 p-1.5"
         data-active={isSelected}
@@ -72,8 +72,8 @@ export function NavLinkGroup({ group }: NavLinkGroupProps) {
           />
         </div>
       </CollapsibleTrigger>
-      <CollapsibleContent asChild>
-        <ul className="mb-3 ml-[15px] flex flex-col gap-0.5 border-l border-gray-300 pl-[14px] dark:border-gray-850">
+      <CollapsibleContent>
+        <ul className="mb-3 ml-[15px] mt-2 flex flex-col gap-0.5 border-l border-gray-300 pl-[14px] dark:border-gray-850">
           {group.links?.map(
             (link) =>
               !link.disabled && (
