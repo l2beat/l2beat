@@ -54,7 +54,8 @@
         "getCurrentClaimableDistributionRoot",
         "getCurrentDistributionRoot",
         "getDistributionRootAtIndex",
-        "getDistributionRootsLength"
+        "getDistributionRootsLength",
+        "currRewardsCalculationEndTimestamp"
       ]
     },
     "StrategiesBeacon": {
