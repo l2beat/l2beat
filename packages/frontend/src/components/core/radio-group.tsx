@@ -34,7 +34,7 @@ const RadioGroupItem = React.forwardRef<
       className={cn(
         'rounded-md px-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-pure-white dark:data-[state=checked]:bg-black',
         'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300 dark:focus-visible:ring-zinc-800',
-        'group-data-[variant=highlighted]/radio-group:from-purple-100 group-data-[variant=highlighted]/radio-group:to-pink-100 group-data-[variant=highlighted]/radio-group:data-[state=checked]:bg-gradient-to-r group-data-[variant=highlighted]/radio-group:data-[state=checked]:text-white',
+        'group-data-[variant=highlighted]/radio-group:data-[state=checked]:bg-brand group-data-[variant=highlighted]/radio-group:data-[state=checked]:text-white',
         className,
       )}
       {...props}
