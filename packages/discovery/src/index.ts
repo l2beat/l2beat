@@ -40,6 +40,7 @@ export { sortBySeverity } from './discovery/utils/sortDiffs'
 export type { HashedChunks, HashedFileContent } from './flatten/utils'
 export { type DiscoveryCache } from './discovery/provider/ReorgAwareCache'
 export { SQLiteCache } from './discovery/provider/SQLiteCache'
+export { NoCache } from './discovery/provider/NoCache'
 export {
   buildSimilarityHashmap,
   estimateSimilarity,
@@ -55,7 +56,6 @@ export { EtherscanClient } from './utils/EtherscanClient'
 export { getErrorMessage } from './utils/getErrorMessage'
 export { HttpClient } from './utils/HttpClient'
 export { AllProviders } from './discovery/provider/AllProviders'
-export { SingleChainProvider } from './discovery/provider/SingleChainProvider'
 export type { IProvider } from './discovery/provider/IProvider'
 export { ParsedFilesManager } from './flatten/ParsedFilesManager'
 export { flattenStartingFrom } from './flatten/flatten'

@@ -1,10 +1,8 @@
 import {
   DiscoveryLogger,
-  HttpClient,
   IProvider,
   ProxyDetector,
   SQLiteCache,
-  SingleChainProvider,
 } from '@l2beat/discovery'
 import { get$Implementations } from '@l2beat/discovery-types'
 import { ExplorerConfig } from '@l2beat/discovery/dist/utils/IEtherscanClient'
@@ -18,6 +16,7 @@ import {
 } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { utils } from 'ethers'
+import { getProvider } from './common/GetProvider'
 
 export async function getEvents(
   logger: CliLogger,
@@ -31,18 +30,12 @@ export async function getEvents(
   const sqliteCache = new SQLiteCache()
   await sqliteCache.init()
 
-  const httpClient = new HttpClient()
-  const providerCreator = new SingleChainProvider(
-    rpcUrl,
-    {
-      type: (explorerType as ExplorerConfig['type']) ?? 'etherscan',
-      url: explorerUrl ?? 'ERROR',
-      apiKey: explorerApiKey ?? 'ERROR',
-    },
-    httpClient,
-    sqliteCache,
-  )
-  const provider = await providerCreator.init()
+  const explorer = {
+    type: (explorerType as ExplorerConfig['type']) ?? 'etherscan',
+    url: explorerUrl ?? 'ERROR',
+    apiKey: explorerApiKey ?? 'ERROR',
+  }
+  const provider = await getProvider(rpcUrl, explorer)
 
   const onlyHashedTopics = inputTopics.every((t) => Hash256.check(t))
   const topics = []
