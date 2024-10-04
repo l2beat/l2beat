@@ -55,8 +55,13 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
     const anomalies = await this.getAnomalies(unixTo)
 
     await this.$.db.transaction(async () => {
-      await this.$.db.anomalies.deleteAll()
+      const deleted = await this.$.db.anomalies.deleteAll()
       await this.$.db.anomalies.upsertMany(anomalies)
+
+      this.logger.info('Anomaly records saved to db', {
+        deleted,
+        upserted: anomalies.length,
+      })
     })
 
     return unixTo.toNumber()
