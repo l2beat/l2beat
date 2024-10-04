@@ -6,7 +6,7 @@ export interface AssetRisksBalanceRecord {
   id: string
   userId: string
   tokenId: string
-  balance: number
+  balance: string
   updatedAt: Date
   createdAt: Date
 }

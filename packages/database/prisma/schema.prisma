@@ -189,7 +189,7 @@ model AssetRisksBalance {
   user AssetRisksUser @relation(fields: [userId], references: [id])
   tokenId String @db.Char(21)
   token Token @relation(fields: [tokenId], references: [id])
-  balance Int
+  balance Decimal @db.Decimal(80, 0)
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
 

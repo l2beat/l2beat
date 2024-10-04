@@ -91,13 +91,16 @@ export async function refreshTokensOfAddress(address: Address) {
       .filter(([_, tokens]) => tokens.length > 0),
   )
 
+  const tokensToUpsert = Object.values(tokens).flatMap((tokens) => tokens.map((token) => ({
+    userId: user.id,
+    tokenId: token.id,
+    balance: 0,
+  })))
+
+  console.log('Tokens to upsert', tokensToUpsert)
+
   await db.assetRisksBalance.upsertMany(
-    Object.entries(tokensByNetwork).flatMap(([networkId, tokens]) => tokens.map((token) => ({
-      userId: user.id,
-      networkId,
-      tokenId: token.id,
-      balance: 0,
-    })))
+    tokensToUpsert
   )
 }
 

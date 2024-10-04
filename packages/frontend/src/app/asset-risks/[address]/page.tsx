@@ -10,6 +10,7 @@ import { Footer } from '../_components/footer'
 import { DetailsHeader } from './_components/details-header'
 import { Disclaimer } from './_components/disclaimer'
 import { TokensTable } from './_components/table/tokens-table'
+import { DebugButtons } from './_test/debug-buttons'
 
 export type Risk = SetOptional<ScalingProjectRisk, 'category'>
 
@@ -48,6 +49,8 @@ export default async function Page({ params: { address } }: Props) {
     return redirect('/')
   }
 
+  // TODO: Check if address is blocklisted
+
   const vanityAddress = await getAddressDisplayName(address)
 
   return (
@@ -61,6 +64,7 @@ export default async function Page({ params: { address } }: Props) {
         />
         <TokensTable tokens={[]} />
         <Disclaimer />
+        <DebugButtons address={address} />
       </div>
       <Footer />
     </main>

@@ -27,7 +27,7 @@ export async function refreshBalancesOfAddress(address: Address) {
   const networks = await db.network.getAllWithConfigs()
 
   // TODO: Observability
-  await Promise.allSettled(Object.entries(tokensByNetwork).map(async ([networkId, tokens]) => {
+  const results = await Promise.allSettled(Object.entries(tokensByNetwork).map(async ([networkId, tokens]) => {
     const network = networks.find((n) => n.id === networkId)
     if (!network) {
       return []
@@ -48,7 +48,7 @@ export async function refreshBalancesOfAddress(address: Address) {
     await db.assetRisksBalance.upsertMany(tokens.map((token, index) => ({
       tokenId: token.id,
       userId: user.id,
-      balance: Number(balances[index]?.result ?? 0n),
+      balance: (balances[index]?.result ?? 0n).toString(),
     })))
   }))
 }
