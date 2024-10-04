@@ -40,7 +40,9 @@ export async function getScalingActivityEntries() {
         hasImplementationChanged,
       )
     }),
-  ].sort((a, b) => (b.data?.pastDayTps ?? 0) - (a.data?.pastDayTps ?? 0))
+  ]
+    .filter((e) => e.data)
+    .sort((a, b) => (b.data?.pastDayTps ?? 0) - (a.data?.pastDayTps ?? 0))
 }
 
 export type ScalingActivityEntry = ReturnType<

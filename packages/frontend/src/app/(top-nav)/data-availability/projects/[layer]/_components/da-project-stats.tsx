@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import round from 'lodash/round'
 import { type ReactNode } from 'react'
-import { ProjectsUsedIn } from '~/app/(side-nav)/data-availability/summary/_components/table/projects-used-in'
+import { ProjectsUsedIn } from '~/app/(new-side-nav)/data-availability/summary/_components/table/projects-used-in'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import {
   Tooltip,

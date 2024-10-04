@@ -1,20 +1,20 @@
-Generated with discovered.json: 0xae2f016f4b91684764a4b58de3319dab6820404e
+Generated with discovered.json: 0x2ae125c5616d635ebb58c74568bb9a25ff7e27b8
 
-# Diff at Tue, 01 Oct 2024 10:50:01 GMT:
+# Diff at Wed, 02 Oct 2024 14:14:10 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20832945
-- current block number: 20832945
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d101c705b5f4fd0b3af2e251678b85e1005b31d8 block: 20871599
+- current block number: 20878339
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Config related.
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 20832945 (main branch discovery), not current.
+discovery. Values are for block 20871599 (main branch discovery), not current.
 
 ```diff
     contract OptimismMintableERC20Factory (0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84) {
@@ -90,7 +90,7 @@ discovery. Values are for block 20832945 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0x399e2d9200803e8ff4fdbf4470e201a414d13e29
+Generated with discovered.json: 0x6d175955ef4edc050319a0ba16d6d9c17491eff8
 
 # Diff at Thu, 26 Sep 2024 06:19:37 GMT:
 

@@ -14,7 +14,11 @@ import {
   DiscordClient,
   MAX_MESSAGE_LENGTH,
 } from '../../peripherals/discord/DiscordClient'
-import { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
+import {
+  DailyReminderChainEntry,
+  UpdateNotifier,
+  generateTemplatizedStatus,
+} from './UpdateNotifier'
 
 const BLOCK = 123
 
@@ -416,13 +420,14 @@ describe(UpdateNotifier.name, () => {
         ['project-a', 'arbitrum', '', '', '', '12'],
       ]
       const table = formatAsAsciiTable(headers, rows)
+      const templatizationStatus = generateTemplatizedStatus()
 
       await updateNotifier.sendDailyReminder(reminders, timestamp)
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
-        `# Daily bot report @ ${timestamp.toYYYYMMDD()}\n\n:x: Detected changes with following severities :x:\n\`\`\`\n${table}\n\`\`\`\n`,
+        `# Daily bot report @ ${timestamp.toYYYYMMDD()}\n${templatizationStatus}\n:x: Detected changes with following severities :x:\n\`\`\`\n${table}\n\`\`\`\n`,
         'INTERNAL',
       )
     })

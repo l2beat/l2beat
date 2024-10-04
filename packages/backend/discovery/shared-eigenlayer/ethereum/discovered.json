@@ -1,8 +1,8 @@
 {
   "name": "shared-eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 20862552,
-  "configHash": "0xb28b3a09df30baf6172f696a63753cfb3c6fe35029cd76dad8e70d63a3c01bba",
+  "blockNumber": 20878358,
+  "configHash": "0xd083e6f617460911d81a3d62ceea0aa541ba7354515a2d8ec8da0cb60455d8c9",
   "version": 15,
   "contracts": [
     {
@@ -12,8 +12,8 @@
       "sinceTimestamp": 1602667372,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0xf3eb190000000000",
-        "get_deposit_root": "0xb5c801637bfd2821d60685390aaf49b00ac0f2c751ddeabcbcf95525f2e9e354"
+        "get_deposit_count": "0x10fd190000000000",
+        "get_deposit_root": "0xe7185c6ff8c96455402375d1c40386d25627d9ec9f98ebbcc307c228adc3fd1e"
       },
       "derivedName": "DepositContract"
     },
@@ -389,7 +389,6 @@
         "activationDelay": 604800,
         "beaconChainETHStrategy": "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0",
         "CALCULATION_INTERVAL_SECONDS": 604800,
-        "currRewardsCalculationEndTimestamp": 1726963200,
         "delegationManager": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "domainSeparator": "0xdc66bf3c6fc5af0167275d317f59c04eb40cdc83022c80f21b5e7bb76e991066",
         "GENESIS_REWARDS_TIMESTAMP": 1710979200,
@@ -449,7 +448,7 @@
         "owner": "0xbb00DDa2832850a43840A3A86515E3Fe226865F2",
         "symbol": "bEIGEN",
         "totalSupply": "1681371191369050738461538468",
-        "transferRestrictionsDisabledAfter": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+        "transferRestrictionsDisabledAfter": 0
       },
       "fieldMeta": {
         "transferRestrictionsDisabledAfter": {
@@ -580,7 +579,7 @@
         "delegationManager": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "eigenPodBeacon": "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
-        "numPods": 32167,
+        "numPods": 32195,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
@@ -641,7 +640,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 59,
+        "nonce": 69,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -831,7 +830,7 @@
         "owner": "0xbb00DDa2832850a43840A3A86515E3Fe226865F2",
         "symbol": "EIGEN",
         "totalSupply": "1681371191369050738461538468",
-        "transferRestrictionsDisabledAfter": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+        "transferRestrictionsDisabledAfter": 0
       },
       "fieldMeta": {
         "transferRestrictionsDisabledAfter": {

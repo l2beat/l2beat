@@ -1,8 +1,8 @@
 {
   "name": "opticsV2",
   "chain": "ethereum",
-  "blockNumber": 20311133,
-  "configHash": "0xd6335c5406db7a8838e31ff78c6edbbfc4df448e47a48c802e2545aa4064004b",
+  "blockNumber": 20878317,
+  "configHash": "0xda5627a7a26b2bd3daadc346358c11b604170f849c8f3fcd60171eb3ccf3d756",
   "version": 15,
   "contracts": [
     {
@@ -40,7 +40,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "committedRoot": "0xde98ef98ef868bcacf359b5e19c9af330e5e94c84e2c5d9eba65c5361c198a17",
+        "committedRoot": "0xb5156b94d857dfc1e57814de7c215442c7c89c442da8dea11ce45b604526e2ab",
         "homeDomainHash": "0x6b881beed7c8ffb30baea620e40be2b61ea2706b341014fb812bc7ff2f75fca1",
         "localDomain": 6648936,
         "OpticsBeacon_beacon": "0xA734EDE8229970776e1B68085D579b6b6E97dAd4",
@@ -193,7 +193,15 @@
           "via": []
         }
       ],
-      "ignoreInWatchMode": ["committedRoot", "count", "root", "tree"],
+      "ignoreInWatchMode": [
+        "committedRoot",
+        "count",
+        "root",
+        "tree",
+        "queueEnd",
+        "queueLength",
+        "suggestUpdate"
+      ],
       "sinceTimestamp": 1637961283,
       "values": {
         "$admin": "0x4F50a7081792063693F46A6402390b9647562457",
@@ -205,8 +213,8 @@
           ]
         ],
         "$upgradeCount": 1,
-        "committedRoot": "0x5cb5f55b518cd45707cb69551c4a689215b6cb6f68bfd6dbe998dffedce53647",
-        "count": 1684,
+        "committedRoot": "0xd889c3c8d1a1e5348651bf0c111f0abf98c994adceb2aa74d4e8de5812b14588",
+        "count": 1696,
         "homeDomainHash": "0xae0c02ff12852e3fb80794f3504aa3d7393b3ef3149213ffe623be2cbe67e77c",
         "localDomain": 6648936,
         "MAX_MESSAGE_BODY_BYTES": 2048,
@@ -214,13 +222,13 @@
         "owner": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94",
         "queueEnd": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "queueLength": 0,
-        "root": "0x5cb5f55b518cd45707cb69551c4a689215b6cb6f68bfd6dbe998dffedce53647",
+        "root": "0xd889c3c8d1a1e5348651bf0c111f0abf98c994adceb2aa74d4e8de5812b14588",
         "state": 1,
         "suggestUpdate": {
           "_committedRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "_new": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
-        "tree": 1684,
+        "tree": 1696,
         "updater": "0x5Ef6e0F6A7E1f866612D806041799a9D762b62c0",
         "updaterManager": "0x81B97dfBB743c343983e9bE7B863dB636DbD7373",
         "VERSION": 0

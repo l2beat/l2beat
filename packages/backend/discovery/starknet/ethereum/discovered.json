@@ -1,8 +1,8 @@
 {
   "name": "starknet",
   "chain": "ethereum",
-  "blockNumber": 20634500,
-  "configHash": "0x9d1beed8f80f0e5c226a167bc517f6809ef5cdccdfe3fe32a3a141fcfa133a87",
+  "blockNumber": 20878376,
+  "configHash": "0xf3c12a7fb062c9f51ba1804ed1ff8937014de2cd3665be9978642c9a970c4e23",
   "version": 15,
   "contracts": [
     {
@@ -68,7 +68,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 15,
+        "nonce": 16,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -392,6 +392,31 @@
       }
     },
     {
+      "name": "StarkgateETHSecurityAgentMultisig",
+      "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5",
+      "template": "GnosisSafe",
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1727171111,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0x030ceEE5D4CBc304287234720B11E00f47695755",
+          "0x59232aC80E6d403b6381393e52f4665ECA328558",
+          "0x35FD2dD14D96Ed455356B892cd4b2fCdc7F44a7b"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xfb9e6f08849613661213b07b88f684c3e7df02a1757b854698a5ef7b4d584893",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 0,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
       "name": "ProxyMultisig",
       "address": "0x83C0A700114101D1283D1405E2c8f21D3F03e988",
       "template": "GnosisSafe",
@@ -544,7 +569,10 @@
             "adminRole": "SECURITY_ADMIN",
             "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
           },
-          "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
+          "SECURITY_AGENT": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"]
+          }
         },
         "bridgedToken": "0x0000000000000000000000000000000000455448",
         "depositorAddress": "0x0000000000000000000000000000000000000000",
@@ -808,7 +836,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1660300,
+        "l1ToL2MessageNonce": 1662076,
         "messageCancellationDelay": 432100,
         "operators": [
           "0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591",
@@ -828,9 +856,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "1572386003829195585468421057066725379003894500633262359005433887988403468119",
-        "stateBlockNumber": 673908,
-        "stateRoot": "3020016869916055714827921928465425784302637001120166817195752061844604490072",
+        "stateBlockHash": "68838576325492469329947743663451320685880846652422264393429872895049218161",
+        "stateBlockNumber": 766960,
+        "stateRoot": "1819402725581256484949530159074014522344558863504143070798082416301320952393",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -1429,9 +1457,11 @@
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x0000000000000000000000000000000000455448" },
+    { "address": "0x030ceEE5D4CBc304287234720B11E00f47695755" },
     { "address": "0x16C8B90390468c1AA81f68B2Fb9fcc3d46e0eA3E" },
     { "address": "0x2871B956bC19D25961E9a7519f32D7fDaA21B403" },
     { "address": "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7" },
+    { "address": "0x35FD2dD14D96Ed455356B892cd4b2fCdc7F44a7b" },
     {
       "address": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "receivedPermissions": [
@@ -1979,6 +2009,9 @@
       "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
       "function transferOwnership(address newOwner)",
       "function unpause()"
+    ],
+    "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5": [
+      "constructor(address _singleton)"
     ],
     "0x83C0A700114101D1283D1405E2c8f21D3F03e988": [
       "constructor(address _singleton)"

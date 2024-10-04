@@ -66,7 +66,7 @@ const getCachedActivityTableData = cache(
     )
 
     return Object.fromEntries(
-      Object.entries(data).filter(([_, value]) => value !== null),
+      Object.entries(data).filter(([_, value]) => value),
     )
   },
   ['activityChart'],

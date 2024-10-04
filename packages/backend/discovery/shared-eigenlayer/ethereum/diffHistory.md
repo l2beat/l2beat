@@ -1,20 +1,20 @@
-Generated with discovered.json: 0x47980f339f0b7364a75e3f0138fb2fe632d472d6
+Generated with discovered.json: 0x3641bb68e8619dad0e36a149ef56bcbbd4b34a78
 
-# Diff at Tue, 01 Oct 2024 10:55:03 GMT:
+# Diff at Wed, 02 Oct 2024 14:17:52 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20862552
-- current block number: 20862552
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d101c705b5f4fd0b3af2e251678b85e1005b31d8 block: 20871604
+- current block number: 20878358
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Config related.
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 20862552 (main branch discovery), not current.
+discovery. Values are for block 20871604 (main branch discovery), not current.
 
 ```diff
     contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF) {
@@ -43,6 +43,8 @@ discovery. Values are for block 20862552 (main branch discovery), not current.
 ```diff
     contract RewardsCoordinator (0x7750d328b314EfFa365A0402CcfD489B80B0adda) {
     +++ description: None
+      values.currRewardsCalculationEndTimestamp:
+-        1726963200
       values.$pastUpgrades:
 +        [["2024-07-19T16:32:35.000Z",["0x5bf7c13D5FAdba224ECB3D5C0a67A231D1628785"]],["2024-09-28T05:46:11.000Z",["0xb6738A8E7793D44c5895B6A6F2a62F6bF86Ba8d2"]]]
     }
@@ -88,13 +90,13 @@ discovery. Values are for block 20862552 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0x175cbdb8024fd1348562ca7a1cc64739065bbb6c
+Generated with discovered.json: 0x07b71986b33f7690da5cafb2ff0200cf78ba090b
 
-# Diff at Mon, 30 Sep 2024 09:24:50 GMT:
+# Diff at Tue, 01 Oct 2024 15:42:01 GMT:
 
-- author: sekuba (<sekuba@users.noreply.github.com>)
-- comparing to: main@eec6993b988ab9a9f325d04da2e9717ed24ad0b9 block: 20777978
-- current block number: 20862552
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@974999225bba0722b5e81edd4c1b80928d80ef33 block: 20777978
+- current block number: 20871604
 
 ## Description
 
@@ -123,6 +125,11 @@ New public `mint()` for `isMinter()` addresses and public `burn()` for all. Curr
       values.totalSupply:
 -        "1673646668284660000000000000"
 +        "1681371191369050738461538468"
++++ description: Timestamp after which transfer restrictions (whitelist) are disabled. Preset to uint256 max. Restrictions disabled if == 0.
++++ severity: HIGH
+      values.transferRestrictionsDisabledAfter:
+-        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
++        0
       values.Minters:
 +        ["0x708230Be53c08b270F43e068116EBacc4C13F577"]
       errors:
@@ -159,6 +166,11 @@ New public `mint()` for `isMinter()` addresses and public `burn()` for all. Curr
       values.totalSupply:
 -        "1673646668284660000000000000"
 +        "1681371191369050738461538468"
++++ description: Timestamp after which transfer restrictions (whitelist) are disabled. Preset to uint256 max. Restrictions disabled if == 0.
++++ severity: HIGH
+      values.transferRestrictionsDisabledAfter:
+-        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
++        0
     }
 ```
 

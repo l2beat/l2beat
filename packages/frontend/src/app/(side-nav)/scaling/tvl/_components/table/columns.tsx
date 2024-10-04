@@ -18,32 +18,47 @@ export const scalingTvlColumns = [
     id: 'data',
     header: undefined,
     columns: [
-      columnHelper.accessor('tvl', {
-        id: 'total',
-        header: 'Total',
-        cell: (ctx) => {
-          const data = ctx.row.original.tvl.data
-          if (!data) {
-            return <UpcomingBadge />
+      columnHelper.accessor(
+        (col) => {
+          if (!col.tvl.data) {
+            return undefined
           }
-          return (
-            <TotalValueLockedCell
-              tvlWarnings={ctx.row.original.tvl.warnings}
-              breakdown={{
-                canonical: data.breakdown.canonical,
-                external: data.breakdown.external,
-                native: data.breakdown.native,
-              }}
-              change={data.totalChange}
-            />
-          )
+          const { breakdown } = col.tvl.data
+          if (
+            breakdown.canonical + breakdown.external + breakdown.native ===
+            0
+          ) {
+            return undefined
+          }
+          return breakdown.canonical + breakdown.external + breakdown.native
         },
-        sortUndefined: 'last',
-        meta: {
-          align: 'center',
-          tooltip: 'Total = Canonical + External + Native',
+        {
+          id: 'total',
+          header: 'Total',
+          cell: (ctx) => {
+            const data = ctx.row.original.tvl.data
+            if (!data) {
+              return <UpcomingBadge />
+            }
+            return (
+              <TotalValueLockedCell
+                tvlWarnings={ctx.row.original.tvl.warnings}
+                breakdown={{
+                  canonical: data.breakdown.canonical,
+                  external: data.breakdown.external,
+                  native: data.breakdown.native,
+                }}
+                change={data.totalChange}
+              />
+            )
+          },
+          sortUndefined: 'last',
+          meta: {
+            align: 'center',
+            tooltip: 'Total = Canonical + External + Native',
+          },
         },
-      }),
+      ),
     ],
   }),
   columnHelper.accessor('tvl.data.breakdown.canonical', {

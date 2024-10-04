@@ -1,20 +1,20 @@
-Generated with discovered.json: 0x3446c98112da0fb44b159128e4721992de22efa4
+Generated with discovered.json: 0xe77da4c9987876a1ead1f34475aabd74b6d05026
 
-# Diff at Tue, 01 Oct 2024 11:13:13 GMT:
+# Diff at Wed, 02 Oct 2024 14:23:55 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20147451
-- current block number: 20147451
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d101c705b5f4fd0b3af2e251678b85e1005b31d8 block: 20504067
+- current block number: 20544837
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Config related.
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 20147451 (main branch discovery), not current.
+discovery. Values are for block 20504067 (main branch discovery), not current.
 
 ```diff
     contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
@@ -24,13 +24,13 @@ discovery. Values are for block 20147451 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0x8519eecca63c755ac772ea19b426950e0976b591
+Generated with discovered.json: 0x048bcfad6829c5ec110d72088a643485686bebb8
 
-# Diff at Mon, 23 Sep 2024 09:37:34 GMT:
+# Diff at Tue, 01 Oct 2024 15:44:57 GMT:
 
-- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@d3382cfb14234950671011f2a61630973cab3e07 block: 19672913
-- current block number: 20147451
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@974999225bba0722b5e81edd4c1b80928d80ef33 block: 19672913
+- current block number: 20504067
 
 ## Description
 
@@ -41,11 +41,11 @@ New verifier.
 ```diff
     contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
     +++ description: None
-+++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen).
++++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-09-21.
       values.oldVerifier2.1:
 -        false
 +        true
-+++ description: The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-09-04.
++++ description: The prover contract address for SP1, and whether it is frozen (true if frozen).
       values.verifier.0:
 -        "0x0000000000000000000000000000000000000000"
 +        "0x1764C29FBd94865198588f10FC75D4f6636d158d"
@@ -74,18 +74,18 @@ discovery. Values are for block 19672913 (main branch discovery), not current.
 ```diff
     contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
     +++ description: None
-+++ description: The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-09-04.
++++ description: The prover contract address for SP1, and whether it is frozen (true if frozen).
       values.verifier.0:
 -        "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc"
 +        "0x0000000000000000000000000000000000000000"
-+++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen).
++++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-09-21.
       values.oldVerifier2:
 +        ["0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",false]
       fieldMeta.verifier.description:
 -        "The verifier contract address for SP1, and whether it is frozen (true if frozen)."
-+        "The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-09-04."
++        "The prover contract address for SP1, and whether it is frozen (true if frozen)."
       fieldMeta.oldVerifier2:
-+        {"description":"The verifier contract address for SP1, and whether it is frozen (true if frozen)."}
++        {"description":"The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-09-21."}
     }
 ```
 
