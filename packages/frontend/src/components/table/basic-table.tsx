@@ -91,6 +91,12 @@ export function BasicTable<T extends BasicEntry>({
   const groupedHeader = maxDepth === 1 ? headerGroups[0] : undefined
   const actualHeader = maxDepth === 1 ? headerGroups[1]! : headerGroups[0]!
 
+  const columnLength =
+    actualHeader.headers.length +
+    (groupedHeader
+      ? groupedHeader.headers.filter((h) => !h.isPlaceholder).length
+      : 0)
+
   return (
     <Table className={className}>
       {groupedHeader && <ColGroup headers={groupedHeader.headers} />}
@@ -180,7 +186,7 @@ export function BasicTable<T extends BasicEntry>({
         </TableHeaderRow>
         <TableHeaderRow>
           <th
-            colSpan={actualHeader.headers.length}
+            colSpan={columnLength}
             className="mx-0.5 h-0.5 rounded-full bg-surface-tertiary"
           />
         </TableHeaderRow>
