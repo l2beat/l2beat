@@ -22,7 +22,7 @@ export function NavLink({ title, href, activeBehavior }: NavLinkProps) {
           active && '!bg-brand text-white dark:text-black',
         )}
       >
-        <span className="text-base font-semibold leading-none">{title}</span>
+        <span className="text-sm font-medium leading-none">{title}</span>
       </li>
     </Link>
   )
