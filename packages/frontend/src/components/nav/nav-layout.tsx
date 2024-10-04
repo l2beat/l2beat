@@ -145,7 +145,7 @@ export async function NavLayout({
           </>
         )}
         {!legacyNav && topChildren && (
-          <div className="block xl:hidden">{topChildren}</div>
+          <div className="block lg:hidden">{topChildren}</div>
         )}
         <MobileNavbar {...{ groups, logoLink }} />
         <NavSidebar
