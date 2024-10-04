@@ -45,6 +45,6 @@ export const thebinaryholdings: Layer2 = opStackL2({
   isNodeAvailable: 'UnderReview',
   milestones: [],
   usesBlobs: true,
-  useDiscoveryMetaOnly: true,
+  discoveryDrivenData: true,
   nonTemplateOptimismPortalEscrowTokens: [], // should add BNRY but the coingecko page doesn't report the ethereum address
 })

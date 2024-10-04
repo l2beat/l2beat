@@ -106,7 +106,7 @@ export interface OpStackConfigCommon {
   isUnderReview?: boolean
   stage?: StageConfig
   badges?: BadgeId[]
-  useDiscoveryMetaOnly?: boolean
+  discoveryDrivenData?: boolean
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -314,7 +314,7 @@ export function opStackCommon(
       ],
     },
     permissions:
-      templateVars.useDiscoveryMetaOnly === true
+      templateVars.discoveryDrivenData === true
         ? [
             ...templateVars.discovery.getDiscoveredRoles(),
             ...templateVars.discovery.getDiscoveredPermissions(),
@@ -332,7 +332,7 @@ export function opStackCommon(
     nativePermissions: templateVars.nonTemplateNativePermissions,
     contracts: {
       addresses:
-        templateVars.useDiscoveryMetaOnly === true
+        templateVars.discoveryDrivenData === true
           ? templateVars.discovery.getDiscoveredContracts()
           : [
               ...templateVars.discovery.getOpStackContractDetails(
@@ -366,7 +366,7 @@ export function opStackCommon(
       [Badge.Stack.OPStack, Badge.VM.EVM, daBadge],
       templateVars.badges ?? [],
     ),
-    usesDiscoveryForMeta: templateVars.useDiscoveryMetaOnly,
+    discoveryDrivenData: templateVars.discoveryDrivenData,
   }
 }
 

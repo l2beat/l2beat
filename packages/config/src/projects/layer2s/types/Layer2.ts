@@ -68,8 +68,8 @@ export interface Layer2 {
   knowledgeNuggets?: KnowledgeNugget[]
   /** List of badges */
   badges?: BadgeId[]
-  /** Indicates whether the data inside comes from fully templatized source */
-  usesDiscoveryForMeta?: boolean
+  /** Indicates whether the generation of contained data was driven by discovery */
+  discoveryDrivenData?: boolean
 }
 
 export interface Layer2Display extends ScalingProjectDisplay {
