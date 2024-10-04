@@ -6,7 +6,7 @@ import { refreshBalancesOfAddress } from '~/server/features/asset-risks/refresh-
 import { db } from '~/server/database'
 import { TRPCError } from '@trpc/server'
 import { assert } from '@l2beat/shared-pure'
-import { layer2s, layer3s } from '@l2beat/config'
+import { Layer2, layer2s, Layer3, layer3s } from '@l2beat/config'
 
 const projects = [...layer2s, ...layer3s];
 
@@ -63,21 +63,27 @@ export const assetRisksRouter = router({
       // TODO: Fetch only needed token meta
       const tokenMeta = await db.tokenMeta.getAll()
       // TODO: Fetch info about bridged tokens / bridges / prices / etc.
+
+      const chains = networks.reduce<Record<string, (Layer2 | Layer3)>>((acc, { id, chainId}) => {
+        const project = projects.find(p => p.chainConfig?.chainId === chainId)
+        if(project) {
+          acc[id] = project
+        }
+        return acc;
+      }, {})
+
       return {
         usdValue: 0,
         tokensRefreshedAt: user.tokensRefreshedAt,
         balancesRefreshedAt: user.balancesRefreshedAt,
+        projects: chains,
         tokens: tokens.map((token) => {
           const balanceRecord = balances.find((b) => b.tokenId === token.id)
           assert(balanceRecord, 'Balance not found')
-          const network = networks.find(n => n.id === token.networkId)
-          assert(network, 'Chain not found')
-          const project = projects.find(p => p.chainConfig?.chainId === network.chainId)
           
           return {
             token,
             meta: tokenMeta.find(m => m.tokenId === token.id && m.name),
-            chain: project,
             balance: balanceRecord.balance,
           }
         }),
