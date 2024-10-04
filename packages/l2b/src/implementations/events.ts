@@ -72,7 +72,13 @@ export async function getEvents(
     const sources = await Promise.all(
       addresses.map((address) => provider.getSource(address)),
     )
-    const iface = new utils.Interface(sources.flatMap((s) => s.abi))
+
+    const iface = new utils.Interface(
+      [...new Set(sources.flatMap((s) => s.abi))].filter((e) =>
+        e.startsWith('event '),
+      ),
+    )
+
     for (const topic of inputTopics) {
       if (Hash256.check(topic)) {
         topics.push(topic)
