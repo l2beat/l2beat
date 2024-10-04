@@ -79,7 +79,9 @@ export function SingleRisk({
 }) {
   return (
     <div>
-      <h3 className="mt-6 text-[13px] uppercase text-white">{value.name}</h3>
+      <h3 className="mt-6 text-sm font-semibold uppercase text-zinc-800 dark:text-white md:text-lg">
+        {value.name}
+      </h3>
       {value.sentiment === 'UnderReview' ? (
         <span className="block">
           {value.name} risk is currently <UnderReviewBadge />
@@ -88,7 +90,8 @@ export function SingleRisk({
         <>
           <SentimentText
             sentiment={value.sentiment}
-            className="block text-lg font-semibold"
+            className="block text-xl font-semibold md:text-2xl"
+            vibrant
           >
             {value.value}
           </SentimentText>
@@ -101,7 +104,7 @@ export function SingleRisk({
             />
           )}
           {value.description && (
-            <Markdown className="mt-1 text-xs leading-snug text-black/80 dark:text-white/80">
+            <Markdown className="mt-1.5 font-normal leading-7 text-black/80 dark:text-white/80 md:text-lg">
               {value.description}
             </Markdown>
           )}
