@@ -40,14 +40,14 @@ export function ScalingSummaryTvlChart({
       isLoading={isLoading}
       renderHoverContents={(data) => <TvlChartHover data={data} />}
     >
-      <section className="flex max-h-[290px] flex-col gap-4 xl:max-h-[320px]">
+      <section className="flex flex-col gap-4">
         <Header
           total={total}
           change={change}
           unit={unit}
           timeRange={timeRange}
         />
-        <Chart disableMilestones />
+        <Chart disableMilestones className="!h-[200px]" />
       </section>
     </ChartProvider>
   )

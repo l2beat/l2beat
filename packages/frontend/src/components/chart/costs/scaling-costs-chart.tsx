@@ -16,7 +16,7 @@ import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scal
 import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import { type CostsProjectsFilter } from '~/server/features/scaling/costs/utils/get-costs-projects'
 import {
-  CostsTimeRange,
+  type CostsTimeRange,
   rangeToResolution,
 } from '~/server/features/scaling/costs/utils/range'
 import { api } from '~/trpc/react'
@@ -100,7 +100,7 @@ function Header({
   const resolution = rangeToResolution(range)
   return (
     <header>
-      <h1 className="text-xl md:text-2xl font-bold first-letter:capitalize">
+      <h1 className="text-xl font-bold first-letter:capitalize md:text-2xl">
         {resolution} onchain costs
         <span className="max-md:hidden"> stacked by type</span>
       </h1>
