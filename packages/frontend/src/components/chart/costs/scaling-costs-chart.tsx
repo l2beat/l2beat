@@ -15,6 +15,10 @@ import { Skeleton } from '~/components/core/skeleton'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import { type CostsProjectsFilter } from '~/server/features/scaling/costs/utils/get-costs-projects'
+import {
+  CostsTimeRange,
+  rangeToResolution,
+} from '~/server/features/scaling/costs/utils/range'
 import { api } from '~/trpc/react'
 import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
 import { useChartLoading } from '../core/chart-loading-context'
@@ -75,7 +79,7 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
           <CostsChartHover data={data} unit={unit} />
         )}
       >
-        <Header chartRange={chartRange} />
+        <Header range={range} chartRange={chartRange} />
         <Chart />
         <ChartControlsWrapper>
           <UnitControls unit={unit} setUnit={setUnit} />
@@ -89,10 +93,17 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
   )
 }
 
-function Header({ chartRange }: { chartRange: [number, number] | undefined }) {
+function Header({
+  range,
+  chartRange,
+}: { range: CostsTimeRange; chartRange: [number, number] | undefined }) {
+  const resolution = rangeToResolution(range)
   return (
     <header>
-      <h1 className="text-2xl font-bold max-md:hidden">Placeholder header</h1>
+      <h1 className="text-xl md:text-2xl font-bold first-letter:capitalize">
+        {resolution} onchain costs
+        <span className="max-md:hidden"> stacked by type</span>
+      </h1>
       <ChartTimeRange range={chartRange} />
     </header>
   )

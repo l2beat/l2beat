@@ -34,7 +34,10 @@ export function TvlChartHeader({
   return (
     <header className="flex justify-between text-base">
       <div>
-        <h1 className="text-xl font-bold md:text-2xl">Placeholder header</h1>
+        <h1 className="text-xl font-bold md:text-2xl">
+          Total value locked
+          <span className="max-md:hidden"> stacked by type</span>
+        </h1>
         <ChartTimeRange range={timeRange} />
       </div>
       <div className="flex flex-col items-end">
