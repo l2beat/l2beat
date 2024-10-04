@@ -89,18 +89,14 @@ export async function refreshTokensOfAddress(address: Address) {
       .filter((p) => p.status === 'fulfilled')
       .map((p) => p.value)
       .filter(([_, tokens]) => tokens.length > 0),
-  )
-
-  const tokensToUpsert = Object.values(tokens).flatMap((tokens) => tokens.map((token) => ({
-    userId: user.id,
-    tokenId: token.id,
-    balance: 0,
-  })))
-
-  console.log('Tokens to upsert', tokensToUpsert)
+  ) 
 
   await db.assetRisksBalance.upsertMany(
-    tokensToUpsert
+    Object.values(tokens).flatMap((tokens) => tokens.map((token) => ({
+      userId: user.id,
+      tokenId: token.id,
+      balance: "0",
+    })))
   )
 }
 
