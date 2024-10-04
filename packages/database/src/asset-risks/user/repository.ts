@@ -22,7 +22,7 @@ export class AssetRisksUserRepository extends BaseRepository {
     const result = await this.db
       .selectFrom('AssetRisksUser')
       .select(selectAssetRisksUser)
-      .where('address', '=', address)
+      .where('address', 'ilike', address)
       .executeTakeFirst()
     return result
   }
