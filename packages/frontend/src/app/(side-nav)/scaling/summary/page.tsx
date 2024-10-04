@@ -46,7 +46,7 @@ export default async function Page() {
             </MainPageCard>
           </div>
           <ChartTabs className="lg:hidden" unit={UNIT} timeRange={TIME_RANGE} />
-          <MainPageCard className="mt-6">
+          <MainPageCard className="md:mt-6">
             <ScalingSummaryTable entries={entries} />
           </MainPageCard>
         </ScalingAssociatedTokensContextProvider>

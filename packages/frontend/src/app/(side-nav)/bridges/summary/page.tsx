@@ -38,7 +38,7 @@ export default async function Page() {
           <MainPageCard>
             <BridgesTvlChart />
           </MainPageCard>
-          <MainPageCard className="mt-6">
+          <MainPageCard className="md:mt-6">
             <BridgesSummaryTable entries={entries} />
           </MainPageCard>
         </BridgesFilterContextProvider>

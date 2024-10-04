@@ -53,7 +53,7 @@ export default async function Page() {
               entries={entries}
             />
           </MainPageCard>
-          <MainPageCard className="mt-6">
+          <MainPageCard className="md:mt-6">
             <ScalingTvlTable entries={entries} />
           </MainPageCard>
         </ScalingAssociatedTokensContextProvider>

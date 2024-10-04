@@ -37,7 +37,7 @@ export default async function Page() {
           <MainPageCard>
             <ActivityChart milestones={HOMEPAGE_MILESTONES} entries={entries} />
           </MainPageCard>
-          <MainPageCard className="mt-6">
+          <MainPageCard className="md:mt-6">
             <ScalingActivityTable entries={entries} />
           </MainPageCard>
         </ActivityTimeRangeContextProvider>

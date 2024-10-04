@@ -37,7 +37,7 @@ export default async function Page() {
                   milestones={HOMEPAGE_MILESTONES}
                 />
               </MainPageCard>
-              <MainPageCard className="mt-6">
+              <MainPageCard className="md:mt-6">
                 <ScalingCostsTable entries={entries} />
               </MainPageCard>
             </CostsMetricContextProvider>
