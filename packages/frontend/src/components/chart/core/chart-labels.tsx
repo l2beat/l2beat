@@ -48,7 +48,7 @@ function ChartLabel({
       {!isLoading ? (
         <span
           className={cn(
-            'absolute bottom-0 left-0 pb-0.5 text-sm text-gray-500 dark:text-white',
+            'absolute bottom-0 left-1 pb-0.5 text-sm text-gray-500 dark:text-white',
             'sidebar:text-zinc-500 sidebar:dark:text-zinc-300',
             className,
           )}
