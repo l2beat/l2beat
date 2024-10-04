@@ -1,12 +1,10 @@
 import { redirect } from 'next/navigation'
-import type { SetOptional, SetRequired } from 'type-fest'
+import type { SetOptional } from 'type-fest'
 import { http, type Hex, createPublicClient, isAddress } from 'viem'
 
 import { type ScalingProjectRisk } from '@l2beat/config'
-import { layer2s } from '@l2beat/config/build/src/projects/layer2s'
 import {
   getChain,
-  getChainStage,
 } from '~/server/features/asset-risks/utils/chains'
 import { Footer } from '../_components/footer'
 import { DetailsHeader } from './_components/details-header'
