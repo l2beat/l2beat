@@ -1,6 +1,5 @@
 'use client'
 
-import { type Stage } from '@l2beat/config'
 import { type Dispatch, type SetStateAction, useState } from 'react'
 
 import { type AssetId, type TokenBridgedUsing } from '@l2beat/shared-pure'
@@ -18,34 +17,11 @@ import {
   type Sorting,
   columnsConfig,
 } from './utils/columnsConfig'
-
-export type Token = {
-  token: {
-    id: AssetId
-    name: string
-    decimals: number
-    symbol: string
-    iconUrl?: string
-    bridgedUsing?: TokenBridgedUsing
-    address?: `0x${string}`
-  }
-  chain: {
-    id: number
-    name: string
-    risks: Risk[]
-    stage:
-      | 'Validium'
-      | 'Optimium'
-      | 'NotApplicable'
-      | 'UnderReview'
-      | Stage
-      | undefined
-  }
-  balance: bigint | null
-}
+import { Address } from 'viem'
+import { api } from '~/trpc/react'
 
 interface TokensTableProps {
-  tokens: Token[]
+  walletAddress: Address
 }
 
 type SortingState = {
@@ -54,6 +30,7 @@ type SortingState = {
 } & Sorting
 
 export function TokensTable(props: TokensTableProps) {
+  const report = api.assetRisks.report.useQuery({ address: props.walletAddress })
   const [sorting, setSorting] = useState<Partial<SortingState>>({
     selected: 'VALUE',
     rule: 'numeric',
@@ -62,7 +39,9 @@ export function TokensTable(props: TokensTableProps) {
   })
   const [filter, setFilter] = useState<string>('')
 
-  let tokens = props.tokens
+  if (!report.data) return null
+
+  let tokens = report.data.tokens
   if (sorting.selected) {
     tokens = tokens.sort((a, b) => {
       if (!sorting.getOrderValue) return 0
@@ -84,7 +63,7 @@ export function TokensTable(props: TokensTableProps) {
 
   if (filter) {
     tokens = tokens.filter((token) =>
-      token.token.name.toLowerCase().includes(filter.toLowerCase()),
+      token.meta?.name?.toLowerCase().includes(filter.toLowerCase()),
     )
   }
 

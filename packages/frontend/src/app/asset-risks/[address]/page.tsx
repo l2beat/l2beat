@@ -57,12 +57,11 @@ export default async function Page({ params: { address } }: Props) {
     <main className="mx-auto w-screen max-w-[1176px] px-0 pt-10 sm:px-4 md:px-12">
       <div className="mb-10 flex flex-col gap-6">
         <DetailsHeader
-          // TODO: Replace with real data when we have it
-          dolarValue={0}
-          tokens={[]}
-          walletAddress={vanityAddress}
+          walletAddress={address}
+          vanityAddress={vanityAddress}
         />
-        <TokensTable tokens={[]} />
+        <TokensTable
+          walletAddress={address} />
         <Disclaimer />
         <DebugButtons address={address} />
       </div>

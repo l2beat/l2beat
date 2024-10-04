@@ -6,6 +6,9 @@ import { refreshBalancesOfAddress } from '~/server/features/asset-risks/refresh-
 import { db } from '~/server/database'
 import { TRPCError } from '@trpc/server'
 import { assert } from '@l2beat/shared-pure'
+import { layer2s, layer3s } from '@l2beat/config'
+
+const projects = [...layer2s, ...layer3s];
 
 export const assetRisksRouter = router({
   refreshTokens: procedure
@@ -34,7 +37,7 @@ export const assetRisksRouter = router({
       return await refreshBalancesOfAddress(input.address)
     }),
 
-    report: procedure
+  report: procedure
     .input(
       z.object({
         address: z
@@ -43,24 +46,38 @@ export const assetRisksRouter = router({
           .transform((arg) => getAddress(arg)),
       }),
     )
-    .mutation(async ({ input }) => {
+    .query(async ({ input }) => {
       const user = await db.assetRisksUser.findUserByAddress(input.address)
-      if(!user) {
+      if (!user) {
         throw new TRPCError({
           code: 'NOT_FOUND',
           message: 'User not found',
         })
       }
+      const networks = await db.network.getAll()
       const balances = await db.assetRisksBalance.getAllForUser(user.id)
       const tokens = await db.token.getByIds(balances.map((b) => b.tokenId))
+      // TODO: Fetch only needed token meta
+      const tokenMeta = await db.tokenMeta.getAll()
       // TODO: Fetch info about bridged tokens / bridges / prices / etc.
-      return tokens.map((token) => {
-        const balanceRecord = balances.find((b) => b.tokenId === token.id)
-        assert(balanceRecord, 'Balance not found')
-        return {
-          token,
-          balance: balanceRecord.balance
-        }
-      })
-    })
+      return {
+        usdValue: 0,
+        tokensRefreshedAt: user.tokensRefreshedAt,
+        balancesRefreshedAt: user.balancesRefreshedAt,
+        tokens: tokens.map((token) => {
+          const balanceRecord = balances.find((b) => b.tokenId === token.id)
+          assert(balanceRecord, 'Balance not found')
+          const network = networks.find(n => n.id === token.networkId)
+          assert(network, 'Chain not found')
+          const project = projects.find(p => p.chainConfig?.chainId === network.chainId)
+          assert(project, 'Project not found')
+          return {
+            token,
+            meta: tokenMeta.find(m => m.tokenId === token.id && m.name),
+            chain: project,
+            balance: balanceRecord.balance,
+          }
+        }),
+      }
+    }),
 })

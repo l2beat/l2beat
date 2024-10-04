@@ -1,11 +1,27 @@
 'use client'
 
+import { useEffect } from 'react'
 import { Address } from 'viem'
 import { api } from '~/trpc/react'
 
 export function DebugButtons({ address }: { address: Address }) {
   const refreshTokens = api.assetRisks.refreshTokens.useMutation()
   const refreshBalances = api.assetRisks.refreshBalances.useMutation()
+
+  const report = api.assetRisks.report.useQuery({ address })
+
+  useEffect(() => {
+    if (!report.data) return
+    if (!report.data.tokensRefreshedAt ||report.data.tokensRefreshedAt < new Date(Date.now() - 1000 * 60 * 60)) {
+      refreshTokens.mutate({ address })
+      return
+    }
+    if (!report.data.balancesRefreshedAt || report.data.balancesRefreshedAt < new Date(Date.now() - 1000 * 60)) {
+      refreshBalances.mutate({ address })
+      return
+    }
+  }, [report.data])
+
   return (
     <div>
       <button onClick={() => refreshTokens.mutate({ address })}>

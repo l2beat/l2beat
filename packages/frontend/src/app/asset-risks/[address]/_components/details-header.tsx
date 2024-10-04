@@ -1,26 +1,27 @@
-import { isAddress } from 'viem'
+"use client"
+
+import { Address, isAddress } from 'viem'
 import { formatAddress } from '~/utils/format-address'
 import { formatNumberWithCommas } from '~/utils/format-number'
 import { Card } from '../../_components/card'
 import { Breakdown } from './breakdown'
-import { type Token } from './table/tokens-table'
+import { api } from '~/trpc/react'
 
 interface DetailsHeaderProps {
-  dolarValue: number
-  walletAddress: string
-  tokens: Token[]
+  walletAddress: Address
+  vanityAddress: string
 }
 
 export function DetailsHeader(props: DetailsHeaderProps) {
-  const risksCount = props.tokens.reduce(
-    (acc, token) => token.chain.risks.length + acc,
-    0,
-  )
+  const report = api.assetRisks.report.useQuery({ address: props.walletAddress })
 
-  const averageIssuesPerToken = Math.round(risksCount / props.tokens.length)
-  const leastIssues = Math.min(
-    ...props.tokens.map((token) => token.chain.risks.length),
-  )
+
+  if (!report.data) return null
+
+  const risksCount = 0
+
+  const averageIssuesPerToken = Math.round(risksCount / report.data.tokens.length)
+  const leastIssues = 0
 
   return (
     <Card className="flex flex-col gap-4 rounded-none sm:rounded-xl">
@@ -38,7 +39,7 @@ export function DetailsHeader(props: DetailsHeaderProps) {
             Value
           </span>
           <span className=" text-xl font-extrabold text-pink-900 dark:text-pink-200">
-            ${formatNumberWithCommas(props.dolarValue)}
+            ${formatNumberWithCommas(report.data.usdValue)}
           </span>
         </div>
         <div className="col-span-2 flex flex-col gap-[5px]">
