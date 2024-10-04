@@ -1,80 +1,96 @@
-import { chainConverter } from '@l2beat/config'
-import generatedJson from '@l2beat/config/src/tokens/generated.json'
-import { AssetId, ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { notUndefined } from '@l2beat/shared-pure'
 import {
   http,
   type Address,
-  type Hex,
   type PublicClient,
   createPublicClient,
-  getAddress,
   parseAbiItem,
 } from 'viem'
 import { getChain } from './utils/chains'
-
-type Token = Omit<(typeof generatedJson.tokens)[number], 'address'> & {
-  address?: Hex
-} & { id: AssetId }
+import { db } from '~/server/database'
+import { type TokenRecord } from '@l2beat/database'
 
 export async function getTokensOfAddress(address: Address) {
-  const groupedTokens = generatedJson.tokens.reduce<Record<number, Token[]>>(
-    (acc, token) => {
-      const { chainId, address } = token
+  // All tokens grouped by network
+  const tokensByNetwork = (await db.token.getAll()).reduce<
+    Record<string, TokenRecord[]>
+  >((acc, token) => {
+    if (!acc[token.networkId]) {
+      acc[token.networkId] = []
+    }
+    acc[token.networkId]?.push(token)
+    return acc
+  }, {})
 
-      if (!acc[chainId]) {
-        acc[chainId] = []
-      }
-      acc[chainId]?.push({
-        ...token,
-        id: AssetId.create(
-          chainConverter.toName(ChainId(token.chainId)),
-          address ? EthereumAddress(address) : 'native',
-        ),
-        address: address ? getAddress(address) : undefined,
-      })
-
+  // Network data by id
+  const networkMapping = (await db.network.getAllWithConfigs()).reduce(
+    (acc, network) => {
+      acc[network.id] = network
       return acc
     },
-    {},
+    {} as Record<
+      string,
+      Awaited<ReturnType<typeof db.network.getAllWithConfigs>>[number]
+    >,
   )
 
-  const chains = Object.keys(groupedTokens).map(Number)
+  // List of networks to check
+  const networksToCheck = Object.keys(tokensByNetwork)
+    .map((networkId) => {
+      const network = networkMapping[networkId]
+      if (!network?.rpc) return undefined
+      return network
+    })
+    .filter(notUndefined)
 
   const tokens = Object.fromEntries(
     (
       await Promise.allSettled(
-        chains.map<Promise<[number, Address[]]>>(async (chainId) => {
-          const chain = getChain(chainId)
-          if (!chain) return [chainId, []]
+        networksToCheck.map<Promise<[string, TokenRecord[]]>>(
+          async (network) => {
+            const chain = getChain(network.chainId)
+            if (!chain) return [network.id, []]
 
-          const client = createPublicClient({
-            chain,
-            transport: http(),
-          })
+            const client = createPublicClient({
+              chain,
+              transport: http(),
+            })
 
-          const blockNumber = await client.getBlockNumber()
-          const logs = await getAllLogs(
-            client as unknown as PublicClient,
-            address,
-            0n,
-            blockNumber,
-          )
-          const tokens = new Set<Address>()
-          for (const log of logs) {
-            tokens.add(log.address)
-          }
+            const blockNumber = await client.getBlockNumber()
+            const logs = await getAllLogs(
+              client as unknown as PublicClient,
+              address,
+              0n,
+              blockNumber,
+            )
+            const tokens = new Set<TokenRecord>()
+            for (const log of logs) {
+              const token = tokensByNetwork[network.id]?.find(
+                (token) => token.address === log.address,
+              )
+              if (token) {
+                tokens.add(token)
+              }
+            }
 
-          return [chainId, Array.from(tokens)] as [number, Address[]]
-        }),
+            return [network.id, Array.from(tokens)]
+          },
+        ),
       )
     )
       .filter((p) => p.status === 'fulfilled')
       .map((p) => p.value)
-      //.map(([chainId, tokens]) => ([chainId, tokens.filter(token => groupedTokens[chainId]?.some(t => t.address?.toLowerCase() === token.toLowerCase()))] as const))
       .filter(([_, tokens]) => tokens.length > 0),
   )
 
-  return tokens
+  return networksToCheck
+    .map((network) => {
+      return {
+        network,
+        tokens: tokens[network.id] ?? [],
+      }
+    })
+    .filter(({ tokens }) => tokens.length > 0)
 }
 
 async function getAllLogsInner(
