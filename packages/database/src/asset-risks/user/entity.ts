@@ -5,6 +5,8 @@ import { nanoid } from 'nanoid'
 export interface AssetRisksUserRecord {
   id: string
   address: string
+  tokensRefreshedAt: Date | null
+  balancesRefreshedAt: Date | null
   updatedAt: Date
   createdAt: Date
 }

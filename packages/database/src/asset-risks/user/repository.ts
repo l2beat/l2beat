@@ -27,6 +27,17 @@ export class AssetRisksUserRepository extends BaseRepository {
     return result
   }
 
+  async update(
+    id: string,
+    updateable: Partial<AssetRisksUserRecord>,
+  ): Promise<void> {
+    await this.db
+      .updateTable('AssetRisksUser')
+      .set(updateable)
+      .where('id', '=', id)
+      .execute()
+  }
+
   async upsert(upsertable: UpsertableAssetRisksUserRecord): Promise<void> {
     await this.db
       .insertInto('AssetRisksUser')
@@ -34,7 +45,11 @@ export class AssetRisksUserRepository extends BaseRepository {
       .onConflict((oc) =>
         oc
           .column('address')
-          .doUpdateSet((eb) => ({ updatedAt: eb.ref('excluded.updatedAt') })),
+          .doUpdateSet((eb) => ({
+            updatedAt: eb.ref('excluded.updatedAt'),
+            tokensRefreshedAt: eb.ref('excluded.tokensRefreshedAt'),
+            balancesRefreshedAt: eb.ref('excluded.balancesRefreshedAt'),
+          })),
       )
       .execute()
   }
