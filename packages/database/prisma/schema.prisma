@@ -148,17 +148,17 @@ model TokenMeta {
 }
 
 model Token {
-  id          String         @id @db.Char(21)
-  networkId   String         @db.Char(21)
-  network     Network        @relation(fields: [networkId], references: [id])
-  address     String
-  deployment  Deployment?
-  metadata    TokenMeta[]
-  bridgedTo   TokenBridge[]  @relation("bridgedTo")
-  bridgedFrom TokenBridge?   @relation("bridgedFrom")
-  escrows     BridgeEscrow[]
-  updatedAt   DateTime       @updatedAt
-  createdAt   DateTime       @default(now())
+  id                 String              @id @db.Char(21)
+  networkId          String              @db.Char(21)
+  network            Network             @relation(fields: [networkId], references: [id])
+  address            String
+  deployment         Deployment?
+  metadata           TokenMeta[]
+  bridgedTo          TokenBridge[]       @relation("bridgedTo")
+  bridgedFrom        TokenBridge?        @relation("bridgedFrom")
+  escrows            BridgeEscrow[]
+  updatedAt          DateTime            @updatedAt
+  createdAt          DateTime            @default(now())
   assetRisksBalances AssetRisksBalance[]
 
   @@unique([networkId, address])
@@ -174,24 +174,24 @@ model Cache {
 }
 
 model AssetRisksUser {
-  id String @id @db.Char(21)
-  address String @db.Char(42)
-  updatedAt DateTime @updatedAt
-  createdAt DateTime @default(now())
-  balances AssetRisksBalance[]
-  
+  id        String              @id @db.Char(21)
+  address   String              @db.Char(42)
+  updatedAt DateTime            @updatedAt
+  createdAt DateTime            @default(now())
+  balances  AssetRisksBalance[]
+
   @@unique([address])
 }
 
 model AssetRisksBalance {
-  id String @id @db.Char(21)
-  userId String @db.Char(21)
-  user AssetRisksUser @relation(fields: [userId], references: [id])
-  tokenId String @db.Char(21)
-  token Token @relation(fields: [tokenId], references: [id])
-  balance Decimal @db.Decimal(80, 0)
-  updatedAt DateTime @updatedAt
-  createdAt DateTime @default(now())
+  id        String         @id @db.Char(21)
+  userId    String         @db.Char(21)
+  user      AssetRisksUser @relation(fields: [userId], references: [id])
+  tokenId   String         @db.Char(21)
+  token     Token          @relation(fields: [tokenId], references: [id])
+  balance   Decimal        @db.Decimal(80, 0)
+  updatedAt DateTime       @updatedAt
+  createdAt DateTime       @default(now())
 
   @@unique([tokenId, userId])
 }

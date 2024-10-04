@@ -27,9 +27,7 @@ export class AssetRisksUserRepository extends BaseRepository {
     return result
   }
 
-  async upsert(
-    upsertable: UpsertableAssetRisksUserRecord,
-  ): Promise<void> {
+  async upsert(upsertable: UpsertableAssetRisksUserRecord): Promise<void> {
     await this.db
       .insertInto('AssetRisksUser')
       .values(upsertableToRecord(upsertable))
@@ -37,7 +35,8 @@ export class AssetRisksUserRepository extends BaseRepository {
         oc
           .column('address')
           .doUpdateSet((eb) => ({ updatedAt: eb.ref('excluded.updatedAt') })),
-      ).execute()
+      )
+      .execute()
   }
 
   async deleteAll(): Promise<number> {
