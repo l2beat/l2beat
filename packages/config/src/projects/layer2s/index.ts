@@ -142,6 +142,7 @@ import { ternoa } from './ternoa'
 import { thanos } from './thanos'
 import { thebinaryholdings } from './thebinaryholdings'
 import { treasure } from './treasure'
+import { turboprotocol } from './turboprotocol'
 import { Layer2 } from './types'
 import { wirex } from './wirex'
 import { witness } from './witness'
@@ -309,6 +310,7 @@ export const layer2s: Layer2[] = [
   thebinaryholdings,
   thanos,
   treasure,
+  turboprotocol,
   wirex,
   witness,
   world,
