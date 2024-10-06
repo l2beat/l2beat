@@ -13,8 +13,8 @@ export const sophon: Layer2 = upcomingL2({
     provider: 'ZK Stack',
     links: {
       websites: ['https://sophon.xyz/'],
-      apps: [],
-      documentation: [],
+      apps: ['https://farm.sophon.xyz/'],
+      documentation: ['https://docs.sophon.xyz/'],
       explorers: [],
       repositories: [],
       socialMedia: ['https://x.com/sophon'],
