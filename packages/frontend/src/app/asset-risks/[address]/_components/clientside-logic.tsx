@@ -2,10 +2,9 @@
 
 import { useEffect } from 'react'
 import { api } from '~/trpc/react'
-import { useReport } from './report-context'
+import { type Address } from 'viem'
 
-export function ClientsideLogic() {
-  const { address } = useReport()
+export function ClientsideLogic({ address }: { address: Address }) {
   const refreshTokens = api.assetRisks.refreshTokens.useMutation()
   const refreshBalances = api.assetRisks.refreshBalances.useMutation()
 

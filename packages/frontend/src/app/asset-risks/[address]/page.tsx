@@ -55,7 +55,7 @@ export default async function Page({ params: { address } }: Props) {
   return (
     <main className="mx-auto w-screen max-w-[1176px] px-0 pt-10 sm:px-4 md:px-12">
       <div className="mb-10 flex flex-col gap-6">
-        <ClientsideLogic />
+        <ClientsideLogic address={address} />
         <ReportProvider
           address={address}
           placeholder={<div>TODO: Loading...</div>}
