@@ -9,7 +9,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       topChildren={<Banner className="lg:rounded-b-xl xl:rounded-br-none" />}
       className="sidebar"
     >
-      <div className="mx-auto mb-20 min-h-screen max-w-[1648px] md:px-6 lg:pl-0 lg:pr-3">
+      <div className="mx-auto min-h-screen max-w-[1648px] md:mb-16 md:px-6 lg:pl-0 lg:pr-3">
         {children}
       </div>
       <Footer />
