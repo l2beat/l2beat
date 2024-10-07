@@ -57,6 +57,7 @@ export async function getL2ProjectDetails({
       contracts: project.contracts,
       isUnderReview: project.isUnderReview,
       escrows: project.config.escrows,
+      architectureImage: project.display.architectureImage
     },
     contractsVerificationStatuses,
     manuallyVerifiedContracts,
