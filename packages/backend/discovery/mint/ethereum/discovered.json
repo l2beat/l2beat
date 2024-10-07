@@ -1,8 +1,8 @@
 {
   "name": "mint",
   "chain": "ethereum",
-  "blockNumber": 20032860,
-  "configHash": "0xf8f362d8e09877e30295be45c092194c05e2f9efaa7303fb9c68609438b96599",
+  "blockNumber": 20915064,
+  "configHash": "0x736886c33cdd26ea25f05e79b2df8368fba2b2d6083f23d9990d6f5498da3013",
   "version": 15,
   "contracts": [
     {
@@ -37,8 +37,7 @@
         "MESSENGER": "0xf80be9f7a74ab776b69d3F0dC5C08c39b3A0bA19",
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000010",
         "version": "1.1.1"
-      },
-      "derivedName": "L1StandardBridge"
+      }
     },
     {
       "name": "ConduitMultisig",
@@ -104,7 +103,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 36,
+        "nonce": 52,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -147,13 +146,12 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 20032800
+          "prevBlockNum": 20905168
         },
         "paused": false,
         "SYSTEM_CONFIG": "0xC975862927797812371A9Fb631f83F8f5e2240D5",
         "version": "1.7.2"
-      },
-      "derivedName": "OptimismPortal"
+      }
     },
     {
       "name": "L2OutputOracle",
@@ -196,17 +194,16 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 1015200,
-        "latestOutputIndex": 46,
-        "nextBlockNumber": 1036800,
-        "nextOutputIndex": 47,
+        "latestBlockNumber": 6350400,
+        "latestOutputIndex": 293,
+        "nextBlockNumber": 6372000,
+        "nextOutputIndex": 294,
         "PROPOSER": "0x3d53Df1e69A32F98dFCcf23CCB689763E21A78bA",
         "startingBlockNumber": 0,
         "startingTimestamp": 1715608931,
         "SUBMISSION_INTERVAL": 21600,
         "version": "1.3.1"
-      },
-      "derivedName": "L2OutputOracle"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -309,8 +306,7 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         }
-      },
-      "derivedName": "SystemConfig"
+      }
     },
     {
       "name": "AddressManager",
@@ -360,7 +356,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292629881",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292631617",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -373,8 +369,7 @@
         "ResolvedDelegateProxy_addressManager": "0xEa4165C5CDCA155779803A113d8391b741bA5228",
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "version": "1.4.1"
-      },
-      "derivedName": "L1CrossDomainMessenger"
+      }
     }
   ],
   "eoas": [
@@ -665,5 +660,5 @@
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0x46fe05664c6168de6029fca0f3968c29d03176659063cc698514a45135ec8c98"
 }
