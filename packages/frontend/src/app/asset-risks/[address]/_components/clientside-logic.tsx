@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { api } from '~/trpc/react'
 import { type Address } from 'viem'
+import { api } from '~/trpc/react'
 
 export function ClientsideLogic({ address }: { address: Address }) {
   const refreshTokens = api.assetRisks.refreshTokens.useMutation()

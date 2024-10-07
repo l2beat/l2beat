@@ -3,6 +3,7 @@ import type { SetOptional } from 'type-fest'
 import { http, type Hex, createPublicClient, isAddress } from 'viem'
 
 import { type ScalingProjectRisk } from '@l2beat/config'
+import { Skeleton } from '~/components/core/skeleton'
 import { getChain } from '~/server/features/asset-risks/utils/chains'
 import { Footer } from '../_components/footer'
 import { ClientsideLogic } from './_components/clientside-logic'
@@ -10,7 +11,6 @@ import { DetailsHeader } from './_components/details-header'
 import { Disclaimer } from './_components/disclaimer'
 import { ReportProvider } from './_components/report-context'
 import { TokensTable } from './_components/table/tokens-table'
-import { Skeleton } from '~/components/core/skeleton'
 
 export type Risk = SetOptional<ScalingProjectRisk, 'category'>
 
