@@ -66,7 +66,7 @@ export function TableRow({
           <div className="flex flex-col">
             <span className="text-lg font-bold">{token.meta?.name}</span>
             <div className="flex items-center text-sm font-normal text-gray-500 dark:text-gray-50">
-              on <span className="font-medium">{token.meta?.name}</span>
+              on <span className="font-medium">{chain?.name}</span>
               &nbsp;
               {chain?.stage && <StageBadge stage={chain.stage} />}
               &nbsp;
