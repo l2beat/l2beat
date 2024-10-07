@@ -74,28 +74,6 @@ export function getTvlAmountsConfig(
           }
         }
       }
-      if (escrow.sharedEscrow?.type === 'AggLayer') {
-        const aggLayerEntries = aggLayerEscrowToEntries(escrow, project)
-        entries.push(...aggLayerEntries)
-      } else {
-        for (const token of escrow.tokens) {
-          const chain = chains.find((x) => x.chainId === +token.chainId)
-          assert(chain, `Chain not found for token ${token.id}`)
-          assert(
-            chain.name === escrow.chain,
-            'Programmer error: chain mismatch',
-          )
-
-          const configEntry = projectEscrowToConfigEntry(
-            chain,
-            token,
-            escrow,
-            project,
-          )
-
-          entries.push(configEntry)
-        }
-      }
     }
   }
 
