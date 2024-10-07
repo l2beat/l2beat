@@ -1,7 +1,7 @@
 import { type ConfigMapping, safeGetTokenByAssetId } from '@l2beat/config'
 import {
   assert,
-  AmountConfigEntry,
+  type AmountConfigEntry,
   type AssetId,
   type ProjectId,
   UnixTime,
