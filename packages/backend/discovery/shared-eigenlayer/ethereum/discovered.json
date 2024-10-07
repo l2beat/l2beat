@@ -1,8 +1,8 @@
 {
   "name": "shared-eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 20878358,
-  "configHash": "0xd083e6f617460911d81a3d62ceea0aa541ba7354515a2d8ec8da0cb60455d8c9",
+  "blockNumber": 20912724,
+  "configHash": "0xf33bc24a9b31fe178eed08ff32ec7e944375ad6817ae20cb4e8a90fdcd7a251a",
   "version": 15,
   "contracts": [
     {
@@ -12,8 +12,8 @@
       "sinceTimestamp": 1602667372,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0x10fd190000000000",
-        "get_deposit_root": "0xe7185c6ff8c96455402375d1c40386d25627d9ec9f98ebbcc307c228adc3fd1e"
+        "get_deposit_count": "0xab1a1a0000000000",
+        "get_deposit_root": "0x94dccdd2e3ce3165a9dc8930bd85c1dc196f975b9e77af720c3454c09bfc7a4c"
       },
       "derivedName": "DepositContract"
     },
@@ -45,6 +45,41 @@
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
       },
       "derivedName": "UpgradeableBeacon"
+    },
+    {
+      "name": "TokenHopper",
+      "address": "0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563",
+      "descriptions": [
+        "Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner)."
+      ],
+      "ignoreInWatchMode": ["latestPress", "canPress"],
+      "sinceTimestamp": 1727895695,
+      "values": {
+        "$immutable": true,
+        "canPress": false,
+        "getHopperConfiguration": {
+          "token": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+          "startTime": 1727308800,
+          "cooldownSeconds": 604800,
+          "actionGenerator": "0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE",
+          "doesExpire": false,
+          "expirationTimestamp": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+        },
+        "isExpired": false,
+        "latestPress": 1728065387,
+        "owner": "0xbb00DDa2832850a43840A3A86515E3Fe226865F2"
+      },
+      "fieldMeta": {
+        "latestPress": {
+          "severity": "LOW",
+          "description": "Timestamp of the latest press. A button-press makes a call (calldata and cooldown are defined by the owner). Anyone can press the button at the defined time intervals."
+        },
+        "getHopperConfiguration": {
+          "severity": "MEDIUM",
+          "description": "Current configuration of the TokenHopper, like calldata executed at each button-press (actionGenerator), target (token) and cooldownSeconds."
+        }
+      },
+      "derivedName": "TokenHopper"
     },
     {
       "name": "AVSDirectory",
@@ -96,7 +131,8 @@
           "0x2d86E90ED40a034C753931eE31b1bD5E1970113d",
           "0x75195699F659ed67083691c2C48F23d0B907b559",
           "0xA5bD40e5406CB2d2440Db1D1bcF9dfD022B6C124",
-          "0x8EF368e31cd0b51941bf85bC11D8C71589489Fe4"
+          "0x8EF368e31cd0b51941bf85bC11D8C71589489Fe4",
+          "0xd75c834B09ec626992Ff3Ce388AE7115791Fb282"
         ],
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
@@ -339,31 +375,12 @@
       }
     },
     {
-      "name": "TokenHopper",
-      "address": "0x708230Be53c08b270F43e068116EBacc4C13F577",
-      "ignoreInWatchMode": ["latestPress"],
-      "sinceTimestamp": 1727382167,
-      "values": {
-        "$immutable": true,
-        "canPress": false,
-        "getHopperConfiguration": {
-          "token": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
-          "startTime": 1727308800,
-          "cooldownSeconds": 604800,
-          "actionGenerator": "0xF2eB394c4e04ff19422EB27411f78d00e216a88d",
-          "doesExpire": false,
-          "expirationTimestamp": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
-        },
-        "isExpired": false,
-        "latestPress": 1727582339,
-        "owner": "0xbb00DDa2832850a43840A3A86515E3Fe226865F2"
-      },
-      "derivedName": "TokenHopper"
-    },
-    {
       "name": "RewardsCoordinator",
       "address": "0x7750d328b314EfFa365A0402CcfD489B80B0adda",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -415,6 +432,7 @@
           "via": []
         }
       ],
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1710958955,
       "values": {
         "$admin": "0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9",
@@ -443,11 +461,11 @@
           "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "extensions": []
         },
-        "Minters": ["0x708230Be53c08b270F43e068116EBacc4C13F577"],
+        "Minters": ["0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563"],
         "name": "Backing Eigen",
         "owner": "0xbb00DDa2832850a43840A3A86515E3Fe226865F2",
         "symbol": "bEIGEN",
-        "totalSupply": "1681371191369050738461538468",
+        "totalSupply": "1683946032397180984615384624",
         "transferRestrictionsDisabledAfter": 0
       },
       "fieldMeta": {
@@ -579,7 +597,7 @@
         "delegationManager": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "eigenPodBeacon": "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
-        "numPods": 32195,
+        "numPods": 32237,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
@@ -587,6 +605,25 @@
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
       },
       "derivedName": "EigenPodManager"
+    },
+    {
+      "name": "RewardAllStakersActionGenerator",
+      "address": "0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE",
+      "descriptions": [
+        "Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers."
+      ],
+      "sinceTimestamp": 1727895359,
+      "values": {
+        "$immutable": true,
+        "amounts": ["321855128516280769230770", "965565385548842307692308"],
+        "bEIGEN": "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
+        "CALCULATION_INTERVAL_SECONDS": 604800,
+        "EIGEN": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+        "firstSubmissionStartTimestamp": 1723680000,
+        "firstSubmissionTriggerCutoff": 1727913600,
+        "rewardsCoordinator": "0x7750d328b314EfFa365A0402CcfD489B80B0adda"
+      },
+      "derivedName": "RewardAllStakersActionGenerator"
     },
     {
       "name": "Timelock",
@@ -640,7 +677,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 69,
+        "nonce": 72,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -668,7 +705,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 59,
+        "nonce": 61,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -790,6 +827,7 @@
           "via": []
         }
       ],
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1697499563,
       "values": {
         "$admin": "0xB8915E195121f2B5D989Ec5727fd47a5259F1CEC",
@@ -829,7 +867,7 @@
         "name": "Eigen",
         "owner": "0xbb00DDa2832850a43840A3A86515E3Fe226865F2",
         "symbol": "EIGEN",
-        "totalSupply": "1681371191369050738461538468",
+        "totalSupply": "1683946032397180984615384624",
         "transferRestrictionsDisabledAfter": 0
       },
       "fieldMeta": {
@@ -839,21 +877,6 @@
         }
       },
       "derivedName": "Eigen"
-    },
-    {
-      "name": "RewardAllStakersActionGenerator",
-      "address": "0xF2eB394c4e04ff19422EB27411f78d00e216a88d",
-      "sinceTimestamp": 1727209235,
-      "values": {
-        "$immutable": true,
-        "amounts": ["321855128516280769230770", "965565385548842307692308"],
-        "bEIGEN": "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
-        "CALCULATION_INTERVAL_SECONDS": 604800,
-        "EIGEN": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
-        "firstSubmissionStartTimestamp": 1723680000,
-        "firstSubmissionTriggerCutoff": 1727913600,
-        "rewardsCoordinator": "0x7750d328b314EfFa365A0402CcfD489B80B0adda"
-      }
     },
     {
       "name": "EigenLayerCommunityMultisig",
@@ -963,6 +986,22 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)",
       "function upgradeTo(address newImplementation)"
+    ],
+    "0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563": [
+      "constructor(tuple(address token, uint256 startTime, uint256 cooldownSeconds, address actionGenerator, bool doesExpire, uint256 expirationTimestamp) config, address initialOwner)",
+      "event ButtonPressed(address indexed caller, uint256 newCooldownHorizon)",
+      "event FundsRetrieved(uint256 amount)",
+      "event HopperLoaded(tuple(address token, uint256 startTime, uint256 cooldownSeconds, address actionGenerator, bool doesExpire, uint256 expirationTimestamp) config)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function canPress() view returns (bool)",
+      "function getHopperConfiguration() view returns (tuple(address token, uint256 startTime, uint256 cooldownSeconds, address actionGenerator, bool doesExpire, uint256 expirationTimestamp))",
+      "function isExpired() view returns (bool)",
+      "function latestPress() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pressButton()",
+      "function renounceOwnership()",
+      "function retrieveFunds()",
+      "function transferOwnership(address newOwner)"
     ],
     "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1266,22 +1305,6 @@
       "function withdrawRestakedBeaconChainETH(address recipient, uint256 amountWei)",
       "function withdrawableRestakedExecutionLayerGwei() view returns (uint64)"
     ],
-    "0x708230Be53c08b270F43e068116EBacc4C13F577": [
-      "constructor(tuple(address token, uint256 startTime, uint256 cooldownSeconds, address actionGenerator, bool doesExpire, uint256 expirationTimestamp) config, address initialOwner)",
-      "event ButtonPressed(address indexed caller, uint256 newCooldownHorizon)",
-      "event FundsRetrieved(uint256 amount)",
-      "event HopperLoaded(tuple(address token, uint256 startTime, uint256 cooldownSeconds, address actionGenerator, bool doesExpire, uint256 expirationTimestamp) config)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function canPress() view returns (bool)",
-      "function getHopperConfiguration() view returns (tuple(address token, uint256 startTime, uint256 cooldownSeconds, address actionGenerator, bool doesExpire, uint256 expirationTimestamp))",
-      "function isExpired() view returns (bool)",
-      "function latestPress() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function pressButton()",
-      "function renounceOwnership()",
-      "function retrieveFunds()",
-      "function transferOwnership(address newOwner)"
-    ],
     "0x70f44C13944d49a236E3cD7a94f48f5daB6C619b": [
       "constructor(address _delegation, address _eigenPodManager, address _slasher)",
       "event Deposit(address staker, address token, address strategy, uint256 shares)",
@@ -1422,6 +1445,18 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE": [
+      "constructor(address _rewardsCoordinator, uint32 _firstSubmissionStartTimestamp, uint256 _firstSubmissionTriggerCutoff, uint256[2] _amounts, tuple(address strategy, uint96 multiplier)[][2] _strategiesAndMultipliers, address _bEIGEN, address _EIGEN)",
+      "function CALCULATION_INTERVAL_SECONDS() view returns (uint32)",
+      "function EIGEN() view returns (address)",
+      "function amounts(uint256) view returns (uint256)",
+      "function bEIGEN() view returns (address)",
+      "function firstSubmissionStartTimestamp() view returns (uint32)",
+      "function firstSubmissionTriggerCutoff() view returns (uint256)",
+      "function generateHopperActions(address hopper, address) view returns (tuple(address target, bytes callData)[])",
+      "function rewardsCoordinator() view returns (address)",
+      "function strategiesAndMultipliers(uint256, uint256) view returns (address strategy, uint96 multiplier)"
     ],
     "0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF": [
       "constructor(address admin_, uint256 delay_)",
@@ -1753,18 +1788,6 @@
       "function transferFrom(address from, address to, uint256 amount) returns (bool)",
       "function transferOwnership(address newOwner)",
       "function transferRestrictionsDisabledAfter() view returns (uint256)"
-    ],
-    "0xF2eB394c4e04ff19422EB27411f78d00e216a88d": [
-      "constructor(address _rewardsCoordinator, uint32 _firstSubmissionStartTimestamp, uint256 _firstSubmissionTriggerCutoff, uint256[2] _amounts, tuple(address strategy, uint96 multiplier)[][2] _strategiesAndMultipliers, address _bEIGEN, address _EIGEN)",
-      "function CALCULATION_INTERVAL_SECONDS() view returns (uint32)",
-      "function EIGEN() view returns (address)",
-      "function amounts(uint256) view returns (uint256)",
-      "function bEIGEN() view returns (address)",
-      "function firstSubmissionStartTimestamp() view returns (uint32)",
-      "function firstSubmissionTriggerCutoff() view returns (uint256)",
-      "function generateHopperActions(address hopper, address) view returns (tuple(address target, bytes callData)[])",
-      "function rewardsCoordinator() view returns (address)",
-      "function strategiesAndMultipliers(uint256, uint256) view returns (address strategy, uint96 multiplier)"
     ],
     "0xF3234220163a757edf1E11a8a085638D9B236614": [
       "constructor(address, address)",

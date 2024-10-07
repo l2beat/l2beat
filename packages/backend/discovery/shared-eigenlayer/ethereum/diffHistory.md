@@ -1,3 +1,263 @@
+Generated with discovered.json: 0x975c5cfa633af197c825d0a359009aee7cb8aabb
+
+# Diff at Mon, 07 Oct 2024 09:16:44 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@ec3878239ad71f9055b207bdcd338b2f207af050 block: 20892444
+- current block number: 20912724
+
+## Description
+
+Minor changes (fixes) to the RewardAllStakersActionGenerator.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract TokenHopper (0x708230Be53c08b270F43e068116EBacc4C13F577)
+    +++ description: None
+```
+
+```diff
+    contract bEIGEN token (0x83E9115d334D248Ce39a6f36144aEaB5b3456e75) {
+    +++ description: None
+      values.Minters.0:
+-        "0x708230Be53c08b270F43e068116EBacc4C13F577"
++        "0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract RewardAllStakersActionGenerator (0xF2eB394c4e04ff19422EB27411f78d00e216a88d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenHopper (0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563)
+    +++ description: Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner).
+```
+
+```diff
++   Status: CREATED
+    contract RewardAllStakersActionGenerator (0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE)
+    +++ description: Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers.
+```
+
+## Source code changes
+
+```diff
+.../{.flat@20892444 => .flat}/RewardAllStakersActionGenerator.sol   | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20892444 (main branch discovery), not current.
+
+```diff
+    contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-22T21:12:11.000Z",["0xdAbdB3Cd346B7D5F5779b0B614EdE1CC9DcBA5b7"]]]
+    }
+```
+
+```diff
+    contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-06-09T22:15:35.000Z",["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]],["2023-06-09T22:16:35.000Z",["0xf97E97649Da958d290e84E6D571c32F4b7F475e4"]],["2024-04-08T16:35:59.000Z",["0x1784BE6401339Fc0Fedf7E9379409f5c1BfE9dda"]]]
+    }
+```
+
+```diff
+    contract StrategyFactory (0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647) {
+    +++ description: Factory contract for permissionless strategy creation via beacon proxies.
+      values.$pastUpgrades:
++        [["2024-08-09T19:37:23.000Z",["0x3e07cc2D34C8E0965f5BA45Ac1E960e535155c74"]]]
+    }
+```
+
+```diff
+    contract TokenHopper (0x708230Be53c08b270F43e068116EBacc4C13F577) {
+    +++ description: None
+      descriptions:
+-        ["Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner)."]
+      fieldMeta:
+-        {"latestPress":{"severity":"LOW","description":"Timestamp of the latest press. A button-press makes a call (calldata and cooldown are defined by the owner). Anyone can press the button at the defined time intervals."},"getHopperConfiguration":{"severity":"MEDIUM","description":"Current configuration of the TokenHopper, like calldata executed at each button-press (actionGenerator), target (token) and cooldownSeconds."}}
+    }
+```
+
+```diff
+    contract RewardsCoordinator (0x7750d328b314EfFa365A0402CcfD489B80B0adda) {
+    +++ description: Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.
+      values.$pastUpgrades:
++        [["2024-07-19T16:32:35.000Z",["0x5bf7c13D5FAdba224ECB3D5C0a67A231D1628785"]],["2024-09-28T05:46:11.000Z",["0xb6738A8E7793D44c5895B6A6F2a62F6bF86Ba8d2"]]]
+    }
+```
+
+```diff
+    contract bEIGEN token (0x83E9115d334D248Ce39a6f36144aEaB5b3456e75) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-20T18:22:35.000Z",["0xB91c69Af3eE022bd0a59Da082945914BFDcEFFE3"]],["2024-09-28T18:27:23.000Z",["0xF2b225815F70c9b327DC9db758A36c92A4279b17"]]]
+    }
+```
+
+```diff
+    contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-06-09T22:15:47.000Z",["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]],["2023-06-09T22:16:35.000Z",["0x5d25EEf8CfEdaA47d31fE2346726dE1c21e342Fb"]],["2024-04-08T16:35:59.000Z",["0x70f44C13944d49a236E3cD7a94f48f5daB6C619b"]]]
+    }
+```
+
+```diff
+    contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-06-09T22:15:47.000Z",["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]],["2023-06-09T22:16:47.000Z",["0xEB86a5c40FdE917E6feC440aBbCDc80E3862e111"]],["2024-04-08T16:35:59.000Z",["0xe4297e3DaDBc7D99e26a2954820f514CB50C5762"]],["2024-09-04T16:00:47.000Z",["0x731A0aD160e407393Ff662231Add6Dd145AD3FEa"]]]
+    }
+```
+
+```diff
+    contract Slasher (0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-06-09T22:15:47.000Z",["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]],["2023-06-09T22:16:35.000Z",["0xef31c292801f24f16479DD83197F1E6AeBb8d6d8"]],["2024-04-08T16:35:59.000Z",["0xF3234220163a757edf1E11a8a085638D9B236614"]]]
+    }
+```
+
+```diff
+    contract EIGEN token (0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-10-16T23:39:23.000Z",["0xB0e9a10f09ED4304df238624d014205B0786572F"]],["2024-03-20T00:37:35.000Z",["0xfe288960BEb8b189303f49B070CB0bA52e44cF32"]],["2024-04-04T16:39:23.000Z",["0x7EC354C84680112d3cfF1544ec1Eb19ca583700b"]],["2024-09-28T18:27:23.000Z",["0x17f56E911C279bad67eDC08acbC9cf3DC4eF26A0"]]]
+    }
+```
+
+```diff
+    contract RewardAllStakersActionGenerator (0xF2eB394c4e04ff19422EB27411f78d00e216a88d) {
+    +++ description: None
+      descriptions:
+-        ["Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers."]
+    }
+```
+
+Generated with discovered.json: 0x6c55d2bea2266f0f7cca234731b3eff5ebb87429
+
+# Diff at Fri, 04 Oct 2024 13:26:28 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@e21865803107a0ef87d34bb1ab1104e36fb6c717 block: 20878358
+- current block number: 20892444
+
+## Description
+
+Add some descriptions to the EIGEN minting and rewards distributor contracts.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20878358 (main branch discovery), not current.
+
+```diff
+    contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF) {
+    +++ description: None
+      values.$pastUpgrades:
+-        [["2024-03-22T21:12:11.000Z",["0xdAbdB3Cd346B7D5F5779b0B614EdE1CC9DcBA5b7"]]]
+    }
+```
+
+```diff
+    contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A) {
+    +++ description: None
+      values.$pastUpgrades:
+-        [["2023-06-09T22:15:35.000Z",["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]],["2023-06-09T22:16:35.000Z",["0xf97E97649Da958d290e84E6D571c32F4b7F475e4"]],["2024-04-08T16:35:59.000Z",["0x1784BE6401339Fc0Fedf7E9379409f5c1BfE9dda"]]]
+    }
+```
+
+```diff
+    contract StrategyFactory (0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647) {
+    +++ description: Factory contract for permissionless strategy creation via beacon proxies.
+      values.$pastUpgrades:
+-        [["2024-08-09T19:37:23.000Z",["0x3e07cc2D34C8E0965f5BA45Ac1E960e535155c74"]]]
+    }
+```
+
+```diff
+    contract TokenHopper (0x708230Be53c08b270F43e068116EBacc4C13F577) {
+    +++ description: Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner).
+      descriptions:
++        ["Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner)."]
+      fieldMeta:
++        {"latestPress":{"severity":"LOW","description":"Timestamp of the latest press. A button-press makes a call (calldata and cooldown are defined by the owner). Anyone can press the button at the defined time intervals."},"getHopperConfiguration":{"severity":"MEDIUM","description":"Current configuration of the TokenHopper, like calldata executed at each button-press (actionGenerator), target (token) and cooldownSeconds."}}
+    }
+```
+
+```diff
+    contract RewardsCoordinator (0x7750d328b314EfFa365A0402CcfD489B80B0adda) {
+    +++ description: Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.
+      values.$pastUpgrades:
+-        [["2024-07-19T16:32:35.000Z",["0x5bf7c13D5FAdba224ECB3D5C0a67A231D1628785"]],["2024-09-28T05:46:11.000Z",["0xb6738A8E7793D44c5895B6A6F2a62F6bF86Ba8d2"]]]
+      descriptions:
++        ["Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators."]
+    }
+```
+
+```diff
+    contract bEIGEN token (0x83E9115d334D248Ce39a6f36144aEaB5b3456e75) {
+    +++ description: None
+      values.$pastUpgrades:
+-        [["2024-03-20T18:22:35.000Z",["0xB91c69Af3eE022bd0a59Da082945914BFDcEFFE3"]],["2024-09-28T18:27:23.000Z",["0xF2b225815F70c9b327DC9db758A36c92A4279b17"]]]
+    }
+```
+
+```diff
+    contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
+    +++ description: None
+      values.$pastUpgrades:
+-        [["2023-06-09T22:15:47.000Z",["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]],["2023-06-09T22:16:35.000Z",["0x5d25EEf8CfEdaA47d31fE2346726dE1c21e342Fb"]],["2024-04-08T16:35:59.000Z",["0x70f44C13944d49a236E3cD7a94f48f5daB6C619b"]]]
+    }
+```
+
+```diff
+    contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
+    +++ description: None
+      values.$pastUpgrades:
+-        [["2023-06-09T22:15:47.000Z",["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]],["2023-06-09T22:16:47.000Z",["0xEB86a5c40FdE917E6feC440aBbCDc80E3862e111"]],["2024-04-08T16:35:59.000Z",["0xe4297e3DaDBc7D99e26a2954820f514CB50C5762"]],["2024-09-04T16:00:47.000Z",["0x731A0aD160e407393Ff662231Add6Dd145AD3FEa"]]]
+    }
+```
+
+```diff
+    contract Slasher (0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd) {
+    +++ description: None
+      values.$pastUpgrades:
+-        [["2023-06-09T22:15:47.000Z",["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]],["2023-06-09T22:16:35.000Z",["0xef31c292801f24f16479DD83197F1E6AeBb8d6d8"]],["2024-04-08T16:35:59.000Z",["0xF3234220163a757edf1E11a8a085638D9B236614"]]]
+    }
+```
+
+```diff
+    contract EIGEN token (0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83) {
+    +++ description: None
+      values.$pastUpgrades:
+-        [["2023-10-16T23:39:23.000Z",["0xB0e9a10f09ED4304df238624d014205B0786572F"]],["2024-03-20T00:37:35.000Z",["0xfe288960BEb8b189303f49B070CB0bA52e44cF32"]],["2024-04-04T16:39:23.000Z",["0x7EC354C84680112d3cfF1544ec1Eb19ca583700b"]],["2024-09-28T18:27:23.000Z",["0x17f56E911C279bad67eDC08acbC9cf3DC4eF26A0"]]]
+    }
+```
+
+```diff
+    contract RewardAllStakersActionGenerator (0xF2eB394c4e04ff19422EB27411f78d00e216a88d) {
+    +++ description: Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers.
+      descriptions:
++        ["Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers."]
+    }
+```
+
 Generated with discovered.json: 0x3641bb68e8619dad0e36a149ef56bcbbd4b34a78
 
 # Diff at Wed, 02 Oct 2024 14:17:52 GMT:

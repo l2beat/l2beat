@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x692e0d2392be27f55cd74cb47a38b2d80bf03902
+
+# Diff at Fri, 04 Oct 2024 08:46:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@000446ee962492b0a3a917c3f907d3277663f719 block: 20847193
+- current block number: 20891049
+
+## Description
+
+Hide external escrow governance.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20847193 (main branch discovery), not current.
+
+```diff
+    contract wstETHescrowLido (0x6625C6332c9F91F2D27c304E729B86db87A3f504) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0xCC2C53556Bc75217cf698721b29071d6f12628A9","via":[]}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x9eBf2f33526CD571f8b2ad312492cb650870CFd6)
+    +++ description: None
+```
+
+```diff
+    contract pufETHEscrow (0xA033Ff09f2da45f0e9ae495f525363722Df42b2a) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x9eBf2f33526CD571f8b2ad312492cb650870CFd6","via":[]}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PufferFinanceOpsMultisig (0xC0896ab1A8cae8c2C1d27d011eb955Cca955580d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract wstETHescrowLidoProxyAdmin (0xCC2C53556Bc75217cf698721b29071d6f12628A9)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x5d92e37e7058817c7609154f19f728454dc8c25e
 
 # Diff at Tue, 01 Oct 2024 10:54:59 GMT:

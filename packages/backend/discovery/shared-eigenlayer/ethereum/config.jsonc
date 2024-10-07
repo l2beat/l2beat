@@ -43,13 +43,29 @@
     "0x5e4c39ad7a3e881585e383db9827eb4811f6f647": "StrategyFactory",
     "0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9": "StrategiesBeacon",
     "0x7750d328b314EfFa365A0402CcfD489B80B0adda": "RewardsCoordinator",
-    "0x708230Be53c08b270F43e068116EBacc4C13F577": "TokenHopper"
+    "0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563": "TokenHopper",
+    "0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE": "RewardAllStakersActionGenerator"
   },
   "overrides": {
+    "RewardAllStakersActionGenerator": {
+      "description": "Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers."
+    },
     "TokenHopper": {
-      "ignoreInWatchMode": ["latestPress"]
+      "description": "Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner).",
+      "ignoreInWatchMode": ["latestPress", "canPress"],
+      "fields": {
+        "latestPress": {
+          "description": "Timestamp of the latest press. A button-press makes a call (calldata and cooldown are defined by the owner). Anyone can press the button at the defined time intervals.",
+          "severity": "LOW"
+        },
+        "getHopperConfiguration": {
+          "description": "Current configuration of the TokenHopper, like calldata executed at each button-press (actionGenerator), target (token) and cooldownSeconds.",
+          "severity": "MEDIUM"
+        }
+      }
     },
     "RewardsCoordinator": {
+      "description": "Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.",
       "ignoreMethods": [
         "getCurrentClaimableDistributionRoot",
         "getCurrentDistributionRoot",
@@ -65,6 +81,7 @@
       "description": "Factory contract for permissionless strategy creation via beacon proxies."
     },
     "bEIGEN token": {
+      "ignoreInWatchMode": ["totalSupply"],
       "ignoreMethods": ["getPastTotalSupply", "clock"],
       "fields": {
         "Minters": {
@@ -92,6 +109,7 @@
     },
     "EIGEN token": {
       "ignoreMethods": ["getPastTotalSupply", "clock"],
+      "ignoreInWatchMode": ["totalSupply"],
       "fields": {
         "transferRestrictionsDisabledAfter": {
           "description": "Timestamp after which transfer restrictions (whitelist) are disabled. Preset to uint256 max. Restrictions disabled if == 0.",

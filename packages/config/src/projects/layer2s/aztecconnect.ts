@@ -99,12 +99,6 @@ export const aztecconnect: Layer2 = {
     proposerFailure: {
       ...RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
     },
-    sourceUpgradeability: {
-      description:
-        'The ownership of the rollup contract (ProxyAdmin) has been irrevocably renounced, which makes it immutable.',
-      sentiment: 'good',
-      value: 'Immutable',
-    },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
       sources: [

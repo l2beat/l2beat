@@ -18,7 +18,7 @@ export interface DiscoveryModuleConfig {
 
 export interface DiscoveryChainConfig {
   name: string
-  chainId: number
+  chainId?: number
   rpcUrl: string
   eventRpcUrl?: string
   reorgSafeDepth?: number
