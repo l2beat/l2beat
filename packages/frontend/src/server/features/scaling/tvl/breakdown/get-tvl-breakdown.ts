@@ -1,6 +1,7 @@
 import { type ConfigMapping, safeGetTokenByAssetId } from '@l2beat/config'
 import {
   assert,
+  AmountConfigEntry,
   type AssetId,
   type ProjectId,
   UnixTime,
@@ -92,6 +93,8 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
               assertUnreachable(config)
           }
 
+          const address = getTokenAddress(config)
+
           const asset = breakdown.canonical.get(priceConfig.assetId)
           if (asset) {
             asset.usdValue += valueAsNumber
@@ -110,6 +113,7 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
               amount: amountAsNumber,
               usdValue: valueAsNumber,
               usdPrice: price.toString(),
+              tokenAddress: address === 'native' ? undefined : address,
               escrows: [
                 {
                   amount: amountAsNumber,
@@ -125,14 +129,7 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
         }
         case 'external': {
           const token = safeGetTokenByAssetId(priceConfig.assetId)
-
-          const address =
-            config.type === 'aggLayerL2Token'
-              ? config.l1Address
-              : config.type === 'aggLayerNativeEtherPreminted' ||
-                  config.type === 'aggLayerNativeEtherWrapped'
-                ? 'native'
-                : config.address
+          const address = getTokenAddress(config)
 
           breakdown.external.push({
             assetId: priceConfig.assetId,
@@ -149,13 +146,7 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
           break
         }
         case 'native': {
-          const address =
-            config.type === 'aggLayerL2Token'
-              ? config.l1Address
-              : config.type === 'aggLayerNativeEtherPreminted' ||
-                  config.type === 'aggLayerNativeEtherWrapped'
-                ? 'native'
-                : config.address
+          const address = getTokenAddress(config)
           breakdown.native.push({
             assetId: priceConfig.assetId,
             chainId: chainConverter.toChainId(config.chain),
@@ -177,4 +168,12 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
       breakdown: breakdownWithTokenInfo,
     }
   }
+}
+function getTokenAddress(config: AmountConfigEntry & { configId: string }) {
+  return config.type === 'aggLayerL2Token'
+    ? config.l1Address
+    : config.type === 'aggLayerNativeEtherPreminted' ||
+        config.type === 'aggLayerNativeEtherWrapped'
+      ? 'native'
+      : config.address
 }

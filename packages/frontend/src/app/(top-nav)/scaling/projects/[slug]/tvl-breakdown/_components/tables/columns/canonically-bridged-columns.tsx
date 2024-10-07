@@ -25,6 +25,22 @@ export const canonicallyBridgedColumns = [
     },
   }),
   columnHelper.display({
+    id: 'contract',
+    header: 'Contract',
+    cell: (ctx) => {
+      const value = ctx.row.original
+
+      return value.tokenAddress ? (
+        <TokenAddressCell
+          address={value.tokenAddress}
+          explorer={value.explorerUrl}
+        />
+      ) : (
+        '-'
+      )
+    },
+  }),
+  columnHelper.display({
     id: 'escrow',
     header: 'Escrow',
     cell: (ctx) => {
@@ -46,28 +62,6 @@ export const canonicallyBridgedColumns = [
           address={value.escrows[0]!.escrowAddress}
           explorer={value.explorerUrl}
         />
-      )
-    },
-  }),
-  columnHelper.display({
-    id: 'price',
-    header: 'Price',
-    meta: {
-      align: 'right',
-      tooltip: 'Prices are fetched from CoinGecko',
-    },
-    cell: (ctx) => {
-      // Do not bloat table if parent row is expanded
-      const parentRow = ctx.row.getParentRow()
-
-      if (parentRow?.getIsExpanded()) {
-        return null
-      }
-
-      return (
-        <div className="pr-2 text-xs font-medium">
-          ${formatNumberWithCommas(Number(ctx.row.original.usdPrice))}
-        </div>
       )
     },
   }),
