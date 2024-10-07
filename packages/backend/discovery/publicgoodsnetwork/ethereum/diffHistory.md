@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x16355a9648288457d82dca352167d6dad3277537
+Generated with discovered.json: 0x6bf5a54453fe0679b4d04d08ce19d01b726d0639
 
-# Diff at Mon, 07 Oct 2024 10:50:48 GMT:
+# Diff at Mon, 07 Oct 2024 12:22:23 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
 - comparing to: main@efca92a29798cefefec67194c1af3e13a1fe40cc block: 20775939
-- current block number: 20913195
+- current block number: 20913652
 
 ## Description
 
@@ -17,11 +17,11 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 20775939 (main branch discovery), not current.
 
 ```diff
-    contract PgnGuardianMultisig (0x39E13D1AB040F6EA58CE19998edCe01B3C365f84) {
+    contract PgnMultisig (0x39E13D1AB040F6EA58CE19998edCe01B3C365f84) {
     +++ description: None
       name:
 -        "GuardianMultisig"
-+        "PgnGuardianMultisig"
++        "PgnMultisig"
       roles.1:
 +        "Guardian"
     }

@@ -1,8 +1,8 @@
 {
   "name": "publicgoodsnetwork",
   "chain": "ethereum",
-  "blockNumber": 20913195,
-  "configHash": "0x3fc9fc6274621e9743886c5925008460849838b29230331f21bc7e8b74757204",
+  "blockNumber": 20913652,
+  "configHash": "0x3a54f3ab3aeb854af2a1777b38da8dc8dc9f3879d47ee4eda3de6e36ed655d68",
   "version": 15,
   "contracts": [
     {
@@ -28,7 +28,7 @@
       }
     },
     {
-      "name": "PgnGuardianMultisig",
+      "name": "PgnMultisig",
       "address": "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -274,10 +274,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 19593000,
-        "latestOutputIndex": 10884,
-        "nextBlockNumber": 19594800,
-        "nextOutputIndex": 10885,
+        "latestBlockNumber": 19596600,
+        "latestOutputIndex": 10886,
+        "nextBlockNumber": 19598400,
+        "nextOutputIndex": 10887,
         "PROPOSER": "0x69968Ce0E92d9c101BAd81de55EFbcb69603cFe3",
         "startingBlockNumber": 0,
         "startingTimestamp": 1689106727,
