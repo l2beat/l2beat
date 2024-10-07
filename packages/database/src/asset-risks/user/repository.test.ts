@@ -1,6 +1,7 @@
 import { expect } from 'earl'
 import { describeDatabase } from '../../test/database'
 import { AssetRisksUserRepository } from './repository'
+import { assert } from '@l2beat/shared-pure'
 
 describeDatabase(AssetRisksUserRepository.name, (db) => {
   const repository = db.assetRisksUser
@@ -33,8 +34,9 @@ describeDatabase(AssetRisksUserRepository.name, (db) => {
 
   describe(AssetRisksUserRepository.prototype.findUserById.name, () => {
     it('returns the user with the given id', async () => {
-      const user = await repository.upsert({ address: 'a' })
-      expect(await repository.findUserById(user.id)).toBeTruthy()
+      await repository.upsert({ address: 'a' })
+      const user = await repository.getAll()
+      expect(await repository.findUserById(user[0]!.id)).toBeTruthy()
       expect(await repository.findUserById('b')).toBeFalsy()
     })
   })
