@@ -10,6 +10,7 @@ import { DetailsHeader } from './_components/details-header'
 import { Disclaimer } from './_components/disclaimer'
 import { ReportProvider } from './_components/report-context'
 import { TokensTable } from './_components/table/tokens-table'
+import { Skeleton } from '~/components/core/skeleton'
 
 export type Risk = SetOptional<ScalingProjectRisk, 'category'>
 
@@ -58,12 +59,17 @@ export default async function Page({ params: { address } }: Props) {
         <ClientsideLogic address={address} />
         <ReportProvider
           address={address}
-          placeholder={<div>TODO: Loading...</div>}
+          placeholder={
+            <div className="flex flex-col gap-6">
+              <Skeleton className="h-[335px] w-full rounded-xl" />
+              <Skeleton className="h-[400px] w-full rounded-xl" />
+            </div>
+          }
         >
           <DetailsHeader vanityAddress={vanityAddress} />
           <TokensTable />
-          <Disclaimer />
         </ReportProvider>
+        <Disclaimer />
       </div>
       <Footer />
     </main>

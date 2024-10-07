@@ -22,15 +22,5 @@ export function ClientsideLogic({ address }: { address: Address }) {
     })()
   }, [address, refetched, refreshBalances, refreshTokens, report])
 
-  return (
-    <div className="flex flex-row gap-2 text-xs uppercase">
-      DEBUG
-      <button onClick={() => refreshTokens.mutate({ address })}>
-        Refresh tokens ({refreshTokens.status})
-      </button>
-      <button onClick={() => refreshBalances.mutate({ address })}>
-        Refresh balances ({refreshBalances.status})
-      </button>
-    </div>
-  )
+  return null
 }
