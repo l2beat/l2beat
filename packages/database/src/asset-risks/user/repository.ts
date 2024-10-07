@@ -27,6 +27,14 @@ export class AssetRisksUserRepository extends BaseRepository {
     return result
   }
 
+  async getAll(): Promise<AssetRisksUserRecord[]> {
+    const result = await this.db
+      .selectFrom('AssetRisksUser')
+      .select(selectAssetRisksUser)
+      .execute()
+    return result
+  }
+
   async update(
     id: string,
     updateable: Partial<AssetRisksUserRecord>,
