@@ -12,8 +12,8 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import {
-  AggLayerEscrow,
   ScalingProjectEscrow,
+  SharedEscrow,
 } from '../common/ScalingProjectEscrow'
 import { ScalingProjectTransactionApi } from '../common/ScalingProjectTransactionApi'
 import {
@@ -50,7 +50,7 @@ export interface BackendProjectEscrow {
   includeInTotal?: boolean
   source?: ScalingProjectEscrow['source']
   bridgedUsing?: TokenBridgedUsing
-  sharedEscrow?: AggLayerEscrow
+  sharedEscrow?: SharedEscrow
 }
 
 export function toBackendProject(
