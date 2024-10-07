@@ -107,6 +107,14 @@ export const zksyncera: Layer2 = zkStackL2({
       type: 'etherscan',
     },
     minTimestampForTvl: new UnixTime(1676384520),
+    multicallContracts: [
+      {
+        version: '3',
+        address: EthereumAddress('0xF9cda624FBC7e059355ce98a31693d299FACd963'),
+        batchSize: 150,
+        sinceBlock: 3908235,
+      },
+    ],
     coingeckoPlatform: 'zksync',
   },
   associatedTokens: ['ZK'],
@@ -115,7 +123,7 @@ export const zksyncera: Layer2 = zkStackL2({
       address: bridge.address,
       tokens: '*',
       description:
-        'Shared bridge for depositing tokens to ZKsync Era and, in the future, other ZK stack chains.',
+        'Shared bridge for depositing tokens to ZKsync Era and other ZK stack chains.',
       sharedEscrow: {
         type: 'ElasticChian',
         l2BridgeAddress: EthereumAddress(
