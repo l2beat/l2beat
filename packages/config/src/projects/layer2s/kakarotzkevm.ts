@@ -14,8 +14,8 @@ export const kakarotzkevm: Layer2 = upcomingL2({
       websites: ['https://kakarot.org/'],
       apps: [],
       documentation: ['https://docs.kakarot.org/'],
-      explorers: [],
-      repositories: [],
+      explorers: ['https://sepolia.kakarotscan.org/'],
+      repositories: ['https://github.com/kkrt-labs/kakarot'],
       socialMedia: [
         'https://twitter.com/KakarotZkEvm',
         'https://t.me/KakarotZkEvm',
