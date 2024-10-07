@@ -55,6 +55,8 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
     const anomalies = await this.getAnomalies(unixTo)
 
     await this.$.db.transaction(async () => {
+      // anomalies are recalculated on each run so we can safely delete all records
+      // to make sure we don't have any outdated records
       const deleted = await this.$.db.anomalies.deleteAll()
       await this.$.db.anomalies.upsertMany(anomalies)
 
