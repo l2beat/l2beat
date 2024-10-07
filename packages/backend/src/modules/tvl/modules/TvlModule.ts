@@ -13,6 +13,7 @@ import { initAggLayerModule } from './AggLayerModule'
 import { initBlockTimestampModule } from './BlockTimestampModule'
 import { initChainModule } from './ChainModule'
 import { initCirculatingSupplyModule } from './CirculatingSupplyModule'
+import { initElasticChainModule } from './ElasticChainModule'
 import { initPremintedModule } from './PremintedModule'
 import { initPriceModule } from './PriceModule'
 
@@ -116,6 +117,17 @@ export function initTvlModule(
     blockTimestampModule?.blockTimestampIndexers,
   )
 
+  const elasticChainModule = initElasticChainModule(
+    config.tvl,
+    logger,
+    peripherals,
+    syncOptimizer,
+    indexerService,
+    configMapping,
+    priceModule.descendant,
+    blockTimestampModule?.blockTimestampIndexers,
+  )
+
   const start = async () => {
     await hourlyIndexer.start()
     await priceModule.start()
@@ -124,6 +136,7 @@ export function initTvlModule(
     await premintedModule?.start()
     await circulatingSupplyModule?.start()
     await aggLayerModule?.start()
+    await elasticChainModule?.start()
 
     if (config.tvl && config.tvl.tvlCleanerEnabled) {
       tvlCleaner.start()
