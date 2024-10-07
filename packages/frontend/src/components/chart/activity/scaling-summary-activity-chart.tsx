@@ -54,15 +54,20 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
 function Header({ scalingFactor }: { scalingFactor: number | undefined }) {
   return (
     <div className="flex items-start justify-between">
-      <div className="flex items-center gap-3">
-        <span className="text-xl font-bold">Activity</span>
-        <Link
-          className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-blue-400 px-3 py-2 text-[13px] leading-none text-[#1459CB] dark:border-blue-500 dark:text-blue-500 max-md:hidden"
-          href="/scaling/activity"
-        >
-          View details{' '}
-          <ChevronIcon className="size-[10px] -rotate-90 fill-current" />
-        </Link>
+      <div>
+        <div className="flex items-center gap-3">
+          <span className="text-xl font-bold">Activity</span>
+          <Link
+            className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-blue-400 px-3 py-2 text-[13px] leading-none text-[#1459CB] dark:border-blue-500 dark:text-blue-500 max-md:hidden"
+            href="/scaling/activity"
+          >
+            View details{' '}
+            <ChevronIcon className="size-[10px] -rotate-90 fill-current" />
+          </Link>
+        </div>
+        <p className="whitespace-nowrap text-xs leading-[1.15] text-secondary">
+          Last 30 days
+        </p>
       </div>
       <div className="flex flex-col items-end">
         <div className="flex items-baseline gap-1">
@@ -79,7 +84,7 @@ function Header({ scalingFactor }: { scalingFactor: number | undefined }) {
             <Skeleton className="my-[5px] h-5 w-20 md:w-[243px]" />
           )}
         </div>
-        <span className="whitespace-nowrap text-right text-xs leading-[1.15] text-[#929CAF]">
+        <span className="whitespace-nowrap text-right text-xs leading-[1.15] text-secondary">
           Observed over the last 7 days
         </span>
       </div>

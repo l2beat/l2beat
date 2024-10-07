@@ -28,6 +28,7 @@ export function ActivityChartHeader({ scalingFactor, range }: Props) {
             <span className="text-xl md:text-2xl">
               {scalingFactor.toFixed(2)}x
             </span>
+            <ScalingFactorTooltip className="ml-1 md:hidden" />
           </p>
         ) : (
           <Skeleton className="h-[30px] w-20 md:h-9 md:w-[200px] lg:w-[243px]" />
@@ -36,29 +37,35 @@ export function ActivityChartHeader({ scalingFactor, range }: Props) {
 
       <div className="flex justify-between text-xs lg:text-base">
         <ChartTimeRange range={range} />
-        <div className="flex items-center gap-1.5 text-right text-gray-500 group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0 dark:text-gray-600 max-md:hidden lg:w-auto">
+        <div className="flex items-center gap-1.5 text-right text-secondary group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0 max-md:hidden lg:w-auto">
           Observed over the last 7 days
-          <Tooltip>
-            <TooltipTrigger>
-              <InfoIcon className="fill-current" />
-            </TooltipTrigger>
-            <TooltipContent>
-              <div className="flex flex-col gap-2">
-                <div>
-                  How many more transactions are settled by Ethereum if we take
-                  into account projects listed below.
-                </div>
-                <div className="flex flex-col gap-1">
-                  <div className="text-xs font-bold">Exact formula:</div>
-                  <div className="text-xs">
-                    (project txs/7d + ETH txs/7d) / ETH txs/7d
-                  </div>
-                </div>
-              </div>
-            </TooltipContent>
-          </Tooltip>
+          <ScalingFactorTooltip />
         </div>
       </div>
     </header>
+  )
+}
+
+function ScalingFactorTooltip({ className }: { className?: string }) {
+  return (
+    <Tooltip>
+      <TooltipTrigger className={className}>
+        <InfoIcon className="fill-current" />
+      </TooltipTrigger>
+      <TooltipContent>
+        <div className="flex flex-col gap-2">
+          <div>
+            How many more transactions are settled by Ethereum if we take into
+            account projects listed below.
+          </div>
+          <div className="flex flex-col gap-1">
+            <div className="text-xs font-bold">Exact formula:</div>
+            <div className="text-xs">
+              (project txs/7d + ETH txs/7d) / ETH txs/7d
+            </div>
+          </div>
+        </div>
+      </TooltipContent>
+    </Tooltip>
   )
 }
