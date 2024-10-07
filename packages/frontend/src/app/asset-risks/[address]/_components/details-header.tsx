@@ -1,11 +1,12 @@
-"use client"
+'use client'
 
-import { Address, isAddress } from 'viem'
+import { type Address, isAddress } from 'viem'
 import { formatAddress } from '~/utils/format-address'
 import { formatNumberWithCommas } from '~/utils/format-number'
 import { Card } from '../../_components/card'
 import { Breakdown } from './breakdown'
 import { api } from '~/trpc/react'
+import { type ScalingProjectRiskViewEntry } from '@l2beat/config'
 
 interface DetailsHeaderProps {
   walletAddress: Address
@@ -13,21 +14,43 @@ interface DetailsHeaderProps {
 }
 
 export function DetailsHeader(props: DetailsHeaderProps) {
-  const report = api.assetRisks.report.useQuery({ address: props.walletAddress })
-
+  const report = api.assetRisks.report.useQuery({
+    address: props.walletAddress,
+  })
 
   if (!report.data) return null
 
-  const risksCount = 0
+  const counts = report.data.tokens
+    .map((entry) => report.data.projects[entry.token.networkId])
+    .map((project) => {
+      if (!project) return null
 
-  const averageIssuesPerToken = Math.round(risksCount / report.data.tokens.length)
-  const leastIssues = 0
+      const issues = (
+        Object.values(project.riskView) as ScalingProjectRiskViewEntry[]
+      ).reduce((acc, risk) => {
+        if (risk.sentiment !== 'good') {
+          return acc + 1
+        }
+
+        return acc
+      }, 0)
+
+      return issues
+    })
+
+  const sum = counts.reduce<number>((acc, risk) => {
+    if (!risk) return acc
+    return acc + risk
+  }, 0)
+
+  const averageIssuesPerToken = Math.round(sum / report.data.tokens.length)
+  const leastIssues = Math.min(...counts.filter((risk) => risk !== null))
 
   return (
     <Card className="flex flex-col gap-4 rounded-none sm:rounded-xl">
       <h1 className="text-3xl font-bold">Assets&apos; Risks</h1>
       <p className="text-sm font-medium text-zinc-500 dark:text-gray-50">
-        {`A total of ${risksCount} issues were found with an average of ${averageIssuesPerToken} issues per token. Your most valuable token has ${leastIssues} issues.`}
+        {`A total of ${sum} issues were found with an average of ${averageIssuesPerToken} issues per token. Your most valuable token has ${leastIssues} issues.`}
       </p>
       <p className="text-sm font-medium text-zinc-500 dark:text-gray-50">
         You can check the risks associated with specific tokens by expanding the

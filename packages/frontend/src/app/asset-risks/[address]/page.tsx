@@ -3,14 +3,12 @@ import type { SetOptional } from 'type-fest'
 import { http, type Hex, createPublicClient, isAddress } from 'viem'
 
 import { type ScalingProjectRisk } from '@l2beat/config'
-import {
-  getChain,
-} from '~/server/features/asset-risks/utils/chains'
+import { getChain } from '~/server/features/asset-risks/utils/chains'
 import { Footer } from '../_components/footer'
 import { DetailsHeader } from './_components/details-header'
 import { Disclaimer } from './_components/disclaimer'
 import { TokensTable } from './_components/table/tokens-table'
-import { DebugButtons } from './_test/debug-buttons'
+import { ClientsideLogic } from './_components/clientside-logic'
 
 export type Risk = SetOptional<ScalingProjectRisk, 'category'>
 
@@ -56,14 +54,10 @@ export default async function Page({ params: { address } }: Props) {
   return (
     <main className="mx-auto w-screen max-w-[1176px] px-0 pt-10 sm:px-4 md:px-12">
       <div className="mb-10 flex flex-col gap-6">
-        <DetailsHeader
-          walletAddress={address}
-          vanityAddress={vanityAddress}
-        />
-        <TokensTable
-          walletAddress={address} />
+        <ClientsideLogic address={address} />
+        <DetailsHeader walletAddress={address} vanityAddress={vanityAddress} />
+        <TokensTable walletAddress={address} />
         <Disclaimer />
-        <DebugButtons address={address} />
       </div>
       <Footer />
     </main>

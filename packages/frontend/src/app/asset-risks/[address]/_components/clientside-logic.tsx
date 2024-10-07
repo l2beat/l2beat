@@ -1,10 +1,10 @@
 'use client'
 
 import { useEffect } from 'react'
-import { Address } from 'viem'
+import { type Address } from 'viem'
 import { api } from '~/trpc/react'
 
-export function DebugButtons({ address }: { address: Address }) {
+export function ClientsideLogic({ address }: { address: Address }) {
   const refreshTokens = api.assetRisks.refreshTokens.useMutation()
   const refreshBalances = api.assetRisks.refreshBalances.useMutation()
 
@@ -12,15 +12,21 @@ export function DebugButtons({ address }: { address: Address }) {
 
   useEffect(() => {
     if (!report.data) return
-    if (!report.data.tokensRefreshedAt ||report.data.tokensRefreshedAt < new Date(Date.now() - 1000 * 60 * 60)) {
+    if (
+      !report.data.tokensRefreshedAt ||
+      report.data.tokensRefreshedAt < new Date(Date.now() - 1000 * 60 * 60)
+    ) {
       refreshTokens.mutate({ address })
       return
     }
-    if (!report.data.balancesRefreshedAt || report.data.balancesRefreshedAt < new Date(Date.now() - 1000 * 60)) {
+    if (
+      !report.data.balancesRefreshedAt ||
+      report.data.balancesRefreshedAt < new Date(Date.now() - 1000 * 60)
+    ) {
       refreshBalances.mutate({ address })
       return
     }
-  }, [report.data])
+  }, [address, refreshBalances, refreshTokens, report.data])
 
   return (
     <div>
