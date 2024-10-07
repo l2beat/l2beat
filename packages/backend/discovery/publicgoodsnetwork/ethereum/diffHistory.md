@@ -8,7 +8,7 @@ Generated with discovered.json: 0x16355a9648288457d82dca352167d6dad3277537
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Renamed GuardianMS to be local.
 
 ## Config/verification related changes
 
