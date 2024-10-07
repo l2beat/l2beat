@@ -34,7 +34,7 @@ export function NavLinkGroup({ group }: NavLinkGroupProps) {
         {group.icon}
         <span
           className={cn(
-            'ml-1 text-base font-semibold tracking-tight text-primary transition-colors duration-300',
+            'ml-1 text-base font-medium tracking-tight text-primary transition-colors duration-300',
             isSelected && 'text-brand',
           )}
         >
@@ -58,7 +58,7 @@ export function NavLinkGroup({ group }: NavLinkGroupProps) {
         <div className="flex items-baseline gap-1.5">
           <span
             className={cn(
-              'ml-1 text-base font-semibold tracking-tight text-primary transition-colors duration-300 ',
+              'ml-1 text-base font-medium tracking-tight text-primary transition-colors duration-300 ',
               isSelected && 'text-brand',
             )}
           >

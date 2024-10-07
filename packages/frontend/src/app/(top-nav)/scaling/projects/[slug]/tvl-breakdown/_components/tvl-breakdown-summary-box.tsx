@@ -109,7 +109,7 @@ function StatsItem(props: StatsItemProps) {
         >
           {formatCurrency(props.value, 'usd')}
         </span>
-        <div className="ml-1 text-xs font-semibold md:text-base">
+        <div className="ml-1 text-xs font-medium md:text-base">
           <PercentChange value={props.change} />
         </div>
       </div>

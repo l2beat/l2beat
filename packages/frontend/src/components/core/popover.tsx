@@ -13,7 +13,7 @@ const PopoverTrigger = React.forwardRef<
   <PopoverPrimitive.Trigger
     ref={ref}
     className={cn(
-      'group inline-flex cursor-pointer select-none items-center gap-1.5 whitespace-pre rounded-lg bg-gray-200 px-3 py-1 text-sm font-semibold leading-none transition-colors data-[state=selected]:hover:bg-gray-400 dark:bg-zinc-700 dark:data-[state=selected]:hover:bg-slate-600',
+      'group inline-flex cursor-pointer select-none items-center gap-1.5 whitespace-pre rounded-lg bg-gray-200 px-3 py-1 text-sm font-medium leading-none transition-colors data-[state=selected]:hover:bg-gray-400 dark:bg-zinc-700 dark:data-[state=selected]:hover:bg-slate-600',
       className,
     )}
     {...props}

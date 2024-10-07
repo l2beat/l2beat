@@ -32,7 +32,7 @@ const TableHeader = React.forwardRef<
   <thead
     ref={ref}
     className={cn(
-      'group/header whitespace-pre py-2 align-bottom text-xs font-semibold uppercase text-zinc-500 dark:text-n-zinc-300',
+      'group/header whitespace-pre py-2 align-bottom text-xs font-medium uppercase text-zinc-500 dark:text-n-zinc-300',
       className,
     )}
     {...props}

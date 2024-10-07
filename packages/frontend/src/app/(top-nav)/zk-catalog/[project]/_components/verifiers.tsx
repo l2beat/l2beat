@@ -26,16 +26,16 @@ export function Verifiers(props: Props) {
       <table className="w-full">
         <thead>
           <tr className="border-b border-gray-200 align-bottom dark:border-zinc-700">
-            <th className="px-4 py-2 text-start text-xs font-semibold uppercase text-gray-500 dark:text-gray-50">
+            <th className="px-4 py-2 text-start text-xs font-medium uppercase text-gray-500 dark:text-gray-50">
               Name
             </th>
-            <th className="hidden py-2 pr-4 text-start text-xs font-semibold uppercase text-gray-500 dark:text-gray-50 md:table-cell">
+            <th className="hidden py-2 pr-4 text-start text-xs font-medium uppercase text-gray-500 dark:text-gray-50 md:table-cell">
               Verifier
             </th>
-            <th className="py-2 pr-4 text-start text-xs font-semibold uppercase text-gray-500 dark:text-gray-50">
+            <th className="py-2 pr-4 text-start text-xs font-medium uppercase text-gray-500 dark:text-gray-50">
               Verification status
             </th>
-            <th className="hidden py-2 pr-4 text-start text-xs font-semibold uppercase text-gray-500 dark:text-gray-50 md:table-cell">
+            <th className="hidden py-2 pr-4 text-start text-xs font-medium uppercase text-gray-500 dark:text-gray-50 md:table-cell">
               Last used
             </th>
             <th />

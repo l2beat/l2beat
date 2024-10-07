@@ -65,7 +65,7 @@ export function StackedTvlChartHover(props: Props) {
                   ></div>
                   <span>{v.title}</span>
                 </span>
-                <span className="font-semibold">
+                <span className="font-medium">
                   {formatCurrency(v.value / divideBy, props.unit)}
                 </span>
               </div>

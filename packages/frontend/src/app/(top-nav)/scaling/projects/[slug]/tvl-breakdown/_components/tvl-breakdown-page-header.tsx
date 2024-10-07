@@ -32,7 +32,7 @@ export function TvlBreakdownPageHeader({
         <h2 className="text-[28px] font-bold md:text-3xl">TVL Breakdown</h2>
         <div className="text-xs font-medium text-gray-500 dark:text-gray-550">
           Timestamp:&nbsp;
-          <span className="text-base font-semibold text-primary">
+          <span className="text-base font-medium text-primary">
             {formatTimestampToDateWithHour(tvlBreakdownTimestamp)}
           </span>
         </div>

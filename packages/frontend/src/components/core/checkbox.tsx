@@ -28,7 +28,7 @@ const Checkbox = React.forwardRef<
     </CheckboxPrimitive.Root>
     <label
       htmlFor={id}
-      className="cursor-pointer whitespace-pre text-sm font-semibold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+      className="cursor-pointer whitespace-pre text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
     >
       {children}
     </label>
