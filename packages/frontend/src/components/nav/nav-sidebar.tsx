@@ -58,7 +58,7 @@ export async function NavSidebar({ groups, logoLink, legacyNav }: Props) {
           />
           <NavSmallLink title="FAQ" href="/faq" />
         </NavSmallLinkGroup>
-        <ul className="mb-[14px] mt-6 flex gap-2 text-2xl lg:justify-between">
+        <ul className="mb-10 mt-8 flex gap-2 text-2xl lg:justify-between">
           <SocialLinks variant="gray" />
         </ul>
       </div>
