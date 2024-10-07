@@ -1,5 +1,6 @@
 import { AmountRecord } from '@l2beat/database'
 import {
+  assert,
   Bytes,
   ElasticChainL2Token,
   EthereumAddress,
@@ -36,15 +37,50 @@ export class ElasticChainService {
   async fetchAmounts(
     timestamp: UnixTime,
     blockNumber: number,
-    tokens: Config<'elasticChainL2Token'>[],
+    tokens: Config<'elasticChainL2Token' | 'elasticChainEther'>[],
   ): Promise<AmountRecord[]> {
+    const l2Tokens = tokens.filter(
+      (token) => token.type === 'elasticChainL2Token',
+    )
+
+    const ether = tokens.find((token) => token.type === 'elasticChainEther')
+    assert(ether, 'ElasticChainEther config not found')
+    const etherAmount = await this.getEtherAmount(timestamp, blockNumber, ether)
+
     const l2TokensAmounts = await this.getL2TokensAmounts(
       timestamp,
       blockNumber,
-      tokens,
+      l2Tokens,
     )
 
-    return l2TokensAmounts
+    return [...l2TokensAmounts, etherAmount]
+  }
+
+  async getEtherAmount(
+    timestamp: UnixTime,
+    blockNumber: number,
+    token: Config<'elasticChainEther'>,
+  ): Promise<AmountRecord> {
+    const response = await this.$.rpcClient.call(
+      {
+        to: token.address,
+        data: Bytes.fromHex(
+          erc20Interface.encodeFunctionData('totalSupply', []),
+        ),
+      },
+      blockNumber,
+    )
+
+    const [totalSupply] = erc20Interface.decodeFunctionResult(
+      'totalSupply',
+      response.toString(),
+    )
+
+    return {
+      configId: token.id,
+      amount: (totalSupply as BigNumber).toBigInt(),
+      timestamp,
+    }
   }
 
   async getL2TokensAmounts(
