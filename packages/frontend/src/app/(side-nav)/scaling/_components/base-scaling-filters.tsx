@@ -74,7 +74,7 @@ export function BaseScalingFilters({
 
   return (
     <OverflowWrapper>
-      <div className="flex flex-row space-x-2">
+      <div className="flex flex-row space-x-1">
         {showRollupsOnly && (
           <Checkbox
             id="rollups-only"
