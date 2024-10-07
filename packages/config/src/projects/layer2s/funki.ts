@@ -8,7 +8,7 @@ export const funki: Layer2 = underReviewL2({
     name: 'Funki',
     slug: 'funki',
     description:
-      'Funki chain is an L2 Ethereum Rollup Network, powered by the OP Stack.',
+      'Funki chain is an OP Stack Optimium on Ethereum reimagining the blockchain experience as an interconnected world brimming with wonder, adventure, and fun.',
     purposes: ['Universal'],
     category: 'Optimium',
     provider: 'OP Stack',
@@ -16,7 +16,7 @@ export const funki: Layer2 = underReviewL2({
       websites: ['https://funkichain.com'],
       apps: ['https://funkichain.com/bridge', 'https://swap.funkichain.com'],
       documentation: ['https://docs.funkichain.com/'],
-      explorers: [],
+      explorers: ['https://funkiscan.io/'],
       repositories: ['https://github.com/funkichain'],
       socialMedia: [
         'https://x.com/funkichain',
