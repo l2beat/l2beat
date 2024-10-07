@@ -1,20 +1,20 @@
+import { type TokenRecord } from '@l2beat/database'
 import { assert, notUndefined } from '@l2beat/shared-pure'
 import {
   http,
   type Address,
   type PublicClient,
   createPublicClient,
-  parseAbiItem,
   getAddress,
+  parseAbiItem,
 } from 'viem'
-import { getChain } from './utils/chains'
 import { db } from '~/server/database'
-import { type TokenRecord } from '@l2beat/database'
+import { getChain } from './utils/chains'
 
 export async function refreshTokensOfAddress(address: Address) {
   await db.assetRisksUser.upsert({
-    address
-  });
+    address,
+  })
   const user = await db.assetRisksUser.findUserByAddress(address)
 
   assert(user, 'User not found')
@@ -89,14 +89,16 @@ export async function refreshTokensOfAddress(address: Address) {
       .filter((p) => p.status === 'fulfilled')
       .map((p) => p.value)
       .filter(([_, tokens]) => tokens.length > 0),
-  ) 
+  )
 
   await db.assetRisksBalance.upsertMany(
-    Object.values(tokens).flatMap((tokens) => tokens.map((token) => ({
-      userId: user.id,
-      tokenId: token.id,
-      balance: "0",
-    })))
+    Object.values(tokens).flatMap((tokens) =>
+      tokens.map((token) => ({
+        userId: user.id,
+        tokenId: token.id,
+        balance: '0',
+      })),
+    ),
   )
 }
 

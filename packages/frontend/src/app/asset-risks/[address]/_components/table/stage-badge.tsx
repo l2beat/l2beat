@@ -17,7 +17,7 @@ export function StageBadge({ stage }: StageBadgeProps) {
     <span
       className={cn(
         getColorClassName(stage),
-        'inline-block h-4 rounded px-1 py-px text-center text-2xs font-medium uppercase !leading-none',
+        'text-2xs inline-block h-4 rounded px-1 py-px text-center font-medium uppercase !leading-none',
       )}
     >
       <span className="relative top-[0.5px]">{value ?? 'n/a'}</span>

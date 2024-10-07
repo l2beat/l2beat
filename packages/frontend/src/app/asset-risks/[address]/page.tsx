@@ -5,10 +5,11 @@ import { http, type Hex, createPublicClient, isAddress } from 'viem'
 import { type ScalingProjectRisk } from '@l2beat/config'
 import { getChain } from '~/server/features/asset-risks/utils/chains'
 import { Footer } from '../_components/footer'
+import { ClientsideLogic } from './_components/clientside-logic'
 import { DetailsHeader } from './_components/details-header'
 import { Disclaimer } from './_components/disclaimer'
+import { ReportProvider } from './_components/report-context'
 import { TokensTable } from './_components/table/tokens-table'
-import { ClientsideLogic } from './_components/clientside-logic'
 
 export type Risk = SetOptional<ScalingProjectRisk, 'category'>
 
@@ -54,10 +55,15 @@ export default async function Page({ params: { address } }: Props) {
   return (
     <main className="mx-auto w-screen max-w-[1176px] px-0 pt-10 sm:px-4 md:px-12">
       <div className="mb-10 flex flex-col gap-6">
-        <ClientsideLogic address={address} />
-        <DetailsHeader walletAddress={address} vanityAddress={vanityAddress} />
-        <TokensTable walletAddress={address} />
-        <Disclaimer />
+        <ClientsideLogic />
+        <ReportProvider
+          address={address}
+          placeholder={<div>TODO: Loading...</div>}
+        >
+          <DetailsHeader vanityAddress={vanityAddress} />
+          <TokensTable />
+          <Disclaimer />
+        </ReportProvider>
       </div>
       <Footer />
     </main>

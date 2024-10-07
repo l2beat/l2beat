@@ -2,14 +2,13 @@
 
 import { type Dispatch, type SetStateAction, useState } from 'react'
 
-import { type AssetId, type TokenBridgedUsing } from '@l2beat/shared-pure'
 import {
   SortingArrowDownIcon,
   SortingArrowUpIcon,
 } from '~/icons/sorting-arrows'
 import { cn } from '~/utils/cn'
 import { Card } from '../../../_components/card'
-import { type Risk } from '../../page'
+import { useReport } from '../report-context'
 import { FilterInput } from './filter-input'
 import { TableRow } from './table-row'
 import {
@@ -17,20 +16,15 @@ import {
   type Sorting,
   columnsConfig,
 } from './utils/columnsConfig'
-import { Address } from 'viem'
-import { api } from '~/trpc/react'
-
-interface TokensTableProps {
-  walletAddress: Address
-}
 
 type SortingState = {
   selected: string
   type: 'asc' | 'desc'
 } & Sorting
 
-export function TokensTable(props: TokensTableProps) {
-  const report = api.assetRisks.report.useQuery({ address: props.walletAddress })
+export function TokensTable() {
+  const report = useReport()
+
   const [sorting, setSorting] = useState<Partial<SortingState>>({
     selected: 'VALUE',
     rule: 'numeric',
@@ -39,9 +33,7 @@ export function TokensTable(props: TokensTableProps) {
   })
   const [filter, setFilter] = useState<string>('')
 
-  if (!report.data) return null
-
-  let tokens = report.data.tokens
+  let tokens = report.tokens
   if (sorting.selected) {
     tokens = tokens.sort((a, b) => {
       if (!sorting.getOrderValue) return 0
@@ -93,10 +85,7 @@ export function TokensTable(props: TokensTableProps) {
             </tr>
           </thead>
           {tokens.map((token) => (
-            <tbody
-              className="group/body"
-              key={token.token.id.toString()}
-            >
+            <tbody className="group/body" key={token.token.id.toString()}>
               <TableRow token={token} />
             </tbody>
           ))}

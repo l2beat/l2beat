@@ -5,9 +5,9 @@ import { type ClassNameValue } from 'tailwind-merge'
 import { formatUnits } from 'viem'
 import { ArrowIcon } from '~/icons/arrow'
 import { cn } from '~/utils/cn'
+import { type Token, useReport } from '../report-context'
 import { RiskDetails } from './risk-details'
 import { StageBadge } from './stage-badge'
-import { type Token } from './tokens-table'
 import { CriticalWarning, Warning } from './warning'
 
 export function TableRow({
@@ -15,10 +15,20 @@ export function TableRow({
 }: {
   token: Token
 }) {
+  const report = useReport()
+  const chain = report.chains[token.token.networkId]
   const [isOpen, setIsOpen] = useState(false)
 
-  const criticalWarnings = token.chain.risks.filter((r) => r.isCritical)
-  const warnings = token.chain.risks.filter((r) => !r.isCritical)
+  const criticalWarnings = chain?.risks.filter((r) => r.isCritical) ?? []
+  const warnings = chain?.risks.filter((r) => !r.isCritical) ?? []
+  const bridges = report.bridges
+    .filter((b) => b.targetTokenId === token.token.address)
+    .map((b) => ({
+      ...b,
+      externalBridge: b.externalBridgeId
+        ? report.externalBridges.find((e) => e.id === b.externalBridgeId)
+        : null,
+    }))
 
   return (
     <>
@@ -37,31 +47,34 @@ export function TableRow({
             $0.00
           </div>
           <div className="text-sm font-medium text-gray-500 dark:text-gray-50">
-            {token.balance && formatUnits(token.balance, token.token.decimals)}
+            {token.balance &&
+              formatUnits(BigInt(token.balance), token.meta?.decimals ?? 0)}
             &nbsp;
-            {token.token.symbol}
+            {token.meta?.symbol}
           </div>
         </Cell>
         <Cell className="flex items-center gap-2">
-          {token.token.iconUrl && (
+          {token.meta?.logoUrl && (
             <Image
-              src={token.token.iconUrl}
-              alt={`${token.token.name} icon`}
+              src={token.meta?.logoUrl}
+              alt={`${token.meta?.name} icon`}
               width={32}
               height={32}
               className="size-8"
             />
           )}
           <div className="flex flex-col">
-            <span className="text-lg font-bold">{token.token.name}</span>
+            <span className="text-lg font-bold">{token.meta?.name}</span>
             <div className="flex items-center text-sm font-normal text-gray-500 dark:text-gray-50">
-              on <span className="font-medium">{token.chain.name}</span>
+              on <span className="font-medium">{token.meta?.name}</span>
               &nbsp;
-              {token.chain.stage && <StageBadge stage={token.chain.stage} />}
+              {chain?.stage && <StageBadge stage={chain.stage} />}
               &nbsp;
-              {token.token.bridgedUsing?.bridges.length === 1
-                ? `bridged via ${token.token.bridgedUsing?.bridges[0]?.name}`
-                : token.token.bridgedUsing?.bridges?.length !== 0
+              {bridges.length === 1
+                ? `bridged via ${
+                    bridges[0]?.externalBridge?.name ?? 'Canonical bridge'
+                  }`
+                : bridges.length !== 0
                   ? `bridged via multiple bridges`
                   : null}
             </div>

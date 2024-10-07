@@ -1,30 +1,24 @@
 'use client'
 
-import { type Address, isAddress } from 'viem'
-import { formatAddress } from '~/utils/format-address'
 import { formatNumberWithCommas } from '~/utils/format-number'
 import { Card } from '../../_components/card'
 import { Breakdown } from './breakdown'
-import { api } from '~/trpc/react'
-import { type ScalingProjectRiskViewEntry } from '@l2beat/config'
+import { useReport } from './report-context'
 
 interface DetailsHeaderProps {
-  walletAddress: Address
   vanityAddress: string
 }
 
 export function DetailsHeader(props: DetailsHeaderProps) {
-  const report = api.assetRisks.report.useQuery({
-    address: props.walletAddress,
-  })
+  const report = useReport()
 
-  if (!report.data) return null
-
-  const counts = report.data.tokens.map((token) => token.risks.length)
+  const counts = report.tokens.map(
+    ({ token }) => report.chains[token.networkId]?.risks.length ?? 0,
+  )
 
   const sum = counts.reduce((acc, risk) => acc + risk, 0)
 
-  const averageIssuesPerToken = Math.round(sum / report.data.tokens.length)
+  const averageIssuesPerToken = Math.round(sum / report.tokens.length)
   const leastIssues = Math.min(...counts)
 
   return (
@@ -43,7 +37,7 @@ export function DetailsHeader(props: DetailsHeaderProps) {
             Value
           </span>
           <span className=" text-xl font-extrabold text-pink-900 dark:text-pink-200">
-            ${formatNumberWithCommas(report.data.usdValue)}
+            ${formatNumberWithCommas(report.usdValue)}
           </span>
         </div>
         <div className="col-span-2 flex flex-col gap-[5px]">
@@ -51,9 +45,7 @@ export function DetailsHeader(props: DetailsHeaderProps) {
             Wallet
           </span>
           <span className="flex items-center gap-2 text-xl font-semibold">
-            {isAddress(props.walletAddress)
-              ? formatAddress(props.walletAddress)
-              : props.walletAddress}
+            {props.vanityAddress ?? report.address}
           </span>
         </div>
       </div>
