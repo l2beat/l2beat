@@ -5,6 +5,8 @@ ALTER TABLE "TokenMeta" ALTER COLUMN "symbol" SET DATA TYPE VARCHAR(256);
 CREATE TABLE "AssetRisksUser" (
     "id" CHAR(21) NOT NULL,
     "address" CHAR(42) NOT NULL,
+    "tokensRefreshedAt" TIMESTAMP(3),
+    "balancesRefreshedAt" TIMESTAMP(3),
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
