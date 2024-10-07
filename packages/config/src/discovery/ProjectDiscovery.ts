@@ -31,7 +31,10 @@ import {
   ScalingProjectContractSingleAddress,
   ScalingProjectUpgradeability,
 } from '../common/ScalingProjectContracts'
-import { ScalingProjectEscrow } from '../common/ScalingProjectEscrow'
+import {
+  AggLayerEscrow,
+  ScalingProjectEscrow,
+} from '../common/ScalingProjectEscrow'
 import {
   ScalingProjectPermission,
   ScalingProjectPermissionedAccount,
@@ -116,6 +119,7 @@ export class ProjectDiscovery {
     bridgedUsing,
     isHistorical,
     untilTimestamp,
+    sharedEscrow,
   }: {
     address: EthereumAddress
     name?: string
@@ -132,6 +136,7 @@ export class ProjectDiscovery {
     bridgedUsing?: TokenBridgedUsing
     isHistorical?: boolean
     untilTimestamp?: UnixTime
+    sharedEscrow?: AggLayerEscrow
   }): ScalingProjectEscrow {
     const contractRaw = this.getContract(address.toString())
     const timestamp = sinceTimestamp?.toNumber() ?? contractRaw.sinceTimestamp
@@ -165,6 +170,7 @@ export class ProjectDiscovery {
       bridgedUsing,
       isHistorical,
       untilTimestamp,
+      sharedEscrow,
     }
   }
 

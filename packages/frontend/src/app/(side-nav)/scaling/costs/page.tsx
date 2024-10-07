@@ -29,7 +29,10 @@ export default async function Page() {
         <CostsTimeRangeContextProvider>
           <CostsUnitContextProvider>
             <CostsMetricContextProvider>
-              <ScalingCostsChart milestones={HOMEPAGE_MILESTONES} />
+              <ScalingCostsChart
+                entries={entries}
+                milestones={HOMEPAGE_MILESTONES}
+              />
               <HorizontalSeparator className="my-4 md:my-6" />
               <ScalingCostsTable entries={entries} />
             </CostsMetricContextProvider>

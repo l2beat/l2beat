@@ -41,6 +41,7 @@ function amountConfiguration(v: Partial<TotalSupplyEntry>) {
     sinceTimestamp: UnixTime.ZERO,
     includeInTotal: true,
     decimals: DECIMALS,
+    assetId: AssetId.create(v.chain ?? 'chain', v.address),
     symbol: 'SYMBOL',
     isAssociated: false,
     category: 'other',

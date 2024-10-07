@@ -262,11 +262,11 @@ export const taiko: Layer2 = {
       references: [
         {
           text: 'TierProviderV2.sol - Etherscan source code, tier ids',
-          href: 'https://etherscan.io/address/0x4cffe56C947E26D07C14020499776DB3e9AE3a23#code',
+          href: 'https://etherscan.io/address/0x3a1A900680BaADb889202faf12915F7E47B71ddd#code',
         },
         {
           text: 'TaikoL1.sol - Etherscan source code, liveness bond',
-          href: 'https://etherscan.io/address/0xe84dc8e2a21e59426542ab040d77f81d6db881ee#code',
+          href: 'https://etherscan.io/address/0xBA1d90BCfA74163bFE09e8eF609b346507D83231#code',
         },
       ],
       risks: [
@@ -292,7 +292,7 @@ export const taiko: Layer2 = {
       references: [
         {
           text: 'TaikoL1.sol - Etherscan source code, proposeBlock function',
-          href: 'https://etherscan.io/address/0x4b2743b869b85d5f7d8020566f92664995e4f3c5#code',
+          href: 'https://etherscan.io/address/0xBA1d90BCfA74163bFE09e8eF609b346507D83231#code',
         },
       ],
       risks: [],

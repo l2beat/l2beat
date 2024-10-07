@@ -4,7 +4,7 @@ import {
   EthereumAddress,
   ProjectId,
   UnixTime,
-  formatLargeNumberShared,
+  formatLargeNumber,
   formatSeconds,
 } from '@l2beat/shared-pure'
 
@@ -146,7 +146,7 @@ function formatMaxTotalBalanceString(
   ) {
     return 'There is no bridge cap.'
   } else {
-    return `The current bridge cap is ${formatLargeNumberShared(
+    return `The current bridge cap is ${formatLargeNumber(
       maxTotalBalance / 10 ** decimals,
     )} ${ticker}.`
   }
@@ -420,7 +420,7 @@ export const starknet: Layer2 = {
     finality: {
       lag: 0,
       type: 'Starknet',
-      minTimestamp: new UnixTime(1710252998),
+      minTimestamp: new UnixTime(1724856347),
       stateUpdate: 'disabled',
     },
     trackedTxs: [
@@ -543,6 +543,22 @@ export const starknet: Layer2 = {
           functionSignature:
             'function updateStateKzgDA(uint256[] programOutput, bytes kzgProof)',
           sinceTimestamp: new UnixTime(1710252995),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
+          ),
+          selector: '0x507ee528',
+          functionSignature:
+            'function updateStateKzgDA(uint256[] programOutput, bytes[] kzgProofs)',
+          sinceTimestamp: new UnixTime(1724856347),
         },
       },
       {

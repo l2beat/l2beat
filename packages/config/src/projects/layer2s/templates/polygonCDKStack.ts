@@ -149,11 +149,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       category:
         templateVars.daProvider !== undefined ? 'Validium' : 'ZK Rollup',
       provider: 'Polygon',
-      tvlWarning: templateVars.display.tvlWarning ?? {
-        content:
-          'The TVL is currently shared among all projects using the shared Polygon CDK contracts.',
-        sentiment: 'warning',
-      },
+      tvlWarning: templateVars.display.tvlWarning,
       finality: templateVars.display.finality ?? {
         finalizationPeriod: 0,
         warnings: {

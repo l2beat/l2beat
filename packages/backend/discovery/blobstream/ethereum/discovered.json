@@ -1,9 +1,9 @@
 {
   "name": "blobstream",
   "chain": "ethereum",
-  "blockNumber": 20871621,
+  "blockNumber": 20878389,
   "configHash": "0x56a5d5d76ca14f24cdb32acdbd01212b950acf2f1159850a2f8b64e541b95d85",
-  "version": 14,
+  "version": 15,
   "contracts": [
     {
       "name": "FunctionVerifier",
@@ -124,6 +124,16 @@
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x47fd660D5252Bd6F9D2c71507E46aa1d6e957c23",
+        "$pastUpgrades": [
+          [
+            "2024-06-05T19:21:47.000Z",
+            ["0x41a87C543EBcbD93706CF5260AD057D9eCBA1caE"]
+          ],
+          [
+            "2024-08-26T18:55:23.000Z",
+            ["0x47fd660D5252Bd6F9D2c71507E46aa1d6e957c23"]
+          ]
+        ],
         "$upgradeCount": 2,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -148,10 +158,10 @@
         "GUARDIAN_ROLE": "0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041",
         "headerRangeFunctionId_deprecated": "0xdb3232748ba9f2906d9d2ce97d2fac3963d4346de23c30521f346e10ddad82f7",
         "isRelayerApproved": true,
-        "latestBlock": 2466900,
+        "latestBlock": 2474100,
         "nextHeaderFunctionId_depcrecated": "0xf7ab2ac6f5ccf2da79050efcc0dbdb06d5ae05a332f58076aeac7fc8c73811fe",
         "relayers": ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"],
-        "state_proofNonce": 961,
+        "state_proofNonce": 969,
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "1.1.0"

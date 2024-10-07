@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
-import { Queue, Worker } from 'bullmq'
+import { Queue } from 'bullmq'
 import { Redis } from 'ioredis'
+import { setupWorker } from '../setup-worker.js'
 import { InferQueueDataType } from '../types.js'
 
 /**
@@ -20,15 +21,15 @@ export function broadcast({
     from: InputQueue
     to: Queue<InputEvent>[]
   }) => {
-    const broadcastWorker = new Worker<InputEvent>(
-      from.name,
-      async (job) => {
+    const broadcastWorker = setupWorker({
+      connection,
+      queue: from,
+      processor: async (job) => {
         to.forEach((queue) => {
           queue.add(job.name, job.data, job.opts)
         })
       },
-      { connection },
-    )
+    })
 
     logger.info('Broadcast rule set', {
       from: from.name,
