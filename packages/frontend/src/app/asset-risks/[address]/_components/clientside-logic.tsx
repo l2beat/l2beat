@@ -23,7 +23,8 @@ export function ClientsideLogic({ address }: { address: Address }) {
   }, [address, refetched, refreshBalances, refreshTokens, report])
 
   return (
-    <div>
+    <div className="flex flex-row gap-2 text-xs uppercase text-black">
+      DEBUG
       <button onClick={() => refreshTokens.mutate({ address })}>
         Refresh tokens ({refreshTokens.status})
       </button>
