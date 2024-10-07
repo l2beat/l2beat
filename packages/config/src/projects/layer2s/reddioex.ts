@@ -48,6 +48,7 @@ const freezeGracePeriod = discovery.getContractValue<number>(
 const committee = getCommittee(discovery)
 
 export const reddioex: Layer2 = {
+  isArchived: true,
   type: 'layer2',
   id: ProjectId('reddioex'),
   badges: [
@@ -59,6 +60,8 @@ export const reddioex: Layer2 = {
   display: {
     name: 'RedSonic',
     slug: 'redsonic',
+    headerWarning:
+      'This project was sunset on 2024-09-20 and deposits after that time may not be recoverable.',
     description:
       'RedSonic is a Validium based on the StarkEx technology. Its goal is to power the next generation Web3 apps and games by providing developers with the APIs and SDKs to create digital assets and easily integrate them in-app and in-game.',
     purposes: ['Exchange', 'NFT', 'Gaming'],
