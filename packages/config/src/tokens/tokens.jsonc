@@ -2831,6 +2831,13 @@
   ],
   "mantle": [
     {
+      "symbol": "CATI",
+      "address": "0x1Bdd8878252DaddD3Af2ba30628813271294eDc0",
+      "source": "native",
+      "coingeckoId": "catizen",
+      "supply": "circulatingSupply"
+    },
+    {
       "symbol": "MNT",
       "source": "canonical",
       "supply": "zero"

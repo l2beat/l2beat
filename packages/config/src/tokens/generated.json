@@ -6379,6 +6379,20 @@
       }
     },
     {
+      "name": "Catizen",
+      "coingeckoId": "catizen",
+      "address": "0x1Bdd8878252DaddD3Af2ba30628813271294eDc0",
+      "symbol": "CATI",
+      "decimals": 18,
+      "deploymentTimestamp": 1725608100,
+      "coingeckoListingTimestamp": 1726617600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50236/large/cati.png?1726638258",
+      "chainId": 5000,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Ether",
       "coingeckoId": "wrapped-ether-mantle-bridge",
       "address": "0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111",
