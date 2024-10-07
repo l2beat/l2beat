@@ -1,7 +1,8 @@
-import { upcomingL2 } from './templates/upcoming'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { underReviewL2 } from './templates/underReview'
 import { Layer2 } from './types'
 
-export const funki: Layer2 = upcomingL2({
+export const funki: Layer2 = underReviewL2({
   id: 'funki',
   display: {
     name: 'Funki',
@@ -9,7 +10,7 @@ export const funki: Layer2 = upcomingL2({
     description:
       'Funki chain is an L2 Ethereum Rollup Network, powered by the OP Stack.',
     purposes: ['Universal'],
-    category: 'Optimistic Rollup',
+    category: 'Optimium',
     provider: 'OP Stack',
     links: {
       websites: ['https://funkichain.com'],
@@ -25,4 +26,18 @@ export const funki: Layer2 = upcomingL2({
       ],
     },
   },
+  escrows: [
+    {
+      chain: 'ethereum',
+      address: EthereumAddress('0x5C9C7f98eD153a2deAA981eB5C97B31744AccF22'), // OptiPortal
+      sinceTimestamp: new UnixTime(1721212775),
+      tokens: ['ETH'],
+    },
+    {
+      chain: 'ethereum',
+      address: EthereumAddress('0xA2C1C1A473250094a6244F2bcf6Cb51F670Ad3aC'), // L1StandardBridge
+      sinceTimestamp: new UnixTime(1721212799),
+      tokens: '*',
+    },
+  ],
 })
