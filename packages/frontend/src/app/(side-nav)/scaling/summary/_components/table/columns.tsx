@@ -32,7 +32,6 @@ export const scalingSummaryColumns = [
     enableSorting: false,
     meta: {
       headClassName: 'w-0',
-      tooltip: 'Risks associated with this project.',
     },
   }),
   columnHelper.accessor('category', {
@@ -48,7 +47,6 @@ export const scalingSummaryColumns = [
     cell: (ctx) => <StageCell stageConfig={ctx.getValue()} />,
     sortingFn: sortStages,
     meta: {
-      tooltip: 'Rollup stage based on its features and maturity.',
       hash: 'stage',
     },
   }),
@@ -87,7 +85,7 @@ export const scalingSummaryColumns = [
     },
   }),
   columnHelper.accessor('activity.pastDayTps', {
-    header: 'Daily TPS',
+    header: 'Past day TPS',
     cell: (ctx) => {
       const data = ctx.row.original.activity
       if (!data) {
@@ -107,6 +105,7 @@ export const scalingSummaryColumns = [
     sortUndefined: 'last',
     meta: {
       align: 'right',
+      tooltip: 'Transactions per second averaged over the past day.',
     },
   }),
 ]
