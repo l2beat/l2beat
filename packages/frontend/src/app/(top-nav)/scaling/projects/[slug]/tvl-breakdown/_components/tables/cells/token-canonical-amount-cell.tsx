@@ -25,7 +25,7 @@ export function TokenCanonicalAmountCell({
     <Tooltip>
       <TooltipTrigger
         className={cn(
-          'flex w-full items-center justify-end gap-1 text-xs font-medium',
+          'flex w-full items-center gap-1 text-xs font-medium',
           isDescendant && 'text-black/80 dark:text-white/80',
         )}
       >

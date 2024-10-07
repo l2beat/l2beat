@@ -15,6 +15,21 @@ export const externallyBridgedColumns = [
     cell: (ctx) => <TokenNameCell {...ctx.row.original} />,
   }),
   columnHelper.display({
+    id: 'value',
+    header: 'Value',
+    cell: (ctx) => <TokenSimpleValueCell {...ctx.row.original} />,
+  }),
+  columnHelper.display({
+    id: 'amount',
+    header: 'Amount',
+    cell: (ctx) => <TokenSimpleAmountCell {...ctx.row.original} />,
+  }),
+  columnHelper.display({
+    id: 'bridge',
+    header: 'Bridged Using',
+    cell: (ctx) => <BridgedUsingCell {...ctx.row.original} />,
+  }),
+  columnHelper.display({
     id: 'contract',
     header: 'Contract',
     cell: (ctx) => {
@@ -29,26 +44,5 @@ export const externallyBridgedColumns = [
         )
       )
     },
-  }),
-  columnHelper.display({
-    id: 'bridge',
-    header: 'Bridged Using',
-    cell: (ctx) => <BridgedUsingCell {...ctx.row.original} />,
-  }),
-  columnHelper.display({
-    id: 'amount',
-    header: 'Amount',
-    meta: {
-      align: 'right',
-    },
-    cell: (ctx) => <TokenSimpleAmountCell {...ctx.row.original} />,
-  }),
-  columnHelper.display({
-    id: 'value',
-    header: 'Value',
-    meta: {
-      align: 'right',
-    },
-    cell: (ctx) => <TokenSimpleValueCell {...ctx.row.original} />,
   }),
 ]

@@ -25,18 +25,43 @@ export const canonicallyBridgedColumns = [
     },
   }),
   columnHelper.display({
-    id: 'contract',
-    header: 'Contract',
+    id: 'value',
+    header: 'Value',
     cell: (ctx) => {
-      const value = ctx.row.original
+      const isParentMultiEscrow = Boolean(
+        ctx.row.getParentRow()?.original.escrows.length ?? 0 > 1,
+      )
 
-      return value.tokenAddress ? (
-        <TokenAddressCell
-          address={value.tokenAddress}
-          explorer={value.explorerUrl}
+      const { usdValue } = ctx.row.original
+
+      return (
+        <TokenCanonicalValueCell
+          usdValue={usdValue}
+          isDescendant={isParentMultiEscrow}
         />
-      ) : (
-        '-'
+      )
+    },
+  }),
+  columnHelper.display({
+    id: 'amount',
+    header: 'Amount',
+    cell: (ctx) => {
+      const isParentMultiEscrow = Boolean(
+        ctx.row.getParentRow()?.original.escrows.length ?? 0 > 1,
+      )
+
+      const { amount, escrows } = ctx.row.original
+
+      const isPreminted = escrows.some((escrow) => escrow.isPreminted)
+      const warnings = escrows.map((e) => e.warning).filter(notUndefined)
+
+      return (
+        <TokenCanonicalAmountCell
+          amount={amount}
+          isPreminted={isPreminted}
+          isDescendant={isParentMultiEscrow}
+          warnings={warnings}
+        />
       )
     },
   }),
@@ -66,49 +91,18 @@ export const canonicallyBridgedColumns = [
     },
   }),
   columnHelper.display({
-    id: 'amount',
-    header: 'Amount',
-    meta: {
-      align: 'right',
-    },
+    id: 'contract',
+    header: 'Contract',
     cell: (ctx) => {
-      const isParentMultiEscrow = Boolean(
-        ctx.row.getParentRow()?.original.escrows.length ?? 0 > 1,
-      )
+      const value = ctx.row.original
 
-      const { amount, escrows } = ctx.row.original
-
-      const isPreminted = escrows.some((escrow) => escrow.isPreminted)
-      const warnings = escrows.map((e) => e.warning).filter(notUndefined)
-
-      return (
-        <TokenCanonicalAmountCell
-          amount={amount}
-          isPreminted={isPreminted}
-          isDescendant={isParentMultiEscrow}
-          warnings={warnings}
+      return value.tokenAddress ? (
+        <TokenAddressCell
+          address={value.tokenAddress}
+          explorer={value.explorerUrl}
         />
-      )
-    },
-  }),
-  columnHelper.display({
-    id: 'value',
-    header: 'Value',
-    meta: {
-      align: 'right',
-    },
-    cell: (ctx) => {
-      const isParentMultiEscrow = Boolean(
-        ctx.row.getParentRow()?.original.escrows.length ?? 0 > 1,
-      )
-
-      const { usdValue } = ctx.row.original
-
-      return (
-        <TokenCanonicalValueCell
-          usdValue={usdValue}
-          isDescendant={isParentMultiEscrow}
-        />
+      ) : (
+        '-'
       )
     },
   }),
