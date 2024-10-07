@@ -9,7 +9,6 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
-  makeBridgeCompatible,
 } from '../../common'
 import { Layer2 } from './types'
 
@@ -61,7 +60,7 @@ export const hermez: Layer2 = {
       },
     ],
   },
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
@@ -71,7 +70,7 @@ export const hermez: Layer2 = {
     // the explorer shows them in USD and there is no documentation around it
     destinationToken: RISK_VIEW.CANONICAL,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-  }),
+  },
   technology: {
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,

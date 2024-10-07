@@ -422,9 +422,17 @@
       "address": "0x92D6C1e31e14520e676a687F0a93788B716BEff5"
     },
     {
+      "symbol": "eBTC",
+      "address": "0x657e8C867D8B37dCC18fA4Caead9C45EB088C642"
+    },
+    {
       "symbol": "eETH",
       "address": "0x35fA164735182de50811E8e2E824cFb9B6118ac2",
       "category": "ether"
+    },
+    {
+      "symbol": "EIGEN",
+      "address": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
     },
     {
       "symbol": "ELG",
@@ -1074,6 +1082,10 @@
     {
       "symbol": "SAND",
       "address": "0x3845badAde8e6dFF049820680d1F14bD3903a5d0"
+    },
+    {
+      "symbol": "SIPHER",
+      "address": "0x9F52c8ecbEe10e00D9faaAc5Ee9Ba0fF6550F511"
     },
     {
       "symbol": "SDT",
@@ -2826,6 +2838,13 @@
     }
   ],
   "mantle": [
+    {
+      "symbol": "CATI",
+      "address": "0x1Bdd8878252DaddD3Af2ba30628813271294eDc0",
+      "source": "native",
+      "coingeckoId": "catizen",
+      "supply": "circulatingSupply"
+    },
     {
       "symbol": "MNT",
       "source": "canonical",
