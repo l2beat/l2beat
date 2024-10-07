@@ -1,10 +1,4 @@
-import {
-  type Layer2,
-  type Layer3,
-  type StageConfig,
-  layer2s,
-  layer3s,
-} from '@l2beat/config'
+import { type StageConfig, layer2s, layer3s } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import { TRPCError } from '@trpc/server'
 import { getAddress } from 'viem'

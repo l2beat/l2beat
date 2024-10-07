@@ -5,7 +5,6 @@ import {
   type Address,
   type PublicClient,
   createPublicClient,
-  getAddress,
   parseAbiItem,
 } from 'viem'
 import { db } from '~/server/database'

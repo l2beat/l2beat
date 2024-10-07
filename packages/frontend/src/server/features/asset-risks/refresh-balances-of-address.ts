@@ -1,6 +1,12 @@
-import { TokenRecord } from '@l2beat/database'
+import { type TokenRecord } from '@l2beat/database'
 import { TRPCError } from '@trpc/server'
-import { http, Address, createPublicClient, getAddress, parseAbi } from 'viem'
+import {
+  http,
+  type Address,
+  createPublicClient,
+  getAddress,
+  parseAbi,
+} from 'viem'
 import { db } from '~/server/database'
 import { getChain } from './utils/chains'
 
@@ -30,7 +36,7 @@ export async function refreshBalancesOfAddress(address: Address) {
   const networks = await db.network.getAllWithConfigs()
 
   // TODO: Observability
-  const results = await Promise.allSettled(
+  await Promise.allSettled(
     Object.entries(tokensByNetwork).map(async ([networkId, tokens]) => {
       const network = networks.find((n) => n.id === networkId)
       if (!network) {
