@@ -1214,12 +1214,12 @@
       "decimals": 18,
       "deploymentTimestamp": 1615354524,
       "coingeckoListingTimestamp": 1625875200,
+      "untilTimestamp": 1725840000,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/16414/large/rhinologo.png?1697736807",
       "chainId": 1,
       "source": "canonical",
-      "supply": "zero",
-      "untilTimestamp": 1725840000
+      "supply": "zero"
     },
     {
       "name": "DEXTF Token",
@@ -3666,6 +3666,20 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/2138/large/singularitynet.png?1696503103",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Sipher Token",
+      "coingeckoId": "sipher",
+      "address": "0x9F52c8ecbEe10e00D9faaAc5Ee9Ba0fF6550F511",
+      "symbol": "SIPHER",
+      "decimals": 18,
+      "deploymentTimestamp": 1638713744,
+      "coingeckoListingTimestamp": 1639008000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/21070/large/SipherToken.png?1696520453",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -6365,6 +6379,20 @@
       }
     },
     {
+      "name": "Catizen",
+      "coingeckoId": "catizen",
+      "address": "0x1Bdd8878252DaddD3Af2ba30628813271294eDc0",
+      "symbol": "CATI",
+      "decimals": 18,
+      "deploymentTimestamp": 1725608100,
+      "coingeckoListingTimestamp": 1726617600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50236/large/cati.png?1726638258",
+      "chainId": 5000,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Ether",
       "coingeckoId": "wrapped-ether-mantle-bridge",
       "address": "0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111",
@@ -8832,6 +8860,7 @@
       "chainId": 167000,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
@@ -8839,8 +8868,7 @@
             "slug": "stargatev2"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     },
     {
       "name": "Tether USD",
@@ -8855,6 +8883,7 @@
       "chainId": 167000,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
@@ -8862,8 +8891,7 @@
             "slug": "stargatev2"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     },
     {
       "name": "Ether",
@@ -9092,6 +9120,7 @@
       "chainId": 1380012617,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
@@ -9099,8 +9128,7 @@
             "slug": "stargatev2"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     },
     {
       "name": "Tether USD",
@@ -9115,6 +9143,7 @@
       "chainId": 1380012617,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
@@ -9122,8 +9151,7 @@
             "slug": "stargatev2"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     }
   ]
 }

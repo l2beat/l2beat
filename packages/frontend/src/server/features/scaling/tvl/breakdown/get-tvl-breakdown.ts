@@ -6,6 +6,7 @@ import {
   type ProjectId,
   UnixTime,
   asNumber,
+  assertUnreachable,
 } from '@l2beat/shared-pure'
 import { assignTokenMetaToBreakdown } from './assign-token-meta-to-breakdown'
 import { chainConverter } from './chain-converter'
@@ -13,6 +14,9 @@ import { getLatestAmountForConfigurations } from './get-latest-amount-for-config
 import { getLatestPriceForConfigurations } from './get-latest-price-for-configurations'
 import { recordToSortedBreakdown } from './record-to-sorted-breakdown'
 import { type BreakdownRecord, type CanonicalAssetBreakdownData } from './types'
+
+const SHARED_ESCROW_WARNING =
+  'There might be a 1% difference with the actual amounts locked due to pending deposits and withdrawals.'
 
 export function getTvlBreakdown(configMapping: ConfigMapping) {
   return async function (projectId: ProjectId, target?: UnixTime) {
@@ -75,6 +79,22 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
               config.type === 'elasticChainEther',
             'Only escrow, preminted, AggLayer, Elastic tokens can be canonical',
           )
+
+          let isSharedEscrow
+          switch (config.type) {
+            case 'aggLayerL2Token':
+            case 'aggLayerNativeEtherPreminted':
+            case 'aggLayerNativeEtherWrapped':
+              isSharedEscrow = true
+              break
+            case 'escrow':
+            case 'preminted':
+              isSharedEscrow = false
+              break
+            default:
+              assertUnreachable(config)
+          }
+
           const asset = breakdown.canonical.get(priceConfig.assetId)
           if (asset) {
             asset.usdValue += valueAsNumber
@@ -84,6 +104,7 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
               usdValue: valueAsNumber,
               escrowAddress: config.escrowAddress,
               ...(config.type === 'preminted' ? { isPreminted: true } : {}),
+              warning: isSharedEscrow ? SHARED_ESCROW_WARNING : undefined,
             })
           } else {
             breakdown.canonical.set(priceConfig.assetId, {
@@ -98,6 +119,7 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
                   usdValue: valueAsNumber,
                   escrowAddress: config.escrowAddress,
                   ...(config.type === 'preminted' ? { isPreminted: true } : {}),
+                  warning: isSharedEscrow ? SHARED_ESCROW_WARNING : undefined,
                 },
               ],
             })

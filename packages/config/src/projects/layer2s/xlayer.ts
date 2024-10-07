@@ -104,10 +104,12 @@ export const xlayer: Layer2 = polygonCDKStack({
     },
     activityDataSource: 'Blockchain RPC',
   },
+  associatedTokens: ['OKB'],
   nonTemplateEscrows: [
     shared.getEscrowDetails({
       address: bridge.address,
       tokens: '*',
+      sinceTimestamp: new UnixTime(1712620800),
       sharedEscrow: {
         type: 'AggLayer',
         nativeAsset: 'etherWrapped',

@@ -352,6 +352,42 @@ describe('layer2s', () => {
         }
       }
     })
+
+    describe('technology references are valid', () => {
+      for (const layer2 of layer2s) {
+        try {
+          const discovery = new ProjectDiscovery(layer2.id.toString())
+          if (layer2.technology.isUnderReview === true) continue
+
+          for (const [key, choicesAny] of Object.entries(layer2.technology)) {
+            if (choicesAny === undefined) {
+              continue
+            }
+            it(`${layer2.id.toString()} : ${key}`, () => {
+              const choicesTyped = choicesAny as
+                | ScalingProjectTechnologyChoice
+                | ScalingProjectTechnologyChoice[]
+
+              const choices = Array.isArray(choicesTyped)
+                ? choicesTyped
+                : [choicesTyped]
+              const referencedAddresses = getReferencedAddresses(
+                choices.flatMap((c) => c.references).map((ref) => ref.href),
+              )
+
+              const allAddresses = discovery
+                .getAllContractAddresses()
+                .concat(discovery.getContractsAndEoas().map((m) => m.address))
+              for (const address of referencedAddresses) {
+                expect(allAddresses.includes(address)).toBeTruthy()
+              }
+            })
+          }
+        } catch {
+          continue
+        }
+      }
+    })
   })
 
   describe('display', () => {

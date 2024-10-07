@@ -58,21 +58,19 @@
     "0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3": "ZkEvmVerifierV2-1",
     "0x8c1b52757b5c571ADcB5572E992679d4D48e30f7": "PlonkVerifierV2-1", // DarwinV2
     "0x6625C6332c9F91F2D27c304E729B86db87A3f504": "wstETHescrowLido",
-    "0xCC2C53556Bc75217cf698721b29071d6f12628A9": "wstETHescrowLidoProxyAdmin",
     "0xA033Ff09f2da45f0e9ae495f525363722Df42b2a": "pufETHEscrow",
-    "0x67260A8B73C5B77B55c1805218A42A7A6F98F515": "DaiEscrow",
-    "0xC0896ab1A8cae8c2C1d27d011eb955Cca955580d": "PufferFinanceOpsMultisig"
+    "0x67260A8B73C5B77B55c1805218A42A7A6F98F515": "DaiEscrow"
   },
   "overrides": {
+    "pufETHEscrow": {
+      "ignoreRelatives": ["owner", "$admin", "counterpart"]
+    },
     "DaiEscrow": {
       "ignoreRelatives": ["counterpart"]
     },
-    "wstETHescrowLidoProxyAdmin": {
-      "ignoreRelatives": ["owner"]
-    },
     "wstETHescrowLido": {
       "ignoreMethods": ["l1Token", "l2Token"],
-      "ignoreRelatives": ["owner"]
+      "ignoreRelatives": ["owner", "$admin"]
     },
     "L1MessageQueue": {
       "ignoreMethods": [

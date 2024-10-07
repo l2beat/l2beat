@@ -52,6 +52,7 @@ export function upcomingL3(templateVars: UpcomingConfigL3): Layer3 {
       escrows: [],
     },
     riskView: UPCOMING_RISK_VIEW,
+    stackedRiskView: UPCOMING_RISK_VIEW,
     technology: TECHNOLOGY.UPCOMING,
     contracts: CONTRACTS.EMPTY,
     badges: templateVars.badges,

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x4f3aadb37b8b77f4fb14f5f3e269417e1be9de05
+
+# Diff at Wed, 02 Oct 2024 14:23:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d101c705b5f4fd0b3af2e251678b85e1005b31d8 block: 259311089
+- current block number: 259634526
+
+## Description
+
+Config related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 259311089 (main branch discovery), not current.
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-17T04:51:20.000Z",["0x7C3A9b466FF5c02582fa32d4aD1b2Cb431fB7c9b"]],["2024-03-18T01:19:36.000Z",["0xfb19439fBa9f16aA720be6bE0e53465a9733C964"]],["2024-08-26T18:53:22.000Z",["0x47fd660D5252Bd6F9D2c71507E46aa1d6e957c23"]]]
+    }
+```
+
 Generated with discovered.json: 0x7c625db0b4e4f64e52d05c87e29ca4fe2a1a4e54
 
 # Diff at Tue, 01 Oct 2024 15:44:43 GMT:

@@ -2,7 +2,7 @@ import {
   EthereumAddress,
   ProjectId,
   UnixTime,
-  formatLargeNumberShared,
+  formatLargeNumber,
   formatSeconds,
 } from '@l2beat/shared-pure'
 
@@ -50,7 +50,7 @@ function formatMaxTotalBalanceString(
   maxTotalBalance: number,
   decimals: number,
 ) {
-  return `The current bridge cap is ${formatLargeNumberShared(
+  return `The current bridge cap is ${formatLargeNumber(
     maxTotalBalance / 10 ** decimals,
   )} ${ticker}.`
 }

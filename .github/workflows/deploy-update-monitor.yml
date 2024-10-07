@@ -1,7 +1,7 @@
 name: Deploy update monitor
 
 concurrency:
-  group: static
+  group: update-monitor-deployment
 permissions: {}
 
 on:
