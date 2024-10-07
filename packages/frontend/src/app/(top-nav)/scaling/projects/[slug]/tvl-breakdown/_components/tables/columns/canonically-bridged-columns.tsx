@@ -73,6 +73,10 @@ export const canonicallyBridgedColumns = [
   columnHelper.display({
     id: 'escrow',
     header: 'Escrow',
+    meta: {
+      headClassName: 'md:pl-6',
+      cellClassName: 'md:pl-6',
+    },
     cell: (ctx) => {
       const value = ctx.row.original
       const isExpended = ctx.row.getIsExpanded()

@@ -33,6 +33,10 @@ export const nativelyMintedColumns = [
   columnHelper.display({
     id: 'type',
     header: 'Type',
+    meta: {
+      headClassName: 'md:pl-6',
+      cellClassName: 'md:pl-6',
+    },
     cell: (ctx) => <TokenTypeCell {...ctx.row.original} />,
   }),
   columnHelper.display({

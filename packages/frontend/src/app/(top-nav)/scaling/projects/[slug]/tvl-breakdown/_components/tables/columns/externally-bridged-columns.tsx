@@ -33,6 +33,10 @@ export const externallyBridgedColumns = [
   columnHelper.display({
     id: 'bridge',
     header: 'Bridged Using',
+    meta: {
+      headClassName: 'md:pl-6',
+      cellClassName: 'md:pl-6',
+    },
     cell: (ctx) => <BridgedUsingCell {...ctx.row.original} />,
   }),
   columnHelper.display({
