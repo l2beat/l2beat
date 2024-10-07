@@ -10,7 +10,6 @@ export interface UpdateMonitorRecord {
   timestamp: UnixTime | null
   discovery: DiscoveryOutput
   configHash: Hash256
-  version: number
 }
 
 export function toRow(record: UpdateMonitorRecord): Insertable<UpdateMonitor> {
@@ -21,7 +20,6 @@ export function toRow(record: UpdateMonitorRecord): Insertable<UpdateMonitor> {
     timestamp: record.timestamp ? record.timestamp.toDate() : null,
     discoveryJsonBlob: JSON.stringify(record.discovery),
     configHash: record.configHash.toString(),
-    version: record.version,
   }
 }
 
@@ -33,6 +31,5 @@ export function toRecord(row: Selectable<UpdateMonitor>): UpdateMonitorRecord {
     timestamp: row.timestamp ? UnixTime.fromDate(row.timestamp) : null,
     discovery: row.discoveryJsonBlob as unknown as DiscoveryOutput,
     configHash: Hash256(row.configHash),
-    version: row.version,
   }
 }
