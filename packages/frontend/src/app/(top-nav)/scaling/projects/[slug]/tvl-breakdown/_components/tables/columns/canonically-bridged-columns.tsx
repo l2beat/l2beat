@@ -26,6 +26,9 @@ export const canonicallyBridgedColumns = [
   columnHelper.display({
     id: 'value',
     header: 'Value',
+    meta: {
+      align: 'right',
+    },
     cell: (ctx) => {
       const isParentMultiEscrow = Boolean(
         ctx.row.getParentRow()?.original.escrows.length ?? 0 > 1,
@@ -44,6 +47,9 @@ export const canonicallyBridgedColumns = [
   columnHelper.display({
     id: 'amount',
     header: 'Amount',
+    meta: {
+      align: 'right',
+    },
     cell: (ctx) => {
       const isParentMultiEscrow = Boolean(
         ctx.row.getParentRow()?.original.escrows.length ?? 0 > 1,

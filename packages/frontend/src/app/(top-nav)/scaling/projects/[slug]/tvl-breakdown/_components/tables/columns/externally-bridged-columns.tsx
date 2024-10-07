@@ -17,11 +17,17 @@ export const externallyBridgedColumns = [
   columnHelper.display({
     id: 'value',
     header: 'Value',
+    meta: {
+      align: 'right',
+    },
     cell: (ctx) => <TokenSimpleValueCell {...ctx.row.original} />,
   }),
   columnHelper.display({
     id: 'amount',
     header: 'Amount',
+    meta: {
+      align: 'right',
+    },
     cell: (ctx) => <TokenSimpleAmountCell {...ctx.row.original} />,
   }),
   columnHelper.display({
