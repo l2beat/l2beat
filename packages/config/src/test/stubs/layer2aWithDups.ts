@@ -78,7 +78,7 @@ export const layer2aWithDups: Layer2 = {
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-    sourceUpgradeability: RISK_VIEW.UPGRADABLE_YES,
+    sourceUpgradeability: RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE,
   },
   technology: {
     stateCorrectness: {

@@ -593,14 +593,6 @@ export const EXIT_WINDOW_UNKNOWN: ScalingProjectRiskViewEntry = {
   definingMetric: -Infinity,
 }
 
-export const UPGRADABLE_YES: ScalingProjectRiskViewEntry = {
-  value: 'Yes',
-  description:
-    'The code that secures the system can be changed arbitrarily and without notice.',
-  sentiment: 'bad',
-  definingMetric: -Infinity,
-}
-
 export const RISK_VIEW = {
   STATE_NONE,
   STATE_FP,
@@ -621,7 +613,6 @@ export const RISK_VIEW = {
   DATA_EXTERNAL,
   DATA_EXTERNAL_L3,
   DATA_CELESTIA,
-  UPGRADABLE_YES,
   VALIDATED_BY_ETHEREUM,
   VALIDATED_BY_L2,
   NATIVE_AND_CANONICAL,
