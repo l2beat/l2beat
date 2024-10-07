@@ -62,14 +62,5 @@ export const publicgoodsnetwork: Layer2 = opStackL2({
       type: 'general',
     },
   ],
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'ConduitMultisig',
-      'This address is the owner of the following contracts: SystemConfig, ProxyAdmin. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
-    ),
-    ...discovery.getMultisigPermission(
-      'GuardianMultisig',
-      'This address is the permissioned challenger of the system. It can delete non finalized roots without going through the fault proof process. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals.',
-    ),
-  ],
+  discoveryDrivenData: true,
 })
