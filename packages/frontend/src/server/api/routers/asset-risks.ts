@@ -6,9 +6,9 @@ import { refreshBalancesOfAddress } from '~/server/features/asset-risks/refresh-
 import { db } from '~/server/database'
 import { TRPCError } from '@trpc/server'
 import { assert } from '@l2beat/shared-pure'
-import { Layer2, layer2s, Layer3, layer3s } from '@l2beat/config'
+import { type Layer2, layer2s, type Layer3, layer3s } from '@l2beat/config'
 
-const projects = [...layer2s, ...layer3s];
+const projects = [...layer2s, ...layer3s]
 
 export const assetRisksRouter = router({
   refreshTokens: procedure
@@ -64,13 +64,18 @@ export const assetRisksRouter = router({
       const tokenMeta = await db.tokenMeta.getAll()
       // TODO: Fetch info about bridged tokens / bridges / prices / etc.
 
-      const chains = networks.reduce<Record<string, (Layer2 | Layer3)>>((acc, { id, chainId}) => {
-        const project = projects.find(p => p.chainConfig?.chainId === chainId)
-        if(project) {
-          acc[id] = project
-        }
-        return acc;
-      }, {})
+      const chains = networks.reduce<Record<string, Layer2 | Layer3>>(
+        (acc, { id, chainId }) => {
+          const project = projects.find(
+            (p) => p.chainConfig?.chainId === chainId,
+          )
+          if (project) {
+            acc[id] = project
+          }
+          return acc
+        },
+        {},
+      )
 
       return {
         usdValue: 0,
@@ -80,10 +85,28 @@ export const assetRisksRouter = router({
         tokens: tokens.map((token) => {
           const balanceRecord = balances.find((b) => b.tokenId === token.id)
           assert(balanceRecord, 'Balance not found')
-          
+
+          const chain = chains[token.networkId]
+
           return {
             token,
-            meta: tokenMeta.find(m => m.tokenId === token.id && m.name),
+            risks: (chain?.technology
+              ? [
+                  chain.technology.stateCorrectness,
+                  chain.technology.newCryptography,
+                  chain.technology.dataAvailability,
+                  chain.technology.operator,
+                  chain.technology.forceTransactions,
+                  ...(chain.technology.exitMechanisms ?? []),
+                  chain.technology.massExit,
+                  ...(chain.technology.otherConsiderations ?? []),
+                ].flatMap((choice) => choice?.risks ?? [])
+              : []
+            ).map((r) => ({
+              text: `${r.category} ${r.text}`,
+              isCritical: r.isCritical,
+            })),
+            meta: tokenMeta.find((m) => m.tokenId === token.id && m.name),
             balance: balanceRecord.balance,
           }
         }),

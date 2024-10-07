@@ -20,31 +20,12 @@ export function DetailsHeader(props: DetailsHeaderProps) {
 
   if (!report.data) return null
 
-  const counts = report.data.tokens
-    .map((entry) => report.data.projects[entry.token.networkId])
-    .map((project) => {
-      if (!project) return null
+  const counts = report.data.tokens.map((token) => token.risks.length)
 
-      const issues = (
-        Object.values(project.riskView) as ScalingProjectRiskViewEntry[]
-      ).reduce((acc, risk) => {
-        if (risk.sentiment !== 'good') {
-          return acc + 1
-        }
-
-        return acc
-      }, 0)
-
-      return issues
-    })
-
-  const sum = counts.reduce<number>((acc, risk) => {
-    if (!risk) return acc
-    return acc + risk
-  }, 0)
+  const sum = counts.reduce((acc, risk) => acc + risk, 0)
 
   const averageIssuesPerToken = Math.round(sum / report.data.tokens.length)
-  const leastIssues = Math.min(...counts.filter((risk) => risk !== null))
+  const leastIssues = Math.min(...counts)
 
   return (
     <Card className="flex flex-col gap-4 rounded-none sm:rounded-xl">
