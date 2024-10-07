@@ -1,7 +1,7 @@
 import { expect } from 'earl'
 import { describeDatabase } from '../../test/database'
-import { AssetRisksBalanceRepository } from './repository'
 import { UpsertableAssetRisksBalanceRecord } from './entity'
+import { AssetRisksBalanceRepository } from './repository'
 
 describeDatabase(AssetRisksBalanceRepository.name, (db) => {
   const repository = db.assetRisksBalance

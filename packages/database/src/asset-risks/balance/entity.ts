@@ -1,6 +1,6 @@
 import { Insertable } from 'kysely'
-import { AssetRisksBalance } from '../../kysely/generated/types'
 import { nanoid } from 'nanoid'
+import { AssetRisksBalance } from '../../kysely/generated/types'
 
 export interface AssetRisksBalanceRecord {
   id: string

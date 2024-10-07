@@ -1,5 +1,7 @@
 import { PoolConfig } from 'pg'
 import { ActivityRepository } from './activity/repository'
+import { AssetRisksBalanceRepository } from './asset-risks/balance/repository'
+import { AssetRisksUserRepository } from './asset-risks/user/repository'
 import { CurrentPriceRepository } from './da-beat/current-price/repository'
 import { StakeRepository } from './da-beat/stake/repository'
 import { DailyDiscoveryRepository } from './discovery/daily-discovery/repository'
@@ -33,8 +35,6 @@ import { TvlCleanerRepository } from './tvl/tvl-cleaner/repository'
 import { ValueRepository } from './tvl/value/repository'
 import { IndexerConfigurationRepository } from './uif/indexer-configuration/repository'
 import { IndexerStateRepository } from './uif/indexer-state/repository'
-import { AssetRisksBalanceRepository } from './asset-risks/balance/repository'
-import { AssetRisksUserRepository } from './asset-risks/user/repository'
 
 export type Database = ReturnType<typeof createDatabase>
 export function createDatabase(config?: PoolConfig) {
