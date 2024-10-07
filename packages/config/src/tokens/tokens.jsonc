@@ -4000,6 +4000,34 @@
   ],
   "real": [
     {
+      "symbol": "CVR",
+      "address": "0xb08f026f8a096e6d92eb5bcbe102c273a7a2d51c",
+      "source": "native",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      },
+      "coingeckoId": "caviar-3"
+    },
+    {
+      "symbol": "UKRE",
+      "address": "0x835d3E1C0aA079C6164AAd21DCb23E60eb71AF48",
+      "source": "native",
+      "supply": "totalSupply",
+      "coingeckoId": "uk-real-estate"
+    },
+    {
+      "symbol": "USDR",
+      "address": "0xb2d75f8Aa33608cF15940Ed47bF139F7CD15d073",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "symbol": "RWA",
       "address": "0x4644066f535Ead0cde82D209dF78d94572fCbf14",
       "source": "native",
@@ -4020,6 +4048,13 @@
         ]
       },
       "coingeckoId": "real-us-t-bill"
+    },
+    {
+      "symbol": "USDC",
+      "address": "0xc518A88c67CECA8B3f24c4562CB71deeB2AF86B7",
+      "source": "native",
+      "supply": "totalSupply",
+      "coingeckoId": "usd-coin"
     },
     {
       "symbol": "PEARL",

@@ -135,5 +135,12 @@ export const real: Layer2 = orbitStackL2({
       description: 'Re.al launches the RWA token and its governance protocol.',
       type: 'general',
     },
+    {
+      name: 'stRWA Token Launch',
+      link: 'https://x.com/real_rwa/status/1841952582488469541',
+      date: '2024-10-1T00:00:00Z',
+      description: 'Re.al launches stRWA; a wrapped, cross-chain, rebasing version of veRWA. stRWA rebases to account for accrued reETH yield while burning a portion of RWA supply in the process.',
+      type: 'general',
+    },
   ],
 })
