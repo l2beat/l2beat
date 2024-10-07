@@ -16,7 +16,6 @@ import {
   STATE_ZKP_SN,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -312,7 +311,7 @@ export const scroll: Layer2 = {
     bridge: { type: 'Enshrined' },
     mode: 'Transaction data (compressed)',
   }),
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: {
       ...STATE_ZKP_SN,
       sources: [
@@ -376,7 +375,7 @@ export const scroll: Layer2 = {
     },
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-  }),
+  },
   technology: {
     newCryptography: {
       ...NEW_CRYPTOGRAPHY.ZK_SNARKS,

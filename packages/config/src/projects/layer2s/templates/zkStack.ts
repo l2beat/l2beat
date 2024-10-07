@@ -26,7 +26,6 @@ import {
   ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../../common'
 import { ChainConfig } from '../../../common/ChainConfig'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
@@ -333,7 +332,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
             bridge: { type: 'Enshrined' },
             mode: 'State diffs (compressed)',
           }),
-    riskView: makeBridgeCompatible({
+    riskView: {
       stateValidation: {
         value: 'ZK proofs',
         description:
@@ -453,7 +452,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       },
       destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
       validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-    }),
+    },
     stage:
       templateVars.stage ??
       (templateVars.daProvider !== undefined

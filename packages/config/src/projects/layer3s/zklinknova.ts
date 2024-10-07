@@ -13,7 +13,6 @@ import {
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -397,7 +396,7 @@ export const zklinknova: Layer3 = {
       },
     ],
   },
-  riskView: makeBridgeCompatible({
+  riskView: {
     validatedBy: RISK_VIEW.VALIDATED_BY_L2(ProjectId('linea')),
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     stateValidation: {
@@ -431,8 +430,8 @@ export const zklinknova: Layer3 = {
     ),
     sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L2'),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-  }),
-  stackedRiskView: makeBridgeCompatible({
+  },
+  stackedRiskView: {
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     stateValidation: RISK_VIEW.STATE_ZKP_L3('Linea'),
@@ -440,7 +439,7 @@ export const zklinknova: Layer3 = {
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0), // TODO(donnoh): something smarter if things change. should be (min(zklink, linea), sum(zklink, linea))
     sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-  }),
+  },
   technology: {
     newCryptography: NEW_CRYPTOGRAPHY.ZK_BOTH,
     dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.GENERIC_OFF_CHAIN,

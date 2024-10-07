@@ -27,7 +27,6 @@ import {
   ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
   pickWorseRisk,
   sumRisk,
 } from '../../../common'
@@ -521,7 +520,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     upgradeDelay: 'No delay',
   }
 
-  const riskView = makeBridgeCompatible({
+  const riskView = {
     stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
       ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(
         nOfChallengers,
@@ -560,7 +559,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     destinationToken:
       templateVars.nonTemplateRiskView?.destinationToken ??
       RISK_VIEW.NATIVE_AND_CANONICAL(),
-  })
+  }
 
   const getStackedRisks = () => {
     assert(
@@ -576,7 +575,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
       baseChainRiskView,
       `Could not find base chain ${templateVars.hostChain} in layer2s`,
     )
-    return makeBridgeCompatible({
+    return {
       stateValidation: pickWorseRisk(
         riskView.stateValidation,
         baseChainRiskView.stateValidation,
@@ -601,7 +600,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
       ),
       validatedBy: riskView.validatedBy,
       destinationToken: riskView.destinationToken,
-    })
+    }
   }
 
   return {
@@ -807,7 +806,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           bridge: { type: 'Enshrined' },
           mode: 'Transaction data (compressed)',
         }),
-    riskView: makeBridgeCompatible({
+    riskView: {
       stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
         ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(
           nOfChallengers,
@@ -846,7 +845,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       destinationToken:
         templateVars.nonTemplateRiskView?.destinationToken ??
         RISK_VIEW.NATIVE_AND_CANONICAL(),
-    }),
+    },
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: [
