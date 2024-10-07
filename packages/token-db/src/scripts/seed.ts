@@ -212,7 +212,7 @@ async function resetDb() {
 
 */
 
-const db = createDatabase()
+const db = createDatabase({ connectionString: env.DATABASE_URL })
 
 // await resetDb()
 await seed()

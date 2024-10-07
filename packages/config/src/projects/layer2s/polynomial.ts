@@ -51,5 +51,5 @@ export const polynomial: Layer2 = opStackL2({
     },
   ],
   usesBlobs: true,
-  useDiscoveryMetaOnly: true,
+  discoveryDrivenData: true,
 })

@@ -1,7 +1,7 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 20792084,
+  "blockNumber": 20878362,
   "configHash": "0x5943efe0a05ae0ecfd3ac11cd0516f29678b9935af12c82b1488fc8272b45d0d",
   "version": 15,
   "contracts": [
@@ -58,7 +58,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 44,
+        "nonce": 47,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -94,7 +94,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0xae3eaa7357676e75578c752113fec93af16bd86197231edb93e7968c410ef68c",
+        "getRoot": "0x728bc17acdd18c10301b56329028db90ef4a757ee3d2fb05705cfaca4eb997c2",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -154,14 +154,14 @@
           "extensions": []
         },
         "EMISSION_ROLE": "0x573321b8a13c75b2702bc4b0ad9afaae98bf6985285411964a564e68bf6da1c9",
-        "lastMint": 1726552967,
+        "lastMint": 1727161487,
         "mintPerSecondCap": "13370000000000000000",
         "name": "Polygon Ecosystem Token",
         "PERMIT2": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
         "PERMIT2_REVOKER_ROLE": "0xbd4c1461ef59750b24719a44d7e2a7948c57fd12c98e333541b7ea7b61f07cb7",
         "permit2Enabled": true,
         "symbol": "POL",
-        "totalSupply": "10259155118486773212109454046",
+        "totalSupply": "10264044459817536867877549070",
         "version": "1.1.0"
       },
       "derivedName": "PolygonEcosystemToken"
@@ -274,7 +274,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x88522c7326b1e1abaf3af373fcb799deda493d1bfffd25eb7ccba7962924e948",
+        "getRollupExitRoot": "0xd6e3ff168bb556ee7297e4834cb0edf2dcc89f8d2d0364dbf7f8130ec58fb47e",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "isVerifyingBatches": [
@@ -290,7 +290,7 @@
           [true],
           [true]
         ],
-        "lastAggregationTimestamp": 1726838147,
+        "lastAggregationTimestamp": 1727878679,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "nondeterministicPendingState": [],
         "pendingStateTimeout": 432000,
@@ -300,8 +300,8 @@
           [
             "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
             1101,
-            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            3
+            "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883",
+            5
           ],
           [
             "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
@@ -364,7 +364,7 @@
             4
           ]
         ],
-        "rollupTypeCount": 4,
+        "rollupTypeCount": 5,
         "rollupTypes": [
           [
             "0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30",
@@ -381,10 +381,14 @@
           [
             "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+          ],
+          [
+            "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
+            "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883"
           ]
         ],
-        "totalSequencedBatches": 361420,
-        "totalVerifiedBatches": 360294,
+        "totalSequencedBatches": 381157,
+        "totalVerifiedBatches": 379830,
         "trustedAggregatorTimeout": 432000,
         "verifyBatchTimeTarget": 1800
       },
@@ -431,8 +435,8 @@
         ],
         "$upgradeCount": 2,
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 45467,
-        "getRoot": "0x4c72edc9ca60d58834c077f3151ee4d7f051f507ca19edf1e230402c47f94b9e",
+        "depositCount": 46304,
+        "getRoot": "0x1212f04cbd439dd1769dd74bac5218cff3ee9542b0950cd9b5d2b61f867f9641",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "derivedName": "PolygonZkEVMGlobalExitRootV2"

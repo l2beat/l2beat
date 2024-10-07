@@ -1,8 +1,8 @@
 {
   "name": "blobstream",
   "chain": "ethereum",
-  "blockNumber": 20812437,
-  "configHash": "0x5fb696e30ac20eb52ba0c15dd0336f8dd6a7a67c38bc1732fb658b41527a8336",
+  "blockNumber": 20878389,
+  "configHash": "0x56a5d5d76ca14f24cdb32acdbd01212b950acf2f1159850a2f8b64e541b95d85",
   "version": 15,
   "contracts": [
     {
@@ -51,10 +51,10 @@
           "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This verifier route was frozen on 2024-09-04."
         },
         "oldVerifier2": {
-          "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen)."
+          "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-09-21."
         },
         "verifier": {
-          "description": "The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-09-04."
+          "description": "The prover contract address for SP1, and whether it is frozen (true if frozen)."
         }
       },
       "derivedName": "SP1VerifierGateway"
@@ -158,10 +158,10 @@
         "GUARDIAN_ROLE": "0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041",
         "headerRangeFunctionId_deprecated": "0xdb3232748ba9f2906d9d2ce97d2fac3963d4346de23c30521f346e10ddad82f7",
         "isRelayerApproved": true,
-        "latestBlock": 2406600,
+        "latestBlock": 2474100,
         "nextHeaderFunctionId_depcrecated": "0xf7ab2ac6f5ccf2da79050efcc0dbdb06d5ae05a332f58076aeac7fc8c73811fe",
         "relayers": ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"],
-        "state_proofNonce": 894,
+        "state_proofNonce": 969,
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "1.1.0"
@@ -551,7 +551,7 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "succinct/SP1Blobstream": "0xb0717b3e2a9ebc9678d934fa77de178537019305cf6fd12950b8f116da2a0e9c",
-    "succinct/SP1SuccinctGateway": "0x469434d0a8618a0831610020a584f9b833db48951a4e6605e45baff5b764ee77"
+    "succinct/SP1SuccinctGateway": "0xe0ec8df0fec605a6cb059948b08432aee71379584a5fa43412fa24a07701c877"
   },
   "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
 }

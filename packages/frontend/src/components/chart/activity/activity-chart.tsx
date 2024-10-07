@@ -7,6 +7,7 @@ import {
 } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
 import { useActivityTimeRangeContext } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-context'
 import { ActivityTimeRangeControls } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-controls'
+import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
 import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
@@ -14,6 +15,7 @@ import { api } from '~/trpc/react'
 import { Checkbox } from '../../core/checkbox'
 import { Chart } from '../core/chart'
 import { ChartProvider } from '../core/chart-provider'
+import { type ChartScale } from '../types'
 import { ActivityChartHeader } from './activity-chart-header'
 import { ActivityChartHover } from './activity-chart-hover'
 import { useActivityChartRenderParams } from './use-activity-chart-render-params'
@@ -27,6 +29,10 @@ export function ActivityChart({ milestones, entries }: Props) {
   const { timeRange, setTimeRange } = useActivityTimeRangeContext()
   const filters = useScalingFilterValues()
   const includeFilter = useScalingFilter()
+  const [scale, setScale] = useLocalStorage<ChartScale>(
+    'scaling-tvl-scale',
+    'lin',
+  )
 
   const [showMainnet, setShowMainnet] = useLocalStorage(
     'scaling-activity-show-mainnet',
@@ -72,6 +78,7 @@ export function ActivityChart({ milestones, entries }: Props) {
       renderHoverContents={(data) => (
         <ActivityChartHover {...data} showEthereum={showMainnet} />
       )}
+      useLogScale={scale === 'log'}
     >
       <section className="flex flex-col gap-4">
         <ActivityChartHeader scalingFactor={scalingFactor} />
@@ -93,6 +100,13 @@ export function ActivityChart({ milestones, entries }: Props) {
               <span className="md:hidden">ETH Txs</span>
             </div>
           </Checkbox>
+          <RadioGroup
+            value={scale}
+            onValueChange={(value) => setScale(value as ChartScale)}
+          >
+            <RadioGroupItem value="log">LOG</RadioGroupItem>
+            <RadioGroupItem value="lin">LIN</RadioGroupItem>
+          </RadioGroup>
         </div>
       </section>
     </ChartProvider>

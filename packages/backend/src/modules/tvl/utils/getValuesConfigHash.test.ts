@@ -60,12 +60,12 @@ function mockAmount(v?: Partial<TotalSupplyEntry>): TotalSupplyEntry {
 
 function mockPrice(v?: Partial<PriceConfigEntry>): PriceConfigEntry {
   return {
+    assetId: AssetId.create(v?.chain ?? 'chain', v?.address),
     address: EthereumAddress.ZERO,
     chain: 'chain',
     type: 'coingecko',
     coingeckoId: CoingeckoId('id'),
     sinceTimestamp: UnixTime.ZERO,
-    assetId: AssetId('test'),
     ...v,
   }
 }

@@ -52,5 +52,5 @@ export const superlumio: Layer2 = opStackL2({
     },
   ],
   usesBlobs: true,
-  useDiscoveryMetaOnly: true,
+  discoveryDrivenData: true,
 })

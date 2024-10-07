@@ -82,8 +82,6 @@ export interface ZkStackConfigCommon {
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
   chainConfig?: ChainConfig
-  upgradesAndGovernance?: string
-  hasProperSecurityCouncil?: boolean
   usesBlobs?: boolean
   isUnderReview?: boolean
   stage?: StageConfig
@@ -268,6 +266,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     id: ProjectId(templateVars.discovery.projectName),
     badges: templateVars.badges ?? [],
     display: {
+      upgradesAndGovernanceImage: 'zk-stack',
       ...templateVars.display,
       provider: 'ZK Stack',
       category: daProvider !== undefined ? 'Validium' : 'ZK Rollup',

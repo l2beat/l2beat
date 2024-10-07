@@ -1,20 +1,130 @@
-Generated with discovered.json: 0x47980f339f0b7364a75e3f0138fb2fe632d472d6
+Generated with discovered.json: 0x6c55d2bea2266f0f7cca234731b3eff5ebb87429
 
-# Diff at Tue, 01 Oct 2024 10:55:03 GMT:
+# Diff at Fri, 04 Oct 2024 13:26:28 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20862552
-- current block number: 20862552
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@e21865803107a0ef87d34bb1ab1104e36fb6c717 block: 20878358
+- current block number: 20892444
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Add some descriptions to the EIGEN minting and rewards distributor contracts.
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 20862552 (main branch discovery), not current.
+discovery. Values are for block 20878358 (main branch discovery), not current.
+
+```diff
+    contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF) {
+    +++ description: None
+      values.$pastUpgrades:
+-        [["2024-03-22T21:12:11.000Z",["0xdAbdB3Cd346B7D5F5779b0B614EdE1CC9DcBA5b7"]]]
+    }
+```
+
+```diff
+    contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A) {
+    +++ description: None
+      values.$pastUpgrades:
+-        [["2023-06-09T22:15:35.000Z",["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]],["2023-06-09T22:16:35.000Z",["0xf97E97649Da958d290e84E6D571c32F4b7F475e4"]],["2024-04-08T16:35:59.000Z",["0x1784BE6401339Fc0Fedf7E9379409f5c1BfE9dda"]]]
+    }
+```
+
+```diff
+    contract StrategyFactory (0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647) {
+    +++ description: Factory contract for permissionless strategy creation via beacon proxies.
+      values.$pastUpgrades:
+-        [["2024-08-09T19:37:23.000Z",["0x3e07cc2D34C8E0965f5BA45Ac1E960e535155c74"]]]
+    }
+```
+
+```diff
+    contract TokenHopper (0x708230Be53c08b270F43e068116EBacc4C13F577) {
+    +++ description: Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner).
+      descriptions:
++        ["Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner)."]
+      fieldMeta:
++        {"latestPress":{"severity":"LOW","description":"Timestamp of the latest press. A button-press makes a call (calldata and cooldown are defined by the owner). Anyone can press the button at the defined time intervals."},"getHopperConfiguration":{"severity":"MEDIUM","description":"Current configuration of the TokenHopper, like calldata executed at each button-press (actionGenerator), target (token) and cooldownSeconds."}}
+    }
+```
+
+```diff
+    contract RewardsCoordinator (0x7750d328b314EfFa365A0402CcfD489B80B0adda) {
+    +++ description: Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.
+      values.$pastUpgrades:
+-        [["2024-07-19T16:32:35.000Z",["0x5bf7c13D5FAdba224ECB3D5C0a67A231D1628785"]],["2024-09-28T05:46:11.000Z",["0xb6738A8E7793D44c5895B6A6F2a62F6bF86Ba8d2"]]]
+      descriptions:
++        ["Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators."]
+    }
+```
+
+```diff
+    contract bEIGEN token (0x83E9115d334D248Ce39a6f36144aEaB5b3456e75) {
+    +++ description: None
+      values.$pastUpgrades:
+-        [["2024-03-20T18:22:35.000Z",["0xB91c69Af3eE022bd0a59Da082945914BFDcEFFE3"]],["2024-09-28T18:27:23.000Z",["0xF2b225815F70c9b327DC9db758A36c92A4279b17"]]]
+    }
+```
+
+```diff
+    contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
+    +++ description: None
+      values.$pastUpgrades:
+-        [["2023-06-09T22:15:47.000Z",["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]],["2023-06-09T22:16:35.000Z",["0x5d25EEf8CfEdaA47d31fE2346726dE1c21e342Fb"]],["2024-04-08T16:35:59.000Z",["0x70f44C13944d49a236E3cD7a94f48f5daB6C619b"]]]
+    }
+```
+
+```diff
+    contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
+    +++ description: None
+      values.$pastUpgrades:
+-        [["2023-06-09T22:15:47.000Z",["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]],["2023-06-09T22:16:47.000Z",["0xEB86a5c40FdE917E6feC440aBbCDc80E3862e111"]],["2024-04-08T16:35:59.000Z",["0xe4297e3DaDBc7D99e26a2954820f514CB50C5762"]],["2024-09-04T16:00:47.000Z",["0x731A0aD160e407393Ff662231Add6Dd145AD3FEa"]]]
+    }
+```
+
+```diff
+    contract Slasher (0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd) {
+    +++ description: None
+      values.$pastUpgrades:
+-        [["2023-06-09T22:15:47.000Z",["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]],["2023-06-09T22:16:35.000Z",["0xef31c292801f24f16479DD83197F1E6AeBb8d6d8"]],["2024-04-08T16:35:59.000Z",["0xF3234220163a757edf1E11a8a085638D9B236614"]]]
+    }
+```
+
+```diff
+    contract EIGEN token (0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83) {
+    +++ description: None
+      values.$pastUpgrades:
+-        [["2023-10-16T23:39:23.000Z",["0xB0e9a10f09ED4304df238624d014205B0786572F"]],["2024-03-20T00:37:35.000Z",["0xfe288960BEb8b189303f49B070CB0bA52e44cF32"]],["2024-04-04T16:39:23.000Z",["0x7EC354C84680112d3cfF1544ec1Eb19ca583700b"]],["2024-09-28T18:27:23.000Z",["0x17f56E911C279bad67eDC08acbC9cf3DC4eF26A0"]]]
+    }
+```
+
+```diff
+    contract RewardAllStakersActionGenerator (0xF2eB394c4e04ff19422EB27411f78d00e216a88d) {
+    +++ description: Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers.
+      descriptions:
++        ["Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers."]
+    }
+```
+
+Generated with discovered.json: 0x3641bb68e8619dad0e36a149ef56bcbbd4b34a78
+
+# Diff at Wed, 02 Oct 2024 14:17:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d101c705b5f4fd0b3af2e251678b85e1005b31d8 block: 20871604
+- current block number: 20878358
+
+## Description
+
+Config related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20871604 (main branch discovery), not current.
 
 ```diff
     contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF) {
@@ -43,6 +153,8 @@ discovery. Values are for block 20862552 (main branch discovery), not current.
 ```diff
     contract RewardsCoordinator (0x7750d328b314EfFa365A0402CcfD489B80B0adda) {
     +++ description: None
+      values.currRewardsCalculationEndTimestamp:
+-        1726963200
       values.$pastUpgrades:
 +        [["2024-07-19T16:32:35.000Z",["0x5bf7c13D5FAdba224ECB3D5C0a67A231D1628785"]],["2024-09-28T05:46:11.000Z",["0xb6738A8E7793D44c5895B6A6F2a62F6bF86Ba8d2"]]]
     }
@@ -88,13 +200,13 @@ discovery. Values are for block 20862552 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0x175cbdb8024fd1348562ca7a1cc64739065bbb6c
+Generated with discovered.json: 0x07b71986b33f7690da5cafb2ff0200cf78ba090b
 
-# Diff at Mon, 30 Sep 2024 09:24:50 GMT:
+# Diff at Tue, 01 Oct 2024 15:42:01 GMT:
 
-- author: sekuba (<sekuba@users.noreply.github.com>)
-- comparing to: main@eec6993b988ab9a9f325d04da2e9717ed24ad0b9 block: 20777978
-- current block number: 20862552
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@974999225bba0722b5e81edd4c1b80928d80ef33 block: 20777978
+- current block number: 20871604
 
 ## Description
 
@@ -123,6 +235,11 @@ New public `mint()` for `isMinter()` addresses and public `burn()` for all. Curr
       values.totalSupply:
 -        "1673646668284660000000000000"
 +        "1681371191369050738461538468"
++++ description: Timestamp after which transfer restrictions (whitelist) are disabled. Preset to uint256 max. Restrictions disabled if == 0.
++++ severity: HIGH
+      values.transferRestrictionsDisabledAfter:
+-        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
++        0
       values.Minters:
 +        ["0x708230Be53c08b270F43e068116EBacc4C13F577"]
       errors:
@@ -159,6 +276,11 @@ New public `mint()` for `isMinter()` addresses and public `burn()` for all. Curr
       values.totalSupply:
 -        "1673646668284660000000000000"
 +        "1681371191369050738461538468"
++++ description: Timestamp after which transfer restrictions (whitelist) are disabled. Preset to uint256 max. Restrictions disabled if == 0.
++++ severity: HIGH
+      values.transferRestrictionsDisabledAfter:
+-        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
++        0
     }
 ```
 

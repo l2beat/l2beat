@@ -1,20 +1,20 @@
-Generated with discovered.json: 0x8c9febf394ebb7092d79ba4f6917754083621fa2
+Generated with discovered.json: 0x8489052aa1b0fac0f8af8fa72fe99ca06e0c92cb
 
-# Diff at Tue, 01 Oct 2024 11:10:56 GMT:
+# Diff at Wed, 02 Oct 2024 14:21:38 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20634500
-- current block number: 20634500
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d101c705b5f4fd0b3af2e251678b85e1005b31d8 block: 20871596
+- current block number: 20878376
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Config related.
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 20634500 (main branch discovery), not current.
+discovery. Values are for block 20871596 (main branch discovery), not current.
 
 ```diff
     contract StarkgateManager (0x0c5aE94f8939182F2D06097025324D1E537d5B60) {
@@ -174,6 +174,42 @@ discovery. Values are for block 20634500 (main branch discovery), not current.
       values.$upgradeCount:
 +        2
     }
+```
+
+Generated with discovered.json: 0x91f6afaf24fc1e2434d43f9d7e5a81ee661d5b16
+
+# Diff at Tue, 01 Oct 2024 15:40:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@974999225bba0722b5e81edd4c1b80928d80ef33 block: 20634500
+- current block number: 20871596
+
+## Description
+
+SECURITY_AGENT role given to new Multisig. Can only activate the withdrawLimit for the ETH escrow (added to permissions). Higher perms are EOA-governed.
+
+## Watched changes
+
+```diff
+    contract ETHBridge (0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) {
+    +++ description: None
+      values.accessControl.SECURITY_AGENT.members.0:
++        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract StarkgateETHSecurityAgentMultisig (0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol                                 | 953 +++++++++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |  35 +
+ 2 files changed, 988 insertions(+)
 ```
 
 Generated with discovered.json: 0x2c4b0cd0339b8c428f9a437291bccbded87a1c38
