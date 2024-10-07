@@ -292,8 +292,6 @@ export const UNDER_REVIEW_RISK_VIEW: ScalingProjectRiskView = {
   validatedBy: UNDER_REVIEW_RISK,
 }
 
-/* New risks for stages */
-
 // SEQUENCER COLUMN
 
 export function SEQUENCER_SELF_SEQUENCE(
@@ -520,17 +518,12 @@ export function EXIT_WINDOW(
 export function EXIT_WINDOW_ZKSTACK(
   upgradeDelay: number,
 ): ScalingProjectRiskViewEntry {
-  // const warning: WarningValueWithSentiment = {
-  //   value: 'The EmergencyUpgradeBoard can upgrade with no delay.',
-  //   sentiment: 'bad',
-  // }
   return {
     value: 'None',
     sentiment: 'bad',
     description: `There is no window for users to exit in case of an unwanted standard upgrade bacause the central operator can censor withdrawal transactions by implementing a TransactionFilterer with no delay. The standard upgrade delay is ${formatSeconds(
       upgradeDelay,
     )}.`,
-    // warning: warning,
   }
 }
 

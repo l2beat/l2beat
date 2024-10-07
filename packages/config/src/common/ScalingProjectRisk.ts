@@ -29,7 +29,6 @@ export interface ScalingProjectRiskViewEntry
   warning?: WarningValueWithSentiment
   // second line in risk view
   secondLine?: string
-  secondSentiment?: 'warning' | 'bad'
   sources?: {
     contract: string
     references: string[]
