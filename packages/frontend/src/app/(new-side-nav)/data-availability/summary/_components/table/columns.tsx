@@ -114,14 +114,6 @@ const risksColumn = columnHelper.accessor('risks', {
   },
 })
 
-const layerTypeColumn = columnHelper.accessor('layerType', {
-  header: 'Layer type',
-  meta: {
-    tooltip:
-      'The type of the DA Layer - Public blockchain or Data availability committee.',
-  },
-})
-
 const tvsColumn = columnHelper.accessor('tvs', {
   header: 'Total value secured',
   cell: (ctx) =>
@@ -158,7 +150,6 @@ export const columns = [
   nameColumn,
   daBridgeColumn,
   risksColumn,
-  layerTypeColumn,
   tvsColumn,
   economicSecurityColumn,
   usedInColumn,

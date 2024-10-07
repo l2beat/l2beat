@@ -46,6 +46,7 @@ import { frame } from './frame'
 import { fraxtal } from './fraxtal'
 import { fuel } from './fuel'
 import { fuelv1 } from './fuelv1'
+import { funki } from './funki'
 import { galxegravity } from './galxegravity'
 import { gluon } from './gluon'
 import { gpt } from './gpt'
@@ -214,6 +215,7 @@ export const layer2s: Layer2[] = [
   fraxtal,
   fuel,
   fuelv1,
+  funki,
   gluon,
   gpt,
   galxegravity,
