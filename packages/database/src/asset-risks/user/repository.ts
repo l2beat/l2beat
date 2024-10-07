@@ -43,13 +43,11 @@ export class AssetRisksUserRepository extends BaseRepository {
       .insertInto('AssetRisksUser')
       .values(upsertableToRecord(upsertable))
       .onConflict((oc) =>
-        oc
-          .column('address')
-          .doUpdateSet((eb) => ({
-            updatedAt: eb.ref('excluded.updatedAt'),
-            tokensRefreshedAt: eb.ref('excluded.tokensRefreshedAt'),
-            balancesRefreshedAt: eb.ref('excluded.balancesRefreshedAt'),
-          })),
+        oc.column('address').doUpdateSet((eb) => ({
+          updatedAt: eb.ref('excluded.updatedAt'),
+          tokensRefreshedAt: eb.ref('excluded.tokensRefreshedAt'),
+          balancesRefreshedAt: eb.ref('excluded.balancesRefreshedAt'),
+        })),
       )
       .execute()
   }
