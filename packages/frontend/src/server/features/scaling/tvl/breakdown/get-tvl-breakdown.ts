@@ -85,6 +85,8 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
             case 'aggLayerL2Token':
             case 'aggLayerNativeEtherPreminted':
             case 'aggLayerNativeEtherWrapped':
+            case 'elasticChainL2Token':
+            case 'elasticChainEther':
               isSharedEscrow = true
               break
             case 'escrow':
