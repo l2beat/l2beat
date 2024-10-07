@@ -7,7 +7,6 @@ import {
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
@@ -79,7 +78,7 @@ export const aztecV1: Layer2 = {
     bridge: { type: 'Enshrined' },
     mode: 'State diffs',
   }),
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
       sources: [
@@ -135,7 +134,7 @@ export const aztecV1: Layer2 = {
     },
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-  }),
+  },
   stateDerivation: {
     nodeSoftware:
       'There are three ways to run a node and use the escape hatch: By running the [Aztec v2 Ejector](https://github.com/AztecProtocol/aztec-v2-ejector/) during the escape hatch window, 2) by running [falafel](https://github.com/AztecProtocol/aztec-2.0/tree/master/falafel), 3) by running the [SDK](https://developers.aztec.network/#/A%20Private%20Layer%202/zkAssets/emergencyWithdraw) in escape hatch mode and connecting to an [escape hatch server](https://github.com/AztecProtocol/aztec-v2-escape-hatch-server). The two latter methods are no longer recommended by the aztec team.',

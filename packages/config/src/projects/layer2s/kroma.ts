@@ -14,7 +14,6 @@ import {
   OPERATOR,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../common'
 import { subtractOne } from '../../common/assessCount'
 import { RISK_VIEW } from '../../common/riskView'
@@ -211,7 +210,7 @@ export const kroma: Layer2 = {
     bridge: { type: 'Enshrined' },
     mode: 'Transaction data',
   }),
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_INT_ZK,
       description:
@@ -268,7 +267,7 @@ export const kroma: Layer2 = {
     },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-  }),
+  },
   stage: getStage(
     {
       stage0: {

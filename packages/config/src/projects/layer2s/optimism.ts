@@ -18,7 +18,6 @@ import {
   NUGGETS,
   RISK_VIEW,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../common'
 import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
@@ -337,7 +336,7 @@ export const optimism: Layer2 = {
     bridge: { type: 'Enshrined' },
     mode: 'Transaction data (compressed)',
   }),
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_INT,
       sources: [
@@ -360,7 +359,7 @@ export const optimism: Layer2 = {
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-  }),
+  },
   technology: {
     stateCorrectness: {
       name: 'Fraud proofs ensure state correctness',

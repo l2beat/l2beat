@@ -10,7 +10,6 @@ import {
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
@@ -114,7 +113,7 @@ export const zkspace: Layer2 = {
     bridge: { type: 'Enshrined' },
     mode: 'State diffs',
   }),
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
       sources: [
@@ -174,7 +173,7 @@ export const zkspace: Layer2 = {
     },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-  }),
+  },
   stage: getStage({
     stage0: {
       callsItselfRollup: true,

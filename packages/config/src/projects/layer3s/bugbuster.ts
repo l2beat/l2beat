@@ -6,7 +6,6 @@ import {
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
@@ -120,7 +119,7 @@ export const bugbuster: Layer3 = {
     bridge: { type: 'Enshrined' },
     mode: 'Transaction data',
   }),
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,
       value: 'None',
@@ -141,8 +140,8 @@ export const bugbuster: Layer3 = {
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
     destinationToken: RISK_VIEW.CANONICAL,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-  }),
-  stackedRiskView: makeBridgeCompatible({
+  },
+  stackedRiskView: {
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN_L3,
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
@@ -152,7 +151,7 @@ export const bugbuster: Layer3 = {
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
     destinationToken: RISK_VIEW.CANONICAL,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-  }),
+  },
   permissions: [
     {
       name: 'BugBuster Owner',

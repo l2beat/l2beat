@@ -1,8 +1,8 @@
 import { expect } from 'earl'
 
-import { formatLargeNumberShared } from './formatLargeNumberShared'
+import { formatLargeNumber } from './formatLargeNumber'
 
-describe(formatLargeNumberShared.name, () => {
+describe(formatLargeNumber.name, () => {
   const cases = [
     { value: 0, expected: '0.00' },
     { value: 1, expected: '1.00' },
@@ -35,7 +35,7 @@ describe(formatLargeNumberShared.name, () => {
   describe('positive', () => {
     for (const { value, expected } of cases) {
       it(`formats ${value} as ${expected}`, () => {
-        const result = formatLargeNumberShared(value)
+        const result = formatLargeNumber(value)
         expect(result).toEqual(expected)
       })
     }
@@ -47,7 +47,7 @@ describe(formatLargeNumberShared.name, () => {
         continue
       }
       it(`formats ${-value} as -${expected}`, () => {
-        const result = formatLargeNumberShared(-value)
+        const result = formatLargeNumber(-value)
         expect(result).toEqual('-' + expected)
       })
     }

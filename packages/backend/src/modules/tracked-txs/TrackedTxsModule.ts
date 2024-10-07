@@ -14,7 +14,6 @@ import {
 import { HourlyIndexer } from './HourlyIndexer'
 import { TrackedTxsClient } from './TrackedTxsClient'
 import { TrackedTxsIndexer } from './TrackedTxsIndexer'
-import { createTrackedTxsStatusRouter } from './api/TrackedTxsStatusRouter'
 import { createL2CostsModule } from './modules/l2-costs/L2CostsModule'
 import { L2CostsAggregatorIndexer } from './modules/l2-costs/indexers/L2CostsAggregatorIndexer'
 import { L2CostsPricesIndexer } from './modules/l2-costs/indexers/L2CostsPricesIndexer'
@@ -155,10 +154,6 @@ export function createTrackedTxsModule(
 
   return {
     start,
-    routers: [
-      ...subModules.flatMap((m) => m?.routers ?? []),
-      createTrackedTxsStatusRouter({ clock, db: peripherals.database }),
-    ],
     indexer: trackedTxsIndexer,
   }
 }

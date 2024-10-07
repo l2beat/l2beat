@@ -32,7 +32,6 @@ import {
   ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
   pickWorseRisk,
   sumRisk,
 } from '../../../common'
@@ -106,7 +105,7 @@ export interface OpStackConfigCommon {
   isUnderReview?: boolean
   stage?: StageConfig
   badges?: BadgeId[]
-  useDiscoveryMetaOnly?: boolean
+  discoveryDrivenData?: boolean
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -314,7 +313,7 @@ export function opStackCommon(
       ],
     },
     permissions:
-      templateVars.useDiscoveryMetaOnly === true
+      templateVars.discoveryDrivenData === true
         ? [
             ...templateVars.discovery.getDiscoveredRoles(),
             ...templateVars.discovery.getDiscoveredPermissions(),
@@ -332,7 +331,7 @@ export function opStackCommon(
     nativePermissions: templateVars.nonTemplateNativePermissions,
     contracts: {
       addresses:
-        templateVars.useDiscoveryMetaOnly === true
+        templateVars.discoveryDrivenData === true
           ? templateVars.discovery.getDiscoveredContracts()
           : [
               ...templateVars.discovery.getOpStackContractDetails(
@@ -366,6 +365,7 @@ export function opStackCommon(
       [Badge.Stack.OPStack, Badge.VM.EVM, daBadge],
       templateVars.badges ?? [],
     ),
+    discoveryDrivenData: templateVars.discoveryDrivenData,
   }
 }
 
@@ -550,7 +550,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
             bridge: { type: 'Enshrined' },
             mode: 'Transaction data (compressed)',
           }),
-    riskView: makeBridgeCompatible({
+    riskView: {
       stateValidation: {
         ...RISK_VIEW.STATE_NONE,
         secondLine: `${formatSeconds(
@@ -605,7 +605,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
       },
       destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
       validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-    }),
+    },
     stage:
       templateVars.stage === undefined
         ? daProvider !== undefined || templateVars.isNodeAvailable === undefined
@@ -681,7 +681,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     upgradeDelay: 'No delay',
   }
 
-  const riskView = makeBridgeCompatible({
+  const riskView = {
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: {
       ...riskViewDA(daProvider),
@@ -731,7 +731,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-  })
+  }
 
   const getStackedRisks = () => {
     assert(
@@ -747,7 +747,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
       baseChainRiskView,
       `Could not find base chain ${templateVars.hostChain} in layer2s`,
     )
-    return makeBridgeCompatible({
+    return {
       stateValidation: pickWorseRisk(
         riskView.stateValidation,
         baseChainRiskView.stateValidation,
@@ -772,7 +772,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
       ),
       validatedBy: riskView.validatedBy,
       destinationToken: riskView.destinationToken,
-    })
+    }
   }
 
   const architectureImage = templateVars.discovery.hasContract(
