@@ -8,7 +8,7 @@ Generated with discovered.json: 0xfbc3c3ed7ea22189bc191b49975f6fb26f5fed13
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Discovery driven data.
 
 ## Config/verification related changes
 
