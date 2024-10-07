@@ -11,22 +11,23 @@ describeDatabase(AssetRisksBalanceRepository.name, (db) => {
   let tokens: [string, string, string, string]
 
   beforeEach(async function () {
-    await db.assetRisksUser.upsert({ address: 'a' })
-    await db.assetRisksUser.upsert({ address: 'b' })
+    // Upsert dummy network
     await db.network.upsert({ name: 'Mainnet', chainId: 1 })
-    await db.token.upsertMany([
-      { networkId, address: 'a' },
-      { networkId, address: 'b' },
-      { networkId, address: 'c' },
-      { networkId, address: 'd' },
-    ])
-
     const allNetworks = await db.network.getAll()
     assert(
       allNetworks.length === 1 && allNetworks[0],
       'Expected exactly one network',
     )
     networkId = allNetworks[0].id
+
+    await db.assetRisksUser.upsert({ address: 'a' })
+    await db.assetRisksUser.upsert({ address: 'b' })
+    await db.token.upsertMany([
+      { networkId, address: 'a' },
+      { networkId, address: 'b' },
+      { networkId, address: 'c' },
+      { networkId, address: 'd' },
+    ])
 
     const allUsers = await db.assetRisksUser.getAll()
     assert(
