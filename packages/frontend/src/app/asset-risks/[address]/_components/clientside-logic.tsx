@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { api } from '~/trpc/react'
 import { type Address } from 'viem'
 
@@ -9,24 +9,18 @@ export function ClientsideLogic({ address }: { address: Address }) {
   const refreshBalances = api.assetRisks.refreshBalances.useMutation()
 
   const report = api.assetRisks.report.useQuery({ address })
+  const [refetched, setRefetched] = useState(false)
 
   useEffect(() => {
-    if (!report.data) return
-    if (
-      !report.data.tokensRefreshedAt ||
-      report.data.tokensRefreshedAt < new Date(Date.now() - 1000 * 60 * 60)
-    ) {
-      refreshTokens.mutate({ address })
-      return
-    }
-    if (
-      !report.data.balancesRefreshedAt ||
-      report.data.balancesRefreshedAt < new Date(Date.now() - 1000 * 60)
-    ) {
-      refreshBalances.mutate({ address })
-      return
-    }
-  }, [address, refreshBalances, refreshTokens, report.data])
+    if (refetched) return
+    setRefetched(true)
+    void (async () => {
+      await refreshTokens.mutateAsync({ address })
+      await report.refetch()
+      await refreshBalances.mutateAsync({ address })
+      await report.refetch()
+    })()
+  }, [address, refetched, refreshBalances, refreshTokens, report])
 
   return (
     <div>

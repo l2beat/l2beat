@@ -19,6 +19,11 @@ export async function refreshBalancesOfAddress(address: Address) {
     })
   }
 
+  await db.assetRisksUser.upsert({
+    address,
+    balancesRefreshedAt: new Date(),
+  })
+
   const balances = await db.assetRisksBalance.getAllForUser(user.id)
   const tokens = await db.token.getByIds(balances.map((b) => b.tokenId))
   const tokensByNetwork = tokens.reduce<Record<string, TokenRecord[]>>(

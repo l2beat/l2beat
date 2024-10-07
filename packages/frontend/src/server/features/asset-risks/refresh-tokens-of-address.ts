@@ -18,6 +18,11 @@ export async function refreshTokensOfAddress(address: Address) {
 
   assert(user, 'User not found')
 
+  await db.assetRisksUser.upsert({
+    address,
+    tokensRefreshedAt: new Date(),
+  })
+
   // All tokens grouped by network
   const tokensByNetwork = (await db.token.getAll()).reduce<
     Record<string, TokenRecord[]>
