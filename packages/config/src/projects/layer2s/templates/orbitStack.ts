@@ -135,7 +135,7 @@ export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
   > & {
     category?: Layer3Display['category']
   }
-  stackedRiskView?: ScalingProjectRiskView
+  stackedRiskView?: Partial<ScalingProjectRiskView>
   hostChain: ProjectId
   nativeToken?: string
 }
@@ -576,30 +576,40 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
       `Could not find base chain ${templateVars.hostChain} in layer2s`,
     )
     return {
-      stateValidation: pickWorseRisk(
-        riskView.stateValidation,
-        baseChainRiskView.stateValidation,
-      ),
-      dataAvailability: pickWorseRisk(
-        riskView.dataAvailability,
-        baseChainRiskView.dataAvailability,
-      ),
-      exitWindow: pickWorseRisk(
-        riskView.exitWindow,
-        baseChainRiskView.exitWindow,
-      ),
-      sequencerFailure: sumRisk(
-        riskView.sequencerFailure,
-        baseChainRiskView.sequencerFailure,
-        RISK_VIEW.SEQUENCER_SELF_SEQUENCE,
-      ),
-      proposerFailure: sumRisk(
-        riskView.proposerFailure,
-        baseChainRiskView.proposerFailure,
-        RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
-      ),
-      validatedBy: riskView.validatedBy,
-      destinationToken: riskView.destinationToken,
+      stateValidation:
+        templateVars.stackedRiskView?.stateValidation ??
+        pickWorseRisk(
+          riskView.stateValidation,
+          baseChainRiskView.stateValidation,
+        ),
+      dataAvailability:
+        templateVars.stackedRiskView?.dataAvailability ??
+        pickWorseRisk(
+          riskView.dataAvailability,
+          baseChainRiskView.dataAvailability,
+        ),
+      exitWindow:
+        templateVars.stackedRiskView?.exitWindow ??
+        pickWorseRisk(riskView.exitWindow, baseChainRiskView.exitWindow),
+      sequencerFailure:
+        templateVars.stackedRiskView?.sequencerFailure ??
+        sumRisk(
+          riskView.sequencerFailure,
+          baseChainRiskView.sequencerFailure,
+          RISK_VIEW.SEQUENCER_SELF_SEQUENCE,
+        ),
+      proposerFailure:
+        templateVars.stackedRiskView?.sequencerFailure ??
+        sumRisk(
+          riskView.proposerFailure,
+          baseChainRiskView.proposerFailure,
+          RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
+        ),
+      validatedBy:
+        templateVars.stackedRiskView?.validatedBy ?? riskView.validatedBy,
+      destinationToken:
+        templateVars.stackedRiskView?.destinationToken ??
+        riskView.destinationToken,
     }
   }
 
@@ -644,7 +654,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
           bridge: { type: 'Enshrined' },
           mode: 'Transaction data (compressed)',
         }),
-    stackedRiskView: templateVars.stackedRiskView ?? getStackedRisks(),
+    stackedRiskView: getStackedRisks(),
     riskView,
     config: {
       associatedTokens: templateVars.associatedTokens,
