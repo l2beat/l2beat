@@ -1124,7 +1124,7 @@
     },
     {
       "name": "Pencils Protocol",
-      "coingeckoId": "pencils-protocol",
+      "coingeckoId": "penpad-token",
       "address": "0x5FC429110A64bC51b57Ca86dCE1714FD0fBec303",
       "symbol": "DAPP",
       "decimals": 18,
@@ -1133,7 +1133,7 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/36569/large/Pencils_Protocol_Profile_Pic.png?1722658792",
       "chainId": 534352,
-      "source": "canonical",
+      "source": "native",
       "supply": "totalSupply"
     },
     {
