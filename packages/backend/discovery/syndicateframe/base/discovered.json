@@ -3,7 +3,6 @@
   "chain": "base",
   "blockNumber": 20760966,
   "configHash": "0x7c7f8927130edd59bfd8c0196ceec0a95a647369af838d326053b8059ea8d3cc",
-  "version": 15,
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -660,5 +659,5 @@
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0x46fe05664c6168de6029fca0f3968c29d03176659063cc698514a45135ec8c98"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

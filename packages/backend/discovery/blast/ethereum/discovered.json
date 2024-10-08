@@ -1,8 +1,8 @@
 {
   "name": "blast",
   "chain": "ethereum",
-  "blockNumber": 20921202,
-  "configHash": "0x43d5974d38a19c4b3be7654d939c615a163940fd34d35e207a02f9cc4e298163",
+  "blockNumber": 20921743,
+  "configHash": "0x8baa00b782bb67bbb3dbda04886f2e9cd1f0ae7afc48216b0637f6b98a650fb5",
   "contracts": [
     {
       "name": "DSRYieldProvider",
@@ -61,8 +61,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 100000,
-          "prevBlockNum": 20921005
+          "prevBoughtGas": 509262,
+          "prevBlockNum": 20921709
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
@@ -319,7 +319,7 @@
         ],
         "$upgradeCount": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292736363",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292736365",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -384,7 +384,7 @@
         "staker": "0x9eDFc192fC4d29b8f2b18f484211161b6Fc8063E",
         "totalETHBalance": "1300085465740785651018",
         "totalETHShares": "1262749265366146659353",
-        "totalUSDBalanceNoUpdate": "295105317195250162140341",
+        "totalUSDBalanceNoUpdate": "295108575846968337120756",
         "totalUSDShares": "276938324863032263562161",
         "USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "USDT": "0xdAC17F958D2ee523a2206206994597C13D831ec7"
@@ -532,10 +532,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 9790200,
-        "latestOutputIndex": 5438,
-        "nextBlockNumber": 9792000,
-        "nextOutputIndex": 5439,
+        "latestBlockNumber": 9793800,
+        "latestOutputIndex": 5440,
+        "nextBlockNumber": 9795600,
+        "nextOutputIndex": 5441,
         "proposer": "0x082b616Ec99167B2FEdee053F07db6795D4dA821",
         "PROPOSER": "0x082b616Ec99167B2FEdee053F07db6795D4dA821",
         "startingBlockNumber": 0,
@@ -591,7 +591,9 @@
       "name": "USDYieldManager",
       "address": "0xa230285d5683C74935aD14c446e137c8c8828438",
       "proxyType": "EIP1967 proxy",
-      "descriptions": ["Contract managing Yield Providers for stablecoins."],
+      "descriptions": [
+        "Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI)."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",

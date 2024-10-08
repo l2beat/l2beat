@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20914730,
   "configHash": "0x5aac61d25d132e1f851b2a0bd63cd2775dc407c546ec163ecf0b82b5d10721b4",
-  "version": 15,
   "contracts": [
     {
       "name": "SuperchainConfig",
@@ -933,5 +932,5 @@
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0x46fe05664c6168de6029fca0f3968c29d03176659063cc698514a45135ec8c98"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

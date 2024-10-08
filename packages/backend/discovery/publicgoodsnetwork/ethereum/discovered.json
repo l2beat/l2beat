@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20913652,
   "configHash": "0x3a54f3ab3aeb854af2a1777b38da8dc8dc9f3879d47ee4eda3de6e36ed655d68",
-  "version": 15,
   "contracts": [
     {
       "name": "AddressManager",
@@ -693,5 +692,5 @@
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0x1035c2c5b8e1c3436010db1d1662e0ffd2cca41e71a8f7e9c0b114c87751f259"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

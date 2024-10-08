@@ -1,9 +1,9 @@
 Generated with discovered.json: 0x5094b497a00fbdf8db369dfc3f5b590d682b3fc7
 
-# Diff at Tue, 08 Oct 2024 14:35:35 GMT:
+# Diff at Tue, 08 Oct 2024 16:23:14 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
-- comparing to: main@3069a46c34e7e7107a5724e2f3fedca60df7b90c block: 20775890
+- comparing to: main@bca55174129419533cd4173605c170ea99ac6f98 block: 20775890
 - current block number: 20921492
 
 ## Description

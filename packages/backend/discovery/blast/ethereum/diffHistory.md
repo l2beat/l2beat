@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x82da0f3a7eb671a0bf87690c33553a605ed63877
+Generated with discovered.json: 0x275e73455341fbccfe83604eb8606015aa998bbb
 
-# Diff at Tue, 08 Oct 2024 13:37:38 GMT:
+# Diff at Tue, 08 Oct 2024 16:23:05 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
-- comparing to: main@3069a46c34e7e7107a5724e2f3fedca60df7b90c block: 20661171
-- current block number: 20921202
+- comparing to: main@bca55174129419533cd4173605c170ea99ac6f98 block: 20661171
+- current block number: 20921743
 
 ## Description
 
@@ -144,9 +144,9 @@ discovery. Values are for block 20661171 (main branch discovery), not current.
 
 ```diff
     contract USDYieldManager (0xa230285d5683C74935aD14c446e137c8c8828438) {
-    +++ description: Contract managing Yield Providers for stablecoins.
+    +++ description: Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI).
       descriptions:
-+        ["Contract managing Yield Providers for stablecoins."]
++        ["Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI)."]
     }
 ```
 

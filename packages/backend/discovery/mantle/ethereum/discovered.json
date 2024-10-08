@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20675899,
   "configHash": "0x545581edf4a871d69dbd50020ae765821e0885a5519c3ba149b700e1bfbbc8b3",
-  "version": 15,
   "contracts": [
     {
       "name": "PauserRegistry",
@@ -2087,5 +2086,5 @@
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091"
   },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }
