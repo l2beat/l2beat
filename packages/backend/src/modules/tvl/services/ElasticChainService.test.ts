@@ -54,9 +54,9 @@ describe(ElasticChainService.name, () => {
       ])
 
       expect(result).toEqual([
+        amountRecord(MOCK_ID3, 1000n),
         amountRecord(MOCK_ID1, 400n),
         amountRecord(MOCK_ID2, 700n),
-        amountRecord(MOCK_ID3, 1000n),
       ])
       expect(rpcClient.getBalance).not.toHaveBeenCalled()
       expect(rpcClient.call).not.toHaveBeenCalled()
