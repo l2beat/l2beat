@@ -1,6 +1,5 @@
 import { AmountRecord } from '@l2beat/database'
 import {
-  assert,
   Bytes,
   ElasticChainL2Token,
   EthereumAddress,
@@ -39,21 +38,29 @@ export class ElasticChainService {
     blockNumber: number,
     tokens: Config<'elasticChainL2Token' | 'elasticChainEther'>[],
   ): Promise<AmountRecord[]> {
+    const results: AmountRecord[] = []
+
+    const ether = tokens.find((token) => token.type === 'elasticChainEther')
+    if (ether) {
+      const etherAmount = await this.getEtherAmount(
+        timestamp,
+        blockNumber,
+        ether,
+      )
+      results.push(etherAmount)
+    }
+
     const l2Tokens = tokens.filter(
       (token) => token.type === 'elasticChainL2Token',
     )
-
-    const ether = tokens.find((token) => token.type === 'elasticChainEther')
-    assert(ether, 'ElasticChainEther config not found')
-    const etherAmount = await this.getEtherAmount(timestamp, blockNumber, ether)
-
     const l2TokensAmounts = await this.getL2TokensAmounts(
       timestamp,
       blockNumber,
       l2Tokens,
     )
+    results.push(...l2TokensAmounts)
 
-    return [...l2TokensAmounts, etherAmount]
+    return results
   }
 
   async getEtherAmount(

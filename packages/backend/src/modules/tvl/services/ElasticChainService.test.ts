@@ -61,6 +61,43 @@ describe(ElasticChainService.name, () => {
       expect(rpcClient.getBalance).not.toHaveBeenCalled()
       expect(rpcClient.call).not.toHaveBeenCalled()
     })
+
+    it('fetch amounts for l2 tokens and ether as undefined', async () => {
+      const mockToken1 = elasticChainL2Token({
+        l1Address: EthereumAddress.random(),
+      })
+      const mockToken2 = elasticChainL2Token({
+        l1Address: EthereumAddress.random(),
+      })
+
+      const rpcClient = mockObject<RpcClient>({
+        getBalance: mockFn(),
+        call: mockFn(),
+      })
+      const service = elasticChainService({
+        rpcClient,
+      })
+
+      service.getL2TokensAmounts = mockFn().resolvesTo([
+        amountRecord(MOCK_ID1, 400n),
+        amountRecord(MOCK_ID2, 700n),
+      ])
+      service.getEtherAmount = mockFn().resolvesTo(
+        amountRecord(MOCK_ID3, 1000n),
+      )
+
+      const result = await service.fetchAmounts(NOW, 0, [
+        mockToken1,
+        mockToken2,
+      ])
+
+      expect(result).toEqual([
+        amountRecord(MOCK_ID1, 400n),
+        amountRecord(MOCK_ID2, 700n),
+      ])
+      expect(rpcClient.getBalance).not.toHaveBeenCalled()
+      expect(rpcClient.call).not.toHaveBeenCalled()
+    })
   })
 
   describe(ElasticChainService.prototype.getEtherAmount.name, () => {
