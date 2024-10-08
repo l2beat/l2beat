@@ -15,7 +15,7 @@ export function RiskDetails({ token }: { token: Token }) {
       <div className="grid grid-cols-4 pt-4">
         <div className="flex flex-col">
           <span className="text-xs font-bold text-zinc-500">Token</span>
-          <div className="flex items-center gap-1 font-semibold">
+          <div className="flex items-center gap-1 font-medium">
             {token.token.iconUrl && (
               <Image
                 src={token.token.iconUrl}
@@ -40,7 +40,7 @@ export function RiskDetails({ token }: { token: Token }) {
           {token.token.address ? (
             // TODO: Add link to block explorer when we start fetching from DB
             <Link href={'/'} className="flex items-center gap-1">
-              <span className="font-semibold text-blue-600 underline">
+              <span className="font-medium text-blue-600 underline">
                 {formatAddress(token.token.address)}
               </span>
               <OutLinkIcon className="fill-blue-600" />
@@ -51,11 +51,11 @@ export function RiskDetails({ token }: { token: Token }) {
         </div>
         <div className="flex flex-col">
           <span className="text-xs font-bold text-zinc-500">Chain</span>
-          <div className="flex items-center gap-1 font-semibold">
+          <div className="flex items-center gap-1 font-medium">
             {/* TODO: Add link to block explorer when we start fetching from DB */}
             <Link
               href={'/'}
-              className="text-base font-semibold text-blue-700 underline"
+              className="text-base font-medium text-blue-700 underline"
             >
               {/* TODO: add link to chain icon */}
               {/* <Image
@@ -71,11 +71,11 @@ export function RiskDetails({ token }: { token: Token }) {
         </div>
         <div className="flex flex-col">
           <span className="text-xs font-bold text-zinc-500">Bridge</span>
-          <div className="flex items-center gap-1 font-semibold">
+          <div className="flex items-center gap-1 font-medium">
             {/* TODO: Add link to block explorer when we start fetching from DB */}
             <Link
               href={'/'}
-              className="text-base font-semibold text-blue-700 underline"
+              className="text-base font-medium text-blue-700 underline"
             >
               {/* TODO: add link to bridge icon */}
               {/* <Image
@@ -110,7 +110,7 @@ function CategoryRisks({ title, risks }: { title: string; risks: Risk[] }) {
 
   return (
     <div className="flex flex-col gap-[8px] rounded-lg border border-gray-400 p-4">
-      <span className="text-[13px] font-semibold uppercase text-zinc-500">
+      <span className="text-[13px] font-medium uppercase text-zinc-500">
         {title}
       </span>
       <div className="flex flex-col gap-3 pl-4">
@@ -122,7 +122,7 @@ function CategoryRisks({ title, risks }: { title: string; risks: Risk[] }) {
               </div>
               <span
                 className={cn(
-                  'whitespace-normal text-sm font-semibold',
+                  'whitespace-normal text-sm font-medium',
                   risk.isCritical ? 'text-red-700' : 'text-zinc-800',
                 )}
               >

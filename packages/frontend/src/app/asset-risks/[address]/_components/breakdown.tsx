@@ -90,7 +90,7 @@ export function Breakdown() {
               <span className="hidden font-medium text-zinc-500 sm:inline-block">
                 ({g.weight}%)
               </span>
-              <span className="font-semibold text-zinc-800">{g.name}</span>
+              <span className="font-medium text-zinc-800">{g.name}</span>
             </div>
             <div className="block sm:hidden">
               <span className="pl-1 font-extrabold text-pink-900">
@@ -162,7 +162,7 @@ function BreakdownItem({
       </span>
       <span
         ref={textRef}
-        className="hidden text-ellipsis whitespace-nowrap text-sm font-semibold leading-[15px] md:inline-block"
+        className="hidden text-ellipsis whitespace-nowrap text-sm font-medium leading-[15px] md:inline-block"
       >
         {group.name}
       </span>

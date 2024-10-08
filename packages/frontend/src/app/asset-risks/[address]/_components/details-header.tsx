@@ -45,7 +45,7 @@ export function DetailsHeader(props: DetailsHeaderProps) {
           <span className="text-xs font-bold text-zinc-500 dark:text-gray-50">
             Wallet
           </span>
-          <span className="flex items-center gap-2 text-xl font-semibold">
+          <span className="flex items-center gap-2 text-xl font-medium">
             {isAddress(props.walletAddress)
               ? formatAddress(props.walletAddress)
               : props.walletAddress}
