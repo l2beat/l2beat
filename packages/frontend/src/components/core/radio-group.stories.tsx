@@ -1,7 +1,7 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 import { userEvent, within } from '@storybook/test'
-import { RadioGroup, RadioGroupItem } from './radio-group'
 import { onlyDesktopModes } from '~/../.storybook/modes'
+import { RadioGroup, RadioGroupItem } from './radio-group'
 
 const meta = {
   title: 'Atoms/Radio Group',

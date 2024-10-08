@@ -1,5 +1,6 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 import { userEvent, within } from '@storybook/test'
+import { onlyDesktopModes } from '~/../.storybook/modes'
 import {
   Select,
   SelectContent,
@@ -7,7 +8,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from './select'
-import { onlyDesktopModes } from '~/../.storybook/modes'
 
 const meta = {
   title: 'Atoms/Select',
