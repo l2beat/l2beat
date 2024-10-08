@@ -93,7 +93,7 @@ export const OverflowWrapper = forwardRef<HTMLDivElement, OverflowWrapperProps>(
           data-role="overflow-wrapper-content"
           ref={mergeRefs(contentRef, ref)}
           className={cn(
-            'scrollbar-hide -m-1 overflow-x-auto [&>*]:m-1',
+            'scrollbar-hide overflow-x-auto',
             visibleArrows === 'left' && 'fade-out-to-left',
             visibleArrows === 'right' && 'fade-out-to-right',
             visibleArrows === 'both' && 'fade-out-horizontal',
