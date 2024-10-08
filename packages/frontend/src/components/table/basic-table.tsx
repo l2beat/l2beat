@@ -218,8 +218,8 @@ export function BasicTable<T extends BasicEntry>({
                           cell.column.getIsPinned() &&
                             getRowTypeClassNamesWithoutOpacity(rowType),
                           groupParams?.isFirstInGroup && 'pl-6',
-                          groupParams?.isLastInGroup && 'pr-6',
-                          cell.column.getCanSort() && meta?.align !== 'right'
+                          groupParams?.isLastInGroup && '!pr-6',
+                          cell.column.getCanSort() && meta?.align === undefined
                             ? groupParams?.isFirstInGroup
                               ? 'pl-10'
                               : 'pl-4'
