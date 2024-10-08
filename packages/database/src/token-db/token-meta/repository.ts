@@ -15,6 +15,14 @@ export class TokenMetaRepository extends BaseRepository {
     return rows
   }
 
+  async getByTokenId(tokenId: string): Promise<TokenMetaRecord[]> {
+    return await this.db
+      .selectFrom('TokenMeta')
+      .select(selectTokenMeta)
+      .where('tokenId', '=', tokenId)
+      .execute()
+  }
+
   async upsert(record: UpsertableTokenMetaRecord): Promise<{ id: string }> {
     const row = upsertableToRow(record)
 
