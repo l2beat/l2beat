@@ -5,6 +5,7 @@ import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import {
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
+  TrackedTxSharedBridgeConfig,
   TrackedTxSharpSubmissionConfig,
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
@@ -49,12 +50,20 @@ export class TrackedTxsClient {
         TrackedTxConfigEntry & { params: TrackedTxSharpSubmissionConfig }
       > => c.properties.params.formula === 'sharpSubmission',
     )
+    const sharedBridgesConfig = configurations.filter(
+      (
+        c,
+      ): c is Configuration<
+        TrackedTxConfigEntry & { params: TrackedTxSharedBridgeConfig }
+      > => c.properties.params.formula === 'sharedBridge',
+    )
 
     const [transfers, functionCalls] = await Promise.all([
       this.getTransfers(transfersConfig, from, to),
       this.getFunctionCalls(
         functionCallsConfig,
         sharpSubmissionsConfig,
+        sharedBridgesConfig,
         from,
         to,
       ),
@@ -90,6 +99,9 @@ export class TrackedTxsClient {
     sharpSubmissionsConfig: Configuration<
       TrackedTxConfigEntry & { params: TrackedTxSharpSubmissionConfig }
     >[],
+    sharedBridgesConfig: Configuration<
+      TrackedTxConfigEntry & { params: TrackedTxSharedBridgeConfig }
+    >[],
     from: UnixTime,
     to: UnixTime,
   ): Promise<TrackedTxFunctionCallResult[]> {
@@ -101,6 +113,7 @@ export class TrackedTxsClient {
       combineCalls(
         functionCallsConfig.map((c) => c.properties.params),
         sharpSubmissionsConfig.map((c) => c.properties.params),
+        sharedBridgesConfig.map((c) => c.properties.params),
       ),
       from,
       to,
@@ -116,6 +129,7 @@ export class TrackedTxsClient {
     return transformFunctionCallsQueryResult(
       functionCallsConfig,
       sharpSubmissionsConfig,
+      sharedBridgesConfig,
       parsedResult,
     )
   }
@@ -124,10 +138,12 @@ export class TrackedTxsClient {
 function combineCalls(
   functionCallsConfig: TrackedTxFunctionCallConfig[],
   sharpSubmissionsConfig: TrackedTxSharpSubmissionConfig[],
+  sharedBridgesConfig: TrackedTxSharedBridgeConfig[],
 ) {
   // TODO: unique
   return [
     ...functionCallsConfig.map((c) => ({ ...c, getFullInput: false })),
     ...sharpSubmissionsConfig.map((c) => ({ ...c, getFullInput: true })),
+    ...sharedBridgesConfig.map((c) => ({ ...c, getFullInput: true })),
   ]
 }

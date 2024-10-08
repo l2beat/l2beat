@@ -24,6 +24,7 @@ interface TrackedTxConfigBase {
     | TrackedTxFunctionCallConfig
     | TrackedTxTransferConfig
     | TrackedTxSharpSubmissionConfig
+    | TrackedTxSharedBridgeConfig
   subtype: TrackedTxsConfigSubtype
 }
 
@@ -53,4 +54,12 @@ export interface TrackedTxSharpSubmissionConfig {
   address: EthereumAddress
   selector: string
   programHashes: string[]
+}
+
+export interface TrackedTxSharedBridgeConfig {
+  formula: 'sharedBridge'
+  address: EthereumAddress
+  signature: `function ${string}`
+  selector: string
+  chainId: number
 }
