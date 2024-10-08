@@ -39,7 +39,7 @@ export function ColorPicker({ ids, onColorChange }: ColorPickerProps) {
       {colors.map((c, i) => (
         <div
           style={{ backgroundColor: colorToCSS(c) }}
-          className="h-12 w-12 rounded border shadow-xl active:opacity-50 hover:ring"
+          className="h-12 w-12 rounded border shadow-xl hover:ring active:opacity-50"
           key={i}
           onClick={() => onColorChange(ids, c)}
         ></div>
