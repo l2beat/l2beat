@@ -54,7 +54,7 @@
     },
     //TODO: Read ProviderInfo
     "USDYieldManager": {
-      "description": "Contract managing Yield Providers for stablecoins.",
+      "description": "Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI).",
       "ignoreRelatives": ["TOKEN", "insurance"],
       "ignoreMethods": [
         "availableBalance",
