@@ -8,7 +8,7 @@ Generated with discovered.json: 0xde90156cc11099733c00341faa70d5448c17ab26
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Move to discovery driven data.
 
 ## Config/verification related changes
 
