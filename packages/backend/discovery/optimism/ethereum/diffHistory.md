@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x1590e38904987c35790e7fdcf8171388d7dc89a0
+
+# Diff at Tue, 08 Oct 2024 08:47:13 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@fdb935c9c2cec6572d61d5c74005044dc6c6dbe2 block: 20826753
+- current block number: 20919756
+
+## Description
+
+The deposits on the main Lido escrow for Optimism are paused by the Lido EmergencyBrake Multisig following [an upgrade proposal](https://research.lido.fi/t/steth-on-optimism-upgrade-announcement-and-action-plan/8474) for rebasing L2 stETH. This is a scheduled action and deposits should be reenabled im 2024/10/10.
+
+## Watched changes
+
+```diff
+    contract wstETHEscrow (0x76943C0D61395d8F2edF9060e1533529cAe05dE6) {
+    +++ description: None
+      values.isDepositsEnabled:
+-        true
++        false
+    }
+```
+
 Generated with discovered.json: 0xab5b0dad05008fc4ed4f6fe633034f4554e466b5
 
 # Diff at Tue, 01 Oct 2024 10:53:43 GMT:

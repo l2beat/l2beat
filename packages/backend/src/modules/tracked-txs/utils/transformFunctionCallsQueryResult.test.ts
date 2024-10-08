@@ -11,9 +11,16 @@ import {
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
   TrackedTxId,
+  TrackedTxSharedBridgeConfig,
   TrackedTxSharpSubmissionConfig,
   createTrackedTxId,
 } from '@l2beat/shared'
+import {
+  sharedBridgeChainId,
+  sharedBridgeCommitBatchesInput,
+  sharedBridgeCommitBatchesSelector,
+  sharedBridgeCommitBatchesSignature,
+} from '../../../test/sharedBridge'
 import { Configuration } from '../../../tools/uif/multi/types'
 import {
   BigQueryFunctionCallResult,
@@ -73,6 +80,20 @@ describe(transformFunctionCallsQueryResult.name, () => {
         sinceTimestamp: SINCE_TIMESTAMP,
         subtype: 'proofSubmissions',
         programHashes: [paradexProgramHash],
+      }),
+    ]
+
+    const sharedBridgeCalls = [
+      mockSharedBridgeCall({
+        id: createTrackedTxId.random(),
+        projectId: ProjectId('project2'),
+        address: EthereumAddress.random(),
+        selector: sharedBridgeCommitBatchesSelector,
+        formula: 'sharedBridge',
+        sinceTimestamp: SINCE_TIMESTAMP,
+        subtype: 'batchSubmissions',
+        chainId: sharedBridgeChainId,
+        signature: sharedBridgeCommitBatchesSignature,
       }),
     ]
 
@@ -173,9 +194,11 @@ describe(transformFunctionCallsQueryResult.name, () => {
         receiptBlobGasUsed: null,
       },
     ]
+
     const result = transformFunctionCallsQueryResult(
       functionCalls,
       sharpSubmissions,
+      sharedBridgeCalls,
       queryResults,
     )
 
@@ -212,7 +235,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
     ]
 
     expect(() =>
-      transformFunctionCallsQueryResult(functionCalls, [], queryResults),
+      transformFunctionCallsQueryResult(functionCalls, [], [], queryResults),
     ).toThrow('There should be at least one matching config')
   })
 
@@ -280,6 +303,80 @@ describe(transformFunctionCallsQueryResult.name, () => {
     const result = transformFunctionCallsQueryResult(
       [],
       sharpSubmissions,
+      [],
+      queryResults,
+    )
+
+    expect(result).toEqual(expected)
+  })
+
+  it('includes only configurations where chain id matches', () => {
+    const sharedBridgeCalls = [
+      mockSharedBridgeCall({
+        id: createTrackedTxId.random(),
+        projectId: ProjectId('project1'),
+        address: EthereumAddress.random(),
+        selector: sharedBridgeCommitBatchesSelector,
+        formula: 'sharedBridge',
+        sinceTimestamp: SINCE_TIMESTAMP,
+        subtype: 'batchSubmissions',
+        chainId: sharedBridgeChainId,
+        signature: sharedBridgeCommitBatchesSignature,
+      }),
+      mockSharedBridgeCall({
+        id: createTrackedTxId.random(),
+        projectId: ProjectId('project2'),
+        address: EthereumAddress.random(),
+        selector: sharedBridgeCommitBatchesSelector,
+        formula: 'sharedBridge',
+        sinceTimestamp: SINCE_TIMESTAMP,
+        subtype: 'batchSubmissions',
+        chainId: 1,
+        signature: sharedBridgeCommitBatchesSignature,
+      }),
+    ]
+
+    const queryResults: BigQueryFunctionCallResult[] = [
+      {
+        hash: txHashes[0],
+        to_address: sharedBridgeCalls[0].properties.params.address,
+        input: sharedBridgeCommitBatchesInput,
+        block_number: block,
+        block_timestamp: timestamp,
+        gas_price: 10n,
+        receipt_gas_used: 100,
+        calldata_gas_used: 100,
+        data_length: 100,
+        receipt_blob_gas_price: null,
+        receipt_blob_gas_used: null,
+      },
+    ]
+
+    const expected: TrackedTxFunctionCallResult[] = [
+      {
+        formula: 'functionCall',
+        projectId: sharedBridgeCalls[0].properties.projectId,
+        type: sharedBridgeCalls[0].properties.type,
+        id: sharedBridgeCalls[0].id,
+        subtype: sharedBridgeCalls[0].properties.subtype,
+        hash: txHashes[0],
+        blockNumber: block,
+        blockTimestamp: timestamp,
+        toAddress: sharedBridgeCalls[0].properties.params.address,
+        input: sharedBridgeCommitBatchesInput,
+        gasPrice: 10n,
+        receiptGasUsed: 100,
+        calldataGasUsed: 100,
+        dataLength: 100,
+        receiptBlobGasPrice: null,
+        receiptBlobGasUsed: null,
+      },
+    ]
+
+    const result = transformFunctionCallsQueryResult(
+      [],
+      [],
+      sharedBridgeCalls,
       queryResults,
     )
 
@@ -365,6 +462,52 @@ function mockSharpSubmission({
         address,
         selector,
         programHashes,
+      },
+    },
+  }
+}
+
+function mockSharedBridgeCall({
+  id,
+  projectId,
+  subtype,
+  address,
+  selector,
+  sinceTimestamp,
+  formula,
+  chainId,
+  signature,
+}: {
+  id: TrackedTxId
+  projectId: ProjectId
+  subtype: TrackedTxsConfigSubtype
+  address: EthereumAddress
+  selector: string
+  sinceTimestamp: UnixTime
+  formula: TrackedTxSharedBridgeConfig['formula']
+  chainId: number
+  signature: `function ${string}`
+}): Configuration<
+  TrackedTxConfigEntry & {
+    params: TrackedTxSharedBridgeConfig
+  }
+> {
+  return {
+    id,
+    minHeight: 0,
+    maxHeight: 0,
+    properties: {
+      id,
+      projectId,
+      type: 'liveness',
+      subtype,
+      sinceTimestamp,
+      params: {
+        formula,
+        address,
+        selector,
+        chainId,
+        signature,
       },
     },
   }

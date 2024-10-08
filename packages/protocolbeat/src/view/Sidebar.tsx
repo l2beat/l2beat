@@ -1,12 +1,12 @@
 import type { SimpleNode } from '../api/SimpleNode'
-import { Color } from '../utils/color'
+import { OklchColor } from '../utils/color'
 import { ColorPicker } from './ColorPicker'
 
 interface SidebarProps {
   selectedNodes: SimpleNode[]
   onDeleteNodes: (ids: string[]) => void
   onHideNodes: (ids: string[]) => void
-  onColorChange: (ids: string[], color: Color) => void
+  onColorChange: (ids: string[], color: OklchColor) => void
 }
 
 export function Sidebar({

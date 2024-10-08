@@ -17,7 +17,7 @@
 
 .mdc ul p {
   @apply mb-0;
- }
+}
 
 .mdc > *:last-child {
   @apply mb-0;

@@ -105,6 +105,25 @@ function RosetteTooltipContent() {
     >
       <div className="flex flex-col gap-1">
         <span className="text-[13px] uppercase text-[#787E8D]">
+          {context.content?.outerProjectName}
+        </span>
+        <SentimentText
+          sentiment={content.outer.sentiment}
+          className="flex items-center gap-1 font-medium"
+        >
+          {content.outer.value}
+        </SentimentText>
+        {content.outer.warning && (
+          <WarningBar
+            icon={RoundedWarningIcon}
+            text={content.outer.warning.value}
+            color={content.outer.warning.sentiment === 'bad' ? 'red' : 'yellow'}
+          />
+        )}
+        <span className="text-xs">{content.outer.description}</span>
+      </div>
+      <div className="flex flex-col gap-1">
+        <span className="text-[13px] uppercase text-[#787E8D]">
           {context.content?.innerProjectName}
         </span>
         <SentimentText
@@ -122,25 +141,6 @@ function RosetteTooltipContent() {
         )}
 
         <span className="text-xs">{content.inner.description}</span>
-      </div>
-      <div className="flex flex-col gap-1">
-        <span className="text-[13px] uppercase text-[#787E8D]">
-          {context.content?.outerProjectName}
-        </span>
-        <SentimentText
-          sentiment={content.outer.sentiment}
-          className="flex items-center gap-1 font-medium"
-        >
-          {content.outer.value}
-        </SentimentText>
-        {content.outer.warning && (
-          <WarningBar
-            icon={RoundedWarningIcon}
-            text={content.outer.warning.value}
-            color={content.outer.warning.sentiment === 'bad' ? 'red' : 'yellow'}
-          />
-        )}
-        <span className="text-xs">{content.outer.description}</span>
       </div>
     </TooltipContent>
   )
