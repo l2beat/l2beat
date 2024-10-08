@@ -32,7 +32,7 @@ export function getElasticChainL2TokenEntry(
   // We are hardcoding assetId because elasticChainL2Token is an canonical token
   const assetId = AssetId.create(ethereum.name, token.address)
   const type = 'elasticChainL2Token'
-  const dataSource = `${chain.name}_elastic_chain`
+  const dataSource = `${project.projectId}_elastic_chain`
 
   return {
     type: type,

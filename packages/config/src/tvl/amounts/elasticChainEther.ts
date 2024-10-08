@@ -32,7 +32,7 @@ export function getElasticChainEtherEntry(
   // We are hardcoding assetId because elasticChainEther is an canonical token
   const assetId = AssetId.create(ethereum.name, 'native')
   const type = 'elasticChainEther'
-  const dataSource = `${chain.name}_elastic_chain`
+  const dataSource = `${project.projectId}_elastic_chain`
 
   return {
     type: type,
