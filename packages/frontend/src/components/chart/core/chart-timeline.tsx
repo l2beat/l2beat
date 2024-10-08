@@ -1,3 +1,4 @@
+'use client'
 import { UnixTime } from '@l2beat/shared-pure'
 import { clamp } from 'lodash'
 import { type ReactNode, useMemo, useRef } from 'react'
@@ -25,12 +26,12 @@ export function ChartTimeline() {
             const label = getTimelineLabel(column.data.timestamp, range)
             if (!label) return null
             return (
-              <TimeLineLabel
+              <TimelineLabel
                 key={column.data.timestamp}
                 x={i / (columns.length - 1)}
               >
                 {label}
-              </TimeLineLabel>
+              </TimelineLabel>
             )
           })
         : null}
@@ -38,27 +39,29 @@ export function ChartTimeline() {
   )
 }
 
-function TimeLineLabel({ x, children }: { x: number; children: ReactNode }) {
+function TimelineLabel({ x, children }: { x: number; children: ReactNode }) {
   const ref = useRef<HTMLSpanElement>(null)
   const { rect } = useChartRect()
+
   const style = useMemo(() => {
-    if (!ref.current || !rect) {
-      return
-    }
+    if (!ref.current || !rect) return undefined
     const pointX = rect.width * x
+
     return {
       left: clamp(
         pointX - ref.current.offsetWidth / 2,
         0,
         rect.width - ref.current.offsetWidth,
       ),
+      visibility: 'visible' as const,
     }
   }, [rect, x])
+
   return (
     <span
       ref={ref}
       style={style}
-      className="absolute whitespace-nowrap text-3xs font-medium leading-none text-secondary"
+      className="invisible absolute whitespace-nowrap text-3xs font-medium leading-none text-secondary"
     >
       {children}
     </span>
