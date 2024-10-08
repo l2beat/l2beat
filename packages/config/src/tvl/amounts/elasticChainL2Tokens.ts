@@ -26,7 +26,7 @@ export function getElasticChainL2TokenEntry(
   )
   const includeInTotal = token.excludeFromTotal
     ? false
-    : escrow.includeInTotal ?? true
+    : (escrow.includeInTotal ?? true)
   const isAssociated = !!project.associatedTokens?.includes(token.symbol)
 
   // We are hardcoding assetId because elasticChainL2Token is an canonical token
