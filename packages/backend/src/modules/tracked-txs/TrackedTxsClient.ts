@@ -22,7 +22,7 @@ import { transformFunctionCallsQueryResult } from './utils/transformFunctionCall
 import { transformTransfersQueryResult } from './utils/transformTransfersQueryResult'
 
 export class TrackedTxsClient {
-  constructor(private readonly bigquery: BigQueryClient) { }
+  constructor(private readonly bigquery: BigQueryClient) {}
 
   async getData(
     configurations: Configuration<TrackedTxConfigEntry>[],
