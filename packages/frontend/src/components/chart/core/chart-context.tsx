@@ -7,13 +7,13 @@ interface Value {
   value: number
   dashed?: boolean
 }
-export interface ChartColumn<T> {
+export interface ChartColumn<T extends { timestamp: number }> {
   values: Value[]
   data: T
   milestone?: Milestone
 }
 
-export interface ChartContextProviderParams<T> {
+export interface ChartContextProviderParams<T extends { timestamp: number }> {
   columns: ChartColumn<T>[]
   range: '1d' | '7d' | '30d' | '90d' | '180d' | '1y' | 'max'
   valuesStyle: SeriesStyle[]
@@ -22,7 +22,7 @@ export interface ChartContextProviderParams<T> {
   children?: ReactNode
 }
 
-export type ChartContextValue<T> = Omit<
+export type ChartContextValue<T extends { timestamp: number }> = Omit<
   ChartContextProviderParams<T>,
   'children'
 > & {
@@ -33,7 +33,7 @@ export type ChartContextValue<T> = Omit<
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ChartContext = createContext<ChartContextValue<any> | null>(null)
 
-export function ChartContextProvider<T>({
+export function ChartContextProvider<T extends { timestamp: number }>({
   children,
   ...params
 }: ChartContextProviderParams<T>) {
@@ -53,7 +53,7 @@ export function ChartContextProvider<T>({
   return <ChartContext.Provider value={value}>{children}</ChartContext.Provider>
 }
 
-export function useChartContext<T>() {
+export function useChartContext<T extends { timestamp: number }>() {
   const context = useContext(ChartContext)
   if (!context) {
     throw new Error('useChartContext must be used within a Chart')

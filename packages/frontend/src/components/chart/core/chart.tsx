@@ -8,6 +8,7 @@ import { ChartLoader } from './chart-loader'
 import { ChartMilestones } from './chart-milestones'
 import { ChartNoDataState } from './chart-no-data-state'
 import { ChartRenderer } from './chart-renderer'
+import { ChartTimeline } from './chart-timeline'
 
 interface Props {
   className?: string
@@ -19,7 +20,7 @@ export function Chart({ className, disableHovers, disableMilestones }: Props) {
   return (
     <div
       className={cn(
-        'relative h-[160px] select-none xs:h-[200px] sm:h-[260px]',
+        'relative mb-5 h-[160px] select-none xs:h-[200px] sm:h-[260px]',
         className,
       )}
       role="img"
@@ -36,6 +37,7 @@ export function Chart({ className, disableHovers, disableMilestones }: Props) {
         animated={false}
         className="absolute left-1/2 top-1/4 z-30 h-8 w-20 -translate-x-1/2 opacity-[0.33]"
       />
+      <ChartTimeline />
     </div>
   )
 }

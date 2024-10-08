@@ -65,20 +65,15 @@ function Header({ total, unit, change, timeRange }: Props) {
   const value = total?.[unit]
   return (
     <div className="flex items-start justify-between">
-      <div>
-        <div className="flex items-center gap-3">
-          <span className="text-xl font-bold">Value Locked</span>
-          <Link
-            className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-blue-400 px-3 py-2 text-[13px] leading-none text-[#1459CB] dark:border-blue-500 dark:text-blue-500 max-md:hidden"
-            href="/scaling/tvl"
-          >
-            View details{' '}
-            <ChevronIcon className="size-[10px] -rotate-90 fill-current" />
-          </Link>
-        </div>
-        <p className="whitespace-nowrap text-xs leading-[1.15] text-secondary">
-          Last 30 days
-        </p>
+      <div className="flex items-center gap-3">
+        <span className="text-xl font-bold">Value Locked</span>
+        <Link
+          className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-blue-400 px-3 py-2 text-[13px] leading-none text-[#1459CB] dark:border-blue-500 dark:text-blue-500 max-md:hidden"
+          href="/scaling/tvl"
+        >
+          View details{' '}
+          <ChevronIcon className="size-[10px] -rotate-90 fill-current" />
+        </Link>
       </div>
       <div className="flex flex-col items-end">
         <div className="whitespace-nowrap text-right text-xl font-bold">
