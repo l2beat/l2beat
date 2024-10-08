@@ -2,6 +2,7 @@ export type NavGroup =
   | {
       type: 'multiple'
       title: string
+      match: string
       icon: React.ReactNode
       links: NavLink[]
       secondaryLinks?: NavLink[]

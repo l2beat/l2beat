@@ -44,9 +44,7 @@ export function NavLinkGroup({ group }: NavLinkGroupProps) {
     )
   }
 
-  const isSelected = [...group.links, ...(group.secondaryLinks ?? [])].some(
-    (link) => link.href === pathname,
-  )
+  const isSelected = pathname.startsWith(`/${group.match}`)
 
   return (
     <Collapsible className="flex flex-col" defaultOpen={isSelected}>

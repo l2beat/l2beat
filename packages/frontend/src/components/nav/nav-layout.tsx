@@ -31,6 +31,7 @@ export async function NavLayout({
     {
       type: 'multiple',
       title: 'Scaling',
+      match: 'scaling',
       icon: (
         <ScalingIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
       ),
@@ -82,6 +83,7 @@ export async function NavLayout({
     {
       type: 'multiple',
       title: 'Bridges',
+      match: 'bridges',
       icon: (
         <BridgesIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
       ),
@@ -105,6 +107,7 @@ export async function NavLayout({
     env.NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT && {
       type: 'multiple',
       title: 'Data Availability',
+      match: 'data-availability',
       icon: (
         <DataAvailabilityIcon className="transition-colors duration-300 group-data-[active=true]:fill-brand" />
       ),
