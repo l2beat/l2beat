@@ -8,24 +8,24 @@
 @layer base {
   :root {
     --primary: #131215;
-    --primary-invert: #FAFAFA;
-    --secondary: #5F6470;
-    --brand: #AB3BD2;
-    --background: #E6E7EC;
-    --surface-primary: #FAFAFA;
-    --surface-secondary: #E6E7EC;
-    --surface-tertiary: #CCD0DA;
+    --primary-invert: #fafafa;
+    --secondary: #5f6470;
+    --brand: #ab3bd2;
+    --background: #e6e7ec;
+    --surface-primary: #fafafa;
+    --surface-secondary: #e6e7ec;
+    --surface-tertiary: #ccd0da;
   }
-  
+
   .dark {
-    --primary: #FAFAFA;
+    --primary: #fafafa;
     --primary-invert: #131215;
-    --secondary: #868B98;
-    --brand: #DB8BF7;
-    --background: #090A0B;
-    --surface-primary: #1F2025;
-    --surface-secondary: #393C43;
-    --surface-tertiary: #464A52;
+    --secondary: #868b98;
+    --brand: #db8bf7;
+    --background: #090a0b;
+    --surface-primary: #1f2025;
+    --surface-secondary: #393c43;
+    --surface-tertiary: #464a52;
   }
 }
 
@@ -44,18 +44,18 @@
     }
     :root:has(.header-height-glossary) {
       --header-height: 9rem !important;
-   }
+    }
   }
 
   html {
     scroll-padding-top: var(--header-height);
   }
-  
+
   body {
     @apply bg-white dark:bg-neutral-900 text-base text-primary md:text-lg font-sans transition-colors;
   }
-  
-  body:has(.sidebar){
+
+  body:has(.sidebar) {
     @apply bg-surface-primary md:bg-background;
   }
 
@@ -68,7 +68,7 @@
     @apply bg-surface-secondary;
   }
   body:has(.sidebar) [data-role="select-content"] [role="option"] {
-    @apply focus:bg-surface-tertiary
+    @apply focus:bg-surface-tertiary;
   }
 }
 
