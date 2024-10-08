@@ -84,7 +84,7 @@ export function Breakdown() {
                   g.className,
                 )}
               />
-              <span className="hidden pl-1 font-extrabold text-pink-900 sm:inline-block">
+              <span className="hidden pl-1 font-bold text-pink-900 sm:inline-block">
                 ${formatNumberWithCommas(g.value)}
               </span>
               <span className="hidden font-medium text-zinc-500 sm:inline-block">
@@ -93,7 +93,7 @@ export function Breakdown() {
               <span className="font-medium text-zinc-800">{g.name}</span>
             </div>
             <div className="block sm:hidden">
-              <span className="pl-1 font-extrabold text-pink-900">
+              <span className="pl-1 font-bold text-pink-900">
                 ${formatNumberWithCommas(g.value)}
               </span>
               <span className="font-medium text-zinc-500">({g.weight}%)</span>

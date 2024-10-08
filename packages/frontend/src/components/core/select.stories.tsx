@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from './select'
-import { onlyDesktopModes } from '.storybook/modes'
+import { onlyDesktopModes } from '~/../.storybook/modes'
 
 const meta = {
   title: 'Atoms/Select',

@@ -37,7 +37,7 @@ export function DetailsHeader(props: DetailsHeaderProps) {
           <span className="text-xs font-bold text-zinc-500 dark:text-gray-50">
             Value
           </span>
-          <span className=" text-xl font-extrabold text-pink-900 dark:text-pink-200">
+          <span className=" font-extrabold text-xl text-pink-900 dark:text-pink-200">
             ${formatNumberWithCommas(props.dolarValue)}
           </span>
         </div>

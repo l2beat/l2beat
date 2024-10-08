@@ -1,6 +1,6 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 import { Checkbox } from './checkbox'
-import { onlyDesktopModes } from '.storybook/modes'
+import { onlyDesktopModes } from '~/../.storybook/modes'
 
 const meta = {
   title: 'Atoms/Checkbox',
