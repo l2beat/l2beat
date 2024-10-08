@@ -20,10 +20,15 @@ export function persistNodeState(state: State): void {
 export function recallNodeState(
   projectId: string,
 ): StorageNodeLocations | undefined {
-  const storage = localStorage.getItem(getLayoutStorageKey(projectId))
+  const key = getLayoutStorageKey(projectId)
+  const storage = localStorage.getItem(key)
   if (storage === null) {
     return undefined
   }
 
-  return decodeNodeState(storage)
+  const result = decodeNodeState(storage)
+  if (result === undefined) {
+    localStorage.removeItem(key)
+  }
+  return result
 }
