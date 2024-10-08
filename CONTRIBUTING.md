@@ -42,6 +42,23 @@ cd packages/frontend
 yarn dev:mock
 ```
 
+## Add tokens to a project
+
+If while adding your project you find that some of the tokens locked in it are missing from our
+token list do not worry.
+
+General token prerequisites:
+* Price data on Coingecko: Every token needs to be listed with current price data on Coingecko. (Not just as preview, not just on CoingeckoTerminal)
+* For natively minted tokens: Circulating supply data on Coingecko is essential.
+
+### Steps to add a token
+
+1. Study the general prerequisites (see above) and check if your token complies.
+2. Add your token to the list (`packages/config/src/tokens/tokens.jsonc`). The order of the tokens should be kept alphabetical.
+3. Run `yarn tokens` in the `packages/config/` directory.
+
+Refer to the [docs - tvl.md](docs/tvl.md) for further token insights.
+
 ## Add your Layer 2 project to the website
 
 If you want to add a new Layer 2 project you can do that by opening a PR. To do this you need to:
@@ -49,33 +66,18 @@ If you want to add a new Layer 2 project you can do that by opening a PR. To do 
 1. Read the specification in `packages/config/src/projects/layer2s/types/Layer2.ts`. It contains an annotated
    data format for the project definition.
 2. Add a .ts file to describe your project inside `packages/config/src/projects/layer2s`. You can use the
-   existing projects as reference.
+   existing projects and templates (e.g. OP stack and Orbit stack templates in `packages/config/src/projects/layer2s/templates/`) as reference.
 3. Add your project into `packages/config/src/projects/layer2s/index.ts`. The order of the projects should be
    kept alphabetical.
-4. Add a square PNG project icon with a minimum size of 128x128 pixels into
-   `packages/frontend/public/icons`. From the `packages/frontend` directory
-   run `yarn tinify-logos` afterwards to reduce its size.
-5. If your project is a fork of an already existing project (like Boba Network that is on top of
-   Optimism) or it was built using a Rollups SDK/framework (like ImmutableX that is on top of
-   StarkEx) you can show this information by:
-   - In your project's .ts file find the field `technology`, add a field `provider` (if it is not
-     already) and set the technology provider your project is based on.
-   - If the technology provider in which your project is based on is not defined in L2BEAT yet, you
-     will need to:
-     - Add the new provider in the file `packages/config/src/projects/layer2s/types/Layer2.ts` (find the
-       optional property `provider`).
-     - Create a simple React component to render the technology provider Icon (SVG format required)
-       inside `packages/frontend/src/icons/providers`.
-     - Import the Icon component created in `packages/frontend/src/components/icons/index.ts`.
-     - To finish, add the technology provider icon in the technology column of the project's table
-       that is located at `packages/frontend/src/components/table/TechnologyCell.tsx`.
-6. Add your project to `packages/config/src/verification/projects.json`.
-7. Make sure that things like linting, formatting and tests are all passing. To
+4. Add a square PNG project icon with a minimum size of 128x128 pixels to
+   `packages/frontend/public/icons`. From the `packages/frontend` directory run `yarn tinify-logos` afterwards to reduce its size.
+5. Run the website locally to check out your changes. (optional, see above)
+6. Make sure that things like linting, formatting and tests are all passing. To
    check their status you can run `yarn lint:fix`, `yarn format:fix` or `yarn test`
    respectively. We greatly encourage doing this before the last step as it
    shortens the amount of time needed for your project to be added.
-8. Open a PR :D
-9. If your changes contain any errors we might want to fix them ourselves. To
+7. Open a PR :D
+8. If your changes contain any errors we might want to fix them ourselves. To
    make this as easy as possible please enable **"Allow edits by maintainers"**.
    Otherwise the latency before we can merge a PR greatly increases.
 
@@ -89,18 +91,13 @@ If you want to add a new Layer 3 project you can do that by opening a PR. To do 
 1. Read the specification in `packages/config/src/projects/layer3s/types/Layer3.ts`. It contains an annotated
    data format for the project definition.
 2. Add a .ts file to describe your project inside `packages/config/src/projects/layer3s`. You can use the
-   existing projects as reference. Remember to specify host chain on which your project is based on.
+   existing projects and templates (e.g. OP stack and Orbit stack templates in `packages/config/src/projects/layer2s/templates/`) as reference. Remember to specify host chain on which your project is based on.
    Take `projectId` of host chian and add it to `hostChain` property.
-3. Add your project into `packages/config/src/projects/layer3s/index.ts`. The order of the projects should be
+3. Add your project to `packages/config/src/projects/layer3s/index.ts`. The order of the projects should be
    kept alphabetical.
 4. Add a square PNG project icon with a minimum size of 128x128 pixels into
    packages/frontend/src/static/icons. From the `packages/frontend` directory
    run `yarn tinify-logos` afterwards to reduce its size.
-5. If your project is a fork of an already existing project (like Boba Network that is on top of
-   Optimism) or it was built using a Rollups SDK/framework (like ImmutableX that is on top of
-   StarkEx) you can show this information by:
-   - In your project's .ts file find the field `technology`, add a field `provider` (if it is not
-     already) and set the technology provider your project is based on.
 6. Make sure that things like linting, formatting and tests are all passing. To
    check their status you can run `yarn lint:fix`, `yarn format:fix` or `yarn test`
    respectively. We greatly encourage doing this before the last step as it
@@ -109,15 +106,6 @@ If you want to add a new Layer 3 project you can do that by opening a PR. To do 
 8. If your changes contain any errors we might want to fix them ourselves. To
    make this as easy as possible please enable **"Allow edits by maintainers"**.
    Otherwise the latency before we can merge a PR greatly increases.
-
-### Add missing tokens
-
-If while adding your project you find that some of the tokens locked in it are missing from our
-token list do not worry.
-
-1. Read the token definition in `packages/config/src/tokens/tokens.ts`
-2. Check if the token matches the requirements.
-3. Add your token to the list. The order of the tokens should be kept alphabetical.
 
 ## Contribute research
 
