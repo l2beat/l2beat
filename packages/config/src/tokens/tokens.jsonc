@@ -4007,6 +4007,28 @@
       "coingeckoId": "re-al"
     },
     {
+      "symbol": "CVR",
+      "address": "0xb08f026f8a096e6d92eb5bcbe102c273a7a2d51c",
+      "source": "native",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      },
+      "coingeckoId": "caviar-3"
+    },
+    {
+      "symbol": "UKRE",
+      "address": "0x835d3E1C0aA079C6164AAd21DCb23E60eb71AF48",
+      "source": "native",
+      "supply": "totalSupply",
+      "coingeckoId": "uk-real-estate"
+    },
+    {
       "symbol": "USTB",
       "address": "0x83fedbc0b85c6e29b589aa6bdefb1cc581935ecd",
       "source": "external",
