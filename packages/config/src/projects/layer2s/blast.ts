@@ -111,7 +111,7 @@ export const blast: Layer2 = opStackL2({
     discovery.getEscrowDetails({
       address: EthereumAddress('0xa230285d5683C74935aD14c446e137c8c8828438'),
       name: 'Interest-bearing DAI Vault',
-      tokens: [],
+      tokens: ['DAI'],
       description:
         'Escrow for DAI that is invested into a yield-bearing contracts such as MakerDAO DSR.',
     }),
