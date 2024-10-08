@@ -1,7 +1,7 @@
 {
   "name": "worldcoin",
   "chain": "ethereum",
-  "blockNumber": 20919851,
+  "blockNumber": 20922333,
   "configHash": "0x37a08290de2c4e6e8031d03bb030ac4f326a7c43f5d5cac74fe334afab1e6771",
   "contracts": [
     {
@@ -117,7 +117,7 @@
         "getSemaphoreVerifierAddress": "0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5",
         "getTreeDepth": 30,
         "identityOperator": "0xE2DA046340e00264C4F0443243a0565007AE08AC",
-        "latestRoot": "19844519018177321253870496193575776351216956940742103499590671581125025055537",
+        "latestRoot": "160254392996319828854350308227682425228451637541199389183618642341600107355",
         "NO_SUCH_ROOT": {
           "root": 0,
           "supersededTimestamp": 0,
@@ -304,5 +304,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0x46fe05664c6168de6029fca0f3968c29d03176659063cc698514a45135ec8c98"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }
