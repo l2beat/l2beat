@@ -12,7 +12,7 @@
     "db:migrate": "prisma migrate deploy",
     "format": "prisma format && biome format .",
     "format:fix": "prisma format && biome format --write .",
-    "lint:fix": "biome check --formatter-enabled=false --apply .",
+    "lint:fix": "biome check --formatter-enabled=false --write .",
     "lint": "biome check --formatter-enabled=false .",
     "test": "./scripts/run_tests.sh",
     "typecheck": "tsc --noEmit"

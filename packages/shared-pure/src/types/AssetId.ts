@@ -1,6 +1,6 @@
 import { EthereumAddress } from './EthereumAddress'
 
-export interface AssetId extends String {
+export type AssetId = string & {
   _AssetIdBrand: string
 }
 

@@ -1,5 +1,5 @@
-@import './markdown.css';
-@import './article.css';
+@import "./markdown.css";
+@import "./article.css";
 
 @tailwind base;
 @tailwind components;
@@ -83,22 +83,66 @@
 
   /* Masks for overflow wrapper */
   .fade-out-to-left {
-    -webkit-mask-image: linear-gradient(to left, transparent 0, black 0px, black calc(100% - 30px), transparent 100%);
-    mask-image: linear-gradient(to left, transparent 0, black 0px, black calc(100% - 30px), transparent 100%);
+    -webkit-mask-image: linear-gradient(
+      to left,
+      transparent 0,
+      black 0px,
+      black calc(100% - 30px),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to left,
+      transparent 0,
+      black 0px,
+      black calc(100% - 30px),
+      transparent 100%
+    );
   }
 
   .fade-out-to-right {
-    -webkit-mask-image: linear-gradient(to right, transparent 0, black 0px, black calc(100% - 30px), transparent 100%);
-    mask-image: linear-gradient(to right, transparent 0, black 0px, black calc(100% - 30px), transparent 100%);
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      black 0px,
+      black calc(100% - 30px),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      black 0px,
+      black calc(100% - 30px),
+      transparent 100%
+    );
   }
   .fade-out-horizontal {
-    -webkit-mask-image: linear-gradient(90deg, transparent, black 30px calc(100% - 30px), transparent) !important;
-    mask-image: linear-gradient(90deg, transparent, black 30px calc(100% - 30px), transparent) !important;
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent,
+      black 30px calc(100% - 30px),
+      transparent
+    ) !important;
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      black 30px calc(100% - 30px),
+      transparent
+    ) !important;
   }
 
   .chart-fade-out-to-bottom {
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0, black 0px, transparent 100%);
-    mask-image: linear-gradient(to bottom, transparent 0, black 0px, transparent 100%);
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      black 0px,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      black 0px,
+      transparent 100%
+    );
   }
 
   /* For Webkit-based browsers (Chrome, Safari and Opera) */
