@@ -1,3 +1,3 @@
-export interface Hash256 extends String {
+export type Hash256 = string & {
   _Hash256Brand: string
 }

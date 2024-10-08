@@ -54,7 +54,7 @@ export class LogFormatterPretty implements LogFormatter {
       this.sanitize(
         entry.resolvedError
           ? { ...entry.resolvedError, ...entry.parameters }
-          : entry.parameters ?? {},
+          : (entry.parameters ?? {}),
       ),
       this.options.colors,
     )

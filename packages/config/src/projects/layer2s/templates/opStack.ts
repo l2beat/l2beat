@@ -499,7 +499,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
       trackedTxs:
         daProvider !== undefined
           ? undefined
-          : templateVars.nonTemplateTrackedTxs ?? [
+          : (templateVars.nonTemplateTrackedTxs ?? [
               {
                 uses: [
                   { type: 'liveness', subtype: 'batchSubmissions' },
@@ -529,7 +529,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
                   ),
                 },
               },
-            ],
+            ]),
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
     dataAvailability:
@@ -637,8 +637,8 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
               {
                 rollupNodeLink:
                   templateVars.isNodeAvailable === true
-                    ? templateVars.nodeSourceLink ??
-                      'https://github.com/ethereum-optimism/optimism/tree/develop/op-node'
+                    ? (templateVars.nodeSourceLink ??
+                      'https://github.com/ethereum-optimism/optimism/tree/develop/op-node')
                     : '',
               },
             )
