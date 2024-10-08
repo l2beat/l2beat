@@ -47,7 +47,7 @@ yarn dev:mock
 If while adding your project you find that some of the tokens locked in it are missing from our
 token list do not worry.
 
-General token prerequisites:
+General token prerequisites (without these your token CANNOT be added):
 * Price data on Coingecko: Every token needs to be listed with current price data on Coingecko. (Not just as preview, not just on CoingeckoTerminal)
 * For natively minted tokens: Circulating supply data on Coingecko is essential.
 
