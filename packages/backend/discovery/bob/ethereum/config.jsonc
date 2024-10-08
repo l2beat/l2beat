@@ -11,9 +11,5 @@
     "0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194": "UsdcBridgeOwnerMultisig",
     "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E": "BobMultisig"
   },
-  "overrides": {
-    "L1UsdcBridge": {
-      "ignoreRelatives": ["l1Usdc"]
-    }
-  }
+  "overrides": {}
 }

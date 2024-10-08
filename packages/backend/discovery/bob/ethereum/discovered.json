@@ -1,8 +1,8 @@
 {
   "name": "bob",
   "chain": "ethereum",
-  "blockNumber": 20920832,
-  "configHash": "0xcdcd2ef4823192a504b0ff6162b48c273985fd832b90be6854df21541197dfda",
+  "blockNumber": 20921492,
+  "configHash": "0xc95d3a062eb47e7e5a870234b935258a4ba08f48c23afc2c38c5208eacbb2002",
   "contracts": [
     {
       "name": "L1ERC20TokenBridge",
@@ -173,8 +173,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 490798,
-          "prevBlockNum": 20920321
+          "prevBoughtGas": 491822,
+          "prevBlockNum": 20921049
         },
         "paused": false,
         "SYSTEM_CONFIG": "0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393",
@@ -395,7 +395,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292658317",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292658318",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -837,5 +837,5 @@
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0x95fd353784f5cf6e2020cf8e97d181fd87f6baf5a00132e759846a8d294e7983"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }
