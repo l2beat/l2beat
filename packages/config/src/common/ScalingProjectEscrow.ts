@@ -18,6 +18,7 @@ export interface ElasticChainEscrow {
   l2BridgeAddress: EthereumAddress
   /** ERC20 address of ether on L2 */
   l2EtherAddress: EthereumAddress
+  includeAllzkCROFromL1?: boolean
 }
 
 export type SharedEscrow = AggLayerEscrow | ElasticChainEscrow

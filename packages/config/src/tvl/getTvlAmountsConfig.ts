@@ -25,7 +25,7 @@ import { getTotalSupplyEntry } from './amounts/totalSupply'
 export function getTvlAmountsConfig(
   projects: BackendProject[],
 ): AmountConfigEntry[] {
-  const entries: AmountConfigEntry[] = []
+  let entries: AmountConfigEntry[] = []
 
   const nonZeroSupplyTokens = tokenList.filter((t) => t.supply !== 'zero')
   for (const token of nonZeroSupplyTokens) {
@@ -77,6 +77,18 @@ export function getTvlAmountsConfig(
     }
   }
 
+  const projectsWithZKCroConfig = projects.filter((p) =>
+    p.escrows.some(
+      (e) =>
+        e.sharedEscrow?.type === 'ElasticChian' &&
+        e.sharedEscrow?.includeAllzkCROFromL1,
+    ),
+  )
+
+  if (projectsWithZKCroConfig.length > 0) {
+    entries = handleZKCROentries(projectsWithZKCroConfig, entries)
+  }
+
   const projectsWithOKBConfig = projects.filter((p) =>
     p.escrows.some(
       (e) =>
@@ -86,7 +98,7 @@ export function getTvlAmountsConfig(
   )
 
   if (projectsWithOKBConfig.length > 0) {
-    return handleOKBentries(projectsWithOKBConfig, entries)
+    entries = handleOKBentries(projectsWithOKBConfig, entries)
   }
 
   return entries
@@ -96,7 +108,7 @@ export function getTvlAmountsConfig(
 export function getTvlAmountsConfigForProject(
   project: BackendProject,
 ): AmountConfigEntry[] {
-  const entries: AmountConfigEntry[] = []
+  let entries: AmountConfigEntry[] = []
 
   const nonZeroSupplyTokens = tokenList.filter((t) => t.supply !== 'zero')
 
@@ -156,7 +168,17 @@ export function getTvlAmountsConfigForProject(
         e.sharedEscrow?.includeAllOKBFromL1,
     )
   ) {
-    return handleOKBentries([project], entries)
+    entries = handleOKBentries([project], entries)
+  }
+
+  if (
+    project.escrows.some(
+      (e) =>
+        e.sharedEscrow?.type === 'ElasticChian' &&
+        e.sharedEscrow?.includeAllzkCROFromL1,
+    )
+  ) {
+    entries = handleZKCROentries([project], entries)
   }
 
   return entries
@@ -196,6 +218,39 @@ function handleOKBentries(
 
   return entries.filter(
     (e) => e.type !== 'aggLayerL2Token' || e.assetId !== AssetId.OKB,
+  )
+}
+
+function handleZKCROentries(
+  projectWithZKCroConfig: BackendProject[],
+  entries: AmountConfigEntry[],
+) {
+  assert(projectWithZKCroConfig.length === 1)
+  const zkCROToken = tokenList.find(
+    (t) =>
+      AssetId.create(chainConverter.toName(t.chainId), t.address) ===
+      AssetId.ZKCRO,
+  )
+  assert(zkCROToken)
+
+  const escrow = projectWithZKCroConfig[0].escrows.find(
+    (e) =>
+      e.sharedEscrow?.type === 'ElasticChian' &&
+      e.sharedEscrow?.includeAllzkCROFromL1,
+  )
+  assert(escrow)
+
+  const l1ZKCroEntry = getEscrowEntry(
+    ethereum,
+    zkCROToken,
+    escrow,
+    projectWithZKCroConfig[0],
+  )
+
+  entries.push(l1ZKCroEntry)
+
+  return entries.filter(
+    (e) => e.type !== 'elasticChainL2Token' || e.assetId !== AssetId.ZKCRO,
   )
 }
 
