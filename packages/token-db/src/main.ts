@@ -5,13 +5,13 @@ import { setupCanonicalQueues } from './queues/canonical.js'
 import { setupDeploymentQueues } from './queues/deployment.js'
 import { setupIndependentQueues } from './queues/independent.js'
 import { setupOnChainMetadataQueues } from './queues/on-chain.js'
+import { setupTokenMetaAggregatorQueue } from './queues/token-meta-aggregator.js'
 import { connection } from './redis/redis.js'
 import { getNetworksConfig } from './utils/get-networks-config.js'
 import { startQueueDashboard } from './utils/queue/dashboard.js'
 import { eventRouter } from './utils/queue/router/index.js'
 import { byTokenChainId } from './utils/queue/router/routing-key-rules.js'
 import { setupQueue } from './utils/queue/setup-queue.js'
-import { setupTokenMetaAggregatorQueue } from './queues/token-meta-aggregator.js'
 
 const db = createDatabase({
   connectionString: env.DATABASE_URL,

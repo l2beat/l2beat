@@ -1,6 +1,6 @@
+import { Logger } from '@l2beat/backend-tools'
 import { Database } from '@l2beat/database'
 import { TokenUpdateQueue } from '../utils/queue/wrap.js'
-import { Logger } from '@l2beat/backend-tools'
 
 type Dependencies = {
   logger: Logger

@@ -1,11 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Database } from '@l2beat/database'
+import { Redis } from 'ioredis'
 import { buildTokenMetaAggregatorSource } from '../sources/token-meta-aggregator.js'
 import { setupQueueWithProcessor } from '../utils/queue/queue-with-processor.js'
 import { setupQueue } from '../utils/queue/setup-queue.js'
 import { wrapTokenQueue } from '../utils/queue/wrap.js'
 import { TokenPayload } from './payloads.js'
-import { Redis } from 'ioredis'
 
 export async function setupTokenMetaAggregatorQueue({
   db,

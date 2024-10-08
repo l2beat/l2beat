@@ -1,8 +1,8 @@
-import { expect } from 'earl'
-import { TokenMetaRepository } from './repository'
-import { UpsertableTokenMetaRecord } from './entity'
-import { describeDatabase } from '../../test/database'
 import { assert } from '@l2beat/shared-pure'
+import { expect } from 'earl'
+import { describeDatabase } from '../../test/database'
+import { UpsertableTokenMetaRecord } from './entity'
+import { TokenMetaRepository } from './repository'
 
 describeDatabase(TokenMetaRepository.name, (database) => {
   const repository = database.tokenMeta
