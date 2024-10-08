@@ -26,7 +26,6 @@ import {
   ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../../common'
 import { ChainConfig } from '../../../common/ChainConfig'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
@@ -315,7 +314,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       trackedTxs:
         daProvider !== undefined
           ? undefined
-          : templateVars.nonTemplateTrackedTxs ?? [],
+          : (templateVars.nonTemplateTrackedTxs ?? []),
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
     chainConfig: templateVars.chainConfig,
@@ -333,7 +332,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
             bridge: { type: 'Enshrined' },
             mode: 'State diffs (compressed)',
           }),
-    riskView: makeBridgeCompatible({
+    riskView: {
       stateValidation: {
         value: 'ZK proofs',
         description:
@@ -360,10 +359,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
             ],
           },
         ],
-        otherReferences: [
-          'https://docs.zksync.io/zk-stack/concepts/transaction-lifecycle#transaction-types',
-          'https://docs.zksync.io/build/developer-reference/era-contracts/l1-contracts#executorfacet',
-        ],
       },
       dataAvailability:
         daProvider !== undefined
@@ -386,10 +381,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
                   ],
                 },
               ],
-              otherReferences: [
-                'https://docs.zksync.io/build/developer-reference/era-contracts/l1-contracts#executorfacet',
-                'https://docs.zksync.io/zk-stack/concepts/data-availability/validiums',
-              ],
             }
           : {
               ...RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
@@ -408,9 +399,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
                     'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F11#L120',
                   ],
                 },
-              ],
-              otherReferences: [
-                'https://docs.zksync.io/build/developer-reference/era-contracts/l1-contracts#executorfacet',
               ],
             },
       exitWindow: {
@@ -436,9 +424,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
             ],
           },
         ],
-        otherReferences: [
-          'https://docs.zksync.io/build/developer-reference/l1-l2-interoperability#priority-queue',
-        ],
       },
       proposerFailure: {
         ...RISK_VIEW.PROPOSER_WHITELIST_GOVERNANCE,
@@ -453,7 +438,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       },
       destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
       validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-    }),
+    },
     stage:
       templateVars.stage ??
       (templateVars.daProvider !== undefined

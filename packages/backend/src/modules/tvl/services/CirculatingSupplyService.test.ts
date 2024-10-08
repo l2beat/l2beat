@@ -12,52 +12,50 @@ import { expect, mockObject } from 'earl'
 import { CirculatingSupplyService } from './CirculatingSupplyService'
 
 describe(CirculatingSupplyService.name, () => {
-  describe(
-    CirculatingSupplyService.prototype.fetchCirculatingSupplies.name,
-    () => {
-      it('fetches circulating supplies and returns them as big integers', async () => {
-        const coingeckoQueryService = mockObject<CoingeckoQueryService>({
-          getCirculatingSupplies: async () => [
-            coingeckoResponse(100),
-            coingeckoResponse(200),
-            coingeckoResponse(300),
-          ],
-        })
-
-        const service = new CirculatingSupplyService({
-          coingeckoQueryService,
-        })
-
-        const from = new UnixTime(100)
-        const to = new UnixTime(300)
-        const coingeckoId = CoingeckoId('id')
-        const config = mockObject<CirculatingSupplyEntry>({
-          chain: 'chain',
-          project: ProjectId('project'),
-          type: 'circulatingSupply',
-          address: EthereumAddress.random(),
-          coingeckoId,
-          decimals: 18,
-          category: 'other',
-        })
-
-        const result = await service.fetchCirculatingSupplies(from, to, {
-          ...config,
-          id: createAmountId(config),
-        })
-
-        expect(result).toEqual([
-          amount(config, 100),
-          amount(config, 200),
-          amount(config, 300),
-        ])
-
-        expect(
-          coingeckoQueryService.getCirculatingSupplies,
-        ).toHaveBeenOnlyCalledWith(coingeckoId, { from, to }, undefined)
+  describe(CirculatingSupplyService.prototype.fetchCirculatingSupplies
+    .name, () => {
+    it('fetches circulating supplies and returns them as big integers', async () => {
+      const coingeckoQueryService = mockObject<CoingeckoQueryService>({
+        getCirculatingSupplies: async () => [
+          coingeckoResponse(100),
+          coingeckoResponse(200),
+          coingeckoResponse(300),
+        ],
       })
-    },
-  )
+
+      const service = new CirculatingSupplyService({
+        coingeckoQueryService,
+      })
+
+      const from = new UnixTime(100)
+      const to = new UnixTime(300)
+      const coingeckoId = CoingeckoId('id')
+      const config = mockObject<CirculatingSupplyEntry>({
+        chain: 'chain',
+        project: ProjectId('project'),
+        type: 'circulatingSupply',
+        address: EthereumAddress.random(),
+        coingeckoId,
+        decimals: 18,
+        category: 'other',
+      })
+
+      const result = await service.fetchCirculatingSupplies(from, to, {
+        ...config,
+        id: createAmountId(config),
+      })
+
+      expect(result).toEqual([
+        amount(config, 100),
+        amount(config, 200),
+        amount(config, 300),
+      ])
+
+      expect(
+        coingeckoQueryService.getCirculatingSupplies,
+      ).toHaveBeenOnlyCalledWith(coingeckoId, { from, to }, undefined)
+    })
+  })
 
   describe(CirculatingSupplyService.prototype.getAdjustedTo.name, () => {
     it('adjust range for coingecko hourly query range', () => {

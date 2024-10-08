@@ -45,7 +45,7 @@ export function BlockNumberInput({
           placeholder="Block number"
           onChange={(e) => setBlockNumber(e.target.value)}
           id="block-number"
-          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 text-sm dark:border-gray-600 dark:focus:border-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:ring-blue-500 focus:ring-blue-500"
+          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 text-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
           required
         />
       </div>
@@ -53,7 +53,7 @@ export function BlockNumberInput({
         type="button"
         onClick={getLatestBlock}
         disabled={isLoading}
-        className="ms-2 rounded-lg border border-blue-700 bg-blue-700 p-2.5 font-medium text-sm text-white dark:bg-blue-600 dark:hover:bg-blue-700 hover:bg-blue-800 focus:outline-none dark:focus:ring-blue-800 focus:ring-4 focus:ring-blue-300"
+        className="ms-2 rounded-lg border border-blue-700 bg-blue-700 p-2.5 font-medium text-sm text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:focus:ring-blue-800 dark:hover:bg-blue-700"
       >
         {!isLoading ? (
           <svg

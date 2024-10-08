@@ -1,3 +1,96 @@
+Generated with discovered.json: 0xfbc3c3ed7ea22189bc191b49975f6fb26f5fed13
+
+# Diff at Mon, 07 Oct 2024 14:28:20 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@7c3e632caf56b943789c1bfa1021d4f65d503045 block: 19927684
+- current block number: 20760966
+
+## Description
+
+Discovery driven data.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19927684 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x0ED44be59Ea62a9960CB97f8aC54088304D05791) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      template:
++        "opstack/L1CrossDomainMessenger"
+      descriptions:
++        ["Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."]
+      categories:
++        ["Core"]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x520D972B4A7C1CE4d5e01bCd4349a93a8AeaEAC5) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      template:
++        "opstack/L2OutputOracle"
+      descriptions:
++        ["Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."]
+    }
+```
+
+```diff
+    contract SyndicateFrameMultisig (0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d) {
+    +++ description: None
+      name:
+-        "GnosisSafeL2"
++        "SyndicateFrameMultisig"
+      receivedPermissions.4.description:
++        "upgrading bridge implementation allows to access all funds and change every system component."
+    }
+```
+
+```diff
+    contract SystemConfig (0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d","via":[{"address":"0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E","delay":0}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.target:
+-        "0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d"
++        "0xdC545dDC657A1E2EDA8F6cBBE382927E3C9aA6E4"
+      issuedPermissions.0.via.0:
+-        {"address":"0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E","delay":0}
+      template:
++        "opstack/SystemConfig"
+      descriptions:
++        ["Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."]
+      fieldMeta:
++        {"gasLimit":{"severity":"LOW","description":"Gas limit for blocks on L2."}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E) {
+    +++ description: None
+      directlyReceivedPermissions.4.description:
++        "upgrading bridge implementation allows to access all funds and change every system component."
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xF7Cb313CB6D146dAbB8c5E31798BDCeFc67B831b) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      issuedPermissions.0.via.0.description:
++        "upgrading bridge implementation allows to access all funds and change every system component."
+      template:
++        "opstack/L1StandardBridge"
+      descriptions:
++        ["The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."]
+    }
+```
+
 Generated with discovered.json: 0xe956de0c0e5db3d8e01b0e16206dc738dd1722ef
 
 # Diff at Tue, 01 Oct 2024 11:13:30 GMT:

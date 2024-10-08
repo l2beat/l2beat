@@ -53,7 +53,7 @@ export const socket: Bridge = {
     },
   },
   technology: {
-    destination: ['Ethereum', 'Reya', 'Lyra', 'Hook'],
+    destination: ['Ethereum', 'Reya', 'Lyra', 'Kinto', 'Polynomial', 'Blast'],
     principleOfOperation: {
       name: 'Principle of operation',
       description:
@@ -109,6 +109,13 @@ export const socket: Bridge = {
         tokens: ['sUSDe'],
       }),
       discovery.getEscrowDetails({
+        address: EthereumAddress('0x613e87BE1cd75dEBC5e6e56a2AF2fED84162C142'),
+        name: 'sDAI Vault Lyra',
+        description:
+          'Socket Vault associated with Lyra and owned by LyraMultisig.',
+        tokens: ['sDAI'],
+      }),
+      discovery.getEscrowDetails({
         address: EthereumAddress('0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa'),
         name: 'USDT Vault Lyra',
         description:
@@ -130,18 +137,18 @@ export const socket: Bridge = {
         tokens: ['weETH'],
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3'),
-        name: 'wstETH Vault Lyra',
-        description:
-          'Socket Vault associated with Lyra and owned by LyraMultisig.',
-        tokens: ['wstETH'],
-      }),
-      discovery.getEscrowDetails({
         address: EthereumAddress('0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e'),
         name: 'WETH Vault Lyra',
         description:
           'Socket Vault associated with Lyra and owned by LyraMultisig.',
         tokens: ['WETH'],
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3'),
+        name: 'wstETH Vault Lyra',
+        description:
+          'Socket Vault associated with Lyra and owned by LyraMultisig.',
+        tokens: ['wstETH'],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x35d4D9bc79B0a543934b1769304B90d752691caD'),
@@ -158,13 +165,6 @@ export const socket: Bridge = {
         tokens: ['SNX'],
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x613e87BE1cd75dEBC5e6e56a2AF2fED84162C142'),
-        name: 'sDAI Vault Lyra',
-        description:
-          'Socket Vault associated with Lyra and owned by LyraMultisig.',
-        tokens: ['sDAI'],
-      }),
-      discovery.getEscrowDetails({
         address: EthereumAddress('0x26Cf1Dc84694E04277F2Fe4C13E43597c6010C2A'),
         name: 'USDe Vault Lyra',
         description:
@@ -179,6 +179,13 @@ export const socket: Bridge = {
         tokens: ['WBTC'],
       }),
       discovery.getEscrowDetails({
+        address: EthereumAddress('0x76624ff43D610F64177Bb9c194A2503642e9B803'),
+        name: 'LBTC Vault Lyra',
+        description:
+          'Socket Vault associated with Lyra and owned by LyraMultisig.',
+        tokens: ['LBTC'],
+      }),
+      discovery.getEscrowDetails({
         address: EthereumAddress('0x7E1d17b580dD4F89037DB331430eAEe8B8e50c91'),
         name: 'DAI Vault Lyra',
         description:
@@ -186,28 +193,20 @@ export const socket: Bridge = {
         tokens: ['DAI'],
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x76624ff43D610F64177Bb9c194A2503642e9B803'),
-        name: 'LBTC Vault Lyra',
+        address: EthereumAddress('0x25d35C8796c9dcD3857abE90D802FC17b1FB55A5'),
+        name: 'eBTC Vault Lyra',
         description:
           'Socket Vault associated with Lyra and owned by LyraMultisig.',
-        tokens: ['LBTC'],
-      }),
-      // Hook
-      discovery.getEscrowDetails({
-        address: EthereumAddress('0x855Aaf2f690Ef6e5EF451D7AE73EC3fa61c50981'),
-        name: 'USDC Vault Hook',
-        description:
-          'Socket Vault associated with Hook and owned by HookOwnerEOA.',
-        tokens: ['USDC'],
-      }),
-      discovery.getEscrowDetails({
-        address: EthereumAddress('0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa'),
-        name: 'WETH Vault Hook',
-        description:
-          'Socket Vault associated with Hook and owned by HookOwnerEOA.',
-        tokens: ['WETH'],
+        tokens: ['eBTC'],
       }),
       // Kinto
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x5B8Ae1C9c5970e2637Cf3Af431acAAebEf7aFb85'),
+        name: 'sDAI Vault Kinto',
+        description:
+          'Socket Vault associated with Kinto and owned by KintoMultisig.',
+        tokens: ['sDAI'],
+      }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x43b718Aa5e678b08615CA984cbe25f690B085b32'),
         name: 'sUSDe Vault Kinto',
@@ -223,25 +222,11 @@ export const socket: Bridge = {
       //   tokens: ['KINTO'],
       // }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x5B8Ae1C9c5970e2637Cf3Af431acAAebEf7aFb85'),
-        name: 'sDAI Vault Kinto',
-        description:
-          'Socket Vault associated with Kinto and owned by KintoMultisig.',
-        tokens: ['sDAI'],
-      }),
-      discovery.getEscrowDetails({
         address: EthereumAddress('0xdf34E61B6e7B9e348713d528fEB019d504d38c1e'),
         name: 'USDe Vault Kinto',
         description:
           'Socket Vault associated with Kinto and owned by KintoMultisig.',
         tokens: ['USDe'],
-      }),
-      discovery.getEscrowDetails({
-        address: EthereumAddress('0x755cD5d147036E11c76F1EeffDd94794fC265f0d'),
-        name: 'USDC Vault Kinto',
-        description:
-          'Socket Vault associated with Kinto and owned by KintoMultisig.',
-        tokens: ['USDC'],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x95d60E34aB2E626407d98dF8C240e6174e5D37E5'),
@@ -251,11 +236,25 @@ export const socket: Bridge = {
         tokens: ['ETHFI'],
       }),
       discovery.getEscrowDetails({
+        address: EthereumAddress('0x755cD5d147036E11c76F1EeffDd94794fC265f0d'),
+        name: 'USDC Vault Kinto',
+        description:
+          'Socket Vault associated with Kinto and owned by KintoMultisig.',
+        tokens: ['USDC'],
+      }),
+      discovery.getEscrowDetails({
         address: EthereumAddress('0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd'),
         name: 'ENA Vault Kinto',
         description:
           'Socket Vault associated with Kinto and owned by KintoMultisig.',
         tokens: ['ENA'],
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xdb161cdc9c11892922F7121a409b196f3b00e640'),
+        name: 'EIGEN Vault Kinto',
+        description:
+          'Socket Vault associated with Kinto and owned by KintoMultisig.',
+        tokens: ['EIGEN'],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc'),
@@ -278,6 +277,13 @@ export const socket: Bridge = {
           'Socket Vault associated with Kinto and owned by KintoEOA.',
         tokens: ['SOL'],
       }),
+      // discovery.getEscrowDetails({
+      //   address: EthereumAddress('0xDB0e855F55ff35dA8754e5297925bd6c4Cb1Fa48'),
+      //   name: 'eUSD Vault Kinto',
+      //   description:
+      //     'Socket Vault associated with Kinto and owned by KintoEOA.',
+      //   tokens: ['eUSD'],
+      // }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94'),
         name: 'WETH Vault Kinto',
@@ -305,6 +311,13 @@ export const socket: Bridge = {
         description:
           'Socket Vault associated with Kinto and owned by KintoEOA.',
         tokens: ['XAUt'],
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x0fC783f611A888A2cAbC3dA482Add3215334dCc2'),
+        name: 'MKR Vault Kinto',
+        description:
+          'Socket Vault associated with Kinto and owned by KintoEOA.',
+        tokens: ['MKR'],
       }),
       // Polynomial
       discovery.getEscrowDetails({
@@ -432,11 +445,6 @@ export const socket: Bridge = {
       'LooksRareMultisig',
       'Multisig that owns a Socket Vault associated with LOOKS token.',
     ),
-    {
-      name: 'HookOwnerEOA',
-      description: 'EOA that owns the Socket Vaults associated with hook.xyz.',
-      accounts: [discovery.getPermissionedAccount('WETH Vault Hook', 'owner')],
-    },
     {
       name: 'PolynomialEOA',
       description:

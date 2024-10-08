@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xb02ec4191fad3301ef8e85d6104e7eea78a2cac4
+
+# Diff at Wed, 02 Oct 2024 14:22:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d101c705b5f4fd0b3af2e251678b85e1005b31d8 block: 20871625
+- current block number: 20878383
+
+## Description
+
+Config related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20871625 (main branch discovery), not current.
+
+```diff
+    contract SP1Vector (0x02993cdC11213985b9B13224f3aF289F03bf298d) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-07-04T21:23:47.000Z",["0x2434564f3524b44258B11643729343Ef57D60989"]],["2024-07-20T01:29:35.000Z",["0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D"]]]
+    }
+```
+
 Generated with discovered.json: 0x62904dc488f9c12751a30fa4fc056944696bdb3a
 
 # Diff at Tue, 01 Oct 2024 15:45:53 GMT:

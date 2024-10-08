@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   ConfigReader,
-  DISCOVERY_LOGIC_VERSION,
   HttpClient as DiscoveryHttpClient,
   DiscoveryLogger,
 } from '@l2beat/discovery'
@@ -68,7 +67,6 @@ export function createUpdateMonitorModule(
     chainConverter,
     logger,
     !!config.updateMonitor.runOnStart,
-    DISCOVERY_LOGIC_VERSION,
   )
 
   const updateMonitorController = new UpdateMonitorController(

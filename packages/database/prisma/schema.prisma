@@ -222,18 +222,6 @@ model BlockTimestamp {
   @@id([chain, timestamp])
 }
 
-model DailyDiscovery {
-  projectName       String   @db.VarChar(255)
-  chainId           Int
-  timestamp         DateTime @db.Timestamp(6)
-  blockNumber       Int
-  version           Int
-  configHash        String   @db.VarChar(255)
-  discoveryJsonBlob Json
-
-  @@id([projectName, chainId, timestamp])
-}
-
 model DiscoveryCache {
   key         String @id
   value       String
@@ -318,7 +306,6 @@ model UpdateMonitor {
   timestamp         DateTime? @db.Timestamp(6)
   discoveryJsonBlob Json
   configHash        String    @default("") @db.VarChar(255)
-  version           Int       @default(0)
   chainId           Int       @default(1)
 
   @@id([projectName, chainId])

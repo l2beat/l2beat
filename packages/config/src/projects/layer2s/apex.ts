@@ -15,7 +15,6 @@ import {
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
@@ -168,7 +167,7 @@ export const apex: Layer2 = {
     bridge: { type: 'DAC Members', ...dacConfig },
     mode: 'State diffs',
   }),
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: {
       ...RISK_VIEW.DATA_EXTERNAL_DAC(dacConfig),
@@ -208,7 +207,7 @@ export const apex: Layer2 = {
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.CANONICAL_USDC,
-  }),
+  },
   technology: {
     stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
     newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,

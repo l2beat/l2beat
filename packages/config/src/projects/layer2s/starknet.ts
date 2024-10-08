@@ -4,7 +4,7 @@ import {
   EthereumAddress,
   ProjectId,
   UnixTime,
-  formatLargeNumberShared,
+  formatLargeNumber,
   formatSeconds,
 } from '@l2beat/shared-pure'
 
@@ -19,7 +19,6 @@ import {
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
@@ -146,7 +145,7 @@ function formatMaxTotalBalanceString(
   ) {
     return 'There is no bridge cap.'
   } else {
-    return `The current bridge cap is ${formatLargeNumberShared(
+    return `The current bridge cap is ${formatLargeNumber(
       maxTotalBalance / 10 ** decimals,
     )} ${ticker}.`
   }
@@ -714,7 +713,7 @@ export const starknet: Layer2 = {
     bridge: { type: 'Enshrined' },
     mode: 'State diffs',
   }),
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
       sources: [
@@ -759,7 +758,7 @@ export const starknet: Layer2 = {
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-  }),
+  },
   stage: getStage(
     {
       stage0: {

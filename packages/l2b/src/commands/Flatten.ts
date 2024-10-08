@@ -1,12 +1,8 @@
 import { writeFileSync } from 'fs'
-import { HttpClient, flattenStartingFrom } from '@l2beat/discovery'
-import {
-  ExplorerConfig,
-  getExplorerClient,
-} from '@l2beat/discovery/dist/utils/IEtherscanClient'
-import { assert } from '@l2beat/shared-pure'
+import { CliLogger } from '@l2beat/shared'
 import chalk from 'chalk'
 import { boolean, command, flag, option, positional, string } from 'cmd-ts'
+import { fetchAndFlatten } from '../implementations/flatten'
 import { explorerApiKey, explorerType, explorerUrl } from './args'
 import { EthereumAddressValue } from './types'
 
@@ -34,32 +30,17 @@ export const Flatten = command({
     }),
   },
   handler: async (args) => {
-    assert(
-      args.type !== 'etherscan' || args.apiKey !== undefined,
-      'When using etherscan you should provide the API key using --etherscan-key.',
+    const logger: CliLogger = new CliLogger()
+    const flat = await fetchAndFlatten(
+      args.address,
+      args.explorerUrl,
+      args.apiKey,
+      args.type,
+      logger,
+      args.includeAll,
     )
-    const httpClient = new HttpClient()
-    const client = getExplorerClient(httpClient, {
-      type: args.type as ExplorerConfig['type'],
-      url: args.explorerUrl.toString(),
-      apiKey: args.apiKey ?? 'YourApiKeyToken',
-    })
 
-    console.log('Fetching contract source code...')
-    const source = await client.getContractSource(args.address)
-
-    console.log('Flattening...')
-    const input = Object.entries(source.files)
-      .map(([fileName, content]) => ({
-        path: fileName,
-        content,
-      }))
-      .filter((e) => e.path.endsWith('.sol'))
-
-    const output = flattenStartingFrom(source.name, input, source.remappings, {
-      includeAll: args.includeAll,
-    })
     console.log(`Done, saving to ${chalk.magenta(args.output)}.`)
-    writeFileSync(args.output, output)
+    writeFileSync(args.output, flat)
   },
 })

@@ -2,7 +2,7 @@ import {
   EthereumAddress,
   ProjectId,
   UnixTime,
-  formatLargeNumberShared,
+  formatLargeNumber,
   formatSeconds,
 } from '@l2beat/shared-pure'
 
@@ -14,7 +14,6 @@ import {
   OPERATOR,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../common'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
 import { RISK_VIEW } from '../../common/riskView'
@@ -50,7 +49,7 @@ function formatMaxTotalBalanceString(
   maxTotalBalance: number,
   decimals: number,
 ) {
-  return `The current bridge cap is ${formatLargeNumberShared(
+  return `The current bridge cap is ${formatLargeNumber(
     maxTotalBalance / 10 ** decimals,
   )} ${ticker}.`
 }
@@ -217,7 +216,7 @@ export const paradex: Layer2 = {
     bridge: { type: 'Enshrined' },
     mode: 'State diffs',
   }),
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
       sources: [
@@ -255,7 +254,7 @@ export const paradex: Layer2 = {
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
     destinationToken: RISK_VIEW.CANONICAL_USDC,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-  }),
+  },
   stage: getStage({
     stage0: {
       callsItselfRollup: true,

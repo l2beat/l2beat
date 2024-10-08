@@ -1,8 +1,8 @@
 {
   "name": "metal",
   "chain": "ethereum",
-  "blockNumber": 20769555,
-  "configHash": "0x85be15526d61d81a7d1d4555a2bb56835c1fd6e9c3d75cdfd5d4dd2ad6dd140f",
+  "blockNumber": 20914057,
+  "configHash": "0x58bcf46f979d0927881ebf04616bfd267dc9d8e9e2001e64273760ba63eb88c6",
   "version": 15,
   "contracts": [
     {
@@ -23,11 +23,10 @@
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
         "thresholdPercentage": 75,
         "version": "1.2.0"
-      },
-      "derivedName": "LivenessModule"
+      }
     },
     {
-      "name": "GuardianMultisig",
+      "name": "SuperchainGuardianMultisig",
       "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -82,7 +81,7 @@
         ],
         "$upgradeCount": 4,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620011",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620021",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -99,8 +98,7 @@
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.3.0"
-      },
-      "derivedName": "L1CrossDomainMessenger"
+      }
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -251,10 +249,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 7495200,
-        "latestOutputIndex": 346,
-        "nextBlockNumber": 7516800,
-        "nextOutputIndex": 347,
+        "latestBlockNumber": 8359200,
+        "latestOutputIndex": 386,
+        "nextBlockNumber": 8380800,
+        "nextOutputIndex": 387,
         "proposer": "0xC8187d40AD440328104A52BBed2D8Efc5ab1F1F6",
         "PROPOSER": "0xC8187d40AD440328104A52BBed2D8Efc5ab1F1F6",
         "startingBlockNumber": 0,
@@ -262,8 +260,7 @@
         "SUBMISSION_INTERVAL": 21600,
         "submissionInterval": 21600,
         "version": "1.8.0"
-      },
-      "derivedName": "L2OutputOracle"
+      }
     },
     {
       "name": "OptimismPortal",
@@ -313,15 +310,14 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 20746629
+          "prevBlockNum": 20912317
         },
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "SYSTEM_CONFIG": "0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA",
         "systemConfig": "0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA",
         "version": "2.5.0"
-      },
-      "derivedName": "OptimismPortal"
+      }
     },
     {
       "name": "GnosisSafe",
@@ -378,7 +374,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 50,
+        "nonce": 52,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -664,8 +660,7 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         }
-      },
-      "derivedName": "SystemConfig"
+      }
     },
     {
       "name": "FoundationMultisig_1",
@@ -741,8 +736,7 @@
         "paused": false,
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
-      },
-      "derivedName": "SuperchainConfig"
+      }
     },
     {
       "name": "FoundationMultisig_2",
@@ -1428,5 +1422,5 @@
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0x1035c2c5b8e1c3436010db1d1662e0ffd2cca41e71a8f7e9c0b114c87751f259"
 }

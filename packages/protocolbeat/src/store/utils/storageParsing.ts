@@ -15,9 +15,9 @@ const NodeLocations = z.record(
 const NodeColors = z.record(
   z.string(),
   z.object({
-    r: z.number(),
-    g: z.number(),
-    b: z.number(),
+    l: z.number(),
+    c: z.number(),
+    h: z.number(),
   }),
 )
 
@@ -49,6 +49,12 @@ export function encodeNodeState(state: State): StorageNodeLocations {
   }
 }
 
-export function decodeNodeState(inputJson: string): StorageNodeLocations {
-  return StorageNodeLocations.parse(JSON.parse(inputJson))
+export function decodeNodeState(
+  inputJson: string,
+): StorageNodeLocations | undefined {
+  const result = StorageNodeLocations.safeParse(JSON.parse(inputJson))
+  if (result.success) {
+    result.data
+  }
+  return undefined
 }

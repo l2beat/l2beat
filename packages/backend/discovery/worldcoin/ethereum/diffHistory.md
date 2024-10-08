@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x3e661599e60bfdaf2ff2d79a33e33c89c99e6634
+
+# Diff at Tue, 08 Oct 2024 09:06:20 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@fdb935c9c2cec6572d61d5c74005044dc6c6dbe2 block: 20432514
+- current block number: 20919851
+
+## Description
+
+New identityOperator EOA.
+
+## Watched changes
+
+```diff
+    contract WorldIdIdentityManager2 (0xf7134CE138832c1456F2a91D64621eE90c2bddEa) {
+    +++ description: Does what it says: Manages identities for Worldcoin. The identityOperator can register or delete identities by submitting zk proofs.
++++ description: Can call functions (manage identities) in the WorldIdIdentityManager2 implementation
+      values.identityOperator:
+-        "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A"
++        "0xE2DA046340e00264C4F0443243a0565007AE08AC"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20432514 (main branch discovery), not current.
+
+```diff
+    contract WorldIdIdentityManager2 (0xf7134CE138832c1456F2a91D64621eE90c2bddEa) {
+    +++ description: Does what it says: Manages identities for Worldcoin. The identityOperator can register or delete identities by submitting zk proofs.
+      descriptions:
++        ["Does what it says: Manages identities for Worldcoin. The identityOperator can register or delete identities by submitting zk proofs."]
+      fieldMeta:
++        {"identityOperator":{"description":"Can call functions (manage identities) in the WorldIdIdentityManager2 implementation"}}
+    }
+```
+
 Generated with discovered.json: 0x96a26211df9aa68ac085af198ba101729d6b20bd
 
 # Diff at Tue, 01 Oct 2024 11:11:50 GMT:

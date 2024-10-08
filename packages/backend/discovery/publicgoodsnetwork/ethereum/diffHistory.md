@@ -1,3 +1,42 @@
+Generated with discovered.json: 0x6bf5a54453fe0679b4d04d08ce19d01b726d0639
+
+# Diff at Mon, 07 Oct 2024 12:22:23 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@efca92a29798cefefec67194c1af3e13a1fe40cc block: 20775939
+- current block number: 20913652
+
+## Description
+
+Renamed GuardianMS to be local.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20775939 (main branch discovery), not current.
+
+```diff
+    contract PgnMultisig (0x39E13D1AB040F6EA58CE19998edCe01B3C365f84) {
+    +++ description: None
+      name:
+-        "GuardianMultisig"
++        "PgnMultisig"
+      roles.1:
++        "Guardian"
+    }
+```
+
+```diff
+    contract OptimismPortal (0xb26Fd985c5959bBB382BAFdD0b879E149e48116c) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      template:
++        "opstack/OptimismPortal"
+      descriptions:
++        ["The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."]
+    }
+```
+
 Generated with discovered.json: 0xa5f73a58a3336d17518e73f66c20fb70569cb4ac
 
 # Diff at Tue, 01 Oct 2024 10:54:24 GMT:

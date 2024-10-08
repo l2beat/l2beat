@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x52011023219858cc7c745a0dacb56e48af7c842c
+
+# Diff at Mon, 07 Oct 2024 13:57:30 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@7c3e632caf56b943789c1bfa1021d4f65d503045 block: 20775904
+- current block number: 20914127
+
+## Description
+
+Rename Multisig.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20775904 (main branch discovery), not current.
+
+```diff
+    contract HyprMultisig (0x28fB4D0e436874F4107948E358df3C242De06788) {
+    +++ description: None
+      name:
+-        "ChallengerMultisig"
++        "HyprMultisig"
+    }
+```
+
 Generated with discovered.json: 0xd5465aff937f8d9936f6f08febe31a4dbc9996ea
 
 # Diff at Tue, 01 Oct 2024 10:51:32 GMT:

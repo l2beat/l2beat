@@ -8,9 +8,16 @@ import { TrackedTxsClient } from './TrackedTxsClient'
 import {
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
+  TrackedTxSharedBridgeConfig,
   TrackedTxSharpSubmissionConfig,
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
+import {
+  sharedBridgeChainId,
+  sharedBridgeCommitBatchesInput,
+  sharedBridgeCommitBatchesSelector,
+  sharedBridgeCommitBatchesSignature,
+} from '../../test/sharedBridge'
 import { Configuration } from '../../tools/uif/multi/types'
 import {
   BigQueryFunctionCallResult,
@@ -61,7 +68,7 @@ describe(TrackedTxsClient.name, () => {
       const bigquery = getMockBiqQuery([])
       const trackedTxsClient = new TrackedTxsClient(bigquery)
 
-      await trackedTxsClient.getFunctionCalls([], [], FROM, TO)
+      await trackedTxsClient.getFunctionCalls([], [], [], FROM, TO)
 
       expect(bigquery.query).not.toHaveBeenCalled()
     })
@@ -143,6 +150,28 @@ const CONFIGURATIONS = [
   } as Configuration<
     TrackedTxConfigEntry & { params: TrackedTxSharpSubmissionConfig }
   >,
+  {
+    id: '4',
+    hasData: true,
+    minHeight: 1,
+    maxHeight: 100,
+    properties: {
+      id: '4',
+      projectId: ProjectId('project1'),
+      type: 'l2costs',
+      subtype: 'batchSubmissions',
+      sinceTimestamp: FROM,
+      params: {
+        formula: 'sharedBridge',
+        address: EthereumAddress.random(),
+        selector: sharedBridgeCommitBatchesSelector,
+        chainId: sharedBridgeChainId,
+        signature: sharedBridgeCommitBatchesSignature,
+      },
+    },
+  } as Configuration<
+    TrackedTxConfigEntry & { params: TrackedTxSharedBridgeConfig }
+  >,
 ] as const
 
 const TRANSFERS_RESPONSE = [
@@ -197,6 +226,20 @@ const FUNCTIONS_RESPONSE = [
     receipt_blob_gas_used: 300,
     receipt_blob_gas_price: 3,
   },
+  {
+    hash: TX_HASH,
+    block_number: BLOCK,
+    block_timestamp: toBigQueryDate(FROM),
+    to_address: CONFIGURATIONS[3].properties.params.address,
+    gas_price: 1500,
+    receipt_gas_used: 200000,
+    input: sharedBridgeCommitBatchesInput,
+    transaction_type: 3,
+    calldata_gas_used: 0,
+    data_length: 0,
+    receipt_blob_gas_used: 300,
+    receipt_blob_gas_price: 3,
+  },
 ]
 
 const parsedFunctionCalls =
@@ -204,6 +247,7 @@ const parsedFunctionCalls =
 const FUNCTIONS_RESULT = transformFunctionCallsQueryResult(
   [CONFIGURATIONS[1]],
   [CONFIGURATIONS[2]],
+  [CONFIGURATIONS[3]],
   parsedFunctionCalls,
 )
 
@@ -216,13 +260,18 @@ const FUNCTIONS_SQL = getFunctionCallQuery(
   (
     CONFIGURATIONS.slice(1) as Configuration<
       TrackedTxConfigEntry & {
-        params: TrackedTxSharpSubmissionConfig | TrackedTxFunctionCallConfig
+        params:
+          | TrackedTxSharpSubmissionConfig
+          | TrackedTxFunctionCallConfig
+          | TrackedTxSharedBridgeConfig
       }
     >[]
   ).map((c) => ({
     address: c.properties.params.address,
     selector: c.properties.params.selector,
-    getFullInput: c.properties.params.formula === 'sharpSubmission',
+    getFullInput:
+      c.properties.params.formula === 'sharpSubmission' ||
+      c.properties.params.formula === 'sharedBridge',
   })),
   FROM,
   TO,

@@ -13,9 +13,9 @@
     "dev": "tsx --no-warnings=ExperimentalWarning --watch src/main.ts",
     "db:seed": "tsx src/scripts/seed.ts",
     "format": "biome check .",
-    "format:fix": "biome check --apply .",
+    "format:fix": "biome check --write .",
     "lint": "biome lint .",
-    "lint:fix": "biome lint . --apply",
+    "lint:fix": "biome lint . --write",
     "start": "tsx src/main.ts",
     "typecheck": "tsc --noEmit"
   },

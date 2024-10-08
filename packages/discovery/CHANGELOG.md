@@ -1,5 +1,13 @@
 # @l2beat/discovery
 
+## 0.48.0
+
+### Minor Changes
+
+- 1ebf93e: Support contract templates
+- 474827d: Auto-detect contract templates during discovery
+- 814c482: Remove meta.json files, move data to config.jsonc
+
 ## 0.47.1
 
 ### Patch Changes

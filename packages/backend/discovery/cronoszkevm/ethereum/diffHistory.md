@@ -1,3 +1,44 @@
+Generated with discovered.json: 0x3ee583d352b79175765670a67ff6b4507b0419ec
+
+# Diff at Wed, 02 Oct 2024 07:13:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@97b544adfba04e970ecc4cdd40ee3ff679944269 block: 20862570
+- current block number: 20876242
+
+## Description
+
+upgradeChainFromVersion() called, upgrading to protocol version 103079215106. This is the latest version used by ZKsync Era, effectively bringing no changes for CronosZkEvm since the postUpgradeCalldata is empty and the diamond implementations are the same as last version. (Era used this upgrade to change an admin) Upgrader role is given to the old Admin EOA (no net perm changes).
+
+## Watched changes
+
+```diff
+    contract CronosZkEVMAdmin (0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4) {
+    +++ description: None
+      values.accessControl.UPGRADER.members.2:
++        "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b"
+    }
+```
+
+```diff
+    contract CronosZkEvm (0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc) {
+    +++ description: None
+      values.$pastUpgrades.2:
++        ["2024-10-02T06:36:11.000Z",["0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a","0xE60E94fCCb18a81D501a38959E532C0A85A1be89","0xCDB6228b616EEf8Df47D69A372C4f725C43e718C","0xaD193aDe635576d8e9f7ada71Af2137b16c64075"]]
+      values.$upgradeCount:
+-        2
++        3
++++ description: Protocol version, increments with each protocol change
++++ severity: MEDIUM
+      values.getProtocolVersion:
+-        103079215105
++        103079215106
+      values.getSemverProtocolVersion.2:
+-        1
++        2
+    }
+```
+
 Generated with discovered.json: 0x94fa59118b88752205637a2b6454460d2c28b0da
 
 # Diff at Tue, 01 Oct 2024 10:50:30 GMT:

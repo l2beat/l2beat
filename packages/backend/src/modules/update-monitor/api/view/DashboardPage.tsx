@@ -1,10 +1,10 @@
 import React, { ReactNode } from 'react'
 
-import { TableData } from '../../../status/Components'
-import { Page } from '../../../status/Page'
-import { reactToHtml } from '../../../status/reactToHtml'
 import { DashboardProject } from '../props/getDashboardProjects'
+import { TableData } from './components/Components'
 import { Diff } from './components/Diff'
+import { Page } from './components/Page'
+import { reactToHtml } from './components/reactToHtml'
 
 import { getContractField, sortBySeverity } from '@l2beat/discovery'
 

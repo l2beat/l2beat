@@ -1,9 +1,8 @@
 {
   "name": "optimism",
   "chain": "ethereum",
-  "blockNumber": 20826753,
+  "blockNumber": 20919756,
   "configHash": "0xa79e8e6a94de9fe57ccc5f741635dc811567356907fdbeb1356cec21353d43a0",
-  "version": 15,
   "contracts": [
     {
       "name": "LivenessModule",
@@ -339,7 +338,7 @@
         ],
         "$upgradeCount": 10,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292756212",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292757995",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -711,7 +710,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DEPOSITS_DISABLER_ROLE": "0x63f736f21cb2943826cd50b191eb054ebbea670e4e962d0527611f830cd399d6",
         "DEPOSITS_ENABLER_ROLE": "0x4b43b36766bde12c5e9cbbc37d15f8d1f769f08f54720ab370faeb4ce893753a",
-        "isDepositsEnabled": true,
+        "isDepositsEnabled": false,
         "isInitialized": true,
         "isWithdrawalsEnabled": true,
         "l1Token": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
@@ -765,7 +764,7 @@
         "name": "Wrapped Ether",
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
-        "totalSupply": "20247594000000000000",
+        "totalSupply": "20335188000000000000",
         "version": "1.1.0"
       },
       "derivedName": "DelayedWETH"
@@ -1096,8 +1095,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 492334,
-          "prevBlockNum": 20826699
+          "prevBoughtGas": 796584,
+          "prevBlockNum": 20919591
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1223,7 +1222,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 2583,
+        "gameCount": 2894,
         "gameImpls": [
           "0xA6f3DFdbf4855a43c529bc42EDE96797252879af",
           "0x050ed6F6273c7D836a111E42153BC00D0380b87d",
@@ -2246,5 +2245,5 @@
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837"
   },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0x46fe05664c6168de6029fca0f3968c29d03176659063cc698514a45135ec8c98"
 }

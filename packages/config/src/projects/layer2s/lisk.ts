@@ -50,5 +50,5 @@ export const lisk: Layer2 = opStackL2({
   usesBlobs: true,
   isNodeAvailable: true,
   rpcUrl: 'https://rpc.api.lisk.com',
-  useDiscoveryMetaOnly: true,
+  discoveryDrivenData: true,
 })
