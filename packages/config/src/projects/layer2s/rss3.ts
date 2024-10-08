@@ -7,11 +7,6 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('rss3')
 
-const upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
-
 export const rss3: Layer2 = opStackL2({
   badges: [Badge.DA.NearDA],
   daProvider: {
@@ -83,7 +78,6 @@ export const rss3: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  upgradeability,
   rpcUrl: 'https://rpc.rss3.io/',
   chainConfig: {
     name: 'rss3',
@@ -109,30 +103,9 @@ export const rss3: Layer2 = opStackL2({
     stateUpdate: 'disabled',
   },
   genesisTimestamp: new UnixTime(1709858519),
-  nonTemplatePermissions: [
-    {
-      name: 'SystemConfig owner',
-      description:
-        'Account privileged to change System Config parameters such as sequencer address and gas limit.',
-      accounts: [discovery.getPermissionedAccount('SystemConfig', 'owner')],
-    },
-    ...discovery.getMultisigPermission(
-      'RSS3Multisig',
-      'This address is the owner of the following contracts: ProxyAdmin. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
-    ),
-  ],
-  nonTemplateContracts: [
-    discovery.getContractDetails('L1StandardBridge', {
-      description: 'The L1 Bridge to VSL.',
-      ...upgradeability,
-    }),
-    discovery.getContractDetails('SuperchainConfig', {
-      description:
-        'Contract that stores the Guardian address and allows it to pause the system.',
-    }),
-  ],
   l1StandardBridgeTokens: ['RSS3'],
   isNodeAvailable: false,
+  discoveryDrivenData: true,
   milestones: [
     {
       name: 'RSS3 Mainnet Alpha Launch',
