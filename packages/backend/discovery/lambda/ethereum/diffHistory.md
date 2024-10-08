@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xd0e52ea9a5ef6d77891f6086171d5b5dd7c60851
+
+# Diff at Mon, 07 Oct 2024 15:59:23 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@7c3e632caf56b943789c1bfa1021d4f65d503045 block: 20111587
+- current block number: 20914730
+
+## Description
+
+Use discovery driven data, 1/1 Safe is not recognized as transparent. (willfix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20111587 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501) {
+    +++ description: None
+      name:
+-        "LambdaOwnerMultisig"
++        "GnosisSafe"
+    }
+```
+
 Generated with discovered.json: 0xf58915ced5c6b5a18bc7068ed36e1b393fa6ac82
 
 # Diff at Tue, 01 Oct 2024 10:51:51 GMT:

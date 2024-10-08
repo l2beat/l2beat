@@ -35,7 +35,7 @@ export function BlockList({
                 className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
               >
                 <a
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  className="font-medium text-blue-600 hover:underline dark:text-blue-500"
                   href={getBlockLink(block.number)}
                   target="_blank"
                   rel="noreferrer"

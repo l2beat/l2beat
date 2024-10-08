@@ -10,7 +10,6 @@ import {
   DATA_ON_CHAIN,
   RISK_VIEW,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -191,7 +190,7 @@ export const taiko: Layer2 = {
     minTimestampForTvl: new UnixTime(1716620627),
   },
   type: 'layer2',
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: {
       description: `Taiko uses a multi-tier proof system to validate the state. However, current tier proofs include either SGX (secure-enclave) execution verification, or approval by a minimum number of Guardians. State validation through the Zk-proof tier is not yet active. 
         Each proof goes through a cooldown window allowing for contestation. Contested blocks require proof from a higher level tier. If no contestation is made, or the block has been proven by the highest tier, the proof is considered valid.
@@ -223,7 +222,7 @@ export const taiko: Layer2 = {
     },
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-  }),
+  },
   stage: getStage(
     {
       stage0: {

@@ -43,8 +43,8 @@
     "0x5e4c39ad7a3e881585e383db9827eb4811f6f647": "StrategyFactory",
     "0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9": "StrategiesBeacon",
     "0x7750d328b314EfFa365A0402CcfD489B80B0adda": "RewardsCoordinator",
-    "0x708230Be53c08b270F43e068116EBacc4C13F577": "TokenHopper",
-    "0xF2eB394c4e04ff19422EB27411f78d00e216a88d": "RewardAllStakersActionGenerator"
+    "0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563": "TokenHopper",
+    "0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE": "RewardAllStakersActionGenerator"
   },
   "overrides": {
     "RewardAllStakersActionGenerator": {

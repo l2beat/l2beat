@@ -165,7 +165,7 @@ export class ProjectDiscovery {
       isUpcoming,
       chain: this.chain,
       includeInTotal:
-        includeInTotal ?? this.chain === 'ethereum' ? true : includeInTotal,
+        (includeInTotal ?? this.chain === 'ethereum') ? true : includeInTotal,
       source,
       bridgedUsing,
       isHistorical,
