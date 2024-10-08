@@ -15,18 +15,18 @@ import {
   TrackedTxSharpSubmissionConfig,
   createTrackedTxId,
 } from '@l2beat/shared'
-import { Configuration } from '../../../tools/uif/multi/types'
-import {
-  BigQueryFunctionCallResult,
-  TrackedTxFunctionCallResult,
-} from '../types/model'
-import { transformFunctionCallsQueryResult } from './transformFunctionCallsQueryResult'
 import {
   sharedBridgeChainId,
   sharedBridgeCommitBatchesInput,
   sharedBridgeCommitBatchesSelector,
   sharedBridgeCommitBatchesSignature,
 } from '../../../test/sharedBridge'
+import { Configuration } from '../../../tools/uif/multi/types'
+import {
+  BigQueryFunctionCallResult,
+  TrackedTxFunctionCallResult,
+} from '../types/model'
+import { transformFunctionCallsQueryResult } from './transformFunctionCallsQueryResult'
 
 const ADDRESS_1 = EthereumAddress.random()
 const SELECTOR_1 = '0x095e4'

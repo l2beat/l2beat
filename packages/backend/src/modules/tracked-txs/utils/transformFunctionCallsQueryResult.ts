@@ -11,8 +11,8 @@ import {
   BigQueryFunctionCallResult,
   TrackedTxFunctionCallResult,
 } from '../types/model'
-import { isProgramHashProven } from './isProgramHashProven'
 import { isChainIdMatching } from './isChainIdMatching'
+import { isProgramHashProven } from './isProgramHashProven'
 
 export function transformFunctionCallsQueryResult(
   functionCalls: Configuration<

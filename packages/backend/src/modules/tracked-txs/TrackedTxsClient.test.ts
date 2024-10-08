@@ -12,6 +12,12 @@ import {
   TrackedTxSharpSubmissionConfig,
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
+import {
+  sharedBridgeChainId,
+  sharedBridgeCommitBatchesInput,
+  sharedBridgeCommitBatchesSelector,
+  sharedBridgeCommitBatchesSignature,
+} from '../../test/sharedBridge'
 import { Configuration } from '../../tools/uif/multi/types'
 import {
   BigQueryFunctionCallResult,
@@ -20,12 +26,6 @@ import {
 import { getFunctionCallQuery, getTransferQuery } from './utils/sql'
 import { transformFunctionCallsQueryResult } from './utils/transformFunctionCallsQueryResult'
 import { transformTransfersQueryResult } from './utils/transformTransfersQueryResult'
-import {
-  sharedBridgeChainId,
-  sharedBridgeCommitBatchesInput,
-  sharedBridgeCommitBatchesSelector,
-  sharedBridgeCommitBatchesSignature,
-} from '../../test/sharedBridge'
 
 const FROM = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
 const TO = UnixTime.fromDate(new Date('2022-01-01T02:00:00Z'))

@@ -1,6 +1,5 @@
 import { expect, mockObject } from 'earl'
 
-import { isChainIdMatching } from './isChainIdMatching'
 import { TrackedTxSharedBridgeConfig } from '@l2beat/shared'
 import {
   sharedBridgeChainId,
@@ -11,6 +10,7 @@ import {
   sharedBridgeProveBatchesInput,
   sharedBridgeProveBatchesSignature,
 } from '../../../test/sharedBridge'
+import { isChainIdMatching } from './isChainIdMatching'
 
 describe(isChainIdMatching.name, () => {
   it('commitBatches', () => {
