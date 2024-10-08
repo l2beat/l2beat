@@ -2,7 +2,6 @@ import { ContractParameters, DiscoveryOutput } from '@l2beat/discovery-types'
 import { Hash256 } from '@l2beat/shared-pure'
 
 import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
-import { DISCOVERY_LOGIC_VERSION } from '../engine/DiscoveryEngine'
 import { resolveAnalysis } from '../permission-resolving/resolveAnalysis'
 import {
   transformToIssued,
@@ -22,7 +21,6 @@ export function toDiscoveryOutput(
     chain,
     blockNumber,
     configHash,
-    version: DISCOVERY_LOGIC_VERSION,
     ...processAnalysis(results),
     usedTemplates: collectUsedTemplatesWithHashes(results),
     shapeFilesHash,
