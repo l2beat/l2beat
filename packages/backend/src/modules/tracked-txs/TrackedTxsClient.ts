@@ -1,28 +1,28 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 
-import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
+import type { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 
-import {
+import type {
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
   TrackedTxSharedBridgeConfig,
   TrackedTxSharpSubmissionConfig,
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
-import { Configuration } from '../../tools/uif/multi/types'
+import type { Configuration } from '../../tools/uif/multi/types'
 import {
   BigQueryFunctionCallResult,
   BigQueryTransferResult,
-  TrackedTxFunctionCallResult,
-  TrackedTxResult,
-  TrackedTxTransferResult,
+  type TrackedTxFunctionCallResult,
+  type TrackedTxResult,
+  type TrackedTxTransferResult,
 } from './types/model'
 import { getFunctionCallQuery, getTransferQuery } from './utils/sql'
 import { transformFunctionCallsQueryResult } from './utils/transformFunctionCallsQueryResult'
 import { transformTransfersQueryResult } from './utils/transformTransfersQueryResult'
 
 export class TrackedTxsClient {
-  constructor(private readonly bigquery: BigQueryClient) {}
+  constructor(private readonly bigquery: BigQueryClient) { }
 
   async getData(
     configurations: Configuration<TrackedTxConfigEntry>[],
@@ -105,7 +105,11 @@ export class TrackedTxsClient {
     from: UnixTime,
     to: UnixTime,
   ): Promise<TrackedTxFunctionCallResult[]> {
-    if (functionCallsConfig.length === 0 && sharpSubmissionsConfig.length === 0)
+    if (
+      functionCallsConfig.length === 0 &&
+      sharpSubmissionsConfig.length === 0 &&
+      sharedBridgesConfig.length === 0
+    )
       return Promise.resolve([])
 
     // function calls and sharp submissions will be batched into one query to save costs
