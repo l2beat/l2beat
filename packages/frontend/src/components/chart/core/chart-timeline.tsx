@@ -66,9 +66,7 @@ function TimeLineLabel({ x, children }: { x: number; children: ReactNode }) {
 }
 
 type ActualRange = Exclude<TimeRange, 'max'> | number
-function getActualRange(
-  columns: ChartColumn<{ timestamp: number }>[],
-): ActualRange {
+function getActualRange(columns: ChartColumn[]): ActualRange {
   const timestamps = columns.map((column) => column.data.timestamp)
   const minTimestamp = Math.min(...timestamps)
   const maxTimestamp = Math.max(...timestamps)
