@@ -70,18 +70,26 @@ library Strings {
 }
 
 contract Semver {
-    /// @notice Contract version number (major).
+    /**
+     * @notice Contract version number (major).
+     */
     uint256 private immutable MAJOR_VERSION;
 
-    /// @notice Contract version number (minor).
+    /**
+     * @notice Contract version number (minor).
+     */
     uint256 private immutable MINOR_VERSION;
 
-    /// @notice Contract version number (patch).
+    /**
+     * @notice Contract version number (patch).
+     */
     uint256 private immutable PATCH_VERSION;
 
-    /// @param _major Version number (major).
-    /// @param _minor Version number (minor).
-    /// @param _patch Version number (patch).
+    /**
+     * @param _major Version number (major).
+     * @param _minor Version number (minor).
+     * @param _patch Version number (patch).
+     */
     constructor(
         uint256 _major,
         uint256 _minor,
@@ -92,8 +100,11 @@ contract Semver {
         PATCH_VERSION = _patch;
     }
 
-    /// @notice Returns the full semver contract version.
-    /// @return Semver contract version as a string.
+    /**
+     * @notice Returns the full semver contract version.
+     *
+     * @return Semver contract version as a string.
+     */
     function version() public view returns (string memory) {
         return
             string(
@@ -109,9 +120,11 @@ contract Semver {
 }
 
 contract CrossDomainMessengerLegacySpacer0 {
-    /// @custom:legacy
-    /// @custom:spacer libAddressManager
-    /// @notice Spacer for backwards compatibility.
+    /**
+     * @custom:legacy
+     * @custom:spacer libAddressManager
+     * @notice Spacer for backwards compatibility.
+     */
     address private spacer_0_0_20;
 }
 
@@ -387,76 +400,101 @@ abstract contract Initializable {
 }
 
 contract CrossDomainMessengerLegacySpacer1 {
-    /// @custom:legacy
-    /// @custom:spacer ContextUpgradable's __gap
-    /// @notice Spacer for backwards compatibility. Comes from OpenZeppelin
-    ///         ContextUpgradable.
+    /**
+     * @custom:legacy
+     * @custom:spacer ContextUpgradable's __gap
+     * @notice Spacer for backwards compatibility. Comes from OpenZeppelin
+     *         ContextUpgradable.
+     *
+     */
     uint256[50] private spacer_1_0_1600;
 
-    /// @custom:legacy
-    /// @custom:spacer OwnableUpgradeable's _owner
-    /// @notice Spacer for backwards compatibility.
-    ///         Come from OpenZeppelin OwnableUpgradeable.
+    /**
+     * @custom:legacy
+     * @custom:spacer OwnableUpgradeable's _owner
+     * @notice Spacer for backwards compatibility.
+     *         Come from OpenZeppelin OwnableUpgradeable.
+     */
     address private spacer_51_0_20;
 
-    /// @custom:legacy
-    /// @custom:spacer OwnableUpgradeable's __gap
-    /// @notice Spacer for backwards compatibility. Comes from OpenZeppelin
-    ///         OwnableUpgradeable.
+    /**
+     * @custom:legacy
+     * @custom:spacer OwnableUpgradeable's __gap
+     * @notice Spacer for backwards compatibility. Comes from OpenZeppelin
+     *         OwnableUpgradeable.
+     */
     uint256[49] private spacer_52_0_1568;
 
-    /// @custom:legacy
-    /// @custom:spacer PausableUpgradable's _paused
-    /// @notice Spacer for backwards compatibility. Comes from OpenZeppelin
-    ///         PausableUpgradable.
+    /**
+     * @custom:legacy
+     * @custom:spacer PausableUpgradable's _paused
+     * @notice Spacer for backwards compatibility. Comes from OpenZeppelin
+     *         PausableUpgradable.
+     */
     bool private spacer_101_0_1;
 
-    /// @custom:legacy
-    /// @custom:spacer PausableUpgradable's __gap
-    /// @notice Spacer for backwards compatibility. Comes from OpenZeppelin
-    ///         PausableUpgradable.
+    /**
+     * @custom:legacy
+     * @custom:spacer PausableUpgradable's __gap
+     * @notice Spacer for backwards compatibility. Comes from OpenZeppelin
+     *         PausableUpgradable.
+     */
     uint256[49] private spacer_102_0_1568;
 
-    /// @custom:legacy
-    /// @custom:spacer ReentrancyGuardUpgradeable's `_status` field.
-    /// @notice Spacer for backwards compatibility.
+    /**
+     * @custom:legacy
+     * @custom:spacer ReentrancyGuardUpgradeable's `_status` field.
+     * @notice Spacer for backwards compatibility.
+     */
     uint256 private spacer_151_0_32;
 
-    /// @custom:legacy
-    /// @custom:spacer ReentrancyGuardUpgradeable's __gap
-    /// @notice Spacer for backwards compatibility.
+    /**
+     * @custom:legacy
+     * @custom:spacer ReentrancyGuardUpgradeable's __gap
+     * @notice Spacer for backwards compatibility.
+     */
     uint256[49] private spacer_152_0_1568;
 
-    /// @custom:legacy
-    /// @custom:spacer blockedMessages
-    /// @notice Spacer for backwards compatibility.
+    /**
+     * @custom:legacy
+     * @custom:spacer blockedMessages
+     * @notice Spacer for backwards compatibility.
+     */
     mapping(bytes32 => bool) private spacer_201_0_32;
 
-    /// @custom:legacy
-    /// @custom:spacer relayedMessages
-    /// @notice Spacer for backwards compatibility.
+    /**
+     * @custom:legacy
+     * @custom:spacer relayedMessages
+     * @notice Spacer for backwards compatibility.
+     */
     mapping(bytes32 => bool) private spacer_202_0_32;
 }
 
 library Types {
-    /// @notice OutputProposal represents a commitment to the L2 state. The timestamp is the L1
-    ///         timestamp that the output root is posted. This timestamp is used to verify that the
-    ///         finalization period has passed since the output root was submitted.
-    /// @custom:field outputRoot    Hash of the L2 output.
-    /// @custom:field timestamp     Timestamp of the L1 block that the output root was submitted in.
-    /// @custom:field l2BlockNumber L2 block number that the output corresponds to.
+    /**
+     * @notice OutputProposal represents a commitment to the L2 state. The timestamp is the L1
+     *         timestamp that the output root is posted. This timestamp is used to verify that the
+     *         finalization period has passed since the output root was submitted.
+     *
+     * @custom:field outputRoot    Hash of the L2 output.
+     * @custom:field timestamp     Timestamp of the L1 block that the output root was submitted in.
+     * @custom:field l2BlockNumber L2 block number that the output corresponds to.
+     */
     struct OutputProposal {
         bytes32 outputRoot;
         uint128 timestamp;
         uint128 l2BlockNumber;
     }
 
-    /// @notice Struct representing the elements that are hashed together to generate an output root
-    ///         which itself represents a snapshot of the L2 state.
-    /// @custom:field version                  Version of the output root.
-    /// @custom:field stateRoot                Root of the state trie at the block of this output.
-    /// @custom:field messagePasserStorageRoot Root of the message passer storage trie.
-    /// @custom:field latestBlockhash          Hash of the block this output was generated from.
+    /**
+     * @notice Struct representing the elements that are hashed together to generate an output root
+     *         which itself represents a snapshot of the L2 state.
+     *
+     * @custom:field version                  Version of the output root.
+     * @custom:field stateRoot                Root of the state trie at the block of this output.
+     * @custom:field messagePasserStorageRoot Root of the message passer storage trie.
+     * @custom:field latestBlockhash          Hash of the block this output was generated from.
+     */
     struct OutputRootProof {
         bytes32 version;
         bytes32 stateRoot;
@@ -464,17 +502,20 @@ library Types {
         bytes32 latestBlockhash;
     }
 
-    /// @notice Struct representing a deposit transaction (L1 => L2 transaction) created by an end
-    ///         user (as opposed to a system deposit transaction generated by the system).
-    /// @custom:field from        Address of the sender of the transaction.
-    /// @custom:field to          Address of the recipient of the transaction.
-    /// @custom:field isCreation  True if the transaction is a contract creation.
-    /// @custom:field value       Value to send to the recipient.
-    /// @custom:field mint        Amount of ETH to mint.
-    /// @custom:field gasLimit    Gas limit of the transaction.
-    /// @custom:field data        Data of the transaction.
-    /// @custom:field l1BlockHash Hash of the block the transaction was submitted in.
-    /// @custom:field logIndex    Index of the log in the block the transaction was submitted in.
+    /**
+     * @notice Struct representing a deposit transaction (L1 => L2 transaction) created by an end
+     *         user (as opposed to a system deposit transaction generated by the system).
+     *
+     * @custom:field from        Address of the sender of the transaction.
+     * @custom:field to          Address of the recipient of the transaction.
+     * @custom:field isCreation  True if the transaction is a contract creation.
+     * @custom:field value       Value to send to the recipient.
+     * @custom:field mint        Amount of ETH to mint.
+     * @custom:field gasLimit    Gas limit of the transaction.
+     * @custom:field data        Data of the transaction.
+     * @custom:field l1BlockHash Hash of the block the transaction was submitted in.
+     * @custom:field logIndex    Index of the log in the block the transaction was submitted in.
+     */
     struct UserDepositTransaction {
         address from;
         address to;
@@ -487,13 +528,16 @@ library Types {
         uint256 logIndex;
     }
 
-    /// @notice Struct representing a withdrawal transaction.
-    /// @custom:field nonce    Nonce of the withdrawal transaction
-    /// @custom:field sender   Address of the sender of the transaction.
-    /// @custom:field target   Address of the recipient of the transaction.
-    /// @custom:field value    Value to send to the recipient.
-    /// @custom:field gasLimit Gas limit of the transaction.
-    /// @custom:field data     Data of the transaction.
+    /**
+     * @notice Struct representing a withdrawal transaction.
+     *
+     * @custom:field nonce    Nonce of the withdrawal transaction
+     * @custom:field sender   Address of the sender of the transaction.
+     * @custom:field target   Address of the recipient of the transaction.
+     * @custom:field value    Value to send to the recipient.
+     * @custom:field gasLimit Gas limit of the transaction.
+     * @custom:field data     Data of the transaction.
+     */
     struct WithdrawalTransaction {
         uint256 nonce;
         address sender;
@@ -717,11 +761,15 @@ library RLPWriter {
 }
 
 library Encoding {
-    /// @notice RLP encodes the L2 transaction that would be generated when a given deposit is sent
-    ///         to the L2 system. Useful for searching for a deposit in the L2 system. The
-    ///         transaction is prefixed with 0x7e to identify its EIP-2718 type.
-    /// @param _tx User deposit transaction to encode.
-    /// @return RLP encoded L2 deposit transaction.
+    /**
+     * @notice RLP encodes the L2 transaction that would be generated when a given deposit is sent
+     *         to the L2 system. Useful for searching for a deposit in the L2 system. The
+     *         transaction is prefixed with 0x7e to identify its EIP-2718 type.
+     *
+     * @param _tx User deposit transaction to encode.
+     *
+     * @return RLP encoded L2 deposit transaction.
+     */
     function encodeDepositTransaction(Types.UserDepositTransaction memory _tx)
         internal
         pure
@@ -740,15 +788,19 @@ library Encoding {
         return abi.encodePacked(uint8(0x7e), RLPWriter.writeList(raw));
     }
 
-    /// @notice Encodes the cross domain message based on the version that is encoded into the
-    ///         message nonce.
-    /// @param _nonce    Message nonce with version encoded into the first two bytes.
-    /// @param _sender   Address of the sender of the message.
-    /// @param _target   Address of the target of the message.
-    /// @param _value    ETH value to send to the target.
-    /// @param _gasLimit Gas limit to use for the message.
-    /// @param _data     Data to send with the message.
-    /// @return Encoded cross domain message.
+    /**
+     * @notice Encodes the cross domain message based on the version that is encoded into the
+     *         message nonce.
+     *
+     * @param _nonce    Message nonce with version encoded into the first two bytes.
+     * @param _sender   Address of the sender of the message.
+     * @param _target   Address of the target of the message.
+     * @param _value    ETH value to send to the target.
+     * @param _gasLimit Gas limit to use for the message.
+     * @param _data     Data to send with the message.
+     *
+     * @return Encoded cross domain message.
+     */
     function encodeCrossDomainMessage(
         uint256 _nonce,
         address _sender,
@@ -767,12 +819,16 @@ library Encoding {
         }
     }
 
-    /// @notice Encodes a cross domain message based on the V0 (legacy) encoding.
-    /// @param _target Address of the target of the message.
-    /// @param _sender Address of the sender of the message.
-    /// @param _data   Data to send with the message.
-    /// @param _nonce  Message nonce.
-    /// @return Encoded cross domain message.
+    /**
+     * @notice Encodes a cross domain message based on the V0 (legacy) encoding.
+     *
+     * @param _target Address of the target of the message.
+     * @param _sender Address of the sender of the message.
+     * @param _data   Data to send with the message.
+     * @param _nonce  Message nonce.
+     *
+     * @return Encoded cross domain message.
+     */
     function encodeCrossDomainMessageV0(
         address _target,
         address _sender,
@@ -789,14 +845,18 @@ library Encoding {
             );
     }
 
-    /// @notice Encodes a cross domain message based on the V1 (current) encoding.
-    /// @param _nonce    Message nonce.
-    /// @param _sender   Address of the sender of the message.
-    /// @param _target   Address of the target of the message.
-    /// @param _value    ETH value to send to the target.
-    /// @param _gasLimit Gas limit to use for the message.
-    /// @param _data     Data to send with the message.
-    /// @return Encoded cross domain message.
+    /**
+     * @notice Encodes a cross domain message based on the V1 (current) encoding.
+     *
+     * @param _nonce    Message nonce.
+     * @param _sender   Address of the sender of the message.
+     * @param _target   Address of the target of the message.
+     * @param _value    ETH value to send to the target.
+     * @param _gasLimit Gas limit to use for the message.
+     * @param _data     Data to send with the message.
+     *
+     * @return Encoded cross domain message.
+     */
     function encodeCrossDomainMessageV1(
         uint256 _nonce,
         address _sender,
@@ -817,10 +877,14 @@ library Encoding {
             );
     }
 
-    /// @notice Adds a version number into the first two bytes of a message nonce.
-    /// @param _nonce   Message nonce to encode into.
-    /// @param _version Version number to encode into the message nonce.
-    /// @return Message nonce with version encoded into the first two bytes.
+    /**
+     * @notice Adds a version number into the first two bytes of a message nonce.
+     *
+     * @param _nonce   Message nonce to encode into.
+     * @param _version Version number to encode into the message nonce.
+     *
+     * @return Message nonce with version encoded into the first two bytes.
+     */
     function encodeVersionedNonce(uint240 _nonce, uint16 _version) internal pure returns (uint256) {
         uint256 nonce;
         assembly {
@@ -829,10 +893,14 @@ library Encoding {
         return nonce;
     }
 
-    /// @notice Pulls the version out of a version-encoded nonce.
-    /// @param _nonce Message nonce with version encoded into the first two bytes.
-    /// @return Nonce without encoded version.
-    /// @return Version of the message.
+    /**
+     * @notice Pulls the version out of a version-encoded nonce.
+     *
+     * @param _nonce Message nonce with version encoded into the first two bytes.
+     *
+     * @return Nonce without encoded version.
+     * @return Version of the message.
+     */
     function decodeVersionedNonce(uint256 _nonce) internal pure returns (uint240, uint16) {
         uint240 nonce;
         uint16 version;
@@ -845,11 +913,15 @@ library Encoding {
 }
 
 library Hashing {
-    /// @notice Computes the hash of the RLP encoded L2 transaction that would be generated when a
-    ///         given deposit is sent to the L2 system. Useful for searching for a deposit in the L2
-    ///         system.
-    /// @param _tx User deposit transaction to hash.
-    /// @return Hash of the RLP encoded L2 deposit transaction.
+    /**
+     * @notice Computes the hash of the RLP encoded L2 transaction that would be generated when a
+     *         given deposit is sent to the L2 system. Useful for searching for a deposit in the L2
+     *         system.
+     *
+     * @param _tx User deposit transaction to hash.
+     *
+     * @return Hash of the RLP encoded L2 deposit transaction.
+     */
     function hashDepositTransaction(Types.UserDepositTransaction memory _tx)
         internal
         pure
@@ -858,12 +930,16 @@ library Hashing {
         return keccak256(Encoding.encodeDepositTransaction(_tx));
     }
 
-    /// @notice Computes the deposit transaction's "source hash", a value that guarantees the hash
-    ///         of the L2 transaction that corresponds to a deposit is unique and is
-    ///         deterministically generated from L1 transaction data.
-    /// @param _l1BlockHash Hash of the L1 block where the deposit was included.
-    /// @param _logIndex    The index of the log that created the deposit transaction.
-    /// @return Hash of the deposit transaction's "source hash".
+    /**
+     * @notice Computes the deposit transaction's "source hash", a value that guarantees the hash
+     *         of the L2 transaction that corresponds to a deposit is unique and is
+     *         deterministically generated from L1 transaction data.
+     *
+     * @param _l1BlockHash Hash of the L1 block where the deposit was included.
+     * @param _logIndex    The index of the log that created the deposit transaction.
+     *
+     * @return Hash of the deposit transaction's "source hash".
+     */
     function hashDepositSource(bytes32 _l1BlockHash, uint256 _logIndex)
         internal
         pure
@@ -873,15 +949,19 @@ library Hashing {
         return keccak256(abi.encode(bytes32(0), depositId));
     }
 
-    /// @notice Hashes the cross domain message based on the version that is encoded into the
-    ///         message nonce.
-    /// @param _nonce    Message nonce with version encoded into the first two bytes.
-    /// @param _sender   Address of the sender of the message.
-    /// @param _target   Address of the target of the message.
-    /// @param _value    ETH value to send to the target.
-    /// @param _gasLimit Gas limit to use for the message.
-    /// @param _data     Data to send with the message.
-    /// @return Hashed cross domain message.
+    /**
+     * @notice Hashes the cross domain message based on the version that is encoded into the
+     *         message nonce.
+     *
+     * @param _nonce    Message nonce with version encoded into the first two bytes.
+     * @param _sender   Address of the sender of the message.
+     * @param _target   Address of the target of the message.
+     * @param _value    ETH value to send to the target.
+     * @param _gasLimit Gas limit to use for the message.
+     * @param _data     Data to send with the message.
+     *
+     * @return Hashed cross domain message.
+     */
     function hashCrossDomainMessage(
         uint256 _nonce,
         address _sender,
@@ -900,12 +980,16 @@ library Hashing {
         }
     }
 
-    /// @notice Hashes a cross domain message based on the V0 (legacy) encoding.
-    /// @param _target Address of the target of the message.
-    /// @param _sender Address of the sender of the message.
-    /// @param _data   Data to send with the message.
-    /// @param _nonce  Message nonce.
-    /// @return Hashed cross domain message.
+    /**
+     * @notice Hashes a cross domain message based on the V0 (legacy) encoding.
+     *
+     * @param _target Address of the target of the message.
+     * @param _sender Address of the sender of the message.
+     * @param _data   Data to send with the message.
+     * @param _nonce  Message nonce.
+     *
+     * @return Hashed cross domain message.
+     */
     function hashCrossDomainMessageV0(
         address _target,
         address _sender,
@@ -915,14 +999,18 @@ library Hashing {
         return keccak256(Encoding.encodeCrossDomainMessageV0(_target, _sender, _data, _nonce));
     }
 
-    /// @notice Hashes a cross domain message based on the V1 (current) encoding.
-    /// @param _nonce    Message nonce.
-    /// @param _sender   Address of the sender of the message.
-    /// @param _target   Address of the target of the message.
-    /// @param _value    ETH value to send to the target.
-    /// @param _gasLimit Gas limit to use for the message.
-    /// @param _data     Data to send with the message.
-    /// @return Hashed cross domain message.
+    /**
+     * @notice Hashes a cross domain message based on the V1 (current) encoding.
+     *
+     * @param _nonce    Message nonce.
+     * @param _sender   Address of the sender of the message.
+     * @param _target   Address of the target of the message.
+     * @param _value    ETH value to send to the target.
+     * @param _gasLimit Gas limit to use for the message.
+     * @param _data     Data to send with the message.
+     *
+     * @return Hashed cross domain message.
+     */
     function hashCrossDomainMessageV1(
         uint256 _nonce,
         address _sender,
@@ -944,9 +1032,13 @@ library Hashing {
             );
     }
 
-    /// @notice Derives the withdrawal hash according to the encoding in the L2 Withdrawer contract
-    /// @param _tx Withdrawal transaction to hash.
-    /// @return Hashed withdrawal transaction.
+    /**
+     * @notice Derives the withdrawal hash according to the encoding in the L2 Withdrawer contract
+     *
+     * @param _tx Withdrawal transaction to hash.
+     *
+     * @return Hashed withdrawal transaction.
+     */
     function hashWithdrawal(Types.WithdrawalTransaction memory _tx)
         internal
         pure
@@ -958,10 +1050,14 @@ library Hashing {
             );
     }
 
-    /// @notice Hashes the various elements of an output root proof into an output root hash which
-    ///         can be used to check if the proof is valid.
-    /// @param _outputRootProof Output root proof which should hash to an output root.
-    /// @return Hashed output root proof.
+    /**
+     * @notice Hashes the various elements of an output root proof into an output root hash which
+     *         can be used to check if the proof is valid.
+     *
+     * @param _outputRootProof Output root proof which should hash to an output root.
+     *
+     * @return Hashed output root proof.
+     */
     function hashOutputRootProof(Types.OutputRootProof memory _outputRootProof)
         internal
         pure
@@ -980,11 +1076,14 @@ library Hashing {
 }
 
 library SafeCall {
-    /// @notice Performs a low level call without copying any returndata.
-    /// @dev Passes no calldata to the call context.
-    /// @param _target   Address to call
-    /// @param _gas      Amount of gas to pass to the call
-    /// @param _value    Amount of value to pass to the call
+    /**
+     * @notice Performs a low level call without copying any returndata.
+     * @dev Passes no calldata to the call context.
+     *
+     * @param _target   Address to call
+     * @param _gas      Amount of gas to pass to the call
+     * @param _value    Amount of value to pass to the call
+     */
     function send(
         address _target,
         uint256 _gas,
@@ -1005,11 +1104,14 @@ library SafeCall {
         return _success;
     }
 
-    /// @notice Perform a low level call without copying any returndata
-    /// @param _target   Address to call
-    /// @param _gas      Amount of gas to pass to the call
-    /// @param _value    Amount of value to pass to the call
-    /// @param _calldata Calldata to pass to the call
+    /**
+     * @notice Perform a low level call without copying any returndata
+     *
+     * @param _target   Address to call
+     * @param _gas      Amount of gas to pass to the call
+     * @param _value    Amount of value to pass to the call
+     * @param _calldata Calldata to pass to the call
+     */
     function call(
         address _target,
         uint256 _gas,
@@ -1031,29 +1133,31 @@ library SafeCall {
         return _success;
     }
 
-    /// @notice Helper function to determine if there is sufficient gas remaining within the context
-    ///         to guarantee that the minimum gas requirement for a call will be met as well as
-    ///         optionally reserving a specified amount of gas for after the call has concluded.
-    /// @param _minGas      The minimum amount of gas that may be passed to the target context.
-    /// @param _reservedGas Optional amount of gas to reserve for the caller after the execution
-    ///                     of the target context.
-    /// @return `true` if there is enough gas remaining to safely supply `_minGas` to the target
-    ///         context as well as reserve `_reservedGas` for the caller after the execution of
-    ///         the target context.
-    /// @dev !!!!! FOOTGUN ALERT !!!!!
-    ///      1.) The 40_000 base buffer is to account for the worst case of the dynamic cost of the
-    ///          `CALL` opcode's `address_access_cost`, `positive_value_cost`, and
-    ///          `value_to_empty_account_cost` factors with an added buffer of 5,700 gas. It is
-    ///          still possible to self-rekt by initiating a withdrawal with a minimum gas limit
-    ///          that does not account for the `memory_expansion_cost` & `code_execution_cost`
-    ///          factors of the dynamic cost of the `CALL` opcode.
-    ///      2.) This function should *directly* precede the external call if possible. There is an
-    ///          added buffer to account for gas consumed between this check and the call, but it
-    ///          is only 5,700 gas.
-    ///      3.) Because EIP-150 ensures that a maximum of 63/64ths of the remaining gas in the call
-    ///          frame may be passed to a subcontext, we need to ensure that the gas will not be
-    ///          truncated.
-    ///      4.) Use wisely. This function is not a silver bullet.
+    /**
+     * @notice Helper function to determine if there is sufficient gas remaining within the context
+     *         to guarantee that the minimum gas requirement for a call will be met as well as
+     *         optionally reserving a specified amount of gas for after the call has concluded.
+     * @param _minGas      The minimum amount of gas that may be passed to the target context.
+     * @param _reservedGas Optional amount of gas to reserve for the caller after the execution
+     *                     of the target context.
+     * @return `true` if there is enough gas remaining to safely supply `_minGas` to the target
+     *         context as well as reserve `_reservedGas` for the caller after the execution of
+     *         the target context.
+     * @dev !!!!! FOOTGUN ALERT !!!!!
+     *      1.) The 40_000 base buffer is to account for the worst case of the dynamic cost of the
+     *          `CALL` opcode's `address_access_cost`, `positive_value_cost`, and
+     *          `value_to_empty_account_cost` factors with an added buffer of 5,700 gas. It is
+     *          still possible to self-rekt by initiating a withdrawal with a minimum gas limit
+     *          that does not account for the `memory_expansion_cost` & `code_execution_cost`
+     *          factors of the dynamic cost of the `CALL` opcode.
+     *      2.) This function should *directly* precede the external call if possible. There is an
+     *          added buffer to account for gas consumed between this check and the call, but it
+     *          is only 5,700 gas.
+     *      3.) Because EIP-150 ensures that a maximum of 63/64ths of the remaining gas in the call
+     *          frame may be passed to a subcontext, we need to ensure that the gas will not be
+     *          truncated.
+     *      4.) Use wisely. This function is not a silver bullet.
+     */
     function hasMinGas(uint256 _minGas, uint256 _reservedGas) internal view returns (bool) {
         bool _hasMinGas;
         assembly {
@@ -1065,13 +1169,16 @@ library SafeCall {
         return _hasMinGas;
     }
 
-    /// @notice Perform a low level call without copying any returndata. This function
-    ///         will revert if the call cannot be performed with the specified minimum
-    ///         gas.
-    /// @param _target   Address to call
-    /// @param _minGas   The minimum amount of gas that may be passed to the call
-    /// @param _value    Amount of value to pass to the call
-    /// @param _calldata Calldata to pass to the call
+    /**
+     * @notice Perform a low level call without copying any returndata. This function
+     *         will revert if the call cannot be performed with the specified minimum
+     *         gas.
+     *
+     * @param _target   Address to call
+     * @param _minGas   The minimum amount of gas that may be passed to the call
+     * @param _value    Amount of value to pass to the call
+     * @param _calldata Calldata to pass to the call
+     */
     function callWithMinGas(
         address _target,
         uint256 _minGas,
@@ -1123,21 +1230,27 @@ library SafeCall {
 }
 
 library Constants {
-    /// @notice Special address to be used as the tx origin for gas estimation calls in the
-    ///         OptimismPortal and CrossDomainMessenger calls. You only need to use this address if
-    ///         the minimum gas limit specified by the user is not actually enough to execute the
-    ///         given message and you're attempting to estimate the actual necessary gas limit. We
-    ///         use address(1) because it's the ecrecover precompile and therefore guaranteed to
-    ///         never have any code on any EVM chain.
+    /**
+     * @notice Special address to be used as the tx origin for gas estimation calls in the
+     *         OptimismPortal and CrossDomainMessenger calls. You only need to use this address if
+     *         the minimum gas limit specified by the user is not actually enough to execute the
+     *         given message and you're attempting to estimate the actual necessary gas limit. We
+     *         use address(1) because it's the ecrecover precompile and therefore guaranteed to
+     *         never have any code on any EVM chain.
+     */
     address internal constant ESTIMATION_ADDRESS = address(1);
 
-    /// @notice Value used for the L2 sender storage slot in both the OptimismPortal and the
-    ///         CrossDomainMessenger contracts before an actual sender is set. This value is
-    ///         non-zero to reduce the gas cost of message passing transactions.
+    /**
+     * @notice Value used for the L2 sender storage slot in both the OptimismPortal and the
+     *         CrossDomainMessenger contracts before an actual sender is set. This value is
+     *         non-zero to reduce the gas cost of message passing transactions.
+     */
     address internal constant DEFAULT_L2_SENDER = 0x000000000000000000000000000000000000dEaD;
 
-    /// @notice Returns the default values for the ResourceConfig. These are the recommended values
-    ///         for a production network.
+    /**
+     * @notice Returns the default values for the ResourceConfig. These are the recommended values
+     *         for a production network.
+     */
     function DEFAULT_RESOURCE_CONFIG()
         internal
         pure
@@ -1160,66 +1273,97 @@ abstract contract CrossDomainMessenger is
     Initializable,
     CrossDomainMessengerLegacySpacer1
 {
-    /// @notice Current message version identifier.
+    /**
+     * @notice Current message version identifier.
+     */
     uint16 public constant MESSAGE_VERSION = 1;
 
-    /// @notice Constant overhead added to the base gas for a message.
+    /**
+     * @notice Constant overhead added to the base gas for a message.
+     */
     uint64 public constant RELAY_CONSTANT_OVERHEAD = 200_000;
 
-    /// @notice Numerator for dynamic overhead added to the base gas for a message.
+    /**
+     * @notice Numerator for dynamic overhead added to the base gas for a message.
+     */
     uint64 public constant MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR = 64;
 
-    /// @notice Denominator for dynamic overhead added to the base gas for a message.
+    /**
+     * @notice Denominator for dynamic overhead added to the base gas for a message.
+     */
     uint64 public constant MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR = 63;
 
-    /// @notice Extra gas added to base gas for each byte of calldata in a message.
+    /**
+     * @notice Extra gas added to base gas for each byte of calldata in a message.
+     */
     uint64 public constant MIN_GAS_CALLDATA_OVERHEAD = 16;
 
-    /// @notice Gas reserved for performing the external call in `relayMessage`.
+    /**
+     * @notice Gas reserved for performing the external call in `relayMessage`.
+     */
     uint64 public constant RELAY_CALL_OVERHEAD = 40_000;
 
-    /// @notice Gas reserved for finalizing the execution of `relayMessage` after the safe call.
+    /**
+     * @notice Gas reserved for finalizing the execution of `relayMessage` after the safe call.
+     */
     uint64 public constant RELAY_RESERVED_GAS = 40_000;
 
-    /// @notice Gas reserved for the execution between the `hasMinGas` check and the external
-    ///         call in `relayMessage`.
+    /**
+     * @notice Gas reserved for the execution between the `hasMinGas` check and the external
+     *         call in `relayMessage`.
+     */
     uint64 public constant RELAY_GAS_CHECK_BUFFER = 5_000;
 
-    /// @notice Address of the paired CrossDomainMessenger contract on the other chain.
+    /**
+     * @notice Address of the paired CrossDomainMessenger contract on the other chain.
+     */
     address public immutable OTHER_MESSENGER;
 
-    /// @notice Mapping of message hashes to boolean receipt values. Note that a message will only
-    ///         be present in this mapping if it has successfully been relayed on this chain, and
-    ///         can therefore not be relayed again.
+    /**
+     * @notice Mapping of message hashes to boolean receipt values. Note that a message will only
+     *         be present in this mapping if it has successfully been relayed on this chain, and
+     *         can therefore not be relayed again.
+     */
     mapping(bytes32 => bool) public successfulMessages;
 
-    /// @notice Address of the sender of the currently executing message on the other chain. If the
-    ///         value of this variable is the default value (0x00000000...dead) then no message is
-    ///         currently being executed. Use the xDomainMessageSender getter which will throw an
-    ///         error if this is the case.
+    /**
+     * @notice Address of the sender of the currently executing message on the other chain. If the
+     *         value of this variable is the default value (0x00000000...dead) then no message is
+     *         currently being executed. Use the xDomainMessageSender getter which will throw an
+     *         error if this is the case.
+     */
     address internal xDomainMsgSender;
 
-    /// @notice Nonce for the next message to be sent, without the message version applied. Use the
-    ///         messageNonce getter which will insert the message version into the nonce to give you
-    ///         the actual nonce to be used for the message.
+    /**
+     * @notice Nonce for the next message to be sent, without the message version applied. Use the
+     *         messageNonce getter which will insert the message version into the nonce to give you
+     *         the actual nonce to be used for the message.
+     */
     uint240 internal msgNonce;
 
-    /// @notice Mapping of message hashes to a boolean if and only if the message has failed to be
-    ///         executed at least once. A message will not be present in this mapping if it
-    ///         successfully executed on the first attempt.
+    /**
+     * @notice Mapping of message hashes to a boolean if and only if the message has failed to be
+     *         executed at least once. A message will not be present in this mapping if it
+     *         successfully executed on the first attempt.
+     */
     mapping(bytes32 => bool) public failedMessages;
 
-    /// @notice Reserve extra slots in the storage layout for future upgrades.
-    ///         A gap size of 41 was chosen here, so that the first slot used in a child contract
-    ///         would be a multiple of 50.
+    /**
+     * @notice Reserve extra slots in the storage layout for future upgrades.
+     *         A gap size of 41 was chosen here, so that the first slot used in a child contract
+     *         would be a multiple of 50.
+     */
     uint256[42] private __gap;
 
-    /// @notice Emitted whenever a message is sent to the other chain.
-    /// @param target       Address of the recipient of the message.
-    /// @param sender       Address of the sender of the message.
-    /// @param message      Message to trigger the recipient address with.
-    /// @param messageNonce Unique nonce attached to the message.
-    /// @param gasLimit     Minimum gas limit that the message can be executed with.
+    /**
+     * @notice Emitted whenever a message is sent to the other chain.
+     *
+     * @param target       Address of the recipient of the message.
+     * @param sender       Address of the sender of the message.
+     * @param message      Message to trigger the recipient address with.
+     * @param messageNonce Unique nonce attached to the message.
+     * @param gasLimit     Minimum gas limit that the message can be executed with.
+     */
     event SentMessage(
         address indexed target,
         address sender,
@@ -1228,32 +1372,46 @@ abstract contract CrossDomainMessenger is
         uint256 gasLimit
     );
 
-    /// @notice Additional event data to emit, required as of Bedrock. Cannot be merged with the
-    ///         SentMessage event without breaking the ABI of this contract, this is good enough.
-    /// @param sender Address of the sender of the message.
-    /// @param value  ETH value sent along with the message to the recipient.
+    /**
+     * @notice Additional event data to emit, required as of Bedrock. Cannot be merged with the
+     *         SentMessage event without breaking the ABI of this contract, this is good enough.
+     *
+     * @param sender Address of the sender of the message.
+     * @param value  ETH value sent along with the message to the recipient.
+     */
     event SentMessageExtension1(address indexed sender, uint256 value);
 
-    /// @notice Emitted whenever a message is successfully relayed on this chain.
-    /// @param msgHash Hash of the message that was relayed.
+    /**
+     * @notice Emitted whenever a message is successfully relayed on this chain.
+     *
+     * @param msgHash Hash of the message that was relayed.
+     */
     event RelayedMessage(bytes32 indexed msgHash);
 
-    /// @notice Emitted whenever a message fails to be relayed on this chain.
-    /// @param msgHash Hash of the message that failed to be relayed.
+    /**
+     * @notice Emitted whenever a message fails to be relayed on this chain.
+     *
+     * @param msgHash Hash of the message that failed to be relayed.
+     */
     event FailedRelayedMessage(bytes32 indexed msgHash);
 
-    /// @param _otherMessenger Address of the messenger on the paired chain.
+    /**
+     * @param _otherMessenger Address of the messenger on the paired chain.
+     */
     constructor(address _otherMessenger) {
         OTHER_MESSENGER = _otherMessenger;
     }
 
-    /// @notice Sends a message to some target address on the other chain. Note that if the call
-    ///         always reverts, then the message will be unrelayable, and any ETH sent will be
-    ///         permanently locked. The same will occur if the target on the other chain is
-    ///         considered unsafe (see the _isUnsafeTarget() function).
-    /// @param _target      Target contract or wallet address.
-    /// @param _message     Message to trigger the target address with.
-    /// @param _minGasLimit Minimum gas limit that the message can be executed with.
+    /**
+     * @notice Sends a message to some target address on the other chain. Note that if the call
+     *         always reverts, then the message will be unrelayable, and any ETH sent will be
+     *         permanently locked. The same will occur if the target on the other chain is
+     *         considered unsafe (see the _isUnsafeTarget() function).
+     *
+     * @param _target      Target contract or wallet address.
+     * @param _message     Message to trigger the target address with.
+     * @param _minGasLimit Minimum gas limit that the message can be executed with.
+     */
     function sendMessage(
         address _target,
         bytes calldata _message,
@@ -1286,15 +1444,18 @@ abstract contract CrossDomainMessenger is
         }
     }
 
-    /// @notice Relays a message that was sent by the other CrossDomainMessenger contract. Can only
-    ///         be executed via cross-chain call from the other messenger OR if the message was
-    ///         already received once and is currently being replayed.
-    /// @param _nonce       Nonce of the message being relayed.
-    /// @param _sender      Address of the user who sent the message.
-    /// @param _target      Address that the message is targeted at.
-    /// @param _value       ETH value to send with the message.
-    /// @param _minGasLimit Minimum amount of gas that the message can be executed with.
-    /// @param _message     Message to send to the target.
+    /**
+     * @notice Relays a message that was sent by the other CrossDomainMessenger contract. Can only
+     *         be executed via cross-chain call from the other messenger OR if the message was
+     *         already received once and is currently being replayed.
+     *
+     * @param _nonce       Nonce of the message being relayed.
+     * @param _sender      Address of the user who sent the message.
+     * @param _target      Address that the message is targeted at.
+     * @param _value       ETH value to send with the message.
+     * @param _minGasLimit Minimum amount of gas that the message can be executed with.
+     * @param _message     Message to send to the target.
+     */
     function relayMessage(
         uint256 _nonce,
         address _sender,
@@ -1407,10 +1568,13 @@ abstract contract CrossDomainMessenger is
         }
     }
 
-    /// @notice Retrieves the address of the contract or wallet that initiated the currently
-    ///         executing message on the other chain. Will throw an error if there is no message
-    ///         currently being executed. Allows the recipient of a call to see who triggered it.
-    /// @return Address of the sender of the currently executing message on the other chain.
+    /**
+     * @notice Retrieves the address of the contract or wallet that initiated the currently
+     *         executing message on the other chain. Will throw an error if there is no message
+     *         currently being executed. Allows the recipient of a call to see who triggered it.
+     *
+     * @return Address of the sender of the currently executing message on the other chain.
+     */
     function xDomainMessageSender() external view returns (address) {
         require(
             xDomainMsgSender != Constants.DEFAULT_L2_SENDER,
@@ -1420,21 +1584,28 @@ abstract contract CrossDomainMessenger is
         return xDomainMsgSender;
     }
 
-    /// @notice Retrieves the next message nonce. Message version will be added to the upper two
-    ///         bytes of the message nonce. Message version allows us to treat messages as having
-    ///         different structures.
-    /// @return Nonce of the next message to be sent, with added message version.
+    /**
+     * @notice Retrieves the next message nonce. Message version will be added to the upper two
+     *         bytes of the message nonce. Message version allows us to treat messages as having
+     *         different structures.
+     *
+     * @return Nonce of the next message to be sent, with added message version.
+     */
     function messageNonce() public view returns (uint256) {
         return Encoding.encodeVersionedNonce(msgNonce, MESSAGE_VERSION);
     }
 
-    /// @notice Computes the amount of gas required to guarantee that a given message will be
-    ///         received on the other chain without running out of gas. Guaranteeing that a message
-    ///         will not run out of gas is important because this ensures that a message can always
-    ///         be replayed on the other chain if it fails to execute completely.
-    /// @param _message     Message to compute the amount of required gas for.
-    /// @param _minGasLimit Minimum desired gas limit when message goes to target.
-    /// @return Amount of gas required to guarantee message receipt.
+    /**
+     * @notice Computes the amount of gas required to guarantee that a given message will be
+     *         received on the other chain without running out of gas. Guaranteeing that a message
+     *         will not run out of gas is important because this ensures that a message can always
+     *         be replayed on the other chain if it fails to execute completely.
+     *
+     * @param _message     Message to compute the amount of required gas for.
+     * @param _minGasLimit Minimum desired gas limit when message goes to target.
+     *
+     * @return Amount of gas required to guarantee message receipt.
+     */
     function baseGas(bytes calldata _message, uint32 _minGasLimit) public pure returns (uint64) {
         return
             // Constant overhead
@@ -1455,19 +1626,24 @@ abstract contract CrossDomainMessenger is
             RELAY_GAS_CHECK_BUFFER;
     }
 
-    /// @notice Initializer.
+    /**
+     * @notice Intializer.
+     */
     // solhint-disable-next-line func-name-mixedcase
     function __CrossDomainMessenger_init() internal onlyInitializing {
         xDomainMsgSender = Constants.DEFAULT_L2_SENDER;
     }
 
-    /// @notice Sends a low-level message to the other messenger. Needs to be implemented by child
-    ///         contracts because the logic for this depends on the network where the messenger is
-    ///         being deployed.
-    /// @param _to       Recipient of the message on the other chain.
-    /// @param _gasLimit Minimum gas limit the message can be executed with.
-    /// @param _value    Amount of ETH to send with the message.
-    /// @param _data     Message data.
+    /**
+     * @notice Sends a low-level message to the other messenger. Needs to be implemented by child
+     *         contracts because the logic for this depends on the network where the messenger is
+     *         being deployed.
+     *
+     * @param _to       Recipient of the message on the other chain.
+     * @param _gasLimit Minimum gas limit the message can be executed with.
+     * @param _value    Amount of ETH to send with the message.
+     * @param _data     Message data.
+     */
     function _sendMessage(
         address _to,
         uint64 _gasLimit,
@@ -1475,43 +1651,58 @@ abstract contract CrossDomainMessenger is
         bytes memory _data
     ) internal virtual;
 
-    /// @notice Checks whether the message is coming from the other messenger. Implemented by child
-    ///         contracts because the logic for this depends on the network where the messenger is
-    ///         being deployed.
-    /// @return Whether the message is coming from the other messenger.
+    /**
+     * @notice Checks whether the message is coming from the other messenger. Implemented by child
+     *         contracts because the logic for this depends on the network where the messenger is
+     *         being deployed.
+     *
+     * @return Whether the message is coming from the other messenger.
+     */
     function _isOtherMessenger() internal view virtual returns (bool);
 
-    /// @notice Checks whether a given call target is a system address that could cause the
-    ///         messenger to peform an unsafe action. This is NOT a mechanism for blocking user
-    ///         addresses. This is ONLY used to prevent the execution of messages to specific
-    ///         system addresses that could cause security issues, e.g., having the
-    ///         CrossDomainMessenger send messages to itself.
-    /// @param _target Address of the contract to check.
-    /// @return Whether or not the address is an unsafe system address.
+    /**
+     * @notice Checks whether a given call target is a system address that could cause the
+     *         messenger to peform an unsafe action. This is NOT a mechanism for blocking user
+     *         addresses. This is ONLY used to prevent the execution of messages to specific
+     *         system addresses that could cause security issues, e.g., having the
+     *         CrossDomainMessenger send messages to itself.
+     *
+     * @param _target Address of the contract to check.
+     *
+     * @return Whether or not the address is an unsafe system address.
+     */
     function _isUnsafeTarget(address _target) internal view virtual returns (bool);
 }
 
 contract L1CrossDomainMessenger is CrossDomainMessenger, Semver {
-    /// @notice Address of the OptimismPortal.
+    /**
+     * @notice Address of the OptimismPortal.
+     */
     OptimismPortal public immutable PORTAL;
 
-    /// @custom:semver 1.4.1
-    /// @notice Constructs the L1CrossDomainMessenger contract.
-    /// @param _portal Address of the OptimismPortal contract on this network.
+    /**
+     * @custom:semver 1.4.0
+     *
+     * @param _portal Address of the OptimismPortal contract on this network.
+     */
     constructor(OptimismPortal _portal)
-        Semver(1, 4, 1)
+        Semver(1, 4, 0)
         CrossDomainMessenger(Predeploys.L2_CROSS_DOMAIN_MESSENGER)
     {
         PORTAL = _portal;
         initialize();
     }
 
-    /// @notice Initializes the contract.
+    /**
+     * @notice Initializer.
+     */
     function initialize() public initializer {
         __CrossDomainMessenger_init();
     }
 
-    /// @inheritdoc CrossDomainMessenger
+    /**
+     * @inheritdoc CrossDomainMessenger
+     */
     function _sendMessage(
         address _to,
         uint64 _gasLimit,
@@ -1521,12 +1712,16 @@ contract L1CrossDomainMessenger is CrossDomainMessenger, Semver {
         PORTAL.depositTransaction{ value: _value }(_to, _value, _gasLimit, false, _data);
     }
 
-    /// @inheritdoc CrossDomainMessenger
+    /**
+     * @inheritdoc CrossDomainMessenger
+     */
     function _isOtherMessenger() internal view override returns (bool) {
         return msg.sender == address(PORTAL) && PORTAL.l2Sender() == OTHER_MESSENGER;
     }
 
-    /// @inheritdoc CrossDomainMessenger
+    /**
+     * @inheritdoc CrossDomainMessenger
+     */
     function _isUnsafeTarget(address _target) internal view override returns (bool) {
         return _target == address(this) || _target == address(PORTAL);
     }

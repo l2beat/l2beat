@@ -314,7 +314,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       trackedTxs:
         daProvider !== undefined
           ? undefined
-          : templateVars.nonTemplateTrackedTxs ?? [],
+          : (templateVars.nonTemplateTrackedTxs ?? []),
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
     chainConfig: templateVars.chainConfig,
