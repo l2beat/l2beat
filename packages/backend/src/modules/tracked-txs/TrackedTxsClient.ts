@@ -1,20 +1,21 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 
-import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
+import type { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 
-import {
+import type {
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
+  TrackedTxSharedBridgeConfig,
   TrackedTxSharpSubmissionConfig,
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
-import { Configuration } from '../../tools/uif/multi/types'
+import type { Configuration } from '../../tools/uif/multi/types'
 import {
   BigQueryFunctionCallResult,
   BigQueryTransferResult,
-  TrackedTxFunctionCallResult,
-  TrackedTxResult,
-  TrackedTxTransferResult,
+  type TrackedTxFunctionCallResult,
+  type TrackedTxResult,
+  type TrackedTxTransferResult,
 } from './types/model'
 import { getFunctionCallQuery, getTransferQuery } from './utils/sql'
 import { transformFunctionCallsQueryResult } from './utils/transformFunctionCallsQueryResult'
@@ -49,12 +50,20 @@ export class TrackedTxsClient {
         TrackedTxConfigEntry & { params: TrackedTxSharpSubmissionConfig }
       > => c.properties.params.formula === 'sharpSubmission',
     )
+    const sharedBridgesConfig = configurations.filter(
+      (
+        c,
+      ): c is Configuration<
+        TrackedTxConfigEntry & { params: TrackedTxSharedBridgeConfig }
+      > => c.properties.params.formula === 'sharedBridge',
+    )
 
     const [transfers, functionCalls] = await Promise.all([
       this.getTransfers(transfersConfig, from, to),
       this.getFunctionCalls(
         functionCallsConfig,
         sharpSubmissionsConfig,
+        sharedBridgesConfig,
         from,
         to,
       ),
@@ -90,10 +99,17 @@ export class TrackedTxsClient {
     sharpSubmissionsConfig: Configuration<
       TrackedTxConfigEntry & { params: TrackedTxSharpSubmissionConfig }
     >[],
+    sharedBridgesConfig: Configuration<
+      TrackedTxConfigEntry & { params: TrackedTxSharedBridgeConfig }
+    >[],
     from: UnixTime,
     to: UnixTime,
   ): Promise<TrackedTxFunctionCallResult[]> {
-    if (functionCallsConfig.length === 0 && sharpSubmissionsConfig.length === 0)
+    if (
+      functionCallsConfig.length === 0 &&
+      sharpSubmissionsConfig.length === 0 &&
+      sharedBridgesConfig.length === 0
+    )
       return Promise.resolve([])
 
     // function calls and sharp submissions will be batched into one query to save costs
@@ -101,6 +117,7 @@ export class TrackedTxsClient {
       combineCalls(
         functionCallsConfig.map((c) => c.properties.params),
         sharpSubmissionsConfig.map((c) => c.properties.params),
+        sharedBridgesConfig.map((c) => c.properties.params),
       ),
       from,
       to,
@@ -116,6 +133,7 @@ export class TrackedTxsClient {
     return transformFunctionCallsQueryResult(
       functionCallsConfig,
       sharpSubmissionsConfig,
+      sharedBridgesConfig,
       parsedResult,
     )
   }
@@ -124,10 +142,12 @@ export class TrackedTxsClient {
 function combineCalls(
   functionCallsConfig: TrackedTxFunctionCallConfig[],
   sharpSubmissionsConfig: TrackedTxSharpSubmissionConfig[],
+  sharedBridgesConfig: TrackedTxSharedBridgeConfig[],
 ) {
   // TODO: unique
   return [
     ...functionCallsConfig.map((c) => ({ ...c, getFullInput: false })),
     ...sharpSubmissionsConfig.map((c) => ({ ...c, getFullInput: true })),
+    ...sharedBridgesConfig.map((c) => ({ ...c, getFullInput: true })),
   ]
 }
