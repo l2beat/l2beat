@@ -7,11 +7,6 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('karak')
 
-const upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
-
 export const karak: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
   badges: [Badge.DA.Celestia, Badge.RaaS.Caldera],
