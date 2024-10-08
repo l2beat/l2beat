@@ -2,7 +2,7 @@ import { bridges, layer2s, layer3s } from '@l2beat/config'
 import { env } from '~/env'
 import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
 import { getTokenBreakdown } from './get-token-breakdown'
-import { type TvlProject, getTvlProjects } from './get-tvl-projects'
+import { type BaseProject, getTvlProjects } from './get-tvl-projects'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
 
 export function get7dTokenBreakdown(
@@ -14,7 +14,7 @@ export function get7dTokenBreakdown(
   return get7dTokenBreakdownData(...parameters)
 }
 
-export type LatestTvl = Awaited<ReturnType<typeof get7dTokenBreakdownData>>
+export type LatestTvl = Awaited<ReturnType<typeof getCached7dTokenBreakdown>>
 export async function get7dTokenBreakdownData({
   type,
 }: { type: 'layer2' | 'bridge' }) {

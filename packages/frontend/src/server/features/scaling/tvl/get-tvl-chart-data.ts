@@ -40,7 +40,7 @@ export async function getTvlChart(...args: Parameters<typeof getTvlChartData>) {
   return getTvlChartData(...args)
 }
 
-export type TvlChartData = Awaited<ReturnType<typeof getTvlChartData>>
+export type TvlChartData = Awaited<ReturnType<typeof getCachedTvlChartData>>
 export async function getTvlChartData({
   range,
   excludeAssociatedTokens,
