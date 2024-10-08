@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x23486dd49dd0d620dbfe38aaf295ea28fce714af
+
+# Diff at Tue, 08 Oct 2024 10:16:53 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@3069a46c34e7e7107a5724e2f3fedca60df7b90c block: 20775910
+- current block number: 20920202
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20775910 (main branch discovery), not current.
+
+```diff
+    contract LyraMultisig (0x91F4be0C264FAFA1fEd75c4440910Cba2cAd98e8) {
+    +++ description: None
+      name:
+-        "ChallengerMultisig"
++        "LyraMultisig"
+    }
+```
+
 Generated with discovered.json: 0x5a6b28eb95f5a78bd06baa8065b6a8a7233fe30c
 
 # Diff at Tue, 01 Oct 2024 10:52:21 GMT:
