@@ -25,15 +25,38 @@ export function buildTokenMetaAggregatorSource({
       (r) => r.source === 'Aggregate',
     )
 
-    // TODO: aggregate
-    if (records[0]) {
-      logger.info('Upserting aggregate token meta', { tokenId })
-      await db.tokenMeta.upsert({
-        ...records[0],
-        source: 'Aggregate',
-      })
-    }
+    // Check all records and update the aggregate record with the most popular data
+
+    await db.tokenMeta.upsert({
+      tokenId,
+      source: 'Aggregate',
+      externalId: '',
+      name: getMostPopularValue(records.map((r) => r.name)),
+      symbol: getMostPopularValue(records.map((r) => r.symbol)),
+      decimals: getMostPopularValue(records.map((r) => r.decimals)),
+      logoUrl: getMostPopularValue(records.map((r) => r.logoUrl)),
+      contractName: getMostPopularValue(records.map((r) => r.contractName)),
+    })
 
     queue.add(tokenId)
   }
+}
+
+function getMostPopularValue<T>(values: T[]) {
+  const valueCounts = new Map<T, number>()
+  for (const value of values) {
+    valueCounts.set(value, (valueCounts.get(value) || 0) + 1)
+  }
+
+  let mostPopularValue: T | null = null
+  let maxCount = 0
+
+  valueCounts.forEach((count, value) => {
+    if (count > maxCount) {
+      mostPopularValue = value
+      maxCount = count
+    }
+  })
+
+  return mostPopularValue
 }
