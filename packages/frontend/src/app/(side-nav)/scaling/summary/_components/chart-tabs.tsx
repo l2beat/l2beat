@@ -25,11 +25,11 @@ export function ChartTabs({ unit, timeRange, className }: Props) {
           <ScalingSummaryActivityChart timeRange={timeRange} />
         </Tabs.Content>
         <Tabs.List className="flex gap-1.5">
-          <Tabs.Trigger value="tvl" className="group w-full py-3">
-            <div className="my-auto h-1 w-full rounded-full bg-surface-tertiary group-data-[state=active]:bg-brand" />
+          <Tabs.Trigger value="tvl" className="group w-full py-2.5">
+            <div className="my-auto h-2 w-full rounded-full bg-surface-tertiary group-data-[state=active]:bg-brand" />
           </Tabs.Trigger>
-          <Tabs.Trigger value="activity" className="group w-full py-3">
-            <div className="my-auto h-1 w-full rounded-full bg-surface-tertiary group-data-[state=active]:bg-brand" />
+          <Tabs.Trigger value="activity" className="group w-full py-2.5">
+            <div className="my-auto h-2 w-full rounded-full bg-surface-tertiary group-data-[state=active]:bg-brand" />
           </Tabs.Trigger>
         </Tabs.List>
       </Tabs.Root>

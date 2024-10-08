@@ -10,7 +10,7 @@ export function MainPageWarning({ children, className }: Props) {
   return (
     <div
       className={cn(
-        'flex border border-yellow-700 bg-yellow-200 px-6 py-2 align-top text-xs font-medium text-yellow-900 md:rounded',
+        'flex border border-yellow-700 bg-yellow-200 px-6 py-2 align-top text-xs font-medium text-yellow-900 md:rounded-xl',
         className,
       )}
     >
