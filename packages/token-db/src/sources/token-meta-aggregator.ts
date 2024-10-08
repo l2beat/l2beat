@@ -45,6 +45,9 @@ export function buildTokenMetaAggregatorSource({
 function getMostPopularValue<T>(values: T[]) {
   const valueCounts = new Map<T, number>()
   for (const value of values) {
+    if (value === null || value === undefined) {
+      continue
+    }
     valueCounts.set(value, (valueCounts.get(value) || 0) + 1)
   }
 
