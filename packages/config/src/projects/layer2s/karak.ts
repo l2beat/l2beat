@@ -37,7 +37,6 @@ export const karak: Layer2 = opStackL2({
     activityDataSource: 'Blockchain RPC',
     architectureImage: 'opstack',
   },
-  upgradeability,
   rpcUrl: 'https://rpc.karak.network/',
   finality: {
     type: 'OPStack',
@@ -46,6 +45,7 @@ export const karak: Layer2 = opStackL2({
   },
   genesisTimestamp: new UnixTime(1703226695), //First sequencer transaction
   isNodeAvailable: true,
+  discoveryDrivenData: true,
   milestones: [
     {
       name: 'Karak Network Early Access Launch',
@@ -54,11 +54,5 @@ export const karak: Layer2 = opStackL2({
       description: 'Karak Network is live on mainnet.',
       type: 'general',
     },
-  ],
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'KarakMultisig',
-      'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Challenger and Guardian of the OptimismPortal, meaning it can halt withdrawals and change incorrect state roots. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
-    ),
   ],
 })
