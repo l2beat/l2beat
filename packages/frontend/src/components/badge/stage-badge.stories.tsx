@@ -1,9 +1,15 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 import { StageBadge } from './stage-badge'
+import { onlyDesktopModes } from '.storybook/modes'
 
 const meta = {
   title: 'Atoms/Badge',
   component: StageBadge,
+  parameters: {
+    chromatic: {
+      modes: onlyDesktopModes,
+    },
+  },
 } satisfies Meta<typeof StageBadge>
 export default meta
 

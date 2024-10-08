@@ -1,9 +1,15 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 import { Checkbox } from './checkbox'
+import { onlyDesktopModes } from '.storybook/modes'
 
 const meta = {
   title: 'Atoms/Checkbox',
   component: Checkbox,
+  parameters: {
+    chromatic: {
+      modes: onlyDesktopModes,
+    },
+  },
 } satisfies Meta<typeof Checkbox>
 export default meta
 
