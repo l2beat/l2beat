@@ -35,7 +35,7 @@ export function ProjectStackedTvlChart({
   isBridge,
 }: Props) {
   const [token, setToken] = useState<ProjectToken>()
-  const [timeRange, setTimeRange] = useState<TvlChartRange>('7d')
+  const [timeRange, setTimeRange] = useState<TvlChartRange>('30d')
   const [unit, setUnit] = useState<ChartUnit>('usd')
 
   if (tokens && token) {
