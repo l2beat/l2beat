@@ -197,4 +197,9 @@ export class TokenRepository extends BaseRepository {
       .execute()
     return rows
   }
+
+  async deleteAll(): Promise<bigint> {
+    const result = await this.db.deleteFrom('Token').executeTakeFirstOrThrow()
+    return result.numDeletedRows
+  }
 }

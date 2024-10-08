@@ -71,4 +71,9 @@ export class TokenMetaRepository extends BaseRepository {
     })
     return records.length
   }
+
+  async deleteAll(): Promise<bigint> {
+    const result = await this.db.deleteFrom('TokenMeta').executeTakeFirst()
+    return result.numDeletedRows
+  }
 }

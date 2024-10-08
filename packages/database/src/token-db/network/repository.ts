@@ -156,4 +156,9 @@ export class NetworkRepository extends BaseRepository {
       .where('coingeckoId', '=', coingeckoId)
       .execute()
   }
+
+  async deleteAll(): Promise<bigint> {
+    const result = await this.db.deleteFrom('Network').executeTakeFirstOrThrow()
+    return result.numDeletedRows
+  }
 }
