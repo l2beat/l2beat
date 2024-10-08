@@ -7,7 +7,9 @@ interface Value {
   value: number
   dashed?: boolean
 }
-export interface ChartColumn<T extends { timestamp: number }> {
+export interface ChartColumn<
+  T extends { timestamp: number } = { timestamp: number },
+> {
   values: Value[]
   data: T
   milestone?: Milestone
