@@ -101,7 +101,7 @@ const DISCOVERY_RESULT_ARB_2: DiscoveryOutput = {
   shapeFilesHash: Hash256.random(),
 }
 
-describe.only(UpdateMonitor.name, () => {
+describe(UpdateMonitor.name, () => {
   let updateNotifier = mockObject<UpdateNotifier>({})
   let discoveryRunner = mockObject<DiscoveryRunner>({})
   const chainConverter = new ChainConverter([
