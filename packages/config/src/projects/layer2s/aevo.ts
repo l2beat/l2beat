@@ -28,7 +28,11 @@ export const aevo: Layer2 = opStackL2({
       documentation: ['https://docs.aevo.xyz/'],
       explorers: ['https://explorer.aevo.xyz/'],
       repositories: ['https://github.com/aevoxyz'],
-      socialMedia: ['https://twitter.com/aevoxyz'],
+      socialMedia: [
+        'https://twitter.com/aevoxyz',
+        'https://discord.com/invite/aevo',
+        'https://t.me/aevoupdates',
+      ],
     },
     activityDataSource: 'Blockchain RPC',
   },

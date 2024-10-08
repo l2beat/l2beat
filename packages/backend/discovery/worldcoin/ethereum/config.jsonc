@@ -15,8 +15,14 @@
   },
   "overrides": {
     "WorldIdIdentityManager2": {
+      "description": "Does what it says: Manages identities for Worldcoin. The identityOperator can register or delete identities by submitting zk proofs.",
       "ignoreMethods": ["proxiableUUID", "queryRoot"],
-      "ignoreInWatchMode": ["latestRoot"]
+      "ignoreInWatchMode": ["latestRoot"],
+      "fields": {
+        "identityOperator": {
+          "description": "Can call functions (manage identities) in the WorldIdIdentityManager2 implementation"
+        }
+      }
     },
     "RegisterIdentitiesVerifierLookupTable": {
       "fields": {
