@@ -48,12 +48,10 @@ describeDatabase(UpdateMonitorRepository.name, (db) => {
         contracts: [],
         eoas: [],
         abis: {},
-        version: 0,
         usedTemplates: {},
         shapeFilesHash: Hash256.random(),
       },
       configHash: CONFIG_HASH,
-      version: 0,
     }
     await repository.upsert(discovery)
 
@@ -79,12 +77,10 @@ function record(params?: Partial<UpdateMonitorRecord>): UpdateMonitorRecord {
       contracts: [],
       eoas: [],
       abis: {},
-      version: 0,
       usedTemplates: {},
       shapeFilesHash: Hash256.random(),
     },
     configHash: CONFIG_HASH,
-    version: 0,
     ...params,
   }
 }

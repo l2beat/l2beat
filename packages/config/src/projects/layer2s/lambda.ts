@@ -6,11 +6,6 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('lambda')
 
-const upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
-
 export const lambda: Layer2 = opStackL2({
   discovery,
   display: {
@@ -37,7 +32,6 @@ export const lambda: Layer2 = opStackL2({
   },
   usesBlobs: true,
   associatedTokens: ['LAMB'],
-  upgradeability,
   rpcUrl: 'https://nrpc.lambda.im',
   genesisTimestamp: new UnixTime(1713345623),
   isNodeAvailable: true,
@@ -70,19 +64,5 @@ export const lambda: Layer2 = opStackL2({
       // },
     ],
   },
-  nonTemplateNativePermissions: {
-    lambda: [
-      {
-        name: 'Lambda Admin EOA',
-        accounts: [
-          {
-            address: discovery.getAddressFromValue('SystemConfig', 'owner'),
-            type: 'EOA',
-          },
-        ],
-        description:
-          "EOA address that can upgrade the rollup's smart contract system (via UpgradeExecutor) and gain access to all funds.",
-      },
-    ],
-  },
+  discoveryDrivenData: true,
 })
