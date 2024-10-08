@@ -223,7 +223,7 @@ export function BasicTable<T extends BasicEntry>({
                             ? groupParams?.isFirstInGroup
                               ? 'pl-10'
                               : 'pl-4'
-                            : 'pl-4',
+                            : undefined,
 
                           meta?.cellClassName,
                         )}
