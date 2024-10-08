@@ -61,7 +61,7 @@ export function RiskCell({ risk, emptyMode = 'no-info' }: Props) {
       {risk.secondLine && (
         <span
           className={
-            '-mt-1 mb-1 text-2xs text-gray-550 dark:text-gray-500 md:m-0 md:text-xs md:leading-none'
+            '-mt-1 mb-1 text-xs text-secondary md:m-0 md:text-xs md:leading-none'
           }
         >
           {risk.secondLine}

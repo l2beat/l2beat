@@ -12,10 +12,7 @@ const Table = React.forwardRef<
       <div className={cn('relative w-full overflow-auto pb-3 max-md:pr-4')}>
         <table
           ref={ref}
-          className={cn(
-            'w-full border-collapse text-left text-base',
-            className,
-          )}
+          className={cn('w-full border-collapse text-left', className)}
           cellSpacing={0}
           {...props}
         />
@@ -114,7 +111,7 @@ const TableCell = React.forwardRef<
   <td
     ref={ref}
     className={cn(
-      'group h-9 whitespace-pre px-0 align-middle text-xs md:h-14 md:text-base',
+      'group h-9 whitespace-pre p-0 align-middle text-xs md:h-14 md:text-sm',
       !href && [
         'pr-3 first:pl-2 last:pr-2 md:pr-4',
         align === 'center' && 'text-center',

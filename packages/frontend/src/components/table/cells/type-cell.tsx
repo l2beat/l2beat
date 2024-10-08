@@ -31,7 +31,6 @@ export function TypeCell({ provider, children, disableColors }: TypeCellProps) {
   return (
     <span
       className={cn(
-        'text-xs md:text-base',
         isRollup && !disableColors && 'text-green-300 dark:text-green-450',
       )}
     >

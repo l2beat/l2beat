@@ -29,7 +29,7 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
   return (
     <div className={className}>
       <div className="flex items-baseline gap-1.5">
-        <span className="text-xs font-bold !leading-none md:!text-lg">
+        <span className="text-xs font-bold !leading-none md:!text-base">
           {project.shortName ?? project.name}
         </span>
         {project.isVerified === false && (
@@ -85,7 +85,7 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
         )}
       </div>
       {project.hostChain && (
-        <span className="block text-[0.8125rem] font-medium leading-[0.9375rem] text-gray-500 dark:text-zinc-400">
+        <span className="block text-[0.8125rem] font-medium leading-[0.9375rem] text-secondary">
           L3 on {project.hostChain}
         </span>
       )}
