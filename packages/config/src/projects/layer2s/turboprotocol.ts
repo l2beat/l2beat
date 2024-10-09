@@ -7,7 +7,7 @@ export const turboprotocol: Layer2 = upcomingL2({
     name: 'Turbo Protocol',
     slug: 'turboprotocol',
     description:
-      'Turbo Protocol is a Ethereum scaling solution offers interactive query speeds for AI dapps in the Ethereum ecosystem.',
+      'Turbo Protocol is an Ethereum scaling solution that will offer interactive query speeds for AI dApps in the Ethereum ecosystem.',
     purposes: ['Universal', 'AI'],
     category: 'Validium',
     links: {
