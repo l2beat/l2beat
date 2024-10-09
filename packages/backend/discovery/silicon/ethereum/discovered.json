@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20783770,
   "configHash": "0x55fe800cde3eb82b5ff1b72431891c79eaae617dc3d576966728d56ff81ec969",
-  "version": 15,
   "contracts": [
     {
       "name": "Verifier",
@@ -309,5 +308,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

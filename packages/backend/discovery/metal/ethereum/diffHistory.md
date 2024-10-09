@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x2734663f8e20363fb5ec33a8b63a0d01bd5d8b83
+
+# Diff at Mon, 07 Oct 2024 13:44:02 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@7c3e632caf56b943789c1bfa1021d4f65d503045 block: 20769555
+- current block number: 20914057
+
+## Description
+
+Use discovery driven data.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20769555 (main branch discovery), not current.
+
+```diff
+    contract SuperchainGuardianMultisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      name:
+-        "GuardianMultisig"
++        "SuperchainGuardianMultisig"
+    }
+```
+
 Generated with discovered.json: 0x2f16d525ba1f7c13a05a1aeed4dcd6e48da9d4eb
 
 # Diff at Tue, 01 Oct 2024 10:52:36 GMT:

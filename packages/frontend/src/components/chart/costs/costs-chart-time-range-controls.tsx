@@ -5,13 +5,11 @@ import { ChartTimeRangeControls } from '../core/chart-time-range-controls'
 interface Props {
   timeRange: CostsTimeRange
   setTimeRange: (range: CostsTimeRange) => void
-  range: [number, number] | undefined
 }
 
 export function CostsChartTimeRangeControls({
   timeRange,
   setTimeRange,
-  range,
 }: Props) {
   const { metric } = useCostsMetricContext()
   return (
@@ -42,7 +40,6 @@ export function CostsChartTimeRangeControls({
           label: '180D',
         },
       ]}
-      range={range}
     />
   )
 }

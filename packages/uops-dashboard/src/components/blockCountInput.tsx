@@ -27,7 +27,7 @@ export function BlockCountInput({
         type="button"
         id="decrement-button"
         data-input-counter-decrement="quantity-input"
-        className="h-11 rounded-s-lg border border-gray-300 bg-gray-100 p-3 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 hover:bg-gray-200 focus:outline-none dark:focus:ring-gray-700 focus:ring-2 focus:ring-gray-100"
+        className="h-11 rounded-s-lg border border-gray-300 bg-gray-100 p-3 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-gray-700 dark:hover:bg-gray-600"
       >
         <svg
           className="h-3 w-3 text-gray-900 dark:text-white"
@@ -52,7 +52,7 @@ export function BlockCountInput({
         id="quantity-input"
         data-input-counter
         aria-describedby="helper-text-explanation"
-        className="block h-11 w-full border-gray-300 border-x-0 bg-gray-50 py-2.5 text-center text-gray-900 text-sm dark:border-gray-600 dark:focus:border-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:ring-blue-500 focus:ring-blue-500"
+        className="block h-11 w-full border-gray-300 border-x-0 bg-gray-50 py-2.5 text-center text-gray-900 text-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
         required
       />
       <button
@@ -60,7 +60,7 @@ export function BlockCountInput({
         type="button"
         id="increment-button"
         data-input-counter-increment="quantity-input"
-        className="h-11 rounded-e-lg border border-gray-300 bg-gray-100 p-3 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 hover:bg-gray-200 focus:outline-none dark:focus:ring-gray-700 focus:ring-2 focus:ring-gray-100"
+        className="h-11 rounded-e-lg border border-gray-300 bg-gray-100 p-3 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-gray-700 dark:hover:bg-gray-600"
       >
         <svg
           className="h-3 w-3 text-gray-900 dark:text-white"

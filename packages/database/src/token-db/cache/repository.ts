@@ -9,11 +9,11 @@ export class CacheRepository extends BaseRepository {
       .insertInto('Cache')
       .values(row)
       .onConflict((cb) =>
-        cb.doUpdateSet((eb) => ({
+        cb.columns(['key']).doUpdateSet((eb) => ({
           value: eb.ref('excluded.value'),
           chainId: eb.ref('excluded.chainId'),
-          key: eb.ref('excluded.key'),
           blockNumber: eb.ref('excluded.blockNumber'),
+          updatedAt: eb.ref('excluded.updatedAt'),
         })),
       )
       .execute()

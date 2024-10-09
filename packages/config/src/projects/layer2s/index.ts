@@ -29,7 +29,6 @@ import { creator } from './creator'
 import { cronoszkevm } from './cronoszkevm'
 import { cyber } from './cyber'
 import { dbk } from './dbk'
-import { debank } from './debank'
 import { degate } from './degate'
 import { degate2 } from './degate2'
 import { degate3 } from './degate3'
@@ -197,7 +196,6 @@ export const layer2s: Layer2[] = [
   creator,
   cronoszkevm,
   dbk,
-  debank,
   honeypot,
   degate,
   degate2,

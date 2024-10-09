@@ -12,7 +12,8 @@ export function LegacyNavLink({
   children,
   large,
   title,
-}: { href: string; large?: boolean } & (
+  withoutUnderline,
+}: { href: string; large?: boolean; withoutUnderline?: boolean } & (
   | { title: string; children?: never }
   | { title?: never; children: React.ReactNode }
 )) {
@@ -23,8 +24,10 @@ export function LegacyNavLink({
         className={cn(
           'flex h-full items-center font-medium',
           large ? 'px-2 text-base md:px-4 md:text-lg' : 'px-2',
-          pathname.startsWith(href) &&
-            'border-b-2 border-current pt-0.5 text-pink-900 dark:text-pink-200',
+          pathname.startsWith(href) && [
+            'pt-0.5 text-brand',
+            !withoutUnderline && 'border-b-2 border-current',
+          ],
         )}
         href={href}
         target={href.startsWith('http') ? '_blank' : undefined}

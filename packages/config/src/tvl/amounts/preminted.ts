@@ -29,7 +29,7 @@ export function getPremintedEntry(
   const bridgedUsing = escrow.bridgedUsing
   const includeInTotal = token.excludeFromTotal
     ? false
-    : escrow.includeInTotal ?? true
+    : (escrow.includeInTotal ?? true)
   const isAssociated = !!project.associatedTokens?.includes(token.symbol)
   const sinceTimestamp = UnixTime.max(
     UnixTime.max(chain.minTimestampForTvl, token.sinceTimestamp),

@@ -6,6 +6,8 @@ import {
   AssetId,
   CirculatingSupplyEntry,
   CoingeckoId,
+  ElasticChainEther,
+  ElasticChainL2Token,
   EscrowEntry,
   EthereumAddress,
   PremintedEntry,
@@ -150,6 +152,43 @@ describe(createAmountId.name, () => {
         },
       ],
     },
+    {
+      name: 'elasticChainL2Token',
+      mockFn: mockElasticChainL2Token,
+      extraFields: [
+        {
+          key: 'l1Address',
+          newValue: EthereumAddress.random(),
+          shouldUpdateHash: true,
+        },
+        {
+          key: 'escrowAddress',
+          newValue: EthereumAddress.random(),
+          shouldUpdateHash: true,
+        },
+        {
+          key: 'l2BridgeAddress',
+          newValue: EthereumAddress.random(),
+          shouldUpdateHash: true,
+        },
+      ],
+    },
+    {
+      name: 'elasticChainEther',
+      mockFn: mockElasticChainEther,
+      extraFields: [
+        {
+          key: 'escrowAddress',
+          newValue: EthereumAddress.random(),
+          shouldUpdateHash: true,
+        },
+        {
+          key: 'address',
+          newValue: EthereumAddress.random(),
+          shouldUpdateHash: true,
+        },
+      ],
+    },
   ]
 
   testCases.forEach(({ name, mockFn, extraFields }) => {
@@ -233,6 +272,25 @@ function mockAggLayerNativeEtherWrapped(): AggLayerNativeEtherWrapped {
     ...mockBase(),
     type: 'aggLayerNativeEtherWrapped',
     wethAddress: EthereumAddress.random(),
+    escrowAddress: EthereumAddress.random(),
+  }
+}
+
+function mockElasticChainL2Token(): ElasticChainL2Token {
+  return {
+    ...mockBase(),
+    type: 'elasticChainL2Token',
+    l1Address: EthereumAddress.random(),
+    escrowAddress: EthereumAddress.random(),
+    l2BridgeAddress: EthereumAddress.random(),
+  }
+}
+
+function mockElasticChainEther(): ElasticChainEther {
+  return {
+    ...mockBase(),
+    type: 'elasticChainEther',
+    address: EthereumAddress.random(),
     escrowAddress: EthereumAddress.random(),
   }
 }

@@ -3,7 +3,6 @@
   "chain": "optimism",
   "blockNumber": 125928338,
   "configHash": "0xe953850a981b00c36111bdd24c7471747259e06fe892adffcfc41d77f3e1db86",
-  "version": 15,
   "contracts": [
     {
       "name": "History",
@@ -129,5 +128,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

@@ -1,6 +1,6 @@
 export function NavNewItemBadge() {
   return (
-    <span className="text-xs font-semibold text-[#AB3BD2] dark:text-[#AB3BD2]">
+    <span className="text-xs font-medium text-pink-900 dark:text-pink-900">
       New
     </span>
   )

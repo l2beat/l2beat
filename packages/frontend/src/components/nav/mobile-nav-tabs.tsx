@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useEffect, useRef } from 'react'
 import { cn } from '~/utils/cn'
 import { OverflowWrapper } from '../core/overflow-wrapper'
 import { type NavGroup } from './types'
@@ -10,39 +11,49 @@ import { type NavGroup } from './types'
  * Second navbar displayed under the main navbar on mobile.
  */
 export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
+  const ref = useRef<HTMLDivElement>(null)
   const pathname = usePathname()
-  const currentGroup = groups.find((g) =>
-    pathname.startsWith(`/${g.links[0]?.href.split('/')[1]}`),
-  )
+
+  useEffect(() => {
+    const tab = document.querySelector('[data-state=selected]')
+    if (tab) {
+      tab.scrollIntoView({
+        inline: 'center',
+      })
+    }
+  }, [])
+
+  const currentGroup = groups
+    .filter((g) => g.type === 'multiple')
+    .find((g) => pathname.startsWith(`/${g.links[0]?.href.split('/')[1]}`))
   if (!currentGroup) return null
 
   // Do not display the tabs if the current group is not found,
   // or the current group does not have a link that matche the current path.
-  const allLinks = [
-    ...currentGroup.links,
-    ...(currentGroup.secondaryLinks ?? []),
-  ]
-  const display = allLinks.some(({ href }) => href === pathname)
+  const display = currentGroup.links.some(({ href }) => href === pathname)
   if (!display) return null
 
   return (
-    <OverflowWrapper>
-      <div className="mx-auto flex w-min items-center gap-2 px-4 py-2">
-        {allLinks
+    <OverflowWrapper className="bg-surface-primary">
+      <div className="flex" ref={ref}>
+        {currentGroup.links
           .filter((link) => !link.disabled)
-          .map((link) => (
-            <Link href={link.href} key={link.href}>
-              <div
+          .map((link) => {
+            const isSelected = link.href === pathname
+            return (
+              <Link
+                href={link.href}
+                key={link.href}
+                data-state={isSelected ? 'selected' : undefined}
                 className={cn(
-                  'm-auto whitespace-nowrap rounded-[4px] border border-[#AB3BD2] px-4 py-[0.53125rem] text-xs font-semibold leading-none',
-                  link.href === pathname &&
-                    'border-0 bg-[linear-gradient(90deg,_#7E41CC_0%,_#FF46C0_100%)] px-[calc(1rem_+_1px)] py-[calc(0.53125rem_+_1px)] text-white',
+                  'flex h-10 w-full items-center justify-center whitespace-nowrap border-b border-gray-200 px-4 text-xs font-medium leading-none dark:border-gray-850',
+                  'data-[state=selected]:border-brand data-[state=selected]:text-brand',
                 )}
               >
                 {link.title}
-              </div>
-            </Link>
-          ))}
+              </Link>
+            )
+          })}
       </div>
     </OverflowWrapper>
   )

@@ -13,7 +13,7 @@
     "clean": "rm -rf dist",
     "format": "biome format .",
     "format:fix": "biome format --write .",
-    "lint:fix": "biome check --formatter-enabled=false --apply .",
+    "lint:fix": "biome check --formatter-enabled=false --write .",
     "lint": "biome check --formatter-enabled=false .",
     "test": "mocha",
     "typecheck": "tsc --noEmit"

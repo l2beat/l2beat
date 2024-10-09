@@ -3,7 +3,6 @@
   "chain": "arbitrum",
   "blockNumber": 257934615,
   "configHash": "0x1cf58d49761799de47d9b462a4e07a947fdece9053ae61a6ce6225150a4e510f",
-  "version": 15,
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -1330,5 +1329,5 @@
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "orbitstack/RollupProxy": "0xdd22b1785ae5df34e829d0b04131559e112131325c3f223825d0fe61e675fb1a"
   },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

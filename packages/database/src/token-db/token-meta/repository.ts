@@ -51,7 +51,7 @@ export class TokenMetaRepository extends BaseRepository {
 
     const rows = records.map(upsertableToRow)
 
-    await this.batch(rows, 1_000, async (batch) => {
+    await this.batch(rows, 100, async (batch) => {
       await this.db
         .insertInto('TokenMeta')
         .values(batch)
@@ -66,7 +66,6 @@ export class TokenMetaRepository extends BaseRepository {
             updatedAt: eb.ref('excluded.updatedAt'),
           })),
         )
-        .returning('TokenMeta.id')
         .execute()
     })
     return records.length
