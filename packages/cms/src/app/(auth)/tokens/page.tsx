@@ -1,3 +1,4 @@
+import { TokenMetaRecord } from '@l2beat/database'
 import { Button } from '~/components/ui/button'
 import {
   Table,
@@ -11,6 +12,13 @@ import { db } from '~/db'
 
 export default async function Page() {
   const tokens = await db.token.getAll()
+  const tokenMeta = (await db.tokenMeta.getBySource('Aggregate')).reduce(
+    (acc, meta) => {
+      acc[meta.tokenId] = meta
+      return acc
+    },
+    {} as Record<string, TokenMetaRecord>,
+  )
 
   return (
     <>
@@ -37,6 +45,8 @@ export default async function Page() {
                 <TableHead>Id</TableHead>
                 <TableHead>Network Id</TableHead>
                 <TableHead>Address</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead>Symbol</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -47,6 +57,12 @@ export default async function Page() {
                     <TableCell className="font-mono">{token.id}</TableCell>
                     <TableCell>{token.networkId}</TableCell>
                     <TableCell>{token.address}</TableCell>
+                    <TableCell>
+                      {tokenMeta[token.id]?.name ?? 'Unknown'}
+                    </TableCell>
+                    <TableCell>
+                      {tokenMeta[token.id]?.symbol ?? 'Unknown'}
+                    </TableCell>
                   </TableRow>
                 ))}
             </TableBody>
