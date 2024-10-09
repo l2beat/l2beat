@@ -1,3 +1,47 @@
+Generated with discovered.json: 0xdae9c1fd4a7fefa9fb8302dd2d3adfcd9f1c5207
+
+# Diff at Wed, 09 Oct 2024 13:09:34 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@37683e2b3d0587372f886eef49e921277810c8bf block: 20914730
+- current block number: 20914730
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20914730 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f) {
+    +++ description: None
+      directlyReceivedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+```diff
+    contract GnosisSafe (0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+```diff
+    contract AddressManager (0x624808dc4A34B79B90C3c085942D2100F09A0376) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.via.0.description:
++        "set and change address mappings."
+      descriptions:
++        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
+    }
+```
+
 Generated with discovered.json: 0x67aeb5b0b1211db969dd7f2026f0e3000f712321
 
 # Diff at Mon, 07 Oct 2024 15:59:23 GMT:

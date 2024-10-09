@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x743c10fea9558ed5174a7aed1f468c2aae727ade
+Generated with discovered.json: 0x6fe67bf91cf7c5c62ca4c5d785925657fe5038f4
 
-# Diff at Wed, 09 Oct 2024 10:13:47 GMT:
+# Diff at Wed, 09 Oct 2024 13:09:22 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
 - comparing to: main@37683e2b3d0587372f886eef49e921277810c8bf block: 20460352
@@ -50,7 +50,7 @@ discovery. Values are for block 20460352 (main branch discovery), not current.
       template:
 +        "opstack/ProxyAdmin"
       directlyReceivedPermissions:
-+        [{"permission":"configure","target":"0x8c5D64d10394cFa070066e70Ec19E67398b4dABE"},{"permission":"upgrade","target":"0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc"},{"permission":"upgrade","target":"0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"},{"permission":"upgrade","target":"0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2","description":"upgrading bridge implementation allows to access all funds and change every system component."},{"permission":"upgrade","target":"0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"},{"permission":"upgrade","target":"0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4"},{"permission":"upgrade","target":"0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"},{"permission":"upgrade","target":"0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5"}]
++        [{"permission":"configure","target":"0x8c5D64d10394cFa070066e70Ec19E67398b4dABE","description":"set and change address mappings."},{"permission":"upgrade","target":"0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc"},{"permission":"upgrade","target":"0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"},{"permission":"upgrade","target":"0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2","description":"upgrading bridge implementation allows to access all funds and change every system component."},{"permission":"upgrade","target":"0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"},{"permission":"upgrade","target":"0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4"},{"permission":"upgrade","target":"0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"},{"permission":"upgrade","target":"0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5"}]
     }
 ```
 
@@ -153,14 +153,14 @@ discovery. Values are for block 20460352 (main branch discovery), not current.
 
 ```diff
     contract AddressManager (0x8c5D64d10394cFa070066e70Ec19E67398b4dABE) {
-    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a more standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
       issuedPermissions.0.target:
 -        "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"
 +        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
       issuedPermissions.0.via.0:
-+        {"address":"0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA","delay":0}
++        {"address":"0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA","delay":0,"description":"set and change address mappings."}
       descriptions:
-+        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a more standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
++        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
     }
 ```
 
@@ -230,7 +230,7 @@ discovery. Values are for block 20460352 (main branch discovery), not current.
       receivedPermissions.2:
 +        {"permission":"upgrade","target":"0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc","via":[{"address":"0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"}]}
       receivedPermissions.1:
-+        {"permission":"configure","target":"0x8c5D64d10394cFa070066e70Ec19E67398b4dABE","via":[{"address":"0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"}]}
++        {"permission":"configure","target":"0x8c5D64d10394cFa070066e70Ec19E67398b4dABE","description":"set and change address mappings.","via":[{"address":"0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"}]}
       fieldMeta:
 -        {"getOwners":{"severity":"LOW","description":"Signers of the multisig, high severity if threshold changes"},"getThreshold":{"severity":"HIGH","description":"Multisig threshold"}}
       directlyReceivedPermissions:

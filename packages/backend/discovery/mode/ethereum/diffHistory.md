@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x49e45b0782e93f6c9ab88fbb594e3732023928b4
+Generated with discovered.json: 0xc08ce36d3dc3387fb28ac770b64a2c5d0a716805
 
-# Diff at Wed, 09 Oct 2024 11:02:54 GMT:
+# Diff at Wed, 09 Oct 2024 13:10:09 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
 - comparing to: main@37683e2b3d0587372f886eef49e921277810c8bf block: 20769559
@@ -35,20 +35,50 @@ discovery. Values are for block 20769559 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ProxyAdmin (0x470d87b1dae09a454A43D1fD772A561a03276aB7) {
+    +++ description: None
+      directlyReceivedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+```diff
     contract AddressManager (0x50eF494573f28Cad6B64C31b7a00Cdaa48306e15) {
-    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a more standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.via.0.description:
++        "set and change address mappings."
       descriptions:
-+        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a more standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
++        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      directlyReceivedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.1.description:
++        "set and change address mappings."
+      receivedPermissions.0.description:
++        "set and change address mappings."
     }
 ```
 
 ```diff
     contract Lib_AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) {
-    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a more standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.via.0.description:
++        "set and change address mappings."
       displayName:
 +        "AddressManager"
       descriptions:
-+        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a more standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
++        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
     }
 ```
 

@@ -228,7 +228,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x50eF494573f28Cad6B64C31b7a00Cdaa48306e15"
+          "target": "0x50eF494573f28Cad6B64C31b7a00Cdaa48306e15",
+          "description": "set and change address mappings."
         },
         {
           "permission": "upgrade",
@@ -305,7 +306,7 @@
       "address": "0x50eF494573f28Cad6B64C31b7a00Cdaa48306e15",
       "template": "opstack/AddressManager",
       "descriptions": [
-        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a more standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
       ],
       "issuedPermissions": [
         {
@@ -314,7 +315,8 @@
           "via": [
             {
               "address": "0x470d87b1dae09a454A43D1fD772A561a03276aB7",
-              "delay": 0
+              "delay": 0,
+              "description": "set and change address mappings."
             }
           ]
         }
@@ -332,7 +334,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+          "target": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+          "description": "set and change address mappings."
         },
         {
           "permission": "upgrade",
@@ -357,11 +360,13 @@
         {
           "permission": "configure",
           "target": "0x50eF494573f28Cad6B64C31b7a00Cdaa48306e15",
+          "description": "set and change address mappings.",
           "via": [{ "address": "0x470d87b1dae09a454A43D1fD772A561a03276aB7" }]
         },
         {
           "permission": "configure",
           "target": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+          "description": "set and change address mappings.",
           "via": [{ "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }]
         },
         {
@@ -893,7 +898,7 @@
       "template": "opstack/AddressManager",
       "displayName": "AddressManager",
       "descriptions": [
-        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a more standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
       ],
       "issuedPermissions": [
         {
@@ -902,7 +907,8 @@
           "via": [
             {
               "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
-              "delay": 0
+              "delay": 0,
+              "description": "set and change address mappings."
             }
           ]
         }
@@ -1467,7 +1473,7 @@
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "gnosisSafeModules/DeputyGuardianModule": "0xd3930cda89001876a722ed430ea8ed07e4823c83ed910e621744eccab9becba1",
     "gnosisSafeModules/LivenessModule": "0x93a18dea68cf1d0abddfc33adec077c82356344dd7b49ae5542b16ca9319bb91",
-    "opstack/AddressManager": "0xe7b79f9e91945070609acfb252ee79f6b3894131d1611c37cf41c429ab659a9a",
+    "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
@@ -1478,5 +1484,5 @@
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0x7d797a1903cdc2397ee6487cf026fb3dd7039d16b90882c36b62e5430ab5cdeb"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

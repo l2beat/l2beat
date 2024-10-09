@@ -101,7 +101,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE"
+          "target": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
+          "description": "set and change address mappings."
         },
         {
           "permission": "upgrade",
@@ -562,7 +563,7 @@
       "address": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
       "template": "opstack/AddressManager",
       "descriptions": [
-        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a more standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
       ],
       "issuedPermissions": [
         {
@@ -571,7 +572,8 @@
           "via": [
             {
               "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
-              "delay": 0
+              "delay": 0,
+              "description": "set and change address mappings."
             }
           ]
         }
@@ -780,6 +782,7 @@
         {
           "permission": "configure",
           "target": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
+          "description": "set and change address mappings.",
           "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         },
         {
@@ -1423,7 +1426,7 @@
     "fraxtal/FrxEthMinter": "0xb3496e9ff1bb9694e50fc29dd6bddc7340da994d9679cc0e51dd2e3dad9a74fd",
     "fraxtal/Timelock": "0xe4a5f2aa5b29efb0adbf27e8e4631b0f753028241ee48858a2e30fe456a21508",
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
-    "opstack/AddressManager": "0xe7b79f9e91945070609acfb252ee79f6b3894131d1611c37cf41c429ab659a9a",
+    "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
@@ -1434,5 +1437,5 @@
     "opstack/SuperchainConfigFake": "0x17951c3ed31f2fe002926d8927d2f05c9fd3502df1cad17c765d965c1e3f07a6",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0x7d797a1903cdc2397ee6487cf026fb3dd7039d16b90882c36b62e5430ab5cdeb"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

@@ -397,7 +397,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+          "target": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+          "description": "set and change address mappings."
         },
         {
           "permission": "upgrade",
@@ -459,6 +460,7 @@
         {
           "permission": "configure",
           "target": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+          "description": "set and change address mappings.",
           "via": [{ "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }]
         },
         {
@@ -1174,6 +1176,9 @@
       "name": "AddressManager",
       "address": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
       "template": "opstack/AddressManager",
+      "descriptions": [
+        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+      ],
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -1181,7 +1186,8 @@
           "via": [
             {
               "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
-              "delay": 0
+              "delay": 0,
+              "description": "set and change address mappings."
             }
           ]
         }
@@ -2238,7 +2244,7 @@
     "gnosisSafeModules/DeputyGuardianModule": "0xd3930cda89001876a722ed430ea8ed07e4823c83ed910e621744eccab9becba1",
     "gnosisSafeModules/LivenessModule": "0x93a18dea68cf1d0abddfc33adec077c82356344dd7b49ae5542b16ca9319bb91",
     "lido/L1ERC20TokenBridge": "0xa297506a5551518c3ed10a3817c661bc02da5794e2745084217d9c8f6c440482",
-    "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
+    "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/AnchorStateRegistry": "0xd777a643e82bcaa34c6605409142defa095bd558d37580cb92153eb68d721b3b",
     "opstack/DelayedWETH": "0x68c3c46b77dde7a7af0ae6477fe17a8531050e799e7ee4c01be128dee3c59447",
     "opstack/DisputeGameFactory": "0x02f89510f08edb9ae5191064b00ab809feddc1544be93f761bbf30427ef5ae5b",
@@ -2250,5 +2256,5 @@
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837"
   },
-  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

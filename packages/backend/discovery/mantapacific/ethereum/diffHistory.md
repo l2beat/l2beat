@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xe4498783608b922189a61ddb3c66c4cd906f6ef1
+Generated with discovered.json: 0x9a98a4a6f9552ab13242a94896fb5ffbd4a2e166
 
-# Diff at Wed, 09 Oct 2024 11:09:51 GMT:
+# Diff at Wed, 09 Oct 2024 13:09:48 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
 - comparing to: main@37683e2b3d0587372f886eef49e921277810c8bf block: 20775915
@@ -18,9 +18,11 @@ discovery. Values are for block 20775915 (main branch discovery), not current.
 
 ```diff
     contract AddressManager (0x3Ad319BB4872F8cB75a26Ac30CC4bD2d56b67b05) {
-    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a more standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.via.0.description:
++        "set and change address mappings."
       descriptions:
-+        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a more standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
++        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
     }
 ```
 
@@ -30,6 +32,8 @@ discovery. Values are for block 20775915 (main branch discovery), not current.
       name:
 -        "AdminMultisig"
 +        "MantaMultisig"
+      receivedPermissions.0.description:
++        "set and change address mappings."
     }
 ```
 
@@ -40,6 +44,14 @@ discovery. Values are for block 20775915 (main branch discovery), not current.
 -        {"severity":"LOW","description":"Fixed L2 gas overhead. Used as part of the L2 fee calculation."}
       fieldMeta.scalar:
 -        {"severity":"LOW","description":"Dynamic L2 gas overhead. Used as part of the L2 fee calculation."}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xa2DCa85BB892De55D8B262d1806114733106e8D1) {
+    +++ description: None
+      directlyReceivedPermissions.0.description:
++        "set and change address mappings."
     }
 ```
 
