@@ -45,7 +45,7 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
     >
       <section className="flex flex-col gap-4">
         <Header scalingFactor={scalingFactor} />
-        <Chart disableMilestones className="!h-[200px]" />
+        <Chart disableMilestones />
       </section>
     </ChartProvider>
   )
