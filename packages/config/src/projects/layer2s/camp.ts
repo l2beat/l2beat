@@ -1,9 +1,10 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
 export const camp: Layer2 = upcomingL2({
   id: 'camp',
-  createdAt: '2024-04-28T08:49:19',
+  createdAt: new UnixTime(1714294159), // '2024-04-28T08:49:19Z'
   display: {
     name: 'Camp',
     slug: 'camp',

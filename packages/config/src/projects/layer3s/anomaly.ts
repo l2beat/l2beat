@@ -1,10 +1,10 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { upcomingL3 } from '../layer2s/templates/upcoming'
 import { Layer3 } from './types'
 
 export const anomaly: Layer3 = upcomingL3({
   id: 'anomaly',
-  createdAt: '2024-07-02T17:01:57',
+  createdAt: new UnixTime(1719939717), // 2024-07-02T17:01:57Z
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Anomaly Network',

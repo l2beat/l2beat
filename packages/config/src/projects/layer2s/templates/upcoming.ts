@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from '../../../common'
 import { BadgeId } from '../../badges'
@@ -7,14 +7,14 @@ import { type Layer2, type Layer2Display } from '../types'
 
 export interface UpcomingConfigL2 {
   id: string
-  createdAt: string
+  createdAt: UnixTime
   display: Omit<Layer2Display, 'dataAvailabilityMode'>
   badges?: BadgeId[]
 }
 
 export interface UpcomingConfigL3 {
   id: string
-  createdAt: string
+  createdAt: UnixTime
   display: Omit<Layer3Display, 'dataAvailabilityMode'>
   hostChain: Layer3['hostChain']
   badges?: BadgeId[]

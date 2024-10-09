@@ -1,9 +1,10 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
 export const aztecV2: Layer2 = upcomingL2({
   id: 'aztec-v2',
-  createdAt: '2023-11-21T12:12:38Z',
+  createdAt: new UnixTime(1700568758), // '2023-11-21T12:12:38Z'
   display: {
     name: 'Aztec',
     slug: 'aztec',

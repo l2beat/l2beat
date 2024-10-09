@@ -1,10 +1,10 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { upcomingL3 } from '../layer2s/templates/upcoming'
 import { Layer3 } from './types'
 
 export const orb3: Layer3 = upcomingL3({
   id: 'orb3',
-  createdAt: '2024-03-19T15:46:11',
+  createdAt: new UnixTime(1710863171), // 2024-03-19T15:46:11Z
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'ORB3',

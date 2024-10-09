@@ -1,9 +1,10 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
 export const axonum: Layer2 = upcomingL2({
   id: 'axonum',
-  createdAt: '2024-05-16T15:06:09',
+  createdAt: new UnixTime(1715871969), // 2024-05-16T15:06:09Z
   display: {
     name: 'Axonum',
     slug: 'axonum',

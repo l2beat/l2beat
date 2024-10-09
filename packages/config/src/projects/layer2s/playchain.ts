@@ -1,9 +1,10 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
 export const playchain: Layer2 = upcomingL2({
   id: 'playchain',
-  createdAt: '2024-05-08T09:53:06',
+  createdAt: new UnixTime(1715161986), // 2024-05-08T09:53:06Z
   display: {
     name: 'PlayChain',
     slug: 'playchain',

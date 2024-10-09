@@ -1,10 +1,10 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { upcomingL3 } from '../layer2s/templates/upcoming'
 import { Layer3 } from './types'
 
 export const superposition: Layer3 = upcomingL3({
   id: 'superposition',
-  createdAt: '2024-07-04T08:45:09',
+  createdAt: new UnixTime(1720082709), // 2024-07-04T08:45:09Z
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Superposition',

@@ -10,8 +10,11 @@ export function getScalingUpcomingEntries() {
 
   return projects
     .sort((a, b) => {
-      assert(a.createdAt && b.createdAt, 'Project has no createdAt')
-      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      assert(
+        a.createdAt && b.createdAt,
+        'Project has no createdAt although it is upcoming',
+      )
+      return b.createdAt.toNumber() - a.createdAt.toNumber()
     })
     .map((project) => ({
       id: project.id,

@@ -1,9 +1,10 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
 export const ethernity: Layer2 = upcomingL2({
   id: 'ethernity',
-  createdAt: '2024-06-12T08:54:32',
+  createdAt: new UnixTime(1718182472), // 2024-06-12T08:54:32Z
   display: {
     name: 'Ethernity',
     slug: 'ethernity',

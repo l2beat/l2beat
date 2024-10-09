@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   ChainConfig,
@@ -23,7 +23,7 @@ export interface Layer3 {
   /** Unique, readable id, will be used in DB. DO NOT EDIT THIS PROPERTY */
   id: ProjectId
   /** Date of creation of the file (not the project), required by test for upcoming projects */
-  createdAt?: string
+  createdAt?: UnixTime
   /** Is this layer3 an upcoming rollup? */
   isUpcoming?: boolean
   /** Is this layer3 archived? */

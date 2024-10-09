@@ -1,9 +1,10 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
 export const moonveil: Layer2 = upcomingL2({
   id: 'moonveil',
-  createdAt: '2024-07-25T14:47:59',
+  createdAt: new UnixTime(1721918879), // 2024-07-25T14:47:59Z
   display: {
     name: 'Moonveil',
     slug: 'moonveil',
