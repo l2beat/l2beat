@@ -18,7 +18,6 @@
     "storybook": "storybook dev -p 6006 --no-open",
     "storybook:build": "storybook build",
     "tinify-logos": "node --loader esbuild-register/loader -r esbuild-register scripts/logos/tinifyLogos.ts",
-    "project-creation-dates": "node --loader esbuild-register/loader -r esbuild-register scripts/project-creation-dates.ts"
   },
   "dependencies": {
     "@l2beat/backend": "*",
