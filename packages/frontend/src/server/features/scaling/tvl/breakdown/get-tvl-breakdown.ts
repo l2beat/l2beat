@@ -16,7 +16,7 @@ import { recordToSortedBreakdown } from './record-to-sorted-breakdown'
 import { type BreakdownRecord, type CanonicalAssetBreakdownData } from './types'
 
 const SHARED_ESCROW_WARNING =
-  'There might be a 1% difference with the actual amounts locked due to pending deposits and withdrawals.'
+  'Does not account for differences in locked value due to pending deposits and withdrawals.'
 
 export function getTvlBreakdown(configMapping: ConfigMapping) {
   return async function (projectId: ProjectId, target?: UnixTime) {
