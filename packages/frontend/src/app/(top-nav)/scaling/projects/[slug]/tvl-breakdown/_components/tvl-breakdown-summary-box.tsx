@@ -80,9 +80,7 @@ function StatsItem(props: StatsItemProps) {
         <span
           className={cn(
             'font-medium md:hidden',
-            props.big
-              ? 'text-lg text-black dark:text-white'
-              : 'text-xs text-gray-600',
+            props.big ? 'text-lg text-primary' : 'text-xs text-gray-600',
           )}
         >
           {props.mobileTitle}
@@ -105,13 +103,13 @@ function StatsItem(props: StatsItemProps) {
       <div className="flex items-center gap-1">
         <span
           className={cn(
-            'font-bold text-black dark:text-white md:text-lg',
+            'font-bold text-primary md:text-lg',
             props.big ? 'text-lg' : 'text-base',
           )}
         >
           {formatCurrency(props.value, 'usd')}
         </span>
-        <div className="ml-1 text-xs font-semibold md:text-base">
+        <div className="ml-1 text-xs font-medium md:text-base">
           <PercentChange value={props.change} />
         </div>
       </div>

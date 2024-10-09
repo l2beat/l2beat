@@ -50,7 +50,7 @@ export function CostsTotalCell({ data, warning }: CellProps) {
       <div className="flex flex-col items-end">
         <div className="flex items-center gap-1">
           {warning && <Warning warning={warning} />}
-          <span className="text-lg font-semibold">
+          <span className="font-medium">
             <DetailedOnHover value={data.total}>{formatted}</DetailedOnHover>
           </span>
         </div>

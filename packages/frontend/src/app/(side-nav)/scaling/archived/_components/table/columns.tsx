@@ -59,7 +59,7 @@ export const scalingArchivedColumns = [
       }
 
       return (
-        <span className="text-base font-bold md:text-lg">
+        <span className="font-bold md:text-base">
           {formatCurrency(value, 'usd', {
             showLessThanMinimum: false,
           })}

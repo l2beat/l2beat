@@ -36,13 +36,13 @@ export function LivenessIntervalCell(props: {
     const tooltipText = getNonApplicableTooltipText(props.dataType, props.entry)
 
     if (!tooltipText) {
-      return <Badge type="gray">N/A</Badge>
+      return <Badge className="bg-surface-tertiary">N/A</Badge>
     }
 
     return (
       <Tooltip>
         <TooltipTrigger>
-          <Badge type="gray">N/A</Badge>
+          <Badge className="bg-surface-tertiary">N/A</Badge>
         </TooltipTrigger>
         <TooltipContent>{tooltipText}</TooltipContent>
       </Tooltip>

@@ -34,22 +34,24 @@ export function getAggLayerNativeEtherPremintedEntry(
     chain.minTimestampForTvl,
     escrow.sinceTimestamp,
   )
+  const untilTimestamp = escrow.untilTimestamp
 
   return {
-    type: type,
-    dataSource: dataSource,
-    l2BridgeAddress: AGGLAYER_L2BRIDGE_ADDRESS,
-    premintedAmount: premintedAmount,
-    escrowAddress: escrow.address,
     assetId: assetId,
-    chain: project.projectId,
-    project: project.projectId,
-    source: source,
     category: category,
+    chain: project.projectId,
+    dataSource: dataSource,
     decimals: decimals,
+    escrowAddress: escrow.address,
     includeInTotal: includeInTotal,
     isAssociated: isAssociated,
-    symbol: symbol,
+    l2BridgeAddress: AGGLAYER_L2BRIDGE_ADDRESS,
+    premintedAmount: premintedAmount,
+    project: project.projectId,
     sinceTimestamp: sinceTimestamp,
+    source: source,
+    symbol: symbol,
+    type: type,
+    untilTimestamp: untilTimestamp,
   }
 }

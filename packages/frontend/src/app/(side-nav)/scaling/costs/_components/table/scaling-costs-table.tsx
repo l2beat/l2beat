@@ -70,8 +70,8 @@ export function ScalingCostsTable(props: Props) {
   }
 
   return (
-    <div className="space-y-2">
-      <div className="flex flex-col gap-2 md:flex-row md:justify-between">
+    <div className="space-y-3 md:space-y-6">
+      <div className="flex flex-col gap-2 lg:flex-row lg:justify-between">
         <ScalingFilters items={filteredEntries} />
         <CostsMetricControls value={metric} onValueChange={onMetricChange} />
       </div>

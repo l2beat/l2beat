@@ -53,7 +53,7 @@ export interface AmountConfigBase {
   source: Token['source']
   dataSource: string
   sinceTimestamp: UnixTime
-  untilTimestamp?: UnixTime
+  untilTimestamp: UnixTime | undefined
   includeInTotal: boolean
   decimals: number
   symbol: string
