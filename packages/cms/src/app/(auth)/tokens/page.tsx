@@ -1,4 +1,6 @@
 import { TokenMetaRecord } from '@l2beat/database'
+import { ChevronRight } from 'lucide-react'
+import Link from 'next/link'
 import { TableControls } from '~/components/table-controls'
 import { Button } from '~/components/ui/button'
 import {
@@ -63,7 +65,8 @@ export default async function Page({
                 <TableHead>Network Id</TableHead>
                 <TableHead>Address</TableHead>
                 <TableHead>Name</TableHead>
-                <TableHead>Symbol</TableHead>
+                <TableHead className="w-full">Symbol</TableHead>
+                <TableHead></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -72,13 +75,22 @@ export default async function Page({
                 .map((token) => (
                   <TableRow key={token.id}>
                     <TableCell className="font-mono">{token.id}</TableCell>
-                    <TableCell>{token.networkId}</TableCell>
-                    <TableCell>{token.address}</TableCell>
-                    <TableCell>
+                    <TableCell className="font-mono">
+                      {token.networkId}
+                    </TableCell>
+                    <TableCell className="font-mono">{token.address}</TableCell>
+                    <TableCell className="whitespace-nowrap">
                       {tokenMeta[token.id]?.name ?? 'Unknown'}
                     </TableCell>
                     <TableCell>
                       {tokenMeta[token.id]?.symbol ?? 'Unknown'}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <Link href={`/tokens/${token.id}`} key={token.id}>
+                        <Button variant="ghost" className="p-0 h-8 w-8">
+                          <ChevronRight className="w-4 h-4" />
+                        </Button>
+                      </Link>
                     </TableCell>
                   </TableRow>
                 ))}
