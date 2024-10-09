@@ -10,6 +10,8 @@ const discovery_ZKstackGovL2 = new ProjectDiscovery(
   'shared-zk-stack',
   'zksync2',
 )
+const shared = new ProjectDiscovery('shared-zk-stack')
+const bridge = shared.getContract('L1SharedBridge')
 
 const executionDelayOldS = discovery.getContractValue<number>(
   'ValidatorTimelockOld',
@@ -105,15 +107,32 @@ export const zksyncera: Layer2 = zkStackL2({
       type: 'etherscan',
     },
     minTimestampForTvl: new UnixTime(1676384520),
+    multicallContracts: [
+      {
+        version: '3',
+        address: EthereumAddress('0xF9cda624FBC7e059355ce98a31693d299FACd963'),
+        batchSize: 150,
+        sinceBlock: 3908235,
+      },
+    ],
     coingeckoPlatform: 'zksync',
   },
   associatedTokens: ['ZK'],
   nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
-    discovery.getEscrowDetails({
-      address: EthereumAddress('0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB'),
+    shared.getEscrowDetails({
+      address: bridge.address,
       tokens: '*',
       description:
-        'Shared bridge for depositing tokens to ZKsync Era and, in the future, other ZK stack chains.',
+        'Shared bridge for depositing tokens to ZKsync Era and other ZK stack chains.',
+      sharedEscrow: {
+        type: 'ElasticChian',
+        l2BridgeAddress: EthereumAddress(
+          '0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102',
+        ),
+        l2EtherAddress: EthereumAddress(
+          '0x000000000000000000000000000000000000800A',
+        ),
+      },
       ...zkStackUpgrades,
     }),
     discovery.getEscrowDetails({
