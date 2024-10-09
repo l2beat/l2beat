@@ -37,20 +37,20 @@ export function getAggLayerNativeEtherWrappedEntry(
   const category = 'ether'
 
   return {
-    type: type,
-    dataSource: dataSource,
-    wethAddress: escrow.sharedEscrow.wethAddress,
-    project: project.projectId,
     assetId: assetId,
-    escrowAddress: escrow.address,
-    chain: project.projectId,
-    symbol: symbol,
-    source: source,
-    includeInTotal: includeInTotal,
-    sinceTimestamp: sinceTimestamp,
-    untilTimestamp: untilTimestamp,
-    decimals: decimals,
-    isAssociated: isAssociated,
     category: category,
+    chain: project.projectId,
+    dataSource: dataSource,
+    decimals: decimals,
+    escrowAddress: escrow.address,
+    includeInTotal: includeInTotal,
+    isAssociated: isAssociated,
+    project: project.projectId,
+    sinceTimestamp: sinceTimestamp,
+    source: source,
+    symbol: symbol,
+    type: type,
+    untilTimestamp: untilTimestamp,
+    wethAddress: escrow.sharedEscrow.wethAddress,
   }
 }

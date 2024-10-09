@@ -40,20 +40,20 @@ export function getElasticChainEtherEntry(
   const dataSource = `${project.projectId}_elastic_chain`
 
   return {
-    type: type,
-    dataSource: dataSource,
     address: token.address,
     assetId: assetId,
-    chain: project.projectId,
-    escrowAddress: escrow.address,
-    project: project.projectId,
-    source: source,
-    sinceTimestamp: sinceTimestamp,
-    untilTimestamp: untilTimestamp,
-    includeInTotal,
-    decimals: token.decimals,
-    symbol: token.symbol,
-    isAssociated,
     category: token.category,
+    chain: project.projectId,
+    dataSource: dataSource,
+    decimals: token.decimals,
+    escrowAddress: escrow.address,
+    includeInTotal,
+    isAssociated,
+    project: project.projectId,
+    sinceTimestamp: sinceTimestamp,
+    source: source,
+    symbol: token.symbol,
+    type: type,
+    untilTimestamp: untilTimestamp,
   }
 }

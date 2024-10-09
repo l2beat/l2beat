@@ -40,21 +40,21 @@ export function getElasticChainL2TokenEntry(
   const dataSource = `${project.projectId}_elastic_chain`
 
   return {
-    type: type,
+    assetId: assetId,
+    category: token.category,
+    chain: project.projectId,
     dataSource: dataSource,
+    decimals: token.decimals,
+    escrowAddress: escrow.address,
+    includeInTotal,
+    isAssociated,
     l1Address: token.address,
     l2BridgeAddress: escrow.sharedEscrow.l2BridgeAddress,
-    assetId: assetId,
-    chain: project.projectId,
-    escrowAddress: escrow.address,
     project: project.projectId,
-    source: source,
     sinceTimestamp: sinceTimestamp,
-    untilTimestamp: untilTimestamp,
-    includeInTotal,
-    decimals: token.decimals,
+    source: source,
     symbol: token.symbol,
-    isAssociated,
-    category: token.category,
+    type: type,
+    untilTimestamp: untilTimestamp,
   }
 }

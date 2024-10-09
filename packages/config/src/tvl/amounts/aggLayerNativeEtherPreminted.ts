@@ -37,21 +37,21 @@ export function getAggLayerNativeEtherPremintedEntry(
   const untilTimestamp = escrow.untilTimestamp
 
   return {
-    type: type,
+    assetId: assetId,
+    category: category,
+    chain: project.projectId,
     dataSource: dataSource,
+    decimals: decimals,
+    escrowAddress: escrow.address,
+    includeInTotal: includeInTotal,
+    isAssociated: isAssociated,
     l2BridgeAddress: AGGLAYER_L2BRIDGE_ADDRESS,
     premintedAmount: premintedAmount,
-    escrowAddress: escrow.address,
-    assetId: assetId,
-    chain: project.projectId,
     project: project.projectId,
-    source: source,
-    category: category,
-    decimals: decimals,
-    includeInTotal: includeInTotal,
-    untilTimestamp: untilTimestamp,
-    isAssociated: isAssociated,
-    symbol: symbol,
     sinceTimestamp: sinceTimestamp,
+    source: source,
+    symbol: symbol,
+    type: type,
+    untilTimestamp: untilTimestamp,
   }
 }
