@@ -128,7 +128,7 @@ function getDaBridgePermissionsForChain(
 
 function getPermissionedAddressesForChain(project: Project, chain: string) {
   const permissions =
-    project.permissions === 'UnderReview' ? [] : project.permissions ?? []
+    project.permissions === 'UnderReview' ? [] : (project.permissions ?? [])
   return permissions
     .filter((p) => isContractOnChain(p.chain, chain, project))
     .flatMap((p) => [...p.accounts, ...(p.participants ?? [])])

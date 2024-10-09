@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x0ccc6b74d8d609f5e08581f2fd25e7b41ebbbec5
+
+# Diff at Tue, 08 Oct 2024 16:22:53 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@bca55174129419533cd4173605c170ea99ac6f98 block: 20891458
+- current block number: 20891458
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20891458 (main branch discovery), not current.
+
+```diff
+    contract wstETHEscrow (0x9de443AdC5A411E83F1878Ef24C3F52C61571e72) {
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+      template:
++        "lido/L1ERC20TokenBridge"
+      displayName:
++        "L1ERC20TokenBridge"
+      descriptions:
++        ["Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally."]
+    }
+```
+
 Generated with discovered.json: 0x81c5b77a9469a833f970d22d1bc8999b9814ca41
 
 # Diff at Fri, 04 Oct 2024 10:08:24 GMT:

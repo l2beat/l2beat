@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 19876012,
   "configHash": "0xc5323f647a9ea9322c162facb56fb967aeeda5e72064249d3a787e7cde4d646a",
-  "version": 15,
   "contracts": [
     {
       "name": "SynapseBridge",
@@ -375,5 +374,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

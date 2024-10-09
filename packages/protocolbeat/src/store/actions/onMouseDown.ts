@@ -6,6 +6,7 @@ import {
 } from '../utils/constants'
 import { toViewCoordinates } from '../utils/coordinates'
 import { reverseIter } from '../utils/reverseIter'
+import { updateNodePositions } from '../utils/updateNodePositions'
 
 export function onMouseDown(
   state: State,
@@ -65,7 +66,8 @@ export function onMouseDown(
           mouseUpAction = { type: 'DeselectOne', id: node.simpleNode.id }
         }
 
-        return {
+        return updateNodePositions({
+          ...state,
           selectedNodeIds,
           pressed: {
             ...state.pressed,
@@ -84,16 +86,17 @@ export function onMouseDown(
                 { x: node.box.x, y: node.box.y },
               ]),
           ),
-        }
+        })
       }
     }
 
-    return {
+    return updateNodePositions({
+      ...state,
       selectedNodeIds: event.shiftKey ? state.selectedNodeIds : [],
       pressed: { ...state.pressed, leftMouseButton: true },
       mouseMoveAction: event.shiftKey ? 'select-add' : 'select',
       mouseMove: { startX: x, startY: y, currentX: x, currentY: y },
-    }
+    })
   }
 
   if (event.button === CLICKED_MIDDLE_MOUSE_BUTTON && !state.mouseMoveAction) {

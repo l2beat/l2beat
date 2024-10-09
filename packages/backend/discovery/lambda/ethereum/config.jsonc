@@ -2,26 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "lambda",
-  "initialAddresses": ["0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054"],
-  "names": {
-    "0xae809d42f861A6381b0DFCf7216556e95362a7a8": "SystemConfig",
-    "0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054": "OptimismPortal",
-    "0x78B5818884929d7A930edADD03a0fCD9Dd068EB7": "L1CrossDomainMessenger",
-    "0x2297eB8DC91f532C91c57b3fb33C06b782e9594A": "L2OutputOracle",
-    "0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501": "LambdaOwnerMultisig"
-  },
-  "overrides": {
-    "OptimismPortal": {
-      "extends": "opstack/OptimismPortal"
-    },
-    "L1CrossDomainMessenger": {
-      "extends": "opstack/L1CrossDomainMessenger"
-    },
-    "L2OutputOracle": {
-      "extends": "opstack/L2OutputOracle"
-    },
-    "SystemConfig": {
-      "extends": "opstack/SystemConfig"
-    }
-  }
+  "initialAddresses": ["0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054"], //OptimismPortal
+  "names": {},
+  "overrides": {}
 }

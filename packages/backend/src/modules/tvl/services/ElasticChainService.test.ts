@@ -1,6 +1,7 @@
 import { AmountRecord } from '@l2beat/database'
 import { Bytes, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
+import { utils } from 'ethers'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import {
@@ -14,11 +15,54 @@ import {
 const NOW = UnixTime.now()
 const MOCK_ID1 = '1'
 const MOCK_ID2 = '2'
+const MOCK_ID3 = '3'
 export const BRIDGE_ADDRESS = EthereumAddress.random()
 
 describe(ElasticChainService.name, () => {
   describe(ElasticChainService.prototype.fetchAmounts.name, () => {
-    it('fetch amounts for l2 tokens and native as undefined', async () => {
+    it('fetch amounts for l2 tokens and ether', async () => {
+      const mockToken1 = elasticChainL2Token({
+        l1Address: EthereumAddress.random(),
+      })
+      const mockToken2 = elasticChainL2Token({
+        l1Address: EthereumAddress.random(),
+      })
+      const mockEther = elasticChainEther({
+        address: EthereumAddress.random(),
+      })
+
+      const rpcClient = mockObject<RpcClient>({
+        getBalance: mockFn(),
+        call: mockFn(),
+      })
+      const service = elasticChainService({
+        rpcClient,
+      })
+
+      service.getL2TokensAmounts = mockFn().resolvesTo([
+        amountRecord(MOCK_ID1, 400n),
+        amountRecord(MOCK_ID2, 700n),
+      ])
+      service.getEtherAmount = mockFn().resolvesTo(
+        amountRecord(MOCK_ID3, 1000n),
+      )
+
+      const result = await service.fetchAmounts(NOW, 0, [
+        mockToken1,
+        mockToken2,
+        mockEther,
+      ])
+
+      expect(result).toEqual([
+        amountRecord(MOCK_ID3, 1000n),
+        amountRecord(MOCK_ID1, 400n),
+        amountRecord(MOCK_ID2, 700n),
+      ])
+      expect(rpcClient.getBalance).not.toHaveBeenCalled()
+      expect(rpcClient.call).not.toHaveBeenCalled()
+    })
+
+    it('fetch amounts for l2 tokens and ether as undefined', async () => {
       const mockToken1 = elasticChainL2Token({
         l1Address: EthereumAddress.random(),
       })
@@ -38,6 +82,9 @@ describe(ElasticChainService.name, () => {
         amountRecord(MOCK_ID1, 400n),
         amountRecord(MOCK_ID2, 700n),
       ])
+      service.getEtherAmount = mockFn().resolvesTo(
+        amountRecord(MOCK_ID3, 1000n),
+      )
 
       const result = await service.fetchAmounts(NOW, 0, [
         mockToken1,
@@ -50,6 +97,36 @@ describe(ElasticChainService.name, () => {
       ])
       expect(rpcClient.getBalance).not.toHaveBeenCalled()
       expect(rpcClient.call).not.toHaveBeenCalled()
+    })
+  })
+
+  describe(ElasticChainService.prototype.getEtherAmount.name, () => {
+    it('should return the correct totalSupply', async () => {
+      const token = elasticChainEther({
+        address: EthereumAddress.random(),
+      })
+
+      const expectedSupply = 1000n
+
+      const rpcClient = mockObject<RpcClient>({
+        call: mockFn().resolvesTo(
+          utils.defaultAbiCoder.encode(['uint256'], [expectedSupply]),
+        ),
+      })
+      const mockAggLayerService = elasticChainService({
+        rpcClient,
+      })
+
+      const result = await mockAggLayerService.getEtherAmount(NOW, 0, token)
+
+      expect(result).toEqual(amountRecord(MOCK_ID1, expectedSupply))
+      expect(rpcClient.call).toHaveBeenCalledWith(
+        {
+          to: token.address,
+          data: encodeTotalSupplyData(),
+        },
+        0,
+      )
     })
   })
 
@@ -251,6 +328,14 @@ function elasticChainL2Token(opts: Partial<Config<'elasticChainL2Token'>>) {
   return mockObject<Config<'elasticChainL2Token'>>({
     id: MOCK_ID1,
     type: 'elasticChainL2Token',
+    ...opts,
+  })
+}
+
+function elasticChainEther(opts: Partial<Config<'elasticChainEther'>>) {
+  return mockObject<Config<'elasticChainEther'>>({
+    id: MOCK_ID1,
+    type: 'elasticChainEther',
     ...opts,
   })
 }

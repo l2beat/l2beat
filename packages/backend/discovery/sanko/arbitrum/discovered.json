@@ -3,7 +3,6 @@
   "chain": "arbitrum",
   "blockNumber": 259311792,
   "configHash": "0x22d5409de9ec2ed8989d6ffc9b7aa1197344c488351b8c3ebcc90c2d6fa8c36e",
-  "version": 15,
   "contracts": [
     {
       "name": "ValidatorWalletCreator",
@@ -1308,5 +1307,5 @@
     "orbitstack/RollupProxy": "0xdd22b1785ae5df34e829d0b04131559e112131325c3f223825d0fe61e675fb1a",
     "orbitstack/SequencerInbox": "0x096f13a8297d3243cf02cbc39d065c1c6f37b23602fce0c63f3ff74d7d65b1ee"
   },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20777124,
   "configHash": "0xb0c4117fe18999d663d6c8d502aa5e139bdf96f44168eecf29ef59bcb1a9d215",
-  "version": 15,
   "contracts": [
     {
       "name": "L2OutputOracle",
@@ -977,5 +976,5 @@
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

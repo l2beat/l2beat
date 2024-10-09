@@ -13,7 +13,7 @@ export function ErrorModal({
           <button
             onClick={onClose}
             type="button"
-            className="absolute end-2.5 top-3 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-gray-400 text-sm dark:hover:bg-gray-600 hover:bg-gray-200 dark:hover:text-white hover:text-gray-900"
+            className="absolute end-2.5 top-3 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-gray-400 text-sm hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
             data-modal-hide="popup-modal"
           >
             <svg

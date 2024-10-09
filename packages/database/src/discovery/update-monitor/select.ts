@@ -7,5 +7,4 @@ export const selectUpdateMonitor = [
   'timestamp',
   'discoveryJsonBlob',
   'configHash',
-  'version',
 ] as const satisfies (keyof UpdateMonitor)[]

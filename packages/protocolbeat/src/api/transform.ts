@@ -1,6 +1,5 @@
 import { recallNodeState } from '../store/utils/localStore'
-import { Color, White } from '../utils/color'
-import { oklch2rgb } from '../utils/oklch'
+import { OklchColor, White } from '../utils/color'
 import { stringHash } from '../utils/stringHash'
 import type { ContractNode, EOANode, SimpleNode } from './SimpleNode'
 import type { DiscoveryContract, DiscoveryOutput } from './paseDiscovery'
@@ -23,12 +22,12 @@ function isChainAddress(value: string): boolean {
   )
 }
 
-function getChainColor(chain: string): Color {
+function getChainColor(chain: string): OklchColor {
   if (chain === 'ethereum') {
     return White
   }
 
-  return oklch2rgb(0.75, 0.12, stringHash(chain) % 360)
+  return { l: 0.75, c: 0.12, h: stringHash(chain) % 360 }
 }
 
 export function transformContracts(

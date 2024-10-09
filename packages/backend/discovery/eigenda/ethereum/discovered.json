@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20777943,
   "configHash": "0xfbb3570feb3d238191d020b83aef7f44dced8f32455ceb32377ae614f91f52c2",
-  "version": 15,
   "contracts": [
     {
       "name": "StakeRegistry",
@@ -1869,5 +1868,5 @@
     "eigenlayer/Strategy": "0xecfa84ed37fe2b3a715680ef8f3137e1bfd82351afa85222bc0241a5c8714272",
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

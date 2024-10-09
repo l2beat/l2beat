@@ -1,9 +1,8 @@
 {
   "name": "orderly",
   "chain": "ethereum",
-  "blockNumber": 20775932,
-  "configHash": "0x8c1fe2ea35e3e9d3ce2b472c13c894127ac3703d838d0c97bbbe56232de0804b",
-  "version": 15,
+  "blockNumber": 20920069,
+  "configHash": "0x4c4cf0395dd1e496e090c97e2591714a19744192f38a7a6829d6bcfd806d512e",
   "contracts": [
     {
       "name": "ConduitMultisig",
@@ -73,7 +72,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 50,
+        "nonce": 53,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -119,17 +118,16 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 15015600,
-        "latestOutputIndex": 8341,
-        "nextBlockNumber": 15017400,
-        "nextOutputIndex": 8342,
+        "latestBlockNumber": 15879600,
+        "latestOutputIndex": 8821,
+        "nextBlockNumber": 15881400,
+        "nextOutputIndex": 8822,
         "PROPOSER": "0x74BaD482a7f73C8286F50D8Aa03e53b7d24A5f3B",
         "startingBlockNumber": 0,
         "startingTimestamp": 1696608227,
         "SUBMISSION_INTERVAL": 1800,
         "version": "1.3.1"
-      },
-      "derivedName": "L2OutputOracle"
+      }
     },
     {
       "name": "AddressManager",
@@ -151,8 +149,7 @@
       "values": {
         "$immutable": true,
         "owner": "0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9"
-      },
-      "derivedName": "AddressManager"
+      }
     },
     {
       "name": "SystemConfig",
@@ -179,7 +176,7 @@
           ]
         }
       ],
-      "ignoreInWatchMode": ["overhead", "scalar"],
+      "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1696608335,
       "values": {
         "$admin": "0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9",
@@ -219,13 +216,8 @@
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
-        },
-        "scalar": {
-          "severity": "LOW",
-          "description": "A system configuration parameter used as dynamic L2 gas overhead in the L2 fee calculation."
         }
-      },
-      "derivedName": "SystemConfig"
+      }
     },
     {
       "name": "OptimismPortal",
@@ -265,13 +257,12 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 20732992
+          "prevBlockNum": 20831670
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664",
         "version": "1.7.2"
-      },
-      "derivedName": "OptimismPortal"
+      }
     },
     {
       "name": "L1ERC721Bridge",
@@ -376,7 +367,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619857",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619858",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -389,11 +380,10 @@
         "ResolvedDelegateProxy_addressManager": "0x87630a802a3789463eC4b00f89b27b1e9f6b92e9",
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "version": "1.4.1"
-      },
-      "derivedName": "L1CrossDomainMessenger"
+      }
     },
     {
-      "name": "ChallengerMultisig",
+      "name": "OrderlyMultisig",
       "address": "0xcE10372313Ca39Fbf75A09e7f4c0E57F070259f4",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -453,8 +443,7 @@
         "MESSENGER": "0xc76543A64666d9a073FaEF4e75F651c88e7DBC08",
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000010",
         "version": "1.1.1"
-      },
-      "derivedName": "L1StandardBridge"
+      }
     }
   ],
   "eoas": [
@@ -776,5 +765,5 @@
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

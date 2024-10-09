@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20769371,
   "configHash": "0x04318f42e060d115a003b02e8e7426c1b68702225a43f5b45840ee74038f90ca",
-  "version": 15,
   "contracts": [
     {
       "name": "OptimismPortal",
@@ -796,5 +795,5 @@
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

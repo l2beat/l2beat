@@ -1,3 +1,64 @@
+Generated with discovered.json: 0x5094b497a00fbdf8db369dfc3f5b590d682b3fc7
+
+# Diff at Tue, 08 Oct 2024 16:23:14 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@bca55174129419533cd4173605c170ea99ac6f98 block: 20775890
+- current block number: 20921492
+
+## Description
+
+Move to discovery driven data.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20775890 (main branch discovery), not current.
+
+```diff
+    contract L1ERC20TokenBridge (0x091dF5E1284E49fA682407096aD34cfD42B95B72) {
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+      template:
++        "lido/L1ERC20TokenBridge"
+      descriptions:
++        ["Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally."]
+    }
+```
+
+```diff
+    contract L1UsdcBridge (0x450D55a4B4136805B0e5A6BB59377c71FC4FaCBb) {
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194","via":[]}]
+      template:
++        "circle/L1ERC20TokenBridge"
+      descriptions:
++        ["Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally."]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x778870B55576Bdb2B5368A3CB225fBcED2B8D0Ff)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract UsdcBridgeOwnerMultisig (0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194)
+    +++ description: None
+```
+
+```diff
+    contract BobMultisig (0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E) {
+    +++ description: None
+      name:
+-        "RollupOwnerMultisig"
++        "BobMultisig"
+    }
+```
+
 Generated with discovered.json: 0x068e890da52a4c9acb24e1e501496b9bb859703b
 
 # Diff at Tue, 01 Oct 2024 10:50:13 GMT:

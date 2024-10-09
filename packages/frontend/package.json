@@ -12,7 +12,7 @@
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format": "biome check .",
-    "format:fix": "biome check --apply .",
+    "format:fix": "biome check --write .",
     "test": "mocha",
     "typecheck": "tsc --noEmit",
     "storybook": "storybook dev -p 6006 --no-open",
