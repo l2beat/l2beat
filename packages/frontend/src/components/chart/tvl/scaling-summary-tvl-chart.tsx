@@ -4,13 +4,14 @@ import Link from 'next/link'
 import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { Skeleton } from '~/components/core/skeleton'
+import { CustomLink } from '~/components/link/custom-link'
 import { PercentChange } from '~/components/percent-change'
 import { ChevronIcon } from '~/icons/chevron'
-import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
+import type { TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
 import { formatCurrency } from '~/utils/format'
 import { useChartLoading } from '../core/chart-loading-context'
-import { type ChartUnit } from '../types'
+import type { ChartUnit } from '../types'
 import { TvlChartHover } from './tvl-chart-hover'
 import { useTvlChartRenderParams } from './use-tvl-chart-render-params'
 
@@ -65,15 +66,25 @@ function Header({ total, unit, change, timeRange }: Props) {
   const value = total?.[unit]
   return (
     <div className="flex items-start justify-between">
-      <div className="flex items-center gap-3">
-        <span className="text-xl font-bold">Value Locked</span>
-        <Link
-          className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-blue-400 px-3 py-2 text-[13px] font-bold leading-none text-[#1459CB] dark:border-blue-500 dark:text-blue-500 max-md:hidden"
+      <div>
+        <div className="flex items-center gap-3">
+          <span className="text-xl font-bold">Value Locked</span>
+          <Link
+            className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-blue-400 px-3 py-2 text-[13px] font-bold leading-none text-[#1459CB] dark:border-blue-500 dark:text-blue-500 max-md:hidden"
+            href="/scaling/tvl"
+          >
+            View details
+            <ChevronIcon className="size-2.5 -rotate-90 fill-current" />
+          </Link>
+        </div>
+        <CustomLink
           href="/scaling/tvl"
+          className="flex items-center gap-1 text-xs leading-[1.15] md:hidden"
+          underline={false}
         >
-          View details{' '}
-          <ChevronIcon className="size-[10px] -rotate-90 fill-current" />
-        </Link>
+          Details
+          <ChevronIcon className="size-2 -rotate-90 fill-current" />
+        </CustomLink>
       </div>
       <div className="flex flex-col items-end">
         <div className="whitespace-nowrap text-right text-xl font-bold">
