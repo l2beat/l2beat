@@ -50,7 +50,7 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
                   'data-[state=selected]:border-brand data-[state=selected]:text-brand',
                 )}
               >
-                {link.title}
+                {link.shortTitle ?? link.title}
               </Link>
             )
           })}
