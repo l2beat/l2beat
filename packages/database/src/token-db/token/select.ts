@@ -7,3 +7,6 @@ export const selectToken = [
   'networkId',
   'updatedAt',
 ] as const satisfies (keyof TokenRecord)[]
+
+export const selectTokenWithPrefix = <T extends string>(prefix: T) =>
+  selectToken.map((s) => `${prefix}.${s}` as const)
