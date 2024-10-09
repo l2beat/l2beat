@@ -68,7 +68,7 @@ function Header({ scalingFactor }: { scalingFactor: number | undefined }) {
         <div className="flex items-baseline gap-1">
           {scalingFactor !== undefined ? (
             <>
-              <span className="whitespace-nowrap text-right text-base font-bold max-md:hidden">
+              <span className="whitespace-nowrap text-right text-base font-bold">
                 Scaling factor:{' '}
               </span>
               <div className="whitespace-nowrap text-right text-xl font-bold">
