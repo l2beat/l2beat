@@ -78,6 +78,14 @@ export class ElasticChainService {
       blockNumber,
     )
 
+    if (response.toString() === '0x') {
+      return {
+        configId: token.id,
+        amount: 0n,
+        timestamp,
+      }
+    }
+
     const [totalSupply] = erc20Interface.decodeFunctionResult(
       'totalSupply',
       response.toString(),
