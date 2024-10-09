@@ -49,6 +49,7 @@
 
   html {
     scroll-padding-top: var(--header-height);
+    scrollbar-gutter: stable;
   }
 
   body {
