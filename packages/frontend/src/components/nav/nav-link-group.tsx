@@ -57,7 +57,7 @@ export function NavLinkGroup({ group }: NavLinkGroupProps) {
           <span
             className={cn(
               'ml-1 text-base font-medium tracking-tight text-primary transition-colors duration-300 ',
-              isSelected && 'text-brand',
+              isSelected && 'font-bold text-brand',
             )}
           >
             {group.title}
