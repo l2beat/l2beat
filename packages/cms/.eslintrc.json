@@ -1,3 +1,79 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": true
+  },
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:@typescript-eslint/recommended-type-checked",
+    "plugin:@typescript-eslint/stylistic-type-checked",
+    "plugin:tailwindcss/recommended",
+    "plugin:storybook/recommended"
+  ],
+  "settings": {
+    "tailwindcss": {
+      "callees": ["cn", "cva"]
+    }
+  },
+  "rules": {
+    "@typescript-eslint/array-type": "off",
+    "@typescript-eslint/consistent-type-definitions": "off",
+    "@typescript-eslint/consistent-type-imports": [
+      "warn",
+      {
+        "prefer": "type-imports",
+        "fixStyle": "inline-type-imports"
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "^_",
+        "destructuredArrayIgnorePattern": "^_"
+      }
+    ],
+    "@typescript-eslint/require-await": "off",
+    "@typescript-eslint/no-misused-promises": [
+      "error",
+      {
+        "checksVoidReturn": {
+          "attributes": false
+        }
+      }
+    ],
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "console",
+            "message": "Do not use console"
+          },
+          {
+            "name": "node:console",
+            "message": "Do not use console"
+          },
+          {
+            "name": "assert",
+            "message": "Use assert from @l2beat/shared-pure"
+          },
+          {
+            "name": "node:assert",
+            "message": "Use assert from @l2beat/shared-pure"
+          },
+          {
+            "name": "next/router",
+            "message": "Use router from next/navigation"
+          }
+        ]
+      }
+    ],
+    "tailwindcss/classnames-order": ["error"],
+    "tailwindcss/enforces-negative-arbitrary-values": ["error"],
+    "tailwindcss/enforces-shorthand": ["error"],
+    "tailwindcss/no-contradicting-classname": ["error"],
+    "tailwindcss/no-unnecessary-arbitrary-value": ["error"]
+  }
 }
