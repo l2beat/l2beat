@@ -42,14 +42,17 @@ export async function NavLayout({
         },
         {
           title: 'Value Locked',
+          shortTitle: 'Value',
           href: '/scaling/tvl',
         },
         {
           title: 'Risk Analysis',
+          shortTitle: 'Risks',
           href: '/scaling/risk',
         },
         {
           title: 'Data Availability',
+          shortTitle: 'DA',
           href: '/scaling/data-availability',
         },
         {
@@ -94,6 +97,7 @@ export async function NavLayout({
         },
         {
           title: 'Risk Analysis',
+          shortTitle: 'Risks',
           href: '/bridges/risk',
         },
       ],
@@ -118,6 +122,7 @@ export async function NavLayout({
         },
         {
           title: 'Risk Analysis',
+          shortTitle: 'Risks',
           href: '/data-availability/risk',
         },
       ],
