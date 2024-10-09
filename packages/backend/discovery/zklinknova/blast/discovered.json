@@ -3,7 +3,7 @@
   "chain": "blast",
   "blockNumber": 8312690,
   "configHash": "0x32517fe35fe5f51b8d393c0d11eb086f45be0b1c8322d9652a82517aa24e8294",
-  "version": 14,
+  "version": 15,
   "contracts": [
     {
       "name": "zkLink",
@@ -29,6 +29,16 @@
       "values": {
         "$admin": "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E",
         "$implementation": "0xDe4Be50Bfe9503180231357Eab19d709F8F73C66",
+        "$pastUpgrades": [
+          [
+            "2024-03-14T12:02:09.000Z",
+            ["0x35E808DB3A37eec12ecF6A22Cc951C9F867f1D64"]
+          ],
+          [
+            "2024-04-22T02:30:45.000Z",
+            ["0xDe4Be50Bfe9503180231357Eab19d709F8F73C66"]
+          ]
+        ],
         "$upgradeCount": 2,
         "feeParams": {
           "pubdataPricingMode": 0,
@@ -74,6 +84,12 @@
       "values": {
         "$admin": "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E",
         "$implementation": "0xd1dCd063A4e650DCECd8BD211fe6D18a934ecCaD",
+        "$pastUpgrades": [
+          [
+            "2024-03-14T12:13:05.000Z",
+            ["0xd1dCd063A4e650DCECd8BD211fe6D18a934ecCaD"]
+          ]
+        ],
         "$upgradeCount": 1,
         "getRemoteGateway": "0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158",
         "MESSAGE_SERVICE": "0x4200000000000000000000000000000000000007",
@@ -137,6 +153,16 @@
       "values": {
         "$admin": "0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19",
         "$implementation": "0xc24864769346073f5fEf0386A18734F0eF5503F5",
+        "$pastUpgrades": [
+          [
+            "2024-03-14T14:36:53.000Z",
+            ["0x4D7012d5C62c351804CCe49c2d7C09A401fD3deC"]
+          ],
+          [
+            "2024-04-04T06:41:11.000Z",
+            ["0xc24864769346073f5fEf0386A18734F0eF5503F5"]
+          ]
+        ],
         "$upgradeCount": 2,
         "l2Bridge": "0x17887788E01A1192a26F636Cfcfc033c7Bb42348",
         "l2TokenBeacon": "0xf7866c804932c93BFcc6f6f8B965bF52a2377bd9",
@@ -390,5 +416,5 @@
     "zklinknova/secondaryGateway": "0xb8fdb3c993db014b3b0c1cdd56f21ecb1aac5dd63185bc3f87a6c0e45e9168c6",
     "zklinknova/secondaryZkLink": "0x3038879967ecfd740f8377d1280264034b6959ad28bea99ebcedd97c6127a904"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
 }

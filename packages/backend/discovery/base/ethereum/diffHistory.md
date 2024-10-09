@@ -1,3 +1,178 @@
+Generated with discovered.json: 0x0ccc6b74d8d609f5e08581f2fd25e7b41ebbbec5
+
+# Diff at Tue, 08 Oct 2024 16:22:53 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@bca55174129419533cd4173605c170ea99ac6f98 block: 20891458
+- current block number: 20891458
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20891458 (main branch discovery), not current.
+
+```diff
+    contract wstETHEscrow (0x9de443AdC5A411E83F1878Ef24C3F52C61571e72) {
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+      template:
++        "lido/L1ERC20TokenBridge"
+      displayName:
++        "L1ERC20TokenBridge"
+      descriptions:
++        ["Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally."]
+    }
+```
+
+Generated with discovered.json: 0x81c5b77a9469a833f970d22d1bc8999b9814ca41
+
+# Diff at Fri, 04 Oct 2024 10:08:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@000446ee962492b0a3a917c3f907d3277663f719 block: 20878339
+- current block number: 20891458
+
+## Description
+
+Weekly gaslimit raise.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20878339 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        132000000
+    }
+```
+
+Generated with discovered.json: 0x2ae125c5616d635ebb58c74568bb9a25ff7e27b8
+
+# Diff at Wed, 02 Oct 2024 14:14:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d101c705b5f4fd0b3af2e251678b85e1005b31d8 block: 20871599
+- current block number: 20878339
+
+## Description
+
+Config related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20871599 (main branch discovery), not current.
+
+```diff
+    contract OptimismMintableERC20Factory (0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      values.$pastUpgrades:
++        [["2023-06-15T01:51:59.000Z",["0x3d2c2f8f95CAba644eA25319c4c08594b8DC0359"]],["2024-06-28T16:32:47.000Z",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]],["2024-06-28T16:32:47.000Z",["0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846"]]]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x3154Cf16ccdb4C6d922629664174b904d80F2C35) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract OptimismPortal (0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.$pastUpgrades:
++        [["2023-06-15T01:51:59.000Z",["0x5FB30336A8d0841cf15d452afA297cB6D10877D7"]],["2024-06-28T16:32:47.000Z",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]],["2024-06-28T16:32:47.000Z",["0x2D778797049FE9259d947D1ED8e5442226dFB589"]]]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x56315b90c40730925ec5485cf004d835058518A0) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$pastUpgrades:
++        [["2023-06-15T01:51:59.000Z",["0x7237343c2A746Aa2940E5E4Fbd53eaFBF3049DcA"]],["2023-07-25T19:44:11.000Z",["0xf2460D3433475C8008ceFfe8283F07EB1447E39a"]],["2024-06-28T16:32:47.000Z",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]],["2024-06-28T16:32:47.000Z",["0xF243BEd163251380e78068d317ae10f26042B292"]]]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x608d94945A64503E642E6370Ec598e519a2C1E53) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.$pastUpgrades:
++        [["2023-06-15T01:51:59.000Z",["0x3311aC7F72bb4108d9f4D5d50E7623B1498A9eC0"]],["2024-06-28T16:32:47.000Z",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]],["2024-06-28T16:32:47.000Z",["0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"]]]
+    }
+```
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.$pastUpgrades:
++        [["2023-06-15T01:51:47.000Z",["0x6481ff79597Fe4F77E1063f615ec5BDaDDEFfd4B"]],["2024-06-28T16:32:47.000Z",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]],["2024-06-28T16:32:47.000Z",["0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1"]]]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x866E82a600A1414e583f7F13623F1aC5d58b0Afa) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades:
++        [["2023-06-15T01:51:47.000Z",["0x0000000000000000000000000000000000000000"]],["2023-06-15T01:51:59.000Z",["0x81C4Bd600793EBd1C0323604E1F455fE50A951F8"]],["2024-06-28T16:32:47.000Z",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]],["2024-06-28T16:32:47.000Z",["0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"]]]
+      values.$upgradeCount:
++        4
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      values.$pastUpgrades:
++        [["2024-01-22T20:19:59.000Z",["0x53c165169401764778F780a69701385eb0FF19B7"]],["2024-06-10T18:29:23.000Z",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]],["2024-06-10T18:29:23.000Z",["0x53c165169401764778F780a69701385eb0FF19B7"]]]
+    }
+```
+
+```diff
+    contract wstETHEscrow (0x9de443AdC5A411E83F1878Ef24C3F52C61571e72) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-09-28T21:08:35.000Z",["0x313819736457910aC1Dd21a712a37f3d7595645A"]]]
+    }
+```
+
+Generated with discovered.json: 0x6d175955ef4edc050319a0ba16d6d9c17491eff8
+
+# Diff at Thu, 26 Sep 2024 06:19:37 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@374d77799a44e3b2fcc4828675ccc0b0ff6146d0 block: 20769544
+- current block number: 20832945
+
+## Description
+
+Scheduled gas limit raise.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        120000000
++        132000000
+    }
+```
+
 Generated with discovered.json: 0x79d67cff869a648204c6809f70c66208c90ece52
 
 # Diff at Tue, 17 Sep 2024 09:51:02 GMT:

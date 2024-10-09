@@ -15,10 +15,10 @@ export default function HomePage() {
   return (
     <main>
       <Flowbite theme={{ mode: 'dark' }}>
-        <h1 className="mb-4 mt-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white text-center">
+        <h1 className="mt-4 mb-4 text-center font-extrabold text-4xl text-gray-900 leading-none tracking-tight md:text-5xl lg:text-6xl dark:text-white">
           User Operations
         </h1>
-        <p className="mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400 text-center">
+        <p className="mb-6 text-center font-normal text-gray-500 text-lg sm:px-16 lg:text-xl xl:px-48 dark:text-gray-400">
           Select the chain and provide the block number and the tool will
           compare overall number of transactions to user operations. By clicking
           the magnifier icon you can get the latest block number.

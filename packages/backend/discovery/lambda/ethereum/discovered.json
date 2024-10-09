@@ -1,9 +1,8 @@
 {
   "name": "lambda",
   "chain": "ethereum",
-  "blockNumber": 20111587,
-  "configHash": "0xb88c1a92fcb92db5606c56fafaebc7c015418e9ab22e7f9be3d312fee20bd4b0",
-  "version": 14,
+  "blockNumber": 20914730,
+  "configHash": "0x5aac61d25d132e1f851b2a0bd63cd2775dc407c546ec163ecf0b82b5d10721b4",
   "contracts": [
     {
       "name": "SuperchainConfig",
@@ -30,6 +29,12 @@
       "values": {
         "$admin": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f",
         "$implementation": "0x527021A71d6E76Bb4243A0BabAd4e160245b8aAE",
+        "$pastUpgrades": [
+          [
+            "2024-04-17T09:44:23.000Z",
+            ["0x527021A71d6E76Bb4243A0BabAd4e160245b8aAE"]
+          ]
+        ],
         "$upgradeCount": 1,
         "guardian": "0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40",
         "GUARDIAN_SLOT": "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68",
@@ -86,7 +91,7 @@
       }
     },
     {
-      "name": "LambdaOwnerMultisig",
+      "name": "GnosisSafe",
       "address": "0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -152,8 +157,7 @@
         "multisigThreshold": "1 of 1 (100%)",
         "nonce": 15,
         "VERSION": "1.3.0"
-      },
-      "derivedName": "GnosisSafe"
+      }
     },
     {
       "name": "L2OutputOracle",
@@ -185,6 +189,12 @@
       "values": {
         "$admin": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f",
         "$implementation": "0x850DFdB4035db757e49eCF997ef051290959167A",
+        "$pastUpgrades": [
+          [
+            "2024-04-17T09:53:23.000Z",
+            ["0x850DFdB4035db757e49eCF997ef051290959167A"]
+          ]
+        ],
         "$upgradeCount": 1,
         "challenger": "0x864A02Ca4a40616f8995709D1B26CDe588709043",
         "CHALLENGER": "0x864A02Ca4a40616f8995709D1B26CDe588709043",
@@ -193,10 +203,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 2637000,
-        "latestOutputIndex": 1464,
-        "nextBlockNumber": 2638800,
-        "nextOutputIndex": 1465,
+        "latestBlockNumber": 7482600,
+        "latestOutputIndex": 4156,
+        "nextBlockNumber": 7484400,
+        "nextOutputIndex": 4157,
         "proposer": "0xC16EAEDaB78E033B555c9eF3C326c07B49F21907",
         "PROPOSER": "0xC16EAEDaB78E033B555c9eF3C326c07B49F21907",
         "startingBlockNumber": 0,
@@ -204,8 +214,7 @@
         "SUBMISSION_INTERVAL": 1800,
         "submissionInterval": 1800,
         "version": "1.8.0"
-      },
-      "derivedName": "L2OutputOracle"
+      }
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -231,6 +240,12 @@
       "values": {
         "$admin": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f",
         "$implementation": "0x4CA20D48C87129Df90A3cAd73000568331548316",
+        "$pastUpgrades": [
+          [
+            "2024-04-17T09:51:59.000Z",
+            ["0x4CA20D48C87129Df90A3cAd73000568331548316"]
+          ]
+        ],
         "$upgradeCount": 1,
         "bridge": "0xEEBd256da18d0BF20c3CEb785a0946D41A7F408F",
         "BRIDGE": "0xEEBd256da18d0BF20c3CEb785a0946D41A7F408F",
@@ -284,6 +299,12 @@
       "values": {
         "$admin": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f",
         "$implementation": "0x5865A0BCf08dd24A0691Dc746F181EDc6821bea9",
+        "$pastUpgrades": [
+          [
+            "2024-04-17T09:54:23.000Z",
+            ["0x5865A0BCf08dd24A0691Dc746F181EDc6821bea9"]
+          ]
+        ],
         "$upgradeCount": 1,
         "guardian": "0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40",
         "GUARDIAN": "0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40",
@@ -293,15 +314,14 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 490798,
-          "prevBlockNum": 20101681
+          "prevBlockNum": 20906710
         },
         "paused": false,
         "superchainConfig": "0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c",
         "SYSTEM_CONFIG": "0xae809d42f861A6381b0DFCf7216556e95362a7a8",
         "systemConfig": "0xae809d42f861A6381b0DFCf7216556e95362a7a8",
         "version": "2.5.0"
-      },
-      "derivedName": "OptimismPortal"
+      }
     },
     {
       "name": "L1CrossDomainMessenger",
@@ -317,8 +337,15 @@
       "values": {
         "$immutable": false,
         "$implementation": "0x26B5810033fd2380c87F9E22CC20101778b5F584",
+        "$pastUpgrades": [
+          [
+            "2024-04-17T09:52:47.000Z",
+            ["0x26B5810033fd2380c87F9E22CC20101778b5F584"]
+          ]
+        ],
+        "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619850",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619885",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -335,8 +362,7 @@
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "superchainConfig": "0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c",
         "version": "2.3.0"
-      },
-      "derivedName": "L1CrossDomainMessenger"
+      }
     },
     {
       "name": "L1ERC721Bridge",
@@ -362,6 +388,12 @@
       "values": {
         "$admin": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f",
         "$implementation": "0x5121000767198Ad7D60fe8e47458F556B7B51aa0",
+        "$pastUpgrades": [
+          [
+            "2024-04-17T09:51:23.000Z",
+            ["0x5121000767198Ad7D60fe8e47458F556B7B51aa0"]
+          ]
+        ],
         "$upgradeCount": 1,
         "messenger": "0x78B5818884929d7A930edADD03a0fCD9Dd068EB7",
         "MESSENGER": "0x78B5818884929d7A930edADD03a0fCD9Dd068EB7",
@@ -402,6 +434,12 @@
       "values": {
         "$admin": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f",
         "$implementation": "0x781dAB53cC9d9870a96A84f4AE3130c084a2fAfD",
+        "$pastUpgrades": [
+          [
+            "2024-04-17T09:50:47.000Z",
+            ["0x781dAB53cC9d9870a96A84f4AE3130c084a2fAfD"]
+          ]
+        ],
         "$upgradeCount": 1,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "0xDeC273BF31AD79ad00D619c52662f724176A12Fb",
@@ -448,8 +486,7 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         }
-      },
-      "derivedName": "SystemConfig"
+      }
     },
     {
       "name": "L1StandardBridge",
@@ -477,6 +514,7 @@
       "values": {
         "$admin": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f",
         "$implementation": "0x3aF70e7103d29a9466663514DE3C421769b30382",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x78B5818884929d7A930edADD03a0fCD9Dd068EB7",
@@ -894,5 +932,5 @@
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0xb3e808e6410511e5cdb557ab187aac264a51956c695f8cc327ebaa202f7514fd"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

@@ -1,9 +1,8 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "blockNumber": 20725971,
-  "configHash": "0xe468df3eac2c93917dfde6f8e4a52efb7b6d627822520d392642c25338743b81",
-  "version": 14,
+  "blockNumber": 20891049,
+  "configHash": "0x5f7370f4a07a8cc3494a93546960c459fd25377b9c259ccbbcc8e1de5fd48b40",
   "contracts": [
     {
       "name": "PlonkVerifierV1-1",
@@ -34,16 +33,30 @@
       "values": {
         "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
         "$implementation": "0x137CC585F607EDeBBc3CA6360AffCFeab507B374",
+        "$pastUpgrades": [
+          [
+            "2023-10-08T16:25:11.000Z",
+            ["0xBC9D741501A20F962756C95BF906b4abffadcf8F"]
+          ],
+          [
+            "2024-02-22T08:20:23.000Z",
+            ["0xeBaed7A81c298B24EE6d59c22698A951dc448E01"]
+          ],
+          [
+            "2024-08-20T23:36:35.000Z",
+            ["0x137CC585F607EDeBBc3CA6360AffCFeab507B374"]
+          ]
+        ],
         "$upgradeCount": 3,
         "enforcedTxGateway": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "gasOracle": "0x987e300fDfb06093859358522a79098848C33852",
-        "l2BaseFee": 40520409,
+        "l2BaseFee": 40333748,
         "maxGasLimit": 10000000,
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 934852,
-        "nextUnfinalizedQueueIndex": 934837,
+        "nextCrossDomainMessageIndex": 940425,
+        "nextUnfinalizedQueueIndex": 940402,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-        "pendingQueueIndex": 934847,
+        "pendingQueueIndex": 940421,
         "scrollChain": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "whitelistChecker": "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37"
       },
@@ -144,14 +157,14 @@
           "0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402",
           "0x0c5cc5155b346453154059aD9d2Ff695dB92f774",
           "0xd7bC70ecf344C279eB78C8899Ba5538e2e3A0632",
-          "0xdA66Df3920091eF4B54782B9463587c314DAdD41"
+          "0x568993632c34604098e35a184C52aD390c70f754"
         ],
         "$threshold": 1,
         "domainSeparator": "0xe9a5efc52797721f6bd4d9839b18dcdc4162a6e91c2fe8ce6e0d679f65e814a4",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 5 (20%)",
-        "nonce": 11,
+        "nonce": 12,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -266,6 +279,16 @@
       "values": {
         "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
         "$implementation": "0x7999cdD5E2893475D89211A2E3FdA67a841E3233",
+        "$pastUpgrades": [
+          [
+            "2024-05-20T05:48:59.000Z",
+            ["0xFAf8f72e54d1089fa1882b6f597BfDFF59a8AFca"]
+          ],
+          [
+            "2024-05-20T06:38:59.000Z",
+            ["0x7999cdD5E2893475D89211A2E3FdA67a841E3233"]
+          ]
+        ],
         "$upgradeCount": 2,
         "counterpart": "0xa1a12158bE6269D7580C63eC5E609Cdc0ddD82bC",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -301,6 +324,16 @@
       "values": {
         "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
         "$implementation": "0xd1841c5756428812233eEA78afC17cb2D3e392bb",
+        "$pastUpgrades": [
+          [
+            "2023-10-08T16:25:23.000Z",
+            ["0xDE3be7C2AA151D1E152DDfcBf0962FcDf5323DAe"]
+          ],
+          [
+            "2024-02-22T08:20:23.000Z",
+            ["0xd1841c5756428812233eEA78afC17cb2D3e392bb"]
+          ]
+        ],
         "$upgradeCount": 2,
         "counterpart": "0x7bC08E1c04fb41d75F1410363F0c5746Eae80582",
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
@@ -333,17 +366,20 @@
       "name": "wstETHescrowLido",
       "address": "0x6625C6332c9F91F2D27c304E729B86db87A3f504",
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0xCC2C53556Bc75217cf698721b29071d6f12628A9",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1696920503,
       "values": {
         "$admin": "0xCC2C53556Bc75217cf698721b29071d6f12628A9",
         "$implementation": "0xF4f2066EE72D62e3caF9678459149BA7FCf2262F",
+        "$pastUpgrades": [
+          [
+            "2023-10-10T06:48:23.000Z",
+            ["0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb"]
+          ],
+          [
+            "2024-03-05T07:48:59.000Z",
+            ["0xF4f2066EE72D62e3caF9678459149BA7FCf2262F"]
+          ]
+        ],
         "$upgradeCount": 2,
         "counterpart": "0x8aE8f22226B9d789A36AC81474e633f8bE2856c9",
         "DEPOSITS_DISABLER_ROLE": "0x63f736f21cb2943826cd50b191eb054ebbea670e4e962d0527611f830cd399d6",
@@ -369,6 +405,35 @@
       "derivedName": "Fallback"
     },
     {
+      "name": "DaiEscrow",
+      "address": "0x67260A8B73C5B77B55c1805218A42A7A6F98F515",
+      "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1696920095,
+      "values": {
+        "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+        "$implementation": "0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb",
+        "$pastUpgrades": [
+          [
+            "2023-10-10T06:41:35.000Z",
+            ["0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "counterpart": "0xaC78dff3A87b5b534e366A93E785a0ce8fA6Cc62",
+        "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
+        "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
+        "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
+      },
+      "derivedName": "L1CustomERC20Gateway"
+    },
+    {
       "name": "L1ScrollMessenger",
       "address": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
       "proxyType": "EIP1967 proxy",
@@ -383,6 +448,16 @@
       "values": {
         "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
         "$implementation": "0x72981fD00087fF4F60aBFdE9f353cB1912A37fb6",
+        "$pastUpgrades": [
+          [
+            "2023-10-08T16:25:23.000Z",
+            ["0xAf2F898a8680cb52766ABE0588ebe6b9bFe37845"]
+          ],
+          [
+            "2024-02-22T08:20:23.000Z",
+            ["0x72981fD00087fF4F60aBFdE9f353cB1912A37fb6"]
+          ]
+        ],
         "$upgradeCount": 2,
         "counterpart": "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
         "feeVault": "0x8FA3b4570B4C96f8036C13b64971BA65867eEB48",
@@ -430,6 +505,12 @@
       "values": {
         "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
         "$implementation": "0x642af405bF64660665B37977449C9C536B806318",
+        "$pastUpgrades": [
+          [
+            "2023-10-08T16:25:23.000Z",
+            ["0x642af405bF64660665B37977449C9C536B806318"]
+          ]
+        ],
         "$upgradeCount": 1,
         "DOMAIN_SEPARATOR": "0x4ba6355a403460269233dc486e88f1f91f64c2c97dc065c7ee1782de423fd902",
         "eip712Domain": {
@@ -636,6 +717,16 @@
       "values": {
         "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
         "$implementation": "0xa4F400593DFfc0ae02F940ab58f6e3Cc6fb9FB49",
+        "$pastUpgrades": [
+          [
+            "2023-10-08T16:25:23.000Z",
+            ["0xd3c42158682D55E082EaBe08a29F7515A97cA307"]
+          ],
+          [
+            "2024-02-22T08:20:23.000Z",
+            ["0xa4F400593DFfc0ae02F940ab58f6e3Cc6fb9FB49"]
+          ]
+        ],
         "$upgradeCount": 2,
         "counterpart": "0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9",
         "l2WETH": "0x5300000000000000000000000000000000000004",
@@ -670,6 +761,16 @@
       "values": {
         "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
         "$implementation": "0x546E0bF31FB6e7babD493452e4e6999191367B42",
+        "$pastUpgrades": [
+          [
+            "2023-10-08T16:25:23.000Z",
+            ["0x1fcbE079c4Bbab37406daB7Dfd35AcAe37D5C55d"]
+          ],
+          [
+            "2024-02-22T08:20:23.000Z",
+            ["0x546E0bF31FB6e7babD493452e4e6999191367B42"]
+          ]
+        ],
         "$upgradeCount": 2,
         "counterpart": "0x6EA73e05AdC79974B931123675ea8F78FfdacDF0",
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
@@ -714,7 +815,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 37,
+        "nonce": 39,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -735,6 +836,12 @@
       "values": {
         "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
         "$implementation": "0xfDF1eE0098168eaa61BF87Db68C39c85151a4E9E",
+        "$pastUpgrades": [
+          [
+            "2023-10-08T16:25:11.000Z",
+            ["0xfDF1eE0098168eaa61BF87Db68C39c85151a4E9E"]
+          ]
+        ],
         "$upgradeCount": 1,
         "intrinsicParams": {
           "txGas": 21000,
@@ -749,35 +856,27 @@
       "derivedName": "L2GasPriceOracle"
     },
     {
-      "name": "ProxyAdmin",
-      "address": "0x9eBf2f33526CD571f8b2ad312492cb650870CFd6",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0xA033Ff09f2da45f0e9ae495f525363722Df42b2a"
-        }
-      ],
-      "sinceTimestamp": 1713173507,
-      "values": {
-        "$immutable": true,
-        "owner": "0xC0896ab1A8cae8c2C1d27d011eb955Cca955580d"
-      }
-    },
-    {
-      "name": "pufEthEscrow",
+      "name": "pufETHEscrow",
       "address": "0xA033Ff09f2da45f0e9ae495f525363722Df42b2a",
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x9eBf2f33526CD571f8b2ad312492cb650870CFd6",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1713173507,
       "values": {
         "$admin": "0x9eBf2f33526CD571f8b2ad312492cb650870CFd6",
         "$implementation": "0x08D77Ea90DB9BF6c0d3f66E6b8394DA2E81B9a03",
+        "$pastUpgrades": [
+          [
+            "2024-04-15T09:31:47.000Z",
+            ["0xc4d46E8402F476F269c379677C99F18E22Ea030e"]
+          ],
+          [
+            "2024-04-15T09:31:47.000Z",
+            ["0x08D77Ea90DB9BF6c0d3f66E6b8394DA2E81B9a03"]
+          ],
+          [
+            "2024-04-15T09:31:47.000Z",
+            ["0x08D77Ea90DB9BF6c0d3f66E6b8394DA2E81B9a03"]
+          ]
+        ],
         "$upgradeCount": 3,
         "counterpart": "0x9eBf2f33526CD571f8b2ad312492cb650870CFd6",
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
@@ -802,8 +901,30 @@
       "values": {
         "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
         "$implementation": "0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f",
+        "$pastUpgrades": [
+          [
+            "2023-10-08T16:25:23.000Z",
+            ["0x2E07f0FBA71709bb5e1f045b02152E45B451D75f"]
+          ],
+          [
+            "2024-02-22T08:20:23.000Z",
+            ["0xFA148514d03420b7b1a13eC74da06D2Ca875539C"]
+          ],
+          [
+            "2024-04-28T22:06:35.000Z",
+            ["0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8"]
+          ],
+          [
+            "2024-07-02T10:10:47.000Z",
+            ["0x4F250B05262240C787a1eE222687C6eC395C628A"]
+          ],
+          [
+            "2024-08-20T23:36:35.000Z",
+            ["0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f"]
+          ]
+        ],
         "$upgradeCount": 5,
-        "lastFinalizedBatchIndex": 317216,
+        "lastFinalizedBatchIndex": 326856,
         "layer2ChainId": 534352,
         "maxNumTxInChunk": 100,
         "messageQueue": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
@@ -893,6 +1014,16 @@
       "values": {
         "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
         "$implementation": "0x7F512E2E9dfC4552941D99A5b2405BBcF5781C2c",
+        "$pastUpgrades": [
+          [
+            "2023-10-08T16:25:23.000Z",
+            ["0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb"]
+          ],
+          [
+            "2024-02-22T08:20:23.000Z",
+            ["0x7F512E2E9dfC4552941D99A5b2405BBcF5781C2c"]
+          ]
+        ],
         "$upgradeCount": 2,
         "counterpart": "0x64CCBE37c9A82D85A1F2E74649b7A42923067988",
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
@@ -916,6 +1047,16 @@
       "values": {
         "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
         "$implementation": "0x244BF7aEf29F03916569470a51fA0794B62F8cd7",
+        "$pastUpgrades": [
+          [
+            "2023-10-08T16:25:23.000Z",
+            ["0xCb4638620E4C6DeCef26374e71b0dd4871863593"]
+          ],
+          [
+            "2024-02-22T08:20:23.000Z",
+            ["0x244BF7aEf29F03916569470a51fA0794B62F8cd7"]
+          ]
+        ],
         "$upgradeCount": 2,
         "counterpart": "0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc",
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
@@ -939,44 +1080,14 @@
           "0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B",
           "0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402",
           "0xd7bC70ecf344C279eB78C8899Ba5538e2e3A0632",
-          "0xdA66Df3920091eF4B54782B9463587c314DAdD41"
+          "0x568993632c34604098e35a184C52aD390c70f754"
         ],
         "$threshold": 2,
         "domainSeparator": "0x7fefd60c480c008b3e78bd9438ded85b15722eff470797839b69ed8f36a54f6b",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 136,
-        "VERSION": "1.3.0"
-      },
-      "derivedName": "GnosisSafe"
-    },
-    {
-      "name": "PufferFinanceOpsMultisig",
-      "address": "0xC0896ab1A8cae8c2C1d27d011eb955Cca955580d",
-      "template": "GnosisSafe",
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1706721719,
-      "values": {
-        "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "0x11B0BE5e19E38F6f6E07e11f103C4F4e8A5d0f6a",
-          "0xE408AE2E70a567c83C0BD36dC4a00b0a56F0A8DA",
-          "0xf09c25681090C5F9408c6D3CD24baa8721870dc5",
-          "0xD6475ce37d964d4816715FdafFEeAAf2958948bE",
-          "0xD70aa9d7280E6FEe89B86f53c0B2A363478D5e94",
-          "0x8F97Bf67182122D2f1745216a81724143db97E43",
-          "0xf061f1FceFa32b3bbD5d18c5A623DB64bfBc107D",
-          "0x206846dE1F372A9a603e672ba97A5238cC89aeAA"
-        ],
-        "$threshold": 3,
-        "domainSeparator": "0xb764b2ca0fc619f1ab8db52dc7089ea1c06341a2c41b9d23ba94a174163cbcee",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 185,
+        "nonce": 138,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1003,22 +1114,6 @@
       "derivedName": "ZkEvmVerifierV2"
     },
     {
-      "name": "wstETHescrowLidoProxyAdmin",
-      "address": "0xCC2C53556Bc75217cf698721b29071d6f12628A9",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x6625C6332c9F91F2D27c304E729B86db87A3f504"
-        }
-      ],
-      "sinceTimestamp": 1708226927,
-      "values": {
-        "$immutable": true,
-        "owner": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
-      },
-      "derivedName": "ProxyAdmin"
-    },
-    {
       "name": "L1StandardERC20Gateway",
       "address": "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9",
       "proxyType": "EIP1967 proxy",
@@ -1033,6 +1128,16 @@
       "values": {
         "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
         "$implementation": "0x4015Fc868C06689ABEba4a9dC8FA43B804F6239c",
+        "$pastUpgrades": [
+          [
+            "2023-10-08T16:25:23.000Z",
+            ["0x9218732389D80f9b8723C3f32a38865B7a63564A"]
+          ],
+          [
+            "2024-02-22T08:20:23.000Z",
+            ["0x4015Fc868C06689ABEba4a9dC8FA43B804F6239c"]
+          ]
+        ],
         "$upgradeCount": 2,
         "counterpart": "0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A",
         "l2TokenFactory": "0x66e5312EDeEAef6e80759A0F789e7914Fb401484",
@@ -1107,6 +1212,10 @@
         {
           "permission": "upgrade",
           "target": "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B"
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x67260A8B73C5B77B55c1805218A42A7A6F98F515"
         },
         {
           "permission": "upgrade",
@@ -1202,6 +1311,16 @@
       "values": {
         "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
         "$implementation": "0x56ce8A8E8399f6cD5e7e4f549E8BfD673f2AfF5e",
+        "$pastUpgrades": [
+          [
+            "2023-10-10T06:29:11.000Z",
+            ["0x6667123b5017AAB9945F73345848B82D7A953AA8"]
+          ],
+          [
+            "2024-02-22T08:20:23.000Z",
+            ["0x56ce8A8E8399f6cD5e7e4f549E8BfD673f2AfF5e"]
+          ]
+        ],
         "$upgradeCount": 2,
         "circleCaller": "0x0000000000000000000000000000000000000000",
         "counterpart": "0x33B60d5Dd260d453cAC3782b0bDC01ce84672142",
@@ -1210,7 +1329,7 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 92987231408533,
+        "totalBridgedUSDC": 86571374612221,
         "withdrawPaused": false
       },
       "derivedName": "L1USDCGateway"
@@ -1230,6 +1349,12 @@
       "values": {
         "$admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
         "$implementation": "0xb93Ac04010Bd61F45BF492022A5b49a902F798F3",
+        "$pastUpgrades": [
+          [
+            "2023-10-08T16:25:23.000Z",
+            ["0xb93Ac04010Bd61F45BF492022A5b49a902F798F3"]
+          ]
+        ],
         "$upgradeCount": 1,
         "defaultERC20Gateway": "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9",
         "ethGateway": "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905",
@@ -1244,29 +1369,21 @@
     { "address": "0x0000000000000000000000000000000000000001" },
     { "address": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4" },
     { "address": "0x0c5cc5155b346453154059aD9d2Ff695dB92f774" },
-    { "address": "0x11B0BE5e19E38F6f6E07e11f103C4F4e8A5d0f6a" },
-    { "address": "0x206846dE1F372A9a603e672ba97A5238cC89aeAA" },
     { "address": "0x21b8a9F5a4640c3FC13E19C48e776173e1210995" },
     { "address": "0x2ce8B4A516ebBc8B425764a867B742F76C2244c7" },
     { "address": "0x33B60d5Dd260d453cAC3782b0bDC01ce84672142" },
     { "address": "0x356483dC32B004f32Ea0Ce58F7F88879886e9074" },
     { "address": "0x5300000000000000000000000000000000000004" },
+    { "address": "0x568993632c34604098e35a184C52aD390c70f754" },
     { "address": "0x69d79Fc4Ae89E4DA80D719e26a435621F75B7f06" },
     { "address": "0x8aE8f22226B9d789A36AC81474e633f8bE2856c9" },
-    { "address": "0x8F97Bf67182122D2f1745216a81724143db97E43" },
     { "address": "0x9337B41709c1C2B938Cb460ea3fA9DB586B172E0" },
     { "address": "0xa1a12158bE6269D7580C63eC5E609Cdc0ddD82bC" },
     { "address": "0xcF2898225ED05Be911D3709d9417e86E0b4Cfc8f" },
-    { "address": "0xD6475ce37d964d4816715FdafFEeAAf2958948bE" },
-    { "address": "0xD70aa9d7280E6FEe89B86f53c0B2A363478D5e94" },
     { "address": "0xd7bC70ecf344C279eB78C8899Ba5538e2e3A0632" },
-    { "address": "0xdA66Df3920091eF4B54782B9463587c314DAdD41" },
     { "address": "0xE2e6345baAD18f779167443Dc4886495507b3249" },
-    { "address": "0xE408AE2E70a567c83C0BD36dC4a00b0a56F0A8DA" },
     { "address": "0xEbbeeAA424AE904508465a41c927Be594C43Dc68" },
     { "address": "0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B" },
-    { "address": "0xf061f1FceFa32b3bbD5d18c5A623DB64bfBc107D" },
-    { "address": "0xf09c25681090C5F9408c6D3CD24baa8721870dc5" },
     { "address": "0xF9062b8a30e0d7722960e305049FA50b86ba6253" },
     { "address": "0xfc31892C5500AbE00974280b28907BaA9190E384" },
     { "address": "0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402" },
@@ -1676,6 +1793,12 @@
       "function transferOwnership(address newOwner)",
       "function withdraw(address _token, uint256 _amount, address _recipient)"
     ],
+    "0x67260A8B73C5B77B55c1805218A42A7A6F98F515": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1941,17 +2064,6 @@
       "function verifier() view returns (address)",
       "function withdrawRoots(uint256) view returns (bytes32)"
     ],
-    "0x9eBf2f33526CD571f8b2ad312492cb650870CFd6": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function changeProxyAdmin(address proxy, address newAdmin)",
-      "function getProxyAdmin(address proxy) view returns (address)",
-      "function getProxyImplementation(address proxy) view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address proxy, address implementation)",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
     "0xA033Ff09f2da45f0e9ae495f525363722Df42b2a": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2039,10 +2151,31 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc": [
-      "constructor(address _singleton)"
+    "0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb": [
+      "constructor()",
+      "event DepositERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data)",
+      "event FinalizeWithdrawERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RefundERC20(address indexed token, address indexed recipient, uint256 amount)",
+      "event UpdateTokenMapping(address indexed l1Token, address indexed oldL2Token, address indexed newL2Token)",
+      "function counterpart() view returns (address)",
+      "function depositERC20(address _token, uint256 _amount, uint256 _gasLimit) payable",
+      "function depositERC20(address _token, address _to, uint256 _amount, uint256 _gasLimit) payable",
+      "function depositERC20AndCall(address _token, address _to, uint256 _amount, bytes _data, uint256 _gasLimit) payable",
+      "function finalizeWithdrawERC20(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _data) payable",
+      "function getL2ERC20Address(address _l1Token) view returns (address)",
+      "function initialize(address _counterpart, address _router, address _messenger)",
+      "function messenger() view returns (address)",
+      "function onDropMessage(bytes _message) payable",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function router() view returns (address)",
+      "function tokenMapping(address) view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function updateTokenMapping(address _l1Token, address _l2Token)"
     ],
-    "0xC0896ab1A8cae8c2C1d27d011eb955Cca955580d": [
+    "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc": [
       "constructor(address _singleton)"
     ],
     "0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69": [
@@ -2059,17 +2192,6 @@
       "function plonkVerifier() view returns (address)",
       "function verifierDigest() view returns (bytes32)",
       "function verify(bytes bundleProof, bytes publicInput) view"
-    ],
-    "0xCC2C53556Bc75217cf698721b29071d6f12628A9": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function changeProxyAdmin(address proxy, address newAdmin)",
-      "function getProxyAdmin(address proxy) view returns (address)",
-      "function getProxyImplementation(address proxy) view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address proxy, address implementation)",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
     "0xd1841c5756428812233eEA78afC17cb2D3e392bb": [
       "constructor(address _counterpart, address _messenger)",
@@ -2319,5 +2441,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

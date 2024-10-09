@@ -16,9 +16,7 @@ export const polygonmiden: Layer2 = upcomingL2({
     links: {
       websites: ['https://polygon.technology/polygon-miden'],
       apps: [],
-      documentation: [
-        'https://0xpolygonmiden.github.io/miden-base/introduction.html',
-      ],
+      documentation: ['https://docs.polygon.technology/miden/'],
       explorers: [],
       repositories: ['https://github.com/0xPolygonMiden'],
       socialMedia: [

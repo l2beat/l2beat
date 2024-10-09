@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20675893,
   "configHash": "0x0613299b238669d4cc9292ebd752109a776c3ee0fac1ca9e94e631f54a5497d8",
-  "version": 14,
   "contracts": [
     {
       "name": "MainchainBridgeManager",
@@ -26,6 +25,20 @@
       "values": {
         "$admin": "0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e",
         "$implementation": "0x0ac26945032143f6196d4bb5Ae03592BfAf822FD",
+        "$pastUpgrades": [
+          [
+            "2024-07-31T08:25:35.000Z",
+            ["0x0ac26945032143f6196d4bb5Ae03592BfAf822FD"]
+          ],
+          [
+            "2024-08-06T09:05:11.000Z",
+            ["0x3BA040BC32352E2dC21f9A85C5573E84696a74Dd"]
+          ],
+          [
+            "2024-08-06T09:14:59.000Z",
+            ["0x0ac26945032143f6196d4bb5Ae03592BfAf822FD"]
+          ]
+        ],
         "$upgradeCount": 3,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -167,6 +180,32 @@
         "_MAX_PERCENTAGE": 1000000,
         "$admin": "0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB",
         "$implementation": "0xD6c4986bbe09f2dDb262B4611b0BA06891be605e",
+        "$pastUpgrades": [
+          [
+            "2022-06-22T07:40:30.000Z",
+            ["0x2DBA725f0a3485382a7F125a31cBF4361539aF73"]
+          ],
+          [
+            "2022-06-28T11:16:22.000Z",
+            ["0x71356E37e0368Bd10bFDbF41dC052fE5FA24cD05"]
+          ],
+          [
+            "2023-04-12T07:14:23.000Z",
+            ["0xa67BA5315AF4961Eb937158032AF9300C657dAcD"]
+          ],
+          [
+            "2023-10-24T03:52:23.000Z",
+            ["0x72E28A9009Ad12dE019BFF418CD210D4bbc3D403"]
+          ],
+          [
+            "2024-08-06T08:48:47.000Z",
+            ["0xfc274EC92bBb1A1472884558d1B5CaaC6F8220Ee"]
+          ],
+          [
+            "2024-08-30T03:41:35.000Z",
+            ["0xD6c4986bbe09f2dDb262B4611b0BA06891be605e"]
+          ]
+        ],
         "$upgradeCount": 6,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -657,5 +696,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

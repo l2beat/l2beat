@@ -1,6 +1,5 @@
 'use client'
-import { debounce } from 'lodash'
-import React, { useEffect, useMemo, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { glossarySectionTreshold } from '~/components/nav/consts'
 import { type CollectionEntry } from '~/content/get-collection'
 import { useCurrentSection } from '~/hooks/use-current-section'
@@ -16,13 +15,9 @@ export function GlossarySideNav(props: Props) {
   const overflowContainer = useRef<HTMLUListElement>(null)
   const currentSection = useCurrentSection(glossarySectionTreshold)
 
-  const scrollToItem = useMemo(
-    () =>
-      debounce(
-        (item: HTMLLIElement, overflowingContainer: HTMLElement) =>
-          scrollVerticallyToItem({ item, overflowingContainer }),
-        200,
-      ),
+  const scrollToItem = useCallback(
+    (item: HTMLLIElement, overflowingContainer: HTMLElement) =>
+      scrollVerticallyToItem({ item, overflowingContainer }),
     [],
   )
 

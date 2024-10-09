@@ -1053,6 +1053,20 @@
       "supply": "zero"
     },
     {
+      "name": "Cronos zkEVM CRO",
+      "coingeckoId": "cronos-zkevm-cro",
+      "address": "0x28Ff2E4dD1B58efEB0fC138602A28D5aE81e44e2",
+      "symbol": "zkCRO",
+      "decimals": 18,
+      "deploymentTimestamp": 1718769911,
+      "coingeckoListingTimestamp": 1724803200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39734/large/Screenshot_2024-08-16_at_10.42.41%E2%80%AFAM.png?1723776225",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Curve DAO Token",
       "coingeckoId": "curve-dao-token",
       "address": "0xD533a949740bb3306d119CC777fa900bA034cd52",
@@ -1214,12 +1228,12 @@
       "decimals": 18,
       "deploymentTimestamp": 1615354524,
       "coingeckoListingTimestamp": 1625875200,
+      "untilTimestamp": 1725840000,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/16414/large/rhinologo.png?1697736807",
       "chainId": 1,
       "source": "canonical",
-      "supply": "zero",
-      "untilTimestamp": 1725840000
+      "supply": "zero"
     },
     {
       "name": "DEXTF Token",
@@ -1362,6 +1376,20 @@
       "supply": "zero"
     },
     {
+      "name": "Eigen",
+      "coingeckoId": "eigenlayer",
+      "address": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+      "symbol": "EIGEN",
+      "decimals": 18,
+      "deploymentTimestamp": 1697499563,
+      "coingeckoListingTimestamp": 1727740800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37441/large/eigen.jpg?1728023974",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Ekubo Protocol",
       "coingeckoId": "ekubo-protocol",
       "address": "0x04C46E830Bb56ce22735d5d8Fc9CB90309317d0f",
@@ -1468,6 +1496,20 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "ether.fi BTC",
+      "coingeckoId": "ether-fi-staked-btc",
+      "address": "0x657e8C867D8B37dCC18fA4Caead9C45EB088C642",
+      "symbol": "eBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1723597307,
+      "coingeckoListingTimestamp": 1727654400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50411/large/eBTC.png?1727664788",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -3671,6 +3713,20 @@
       "supply": "zero"
     },
     {
+      "name": "Sipher Token",
+      "coingeckoId": "sipher",
+      "address": "0x9F52c8ecbEe10e00D9faaAc5Ee9Ba0fF6550F511",
+      "symbol": "SIPHER",
+      "decimals": 18,
+      "deploymentTimestamp": 1638713744,
+      "coingeckoListingTimestamp": 1639008000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/21070/large/SipherToken.png?1696520453",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "SKALE",
       "coingeckoId": "skale",
       "address": "0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7",
@@ -4352,6 +4408,20 @@
       "coingeckoListingTimestamp": 1702512000,
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/33613/large/3466ef_3c088c66c7d941e8856339d0bddf33cc_mv2.png?1702514458",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Veno yield bearing ETH",
+      "coingeckoId": "veno-eth",
+      "address": "0x76bf2D1e6dFda645c0c17440B17Eccc181dfC351",
+      "symbol": "ybETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1721279435,
+      "coingeckoListingTimestamp": 1724198400,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39776/large/Screenshot_2024-08-19_at_5.07.51%E2%80%AFPM.png?1724058891",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -6363,6 +6433,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "Catizen",
+      "coingeckoId": "catizen",
+      "address": "0x1Bdd8878252DaddD3Af2ba30628813271294eDc0",
+      "symbol": "CATI",
+      "decimals": 18,
+      "deploymentTimestamp": 1725608100,
+      "coingeckoListingTimestamp": 1726617600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50236/large/cati.png?1726638258",
+      "chainId": 5000,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "Ether",
@@ -8832,6 +8916,7 @@
       "chainId": 167000,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
@@ -8839,8 +8924,7 @@
             "slug": "stargatev2"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     },
     {
       "name": "Tether USD",
@@ -8855,6 +8939,7 @@
       "chainId": 167000,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
@@ -8862,8 +8947,7 @@
             "slug": "stargatev2"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     },
     {
       "name": "Ether",
@@ -9092,6 +9176,7 @@
       "chainId": 1380012617,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
@@ -9099,8 +9184,7 @@
             "slug": "stargatev2"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     },
     {
       "name": "Tether USD",
@@ -9115,6 +9199,7 @@
       "chainId": 1380012617,
       "source": "external",
       "supply": "totalSupply",
+      "excludeFromTotal": true,
       "bridgedUsing": {
         "bridges": [
           {
@@ -9122,8 +9207,7 @@
             "slug": "stargatev2"
           }
         ]
-      },
-      "excludeFromTotal": true
+      }
     }
   ]
 }

@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20640712,
   "configHash": "0xa8586a9cc9764821729519efbbdaac1754212cb07e84c4c373f9caedbd6b83d9",
-  "version": 14,
   "contracts": [
     {
       "name": "MainnetSpokeConnector",
@@ -549,6 +548,8 @@
           "0x44e799f47A5599f5c9158d1F2457E30A6D77aDb4",
           "0x3Bcf4185443A339517aD4e580067f178d1B68E1D"
         ],
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
         "aavePool": "0x0000000000000000000000000000000000000000",
         "aavePortalFee": 0,
         "delay": 604800,
@@ -2652,5 +2653,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

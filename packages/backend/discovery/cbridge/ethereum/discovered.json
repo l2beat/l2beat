@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20512741,
   "configHash": "0x5eadf9aa619337518b920086c1bf5de662fa19fa8d3cdd00051e2b9d178534f5",
-  "version": 14,
   "contracts": [
     {
       "name": "PeggedTokenBridge",
@@ -33,6 +32,16 @@
       "values": {
         "$admin": "0x520d812604E7b2ce71819FDBFE9aC40E56327F8f",
         "$implementation": "0x479ec366ae4EC016cE25B918BdEa8f78d4fa5dd8",
+        "$pastUpgrades": [
+          [
+            "2022-11-16T07:56:23.000Z",
+            ["0xbc7B0223Dd16cbc679c0D04bA3F4530D76DFbA87"]
+          ],
+          [
+            "2022-11-22T04:01:35.000Z",
+            ["0x479ec366ae4EC016cE25B918BdEa8f78d4fa5dd8"]
+          ]
+        ],
         "$upgradeCount": 2,
         "feeBase": 15000000000000,
         "feePerByte": 150000000000,
@@ -214,6 +223,12 @@
       "values": {
         "$admin": "0x8E339115b295DeD49880eA62C1F06d1dbec3496b",
         "$implementation": "0xaE41e6a597f4c65646e94E330D8BAd218Bec7896",
+        "$pastUpgrades": [
+          [
+            "2023-08-07T05:02:59.000Z",
+            ["0xaE41e6a597f4c65646e94E330D8BAd218Bec7896"]
+          ]
+        ],
         "$upgradeCount": 1,
         "governors": [
           "0xED9fdF5B16F9F254bec5Ad389B80B48225186655",
@@ -826,5 +841,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

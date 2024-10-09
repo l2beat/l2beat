@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x7048de80f9b93c0d62c041f60ee0e0e75ba6ff3e
+
+# Diff at Tue, 01 Oct 2024 11:13:38 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 122295641
+- current block number: 122295641
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 122295641 (main branch discovery), not current.
+
+```diff
+    contract  (0x81E792e5a9003CC1C8BF5569A00f34b65d75b017) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2022-11-21T22:15:25.000Z",["0xc1b85974F7c2F0Ccb01d763F4a34BFB41a33D612"]],["2023-02-03T23:00:44.000Z",["0x00e7306e591c04E72867644dF141e250aCAF175B"]],["2023-04-23T04:32:58.000Z",["0xFc358F532d474b3f47c98f2Af5654a813DB1a1cc"]],["2023-06-26T23:09:03.000Z",["0x8042425b53DC6a475cb4e62778A5E17F55f2188d"]],["2023-09-20T19:28:11.000Z",["0x626058B401DF808fE231566B3D2DE1A64A6bf764"]],["2023-09-22T14:08:13.000Z",["0x9A4DF6D81309c8a583C28eD8e449E320043e7A97"]]]
+    }
+```
+
+```diff
+    contract  (0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-02-08T19:48:35.000Z",["0x154c7B3Eee18ABCFaede98fae00e58e7737d96dE"]],["2023-04-27T02:32:07.000Z",["0x81855cd82374C3700ee579Ad1fF0760ae039a19B"]]]
+    }
+```
+
 Generated with discovered.json: 0x7f7ce287f0d915468daeb81313f2ab879dd1669c
 
 # Diff at Fri, 30 Aug 2024 08:07:20 GMT:

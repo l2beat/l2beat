@@ -1,9 +1,8 @@
 {
   "name": "kinto",
   "chain": "ethereum",
-  "blockNumber": 20756734,
+  "blockNumber": 20842784,
   "configHash": "0xd59a5f6a719f09c146de69281095f5a958fa0fc010b530866672fc5a5495c299",
-  "version": 14,
   "contracts": [
     {
       "name": "Bridger",
@@ -19,8 +18,54 @@
       "sinceTimestamp": 1710248135,
       "values": {
         "$admin": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
-        "$implementation": "0x47e28e296BE2EE69b4579d5eecbABA38217a2b03",
-        "$upgradeCount": 10,
+        "$implementation": "0x21D3921B50617BDef223207118950B0b577e4007",
+        "$pastUpgrades": [
+          [
+            "2024-03-12T12:55:35.000Z",
+            ["0x925eC66892261203536a4aede9CA8e8D0feeA4ad"]
+          ],
+          [
+            "2024-03-13T12:31:35.000Z",
+            ["0x31a20f10c846BD3Ed41c6c05c340bFD7A57ECADA"]
+          ],
+          [
+            "2024-03-15T01:29:11.000Z",
+            ["0xE3641CbDAc5477C350c8FeAAF52Ddc021451A2aA"]
+          ],
+          [
+            "2024-03-26T06:51:23.000Z",
+            ["0x989b9f407687DA3050C957CfeF5E6c18BeE7cb9F"]
+          ],
+          [
+            "2024-05-21T00:55:23.000Z",
+            ["0x3636617973f25a512676cb06876f0C885568664a"]
+          ],
+          [
+            "2024-05-22T00:09:11.000Z",
+            ["0x0210AE8703F8c9A88D7050825bd8001E359CB4BA"]
+          ],
+          [
+            "2024-05-22T02:17:11.000Z",
+            ["0x270f25127D7C48c956459e113aa81615CC30AeE2"]
+          ],
+          [
+            "2024-06-22T21:24:59.000Z",
+            ["0xEEe82E92bA40A694409B4BDa3D7426188c61163e"]
+          ],
+          [
+            "2024-07-22T20:12:59.000Z",
+            ["0x23559eB4Ad22c31940a929958B104821126F35b7"]
+          ],
+          [
+            "2024-08-06T21:07:23.000Z",
+            ["0x47e28e296BE2EE69b4579d5eecbABA38217a2b03"]
+          ],
+          [
+            "2024-09-26T17:41:47.000Z",
+            ["0x21D3921B50617BDef223207118950B0b577e4007"]
+          ]
+        ],
+        "$upgradeCount": 11,
         "angleSwapper": "0xD253b62108d1831aEd298Fc2434A5A8e4E418053",
         "DAI": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "ETH": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
@@ -30,7 +75,7 @@
         "senderAccount": "0x89A01e3B2C3A16c3960EADc2ceFcCf2D3AA3F82e",
         "SOLV_BTC": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
         "SOLV_BTC_POOL_ID": "0x488def4a346b409d5d57985a160cd216d29d4f555e1b716df4e04e2374d2d9f6",
-        "SOLV_SFT_WRAP_ROUTER": "0x6Ea88D4D0c4bC06F6A51f427eF295c93e10D0b36",
+        "SOLV_SFT_WRAP_ROUTER": "0xe9eD7530427Cb41A56C9e004e00e074cCc168C44",
         "stUSD": "0x0022228a2cc5E7eF0274A7Baa600d44da5aB5776",
         "sUSDe": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
         "swapRouter": "0x0000000000001fF3684f28c67538d4D072C22734",
@@ -38,7 +83,6 @@
         "USDC": "0x0000000000000000000000000000000000000000",
         "USDe": "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
         "USDM": "0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C",
-        "usdmCurvePool": "0x0000000000000000000000000000000000000000",
         "WBTC": "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
         "WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "wstETH": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
@@ -120,6 +164,16 @@
           "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A",
           "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
         ],
+        "$pastUpgrades": [
+          [
+            "2023-12-15T02:37:35.000Z",
+            [
+              "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A",
+              "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
+            ]
+          ]
+        ],
+        "$upgradeCount": 1,
         "baseStake": "100000000000000000",
         "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
         "chainId": 7887,
@@ -128,12 +182,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1956,
+        "firstUnresolvedNode": 2004,
         "inbox": "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
         "isERC20Enabled": false,
         "lastStakeBlock": 18788889,
-        "latestConfirmed": 1955,
-        "latestNodeCreated": 1981,
+        "latestConfirmed": 2003,
+        "latestNodeCreated": 2029,
         "loserStakeEscrow": "0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5",
         "minimumAssertionPeriod": 75,
         "outbox": "0x655761AD5FC251F414D6993A73184B0669F278c8",
@@ -191,7 +245,8 @@
             "0x68e4fe5023f792d4ef584796c84d710303a5e12ea02d6e37e2b5e9c4332507c4": "ArbOS v11.1 wasmModuleRoot",
             "0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4": "ArbOS v20 wasmModuleRoot",
             "0xb0de9cb89e4d944ae6023a3b62276e54804c242fd8c4c2d8e6cc4450f5fa8b1b": "ArbOS v30 wasmModuleRoot",
-            "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot"
+            "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
+            "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot"
           }
         }
       ]
@@ -211,6 +266,12 @@
       "values": {
         "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
         "$implementation": "0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494",
+        "$pastUpgrades": [
+          [
+            "2023-12-15T02:37:35.000Z",
+            ["0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"]
+          ]
+        ],
         "$upgradeCount": 1,
         "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11"
@@ -237,6 +298,12 @@
       "values": {
         "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
         "$implementation": "0x6c21303F5986180B1394d2C89f3e883890E2867b",
+        "$pastUpgrades": [
+          [
+            "2023-12-15T02:37:35.000Z",
+            ["0x6c21303F5986180B1394d2C89f3e883890E2867b"]
+          ]
+        ],
         "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -273,6 +340,16 @@
       "values": {
         "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
         "$implementation": "0x122B88885F1f365B69CAd38B167B039fEd0Ba096",
+        "$pastUpgrades": [
+          [
+            "2023-12-15T02:37:35.000Z",
+            ["0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754"]
+          ],
+          [
+            "2024-06-27T16:39:47.000Z",
+            ["0x122B88885F1f365B69CAd38B167B039fEd0Ba096"]
+          ]
+        ],
         "$upgradeCount": 2,
         "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
         "osp": "0x8B02a8B985a81f96e49B8289FF60847FC6020e51",
@@ -297,6 +374,12 @@
       "values": {
         "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
         "$implementation": "0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC",
+        "$pastUpgrades": [
+          [
+            "2023-12-15T02:37:35.000Z",
+            ["0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC"]
+          ]
+        ],
         "$upgradeCount": 1,
         "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
         "l2ToL1BatchNum": 0,
@@ -385,6 +468,12 @@
       "values": {
         "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
         "$implementation": "0xf43bce5D32742FFC862eA182b0b5544CbDBB0F02",
+        "$pastUpgrades": [
+          [
+            "2023-12-15T03:06:35.000Z",
+            ["0xf43bce5D32742FFC862eA182b0b5544CbDBB0F02"]
+          ]
+        ],
         "$upgradeCount": 1,
         "cloneableProxyHash": "0xce61ab08155a3a368bfd165ba9e1151d023608a155fce1ec0d87bba89a59cb4d",
         "counterpartGateway": "0x87799989341A07F495287B1433eea98398FD73aA",
@@ -414,6 +503,12 @@
       "values": {
         "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
         "$implementation": "0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F",
+        "$pastUpgrades": [
+          [
+            "2023-12-15T02:37:35.000Z",
+            ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]
+          ]
+        ],
         "$upgradeCount": 1,
         "activeOutbox": "0x0000000000000000000000000000000000000000",
         "allowedDelayedInboxList": [
@@ -421,11 +516,11 @@
           "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"
         ],
         "allowedOutboxList": ["0x655761AD5FC251F414D6993A73184B0669F278c8"],
-        "delayedMessageCount": 3877,
+        "delayedMessageCount": 3950,
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerInbox": "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
-        "sequencerMessageCount": 3200,
-        "sequencerReportedSubMessageCount": 223760
+        "sequencerMessageCount": 3272,
+        "sequencerReportedSubMessageCount": 227264
       },
       "derivedName": "Bridge"
     },
@@ -472,6 +567,20 @@
       "values": {
         "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
         "$implementation": "0xc235c5194f2404234fc7C99b4dd15289BB735Cf5",
+        "$pastUpgrades": [
+          [
+            "2023-12-15T02:37:35.000Z",
+            ["0x1162084C3C6575121146582Db5BE43189e8CEe6b"]
+          ],
+          [
+            "2024-05-03T15:22:59.000Z",
+            ["0x518465d9f81bDE1e573f9bD2a6761F8ADaAFe73e"]
+          ],
+          [
+            "2024-05-08T00:06:47.000Z",
+            ["0xc235c5194f2404234fc7C99b4dd15289BB735Cf5"]
+          ]
+        ],
         "$upgradeCount": 3,
         "allowListEnabled": false,
         "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
@@ -496,6 +605,12 @@
       "values": {
         "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
         "$implementation": "0x6525137BfF366fbc0A89E3e5A4d244B5A0090a6D",
+        "$pastUpgrades": [
+          [
+            "2023-12-15T03:06:35.000Z",
+            ["0x6525137BfF366fbc0A89E3e5A4d244B5A0090a6D"]
+          ]
+        ],
         "$upgradeCount": 1,
         "counterpartGateway": "0x340487b92808B84c2bd97C87B590EE81267E04a7",
         "defaultGateway": "0x7870D5398DB488c669B406fBE57b8d05b6A35e42",
@@ -539,7 +654,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 171,
+        "nonce": 176,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -560,8 +675,18 @@
       "values": {
         "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
         "$implementation": "0x57411f5BA52531e8199066bC8EC650470A744883",
+        "$pastUpgrades": [
+          [
+            "2023-12-15T02:37:35.000Z",
+            ["0x873484Ba63353C8b71210ce123B465512d408B27"]
+          ],
+          [
+            "2024-06-27T16:39:47.000Z",
+            ["0x57411f5BA52531e8199066bC8EC650470A744883"]
+          ]
+        ],
         "$upgradeCount": 2,
-        "batchCount": 3200,
+        "batchCount": 3272,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xe27f3f6db6824def1738b2aACe2672aC59046a39"],
         "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
@@ -585,7 +710,7 @@
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 3876,
+        "totalDelayedMessagesRead": 3949,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -795,6 +920,66 @@
       "function submitBatchSpendingReport(address sender, bytes32 messageDataHash) returns (uint256)",
       "function updateRollupAddress(address _rollup)"
     ],
+    "0x21D3921B50617BDef223207118950B0b577e4007": [
+      "constructor(address exchange, address usdc, address weth, address dai, address usde, address sUsde, address wstEth)",
+      "error BalanceTooLow(uint256 amount, uint256 balance)",
+      "error DepositBySigResult(uint256 amountOut)",
+      "error FailedToStakeEth()",
+      "error InvalidAmount(uint256 amount)",
+      "error InvalidNonce()",
+      "error InvalidSigner(address signer)",
+      "error InvalidVault(address vault)",
+      "error OnlyOwner()",
+      "error SignatureExpired()",
+      "error SlippageError(uint256 boughtAmount, uint256 minReceive)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Deposit(address indexed from, address indexed wallet, address indexed asset, uint256 amount, address assetBought, uint256 amountBought)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function DAI() view returns (address)",
+      "function ETH() view returns (address)",
+      "function PERMIT2() view returns (address)",
+      "function SOLV_BTC() view returns (address)",
+      "function SOLV_BTC_POOL_ID() view returns (bytes32)",
+      "function SOLV_SFT_WRAP_ROUTER() view returns (address)",
+      "function USDA() view returns (address)",
+      "function USDC() view returns (address)",
+      "function USDM() view returns (address)",
+      "function USDe() view returns (address)",
+      "function WBTC() view returns (address)",
+      "function WETH() view returns (address)",
+      "function __depositCount() view returns (uint256)",
+      "function angleSwapper() view returns (address)",
+      "function bridgeVaults(address) view returns (bool)",
+      "function depositBySig(bytes permitSig, tuple(address kintoWallet, address signer, address inputAsset, address finalAsset, uint256 amount, uint256 minReceive, uint256 nonce, uint256 expiresAt, bytes signature) depositData, bytes swapCallData, tuple(address vault, uint256 gasFee, uint256 msgGasLimit, address connector, bytes execPayload, bytes options) bridgeData) returns (uint256)",
+      "function depositERC20(address inputAsset, uint256 amount, address kintoWallet, address finalAsset, uint256 minReceive, bytes swapCallData, tuple(address vault, uint256 gasFee, uint256 msgGasLimit, address connector, bytes execPayload, bytes options) bridgeData) returns (uint256)",
+      "function depositETH(uint256 amount, address kintoWallet, address finalAsset, uint256 minReceive, bytes swapCallData, tuple(address vault, uint256 gasFee, uint256 msgGasLimit, address connector, bytes execPayload, bytes options) bridgeData) payable returns (uint256)",
+      "function depositPermit2(tuple(tuple(address token, uint160 amount, uint48 expiration, uint48 nonce) details, address spender, uint256 sigDeadline) permitSingle, bytes permit2Signature, tuple(address kintoWallet, address signer, address inputAsset, address finalAsset, uint256 amount, uint256 minReceive, uint256 nonce, uint256 expiresAt, bytes signature) depositData, bytes swapCallData, tuple(address vault, uint256 gasFee, uint256 msgGasLimit, address connector, bytes execPayload, bytes options) bridgeData) returns (uint256)",
+      "function domainSeparator() view returns (bytes32)",
+      "function initialize(address sender)",
+      "function nonces(address) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function sUSDe() view returns (address)",
+      "function senderAccount() view returns (address)",
+      "function setBridgeVault(address vault, bool flag)",
+      "function setSenderAccount(address sender)",
+      "function stUSD() view returns (address)",
+      "function swapRouter() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function wUSDM() view returns (address)",
+      "function wstETH() view returns (address)"
+    ],
     "0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC": [
       "error AlreadyInit()",
       "error AlreadySpent(uint256 index)",
@@ -844,66 +1029,6 @@
       "function requireRejectable(address rollup) view",
       "function stakedNodes(address rollup, address staker) view returns (uint64[])",
       "function timedOutChallenges(address rollup, uint64 startIndex, uint64 max) view returns (uint64[], bool hasMore)"
-    ],
-    "0x47e28e296BE2EE69b4579d5eecbABA38217a2b03": [
-      "constructor(address exchange, address usdmCurveAmm, address usdc, address weth, address dai, address usde, address sUsde, address wstEth)",
-      "error DepositBySigResult(uint256 amountOut)",
-      "error FailedToStakeEth()",
-      "error InvalidAmount(uint256 amount)",
-      "error InvalidNonce()",
-      "error InvalidSigner(address signer)",
-      "error InvalidVault(address vault)",
-      "error OnlyOwner()",
-      "error SignatureExpired()",
-      "error SlippageError(uint256 boughtAmount, uint256 minReceive)",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Deposit(address indexed from, address indexed wallet, address indexed asset, uint256 amount, address assetBought, uint256 amountBought)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event Unpaused(address account)",
-      "event Upgraded(address indexed implementation)",
-      "function DAI() view returns (address)",
-      "function ETH() view returns (address)",
-      "function PERMIT2() view returns (address)",
-      "function SOLV_BTC() view returns (address)",
-      "function SOLV_BTC_POOL_ID() view returns (bytes32)",
-      "function SOLV_SFT_WRAP_ROUTER() view returns (address)",
-      "function USDA() view returns (address)",
-      "function USDC() view returns (address)",
-      "function USDM() view returns (address)",
-      "function USDe() view returns (address)",
-      "function WBTC() view returns (address)",
-      "function WETH() view returns (address)",
-      "function __depositCount() view returns (uint256)",
-      "function angleSwapper() view returns (address)",
-      "function bridgeVaults(address) view returns (bool)",
-      "function depositBySig(bytes permitSig, tuple(address kintoWallet, address signer, address inputAsset, address finalAsset, uint256 amount, uint256 minReceive, uint256 nonce, uint256 expiresAt, bytes signature) depositData, bytes swapCallData, tuple(address vault, uint256 gasFee, uint256 msgGasLimit, address connector, bytes execPayload, bytes options) bridgeData) payable returns (uint256)",
-      "function depositERC20(address inputAsset, uint256 amount, address kintoWallet, address finalAsset, uint256 minReceive, bytes swapCallData, tuple(address vault, uint256 gasFee, uint256 msgGasLimit, address connector, bytes execPayload, bytes options) bridgeData) payable returns (uint256)",
-      "function depositETH(uint256 amount, address kintoWallet, address finalAsset, uint256 minReceive, bytes swapCallData, tuple(address vault, uint256 gasFee, uint256 msgGasLimit, address connector, bytes execPayload, bytes options) bridgeData) payable returns (uint256)",
-      "function depositPermit2(tuple(tuple(address token, uint160 amount, uint48 expiration, uint48 nonce) details, address spender, uint256 sigDeadline) permitSingle, bytes permit2Signature, tuple(address kintoWallet, address signer, address inputAsset, address finalAsset, uint256 amount, uint256 minReceive, uint256 nonce, uint256 expiresAt, bytes signature) depositData, bytes swapCallData, tuple(address vault, uint256 gasFee, uint256 msgGasLimit, address connector, bytes execPayload, bytes options) bridgeData) payable returns (uint256)",
-      "function domainSeparator() view returns (bytes32)",
-      "function initialize(address sender)",
-      "function nonces(address) view returns (uint256)",
-      "function owner() view returns (address)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function renounceOwnership()",
-      "function sUSDe() view returns (address)",
-      "function senderAccount() view returns (address)",
-      "function setBridgeVault(address vault, bool flag)",
-      "function setSenderAccount(address sender)",
-      "function stUSD() view returns (address)",
-      "function swapRouter() view returns (address)",
-      "function transferOwnership(address newOwner)",
-      "function unpause()",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable",
-      "function usdmCurvePool() view returns (address)",
-      "function wUSDM() view returns (address)",
-      "function wstETH() view returns (address)"
     ],
     "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1384,5 +1509,5 @@
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "orbitstack/RollupProxy": "0xdd22b1785ae5df34e829d0b04131559e112131325c3f223825d0fe61e675fb1a"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

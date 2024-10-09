@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20675899,
   "configHash": "0x545581edf4a871d69dbd50020ae765821e0885a5519c3ba149b700e1bfbbc8b3",
-  "version": 14,
   "contracts": [
     {
       "name": "PauserRegistry",
@@ -47,6 +46,16 @@
       "values": {
         "$admin": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
         "$implementation": "0x64F4244eEA17a361bb919A28F614C3ad1aC565ad",
+        "$pastUpgrades": [
+          [
+            "2023-06-28T06:00:47.000Z",
+            ["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]
+          ],
+          [
+            "2023-06-28T06:05:35.000Z",
+            ["0x64F4244eEA17a361bb919A28F614C3ad1aC565ad"]
+          ]
+        ],
         "$upgradeCount": 2,
         "delegation": "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
         "forceDeregister": "0x0000000000000000000000000000000000000000",
@@ -92,6 +101,16 @@
       "values": {
         "$admin": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
         "$implementation": "0x7C4813A9AF2FEA4ca765a26b05d128926E94e72E",
+        "$pastUpgrades": [
+          [
+            "2023-06-28T05:42:35.000Z",
+            ["0xa288E750401E6d15A62e3400C87d3ee331650a0C"]
+          ],
+          [
+            "2023-06-28T05:46:11.000Z",
+            ["0x7C4813A9AF2FEA4ca765a26b05d128926E94e72E"]
+          ]
+        ],
         "$upgradeCount": 2,
         "delegation": "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
         "DEPOSIT_TYPEHASH": "0x0a564d4cfe5cb0d4ee082aab2ca54b8c48e129485a8f7c77766ab5ef0c3566f1",
@@ -223,6 +242,12 @@
       "values": {
         "$admin": "0xca35F8338054739D138884685e08b39EE2217794",
         "$implementation": "0xD1230865641561653406906Fb08873F011c19080",
+        "$pastUpgrades": [
+          [
+            "2024-03-15T08:19:35.000Z",
+            ["0xD1230865641561653406906Fb08873F011c19080"]
+          ]
+        ],
         "$upgradeCount": 1,
         "CHALLENGER": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
         "deletedOutputs": [],
@@ -256,6 +281,12 @@
       "values": {
         "$admin": "0x0cac2B1a172ac24012621101634DD5ABD6399ADd",
         "$implementation": "0xCd368c1d80120b0Dd92447c87eB570154f8e685c",
+        "$pastUpgrades": [
+          [
+            "2023-06-20T06:16:35.000Z",
+            ["0xCd368c1d80120b0Dd92447c87eB570154f8e685c"]
+          ]
+        ],
         "$upgradeCount": 1,
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x4657b7bac12b34fb80f1848c560d6e440dfccdffe8b83f2dc958a534c89b0622",
@@ -291,6 +322,12 @@
       "values": {
         "$admin": "0xca35F8338054739D138884685e08b39EE2217794",
         "$implementation": "0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3",
+        "$pastUpgrades": [
+          [
+            "2024-03-15T01:47:47.000Z",
+            ["0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3"]
+          ]
+        ],
         "$upgradeCount": 1,
         "baseFee": 20000000,
         "batcherHash": "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749",
@@ -450,6 +487,12 @@
       "values": {
         "$admin": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
         "$implementation": "0xDF401d4229Fc6cA52238f7e55A04FA8EBc24C55a",
+        "$pastUpgrades": [
+          [
+            "2023-07-02T07:18:23.000Z",
+            ["0xDF401d4229Fc6cA52238f7e55A04FA8EBc24C55a"]
+          ]
+        ],
         "$upgradeCount": 1,
         "BLOCK_STALE_MEASURE": 500,
         "dataManageAddress": "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
@@ -483,6 +526,16 @@
       "values": {
         "$admin": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
         "$implementation": "0xAB42127980a3bff124E6465e097a5fC97228827e",
+        "$pastUpgrades": [
+          [
+            "2023-06-28T05:59:35.000Z",
+            ["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]
+          ],
+          [
+            "2023-06-28T06:04:23.000Z",
+            ["0xAB42127980a3bff124E6465e097a5fC97228827e"]
+          ]
+        ],
         "$upgradeCount": 2,
         "adversaryThresholdBasisPoints": 4000,
         "BIP_MULTIPLIER": 10000,
@@ -544,6 +597,21 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xb8DE82551fA4BA3bE4B3d9097763EDBeED541308",
+        "$pastUpgrades": [
+          [
+            "2023-06-28T13:13:59.000Z",
+            ["0x4692363048d0F32a2dE7816860D48fff0c61B24B"]
+          ],
+          [
+            "2024-03-15T01:47:47.000Z",
+            ["0x0000000000000000000000000000000000000000"]
+          ],
+          [
+            "2024-03-15T08:19:35.000Z",
+            ["0xb8DE82551fA4BA3bE4B3d9097763EDBeED541308"]
+          ]
+        ],
+        "$upgradeCount": 3,
         "HASH_MESSAGE_BASE_GAS": 800,
         "HASH_MESSAGE_GAS_PER_BYTE": 2,
         "L1_MNT_ADDRESS": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
@@ -652,6 +720,16 @@
       "values": {
         "$admin": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
         "$implementation": "0x18Dd3cBE484f955217165FEaC6fe928D04a56a72",
+        "$pastUpgrades": [
+          [
+            "2023-06-28T05:59:59.000Z",
+            ["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]
+          ],
+          [
+            "2023-06-28T06:04:47.000Z",
+            ["0x18Dd3cBE484f955217165FEaC6fe928D04a56a72"]
+          ]
+        ],
         "$upgradeCount": 2,
         "IS_TEST": false,
         "permissionManager": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01"
@@ -678,6 +756,7 @@
       "values": {
         "$admin": "0xca35F8338054739D138884685e08b39EE2217794",
         "$implementation": "0xb4133552BA49dFb60DA6eb5cA0102d0f94ce071f",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "L1_MNT_ADDRESS": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
@@ -703,6 +782,12 @@
       "values": {
         "$admin": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
         "$implementation": "0x9FEcF38689349a5CFf97526610CdB27618edc6b9",
+        "$pastUpgrades": [
+          [
+            "2023-06-28T05:48:11.000Z",
+            ["0x9FEcF38689349a5CFf97526610CdB27618edc6b9"]
+          ]
+        ],
         "$upgradeCount": 1,
         "explanation": "Base InvestmentStrategy implementation to inherit from for more complex implementations",
         "investmentManager": "0x23754725a49c0f003C349A6C7869fF8609a7CEfd",
@@ -730,6 +815,16 @@
       "values": {
         "$admin": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
         "$implementation": "0xAb00B934DE01c1b4931047125C2ba5B3d6186b85",
+        "$pastUpgrades": [
+          [
+            "2023-06-28T05:42:59.000Z",
+            ["0xa288E750401E6d15A62e3400C87d3ee331650a0C"]
+          ],
+          [
+            "2023-06-28T05:46:35.000Z",
+            ["0xAb00B934DE01c1b4931047125C2ba5B3d6186b85"]
+          ]
+        ],
         "$upgradeCount": 2,
         "dataStorePermission": [
           "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749",
@@ -774,6 +869,12 @@
       "values": {
         "$admin": "0xca35F8338054739D138884685e08b39EE2217794",
         "$implementation": "0xe1399f54ba2597b4EaDA9E3450c34D393fb131A7",
+        "$pastUpgrades": [
+          [
+            "2024-03-15T08:19:35.000Z",
+            ["0xe1399f54ba2597b4EaDA9E3450c34D393fb131A7"]
+          ]
+        ],
         "$upgradeCount": 1,
         "GUARDIAN": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
         "L1_MNT_ADDRESS": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
@@ -805,6 +906,16 @@
       "values": {
         "$admin": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
         "$implementation": "0x6EE53D3d6e622Ac0296369445AFB3CBBDc57C066",
+        "$pastUpgrades": [
+          [
+            "2023-06-28T06:00:23.000Z",
+            ["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]
+          ],
+          [
+            "2023-06-28T06:05:11.000Z",
+            ["0x6EE53D3d6e622Ac0296369445AFB3CBBDc57C066"]
+          ]
+        ],
         "$upgradeCount": 2,
         "challengeUtils": "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D",
         "dataLayrServiceManager": "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
@@ -858,6 +969,12 @@
       "values": {
         "$admin": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
         "$implementation": "0x9FEcF38689349a5CFf97526610CdB27618edc6b9",
+        "$pastUpgrades": [
+          [
+            "2023-06-28T05:47:23.000Z",
+            ["0x9FEcF38689349a5CFf97526610CdB27618edc6b9"]
+          ]
+        ],
         "$upgradeCount": 1,
         "explanation": "Base InvestmentStrategy implementation to inherit from for more complex implementations",
         "investmentManager": "0x23754725a49c0f003C349A6C7869fF8609a7CEfd",
@@ -885,6 +1002,16 @@
       "values": {
         "$admin": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
         "$implementation": "0xd8d731624d97a66e012E62208cFc921d7033c564",
+        "$pastUpgrades": [
+          [
+            "2023-06-28T05:59:11.000Z",
+            ["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]
+          ],
+          [
+            "2023-06-28T06:03:47.000Z",
+            ["0xd8d731624d97a66e012E62208cFc921d7033c564"]
+          ]
+        ],
         "$upgradeCount": 2,
         "getZeroPolyMerkleRoot": [
           "0xe82cea94884b1b895ea0742840a3b19249a723810fd1b04d8564d675b0a416f1",
@@ -924,6 +1051,16 @@
       "values": {
         "$admin": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
         "$implementation": "0xAdA69A18B30B3B9235AB2748116bB9195e16aDba",
+        "$pastUpgrades": [
+          [
+            "2023-06-28T05:41:47.000Z",
+            ["0xa288E750401E6d15A62e3400C87d3ee331650a0C"]
+          ],
+          [
+            "2023-06-28T05:45:11.000Z",
+            ["0xAdA69A18B30B3B9235AB2748116bB9195e16aDba"]
+          ]
+        ],
         "$upgradeCount": 2,
         "DELEGATION_TYPEHASH": "0xb2a21c2f78b6ef501475a2971550fe4cedb86f0dec990e23909bfb01fd61c54c",
         "DOMAIN_SEPARATOR": "0xbc7bcb096dfed433b8cff98aee0d5bcc22202e4870ee9b36c93c2fb0303b87e6",
@@ -1949,5 +2086,5 @@
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

@@ -1,6 +1,8 @@
 import { createColumnHelper } from '@tanstack/react-table'
+import { TotalCell } from '~/app/(side-nav)/scaling/summary/_components/table/total-cell'
 import { UpcomingBadge } from '~/components/badge/upcoming-badge'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/pizza-rosette-cell'
+import { NumberCell } from '~/components/table/cells/number-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { StageCell } from '~/components/table/cells/stage/stage-cell'
 import {
@@ -10,13 +12,12 @@ import {
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { sortStages } from '~/components/table/sorting/functions/stage-sorting'
 import { EM_DASH } from '~/consts/characters'
-import { formatPercent } from '~/utils/get-percentage-change'
+import { formatNumber } from '~/utils/format-number'
 import { type ScalingSummaryTableRow } from '../../_utils/to-table-rows'
-import { TotalCell } from './total-cell'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 
-export const scalingLayer2sColumns = [
+export const scalingSummaryColumns = [
   ...getCommonProjectColumns(columnHelper),
   columnHelper.accessor('name', {
     cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
@@ -30,8 +31,7 @@ export const scalingLayer2sColumns = [
     ),
     enableSorting: false,
     meta: {
-      cellClassName: 'justify-center',
-      tooltip: 'Risks associated with this project.',
+      headClassName: 'w-0',
     },
   }),
   columnHelper.accessor('category', {
@@ -47,16 +47,7 @@ export const scalingLayer2sColumns = [
     cell: (ctx) => <StageCell stageConfig={ctx.getValue()} />,
     sortingFn: sortStages,
     meta: {
-      tooltip: 'Rollup stage based on its features and maturity.',
       hash: 'stage',
-    },
-  }),
-  columnHelper.accessor('purposes', {
-    header: 'Purpose',
-    cell: (ctx) => ctx.getValue().join(', '),
-    enableSorting: false,
-    meta: {
-      tooltip: 'Functionality supported by this project.',
     },
   }),
   columnHelper.accessor('tvl', {
@@ -93,20 +84,28 @@ export const scalingLayer2sColumns = [
         'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
     },
   }),
-  columnHelper.accessor((e) => e.marketShare, {
-    header: 'Mkt Share',
+  columnHelper.accessor('activity.pastDayTps', {
+    header: 'Past day TPS',
     cell: (ctx) => {
-      const value = ctx.getValue()
-      if (!value) {
+      const data = ctx.row.original.activity
+      if (!data) {
         return EM_DASH
       }
-
-      return formatPercent(value)
+      return (
+        <div className="flex items-center">
+          <NumberCell className="font-bold">
+            {formatNumber(ctx.getValue())}
+          </NumberCell>
+          <NumberCell signed className="ml-1 font-medium">
+            {data.change}
+          </NumberCell>
+        </div>
+      )
     },
     sortUndefined: 'last',
     meta: {
       align: 'right',
-      tooltip: 'Share of the sum of total value locked of all projects.',
+      tooltip: 'Transactions per second averaged over the past day.',
     },
   }),
 ]

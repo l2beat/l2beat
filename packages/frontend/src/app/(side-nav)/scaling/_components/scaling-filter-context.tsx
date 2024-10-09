@@ -105,7 +105,9 @@ export function useScalingFilter() {
           ? entry.stage?.stage === scalingFilters.stage
           : undefined,
         scalingFilters.purpose !== undefined
-          ? entry.purposes.some((purpose) => purpose === scalingFilters.purpose)
+          ? entry.purposes?.some(
+              (purpose) => purpose === scalingFilters.purpose,
+            )
           : undefined,
         scalingFilters.hostChain !== undefined
           ? scalingFilters.hostChain === 'Ethereum'

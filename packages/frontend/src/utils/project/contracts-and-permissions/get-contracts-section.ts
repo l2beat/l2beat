@@ -414,7 +414,7 @@ function isEscrowUnverified(
   contractsVerificationStatuses: ContractsVerificationStatuses,
 ): boolean {
   const chain = escrow.newVersion
-    ? escrow.contract.chain ?? 'ethereum'
+    ? (escrow.contract.chain ?? 'ethereum')
     : 'ethereum'
   return (
     contractsVerificationStatuses[chain]?.[escrow.address.toString()] === false

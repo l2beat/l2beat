@@ -1,9 +1,8 @@
 {
   "name": "xai",
   "chain": "arbitrum",
-  "blockNumber": 245317770,
+  "blockNumber": 257934975,
   "configHash": "0x080307e0f4a47cf961d913101713b8d01c22d29dbbaa58163b576c9fd66006ca",
-  "version": 14,
   "contracts": [
     {
       "name": "GnosisSafeAdminMember",
@@ -98,6 +97,12 @@
       "values": {
         "$admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
         "$implementation": "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1",
+        "$pastUpgrades": [
+          [
+            "2024-01-03T19:16:11.000Z",
+            ["0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"]
+          ]
+        ],
         "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -151,6 +156,12 @@
       "values": {
         "$admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
         "$implementation": "0x302275067251F5FcdB9359Bda735fD8f7A4A54c0",
+        "$pastUpgrades": [
+          [
+            "2024-01-03T19:16:11.000Z",
+            ["0x302275067251F5FcdB9359Bda735fD8f7A4A54c0"]
+          ]
+        ],
         "$upgradeCount": 1,
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
         "l2ToL1BatchNum": 0,
@@ -180,6 +191,12 @@
       "values": {
         "$admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
         "$implementation": "0xd106EC93D2c1adaA65C4B17ffc7bB166Ce30DDAe",
+        "$pastUpgrades": [
+          [
+            "2024-01-05T17:33:40.000Z",
+            ["0xd106EC93D2c1adaA65C4B17ffc7bB166Ce30DDAe"]
+          ]
+        ],
         "$upgradeCount": 1,
         "counterpartGateway": "0xd096e8dE90D34de758B0E0bA4a796eA2e1e272cF",
         "defaultGateway": "0xb591cE747CF19cF30e11d656EB94134F523A9e77",
@@ -215,6 +232,12 @@
       "values": {
         "$admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
         "$implementation": "0x18FD37A4FB9E1F06d9383958aFd236771F15A8cb",
+        "$pastUpgrades": [
+          [
+            "2024-01-03T19:16:11.000Z",
+            ["0x18FD37A4FB9E1F06d9383958aFd236771F15A8cb"]
+          ]
+        ],
         "$upgradeCount": 1,
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336"
@@ -235,6 +258,16 @@
       "values": {
         "$admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
         "$implementation": "0x5cA988F213EfbCB86ED7e2AACB0C15c91e648f8d",
+        "$pastUpgrades": [
+          [
+            "2024-01-03T19:16:11.000Z",
+            ["0x09824fe72BFF474d16D9c2774432E381BBD60662"]
+          ],
+          [
+            "2024-08-20T17:31:00.000Z",
+            ["0x5cA988F213EfbCB86ED7e2AACB0C15c91e648f8d"]
+          ]
+        ],
         "$upgradeCount": 2,
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
         "osp": "0xb20107bfB36D3B5AcA534aCAfbd8857b10b402a8",
@@ -331,6 +364,12 @@
       "values": {
         "$admin": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723",
         "$implementation": "0xb6773d5bF5b908B58ff5B7Bd36A7F06Da2EeeEc7",
+        "$pastUpgrades": [
+          [
+            "2024-04-11T20:05:43.000Z",
+            ["0xb6773d5bF5b908B58ff5B7Bd36A7F06Da2EeeEc7"]
+          ]
+        ],
         "$upgradeCount": 1,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "esXaiBeacon": "0x6Bc4e6B2c13Ba42e933b23AFAb8a58bbbBa5D02B",
@@ -374,6 +413,12 @@
       "values": {
         "$admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
         "$implementation": "0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC",
+        "$pastUpgrades": [
+          [
+            "2024-01-03T19:16:11.000Z",
+            ["0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC"]
+          ]
+        ],
         "$upgradeCount": 1,
         "activeOutbox": "0x0000000000000000000000000000000000000000",
         "allowedDelayedInboxList": [
@@ -381,12 +426,12 @@
           "0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8"
         ],
         "allowedOutboxList": ["0x1E400568AD4840dbE50FB32f306B842e9ddeF726"],
-        "delayedMessageCount": 84190,
+        "delayedMessageCount": 89611,
         "nativeToken": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66",
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerInbox": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-        "sequencerMessageCount": 65908,
-        "sequencerReportedSubMessageCount": 29829274
+        "sequencerMessageCount": 89179,
+        "sequencerReportedSubMessageCount": 42268706
       },
       "derivedName": "ERC20Bridge"
     },
@@ -418,6 +463,12 @@
       "values": {
         "$admin": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723",
         "$implementation": "0xF208798482F0b12c8767Bc03cC0F145D18BeCe6A",
+        "$pastUpgrades": [
+          [
+            "2023-12-05T18:33:39.000Z",
+            ["0xF208798482F0b12c8767Bc03cC0F145D18BeCe6A"]
+          ]
+        ],
         "$upgradeCount": 1,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TRANSFER_ROLE": "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c"
@@ -441,8 +492,18 @@
       "values": {
         "$admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
         "$implementation": "0x7a299aD29499736994Aa3a9aFa3f476445FAEB2c",
+        "$pastUpgrades": [
+          [
+            "2024-01-03T19:16:11.000Z",
+            ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]
+          ],
+          [
+            "2024-08-20T17:31:00.000Z",
+            ["0x7a299aD29499736994Aa3a9aFa3f476445FAEB2c"]
+          ]
+        ],
         "$upgradeCount": 2,
-        "batchCount": 65908,
+        "batchCount": 89179,
         "batchPosterManager": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871",
         "batchPosters": ["0x7F68dba68E72a250004812fe04F1123Fca89aBa9"],
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
@@ -474,7 +535,7 @@
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 84190,
+        "totalDelayedMessagesRead": 89611,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -517,6 +578,12 @@
       "values": {
         "$admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
         "$implementation": "0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab",
+        "$pastUpgrades": [
+          [
+            "2024-01-03T19:16:11.000Z",
+            ["0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab"]
+          ]
+        ],
         "$upgradeCount": 1,
         "allowListEnabled": false,
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
@@ -554,6 +621,12 @@
       "values": {
         "$admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
         "$implementation": "0x8b73Ef238ADaB31EBC7c05423d243c345241a22f",
+        "$pastUpgrades": [
+          [
+            "2024-01-05T17:33:40.000Z",
+            ["0x8b73Ef238ADaB31EBC7c05423d243c345241a22f"]
+          ]
+        ],
         "$upgradeCount": 1,
         "cloneableProxyHash": "0xce61ab08155a3a368bfd165ba9e1151d023608a155fce1ec0d87bba89a59cb4d",
         "counterpartGateway": "0x0c71417917D24F4A6A6A55559B98c5cCEcb33F7a",
@@ -580,6 +653,40 @@
       "values": {
         "$admin": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723",
         "$implementation": "0xfD6Bb931D2Ee134E70568ca36584c043cB278734",
+        "$pastUpgrades": [
+          [
+            "2023-12-05T18:34:03.000Z",
+            ["0xf765452e587Ad0AE785Dc984963897c05d4c8c71"]
+          ],
+          [
+            "2023-12-06T04:00:01.000Z",
+            ["0x471f1a92a8099f7011Aa3f2E011569618bD754EC"]
+          ],
+          [
+            "2023-12-11T19:39:24.000Z",
+            ["0x471f1a92a8099f7011Aa3f2E011569618bD754EC"]
+          ],
+          [
+            "2023-12-11T20:19:48.000Z",
+            ["0xC2b691250fD85bF7eC91Dd4f13eF1e76678395B2"]
+          ],
+          [
+            "2023-12-19T21:11:23.000Z",
+            ["0xAED4aF101d3e64114051E63F12265403d6Cb9B10"]
+          ],
+          [
+            "2023-12-22T18:33:23.000Z",
+            ["0xfD6Bb931D2Ee134E70568ca36584c043cB278734"]
+          ],
+          [
+            "2023-12-22T22:21:26.000Z",
+            ["0xa2815b0F4A99799aeb9d5cb73501E43f5197dDD1"]
+          ],
+          [
+            "2023-12-22T23:54:26.000Z",
+            ["0xfD6Bb931D2Ee134E70568ca36584c043cB278734"]
+          ]
+        ],
         "$upgradeCount": 8,
         "claimable": true,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -621,6 +728,16 @@
           "0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754",
           "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A"
         ],
+        "$pastUpgrades": [
+          [
+            "2024-01-03T19:16:11.000Z",
+            [
+              "0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754",
+              "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A"
+            ]
+          ]
+        ],
+        "$upgradeCount": 1,
         "baseStake": "100000000000000000",
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
         "chainId": 660279,
@@ -629,12 +746,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 5187,
+        "firstUnresolvedNode": 6038,
         "inbox": "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
         "isERC20Enabled": false,
         "lastStakeBlock": 18944658,
-        "latestConfirmed": 5186,
-        "latestNodeCreated": 5336,
+        "latestConfirmed": 6037,
+        "latestNodeCreated": 6189,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x1E400568AD4840dbE50FB32f306B842e9ddeF726",
@@ -689,7 +806,8 @@
             "0x68e4fe5023f792d4ef584796c84d710303a5e12ea02d6e37e2b5e9c4332507c4": "ArbOS v11.1 wasmModuleRoot",
             "0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4": "ArbOS v20 wasmModuleRoot",
             "0xb0de9cb89e4d944ae6023a3b62276e54804c242fd8c4c2d8e6cc4450f5fa8b1b": "ArbOS v30 wasmModuleRoot",
-            "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot"
+            "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
+            "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot"
           }
         }
       ]
@@ -754,12 +872,18 @@
       "values": {
         "$admin": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723",
         "$implementation": "0x21EEC6626f15d02A8896ebB7EDD68ff3CB61e89E",
+        "$pastUpgrades": [
+          [
+            "2024-04-11T20:05:40.000Z",
+            ["0x21EEC6626f15d02A8896ebB7EDD68ff3CB61e89E"]
+          ]
+        ],
         "$upgradeCount": 1,
         "bucketshareMaxValues": [100000, 950000, 850000],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "deployerAddress": "0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD",
         "esXaiAddress": "0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c",
-        "getPoolsCount": 248,
+        "getPoolsCount": 259,
         "nodeLicenseAddress": "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66",
         "refereeAddress": "0xfD41041180571C5D371BEA3D9550E55653671198",
         "stakingEnabled": true,
@@ -832,18 +956,52 @@
       "values": {
         "$admin": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723",
         "$implementation": "0x609152cb742916E0F7FBC4391Be750C458b049fe",
+        "$pastUpgrades": [
+          [
+            "2023-12-05T18:33:46.000Z",
+            ["0x29A7b907FdF4a9235F46d891b7Aa1e7d3D35A3b6"]
+          ],
+          [
+            "2024-02-27T20:49:59.000Z",
+            ["0x4110251275f1b1f8e6Ce7114139D69597fdAd474"]
+          ],
+          [
+            "2024-03-01T18:50:49.000Z",
+            ["0x10edA49fA8C6594cC6783CA5d7a6677d9e3236c1"]
+          ],
+          [
+            "2024-03-01T19:37:28.000Z",
+            ["0x254954e3F6BD7443444036BeA2d8fE88fdf496c1"]
+          ],
+          [
+            "2024-04-11T20:05:47.000Z",
+            ["0x5538622Ad2F14bf781Af032542F7f00f080EB4CD"]
+          ],
+          [
+            "2024-04-16T14:51:04.000Z",
+            ["0x680F4a9f47E4Cfea124a5654E759cB3b0a0C837c"]
+          ],
+          [
+            "2024-05-16T18:01:22.000Z",
+            ["0xFf38Aa9D553bE47eee329F968ADF0C74A01D021c"]
+          ],
+          [
+            "2024-06-07T17:57:03.000Z",
+            ["0x609152cb742916E0F7FBC4391Be750C458b049fe"]
+          ]
+        ],
         "$upgradeCount": 8,
         "calculateChallengeEmissionAndTier": [
           "35673515981735159817351",
           "625000000000000000000000000"
         ],
-        "challengeCounter": 6079,
+        "challengeCounter": 6930,
         "CHALLENGER_ROLE": "0xe752add323323eb13e36c71ee508dfd16d74e9e4c4fd78786ba97989e5e13818",
         "challengerPublicKey": "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "esXaiAddress": "0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c",
         "gasSubsidyRecipient": "0x94F4aBC83eae00b693286B6eDCa09e1D76183C97",
-        "getKycWalletCount": 6555,
+        "getKycWalletCount": 6558,
         "isCheckingAssertions": true,
         "KYC_ADMIN_ROLE": "0x811427a0fa4932aef534bba16bc34e9b7b2d7d2a79c475fca1765f6cc1faebea",
         "maxKeysPerPool": 1000,
@@ -2035,5 +2193,5 @@
     "orbitstack/RollupProxy": "0xdd22b1785ae5df34e829d0b04131559e112131325c3f223825d0fe61e675fb1a",
     "orbitstack/SequencerInbox": "0x096f13a8297d3243cf02cbc39d065c1c6f37b23602fce0c63f3ff74d7d65b1ee"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

@@ -1,3 +1,61 @@
+Generated with discovered.json: 0xec08d769ec493cfaed6128dd4f8fb1d4f30c1da4
+
+# Diff at Tue, 01 Oct 2024 10:53:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 19531994
+- current block number: 19531994
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531994 (main branch discovery), not current.
+
+```diff
+    contract ReplicaBeaconProxy (0x049b51e531Fd8f90da6d92EA83dC4125002F20EF) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2022-01-11T10:52:17.000Z",["0x7F58bb8311DB968AB110889F2Dfa04ab7E8E831B"]],["2022-06-21T18:39:29.000Z",["0xB92336759618F55bd0F8313bd843604592E27bd8"]],["2022-11-30T19:54:11.000Z",["0x7f221A1850c12b57fed1f0831dd25399a13b68c2"]]]
+      values.$upgradeCount:
++        3
+    }
+```
+
+```diff
+    contract GovernanceRouterBeaconProxy (0x3009C99D370B780304D2098196f1EBF779a4777a) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2022-01-11T10:51:01.000Z",["0x569D80f7FC17316B4C83f072b92EF37B72819DE0"]],["2022-06-21T18:39:29.000Z",["0xfBea6D67DDd90E1f726C2622c6C42b016fDad5a7"]],["2022-11-30T19:54:11.000Z",["0xE9F0a0a787CEEA82f1c8fE7A783826eBD181e707"]]]
+      values.$upgradeCount:
++        3
+    }
+```
+
+```diff
+    contract BridgeRouterBeaconProxy (0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2022-01-11T11:10:23.000Z",["0xD3dfD3eDe74E0DCEBC1AA685e151332857efCe2d"]],["2022-06-21T18:39:29.000Z",["0x15fdA9F60310d09FEA54E3c99d1197DfF5107248"]],["2022-11-30T19:54:11.000Z",["0xe0db61ac718f502B485DEc66D013afbbE0B52F84"]]]
+      values.$upgradeCount:
++        3
+    }
+```
+
+```diff
+    contract HomeBeaconProxy (0x92d3404a7E6c91455BbD81475Cd9fAd96ACFF4c8) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2022-01-11T10:50:10.000Z",["0x8F184D6Aa1977fd2F9d9024317D0ea5cF5815b6f"]],["2022-06-21T18:39:29.000Z",["0x1f98FDc4D8d0806eB3902d57df7a2183b333B80C"]],["2022-11-30T19:54:11.000Z",["0xf3bb7e2d4B26ae2C3EAC41171840c227f457EA06"]]]
+      values.$upgradeCount:
++        3
+    }
+```
+
 Generated with discovered.json: 0x8d448e942609b418809366f0f5c9f296a31f5644
 
 # Diff at Fri, 30 Aug 2024 07:53:51 GMT:

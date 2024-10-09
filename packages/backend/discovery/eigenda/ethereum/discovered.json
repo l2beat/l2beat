@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20777943,
   "configHash": "0xfbb3570feb3d238191d020b83aef7f44dced8f32455ceb32377ae614f91f52c2",
-  "version": 14,
   "contracts": [
     {
       "name": "StakeRegistry",
@@ -20,6 +19,16 @@
       "values": {
         "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
         "$implementation": "0x1C468cf7089D263c2f53e2579b329B16aBc4dd96",
+        "$pastUpgrades": [
+          [
+            "2024-04-05T21:49:59.000Z",
+            ["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]
+          ],
+          [
+            "2024-04-05T21:49:59.000Z",
+            ["0x1C468cf7089D263c2f53e2579b329B16aBc4dd96"]
+          ]
+        ],
         "$upgradeCount": 2,
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "firstQuorumStrategies": [
@@ -77,6 +86,16 @@
       "values": {
         "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
         "$implementation": "0x5d0B9cE2e277Daf508528E9f6Bf6314E79e4eD2b",
+        "$pastUpgrades": [
+          [
+            "2024-04-05T21:49:59.000Z",
+            ["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]
+          ],
+          [
+            "2024-04-05T21:49:59.000Z",
+            ["0x5d0B9cE2e277Daf508528E9f6Bf6314E79e4eD2b"]
+          ]
+        ],
         "$upgradeCount": 2,
         "registryCoordinator": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
       }
@@ -100,6 +119,20 @@
       "values": {
         "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
         "$implementation": "0xdcabf0bE991d4609096CCe316df08d091356E03F",
+        "$pastUpgrades": [
+          [
+            "2024-04-05T21:49:47.000Z",
+            ["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]
+          ],
+          [
+            "2024-04-05T21:49:59.000Z",
+            ["0xd3e09a0c2A9A6FDf5E92aE65D3CC090A4dF8EECF"]
+          ],
+          [
+            "2024-07-24T15:18:11.000Z",
+            ["0xdcabf0bE991d4609096CCe316df08d091356E03F"]
+          ]
+        ],
         "$upgradeCount": 3,
         "blsApkRegistry": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "churnApprover": "0xe0550117Cb066D3b330eBd764B0d75D3BA378734",
@@ -401,6 +434,12 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$pastUpgrades": [
+          [
+            "2023-12-05T15:47:23.000Z",
+            ["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]
+          ]
+        ],
         "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
@@ -449,6 +488,20 @@
       "values": {
         "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
         "$implementation": "0x33A517608999DF5CEfFa2b2EbA88B4461c26Af6f",
+        "$pastUpgrades": [
+          [
+            "2024-05-10T13:31:35.000Z",
+            ["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]
+          ],
+          [
+            "2024-05-10T13:31:35.000Z",
+            ["0x1A27AC48D40F70213Ae6ec64f66852e0A1a0E6fa"]
+          ],
+          [
+            "2024-08-07T15:52:47.000Z",
+            ["0x33A517608999DF5CEfFa2b2EbA88B4461c26Af6f"]
+          ]
+        ],
         "$upgradeCount": 3,
         "ejectableStakePercent": [3333],
         "ejectionRateLimitWindow": [604800],
@@ -480,6 +533,12 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$pastUpgrades": [
+          [
+            "2023-12-05T15:47:23.000Z",
+            ["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]
+          ]
+        ],
         "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
@@ -548,6 +607,12 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$pastUpgrades": [
+          [
+            "2023-06-09T22:16:59.000Z",
+            ["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]
+          ]
+        ],
         "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
@@ -590,6 +655,12 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$pastUpgrades": [
+          [
+            "2024-01-05T20:15:23.000Z",
+            ["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]
+          ]
+        ],
         "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
@@ -632,6 +703,12 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$pastUpgrades": [
+          [
+            "2023-06-09T22:16:59.000Z",
+            ["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]
+          ]
+        ],
         "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
@@ -674,6 +751,12 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$pastUpgrades": [
+          [
+            "2023-12-05T15:47:23.000Z",
+            ["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]
+          ]
+        ],
         "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
@@ -723,6 +806,12 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$pastUpgrades": [
+          [
+            "2023-12-05T15:47:23.000Z",
+            ["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]
+          ]
+        ],
         "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
@@ -804,6 +893,32 @@
       "values": {
         "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
         "$implementation": "0x58fDE694Db83e589ABb21A6Fe66cb20Ce5554a07",
+        "$pastUpgrades": [
+          [
+            "2024-04-05T21:49:47.000Z",
+            ["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]
+          ],
+          [
+            "2024-04-05T21:49:59.000Z",
+            ["0xF5fD25A90902c27068CF5eBe53Be8da693Ac899e"]
+          ],
+          [
+            "2024-05-09T21:13:11.000Z",
+            ["0x26089e9738b809d8308B0011B93b4225a112DB8C"]
+          ],
+          [
+            "2024-05-21T19:56:59.000Z",
+            ["0xCDFFF07d5b8AcdAd13607615118a2e65030f5be1"]
+          ],
+          [
+            "2024-08-03T16:14:35.000Z",
+            ["0x0D2C5FD4Bb956cDD48A23fC3Ef77a768a5cDbAf7"]
+          ],
+          [
+            "2024-09-17T14:17:11.000Z",
+            ["0x58fDE694Db83e589ABb21A6Fe66cb20Ce5554a07"]
+          ]
+        ],
         "$upgradeCount": 6,
         "avsDirectory": "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
         "batchConfirmers": [
@@ -879,6 +994,12 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$pastUpgrades": [
+          [
+            "2024-01-05T20:15:23.000Z",
+            ["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]
+          ]
+        ],
         "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
@@ -921,6 +1042,12 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$pastUpgrades": [
+          [
+            "2023-06-09T22:16:59.000Z",
+            ["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]
+          ]
+        ],
         "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
@@ -963,6 +1090,12 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$pastUpgrades": [
+          [
+            "2023-12-05T15:47:23.000Z",
+            ["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]
+          ]
+        ],
         "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
@@ -1005,6 +1138,12 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$pastUpgrades": [
+          [
+            "2023-12-05T15:47:23.000Z",
+            ["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]
+          ]
+        ],
         "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
@@ -1047,6 +1186,12 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x27e7a3A81741B9fcc5Ad7edCBf9F8a72a5c00428",
+        "$pastUpgrades": [
+          [
+            "2024-04-18T04:30:11.000Z",
+            ["0x27e7a3A81741B9fcc5Ad7edCBf9F8a72a5c00428"]
+          ]
+        ],
         "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "paused": 0,
@@ -1083,6 +1228,12 @@
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "$pastUpgrades": [
+          [
+            "2024-01-05T20:15:23.000Z",
+            ["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]
+          ]
+        ],
         "$upgradeCount": 1,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
@@ -1127,6 +1278,16 @@
       "values": {
         "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
         "$implementation": "0x1ae0b73118906f39D5ED30Ae4A484ce2F479a14c",
+        "$pastUpgrades": [
+          [
+            "2024-04-05T21:49:59.000Z",
+            ["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]
+          ],
+          [
+            "2024-04-05T21:49:59.000Z",
+            ["0x1ae0b73118906f39D5ED30Ae4A484ce2F479a14c"]
+          ]
+        ],
         "$upgradeCount": 2,
         "OPERATOR_DOES_NOT_EXIST_ID": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "registryCoordinator": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
@@ -1707,5 +1868,5 @@
     "eigenlayer/Strategy": "0xecfa84ed37fe2b3a715680ef8f3137e1bfd82351afa85222bc0241a5c8714272",
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0x85df49141aae129e6017bfc7c6023c4dbe8aaf7512ea4cbdd7bd4a62e13c7ae2"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

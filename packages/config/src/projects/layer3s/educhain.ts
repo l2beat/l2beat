@@ -17,9 +17,9 @@ export const educhain: Layer3 = upcomingL3({
     links: {
       websites: ['https://opencampus.xyz/'],
       apps: [],
-      documentation: [],
+      documentation: ['https://userdocs.opencampus.xyz'],
       explorers: [],
-      repositories: [],
+      repositories: ['https://github.com/opencampus-xyz'],
       socialMedia: ['https://x.com/opencampus_xyz'],
     },
   },

@@ -1,3 +1,87 @@
+Generated with discovered.json: 0x32a30fce5dbba8c94f9ff2899f4e454e5162ed5e
+
+# Diff at Tue, 01 Oct 2024 10:52:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20368673
+- current block number: 20368673
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20368673 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x05f23282FFDCA8286E4738C1aF79079f3d843750) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.$pastUpgrades:
++        [["2024-05-03T09:59:59.000Z",["0xc6cF1149d23F2788AC94312E68EB52a74F288ebe"]]]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x113cB99283AF242Da0A0C54347667edF531Aa7d6) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$pastUpgrades:
++        [["2024-05-03T10:02:59.000Z",["0xe8912070277Dd5D9473904b7F4e6C71290F2AE90"]],["2024-07-22T12:25:35.000Z",["0x4a8515A656BF683cCdabc27C25610223033b594e"]],["2024-07-22T12:25:35.000Z",["0xe8912070277Dd5D9473904b7F4e6C71290F2AE90"]]]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x2658723Bf70c7667De6B25F99fcce13A16D25d08) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x26C7bFB430d68Bf74d2d52497836d4336b555dE7) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      values.$pastUpgrades:
++        [["2024-05-03T09:51:11.000Z",["0xd637dc6d7DA9151b5069a4bFB74a12E67a532CC3"]],["2024-07-22T12:26:23.000Z",["0x4a8515A656BF683cCdabc27C25610223033b594e"]],["2024-07-22T12:26:23.000Z",["0xd637dc6d7DA9151b5069a4bFB74a12E67a532CC3"]]]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x26dB93F8b8b4f7016240af62F7730979d353f9A7) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.$pastUpgrades:
++        [["2024-05-03T10:03:35.000Z",["0x3Ff11Cde41a5f7c791eFfcd6AeEA05dd2df5e21e"]]]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x31B72D76FB666844C41EdF08dF0254875Dbb7edB) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades:
++        [["2024-05-03T10:02:23.000Z",["0x0318A37e2662507789a6E17E85A506709F89488b"]]]
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x3A44A3b263FB631cdbf25f339e2D29497511A81f) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.$pastUpgrades:
++        [["2024-05-03T10:00:59.000Z",["0xefBDff012170ae592A3d197bf9Ac10eBF313233a"]]]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xc1dA06CC5DD5cE23bABa924463de7F762039252d) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      values.$pastUpgrades:
++        [["2024-05-03T10:01:23.000Z",["0xD00e38514d66bf1B761a8937559c6b2854A5B3ad"]]]
+    }
+```
+
 Generated with discovered.json: 0x60b4dae22b52bad733321b15f4204f13dfc3ff07
 
 # Diff at Sun, 08 Sep 2024 17:24:31 GMT:

@@ -1,22 +1,16 @@
-import { About } from '~/components/about'
 import { Banner } from '~/components/banner'
-import { ContentWrapper } from '~/components/content-wrapper'
 import { Footer } from '~/components/footer'
 import { NavLayout } from '~/components/nav/nav-layout'
-import { OtherSites } from '~/components/other-sites'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <NavLayout logoLink="/scaling/summary">
-      <div className="min-h-screen">
-        <Banner />
-        <ContentWrapper className="mt-4 md:mt-12">
-          <div className="mb-20">
-            {children}
-            <OtherSites />
-            <About />
-          </div>
-        </ContentWrapper>
+    <NavLayout
+      logoLink="/scaling/summary"
+      topChildren={<Banner className="lg:rounded-b-xl xl:rounded-br-none" />}
+      className="sidebar"
+    >
+      <div className="mx-auto min-h-screen max-w-[1648px] md:px-6 lg:pl-0 lg:pr-3">
+        {children}
       </div>
       <Footer />
     </NavLayout>

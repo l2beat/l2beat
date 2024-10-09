@@ -26,7 +26,6 @@ import {
   ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../../common'
 import { ChainConfig } from '../../../common/ChainConfig'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
@@ -82,8 +81,6 @@ export interface ZkStackConfigCommon {
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
   chainConfig?: ChainConfig
-  upgradesAndGovernance?: string
-  hasProperSecurityCouncil?: boolean
   usesBlobs?: boolean
   isUnderReview?: boolean
   stage?: StageConfig
@@ -268,6 +265,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     id: ProjectId(templateVars.discovery.projectName),
     badges: templateVars.badges ?? [],
     display: {
+      upgradesAndGovernanceImage: 'zk-stack',
       ...templateVars.display,
       provider: 'ZK Stack',
       category: daProvider !== undefined ? 'Validium' : 'ZK Rollup',
@@ -316,7 +314,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       trackedTxs:
         daProvider !== undefined
           ? undefined
-          : templateVars.nonTemplateTrackedTxs ?? [],
+          : (templateVars.nonTemplateTrackedTxs ?? []),
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
     chainConfig: templateVars.chainConfig,
@@ -334,7 +332,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
             bridge: { type: 'Enshrined' },
             mode: 'State diffs (compressed)',
           }),
-    riskView: makeBridgeCompatible({
+    riskView: {
       stateValidation: {
         value: 'ZK proofs',
         description:
@@ -361,10 +359,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
             ],
           },
         ],
-        otherReferences: [
-          'https://docs.zksync.io/zk-stack/concepts/transaction-lifecycle#transaction-types',
-          'https://docs.zksync.io/build/developer-reference/era-contracts/l1-contracts#executorfacet',
-        ],
       },
       dataAvailability:
         daProvider !== undefined
@@ -387,10 +381,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
                   ],
                 },
               ],
-              otherReferences: [
-                'https://docs.zksync.io/build/developer-reference/era-contracts/l1-contracts#executorfacet',
-                'https://docs.zksync.io/zk-stack/concepts/data-availability/validiums',
-              ],
             }
           : {
               ...RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
@@ -409,9 +399,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
                     'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F11#L120',
                   ],
                 },
-              ],
-              otherReferences: [
-                'https://docs.zksync.io/build/developer-reference/era-contracts/l1-contracts#executorfacet',
               ],
             },
       exitWindow: {
@@ -437,9 +424,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
             ],
           },
         ],
-        otherReferences: [
-          'https://docs.zksync.io/build/developer-reference/l1-l2-interoperability#priority-queue',
-        ],
       },
       proposerFailure: {
         ...RISK_VIEW.PROPOSER_WHITELIST_GOVERNANCE,
@@ -454,7 +438,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       },
       destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
       validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-    }),
+    },
     stage:
       templateVars.stage ??
       (templateVars.daProvider !== undefined
@@ -874,11 +858,11 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
             nodeSoftware: `The node software is open-source, and its source code can be found [here](https://github.com/matter-labs/zksync-era).
     The main node software does not rely on Layer 1 (L1) to reconstruct the state, but you can use [this tool](https://github.com/eqlabs/zksync-state-reconstruct) for that purpose. Currently, there is no straightforward method to inject the state into the main node, but ZKsync is actively working on a solution for this.`,
             compressionScheme:
-              'Bytecodes undergo compression before deployment on Layer 1 (L1). You can find additional information on this process [here](https://github.com/matter-labs/zksync-era/blob/main/docs/guides/advanced/compression.md).',
+              'Bytecodes undergo compression before deployment on Layer 1 (L1). You can find additional information on this process [here](https://github.com/matter-labs/zksync-era/blob/main/docs/guides/advanced/11_compression.md).',
             genesisState:
               'There have been neither genesis states nor regenesis.',
             dataFormat:
-              'Details on data format can be found [here](https://github.com/matter-labs/zksync-era/blob/main/docs/guides/advanced/pubdata.md).',
+              'Details on data format can be found [here](https://github.com/matter-labs/zksync-era/blob/main/docs/guides/advanced/09_pubdata.md).',
           },
     stateValidation: {
       description:
@@ -903,7 +887,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
         {
           title: 'Verification Keys Generation',
           description:
-            'SNARK verification keys can be generated and checked against the Ethereum verifier contract using [this tool](https://github.com/matter-labs/zksync-era/tree/main/prover/vk_setup_data_generator_server_fri). The system requires a trusted setup.',
+            'SNARK verification keys can be generated and checked against the Ethereum verifier contract using [this tool](https://github.com/matter-labs/zksync-era/tree/main/prover/crates/bin/vk_setup_data_generator_server_fri). The system requires a trusted setup.',
         },
       ],
       proofVerification: {

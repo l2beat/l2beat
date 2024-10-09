@@ -1,16 +1,14 @@
 'use client'
 
-import { type Stage } from '@l2beat/config'
 import { type Dispatch, type SetStateAction, useState } from 'react'
 
-import { type AssetId, type TokenBridgedUsing } from '@l2beat/shared-pure'
 import {
   SortingArrowDownIcon,
   SortingArrowUpIcon,
 } from '~/icons/sorting-arrows'
 import { cn } from '~/utils/cn'
 import { Card } from '../../../_components/card'
-import { type Risk } from '../../page'
+import { useReport } from '../report-context'
 import { FilterInput } from './filter-input'
 import { TableRow } from './table-row'
 import {
@@ -19,41 +17,14 @@ import {
   columnsConfig,
 } from './utils/columnsConfig'
 
-export type Token = {
-  token: {
-    id: AssetId
-    name: string
-    decimals: number
-    symbol: string
-    iconUrl?: string
-    bridgedUsing?: TokenBridgedUsing
-    address?: `0x${string}`
-  }
-  chain: {
-    id: number
-    name: string
-    risks: Risk[]
-    stage:
-      | 'Validium'
-      | 'Optimium'
-      | 'NotApplicable'
-      | 'UnderReview'
-      | Stage
-      | undefined
-  }
-  balance: bigint | null
-}
-
-interface TokensTableProps {
-  tokens: Token[]
-}
-
 type SortingState = {
   selected: string
   type: 'asc' | 'desc'
 } & Sorting
 
-export function TokensTable(props: TokensTableProps) {
+export function TokensTable() {
+  const report = useReport()
+
   const [sorting, setSorting] = useState<Partial<SortingState>>({
     selected: 'VALUE',
     rule: 'numeric',
@@ -62,7 +33,7 @@ export function TokensTable(props: TokensTableProps) {
   })
   const [filter, setFilter] = useState<string>('')
 
-  let tokens = props.tokens
+  let tokens = report.tokens
   if (sorting.selected) {
     tokens = tokens.sort((a, b) => {
       if (!sorting.getOrderValue) return 0
@@ -84,7 +55,7 @@ export function TokensTable(props: TokensTableProps) {
 
   if (filter) {
     tokens = tokens.filter((token) =>
-      token.token.name.toLowerCase().includes(filter.toLowerCase()),
+      token.meta?.name?.toLowerCase().includes(filter.toLowerCase()),
     )
   }
 
@@ -114,10 +85,7 @@ export function TokensTable(props: TokensTableProps) {
             </tr>
           </thead>
           {tokens.map((token) => (
-            <tbody
-              className="group/body"
-              key={`${token.chain.id}-${token.token.id.toString()}`}
-            >
+            <tbody className="group/body" key={token.token.id.toString()}>
               <TableRow token={token} />
             </tbody>
           ))}

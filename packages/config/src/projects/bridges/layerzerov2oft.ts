@@ -38,7 +38,7 @@ export const layerzerov2oft: Bridge = {
     description:
       'This page gathers significant Omnichain Fungible Tokens (OFTs) built on top of LayerZero v2 AMB protocol.',
     detailedDescription:
-      'Risk associated with using any OFT varies, depending on the technological decisions ([OApp configuration and security stack](https://docs.layerzero.network/v2/developers/evm/configuration/default-config)) made by the developers.\
+      'Risk associated with using any OFT varies, depending on the technological decisions ([OApp configuration and security stack](https://docs.layerzero.network/v2/developers/evm/protocol-gas-settings/default-config)) made by the developers.\
        LayerZero as a framework to build omnichain application does not provide any base security as applications can define their own security settings,\
        however applications and tokens choosing the default security settings will leverage security provided by the current default Verifiers and Executor.\
        Default settings are managed by LayerZero team.',

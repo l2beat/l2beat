@@ -45,7 +45,7 @@ export function LinkWithThumbnail({
         className={cn(
           orientation === 'vertical' && 'mb-12 mt-6 px-8',
           orientation === 'horizontal' &&
-            'self-center transition-all group-hover:translate-x-0.5',
+            'self-center py-2 transition-all group-hover:translate-x-0.5',
         )}
       >
         {props.topAccessory && <div className="mb-2">{props.topAccessory}</div>}
@@ -71,7 +71,7 @@ export function LinkWithThumbnail({
             </p>
           </div>
         )}
-        <p className="mt-3 flex flex-wrap items-center gap-1 text-sm font-semibold text-blue-700 underline transition-colors group-hover:text-blue-550 dark:text-blue-500">
+        <p className="flex flex-wrap items-center gap-1 text-sm font-medium text-blue-700 underline transition-colors group-hover:text-blue-550 dark:text-blue-500 md:mt-3">
           Learn more
           <ArrowRightIcon className="fill-current" />
         </p>

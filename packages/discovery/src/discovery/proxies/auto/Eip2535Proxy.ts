@@ -3,9 +3,74 @@
 // every contract implementing this standard needs to have facetAddresses() view function
 
 import { ProxyDetails } from '@l2beat/discovery-types'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
+import { utils } from 'ethers'
 import { IProvider } from '../../provider/IProvider'
+
+async function getPastUpgrades(provider: IProvider, address: EthereumAddress) {
+  const abi = new utils.Interface([
+    'event DiamondCut(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata)',
+  ])
+  const logs = await provider.getLogs(address, [
+    [abi.getEventTopic('DiamondCut')],
+  ])
+
+  const blockNumbers = [...new Set(logs.map((l) => l.blockNumber))]
+  const blocks = await Promise.all(
+    blockNumbers.map(
+      async (blockNumber) => await provider.getBlock(blockNumber),
+    ),
+  )
+  assert(blocks.every((b) => b !== undefined))
+
+  const dateMap = Object.fromEntries(
+    blocks.map((b) => [
+      b.number,
+      new UnixTime(b.timestamp).toDate().toISOString(),
+    ]),
+  )
+
+  const selectorAddress: Map<string, string> = new Map()
+  const ADD = 0
+  const REPLACE = 1
+  const REMOVE = 2
+
+  return logs.map((l) => {
+    const parsed = abi.parseLog(l)
+    for (const cut of parsed.args.facetCuts) {
+      switch (cut.action) {
+        case ADD:
+          {
+            for (const selector of cut.selectors) {
+              selectorAddress.set(selector, cut.facet)
+            }
+          }
+          break
+        case REPLACE:
+          {
+            for (const selector of cut.selectors) {
+              selectorAddress.set(selector, cut.facet)
+            }
+          }
+          break
+        case REMOVE:
+          {
+            for (const selector of cut.selectors) {
+              selectorAddress.delete(selector)
+            }
+          }
+          break
+      }
+    }
+
+    const implementations = [...new Set(selectorAddress.values())]
+    return {
+      date: dateMap[l.blockNumber] ?? 'ERROR',
+      addresses: implementations,
+    }
+  })
+}
 
 export async function detectEip2535proxy(
   provider: IProvider,
@@ -21,12 +86,16 @@ export async function detectEip2535proxy(
     return
   }
 
+  const pastUpgrades = await getPastUpgrades(provider, address)
+
   return {
     type: 'EIP2535 diamond proxy',
     values: {
       // TODO: (sz-piotr) I'm not actually sure if this is correct. Diamonds actually have specific faucet that we should query for this.
       $immutable: false,
       $implementation: facets.map((f) => f.toString()),
+      $pastUpgrades: pastUpgrades.map((v) => [v.date, v.addresses]),
+      $upgradeCount: Object.values(pastUpgrades).length,
     },
   }
 }

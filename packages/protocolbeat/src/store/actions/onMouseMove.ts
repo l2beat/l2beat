@@ -87,7 +87,7 @@ export function onMouseMove(
           height: Math.abs(mouseMove.startY - mouseMove.currentY),
         }
 
-        return {
+        return updateNodePositions({
           ...state,
           selectedNodeIds: state.nodes
             .filter(
@@ -100,7 +100,7 @@ export function onMouseMove(
           mouseUpAction: undefined,
           mouseMove,
           mouseSelection: toContainerCoordinates(selection, state.transform),
-        }
+        })
       }
     }
   }

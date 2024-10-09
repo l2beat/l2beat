@@ -1,5 +1,6 @@
 import { ContractParameters } from '@l2beat/discovery-types'
 
+import { getErrorMessage } from '@l2beat/shared-pure'
 import {
   DiscoveryContract,
   DiscoveryCustomType,
@@ -23,16 +24,20 @@ export function decodeHandlerResults(
   for (const result of results) {
     if (result.value !== undefined) {
       const returnType = (fieldOverrides ?? {})[result.field]?.returnType
-      if (returnType !== undefined) {
-        values[result.field] = typeApplier.applyReturnType(
-          result.value,
-          returnType,
-        )
-      } else {
-        values[result.field] = typeApplier.applyReturnFragment(
-          result.value,
-          result.fragment,
-        )
+      try {
+        if (returnType !== undefined) {
+          values[result.field] = typeApplier.applyReturnType(
+            result.value,
+            returnType,
+          )
+        } else {
+          values[result.field] = typeApplier.applyReturnFragment(
+            result.value,
+            result.fragment,
+          )
+        }
+      } catch (e) {
+        errors[result.field] = getErrorMessage(e)
       }
     }
     if (result.error !== undefined) {

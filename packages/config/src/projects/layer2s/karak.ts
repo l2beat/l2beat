@@ -7,11 +7,6 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('karak')
 
-const upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
-
 export const karak: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
   badges: [Badge.DA.Celestia, Badge.RaaS.Caldera],
@@ -26,9 +21,7 @@ export const karak: Layer2 = opStackL2({
     links: {
       websites: ['https://karak.network/'],
       apps: ['https://karak.network/karak-xp/'],
-      documentation: [
-        'https://docs.karak.network/karak/general/karak-overview',
-      ],
+      documentation: ['https://docs.karak.network/'],
       explorers: ['https://explorer.karak.network/'],
       repositories: [],
       socialMedia: [
@@ -39,7 +32,6 @@ export const karak: Layer2 = opStackL2({
     activityDataSource: 'Blockchain RPC',
     architectureImage: 'opstack',
   },
-  upgradeability,
   rpcUrl: 'https://rpc.karak.network/',
   finality: {
     type: 'OPStack',
@@ -48,6 +40,7 @@ export const karak: Layer2 = opStackL2({
   },
   genesisTimestamp: new UnixTime(1703226695), //First sequencer transaction
   isNodeAvailable: true,
+  discoveryDrivenData: true,
   milestones: [
     {
       name: 'Karak Network Early Access Launch',
@@ -56,11 +49,5 @@ export const karak: Layer2 = opStackL2({
       description: 'Karak Network is live on mainnet.',
       type: 'general',
     },
-  ],
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'KarakMultisig',
-      'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Challenger and Guardian of the OptimismPortal, meaning it can halt withdrawals and change incorrect state roots. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
-    ),
   ],
 })

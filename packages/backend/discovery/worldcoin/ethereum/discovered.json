@@ -1,9 +1,8 @@
 {
   "name": "worldcoin",
   "chain": "ethereum",
-  "blockNumber": 20432514,
-  "configHash": "0x49d0dd9e1f3e81d463d5c70dd88cf44ea1b64ad4bf2656a6374146f6e44bc04e",
-  "version": 14,
+  "blockNumber": 20922333,
+  "configHash": "0x37a08290de2c4e6e8031d03bb030ac4f326a7c43f5d5cac74fe334afab1e6771",
   "contracts": [
     {
       "name": "DeleteIdentitiesVerifierLookupTable",
@@ -82,6 +81,9 @@
       "name": "WorldIdIdentityManager2",
       "address": "0xf7134CE138832c1456F2a91D64621eE90c2bddEa",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "Does what it says: Manages identities for Worldcoin. The identityOperator can register or delete identities by submitting zk proofs."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -94,14 +96,28 @@
       "values": {
         "$admin": "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A",
         "$implementation": "0x521e8FB3A32Ea44237DC8b1E506dd78accFDf8Bd",
+        "$pastUpgrades": [
+          [
+            "2023-07-06T19:19:11.000Z",
+            ["0xa3cD15EBed6075E33a54483C59818bC43D57c556"]
+          ],
+          [
+            "2023-08-18T17:12:23.000Z",
+            ["0x2Ad412A1dF96434Eed0779D2dB4A8694a06132f8"]
+          ],
+          [
+            "2024-01-12T00:00:23.000Z",
+            ["0x521e8FB3A32Ea44237DC8b1E506dd78accFDf8Bd"]
+          ]
+        ],
         "$upgradeCount": 3,
         "getDeleteIdentitiesVerifierLookupTableAddress": "0x39CcB3b670651a14da8b3835f42924f49C2C5986",
         "getRegisterIdentitiesVerifierLookupTableAddress": "0x4055B6d4018e92e4d000865e61e87B57A4E5Ab49",
         "getRootHistoryExpiry": 604800,
         "getSemaphoreVerifierAddress": "0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5",
         "getTreeDepth": 30,
-        "identityOperator": "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A",
-        "latestRoot": "16140752359481101902482273723632367130449370977025915348670355562994378688965",
+        "identityOperator": "0xE2DA046340e00264C4F0443243a0565007AE08AC",
+        "latestRoot": "160254392996319828854350308227682425228451637541199389183618642341600107355",
         "NO_SUCH_ROOT": {
           "root": 0,
           "supersededTimestamp": 0,
@@ -109,6 +125,11 @@
         },
         "owner": "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "identityOperator": {
+          "description": "Can call functions (manage identities) in the WorldIdIdentityManager2 implementation"
+        }
       },
       "derivedName": "WorldIDIdentityManagerImplV2"
     },
@@ -131,7 +152,8 @@
           "target": "0xf7134CE138832c1456F2a91D64621eE90c2bddEa"
         }
       ]
-    }
+    },
+    { "address": "0xE2DA046340e00264C4F0443243a0565007AE08AC" }
   ],
   "abis": {
     "0x39CcB3b670651a14da8b3835f42924f49C2C5986": [
@@ -282,5 +304,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

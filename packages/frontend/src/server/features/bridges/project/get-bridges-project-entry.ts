@@ -29,8 +29,8 @@ export async function getBridgesProjectEntry(project: Bridge) {
   ])
 
   const isVerified = !!projectsVerificationStatuses[project.id]
-  const isImplementationUnderReview =
-    !!implementationChangeReport.projects[project.id]
+  const changes = implementationChangeReport.projects[project.id]
+  const isImplementationUnderReview = !!changes?.ethereum
 
   return {
     type: project.type,

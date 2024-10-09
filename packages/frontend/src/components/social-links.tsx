@@ -6,8 +6,13 @@ import { LinkedInIcon } from '~/icons/products/linkedin'
 import { MediumIcon } from '~/icons/products/medium'
 import { XIcon } from '~/icons/products/x'
 import { YouTubeIcon } from '~/icons/products/youtube'
+import { cn } from '~/utils/cn'
 
-export function SocialLinks() {
+interface Props {
+  variant?: 'gray'
+}
+
+export function SocialLinks({ variant }: Props) {
   const links = [
     {
       href: externalLinks.x,
@@ -43,7 +48,14 @@ export function SocialLinks() {
   return links.map(({ href, title, icon: Icon }) => (
     <li key={title}>
       <a rel="noopener noreferrer" href={href} target="_blank">
-        <Icon aria-label={title} className="size-6" />
+        <Icon
+          aria-label={title}
+          className={cn(
+            'size-6',
+            variant === 'gray' &&
+              'fill-zinc-500 transition-colors hover:fill-zinc-400 dark:fill-n-zinc-300 dark:hover:fill-zinc-400',
+          )}
+        />
       </a>
     </li>
   ))

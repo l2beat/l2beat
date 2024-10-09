@@ -6,7 +6,9 @@ import { polygonCDKStack } from './templates/polygonCDKStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('silicon')
-// const bridge = discovery.getContract('Bridge')
+
+const shared = new ProjectDiscovery('shared-polygon-cdk')
+const bridge = shared.getContract('Bridge')
 
 const membersCountDAC = discovery.getContractValue<number>(
   'SiliconDAC',
@@ -33,8 +35,6 @@ export const silicon: Layer2 = polygonCDKStack({
   display: {
     name: 'Silicon',
     slug: 'silicon',
-    headerWarning:
-      'GPT Protocol is using AggLayer, meaning it shares the TVL escrow contracts with Polygon zkEVM and other connected chains.',
     description:
       'Silicon is a Validium built on the Polygon CDK Stack, aiming to become the social network of the future.',
     purposes: ['Universal'],
@@ -105,15 +105,15 @@ export const silicon: Layer2 = polygonCDKStack({
   },
   nonTemplateEscrows: [
     // shared
-    // discovery.getEscrowDetails({
-    //   address: bridge.address,
-    //   tokens: '*',
-    //   sharedEscrow: {
-    //     type: 'AggLayer',
-    //     nativeAsset: 'etherPreminted',
-    //     premintedAmount: '340282366920938463463374607431768211455',
-    //   },
-    // }),
+    shared.getEscrowDetails({
+      address: bridge.address,
+      tokens: '*',
+      sharedEscrow: {
+        type: 'AggLayer',
+        nativeAsset: 'etherPreminted',
+        premintedAmount: '340282366920938463463374607431768211455',
+      },
+    }),
   ],
   stateDerivation: {
     nodeSoftware:

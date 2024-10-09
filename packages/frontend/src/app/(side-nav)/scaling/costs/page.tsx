@@ -1,6 +1,7 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import { ScalingCostsChart } from '~/components/chart/costs/scaling-costs-chart'
-import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { MainPageCard } from '~/components/main-page-card'
+import { MainPageHeader } from '~/components/main-page-header'
 import { getScalingCostsEntries } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
@@ -29,9 +30,16 @@ export default async function Page() {
         <CostsTimeRangeContextProvider>
           <CostsUnitContextProvider>
             <CostsMetricContextProvider>
-              <ScalingCostsChart milestones={HOMEPAGE_MILESTONES} />
-              <HorizontalSeparator className="my-4 md:my-6" />
-              <ScalingCostsTable entries={entries} />
+              <MainPageHeader>Onchain costs</MainPageHeader>
+              <MainPageCard>
+                <ScalingCostsChart
+                  entries={entries}
+                  milestones={HOMEPAGE_MILESTONES}
+                />
+              </MainPageCard>
+              <MainPageCard className="md:mt-6">
+                <ScalingCostsTable entries={entries} />
+              </MainPageCard>
             </CostsMetricContextProvider>
           </CostsUnitContextProvider>
         </CostsTimeRangeContextProvider>

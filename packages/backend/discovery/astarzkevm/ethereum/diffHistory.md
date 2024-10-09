@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x32e8bf227cc2f842197ad9eb1bf4bd1ba4a85b9b
+
+# Diff at Tue, 01 Oct 2024 10:49:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20325048
+- current block number: 20325048
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20325048 (main branch discovery), not current.
+
+```diff
+    contract AstarValidium (0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-02-22T20:00:59.000Z",["0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30"]],["2024-04-08T18:10:59.000Z",["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]]]
+    }
+```
+
+```diff
+    contract AstarValidiumDAC (0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-02-22T17:55:59.000Z",["0xF4e87685e323818E0aE35dCdFc3B65106002E456"]]]
+    }
+```
+
 Generated with discovered.json: 0xdb831b3c00409a66463c269d69024df58b67f87a
 
 # Diff at Fri, 30 Aug 2024 07:51:24 GMT:

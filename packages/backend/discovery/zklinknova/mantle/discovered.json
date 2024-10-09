@@ -3,7 +3,7 @@
   "chain": "mantle",
   "blockNumber": 68652420,
   "configHash": "0xba99224e212c7eb632ba06c519a466724d98fb22fad4fc880458e49a59f4dbad",
-  "version": 14,
+  "version": 15,
   "contracts": [
     {
       "name": "MantleOwner",
@@ -60,6 +60,16 @@
       "values": {
         "$admin": "0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82",
         "$implementation": "0x7769C18828569692Dfb65affa0856533613ea458",
+        "$pastUpgrades": [
+          [
+            "2024-03-01T12:41:47.000Z",
+            ["0xbfa352a683D82a04233Cc45AC1308621BA63283f"]
+          ],
+          [
+            "2024-04-04T06:27:28.000Z",
+            ["0x7769C18828569692Dfb65affa0856533613ea458"]
+          ]
+        ],
         "$upgradeCount": 2,
         "l2Bridge": "0x321Ce902eDFC6466B224ce5D9A7Bc16858855272",
         "l2TokenBeacon": "0x21194Efd1D913Bc8D62F1ED9467aA0cA2a257FCe",
@@ -91,6 +101,24 @@
       "values": {
         "$admin": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "$implementation": "0x0C04046546C46652969Aa9eB4BFB758cFDf1e821",
+        "$pastUpgrades": [
+          [
+            "2024-03-01T07:48:29.000Z",
+            ["0x5715Dec4cd747675E47b969D3a15aab909b8ce05"]
+          ],
+          [
+            "2024-03-09T10:15:53.000Z",
+            ["0x85079cb83B6cadba34e64bc0f24493F49D8b1F4e"]
+          ],
+          [
+            "2024-04-22T02:31:22.000Z",
+            ["0xa8486096C719024D4eB2262A45AAc5cA8A256Cd6"]
+          ],
+          [
+            "2024-05-03T09:09:50.000Z",
+            ["0x0C04046546C46652969Aa9eB4BFB758cFDf1e821"]
+          ]
+        ],
         "$upgradeCount": 4,
         "feeParams": {
           "pubdataPricingMode": 0,
@@ -135,6 +163,20 @@
       "values": {
         "$admin": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "$implementation": "0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D",
+        "$pastUpgrades": [
+          [
+            "2024-03-01T07:49:58.000Z",
+            ["0x55fa5276c44c1B465196898b144524C9c852235E"]
+          ],
+          [
+            "2024-03-09T10:51:51.000Z",
+            ["0x09CB6C5A235939258e3F6Ae2989cf6f26EeE1c72"]
+          ],
+          [
+            "2024-05-03T09:09:50.000Z",
+            ["0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D"]
+          ]
+        ],
         "$upgradeCount": 3,
         "ethToken": "0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111",
         "getRemoteGateway": "0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269",
@@ -391,5 +433,5 @@
     "zklinknova/secondaryGateway": "0xb8fdb3c993db014b3b0c1cdd56f21ecb1aac5dd63185bc3f87a6c0e45e9168c6",
     "zklinknova/secondaryZkLink": "0x3038879967ecfd740f8377d1280264034b6959ad28bea99ebcedd97c6127a904"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
 }

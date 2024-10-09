@@ -27,8 +27,5 @@ export const scalingUpcomingColumns = [
     header: 'Purpose',
     cell: (ctx) => ctx.getValue().join(', '),
     enableSorting: false,
-    meta: {
-      tooltip: 'Functionality supported by this project.',
-    },
   }),
 ]

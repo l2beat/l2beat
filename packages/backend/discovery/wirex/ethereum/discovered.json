@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20677136,
   "configHash": "0x382d1bf894200503aa610e56bdf4cb15223fefc0d808dc346efd74b02363a187",
-  "version": 14,
   "contracts": [
     {
       "name": "Verifier",
@@ -43,6 +42,12 @@
       "values": {
         "$admin": "0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78",
         "$implementation": "0xAce9269EaC3419937093154dea0AD44C36Df6963",
+        "$pastUpgrades": [
+          [
+            "2024-07-09T17:46:23.000Z",
+            ["0xAce9269EaC3419937093154dea0AD44C36Df6963"]
+          ]
+        ],
         "$upgradeCount": 1,
         "committeeHash": "0xe6f885fcfef296a71bcc466caa039d3a8e72b1c43f5b110d5045776b5680750b",
         "getAmountOfMembers": 2,
@@ -71,6 +76,12 @@
       "values": {
         "$admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "$implementation": "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
+        "$pastUpgrades": [
+          [
+            "2024-07-04T10:40:23.000Z",
+            ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
+          ]
+        ],
         "$upgradeCount": 1,
         "admin": "0xecEA75e2854FD52b0aE5C51C88f5eA8e2eC4bf9A",
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
@@ -293,5 +304,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

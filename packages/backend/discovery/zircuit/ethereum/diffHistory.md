@@ -1,3 +1,131 @@
+Generated with discovered.json: 0x9b5c7fe881ecbc29723ffa63861a8917402a13a7
+
+# Diff at Tue, 01 Oct 2024 11:11:57 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20827058
+- current block number: 20827058
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20827058 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.$pastUpgrades:
++        [["2024-07-02T16:13:23.000Z",["0x8Ab1b1E21c2f229a7bB1430CF3ADfb0644a69ab7"]],["2024-07-16T08:48:59.000Z",["0x304a52C8354f323672191Ebf1347Cd3d494Ea830"]],["2024-07-17T12:11:35.000Z",["0xde8B916B972cE3c27C21157Fc2b107c413062b9d"]]]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x2a721cBE81a128be0F01040e3353c3805A5EA091) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades:
++        [["2024-07-02T16:12:35.000Z",["0x6c01D349d3010Cc2953fFA0A5e8d176fc273B834"]]]
+    }
+```
+
+```diff
+    contract SystemConfig (0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.$pastUpgrades:
++        [["2024-07-02T16:11:47.000Z",["0xA03E2f3Ee6dBa20411A2326D7FA9CCCc6a9A53de"]]]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      values.$pastUpgrades:
++        [["2024-07-02T16:11:59.000Z",["0x7409668285336dBBe720bE3525AEe372Fce4c2ab"]],["2024-07-16T08:48:59.000Z",["0xE14b12F4843447114A093D99Dc9322b93a967DE6"]],["2024-07-16T08:48:59.000Z",["0x0Fc6203310c494963eBAdd1157780a613B67eCDf"]],["2024-07-17T12:11:35.000Z",["0xA4ba8bd753695B6121722CBB7cd81c71BCFBCA28"]]]
+    }
+```
+
+```diff
+    contract Verifier (0x6BCe7408c0781dcE7b71494274302D4b75a1447c) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-07-02T16:13:35.000Z",["0x6a8497798ae8B398608B49b003ECB23aC0756E06"]],["2024-07-03T09:00:47.000Z",["0xA153Ec874DaB9e6590cFcf4DC3f5bb86FfaC08B9"]],["2024-08-12T16:32:59.000Z",["0x13A06FF21E46BCCd4B03E5Cb04372bB7aE7f2168"]]]
+    }
+```
+
+```diff
+    contract ZircuitSuperchainConfig (0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-07-02T16:08:11.000Z",["0xA47314C96ab9572af656788e15143B459F99AE0f"]]]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$pastUpgrades:
++        [["2024-07-02T16:12:59.000Z",["0xaaF7FCc7252eb739E0001D8727800deAE04A84f1"]]]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x994eEb321F9cD79B077a5455fC248c77f30Dd244) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.$pastUpgrades:
++        [["2024-07-02T16:12:11.000Z",["0x3B21dC86c412aC34fF4c679497b274509D73cDcC"]]]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-07-02T16:12:23.000Z",["0xf885DA6A3B4c93905b02f36f9a13680922A554b0"]]]
+    }
+```
+
+Generated with discovered.json: 0x7739dd387f09b162dfd31f9caa7e750639621a36
+
+# Diff at Wed, 25 Sep 2024 10:35:52 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@e8c4fe6b10f7918ebbd761bc35018ba84053b08c block: 20619826
+- current block number: 20827058
+
+## Description
+
+Limits changed. The maximum total deposit limit is removed (unlimited) and withdrawal limits per period are raised.
+
+## Watched changes
+
+```diff
+    contract OptimismPortal (0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.ethThrottleDeposits.maxAmountTotal:
+-        "3000000000000000000000"
++        0
+      values.ethThrottleWithdrawals.maxAmountPerPeriod:
+-        "500000000000000000000"
++        "1000000000000000000000"
+      values.getEthThrottleWithdrawalsCredits:
+-        "500000000000000000000"
++        "1000000000000000000000"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      values.ethThrottleDeposits.maxAmountPerPeriod:
+-        "50000000000000000000"
++        0
+    }
+```
+
 Generated with discovered.json: 0x8ec193a124244817461cb28bc56248ba72ba973e
 
 # Diff at Sun, 08 Sep 2024 17:24:52 GMT:

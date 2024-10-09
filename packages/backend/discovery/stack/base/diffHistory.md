@@ -1,3 +1,173 @@
+Generated with discovered.json: 0x7bfe86d38551a675cb584d7730ff722e714e9da9
+
+# Diff at Mon, 07 Oct 2024 16:03:05 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@7c3e632caf56b943789c1bfa1021d4f65d503045 block: 19927649
+- current block number: 20763805
+
+## Description
+
+Config related (discoveryDrivenData).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19927649 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x25aBB510386A658c622280f488844BD3b485DC32) {
+    +++ description: None
+      directlyReceivedPermissions.3.description:
++        "upgrading bridge implementation allows to access all funds and change every system component."
+    }
+```
+
+```diff
+    contract SystemConfig (0x52c901666Cfc8AeE9b46A3b7C101688351529B37) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104","via":[{"address":"0x25aBB510386A658c622280f488844BD3b485DC32","delay":0}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.via.0:
+-        {"address":"0x25aBB510386A658c622280f488844BD3b485DC32","delay":0}
+      template:
++        "opstack/SystemConfig"
+      descriptions:
++        ["Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."]
+      fieldMeta:
++        {"gasLimit":{"severity":"LOW","description":"Gas limit for blocks on L2."}}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x727a91e8251A262A4ad5F2D5811c6cD862961759) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      template:
++        "opstack/L1CrossDomainMessenger"
+      descriptions:
++        ["Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."]
+      categories:
++        ["Core"]
+    }
+```
+
+```diff
+    contract StackMultisig (0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104) {
+    +++ description: None
+      roles.1:
++        "Guardian"
+      roles.0:
+-        "Guardian"
++        "Challenger"
+      receivedPermissions.5:
++        {"permission":"upgrade","target":"0xCC61c26901E719B73273C1484e337cBAB84369EF","via":[{"address":"0x25aBB510386A658c622280f488844BD3b485DC32"}]}
+      receivedPermissions.4.target:
+-        "0xCC61c26901E719B73273C1484e337cBAB84369EF"
++        "0xbA256039AEdaD407692D8Deb366308BE6Bb2515C"
+      receivedPermissions.4.description:
++        "upgrading bridge implementation allows to access all funds and change every system component."
+      receivedPermissions.3.target:
+-        "0xbA256039AEdaD407692D8Deb366308BE6Bb2515C"
++        "0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E"
+      receivedPermissions.2.target:
+-        "0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E"
++        "0x52c901666Cfc8AeE9b46A3b7C101688351529B37"
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "configure"
+      receivedPermissions.1.via:
+-        [{"address":"0x25aBB510386A658c622280f488844BD3b485DC32"}]
+      receivedPermissions.1.description:
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xbA256039AEdaD407692D8Deb366308BE6Bb2515C) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      issuedPermissions.0.via.0.description:
++        "upgrading bridge implementation allows to access all funds and change every system component."
+      template:
++        "opstack/L1StandardBridge"
+      descriptions:
++        ["The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xCC61c26901E719B73273C1484e337cBAB84369EF) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      template:
++        "opstack/L2OutputOracle"
+      descriptions:
++        ["Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."]
+    }
+```
+
+Generated with discovered.json: 0x37587e71382dd1e5ca9d841ff7eb94c50ff3fcb6
+
+# Diff at Tue, 01 Oct 2024 11:13:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 19927649
+- current block number: 19927649
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19927649 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x52c901666Cfc8AeE9b46A3b7C101688351529B37) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-05T23:11:37.000Z",["0x34E6305Fe21a0Ed945177dcD36D7E6084F9f1BcC"]]]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x727a91e8251A262A4ad5F2D5811c6cD862961759) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-05T23:10:15.000Z",["0x727a91e8251A262A4ad5F2D5811c6cD862961759"]],["2024-03-05T23:12:19.000Z",["0xb079375dDB17FaBae0F3Ed6B9950f6cD626cE2a3"]]]
+      values.$upgradeCount:
++        2
+    }
+```
+
+```diff
+    contract OptimismPortal (0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.$pastUpgrades:
++        [["2024-03-05T23:12:45.000Z",["0x1D9e8EcF1b3D0e773c2dE9f9B864d38322e5adb9"]]]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xbA256039AEdaD407692D8Deb366308BE6Bb2515C) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xCC61c26901E719B73273C1484e337cBAB84369EF) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-05T23:12:33.000Z",["0xA39D53FCa52Efe9a034D1EC61E30151621F9b945"]]]
+    }
+```
+
 Generated with discovered.json: 0x7b2e62e4308a06a63048c582ee71da2354b9aeec
 
 # Diff at Wed, 18 Sep 2024 07:30:56 GMT:

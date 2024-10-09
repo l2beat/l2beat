@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20454449,
   "configHash": "0x722bdc74afa4186d83f17ede56db3b5fde5f89d6a296169858d275ccc239df59",
-  "version": 14,
   "contracts": [
     {
       "name": "ChainportCongressMembersRegistry",
@@ -84,6 +83,56 @@
       "values": {
         "$admin": "0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F",
         "$implementation": "0x118cbd7a4769846AD4928598D1f805a509Cc8c0d",
+        "$pastUpgrades": [
+          [
+            "2021-07-22T10:30:25.000Z",
+            ["0x93307C7dE0f1B54814135f06321639A9f5c7dDFF"]
+          ],
+          [
+            "2021-08-03T12:38:19.000Z",
+            ["0xF7362aF99Cc1f48a1e50D304ed23BAf8f9Fd16f2"]
+          ],
+          [
+            "2021-11-10T14:18:21.000Z",
+            ["0x21AEbe5B5b7A33930b3c5c10fbd77117501a9552"]
+          ],
+          [
+            "2022-03-15T12:40:26.000Z",
+            ["0xE317bF1cf456875f37F1d1c5A63848d0Ab25653C"]
+          ],
+          [
+            "2022-07-25T08:03:28.000Z",
+            ["0xF8EfC927502c4645d147dEE742637BaF5B4318B0"]
+          ],
+          [
+            "2022-11-16T11:32:23.000Z",
+            ["0x6609d8d915153A18768199468c89A9B0e27581a6"]
+          ],
+          [
+            "2023-04-02T08:48:23.000Z",
+            ["0x77FA6b67b5fC1cC6116082981D1Db098B8980843"]
+          ],
+          [
+            "2023-07-10T07:49:59.000Z",
+            ["0x5D6F289A6A31c618A600d61984140877991E90f7"]
+          ],
+          [
+            "2023-08-09T08:10:35.000Z",
+            ["0x4899eB3c7db4c3b31Ee412fBcf2cfbA60Ca5C568"]
+          ],
+          [
+            "2024-01-15T08:39:47.000Z",
+            ["0x2861F4FCADEB5Be5cA47D306D139ec97439FC35C"]
+          ],
+          [
+            "2024-06-25T05:54:35.000Z",
+            ["0x5D9A457ce3F6ab74B7854DA7Cdc8ac5cc5bbb16C"]
+          ],
+          [
+            "2024-07-30T09:36:11.000Z",
+            ["0x118cbd7a4769846AD4928598D1f805a509Cc8c0d"]
+          ]
+        ],
         "$upgradeCount": 12
       },
       "derivedName": ""
@@ -255,5 +304,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

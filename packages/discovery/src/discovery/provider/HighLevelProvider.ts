@@ -168,6 +168,11 @@ export class HighLevelProvider implements IProvider {
     })
   }
 
+  async getBlock(blockNumber: number): Promise<providers.Block | undefined> {
+    this.stats.getBlockCount++
+    return await this.provider.getBlock(blockNumber)
+  }
+
   getTransaction(
     transactionHash: Hash256,
   ): Promise<providers.TransactionResponse | undefined> {

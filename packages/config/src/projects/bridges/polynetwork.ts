@@ -93,12 +93,8 @@ export const polynetwork: Bridge = {
         'Poly Bridge operation is centered around PolyNetwork chain that acts as a type of a light client for all supported chains. Each supported chain has a set or Relayers that transmit successive block headers to the PolyNetwork chain, as well as lock or burn events. Those events, after passing verification on PolyNetwork chain, are relayed to the destination chain by Relayers that are responsible for the destination chain. Relayers on the destination chain pass messages to appropriate contracts that mint or release corresponding tokens to the user after verifying validity of the message.',
       references: [
         {
-          text: 'PolyNetwork docs from source code',
-          href: 'https://github.com/polynetwork/docs',
-        },
-        {
-          text: 'Ethereum-related PolyNetwork docs from source code',
-          href: 'https://github.com/polynetwork/docs/blob/master/eth/README.md',
+          text: 'Poly Bridge docs',
+          href: 'https://github.com/polynetwork/poly-bridge/tree/master/doc',
         },
       ],
       risks: [

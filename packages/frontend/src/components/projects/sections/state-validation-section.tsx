@@ -57,9 +57,7 @@ function Category({ category }: CategoryProps) {
 
   return (
     <div>
-      <span className="text-lg font-bold uppercase md:text-xl">
-        {category.title}
-      </span>
+      <span className="text-lg font-bold md:text-xl">{category.title}</span>
       <Markdown className="mt-2 leading-snug text-gray-850 dark:text-gray-400 md:text-lg">
         {category.description}
       </Markdown>

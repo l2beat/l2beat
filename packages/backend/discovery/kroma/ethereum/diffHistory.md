@@ -1,3 +1,213 @@
+Generated with discovered.json: 0xdc48145f3c99b708f5284b5fc88e86f04501c052
+
+# Diff at Mon, 07 Oct 2024 09:02:03 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@ec3878239ad71f9055b207bdcd338b2f207af050 block: 20232340
+- current block number: 20912649
+
+## Description
+
+One SC signer swapped its EOA (Xangle): https://www.tally.xyz/gov/kroma-security-council-l2/proposal/66793954205565734871927487347209424383799739452575476193452192540588648719016.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncilToken (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
+    +++ description: None
+      values.tokenOwners.8:
+-        "0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1"
++        "0x66FA82F4AEA284d1d208437F179dFE13d8118f3A"
+      values.tokenOwners.3:
+-        "0xbDeE962137373A755a71C716E01B9946B1a27686"
++        "0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1"
+      values.tokens.8:
+-        10
++        12
+      values.tokens.3:
+-        5
++        10
+    }
+```
+
+Generated with discovered.json: 0x5b6193f2a97f297ba8bb7924dd948346e3654372
+
+# Diff at Tue, 01 Oct 2024 10:51:49 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20232340
+- current block number: 20232340
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20232340 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-09-05T02:26:47.000Z",["0x14126FFa3889a026A79F0f99FaE80B3dc9E38095"]]]
+    }
+```
+
+```diff
+    contract Timelock (0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-09-05T02:30:35.000Z",["0x595E1b330892Fcbf18b2BF099DE501Ad4d6A07C4"]],["2023-11-22T07:31:11.000Z",["0xe44da6e9fA92E3FD897Da84d38fa6B9322Dd22c3"]]]
+    }
+```
+
+```diff
+    contract KromaPortal (0x31F648572b67e60Ec6eb8E197E1848CC5F5558de) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-09-05T02:27:59.000Z",["0x381F53695230BAF83a39D1a08304D233A35730Fa"]]]
+    }
+```
+
+```diff
+    contract SystemConfig (0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-09-05T02:28:23.000Z",["0x2af8a383C395EBa6551E674EeD02344936fE36f5"]]]
+    }
+```
+
+```diff
+    contract SecurityCouncil (0x3de211088dF516da72efe68D386b561BEE256Ec4) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-09-05T02:27:35.000Z",["0x2BB1c629c46a4018fBe2538a98da7162F8355583"]],["2023-11-22T07:31:11.000Z",["0x61c7C854Dcdf8393230B1242a4c1107f4d023c28"]]]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-09-05T02:24:47.000Z",["0x675924D68200F2C967Ba12349d5d510676C7214c"]]]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x46d07221dfC313afe1BF104F4bB1f185301D65B9) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-08-29T05:48:11.000Z",["0x0257e4d92C00C9EfcCa1d641b224d7d09cfa4522"]],["2023-09-05T02:25:35.000Z",["0xbB1cDB5Cc35B1c9801DA8772aCBcDbd323A912D9"]]]
+    }
+```
+
+```diff
+    contract ZKVerifier (0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-08-29T05:49:23.000Z",["0xD3b1D396330EA8dd79615f12433B856160d7D8B4"]],["2023-09-01T03:41:59.000Z",["0x7E79726560B140fd6e089547bD049509F5423BFf"]],["2024-06-21T06:13:11.000Z",["0x4cd05aB629055a449617a28E3466660403eA7126"]]]
+    }
+```
+
+```diff
+    contract Colosseum (0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-09-05T02:27:11.000Z",["0x7526F997ea040B3949415c3a44e708273863AA2b"]],["2024-04-05T08:14:59.000Z",["0x311b4A33b6dC4e080eE0d98caAaf8dF86C833066"]],["2024-04-25T08:09:11.000Z",["0xb87eaB624EE684C1799f1E8b24936A1c90759eEc"]]]
+    }
+```
+
+```diff
+    contract USDCBridge (0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-11-16T08:17:11.000Z",["0xE4e9F3AD8A6F224c4b39854D3550AD258441AfE3"]]]
+    }
+```
+
+```diff
+    contract SpectrumHub (0x7fe71D0Dde2f6Bbc8474c41dc39bDFd6bCd9Eca5) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-05-13T06:43:23.000Z",["0xbb1C83Da81A6eb02B3156A894a58325b741e0F0F"]],["2024-05-13T07:08:59.000Z",["0x736058a55d3D711aC2DC131A6B926A4C245c7351"]],["2024-05-17T05:55:23.000Z",["0x5d55AEC0a39c660f369F147c4133cc099f095508"]]]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x827962404D7104202C5aaa6b929115C8211d9596) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-09-05T02:25:11.000Z",["0x404133EdF24F56b7dD9c6d89Fb56bb35244461B4"]]]
+    }
+```
+
+```diff
+    contract SpectrumCore (0x88b6bBb148748C18B377A57c9d4E6c714AF28078) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-05-13T04:33:11.000Z",["0xCa977F1D10Dd2361ae57295AdC0C6fFc06f1E6C0"]],["2024-05-17T05:55:47.000Z",["0x89792dDc14209A3156d90F5e4A34F4c532bB4EC6"]]]
+    }
+```
+
+```diff
+    contract SH_ProxyAdmin (0x9841bC06C8284095824e9397AC818aD1114C444C) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-05-13T06:43:23.000Z",["0x0114fd85c342F39e22E2c8e1Be512ade856309C0"]]]
+    }
+```
+
+```diff
+    contract spETH_ProxyAdmin (0xa50f2b3d55fb311c81f6FB75998B48A67505c6F4) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-05-13T04:32:11.000Z",["0x0114fd85c342F39e22E2c8e1Be512ade856309C0"]]]
+    }
+```
+
+```diff
+    contract UpgradeGovernor (0xb3c415c2Aad428D5570208e1772cb68e7D06a537) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-09-05T02:30:59.000Z",["0x2a51e099CC7AF922CcDe7F3db909DC7b71B8D030"]],["2023-11-22T07:31:11.000Z",["0x64F8F4EB207D51F74caf6db644Bf710Ad86989b3"]]]
+    }
+```
+
+```diff
+    contract SC_ProxyAdmin (0xd26F4195B147b988E7497779f7DED22ba130204d) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-05-13T04:33:11.000Z",["0x0114fd85c342F39e22E2c8e1Be512ade856309C0"]]]
+    }
+```
+
+```diff
+    contract SecurityCouncilToken (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-09-05T02:28:47.000Z",["0x54140F4Cd6e6665BE0151eD5a8aC949EC2942439"]],["2023-11-22T07:31:11.000Z",["0x108eDc4Df0b9B04dcE9f6FFBD65Dd9895562c14C"]]]
+    }
+```
+
+```diff
+    contract spETH (0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-05-13T04:32:11.000Z",["0x05F3e2b5f90EF4543D3E147AD4DDAa0C7A8C3Fcc"]]]
+    }
+```
+
+```diff
+    contract ValidatorPool (0xFdFF462845953D90719A78Fd12a2d103541d2103) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-09-05T02:26:23.000Z",["0x6e1781678ffE6CDc109fd3bC0833c47BD0F23de1"]],["2023-11-22T07:31:11.000Z",["0x3eb033BAc5c449bDcb6D082c4f728eDAfC8D75fa"]],["2024-04-05T08:14:59.000Z",["0x8EDc4cCa2aF96f5D5141d55333043a65c3f59Ec4"]]]
+    }
+```
+
 Generated with discovered.json: 0xa0f804d04385316fdedc422c72c8f83409cb6920
 
 # Diff at Fri, 30 Aug 2024 07:53:16 GMT:

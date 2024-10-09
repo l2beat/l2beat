@@ -1,3 +1,109 @@
+Generated with discovered.json: 0xbd244e164ee4d4eec3670064354285de2d3353d5
+
+# Diff at Tue, 01 Oct 2024 11:12:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 256572673
+- current block number: 256572673
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 256572673 (main branch discovery), not current.
+
+```diff
+    contract L2ERC20Gateway (0x09e9222E96E7B4AE2a407B98d48e330053351EEe) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2021-06-26T14:01:05.000Z",["0x4bF6365278F340E759e7BB4732fE8B507784eAEB"]],["2021-08-26T16:19:50.000Z",["0x370ED500E9FEBC1ab05aC0A1617F8775aB80c48e"]],["2021-08-30T17:47:17.000Z",["0xEdE95739749BfA021134E41F520d784c99323D6B"]],["2022-08-08T17:33:55.000Z",["0x1DCf7D03574fbC7C205F41f2e116eE094a652e93"]]]
+    }
+```
+
+```diff
+    contract L2Timelock (0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-03-16T12:08:28.000Z",["0x41740588b86B4e0629b83A4e28786FF94361c3A3"]]]
+    }
+```
+
+```diff
+    contract L2GatewayRouter (0x5288c571Fd7aD117beA99bF60FE0846C4E84F933) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2021-08-26T16:19:50.000Z",["0xb30751052797AdBDdbF4847045E51E65e48BAF9c"]],["2021-08-30T17:47:17.000Z",["0x176a9d89d235512Ad5CB4b6A0879D704D8315eF8"]],["2022-08-08T17:33:55.000Z",["0xe80eb0238029333e368e0bDDB7acDf1b9cb28278"]]]
+    }
+```
+
+```diff
+    contract L2WethGateway (0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2021-06-28T22:19:37.000Z",["0xb01dB0529B80B73a86ecD75Ae3559844319575E5"]],["2021-08-26T16:19:50.000Z",["0xc4940069140142236D4065b866018f7b2BeC77fD"]],["2021-08-30T17:48:09.000Z",["0x0db4f16c99B0aE9b00fc09bF69b36c7d73c45CBE"]],["2022-08-08T17:33:55.000Z",["0xB642058A41D414D9De3F36D14051623e557f1052"]],["2023-02-10T03:20:53.000Z",["0x806421D09cDb253aa9d128a658e60c0B95eFFA01"]]]
+    }
+```
+
+```diff
+    contract TreasuryGovernor (0x789fC99093B09aD01C34DC7251D0C89ce743e5a4) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-03-16T12:08:28.000Z",["0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9"]]]
+    }
+```
+
+```diff
+    contract L2ArbitrumToken (0x912CE59144191C1204E64559FE8253a0e49E6548) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-03-16T12:08:28.000Z",["0xC4ed0A9Ea70d5bCC69f748547650d32cC219D882"]]]
+    }
+```
+
+```diff
+    contract TreasuryTimelock (0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-03-16T12:08:28.000Z",["0x41740588b86B4e0629b83A4e28786FF94361c3A3"]]]
+    }
+```
+
+```diff
+    contract L2ARBGateway (0xCaD7828a19b363A2B44717AFB1786B5196974D8E) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-03-16T12:07:15.000Z",["0x5D96786d3Eb13CAd05c9Fd7d0f7bb9560b4E5056"]]]
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-03-16T12:08:28.000Z",["0x7A013834D54e9B22d1978aAe3aaDDC909Aa79115"]]]
+    }
+```
+
+```diff
+    contract SecurityCouncilManager (0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-08-15T22:36:05.000Z",["0x468dA0eE5570Bdb1Dd81bFd925BAf028A93Dce64"]]]
+    }
+```
+
+```diff
+    contract CoreGovernor (0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-03-16T12:08:28.000Z",["0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9"]]]
+    }
+```
+
 Generated with discovered.json: 0x05d95882cf858d5d7268d1c3f342a3c9caa5f530
 
 # Diff at Mon, 23 Sep 2024 16:30:22 GMT:

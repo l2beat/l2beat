@@ -422,9 +422,17 @@
       "address": "0x92D6C1e31e14520e676a687F0a93788B716BEff5"
     },
     {
+      "symbol": "eBTC",
+      "address": "0x657e8C867D8B37dCC18fA4Caead9C45EB088C642"
+    },
+    {
       "symbol": "eETH",
       "address": "0x35fA164735182de50811E8e2E824cFb9B6118ac2",
       "category": "ether"
+    },
+    {
+      "symbol": "EIGEN",
+      "address": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
     },
     {
       "symbol": "ELG",
@@ -1076,6 +1084,10 @@
       "address": "0x3845badAde8e6dFF049820680d1F14bD3903a5d0"
     },
     {
+      "symbol": "SIPHER",
+      "address": "0x9F52c8ecbEe10e00D9faaAc5Ee9Ba0fF6550F511"
+    },
+    {
       "symbol": "SDT",
       "address": "0x73968b9a57c6e53d41345fd57a6e6ae27d6cdb2f"
     },
@@ -1148,6 +1160,12 @@
     {
       "symbol": "SRM",
       "address": "0x476c5E26a75bd202a9683ffD34359C0CC15be0fF"
+    },
+    {
+      "symbol": "ybETH",
+      "category": "ether",
+      "address": "0x76bf2D1e6dFda645c0c17440B17Eccc181dfC351",
+      "coingeckoId": "veno-eth" // ybETH price currently is not on CG
     },
     {
       "symbol": "STARL",
@@ -1425,6 +1443,10 @@
     {
       "symbol": "ZEND",
       "address": "0xb2606492712D311be8f41d940AFE8CE742A52D44"
+    },
+    {
+      "symbol": "zkCRO",
+      "address": "0x28Ff2E4dD1B58efEB0fC138602A28D5aE81e44e2"
     },
     {
       "symbol": "ZKS",
@@ -2826,6 +2848,13 @@
     }
   ],
   "mantle": [
+    {
+      "symbol": "CATI",
+      "address": "0x1Bdd8878252DaddD3Af2ba30628813271294eDc0",
+      "source": "native",
+      "coingeckoId": "catizen",
+      "supply": "circulatingSupply"
+    },
     {
       "symbol": "MNT",
       "source": "canonical",

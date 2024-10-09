@@ -1,3 +1,63 @@
+Generated with discovered.json: 0x49710ae52f73994eb3a49c829d315f0f2491d48b
+
+# Diff at Tue, 01 Oct 2024 10:50:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 19825321
+- current block number: 19825321
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825321 (main branch discovery), not current.
+
+```diff
+    contract MerkleDistributor (0x01d3348601968aB85b4bb028979006eac235a588) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract LiquidityStaking (0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract TreasuryBridge (0x639192D54431F8c816368D3FB4107Bc168d0E871) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-11-20T13:04:23.000Z",["0x8d0051943D4c72aF12D638c6b7253C71929A910A"]]]
+    }
+```
+
+```diff
+    contract SafetyModule (0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2021-08-03T08:06:30.000Z",["0xD249aD8fA4646C303028a8d29cf8568A38897C55"]],["2021-11-20T04:36:32.000Z",["0x31D76F5Db8F40D28886Bf00F3be5F157472Bf77A"]]]
+    }
+```
+
+```diff
+    contract StarkPerpetual (0xD54f502e184B6B739d7D27a6410a67dc462D69c8) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2021-02-11T08:54:42.000Z",["0x0a5a7A738528af22B4f5cfE70E5A1e07A2cfE643","0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5","0xEbfeA8AC94FbEEcEe91d457D8cBd3b047bFd2481","0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0","0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3"]],["2021-02-11T15:51:49.000Z",["0x0a5a7A738528af22B4f5cfE70E5A1e07A2cfE643","0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5","0xEbfeA8AC94FbEEcEe91d457D8cBd3b047bFd2481","0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0","0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3"]],["2021-03-16T13:44:41.000Z",["0x0a5a7A738528af22B4f5cfE70E5A1e07A2cfE643","0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5","0xEbfeA8AC94FbEEcEe91d457D8cBd3b047bFd2481","0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0","0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3"]],["2021-05-13T08:12:15.000Z",["0x2C0df87E073755139101b35c0A51e065291cc2d3","0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5","0x3FeD7bF5Bf3E738bc30fBe61B048fDcb82368545","0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0","0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3"]],["2023-04-30T05:12:23.000Z",["0x2C0df87E073755139101b35c0A51e065291cc2d3","0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5","0x3FeD7bF5Bf3E738bc30fBe61B048fDcb82368545","0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0","0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3"]]]
+      values.$upgradeCount:
++        5
+    }
+```
+
 Generated with discovered.json: 0x55fe5c6d1d28cf7f14e44089e6d8c4b4d222d35f
 
 # Diff at Fri, 30 Aug 2024 07:52:06 GMT:

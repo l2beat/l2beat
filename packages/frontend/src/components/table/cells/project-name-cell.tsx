@@ -8,7 +8,6 @@ import { ShieldIcon } from '~/icons/shield'
 import { UnderReviewIcon } from '~/icons/under-review'
 import { UnverifiedIcon } from '~/icons/unverified'
 import { type SyncStatus } from '~/types/sync-status'
-import { cn } from '~/utils/cn'
 import { NotSyncedBadge } from '../../badge/not-synced-badge'
 
 export interface ProjectCellProps {
@@ -28,19 +27,12 @@ export interface ProjectCellProps {
 
 export function ProjectNameCell({ project, className }: ProjectCellProps) {
   return (
-    <div className={cn('flex items-center pl-2 2xl:pl-3', className)}>
-      <div>
-        <span className="text-base font-bold leading-none md:text-lg">
+    <div className={className}>
+      <div className="flex items-baseline gap-1.5">
+        <span className="text-xs font-bold !leading-none md:!text-base">
           {project.shortName ?? project.name}
         </span>
-        {project.hostChain && (
-          <span className="block text-[0.8125rem] font-medium leading-[0.9375rem] text-gray-500 dark:text-zinc-400">
-            L3 on {project.hostChain}
-          </span>
-        )}
-      </div>
-      {project.isVerified === false && (
-        <span className="pl-1.5">
+        {project.isVerified === false && (
           <Tooltip>
             <TooltipTrigger>
               <UnverifiedIcon className="relative top-px size-4 fill-red-300" />
@@ -49,21 +41,17 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
               This project contains unverified contracts.
             </TooltipContent>
           </Tooltip>
-        </span>
-      )}
-      {project.redWarning && (
-        <span className="pl-1.5">
+        )}
+        {project.redWarning && (
           <Tooltip>
             <TooltipTrigger>
               <ShieldIcon className="relative top-px size-4 fill-red-300" />
             </TooltipTrigger>
             <TooltipContent>{project.redWarning}</TooltipContent>
           </Tooltip>
-        </span>
-      )}
-      {(!!project.showProjectUnderReview ||
-        !!project.hasImplementationChanged) && (
-        <span className="pl-1.5">
+        )}
+        {(!!project.showProjectUnderReview ||
+          !!project.hasImplementationChanged) && (
           <Tooltip>
             <TooltipTrigger>
               <UnderReviewIcon className="relative top-px size-4" />
@@ -75,10 +63,8 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
               )}
             </TooltipContent>
           </Tooltip>
-        </span>
-      )}
-      {project.headerWarning && (
-        <span className="pl-1.5">
+        )}
+        {project.headerWarning && (
           <Tooltip>
             <TooltipTrigger>
               <ShieldIcon className="relative top-px h-4 fill-yellow-700 dark:fill-yellow-300" />
@@ -89,12 +75,19 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
               </Markdown>
             </TooltipContent>
           </Tooltip>
+        )}
+        {project.data?.syncStatus?.isSynced === false && (
+          <div className="mb-1.5  flex items-center justify-center">
+            <NotSyncedBadge
+              syncedUntil={project.data?.syncStatus.syncedUntil}
+            />
+          </div>
+        )}
+      </div>
+      {project.hostChain && (
+        <span className="block text-[0.8125rem] font-medium leading-[0.9375rem] text-secondary">
+          L3 on {project.hostChain}
         </span>
-      )}
-      {project.data?.syncStatus?.isSynced === false && (
-        <div className="mb-1.5 flex items-center justify-center pl-1.5">
-          <NotSyncedBadge syncedUntil={project.data?.syncStatus.syncedUntil} />
-        </div>
       )}
     </div>
   )

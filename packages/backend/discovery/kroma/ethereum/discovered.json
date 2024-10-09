@@ -1,9 +1,8 @@
 {
   "name": "kroma",
   "chain": "ethereum",
-  "blockNumber": 20232340,
+  "blockNumber": 20912649,
   "configHash": "0x2dc78fa0c026b5bfa1b50ed5ae271d153b773a2e2f38e5ace3d7934eae709860",
-  "version": 14,
   "contracts": [
     {
       "name": "L2OutputOracle",
@@ -26,14 +25,20 @@
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0x14126FFa3889a026A79F0f99FaE80B3dc9E38095",
+        "$pastUpgrades": [
+          [
+            "2023-09-05T02:26:47.000Z",
+            ["0x14126FFa3889a026A79F0f99FaE80B3dc9E38095"]
+          ]
+        ],
         "$upgradeCount": 1,
         "COLOSSEUM": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 13102200,
-        "latestOutputIndex": 7279,
-        "nextBlockNumber": 13104000,
-        "nextOutputIndex": 7280,
+        "latestBlockNumber": 17204400,
+        "latestOutputIndex": 9558,
+        "nextBlockNumber": 17206200,
+        "nextOutputIndex": 9559,
         "startingBlockNumber": 0,
         "startingTimestamp": 1693880387,
         "SUBMISSION_INTERVAL": 1800,
@@ -69,6 +74,16 @@
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0xe44da6e9fA92E3FD897Da84d38fa6B9322Dd22c3",
+        "$pastUpgrades": [
+          [
+            "2023-09-05T02:30:35.000Z",
+            ["0x595E1b330892Fcbf18b2BF099DE501Ad4d6A07C4"]
+          ],
+          [
+            "2023-11-22T07:31:11.000Z",
+            ["0xe44da6e9fA92E3FD897Da84d38fa6B9322Dd22c3"]
+          ]
+        ],
         "$upgradeCount": 2,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -121,6 +136,12 @@
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0x381F53695230BAF83a39D1a08304D233A35730Fa",
+        "$pastUpgrades": [
+          [
+            "2023-09-05T02:27:59.000Z",
+            ["0x381F53695230BAF83a39D1a08304D233A35730Fa"]
+          ]
+        ],
         "$upgradeCount": 1,
         "GUARDIAN": "0x3de211088dF516da72efe68D386b561BEE256Ec4",
         "L2_ORACLE": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
@@ -128,7 +149,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 200000,
-          "prevBlockNum": 20232340
+          "prevBlockNum": 20906854
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35",
@@ -163,6 +184,12 @@
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0x2af8a383C395EBa6551E674EeD02344936fE36f5",
+        "$pastUpgrades": [
+          [
+            "2023-09-05T02:28:23.000Z",
+            ["0x2af8a383C395EBa6551E674EeD02344936fE36f5"]
+          ]
+        ],
         "$upgradeCount": 1,
         "batcherHash": "0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12",
         "gasLimit": 30000000,
@@ -212,6 +239,16 @@
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0x61c7C854Dcdf8393230B1242a4c1107f4d023c28",
+        "$pastUpgrades": [
+          [
+            "2023-09-05T02:27:35.000Z",
+            ["0x2BB1c629c46a4018fBe2538a98da7162F8355583"]
+          ],
+          [
+            "2023-11-22T07:31:11.000Z",
+            ["0x61c7C854Dcdf8393230B1242a4c1107f4d023c28"]
+          ]
+        ],
         "$upgradeCount": 2,
         "COLOSSEUM": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
         "GOVERNOR": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537",
@@ -247,9 +284,15 @@
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0x675924D68200F2C967Ba12349d5d510676C7214c",
+        "$pastUpgrades": [
+          [
+            "2023-09-05T02:24:47.000Z",
+            ["0x675924D68200F2C967Ba12349d5d510676C7214c"]
+          ]
+        ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 0,
-        "messageNonce": 3602,
+        "messageNonce": 3979,
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -279,6 +322,16 @@
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0xbB1cDB5Cc35B1c9801DA8772aCBcDbd323A912D9",
+        "$pastUpgrades": [
+          [
+            "2023-08-29T05:48:11.000Z",
+            ["0x0257e4d92C00C9EfcCa1d641b224d7d09cfa4522"]
+          ],
+          [
+            "2023-09-05T02:25:35.000Z",
+            ["0xbB1cDB5Cc35B1c9801DA8772aCBcDbd323A912D9"]
+          ]
+        ],
         "$upgradeCount": 2,
         "MESSENGER": "0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746",
         "OTHER_BRIDGE": "0x420000000000000000000000000000000000000A",
@@ -365,6 +418,20 @@
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0x4cd05aB629055a449617a28E3466660403eA7126",
+        "$pastUpgrades": [
+          [
+            "2023-08-29T05:49:23.000Z",
+            ["0xD3b1D396330EA8dd79615f12433B856160d7D8B4"]
+          ],
+          [
+            "2023-09-01T03:41:59.000Z",
+            ["0x7E79726560B140fd6e089547bD049509F5423BFf"]
+          ],
+          [
+            "2024-06-21T06:13:11.000Z",
+            ["0x4cd05aB629055a449617a28E3466660403eA7126"]
+          ]
+        ],
         "$upgradeCount": 3,
         "version": "0.1.5"
       }
@@ -384,6 +451,20 @@
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0xb87eaB624EE684C1799f1E8b24936A1c90759eEc",
+        "$pastUpgrades": [
+          [
+            "2023-09-05T02:27:11.000Z",
+            ["0x7526F997ea040B3949415c3a44e708273863AA2b"]
+          ],
+          [
+            "2024-04-05T08:14:59.000Z",
+            ["0x311b4A33b6dC4e080eE0d98caAaf8dF86C833066"]
+          ],
+          [
+            "2024-04-25T08:09:11.000Z",
+            ["0xb87eaB624EE684C1799f1E8b24936A1c90759eEc"]
+          ]
+        ],
         "$upgradeCount": 3,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -427,6 +508,12 @@
       "values": {
         "$admin": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1",
         "$implementation": "0xE4e9F3AD8A6F224c4b39854D3550AD258441AfE3",
+        "$pastUpgrades": [
+          [
+            "2023-11-16T08:17:11.000Z",
+            ["0xE4e9F3AD8A6F224c4b39854D3550AD258441AfE3"]
+          ]
+        ],
         "$upgradeCount": 1,
         "MESSENGER": "0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746",
         "paused": false,
@@ -449,6 +536,20 @@
       "values": {
         "$admin": "0x9841bC06C8284095824e9397AC818aD1114C444C",
         "$implementation": "0x5d55AEC0a39c660f369F147c4133cc099f095508",
+        "$pastUpgrades": [
+          [
+            "2024-05-13T06:43:23.000Z",
+            ["0xbb1C83Da81A6eb02B3156A894a58325b741e0F0F"]
+          ],
+          [
+            "2024-05-13T07:08:59.000Z",
+            ["0x736058a55d3D711aC2DC131A6B926A4C245c7351"]
+          ],
+          [
+            "2024-05-17T05:55:23.000Z",
+            ["0x5d55AEC0a39c660f369F147c4133cc099f095508"]
+          ]
+        ],
         "$upgradeCount": 3,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -495,6 +596,12 @@
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0x404133EdF24F56b7dD9c6d89Fb56bb35244461B4",
+        "$pastUpgrades": [
+          [
+            "2023-09-05T02:25:11.000Z",
+            ["0x404133EdF24F56b7dD9c6d89Fb56bb35244461B4"]
+          ]
+        ],
         "$upgradeCount": 1,
         "MESSENGER": "0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746",
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000009",
@@ -518,6 +625,16 @@
       "values": {
         "$admin": "0xd26F4195B147b988E7497779f7DED22ba130204d",
         "$implementation": "0x89792dDc14209A3156d90F5e4A34F4c532bB4EC6",
+        "$pastUpgrades": [
+          [
+            "2024-05-13T04:33:11.000Z",
+            ["0xCa977F1D10Dd2361ae57295AdC0C6fFc06f1E6C0"]
+          ],
+          [
+            "2024-05-17T05:55:47.000Z",
+            ["0x89792dDc14209A3156d90F5e4A34F4c532bB4EC6"]
+          ]
+        ],
         "$upgradeCount": 2,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -544,9 +661,9 @@
             "feeVault": "0x8898EF6f9838A0Ec088F174A77F8a094fB788C4e",
             "defaultFeeAmount": 2000000000000000
           },
-          "spSnap": { "evalValue": "1264343537265083327923" },
+          "spSnap": { "evalValue": "974041155081783749744" },
           "assets": ["0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee"],
-          "snaps": [{ "evalValue": "1264343537265083327923" }]
+          "snaps": [{ "evalValue": "974041155081783749744" }]
         },
         "owner": "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f",
         "paused": false,
@@ -575,6 +692,12 @@
       "values": {
         "$admin": "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f",
         "$implementation": "0x0114fd85c342F39e22E2c8e1Be512ade856309C0",
+        "$pastUpgrades": [
+          [
+            "2024-05-13T06:43:23.000Z",
+            ["0x0114fd85c342F39e22E2c8e1Be512ade856309C0"]
+          ]
+        ],
         "$upgradeCount": 1,
         "owner": "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -603,6 +726,12 @@
       "values": {
         "$admin": "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f",
         "$implementation": "0x0114fd85c342F39e22E2c8e1Be512ade856309C0",
+        "$pastUpgrades": [
+          [
+            "2024-05-13T04:32:11.000Z",
+            ["0x0114fd85c342F39e22E2c8e1Be512ade856309C0"]
+          ]
+        ],
         "$upgradeCount": 1,
         "owner": "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -626,9 +755,19 @@
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0x64F8F4EB207D51F74caf6db644Bf710Ad86989b3",
+        "$pastUpgrades": [
+          [
+            "2023-09-05T02:30:59.000Z",
+            ["0x2a51e099CC7AF922CcDe7F3db909DC7b71B8D030"]
+          ],
+          [
+            "2023-11-22T07:31:11.000Z",
+            ["0x64F8F4EB207D51F74caf6db644Bf710Ad86989b3"]
+          ]
+        ],
         "$upgradeCount": 2,
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 20232340,
+        "clock": 20912649,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -675,6 +814,12 @@
       "values": {
         "$admin": "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f",
         "$implementation": "0x0114fd85c342F39e22E2c8e1Be512ade856309C0",
+        "$pastUpgrades": [
+          [
+            "2024-05-13T04:33:11.000Z",
+            ["0x0114fd85c342F39e22E2c8e1Be512ade856309C0"]
+          ]
+        ],
         "$upgradeCount": 1,
         "owner": "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -698,8 +843,18 @@
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0x108eDc4Df0b9B04dcE9f6FFBD65Dd9895562c14C",
+        "$pastUpgrades": [
+          [
+            "2023-09-05T02:28:47.000Z",
+            ["0x54140F4Cd6e6665BE0151eD5a8aC949EC2942439"]
+          ],
+          [
+            "2023-11-22T07:31:11.000Z",
+            ["0x108eDc4Df0b9B04dcE9f6FFBD65Dd9895562c14C"]
+          ]
+        ],
         "$upgradeCount": 2,
-        "clock": 20232340,
+        "clock": 20912649,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "DOMAIN_SEPARATOR": "0x1630586f33defc933258f4512df143dd6bf7adb1b4d039178e748d4cac4813b8",
         "eip712Domain": {
@@ -728,14 +883,14 @@
           "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
           "0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A",
           "0x8ECF028Cd647379E580DaA6701A11154750fcd3c",
-          "0xbDeE962137373A755a71C716E01B9946B1a27686",
+          "0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1",
           "0x7B3225ADc5D908668FaA050246680CBE4e75A93f",
           "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80",
           "0xECe4AAf6A41aa81A164363Ec6C420510617Fc998",
           "0x3a4F65D1ACFb2A3F5AD93ef7b240bfa1079052e0",
-          "0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1"
+          "0x66FA82F4AEA284d1d208437F179dFE13d8118f3A"
         ],
-        "tokens": [0, 11, 4, 5, 6, 7, 8, 9, 10],
+        "tokens": [0, 11, 4, 10, 6, 7, 8, 9, 12],
         "tokenURI": [
           "https://nft.kroma.network/sc/1.png",
           "https://nft.kroma.network/sc/3.png"
@@ -761,6 +916,12 @@
       "values": {
         "$admin": "0xa50f2b3d55fb311c81f6FB75998B48A67505c6F4",
         "$implementation": "0x05F3e2b5f90EF4543D3E147AD4DDAa0C7A8C3Fcc",
+        "$pastUpgrades": [
+          [
+            "2024-05-13T04:32:11.000Z",
+            ["0x05F3e2b5f90EF4543D3E147AD4DDAa0C7A8C3Fcc"]
+          ]
+        ],
         "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -789,7 +950,7 @@
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "symbol": "spETH",
-        "totalSupply": "1213261748343680177753"
+        "totalSupply": "927904832582073518161"
       },
       "derivedName": "SPETH"
     },
@@ -817,10 +978,24 @@
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0x8EDc4cCa2aF96f5D5141d55333043a65c3f59Ec4",
+        "$pastUpgrades": [
+          [
+            "2023-09-05T02:26:23.000Z",
+            ["0x6e1781678ffE6CDc109fd3bC0833c47BD0F23de1"]
+          ],
+          [
+            "2023-11-22T07:31:11.000Z",
+            ["0x3eb033BAc5c449bDcb6D082c4f728eDAfC8D75fa"]
+          ],
+          [
+            "2024-04-05T08:14:59.000Z",
+            ["0x8EDc4cCa2aF96f5D5141d55333043a65c3f59Ec4"]
+          ]
+        ],
         "$upgradeCount": 3,
         "L2_ORACLE": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
         "MAX_UNBOND": 10,
-        "nextValidator": "0xe35002a892EA997CC10500DE27B5bA3E32FEaC61",
+        "nextValidator": "0xC74970A67e867Ee3dA881B6030B3f7785CFbca0A",
         "PORTAL": "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de",
         "REQUIRED_BOND_AMOUNT": "200000000000000000",
         "ROUND_DURATION": 1800,
@@ -828,7 +1003,7 @@
         "TAX_DENOMINATOR": 100,
         "TAX_NUMERATOR": 20,
         "TRUSTED_VALIDATOR": "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
-        "validatorCount": 361,
+        "validatorCount": 248,
         "VAULT_REWARD_GAS_LIMIT": 100000,
         "version": "1.0.1"
       },
@@ -847,6 +1022,7 @@
     { "address": "0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1" },
     { "address": "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80" },
     { "address": "0x61e0D34b5206Fa8005EC1De8000df9B9dDee23Db" },
+    { "address": "0x66FA82F4AEA284d1d208437F179dFE13d8118f3A" },
     { "address": "0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A" },
     { "address": "0x7B3225ADc5D908668FaA050246680CBE4e75A93f" },
     {
@@ -869,8 +1045,7 @@
     { "address": "0x8898EF6f9838A0Ec088F174A77F8a094fB788C4e" },
     { "address": "0x8ECF028Cd647379E580DaA6701A11154750fcd3c" },
     { "address": "0x994C074BD9503e4f01CB834e2c409FA16b41E587" },
-    { "address": "0xbDeE962137373A755a71C716E01B9946B1a27686" },
-    { "address": "0xe35002a892EA997CC10500DE27B5bA3E32FEaC61" },
+    { "address": "0xC74970A67e867Ee3dA881B6030B3f7785CFbca0A" },
     { "address": "0xECe4AAf6A41aa81A164363Ec6C420510617Fc998" },
     { "address": "0xfF00000000000000000000000000000000000255" }
   ],
@@ -1761,5 +1936,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

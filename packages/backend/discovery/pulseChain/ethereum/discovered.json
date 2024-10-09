@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 17968825,
   "configHash": "0xccac8f34b06e2a5664c1a8d39d3544c382c436c2d93cd6c2c70718376fae67b3",
-  "version": 14,
   "contracts": [
     {
       "name": "ForeignOmnibridge",
@@ -21,6 +20,13 @@
       "values": {
         "$admin": "0x13A9594a2696D3c35F9D6E4Be6b332f699C57801",
         "$implementation": "0xB7DF1E00ae030e966E635ede273625240546B873",
+        "$pastUpgrades": [
+          [
+            "2023-05-15T09:06:11.000Z",
+            ["0xB7DF1E00ae030e966E635ede273625240546B873"]
+          ]
+        ],
+        "$upgradeCount": 1,
         "bridgeContract": "0xd0764FAe29E0a6a96fF685f71CfC685456D5636c",
         "getBridgeInterfacesVersion": { "major": 3, "minor": 3, "patch": 0 },
         "getBridgeMode": "0xb1516c26",
@@ -51,6 +57,13 @@
       "values": {
         "$admin": "0xDf5d165A7EB95D26355c56d53799B7da1240e585",
         "$implementation": "0x95B303987A60C71504D99Aa1b13B4DA07b0790ab",
+        "$pastUpgrades": [
+          [
+            "2023-05-15T08:53:47.000Z",
+            ["0x95B303987A60C71504D99Aa1b13B4DA07b0790ab"]
+          ]
+        ],
+        "$upgradeCount": 1,
         "deployedAtBlock": 17264123,
         "F_ADDR": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
         "getBridgeValidatorsInterfacesVersion": {
@@ -135,6 +148,13 @@
       "values": {
         "$admin": "0xDf5d165A7EB95D26355c56d53799B7da1240e585",
         "$implementation": "0xe98699957d3504aCD57ffF861E4b77b57eB02467",
+        "$pastUpgrades": [
+          [
+            "2023-05-15T08:54:59.000Z",
+            ["0xe98699957d3504aCD57ffF861E4b77b57eB02467"]
+          ]
+        ],
+        "$upgradeCount": 1,
         "allowReentrantRequests": false,
         "decimalShift": 0,
         "deployedAtBlock": 17264129,
@@ -435,5 +455,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

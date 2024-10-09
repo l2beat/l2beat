@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20792032,
   "configHash": "0x2eec4bf11f15af3314b396b1fca83a67a70e09cd7b429a0be66f522678b530db",
-  "version": 14,
   "contracts": [
     {
       "name": "",
@@ -21,6 +20,24 @@
       "values": {
         "$admin": "0xc045b35d1cf9501B2fc95e7c489FDA96345A4D70",
         "$implementation": "0x59fF8Eb9B384a6e1146194D7b2e754694957c5Af",
+        "$pastUpgrades": [
+          [
+            "2024-02-23T02:38:47.000Z",
+            ["0x88022f07eB8F5c6FfECCd50152A6c7CAf69Bfc62"]
+          ],
+          [
+            "2024-03-18T08:25:23.000Z",
+            ["0x2BeBced27D2c7ECE9C6cEa9daFD2711aDdc8a1Bc"]
+          ],
+          [
+            "2024-06-20T02:59:11.000Z",
+            ["0xb4D37E8f6e970344c1cc99F65D8D1Afd5F7590D9"]
+          ],
+          [
+            "2024-09-20T05:02:35.000Z",
+            ["0x59fF8Eb9B384a6e1146194D7b2e754694957c5Af"]
+          ]
+        ],
         "$upgradeCount": 4
       }
     },
@@ -93,6 +110,7 @@
       "values": {
         "$admin": "0xFb504CD4eD46024B83c4337044995CF112205f18",
         "$implementation": "0xdbF3C7e0a1493B81B295547ae3D0711417481A55",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "getAdmin": "0xFb504CD4eD46024B83c4337044995CF112205f18",
         "getImplementation": "0xdbF3C7e0a1493B81B295547ae3D0711417481A55"
@@ -115,6 +133,7 @@
       "values": {
         "$admin": "0xFb504CD4eD46024B83c4337044995CF112205f18",
         "$implementation": "0xdbF3C7e0a1493B81B295547ae3D0711417481A55",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "getAdmin": "0xFb504CD4eD46024B83c4337044995CF112205f18",
         "getImplementation": "0xdbF3C7e0a1493B81B295547ae3D0711417481A55"
@@ -137,6 +156,7 @@
       "values": {
         "$admin": "0xFb504CD4eD46024B83c4337044995CF112205f18",
         "$implementation": "0xdbF3C7e0a1493B81B295547ae3D0711417481A55",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "getAdmin": "0xFb504CD4eD46024B83c4337044995CF112205f18",
         "getImplementation": "0xdbF3C7e0a1493B81B295547ae3D0711417481A55"
@@ -172,6 +192,7 @@
       "values": {
         "$admin": "0xFb504CD4eD46024B83c4337044995CF112205f18",
         "$implementation": "0xdbF3C7e0a1493B81B295547ae3D0711417481A55",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "getAdmin": "0xFb504CD4eD46024B83c4337044995CF112205f18",
         "getImplementation": "0xdbF3C7e0a1493B81B295547ae3D0711417481A55"
@@ -392,5 +413,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xb3e808e6410511e5cdb557ab187aac264a51956c695f8cc327ebaa202f7514fd"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

@@ -10,7 +10,6 @@ import {
   DATA_ON_CHAIN,
   RISK_VIEW,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -191,7 +190,7 @@ export const taiko: Layer2 = {
     minTimestampForTvl: new UnixTime(1716620627),
   },
   type: 'layer2',
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: {
       description: `Taiko uses a multi-tier proof system to validate the state. However, current tier proofs include either SGX (secure-enclave) execution verification, or approval by a minimum number of Guardians. State validation through the Zk-proof tier is not yet active. 
         Each proof goes through a cooldown window allowing for contestation. Contested blocks require proof from a higher level tier. If no contestation is made, or the block has been proven by the highest tier, the proof is considered valid.
@@ -223,7 +222,7 @@ export const taiko: Layer2 = {
     },
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-  }),
+  },
   stage: getStage(
     {
       stage0: {
@@ -262,11 +261,11 @@ export const taiko: Layer2 = {
       references: [
         {
           text: 'TierProviderV2.sol - Etherscan source code, tier ids',
-          href: 'https://etherscan.io/address/0x4cffe56C947E26D07C14020499776DB3e9AE3a23#code',
+          href: 'https://etherscan.io/address/0x3a1A900680BaADb889202faf12915F7E47B71ddd#code',
         },
         {
           text: 'TaikoL1.sol - Etherscan source code, liveness bond',
-          href: 'https://etherscan.io/address/0xe84dc8e2a21e59426542ab040d77f81d6db881ee#code',
+          href: 'https://etherscan.io/address/0xBA1d90BCfA74163bFE09e8eF609b346507D83231#code',
         },
       ],
       risks: [
@@ -292,7 +291,7 @@ export const taiko: Layer2 = {
       references: [
         {
           text: 'TaikoL1.sol - Etherscan source code, proposeBlock function',
-          href: 'https://etherscan.io/address/0x4b2743b869b85d5f7d8020566f92664995e4f3c5#code',
+          href: 'https://etherscan.io/address/0xBA1d90BCfA74163bFE09e8eF609b346507D83231#code',
         },
       ],
       risks: [],

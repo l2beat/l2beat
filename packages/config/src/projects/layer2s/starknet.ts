@@ -4,7 +4,7 @@ import {
   EthereumAddress,
   ProjectId,
   UnixTime,
-  formatLargeNumberShared,
+  formatLargeNumber,
   formatSeconds,
 } from '@l2beat/shared-pure'
 
@@ -19,7 +19,6 @@ import {
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
@@ -146,7 +145,7 @@ function formatMaxTotalBalanceString(
   ) {
     return 'There is no bridge cap.'
   } else {
-    return `The current bridge cap is ${formatLargeNumberShared(
+    return `The current bridge cap is ${formatLargeNumber(
       maxTotalBalance / 10 ** decimals,
     )} ${ticker}.`
   }
@@ -420,7 +419,7 @@ export const starknet: Layer2 = {
     finality: {
       lag: 0,
       type: 'Starknet',
-      minTimestamp: new UnixTime(1710252998),
+      minTimestamp: new UnixTime(1724856347),
       stateUpdate: 'disabled',
     },
     trackedTxs: [
@@ -543,6 +542,22 @@ export const starknet: Layer2 = {
           functionSignature:
             'function updateStateKzgDA(uint256[] programOutput, bytes kzgProof)',
           sinceTimestamp: new UnixTime(1710252995),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
+          ),
+          selector: '0x507ee528',
+          functionSignature:
+            'function updateStateKzgDA(uint256[] programOutput, bytes[] kzgProofs)',
+          sinceTimestamp: new UnixTime(1724856347),
         },
       },
       {
@@ -698,7 +713,7 @@ export const starknet: Layer2 = {
     bridge: { type: 'Enshrined' },
     mode: 'State diffs',
   }),
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
       sources: [
@@ -743,7 +758,7 @@ export const starknet: Layer2 = {
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-  }),
+  },
   stage: getStage(
     {
       stage0: {
@@ -987,6 +1002,10 @@ At present, the StarkNet Foundation hosts voting for STRK token holders (or thei
         'Can upgrade implementation of the ETH escrow, potentially gaining access to all funds stored in the bridge. ' +
         delayDescriptionFromSeconds(escrowETHDelaySeconds),
     },
+    ...discovery.getMultisigPermission(
+      'StarkgateETHSecurityAgentMultisig',
+      'Can enable the token withdrawal limit of the Starkgate escrow for ETH.',
+    ),
     {
       name: 'StarkGate WBTC owner',
       accounts: getProxyGovernance(discovery, ESCROW_WBTC_ADDRESS),

@@ -1,10 +1,11 @@
-import { ProxyDetails } from '@l2beat/discovery-types'
+import { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
 import { assert, Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { ethers } from 'ethers'
 
 import { serializeResult } from '../../handlers/user/ConstructorArgsHandler'
 import { IProvider } from '../../provider/IProvider'
 import { bytes32ToAddress } from '../../utils/address'
+import { getPastUpgradesSingleEvent } from '../pastUpgrades'
 
 export async function getOpticsBeaconProxy(
   provider: IProvider,
@@ -37,12 +38,19 @@ export async function getOpticsBeaconProxy(
 
   // TODO: (sz-piotr) what about reverts?
   const implementation = bytes32ToAddress(implementationCallResult)
+  const pastUpgrades = await getPastUpgradesSingleEvent(
+    provider,
+    upgradeBeacon,
+    'event Upgrade(address indexed implementation)',
+  )
 
   return {
     type: 'Optics Beacon proxy',
     values: {
       $admin: beaconController.toString(),
       $implementation: implementation.toString(),
+      $pastUpgrades: pastUpgrades as ContractValue,
+      $upgradeCount: pastUpgrades.length,
       OpticsBeacon_beacon: upgradeBeacon.toString(),
     },
   }

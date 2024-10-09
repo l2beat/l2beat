@@ -2,7 +2,7 @@ import { BlockList } from '@/components/blockList'
 import { SmartAccountList } from '@/components/smartAccountList'
 import { StatsDetails } from '@/components/statsDetails'
 import { StatsForm } from '@/components/statsForm'
-import type { Stats, StatsWithChain } from '@/types'
+import type { StatsWithChain } from '@/types'
 import { Flowbite } from 'flowbite-react'
 import { useState } from 'react'
 import { rankBlocks } from '../api/utils/rankBlocks'
@@ -15,11 +15,9 @@ export default function StatsPage() {
     usage2: { signature: string; count: number }[],
   ) => {
     const usageMap = new Map<string, number>()
-    // biome-ignore lint/complexity/noForEach: <explanation>
     usage1.forEach(({ signature, count }) => {
       usageMap.set(signature, (usageMap.get(signature) || 0) + count)
     })
-    // biome-ignore lint/complexity/noForEach: <explanation>
     usage2.forEach(({ signature, count }) => {
       usageMap.set(signature, (usageMap.get(signature) || 0) + count)
     })
@@ -62,10 +60,10 @@ export default function StatsPage() {
   return (
     <main>
       <Flowbite theme={{ mode: 'dark' }}>
-        <h1 className="mb-4 mt-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white text-center">
+        <h1 className="mt-4 mb-4 text-center font-extrabold text-4xl text-gray-900 leading-none tracking-tight md:text-5xl lg:text-6xl dark:text-white">
           User Operations
         </h1>
-        <p className="mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400 text-center">
+        <p className="mb-6 text-center font-normal text-gray-500 text-lg sm:px-16 lg:text-xl xl:px-48 dark:text-gray-400">
           Select the chain and provide the number of blocks to analyze. The tool
           will fetch the data and generate statistics by comparing overall
           number of transactions to user operations. Subsequent clicks on Go!

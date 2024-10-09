@@ -1,3 +1,159 @@
+Generated with discovered.json: 0x4bc1aea05c2646ed4a46497d6d84f24ee0904a70
+
+# Diff at Tue, 01 Oct 2024 10:52:32 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20675899
+- current block number: 20675899
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20675899 (main branch discovery), not current.
+
+```diff
+    contract BLSRegistry (0x1eD35B793d887e028493dAC4a11AA5Feb811dd67) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-06-28T06:00:47.000Z",["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]],["2023-06-28T06:05:35.000Z",["0x64F4244eEA17a361bb919A28F614C3ad1aC565ad"]]]
+    }
+```
+
+```diff
+    contract InvestmentManager (0x23754725a49c0f003C349A6C7869fF8609a7CEfd) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-06-28T05:42:35.000Z",["0xa288E750401E6d15A62e3400C87d3ee331650a0C"]],["2023-06-28T05:46:11.000Z",["0x7C4813A9AF2FEA4ca765a26b05d128926E94e72E"]]]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-15T08:19:35.000Z",["0xD1230865641561653406906Fb08873F011c19080"]]]
+    }
+```
+
+```diff
+    contract L1MantleToken (0x3c3a81e81dc49A522A592e7622A7E711c06bf354) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-06-20T06:16:35.000Z",["0xCd368c1d80120b0Dd92447c87eB570154f8e685c"]]]
+    }
+```
+
+```diff
+    contract SystemConfig (0x427Ea0710FA5252057F0D88274f7aeb308386cAf) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-15T01:47:47.000Z",["0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3"]]]
+    }
+```
+
+```diff
+    contract EigenDataLayerChain (0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-07-02T07:18:23.000Z",["0xDF401d4229Fc6cA52238f7e55A04FA8EBc24C55a"]]]
+    }
+```
+
+```diff
+    contract DataLayrServiceManager (0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-06-28T05:59:35.000Z",["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]],["2023-06-28T06:04:23.000Z",["0xAB42127980a3bff124E6465e097a5fC97228827e"]]]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x676A795fe6E43C17c668de16730c3F690FEB7120) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-06-28T13:13:59.000Z",["0x4692363048d0F32a2dE7816860D48fff0c61B24B"]],["2024-03-15T01:47:47.000Z",["0x0000000000000000000000000000000000000000"]],["2024-03-15T08:19:35.000Z",["0xb8DE82551fA4BA3bE4B3d9097763EDBeED541308"]]]
+      values.$upgradeCount:
++        3
+    }
+```
+
+```diff
+    contract PubkeyCompendium (0x92986cd63C3409b7dA2882624B6d6E7Cf660707a) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-06-28T05:59:59.000Z",["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]],["2023-06-28T06:04:47.000Z",["0x18Dd3cBE484f955217165FEaC6fe928D04a56a72"]]]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract MantleSecondStrat (0xA937660031787C4408587D2c6A67Ec4B260630F5) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-06-28T05:48:11.000Z",["0x9FEcF38689349a5CFf97526610CdB27618edc6b9"]]]
+    }
+```
+
+```diff
+    contract RegistryPermission (0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-06-28T05:42:59.000Z",["0xa288E750401E6d15A62e3400C87d3ee331650a0C"]],["2023-06-28T05:46:35.000Z",["0xAb00B934DE01c1b4931047125C2ba5B3d6186b85"]]]
+    }
+```
+
+```diff
+    contract OptimismPortal (0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-15T08:19:35.000Z",["0xe1399f54ba2597b4EaDA9E3450c34D393fb131A7"]]]
+    }
+```
+
+```diff
+    contract DataLayrChallenge (0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-06-28T06:00:23.000Z",["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]],["2023-06-28T06:05:11.000Z",["0x6EE53D3d6e622Ac0296369445AFB3CBBDc57C066"]]]
+    }
+```
+
+```diff
+    contract MantleFirstStrat (0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-06-28T05:47:23.000Z",["0x9FEcF38689349a5CFf97526610CdB27618edc6b9"]]]
+    }
+```
+
+```diff
+    contract DataLayrChallengeUtils (0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-06-28T05:59:11.000Z",["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]],["2023-06-28T06:03:47.000Z",["0xd8d731624d97a66e012E62208cFc921d7033c564"]]]
+    }
+```
+
+```diff
+    contract Delegation (0xeA4F1fE4928f1f83a450899C068bcd455BaF4798) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-06-28T05:41:47.000Z",["0xa288E750401E6d15A62e3400C87d3ee331650a0C"]],["2023-06-28T05:45:11.000Z",["0xAdA69A18B30B3B9235AB2748116bB9195e16aDba"]]]
+    }
+```
+
 Generated with discovered.json: 0x526487d00c87592c0df139620a2a63ce4ceb29ce
 
 # Diff at Sun, 08 Sep 2024 17:18:43 GMT:

@@ -16,7 +16,7 @@ export const fuel: Layer2 = upcomingL2({
       websites: ['https://fuel.network/'],
       apps: ['https://alpha.fuel.network/ecosystem/'],
       documentation: ['https://docs.fuel.network/'],
-      explorers: ['https://fuellabs.github.io/block-explorer-v2/'],
+      explorers: ['https://fuellabs.github.io/block-explorer-v2/beta-4/#/'],
       repositories: ['https://github.com/FuelLabs/'],
       socialMedia: [
         'https://twitter.com/fuel_network',

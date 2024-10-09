@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x325f7b9ddc6138a776bf39b0e2db43ff11188bf9
+
+# Diff at Tue, 08 Oct 2024 17:23:55 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@bca55174129419533cd4173605c170ea99ac6f98 block: 20432514
+- current block number: 20922333
+
+## Description
+
+New identityOperator EOA.
+
+## Watched changes
+
+```diff
+    contract WorldIdIdentityManager2 (0xf7134CE138832c1456F2a91D64621eE90c2bddEa) {
+    +++ description: Does what it says: Manages identities for Worldcoin. The identityOperator can register or delete identities by submitting zk proofs.
++++ description: Can call functions (manage identities) in the WorldIdIdentityManager2 implementation
+      values.identityOperator:
+-        "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A"
++        "0xE2DA046340e00264C4F0443243a0565007AE08AC"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20432514 (main branch discovery), not current.
+
+```diff
+    contract WorldIdIdentityManager2 (0xf7134CE138832c1456F2a91D64621eE90c2bddEa) {
+    +++ description: Does what it says: Manages identities for Worldcoin. The identityOperator can register or delete identities by submitting zk proofs.
+      descriptions:
++        ["Does what it says: Manages identities for Worldcoin. The identityOperator can register or delete identities by submitting zk proofs."]
+      fieldMeta:
++        {"identityOperator":{"description":"Can call functions (manage identities) in the WorldIdIdentityManager2 implementation"}}
+    }
+```
+
+Generated with discovered.json: 0x96a26211df9aa68ac085af198ba101729d6b20bd
+
+# Diff at Tue, 01 Oct 2024 11:11:50 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20432514
+- current block number: 20432514
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20432514 (main branch discovery), not current.
+
+```diff
+    contract WorldIdIdentityManager2 (0xf7134CE138832c1456F2a91D64621eE90c2bddEa) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-07-06T19:19:11.000Z",["0xa3cD15EBed6075E33a54483C59818bC43D57c556"]],["2023-08-18T17:12:23.000Z",["0x2Ad412A1dF96434Eed0779D2dB4A8694a06132f8"]],["2024-01-12T00:00:23.000Z",["0x521e8FB3A32Ea44237DC8b1E506dd78accFDf8Bd"]]]
+    }
+```
+
 Generated with discovered.json: 0x2e81c05e7db49aa9410691675b939ba0db695cff
 
 # Diff at Fri, 23 Aug 2024 09:56:22 GMT:

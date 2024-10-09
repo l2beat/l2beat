@@ -1,3 +1,1224 @@
+Generated with discovered.json: 0xc37ce95daf3e1510d769b2f36f8677e6be3006d6
+
+# Diff at Tue, 01 Oct 2024 11:11:41 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20862628
+- current block number: 20862628
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20862628 (main branch discovery), not current.
+
+```diff
+    contract UpgradeableLockReleaseTokenPool (0x5756880B6a1EAba0175227bf02a7E87c1e02B28C) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-06-22T17:51:35.000Z",["0x72427dA7EFBa1585E94F30C72221d8d394aE3Bb7"]]]
+    }
+```
+
+Generated with discovered.json: 0x16b4698a50c5e6896d40b903e619513ddecaeba4
+
+# Diff at Mon, 30 Sep 2024 09:41:05 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@eec6993b988ab9a9f325d04da2e9717ed24ad0b9 block: 20842966
+- current block number: 20862628
+
+## Description
+
+Multisig signers / groups changes.
+
+## Watched changes
+
+```diff
+    contract ManyChainMultiSig (0x117ec8aD107976e1dBCc21717ff78407Bc36aADc) {
+    +++ description: None
+      values.getConfig.signers.45:
++        {"addr":"0xECDd1737E54530D7b05Ad309B9B365CDc0084FD0","index":45,"group":12}
+      values.getConfig.signers.44.addr:
+-        "0xECDd1737E54530D7b05Ad309B9B365CDc0084FD0"
++        "0xE062e7D123AC8dF480C56147f911144F55C10f88"
+      values.getConfig.signers.44.group:
+-        12
++        10
+      values.getConfig.signers.43.addr:
+-        "0xE062e7D123AC8dF480C56147f911144F55C10f88"
++        "0xd844665361adBa29CD1259ebDe9b547ECe2ab0E7"
+      values.getConfig.signers.43.group:
+-        10
++        12
+      values.getConfig.signers.42.addr:
+-        "0xd844665361adBa29CD1259ebDe9b547ECe2ab0E7"
++        "0xd3E2da792E806556517124f03F12e557045951E7"
+      values.getConfig.signers.42.group:
+-        12
++        6
+      values.getConfig.signers.41.addr:
+-        "0xd3E2da792E806556517124f03F12e557045951E7"
++        "0xd3094f770579AFd66711847cE9E9C42D10BA2264"
+      values.getConfig.signers.41.group:
+-        6
++        4
+      values.getConfig.signers.40.addr:
+-        "0xd3094f770579AFd66711847cE9E9C42D10BA2264"
++        "0xc90788d9168f83dec518Ab7c0445Ad1Ec53554D7"
+      values.getConfig.signers.40.group:
+-        4
++        5
+      values.getConfig.signers.39.addr:
+-        "0xc90788d9168f83dec518Ab7c0445Ad1Ec53554D7"
++        "0xC19Beb494BA0bC57e5F967706A24bAFb6Da7BCD7"
+      values.getConfig.signers.39.group:
+-        5
++        12
+      values.getConfig.signers.38.addr:
+-        "0xC19Beb494BA0bC57e5F967706A24bAFb6Da7BCD7"
++        "0xAe735fd5e74887064DFf99C637f291caE5485A75"
+      values.getConfig.signers.38.group:
+-        12
++        11
+      values.getConfig.signers.37.addr:
+-        "0xAe735fd5e74887064DFf99C637f291caE5485A75"
++        "0xA8030F40032E88552519EDFc448523d677B29661"
+      values.getConfig.signers.37.group:
+-        11
++        12
+      values.getConfig.signers.36.addr:
+-        "0xA8030F40032E88552519EDFc448523d677B29661"
++        "0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"
+      values.getConfig.signers.36.group:
+-        12
++        8
+      values.getConfig.signers.35.addr:
+-        "0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"
++        "0xa35B7219521134cAF52DccAD44d604335b64a4fB"
+      values.getConfig.signers.35.group:
+-        8
++        4
+      values.getConfig.signers.34.addr:
+-        "0xa35B7219521134cAF52DccAD44d604335b64a4fB"
++        "0xA3177f64efE98422E782bC17BE7971F01187B7cF"
+      values.getConfig.signers.34.group:
+-        4
++        1
+      values.getConfig.signers.33.addr:
+-        "0xA3177f64efE98422E782bC17BE7971F01187B7cF"
++        "0x9E318D85D42F7e5b8B4fb2fB2d706C4c04D1549e"
+      values.getConfig.signers.33.group:
+-        1
++        12
+      values.getConfig.signers.32.addr:
+-        "0x9E318D85D42F7e5b8B4fb2fB2d706C4c04D1549e"
++        "0x9d0D65cd6e46B86f88fF021d8f5EE58fe8ce2882"
+      values.getConfig.signers.31.addr:
+-        "0x9d0D65cd6e46B86f88fF021d8f5EE58fe8ce2882"
++        "0x9453E18f03A36E2A2c70598De520bD24434D2d1D"
+      values.getConfig.signers.31.group:
+-        12
++        6
+      values.getConfig.signers.30.addr:
+-        "0x9453E18f03A36E2A2c70598De520bD24434D2d1D"
++        "0x925d7Ea0ADe586DBFd56a942bb297286cE428C79"
+      values.getConfig.signers.30.group:
+-        6
++        1
+      values.getConfig.signers.29.addr:
+-        "0x925d7Ea0ADe586DBFd56a942bb297286cE428C79"
++        "0x9079410666ED02725ee9d148398Cee26397c2A36"
+      values.getConfig.signers.28.addr:
+-        "0x9079410666ED02725ee9d148398Cee26397c2A36"
++        "0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374"
+      values.getConfig.signers.28.group:
+-        1
++        5
+      values.getConfig.signers.27.addr:
+-        "0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374"
++        "0x776D5B14ef1D5C58B0d48b53114f2Aa0faccB307"
+      values.getConfig.signers.27.group:
+-        5
++        11
+      values.getConfig.signers.26.addr:
+-        "0x776D5B14ef1D5C58B0d48b53114f2Aa0faccB307"
++        "0x745B9329ccF53556e3C5f1fD1E4e9D0E91Ad2514"
+      values.getConfig.signers.25.addr:
+-        "0x745B9329ccF53556e3C5f1fD1E4e9D0E91Ad2514"
++        "0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5"
+      values.getConfig.signers.25.group:
+-        11
++        6
+      values.getConfig.signers.24.addr:
+-        "0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5"
++        "0x7052cB84079905400ea52B635cAb6a275fDA8823"
+      values.getConfig.signers.24.group:
+-        6
++        10
+      values.getConfig.signers.23.addr:
+-        "0x7052cB84079905400ea52B635cAb6a275fDA8823"
++        "0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4"
+      values.getConfig.signers.23.group:
+-        10
++        8
+      values.getConfig.signers.22.addr:
+-        "0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4"
++        "0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae"
+      values.getConfig.signers.22.group:
+-        8
++        7
+      values.getConfig.signers.21.addr:
+-        "0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae"
++        "0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"
+      values.getConfig.signers.21.group:
+-        7
++        1
+      values.getConfig.signers.20.addr:
+-        "0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"
++        "0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"
+      values.getConfig.signers.20.group:
+-        1
++        2
+      values.getConfig.signers.19.addr:
+-        "0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"
++        "0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6"
+      values.getConfig.signers.18.addr:
+-        "0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6"
++        "0x570F41d83b1031d382F641B9a532A8D7CBd7a695"
+      values.getConfig.signers.18.group:
+-        2
++        1
+      values.getConfig.signers.17.addr:
+-        "0x570F41d83b1031d382F641B9a532A8D7CBd7a695"
++        "0x56B167deCD5fC4E3Bbc07B3B4e1F30e74534F9dd"
+      values.getConfig.signers.17.group:
+-        1
++        8
+      values.getConfig.signers.16.addr:
+-        "0x56B167deCD5fC4E3Bbc07B3B4e1F30e74534F9dd"
++        "0x4e509C60b3e916644dE441298595FeD12C4AC926"
+      values.getConfig.signers.16.group:
+-        8
++        1
+      values.getConfig.signers.15.addr:
+-        "0x4e509C60b3e916644dE441298595FeD12C4AC926"
++        "0x48A094F7A354d8faD7263EA2a82391d105DF6628"
+      values.getConfig.signers.15.group:
+-        1
++        3
+      values.getConfig.signers.14.addr:
+-        "0x48A094F7A354d8faD7263EA2a82391d105DF6628"
++        "0x480496c0884D61F2f56707Adb11697F8018898c2"
+      values.getConfig.signers.14.group:
+-        3
++        10
+      values.getConfig.signers.13.addr:
+-        "0x480496c0884D61F2f56707Adb11697F8018898c2"
++        "0x43640F208956c7D49e04F40FF95dF818643B76aA"
+      values.getConfig.signers.13.group:
+-        10
++        1
+      values.getConfig.signers.12.addr:
+-        "0x43640F208956c7D49e04F40FF95dF818643B76aA"
++        "0x41eAdbc688797a02bfaBE48472995833489ce69D"
+      values.getConfig.signers.12.group:
+-        1
++        10
+      values.getConfig.signers.11.addr:
+-        "0x41eAdbc688797a02bfaBE48472995833489ce69D"
++        "0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3"
+      values.getConfig.signers.11.group:
+-        10
++        3
+      values.getConfig.signers.10.addr:
+-        "0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3"
++        "0x36FdBDA6085d4DFA63Da90839432dDe9373970F0"
+      values.getConfig.signers.10.group:
+-        3
++        11
+      values.getConfig.signers.9.addr:
+-        "0x36FdBDA6085d4DFA63Da90839432dDe9373970F0"
++        "0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6"
+      values.getConfig.signers.9.group:
+-        11
++        1
+      values.getConfig.signers.8.addr:
+-        "0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6"
++        "0x2B88575011C5E11389ddB50D28d31C7d06B352A0"
+      values.getConfig.signers.7.addr:
+-        "0x2B88575011C5E11389ddB50D28d31C7d06B352A0"
++        "0x2b73763722378AB2013CB0877946f69fC3727Fd8"
+      values.getConfig.signers.7.group:
+-        1
++        4
+      values.getConfig.signers.6.addr:
+-        "0x2b73763722378AB2013CB0877946f69fC3727Fd8"
++        "0x21Ac2a1d6ee437FB11a6F1933C5D1d22c714B922"
+      values.getConfig.signers.6.group:
+-        4
++        12
+      values.getConfig.signers.5.addr:
+-        "0x21Ac2a1d6ee437FB11a6F1933C5D1d22c714B922"
++        "0x1c6460cfe32916196f6977b5442b0F98A826D880"
+      values.getConfig.signers.5.group:
+-        12
++        11
+      values.getConfig.signers.4.addr:
+-        "0x1c6460cfe32916196f6977b5442b0F98A826D880"
++        "0x180159135c9b93C59d16eA1A690e465D22c5EB67"
+      values.getConfig.signers.4.group:
+-        11
++        5
+      values.getConfig.signers.3.addr:
+-        "0x180159135c9b93C59d16eA1A690e465D22c5EB67"
++        "0x14a8f3B302Bbfa7F2f2AC2F4515548370bc7bAdC"
+      values.getConfig.signers.3.group:
+-        5
++        8
+      values.getConfig.signers.2.addr:
+-        "0x14a8f3B302Bbfa7F2f2AC2F4515548370bc7bAdC"
++        "0x146CAe49Dbe1b1D1968fc4652814740706548952"
+      values.getConfig.signers.2.group:
+-        8
++        1
+    }
+```
+
+```diff
+    contract ManyChainMultiSig (0xa8D5E1daA6D8B94f11D77B7E09DE846292ef69FF) {
+    +++ description: None
+      values.getConfig.signers.5.addr:
+-        "0xa2E004594939e2Dd4cBb680536576f6d5B435077"
++        "0xA34aAf7a569504E73a12566121f890B1DFE5146d"
+      values.getConfig.signers.4.addr:
+-        "0x6F9dc914D7E124FF68c8618CC3C00b17B15F9b4C"
++        "0xa2E004594939e2Dd4cBb680536576f6d5B435077"
+      values.getConfig.signers.3.addr:
+-        "0x2E3f1E5A392366975A99744f95d06C28225b1e32"
++        "0x6F9dc914D7E124FF68c8618CC3C00b17B15F9b4C"
+    }
+```
+
+```diff
+    contract ManyChainMultiSig (0xAD97C0270a243270136E40278155C12ce7C7F87B) {
+    +++ description: None
+      values.getConfig.signers.24:
++        {"addr":"0xd3E2da792E806556517124f03F12e557045951E7","index":24,"group":6}
+      values.getConfig.signers.23.addr:
+-        "0xd3E2da792E806556517124f03F12e557045951E7"
++        "0xd3094f770579AFd66711847cE9E9C42D10BA2264"
+      values.getConfig.signers.23.group:
+-        6
++        4
+      values.getConfig.signers.22.addr:
+-        "0xd3094f770579AFd66711847cE9E9C42D10BA2264"
++        "0xc90788d9168f83dec518Ab7c0445Ad1Ec53554D7"
+      values.getConfig.signers.22.group:
+-        4
++        5
+      values.getConfig.signers.21.addr:
+-        "0xc90788d9168f83dec518Ab7c0445Ad1Ec53554D7"
++        "0xa35B7219521134cAF52DccAD44d604335b64a4fB"
+      values.getConfig.signers.21.group:
+-        5
++        4
+      values.getConfig.signers.20.addr:
+-        "0xa35B7219521134cAF52DccAD44d604335b64a4fB"
++        "0xA3177f64efE98422E782bC17BE7971F01187B7cF"
+      values.getConfig.signers.20.group:
+-        4
++        1
+      values.getConfig.signers.19.addr:
+-        "0xA3177f64efE98422E782bC17BE7971F01187B7cF"
++        "0x9453E18f03A36E2A2c70598De520bD24434D2d1D"
+      values.getConfig.signers.19.group:
+-        1
++        6
+      values.getConfig.signers.18.addr:
+-        "0x9453E18f03A36E2A2c70598De520bD24434D2d1D"
++        "0x925d7Ea0ADe586DBFd56a942bb297286cE428C79"
+      values.getConfig.signers.18.group:
+-        6
++        1
+      values.getConfig.signers.17.addr:
+-        "0x925d7Ea0ADe586DBFd56a942bb297286cE428C79"
++        "0x9079410666ED02725ee9d148398Cee26397c2A36"
+      values.getConfig.signers.16.addr:
+-        "0x9079410666ED02725ee9d148398Cee26397c2A36"
++        "0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374"
+      values.getConfig.signers.16.group:
+-        1
++        5
+      values.getConfig.signers.15.addr:
+-        "0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374"
++        "0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5"
+      values.getConfig.signers.15.group:
+-        5
++        6
+      values.getConfig.signers.14.addr:
+-        "0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5"
++        "0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae"
+      values.getConfig.signers.14.group:
+-        6
++        7
+      values.getConfig.signers.13.addr:
+-        "0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae"
++        "0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"
+      values.getConfig.signers.13.group:
+-        7
++        1
+      values.getConfig.signers.12.addr:
+-        "0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"
++        "0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"
+      values.getConfig.signers.12.group:
+-        1
++        2
+      values.getConfig.signers.11.addr:
+-        "0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"
++        "0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6"
+      values.getConfig.signers.10.addr:
+-        "0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6"
++        "0x570F41d83b1031d382F641B9a532A8D7CBd7a695"
+      values.getConfig.signers.10.group:
+-        2
++        1
+      values.getConfig.signers.9.addr:
+-        "0x570F41d83b1031d382F641B9a532A8D7CBd7a695"
++        "0x4e509C60b3e916644dE441298595FeD12C4AC926"
+      values.getConfig.signers.8.addr:
+-        "0x4e509C60b3e916644dE441298595FeD12C4AC926"
++        "0x48A094F7A354d8faD7263EA2a82391d105DF6628"
+      values.getConfig.signers.8.group:
+-        1
++        3
+      values.getConfig.signers.7.addr:
+-        "0x48A094F7A354d8faD7263EA2a82391d105DF6628"
++        "0x43640F208956c7D49e04F40FF95dF818643B76aA"
+      values.getConfig.signers.7.group:
+-        3
++        1
+      values.getConfig.signers.6.addr:
+-        "0x43640F208956c7D49e04F40FF95dF818643B76aA"
++        "0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3"
+      values.getConfig.signers.6.group:
+-        1
++        3
+      values.getConfig.signers.5.addr:
+-        "0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3"
++        "0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6"
+      values.getConfig.signers.5.group:
+-        3
++        1
+      values.getConfig.signers.4.addr:
+-        "0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6"
++        "0x2B88575011C5E11389ddB50D28d31C7d06B352A0"
+      values.getConfig.signers.3.addr:
+-        "0x2B88575011C5E11389ddB50D28d31C7d06B352A0"
++        "0x2b73763722378AB2013CB0877946f69fC3727Fd8"
+      values.getConfig.signers.3.group:
+-        1
++        4
+      values.getConfig.signers.2.addr:
+-        "0x2b73763722378AB2013CB0877946f69fC3727Fd8"
++        "0x180159135c9b93C59d16eA1A690e465D22c5EB67"
+      values.getConfig.signers.2.group:
+-        4
++        5
+      values.getConfig.signers.1.addr:
+-        "0x180159135c9b93C59d16eA1A690e465D22c5EB67"
++        "0x146CAe49Dbe1b1D1968fc4652814740706548952"
+      values.getConfig.signers.1.group:
+-        5
++        1
+    }
+```
+
+Generated with discovered.json: 0x045bfbcc216538e060f69144287dd96181b4ce0e
+
+# Diff at Thu, 26 Sep 2024 11:49:41 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@374d77799a44e3b2fcc4828675ccc0b0ff6146d0 block: 20769260
+- current block number: 20834586
+
+## Description
+
+New (unknown) supported chain added, new arm-related contracts. Added shape based discovery.
+
+## Watched changes
+
+```diff
+    contract BurnMintTokenPool (0x057152DB365B47851B0A0bd431644b8eE21fE1b4) {
+    +++ description: None
+      values.getOffRamps.3:
+-        "0xB095900fB91db00E6abD247A5A5AD1cee3F20BF7"
+      values.getOffRamps.2:
+-        "0xBDd822f3bC2EAB6818CfA3053107831D4E93fE72"
+      values.getOffRamps.1:
+-        "0x1C207dabc46902dF9028b27D6d301c3849b2D12c"
++        "0xB095900fB91db00E6abD247A5A5AD1cee3F20BF7"
+    }
+```
+
+```diff
+    contract Router (0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.14:
++        {"sourceChainSelector":"13204309965629103672","offRamp":"0x26a10137A54F4Ea01D20758Ac5AdBf9326340Fc3"}
+      values.offRamps.13:
++        {"sourceChainSelector":"4627098889531055414","offRamp":"0x418dcbCf229897d0CCf1B8B464Db06C23879FBB4"}
+      values.onRamps.4627098889531055414:
++        "0x626189C882A80fF0D036d8D9f6447555e81F78E9"
+      values.onRamps.13204309965629103672:
++        "0x362A221C3cfd7F992DFE221687323F0BA9BA8187"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (0x80Cc104119901fd66088C9a8219E50D9547dE2d4) {
+    +++ description: None
+      values.getSupportedChains.3:
++        "15971525489660198786"
+    }
+```
+
+```diff
+    contract PriceRegistry (0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad) {
+    +++ description: None
+      values.getPriceUpdaters.14:
++        "0x9f592c28590595F3F78a8881E8Dbb9984ed705cD"
+      values.getPriceUpdaters.13:
++        "0x57d6cD9CD44770C807b2763Dbe4CFDA0113dd114"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (0xd8f734c938200BA294d0De5B555E8ff77d66c351) {
+    +++ description: None
+      values.getSupportedChains.3:
++        "15971525489660198786"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (0xf0D19c04f04382048fC9ad157C529CeB2c7be823) {
+    +++ description: None
+      values.getOffRamps.7:
+-        "0xeFC4a18af59398FF23bfe7325F2401aD44286F4d"
+      values.getOffRamps.6:
+-        "0x7Afe7088aff57173565F4b034167643AA8b9171c"
+      values.getOffRamps.5:
+-        "0x569940e02D4425eac61A7601632eC00d69f75c17"
+      values.getOffRamps.4:
+-        "0x0af338F0E314c7551bcE0EF516d46d855b0Ee395"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0x26a10137A54F4Ea01D20758Ac5AdBf9326340Fc3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0x362A221C3cfd7F992DFE221687323F0BA9BA8187)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0x418dcbCf229897d0CCf1B8B464Db06C23879FBB4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0x57d6cD9CD44770C807b2763Dbe4CFDA0113dd114)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0x626189C882A80fF0D036d8D9f6447555e81F78E9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0x9f592c28590595F3F78a8881E8Dbb9984ed705cD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenAdminRegistry (0xb22764f98dD05c789929716D677382Df22C05Cb6)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0x57d6cD9CD44770C807b2763Dbe4CFDA0113dd114.sol | 1297 ++++++++
+ ...-0x9f592c28590595F3F78a8881E8Dbb9984ed705cD.sol | 1297 ++++++++
+ ...-0x26a10137A54F4Ea01D20758Ac5AdBf9326340Fc3.sol | 3430 ++++++++++++++++++++
+ ...-0x418dcbCf229897d0CCf1B8B464Db06C23879FBB4.sol | 3430 ++++++++++++++++++++
+ ...-0x362A221C3cfd7F992DFE221687323F0BA9BA8187.sol | 2982 +++++++++++++++++
+ ...-0x626189C882A80fF0D036d8D9f6447555e81F78E9.sol | 2982 +++++++++++++++++
+ .../ethereum/.flat/TokenAdminRegistry.sol          |  640 ++++
+ 7 files changed, 16058 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20769260 (main branch discovery), not current.
+
+```diff
+    contract EVM2EVMOffRamp (0x0af338F0E314c7551bcE0EF516d46d855b0Ee395) {
+    +++ description: None
+      name:
+-        "OffRamp7"
++        "EVM2EVMOffRamp"
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0x0f27c8532457b66D6037141DEB0ed479Dad04B3c) {
+    +++ description: None
+      name:
+-        "OnRamp11"
++        "EVM2EVMOnRamp"
+    }
+```
+
+```diff
+    contract CommitStore (0x118a9389960F86390A4F14ce4C95D6ff076C6bFC) {
+    +++ description: None
+      name:
+-        "CommitStore2"
++        "CommitStore"
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0x1a904DbbaDdE629a1460e2F6E2E485Ce06Ed7599) {
+    +++ description: None
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0x1C207dabc46902dF9028b27D6d301c3849b2D12c) {
+    +++ description: None
+      name:
+-        "OffRamp10"
++        "EVM2EVMOffRamp"
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract CommitStore (0x20718EfbC25Dba60FD51c2c81362b83f7C411A6D) {
+    +++ description: None
+      name:
+-        "CommitStore11"
++        "CommitStore"
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract CommitStore (0x2aa101BF99CaeF7fc1355D4c493a1fe187A007cE) {
+    +++ description: None
+      name:
+-        "CommitStore5"
++        "CommitStore"
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract CommitStore (0x2D1708ff2a15adbE313eA8C6035aA24d0FBA1c77) {
+    +++ description: None
+      name:
+-        "CommitStore14"
++        "CommitStore"
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract CommitStore1 (0x31f6ab382DDeb9A316Ab61C3945a5292a50a89AB) {
+    +++ description: None
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0x333f976915195ba9044fD0cd603cEcE936f6264e) {
+    +++ description: None
+      name:
+-        "OnRamp12"
++        "EVM2EVMOnRamp"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0x35F0ca9Be776E4B38659944c257bDd0ba75F1B8B) {
+    +++ description: None
+      name:
+-        "OnRamp2"
++        "EVM2EVMOnRamp"
+      template:
+-        "transporter/OnRamp"
++        "transporter/OnRampV1"
+    }
+```
+
+```diff
+    contract OffRamp1 (0x3a129e6C18b23d18BA9E6Aa14Dc2e79d1f91c6c5) {
+    +++ description: None
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract CommitStore (0x3CB2A81bb8a188C5353CdFa9994ed8666556FC53) {
+    +++ description: None
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract CommitStore (0x3d3467e1036Ee25F6F4aa15e3Abf77443A23144C) {
+    +++ description: None
+      name:
+-        "CommitStore12"
++        "CommitStore"
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract CommitStore (0x3d8a95adA63D406ee8232562AbD83CEdb0B90466) {
+    +++ description: None
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0x3df8dAe2d123081c4D5E946E655F7c109B9Dd630) {
+    +++ description: None
+      name:
+-        "OnRamp4"
++        "EVM2EVMOnRamp"
+      template:
+-        "transporter/OnRamp"
++        "transporter/OnRampV1"
+    }
+```
+
+```diff
+    contract CommitStore (0x40c558575093eC1099CC21B020d9b8D13c74417F) {
+    +++ description: None
+      name:
+-        "CommitStore10"
++        "CommitStore"
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0x41627a90f2c6238f2BADAB72D5aB050B857fdAb5) {
+    +++ description: None
+      name:
+-        "OffRamp9"
++        "EVM2EVMOffRamp"
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0x4545F9a17DA50110632C14704a15d893BF9CBD27) {
+    +++ description: None
+      template:
+-        "transporter/OnRamp"
++        "transporter/OnRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0x466a078d17e3706a9414ACc48029EE9Bae4C9b65) {
+    +++ description: None
+      template:
+-        "transporter/OnRamp"
++        "transporter/OnRampV1"
+    }
+```
+
+```diff
+    contract CommitStore (0x4af4B497c998007eF83ad130318eB2b925a79dc8) {
+    +++ description: None
+      name:
+-        "CommitStore4"
++        "CommitStore"
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0x569940e02D4425eac61A7601632eC00d69f75c17) {
+    +++ description: None
+      name:
+-        "OffRamp5"
++        "EVM2EVMOffRamp"
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0x61135E701a2214C170c5F596D0067798FEfbaaE4) {
+    +++ description: None
+      name:
+-        "OffRamp12"
++        "EVM2EVMOffRamp"
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract CommitStore (0x76264869a3eBF51a59FCa5ABa84ee2867c7F190e) {
+    +++ description: None
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract CommitStore (0x7986C9892389854cAAbAC785ff18123B0070a5Fd) {
+    +++ description: None
+      name:
+-        "CommitStore13"
++        "CommitStore"
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0x7Afe7088aff57173565F4b034167643AA8b9171c) {
+    +++ description: None
+      name:
+-        "OffRamp3"
++        "EVM2EVMOffRamp"
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract Router (0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      template:
+-        "transporter/Router"
++        "transporter/RouterV1_2_0"
+    }
+```
+
+```diff
+    contract CommitStore (0x831097033C88c82a7F1897b168Aa88cC44540C8f) {
+    +++ description: None
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract OnRamp1 (0x86B47d8411006874eEf8E4584BdFD7be8e5549d1) {
+    +++ description: None
+      template:
+-        "transporter/OnRamp"
++        "transporter/OnRampV1"
+    }
+```
+
+```diff
+    contract CommitStore (0x87c55D48DF6EF7B08153Ab079e76bFEcbb793D75) {
+    +++ description: None
+      name:
+-        "CommitStore3"
++        "CommitStore"
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract CommitStore (0x8bEFCa744c6f2b567b1863dcF055C593afdC11A0) {
+    +++ description: None
+      name:
+-        "CommitStore9"
++        "CommitStore"
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract CommitStore (0x8DC27D621c41a32140e22E2a4dAf1259639BAe04) {
+    +++ description: None
+      name:
+-        "CommitStore6"
++        "CommitStore"
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0x91D25A56Db77aD5147437d8B83Eb563D46eBFa69) {
+    +++ description: None
+      name:
+-        "OnRamp5"
++        "EVM2EVMOnRamp"
+      template:
+-        "transporter/OnRamp"
++        "transporter/OnRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0x925228D7B82d883Dde340A55Fe8e6dA56244A22C) {
+    +++ description: None
+      name:
+-        "OnRamp3"
++        "EVM2EVMOnRamp"
+      template:
+-        "transporter/OnRamp"
++        "transporter/OnRampV1"
+    }
+```
+
+```diff
+    contract CommitStore (0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749) {
+    +++ description: None
+      name:
+-        "CommitStore8"
++        "CommitStore"
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract CommitStore (0xa4d264470a67D9f6682EE12Bdc9c35Df44e3F194) {
+    +++ description: None
+      name:
+-        "CommitStore15"
++        "CommitStore"
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0xa5ef33B57dD8B653F9A9EA7114f46376d18264aC) {
+    +++ description: None
+      template:
+-        "transporter/OnRamp"
++        "transporter/OnRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0xB095900fB91db00E6abD247A5A5AD1cee3F20BF7) {
+    +++ description: None
+      name:
+-        "OffRamp4"
++        "EVM2EVMOffRamp"
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0xb368c8946D9fa5A497cDe1Dff7213f9CdfD143Bf) {
+    +++ description: None
+      name:
+-        "OffRamp15"
++        "EVM2EVMOffRamp"
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0xBDd822f3bC2EAB6818CfA3053107831D4E93fE72) {
+    +++ description: None
+      name:
+-        "OffRamp11"
++        "EVM2EVMOffRamp"
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0xC7176620daf49A39a17FF9A6C2DE1eAA6033EE94) {
+    +++ description: None
+      name:
+-        "OffRamp13"
++        "EVM2EVMOffRamp"
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0xCbE7e5DA76dC99Ac317adF6d99137005FDA4E2C4) {
+    +++ description: None
+      name:
+-        "OnRamp7"
++        "EVM2EVMOnRamp"
+      template:
+-        "transporter/OnRamp"
++        "transporter/OnRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0xCC19bC4D43d17eB6859F0d22BA300967C97780b0) {
+    +++ description: None
+      name:
+-        "OnRamp9"
++        "EVM2EVMOnRamp"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0xCe6364dBe64D2789D916180131fAda2ABFF702E8) {
+    +++ description: None
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0xd0B5Fc9790a6085b048b8Aa1ED26ca2b3b282CF2) {
+    +++ description: None
+      name:
+-        "OnRamp10"
++        "EVM2EVMOnRamp"
+    }
+```
+
+```diff
+    contract CommitStore (0xD37a60E8C36E802D2E1a6321832Ee85556Beeb76) {
+    +++ description: None
+      name:
+-        "CommitStore7"
++        "CommitStore"
+      template:
+-        "transporter/CommitStore"
++        "transporter/CommitStoreV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0xd5083684eE92dDeA117636ae5E2F1cb7fE4dfd46) {
+    +++ description: None
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0xD54C93A99CBCb8D865E13DA321B540171795A89f) {
+    +++ description: None
+      template:
+-        "transporter/OnRamp"
++        "transporter/OnRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0xdF1d7FD22aC3aB5171E275796f123224039f3b24) {
+    +++ description: None
+      name:
+-        "OnRamp13"
++        "EVM2EVMOnRamp"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0xdf85c8381954694E74abD07488f452b4c2Cddfb3) {
+    +++ description: None
+      name:
+-        "OffRamp6"
++        "EVM2EVMOffRamp"
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0xe2c2AB221AA0b957805f229d2AA57fBE2f4dADf7) {
+    +++ description: None
+      name:
+-        "OnRamp6"
++        "EVM2EVMOnRamp"
+      template:
+-        "transporter/OnRamp"
++        "transporter/OnRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0xe2Eb229e88F56691e96bb98256707Bc62160FE73) {
+    +++ description: None
+      name:
+-        "OnRamp14"
++        "EVM2EVMOnRamp"
+    }
+```
+
+```diff
+    contract RouterOld (0xE561d5E02207fb5eB32cca20a699E0d8919a1476) {
+    +++ description: None
+      name:
+-        "Router2"
++        "RouterOld"
+      template:
+-        "transporter/RouterV2"
++        "transporter/RouterV1_0_0"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0xE8af3b68eDfFf65Ce48648009982380701f09B92) {
+    +++ description: None
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0xE93ec2A57e38C8541c893348cCafEAB01F7D47d4) {
+    +++ description: None
+      name:
+-        "OffRamp2"
++        "EVM2EVMOffRamp"
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0xEd5bE9508ae56531cc0EDe6A3bD588Eb9E2e3cfa) {
+    +++ description: None
+      template:
+-        "transporter/OnRamp"
++        "transporter/OnRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0xeFC4a18af59398FF23bfe7325F2401aD44286F4d) {
+    +++ description: None
+      name:
+-        "OffRamp8"
++        "EVM2EVMOffRamp"
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0xF538dA6c673A30338269655f4e019B71ba58CFd4) {
+    +++ description: None
+      name:
+-        "OnRamp8"
++        "EVM2EVMOnRamp"
+      template:
+-        "transporter/OnRamp"
++        "transporter/OnRampV1"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0xfF51C00546AA3d9051a4B96Ae81346E14709CD24) {
+    +++ description: None
+      name:
+-        "OffRamp14"
++        "EVM2EVMOffRamp"
+      template:
+-        "transporter/OffRamp"
++        "transporter/OffRampV1"
+    }
+```
+
 Generated with discovered.json: 0x3d51ed0e555f35d54a152ced044fd6320a96f883
 
 # Diff at Tue, 17 Sep 2024 08:54:01 GMT:

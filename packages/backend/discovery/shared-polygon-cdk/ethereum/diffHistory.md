@@ -1,3 +1,81 @@
+Generated with discovered.json: 0xbe455b561c779a6f7bace5d8b844602e85eb51da
+
+# Diff at Wed, 02 Oct 2024 14:18:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d101c705b5f4fd0b3af2e251678b85e1005b31d8 block: 20871594
+- current block number: 20878362
+
+## Description
+
+Config related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20871594 (main branch discovery), not current.
+
+```diff
+    contract Bridge (0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-03-24T10:18:47.000Z",["0x5ac4182A1dd41AeEf465E40B82fd326BF66AB82C"]],["2024-02-13T11:00:59.000Z",["0x0FeB850B183C57534b56b7d56520133C8f9BDB65"]]]
+    }
+```
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-03-24T10:19:23.000Z",["0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF"]],["2023-09-20T08:30:35.000Z",["0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F"]],["2023-11-09T09:22:59.000Z",["0xb1585916487AcEdD99952086f2950763D253b923"]],["2024-02-13T11:00:59.000Z",["0x3b82Da772c825283d85d5d6717A77C6Ff582053b"]]]
+    }
+```
+
+```diff
+    contract GlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-03-24T10:19:11.000Z",["0xbc1ea504fC54D078514eFCCA1F6860B5219B6BC3"]],["2024-02-13T11:00:59.000Z",["0x2E38cD55163137483E30580Cb468C2dFf1d85077"]]]
+    }
+```
+
+Generated with discovered.json: 0xa05eff9760fe0c1b81a11c3826d3a0970b9e9ebf
+
+# Diff at Tue, 01 Oct 2024 15:39:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@974999225bba0722b5e81edd4c1b80928d80ef33 block: 20792084
+- current block number: 20871594
+
+## Description
+
+New RollupType with FflonkVerifier_11 and a PolygonZkEvm code-identical consensus implementation is added. PolygonZkEvm is upgraded to the new type. See last update for context.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.0.3:
+-        3
++        5
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.0.2:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883"
+      values.rollupTypeCount:
+-        4
++        5
++++ description: struct consensusImplementation, verifier, forkID, rollupCompatibilityID, bool obsolete, genesisBlock
+      values.rollupTypes.4:
++        ["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71","0xc521580cd8586Cc688A7430F9DcE0f6A803F2883"]
+    }
+```
+
 Generated with discovered.json: 0x6761afe95cc65b2d57facf739411497e0c79d266
 
 # Diff at Fri, 20 Sep 2024 13:25:57 GMT:

@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 19531527,
   "configHash": "0xda2ff96fd6b62e3e863cfa2a09f32c1024251fbb46b4a150e1db5ed44869d008",
-  "version": 14,
   "contracts": [
     {
       "name": "DeBridgeGate",
@@ -21,6 +20,32 @@
       "values": {
         "$admin": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
         "$implementation": "0x797161BCC625155D2302251404ccB93c2632658e",
+        "$pastUpgrades": [
+          [
+            "2021-11-22T15:36:30.000Z",
+            ["0xB1A20D1c885fd775df97396397d6f8F07Abdd20D"]
+          ],
+          [
+            "2021-12-16T14:53:55.000Z",
+            ["0xFCe0502293dCacbFc2d663f7814b2771dEcfd576"]
+          ],
+          [
+            "2022-01-18T09:29:57.000Z",
+            ["0x51bFD427D06B2a5FC3588f9d023994A9f70e0Ce0"]
+          ],
+          [
+            "2022-02-16T13:27:21.000Z",
+            ["0xc8550d85759BAbE6851235212563Fa2Ff04961BF"]
+          ],
+          [
+            "2022-03-15T12:17:48.000Z",
+            ["0x24455aa55DED7728783c9474bE8eA2f5C935f8EB"]
+          ],
+          [
+            "2022-12-15T10:58:59.000Z",
+            ["0x797161BCC625155D2302251404ccB93c2632658e"]
+          ]
+        ],
         "$upgradeCount": 6,
         "BPS_DENOMINATOR": 10000,
         "callProxy": "0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824",
@@ -92,6 +117,12 @@
       "values": {
         "$admin": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
         "$implementation": "0x4c7CA8fcFFE77281A8B81D4580CFf8257d785491",
+        "$pastUpgrades": [
+          [
+            "2021-11-22T20:43:22.000Z",
+            ["0x4c7CA8fcFFE77281A8B81D4580CFf8257d785491"]
+          ]
+        ],
         "$upgradeCount": 1,
         "debridgeAddress": "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
         "deBridgeTokenAdmin": "0x6bec1faF33183e1Bc316984202eCc09d46AC92D5",
@@ -116,6 +147,32 @@
       "values": {
         "$admin": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
         "$implementation": "0xBd3d657AE87671eC6f8D6272A9f431a7c4a9B6f8",
+        "$pastUpgrades": [
+          [
+            "2021-11-22T23:54:37.000Z",
+            ["0x4e446b6Cf4d127827c83Ca0c848Db0B43841c391"]
+          ],
+          [
+            "2022-01-18T09:32:02.000Z",
+            ["0xd5317E82BFEFf70b4773f0fcab5e2ABFA3c7D63b"]
+          ],
+          [
+            "2022-02-16T12:55:04.000Z",
+            ["0x752A9e96e8683400ae238270C97c1D0160861fEF"]
+          ],
+          [
+            "2022-05-02T14:08:42.000Z",
+            ["0x0C4B79205F6Cc20c0E0201b61b99e77F3CE3B67A"]
+          ],
+          [
+            "2022-05-19T13:24:39.000Z",
+            ["0xe5a04b307B31Af07F4DfCaA840952Ff7d3845c7e"]
+          ],
+          [
+            "2022-05-28T12:04:47.000Z",
+            ["0xBd3d657AE87671eC6f8D6272A9f431a7c4a9B6f8"]
+          ]
+        ],
         "$upgradeCount": 6,
         "DEBRIDGE_GATE_ROLE": "0xd5a6101e940ba33e226d2395b16238ab3063d7ee83d7b3ff59cb92988b395437",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -140,6 +197,16 @@
       "values": {
         "$admin": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
         "$implementation": "0xfE7De3c1e1BD252C67667B56347cABFC6df08dF4",
+        "$pastUpgrades": [
+          [
+            "2021-11-22T22:58:34.000Z",
+            ["0x2a3e72eD893b5958690e16c3BBe1BD92137b6250"]
+          ],
+          [
+            "2021-12-17T11:09:26.000Z",
+            ["0xfE7De3c1e1BD252C67667B56347cABFC6df08dF4"]
+          ]
+        ],
         "$upgradeCount": 2,
         "confirmationThreshold": 3,
         "currentBlock": 19531339,
@@ -206,6 +273,16 @@
       "values": {
         "$admin": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
         "$implementation": "0x37a52ddb753c924f8C914de65ef00b5210Caa83C",
+        "$pastUpgrades": [
+          [
+            "2021-11-23T07:17:24.000Z",
+            ["0x27406EbF0b76923d93b4C6c6224bCaB7fFf11f87"]
+          ],
+          [
+            "2022-02-16T12:53:26.000Z",
+            ["0x37a52ddb753c924f8C914de65ef00b5210Caa83C"]
+          ]
+        ],
         "$upgradeCount": 2,
         "debridgeGate": "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -706,5 +783,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

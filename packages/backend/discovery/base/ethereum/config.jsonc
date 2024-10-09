@@ -30,6 +30,9 @@
     "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": "SuperchainProxyAdminOwner"
   },
   "overrides": {
+    "SystemConfig": {
+      "ignoreMethods": ["gasLimit"]
+    },
     "LivenessModule": {
       "ignoreMethods": ["getRequiredThreshold"]
     },

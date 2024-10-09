@@ -1,3 +1,154 @@
+Generated with discovered.json: 0x54708d6223b5f88881066a1eb09b1249621f95f5
+
+# Diff at Tue, 01 Oct 2024 10:54:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20862639
+- current block number: 20862639
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20862639 (main branch discovery), not current.
+
+```diff
+    contract ERC1155Predicate (0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2020-08-26T10:28:42.000Z",["0x46cA157573005281774be9be9a4187cce4ec1871"]],["2020-11-18T07:48:02.000Z",["0x62D7e87677ac7e3bd02c198e3FABeFFdBc5eB2A3"]],["2024-08-25T16:11:47.000Z",["0xb86357daD9c3567dD70862a5b49fFFaFb0F094Ac"]],["2024-08-27T11:02:23.000Z",["0xCFA65db73cB45D458d0a98006d3d558b5e1F021d"]]]
+      values.$upgradeCount:
++        4
+    }
+```
+
+```diff
+    contract MintableERC1155Predicate (0x2d641867411650cd05dB93B59964536b1ED5b1B7) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2021-02-12T05:32:55.000Z",["0xbf3d5d13b3Cb79A6173394046973C34A60Ac8A41"]],["2021-04-21T11:45:46.000Z",["0x62414D03084EeB269E18C970a21f45D2967F0170"]],["2021-09-26T07:01:07.000Z",["0x4c2aA63BF1d867fbAD14f1d505481c16e4862201"]],["2022-03-02T10:12:36.000Z",["0xDb161A896Be50a020B636D6B60DA7c59817412a5"]],["2024-08-25T16:11:47.000Z",["0x985Dbac75cf625dD6baB03Da784CF0D51B4bEcef"]],["2024-08-27T11:02:23.000Z",["0xFD47E7d657b07B071C3362bBCe908a70895EE747"]]]
+      values.$upgradeCount:
++        6
+    }
+```
+
+```diff
+    contract ERC20Predicate (0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2020-08-26T10:11:21.000Z",["0xC760DefB87E5194E62b282c2a76CBCe4766d7345"]],["2020-11-18T07:48:02.000Z",["0x608669d4914Eec1E20408Bc4c9eFFf27BB8cBdE5"]],["2024-08-25T16:11:47.000Z",["0xb774EBbeF817390483FEA5bEd0F0cB0EDEBE4065"]],["2024-08-27T11:02:23.000Z",["0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB"]]]
+      values.$upgradeCount:
++        4
+    }
+```
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2020-07-16T12:32:01.000Z",["0x9a6bC66Ce2E008D59654bc0053Ce2d01f09C8B90"]],["2020-10-27T11:43:55.000Z",["0xf58Ec2F599EC32f2aE104984F41C1fB1377ECEBa"]],["2021-03-26T16:24:09.000Z",["0xB955EE20A7F1D6F9bD68805e6EefE2cBc5d8220D"]],["2021-03-26T17:05:24.000Z",["0xd8EeB76bf9FEc7Efe3772383d5f38fd02243E56C"]],["2021-06-18T13:08:09.000Z",["0xd6F5c46d4E1a02f9D145cEe41d2F8AF30D8d2d76"]],["2022-01-26T07:47:11.000Z",["0x644A0A4a4a9892f57Af7dFF1Db23cE2A235A255e"]],["2022-11-15T16:28:23.000Z",["0xbA9Ac3C9983a3e967f0f387c75cCbD38Ad484963"]],["2024-09-04T16:31:35.000Z",["0x97a3500083348A147F419b8a65717909762c389f"]]]
+      values.$upgradeCount:
++        8
+    }
+```
+
+```diff
+    contract EventsHub (0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2021-03-26T16:01:24.000Z",["0x762540dB57aBdB6d32E5B5b8856986C0418A3b82"]],["2021-12-02T06:09:51.000Z",["0x0672777617CAA1E778083a4f74eBC997262C9EdD"]]]
+      values.$upgradeCount:
++        2
+    }
+```
+
+```diff
+    contract EtherPredicate (0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2020-08-26T10:33:28.000Z",["0xb6a508B418d49080Ce4AE4F140e585A0f95C1326"]],["2020-11-18T07:48:02.000Z",["0x499a865ac595e6167482d2bd5A224876baB85ab4"]],["2021-09-26T07:01:07.000Z",["0x54006763154c764da4AF42a8c3cfc25Ea29765D5"]],["2024-08-25T16:11:47.000Z",["0x3129B90fB7bF58A0B36226f2e6547B89C0BbdE42"]],["2024-08-27T11:02:23.000Z",["0xeB185ED8f664D105903EF434E5becd214a8AC874"]]]
+      values.$upgradeCount:
++        5
+    }
+```
+
+```diff
+    contract MintableERC721Predicate (0x932532aA4c0174b8453839A6E44eE09Cc615F2b7) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2020-08-26T10:15:37.000Z",["0x3Bf44AD2e36f39572175C72C1D0Fa85933c6E0b6"]],["2020-11-18T07:48:02.000Z",["0x9b02a268fBb66Eb24AC9557DAEbA7aa6f04A89c2"]],["2021-02-24T11:40:48.000Z",["0xa0451a72f243A5173ea604B43B5F61EE76376551"]],["2021-03-12T06:45:22.000Z",["0x71A1666727Ea5A9B32C23cB09ABa29954e7a4a78"]],["2021-04-09T07:18:40.000Z",["0x58aDFa7960bf7Cf39965B46D796Fe66CD8f38283"]],["2022-11-15T05:50:59.000Z",["0x7FBd00c577cAA70318BCF1c6c11e23732823b387"]],["2024-08-25T16:11:47.000Z",["0x34AF15A166def1d89D38a70120Ea33CD8cc10C45"]],["2024-08-27T11:02:23.000Z",["0xba31389292f7EdfC7b60B937b97014b4C354689b"]]]
+      values.$upgradeCount:
++        8
+    }
+```
+
+```diff
+    contract MintableERC20Predicate (0x9923263fA127b3d1484cFD649df8f1831c2A74e4) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2021-02-12T03:43:02.000Z",["0xFdc26CDA2d2440d0E83CD1DeE8E8bE48405806DC"]],["2021-09-26T07:01:07.000Z",["0x0f92D459B20D21F6bf9E02056EA9165d3f78bA62"]],["2024-08-25T16:11:47.000Z",["0xab00328234bC22430c78847094A68a6836574fFB"]],["2024-08-27T11:02:23.000Z",["0x94D40724d6aA4AB313065006E4bA8CA448dcDfae"]]]
+      values.$upgradeCount:
++        4
+    }
+```
+
+```diff
+    contract RootChainManager (0xA0c68C638235ee32657e8f720a23ceC1bFc77C77) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2020-08-26T10:09:10.000Z",["0xD4888faB8bd39A663B63161F5eE1Eae31a25B653"]],["2020-11-18T07:48:02.000Z",["0x0BfF34272aF650632236703a3D6d8e3c133421Cb"]],["2021-01-22T18:50:08.000Z",["0x4015ccad9218b109d3339B356392C6EE8438e5d0"]],["2021-02-24T11:42:20.000Z",["0xEcFdefe1D67f93d3C154B67FD9d4ba62aB820DeA"]],["2021-04-28T11:52:47.000Z",["0x296AC8fb39279BbcFF6eDc9FddF1d2f4aEa1631b"]],["2021-08-05T09:27:28.000Z",["0x7CfA0f105a4922E89666D7D63689d9C9b1eA7a19"]],["2021-09-26T07:01:07.000Z",["0x6866FE89723713282BF6aB2fb8f03b0ee1833ABE"]],["2021-09-26T07:01:07.000Z",["0x6aBB753C1893194DE4a83c6e8B4EadFc105Fd5f5"]],["2022-08-21T07:40:43.000Z",["0x37D26DC2890b35924b40574BAc10552794771997"]],["2024-08-25T16:11:47.000Z",["0x1633012a2cB27eFBC2944f2E43b9197Bc3964359"]],["2024-08-27T11:02:23.000Z",["0x8F372f5404514cec63A3F88BAac772Cc620F2281"]]]
+      values.$upgradeCount:
++        11
+    }
+```
+
+```diff
+    contract ChainExitERC1155Predicate (0xDB2382413bCb9c2F1B6b62B52238558266361D68) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2021-08-30T06:28:28.000Z",["0xf17461C73d32f7545ADfdd478a6eC5a382F5A58f"]]]
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract ERC721Predicate (0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2020-08-26T10:13:28.000Z",["0x9aaae29879c95eD732babaBEa4cAe20A6D931DbB"]],["2020-11-18T07:48:02.000Z",["0xf3f08b74B63d0C008Cea903ee59b346bF1d5e4Cd"]],["2021-03-12T06:45:22.000Z",["0x637315199D6dcB7190BbfAcFB1E1cCe7f9632714"]],["2021-04-09T07:18:40.000Z",["0xB272B6D99858B0EfB079946942006727fe105201"]],["2022-05-26T10:17:23.000Z",["0xd515C8fF03eC79e7d5B3410c036f738e7f396C90"]],["2024-08-25T16:11:47.000Z",["0x9F5B43C0d6d57a76E5B24CE05E11b70C3C7eA8Ec"]],["2024-08-27T11:02:23.000Z",["0x02Bc987f54B54bf18Ca6E20a13e57508ec561072"]]]
+      values.$upgradeCount:
++        7
+    }
+```
+
+Generated with discovered.json: 0xc9692571aec67bd25ab9438b82272a7c15a33947
+
+# Diff at Mon, 30 Sep 2024 09:42:21 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@eec6993b988ab9a9f325d04da2e9717ed24ad0b9 block: 20719990
+- current block number: 20862639
+
+## Description
+
+1 Polygon validator unstaked (removed).
+
+## Watched changes
+
+```diff
+    contract StakingNFT (0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F) {
+    +++ description: None
+      values.totalSupply:
+-        127
++        126
+    }
+```
+
 Generated with discovered.json: 0x3d35e33e8d7c7a42b99c510b19d0ecafea220295
 
 # Diff at Tue, 10 Sep 2024 11:43:09 GMT:

@@ -1,3 +1,75 @@
+Generated with discovered.json: 0xa97bdd5523bee84b1721a567443c3a6fa1660fbd
+
+# Diff at Tue, 01 Oct 2024 10:52:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20685269
+- current block number: 20685269
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20685269 (main branch discovery), not current.
+
+```diff
+    contract Challenge (0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-06-04T17:32:23.000Z",["0x2785D4Af59bf299C1f2DBC5132E72B2eE015B3aC"]],["2024-09-05T13:35:35.000Z",["0x4Fc6a6A2e3864709ae6AdCf29280dA01c95Aa10B"]]]
+    }
+```
+
+```diff
+    contract ChainOracle (0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-06-04T17:31:47.000Z",["0x79B3E839333a74137e78b0DaF84FC12512a8c704"]]]
+    }
+```
+
+```diff
+    contract LightLinkBridge (0x3ca373F5ecB92ac762f9876f6e773082A4589995) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-08-16T03:06:47.000Z",["0x468b89D930ca7974196D7195033600B658011756"]]]
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract L1BridgeRegistry (0x624631881655a310adcF0d1336658Cc977609b72) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-08-16T02:57:47.000Z",["0xC48F0e7C3c4E385ae84B4f678A0482E00208cf3E"]]]
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract LightLinkERC20Bridge (0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-08-16T03:12:11.000Z",["0xa8372d6FF00d48A25BaA1AF16d6a86C936708f4E"]]]
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract CanonicalStateChain (0x65E325A22c0F519041db69F5693EbAc3b4AE71bE) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-06-04T17:31:11.000Z",["0xd8C81A0CB0044fC45B51531A8dcc48Ed385937B5"]],["2024-09-05T13:31:35.000Z",["0xeFE38Bd58ADDf23eFab1FFa16312030384929289"]]]
+    }
+```
+
 Generated with discovered.json: 0x3e7db4030a9e68b02999c798868fa8c2066511dc
 
 # Diff at Thu, 05 Sep 2024 15:26:03 GMT:

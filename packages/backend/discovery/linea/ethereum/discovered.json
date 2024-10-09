@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20389671,
   "configHash": "0x311143ae4848e97520f64a30bb9922830c881232fba2b4ba5205492f3e5e951e",
-  "version": 14,
   "contracts": [
     {
       "name": "ERC20Bridge",
@@ -20,6 +19,16 @@
       "values": {
         "$admin": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
         "$implementation": "0xd52c09E67aF3BE0977B52b4817366e9BaB5dCFA2",
+        "$pastUpgrades": [
+          [
+            "2023-08-03T13:04:35.000Z",
+            ["0x6ccfD65b0b14F67259C77Ca6267104e058dDB292"]
+          ],
+          [
+            "2024-06-05T11:49:35.000Z",
+            ["0xd52c09E67aF3BE0977B52b4817366e9BaB5dCFA2"]
+          ]
+        ],
         "$upgradeCount": 2,
         "messageService": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
         "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
@@ -88,6 +97,16 @@
       "values": {
         "$admin": "0x41fAD3Df1B07B647D120D055259E474fE8046eb5",
         "$implementation": "0x0eC393209674090368C592A591B25811e490BF36",
+        "$pastUpgrades": [
+          [
+            "2023-08-03T18:11:11.000Z",
+            ["0x16Db542C30fB3519D11CF8F632077c62c1a944fd"]
+          ],
+          [
+            "2023-09-01T20:25:47.000Z",
+            ["0x0eC393209674090368C592A591B25811e490BF36"]
+          ]
+        ],
         "$upgradeCount": 2,
         "balance": 40788560818546,
         "messageService": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
@@ -174,6 +193,36 @@
       "values": {
         "$admin": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
         "$implementation": "0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562",
+        "$pastUpgrades": [
+          [
+            "2023-07-12T11:05:23.000Z",
+            ["0xE8f627df6Cb02e415b2e6d6e112323BD269b4706"]
+          ],
+          [
+            "2023-07-12T12:57:47.000Z",
+            ["0xE8f627df6Cb02e415b2e6d6e112323BD269b4706"]
+          ],
+          [
+            "2023-07-15T13:31:23.000Z",
+            ["0x4c8d4Ce72afAA417d1F7E833725FdB4E793cd6b3"]
+          ],
+          [
+            "2023-08-08T16:58:47.000Z",
+            ["0xb32c3D0dDb0063FfB15E8a50b40cC62230D820B3"]
+          ],
+          [
+            "2024-02-13T08:39:59.000Z",
+            ["0xAA4b3a9515c921996Abe7930bF75Eff7466a4457"]
+          ],
+          [
+            "2024-03-26T10:29:47.000Z",
+            ["0x934Dd4C63E285551CEceF8459103554D0096c179"]
+          ],
+          [
+            "2024-06-05T11:49:35.000Z",
+            ["0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562"]
+          ]
+        ],
         "$upgradeCount": 7,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -867,5 +916,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

@@ -28,6 +28,9 @@ export function ScalingActivityTable({ entries }: Props) {
     getSortedRowModel: getSortedRowModel(),
     initialState: {
       sorting: [{ id: 'data_pastDayTps', desc: true }],
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
     },
   })
   return (

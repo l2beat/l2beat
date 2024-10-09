@@ -64,7 +64,7 @@ export const beamerbridgev2: Bridge = {
       references: [
         {
           text: 'Beamer Bridge V2 Architecture',
-          href: 'https://docs.beamerbridge.com/whitepaper.html',
+          href: 'https://docs.beamerbridge.com/',
         },
       ],
       risks: [],
@@ -84,7 +84,7 @@ export const beamerbridgev2: Bridge = {
       references: [
         {
           text: 'Beamer Bridge V2 Architecture',
-          href: 'https://docs.beamerbridge.com/whitepaper.html',
+          href: 'https://docs.beamerbridge.com/',
         },
       ],
     },

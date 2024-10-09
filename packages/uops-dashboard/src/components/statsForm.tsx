@@ -62,13 +62,12 @@ export function StatsForm({
     })
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
     getStats(chainId, blockCount)
   }
 
-  const getStats = async (chainId: ChainId, blockNumber: number) => {
+  const getStats = async (chainId: ChainId, overideBlockCount: number) => {
     setIsLoading(true)
 
     const chain = SUPPORTED_CHAINS.find((c) => c.id === chainId)
@@ -78,7 +77,7 @@ export function StatsForm({
     }
 
     let currentBatchSize = chain.batchSize || 10
-    let blocksLeftToFetch = blockCount
+    let blocksLeftToFetch = overideBlockCount ?? blockCount
     let currentLastFetched = lastFetched
 
     try {

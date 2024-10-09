@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 19531448,
   "configHash": "0xf3b1fe36854fe7db011f4e2a3ed30fa740e86981816b395b308c2ab99a1e5f9d",
-  "version": 14,
   "contracts": [
     {
       "name": "EthereumL1Messenger",
@@ -285,5 +284,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

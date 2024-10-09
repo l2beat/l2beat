@@ -1,3 +1,185 @@
+Generated with discovered.json: 0xe0aaeba96a6b157035d409db6ad8520899fb43b6
+
+# Diff at Tue, 08 Oct 2024 17:23:11 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@bca55174129419533cd4173605c170ea99ac6f98 block: 20826753
+- current block number: 20922325
+
+## Description
+
+The deposits on the main Lido escrow for Optimism are paused by the Lido EmergencyBrake Multisig following [an upgrade proposal](https://research.lido.fi/t/steth-on-optimism-upgrade-announcement-and-action-plan/8474) for rebasing L2 stETH. This is a scheduled action and deposits should be reenabled im 2024/10/10.
+
+Config related: Move to discovery driven data.
+
+## Watched changes
+
+```diff
+    contract wstETHEscrow (0x76943C0D61395d8F2edF9060e1533529cAe05dE6) {
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+      values.isDepositsEnabled:
+-        true
++        false
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20826753 (main branch discovery), not current.
+
+```diff
+    contract wstETHEscrow (0x76943C0D61395d8F2edF9060e1533529cAe05dE6) {
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+      template:
++        "lido/L1ERC20TokenBridge"
+      displayName:
++        "L1ERC20TokenBridge"
+      descriptions:
++        ["Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally."]
+    }
+```
+
+Generated with discovered.json: 0xab5b0dad05008fc4ed4f6fe633034f4554e466b5
+
+# Diff at Tue, 01 Oct 2024 10:53:43 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20826753
+- current block number: 20826753
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20826753 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (0x18DAc71c228D1C32c99489B7323d441E1175e443) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+      values.$pastUpgrades:
++        [["2024-05-16T19:17:35.000Z",["0x6B7da1647Aa9684F54B2BEeB699F91F31cd35Fb9"]],["2024-09-11T00:54:59.000Z",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]],["2024-09-11T00:54:59.000Z",["0x1B5CC028A4276597C607907F24E1AC05d3852cFC"]]]
+    }
+```
+
+```diff
+    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-06-06T15:58:47.000Z",["0x5efa852e92800D1C982711761e45c3FE39a2b6D8"]],["2024-02-26T21:44:11.000Z",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]],["2024-02-26T21:44:11.000Z",["0x33A032ec93Ec0C492Ec4BF0B30D5f51986E5a314"]],["2024-04-11T20:49:59.000Z",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]],["2024-04-11T20:49:59.000Z",["0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1"]],["2024-06-10T16:42:59.000Z",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]],["2024-06-10T16:42:59.000Z",["0xF56D96B2535B932656d3c04Ebf51baBff241D886"]]]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades:
++        [["2021-06-22T22:29:27.000Z",["0x16393737D09d2722AD13DcA3cA8C3DB957699F1D"]],["2021-06-26T00:52:47.000Z",["0xbfba066b5cA610Fe70AdCE45FcB622F945891bb0"]],["2021-11-11T17:37:56.000Z",["0x0000000000000000000000000000000000000000"]],["2021-11-11T19:29:14.000Z",["0xd9166833FF12A5F900ccfBf2c8B62a90F1Ca1FD5"]],["2023-06-06T15:58:47.000Z",["0x0000000000000000000000000000000000000000"]],["2023-06-06T18:24:11.000Z",["0x2150Bc3c64cbfDDbaC9815EF615D6AB8671bfe43"]],["2024-02-26T21:44:11.000Z",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]],["2024-02-26T21:44:11.000Z",["0xa95B24af19f8907390eD15f8348A1a5e6Ccbc5C6"]],["2024-04-11T20:49:59.000Z",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]],["2024-04-11T20:49:59.000Z",["0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"]]]
+      values.$upgradeCount:
++        10
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x5a7749f83b81B301cAb5f48EB8516B986DAef23D) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.$pastUpgrades:
++        [["2022-10-04T22:08:59.000Z",["0x3268Ed09f76e619331528270B6267D4d2C5Ab5C2"]],["2023-06-06T18:24:11.000Z",["0x3268Ed09f76e619331528270B6267D4d2C5Ab5C2"]],["2024-02-26T21:44:11.000Z",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]],["2024-02-26T21:44:11.000Z",["0xc599Fa757c2bCaA5aE3753Ab129237F38C10da0b"]],["2024-04-11T20:49:59.000Z",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]],["2024-04-11T20:49:59.000Z",["0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"]]]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x75505a97BD334E7BD3C476893285569C4136Fa0F) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      values.$pastUpgrades:
++        [["2023-06-06T18:24:11.000Z",["0xaE849EFA4BcFc419593420e14707996936E365E2"]],["2024-02-26T21:44:11.000Z",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]],["2024-02-26T21:44:11.000Z",["0x74e273220Fa1cB62Fd756FE6CbDA8BBb89404deD"]],["2024-04-11T20:49:59.000Z",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]],["2024-04-11T20:49:59.000Z",["0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846"]]]
+    }
+```
+
+```diff
+    contract wstETHEscrow (0x76943C0D61395d8F2edF9060e1533529cAe05dE6) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2022-08-05T08:23:19.000Z",["0x29C5c51A031165CE62F964966A6399b81165EFA4"]]]
+    }
+```
+
+```diff
+    contract DelayedWETH_PermissionlessGames (0x82511d494B5C942BE57498a70Fdd7184Ee33B975) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      values.$pastUpgrades:
++        [["2024-08-29T23:45:23.000Z",["0x71e966Ae981d1ce531a7b6d23DC0f27B38409087"]]]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      values.$pastUpgrades:
++        [["2024-01-22T20:19:59.000Z",["0x53c165169401764778F780a69701385eb0FF19B7"]],["2024-06-10T18:29:23.000Z",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]],["2024-06-10T18:29:23.000Z",["0x53c165169401764778F780a69701385eb0FF19B7"]]]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract DelayedWETH_PermissionedGames (0x9F9b897e37de5052cD70Db6D08474550DDb07f39) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      values.$pastUpgrades:
++        [["2024-08-29T23:45:35.000Z",["0x71e966Ae981d1ce531a7b6d23DC0f27B38409087"]]]
+    }
+```
+
+```diff
+    contract OptimismPortal (0xbEb5Fc579115071764c7423A4f12eDde41f106Ed) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-06-06T18:24:11.000Z",["0x28a55488fef40005309e2DA0040DbE9D300a64AB"]],["2024-02-26T21:44:11.000Z",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]],["2024-02-26T21:44:11.000Z",["0xaBAbe63514dDd6277356F8cc3d6518aA8BDEB4de"]],["2024-04-11T20:49:59.000Z",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]],["2024-04-11T20:49:59.000Z",["0x2D778797049FE9259d947D1ED8e5442226dFB589"]],["2024-06-10T16:42:59.000Z",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]],["2024-06-10T16:42:59.000Z",["0xe2F826324b2faf99E513D16D266c3F80aE87832B"]]]
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0xe5965Ab5962eDc7477C8520243A95517CD252fA9) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.$pastUpgrades:
++        [["2024-05-16T19:17:35.000Z",["0xc641A33cab81C559F2bd4b21EA34C290E2440C2B"]]]
+    }
+```
+
+Generated with discovered.json: 0xc97d3bc9db68bf215aa669c14b6ff99153c688cf
+
+# Diff at Wed, 25 Sep 2024 09:34:30 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@e8c4fe6b10f7918ebbd761bc35018ba84053b08c block: 20785025
+- current block number: 20826753
+
+## Description
+
+Single signer change in SNX MS (SNX escrow owner).
+
+## Watched changes
+
+```diff
+    contract SynthetixMultisig (0xEb3107117FEAd7de89Cd14D463D340A2E6917769) {
+    +++ description: None
+      values.$members.3:
+-        "0x0B67bab43157e53D21965Af0d83f83BeD9553E0a"
++        "0xcC934A54A2Dc516B2bb0CFE2F73bfA9A87F5341f"
+    }
+```
+
 Generated with discovered.json: 0x225b2dce43e2ef7ecd0848d32f679a6bf29f6f43
 
 # Diff at Thu, 19 Sep 2024 13:46:26 GMT:

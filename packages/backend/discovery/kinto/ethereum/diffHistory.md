@@ -1,3 +1,163 @@
+Generated with discovered.json: 0xc9ebd71070ff948b0a129e8de7fc00d4f4883ce3
+
+# Diff at Tue, 01 Oct 2024 10:51:44 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20842784
+- current block number: 20842784
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20842784 (main branch discovery), not current.
+
+```diff
+    contract Bridger (0x0f1b7bd7762662B23486320AA91F30312184f70C) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-12T12:55:35.000Z",["0x925eC66892261203536a4aede9CA8e8D0feeA4ad"]],["2024-03-13T12:31:35.000Z",["0x31a20f10c846BD3Ed41c6c05c340bFD7A57ECADA"]],["2024-03-15T01:29:11.000Z",["0xE3641CbDAc5477C350c8FeAAF52Ddc021451A2aA"]],["2024-03-26T06:51:23.000Z",["0x989b9f407687DA3050C957CfeF5E6c18BeE7cb9F"]],["2024-05-21T00:55:23.000Z",["0x3636617973f25a512676cb06876f0C885568664a"]],["2024-05-22T00:09:11.000Z",["0x0210AE8703F8c9A88D7050825bd8001E359CB4BA"]],["2024-05-22T02:17:11.000Z",["0x270f25127D7C48c956459e113aa81615CC30AeE2"]],["2024-06-22T21:24:59.000Z",["0xEEe82E92bA40A694409B4BDa3D7426188c61163e"]],["2024-07-22T20:12:59.000Z",["0x23559eB4Ad22c31940a929958B104821126F35b7"]],["2024-08-06T21:07:23.000Z",["0x47e28e296BE2EE69b4579d5eecbABA38217a2b03"]],["2024-09-26T17:41:47.000Z",["0x21D3921B50617BDef223207118950B0b577e4007"]]]
+    }
+```
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      values.$pastUpgrades:
++        [["2023-12-15T02:37:35.000Z",["0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A","0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"]]]
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract RollupEventInbox (0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-12-15T02:37:35.000Z",["0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"]]]
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-12-15T02:37:35.000Z",["0x6c21303F5986180B1394d2C89f3e883890E2867b"]]]
+    }
+```
+
+```diff
+    contract ChallengeManager (0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-12-15T02:37:35.000Z",["0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754"]],["2024-06-27T16:39:47.000Z",["0x122B88885F1f365B69CAd38B167B039fEd0Ba096"]]]
+    }
+```
+
+```diff
+    contract Outbox (0x655761AD5FC251F414D6993A73184B0669F278c8) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-12-15T02:37:35.000Z",["0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC"]]]
+    }
+```
+
+```diff
+    contract L1ERC20Gateway (0x7870D5398DB488c669B406fBE57b8d05b6A35e42) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-12-15T03:06:35.000Z",["0xf43bce5D32742FFC862eA182b0b5544CbDBB0F02"]]]
+    }
+```
+
+```diff
+    contract Bridge (0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-12-15T02:37:35.000Z",["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]]]
+    }
+```
+
+```diff
+    contract Inbox (0xBFfaA85c1756472fFC37e6D172A7eC0538C14474) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-12-15T02:37:35.000Z",["0x1162084C3C6575121146582Db5BE43189e8CEe6b"]],["2024-05-03T15:22:59.000Z",["0x518465d9f81bDE1e573f9bD2a6761F8ADaAFe73e"]],["2024-05-08T00:06:47.000Z",["0xc235c5194f2404234fc7C99b4dd15289BB735Cf5"]]]
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-12-15T03:06:35.000Z",["0x6525137BfF366fbc0A89E3e5A4d244B5A0090a6D"]]]
+    }
+```
+
+```diff
+    contract SequencerInbox (0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-12-15T02:37:35.000Z",["0x873484Ba63353C8b71210ce123B465512d408B27"]],["2024-06-27T16:39:47.000Z",["0x57411f5BA52531e8199066bC8EC650470A744883"]]]
+    }
+```
+
+Generated with discovered.json: 0x3b19a1236807f46f2117249263404871458f5451
+
+# Diff at Fri, 27 Sep 2024 15:14:59 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@4cb14cc1bdc343d171a7988f9f91f11edbf568a8 block: 20756734
+- current block number: 20842784
+
+## Description
+
+Bridger upgrade: Formatting, libraries, removal of a USDM curve pool slot and Solv SFT wrapper.
+
+## Watched changes
+
+```diff
+    contract Bridger (0x0f1b7bd7762662B23486320AA91F30312184f70C) {
+    +++ description: None
+      values.$implementation:
+-        "0x47e28e296BE2EE69b4579d5eecbABA38217a2b03"
++        "0x21D3921B50617BDef223207118950B0b577e4007"
+      values.$upgradeCount:
+-        10
++        11
+      values.SOLV_SFT_WRAP_ROUTER:
+-        "0x6Ea88D4D0c4bC06F6A51f427eF295c93e10D0b36"
++        "0xe9eD7530427Cb41A56C9e004e00e074cCc168C44"
+      values.usdmCurvePool:
+-        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@20756734 => .flat}/Bridger/Bridger.sol  | 1909 +++-----------------
+ 1 file changed, 228 insertions(+), 1681 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20756734 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      usedTypes.0.arg.0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39:
++        "ArbOS v32 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0xe37f1f654e8ff1efaa734238d523de5b48be6763
 
 # Diff at Sun, 15 Sep 2024 14:53:00 GMT:

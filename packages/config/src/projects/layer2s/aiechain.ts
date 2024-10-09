@@ -16,10 +16,14 @@ export const aiechain: Layer2 = upcomingL2({
     links: {
       websites: ['https://genesis.aielabs.io/'],
       apps: [],
-      documentation: [],
+      documentation: ['https://docs.aielabs.io'],
       explorers: [],
       repositories: [],
-      socialMedia: ['https://x.com/AIE_Labs'],
+      socialMedia: [
+        'https://x.com/AIE_Labs',
+        'https://t.me/aielabsnews',
+        'https://discord.gg/ZrQYEE2m9s',
+      ],
     },
   },
 })

@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20460352,
   "configHash": "0x3e2dc7e022e9938085df51572e3b11183280786767e123280350b230e4c8c300",
-  "version": 14,
   "contracts": [
     {
       "name": "DepositContract",
@@ -32,6 +31,16 @@
       "values": {
         "$admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
         "$implementation": "0x6cA98f43719231d38F6426DB64C7F3D5C7CE7876",
+        "$pastUpgrades": [
+          [
+            "2024-02-01T18:20:11.000Z",
+            ["0x1120ef11d4C3dc90Aa6BDfce16Ab049dd5d18aE0"]
+          ],
+          [
+            "2024-02-19T16:52:35.000Z",
+            ["0x6cA98f43719231d38F6426DB64C7F3D5C7CE7876"]
+          ]
+        ],
         "$upgradeCount": 2,
         "bridge": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
         "BRIDGE": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
@@ -53,6 +62,21 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xC6e4ECE5576dC96846bb11eD8910f3dF3CE516b8",
+        "$pastUpgrades": [
+          [
+            "2024-02-01T18:20:11.000Z",
+            ["0x31c25985E6b10CF335FC01cf9790aF4890d0505c"]
+          ],
+          [
+            "2024-05-14T20:13:47.000Z",
+            ["0x7a6b7F35D032c9b122C69F01EA4523e028f6ef4A"]
+          ],
+          [
+            "2024-05-14T20:13:47.000Z",
+            ["0xC6e4ECE5576dC96846bb11eD8910f3dF3CE516b8"]
+          ]
+        ],
+        "$upgradeCount": 3,
         "MESSAGE_VERSION": 1,
         "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292625725",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
@@ -146,6 +170,20 @@
       "values": {
         "$admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
         "$implementation": "0x4D7A1a16d0DA89B50FBd8b524508FC393A6Dc367",
+        "$pastUpgrades": [
+          [
+            "2024-02-01T18:20:11.000Z",
+            ["0x22052c592f763CA14a090D9974c5Bf9Fd3a44b8c"]
+          ],
+          [
+            "2024-05-14T20:13:47.000Z",
+            ["0x7a6b7F35D032c9b122C69F01EA4523e028f6ef4A"]
+          ],
+          [
+            "2024-05-14T20:13:47.000Z",
+            ["0x4D7A1a16d0DA89B50FBd8b524508FC393A6Dc367"]
+          ]
+        ],
         "$upgradeCount": 3,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "0x6017f75108f251a488B045A7ce2a7C15b179d1f2",
@@ -214,6 +252,7 @@
       "values": {
         "$admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
         "$implementation": "0x30Cd695249394eED44C576f2caEC5304be6455F9",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x126bcc31Bc076B3d515f60FBC81FddE0B0d542Ed",
@@ -242,6 +281,20 @@
       "values": {
         "$admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
         "$implementation": "0x47Ec03B67ba4f3C71a4320D2947f2173E0B45a23",
+        "$pastUpgrades": [
+          [
+            "2024-02-01T18:20:23.000Z",
+            ["0x59B6903044Fa9439a5D621D3605789A6E654b1D6"]
+          ],
+          [
+            "2024-05-14T20:13:47.000Z",
+            ["0x7a6b7F35D032c9b122C69F01EA4523e028f6ef4A"]
+          ],
+          [
+            "2024-05-14T20:13:47.000Z",
+            ["0x47Ec03B67ba4f3C71a4320D2947f2173E0B45a23"]
+          ]
+        ],
         "$upgradeCount": 3,
         "FRXETH": "0x5E8422345238F34275888049021821E8E08CAa1f",
         "FRXETH_MINTER": "0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
@@ -305,6 +358,20 @@
       "values": {
         "$admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
         "$implementation": "0x0d9C39c64CF8eDA1EdFeBD78AFa895bAA797eFc4",
+        "$pastUpgrades": [
+          [
+            "2024-02-01T18:19:59.000Z",
+            ["0x0d9C39c64CF8eDA1EdFeBD78AFa895bAA797eFc4"]
+          ],
+          [
+            "2024-02-02T23:44:11.000Z",
+            ["0xb851fc304fCa88EDC89C287687AF4F6d7810bc14"]
+          ],
+          [
+            "2024-02-02T23:44:11.000Z",
+            ["0x0d9C39c64CF8eDA1EdFeBD78AFa895bAA797eFc4"]
+          ]
+        ],
         "$upgradeCount": 3,
         "guardian": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
         "GUARDIAN_SLOT": "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68",
@@ -339,6 +406,24 @@
       "values": {
         "$admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
         "$implementation": "0x6f3CcC8C9DAf8B9b39aDe481213Ff7A626a42B65",
+        "$pastUpgrades": [
+          [
+            "2024-02-01T18:20:23.000Z",
+            ["0xA30ADd78D5be6B2B55C934666bb4fF2C4429d800"]
+          ],
+          [
+            "2024-02-02T23:44:11.000Z",
+            ["0x84c2f365733c6560bd49D8768d9c23B07A9DD630"]
+          ],
+          [
+            "2024-05-14T20:13:47.000Z",
+            ["0x7a6b7F35D032c9b122C69F01EA4523e028f6ef4A"]
+          ],
+          [
+            "2024-05-14T20:13:47.000Z",
+            ["0x6f3CcC8C9DAf8B9b39aDe481213Ff7A626a42B65"]
+          ]
+        ],
         "$upgradeCount": 4,
         "challenger": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
         "CHALLENGER": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
@@ -442,6 +527,20 @@
       "values": {
         "$admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
         "$implementation": "0x7eE1637C33Ed0DFEE6403f3301B6d404106018e4",
+        "$pastUpgrades": [
+          [
+            "2024-02-01T18:20:11.000Z",
+            ["0x23A0478996241F9f966b7054c06FdeB96Ddf3475"]
+          ],
+          [
+            "2024-05-14T20:13:47.000Z",
+            ["0x7a6b7F35D032c9b122C69F01EA4523e028f6ef4A"]
+          ],
+          [
+            "2024-05-14T20:13:47.000Z",
+            ["0x7eE1637C33Ed0DFEE6403f3301B6d404106018e4"]
+          ]
+        ],
         "$upgradeCount": 3,
         "messenger": "0x126bcc31Bc076B3d515f60FBC81FddE0B0d542Ed",
         "MESSENGER": "0x126bcc31Bc076B3d515f60FBC81FddE0B0d542Ed",
@@ -1157,5 +1256,5 @@
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0xc2b2af326d311f3d03fc7620f421703794cce7b4ddb9f30cdcf6d025b4cdec01"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

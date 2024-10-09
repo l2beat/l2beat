@@ -7,7 +7,6 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
-  makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Layer2 } from './types'
@@ -38,7 +37,6 @@ export const omgnetwork: Layer2 = {
         'https://twitter.com/omgnetworkhq',
         'https://discord.gg/m7NysJjKhm',
         'https://t.me/omgnetwork',
-        'https://linkedin.com/company/omgnetwork/',
       ],
     },
   },
@@ -62,7 +60,7 @@ export const omgnetwork: Layer2 = {
       },
     ],
   },
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: RISK_VIEW.STATE_EXITS_ONLY,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
@@ -75,7 +73,7 @@ export const omgnetwork: Layer2 = {
     },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('OMG'),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-  }),
+  },
   technology: {
     stateCorrectness: {
       ...STATE_CORRECTNESS.EXIT_FRAUD_PROOFS,

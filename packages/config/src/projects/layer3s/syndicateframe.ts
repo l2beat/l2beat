@@ -39,17 +39,6 @@ export const syndicateframe: Layer3 = opStackL3({
   rpcUrl: 'https://rpc-frame.syndicate.io',
   genesisTimestamp: new UnixTime(1707371473),
   isNodeAvailable: 'UnderReview',
-  nonTemplatePermissions: [
-    {
-      name: 'ProxyAdmin owner',
-      description:
-        'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('ProxyAdmin', 'owner'),
-        ),
-      ],
-    },
-  ],
   usesBlobs: true,
+  discoveryDrivenData: true,
 })

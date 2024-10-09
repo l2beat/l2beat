@@ -52,7 +52,7 @@ export const bridgesArchivedColumns = [
       }
 
       return (
-        <span className="text-base font-bold md:text-lg">
+        <span className="text-xs font-bold md:text-base">
           {formatCurrency(value, 'usd', {
             showLessThanMinimum: false,
           })}

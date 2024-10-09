@@ -1,3 +1,106 @@
+Generated with discovered.json: 0xc671fe7911149c86e012a82d536ec3601af3e50f
+
+# Diff at Mon, 07 Oct 2024 13:57:30 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@7c3e632caf56b943789c1bfa1021d4f65d503045 block: 20775904
+- current block number: 20914127
+
+## Description
+
+Rename Multisig.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20775904 (main branch discovery), not current.
+
+```diff
+    contract HyprMultisig (0x28fB4D0e436874F4107948E358df3C242De06788) {
+    +++ description: None
+      name:
+-        "ChallengerMultisig"
++        "HyprMultisig"
+    }
+```
+
+Generated with discovered.json: 0xd5465aff937f8d9936f6f08febe31a4dbc9996ea
+
+# Diff at Tue, 01 Oct 2024 10:51:32 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20775904
+- current block number: 20775904
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20775904 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (0x1bBde518ad01BaABFE30020407A7630FB17B545d) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x2e5687010b5f62Ad0ef84370325bC91DED2724fe) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.$pastUpgrades:
++        [["2024-01-17T17:27:11.000Z",["0x384BA1d14cDdE620d309AcA9B154e6CACbF27d11"]]]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x3E4F4Eb77a9c1f88c0e1F5aDCc9d3521Ce157FdD) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$pastUpgrades:
++        [["2024-01-17T17:27:11.000Z",["0x2246d85AC397d289d49a92C804201738C4Bd2d73"]]]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x5F67587FB3f1736a5a91C10E3EeB7cA92117177B) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      values.$pastUpgrades:
++        [["2024-01-17T17:27:11.000Z",["0x2A033B70a4D7FAbc6E651E964D18fcf65D9d2aED"]]]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x9f6F58F07863D72C47D001066C65528C27D3AE19) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades:
++        [["2024-01-17T17:27:11.000Z",["0x9f6F58F07863D72C47D001066C65528C27D3AE19"]],["2024-01-17T17:27:11.000Z",["0xdf3CEeA6357eb051c7D5C6aA0E31908C99Ec4E7e"]]]
+      values.$upgradeCount:
++        2
+    }
+```
+
+```diff
+    contract OptimismPortal (0xba1ac896F3b7cB273daE94bF9A6291A432e826c7) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.$pastUpgrades:
++        [["2024-01-17T17:27:11.000Z",["0xC3fE3e0Ea967B2878faB2fEc7e1067b32aDf1C03"]]]
+    }
+```
+
+```diff
+    contract SystemConfig (0xBB08cf90DEb93492b463f1Ee5DA9453e51643586) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.$pastUpgrades:
++        [["2024-01-17T17:27:11.000Z",["0xd136b83fd10735AB0001B8F8B361900c3717d6C2"]]]
+    }
+```
+
 Generated with discovered.json: 0xfc89da92652814898db1eb86e827fa81bb74ddf4
 
 # Diff at Wed, 18 Sep 2024 11:33:06 GMT:

@@ -1,3 +1,126 @@
+Generated with discovered.json: 0x23e388bff7edd9b963516c7c4e0874b575b809df
+
+# Diff at Tue, 08 Oct 2024 16:23:20 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@bca55174129419533cd4173605c170ea99ac6f98 block: 19960612
+- current block number: 20919938
+
+## Description
+
+Move to discovery driven data.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19960612 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      descriptions.0:
+-        "It contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address."
++        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
+      fieldMeta.unsafeBlockSigner:
+-        {"severity":"LOW","description":"Blocks are gossiped around the L2 p2p network before they are made available on L1. To prevent denial of service on the p2p layer, these unsafe blocks must be signed with a particular key to be accepted as 'canonical' unsafe blocks. The address corresponding to this key is the unsafeBlockSigner."}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x6D4528d192dB72E282265D6092F4B872f9Dff69e) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      template:
++        "opstack/L1CrossDomainMessenger"
+      descriptions:
++        ["Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."]
+    }
+```
+
+Generated with discovered.json: 0x2b228aabc53db39c3f30b455b5446a59439ba6e8
+
+# Diff at Tue, 01 Oct 2024 10:50:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 19960612
+- current block number: 19960612
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19960612 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB) {
+    +++ description: It contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address.
+      values.$pastUpgrades:
++        [["2024-04-16T21:38:23.000Z",["0xfaE274B77BA59f001196689f93E9e73693866f4a"]]]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x4d898F66327Fa050131A17ed17a39EBeCC81f0c3) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      values.$pastUpgrades:
++        [["2024-04-16T21:38:47.000Z",["0xd080A33E651780cD6f52F16020E1FFA04F0f15B2"]]]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x6D4528d192dB72E282265D6092F4B872f9Dff69e) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2021-08-12T18:24:06.000Z",["0x25109139f8C4F9f7b4E4d5452A067feaE3a537F3"]],["2021-10-05T19:35:22.000Z",["0xae6b041f0550EDeF61a70F76f89c77B2b1Ef38Fd"]],["2021-10-28T02:15:33.000Z",["0x12Acf6E3ca96A60fBa0BBFd14D2Fe0EB6ae47820"]],["2024-04-16T21:38:23.000Z",["0x0000000000000000000000000000000000000000"]],["2024-04-16T21:38:47.000Z",["0x3b48597212f2622511585914CC4D4152c9B1B077"]]]
+      values.$upgradeCount:
++        5
+    }
+```
+
+```diff
+    contract OptimismPortal (0x7B02D13904D8e6E0f0Efaf756aB14Cb0FF21eE7e) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.$pastUpgrades:
++        [["2024-04-16T21:38:47.000Z",["0xD8056243180C4b56a7d2ccd5df9c2696E1261826"]]]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x996ffD627901f10C80A7d4B72A12316D2e77c076) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      values.$pastUpgrades:
++        [["2024-04-16T21:38:47.000Z",["0xe4e0f760409EB1661db76a4365c0803C3630270f"]],["2024-04-19T18:05:35.000Z",["0x862E8e466ac49c1B076322AabCd4156326C47890"]],["2024-04-19T18:05:35.000Z",["0xe4e0f760409EB1661db76a4365c0803C3630270f"]]]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0xA6Ad22bb0E73DEF40a24E510cFbc93807d8bf87e) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.$pastUpgrades:
++        [["2024-04-16T21:38:47.000Z",["0x99948157F4702B3EE9De4290C3dCDF2622Db9318"]]]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xbB7aD3f9CCbC94085b7F7B1D5258e59F5F068741) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$pastUpgrades:
++        [["2024-04-16T21:38:47.000Z",["0x31f395dd26430a8CBFa530e31B46aaf7ad517017"]],["2024-04-19T18:04:11.000Z",["0xfeE76239E3ac25A05c5CdDC106E4B39B2C088029"]],["2024-04-19T18:04:11.000Z",["0x31f395dd26430a8CBFa530e31B46aaf7ad517017"]]]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      values.$pastUpgrades:
++        []
+    }
+```
+
 Generated with discovered.json: 0x576cc08d7de3d6d721fe264e3ba75a990b74a26b
 
 # Diff at Fri, 13 Sep 2024 08:18:08 GMT:

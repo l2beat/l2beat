@@ -126,7 +126,7 @@ export class RpcAnalyzer implements Analyzer {
     includeDetails: boolean,
   ): Promise<Transaction> {
     if (tx.to?.toLowerCase() === ENTRY_POINT_ADDRESS_0_6_0) {
-      return this.createTransaction(
+      return await this.createTransaction(
         'ERC-4337 Entry Point 0.6.0',
         tx,
         includeDetails,
@@ -134,7 +134,7 @@ export class RpcAnalyzer implements Analyzer {
     }
 
     if (tx.to?.toLowerCase() === ENTRY_POINT_ADDRESS_0_7_0) {
-      return this.createTransaction(
+      return await this.createTransaction(
         'ERC-4337 Entry Point 0.7.0',
         tx,
         includeDetails,

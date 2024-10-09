@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xf8efcb7a9ea1eb3b6cf51588c8ebe10dba759514
+
+# Diff at Tue, 01 Oct 2024 11:11:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20711816
+- current block number: 20711816
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20711816 (main branch discovery), not current.
+
+```diff
+    contract ZKFairValidium (0x1CbC08bf0D48b18F9f97796c61352b192d1850A5) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-12-18T06:02:35.000Z",["0x668965757127549f8755D2eEd10494B06420213b"]]]
+    }
+```
+
+```diff
+    contract GlobalExitRoot (0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-12-18T06:02:11.000Z",["0xC4CD3D0b31904969a397A98AcE8bDF2A94ba8615"]]]
+    }
+```
+
+```diff
+    contract ZKFairValidiumDAC (0x997CfB0838544f68E59f877EDc905001456F125b) {
+    +++ description: Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.
+      values.$pastUpgrades:
++        [["2023-12-18T06:01:59.000Z",["0x63150fA72c1c9fF8Fe4438f8355927D3415b0FDc"]]]
+    }
+```
+
+```diff
+    contract Bridge (0x9cb4706e20A18E59a48ffa7616d700A3891e1861) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-12-18T06:01:23.000Z",["0xEb80283EBc508CF6AaC5E054118954a2BD7fA006"]]]
+    }
+```
+
 Generated with discovered.json: 0x2ccdebaa7025806644571f9c5d25cfc70cd26a4b
 
 # Diff at Mon, 09 Sep 2024 08:19:48 GMT:

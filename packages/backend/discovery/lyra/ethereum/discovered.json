@@ -1,9 +1,8 @@
 {
   "name": "lyra",
   "chain": "ethereum",
-  "blockNumber": 20775910,
-  "configHash": "0xb054397b11aa00d2891531ffcd51382503645937e8dd928600b01bd5835322b9",
-  "version": 14,
+  "blockNumber": 20920202,
+  "configHash": "0xd2b34cce08747ffe4e4f13d440cef697e19c9ff16fe43022e7f3e96a10fb807d",
   "contracts": [
     {
       "name": "OptimismMintableERC20Factory",
@@ -29,6 +28,12 @@
       "values": {
         "$admin": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
         "$implementation": "0x81C2645D347a67c089169a4Da074aF7788650955",
+        "$pastUpgrades": [
+          [
+            "2023-11-15T04:14:35.000Z",
+            ["0x81C2645D347a67c089169a4Da074aF7788650955"]
+          ]
+        ],
         "$upgradeCount": 1,
         "BRIDGE": "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
         "version": "1.1.1"
@@ -64,6 +69,12 @@
       "values": {
         "$admin": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
         "$implementation": "0x81CCFC10CB55B58449A3FEE870D63C4D61941DaC",
+        "$pastUpgrades": [
+          [
+            "2023-11-15T04:14:35.000Z",
+            ["0x81CCFC10CB55B58449A3FEE870D63C4D61941DaC"]
+          ]
+        ],
         "$upgradeCount": 1,
         "batcherHash": "0x14e4E97bDc195d399Ad8E7FC14451C279FE04c8e",
         "gasLimit": 120000000,
@@ -94,8 +105,7 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         }
-      },
-      "derivedName": "SystemConfig"
+      }
     },
     {
       "name": "L2OutputOracle",
@@ -127,22 +137,27 @@
       "values": {
         "$admin": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
         "$implementation": "0xad206309916Fe08A27221133dde05a8F30f75e29",
+        "$pastUpgrades": [
+          [
+            "2023-11-15T04:14:35.000Z",
+            ["0xad206309916Fe08A27221133dde05a8F30f75e29"]
+          ]
+        ],
         "$upgradeCount": 1,
         "CHALLENGER": "0x91F4be0C264FAFA1fEd75c4440910Cba2cAd98e8",
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 13307400,
-        "latestOutputIndex": 7392,
-        "nextBlockNumber": 13309200,
-        "nextOutputIndex": 7393,
+        "latestBlockNumber": 14178600,
+        "latestOutputIndex": 7876,
+        "nextBlockNumber": 14180400,
+        "nextOutputIndex": 7877,
         "PROPOSER": "0x03e820562ffd2e0390787caD706EaF1FF98C2608",
         "startingBlockNumber": 0,
         "startingTimestamp": 1700021615,
         "SUBMISSION_INTERVAL": 1800,
         "version": "1.3.1"
-      },
-      "derivedName": "L2OutputOracle"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -260,7 +275,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 50,
+        "nonce": 53,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -279,8 +294,19 @@
       "values": {
         "$immutable": false,
         "$implementation": "0x93f5d9CD5BE592F1DC602E0CF4A38148b880cd13",
+        "$pastUpgrades": [
+          [
+            "2023-11-15T04:14:35.000Z",
+            ["0x5456f02c08e9A018E42C39b351328E5AA864174A"]
+          ],
+          [
+            "2023-11-15T04:14:35.000Z",
+            ["0x93f5d9CD5BE592F1DC602E0CF4A38148b880cd13"]
+          ]
+        ],
+        "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620102",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620105",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -293,8 +319,7 @@
         "ResolvedDelegateProxy_addressManager": "0xC845F9C4004EB35a8bde8ad89C4760a9c0e65CAB",
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "version": "1.4.1"
-      },
-      "derivedName": "L1CrossDomainMessenger"
+      }
     },
     {
       "name": "L1StandardBridge",
@@ -321,14 +346,14 @@
       "values": {
         "$admin": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
         "$implementation": "0xff7E236F171131cCB7a5149cE4645aBc92E0D8fb",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x5456f02c08e9A018E42C39b351328E5AA864174A",
         "MESSENGER": "0x5456f02c08e9A018E42C39b351328E5AA864174A",
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000010",
         "version": "1.1.1"
-      },
-      "derivedName": "L1StandardBridge"
+      }
     },
     {
       "name": "L1ERC721Bridge",
@@ -354,6 +379,12 @@
       "values": {
         "$admin": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
         "$implementation": "0x4f993d43f697Cb4c63D719Bb8Dc762dcbbB11476",
+        "$pastUpgrades": [
+          [
+            "2023-11-15T04:14:35.000Z",
+            ["0x4f993d43f697Cb4c63D719Bb8Dc762dcbbB11476"]
+          ]
+        ],
         "$upgradeCount": 1,
         "messenger": "0x5456f02c08e9A018E42C39b351328E5AA864174A",
         "MESSENGER": "0x5456f02c08e9A018E42C39b351328E5AA864174A",
@@ -387,6 +418,12 @@
       "values": {
         "$admin": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
         "$implementation": "0x4Ec5C80Fa12d04DB3A208DD0Fa5C01178FF5a16e",
+        "$pastUpgrades": [
+          [
+            "2023-11-15T04:14:35.000Z",
+            ["0x4Ec5C80Fa12d04DB3A208DD0Fa5C01178FF5a16e"]
+          ]
+        ],
         "$upgradeCount": 1,
         "GUARDIAN": "0x91F4be0C264FAFA1fEd75c4440910Cba2cAd98e8",
         "L2_ORACLE": "0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba",
@@ -394,16 +431,15 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 20730644
+          "prevBlockNum": 20905805
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e",
         "version": "1.7.2"
-      },
-      "derivedName": "OptimismPortal"
+      }
     },
     {
-      "name": "ChallengerMultisig",
+      "name": "LyraMultisig",
       "address": "0x91F4be0C264FAFA1fEd75c4440910Cba2cAd98e8",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -451,8 +487,7 @@
       "values": {
         "$immutable": true,
         "owner": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93"
-      },
-      "derivedName": "AddressManager"
+      }
     }
   ],
   "eoas": [
@@ -794,5 +829,5 @@
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0xb3e808e6410511e5cdb557ab187aac264a51956c695f8cc327ebaa202f7514fd"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

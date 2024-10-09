@@ -69,7 +69,8 @@
     [
       "0x77edae6a5f332605720688c7fda7476476e8f83f",
       "TransparentUpgradeableProxy"
-    ]
+    ],
+    ["0xd692f41fd540abb39aff27d7914ad7f1831f785b", "Login"]
   ],
   "METHODS": [
     ["0xfec93e49", "follow"],
@@ -125,6 +126,8 @@
     ["0x7050ccd9", "getReward"],
     ["0xb91d544e", "u"],
     ["0x2f2ff15d", "grantRole"],
-    ["0x98a6e993", "mintWithSignature"]
+    ["0x98a6e993", "mintWithSignature"],
+    ["0x3dbfd97c", "login"],
+    ["0x82ad56cb", "aggregate3"]
   ]
 }

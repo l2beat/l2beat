@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20325048,
   "configHash": "0xa75ac3d3673e70efc5004b51931bfbf779c046e09be2455ba9855c5111382b42",
-  "version": 14,
   "contracts": [
     {
       "name": "AstarVerifier",
@@ -36,6 +35,16 @@
       "values": {
         "$admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "$implementation": "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
+        "$pastUpgrades": [
+          [
+            "2024-02-22T20:00:59.000Z",
+            ["0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30"]
+          ],
+          [
+            "2024-04-08T18:10:59.000Z",
+            ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
+          ]
+        ],
         "$upgradeCount": 2,
         "admin": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
@@ -111,6 +120,12 @@
       "values": {
         "$admin": "0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d",
         "$implementation": "0xF4e87685e323818E0aE35dCdFc3B65106002E456",
+        "$pastUpgrades": [
+          [
+            "2024-02-22T17:55:59.000Z",
+            ["0xF4e87685e323818E0aE35dCdFc3B65106002E456"]
+          ]
+        ],
         "$upgradeCount": 1,
         "committeeHash": "0x9a0c18a0211f34e9126b78961894fb03edbdcb7e314a5affed3f8365315e3aff",
         "getAmountOfMembers": 5,
@@ -422,5 +437,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

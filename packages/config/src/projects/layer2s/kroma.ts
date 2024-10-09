@@ -14,7 +14,6 @@ import {
   OPERATOR,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../common'
 import { subtractOne } from '../../common/assessCount'
 import { RISK_VIEW } from '../../common/riskView'
@@ -211,7 +210,7 @@ export const kroma: Layer2 = {
     bridge: { type: 'Enshrined' },
     mode: 'Transaction data',
   }),
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_INT_ZK,
       description:
@@ -268,7 +267,7 @@ export const kroma: Layer2 = {
     },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-  }),
+  },
   stage: getStage(
     {
       stage0: {
@@ -306,15 +305,15 @@ export const kroma: Layer2 = {
       references: [
         {
           text: 'Colosseum.sol#L300 - Etherscan source code, createChallenge function',
-          href: 'https://etherscan.io/address/0x7526F997ea040B3949415c3a44e708273863AA2b#code#F1#L300',
+          href: 'https://etherscan.io/address/0xb87eaB624EE684C1799f1E8b24936A1c90759eEc#code#F1#L300',
         },
         {
           text: 'Colosseum.sol#L378 - Etherscan source code, bisect function',
-          href: 'https://etherscan.io/address/0x7526F997ea040B3949415c3a44e708273863AA2b#code#F1#L378',
+          href: 'https://etherscan.io/address/0xb87eaB624EE684C1799f1E8b24936A1c90759eEc#code#F1#L378',
         },
         {
           text: 'Colosseum.sol#L434 - Etherscan source code, proveFault function',
-          href: 'https://etherscan.io/address/0x7526F997ea040B3949415c3a44e708273863AA2b#code#F1#L434',
+          href: 'https://etherscan.io/address/0xb87eaB624EE684C1799f1E8b24936A1c90759eEc#code#F1#L434',
         },
         {
           text: 'KROMA-020: lack of validation segments and proofs in Colosseum.sol - ChainLight security audit',

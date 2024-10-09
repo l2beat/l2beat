@@ -26,12 +26,10 @@ type ActivityTableData = Awaited<ReturnType<typeof getCachedActivityTableData>>
 
 const getCachedActivityTableData = cache(
   async (projects: (Layer2 | Layer3)[]) => {
-    const [start, end] = getFullySyncedActivityRange('30d')
-    // We already subtract 1 day from the start to get data for change calculation in `getFullySyncedActivityRange`
-    const adjustedRange: [UnixTime, UnixTime] = [start, end]
+    const range = getFullySyncedActivityRange('30d')
     const records = await db.activity.getByProjectsAndTimeRange(
       [ProjectId.ETHEREUM, ...projects.map((p) => p.id)],
-      adjustedRange,
+      range,
     )
     const maxCounts = await db.activity.getMaxCountForProjects()
 
@@ -68,7 +66,7 @@ const getCachedActivityTableData = cache(
     )
 
     return Object.fromEntries(
-      Object.entries(data).filter(([_, value]) => value !== null),
+      Object.entries(data).filter(([_, value]) => value),
     )
   },
   ['activityChart'],

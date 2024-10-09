@@ -2,7 +2,7 @@ import {
   EthereumAddress,
   ProjectId,
   UnixTime,
-  formatLargeNumberShared,
+  formatLargeNumber,
   formatSeconds,
 } from '@l2beat/shared-pure'
 
@@ -14,7 +14,6 @@ import {
   OPERATOR,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../common'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
 import { RISK_VIEW } from '../../common/riskView'
@@ -50,7 +49,7 @@ function formatMaxTotalBalanceString(
   maxTotalBalance: number,
   decimals: number,
 ) {
-  return `The current bridge cap is ${formatLargeNumberShared(
+  return `The current bridge cap is ${formatLargeNumber(
     maxTotalBalance / 10 ** decimals,
   )} ${ticker}.`
 }
@@ -191,11 +190,24 @@ export const paradex: Layer2 = {
           sinceTimestamp: new UnixTime(1710346919),
         },
       },
+      {
+        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xF338cad020D506e8e3d9B4854986E0EcE6C23640',
+          ),
+          selector: '0x507ee528',
+          functionSignature:
+            'function updateStateKzgDA(uint256[] programOutput, bytes[] kzgProofs)',
+          sinceTimestamp: new UnixTime(1725811667),
+        },
+      },
     ],
     finality: {
       lag: 0,
       type: 'Starknet',
-      minTimestamp: new UnixTime(1710346920),
+      minTimestamp: new UnixTime(1725811667),
       stateUpdate: 'disabled',
     },
   },
@@ -204,7 +216,7 @@ export const paradex: Layer2 = {
     bridge: { type: 'Enshrined' },
     mode: 'State diffs',
   }),
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
       sources: [
@@ -242,7 +254,7 @@ export const paradex: Layer2 = {
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
     destinationToken: RISK_VIEW.CANONICAL_USDC,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-  }),
+  },
   stage: getStage({
     stage0: {
       callsItselfRollup: true,

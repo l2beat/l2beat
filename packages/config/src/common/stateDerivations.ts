@@ -12,19 +12,19 @@ type OPStackInfo = [string, string] // [config, genesis file]
 const OPStackInfos: Record<SupportedOPStackChains, OPStackInfo> = {
   OP_MAINNET: [
     'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/op.toml',
-    'https://community.optimism.io/docs/useful-tools/networks/#parameters-for-node-operators',
+    'https://docs.optimism.io/builders/node-operators/configuration/base-config',
   ],
   ZORA: [
     'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/zora.toml',
     'https://github.com/ethereum-optimism/superchain-registry/tree/main/superchain/extra/genesis/mainnet',
   ],
   PGN: [
-    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/pgn.toml',
+    'https://github.com/ethereum-optimism/superchain-registry/blob/v0.1.1/superchain/configs/mainnet/pgn.yaml',
     'https://github.com/ethereum-optimism/superchain-registry/tree/main/superchain/extra/genesis/mainnet',
   ],
   BASE: [
     'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/base.toml',
-    'https://raw.githubusercontent.com/base-org/node/main/mainnet/genesis-l2.json ',
+    'https://raw.githubusercontent.com/base-org/node/refs/tags/v0.8.4/mainnet/genesis-l2.json',
   ],
   MODE: [
     'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/mode.toml',

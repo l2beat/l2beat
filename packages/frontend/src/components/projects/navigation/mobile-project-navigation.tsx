@@ -1,7 +1,6 @@
 'use client'
 
-import debounce from 'lodash/debounce'
-import { useEffect, useMemo, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { OverflowWrapper } from '~/components/core/overflow-wrapper'
 import { useCurrentSection } from '~/hooks/use-current-section'
 import { cn } from '~/utils/cn'
@@ -19,13 +18,9 @@ export function MobileProjectNavigation({ sections }: Props) {
   const currentSection = useCurrentSection()
   const isSummarySection = currentSection && currentSection.id === 'summary'
 
-  const scrollToItem = useMemo(
-    () =>
-      debounce(
-        (item: HTMLLIElement, overflowingContainer: HTMLElement) =>
-          scrollHorizontallyToItem({ item, overflowingContainer }),
-        200,
-      ),
+  const scrollToItem = useCallback(
+    (item: HTMLLIElement, overflowingContainer: HTMLElement) =>
+      scrollHorizontallyToItem({ item, overflowingContainer }),
     [],
   )
 
@@ -47,8 +42,7 @@ export function MobileProjectNavigation({ sections }: Props) {
           ref={isSummarySection ? selectedItem : undefined}
           className={cn(
             'whitespace-nowrap p-4 text-xs transition-colors',
-            isSummarySection &&
-              'border-b-2 border-current text-pink-900 dark:text-pink-200',
+            isSummarySection && 'border-b-2 border-current text-brand',
           )}
         >
           Summary
@@ -63,8 +57,7 @@ export function MobileProjectNavigation({ sections }: Props) {
               href={`#${section.id}`}
               className={cn(
                 'whitespace-nowrap p-4 text-xs transition-colors',
-                selected &&
-                  'border-b-2 border-current text-pink-900 dark:text-pink-200',
+                selected && 'border-b-2 border-current text-brand',
               )}
             >
               {section.title}

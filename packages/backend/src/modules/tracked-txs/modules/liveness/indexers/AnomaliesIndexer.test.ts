@@ -60,6 +60,7 @@ describe(AnomaliesIndexer.name, () => {
 
     it('should update', async () => {
       const mockAnomaliesRepository = mockObject<Database['anomalies']>({
+        deleteAll: mockFn().resolvesTo(0),
         upsertMany: mockFn().resolvesTo(1),
       })
 
@@ -87,6 +88,8 @@ describe(AnomaliesIndexer.name, () => {
 
       expect(mockCalculateAnomalies).toHaveBeenCalledWith(NOW.toStartOf('day'))
 
+      expect(mockAnomaliesRepository.deleteAll).toHaveBeenCalled()
+
       expect(mockAnomaliesRepository.upsertMany).toHaveBeenCalledWith(
         mockAnomalies,
       )
@@ -96,6 +99,7 @@ describe(AnomaliesIndexer.name, () => {
 
     it('should adjust and update', async () => {
       const mockAnomaliesRepository = mockObject<Database['anomalies']>({
+        deleteAll: mockFn().resolvesTo(0),
         upsertMany: mockFn().resolvesTo(1),
       })
 
@@ -122,6 +126,8 @@ describe(AnomaliesIndexer.name, () => {
       const result = await indexer.update(from, to.toNumber())
 
       expect(mockCalculateAnomalies).toHaveBeenCalledWith(NOW.toStartOf('day'))
+
+      expect(mockAnomaliesRepository.deleteAll).toHaveBeenCalled()
 
       expect(mockAnomaliesRepository.upsertMany).toHaveBeenCalledWith(
         mockAnomalies,
@@ -350,6 +356,7 @@ function createIndexer(options: {
   livenessRepository?: Database['liveness']
   anomaliesRepository?: Database['anomalies']
   indexerService?: IndexerService
+  transaction?: Database['transaction']
 }) {
   return new AnomaliesIndexer({
     tag: options.tag,
@@ -365,6 +372,7 @@ function createIndexer(options: {
         mockObject<Database['anomalies']>({
           upsertMany: mockFn().resolvesTo(1),
         }),
+      transaction: options.transaction ?? (async (fun) => await fun()),
     }),
     projects: MOCK_PROJECTS,
   })

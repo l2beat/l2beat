@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 19825385,
   "configHash": "0xeb144afd373363daf78a82904d2479db0a01d112bec1aa14c3a7c6d3f57970f1",
-  "version": 14,
   "contracts": [
     {
       "name": "Committee",
@@ -79,6 +78,21 @@
           "0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
           "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
         ],
+        "$pastUpgrades": [
+          [
+            "2022-09-18T10:59:23.000Z",
+            [
+              "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
+              "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
+              "0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb",
+              "0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
+              "0x613ee54C54D5548627064B4D648942bF3648f376",
+              "0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
+              "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
+            ]
+          ]
+        ],
+        "$upgradeCount": 1,
         "defaultVaultWithdrawalLock": 0,
         "DEPOSIT_CANCEL_DELAY": 172800,
         "FREEZE_GRACE_PERIOD": 604800,
@@ -500,5 +514,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

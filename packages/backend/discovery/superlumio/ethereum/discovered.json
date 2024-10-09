@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20770354,
   "configHash": "0xa3de6d87fe249159212ec9db1b3ae80c61b4d82bc4ff5937332cbbd63540a240",
-  "version": 14,
   "contracts": [
     {
       "name": "ConduitMultisig",
@@ -98,6 +97,17 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xfe0651694489eb60Bb93031C9C32318b0E1Fe200",
+        "$pastUpgrades": [
+          [
+            "2024-02-26T22:00:11.000Z",
+            ["0x6c10d7e5750b21729Eb863Cf89E5b48850E6d97D"]
+          ],
+          [
+            "2024-02-26T22:04:23.000Z",
+            ["0xfe0651694489eb60Bb93031C9C32318b0E1Fe200"]
+          ]
+        ],
+        "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
         "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292625328",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
@@ -138,6 +148,12 @@
       "values": {
         "$admin": "0xA6b2b6B6E621482aF877F304D46B94123a942Ae9",
         "$implementation": "0xf7110272725E2036fc21294E9468EBD635800381",
+        "$pastUpgrades": [
+          [
+            "2024-02-26T22:03:35.000Z",
+            ["0xf7110272725E2036fc21294E9468EBD635800381"]
+          ]
+        ],
         "$upgradeCount": 1,
         "messenger": "0x6c10d7e5750b21729Eb863Cf89E5b48850E6d97D",
         "MESSENGER": "0x6c10d7e5750b21729Eb863Cf89E5b48850E6d97D",
@@ -171,6 +187,12 @@
       "values": {
         "$admin": "0xA6b2b6B6E621482aF877F304D46B94123a942Ae9",
         "$implementation": "0x4662AF45c8A14c63cb90c5a61A8045EE5a35A00D",
+        "$pastUpgrades": [
+          [
+            "2024-02-26T22:05:11.000Z",
+            ["0x4662AF45c8A14c63cb90c5a61A8045EE5a35A00D"]
+          ]
+        ],
         "$upgradeCount": 1,
         "GUARDIAN": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "L2_ORACLE": "0xffB004874CbBF8692B5f397B602f4B8a630aeD59",
@@ -274,6 +296,12 @@
       "values": {
         "$admin": "0xA6b2b6B6E621482aF877F304D46B94123a942Ae9",
         "$implementation": "0xCB163fF84Dfe5380C76cbd9B660d62D9ccE8945C",
+        "$pastUpgrades": [
+          [
+            "2024-02-26T22:03:47.000Z",
+            ["0xCB163fF84Dfe5380C76cbd9B660d62D9ccE8945C"]
+          ]
+        ],
         "$upgradeCount": 1,
         "BRIDGE": "0xdB5C6b73CB1c5875995a42D64C250BF8BC69a8bc",
         "version": "1.1.1"
@@ -304,6 +332,7 @@
       "values": {
         "$admin": "0xA6b2b6B6E621482aF877F304D46B94123a942Ae9",
         "$implementation": "0xAaa6cF2EFB6cfB5f6887366cC9ce242899f495A1",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x6c10d7e5750b21729Eb863Cf89E5b48850E6d97D",
@@ -342,6 +371,12 @@
       "values": {
         "$admin": "0xA6b2b6B6E621482aF877F304D46B94123a942Ae9",
         "$implementation": "0x4e85732016AFF90b14ea7F39Df04cBcf4ED170eC",
+        "$pastUpgrades": [
+          [
+            "2024-02-26T22:02:47.000Z",
+            ["0x4e85732016AFF90b14ea7F39Df04cBcf4ED170eC"]
+          ]
+        ],
         "$upgradeCount": 1,
         "batcherHash": "0x5c53f2fF1030C7fbC0616fD5B8fC6bE97aa27e00",
         "gasLimit": 30000000,
@@ -404,6 +439,12 @@
       "values": {
         "$admin": "0xA6b2b6B6E621482aF877F304D46B94123a942Ae9",
         "$implementation": "0x68c36689D9820D78F53CF384D06199b061cc948b",
+        "$pastUpgrades": [
+          [
+            "2024-02-26T22:04:47.000Z",
+            ["0x68c36689D9820D78F53CF384D06199b061cc948b"]
+          ]
+        ],
         "$upgradeCount": 1,
         "CHALLENGER": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "deletedOutputs": [],
@@ -754,5 +795,5 @@
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0xb3e808e6410511e5cdb557ab187aac264a51956c695f8cc327ebaa202f7514fd"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

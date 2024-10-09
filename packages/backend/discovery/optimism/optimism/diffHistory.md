@@ -1,3 +1,155 @@
+Generated with discovered.json: 0x6ff03aeec48e283ade2af4498f6da0af7a02fd00
+
+# Diff at Tue, 01 Oct 2024 11:13:41 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 122593187
+- current block number: 122593187
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 122593187 (main branch discovery), not current.
+
+```diff
+    contract DeployerWhitelist (0x4200000000000000000000000000000000000002) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract L2CrossDomainMessenger (0x4200000000000000000000000000000000000007) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract GasPriceOracle (0x420000000000000000000000000000000000000F) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-14T00:00:01.000Z",["0xb528D11cC114E026F138fE568744c6D45ce6Da7A"]],["2024-07-10T16:00:01.000Z",["0xa919894851548179A0750865e7974DA599C0Fac7"]]]
+    }
+```
+
+```diff
+    contract L2StandardBridge (0x4200000000000000000000000000000000000010) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract SequencerFeeVault (0x4200000000000000000000000000000000000011) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x4200000000000000000000000000000000000012) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract L1BlockNumber (0x4200000000000000000000000000000000000013) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract L2ERC721Bridge (0x4200000000000000000000000000000000000014) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2022-10-04T21:36:13.000Z",["0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"]]]
+    }
+```
+
+```diff
+    contract L1Block (0x4200000000000000000000000000000000000015) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-14T00:00:01.000Z",["0x07dbe8500fc591d1852B76feE44d5a05e13097Ff"]]]
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (0x4200000000000000000000000000000000000016) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract OptimismMintableERC721Factory (0x4200000000000000000000000000000000000017) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0x4200000000000000000000000000000000000018) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract BaseFeeVault (0x4200000000000000000000000000000000000019) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract L1FeeVault (0x420000000000000000000000000000000000001A) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract SchemaRegistry (0x4200000000000000000000000000000000000020) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-07-27T22:05:33.000Z",["0x6232208d66bAc2305b46b4Cb6BCB3857B298DF13"]]]
+    }
+```
+
+```diff
+    contract EAS (0x4200000000000000000000000000000000000021) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-07-27T22:05:33.000Z",["0x4E0275Ea5a89e7a3c1B58411379D1a0eDdc5b088"]]]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OldQuixoticNFTBridge (0x5a7749f83b81B301cAb5f48EB8516B986DAef23D)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xde56736763a79673334ff3f954cd27f22d15ce8c
 
 # Diff at Sun, 08 Sep 2024 17:20:14 GMT:
@@ -677,7 +829,7 @@ Generated with discovered.json: 0xbb4c91641c0bf25a3e6c9e69893a5e2edc9eb451
 
 The changes are due to the [OP Mainnet 'Fjord' upgrade](https://gov.optimism.io/t/upgrade-proposal-9-fjord-network-upgrade/8236).
 
-The GasPriceOracle predeploy is changed to use a FastLZ-based compression estimator for gas price estimation. (compare [the spec](https://github.com/ethereum-optimism/specs/blob/main/specs/fjord/exec-engine.md#fees))
+The GasPriceOracle predeploy is changed to use a FastLZ-based compression estimator for gas price estimation. (compare [the spec](https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/fjord/exec-engine.md#fees))
 
 ## Watched changes
 

@@ -1,4 +1,4 @@
-export interface ChainId extends Number {
+export type ChainId = number & {
   _ChainIdBrand: number
 }
 

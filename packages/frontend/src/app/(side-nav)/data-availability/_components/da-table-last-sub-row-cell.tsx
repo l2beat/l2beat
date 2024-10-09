@@ -15,10 +15,10 @@ export function DaTableLastSubRowCell({
   return (
     <td
       className={cn(
-        'group whitespace-pre bg-black/[0.05] group-hover:bg-black/[0.1] dark:bg-white/[0.1] dark:group-hover:bg-white/[0.2]',
+        'group whitespace-pre bg-n-gray-200 text-xs group-hover:bg-black/[0.1] dark:bg-white/[0.1] dark:group-hover:bg-white/[0.2] md:text-base',
         firstRow && 'rounded-tr-xl',
         lastRow && 'rounded-br-xl',
-        !lastRow && 'border-b border-b-gray-200 dark:border-b-zinc-700 ',
+        !lastRow && 'border-b border-b-gray-200 dark:border-b-zinc-700',
       )}
     >
       <Link href={href}>

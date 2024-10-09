@@ -1,3 +1,63 @@
+Generated with discovered.json: 0x36a6f9af3ec14c253fd02d137d0e119b8c0e1c6b
+
+# Diff at Tue, 01 Oct 2024 10:52:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20775915
+- current block number: 20775915
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20775915 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x30c789674ad3B458886BBC9abf42EEe19EA05C1D) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$pastUpgrades:
++        [["2023-09-09T02:06:47.000Z",["0x1E5e634981564fc645dcbC6546aE618d7870B30a"]]]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x3B95bC951EE0f553ba487327278cAc44f29715E5) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x635ba609680c55C3bDd0B3627b4c5dB21b13c310) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades:
++        [["2023-09-09T02:02:11.000Z",["0x635ba609680c55C3bDd0B3627b4c5dB21b13c310"]],["2023-09-09T02:06:23.000Z",["0x9cDDc6F65eD67Ef19743fFDFD53501457ce8B51f"]]]
+      values.$upgradeCount:
++        2
+    }
+```
+
+```diff
+    contract SystemConfig (0x895E00269A05848F3c9889EfA677D02fF7351a5D) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.$pastUpgrades:
++        [["2023-09-09T02:04:59.000Z",["0xeF01a6aE995791FfFcA3d70bDA7B91E5Fa1aD0aE"]]]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.$pastUpgrades:
++        [["2023-09-09T02:07:11.000Z",["0x445c62F4948f3B08a6bB1DbC51Ef985b3Eb199F1"]]]
+    }
+```
+
 Generated with discovered.json: 0x9672942875aeb19a313414f997a17dddbe4717a3
 
 # Diff at Wed, 18 Sep 2024 11:34:22 GMT:

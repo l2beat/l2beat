@@ -8,7 +8,6 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
-  makeBridgeCompatible,
 } from '../../common'
 import { Layer2 } from './types'
 
@@ -30,7 +29,7 @@ export const gluon: Layer2 = {
     links: {
       websites: ['https://gluon.network/', 'https://leverj.io/'],
       apps: ['https://live.leverj.io/'],
-      documentation: ['https://leverj.io/assets/documents/Gluon-Layer2.pdf'],
+      documentation: ['https://leverj.github.io/claim-gluon-balances/'],
       explorers: ['https://gluon.leverj.io/'],
       repositories: [],
       socialMedia: [
@@ -62,7 +61,7 @@ export const gluon: Layer2 = {
       },
     ],
   },
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: {
       value: 'Fraud proofs (!)',
       description:
@@ -75,7 +74,7 @@ export const gluon: Layer2 = {
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
     destinationToken: RISK_VIEW.CANONICAL,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-  }),
+  },
   technology: {
     stateCorrectness: {
       ...STATE_CORRECTNESS.FRAUD_PROOFS,

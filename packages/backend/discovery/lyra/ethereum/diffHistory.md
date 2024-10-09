@@ -1,3 +1,106 @@
+Generated with discovered.json: 0x182b6509349018221a7f288bfd6e35ad2819a770
+
+# Diff at Tue, 08 Oct 2024 16:26:07 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@bca55174129419533cd4173605c170ea99ac6f98 block: 20775910
+- current block number: 20920202
+
+## Description
+
+Move to discovery driven data.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20775910 (main branch discovery), not current.
+
+```diff
+    contract LyraMultisig (0x91F4be0C264FAFA1fEd75c4440910Cba2cAd98e8) {
+    +++ description: None
+      name:
+-        "ChallengerMultisig"
++        "LyraMultisig"
+    }
+```
+
+Generated with discovered.json: 0x5a6b28eb95f5a78bd06baa8065b6a8a7233fe30c
+
+# Diff at Tue, 01 Oct 2024 10:52:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20775910
+- current block number: 20775910
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20775910 (main branch discovery), not current.
+
+```diff
+    contract OptimismMintableERC20Factory (0x08Dea366F26C25a08C8D1C3568ad07d1e587136d) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      values.$pastUpgrades:
++        [["2023-11-15T04:14:35.000Z",["0x81C2645D347a67c089169a4Da074aF7788650955"]]]
+    }
+```
+
+```diff
+    contract SystemConfig (0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.$pastUpgrades:
++        [["2023-11-15T04:14:35.000Z",["0x81CCFC10CB55B58449A3FEE870D63C4D61941DaC"]]]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$pastUpgrades:
++        [["2023-11-15T04:14:35.000Z",["0xad206309916Fe08A27221133dde05a8F30f75e29"]]]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x5456f02c08e9A018E42C39b351328E5AA864174A) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades:
++        [["2023-11-15T04:14:35.000Z",["0x5456f02c08e9A018E42C39b351328E5AA864174A"]],["2023-11-15T04:14:35.000Z",["0x93f5d9CD5BE592F1DC602E0CF4A38148b880cd13"]]]
+      values.$upgradeCount:
++        2
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x61E44dC0dae6888B5a301887732217d5725B0bFf) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x6CC3268794c5d3E3d9d52adEfC748B59d536cb22) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.$pastUpgrades:
++        [["2023-11-15T04:14:35.000Z",["0x4f993d43f697Cb4c63D719Bb8Dc762dcbbB11476"]]]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x85eA9c11cf3D4786027F7FD08F4406b15777e5f8) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.$pastUpgrades:
++        [["2023-11-15T04:14:35.000Z",["0x4Ec5C80Fa12d04DB3A208DD0Fa5C01178FF5a16e"]]]
+    }
+```
+
 Generated with discovered.json: 0x043b3de45c6f2ef3da3fce6a7eae5c24c963b180
 
 # Diff at Wed, 18 Sep 2024 11:33:33 GMT:

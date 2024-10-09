@@ -49,7 +49,7 @@ export function BaseScalingFilters({
       value,
     }))
 
-  const purposeOptions = uniq(items.flatMap((item) => item.purposes))
+  const purposeOptions = uniq(items.flatMap((item) => item.purposes ?? []))
     .sort()
     .map((value) => ({
       label: value,
@@ -73,8 +73,8 @@ export function BaseScalingFilters({
     }))
 
   return (
-    <OverflowWrapper>
-      <div className="flex flex-row space-x-2">
+    <OverflowWrapper childrenClassName="-m-1 [&>*]:m-1">
+      <div className="flex flex-row space-x-1">
         {showRollupsOnly && (
           <Checkbox
             id="rollups-only"

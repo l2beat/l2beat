@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20532597,
   "configHash": "0x3d998b8628d34dc5825d501ad6778e24924b2742b447a4efaa1617f47e42367b",
-  "version": 14,
   "contracts": [
     {
       "name": "Multisig 1",
@@ -102,6 +101,7 @@
       "values": {
         "$admin": "0x38A43F4330f24fe920F943409709fc9A6084C939",
         "$implementation": "0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "defaultFactory": "0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D",
         "networkGovernor": "0xE24f4870Ab85DE8E356C5fC56138587206c70d99",
@@ -175,6 +175,7 @@
       "values": {
         "$admin": "0x38A43F4330f24fe920F943409709fc9A6084C939",
         "$implementation": "0x6e95812C432F293b8045811F4B1758285EBDB206",
+        "$pastUpgrades": [],
         "$upgradeCount": 0
       },
       "derivedName": "Verifier"
@@ -680,5 +681,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

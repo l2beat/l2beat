@@ -1,5 +1,5 @@
 import type { Chain } from '@/chains'
-import type { Block, StatResults, Stats } from '@/types'
+import type { Block, StatResults } from '@/types'
 import { getApiUrl } from '../../clients/apiUrls'
 import type { Analyzer } from '../analyzer'
 import {

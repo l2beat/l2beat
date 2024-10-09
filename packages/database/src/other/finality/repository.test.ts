@@ -118,118 +118,114 @@ describeDatabase(FinalityRepository.name, (db) => {
     })
   })
 
-  describe(
-    FinalityRepository.prototype.findProjectFinalityOnTimestamp.name,
-    () => {
-      it('finds a record', async () => {
-        const target = BASE.add(1, 'days')
-        const result = await repository.findProjectFinalityOnTimestamp(
-          ProjectId('project-a'),
-          target,
-        )
+  describe(FinalityRepository.prototype.findProjectFinalityOnTimestamp
+    .name, () => {
+    it('finds a record', async () => {
+      const target = BASE.add(1, 'days')
+      const result = await repository.findProjectFinalityOnTimestamp(
+        ProjectId('project-a'),
+        target,
+      )
 
-        expect(result).toEqual({
+      expect(result).toEqual({
+        minimumTimeToInclusion: 2,
+        maximumTimeToInclusion: 4,
+        averageTimeToInclusion: 3,
+      })
+    })
+
+    it('returns undefined if not found', async () => {
+      const target = BASE.add(300, 'days')
+
+      const result = await repository.findProjectFinalityOnTimestamp(
+        ProjectId('project-a'),
+        target,
+      )
+      expect(result).toEqual(undefined)
+    })
+  })
+
+  describe(FinalityRepository.prototype.getLatestGroupedByProjectId
+    .name, () => {
+    it('returns empty array if no records', async () => {
+      await repository.deleteAll()
+
+      const result = await repository.getLatestGroupedByProjectId([
+        ProjectId('project-a'),
+      ])
+
+      expect(result).toEqual([])
+    })
+
+    it('returns latest rows grouped by projectId', async () => {
+      const latestProjectAFinality = {
+        projectId: ProjectId('project-a'),
+        timestamp: BASE.add(7, 'days'),
+        minimumTimeToInclusion: 4,
+        maximumTimeToInclusion: 8,
+        averageTimeToInclusion: 6,
+        averageStateUpdate: 6,
+      }
+
+      const latestProjectBFinality = {
+        projectId: ProjectId('project-b'),
+        timestamp: BASE.add(7, 'days'),
+        minimumTimeToInclusion: 1,
+        maximumTimeToInclusion: 3,
+        averageTimeToInclusion: 2,
+        averageStateUpdate: 2,
+      }
+
+      const latestProjectCFinality = [
+        {
+          projectId: ProjectId('project-c'),
+          timestamp: BASE.add(6, 'days'),
           minimumTimeToInclusion: 2,
           maximumTimeToInclusion: 4,
           averageTimeToInclusion: 3,
-        })
-      })
-
-      it('returns undefined if not found', async () => {
-        const target = BASE.add(300, 'days')
-
-        const result = await repository.findProjectFinalityOnTimestamp(
-          ProjectId('project-a'),
-          target,
-        )
-        expect(result).toEqual(undefined)
-      })
-    },
-  )
-
-  describe(
-    FinalityRepository.prototype.getLatestGroupedByProjectId.name,
-    () => {
-      it('returns empty array if no records', async () => {
-        await repository.deleteAll()
-
-        const result = await repository.getLatestGroupedByProjectId([
-          ProjectId('project-a'),
-        ])
-
-        expect(result).toEqual([])
-      })
-
-      it('returns latest rows grouped by projectId', async () => {
-        const latestProjectAFinality = {
-          projectId: ProjectId('project-a'),
+          averageStateUpdate: 3,
+        },
+        {
+          projectId: ProjectId('project-c'),
           timestamp: BASE.add(7, 'days'),
           minimumTimeToInclusion: 4,
           maximumTimeToInclusion: 8,
           averageTimeToInclusion: 6,
           averageStateUpdate: 6,
-        }
+        },
+      ]
 
-        const latestProjectBFinality = {
-          projectId: ProjectId('project-b'),
-          timestamp: BASE.add(7, 'days'),
-          minimumTimeToInclusion: 1,
-          maximumTimeToInclusion: 3,
-          averageTimeToInclusion: 2,
-          averageStateUpdate: 2,
-        }
+      const latestProjectDFinality = {
+        projectId: ProjectId('project-d'),
+        timestamp: BASE.add(7, 'days'),
+        minimumTimeToInclusion: 4,
+        maximumTimeToInclusion: 8,
+        averageTimeToInclusion: 6,
+        averageStateUpdate: 6,
+      }
 
-        const latestProjectCFinality = [
-          {
-            projectId: ProjectId('project-c'),
-            timestamp: BASE.add(6, 'days'),
-            minimumTimeToInclusion: 2,
-            maximumTimeToInclusion: 4,
-            averageTimeToInclusion: 3,
-            averageStateUpdate: 3,
-          },
-          {
-            projectId: ProjectId('project-c'),
-            timestamp: BASE.add(7, 'days'),
-            minimumTimeToInclusion: 4,
-            maximumTimeToInclusion: 8,
-            averageTimeToInclusion: 6,
-            averageStateUpdate: 6,
-          },
-        ]
+      const additionalRows = [
+        latestProjectAFinality,
+        latestProjectBFinality,
+        ...latestProjectCFinality,
+        latestProjectDFinality,
+      ]
 
-        const latestProjectDFinality = {
-          projectId: ProjectId('project-d'),
-          timestamp: BASE.add(7, 'days'),
-          minimumTimeToInclusion: 4,
-          maximumTimeToInclusion: 8,
-          averageTimeToInclusion: 6,
-          averageStateUpdate: 6,
-        }
+      await repository.insertMany(additionalRows)
 
-        const additionalRows = [
-          latestProjectAFinality,
-          latestProjectBFinality,
-          ...latestProjectCFinality,
-          latestProjectDFinality,
-        ]
+      const result = await repository.getLatestGroupedByProjectId([
+        ProjectId('project-a'),
+        ProjectId('project-b'),
+        ProjectId('project-c'),
+      ])
 
-        await repository.insertMany(additionalRows)
-
-        const result = await repository.getLatestGroupedByProjectId([
-          ProjectId('project-a'),
-          ProjectId('project-b'),
-          ProjectId('project-c'),
-        ])
-
-        expect(result).toEqualUnsorted([
-          latestProjectAFinality,
-          latestProjectBFinality,
-          latestProjectCFinality[1]!,
-        ])
-      })
-    },
-  )
+      expect(result).toEqualUnsorted([
+        latestProjectAFinality,
+        latestProjectBFinality,
+        latestProjectCFinality[1]!,
+      ])
+    })
+  })
 
   describe(FinalityRepository.prototype.findLatestByProjectId.name, () => {
     it('finds a latest record by timestamp', async () => {

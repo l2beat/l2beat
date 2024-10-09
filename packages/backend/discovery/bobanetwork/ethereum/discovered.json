@@ -1,9 +1,8 @@
 {
   "name": "bobanetwork",
   "chain": "ethereum",
-  "blockNumber": 19960612,
-  "configHash": "0x150fd11b72d9b276dab0b43c60f2417401823f672a2bf8c70ec190bd26acdfb7",
-  "version": 14,
+  "blockNumber": 20919938,
+  "configHash": "0x9097cf766695230c62cdd60ab417835b0ce7aaba30afa39106a318745cc03325",
   "contracts": [
     {
       "name": "SystemConfig",
@@ -11,7 +10,7 @@
       "template": "opstack/SystemConfig",
       "proxyType": "EIP1967 proxy",
       "descriptions": [
-        "It contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address."
+        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
       ],
       "issuedPermissions": [
         {
@@ -35,6 +34,12 @@
       "values": {
         "$admin": "0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc",
         "$implementation": "0xfaE274B77BA59f001196689f93E9e73693866f4a",
+        "$pastUpgrades": [
+          [
+            "2024-04-16T21:38:23.000Z",
+            ["0xfaE274B77BA59f001196689f93E9e73693866f4a"]
+          ]
+        ],
         "$upgradeCount": 1,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "0xe1B64045351B0B6e9821F19b39f81bc4711D2230",
@@ -80,13 +85,8 @@
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
-        },
-        "unsafeBlockSigner": {
-          "severity": "LOW",
-          "description": "Blocks are gossiped around the L2 p2p network before they are made available on L1. To prevent denial of service on the p2p layer, these unsafe blocks must be signed with a particular key to be accepted as 'canonical' unsafe blocks. The address corresponding to this key is the unsafeBlockSigner."
         }
-      },
-      "derivedName": "SystemConfig"
+      }
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -112,6 +112,12 @@
       "values": {
         "$admin": "0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc",
         "$implementation": "0xd080A33E651780cD6f52F16020E1FFA04F0f15B2",
+        "$pastUpgrades": [
+          [
+            "2024-04-16T21:38:47.000Z",
+            ["0xd080A33E651780cD6f52F16020E1FFA04F0f15B2"]
+          ]
+        ],
         "$upgradeCount": 1,
         "bridge": "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00",
         "BRIDGE": "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00",
@@ -194,7 +200,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 8,
+        "nonce": 14,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -202,15 +208,42 @@
     {
       "name": "L1CrossDomainMessenger",
       "address": "0x6D4528d192dB72E282265D6092F4B872f9Dff69e",
+      "template": "opstack/L1CrossDomainMessenger",
       "proxyType": "resolved delegate proxy",
+      "descriptions": [
+        "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
+      ],
       "categories": ["Core"],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1628792652,
       "values": {
         "$immutable": false,
         "$implementation": "0x3b48597212f2622511585914CC4D4152c9B1B077",
+        "$pastUpgrades": [
+          [
+            "2021-08-12T18:24:06.000Z",
+            ["0x25109139f8C4F9f7b4E4d5452A067feaE3a537F3"]
+          ],
+          [
+            "2021-10-05T19:35:22.000Z",
+            ["0xae6b041f0550EDeF61a70F76f89c77B2b1Ef38Fd"]
+          ],
+          [
+            "2021-10-28T02:15:33.000Z",
+            ["0x12Acf6E3ca96A60fBa0BBFd14D2Fe0EB6ae47820"]
+          ],
+          [
+            "2024-04-16T21:38:23.000Z",
+            ["0x0000000000000000000000000000000000000000"]
+          ],
+          [
+            "2024-04-16T21:38:47.000Z",
+            ["0x3b48597212f2622511585914CC4D4152c9B1B077"]
+          ]
+        ],
+        "$upgradeCount": 5,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292676827",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292676986",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -227,8 +260,7 @@
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "superchainConfig": "0x996ffD627901f10C80A7d4B72A12316D2e77c076",
         "version": "2.3.0"
-      },
-      "derivedName": "L1CrossDomainMessenger"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -302,6 +334,12 @@
       "values": {
         "$admin": "0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc",
         "$implementation": "0xD8056243180C4b56a7d2ccd5df9c2696E1261826",
+        "$pastUpgrades": [
+          [
+            "2024-04-16T21:38:47.000Z",
+            ["0xD8056243180C4b56a7d2ccd5df9c2696E1261826"]
+          ]
+        ],
         "$upgradeCount": 1,
         "guardian": "0x56121a8612474C3eB65D69a3b871f284705b9bC4",
         "GUARDIAN": "0x56121a8612474C3eB65D69a3b871f284705b9bC4",
@@ -310,16 +348,15 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 389211,
-          "prevBlockNum": 19939582
+          "prevBoughtGas": 1304520,
+          "prevBlockNum": 20904685
         },
         "paused": false,
         "superchainConfig": "0x996ffD627901f10C80A7d4B72A12316D2e77c076",
         "SYSTEM_CONFIG": "0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB",
         "systemConfig": "0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB",
         "version": "2.5.0"
-      },
-      "derivedName": "OptimismPortal"
+      }
     },
     {
       "name": "Lib_AddressManager",
@@ -368,6 +405,20 @@
       "values": {
         "$admin": "0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc",
         "$implementation": "0xe4e0f760409EB1661db76a4365c0803C3630270f",
+        "$pastUpgrades": [
+          [
+            "2024-04-16T21:38:47.000Z",
+            ["0xe4e0f760409EB1661db76a4365c0803C3630270f"]
+          ],
+          [
+            "2024-04-19T18:05:35.000Z",
+            ["0x862E8e466ac49c1B076322AabCd4156326C47890"]
+          ],
+          [
+            "2024-04-19T18:05:35.000Z",
+            ["0xe4e0f760409EB1661db76a4365c0803C3630270f"]
+          ]
+        ],
         "$upgradeCount": 3,
         "guardian": "0x56121a8612474C3eB65D69a3b871f284705b9bC4",
         "GUARDIAN_SLOT": "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68",
@@ -400,6 +451,12 @@
       "values": {
         "$admin": "0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc",
         "$implementation": "0x99948157F4702B3EE9De4290C3dCDF2622Db9318",
+        "$pastUpgrades": [
+          [
+            "2024-04-16T21:38:47.000Z",
+            ["0x99948157F4702B3EE9De4290C3dCDF2622Db9318"]
+          ]
+        ],
         "$upgradeCount": 1,
         "messenger": "0x6D4528d192dB72E282265D6092F4B872f9Dff69e",
         "MESSENGER": "0x6D4528d192dB72E282265D6092F4B872f9Dff69e",
@@ -440,6 +497,20 @@
       "values": {
         "$admin": "0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc",
         "$implementation": "0x31f395dd26430a8CBFa530e31B46aaf7ad517017",
+        "$pastUpgrades": [
+          [
+            "2024-04-16T21:38:47.000Z",
+            ["0x31f395dd26430a8CBFa530e31B46aaf7ad517017"]
+          ],
+          [
+            "2024-04-19T18:04:11.000Z",
+            ["0xfeE76239E3ac25A05c5CdDC106E4B39B2C088029"]
+          ],
+          [
+            "2024-04-19T18:04:11.000Z",
+            ["0x31f395dd26430a8CBFa530e31B46aaf7ad517017"]
+          ]
+        ],
         "$upgradeCount": 3,
         "challenger": "0x56121a8612474C3eB65D69a3b871f284705b9bC4",
         "CHALLENGER": "0x56121a8612474C3eB65D69a3b871f284705b9bC4",
@@ -448,10 +519,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 2898619,
-        "latestOutputIndex": 971,
-        "nextBlockNumber": 2900419,
-        "nextOutputIndex": 972,
+        "latestBlockNumber": 8685619,
+        "latestOutputIndex": 4186,
+        "nextBlockNumber": 8687419,
+        "nextOutputIndex": 4187,
         "proposer": "0xbfBAB4363034A930687B9320599a69DfBf1D21d0",
         "PROPOSER": "0xbfBAB4363034A930687B9320599a69DfBf1D21d0",
         "startingBlockNumber": 1149019,
@@ -459,8 +530,7 @@
         "SUBMISSION_INTERVAL": 1800,
         "submissionInterval": 1800,
         "version": "1.8.0"
-      },
-      "derivedName": "L2OutputOracle"
+      }
     },
     {
       "name": "L1StandardBridge",
@@ -488,6 +558,7 @@
       "values": {
         "$admin": "0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc",
         "$implementation": "0x5Eb02901135865aF8Da6752aF92fbAe62258520F",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x6D4528d192dB72E282265D6092F4B872f9Dff69e",
@@ -885,6 +956,7 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
+    "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
     "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
@@ -894,5 +966,5 @@
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0xb3e808e6410511e5cdb557ab187aac264a51956c695f8cc327ebaa202f7514fd"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

@@ -3,11 +3,11 @@
   "chain": "optimism",
   "name": "bugbuster",
   "initialAddresses": [
-    "0x9cb6c6e904ce6bf3ca6d0002b9629acce74ea89b",
+    "0x3ff5c7383f614256053c3f6b86a47ba974937299",
     "0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB"
   ],
   "names": {
-    "0x9cb6c6e904ce6bf3ca6d0002b9629acce74ea89b": "BugBuster"
+    "0x3ff5c7383f614256053c3f6b86a47ba974937299": "BugBuster"
   },
   "overrides": {}
 }

@@ -1,6 +1,7 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import { ScalingStackedTvlChart } from '~/components/chart/tvl/stacked/scaling-stacked-tvl-chart'
-import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { MainPageCard } from '~/components/main-page-card'
+import { MainPageHeader } from '~/components/main-page-header'
 import { getImplementationChangeReport } from '~/server/features/implementation-change-report/get-implementation-change-report'
 import { getScalingTvlEntries } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 import { get7dTvlBreakdown } from '~/server/features/scaling/tvl/utils/get-7d-tvl-breakdown'
@@ -10,7 +11,7 @@ import { getCookie } from '~/utils/cookies/server'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingAssociatedTokensContextProvider } from '../_components/scaling-associated-tokens-context'
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
-import { ScalingTvlTable } from './_components/scaling-tvl-table'
+import { ScalingTvlTable } from './_components/table/scaling-tvl-table'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -45,12 +46,16 @@ export default async function Page() {
     <HydrateClient>
       <ScalingFilterContextProvider>
         <ScalingAssociatedTokensContextProvider>
-          <ScalingStackedTvlChart
-            milestones={HOMEPAGE_MILESTONES}
-            entries={entries}
-          />
-          <HorizontalSeparator className="my-4 md:my-6" />
-          <ScalingTvlTable entries={entries} />
+          <MainPageHeader>Value Locked</MainPageHeader>
+          <MainPageCard>
+            <ScalingStackedTvlChart
+              milestones={HOMEPAGE_MILESTONES}
+              entries={entries}
+            />
+          </MainPageCard>
+          <MainPageCard className="md:mt-6">
+            <ScalingTvlTable entries={entries} />
+          </MainPageCard>
         </ScalingAssociatedTokensContextProvider>
       </ScalingFilterContextProvider>
     </HydrateClient>

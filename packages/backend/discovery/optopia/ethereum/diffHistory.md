@@ -1,3 +1,87 @@
+Generated with discovered.json: 0x45d4c134035fe754e6f58d267b73d408d01a7d43
+
+# Diff at Tue, 01 Oct 2024 10:53:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20427351
+- current block number: 20427351
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20427351 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x03D5bc58E7b7E13ba785F67AFA2d2fC49cB2BdF3) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades:
++        [["2024-05-10T09:57:11.000Z",["0xD09C8E2C6D124bCE71235046B95ab676bE1d5601"]]]
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x1adE86B9cc8a50Db747b7aaC32E8527d42c71fC1) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract OptimismPortal (0x39A90926306E11497EC5FE1C459910258B620edD) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.$pastUpgrades:
++        [["2024-05-10T09:57:23.000Z",["0x63dD9FB4b0Af7a158E819cDfE781082bCb60e21D"]],["2024-05-23T11:39:11.000Z",["0xFe9B3d40DB0ec8f97D9ea638e926b3aEED8cF29B"]],["2024-05-24T03:40:35.000Z",["0x63dD9FB4b0Af7a158E819cDfE781082bCb60e21D"]],["2024-05-29T06:06:23.000Z",["0x9b29299b791a36DA8Dd7dDeBe55038576995145b"]],["2024-05-29T06:10:23.000Z",["0xFe9B3d40DB0ec8f97D9ea638e926b3aEED8cF29B"]]]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x5e8d351FD046Aa0b3DDA24096751996C0c397C61) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      values.$pastUpgrades:
++        [["2024-05-10T09:56:11.000Z",["0xF3E372Ec07a9Bf0C94ff21ceBe02952F2164996F"]]]
+    }
+```
+
+```diff
+    contract SystemConfig (0x94118F86eE37Fa4Fdb266CDab1e55B8F0D6959D9) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.$pastUpgrades:
++        [["2024-05-10T09:57:11.000Z",["0xa65DE544846795C7eeAd60790197B0EB755547ee"]]]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0xAFc9946b25e3e93208b7E2D477680C5B6e2952be) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.$pastUpgrades:
++        [["2024-05-10T09:57:11.000Z",["0xe04D088840aE793afd0970fE97FEC6Ac7BaF4AAC"]]]
+    }
+```
+
+```diff
+    contract  (0xB77d3ea899ef38c464e19F5A6CBc5a37187DC43c) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-05-10T09:57:11.000Z",["0xAd8890C1DF1f29f6a26B6eCcc73c299599c40F3d"]]]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$pastUpgrades:
++        [["2024-05-10T09:57:11.000Z",["0x38f2D861b23866b92188155C4876F0879cA706Ec"]]]
+    }
+```
+
 Generated with discovered.json: 0xe6e500bd1941daac91d9b95ac3d7eae7e62e4a85
 
 # Diff at Sun, 08 Sep 2024 17:24:43 GMT:

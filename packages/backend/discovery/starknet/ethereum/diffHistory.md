@@ -1,3 +1,217 @@
+Generated with discovered.json: 0x0bb305e4a642e4a9446e358f4fac4df7a94f855a
+
+# Diff at Wed, 02 Oct 2024 14:21:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d101c705b5f4fd0b3af2e251678b85e1005b31d8 block: 20871596
+- current block number: 20878376
+
+## Description
+
+Config related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20871596 (main branch discovery), not current.
+
+```diff
+    contract StarkgateManager (0x0c5aE94f8939182F2D06097025324D1E537d5B60) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-02-07T17:04:11.000Z",["0x64608BDF1867110f622391196989bF4cE37BBb33"]]]
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract StarkgateRegistry (0x1268cc171c54F2000402DfF20E93E60DF4c96812) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-02-07T17:05:11.000Z",["0x642F04899B6cA155c2a5eAdD4e4ed634f1B07Dd7"]]]
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract WBTCBridge (0x283751A21eafBFcD52297820D27C1f1963D9b5b4) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2022-07-06T20:20:06.000Z",["0xaec1fB35875a3816a5d09D61F086FeB6c252e096"]],["2022-07-12T12:56:17.000Z",["0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"]],["2022-11-20T14:07:11.000Z",["0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"]],["2023-03-28T15:06:47.000Z",["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]],["2024-02-08T10:13:23.000Z",["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]],["2024-02-12T09:54:59.000Z",["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]],["2024-04-21T14:18:35.000Z",["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]]]
+      values.$upgradeCount:
++        7
+    }
+```
+
+```diff
+    contract FXSBridge (0x66ba83ba3D3AD296424a2258145d9910E9E40B7C) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-08-23T12:22:47.000Z",["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]],["2024-02-11T10:08:59.000Z",["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]]]
+      values.$upgradeCount:
++        2
+    }
+```
+
+```diff
+    contract ETHBridge (0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2022-03-21T10:19:20.000Z",["0x0205172F25e791975edB4dEF203f3789B01f43bb"]],["2022-04-10T13:08:21.000Z",["0x5e70F3301bbBBB1DFA2c8d20D75b162aFa6Dbe37"]],["2022-11-20T14:07:11.000Z",["0x5e70F3301bbBBB1DFA2c8d20D75b162aFa6Dbe37"]],["2023-03-28T15:08:23.000Z",["0x455603AD9ae671F6c1f0f746F24d7904cA603581"]],["2024-02-08T10:13:23.000Z",["0x455603AD9ae671F6c1f0f746F24d7904cA603581"]],["2024-02-12T11:55:59.000Z",["0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95"]],["2024-04-21T14:18:35.000Z",["0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95"]]]
+      values.$upgradeCount:
++        7
+    }
+```
+
+```diff
+    contract USDTBridge (0xbb3400F107804DFB482565FF1Ec8D8aE66747605) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2022-07-06T20:27:48.000Z",["0xaec1fB35875a3816a5d09D61F086FeB6c252e096"]],["2022-07-12T12:57:34.000Z",["0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"]],["2022-11-20T14:07:11.000Z",["0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"]],["2023-03-28T15:07:47.000Z",["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]],["2024-02-08T10:13:23.000Z",["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]],["2024-02-12T10:13:35.000Z",["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]],["2024-04-21T14:18:35.000Z",["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]]]
+      values.$upgradeCount:
++        7
+    }
+```
+
+```diff
+    contract wstETHBridge (0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-05-30T13:31:11.000Z",["0xEf3525a1081a4cf6f76E0B202a575195cEE083a2"]],["2024-02-08T18:13:35.000Z",["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]],["2024-04-21T14:18:35.000Z",["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]]]
+      values.$upgradeCount:
++        3
+    }
+```
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2021-11-15T12:26:20.000Z",["0xD8Cd77206fCb239BdDaaDDdA8C87CBFe7d67Ca2b"]],["2022-01-26T10:45:21.000Z",["0x944960b90381d76368aecE61F269bD99FFfd627e"]],["2022-03-21T09:06:14.000Z",["0xDC109C4a1A3084Ed15A97692FBEF3e1FB32A6955"]],["2022-06-15T09:20:58.000Z",["0x2B3B750f1f10c85c8A6D476Fc209A8DC7E4Ca3F8"]],["2022-09-11T06:59:08.000Z",["0xE267213B0749Bb94c575F6170812c887330d9cE3"]],["2023-03-29T10:21:47.000Z",["0x739A654271c565839F0408546706bBea2F1FfE42"]],["2023-05-24T05:31:23.000Z",["0x16938E4b59297060484Fa56a12594d8D6F4177e8"]],["2024-03-12T14:15:23.000Z",["0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24"]],["2024-08-28T14:32:59.000Z",["0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC"]]]
+      values.$upgradeCount:
++        9
+    }
+```
+
+```diff
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-01-10T17:21:23.000Z",["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]],["2024-01-14T13:34:23.000Z",["0x052C81F05595B5DeF4fdFEdbD7CA7b4A8a7B50C1"]],["2024-01-14T16:30:23.000Z",["0x7f2a18900A978D4390a3640e34739BB697777A71"]],["2024-02-12T15:17:11.000Z",["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]],["2024-04-21T14:18:35.000Z",["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]]]
+      values.$upgradeCount:
++        5
+    }
+```
+
+```diff
+    contract rETHBridge (0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-06-04T12:42:11.000Z",["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]],["2024-02-08T22:37:35.000Z",["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]],["2024-04-21T14:18:35.000Z",["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]]]
+      values.$upgradeCount:
++        3
+    }
+```
+
+```diff
+    contract sfrxETHBridge (0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-08-23T12:22:47.000Z",["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]],["2024-02-11T10:08:59.000Z",["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]]]
+      values.$upgradeCount:
++        2
+    }
+```
+
+```diff
+    contract FRAXBridge (0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-08-23T12:22:47.000Z",["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]],["2024-02-11T10:08:59.000Z",["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]]]
+      values.$upgradeCount:
++        2
+    }
+```
+
+```diff
+    contract LUSDBridge (0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-06-29T13:54:59.000Z",["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]],["2024-02-08T22:57:59.000Z",["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]]]
+      values.$upgradeCount:
++        2
+    }
+```
+
+```diff
+    contract MultiBridge (0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-02-07T17:06:11.000Z",["0x594cCaDF93F860dc42Cf9fd7bCea47Ff4d135D7A"]]]
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract USDCBridge (0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2022-07-06T20:27:48.000Z",["0xaec1fB35875a3816a5d09D61F086FeB6c252e096"]],["2022-07-12T12:57:34.000Z",["0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"]],["2022-11-20T14:07:11.000Z",["0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"]],["2023-03-28T15:07:47.000Z",["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]],["2024-02-08T10:13:23.000Z",["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]],["2024-02-12T10:15:59.000Z",["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]],["2024-04-21T14:18:35.000Z",["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]]]
+      values.$upgradeCount:
++        7
+    }
+```
+
+```diff
+    contract UNIBridge (0xf76e6bF9e2df09D0f854F045A3B724074dA1236B) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-10-23T11:52:23.000Z",["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]],["2024-02-08T22:52:47.000Z",["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]]]
+      values.$upgradeCount:
++        2
+    }
+```
+
+Generated with discovered.json: 0x91f6afaf24fc1e2434d43f9d7e5a81ee661d5b16
+
+# Diff at Tue, 01 Oct 2024 15:40:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@974999225bba0722b5e81edd4c1b80928d80ef33 block: 20634500
+- current block number: 20871596
+
+## Description
+
+SECURITY_AGENT role given to new Multisig. Can only activate the withdrawLimit for the ETH escrow (added to permissions). Higher perms are EOA-governed.
+
+## Watched changes
+
+```diff
+    contract ETHBridge (0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) {
+    +++ description: None
+      values.accessControl.SECURITY_AGENT.members.0:
++        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract StarkgateETHSecurityAgentMultisig (0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol                                 | 953 +++++++++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |  35 +
+ 2 files changed, 988 insertions(+)
+```
+
 Generated with discovered.json: 0x2c4b0cd0339b8c428f9a437291bccbded87a1c38
 
 # Diff at Thu, 29 Aug 2024 13:21:54 GMT:

@@ -16,7 +16,6 @@ import {
   STATE_ZKP_SN,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -174,16 +173,21 @@ export const scroll: Layer2 = {
         ...upgradesScrollMultisig,
       }),
       discovery.getEscrowDetails({
+        address: EthereumAddress('0x67260A8B73C5B77B55c1805218A42A7A6F98F515'),
+        tokens: ['DAI'],
+        ...upgradesScrollMultisig,
+      }),
+      discovery.getEscrowDetails({
         address: EthereumAddress('0x6625C6332c9F91F2D27c304E729B86db87A3f504'),
         tokens: ['wstETH'],
-        upgradableBy: ['Lido (Lido Agent)'],
-        upgradeDelay: 'No delay',
+        description:
+          'Custom token escrow with third-party governance, using the canonical bridge only for messaging.',
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xA033Ff09f2da45f0e9ae495f525363722Df42b2a'),
         tokens: ['pufETH'],
-        upgradableBy: ['PufferFinanceOpsMultisig'],
-        upgradeDelay: 'No delay',
+        description:
+          'Custom token escrow with third-party governance, using the canonical bridge only for messaging.',
       }),
     ],
     transactionApi: {
@@ -307,7 +311,7 @@ export const scroll: Layer2 = {
     bridge: { type: 'Enshrined' },
     mode: 'Transaction data (compressed)',
   }),
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: {
       ...STATE_ZKP_SN,
       sources: [
@@ -371,7 +375,7 @@ export const scroll: Layer2 = {
     },
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-  }),
+  },
   technology: {
     newCryptography: {
       ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
@@ -380,7 +384,7 @@ export const scroll: Layer2 = {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'ScrollChain.sol - Etherscan source code, verifyAggregateProof4844() and verifyBundleProof() calls',
+          text: 'ScrollChain.sol - Etherscan source code, verifyAggregateProof() and verifyBundleProof() calls',
           href: 'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
         },
       ],
@@ -407,8 +411,12 @@ export const scroll: Layer2 = {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
       references: [
         {
-          text: 'EnforcedTxGateway.sol - Etherscan source code, EnforcedTxGateway is paused',
+          text: 'EnforcedTxGateway.sol - Etherscan source code',
           href: 'https://etherscan.io/address/0x642af405bF64660665B37977449C9C536B806318#code',
+        },
+        {
+          text: 'EnforcedTxGateway is paused - Etherscan proxy contract',
+          href: 'https://etherscan.io/address/0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d#readProxyContract#F7',
         },
       ],
     },
@@ -419,7 +427,7 @@ export const scroll: Layer2 = {
         references: [
           {
             text: 'L1ETHGateway.sol - Etherscan source code, finalizeWithdrawETH function',
-            href: 'https://etherscan.io/address/0x1fcbE079c4Bbab37406daB7Dfd35AcAe37D5C55d#code',
+            href: 'https://etherscan.io/address/0x546E0bF31FB6e7babD493452e4e6999191367B42#code',
           },
         ],
       },
@@ -433,7 +441,7 @@ export const scroll: Layer2 = {
     genesisState:
       'The genesis file can be found [here](https://scrollzkp.notion.site/genesis-json-f89ca24b123f462f98c8844d17bdbb74), which contains two prefunded addresses and five predeployed contracts.',
     dataFormat:
-      'Blocks are grouped into chunks and chunks are grouped into batches. Chunk encoding format can be found [here](https://github.com/scroll-tech/scroll/blob/develop/contracts/src/libraries/codec/ChunkCodec.sol#L5), and batch encoding format can be found [here](https://github.com/scroll-tech/scroll/blob/develop/contracts/src/libraries/codec/BatchHeaderV0Codec.sol#L7).',
+      'Blocks are grouped into chunks and chunks are grouped into batches. Chunk encoding format can be found [here](https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/ChunkCodecV0.sol#L5), and batch encoding format can be found [here](https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/BatchHeaderV0Codec.sol#L7).',
   },
   stateValidation: {
     description:
@@ -734,17 +742,6 @@ export const scroll: Layer2 = {
       'EmergencyMultisig',
       'Can revert batches, remove sequencers and provers, and pause contracts.',
     ),
-    ...discovery.getMultisigPermission(
-      'PufferFinanceOpsMultisig',
-      'Can upgrade the pufETH custom escrow.',
-    ),
-    {
-      name: 'Lido (Lido Agent)',
-      accounts: [
-        discovery.getPermissionedAccount('wstETHescrowLidoProxyAdmin', 'owner'),
-      ],
-      description: 'Can upgrade the wstETH custom escrow.',
-    },
     {
       name: 'Sequencers',
       accounts: discovery.getPermissionedAccounts('ScrollChain', 'sequencers'),

@@ -3,14 +3,14 @@ export function SubmitButton({ isLoading }: { isLoading: boolean }) {
     <button
       type="submit"
       disabled={isLoading}
-      className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      className="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center font-medium text-sm text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 sm:w-auto dark:bg-blue-600 dark:focus:ring-blue-800 dark:hover:bg-blue-700"
     >
       {!isLoading ? (
         'Go!'
       ) : (
         <svg
           aria-hidden="true"
-          className="w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+          className="h-5 w-5 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

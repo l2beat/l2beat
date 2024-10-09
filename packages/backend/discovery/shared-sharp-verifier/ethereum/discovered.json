@@ -1,9 +1,8 @@
 {
   "name": "shared-sharp-verifier",
   "chain": "ethereum",
-  "blockNumber": 20756791,
+  "blockNumber": 20842982,
   "configHash": "0x899e53b29b077d1af0417c2dcf901f5a4bfdb20a2598939c95c06827ec471499",
-  "version": 14,
   "contracts": [
     {
       "name": "EcdsaPointsXColumn",
@@ -171,6 +170,7 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x0405107a60391Eb51821be373ff978115Ee58488",
           "0x59232aC80E6d403b6381393e52f4665ECA328558",
           "0xebc8416179fE90854fe8B3f774801165572cfD7F",
           "0x955B978F3ee7818dA71fA25c676062E6BC462Fec"
@@ -179,8 +179,8 @@
         "domainSeparator": "0xdc841842a6a324de5b6a29714a4394558c78638216ef50f533783d49856a58c0",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 5,
+        "multisigThreshold": "2 of 4 (50%)",
+        "nonce": 6,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -405,6 +405,41 @@
         ],
         "$immutable": false,
         "$implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
+        "$pastUpgrades": [
+          [
+            "2021-10-24T13:06:25.000Z",
+            ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
+          ],
+          [
+            "2022-05-02T16:49:21.000Z",
+            ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
+          ],
+          [
+            "2022-08-07T10:50:09.000Z",
+            ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
+          ],
+          [
+            "2023-03-06T12:34:23.000Z",
+            ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
+          ],
+          [
+            "2024-02-26T09:25:23.000Z",
+            ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
+          ],
+          [
+            "2024-02-26T09:25:23.000Z",
+            ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
+          ],
+          [
+            "2024-07-28T10:07:47.000Z",
+            ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
+          ],
+          [
+            "2024-07-28T20:08:35.000Z",
+            ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
+          ]
+        ],
+        "$upgradeCount": 8,
         "CALL_PROXY_VERSION": "3.1.0",
         "callProxyImplementation": "0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942",
         "getUpgradeActivationDelay": 0,
@@ -2717,6 +2752,7 @@
   ],
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000008" },
+    { "address": "0x0405107a60391Eb51821be373ff978115Ee58488" },
     {
       "address": "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "receivedPermissions": [
@@ -3282,5 +3318,5 @@
     "shared-sharp-verifier/ignoreCompute": "0xa8aa26763cc2441a6b27a0af65fbedb173bdc79f80d6b91e42c0980da6c2c5c9",
     "shared-sharp-verifier/Verifier": "0xd2279a320c1ee8e95b9990e28e9f4382c1cb9ddd8493a36417796e57a77222a2"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

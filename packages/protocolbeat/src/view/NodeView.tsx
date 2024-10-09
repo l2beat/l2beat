@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef } from 'react'
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
 import { NODE_WIDTH } from '../store/utils/constants'
-import { colorToCSS } from '../utils/color'
+import { OklchColor, oklchColorToCSS } from '../utils/color'
 import { ResizeHandle } from './ResizeHandle'
 
 export interface NodeViewProps {
@@ -55,6 +55,12 @@ export function NodeView(props: NodeViewProps) {
     })
   }, [])
 
+  const highlightedColor: OklchColor = {
+    l: 0.65,
+    c: Math.max(props.node.simpleNode.color.c, 0.1),
+    h: (props.node.simpleNode.color.h + 180) % 360,
+  }
+
   return (
     <div
       ref={ref}
@@ -63,7 +69,7 @@ export function NodeView(props: NodeViewProps) {
         top: props.node.box.y,
         width: props.node.box.width,
         height: props.node.box.height,
-        backgroundColor: colorToCSS(props.node.simpleNode.color),
+        backgroundColor: oklchColorToCSS(props.node.simpleNode.color),
       }}
       className={clsx(
         'absolute rounded-md border-2 border-black',
@@ -86,7 +92,15 @@ export function NodeView(props: NodeViewProps) {
       </div>
       {props.node.fields.map(({ name, connection }, i) => (
         <div className="relative" key={i}>
-          <div className="h-[24px] w-full truncate px-2 leading-[24px]">
+          <div
+            className="h-[24px] w-full truncate rounded-full px-2 leading-[24px]"
+            style={{
+              backgroundColor:
+                connection?.highlighted === true
+                  ? oklchColorToCSS(highlightedColor)
+                  : undefined,
+            }}
+          >
             {name}
           </div>
           {connection && (

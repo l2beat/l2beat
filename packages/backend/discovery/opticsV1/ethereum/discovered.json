@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 19532023,
   "configHash": "0xf4d522e6a76c655c0c448063299964cc131f8af0b7e12d3b1a91e5de9f315683",
-  "version": 14,
   "contracts": [
     {
       "name": "ReplicaUpgradeBeacon",
@@ -75,6 +74,13 @@
       "values": {
         "$admin": "0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B",
         "$implementation": "0xDFb2A95900d6b7c8AA95F2E46563a5FCFb5505A1",
+        "$pastUpgrades": [
+          [
+            "2021-09-08T21:56:48.000Z",
+            ["0xDFb2A95900d6b7c8AA95F2E46563a5FCFb5505A1"]
+          ]
+        ],
+        "$upgradeCount": 1,
         "domains": [1667591279, 1886350457],
         "governor": "0x5Fa96B622D1F4e920b92040c10fA297ca496ad37",
         "governorDomain": 6648936,
@@ -141,6 +147,13 @@
       "values": {
         "$admin": "0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B",
         "$implementation": "0x67364232A8f8dA6f22dF3bE3408ef9872132F2A6",
+        "$pastUpgrades": [
+          [
+            "2021-09-08T23:13:15.000Z",
+            ["0x67364232A8f8dA6f22dF3bE3408ef9872132F2A6"]
+          ]
+        ],
+        "$upgradeCount": 1,
         "OpticsBeacon_beacon": "0x3b96B42D1F4962CB21049fB237A886E2860AfacB",
         "owner": "0x42303634F37956687fB7ff2c6146AC842481A052",
         "PRE_FILL_FEE_DENOMINATOR": 10000,
@@ -166,6 +179,13 @@
       "values": {
         "$admin": "0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B",
         "$implementation": "0xFC4060e4Fd5979f848b8EDc8505d2f89D83b9E04",
+        "$pastUpgrades": [
+          [
+            "2021-09-08T22:00:31.000Z",
+            ["0xFC4060e4Fd5979f848b8EDc8505d2f89D83b9E04"]
+          ]
+        ],
+        "$upgradeCount": 1,
         "committedRoot": "0x455f04b906bf82846c36124b922a420af8481164743fd23b71f5bebac57317ac",
         "homeDomainHash": "0x59173efcb1579737af2864591230a38bbbf3a97113ba8e64761852aa96c4cd34",
         "localDomain": 6648936,
@@ -267,6 +287,13 @@
       "values": {
         "$admin": "0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B",
         "$implementation": "0xfAc41463ef1E01546F2130F92184a053A0E3Fa14",
+        "$pastUpgrades": [
+          [
+            "2021-09-08T21:55:49.000Z",
+            ["0xfAc41463ef1E01546F2130F92184a053A0E3Fa14"]
+          ]
+        ],
+        "$upgradeCount": 1,
         "committedRoot": "0x3a7147efac09479034f1b7ef0041d7fac3a3fe0fe6919ecbceb2fd30255eb677",
         "count": 2247,
         "homeDomainHash": "0xae0c02ff12852e3fb80794f3504aa3d7393b3ef3149213ffe623be2cbe67e77c",
@@ -561,5 +588,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

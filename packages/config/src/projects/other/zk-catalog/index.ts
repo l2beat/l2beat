@@ -1,5 +1,6 @@
 import { SP1Blobstream } from './SP1Blobstream'
 import { SP1Vector } from './SP1Vector'
+import { nebraupa } from './nebraupa'
 import { payy } from './payy'
 import { risczero } from './risczero'
 import { soulwallet } from './soulwallet'
@@ -13,6 +14,7 @@ export * from './utils/getVerifiers'
 
 export const zkCatalogProjects: ZkCatalogProject[] = [
   SP1Blobstream,
+  nebraupa,
   payy,
   risczero,
   soulwallet,

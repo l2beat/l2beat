@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { type KnownCookieName, type KnownCookieValue } from '~/consts/cookies'
-import { getCookie } from '~/utils/cookies/client'
+import { getCookie, setCookie } from '~/utils/cookies/client'
 
 type CookieEvent = {
   name: KnownCookieName
@@ -50,6 +50,7 @@ export function useCookieState<Name extends KnownCookieName>(
           },
         }),
       )
+      setCookie(name, state)
     },
   ]
 }

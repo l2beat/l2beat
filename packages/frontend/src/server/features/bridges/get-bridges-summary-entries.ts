@@ -62,8 +62,8 @@ function getBridges(params: Params) {
         : undefined
 
     const isVerified = !!projectsVerificationStatuses[bridge.id.toString()]
-    const hasImplementationChanged =
-      !!implementationChangeReport.projects[bridge.id.toString()]
+    const changes = implementationChangeReport.projects[bridge.id.toString()]
+    const hasImplementationChanged = !!changes?.ethereum
 
     return {
       id: bridge.id,
@@ -91,9 +91,6 @@ function getBridges(params: Params) {
           associatedTokenWarning?.sentiment === 'bad' && associatedTokenWarning,
         ]),
       },
-      marketShare: bridgeTvl
-        ? bridgeTvl.breakdown.total / tvl7dBreakdown.total
-        : undefined,
       validatedBy: bridge.riskView?.validatedBy,
       category: bridge.display.category,
       warning: bridge.display.warning,
