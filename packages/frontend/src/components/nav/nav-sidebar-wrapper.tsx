@@ -29,10 +29,8 @@ export const NavSideBarWrapper = ({
 
   useEffect(() => {
     if (open) {
-      document.documentElement.classList.add('scrollbar-gutter-stable')
       document.body.classList.add('max-lg:overflow-hidden')
     } else {
-      document.documentElement.classList.remove('scrollbar-gutter-stable')
       document.body.classList.remove('max-lg:overflow-hidden')
     }
   }, [open])
