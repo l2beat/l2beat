@@ -1,8 +1,8 @@
 {
   "name": "mode",
   "chain": "ethereum",
-  "blockNumber": 20769559,
-  "configHash": "0xd89337fb874a5743d959c408e6bfb963735585df43ff1d6f30b9a7a07921cb16",
+  "blockNumber": 20927606,
+  "configHash": "0xab456cbc3a15cdff6b2027f311dad2f7b3cd330a5416d45a977336cdf034b2df",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -22,11 +22,10 @@
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
         "thresholdPercentage": 75,
         "version": "1.2.0"
-      },
-      "derivedName": "LivenessModule"
+      }
     },
     {
-      "name": "GuardianMultisig",
+      "name": "SuperchainGuardianMultisig",
       "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -106,7 +105,7 @@
       }
     },
     {
-      "name": "ChallengerMultisig",
+      "name": "ModeMultisig",
       "address": "0x309Fe2536d01867018D120b40e4676723C53A14C",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -209,10 +208,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 13197600,
-        "latestOutputIndex": 7331,
-        "nextBlockNumber": 13199400,
-        "nextOutputIndex": 7332,
+        "latestBlockNumber": 14149800,
+        "latestOutputIndex": 7860,
+        "nextBlockNumber": 14151600,
+        "nextOutputIndex": 7861,
         "proposer": "0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB",
         "PROPOSER": "0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB",
         "startingBlockNumber": 0,
@@ -220,8 +219,7 @@
         "SUBMISSION_INTERVAL": 1800,
         "submissionInterval": 1800,
         "version": "1.8.0"
-      },
-      "derivedName": "L2OutputOracle"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -297,7 +295,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 50,
+        "nonce": 53,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -306,6 +304,9 @@
       "name": "AddressManager",
       "address": "0x50eF494573f28Cad6B64C31b7a00Cdaa48306e15",
       "template": "opstack/AddressManager",
+      "descriptions": [
+        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a more standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+      ],
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -322,8 +323,7 @@
       "values": {
         "$immutable": true,
         "owner": "0x470d87b1dae09a454A43D1fD772A561a03276aB7"
-      },
-      "derivedName": "AddressManager"
+      }
     },
     {
       "name": "SuperchainProxyAdmin",
@@ -520,8 +520,7 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         }
-      },
-      "derivedName": "SystemConfig"
+      }
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -603,8 +602,7 @@
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.1.0"
-      },
-      "derivedName": "L1StandardBridge"
+      }
     },
     {
       "name": "FoundationMultisig_1",
@@ -698,16 +696,15 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 490798,
-          "prevBlockNum": 20769471
+          "prevBoughtGas": 489262,
+          "prevBlockNum": 20927419
         },
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "SYSTEM_CONFIG": "0x5e6432F18Bc5d497B1Ab2288a025Fbf9D69E2221",
         "systemConfig": "0x5e6432F18Bc5d497B1Ab2288a025Fbf9D69E2221",
         "version": "2.5.0"
-      },
-      "derivedName": "OptimismPortal"
+      }
     },
     {
       "name": "SuperchainConfig",
@@ -790,7 +787,7 @@
         ],
         "$upgradeCount": 4,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292827905",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292828484",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -807,8 +804,7 @@
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.3.0"
-      },
-      "derivedName": "L1CrossDomainMessenger"
+      }
     },
     {
       "name": "FoundationMultisig_2",
@@ -895,6 +891,10 @@
       "name": "Lib_AddressManager",
       "address": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
       "template": "opstack/AddressManager",
+      "displayName": "AddressManager",
+      "descriptions": [
+        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a more standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+      ],
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -1467,7 +1467,7 @@
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "gnosisSafeModules/DeputyGuardianModule": "0xd3930cda89001876a722ed430ea8ed07e4823c83ed910e621744eccab9becba1",
     "gnosisSafeModules/LivenessModule": "0x93a18dea68cf1d0abddfc33adec077c82356344dd7b49ae5542b16ca9319bb91",
-    "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
+    "opstack/AddressManager": "0xe7b79f9e91945070609acfb252ee79f6b3894131d1611c37cf41c429ab659a9a",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
@@ -1478,5 +1478,5 @@
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
+  "shapeFilesHash": "0x7d797a1903cdc2397ee6487cf026fb3dd7039d16b90882c36b62e5430ab5cdeb"
 }

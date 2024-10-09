@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x49e45b0782e93f6c9ab88fbb594e3732023928b4
+
+# Diff at Wed, 09 Oct 2024 11:02:54 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@37683e2b3d0587372f886eef49e921277810c8bf block: 20769559
+- current block number: 20927606
+
+## Description
+
+Move to discovery driven data.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20769559 (main branch discovery), not current.
+
+```diff
+    contract SuperchainGuardianMultisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      name:
+-        "GuardianMultisig"
++        "SuperchainGuardianMultisig"
+    }
+```
+
+```diff
+    contract ModeMultisig (0x309Fe2536d01867018D120b40e4676723C53A14C) {
+    +++ description: None
+      name:
+-        "ChallengerMultisig"
++        "ModeMultisig"
+    }
+```
+
+```diff
+    contract AddressManager (0x50eF494573f28Cad6B64C31b7a00Cdaa48306e15) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a more standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      descriptions:
++        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a more standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
+    }
+```
+
+```diff
+    contract Lib_AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a more standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      displayName:
++        "AddressManager"
+      descriptions:
++        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a more standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
+    }
+```
+
 Generated with discovered.json: 0x82ac0decd951d4449afa308861fdbfe561f2301b
 
 # Diff at Tue, 01 Oct 2024 10:53:10 GMT:
