@@ -1,7 +1,7 @@
+import { assert } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../../test/database'
 import { AssetRisksUserRepository } from './repository'
-import { assert } from '@l2beat/shared-pure'
 
 describeDatabase(AssetRisksUserRepository.name, (db) => {
   const repository = db.assetRisksUser
