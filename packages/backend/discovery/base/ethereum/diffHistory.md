@@ -1,3 +1,130 @@
+Generated with discovered.json: 0x7567c62ddeb57d96febf6e635431c505fab8e4f4
+
+# Diff at Wed, 09 Oct 2024 13:07:15 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@37683e2b3d0587372f886eef49e921277810c8bf block: 20891458
+- current block number: 20928224
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20891458 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E) {
+    +++ description: None
+      directlyReceivedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+```diff
+    contract SuperchainGuardianMultisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      name:
+-        "GuardianMultisig"
++        "SuperchainGuardianMultisig"
+    }
+```
+
+```diff
+    contract BaseMultisig2 (0x14536667Cd30e52C0b458BaACcB9faDA7046E056) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824"}]
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      directlyReceivedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+```diff
+    contract Challenger1of2 (0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824) {
+    +++ description: None
+      template:
++        "base/Challenger1of2"
+    }
+```
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
++        144000000
+    }
+```
+
+```diff
+    contract BaseAdminMultisig (0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c) {
+    +++ description: None
+      name:
+-        "AdminMultisig"
++        "BaseAdminMultisig"
+      receivedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+```diff
+    contract AddressManager (0x8EfB6B5c4767B09Dc9AA6Af4eAA89F749522BaE2) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.via.0.description:
++        "set and change address mappings."
+      descriptions:
++        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
+    }
+```
+
+```diff
+    contract BaseMultisig1 (0x9855054731540A48b28990B63DcF4f33d8AE46A1) {
+    +++ description: None
+      name:
+-        "BaseMultisig"
++        "BaseMultisig1"
+    }
+```
+
+```diff
+    contract FoundationMultisig_2 (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824"}]
+    }
+```
+
+```diff
+    contract Lib_AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.via.0.description:
++        "set and change address mappings."
+      displayName:
++        "AddressManager"
+      descriptions:
++        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
+    }
+```
+
 Generated with discovered.json: 0x0ccc6b74d8d609f5e08581f2fd25e7b41ebbbec5
 
 # Diff at Tue, 08 Oct 2024 16:22:53 GMT:
