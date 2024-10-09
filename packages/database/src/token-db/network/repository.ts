@@ -175,7 +175,8 @@ export class NetworkRepository extends BaseRepository {
       .execute()
   }
 
-  async deleteAll(): Promise<void> {
-    await this.db.deleteFrom('Network').execute()
+  async deleteAll(): Promise<bigint> {
+    const result = await this.db.deleteFrom('Network').executeTakeFirstOrThrow()
+    return result.numDeletedRows
   }
 }
