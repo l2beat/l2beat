@@ -1,11 +1,16 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 import { userEvent, within } from '@storybook/test'
-import React from 'react'
+import { onlyDesktopModes } from '~/../.storybook/modes'
 import { RadioGroup, RadioGroupItem } from './radio-group'
 
 const meta = {
   title: 'Atoms/Radio Group',
   component: RadioGroup,
+  parameters: {
+    chromatic: {
+      modes: onlyDesktopModes,
+    },
+  },
 } satisfies Meta<typeof RadioGroup>
 
 export default meta

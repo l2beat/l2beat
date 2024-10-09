@@ -11,7 +11,7 @@ import {
 import Image from 'next/image'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { useCurrentSection } from '~/hooks/use-current-section'
-import { SummaryIcon } from '~/icons/pages/summary'
+import { SummaryIcon } from '~/icons/summary'
 import { cn } from '~/utils/cn'
 import { scrollVerticallyToItem } from '~/utils/scroll-to-item'
 import { UnderReviewCallout } from '../under-review-callout'

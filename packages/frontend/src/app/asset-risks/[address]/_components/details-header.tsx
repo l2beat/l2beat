@@ -36,7 +36,7 @@ export function DetailsHeader(props: DetailsHeaderProps) {
           <span className="text-xs font-bold text-zinc-500 dark:text-gray-50">
             Value
           </span>
-          <span className=" text-xl font-extrabold text-pink-900 dark:text-pink-200">
+          <span className="text-xl font-bold text-pink-900 dark:text-pink-200">
             ${formatNumberWithCommas(report.usdValue)}
           </span>
         </div>
@@ -44,7 +44,7 @@ export function DetailsHeader(props: DetailsHeaderProps) {
           <span className="text-xs font-bold text-zinc-500 dark:text-gray-50">
             Wallet
           </span>
-          <span className="flex items-center gap-2 text-xl font-semibold">
+          <span className="flex items-center gap-2 text-xl font-medium">
             {props.vanityAddress ?? report.address}
           </span>
         </div>

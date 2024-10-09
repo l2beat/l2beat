@@ -1,13 +1,14 @@
-import { HOMEPAGE_MILESTONES } from '@l2beat/config'
-import { ScalingTvlChart } from '~/components/chart/tvl/scaling-tvl-chart'
-import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { ScalingSummaryActivityChart } from '~/components/chart/activity/scaling-summary-activity-chart'
+import { ScalingSummaryTvlChart } from '~/components/chart/tvl/scaling-summary-tvl-chart'
+import { MainPageCard } from '~/components/main-page-card'
+import { MainPageHeader } from '~/components/main-page-header'
 import { getScalingSummaryEntries } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { HydrateClient, api } from '~/trpc/server'
-import { getCookie } from '~/utils/cookies/server'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingAssociatedTokensContextProvider } from '../_components/scaling-associated-tokens-context'
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
-import { ScalingSummaryTable } from './_components/scaling-summary-table'
+import { ChartTabs } from './_components/chart-tabs'
+import { ScalingSummaryTable } from './_components/table/scaling-summary-table'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -15,27 +16,39 @@ export const metadata = getDefaultMetadata({
   },
 })
 
-export default async function Page() {
-  const [entries] = await Promise.all([
-    getScalingSummaryEntries(),
-    api.tvl.chart.prefetch({
-      filter: { type: 'layer2' },
-      range: getCookie('scalingSummaryChartRange'),
-      excludeAssociatedTokens: false,
-    }),
-    api.tvl.total.prefetch({
-      filter: { type: 'layer2' },
-      excludeAssociatedTokens: false,
-    }),
-  ])
+const TIME_RANGE = '30d'
+const UNIT = 'usd'
 
+export default async function Page() {
+  const entries = await getScalingSummaryEntries()
+
+  await api.tvl.chart.prefetch({
+    range: TIME_RANGE,
+    excludeAssociatedTokens: false,
+    filter: { type: 'layer2' },
+  })
+
+  await api.activity.chart.prefetch({
+    range: TIME_RANGE,
+    filter: { type: 'all' },
+  })
   return (
     <HydrateClient>
       <ScalingFilterContextProvider>
         <ScalingAssociatedTokensContextProvider>
-          <ScalingTvlChart milestones={HOMEPAGE_MILESTONES} entries={entries} />
-          <HorizontalSeparator className="my-4 md:my-6" />
-          <ScalingSummaryTable entries={entries} />
+          <MainPageHeader>Summary</MainPageHeader>
+          <div className="grid grid-cols-2 gap-4 max-lg:hidden">
+            <MainPageCard>
+              <ScalingSummaryTvlChart unit={UNIT} timeRange={TIME_RANGE} />
+            </MainPageCard>
+            <MainPageCard>
+              <ScalingSummaryActivityChart timeRange={TIME_RANGE} />
+            </MainPageCard>
+          </div>
+          <ChartTabs className="lg:hidden" unit={UNIT} timeRange={TIME_RANGE} />
+          <MainPageCard className="md:mt-6">
+            <ScalingSummaryTable entries={entries} />
+          </MainPageCard>
         </ScalingAssociatedTokensContextProvider>
       </ScalingFilterContextProvider>
     </HydrateClient>

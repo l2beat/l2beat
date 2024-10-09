@@ -8,7 +8,6 @@ import { ShieldIcon } from '~/icons/shield'
 import { UnderReviewIcon } from '~/icons/under-review'
 import { UnverifiedIcon } from '~/icons/unverified'
 import { type SyncStatus } from '~/types/sync-status'
-import { cn } from '~/utils/cn'
 import { NotSyncedBadge } from '../../badge/not-synced-badge'
 
 export interface ProjectCellProps {
@@ -28,9 +27,9 @@ export interface ProjectCellProps {
 
 export function ProjectNameCell({ project, className }: ProjectCellProps) {
   return (
-    <div className={cn('pl-2 2xl:pl-3', className)}>
+    <div className={className}>
       <div className="flex items-baseline gap-1.5">
-        <span className="text-base font-bold !leading-none v2:text-xs md:!text-lg">
+        <span className="text-xs font-bold !leading-none md:!text-base">
           {project.shortName ?? project.name}
         </span>
         {project.isVerified === false && (
@@ -86,7 +85,7 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
         )}
       </div>
       {project.hostChain && (
-        <span className="block text-[0.8125rem] font-medium leading-[0.9375rem] text-gray-500 dark:text-zinc-400">
+        <span className="block text-[0.8125rem] font-medium leading-[0.9375rem] text-secondary">
           L3 on {project.hostChain}
         </span>
       )}

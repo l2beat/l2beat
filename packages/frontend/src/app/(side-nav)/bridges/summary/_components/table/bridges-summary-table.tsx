@@ -31,7 +31,7 @@ export function BridgesSummaryTable({ entries }: Props) {
     initialState: {
       sorting: [
         {
-          id: 'tvl',
+          id: 'total',
           desc: true,
         },
       ],

@@ -6,13 +6,13 @@ import { type ActivityTimeRange } from '~/server/features/scaling/activity/utils
 interface Props {
   timeRange: ActivityTimeRange
   setTimeRange: (timeRange: ActivityTimeRange) => void
-  range: [number, number] | undefined
+  projectSection?: boolean
 }
 
 export function ActivityTimeRangeControls({
   timeRange,
   setTimeRange,
-  range,
+  projectSection,
 }: Props) {
   return (
     <ChartTimeRangeControls
@@ -25,7 +25,7 @@ export function ActivityTimeRangeControls({
         { value: '1y', label: '1Y' },
         { value: 'max', label: 'MAX' },
       ]}
-      range={range}
+      projectSection={projectSection}
     />
   )
 }

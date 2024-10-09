@@ -25,14 +25,20 @@ const config: Config = {
       '5xl': ['48px', '60px'],
       '6xl': ['64px', '64px'],
     },
+    fontWeight: {
+      thin: '100',
+      light: '300',
+      normal: '400',
+      medium: '500',
+      bold: '700',
+      black: '900',
+    },
     colors: {
       current: 'currentColor',
       transparent: 'transparent',
-      brand: {
-        red: '#F9347B',
-        'red-dark': '#BD114F',
-        black: '#222222',
-      },
+      'brand-red': '#F9347B',
+      'brand-red-dark': '#BD114F',
+      'brand-black': '#222222',
       'pure-white': '#FFFFFF',
       white: '#FAFAFA',
       neutral: {
@@ -48,6 +54,9 @@ const config: Config = {
         700: '#393C43',
         800: '#272A2F',
         900: '#1D1E22',
+      },
+      'n-zinc': {
+        300: '#D3D5D9',
       },
       gray: {
         50: '#AEAEAE',
@@ -68,6 +77,10 @@ const config: Config = {
         900: '#2F2F2F',
         950: '#111111',
       },
+      'n-gray': {
+        200: '#E6E7EC',
+        400: '#AEB1C2',
+      },
       black: '#1B1B1B',
       yellow: {
         100: '#FFDD28',
@@ -77,6 +90,10 @@ const config: Config = {
         500: '#E5C227',
         700: '#CB9800',
         800: '#382D11',
+        900: '#684E00',
+      },
+      'n-yellow': {
+        700: '#AB8000',
       },
       orange: { 400: '#FF8B36', 500: '#FF7D1F', 600: '#F94A24' },
       purple: {
@@ -146,14 +163,25 @@ const config: Config = {
       },
       sky: { 500: '#0074FD', 550: '#2670FF', 600: '#2083C1' },
       fuchsia: { 700: '#860CB0' },
+
+      // New colors
+      primary: {
+        DEFAULT: 'var(--primary)',
+        invert: 'var(--primary-invert)',
+      },
+      secondary: 'var(--secondary)',
+      brand: 'var(--brand)',
+      background: 'var(--background)',
+      'surface-primary': 'var(--surface-primary)',
+      'surface-secondary': 'var(--surface-secondary)',
+      'surface-tertiary': 'var(--surface-tertiary)',
     },
     screens: {
       xs: '400px',
       sm: '550px',
-      md: '750px',
-      lg: '1120px',
-      xl: '1280px',
-      '2xl': '1920px',
+      md: '768px',
+      lg: '1200px',
+      xl: '1920px',
     },
     zIndex: {
       1: '1',
@@ -244,7 +272,7 @@ const config: Config = {
   },
   plugins: [
     plugin(function ({ addVariant }) {
-      addVariant('v2', '.v2 &')
+      addVariant('sidebar', '.sidebar &')
     }),
     require('tailwindcss-animate'),
     require('@tailwindcss/container-queries'),

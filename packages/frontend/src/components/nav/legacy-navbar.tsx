@@ -12,14 +12,14 @@ import { type NavGroup } from './types'
  * Legacy nav bar component used on old-style pages *on xl screens*.
  * Everywhere else, the new sidenav is used.
  */
-export async function LegacyNavbar({
+export function LegacyNavbar({
   logoLink,
   groups,
 }: { logoLink: string; groups: NavGroup[] }) {
   const hiringBadge = env.NEXT_PUBLIC_SHOW_HIRING_BADGE
 
   return (
-    <div className="hidden h-[4.25rem] border-b border-gray-200 text-base dark:border-gray-850 xl:block">
+    <div className="hidden h-[4.25rem] border-b border-gray-200 text-base dark:border-gray-850 lg:block">
       <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-6">
         <ul className="flex items-center py-4">
           <li className="mr-8">
@@ -27,26 +27,38 @@ export async function LegacyNavbar({
               <Logo className="h-8 w-auto" />
             </Link>
           </li>
-          {groups.map(
-            (group) =>
+          {groups.map((group) => {
+            if (group.type === 'single') {
+              return (
+                <LegacyNavLink
+                  key={group.title}
+                  large
+                  href={group.href}
+                  title={group.title}
+                  withoutUnderline
+                />
+              )
+            }
+            return (
               group.links[0] && (
                 <LegacyNavLink
                   key={group.title}
                   large
                   href={group.links[0].href}
                   title={group.title}
+                  withoutUnderline
                 />
-              ),
-          )}
+              )
+            )
+          })}
         </ul>
         <div className="flex h-full items-center gap-5">
-          <ul className="hidden items-center gap-4 2xl:flex">
+          <ul className="hidden items-center gap-4 xl:flex">
             <SocialLinks />
           </ul>
-          <div className="hidden h-8 w-px bg-gray-300 dark:bg-gray-700 2xl:block" />
+          <div className="hidden h-8 w-px bg-gray-300 dark:bg-gray-700 xl:block" />
           <ul className="flex h-full items-center gap-1.5">
             <LegacyNavLink title="Forum" href={externalLinks.forum} />
-            <LegacyNavLink title="ZK Catalog" href="/zk-catalog" />
             <LegacyNavLink title="Donate" href="/donate" />
             <LegacyNavLink title="Governance" href="/governance" />
             <LegacyNavLink title="Glossary" href="/glossary" />
