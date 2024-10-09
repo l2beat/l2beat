@@ -228,26 +228,8 @@ describeDatabase(TokenMetaRepository.name, (database) => {
   })
 })
 
-function mock({
-  tokenId,
-  source,
-  externalId,
-  name,
-  symbol,
-  decimals,
-  logoUrl,
-  contractName,
-}: UpsertableTokenMetaRecord): UpsertableTokenMetaRecord {
-  return {
-    tokenId,
-    source,
-    externalId,
-    name,
-    symbol,
-    decimals,
-    logoUrl,
-    contractName,
-  }
+function mock(record: UpsertableTokenMetaRecord): UpsertableTokenMetaRecord {
+  return record
 }
 
 function mockOutput(

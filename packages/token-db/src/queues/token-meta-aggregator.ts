@@ -3,8 +3,6 @@ import { Database } from '@l2beat/database'
 import { Redis } from 'ioredis'
 import { buildTokenMetaAggregatorSource } from '../sources/token-meta-aggregator.js'
 import { setupQueueWithProcessor } from '../utils/queue/queue-with-processor.js'
-import { setupQueue } from '../utils/queue/setup-queue.js'
-import { wrapTokenQueue } from '../utils/queue/wrap.js'
 import { TokenPayload } from './payloads.js'
 
 export async function setupTokenMetaAggregatorQueue({
@@ -20,20 +18,13 @@ export async function setupTokenMetaAggregatorQueue({
     connection,
     logger,
   }
-  const queue = setupQueue(deps)
   const queueWithProcessor = setupQueueWithProcessor(deps)
-  const tokenMetaAggregatorInbox = queue<TokenPayload>({
-    name: 'TokenMetaAggregator.Inbox',
-  })
-  const tokenMetaAggregatorQueue = wrapTokenQueue(tokenMetaAggregatorInbox)
-
   const tokenMetaAggregator = queueWithProcessor<TokenPayload>({
     name: 'TokenMetaAggregator.Processor',
     processor: (job) =>
       buildTokenMetaAggregatorSource({
         logger,
         db,
-        queue: tokenMetaAggregatorQueue,
       })(job.data.tokenId),
   })
 
@@ -48,6 +39,6 @@ export async function setupTokenMetaAggregatorQueue({
 
   return {
     start,
-    inbox: tokenMetaAggregatorInbox,
+    inbox: tokenMetaAggregator.queue,
   }
 }

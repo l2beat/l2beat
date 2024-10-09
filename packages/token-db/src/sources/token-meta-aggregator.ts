@@ -5,14 +5,9 @@ import { TokenUpdateQueue } from '../utils/queue/wrap.js'
 type Dependencies = {
   logger: Logger
   db: Database
-  queue: TokenUpdateQueue
 }
 
-export function buildTokenMetaAggregatorSource({
-  db,
-  logger,
-  queue,
-}: Dependencies) {
+export function buildTokenMetaAggregatorSource({ db, logger }: Dependencies) {
   return async function (tokenId: string) {
     const token = await db.token.findById(tokenId)
 
@@ -37,8 +32,6 @@ export function buildTokenMetaAggregatorSource({
       logoUrl: getMostPopularValue(records.map((r) => r.logoUrl)),
       contractName: getMostPopularValue(records.map((r) => r.contractName)),
     })
-
-    queue.add(tokenId)
   }
 }
 
