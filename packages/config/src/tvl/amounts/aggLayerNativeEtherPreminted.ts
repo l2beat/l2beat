@@ -34,6 +34,7 @@ export function getAggLayerNativeEtherPremintedEntry(
     chain.minTimestampForTvl,
     escrow.sinceTimestamp,
   )
+  const untilTimestamp = escrow.untilTimestamp
 
   return {
     type: type,
@@ -48,6 +49,7 @@ export function getAggLayerNativeEtherPremintedEntry(
     category: category,
     decimals: decimals,
     includeInTotal: includeInTotal,
+    untilTimestamp: untilTimestamp,
     isAssociated: isAssociated,
     symbol: symbol,
     sinceTimestamp: sinceTimestamp,

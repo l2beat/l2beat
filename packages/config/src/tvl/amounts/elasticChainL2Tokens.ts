@@ -8,6 +8,7 @@ import {
 import { BackendProject, BackendProjectEscrow } from '../../backend'
 import { ethereum } from '../../chains/ethereum'
 import { ChainConfig } from '../../common'
+import { getEscrowUntilTimestamp } from '../../utils/getEscrowUntilTimestamp'
 
 export function getElasticChainL2TokenEntry(
   chain: ChainConfig,
@@ -24,9 +25,13 @@ export function getElasticChainL2TokenEntry(
     UnixTime.max(chain.minTimestampForTvl, token.sinceTimestamp),
     escrow.sinceTimestamp,
   )
+  const untilTimestamp = getEscrowUntilTimestamp(
+    token.untilTimestamp,
+    escrow.untilTimestamp,
+  )
   const includeInTotal = token.excludeFromTotal
     ? false
-    : (escrow.includeInTotal ?? true)
+    : escrow.includeInTotal ?? true
   const isAssociated = !!project.associatedTokens?.includes(token.symbol)
 
   // We are hardcoding assetId because elasticChainL2Token is an canonical token
@@ -45,6 +50,7 @@ export function getElasticChainL2TokenEntry(
     project: project.projectId,
     source: source,
     sinceTimestamp: sinceTimestamp,
+    untilTimestamp: untilTimestamp,
     includeInTotal,
     decimals: token.decimals,
     symbol: token.symbol,

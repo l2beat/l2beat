@@ -31,6 +31,7 @@ export function getAggLayerNativeEtherWrappedEntry(
     chain.minTimestampForTvl,
     escrow.sinceTimestamp,
   )
+  const untilTimestamp = escrow.untilTimestamp
   const decimals = 18
   const isAssociated = false
   const category = 'ether'
@@ -47,6 +48,7 @@ export function getAggLayerNativeEtherWrappedEntry(
     source: source,
     includeInTotal: includeInTotal,
     sinceTimestamp: sinceTimestamp,
+    untilTimestamp: untilTimestamp,
     decimals: decimals,
     isAssociated: isAssociated,
     category: category,
