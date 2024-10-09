@@ -1,4 +1,5 @@
 import { TokenMetaRecord } from '@l2beat/database'
+import { TableControls } from '~/components/table-controls'
 import { Button } from '~/components/ui/button'
 import {
   Table,
@@ -9,9 +10,25 @@ import {
   TableCell,
 } from '~/components/ui/table'
 import { db } from '~/db'
+import { getServerPagination } from '~/lib/server-pagination/server'
 
-export default async function Page() {
-  const tokens = await db.token.getAll()
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Record<string, string | string[] | undefined>
+}) {
+  // TODO: proper pagination support in repository
+  const allTokens = await db.token.getAll()
+  const count = allTokens.length
+  const pagination = getServerPagination({
+    count,
+    searchParams,
+  })
+  console.log(pagination)
+  const tokens = allTokens.slice(
+    pagination.skip,
+    pagination.skip + pagination.take,
+  )
   const tokenMeta = (await db.tokenMeta.getBySource('Aggregate')).reduce(
     (acc, meta) => {
       acc[meta.tokenId] = meta
@@ -67,6 +84,7 @@ export default async function Page() {
                 ))}
             </TableBody>
           </Table>
+          <TableControls count={count} />
         </div>
       )}
     </>
