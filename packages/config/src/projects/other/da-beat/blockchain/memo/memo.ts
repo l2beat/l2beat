@@ -31,7 +31,8 @@ export const memo: DaLayer = {
     consensusFinality: 0,
     unbondingPeriod: 0,
   },
-  technology: `
+  technology: {
+    description: `
     ## Architecture
     Meeda's architecture consists of several components. 
     Storage Nodes store blob data and generate data availability commitments, with node deployment available to all users. 
@@ -53,6 +54,7 @@ export const memo: DaLayer = {
     L2s can upload transaction data to Meeda through the MemoDA RPC, and the Meeda operator will generate an aggregated KZG polynomial commitment based on the transaction data. 
     Nodes can request transaction data on Meeda based on the commitment value of the transaction data.
   `,
+  },
   bridges: [
     NO_BRIDGE({
       layer: 'MEMO',
