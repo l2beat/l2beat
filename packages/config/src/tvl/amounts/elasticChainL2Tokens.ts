@@ -8,6 +8,7 @@ import {
 import { BackendProject, BackendProjectEscrow } from '../../backend'
 import { ethereum } from '../../chains/ethereum'
 import { ChainConfig } from '../../common'
+import { getEscrowUntilTimestamp } from '../../utils/getEscrowUntilTimestamp'
 
 export function getElasticChainL2TokenEntry(
   chain: ChainConfig,
@@ -24,6 +25,10 @@ export function getElasticChainL2TokenEntry(
     UnixTime.max(chain.minTimestampForTvl, token.sinceTimestamp),
     escrow.sinceTimestamp,
   )
+  const untilTimestamp = getEscrowUntilTimestamp(
+    token.untilTimestamp,
+    escrow.untilTimestamp,
+  )
   const includeInTotal = token.excludeFromTotal
     ? false
     : (escrow.includeInTotal ?? true)
@@ -35,20 +40,21 @@ export function getElasticChainL2TokenEntry(
   const dataSource = `${project.projectId}_elastic_chain`
 
   return {
-    type: type,
+    assetId: assetId,
+    category: token.category,
+    chain: project.projectId,
     dataSource: dataSource,
+    decimals: token.decimals,
+    escrowAddress: escrow.address,
+    includeInTotal,
+    isAssociated,
     l1Address: token.address,
     l2BridgeAddress: escrow.sharedEscrow.l2BridgeAddress,
-    assetId: assetId,
-    chain: project.projectId,
-    escrowAddress: escrow.address,
     project: project.projectId,
-    source: source,
     sinceTimestamp: sinceTimestamp,
-    includeInTotal,
-    decimals: token.decimals,
+    source: source,
     symbol: token.symbol,
-    isAssociated,
-    category: token.category,
+    type: type,
+    untilTimestamp: untilTimestamp,
   }
 }
