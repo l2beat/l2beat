@@ -3,7 +3,6 @@
   "chain": "optimism",
   "blockNumber": 122295641,
   "configHash": "0xef4a8d9fc64cd6cb4841c2f2a5a158c30e7d525c846e6834ae078ffc5521512d",
-  "version": 15,
   "contracts": [
     {
       "name": "FPValidator",
@@ -1856,5 +1855,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

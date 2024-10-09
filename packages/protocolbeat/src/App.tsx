@@ -14,7 +14,7 @@ import {
   decodeNodeState,
   getLayoutStorageKey,
 } from './store/utils/storageParsing'
-import { Color } from './utils/color'
+import { OklchColor } from './utils/color'
 import { AutoLayoutButton } from './view/AutoLayoutButton'
 import { Sidebar } from './view/Sidebar'
 import { Viewport } from './view/Viewport'
@@ -72,6 +72,9 @@ export function App() {
     const contents = await file.text()
     try {
       const state = decodeNodeState(contents)
+      if (state === undefined) {
+        throw new Error('not node state')
+      }
       if (state.projectId !== projectId) {
         console.error(
           `Location data is for ${state.projectId} but ${projectId} is loaded`,
@@ -101,7 +104,7 @@ export function App() {
     }
   }
 
-  function colorChangeAction(id: string[], color: Color) {
+  function colorChangeAction(id: string[], color: OklchColor) {
     try {
       const matching = nodes
         .filter((n) => id.includes(n.id))

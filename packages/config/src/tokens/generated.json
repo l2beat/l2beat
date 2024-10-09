@@ -1053,6 +1053,20 @@
       "supply": "zero"
     },
     {
+      "name": "Cronos zkEVM CRO",
+      "coingeckoId": "cronos-zkevm-cro",
+      "address": "0x28Ff2E4dD1B58efEB0fC138602A28D5aE81e44e2",
+      "symbol": "zkCRO",
+      "decimals": 18,
+      "deploymentTimestamp": 1718769911,
+      "coingeckoListingTimestamp": 1724803200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39734/large/Screenshot_2024-08-16_at_10.42.41%E2%80%AFAM.png?1723776225",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Curve DAO Token",
       "coingeckoId": "curve-dao-token",
       "address": "0xD533a949740bb3306d119CC777fa900bA034cd52",
@@ -4394,6 +4408,20 @@
       "coingeckoListingTimestamp": 1702512000,
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/33613/large/3466ef_3c088c66c7d941e8856339d0bddf33cc_mv2.png?1702514458",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Veno yield bearing ETH",
+      "coingeckoId": "veno-eth",
+      "address": "0x76bf2D1e6dFda645c0c17440B17Eccc181dfC351",
+      "symbol": "ybETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1721279435,
+      "coingeckoListingTimestamp": 1724198400,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39776/large/Screenshot_2024-08-19_at_5.07.51%E2%80%AFPM.png?1724058891",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"

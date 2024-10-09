@@ -1,3 +1,38 @@
+Generated with discovered.json: 0x0d00d1c4e97a77321515b7cf757d33b25a81d930
+
+# Diff at Tue, 08 Oct 2024 16:27:39 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@bca55174129419533cd4173605c170ea99ac6f98 block: 20775932
+- current block number: 20920069
+
+## Description
+
+Move to discovery driven data.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20775932 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.scalar:
+-        {"severity":"LOW","description":"A system configuration parameter used as dynamic L2 gas overhead in the L2 fee calculation."}
+    }
+```
+
+```diff
+    contract OrderlyMultisig (0xcE10372313Ca39Fbf75A09e7f4c0E57F070259f4) {
+    +++ description: None
+      name:
+-        "ChallengerMultisig"
++        "OrderlyMultisig"
+    }
+```
+
 Generated with discovered.json: 0xbabcc2ea6910170e7f642c9c3436761368428543
 
 # Diff at Tue, 01 Oct 2024 10:53:56 GMT:

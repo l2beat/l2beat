@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20862628,
   "configHash": "0x14c79194c71d47265a9c65c71355062cbea0a7a60e2cf4d4531350eaba9baf7c",
-  "version": 15,
   "contracts": [
     {
       "name": "PriceRegistry",
@@ -15534,5 +15533,5 @@
     "transporter/RouterV1_2_0": "0x19a2737ac25685728904a70aacb66e3801a02ddb72bfbb28e68984410939eced",
     "transporter/TokenPool": "0x2e81a3f9299ca0620790b11a5985d7d9152d63f0e8b609092c48cd1774d159b3"
   },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

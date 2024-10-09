@@ -24,6 +24,11 @@ export function createTrackedTxId(
       input.push(trackedTxConfig.params.selector)
       input.push(trackedTxConfig.params.programHashes)
       break
+    case 'sharedBridge':
+      input.push(trackedTxConfig.params.address)
+      input.push(trackedTxConfig.params.selector)
+      input.push(trackedTxConfig.params.chainId)
+      break
     case 'transfer':
       input.push(trackedTxConfig.params.from)
       input.push(trackedTxConfig.params.to)

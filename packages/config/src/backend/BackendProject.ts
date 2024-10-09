@@ -12,8 +12,8 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import {
-  AggLayerEscrow,
   ScalingProjectEscrow,
+  SharedEscrow,
 } from '../common/ScalingProjectEscrow'
 import { ScalingProjectTransactionApi } from '../common/ScalingProjectTransactionApi'
 import {
@@ -50,7 +50,7 @@ export interface BackendProjectEscrow {
   includeInTotal?: boolean
   source?: ScalingProjectEscrow['source']
   bridgedUsing?: TokenBridgedUsing
-  sharedEscrow?: AggLayerEscrow
+  sharedEscrow?: SharedEscrow
 }
 
 export function toBackendProject(
@@ -158,6 +158,22 @@ function toBackendTrackedTxsConfig(
               address: SHARP_SUBMISSION_ADDRESS,
               selector: SHARP_SUBMISSION_SELECTOR,
               programHashes: config.query.programHashes,
+            },
+          } as const
+          return {
+            ...withParams,
+            id: createTrackedTxId(withParams),
+          }
+        }
+        case 'sharedBridge': {
+          const withParams = {
+            ...base,
+            params: {
+              formula: 'sharedBridge',
+              address: config.query.address,
+              signature: config.query.functionSignature,
+              selector: config.query.selector,
+              chainId: config.query.chainId,
             },
           } as const
           return {
