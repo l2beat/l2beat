@@ -1,5 +1,7 @@
 import { PoolConfig } from 'pg'
 import { ActivityRepository } from './activity/repository'
+import { AssetRisksBalanceRepository } from './asset-risks/balance/repository'
+import { AssetRisksUserRepository } from './asset-risks/user/repository'
 import { CurrentPriceRepository } from './da-beat/current-price/repository'
 import { StakeRepository } from './da-beat/stake/repository'
 import { DiscoveryCacheRepository } from './discovery/discovery-cache/repository'
@@ -43,6 +45,11 @@ export function createDatabase(config?: PoolConfig) {
 
     // #region Activity
     activity: new ActivityRepository(db),
+    // #endregion
+
+    // #region Asset Risks
+    assetRisksUser: new AssetRisksUserRepository(db),
+    assetRisksBalance: new AssetRisksBalanceRepository(db),
     // #endregion
 
     // #region DA BEAT

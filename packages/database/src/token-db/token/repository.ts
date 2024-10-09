@@ -2,7 +2,7 @@ import { assert } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { TokenRecord, UpsertableTokenRecord, upsertableToRow } from './entity'
 import { joinDeployment, joinNetwork, joinTokenMeta } from './join'
-import { selectToken } from './select'
+import { selectToken, selectTokenWithPrefix } from './select'
 
 export class TokenRepository extends BaseRepository {
   async upsert(record: UpsertableTokenRecord): Promise<{ id: string }> {
@@ -12,8 +12,7 @@ export class TokenRepository extends BaseRepository {
       .values(row)
       .onConflict((cb) =>
         cb.columns(['networkId', 'address']).doUpdateSet((eb) => ({
-          networkId: eb.ref('excluded.networkId'),
-          address: eb.ref('excluded.address'),
+          updatedAt: eb.ref('excluded.updatedAt'),
         })),
       )
       .returning('Token.id')
@@ -24,17 +23,15 @@ export class TokenRepository extends BaseRepository {
     if (records.length === 0) return 0
 
     const rows = records.map(upsertableToRow)
-    await this.batch(rows, 1_000, async (batch) => {
+    await this.batch(rows, 100, async (batch) => {
       await this.db
         .insertInto('Token')
         .values(batch)
         .onConflict((cb) =>
           cb.columns(['networkId', 'address']).doUpdateSet((eb) => ({
-            networkId: eb.ref('excluded.networkId'),
-            address: eb.ref('excluded.address'),
+            updatedAt: eb.ref('excluded.updatedAt'),
           })),
         )
-        .returning('Token.id')
         .execute()
     })
     return records.length
@@ -49,7 +46,7 @@ export class TokenRepository extends BaseRepository {
     const rows = await this.db
       .selectFrom('Token')
       .innerJoin(...joinNetwork)
-      .select(selectToken)
+      .select(selectTokenWithPrefix('Token'))
       .where('Network.chainId', '=', chainId)
       .execute()
     return rows
@@ -60,21 +57,28 @@ export class TokenRepository extends BaseRepository {
   ): Promise<TokenRecord[]> {
     if (networks.length === 0) return []
 
-    const rows = await this.db
-      .selectFrom('Token')
-      .select(selectToken)
-      .where((eb) =>
-        eb.or(
-          networks.map(({ address, networkId }) =>
-            eb.and([
-              eb('address', '=', address),
-              eb('networkId', '=', networkId),
-            ]),
+    const allRows: TokenRecord[] = []
+
+    await this.batch(networks, 1000, async (batch) => {
+      const rows = await this.db
+        .selectFrom('Token')
+        .select(selectToken)
+        .where((eb) =>
+          eb.or(
+            batch.map(({ address, networkId }) =>
+              eb.and([
+                eb('address', '=', address),
+                eb('networkId', '=', networkId),
+              ]),
+            ),
           ),
-        ),
-      )
-      .execute()
-    return rows
+        )
+        .execute()
+
+      allRows.push(...rows)
+    })
+
+    return allRows
   }
 
   async getByNetworksAndContractName(
@@ -83,7 +87,7 @@ export class TokenRepository extends BaseRepository {
   ): Promise<TokenRecord[]> {
     const rows = await this.db
       .selectFrom('Token')
-      .select(selectToken)
+      .select(selectTokenWithPrefix('Token'))
       .innerJoin(...joinDeployment)
       .innerJoin(...joinTokenMeta)
       .where((eb) =>
@@ -114,7 +118,7 @@ export class TokenRepository extends BaseRepository {
   }): Promise<TokenRecord[]> {
     let statement = this.db
       .selectFrom('Token')
-      .select(selectToken)
+      .select(selectTokenWithPrefix('Token'))
       .innerJoin(...joinDeployment)
       .innerJoin(...joinTokenMeta)
       .innerJoin(...joinNetwork)
@@ -150,7 +154,7 @@ export class TokenRepository extends BaseRepository {
   }): Promise<TokenRecord[]> {
     const rows = await this.db
       .selectFrom('Token')
-      .select(selectToken)
+      .select(selectTokenWithPrefix('Token'))
       .innerJoin(...joinDeployment)
       .innerJoin(...joinTokenMeta)
       .innerJoin(...joinNetwork)
@@ -169,7 +173,7 @@ export class TokenRepository extends BaseRepository {
     const row = await this.db
       .selectFrom('Token')
       .innerJoin(...joinNetwork)
-      .select(selectToken)
+      .select(selectTokenWithPrefix('Token'))
       .where('Network.name', '=', network.network)
       .where('Token.address', 'ilike', network.address)
       .limit(1)
@@ -196,5 +200,9 @@ export class TokenRepository extends BaseRepository {
       .where('Token.id', 'in', ids)
       .execute()
     return rows
+  }
+
+  async deleteAll(): Promise<void> {
+    await this.db.deleteFrom('Token').execute()
   }
 }

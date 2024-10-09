@@ -31,6 +31,10 @@ export class NetworkRepository extends BaseRepository {
       .select([...selectNetwork])
       .execute()
 
+    if (allNetworks.length === 0) {
+      return []
+    }
+
     const networkIds = allNetworks.map((network) => network.id)
 
     const [explorers, rpcs] = await Promise.all([
@@ -127,11 +131,25 @@ export class NetworkRepository extends BaseRepository {
     return row
   }
 
+  async upsert(network: UpsertableNetworkRecord): Promise<{ id: string }> {
+    const row = upsertableToRow(network)
+    return await this.db
+      .insertInto('Network')
+      .values(row)
+      .onConflict((cb) =>
+        cb.column('coingeckoId').doUpdateSet((eb) => ({
+          coingeckoId: eb.ref('excluded.coingeckoId'),
+        })),
+      )
+      .returning('id')
+      .executeTakeFirstOrThrow()
+  }
+
   async upsertMany(networks: UpsertableNetworkRecord[]): Promise<number> {
     if (networks.length === 0) return 0
 
     const rows = networks.map(upsertableToRow)
-    await this.batch(rows, 1_000, async (batch) => {
+    await this.batch(rows, 100, async (batch) => {
       await this.db
         .insertInto('Network')
         .values(batch)
@@ -155,5 +173,9 @@ export class NetworkRepository extends BaseRepository {
       .set(row)
       .where('coingeckoId', '=', coingeckoId)
       .execute()
+  }
+
+  async deleteAll(): Promise<void> {
+    await this.db.deleteFrom('Network').execute()
   }
 }
