@@ -1,3 +1,4 @@
+import { RateLimiter } from '@l2beat/backend-tools'
 import fetch, { RequestInit, Response } from 'node-fetch'
 
 interface HttpClient2Options {
@@ -6,6 +7,7 @@ interface HttpClient2Options {
   initialRetryDelayMs?: number
   maxRetryDelayMs?: number
   statusCodesToRetry?: number[]
+  callsPerMinute?: number
 }
 
 export class HttpClient2 {
@@ -18,8 +20,13 @@ export class HttpClient2 {
       initialRetryDelayMs: 1000,
       maxRetryDelayMs: 30000,
       statusCodesToRetry: [408, 429, 500, 502, 503, 504],
+      callsPerMinute: 60,
       ...$,
     }
+    const rateLimiter = new RateLimiter({
+      callsPerMinute: this.$.callsPerMinute,
+    })
+    this.fetchJson = rateLimiter.wrap(this.fetchJson.bind(this))
   }
 
   async fetchJson(url: string, init?: RequestInit): Promise<unknown> {
