@@ -31,7 +31,7 @@ export function getElasticChainEtherEntry(
   )
   const includeInTotal = token.excludeFromTotal
     ? false
-    : escrow.includeInTotal ?? true
+    : (escrow.includeInTotal ?? true)
   const isAssociated = !!project.associatedTokens?.includes(token.symbol)
 
   // We are hardcoding assetId because elasticChainEther is an canonical token

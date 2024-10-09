@@ -31,7 +31,7 @@ export function getAggLayerL2TokenEntry(
   )
   const includeInTotal = token.excludeFromTotal
     ? false
-    : escrow.includeInTotal ?? true
+    : (escrow.includeInTotal ?? true)
   const isAssociated = !!project.associatedTokens?.includes(token.symbol)
 
   // We are hardcoding assetId because aggLayerL2Token is an canonical token
