@@ -61,7 +61,7 @@ function TimelineLabel({ x, children }: { x: number; children: ReactNode }) {
     <span
       ref={ref}
       style={style}
-      className="invisible absolute whitespace-nowrap text-3xs font-medium leading-none text-secondary"
+      className="invisible absolute whitespace-nowrap text-3xs font-medium leading-none text-secondary md:text-[11px]"
     >
       {children}
     </span>
