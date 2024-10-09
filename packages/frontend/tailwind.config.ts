@@ -40,6 +40,7 @@ const config: Config = {
       'brand-red-dark': '#BD114F',
       'brand-black': '#222222',
       'pure-white': '#FFFFFF',
+      'pure-black': '#000000',
       white: '#FAFAFA',
       neutral: {
         700: '#323539',
