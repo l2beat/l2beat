@@ -1,3 +1,4 @@
+import { ScalingProjectTechnologyChoice } from '../../../../common'
 import {
   DacBridge,
   EnshrinedBridge,
@@ -48,6 +49,8 @@ export type CommonDaLayer = {
   usedIn: UsedInProject[]
   /** Risks associated with the data availability layer. */
   risks: DaLayerRisks
+  /** Other considerations */
+  otherConsiderations?: ScalingProjectTechnologyChoice[]
 }
 
 export type DaLayerRisks = {

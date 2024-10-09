@@ -8,6 +8,7 @@ import { type ProjectDetailsSection } from '~/components/projects/sections/types
 import { type RosetteValue } from '~/components/rosette/types'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
+import { getDaOtherConsiderationsSection } from './get-da-other-considerations-section'
 interface Params {
   daLayer: DaLayer
   daBridge: DaBridge
@@ -59,6 +60,17 @@ export function getProjectDetails({
           implementationChangeReport,
         )
       : undefined
+
+  const riskSummarySection = getDaProjectRiskSummarySection(
+    daLayer,
+    daBridge,
+    isVerified,
+  )
+
+  const otherConsiderationsSection = getDaOtherConsiderationsSection(
+    daLayer,
+    daBridge,
+  )
 
   const items: ProjectDetailsSection[] = []
 
@@ -120,6 +132,17 @@ export function getProjectDetails({
         ...contractsSection,
         id: 'contracts',
         title: 'DA Bridge contracts',
+      },
+    })
+  }
+
+  if (otherConsiderationsSection.items.length > 0) {
+    items.push({
+      type: 'TechnologySection',
+      props: {
+        id: 'other-considerations',
+        title: 'Other considerations',
+        ...otherConsiderationsSection,
       },
     })
   }

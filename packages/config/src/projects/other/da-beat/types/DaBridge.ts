@@ -2,6 +2,7 @@ import { ChainId } from '@l2beat/shared-pure'
 import {
   ScalingProjectContracts,
   ScalingProjectPermission,
+  ScalingProjectTechnologyChoice,
 } from '../../../../common'
 import { DaAccessibilityRisk } from './DaAccessibilityRisk'
 import { DaAttestationSecurityRisk } from './DaAttestationSecurityRisk'
@@ -73,6 +74,8 @@ type CommonDaBridge = {
   usedIn: UsedInProject[]
   /** Risks related to given data availability bridge. */
   risks: DaBridgeRisks
+  /** Other considerations */
+  otherConsiderations?: ScalingProjectTechnologyChoice[]
 }
 
 interface DaBridgeDisplay {

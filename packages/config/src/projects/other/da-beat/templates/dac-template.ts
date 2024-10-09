@@ -23,10 +23,11 @@ type Optionals = {
   risks?: Partial<DacDaLayer['risks'] & DacBridge['risks']>
   /** Links for given DAC, defaults to Project's main links */
   links?: Partial<DaLinks>
-  /** Optional layer description and technology, defaults to generic ones*/
+  /** Optional layer description and technology, defaults to generic ones. Other considerations will be passed through. */
   layer?: {
     technology?: DacDaLayer['technology']
     description?: DacDaLayer['display']['description']
+    otherConsiderations?: DacDaLayer['otherConsiderations']
   }
   /**
    * Optional layer description and technology, defaults to generic ones
@@ -44,6 +45,7 @@ type Optionals = {
     | 'members'
     | 'transactionDataType'
     | 'isUnderReview'
+    | 'otherConsiderations'
   >
   /** Optional warning, defaults to undefined */
   warning?: DacBridge['display']['warning']
@@ -100,6 +102,7 @@ export function DAC(template: TemplateVars): DacDaLayer {
       accessibility:
         template.risks?.accessibility ?? DaAccessibilityRisk.NotEnshrined,
     },
+    otherConsiderations: template.bridge.otherConsiderations,
   }
 
   // DAC "DA-Layer"
@@ -136,6 +139,7 @@ export function DAC(template: TemplateVars): DacDaLayer {
       fraudDetection:
         template.risks?.fraudDetection ?? DaFraudDetectionRisk.NoFraudDetection,
     },
+    otherConsiderations: template.layer?.otherConsiderations,
   }
 
   return dacLayer
