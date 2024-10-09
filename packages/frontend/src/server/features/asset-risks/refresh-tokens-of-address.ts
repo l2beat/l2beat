@@ -113,7 +113,6 @@ async function getAllLogsInner(
   toBlock: bigint,
   mode?: 'from' | 'to',
 ) {
-  console.log('Getting logs from', fromBlock, 'to', toBlock, 'mode', mode)
   return await client.getLogs({
     event: parseAbiItem(
       'event Transfer(address indexed from, address indexed to, uint256 value)',

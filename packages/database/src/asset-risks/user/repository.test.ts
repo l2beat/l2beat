@@ -1,6 +1,7 @@
 import { expect } from 'earl'
 import { describeDatabase } from '../../test/database'
 import { AssetRisksUserRepository } from './repository'
+import { assert } from '@l2beat/shared-pure'
 
 describeDatabase(AssetRisksUserRepository.name, (db) => {
   const repository = db.assetRisksUser
@@ -13,8 +14,6 @@ describeDatabase(AssetRisksUserRepository.name, (db) => {
       await repository.upsert({
         address: '0x0000000000000000000000000000000000000001',
       })
-
-      console.log(await repository.getAll())
 
       expect(
         await repository.findUserByAddress(
@@ -41,7 +40,6 @@ describeDatabase(AssetRisksUserRepository.name, (db) => {
       const user = await repository.findUserByAddress(
         '0x0000000000000000000000000000000000000000',
       )
-      expect(user).toBeTruthy()
 
       await repository.upsert({
         address: '0x0000000000000000000000000000000000000000',
@@ -49,9 +47,13 @@ describeDatabase(AssetRisksUserRepository.name, (db) => {
       const user2 = await repository.findUserByAddress(
         '0x0000000000000000000000000000000000000000',
       )
-      expect(user2?.updatedAt).toBeTruthy()
-      expect(user2?.updatedAt.getTime() ?? 0).toBeGreaterThan(
-        user?.updatedAt.getTime() ?? 0,
+
+      assert(user, 'User not found')
+      assert(user2, 'User 2 not found')
+
+      expect(user2.updatedAt).toBeTruthy()
+      expect(user2.updatedAt.getTime()).toBeGreaterThan(
+        user.updatedAt.getTime(),
       )
     })
   })
