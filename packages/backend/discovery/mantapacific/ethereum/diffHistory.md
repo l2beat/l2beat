@@ -1,3 +1,48 @@
+Generated with discovered.json: 0xe4498783608b922189a61ddb3c66c4cd906f6ef1
+
+# Diff at Wed, 09 Oct 2024 11:09:51 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@37683e2b3d0587372f886eef49e921277810c8bf block: 20775915
+- current block number: 20927642
+
+## Description
+
+Move to discovery driven data.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20775915 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0x3Ad319BB4872F8cB75a26Ac30CC4bD2d56b67b05) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a more standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      descriptions:
++        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a more standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
+    }
+```
+
+```diff
+    contract MantaMultisig (0x3c46C05c2eba8eDd0B0f0C8B1D2fBf9fc53ea01E) {
+    +++ description: None
+      name:
+-        "AdminMultisig"
++        "MantaMultisig"
+    }
+```
+
+```diff
+    contract SystemConfig (0x895E00269A05848F3c9889EfA677D02fF7351a5D) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.overhead:
+-        {"severity":"LOW","description":"Fixed L2 gas overhead. Used as part of the L2 fee calculation."}
+      fieldMeta.scalar:
+-        {"severity":"LOW","description":"Dynamic L2 gas overhead. Used as part of the L2 fee calculation."}
+    }
+```
+
 Generated with discovered.json: 0x36a6f9af3ec14c253fd02d137d0e119b8c0e1c6b
 
 # Diff at Tue, 01 Oct 2024 10:52:28 GMT:
