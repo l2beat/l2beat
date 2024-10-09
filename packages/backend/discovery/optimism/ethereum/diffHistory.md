@@ -1,23 +1,43 @@
-Generated with discovered.json: 0x1590e38904987c35790e7fdcf8171388d7dc89a0
+Generated with discovered.json: 0xe0aaeba96a6b157035d409db6ad8520899fb43b6
 
-# Diff at Tue, 08 Oct 2024 08:47:13 GMT:
+# Diff at Tue, 08 Oct 2024 17:23:11 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
-- comparing to: main@fdb935c9c2cec6572d61d5c74005044dc6c6dbe2 block: 20826753
-- current block number: 20919756
+- comparing to: main@bca55174129419533cd4173605c170ea99ac6f98 block: 20826753
+- current block number: 20922325
 
 ## Description
 
 The deposits on the main Lido escrow for Optimism are paused by the Lido EmergencyBrake Multisig following [an upgrade proposal](https://research.lido.fi/t/steth-on-optimism-upgrade-announcement-and-action-plan/8474) for rebasing L2 stETH. This is a scheduled action and deposits should be reenabled im 2024/10/10.
 
+Config related: Move to discovery driven data.
+
 ## Watched changes
 
 ```diff
     contract wstETHEscrow (0x76943C0D61395d8F2edF9060e1533529cAe05dE6) {
-    +++ description: None
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
       values.isDepositsEnabled:
 -        true
 +        false
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20826753 (main branch discovery), not current.
+
+```diff
+    contract wstETHEscrow (0x76943C0D61395d8F2edF9060e1533529cAe05dE6) {
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+      template:
++        "lido/L1ERC20TokenBridge"
+      displayName:
++        "L1ERC20TokenBridge"
+      descriptions:
++        ["Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally."]
     }
 ```
 

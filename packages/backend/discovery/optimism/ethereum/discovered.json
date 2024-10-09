@@ -1,7 +1,7 @@
 {
   "name": "optimism",
   "chain": "ethereum",
-  "blockNumber": 20919756,
+  "blockNumber": 20922325,
   "configHash": "0xa79e8e6a94de9fe57ccc5f741635dc811567356907fdbeb1356cec21353d43a0",
   "contracts": [
     {
@@ -338,7 +338,7 @@
         ],
         "$upgradeCount": 10,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292757995",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292758020",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -667,7 +667,12 @@
     {
       "name": "wstETHEscrow",
       "address": "0x76943C0D61395d8F2edF9060e1533529cAe05dE6",
+      "template": "lido/L1ERC20TokenBridge",
       "proxyType": "EIP1967 proxy",
+      "displayName": "L1ERC20TokenBridge",
+      "descriptions": [
+        "Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally."
+      ],
       "sinceTimestamp": 1659687799,
       "values": {
         "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
@@ -764,7 +769,7 @@
         "name": "Wrapped Ether",
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
-        "totalSupply": "20335188000000000000",
+        "totalSupply": "20255188000000000000",
         "version": "1.1.0"
       },
       "derivedName": "DelayedWETH"
@@ -1095,8 +1100,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 796584,
-          "prevBlockNum": 20919591
+          "prevBoughtGas": 1301449,
+          "prevBlockNum": 20922132
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1222,7 +1227,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 2894,
+        "gameCount": 2902,
         "gameImpls": [
           "0xA6f3DFdbf4855a43c529bc42EDE96797252879af",
           "0x050ed6F6273c7D836a111E42153BC00D0380b87d",
@@ -1293,7 +1298,6 @@
     { "address": "0x7cB07FE039a92B3D784f284D919503A381BEC54f" },
     { "address": "0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39" },
     { "address": "0x8Afe777B5A4D1e156435ab44Ad4b73A318cE0EA4" },
-    { "address": "0x8E01013243a96601a86eb3153F0d9Fa4fbFb6957" },
     { "address": "0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa" },
     { "address": "0x9Eb11A55132c851b9991F148b3Af791ca498fD7A" },
     { "address": "0xAAAA45d9549EDA09E70937013520214382Ffc4A2" },
@@ -2233,6 +2237,7 @@
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "gnosisSafeModules/DeputyGuardianModule": "0xd3930cda89001876a722ed430ea8ed07e4823c83ed910e621744eccab9becba1",
     "gnosisSafeModules/LivenessModule": "0x93a18dea68cf1d0abddfc33adec077c82356344dd7b49ae5542b16ca9319bb91",
+    "lido/L1ERC20TokenBridge": "0xa297506a5551518c3ed10a3817c661bc02da5794e2745084217d9c8f6c440482",
     "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
     "opstack/AnchorStateRegistry": "0xd777a643e82bcaa34c6605409142defa095bd558d37580cb92153eb68d721b3b",
     "opstack/DelayedWETH": "0x68c3c46b77dde7a7af0ae6477fe17a8531050e799e7ee4c01be128dee3c59447",
@@ -2245,5 +2250,5 @@
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837"
   },
-  "shapeFilesHash": "0x46fe05664c6168de6029fca0f3968c29d03176659063cc698514a45135ec8c98"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

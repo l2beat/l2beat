@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20891458,
   "configHash": "0xb84652bb19f4e71b8b2920a2f6d0543c3effff9a89f5d18a8241078a31748d38",
-  "version": 15,
   "contracts": [
     {
       "name": "LivenessModule",
@@ -878,7 +877,12 @@
     {
       "name": "wstETHEscrow",
       "address": "0x9de443AdC5A411E83F1878Ef24C3F52C61571e72",
+      "template": "lido/L1ERC20TokenBridge",
       "proxyType": "EIP1967 proxy",
+      "displayName": "L1ERC20TokenBridge",
+      "descriptions": [
+        "Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally."
+      ],
       "sinceTimestamp": 1695935315,
       "values": {
         "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
@@ -1049,7 +1053,6 @@
     { "address": "0x9Eb11A55132c851b9991F148b3Af791ca498fD7A" },
     { "address": "0xa3D3c103442F162856163d564b983ae538c6202D" },
     { "address": "0xa7a5e47D3959bf134e3EcdEb1f62e054f0D58a18" },
-    { "address": "0xac9D11cD4D7eF6e54F14643a393F68Ca014287AB" },
     { "address": "0xAf6E19BE0F9cE7f8afd49a1824851023A8249e8a" },
     { "address": "0xB011a32ED8b4F70D9943A2199F539bbeCd7b62F7" },
     { "address": "0xb23794fd6BA1CEAd01Cf54D772b8341F2F0197A5" },
@@ -1648,6 +1651,7 @@
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "gnosisSafeModules/DeputyGuardianModule": "0xd3930cda89001876a722ed430ea8ed07e4823c83ed910e621744eccab9becba1",
     "gnosisSafeModules/LivenessModule": "0x93a18dea68cf1d0abddfc33adec077c82356344dd7b49ae5542b16ca9319bb91",
+    "lido/L1ERC20TokenBridge": "0xa297506a5551518c3ed10a3817c661bc02da5794e2745084217d9c8f6c440482",
     "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
@@ -1659,5 +1663,5 @@
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }
