@@ -379,12 +379,12 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
             {
               stage0: {
                 callsItselfRollup: true,
-                stateRootsPostedToL1: true,
-                dataAvailabilityOnL1: true,
+                stateRootsPostedToBaseLayer: true,
+                dataAvailabilityOnBaseLayer: true,
                 rollupNodeSourceAvailable: true,
               },
               stage1: {
-                stateVerificationOnL1: true,
+                stateVerificationOnBaseLayer: true,
                 fraudProofSystemAtLeast5Outsiders: null,
                 usersHave7DaysToExit: false,
                 usersCanExitWithoutCooperation: false,

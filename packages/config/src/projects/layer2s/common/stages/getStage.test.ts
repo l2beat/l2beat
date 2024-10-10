@@ -8,12 +8,12 @@ describe(getStage.name, () => {
       {
         stage0: {
           callsItselfRollup: true,
-          stateRootsPostedToL1: true,
-          dataAvailabilityOnL1: true,
+          stateRootsPostedToBaseLayer: true,
+          dataAvailabilityOnBaseLayer: true,
           rollupNodeSourceAvailable: true,
         },
         stage1: {
-          stateVerificationOnL1: true,
+          stateVerificationOnBaseLayer: true,
           fraudProofSystemAtLeast5Outsiders: true,
           usersHave7DaysToExit: true,
           usersCanExitWithoutCooperation: true,
@@ -123,12 +123,12 @@ describe(getStage.name, () => {
       getStage({
         stage0: {
           callsItselfRollup: true,
-          stateRootsPostedToL1: true,
-          dataAvailabilityOnL1: true,
+          stateRootsPostedToBaseLayer: true,
+          dataAvailabilityOnBaseLayer: true,
           rollupNodeSourceAvailable: true,
         },
         stage1: {
-          stateVerificationOnL1: true,
+          stateVerificationOnBaseLayer: true,
           fraudProofSystemAtLeast5Outsiders: true,
           usersHave7DaysToExit: true,
           usersCanExitWithoutCooperation: true,

@@ -616,12 +616,12 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
               {
                 stage0: {
                   callsItselfRollup: true,
-                  stateRootsPostedToL1: true,
-                  dataAvailabilityOnL1: true,
+                  stateRootsPostedToBaseLayer: true,
+                  dataAvailabilityOnBaseLayer: true,
                   rollupNodeSourceAvailable: templateVars.isNodeAvailable,
                 },
                 stage1: {
-                  stateVerificationOnL1: false,
+                  stateVerificationOnBaseLayer: false,
                   fraudProofSystemAtLeast5Outsiders: null,
                   usersHave7DaysToExit: false,
                   usersCanExitWithoutCooperation: false,

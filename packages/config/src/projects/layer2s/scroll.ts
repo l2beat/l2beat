@@ -114,12 +114,12 @@ export const scroll: Layer2 = {
   stage: getStage({
     stage0: {
       callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
+      stateRootsPostedToBaseLayer: true,
+      dataAvailabilityOnBaseLayer: true,
       rollupNodeSourceAvailable: false,
     },
     stage1: {
-      stateVerificationOnL1: true,
+      stateVerificationOnBaseLayer: true,
       fraudProofSystemAtLeast5Outsiders: null,
       usersHave7DaysToExit: false,
       usersCanExitWithoutCooperation: false,
