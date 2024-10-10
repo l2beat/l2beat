@@ -10,8 +10,7 @@ export interface AggLayerEscrow {
   wethAddress?: EthereumAddress
   /** It has to be string because frontend need to serialize it as cache key */
   premintedAmount?: string
-  includeAllOKBFromL1?: boolean
-  includeAllGPTFromL1?: boolean
+  includeL1Tokens?: string[]
 }
 
 export interface ElasticChainEscrow {
@@ -19,7 +18,7 @@ export interface ElasticChainEscrow {
   l2BridgeAddress: EthereumAddress
   /** ERC20 address of ether on L2 */
   l2EtherAddress: EthereumAddress
-  includeAllzkCROFromL1?: boolean
+  includeL1Tokens?: string[]
 }
 
 export type SharedEscrow = AggLayerEscrow | ElasticChainEscrow

@@ -16,9 +16,6 @@ import { getAggLayerL2TokenEntry } from './amounts/aggLayerL2Tokens'
 import { getAggLayerNativeEtherPremintedEntry } from './amounts/aggLayerNativeEtherPreminted'
 import { getAggLayerNativeEtherWrappedEntry } from './amounts/aggLayerNativeEtherWrapped'
 import { getCirculatingSupplyEntry } from './amounts/circulatingSupply'
-import { handleGPTentries } from './amounts/custom/gpt'
-import { handleOKBentries } from './amounts/custom/okb'
-import { handleZKCROentries } from './amounts/custom/zkCRO'
 import { getElasticChainEtherEntry } from './amounts/elasticChainEther'
 import { getElasticChainL2TokenEntry } from './amounts/elasticChainL2Tokens'
 import { getEscrowEntry } from './amounts/escrow'
@@ -80,40 +77,18 @@ export function getTvlAmountsConfig(
     }
   }
 
-  const projectsWithZKCroConfig = projects.filter((p) =>
+  const projectsWithL1Tokens = projects.filter((p) =>
     p.escrows.some(
       (e) =>
-        e.sharedEscrow?.type === 'ElasticChian' &&
-        e.sharedEscrow?.includeAllzkCROFromL1,
+        (e.sharedEscrow?.type === 'AggLayer' ||
+          e.sharedEscrow?.type === 'ElasticChian') &&
+        e.sharedEscrow?.includeL1Tokens?.length &&
+        e.sharedEscrow.includeL1Tokens.length > 0,
     ),
   )
 
-  if (projectsWithZKCroConfig.length > 0) {
-    entries = handleZKCROentries(projectsWithZKCroConfig, entries)
-  }
-
-  const projectsWithOKBConfig = projects.filter((p) =>
-    p.escrows.some(
-      (e) =>
-        e.sharedEscrow?.type === 'AggLayer' &&
-        e.sharedEscrow?.includeAllOKBFromL1,
-    ),
-  )
-
-  if (projectsWithOKBConfig.length > 0) {
-    entries = handleOKBentries(projectsWithOKBConfig, entries)
-  }
-
-  const projectsWithGPTConfig = projects.filter((p) =>
-    p.escrows.some(
-      (e) =>
-        e.sharedEscrow?.type === 'AggLayer' &&
-        e.sharedEscrow?.includeAllGPTFromL1,
-    ),
-  )
-
-  if (projectsWithGPTConfig.length > 0) {
-    entries = handleGPTentries(projectsWithGPTConfig, entries)
+  if (projectsWithL1Tokens.length > 0) {
+    entries = handleL1Tokens(projectsWithL1Tokens, entries)
   }
 
   return entries
@@ -179,31 +154,11 @@ export function getTvlAmountsConfigForProject(
   if (
     project.escrows.some(
       (e) =>
-        e.sharedEscrow?.type === 'AggLayer' &&
-        e.sharedEscrow?.includeAllOKBFromL1,
+        e.sharedEscrow?.includeL1Tokens?.length &&
+        e.sharedEscrow.includeL1Tokens.length > 0,
     )
   ) {
-    entries = handleOKBentries([project], entries)
-  }
-
-  if (
-    project.escrows.some(
-      (e) =>
-        e.sharedEscrow?.type === 'AggLayer' &&
-        e.sharedEscrow?.includeAllGPTFromL1,
-    )
-  ) {
-    entries = handleGPTentries([project], entries)
-  }
-
-  if (
-    project.escrows.some(
-      (e) =>
-        e.sharedEscrow?.type === 'ElasticChian' &&
-        e.sharedEscrow?.includeAllzkCROFromL1,
-    )
-  ) {
-    entries = handleZKCROentries([project], entries)
+    entries = handleL1Tokens([project], entries)
   }
 
   return entries
@@ -213,6 +168,34 @@ const chainConverter = new ChainConverter(
   chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
 )
 
+export function handleL1Tokens(
+  projectsWithL1Tokens: BackendProject[],
+  entries: AmountConfigEntry[],
+) {
+  for (const project of projectsWithL1Tokens) {
+    const escrow = project.escrows.find(
+      (e) =>
+        (e.sharedEscrow?.type === 'AggLayer' ||
+          e.sharedEscrow?.type === 'ElasticChian') &&
+        e.sharedEscrow?.includeL1Tokens?.length &&
+        e.sharedEscrow.includeL1Tokens.length > 0,
+    )
+    assert(escrow)
+    assert(escrow.sharedEscrow?.includeL1Tokens)
+
+    for (const tokenSymbol of escrow.sharedEscrow.includeL1Tokens) {
+      const token = escrow.tokens.find((t) => t.symbol === tokenSymbol)
+      assert(token, `Token ${tokenSymbol} not found in escrow tokens`)
+
+      const l1TokenEntry = getEscrowEntry(ethereum, token, escrow, project)
+
+      entries.push(l1TokenEntry)
+    }
+  }
+
+  return entries
+}
+
 function aggLayerEscrowToEntries(
   escrow: BackendProjectEscrow,
   project: BackendProject,
@@ -220,8 +203,10 @@ function aggLayerEscrowToEntries(
   assert(escrow.sharedEscrow?.type === 'AggLayer', 'AggLayer escrow expected')
   const entries: AmountConfigEntry[] = []
 
+  const l1Tokens = escrow.sharedEscrow.includeL1Tokens
+
   for (const token of escrow.tokens) {
-    if (token.address === undefined) {
+    if (token.address === undefined || l1Tokens?.includes(token.symbol)) {
       continue
     }
     const chain = chains.find((x) => x.chainId === +token.chainId)
@@ -277,8 +262,10 @@ function elasticChainEscrowToEntries(
   )
   const entries: AmountConfigEntry[] = []
 
+  const l1Tokens = escrow.sharedEscrow.includeL1Tokens
+
   for (const token of escrow.tokens) {
-    if (token.address === undefined) {
+    if (token.address === undefined || l1Tokens?.includes(token.symbol)) {
       continue
     }
     const chain = chains.find((x) => x.chainId === +token.chainId)
