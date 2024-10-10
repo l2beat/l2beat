@@ -1,7 +1,6 @@
 import {
   assert,
   AmountConfigEntry,
-  AssetId,
   ChainConverter,
   ChainId,
   Token,
@@ -9,15 +8,12 @@ import {
 import { chainToProject } from '../backend'
 import { BackendProject, BackendProjectEscrow } from '../backend/BackendProject'
 import { chains } from '../chains'
-import { ethereum } from '../chains/ethereum'
 import { ChainConfig } from '../common'
 import { tokenList } from '../tokens'
-import { getAggLayerL2TokenEntry } from './amounts/aggLayerL2Tokens'
-import { getAggLayerNativeEtherPremintedEntry } from './amounts/aggLayerNativeEtherPreminted'
-import { getAggLayerNativeEtherWrappedEntry } from './amounts/aggLayerNativeEtherWrapped'
 import { getCirculatingSupplyEntry } from './amounts/circulatingSupply'
-import { getElasticChainEtherEntry } from './amounts/elasticChainEther'
-import { getElasticChainL2TokenEntry } from './amounts/elasticChainL2Tokens'
+import { aggLayerEscrowToEntries } from './amounts/custom/aggLayerEscrowToEntries'
+import { elasticChainEscrowToEntries } from './amounts/custom/elasticChainEscrowToEntries'
+import { handleL1Tokens } from './amounts/custom/handleL1Tokens'
 import { getEscrowEntry } from './amounts/escrow'
 import { getPremintedEntry } from './amounts/preminted'
 import { getTotalSupplyEntry } from './amounts/totalSupply'
@@ -167,136 +163,6 @@ export function getTvlAmountsConfigForProject(
 const chainConverter = new ChainConverter(
   chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
 )
-
-export function handleL1Tokens(
-  projectsWithL1Tokens: BackendProject[],
-  entries: AmountConfigEntry[],
-) {
-  for (const project of projectsWithL1Tokens) {
-    const escrow = project.escrows.find(
-      (e) =>
-        (e.sharedEscrow?.type === 'AggLayer' ||
-          e.sharedEscrow?.type === 'ElasticChian') &&
-        e.sharedEscrow?.includeL1Tokens?.length &&
-        e.sharedEscrow.includeL1Tokens.length > 0,
-    )
-    assert(escrow)
-    assert(escrow.sharedEscrow?.includeL1Tokens)
-
-    for (const tokenSymbol of escrow.sharedEscrow.includeL1Tokens) {
-      const token = escrow.tokens.find((t) => t.symbol === tokenSymbol)
-      assert(token, `Token ${tokenSymbol} not found in escrow tokens`)
-
-      const l1TokenEntry = getEscrowEntry(ethereum, token, escrow, project)
-
-      entries.push(l1TokenEntry)
-    }
-  }
-
-  return entries
-}
-
-function aggLayerEscrowToEntries(
-  escrow: BackendProjectEscrow,
-  project: BackendProject,
-) {
-  assert(escrow.sharedEscrow?.type === 'AggLayer', 'AggLayer escrow expected')
-  const entries: AmountConfigEntry[] = []
-
-  const l1Tokens = escrow.sharedEscrow.includeL1Tokens
-
-  for (const token of escrow.tokens) {
-    if (token.address === undefined || l1Tokens?.includes(token.symbol)) {
-      continue
-    }
-    const chain = chains.find((x) => x.chainId === +token.chainId)
-    assert(chain, `Chain not found for token ${token.id}`)
-    assert(chain.name === escrow.chain, 'Programmer error: chain mismatch')
-
-    const configEntry = getAggLayerL2TokenEntry(chain, token, escrow, project)
-
-    entries.push(configEntry)
-  }
-  if (escrow.sharedEscrow.nativeAsset === 'etherPreminted') {
-    const chain = chains.find((x) => x.name === project.projectId)
-    assert(chain, `Chain not found for project ${project.projectId}`)
-    assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
-
-    const configEntry = getAggLayerNativeEtherPremintedEntry(
-      chain,
-      escrow,
-      project,
-    )
-
-    entries.push(configEntry)
-  }
-  if (escrow.sharedEscrow.nativeAsset === 'etherWrapped') {
-    const chain = chains.find((x) => x.name === project.projectId)
-    assert(chain, `Chain not found for project ${project.projectId}`)
-    assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
-    const l1Weth = tokenList.find(
-      (t) => AssetId.create(ethereum.name, t.address) === AssetId.WETH,
-    )
-    assert(l1Weth, 'Ethereum WETH token not found')
-
-    const configEntry = getAggLayerNativeEtherWrappedEntry(
-      chain,
-      l1Weth,
-      escrow,
-      project,
-    )
-
-    entries.push(configEntry)
-  }
-
-  return entries
-}
-
-function elasticChainEscrowToEntries(
-  escrow: BackendProjectEscrow,
-  project: BackendProject,
-) {
-  assert(
-    escrow.sharedEscrow?.type === 'ElasticChian',
-    'ElasticChian escrow expected',
-  )
-  const entries: AmountConfigEntry[] = []
-
-  const l1Tokens = escrow.sharedEscrow.includeL1Tokens
-
-  for (const token of escrow.tokens) {
-    if (token.address === undefined || l1Tokens?.includes(token.symbol)) {
-      continue
-    }
-    const chain = chains.find((x) => x.chainId === +token.chainId)
-    assert(chain, `Chain not found for token ${token.id}`)
-    assert(chain.name === escrow.chain, 'Programmer error: chain mismatch')
-
-    const configEntry = getElasticChainL2TokenEntry(
-      chain,
-      token,
-      escrow,
-      project,
-    )
-
-    entries.push(configEntry)
-  }
-
-  const ether = tokenList.find(
-    (t) => AssetId.create(ethereum.name, t.address) === AssetId.ETH,
-  )
-  assert(ether, 'ETH on ethereum not found')
-
-  const etherEntry = getElasticChainEtherEntry(
-    ethereum,
-    { ...ether, address: escrow.sharedEscrow.l2EtherAddress },
-    escrow,
-    project,
-  )
-  entries.push(etherEntry)
-
-  return entries
-}
 
 function projectTokenToConfigEntry(
   chain: ChainConfig,
