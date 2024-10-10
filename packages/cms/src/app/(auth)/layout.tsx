@@ -23,6 +23,7 @@ import { Sheet, SheetContent, SheetTrigger } from '~/components/ui/sheet'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { NavMenuItem } from './_components/nav-menu-item'
+import { ThemeToggle } from './_components/theme-toggle'
 
 const menu = [
   {
@@ -62,10 +63,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <Link href="/" className="flex items-center gap-2 font-semibold">
               <span className="">L2BEAT</span>
             </Link>
-            <Button variant="outline" size="icon" className="ml-auto h-8 w-8">
-              <Sun className="h-4 w-4" />
-              <span className="sr-only">Toggle theme</span>
-            </Button>
+            <ThemeToggle className="ml-auto" />
           </div>
           <div className="flex-1">
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
