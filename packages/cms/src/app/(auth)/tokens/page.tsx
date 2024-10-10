@@ -86,7 +86,7 @@ export default async function Page({
                     </TableCell>
                     <TableCell className="text-right">
                       <Link href={`/tokens/${token.id}`} key={token.id}>
-                        <Button variant="ghost" className="p-0 h-8 w-8">
+                        <Button variant="ghost" size="icon">
                           <ChevronRight className="w-4 h-4" />
                         </Button>
                       </Link>
