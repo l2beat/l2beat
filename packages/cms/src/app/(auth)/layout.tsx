@@ -22,11 +22,12 @@ import { Input } from '~/components/ui/input'
 import { Sheet, SheetContent, SheetTrigger } from '~/components/ui/sheet'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { NavMenuItem } from './_components/nav-menu-item'
 
 const menu = [
   {
     name: 'Networks',
-    href: '/' as const,
+    href: '/networks' as const,
     icon: Network,
   },
   {
@@ -69,14 +70,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="flex-1">
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
               {menu.map(({ name, href, icon: Icon }) => (
-                <Link
+                <NavMenuItem
                   key={name}
                   href={href}
-                  className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-                >
-                  <Icon className="h-4 w-4" />
-                  {name}
-                </Link>
+                  name={name}
+                  icon={<Icon className="h-4 w-4" />}
+                  activeBehavior={{ type: 'prefix', prefix: href }}
+                />
               ))}
             </nav>
           </div>
@@ -96,16 +96,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="flex flex-col">
-              <nav className="grid gap-2 text-lg font-medium">
+              <nav className="grid gap-2 text-lg font-medium mt-6">
                 {menu.map(({ name, href, icon: Icon }) => (
-                  <Link
+                  <NavMenuItem
                     key={name}
                     href={href}
-                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-                  >
-                    <Icon className="h-4 w-4" />
-                    {name}
-                  </Link>
+                    name={name}
+                    icon={<Icon className="h-4 w-4" />}
+                    activeBehavior={{ type: 'prefix', prefix: href }}
+                  />
                 ))}
               </nav>
             </SheetContent>

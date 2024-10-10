@@ -26,7 +26,6 @@ export default async function Page({
     count,
     searchParams,
   })
-  console.log(pagination)
   const tokens = allTokens.slice(
     pagination.skip,
     pagination.skip + pagination.take,
