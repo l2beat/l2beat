@@ -31,7 +31,7 @@ export function TableControls({
           value={limit.toString()}
           onValueChange={(value) => setLimit(parseInt(value))}
         >
-          <SelectTrigger>{limit}</SelectTrigger>
+          <SelectTrigger className="w-20">{limit}</SelectTrigger>
           <SelectContent>
             {limits.map((limit) => (
               <SelectItem key={limit} value={limit.toString()}>
@@ -47,32 +47,32 @@ export function TableControls({
         </div>
         <div className="flex items-center space-x-2">
           <Button
-            className="w-8 h-8 p-0"
             variant="secondary"
+            size="icon"
             onClick={() => setPage(1)}
             disabled={page === 1}
           >
             <ChevronsLeft className="h-4 w-4" />
           </Button>
           <Button
-            className="w-8 h-8 p-0"
             variant="secondary"
+            size="icon"
             onClick={() => setPage(page - 1)}
             disabled={page === 1}
           >
             <ChevronLeft className="h-4 w-4" />
           </Button>
           <Button
-            className="w-8 h-8 p-0"
             variant="secondary"
+            size="icon"
             onClick={() => setPage(page + 1)}
             disabled={page === pageCount}
           >
             <ChevronRight className="h-4 w-4" />
           </Button>
           <Button
-            className="w-8 h-8 p-0"
             variant="secondary"
+            size="icon"
             onClick={() => setPage(pageCount)}
             disabled={page === pageCount}
           >

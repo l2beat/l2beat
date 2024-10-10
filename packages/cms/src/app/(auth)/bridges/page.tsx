@@ -1,3 +1,6 @@
+import { ChevronRight } from 'lucide-react'
+import Link from 'next/link'
+import { TableControls } from '~/components/table-controls'
 import { Button } from '~/components/ui/button'
 import {
   Table,
@@ -8,9 +11,23 @@ import {
   TableCell,
 } from '~/components/ui/table'
 import { db } from '~/db'
+import { getServerPagination } from '~/lib/server-pagination/server'
 
-export default async function Page() {
-  const bridges = await db.externalBridge.getAll()
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Record<string, string | string[] | undefined>
+}) {
+  const allBridges = await db.externalBridge.getAll()
+  const count = allBridges.length
+  const pagination = getServerPagination({
+    count,
+    searchParams,
+  })
+  const bridges = allBridges.slice(
+    pagination.skip,
+    pagination.skip + pagination.take,
+  )
 
   return (
     <>
@@ -37,6 +54,7 @@ export default async function Page() {
                 <TableHead>Id</TableHead>
                 <TableHead>Name</TableHead>
                 <TableHead>Type</TableHead>
+                <TableHead />
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -47,10 +65,18 @@ export default async function Page() {
                     <TableCell className="font-mono">{bridge.id}</TableCell>
                     <TableCell>{bridge.name}</TableCell>
                     <TableCell>{bridge.type}</TableCell>
+                    <TableCell className="text-right">
+                      <Link href={`/bridges/${bridge.id}`} key={bridge.id}>
+                        <Button variant="ghost" size="icon">
+                          <ChevronRight className="w-4 h-4" />
+                        </Button>
+                      </Link>
+                    </TableCell>
                   </TableRow>
                 ))}
             </TableBody>
           </Table>
+          <TableControls count={allBridges.length} />
         </div>
       )}
     </>

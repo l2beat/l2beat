@@ -1,3 +1,6 @@
+import { ChevronRight } from 'lucide-react'
+import Link from 'next/link'
+import { TableControls } from '~/components/table-controls'
 import { Button } from '~/components/ui/button'
 import {
   Table,
@@ -8,9 +11,23 @@ import {
   TableCell,
 } from '~/components/ui/table'
 import { db } from '~/db'
+import { getServerPagination } from '~/lib/server-pagination/server'
 
-export default async function Page() {
-  const networks = await db.network.getAll()
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Record<string, string | string[] | undefined>
+}) {
+  const allNetworks = await db.network.getAll()
+  const count = allNetworks.length
+  const pagination = getServerPagination({
+    count,
+    searchParams,
+  })
+  const networks = allNetworks.slice(
+    pagination.skip,
+    pagination.skip + pagination.take,
+  )
 
   return (
     <>
@@ -38,6 +55,7 @@ export default async function Page() {
                 <TableHead>Name</TableHead>
                 <TableHead>ChainId</TableHead>
                 <TableHead>CoinGecko Id</TableHead>
+                <TableHead />
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -51,10 +69,18 @@ export default async function Page() {
                       {network.chainId} (0x{network.chainId.toString(16)})
                     </TableCell>
                     <TableCell>{network.coingeckoId}</TableCell>
+                    <TableCell className="text-right">
+                      <Link href={`/networks/${network.id}`} key={network.id}>
+                        <Button variant="ghost" size="icon">
+                          <ChevronRight className="w-4 h-4" />
+                        </Button>
+                      </Link>
+                    </TableCell>
                   </TableRow>
                 ))}
             </TableBody>
           </Table>
+          <TableControls count={allNetworks.length} />
         </div>
       )}
     </>

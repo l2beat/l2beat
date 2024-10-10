@@ -65,7 +65,7 @@ export default async function Page({
                 <TableHead>Address</TableHead>
                 <TableHead>Name</TableHead>
                 <TableHead className="w-full">Symbol</TableHead>
-                <TableHead></TableHead>
+                <TableHead />
               </TableRow>
             </TableHeader>
             <TableBody>
