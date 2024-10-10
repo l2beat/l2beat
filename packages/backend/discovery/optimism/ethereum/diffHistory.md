@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x9a811955975023a7fb2408dba45325bb656cd327
+
+# Diff at Thu, 10 Oct 2024 09:35:49 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@cb5ff535ffc194baf7396bd6db8232883e2ad088 block: 20922325
+- current block number: 20934347
+
+## Description
+
+Ignore SNX Multisig and wstethEscrow relatives.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20922325 (main branch discovery), not current.
+
+```diff
+    contract wstETHEscrow (0x76943C0D61395d8F2edF9060e1533529cAe05dE6) {
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]},"0x4b43b36766bde12c5e9cbbc37d15f8d1f769f08f54720ab370faeb4ce893753a":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]},"0x63f736f21cb2943826cd50b191eb054ebbea670e4e962d0527611f830cd399d6":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","0x73b047fe6337183A454c5217241D780a932777bD"]},"0x9ab8816a3dc0b3849ec1ac00483f6ec815b07eee2fd766a353311c823ad59d0d":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]},"0x94a954c0bc99227eddbc0715a62a7e1056ed8784cd719c2303b685683908857c":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","0x73b047fe6337183A454c5217241D780a932777bD"]}}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SynthetixMultisig (0xEb3107117FEAd7de89Cd14D463D340A2E6917769)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xe0aaeba96a6b157035d409db6ad8520899fb43b6
 
 # Diff at Tue, 08 Oct 2024 17:23:11 GMT:
