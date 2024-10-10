@@ -1,8 +1,10 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
 export const soneium: Layer2 = upcomingL2({
   id: 'soneium',
+  createdAt: new UnixTime(1724842746), // 2024-08-28T10:59:06Z
   display: {
     name: 'Soneium',
     slug: 'soneium',

@@ -288,11 +288,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
           },
         },
       },
-      tvlWarning: templateVars.display.tvlWarning ?? {
-        content:
-          'The TVL is currently shared among all projects using the shared ZK Stack contracts.',
-        sentiment: 'warning',
-      },
+      tvlWarning: templateVars.display.tvlWarning,
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
