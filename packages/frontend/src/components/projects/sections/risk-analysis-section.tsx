@@ -79,7 +79,7 @@ export function SingleRisk({
 }) {
   return (
     <div>
-      <h3 className="mt-6 text-sm font-semibold uppercase text-zinc-800 dark:text-white md:text-lg">
+      <h3 className="mt-6 text-sm font-medium uppercase text-zinc-800 dark:text-white md:text-lg">
         {value.name}
       </h3>
       {value.sentiment === 'UnderReview' ? (
@@ -90,7 +90,7 @@ export function SingleRisk({
         <>
           <SentimentText
             sentiment={value.sentiment}
-            className="block text-xl font-semibold md:text-2xl"
+            className="block text-xl font-medium md:text-2xl"
             vibrant
           >
             {value.value}
