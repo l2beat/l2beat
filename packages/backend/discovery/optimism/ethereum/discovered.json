@@ -1,7 +1,7 @@
 {
   "name": "optimism",
   "chain": "ethereum",
-  "blockNumber": 20934673,
+  "blockNumber": 20935110,
   "configHash": "0x3c6748f4154b3403666ecc1a409d2ec7f2022a49b905a7e173a0e7e665295c30",
   "contracts": [
     {
@@ -338,7 +338,7 @@
         ],
         "$upgradeCount": 10,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292758257",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292758266",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -744,7 +744,7 @@
         "name": "Wrapped Ether",
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
-        "totalSupply": "20422782000000000000",
+        "totalSupply": "20502782000000000000",
         "version": "1.1.0"
       },
       "derivedName": "DelayedWETH"
@@ -1075,8 +1075,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 2081684,
-          "prevBlockNum": 20934663
+          "prevBoughtGas": 491310,
+          "prevBlockNum": 20935035
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1206,7 +1206,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 2944,
+        "gameCount": 2946,
         "gameImpls": [
           "0xA6f3DFdbf4855a43c529bc42EDE96797252879af",
           "0x050ed6F6273c7D836a111E42153BC00D0380b87d",
