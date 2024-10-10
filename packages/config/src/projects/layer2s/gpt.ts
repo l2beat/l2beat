@@ -1,3 +1,4 @@
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { NEW_CRYPTOGRAPHY, RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -5,6 +6,9 @@ import { polygonCDKStack } from './templates/polygonCDKStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('gpt')
+
+const shared = new ProjectDiscovery('shared-polygon-cdk')
+const bridge = shared.getContract('Bridge')
 
 const membersCountDAC = discovery.getContractValue<number>(
   'GptProtocolDAC',
@@ -32,8 +36,6 @@ export const gpt: Layer2 = polygonCDKStack({
   display: {
     name: 'GPT Protocol',
     slug: 'gpt',
-    headerWarning:
-      'GPT Protocol is using AggLayer, meaning it shares the TVL escrow contracts with Polygon zkEVM and other connected chains.',
     description:
       'GPT Protocol is a Validium built on the Polygon CDK stack. The purpose of the project is to create a decentralized market of AI compute power.',
     purposes: ['AI'],
@@ -99,10 +101,29 @@ export const gpt: Layer2 = polygonCDKStack({
       ],
     },
   },
+  chainConfig: {
+    chainId: 1511670449,
+    minTimestampForTvl: new UnixTime(1716807971),
+    name: 'gpt',
+  },
   rollupModuleContract: discovery.getContract('GptProtocolValidium'),
   rollupVerifierContract: discovery.getContract('Verifier'),
   isForcedBatchDisallowed,
-  nonTemplateEscrows: [],
+  nonTemplateEscrows: [
+    shared.getEscrowDetails({
+      address: bridge.address,
+      tokens: ['GPT', 'WETH'],
+      sinceTimestamp: new UnixTime(1712620800),
+      sharedEscrow: {
+        type: 'AggLayer',
+        nativeAsset: 'etherWrapped',
+        wethAddress: EthereumAddress(
+          '0x5A77f1443D16ee5761d310e38b62f77f726bC71c',
+        ),
+        includeAllGPTFromL1: true,
+      },
+    }),
+  ],
   nonTemplateTechnology: {
     newCryptography: {
       ...NEW_CRYPTOGRAPHY.ZK_BOTH,
