@@ -11,6 +11,7 @@ export interface AggLayerEscrow {
   /** It has to be string because frontend need to serialize it as cache key */
   premintedAmount?: string
   includeAllOKBFromL1?: boolean
+  includeAllGPTFromL1?: boolean
 }
 
 export interface ElasticChainEscrow {

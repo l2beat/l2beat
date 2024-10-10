@@ -101,6 +101,18 @@ export function getTvlAmountsConfig(
     entries = handleOKBentries(projectsWithOKBConfig, entries)
   }
 
+  const projectsWithGPTConfig = projects.filter((p) =>
+    p.escrows.some(
+      (e) =>
+        e.sharedEscrow?.type === 'AggLayer' &&
+        e.sharedEscrow?.includeAllGPTFromL1,
+    ),
+  )
+
+  if (projectsWithGPTConfig.length > 0) {
+    entries = handleGPTentries(projectsWithGPTConfig, entries)
+  }
+
   return entries
 }
 
@@ -218,6 +230,39 @@ function handleOKBentries(
 
   return entries.filter(
     (e) => e.type !== 'aggLayerL2Token' || e.assetId !== AssetId.OKB,
+  )
+}
+
+function handleGPTentries(
+  projectWithGPTConfig: BackendProject[],
+  entries: AmountConfigEntry[],
+) {
+  assert(projectWithGPTConfig.length === 1)
+  const gptToken = tokenList.find(
+    (t) =>
+      AssetId.create(chainConverter.toName(t.chainId), t.address) ===
+      AssetId.GPT,
+  )
+  assert(gptToken)
+
+  const escrow = projectWithGPTConfig[0].escrows.find(
+    (e) =>
+      e.sharedEscrow?.type === 'AggLayer' &&
+      e.sharedEscrow?.includeAllGPTFromL1,
+  )
+  assert(escrow)
+
+  const l1GPTEntry = getEscrowEntry(
+    ethereum,
+    gptToken,
+    escrow,
+    projectWithGPTConfig[0],
+  )
+
+  entries.push(l1GPTEntry)
+
+  return entries.filter(
+    (e) => e.type !== 'aggLayerL2Token' || e.assetId !== AssetId.GPT,
   )
 }
 
