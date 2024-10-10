@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { RateLimiter, UnixTime } from '@l2beat/shared-pure'
+import { generateId } from '../../tools/generateId'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 import { HttpClient2 } from '../http/HttpClient2'
 import { Block, RpcResponse } from './types'
@@ -59,8 +60,7 @@ export class RpcClient2 {
       body: JSON.stringify({
         method,
         params,
-        // TODO: should we use UUID here?
-        id: 1,
+        id: generateId(),
         jsonrpc: '2.0',
       }),
       redirect: 'follow',

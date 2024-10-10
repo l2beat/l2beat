@@ -1,3 +1,4 @@
+import { Logger } from '@l2beat/backend-tools'
 import fetch, { RequestInit, Response } from 'node-fetch'
 
 interface HttpClient2Options {
@@ -7,6 +8,7 @@ interface HttpClient2Options {
   maxRetryDelayMs?: number
   statusCodesToRetry?: number[]
   callsPerMinute?: number
+  logger?: Logger
 }
 
 export class HttpClient2 {
@@ -20,8 +22,10 @@ export class HttpClient2 {
       maxRetryDelayMs: 30000,
       statusCodesToRetry: [408, 429, 500, 502, 503, 504],
       callsPerMinute: 60,
+      logger: Logger.SILENT,
       ...$,
     }
+    this.$.logger = this.$.logger.for(this)
   }
 
   async fetchJson(url: string, init?: RequestInit): Promise<unknown> {
@@ -52,6 +56,12 @@ export class HttpClient2 {
         this.$.initialRetryDelayMs * Math.pow(2, calls),
         this.$.maxRetryDelayMs,
       )
+      this.$.logger.warn('Failed to fetch, scheduling retry...', {
+        url,
+        body: init?.body,
+        attempt: calls + 1,
+        delay,
+      })
       await new Promise((resolve) => setTimeout(resolve, delay))
       calls++
     }

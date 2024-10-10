@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { BlockExplorerClient } from '@l2beat/shared'
+import { BlockExplorerClient, HttpClient2, RpcClient2 } from '@l2beat/shared'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { Config } from '../../config'
 import {
@@ -87,11 +87,21 @@ function createActivityIndexers(
   activityConfig.projects.forEach((project) => {
     switch (project.config.type) {
       case 'rpc': {
-        const rpcClient = peripherals.getClient(RpcClient, {
-          url: project.config.url,
-          callsPerMinute: project.config.callsPerMinute,
-          chain: project.id,
-        })
+        const rpcClient =
+          project.id !== ProjectId('zkfair')
+            ? peripherals.getClient(RpcClient, {
+                url: project.config.url,
+                callsPerMinute: project.config.callsPerMinute,
+                chain: project.id,
+              })
+            : new RpcClient2({
+                logger: logger.tag('zkfair'),
+                http: new HttpClient2({ logger: logger.tag('zkfair') }),
+                callsPerMinute: 10_000,
+                url: project.config.url,
+                chain: 'zkfair',
+              })
+
         const txsCountProvider = new RpcTxsCountProvider(
           rpcClient,
           project.id,

@@ -2,12 +2,17 @@ import { AssessCount } from '@l2beat/config'
 import { ActivityRecord } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
-import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import { aggregatePerDay } from '../../utils/aggregatePerDay'
 
 export class RpcTxsCountProvider {
   constructor(
-    private readonly rpcClient: RpcClient,
+    private readonly rpcClient: {
+      getBlock: (x: number) => Promise<{
+        transactions: unknown[]
+        timestamp: number
+        number: number
+      }>
+    },
     private readonly projectId: ProjectId,
     private readonly assessCount?: AssessCount,
   ) {}
