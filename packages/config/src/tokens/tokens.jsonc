@@ -3151,16 +3151,6 @@
       "supply": "circulatingSupply"
     }
   ],
-  "kinto": [
-    {
-      "symbol": "USD+",
-      "address": "0x6F086dB0f6A621a915bC90295175065c9e5d9b8c",
-      "category": "stablecoin",
-      "source": "native",
-      "supply": "totalSupply",
-      "coingeckoId": "dinari-usd"
-    }
-  ],
   "kroma": [
     {
       "symbol": "M-BTC",
