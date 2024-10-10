@@ -4,6 +4,7 @@ import { ChecklistTemplate } from './types'
 export type StageChecklist = Parameters<typeof getStage>[0]
 interface GetStageOptions {
   rollupNodeLink?: string
+  baselayer?: string
 }
 type Blueprint = ReturnType<typeof getBlueprint>
 type BlueprintChecklist = ChecklistTemplate<Blueprint>
@@ -18,7 +19,6 @@ export const getStage = (
   if (rollupNode === true && !opts?.rollupNodeLink) {
     throw new Error('Rollup node link is required')
   }
-
   const blueprint = getBlueprint(opts)
   return createGetStage(blueprint)(blueprintChecklist)
 }
@@ -33,27 +33,23 @@ const getBlueprint = (opts?: GetStageOptions) =>
           negative: "The project doesn't call itself a rollup.",
         },
         stateRootsPostedToL1: {
-          positive: 'L2 state roots are posted to Ethereum L1.',
-          negative: 'L2 state roots are not posted to Ethereum L1.',
+          positive: `L2 state roots are posted to ${opts?.baselayer ?? 'Ethereum L1'}.`,
+          negative: `L2 state roots are not posted to ${opts?.baselayer ?? 'Ethereum L1'}.`,
         },
         dataAvailabilityOnL1: {
-          positive:
-            'Inputs for the state transition function are posted to L1.',
-          negative:
-            'All the data to reconstruct the L2 state is not available on L1.',
+          positive: `Inputs for the state transition function are posted to ${opts?.baselayer ?? 'Ethereum L1'}.`,
+          negative: `All the data to reconstruct the L2 state is not available on ${opts?.baselayer ?? 'Ethereum L1'}.`,
         },
         rollupNodeSourceAvailable: {
           positive:
-            'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code.' +
+            `A source-available node exists that can recreate the state from ${opts?.baselayer ?? 'Ethereum L1'} data. Please note that the L2BEAT team has not verified the validity of the node source code.` +
             (opts?.rollupNodeLink
               ? ` [View code](${opts.rollupNodeLink})`
               : ''),
-          negative:
-            'No source-available node exists that can recreate the state from L1 data.',
+          negative: `No source-available node exists that can recreate the state from ${opts?.baselayer ?? 'Ethereum L1'} data.`,
           underReviewMessage:
             'The requirement for available node software is under review',
-          warningMessage:
-            'There is no available node software that can reconstruct the state from L1 data, hence there is no way to verify that this system is a rollup.',
+          warningMessage: `There is no available node software that can reconstruct the state from ${opts?.baselayer ?? 'Ethereum L1'} data, hence there is no way to verify that this system is a rollup.`,
         },
       },
     },

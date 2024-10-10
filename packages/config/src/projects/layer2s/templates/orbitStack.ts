@@ -661,6 +661,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
             },
             {
               rollupNodeLink: templateVars.nodeSourceLink,
+              baselayer: templateVars.hostChain,
             },
           )),
     dataAvailability: postsToExternalDA
