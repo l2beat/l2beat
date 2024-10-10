@@ -75,18 +75,7 @@ export const mantapacific: Layer2 = opStackL2({
   },
   genesisTimestamp: new UnixTime(1679202395),
   isNodeAvailable: false,
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'AdminMultisig',
-      'Owner of the ProxyAdmin contract.',
-    ),
-    {
-      name: 'MantaOwner',
-      accounts: [discovery.getPermissionedAccount('SystemConfig', 'owner')],
-      description:
-        'Owner of the SystemConfig and configured as the Challenger and Guardian of the system.',
-    },
-  ],
+  discoveryDrivenData: true,
   milestones: [
     {
       name: 'Manta Pacific Network Launch',

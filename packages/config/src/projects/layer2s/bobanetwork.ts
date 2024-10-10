@@ -1,4 +1,4 @@
-import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../../common'
 import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
@@ -35,29 +35,6 @@ export const bobanetwork: Layer2 = opStackL2({
     activityDataSource: 'Blockchain RPC',
   },
   usesBlobs: true,
-  nonTemplateContracts: [
-    discovery.getContractDetails('L1ERC721Bridge', {
-      description:
-        'The L1ERC721Bridge contract is the main entry point to deposit ERC721 tokens from L1 to L2.',
-    }),
-  ],
-  nonTemplatePermissions: [
-    ...(() => {
-      const discoveredAdminOwner = discovery.getAddressFromValue(
-        'ProxyAdmin',
-        'owner',
-      )
-      const bobaMultisigAddress = discovery.getContract('BobaMultisig').address
-      assert(
-        discoveredAdminOwner === bobaMultisigAddress,
-        'Update the permissions section if this changes. (BobaMultisig is not the ProxyAdmin anymore)',
-      )
-      return discovery.getMultisigPermission(
-        'BobaMultisig',
-        'Owner of the ProxyAdmin. It can upgrade the rollup system and the bridge implementation, potentially gaining access to all funds.',
-      )
-    })(),
-  ],
   rpcUrl: 'https://mainnet.boba.network/',
   transactionApi: {
     type: 'rpc',
@@ -78,6 +55,7 @@ export const bobanetwork: Layer2 = opStackL2({
   genesisTimestamp: new UnixTime(1713303530), // boba network anchorage upgrade + 3 timestamp
   associatedTokens: ['BOBA', 'OMG'],
   isNodeAvailable: 'UnderReview',
+  discoveryDrivenData: true,
   nonTemplateTrackedTxs: [
     {
       uses: [

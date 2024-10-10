@@ -20,14 +20,14 @@ import { getTokensForProject } from '../../tvl/tokens/get-tokens-for-project'
 
 interface Params {
   project: Layer3
-  hostChain: Layer2
   isVerified: boolean
   isHostChainVerified: boolean
   contractsVerificationStatuses: ContractsVerificationStatuses
   manuallyVerifiedContracts: ManuallyVerifiedContracts
   implementationChangeReport: ImplementationChangeReportApiResponse
   rosetteValues: RosetteValue[]
-  hostChainRosetteValues: RosetteValue[]
+  hostChain?: Layer2
+  hostChainRosetteValues?: RosetteValue[]
   combinedRosetteValues?: RosetteValue[]
 }
 
@@ -198,28 +198,44 @@ export async function getL3ProjectDetails({
     return items
   }
 
-  items.push({
-    type: 'L3RiskAnalysisSection',
-    props: {
-      id: 'risk-analysis',
-      title: 'Risk analysis',
-      l2: {
-        name: hostChain.display.name,
-        risks: toRosetteTuple(hostChainRosetteValues),
+  if (hostChain && hostChainRosetteValues) {
+    items.push({
+      type: 'L3RiskAnalysisSection',
+      props: {
+        id: 'risk-analysis',
+        title: 'Risk analysis',
+        l2: {
+          name: hostChain.display.name,
+          risks: toRosetteTuple(hostChainRosetteValues),
+        },
+        l3: {
+          name: project.display.name,
+          risks: toRosetteTuple(rosetteValues),
+        },
+        combined: combinedRosetteValues
+          ? toRosetteTuple(combinedRosetteValues)
+          : undefined,
+        warning: project.display.warning,
+        redWarning: project.display.redWarning,
+        isVerified,
+        isUnderReview: project.isUnderReview,
       },
-      l3: {
-        name: project.display.name,
-        risks: toRosetteTuple(rosetteValues),
+    })
+  } else {
+    items.push({
+      type: 'RiskAnalysisSection',
+      props: {
+        id: 'risk-analysis',
+        title: 'Risk analysis',
+        rosetteType: 'pizza',
+        rosetteValues,
+        warning: project.display.warning,
+        redWarning: project.display.redWarning,
+        isVerified,
+        isUnderReview: project.isUnderReview,
       },
-      combined: combinedRosetteValues
-        ? toRosetteTuple(combinedRosetteValues)
-        : undefined,
-      warning: project.display.warning,
-      redWarning: project.display.redWarning,
-      isVerified,
-      isUnderReview: project.isUnderReview,
-    },
-  })
+    })
+  }
 
   if (technologySection) {
     items.push({

@@ -1,4 +1,5 @@
-import { SimplePageHeader } from '~/components/simple-page-header'
+import { MainPageCard } from '~/components/main-page-card'
+import { MainPageHeader } from '~/components/main-page-header'
 import { getScalingDaEntries } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
@@ -15,10 +16,10 @@ export default async function Page() {
 
   return (
     <ScalingFilterContextProvider>
-      <div className="mb-8">
-        <SimplePageHeader>Data Availability</SimplePageHeader>
-      </div>
-      <ScalingDataAvailabilityTable entries={entries} />
+      <MainPageHeader>Data Availability</MainPageHeader>
+      <MainPageCard>
+        <ScalingDataAvailabilityTable entries={entries} />
+      </MainPageCard>
     </ScalingFilterContextProvider>
   )
 }

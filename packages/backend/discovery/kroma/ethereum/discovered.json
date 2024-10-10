@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20912649,
   "configHash": "0x2dc78fa0c026b5bfa1b50ed5ae271d153b773a2e2f38e5ace3d7934eae709860",
-  "version": 15,
   "contracts": [
     {
       "name": "L2OutputOracle",
@@ -1937,5 +1936,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
 }

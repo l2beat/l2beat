@@ -141,7 +141,7 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
                 <span className="hidden md:inline">{s.shortLabel}</span>
               </span>
             </div>
-            <span className="whitespace-nowrap text-base font-semibold leading-none">
+            <span className="whitespace-nowrap text-base font-medium leading-none">
               {s.value}
               {params.breakdown.total > 0 && (
                 <span className="hidden font-normal text-gray-500 @[200px]:inline">

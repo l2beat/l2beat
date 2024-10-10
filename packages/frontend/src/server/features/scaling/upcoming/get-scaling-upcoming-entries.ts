@@ -1,4 +1,5 @@
 import { layer2s, layer3s } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 import { getHostChain } from '../utils/get-host-chain'
 
 export type ScalingUpcomingEntry = ReturnType<
@@ -8,6 +9,13 @@ export function getScalingUpcomingEntries() {
   const projects = [...layer2s, ...layer3s].filter((p) => p.isUpcoming)
 
   return projects
+    .sort((a, b) => {
+      assert(
+        a.createdAt && b.createdAt,
+        'Project has no createdAt although it is upcoming',
+      )
+      return b.createdAt.toNumber() - a.createdAt.toNumber()
+    })
     .map((project) => ({
       id: project.id,
       slug: project.display.slug,
@@ -19,5 +27,4 @@ export function getScalingUpcomingEntries() {
       hostChain: getHostChain(project),
       purposes: project.display.purposes,
     }))
-    .sort((a, b) => a.name.localeCompare(b.name))
 }

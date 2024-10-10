@@ -7,6 +7,7 @@ export type ChainId =
   | 'arbitrum'
   | 'immutablex'
   | 'gravity'
+  | 'optimism'
 
 export type Chain = {
   id: ChainId
@@ -98,5 +99,17 @@ export const SUPPORTED_CHAINS: Chain[] = [
     getTxLink: (txHash: string) => `https://explorer.gravity.xyz/tx/${txHash}`,
     getContractLink: (address: string) =>
       `https://explorer.gravity.xyz/address/${address}`,
+  },
+  {
+    id: 'optimism',
+    name: 'Optimism',
+    suggestedBlocksCount: 100,
+    batchSize: 10,
+    getBlockLink: (blockNumber: number) =>
+      `https://optimistic.etherscan.io/block/${blockNumber}`,
+    getTxLink: (txHash: string) =>
+      `https://app.blocksec.com/explorer/tx/optimism/${txHash}`,
+    getContractLink: (address: string) =>
+      `https://optimistic.etherscan.io/address/${address}`,
   },
 ]

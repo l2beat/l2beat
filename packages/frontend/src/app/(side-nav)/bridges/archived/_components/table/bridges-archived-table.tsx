@@ -42,7 +42,7 @@ export function BridgesArchivedTable({ entries }: Props) {
   })
 
   return (
-    <div className="mt-4 space-y-6 sm:mt-8">
+    <div className="space-y-3 md:space-y-6">
       <BridgesFilters entries={filteredEntries} />
       <BasicTable table={activeTable} />
     </div>

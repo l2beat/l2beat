@@ -1,9 +1,11 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { Badge } from '../badges'
 import { upcomingL2 } from './templates/upcoming'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 export const ternoa: Layer2 = upcomingL2({
   id: 'ternoa',
+  createdAt: new UnixTime(1727455020), // 2024-09-27T17:09:00Z
   badges: [Badge.Infra.AggLayer],
   display: {
     name: 'Ternoa',

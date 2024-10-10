@@ -85,7 +85,7 @@ export function TokenBreakdownTooltipContent({
                   <Square variant={v.variant} size="small" />
                   <span>{v.title}</span>
                 </span>
-                <span className="font-semibold">
+                <span className="font-medium">
                   {((v.value / total) * 100).toFixed(2)}%
                 </span>
               </div>

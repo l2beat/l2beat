@@ -4,7 +4,7 @@ import { type Milestone } from '@l2beat/config'
 import { useState } from 'react'
 import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
-import { TvlChartUnitControls } from '~/components/chart/tvl/tvl-chart-unit-and-scale-controls'
+import { TvlChartUnitControls } from '~/components/chart/tvl/tvl-chart-unit-controls'
 import { TokenCombobox } from '~/components/token-combobox'
 import {
   type ProjectToken,
@@ -13,6 +13,8 @@ import {
 import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
 import { formatCurrency } from '~/utils/format'
+import { ChartControlsWrapper } from '../../core/chart-controls-wrapper'
+import { ProjectChartTimeRange } from '../../core/chart-time-range'
 import { type ChartUnit } from '../../types'
 import { ProjectTokenChart } from '../token/project-token-chart'
 import { TvlChartTimeRangeControls } from '../tvl-chart-time-range-controls'
@@ -33,7 +35,7 @@ export function ProjectStackedTvlChart({
   isBridge,
 }: Props) {
   const [token, setToken] = useState<ProjectToken>()
-  const [timeRange, setTimeRange] = useState<TvlChartRange>('7d')
+  const [timeRange, setTimeRange] = useState<TvlChartRange>('30d')
   const [unit, setUnit] = useState<ChartUnit>('usd')
 
   if (tokens && token) {
@@ -120,12 +122,14 @@ function DefaultChart({
       )}
     >
       <section className="flex flex-col gap-4">
-        <TvlChartTimeRangeControls
-          timeRange={timeRange}
-          setTimeRange={setTimeRange}
-          range={chartRange}
-        />
-
+        <ChartControlsWrapper>
+          <ProjectChartTimeRange range={chartRange} />
+          <TvlChartTimeRangeControls
+            projectSection
+            timeRange={timeRange}
+            setTimeRange={setTimeRange}
+          />
+        </ChartControlsWrapper>
         <Chart />
         <TvlChartUnitControls unit={unit} setUnit={setUnit}>
           {tokens && (

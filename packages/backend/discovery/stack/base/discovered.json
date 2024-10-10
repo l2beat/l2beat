@@ -3,7 +3,6 @@
   "chain": "base",
   "blockNumber": 20763805,
   "configHash": "0x3a92f9da37633c839fad59cb487e56a37a5fb55e6e24f54d4dfbda7d8ec7fd41",
-  "version": 15,
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -12,7 +11,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x31f09c4a4151EeBB1c0Ac10003bF3b06f4Aa5668"
+          "target": "0x31f09c4a4151EeBB1c0Ac10003bF3b06f4Aa5668",
+          "description": "set and change address mappings."
         },
         {
           "permission": "upgrade",
@@ -44,6 +44,9 @@
       "name": "AddressManager",
       "address": "0x31f09c4a4151EeBB1c0Ac10003bF3b06f4Aa5668",
       "template": "opstack/AddressManager",
+      "descriptions": [
+        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+      ],
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -51,7 +54,8 @@
           "via": [
             {
               "address": "0x25aBB510386A658c622280f488844BD3b485DC32",
-              "delay": 0
+              "delay": 0,
+              "description": "set and change address mappings."
             }
           ]
         }
@@ -226,6 +230,7 @@
         {
           "permission": "configure",
           "target": "0x31f09c4a4151EeBB1c0Ac10003bF3b06f4Aa5668",
+          "description": "set and change address mappings.",
           "via": [{ "address": "0x25aBB510386A658c622280f488844BD3b485DC32" }]
         },
         {
@@ -649,7 +654,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
-    "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
+    "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
     "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
@@ -657,5 +662,5 @@
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0x46fe05664c6168de6029fca0f3968c29d03176659063cc698514a45135ec8c98"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

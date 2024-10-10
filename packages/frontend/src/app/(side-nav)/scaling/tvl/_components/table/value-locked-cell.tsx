@@ -13,12 +13,7 @@ export function ValueLockedCell(data: ValueLockedCellProps) {
   return (
     <div className="flex flex-col items-end">
       <div className="flex items-center gap-1">
-        <span
-          className={cn(
-            'text-base md:text-lg',
-            data.value !== 0 && 'font-bold',
-          )}
-        >
+        <span className={cn('text-base', data.value !== 0 && 'font-bold')}>
           {data.value !== 0 ? formatCurrency(data.value, 'usd') : EM_DASH}
         </span>
         {showChange && data.change !== undefined && (

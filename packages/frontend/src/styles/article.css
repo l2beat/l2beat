@@ -21,7 +21,7 @@
 
 .article p,
 .article li {
-  @apply text-base text-black text-opacity-80 dark:text-white dark:text-opacity-80 md:text-[17px] leading-[1.6] font-light;
+  @apply text-base text-primary text-opacity-80 dark:text-opacity-80 md:text-[17px] leading-[1.6] font-light;
 }
 
 .article blockquote {
@@ -60,7 +60,7 @@
 }
 
 .article strong {
-  @apply text-black text-opacity-100 dark:text-white;
+  @apply text-opacity-100 text-primary;
 }
 
 .article code {
@@ -77,5 +77,6 @@
 
 /* Make sure this is compatible with the <Link /> component */
 .article a {
-  @apply font-semibold text-blue-700 underline transition-colors hover:text-blue-550 dark:text-blue-500 dark:hover:text-blue-550;
+  @apply text-blue-700 underline transition-colors hover:text-blue-550 dark:text-blue-500 dark:hover:text-blue-550;
+  font-weight: 600;
 }

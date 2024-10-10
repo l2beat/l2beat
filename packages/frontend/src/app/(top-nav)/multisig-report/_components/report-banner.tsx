@@ -8,7 +8,7 @@ export function ReportBanner() {
         <div className="mb-2 font-medium uppercase leading-5 text-gray-50 md:text-xl md:text-[#4F4F4F]">
           Just Released
         </div>
-        <div className="text-2xl font-semibold leading-tight text-black dark:text-white md:text-5xl md:text-black md:dark:text-black">
+        <div className="text-2xl font-medium leading-tight text-primary md:text-5xl md:text-black md:dark:text-black">
           Upgradeability of Ethereum L2s
         </div>
       </div>

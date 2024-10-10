@@ -19,7 +19,7 @@ export const GlossarySideNavItem = forwardRef<HTMLLIElement, Props>(
             'flex items-center gap-1 text-xs font-medium transition-colors duration-100',
             'text-zinc-500 hover:text-zinc-700 dark:text-pure-white/80 dark:hover:text-pure-white',
             selected &&
-              'text-pink-900 hover:text-fuchsia-700 dark:text-pink-200 dark:hover:text-purple-450',
+              'text-brand hover:text-fuchsia-700 dark:hover:text-purple-450',
           )}
         >
           <span className="line-clamp-1">{entry.data.term}</span>

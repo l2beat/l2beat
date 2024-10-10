@@ -1,8 +1,10 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
 export const everclear: Layer2 = upcomingL2({
   id: 'everclear',
+  createdAt: new UnixTime(1717512064), // 2024-06-04T14:41:04Z
   display: {
     name: 'Everclear',
     slug: 'everclear',

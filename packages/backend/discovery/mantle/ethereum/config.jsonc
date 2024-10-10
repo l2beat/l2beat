@@ -3,8 +3,7 @@
   "chain": "ethereum",
   "name": "mantle",
   "initialAddresses": [
-    "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
-    "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
+    "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012", //L1StandardBridge
     "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A",
     "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
     "0x23754725a49c0f003C349A6C7869fF8609a7CEfd",
@@ -15,17 +14,10 @@
     "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01"
   ],
   "names": {
-    "0x291dc3819b863e19b0a9b9809F8025d2EB4aaE93": "CanonicalTransactionChain",
-    "0x5Dd48eF85B99E3e3d711Ca8B41cBC07dA1677F3E": "ChainStorageContainerCTC",
-    "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42": "AddressManager",
-    "0x89E9D387555AF0cDE22cb98833Bae40d640AD7fa": "StateCommitmentChain",
-    "0xd3f0BD982D72e28cccc69e0A9dA439e9D587b3bD": "ChainStorageContainerSCC",
-    "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012": "L1StandardBridge",
     "0x3c3a81e81dc49A522A592e7622A7E711c06bf354": "L1MantleToken",
     "0x0cac2B1a172ac24012621101634DD5ABD6399ADd": "MantleTokenProxyAdmin",
     "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f": "MantleSecurityMultisig",
     "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9": "MantleEngineeringMultisig",
-    "0x676A795fe6E43C17c668de16730c3F690FEB7120": "L1CrossDomainMessenger",
     "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A": "EigenDataLayerChain",
     "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798": "Delegation", // check mermaid to see what's going on from now on
     "0x23754725a49c0f003C349A6C7869fF8609a7CEfd": "InvestmentManager",
@@ -41,159 +33,28 @@
     "0x78CF48880E9e1b3ab209779c0D8A76f611e53e81": "TssStakingSlashing",
     "0xa0d79E982bfD3C2ccD09D2E374ddC75fe328f317": "AssertionMap",
     "0x3F77D44E1789D47e076a4d5f2779a1fCAb821C2a": "VerifierEntry",
-    "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D": "DataLayrChallengeUtils",
-    "0xca35F8338054739D138884685e08b39EE2217794": "ProxyAdmin",
-    "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb": "OptimismPortal",
-    "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481": "L2OutputOracle",
-    "0x427Ea0710FA5252057F0D88274f7aeb308386cAf": "SystemConfig"
+    "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D": "DataLayrChallengeUtils"
   },
   "overrides": {
-    "AddressManager": {
-      "fields": {
-        "CanonicalTransactionChain": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["CanonicalTransactionChain"]
-          }
-        },
-        "ChainStorageContainerCTC": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["ChainStorageContainer-CTC-batches"]
-          }
-        },
-        "sequencer": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["BVM_Sequencer"]
-          }
-        },
-        "proposer": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["BVM_Proposer"]
-          }
-        },
-        "rolluper": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["BVM_Rolluper"]
-          }
-        },
-        "StateCommitmentChain": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["StateCommitmentChain"]
-          }
-        },
-        "ChainStorageContainerSCC": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["ChainStorageContainer-SCC-batches"]
-          }
-        },
-        "FraudVerifier": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["BVM_FraudVerifier"]
-          }
-        },
-        "TssGroupManagerProxy": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["Proxy__TSS_GroupManager"],
-            "ignoreRelative": true
-          }
-        },
-        "TssGroupManager": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["TssGroupManager"],
-            "ignoreRelative": true
-          }
-        },
-        "TssStakingSlashing": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["TssStakingSlashing"],
-            "ignoreRelative": true
-          }
-        },
-        "TssStakingSlashingProxy": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["Proxy__TSS_StakingSlashing"],
-            "ignoreRelative": true
-          }
-        },
-        "L1StandardBridgeProxy": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["Proxy__L1StandardBridge"]
-          }
-        },
-        "BondManager": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["BondManager"]
-          }
-        },
-        "L1CrossDomainMessenger": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["BVM_L1CrossDomainMessenger"],
-            "ignoreRelative": true
-          }
-        },
-        "L1CrossDomainMessengerProxy": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["Proxy__BVM_L1CrossDomainMessenger"]
-          }
-        },
-        "L1MantleAddress": {
-          "handler": {
-            "type": "call",
-            "method": "getAddress",
-            "args": ["L1_MantleAddress"]
-          }
-        }
-      }
+    "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42": {
+      "extends": "opstack/AddressManager" // shape does not work (tofix)
     },
-    "CanonicalTransactionChain": {
-      "ignoreMethods": ["getQueueElement"],
-      "ignoreInWatchMode": [
-        "getLastBlockNumber",
-        "getLastTimestamp",
-        "getNextQueueIndex",
-        "getNumPendingQueueElements",
-        "getQueueLength",
-        "getTotalBatches",
-        "getTotalElements"
-      ]
+    "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83": {
+      "extends": "opstack/ProxyAdmin" // shape does not work (tofix)
+    },
+    "0x47D58744D8515d9aaEAf961bc03625118bd91EBb": {
+      "extends": "opstack/ProxyAdmin" // shape does not work (tofix)
+    },
+    "MantleTokenProxyAdmin": {
+      "extends": "opstack/ProxyAdmin" // shape does not work (tofix)
+    },
+    "InvestmentManager": {
+      "description": "Contract managing different investment strategies, forked from EigenLayer StrategyManager."
     },
     "L1MantleToken": {
+      "description": "MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.",
       "ignoreMethods": ["getPastTotalSupply"],
       "ignoreInWatchMode": ["totalSupply"]
-    },
-    "MantleSecurityMultisig": {
-      "ignoreInWatchMode": ["nonce"]
     },
     "EigenDataLayerChain": {
       "ignoreMethods": [
@@ -209,11 +70,8 @@
         "rollupBatchIndex"
       ]
     },
-    "ChainStorageContainerCTC": {
-      "ignoreMethods": ["get"],
-      "ignoreInWatchMode": ["getGlobalMetadata", "length"]
-    },
     "DataLayrServiceManager": {
+      "description": "This contract is the main entry point for data availability. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures.",
       "ignoreMethods": [
         "zeroPolynomialCommitmentMerkleRoots",
         "taskNumber",
@@ -222,6 +80,7 @@
       "ignoreInWatchMode": ["dataStoresForDuration"]
     },
     "BLSRegistry": {
+      "description": "This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum.",
       "ignoreMethods": [
         "apk",
         "apkHashes",
@@ -262,18 +121,8 @@
         "getNumStakers"
       ]
     },
-    "ChainStorageContainerSCC": {
-      "ignoreMethods": ["get"],
-      "ignoreInWatchMode": ["getGlobalMetadata", "length"]
-    },
-    "StateCommitmentChain": {
-      "ignoreInWatchMode": [
-        "getLastSequencerTimestamp",
-        "getTotalBatches",
-        "getTotalElements"
-      ]
-    },
     "MantleSecondStrat": {
+      "description": "Basic do-nothing investment strategy.",
       "ignoreMethods": [
         "sharesToUnderlying",
         "sharesToUnderlyingView",
@@ -282,6 +131,7 @@
       ]
     },
     "MantleFirstStrat": {
+      "description": "Basic do-nothing investment strategy.",
       "ignoreMethods": [
         "sharesToUnderlying",
         "sharesToUnderlyingView",
@@ -291,64 +141,6 @@
     },
     "DataLayrChallengeUtils": {
       "ignoreMethods": ["nextPowerOf2"]
-    },
-    "MantleEngineeringMultisig": {
-      "ignoreInWatchMode": ["nonce"]
-    },
-    "L1CrossDomainMessenger": {
-      "ignoreMethods": ["xDomainMessageSender"],
-      "ignoreInWatchMode": ["messageNonce"]
-    },
-    "L2OutputOracle": {
-      "ignoreMethods": [
-        "getL2OutputAfter",
-        "getL2OutputIndexAfter",
-        "getL2Output",
-        "computeL2Timestamp"
-      ],
-      "ignoreInWatchMode": [
-        "nextBlockNumber",
-        "nextOutputIndex",
-        "latestBlockNumber",
-        "latestOutputIndex"
-      ],
-      "fields": {
-        "deletedOutputs": {
-          "handler": {
-            "type": "stateFromEvent",
-            "event": "OutputsDeleted",
-            "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"]
-          }
-        }
-      }
-    },
-    "OptimismPortal": {
-      "ignoreMethods": ["isOutputFinalized"],
-      "ignoreInWatchMode": ["params"]
-    },
-    "SystemConfig": {
-      "fields": {
-        // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
-        "batcherHash": {
-          "handler": {
-            "type": "call",
-            "method": "function batcherHash() view returns (address)",
-            "args": []
-          }
-        },
-        "opStackDA": {
-          "handler": {
-            "type": "opStackDA",
-            "sequencerAddress": "{{ batcherHash }}"
-          }
-        },
-        "sequencerInbox": {
-          "handler": {
-            "type": "opStackSequencerInbox",
-            "sequencerAddress": "{{ batcherHash }}"
-          }
-        }
-      }
     },
     "RegistryPermission": {
       "fields": {

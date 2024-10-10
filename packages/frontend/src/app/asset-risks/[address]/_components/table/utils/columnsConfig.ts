@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react'
 import { type ClassNameValue } from 'tailwind-merge'
-import { type Token } from '../tokens-table'
+import { type Token } from '../../report-context'
 
 export type SortingRule = 'alphabetical' | 'numeric'
 
@@ -29,7 +29,7 @@ export const columnsConfig: SingleColumnConfig[] = [
     className: 'pl-12',
     sorting: {
       rule: 'alphabetical',
-      getOrderValue: ({ token }) => token.name,
+      getOrderValue: ({ meta }) => meta?.name ?? 'Unknown',
     },
   },
   {
