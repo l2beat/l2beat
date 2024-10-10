@@ -10,6 +10,7 @@ import {
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import { Badge } from '../badges'
+import { getStage } from '../layer2s/common/stages/getStage'
 import { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('bugbuster', 'optimism')
@@ -61,6 +62,32 @@ export const bugbuster: Layer3 = {
       }),
     ],
   },
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToBaseLayer: true,
+        dataAvailabilityOnBaseLayer: true,
+        rollupNodeSourceAvailable: 'UnderReview',
+      },
+      stage1: {
+        stateVerificationOnBaseLayer: false,
+        fraudProofSystemAtLeast5Outsiders: null,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: false,
+        securityCouncilProperlySetUp: null,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: null,
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+      },
+    },
+    {
+      rollupNodeLink: '',
+      baselayer: 'OP Mainnet L2',
+    },
+  ),
   technology: {
     stateCorrectness: {
       name: 'Fraud proofs are in development',
