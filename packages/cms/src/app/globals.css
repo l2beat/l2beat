@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+::selection {
+  /* Brand dark red */
+  background: #bd114f;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

@@ -15,6 +15,36 @@ export class ExternalBridgeRepository extends BaseRepository {
     return rows
   }
 
+  async getById(id: string): Promise<ExternalBridgeRecord | null> {
+    const row = await this.db
+      .selectFrom('ExternalBridge')
+      .select(selectExternalBridge)
+      .where('ExternalBridge.id', '=', id)
+      .executeTakeFirst()
+    return row ?? null
+  }
+
+  async insert(
+    record: UpsertableExternalBridgeRecord,
+  ): Promise<{ id: string }> {
+    const row = upsertableToRecord(record)
+    const result = await this.db
+      .insertInto('ExternalBridge')
+      .values(row)
+      .returning('id')
+      .executeTakeFirstOrThrow()
+    return result
+  }
+
+  async update(id: string, record: UpsertableExternalBridgeRecord) {
+    const row = upsertableToRecord(record)
+    await this.db
+      .updateTable('ExternalBridge')
+      .set(row)
+      .where('id', '=', id)
+      .execute()
+  }
+
   async upsert(
     record: UpsertableExternalBridgeRecord,
   ): Promise<{ id: string }> {

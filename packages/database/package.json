@@ -4,6 +4,16 @@
   "version": "0.0.0",
   "main": "dist/index.js",
   "types": "src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./enums": {
+      "import": "./dist/kysely/generated/enums.js",
+      "types": "./dist/kysely/generated/enums.d.ts"
+    }
+  },
   "scripts": {
     "clean": "rm -rf dist",
     "build": "tsc -p tsconfig.build.json",

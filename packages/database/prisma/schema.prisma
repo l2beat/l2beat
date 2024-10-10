@@ -48,7 +48,7 @@ enum ExternalBridgeType {
 model ExternalBridge {
   id      String             @id @db.Char(21)
   name    String             @db.VarChar(256)
-  type    ExternalBridgeType @unique
+  type    ExternalBridgeType? @unique
   tokens  TokenBridge[]
   escrows BridgeEscrow[]
 

@@ -31,8 +31,11 @@ export default async function Page({
 
   return (
     <>
-      <div className="flex items-center">
+      <div className="flex items-center justify-between gap-4">
         <h1 className="text-lg font-semibold md:text-2xl">Bridges</h1>
+        <Link href="/bridges/new">
+          <Button size="sm">Add Bridge</Button>
+        </Link>
       </div>
       {bridges.length === 0 ? (
         <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
@@ -51,9 +54,9 @@ export default async function Page({
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Id</TableHead>
+                <TableHead>ID</TableHead>
                 <TableHead>Name</TableHead>
-                <TableHead>Type</TableHead>
+                <TableHead>Handler</TableHead>
                 <TableHead />
               </TableRow>
             </TableHeader>
