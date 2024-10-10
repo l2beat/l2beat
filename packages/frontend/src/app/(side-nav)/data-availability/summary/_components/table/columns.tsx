@@ -75,12 +75,19 @@ const risksColumn = columnHelper.accessor('risks', {
   cell: (ctx) => {
     const value = ctx.getValue()
 
+    const hasNoBridge =
+      ctx.row.original.daBridge !== 'multiple' &&
+      ctx.row.original.daBridge.type === 'NoBridge'
+
+    console.log(ctx.row.original.name, ctx.row.original.daBridge, hasNoBridge)
+
     if ('accessibility' in value) {
       return (
         <PentagonRosetteCell
           className="justify-start"
           values={mapRisksToRosetteValues(value)}
           isUnderReview={ctx.row.original.isUnderReview}
+          hasNoBridge={hasNoBridge}
         />
       )
     }
@@ -105,6 +112,7 @@ const risksColumn = columnHelper.accessor('risks', {
           },
         })}
         isUnderReview={ctx.row.original.isUnderReview}
+        hasNoBridge={hasNoBridge}
       />
     )
   },

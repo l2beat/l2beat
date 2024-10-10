@@ -64,6 +64,7 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
       id: daBridge.id,
       name: daBridge.display.name,
       slug: daBridge.display.slug,
+      type: daBridge.type,
     },
     bridges: daLayer.bridges.map((bridge) => ({
       id: bridge.id,
