@@ -1,4 +1,4 @@
-import { slugToDisplayName } from '../../../../../../frontend/src/utils/project/slug-to-display-name'
+import { slugToDisplayName } from '@l2beat/frontend/src/utils/project/slug-to-display-name'
 import { createGetStage, isSatisfied } from './stage'
 import { ChecklistTemplate } from './types'
 
