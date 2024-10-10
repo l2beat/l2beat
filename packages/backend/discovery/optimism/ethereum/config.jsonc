@@ -109,9 +109,6 @@
         "messenger"
       ]
     },
-    "SynthetixMultisig": {
-      "ignoreInWatchMode": ["nonce"]
-    },
     "L2OutputOracle": {
       "ignoreMethods": [
         "getL2OutputAfter",
