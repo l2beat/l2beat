@@ -117,13 +117,14 @@ export async function getL3ProjectDetails({
   const hostChainWarning = hostChain
     ? { hostChain: hostChain.display }
     : undefined
-  const hostChainWarningWithRiskCount = hostChain
-    ? {
-        hostChain: hostChain.display,
-        riskCount: hostChainRisksSummary.riskGroups.flatMap((rg) => rg.items)
-          .length,
-      }
-    : undefined
+  const hostChainWarningWithRiskCount =
+    hostChain && hostChainRisksSummary
+      ? {
+          hostChain: hostChain.display,
+          riskCount: hostChainRisksSummary.riskGroups.flatMap((rg) => rg.items)
+            .length,
+        }
+      : undefined
 
   if (!project.isUpcoming && tvlChartData.length > 0) {
     items.push({
