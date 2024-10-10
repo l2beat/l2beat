@@ -8,7 +8,6 @@ import { Block, RpcResponse } from './types'
 interface RpcClient2Deps {
   http: HttpClient2
   logger: Logger
-  chain: string
   url: string
   callsPerMinute: number
 }

@@ -99,7 +99,6 @@ function createActivityIndexers(
                 http: new HttpClient2({ logger: logger.tag('zkfair') }),
                 callsPerMinute: 10_000,
                 url: project.config.url,
-                chain: 'zkfair',
               })
 
         const txsCountProvider = new RpcTxsCountProvider(
