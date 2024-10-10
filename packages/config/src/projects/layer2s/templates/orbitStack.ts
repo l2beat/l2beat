@@ -631,6 +631,38 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
         templateVars.display.category ??
         (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup'),
     },
+    stage:
+      templateVars.stage ??
+      (postsToExternalDA
+        ? {
+            stage: 'NotApplicable',
+          }
+        : getStage(
+            {
+              stage0: {
+                callsItselfRollup: true,
+                stateRootsPostedToL1: true,
+                dataAvailabilityOnL1: true,
+                rollupNodeSourceAvailable:
+                  templateVars.isNodeAvailable ?? 'UnderReview',
+              },
+              stage1: {
+                stateVerificationOnL1: true,
+                fraudProofSystemAtLeast5Outsiders: false,
+                usersHave7DaysToExit: false,
+                usersCanExitWithoutCooperation: true,
+                securityCouncilProperlySetUp: false,
+              },
+              stage2: {
+                proofSystemOverriddenOnlyInCaseOfABug: false,
+                fraudProofSystemIsPermissionless: false,
+                delayWith30DExitWindow: false,
+              },
+            },
+            {
+              rollupNodeLink: templateVars.nodeSourceLink,
+            },
+          )),
     dataAvailability: postsToExternalDA
       ? (() => {
           const DAC = templateVars.discovery.getContractValue<{
