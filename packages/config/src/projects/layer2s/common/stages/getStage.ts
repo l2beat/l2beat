@@ -1,3 +1,4 @@
+import { slugToDisplayName } from '../../../../../../frontend/src/utils/project/slug-to-display-name'
 import { createGetStage, isSatisfied } from './stage'
 import { ChecklistTemplate } from './types'
 
@@ -15,7 +16,7 @@ export const getStage = (
   blueprintChecklist: BlueprintChecklist,
   opts: GetStageOptions = {},
 ) => {
-  const { rollupNodeLink, baselayer = 'Ethereum L1' } = opts
+  const { rollupNodeLink, baselayer = 'ethereum' } = opts
 
   const rollupNode = isSatisfied(
     blueprintChecklist.stage0.rollupNodeSourceAvailable,
@@ -24,11 +25,31 @@ export const getStage = (
     throw new Error('Rollup node link is required')
   }
 
-  const blueprint = createBlueprint({ rollupNodeLink, baselayer })
+  let displayBaselayer: string
+  try {
+    const result = slugToDisplayName(baselayer)
+    if (result === undefined) {
+      throw new Error('slugToDisplayName returned undefined')
+    }
+    displayBaselayer = result
+  } catch (_error) {
+    console.warn(
+      `Failed to convert baselayer slug: ${baselayer}. Using default 'Ethereum L1'.`,
+    )
+    displayBaselayer = 'Ethereum L1'
+  }
+
+  const blueprint = createBlueprint({
+    rollupNodeLink,
+    baselayer: displayBaselayer,
+  })
   return createGetStage(blueprint)(blueprintChecklist)
 }
 
-const createBlueprint = ({ rollupNodeLink, baselayer }: GetStageOptions) =>
+const createBlueprint = ({
+  baselayer,
+  rollupNodeLink,
+}: { baselayer: string; rollupNodeLink?: string }) =>
   ({
     stage0: {
       name: 'Stage 0',
@@ -46,7 +67,7 @@ const createBlueprint = ({ rollupNodeLink, baselayer }: GetStageOptions) =>
           negative: `All the data to reconstruct the L2 state is not available on ${baselayer}.`,
         },
         rollupNodeSourceAvailable: {
-          positive: createRollupNodeMessage(rollupNodeLink, baselayer),
+          positive: createRollupNodeMessage(baselayer, rollupNodeLink),
           negative: `No source-available node exists that can recreate the state from ${baselayer} data.`,
           underReviewMessage:
             'The requirement for available node software is under review',
@@ -109,8 +130,8 @@ const createBlueprint = ({ rollupNodeLink, baselayer }: GetStageOptions) =>
   }) as const
 
 const createRollupNodeMessage = (
+  baselayer: string,
   rollupNodeLink?: string,
-  baselayer?: string,
 ) => {
   let message = `A source-available node exists that can recreate the state from ${baselayer} data. Please note that the L2BEAT team has not verified the validity of the node source code.`
   if (rollupNodeLink) {
