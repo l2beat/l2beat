@@ -408,7 +408,7 @@ export const dydx: Layer2 = {
       description:
         'Allowed to update state of the rollup. When Operator is down the state cannot be updated.',
     },
-    getCommittee(discovery),
+    // getCommittee(discovery), # Removed because even though it is set for some reason, it is not used in updateState()
     {
       name: 'Rollup Admin',
       accounts: [
