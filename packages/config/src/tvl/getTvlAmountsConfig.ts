@@ -34,11 +34,33 @@ export function getTvlAmountsConfig(
     entries.push(configEntry)
   }
 
+  const aggLayerIncludedL1Tokens = projects.flatMap((p) =>
+    p.escrows.flatMap(
+      (e) =>
+        (e.sharedEscrow?.type === 'AggLayer' &&
+          e.sharedEscrow?.includeL1Tokens) ||
+        [],
+    ),
+  )
+
+  const elasticChainIncludedL1Tokens = projects.flatMap((p) =>
+    p.escrows.flatMap(
+      (e) =>
+        (e.sharedEscrow?.type === 'ElasticChian' &&
+          e.sharedEscrow?.includeL1Tokens) ||
+        [],
+    ),
+  )
+
   for (const project of projects) {
     for (const escrow of project.escrows) {
       switch (escrow.sharedEscrow?.type) {
         case 'AggLayer': {
-          const aggLayerEntries = aggLayerEscrowToEntries(escrow, project)
+          const aggLayerEntries = aggLayerEscrowToEntries(
+            escrow,
+            project,
+            aggLayerIncludedL1Tokens,
+          )
           entries.push(...aggLayerEntries)
           break
         }
@@ -46,6 +68,7 @@ export function getTvlAmountsConfig(
           const elasticChainEntries = elasticChainEscrowToEntries(
             escrow,
             project,
+            elasticChainIncludedL1Tokens,
           )
           entries.push(...elasticChainEntries)
           break
@@ -116,12 +139,20 @@ export function getTvlAmountsConfigForProject(
   for (const escrow of project.escrows) {
     switch (escrow.sharedEscrow?.type) {
       case 'AggLayer': {
-        const aggLayerEntries = aggLayerEscrowToEntries(escrow, project)
+        const aggLayerEntries = aggLayerEscrowToEntries(
+          escrow,
+          project,
+          escrow.sharedEscrow.includeL1Tokens ?? [],
+        )
         entries.push(...aggLayerEntries)
         break
       }
       case 'ElasticChian': {
-        const elasticChainEntries = elasticChainEscrowToEntries(escrow, project)
+        const elasticChainEntries = elasticChainEscrowToEntries(
+          escrow,
+          project,
+          escrow.sharedEscrow.includeL1Tokens ?? [],
+        )
         entries.push(...elasticChainEntries)
         break
       }

@@ -9,6 +9,7 @@ import { getElasticChainL2TokenEntry } from '../elasticChainL2Tokens'
 export function elasticChainEscrowToEntries(
   escrow: BackendProjectEscrow,
   project: BackendProject,
+  elasticChainIncludedL1Tokens: string[],
 ) {
   assert(
     escrow.sharedEscrow?.type === 'ElasticChian',
@@ -16,10 +17,11 @@ export function elasticChainEscrowToEntries(
   )
   const entries: AmountConfigEntry[] = []
 
-  const l1Tokens = escrow.sharedEscrow.includeL1Tokens
-
   for (const token of escrow.tokens) {
-    if (token.address === undefined || l1Tokens?.includes(token.symbol)) {
+    if (
+      token.address === undefined ||
+      elasticChainIncludedL1Tokens?.includes(token.symbol)
+    ) {
       continue
     }
     const chain = chains.find((x) => x.chainId === +token.chainId)

@@ -10,14 +10,16 @@ import { getAggLayerNativeEtherWrappedEntry } from '../aggLayerNativeEtherWrappe
 export function aggLayerEscrowToEntries(
   escrow: BackendProjectEscrow,
   project: BackendProject,
+  aggLayerIncludedL1Tokens: string[],
 ) {
   assert(escrow.sharedEscrow?.type === 'AggLayer', 'AggLayer escrow expected')
   const entries: AmountConfigEntry[] = []
 
-  const l1Tokens = escrow.sharedEscrow.includeL1Tokens
-
   for (const token of escrow.tokens) {
-    if (token.address === undefined || l1Tokens?.includes(token.symbol)) {
+    if (
+      token.address === undefined ||
+      aggLayerIncludedL1Tokens?.includes(token.symbol)
+    ) {
       continue
     }
     const chain = chains.find((x) => x.chainId === +token.chainId)
