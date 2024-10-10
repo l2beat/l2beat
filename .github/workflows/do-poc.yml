@@ -1,4 +1,4 @@
-name: Deploy backend, update monitor and db migrations on PoC environment
+name: Deploy update monitor on PoC environment
 
 concurrency:
   group: do-poc
@@ -7,15 +7,11 @@ permissions: {}
 on:
   schedule:
     - cron: "45 * * * *"
-  push:
-    branches:
-      - main
 
 jobs:
   deploy-update-monitor:
     name: Deploy update monitor
     runs-on: ubuntu-latest
-    if: github.event.name == "schedule"
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -35,41 +31,3 @@ jobs:
             TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
           tags: |
             ${{ secrets.DO_POC_REGISTRY }}/l2beat/update-monitor
-  deploy-backend:
-    name: Deploy backend
-    runs-on: ubuntu-latest
-    if: gihub.event.name == "push"
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-      - name: Login to DO container registry
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DO_POC_USER }}
-          password: ${{ secrets.DO_POC_TOKEN }}
-          registry: ${{ secrets.DO_POC_REGISTRY }}
-      - name: Build and publish containers
-        uses: docker/build-push-action@v5
-        with:
-          push: true
-          file: Dockerfile.backend
-          build-args: |
-            TURBO_TEAM=${{ vars.TURBO_TEAM }}
-            TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
-          tags: |
-            ${{ secrets.DO_POC_REGISTRY }}/l2beat/backend
-  migrate-db:
-    name: Apply DB migrations
-    runs-on: ubuntu-latest
-    if: gihub.event.name == "push"
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-      - name: Setup Node
-        uses: actions/setup-node@v3
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-      - name: Apply migrations
-        run: yarn prisma migrate deploy --schema=packages/database/prisma/schema.prisma
-        env:
-          PRISMA_DB_URL: ${{ secrets.DO_POC_DATABASE_URL }}
