@@ -17,6 +17,7 @@ export interface RiskAnalysisSectionProps extends ProjectSectionProps {
   warning: string | undefined
   isVerified: boolean | undefined
   redWarning: string | undefined
+  shouldHideRosette?: boolean | undefined
 }
 
 export function RiskAnalysisSection({
@@ -25,6 +26,7 @@ export function RiskAnalysisSection({
   warning,
   isVerified,
   redWarning,
+  shouldHideRosette,
   ...sectionProps
 }: RiskAnalysisSectionProps) {
   const isUnderReview =
@@ -60,10 +62,17 @@ export function RiskAnalysisSection({
         />
       )}
 
-      {rosetteType === 'pizza' ? (
-        <BigPizzaRosette values={rosetteValues} className="mx-auto my-6" />
-      ) : (
-        <BigPentagonRosette values={rosetteValues} className="mx-auto my-6" />
+      {!shouldHideRosette && (
+        <>
+          {rosetteType === 'pizza' ? (
+            <BigPizzaRosette values={rosetteValues} className="mx-auto my-6" />
+          ) : (
+            <BigPentagonRosette
+              values={rosetteValues}
+              className="mx-auto my-6"
+            />
+          )}
+        </>
       )}
       {Object.values(rosetteValues).map((value) => (
         <SingleRisk key={value.name} value={value} />
