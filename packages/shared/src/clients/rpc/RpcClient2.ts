@@ -66,6 +66,7 @@ export class RpcClient2 {
       redirect: 'follow',
     })
 
+    // this parsing is needed for APIs which return 200 and error in the body
     const response = RpcResponse.safeParse(blockResponse)
     if (!response.success) {
       this.$.logger.error(JSON.stringify(response))

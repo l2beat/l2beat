@@ -2,7 +2,7 @@ import { stringAsInt } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 export const RpcResponse = z.object({
-  result: z.string().or(z.number().or(z.object({}))),
+  result: z.union([z.string(), z.number(), z.record(z.string(), z.any())]),
 })
 
 export type Block = z.infer<typeof Block>
