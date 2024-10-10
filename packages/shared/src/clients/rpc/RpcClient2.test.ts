@@ -4,9 +4,43 @@ import { HttpClient2 } from '../http/HttpClient2'
 import { RpcClient2 } from './RpcClient2'
 
 describe(RpcClient2.name, () => {
-  describe(RpcClient2.prototype.getBlock.name, () => {})
-  describe(RpcClient2.prototype.getBlockNumber.name, () => {})
-  describe(RpcClient2.prototype.getBlockNumberAtOrBefore.name, () => {})
+  describe(RpcClient2.prototype.getBlock.name, () => {
+    it('fetches block from rpc are parsers response', async () => {
+      const { rpc, http } = createClients(100)
+
+      const result = await rpc.getBlock(100)
+
+      expect(result).toEqual({
+        transactions: ['0x0', '0x1'],
+        timestamp: 100,
+        hash: '0xabcdef',
+        number: 100,
+      })
+      //@ts-expect-error
+      expect(http.fetchJson.calls[0].args[1]?.body).toMatchRegex(
+        /"method":"eth_getBlockByNumber"/,
+      )
+      //@ts-expect-error
+      expect(http.fetchJson.calls[0].args[1]?.body).toMatchRegex(
+        /"params":\["0x64",false\]/,
+      )
+    })
+  })
+
+  describe(RpcClient2.prototype.getLatestBlockNumber.name, () => {
+    it('returns number of the block', async () => {
+      const { rpc, http } = createClients(100)
+
+      const result = await rpc.getLatestBlockNumber()
+
+      expect(result).toEqual(100)
+      //@ts-expect-error
+      expect(http.fetchJson.calls[0].args[1]?.body).toMatchRegex(
+        /"params":\["latest",false\]/,
+      )
+    })
+  })
+
   describe(RpcClient2.prototype.query.name, () => {
     it('calls http client with correct params and returns data', async () => {
       const http = mockObject<HttpClient2>({
@@ -63,4 +97,27 @@ describe(RpcClient2.name, () => {
       ).toBeRejectedWith('Error during parsing of rpc response')
     })
   })
+})
+
+function createClients(blockNumber: number) {
+  const http = mockObject<HttpClient2>({
+    fetchJson: async () => mockResponse(blockNumber),
+  })
+
+  const rpc = new RpcClient2({
+    http,
+    logger: Logger.SILENT,
+    url: 'API_URL',
+    callsPerMinute: 100_000,
+  })
+  return { rpc, http }
+}
+
+const mockResponse = (blockNumber: number) => ({
+  result: {
+    transactions: ['0x0', '0x1'],
+    timestamp: `0x${blockNumber.toString(16)}`,
+    hash: '0xabcdef',
+    number: `0x${blockNumber.toString(16)}`,
+  },
 })

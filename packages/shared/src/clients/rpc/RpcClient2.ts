@@ -21,13 +21,12 @@ export class RpcClient2 {
     this.$.logger = this.$.logger.for(this)
   }
 
-  async getBlock(blockNumber?: number, includeFullTxs?: boolean) {
+  // TODO: add support for including txs body
+  async getBlock(blockNumber: number | 'latest') {
     const method = 'eth_getBlockByNumber'
-    const encodedNumber = blockNumber
-      ? `0x${blockNumber.toString(16)}`
-      : 'latest'
-    const txDetail = includeFullTxs ?? false
-    const blockResponse = await this.query(method, [encodedNumber, txDetail])
+    const encodedNumber =
+      blockNumber === 'latest' ? 'latest' : `0x${blockNumber.toString(16)}`
+    const blockResponse = await this.query(method, [encodedNumber, false])
 
     const block = Block.safeParse(blockResponse)
     if (!block.success) {
@@ -37,13 +36,13 @@ export class RpcClient2 {
     return block.data
   }
 
-  async getBlockNumber(blockNumber?: number) {
-    const block = await this.getBlock(blockNumber, false)
+  async getLatestBlockNumber() {
+    const block = await this.getBlock('latest')
     return Number(block.number)
   }
 
   async getBlockNumberAtOrBefore(timestamp: UnixTime, start = 0) {
-    const end = await this.getBlockNumber()
+    const end = await this.getLatestBlockNumber()
 
     return await getBlockNumberAtOrBefore(
       timestamp,

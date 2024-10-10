@@ -7,6 +7,7 @@ export const RpcResponse = z.object({
 
 export type Block = z.infer<typeof Block>
 export const Block = z.object({
+  // TODO: add support for including txs body
   transactions: z.array(z.string()),
   timestamp: stringAsInt(),
   hash: z.string(),
