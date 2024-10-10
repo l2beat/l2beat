@@ -79,8 +79,6 @@ const risksColumn = columnHelper.accessor('risks', {
       ctx.row.original.daBridge !== 'multiple' &&
       ctx.row.original.daBridge.type === 'NoBridge'
 
-    console.log(ctx.row.original.name, ctx.row.original.daBridge, hasNoBridge)
-
     if ('accessibility' in value) {
       return (
         <PentagonRosetteCell
