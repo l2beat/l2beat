@@ -7,7 +7,6 @@ interface HttpClient2Options {
   initialRetryDelayMs?: number
   maxRetryDelayMs?: number
   statusCodesToRetry?: number[]
-  callsPerMinute?: number
   logger?: Logger
 }
 
@@ -21,7 +20,6 @@ export class HttpClient2 {
       initialRetryDelayMs: 1000,
       maxRetryDelayMs: 30000,
       statusCodesToRetry: [408, 429, 500, 502, 503, 504],
-      callsPerMinute: 60,
       logger: Logger.SILENT,
       ...$,
     }

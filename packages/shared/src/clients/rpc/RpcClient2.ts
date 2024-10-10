@@ -9,15 +9,16 @@ interface RpcClient2Deps {
   http: HttpClient2
   logger: Logger
   url: string
-  callsPerMinute: number
+  callsPerMinute?: number
 }
 
 export class RpcClient2 {
   constructor(private readonly $: RpcClient2Deps) {
     const rateLimiter = new RateLimiter({
-      callsPerMinute: this.$.callsPerMinute,
+      callsPerMinute: this.$.callsPerMinute ?? 60,
     })
     this.query = rateLimiter.wrap(this.query.bind(this))
+    this.$.logger = this.$.logger.for(this)
   }
 
   async getBlock(blockNumber?: number, includeFullTxs?: boolean) {
@@ -28,7 +29,7 @@ export class RpcClient2 {
     const txDetail = includeFullTxs ?? false
     const blockResponse = await this.query(method, [encodedNumber, txDetail])
 
-    const block = Block.safeParse(blockResponse.result)
+    const block = Block.safeParse(blockResponse)
     if (!block.success) {
       this.$.logger.error(JSON.stringify(blockResponse))
       throw new Error('Error during parsing of eth_getBlockByNumber response')
@@ -70,6 +71,6 @@ export class RpcClient2 {
       this.$.logger.error(JSON.stringify(response))
       throw new Error('Error during parsing of rpc response')
     }
-    return response.data
+    return response.data.result
   }
 }
