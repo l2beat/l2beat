@@ -1,3 +1,99 @@
+Generated with discovered.json: 0xc23597de36404eeaff36e475d2ed0e3ffc459f01
+
+# Diff at Fri, 11 Oct 2024 07:38:55 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@52c209ecd27d1a92626074299e0545e15598d287 block: 40976255
+- current block number: 40976255
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 40976255 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x38dE71124f7a447a01D67945a51eDcE9FF491251) {
+    +++ description: None
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract  (0x5a54fe5234E811466D5366846283323c954310B2) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-02-08T19:55:32.000Z",["0xf75C2919c8fddF9D6f34531EBDC7Ad28E1a192e2"]],["2023-04-27T02:37:47.000Z",["0x47bc8fb02aA30f7ec413f60aFD2C90D8ee96B583"]]]
+      values.$upgradeCount:
++        2
+    }
+```
+
+```diff
+    contract  (0x5b3b51F830A79a250808f080e0e8dB08BAdf2D1C) {
+    +++ description: None
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract  (0x5e603Fe3FBDa423D4AFc82e80F59AE8a041Ac35D) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+      values.$upgradeCount:
++        0
+    }
+```
+
+```diff
+    contract  (0x7A50b180265eb5347Ce7b92224F0B0Cd6cE0493b) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-06-26T19:44:20.000Z",["0x23768Cfd95B699d9B772ce042e490F9deA5ae6d6"]],["2024-03-11T19:12:16.000Z",["0xa79dE9B3409361Cd3367856b5Fa9BC258C1f9F0F"]],["2024-07-04T23:52:09.000Z",["0x893BB42a352CA8Ee8bCb58348455DD3966368737"]]]
+      values.$upgradeCount:
++        3
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8) {
+    +++ description: None
+      receivedPermissions.1.via:
+-        []
+      receivedPermissions.0.via:
+-        []
+    }
+```
+
+```diff
+    contract RelayerV2 (0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2022-11-21T22:34:18.000Z",["0x50002CdFe7CCb0C41F519c6Eb0653158d11cd907"]],["2023-02-03T23:05:57.000Z",["0x48486ECbB22Ca392f99C21FF02f6106580f526F8"]],["2023-04-23T04:35:55.000Z",["0x1a9a68b8Af58eA2b9130622e3bEA2373AaA79EFa"]],["2023-06-26T23:18:31.000Z",["0x92B9a8278ce3a1E17C66B3a6B61d807b2616bcED"]],["2023-09-20T19:37:03.000Z",["0x26fdA154E76e53F078e7096459d9132542db3b9d"]],["2023-09-22T14:16:28.000Z",["0x7701C12D268847dB94bbF37A4C4af53Bb6bAF8B0"]]]
+      values.$upgradeCount:
++        6
+    }
+```
+
+```diff
+    contract RelayerV2Radar (0xde19274c009A22921E3966a1Ec868cEba40A5DaC) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+      values.$upgradeCount:
++        0
+    }
+```
+
 Generated with discovered.json: 0x06adb74bf2c673203740b9848c03ad712e3fc804
 
 # Diff at Wed, 21 Aug 2024 10:08:12 GMT:

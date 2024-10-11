@@ -7,6 +7,7 @@ import { PentagonRosetteLabels } from './pentagon-rosette-labels'
 export function PentagonRosetteTooltip({
   values,
   isUnderReview,
+  hasNoBridge,
 }: PentagonRosetteCellProps) {
   if (isUnderReview) {
     return (
@@ -21,6 +22,21 @@ export function PentagonRosetteTooltip({
           <br />
           L2BEAT Team is working to research & validate content before
           publishing.
+        </p>
+      </div>
+    )
+  }
+
+  if (hasNoBridge) {
+    return (
+      <div className="w-[300px]">
+        <div className="mb-4">
+          <span className="text-base font-bold">No bridge</span>
+        </div>
+
+        <p className="text-wrap">
+          Without a DA Bridge, Ethereum has no proof of data availability for
+          this project.
         </p>
       </div>
     )

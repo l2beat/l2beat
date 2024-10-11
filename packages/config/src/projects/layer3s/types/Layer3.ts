@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   ChainConfig,
@@ -22,6 +22,8 @@ export interface Layer3 {
   type: 'layer3'
   /** Unique, readable id, will be used in DB. DO NOT EDIT THIS PROPERTY */
   id: ProjectId
+  /** Date of creation of the file (not the project), required by test for upcoming projects */
+  createdAt?: UnixTime
   /** Is this layer3 an upcoming rollup? */
   isUpcoming?: boolean
   /** Is this layer3 archived? */
@@ -39,7 +41,7 @@ export interface Layer3 {
   /** Risk view values for this layer3 */
   riskView: ScalingProjectRiskView
   /** Stacked risk view values for this layer3 and it's base chain */
-  stackedRiskView?: ScalingProjectRiskView
+  stackedRiskView: ScalingProjectRiskView
   /** Data availability of scaling project */
   dataAvailability?: DataAvailabilityWithSentiment
   /** Deep dive into layer3 technology */
@@ -60,6 +62,8 @@ export interface Layer3 {
   knowledgeNuggets?: KnowledgeNugget[]
   /** List of badges */
   badges?: BadgeId[]
+  /** Indicates whether the generation of contained data was driven by discovery */
+  discoveryDrivenData?: boolean
 }
 
 export interface Layer3Config extends ScalingProjectConfig {

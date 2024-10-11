@@ -1,9 +1,8 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "blockNumber": 20847193,
-  "configHash": "0x04ead388d6c5ec6f85f0c437c6e44e3d39cc66103a137a34a93b456d51ef212f",
-  "version": 15,
+  "blockNumber": 20891049,
+  "configHash": "0x5f7370f4a07a8cc3494a93546960c459fd25377b9c259ccbbcc8e1de5fd48b40",
   "contracts": [
     {
       "name": "PlonkVerifierV1-1",
@@ -51,13 +50,13 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "gasOracle": "0x987e300fDfb06093859358522a79098848C33852",
-        "l2BaseFee": 61430918,
+        "l2BaseFee": 40333748,
         "maxGasLimit": 10000000,
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 938917,
-        "nextUnfinalizedQueueIndex": 938901,
+        "nextCrossDomainMessageIndex": 940425,
+        "nextUnfinalizedQueueIndex": 940402,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-        "pendingQueueIndex": 938914,
+        "pendingQueueIndex": 940421,
         "scrollChain": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "whitelistChecker": "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37"
       },
@@ -367,13 +366,6 @@
       "name": "wstETHescrowLido",
       "address": "0x6625C6332c9F91F2D27c304E729B86db87A3f504",
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0xCC2C53556Bc75217cf698721b29071d6f12628A9",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1696920503,
       "values": {
         "$admin": "0xCC2C53556Bc75217cf698721b29071d6f12628A9",
@@ -864,31 +856,9 @@
       "derivedName": "L2GasPriceOracle"
     },
     {
-      "name": "ProxyAdmin",
-      "address": "0x9eBf2f33526CD571f8b2ad312492cb650870CFd6",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0xA033Ff09f2da45f0e9ae495f525363722Df42b2a"
-        }
-      ],
-      "sinceTimestamp": 1713173507,
-      "values": {
-        "$immutable": true,
-        "owner": "0xC0896ab1A8cae8c2C1d27d011eb955Cca955580d"
-      }
-    },
-    {
       "name": "pufETHEscrow",
       "address": "0xA033Ff09f2da45f0e9ae495f525363722Df42b2a",
       "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x9eBf2f33526CD571f8b2ad312492cb650870CFd6",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1713173507,
       "values": {
         "$admin": "0x9eBf2f33526CD571f8b2ad312492cb650870CFd6",
@@ -954,7 +924,7 @@
           ]
         ],
         "$upgradeCount": 5,
-        "lastFinalizedBatchIndex": 324086,
+        "lastFinalizedBatchIndex": 326856,
         "layer2ChainId": 534352,
         "maxNumTxInChunk": 100,
         "messageQueue": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
@@ -1123,36 +1093,6 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "PufferFinanceOpsMultisig",
-      "address": "0xC0896ab1A8cae8c2C1d27d011eb955Cca955580d",
-      "template": "GnosisSafe",
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1706721719,
-      "values": {
-        "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "0x11B0BE5e19E38F6f6E07e11f103C4F4e8A5d0f6a",
-          "0xE408AE2E70a567c83C0BD36dC4a00b0a56F0A8DA",
-          "0xf09c25681090C5F9408c6D3CD24baa8721870dc5",
-          "0xD6475ce37d964d4816715FdafFEeAAf2958948bE",
-          "0xD70aa9d7280E6FEe89B86f53c0B2A363478D5e94",
-          "0x8F97Bf67182122D2f1745216a81724143db97E43",
-          "0xf061f1FceFa32b3bbD5d18c5A623DB64bfBc107D",
-          "0x206846dE1F372A9a603e672ba97A5238cC89aeAA"
-        ],
-        "$threshold": 3,
-        "domainSeparator": "0xb764b2ca0fc619f1ab8db52dc7089ea1c06341a2c41b9d23ba94a174163cbcee",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 206,
-        "VERSION": "1.3.0"
-      },
-      "derivedName": "GnosisSafe"
-    },
-    {
       "name": "L2TokenImplementationFallback",
       "address": "0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69",
       "sinceTimestamp": 1696927307,
@@ -1172,22 +1112,6 @@
         "verifierDigest": "0x0a1904dbfff4614fb090b4b3864af4874f12680c32f07889e9ede8665097e5ec"
       },
       "derivedName": "ZkEvmVerifierV2"
-    },
-    {
-      "name": "wstETHescrowLidoProxyAdmin",
-      "address": "0xCC2C53556Bc75217cf698721b29071d6f12628A9",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x6625C6332c9F91F2D27c304E729B86db87A3f504"
-        }
-      ],
-      "sinceTimestamp": 1708226927,
-      "values": {
-        "$immutable": true,
-        "owner": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
-      },
-      "derivedName": "ProxyAdmin"
     },
     {
       "name": "L1StandardERC20Gateway",
@@ -1405,7 +1329,7 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 97050824489037,
+        "totalBridgedUSDC": 86571374612221,
         "withdrawPaused": false
       },
       "derivedName": "L1USDCGateway"
@@ -1445,8 +1369,6 @@
     { "address": "0x0000000000000000000000000000000000000001" },
     { "address": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4" },
     { "address": "0x0c5cc5155b346453154059aD9d2Ff695dB92f774" },
-    { "address": "0x11B0BE5e19E38F6f6E07e11f103C4F4e8A5d0f6a" },
-    { "address": "0x206846dE1F372A9a603e672ba97A5238cC89aeAA" },
     { "address": "0x21b8a9F5a4640c3FC13E19C48e776173e1210995" },
     { "address": "0x2ce8B4A516ebBc8B425764a867B742F76C2244c7" },
     { "address": "0x33B60d5Dd260d453cAC3782b0bDC01ce84672142" },
@@ -1455,19 +1377,13 @@
     { "address": "0x568993632c34604098e35a184C52aD390c70f754" },
     { "address": "0x69d79Fc4Ae89E4DA80D719e26a435621F75B7f06" },
     { "address": "0x8aE8f22226B9d789A36AC81474e633f8bE2856c9" },
-    { "address": "0x8F97Bf67182122D2f1745216a81724143db97E43" },
     { "address": "0x9337B41709c1C2B938Cb460ea3fA9DB586B172E0" },
     { "address": "0xa1a12158bE6269D7580C63eC5E609Cdc0ddD82bC" },
     { "address": "0xcF2898225ED05Be911D3709d9417e86E0b4Cfc8f" },
-    { "address": "0xD6475ce37d964d4816715FdafFEeAAf2958948bE" },
-    { "address": "0xD70aa9d7280E6FEe89B86f53c0B2A363478D5e94" },
     { "address": "0xd7bC70ecf344C279eB78C8899Ba5538e2e3A0632" },
     { "address": "0xE2e6345baAD18f779167443Dc4886495507b3249" },
-    { "address": "0xE408AE2E70a567c83C0BD36dC4a00b0a56F0A8DA" },
     { "address": "0xEbbeeAA424AE904508465a41c927Be594C43Dc68" },
     { "address": "0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B" },
-    { "address": "0xf061f1FceFa32b3bbD5d18c5A623DB64bfBc107D" },
-    { "address": "0xf09c25681090C5F9408c6D3CD24baa8721870dc5" },
     { "address": "0xF9062b8a30e0d7722960e305049FA50b86ba6253" },
     { "address": "0xfc31892C5500AbE00974280b28907BaA9190E384" },
     { "address": "0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402" },
@@ -2148,17 +2064,6 @@
       "function verifier() view returns (address)",
       "function withdrawRoots(uint256) view returns (bytes32)"
     ],
-    "0x9eBf2f33526CD571f8b2ad312492cb650870CFd6": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function changeProxyAdmin(address proxy, address newAdmin)",
-      "function getProxyAdmin(address proxy) view returns (address)",
-      "function getProxyImplementation(address proxy) view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address proxy, address implementation)",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
     "0xA033Ff09f2da45f0e9ae495f525363722Df42b2a": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2273,9 +2178,6 @@
     "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc": [
       "constructor(address _singleton)"
     ],
-    "0xC0896ab1A8cae8c2C1d27d011eb955Cca955580d": [
-      "constructor(address _singleton)"
-    ],
     "0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function execute(address _target, bytes _data) payable",
@@ -2290,17 +2192,6 @@
       "function plonkVerifier() view returns (address)",
       "function verifierDigest() view returns (bytes32)",
       "function verify(bytes bundleProof, bytes publicInput) view"
-    ],
-    "0xCC2C53556Bc75217cf698721b29071d6f12628A9": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function changeProxyAdmin(address proxy, address newAdmin)",
-      "function getProxyAdmin(address proxy) view returns (address)",
-      "function getProxyImplementation(address proxy) view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address proxy, address implementation)",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
     "0xd1841c5756428812233eEA78afC17cb2D3e392bb": [
       "constructor(address _counterpart, address _messenger)",
@@ -2550,5 +2441,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

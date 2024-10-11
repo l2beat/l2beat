@@ -12,7 +12,7 @@
     "start": "vite",
     "format": "biome format .",
     "format:fix": "biome format --write .",
-    "lint:fix": "biome check --formatter-enabled=false --apply .",
+    "lint:fix": "biome check --formatter-enabled=false --write .",
     "lint": "biome check --formatter-enabled=false .",
     "typecheck": "tsc --noEmit"
   },

@@ -3,7 +3,6 @@
   "chain": "base",
   "blockNumber": 17827903,
   "configHash": "0x6dbcd0a3ed37a0123922561e52e68fa8df142159233f463e8c4494e33312fbb5",
-  "version": 15,
   "contracts": [
     {
       "name": "HamMultisig1",
@@ -14,6 +13,7 @@
         {
           "permission": "configure",
           "target": "0xd2e0532f8AE8DeDA4b9Ad2CB79f008C97c9C25eE",
+          "description": "set and change address mappings.",
           "via": [{ "address": "0x5eC25263F8a79F8D5fF7bD5F493640b6E2627B49" }]
         },
         {
@@ -221,7 +221,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xd2e0532f8AE8DeDA4b9Ad2CB79f008C97c9C25eE"
+          "target": "0xd2e0532f8AE8DeDA4b9Ad2CB79f008C97c9C25eE",
+          "description": "set and change address mappings."
         },
         {
           "permission": "upgrade",
@@ -461,6 +462,9 @@
       "name": "AddressManager",
       "address": "0xd2e0532f8AE8DeDA4b9Ad2CB79f008C97c9C25eE",
       "template": "opstack/AddressManager",
+      "descriptions": [
+        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+      ],
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -468,7 +472,8 @@
           "via": [
             {
               "address": "0x5eC25263F8a79F8D5fF7bD5F493640b6E2627B49",
-              "delay": 0
+              "delay": 0,
+              "description": "set and change address mappings."
             }
           ]
         }
@@ -959,7 +964,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
-    "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
+    "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
@@ -970,5 +975,5 @@
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

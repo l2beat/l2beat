@@ -1,4 +1,55 @@
-Generated with discovered.json: 0x6c30996002e0caa007f6510aee5b6414e22868d1
+Generated with discovered.json: 0x98a0771c749aa0ed8dc3faf94a63cc876be2d3a1
+
+# Diff at Fri, 11 Oct 2024 10:33:15 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@8f7c5fd25193054458be38552e62a708c480b2c8 block: 20842802
+- current block number: 20941805
+
+## Description
+
+Gelato MS signer removed, one DAC member added, one changed.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0) {
+    +++ description: State batches / commitments get posted here.
+      values.dacKeyset.membersCount:
+-        1
++        2
+      values.dacKeyset.blsSignatures.1:
++        "YBRYWM3r9QjDsxiTYDBsz7DLQsSk8ww7UeuNmhhAa+Spo31J5lWspLpAwHynMqRoDRkEg0bP1Y6Wivt1kwBOM2fDRs97y2vUB/OQpju9aok8WdBTJ16K9sM6Hlv0bT62ChK2Otjpjug8u839aoVPAZhojuYmW1hslHipM/JqYlCaVwHlB1hyp4kc8v230j6I6gsE1Bw1WMvxVXbP05bXwnO7ZIM+dQugQFWoDDZOS1HMIY+I9B+389vkEFGkjF8CPw5uGnIgdhabcqQFRkceDLVb7vMqJGgf/Oi4nKy6CKEJILwsf+grAdHY1MDDpe0WWRJflAnSemnZbpCaGqIEY1sEE/69idZuSbuqiHtmU0AGWcFcngv+WFjfG6Xr1V1tRw=="
+      values.dacKeyset.blsSignatures.0:
+-        "YAWa/w4rq6sHO4ozBBwPL3un0A6NDa3V163lAXaJmPZmihk4ntRlBqwcjz3Hq2NJWgcMOYyZicf+cyzYzT33XiJRcNMidWZ04qP6b7ZRHZh7R0p+YycNLqBxfRdNtllWJglg7ynQO4Suel9bqlzc+0Yq8ZuoHTHJXVVd4psJariQ/dNE16NqExPpV/jfJdFVThaAoNqowj5K/bl0VWEKPzxnf4ttwFM38wnUOIvmNHvVOREbkiWzus6H/6B7Cl7BygWo5cs97lUTeMuatpIqR/yNw352EkRLOLrmFTrg36zV9F8jebStSVDZ3M002mBH1gpxq5pQFaCb0lpXE0vmB08dfg7jS6KWU/OMlLZzVPk2DVKhkqtpDC5JAMkRNxrwfQ=="
++        "YBJCXtJZAUzwENdMJDCrgB6pWhA4ldiCFRNdySmzbLpcXriGq7NeKGLHyW5RcbP49QLgp7h9Asr+8KEc4coM7E0hRWXz6pU6W/rGUBAM1F0BtZNWdVQIp45BfwocbS4wxBWylr0ibVn8sJhVWG5uOY0kF0EddnVBElucIld+gTUyuTcNNKTHUqC1RdOI91XkKAC28qY5HGhdk41zEU8swBwjAIKmUbg+fcrKyxy/hs8OmySPr9YmPKnEv42CR0O0oBnadp/8W8WVrJRit2jwBQAXxLj52BxnGJkRA6x0DLkM+mXhU0ASMQB3EcWz5UaMZBfSXy4taHskYoDrqicHh5CCEAq7KoWive1o/stdn9VfnaGNL+uUqhGPg6Qbr/+oMw=="
+      values.keySetUpdates:
+-        1
++        2
+    }
+```
+
+```diff
+    contract GelatoMultisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      values.$members.9:
+-        "0x547D0F472309e4239b296D01e03bEDc101241a26"
+      values.$members.8:
+-        "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
++        "0x547D0F472309e4239b296D01e03bEDc101241a26"
+      values.$members.7:
+-        "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
++        "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
+      values.$members.6:
+-        "0x27b1682E9C5Cb0E58Ff474F3a13EeCC36E708ad3"
++        "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
+      values.multisigThreshold:
+-        "6 of 10 (60%)"
++        "6 of 9 (67%)"
+    }
+```
+
+Generated with discovered.json: 0xee942efa816220afd64b71592d5a041bf9650916
 
 # Diff at Tue, 01 Oct 2024 10:54:31 GMT:
 

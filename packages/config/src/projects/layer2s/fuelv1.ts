@@ -9,7 +9,6 @@ import {
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../common'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
@@ -62,7 +61,7 @@ export const fuelv1: Layer2 = {
     bridge: { type: 'Enshrined' },
     mode: 'Transaction data',
   }),
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: RISK_VIEW.STATE_FP_1R,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE,
@@ -70,7 +69,7 @@ export const fuelv1: Layer2 = {
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-  }),
+  },
   stage: getStage(
     {
       stage0: {

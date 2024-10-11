@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x4262e512e3864b6ddccec6b83a098abac2faa184
+
+# Diff at Wed, 02 Oct 2024 14:15:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d101c705b5f4fd0b3af2e251678b85e1005b31d8 block: 20871607
+- current block number: 20878347
+
+## Description
+
+Config related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20871607 (main branch discovery), not current.
+
+```diff
+    contract ForeignAMB (0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2020-01-17T10:56:41.000Z",["0xe804Fe5Fb14B02aba636f37Fb6E1c7a08b2f4B16"]],["2020-07-06T21:51:30.000Z",["0x2946f6D458F8Cf8723A1d9e95043831D3937461e"]],["2020-08-02T22:22:52.000Z",["0x54c6dFBB807BE694841A0F1B84CbC49D8FC98ed7"]],["2020-12-06T21:52:03.000Z",["0x872796bf7Fe754754d2BEE2c66D7de9B04a5C943"]],["2021-10-04T11:04:06.000Z",["0x82B67a43b69914E611710C62e629dAbB2f7AC6AB"]],["2024-09-23T08:55:47.000Z",["0x098f51bdfb5D6d319DD4FDf06b64773d25bD1316"]]]
+      values.$upgradeCount:
++        6
+    }
+```
+
+```diff
+    contract MultiTokenMediator (0x88ad09518695c6c3712AC10a214bE5109a655671) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2020-08-04T00:31:58.000Z",["0x280f04a988513610584057Bf3fDE1f56f4d22CA9"]],["2020-08-22T21:44:00.000Z",["0x4B86181abcAeFc008B561E27C0aee64Bb5eB8dBe"]],["2020-08-27T21:37:25.000Z",["0x5275e7264AB0Bb75D970E7442De0Aadd0C0b85ae"]],["2020-12-06T21:53:07.000Z",["0xB0a18F960221c6D56871c29e5dD7b838E79c2E94"]],["2021-03-15T12:56:56.000Z",["0x7bFF37bda2318125C6B895d4f2B50Bcd9E0cC40e"]],["2021-10-15T18:59:03.000Z",["0x8eB3b7D8498a6716904577b2579e1c313d48E347"]]]
+      values.$upgradeCount:
++        6
+    }
+```
+
+```diff
+    contract HashiManager (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-09-11T02:56:11.000Z",["0x159B36Ed5BA327fd269Fb93c75918257DCfe686d"]]]
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract BridgeValidators (0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2020-01-17T10:54:27.000Z",["0xD83893F31AA1B6B9D97C9c70D3492fe38D24d218"]]]
+      values.$upgradeCount:
++        1
+    }
+```
+
 Generated with discovered.json: 0x1ee6e62af8033db28f96636fad340c2ee316efcf
 
 # Diff at Tue, 01 Oct 2024 15:42:24 GMT:

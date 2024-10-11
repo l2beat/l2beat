@@ -1,3 +1,104 @@
+Generated with discovered.json: 0x41f2c0b7c194a335bce74f0146ed7b8824b7db6f
+
+# Diff at Thu, 10 Oct 2024 12:08:56 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@cb5ff535ffc194baf7396bd6db8232883e2ad088 block: 20922325
+- current block number: 20935110
+
+## Description
+
+Ignore SNX Multisig and wstethEscrow relatives + shape template config related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20922325 (main branch discovery), not current.
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      directlyReceivedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+```diff
+    contract wstETHEscrow (0x76943C0D61395d8F2edF9060e1533529cAe05dE6) {
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]},"0x4b43b36766bde12c5e9cbbc37d15f8d1f769f08f54720ab370faeb4ce893753a":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]},"0x63f736f21cb2943826cd50b191eb054ebbea670e4e962d0527611f830cd399d6":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","0x73b047fe6337183A454c5217241D780a932777bD"]},"0x9ab8816a3dc0b3849ec1ac00483f6ec815b07eee2fd766a353311c823ad59d0d":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]},"0x94a954c0bc99227eddbc0715a62a7e1056ed8784cd719c2303b685683908857c":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","0x73b047fe6337183A454c5217241D780a932777bD"]}}
+    }
+```
+
+```diff
+    contract AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.via.0.description:
++        "set and change address mappings."
+      descriptions:
++        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SynthetixMultisig (0xEb3107117FEAd7de89Cd14D463D340A2E6917769)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xe0aaeba96a6b157035d409db6ad8520899fb43b6
+
+# Diff at Tue, 08 Oct 2024 17:23:11 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@bca55174129419533cd4173605c170ea99ac6f98 block: 20826753
+- current block number: 20922325
+
+## Description
+
+The deposits on the main Lido escrow for Optimism are paused by the Lido EmergencyBrake Multisig following [an upgrade proposal](https://research.lido.fi/t/steth-on-optimism-upgrade-announcement-and-action-plan/8474) for rebasing L2 stETH. This is a scheduled action and deposits should be reenabled im 2024/10/10.
+
+Config related: Move to discovery driven data.
+
+## Watched changes
+
+```diff
+    contract wstETHEscrow (0x76943C0D61395d8F2edF9060e1533529cAe05dE6) {
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+      values.isDepositsEnabled:
+-        true
++        false
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20826753 (main branch discovery), not current.
+
+```diff
+    contract wstETHEscrow (0x76943C0D61395d8F2edF9060e1533529cAe05dE6) {
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+      template:
++        "lido/L1ERC20TokenBridge"
+      displayName:
++        "L1ERC20TokenBridge"
+      descriptions:
++        ["Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally."]
+    }
+```
+
 Generated with discovered.json: 0xab5b0dad05008fc4ed4f6fe633034f4554e466b5
 
 # Diff at Tue, 01 Oct 2024 10:53:43 GMT:

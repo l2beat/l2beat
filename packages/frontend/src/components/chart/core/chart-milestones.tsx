@@ -79,7 +79,6 @@ interface Props {
 }
 
 function ChartMilestone({ x, milestone }: Props) {
-  const ref = useRef<HTMLDivElement>(null)
   const { rect } = useChartRect()
   const style = useMemo(
     () =>
@@ -98,11 +97,7 @@ function ChartMilestone({ x, milestone }: Props) {
   }
 
   return (
-    <div
-      ref={ref}
-      className="absolute scale-75 select-none md:scale-100"
-      style={style}
-    >
+    <div className="absolute scale-75 select-none md:scale-100" style={style}>
       <a
         href={milestone.link}
         target="_blank"

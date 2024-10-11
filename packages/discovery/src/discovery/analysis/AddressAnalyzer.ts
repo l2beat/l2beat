@@ -314,8 +314,8 @@ export class AddressAnalyzer {
     const fieldOverrides: Record<string, DiscoveryContractField>[] = [
       overrides?.fields ?? {},
       template !== undefined
-        ? this.templateService.loadContractTemplate(template.template).fields ??
-          {}
+        ? (this.templateService.loadContractTemplate(template.template)
+            .fields ?? {})
         : {},
     ]
 

@@ -17,10 +17,8 @@ import {
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { getCommittee } from '../../discovery/starkware'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
@@ -181,7 +179,7 @@ export const dydx: Layer2 = {
     bridge: { type: 'Enshrined' },
     mode: 'State diffs',
   }),
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
       sources: [
@@ -242,7 +240,7 @@ export const dydx: Layer2 = {
     },
     destinationToken: RISK_VIEW.CANONICAL_USDC,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-  }),
+  },
   technology: {
     stateCorrectness: {
       ...STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
@@ -409,7 +407,7 @@ export const dydx: Layer2 = {
       description:
         'Allowed to update state of the rollup. When Operator is down the state cannot be updated.',
     },
-    getCommittee(discovery),
+    // getCommittee(discovery), # Removed because even though it is set for some reason, it is not used in updateState()
     {
       name: 'Rollup Admin',
       accounts: [

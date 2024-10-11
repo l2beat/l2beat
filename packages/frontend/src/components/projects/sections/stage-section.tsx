@@ -50,11 +50,7 @@ export function StageSection({
             className="relative -top-0.5 mr-2 inline-block"
           />
           {name} is currently
-          <StageBadge
-            stage={stageConfig.stage}
-            big
-            className="mx-1 md:mx-1.5"
-          />
+          <StageBadge stage={stageConfig.stage} className="mx-1 md:mx-1.5" />
           for stage assignment.
         </div>
       </ProjectSection>
@@ -76,8 +72,7 @@ export function StageSection({
           height={18}
           className="relative -top-0.5 mr-2 inline-block"
         />
-        {name} is a{' '}
-        <StageBadge stage={stageConfig.stage} big className="mx-1" />
+        {name} is a <StageBadge stage={stageConfig.stage} className="mx-1" />
         <span className="lowercase"> {type}</span>.
       </div>
       {stageConfig.message && (
@@ -108,7 +103,7 @@ export function StageSection({
             >
               <AccordionTrigger className="p-4 text-lg font-normal">
                 <div className="flex select-none items-center justify-start gap-3">
-                  <StageBadge stage={stage.stage} big />
+                  <StageBadge stage={stage.stage} />
                   {missing.length === 0 ? (
                     <div className="flex flex-col gap-3 md:flex-row">
                       <div className="flex items-center gap-2">

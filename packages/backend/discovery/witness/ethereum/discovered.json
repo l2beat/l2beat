@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20491473,
   "configHash": "0x5a18dc94a699ce771faca7fc8fd756e0d22f96fe60d5e177d853ca3c8c90f379",
-  "version": 15,
   "contracts": [
     {
       "name": "FflonkVerifier",
@@ -303,5 +302,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

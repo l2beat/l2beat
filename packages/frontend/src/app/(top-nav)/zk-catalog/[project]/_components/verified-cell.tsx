@@ -42,7 +42,7 @@ export function VerifiedCell(props: Props) {
               was able to regenerate the onchain verifier.
             </TooltipContent>
           </Tooltip>
-          <div className="ml-[26px] w-full flex-nowrap whitespace-nowrap text-xs font-medium text-zinc-500 max-md:hidden">
+          <div className="ml-[26px] w-full flex-nowrap whitespace-nowrap text-xs font-medium text-secondary max-md:hidden">
             (performed by{' '}
             {
               <OutLink className="underline" href={props.performedBy.link}>
@@ -88,7 +88,7 @@ export function VerifiedCell(props: Props) {
               wasn&apos;t able to regenerate the onchain verifier.
             </TooltipContent>
           </Tooltip>
-          <div className="ml-[26px] w-full flex-nowrap whitespace-nowrap text-xs font-medium text-zinc-500 max-md:hidden">
+          <div className="ml-[26px] w-full flex-nowrap whitespace-nowrap text-xs font-medium text-secondary max-md:hidden">
             (performed by{' '}
             {
               <OutLink className="underline" href={props.performedBy.link}>

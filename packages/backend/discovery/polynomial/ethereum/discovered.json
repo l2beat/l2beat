@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20769371,
   "configHash": "0x04318f42e060d115a003b02e8e7426c1b68702225a43f5b45840ee74038f90ca",
-  "version": 15,
   "contracts": [
     {
       "name": "OptimismPortal",
@@ -54,6 +53,9 @@
       "name": "AddressManager",
       "address": "0x287bBa8116F2fc5a642bfD6027EBf5AD6522655C",
       "template": "opstack/AddressManager",
+      "descriptions": [
+        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+      ],
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -61,7 +63,8 @@
           "via": [
             {
               "address": "0x3c68b1d45f4faa4F028c3DC8910fA3247c7f0a1f",
-              "delay": 0
+              "delay": 0,
+              "description": "set and change address mappings."
             }
           ]
         }
@@ -154,7 +157,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x287bBa8116F2fc5a642bfD6027EBf5AD6522655C"
+          "target": "0x287bBa8116F2fc5a642bfD6027EBf5AD6522655C",
+          "description": "set and change address mappings."
         },
         {
           "permission": "upgrade",
@@ -200,6 +204,7 @@
         {
           "permission": "configure",
           "target": "0x287bBa8116F2fc5a642bfD6027EBf5AD6522655C",
+          "description": "set and change address mappings.",
           "via": [{ "address": "0x3c68b1d45f4faa4F028c3DC8910fA3247c7f0a1f" }]
         },
         {
@@ -786,7 +791,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
-    "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
+    "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
@@ -796,5 +801,5 @@
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

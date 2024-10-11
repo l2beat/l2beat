@@ -5,12 +5,12 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { IProvider } from '../provider/IProvider'
 import { HandlerResult } from './Handler'
 
-const REFERENCE_REGEX = /^\{\{ [$a-z_][$.a-z\d_]* \}\}$/i
+const REFERENCE_REGEX = /^\{\{\s*[$a-z_][$.a-z\d_]*\s*\}\}$/i
 export const Reference = z.string().regex(REFERENCE_REGEX)
 
 export function getReferencedName(value: unknown): string | undefined {
   if (typeof value === 'string' && REFERENCE_REGEX.test(value)) {
-    return value.slice(3, -3)
+    return value.slice(2, -2).trim()
   }
 }
 

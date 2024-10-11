@@ -23,13 +23,13 @@ type AddressToMetaMap = { [address: string]: ContractMeta }
 // using `| undefined` for strong type safety,
 // making sure ever field of meta is always processed.
 export interface ContractMeta {
-  displayName: string | undefined
-  descriptions: string[] | undefined
-  roles: Set<StackRole> | undefined
-  permissions: PermissionConfiguration[] | undefined
-  categories: Set<StackCategory> | undefined
-  types: Set<ContractValueType> | undefined
-  severity: ContractFieldSeverity | undefined
+  displayName?: string
+  descriptions?: string[]
+  roles?: Set<StackRole>
+  permissions?: PermissionConfiguration[]
+  categories?: Set<StackCategory>
+  types?: Set<ContractValueType>
+  severity?: ContractFieldSeverity
 }
 
 export function mergeContractMeta(

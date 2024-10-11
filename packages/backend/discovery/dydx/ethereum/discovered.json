@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 19825321,
   "configHash": "0x847ede6a024e5b92079594fdc9dc23cdb1b71bfe3a16bd0235f77ffed4ab6ecb",
-  "version": 15,
   "contracts": [
     {
       "name": "MerkleDistributor",
@@ -2290,5 +2289,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

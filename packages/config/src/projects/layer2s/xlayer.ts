@@ -104,6 +104,7 @@ export const xlayer: Layer2 = polygonCDKStack({
     },
     activityDataSource: 'Blockchain RPC',
   },
+  associatedTokens: ['OKB'],
   nonTemplateEscrows: [
     shared.getEscrowDetails({
       address: bridge.address,

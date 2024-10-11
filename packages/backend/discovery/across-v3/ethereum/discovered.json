@@ -1,9 +1,8 @@
 {
   "name": "across-v3",
   "chain": "ethereum",
-  "blockNumber": 20675639,
+  "blockNumber": 20934032,
   "configHash": "0xf486b63f8ed759517c43e689f34697eacc9d82deefc356f0c99a4c61f56a36bd",
-  "version": 15,
   "contracts": [
     {
       "name": "Zora_Adapter",
@@ -36,7 +35,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "120829027721366963347431018",
+        "totalSupply": "121469482789324159006283718",
         "totalSupplyAt": [
           "100000000000000000000000000",
           "100000000000000000000000000",
@@ -102,7 +101,7 @@
         "$immutable": true,
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1725433907,
+        "getCurrentTime": 1728549107,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -198,11 +197,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
-        "getCurrentTime": 1725433907,
+        "getCurrentTime": 1728549107,
         "hubPool": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 1521185,
+        "numberOfDeposits": 1569966,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -220,7 +219,7 @@
       "values": {
         "$immutable": true,
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1725433907,
+        "getCurrentTime": 1728549107,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -274,7 +273,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 701,
+        "nonce": 714,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -331,6 +330,26 @@
       "derivedName": "OptimisticGovernor"
     },
     {
+      "name": "WorldChain_Adapter",
+      "address": "0x8eBebfc894047bEE213A561b8792fCa71241731f",
+      "template": "acrossv3/adapter",
+      "ignoreInWatchMode": [
+        "L2_MESSAGE_RELAY_GAS_LIMIT",
+        "L2_TOKEN_RELAY_GAS_LIMIT"
+      ],
+      "sinceTimestamp": 1728402707,
+      "values": {
+        "$immutable": true,
+        "cctpTokenMessenger": "0x0000000000000000000000000000000000000000",
+        "L1_STANDARD_BRIDGE": "0x470458C91978D2d929704489Ad730DC3E3001113",
+        "L1_WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "L2_GAS_LIMIT": 200000,
+        "MESSENGER": "0xf931a81D18B1766d15695ffc7c1920a62b7e710a",
+        "recipientCircleDomainId": 4294967295,
+        "usdcToken": "0x0000000000000000000000000000000000000000"
+      }
+    },
+    {
       "name": "EmergencyProposer",
       "address": "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
       "ignoreInWatchMode": ["getCurrentTime"],
@@ -339,7 +358,7 @@
         "$immutable": true,
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1725433907,
+        "getCurrentTime": 1728549107,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -392,7 +411,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x8692B776d1Ff0664177c90465038056Dc64f8991"],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 249,
+        "nonce": 252,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -440,6 +459,7 @@
           "137": "0xb4AeF0178f5725392A26eE18684C2aB62adc912e",
           "288": "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3",
           "324": "0xE233009838CB898b50e0012a6E783FC9FeE447FB",
+          "480": "0x8eBebfc894047bEE213A561b8792fCa71241731f",
           "690": "0x188F8C95B7cfB7993B53a4F643efa687916f73fA",
           "1135": "0x8229E812f20537caA1e8Fb41749b4887B8a75C3B",
           "8453": "0xE1421233BF7158A19f89F17c9735F9cbd3D9529c",
@@ -458,6 +478,7 @@
           "137": "0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096",
           "288": "0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58",
           "324": "0xE0B015E54d54fc84a6cB9B666099c46adE9335FF",
+          "480": "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
           "690": "0x13fDac9F9b4777705db45291bbFF3c972c6d1d97",
           "1135": "0x9552a0a6624A23B848060AE5901659CDDa1f83f8",
           "8453": "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
@@ -478,13 +499,13 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": {
-          "poolRebalanceRoot": "0x62636840f0f029fa2f46f8feff69fed905c76988b3cacbf210b12d8ebdd61b1c",
-          "relayerRefundRoot": "0xd9959f7d972f9b97446c39c8e31f1659c578969afb56575e912679346841e727",
+          "poolRebalanceRoot": "0x68149deda9498dc115b29b8b1a33f027bc3ad28535aed06c3b479dd303bc305a",
+          "relayerRefundRoot": "0x734981bd795986da360ec4db588eb21c3c17d0ac767d5b0a29c24a0603894157",
           "slowRelayRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "claimedBitMap": 0,
           "proposer": "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
-          "unclaimedPoolRebalanceLeafCount": 11,
-          "challengePeriodEndTimestamp": 1725434135
+          "unclaimedPoolRebalanceLeafCount": 12,
+          "challengePeriodEndTimestamp": 1728551207
         },
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
@@ -987,6 +1008,20 @@
       "function target() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
+    "0x8eBebfc894047bEE213A561b8792fCa71241731f": [
+      "constructor(address _l1Weth, address _crossDomainMessenger, address _l1StandardBridge, address _l1Usdc)",
+      "event MessageRelayed(address target, bytes message)",
+      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
+      "function L1_STANDARD_BRIDGE() view returns (address)",
+      "function L1_WETH() view returns (address)",
+      "function L2_GAS_LIMIT() view returns (uint32)",
+      "function MESSENGER() view returns (address)",
+      "function cctpTokenMessenger() view returns (address)",
+      "function recipientCircleDomainId() view returns (uint32)",
+      "function relayMessage(address target, bytes message) payable",
+      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
+      "function usdcToken() view returns (address)"
+    ],
     "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748": [
       "constructor(address _token, uint256 _quorum, address _governor, address _executor, uint64 _minimumWaitTime)",
       "event EmergencyProposalExecuted(uint256 indexed id, address indexed sender, address indexed caller, uint64 expiryTime, uint256 lockedTokens, tuple(address to, uint256 value, bytes data)[] transactions)",
@@ -1316,5 +1351,5 @@
     "acrossv3/adapter": "0xeaf92ca0d35393a678b6711fdb4d669f314758b2a55dfb334cad14cb7175c3b0",
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

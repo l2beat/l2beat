@@ -197,6 +197,16 @@ describe('tokens', () => {
           expect(token.coingeckoId).toEqual(
             CoingeckoId('mountain-protocol-usdm'),
           )
+        } else if (token.id === AssetId.YBETH) {
+          // TODO(maciekzygmunt): ybETH is a yield-bearing token version of vETH,
+          // and its price should increase relative to vETH over time. Currently, the
+          // price of ybETH is not available on CoinGecko, so we are using the price
+          // of vETH as a placeholder. For now, the difference is not significant, so
+          // there shouldn't be a major impact on TVL calculations. This should be updated
+          // in the future when the price is added to CoinGecko.
+          //
+          // - 8 October 2024
+          expect(token.coingeckoId).toEqual(CoingeckoId('veno-eth'))
         } else {
           const expectedId = token.address && result.get(token.address)
 

@@ -11,7 +11,6 @@ import {
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
@@ -49,6 +48,7 @@ const freezeGracePeriod = discovery.getContractValue<number>(
 const committee = getCommittee(discovery)
 
 export const reddioex: Layer2 = {
+  isArchived: true,
   type: 'layer2',
   id: ProjectId('reddioex'),
   badges: [
@@ -60,6 +60,8 @@ export const reddioex: Layer2 = {
   display: {
     name: 'RedSonic',
     slug: 'redsonic',
+    headerWarning:
+      'This project was sunset on 2024-09-20 and deposits after that time may not be recoverable.',
     description:
       'RedSonic is a Validium based on the StarkEx technology. Its goal is to power the next generation Web3 apps and games by providing developers with the APIs and SDKs to create digital assets and easily integrate them in-app and in-game.',
     purposes: ['Exchange', 'NFT', 'Gaming'],
@@ -114,7 +116,7 @@ export const reddioex: Layer2 = {
     },
     mode: 'State diffs',
   }),
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: {
       ...RISK_VIEW.DATA_EXTERNAL_DAC({
@@ -144,7 +146,7 @@ export const reddioex: Layer2 = {
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_NFT,
     destinationToken: RISK_VIEW.CANONICAL,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-  }),
+  },
   technology: {
     stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
     newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,

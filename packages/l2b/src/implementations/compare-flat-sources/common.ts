@@ -250,7 +250,7 @@ function filesToCompare(paths: string[]): string[] {
   )
 }
 
-async function listFilesRecursively(path: string): Promise<string[]> {
+export async function listFilesRecursively(path: string): Promise<string[]> {
   const entries = await readdir(path, { withFileTypes: true })
   const files = await Promise.all(
     entries.map((entry) => {

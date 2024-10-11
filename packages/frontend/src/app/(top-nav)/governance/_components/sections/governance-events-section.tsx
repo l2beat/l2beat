@@ -37,14 +37,14 @@ function Event({ event }: { event: GovernanceEventEntry }) {
         {event.subtitle && (
           <p
             className={cn(
-              'text-xs font-semibold uppercase text-purple-100 dark:text-pink-200',
+              'text-xs font-medium uppercase text-purple-100 dark:text-pink-200',
               event.highlighted && 'text-pink-200',
             )}
           >
             {event.subtitle}
           </p>
         )}
-        <p className="text-lg font-semibold leading-tight">{event.title}</p>
+        <p className="text-lg font-medium leading-tight">{event.title}</p>
         <CustomLink
           href={event.link}
           className={cn('mt-2 text-xs', event.highlighted && 'text-white')}

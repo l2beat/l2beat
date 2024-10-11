@@ -69,6 +69,22 @@ export function toTrackedTxConfig(
             id: createTrackedTxId(withParams),
           }
         }
+        case 'sharedBridge': {
+          const withParams = {
+            ...base,
+            params: {
+              formula: 'sharedBridge',
+              address: config.query.address,
+              signature: config.query.functionSignature,
+              selector: config.query.selector,
+              chainId: config.query.chainId,
+            },
+          } as const
+          return {
+            ...withParams,
+            id: createTrackedTxId(withParams),
+          }
+        }
       }
     }),
   )

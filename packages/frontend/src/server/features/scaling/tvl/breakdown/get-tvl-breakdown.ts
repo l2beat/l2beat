@@ -2,9 +2,11 @@ import { type ConfigMapping, safeGetTokenByAssetId } from '@l2beat/config'
 import {
   assert,
   type AssetId,
+  type EthereumAddress,
   type ProjectId,
   UnixTime,
   asNumber,
+  assertUnreachable,
 } from '@l2beat/shared-pure'
 import { assignTokenMetaToBreakdown } from './assign-token-meta-to-breakdown'
 import { chainConverter } from './chain-converter'
@@ -12,6 +14,9 @@ import { getLatestAmountForConfigurations } from './get-latest-amount-for-config
 import { getLatestPriceForConfigurations } from './get-latest-price-for-configurations'
 import { recordToSortedBreakdown } from './record-to-sorted-breakdown'
 import { type BreakdownRecord, type CanonicalAssetBreakdownData } from './types'
+
+const SHARED_ESCROW_WARNING =
+  'Does not account for differences in locked value due to pending deposits and withdrawals.'
 
 export function getTvlBreakdown(configMapping: ConfigMapping) {
   return async function (projectId: ProjectId, target?: UnixTime) {
@@ -69,9 +74,29 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
               config.type === 'preminted' ||
               config.type === 'aggLayerL2Token' ||
               config.type === 'aggLayerNativeEtherPreminted' ||
-              config.type === 'aggLayerNativeEtherWrapped',
-            'Only escrow, preminted, AggLayer tokens can be canonical',
+              config.type === 'aggLayerNativeEtherWrapped' ||
+              config.type === 'elasticChainL2Token' ||
+              config.type === 'elasticChainEther',
+            'Only escrow, preminted, AggLayer, Elastic tokens can be canonical',
           )
+
+          let isSharedEscrow
+          switch (config.type) {
+            case 'aggLayerL2Token':
+            case 'aggLayerNativeEtherPreminted':
+            case 'aggLayerNativeEtherWrapped':
+            case 'elasticChainL2Token':
+            case 'elasticChainEther':
+              isSharedEscrow = true
+              break
+            case 'escrow':
+            case 'preminted':
+              isSharedEscrow = false
+              break
+            default:
+              assertUnreachable(config)
+          }
+
           const asset = breakdown.canonical.get(priceConfig.assetId)
           if (asset) {
             asset.usdValue += valueAsNumber
@@ -81,6 +106,7 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
               usdValue: valueAsNumber,
               escrowAddress: config.escrowAddress,
               ...(config.type === 'preminted' ? { isPreminted: true } : {}),
+              warning: isSharedEscrow ? SHARED_ESCROW_WARNING : undefined,
             })
           } else {
             breakdown.canonical.set(priceConfig.assetId, {
@@ -95,6 +121,7 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
                   usdValue: valueAsNumber,
                   escrowAddress: config.escrowAddress,
                   ...(config.type === 'preminted' ? { isPreminted: true } : {}),
+                  warning: isSharedEscrow ? SHARED_ESCROW_WARNING : undefined,
                 },
               ],
             })
@@ -104,13 +131,20 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
         case 'external': {
           const token = safeGetTokenByAssetId(priceConfig.assetId)
 
-          const address =
-            config.type === 'aggLayerL2Token'
-              ? config.l1Address
-              : config.type === 'aggLayerNativeEtherPreminted' ||
-                  config.type === 'aggLayerNativeEtherWrapped'
-                ? 'native'
-                : config.address
+          let address: EthereumAddress | 'native'
+          switch (config.type) {
+            case 'aggLayerL2Token':
+            case 'elasticChainL2Token':
+              address = config.l1Address
+              break
+            case 'aggLayerNativeEtherPreminted':
+            case 'aggLayerNativeEtherWrapped':
+            case 'elasticChainEther':
+              address = 'native'
+              break
+            default:
+              address = config.address
+          }
 
           breakdown.external.push({
             assetId: priceConfig.assetId,
@@ -127,13 +161,21 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
           break
         }
         case 'native': {
-          const address =
-            config.type === 'aggLayerL2Token'
-              ? config.l1Address
-              : config.type === 'aggLayerNativeEtherPreminted' ||
-                  config.type === 'aggLayerNativeEtherWrapped'
-                ? 'native'
-                : config.address
+          let address: EthereumAddress | 'native'
+          switch (config.type) {
+            case 'aggLayerL2Token':
+            case 'elasticChainL2Token':
+              address = config.l1Address
+              break
+            case 'aggLayerNativeEtherPreminted':
+            case 'aggLayerNativeEtherWrapped':
+            case 'elasticChainEther':
+              address = 'native'
+              break
+            default:
+              address = config.address
+          }
+
           breakdown.native.push({
             assetId: priceConfig.assetId,
             chainId: chainConverter.toChainId(config.chain),

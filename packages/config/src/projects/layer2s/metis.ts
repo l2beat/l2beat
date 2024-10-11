@@ -12,7 +12,6 @@ import {
   FRONTRUNNING_RISK,
   RISK_VIEW,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -110,7 +109,7 @@ export const metis: Layer2 = {
     bridge: { type: 'None' },
     mode: 'Transaction data',
   }),
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,
       secondLine: `${formatSeconds(CHALLENGE_PERIOD_SECONDS)} challenge period`,
@@ -131,7 +130,7 @@ export const metis: Layer2 = {
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('METIS'),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-  }),
+  },
   technology: {
     stateCorrectness: {
       name: 'No automatic on-chain fraud proof system',

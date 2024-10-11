@@ -1,9 +1,8 @@
 {
   "name": "nova",
   "chain": "nova",
-  "blockNumber": 75517853,
-  "configHash": "0x1c226d3f76c0ec2cb1fcb3c363c2743922f2a82aebe21238fdf8d9afd72f6388",
-  "version": 15,
+  "blockNumber": 77458757,
+  "configHash": "0x3126f9b4d9710b222723513b08bf8aceb05d8d9785ffaef88e905065048b4801",
   "contracts": [
     {
       "name": "L2GatewayRouter",
@@ -313,7 +312,7 @@
         ],
         "$upgradeCount": 3,
         "counterpartGateway": "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
-        "exitNum": 2277,
+        "exitNum": 2308,
         "router": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
       },
       "derivedName": "L2CustomGateway"
@@ -347,7 +346,7 @@
         "getChainId": 42170,
         "GnosisSafe_modules": ["0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"],
         "multisigThreshold": "9 of 12 (75%)",
-        "nonce": 2,
+        "nonce": 3,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -382,7 +381,7 @@
         "beaconProxyFactory": "0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3",
         "cloneableProxyHash": "0xe95e7b13b0b76934e55320c0f1a812918ec818f61a9b36660d64d803eeecb91a",
         "counterpartGateway": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
-        "exitNum": 843,
+        "exitNum": 851,
         "router": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
       },
       "derivedName": "L2ERC20Gateway"
@@ -410,7 +409,7 @@
         "getChainId": 42170,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 3,
+        "nonce": 4,
         "VERSION": "1.3.0"
       }
     },
@@ -465,6 +464,7 @@
           "via": []
         }
       ],
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1678968495,
       "values": {
         "$admin": "0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9",
@@ -482,7 +482,7 @@
         "l2Gateway": "0xbf544970E6BD77b21C6492C281AB60d0770451F4",
         "name": "Arbitrum",
         "symbol": "ARB",
-        "totalSupply": "232176163013315421283473"
+        "totalSupply": "232021314455061742437815"
       },
       "derivedName": "L2CustomGatewayToken"
     }
@@ -900,5 +900,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

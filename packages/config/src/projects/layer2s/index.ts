@@ -30,7 +30,6 @@ import { creator } from './creator'
 import { cronoszkevm } from './cronoszkevm'
 import { cyber } from './cyber'
 import { dbk } from './dbk'
-import { debank } from './debank'
 import { degate } from './degate'
 import { degate2 } from './degate2'
 import { degate3 } from './degate3'
@@ -47,6 +46,7 @@ import { frame } from './frame'
 import { fraxtal } from './fraxtal'
 import { fuel } from './fuel'
 import { fuelv1 } from './fuelv1'
+import { funki } from './funki'
 import { galxegravity } from './galxegravity'
 import { gluon } from './gluon'
 import { gpt } from './gpt'
@@ -198,7 +198,6 @@ export const layer2s: Layer2[] = [
   creator,
   cronoszkevm,
   dbk,
-  debank,
   honeypot,
   degate,
   degate2,
@@ -215,6 +214,7 @@ export const layer2s: Layer2[] = [
   fraxtal,
   fuel,
   fuelv1,
+  funki,
   gluon,
   gpt,
   galxegravity,

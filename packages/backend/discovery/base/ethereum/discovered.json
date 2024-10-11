@@ -1,9 +1,8 @@
 {
   "name": "base",
   "chain": "ethereum",
-  "blockNumber": 20871599,
-  "configHash": "0x4fbbc917890f4d3f2087e5cb09da4c68de323d988c3afd191d1c8572878bc105",
-  "version": 14,
+  "blockNumber": 20941326,
+  "configHash": "0xe46088b8a34a06f4d38288a4dfac15fea2d77390a56bbcac099882d6f94647bc",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -23,8 +22,7 @@
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
         "thresholdPercentage": 75,
         "version": "1.2.0"
-      },
-      "derivedName": "LivenessModule"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -33,7 +31,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x8EfB6B5c4767B09Dc9AA6Af4eAA89F749522BaE2"
+          "target": "0x8EfB6B5c4767B09Dc9AA6Af4eAA89F749522BaE2",
+          "description": "set and change address mappings."
         },
         {
           "permission": "upgrade",
@@ -93,15 +92,28 @@
       "values": {
         "$admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
         "$implementation": "0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846",
+        "$pastUpgrades": [
+          [
+            "2023-06-15T01:51:59.000Z",
+            ["0x3d2c2f8f95CAba644eA25319c4c08594b8DC0359"]
+          ],
+          [
+            "2024-06-28T16:32:47.000Z",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2024-06-28T16:32:47.000Z",
+            ["0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846"]
+          ]
+        ],
         "$upgradeCount": 3,
         "bridge": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "BRIDGE": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "version": "1.9.0"
-      },
-      "derivedName": "OptimismMintableERC20Factory"
+      }
     },
     {
-      "name": "GuardianMultisig",
+      "name": "SuperchainGuardianMultisig",
       "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -134,6 +146,12 @@
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
         }
       ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1685980643,
       "values": {
@@ -157,7 +175,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 11 (27%)",
-        "nonce": 32,
+        "nonce": 39,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -198,6 +216,7 @@
       "values": {
         "$admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
         "$implementation": "0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
@@ -207,8 +226,7 @@
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.1.0"
-      },
-      "derivedName": "L1StandardBridge"
+      }
     },
     {
       "name": "GnosisSafe",
@@ -258,6 +276,20 @@
       "values": {
         "$admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
         "$implementation": "0x2D778797049FE9259d947D1ED8e5442226dFB589",
+        "$pastUpgrades": [
+          [
+            "2023-06-15T01:51:59.000Z",
+            ["0x5FB30336A8d0841cf15d452afA297cB6D10877D7"]
+          ],
+          [
+            "2024-06-28T16:32:47.000Z",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2024-06-28T16:32:47.000Z",
+            ["0x2D778797049FE9259d947D1ED8e5442226dFB589"]
+          ]
+        ],
         "$upgradeCount": 3,
         "guardian": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
         "GUARDIAN": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
@@ -267,15 +299,14 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 20871597
+          "prevBlockNum": 20941323
         },
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "SYSTEM_CONFIG": "0x73a79Fab69143498Ed3712e519A88a918e1f4072",
         "systemConfig": "0x73a79Fab69143498Ed3712e519A88a918e1f4072",
         "version": "2.5.0"
-      },
-      "derivedName": "OptimismPortal"
+      }
     },
     {
       "name": "SuperchainProxyAdmin",
@@ -284,7 +315,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+          "target": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+          "description": "set and change address mappings."
         },
         {
           "permission": "upgrade",
@@ -330,6 +362,24 @@
       "values": {
         "$admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
         "$implementation": "0xF243BEd163251380e78068d317ae10f26042B292",
+        "$pastUpgrades": [
+          [
+            "2023-06-15T01:51:59.000Z",
+            ["0x7237343c2A746Aa2940E5E4Fbd53eaFBF3049DcA"]
+          ],
+          [
+            "2023-07-25T19:44:11.000Z",
+            ["0xf2460D3433475C8008ceFfe8283F07EB1447E39a"]
+          ],
+          [
+            "2024-06-28T16:32:47.000Z",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2024-06-28T16:32:47.000Z",
+            ["0xF243BEd163251380e78068d317ae10f26042B292"]
+          ]
+        ],
         "$upgradeCount": 4,
         "challenger": "0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824",
         "CHALLENGER": "0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824",
@@ -341,10 +391,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 20502000,
-        "latestOutputIndex": 11389,
-        "nextBlockNumber": 20503800,
-        "nextOutputIndex": 11390,
+        "latestBlockNumber": 20921400,
+        "latestOutputIndex": 11622,
+        "nextBlockNumber": 20923200,
+        "nextOutputIndex": 11623,
         "proposer": "0x642229f238fb9dE03374Be34B0eD8D9De80752c5",
         "PROPOSER": "0x642229f238fb9dE03374Be34B0eD8D9De80752c5",
         "startingBlockNumber": 0,
@@ -352,8 +402,7 @@
         "SUBMISSION_INTERVAL": 1800,
         "submissionInterval": 1800,
         "version": "1.8.0"
-      },
-      "derivedName": "L2OutputOracle"
+      }
     },
     {
       "name": "SuperchainProxyAdminOwner",
@@ -364,6 +413,7 @@
         {
           "permission": "configure",
           "target": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+          "description": "set and change address mappings.",
           "via": [{ "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }]
         },
         {
@@ -421,6 +471,20 @@
       "values": {
         "$admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
         "$implementation": "0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d",
+        "$pastUpgrades": [
+          [
+            "2023-06-15T01:51:59.000Z",
+            ["0x3311aC7F72bb4108d9f4D5d50E7623B1498A9eC0"]
+          ],
+          [
+            "2024-06-28T16:32:47.000Z",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2024-06-28T16:32:47.000Z",
+            ["0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"]
+          ]
+        ],
         "$upgradeCount": 3,
         "messenger": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "MESSENGER": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
@@ -429,12 +493,12 @@
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.1.0"
-      },
-      "derivedName": "L1ERC721Bridge"
+      }
     },
     {
       "name": "Challenger1of2",
       "address": "0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824",
+      "template": "base/Challenger1of2",
       "roles": ["Challenger"],
       "sinceTimestamp": 1689917711,
       "values": {
@@ -469,16 +533,30 @@
           ]
         }
       ],
-      "ignoreInWatchMode": ["scalar", "overhead"],
+      "ignoreInWatchMode": ["gasLimit", "overhead"],
       "sinceTimestamp": 1686793895,
       "values": {
         "$admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
         "$implementation": "0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1",
+        "$pastUpgrades": [
+          [
+            "2023-06-15T01:51:47.000Z",
+            ["0x6481ff79597Fe4F77E1063f615ec5BDaDDEFfd4B"]
+          ],
+          [
+            "2024-06-28T16:32:47.000Z",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2024-06-28T16:32:47.000Z",
+            ["0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1"]
+          ]
+        ],
         "$upgradeCount": 3,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "0x5050F69a9786F081509234F1a7F4684b5E5b76C9",
         "batchInbox": "0xFf00000000000000000000000000000000008453",
-        "gasLimit": 132000000,
+        "gasLimit": 156000000,
         "L1_CROSS_DOMAIN_MESSENGER_SLOT": "0x383f291819e6d54073bc9a648251d97421076bdd101933c0c022219ce9580636",
         "L1_ERC_721_BRIDGE_SLOT": "0x46adcbebc6be8ce551740c29c47c8798210f23f7f4086c41752944352568d5a7",
         "L1_STANDARD_BRIDGE_SLOT": "0x9904ba90dde5696cda05c9e0dab5cbaa0fea005ace4d11218a02ac668dad6376",
@@ -520,11 +598,10 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         }
-      },
-      "derivedName": "SystemConfig"
+      }
     },
     {
-      "name": "AdminMultisig",
+      "name": "BaseAdminMultisig",
       "address": "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -532,6 +609,7 @@
         {
           "permission": "configure",
           "target": "0x8EfB6B5c4767B09Dc9AA6Af4eAA89F749522BaE2",
+          "description": "set and change address mappings.",
           "via": [{ "address": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E" }]
         },
         {
@@ -634,8 +712,27 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65",
+        "$pastUpgrades": [
+          [
+            "2023-06-15T01:51:47.000Z",
+            ["0x0000000000000000000000000000000000000000"]
+          ],
+          [
+            "2023-06-15T01:51:59.000Z",
+            ["0x81C4Bd600793EBd1C0323604E1F455fE50A951F8"]
+          ],
+          [
+            "2024-06-28T16:32:47.000Z",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2024-06-28T16:32:47.000Z",
+            ["0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"]
+          ]
+        ],
+        "$upgradeCount": 4,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292898714",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292902975",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -652,13 +749,15 @@
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.3.0"
-      },
-      "derivedName": "L1CrossDomainMessenger"
+      }
     },
     {
       "name": "AddressManager",
       "address": "0x8EfB6B5c4767B09Dc9AA6Af4eAA89F749522BaE2",
       "template": "opstack/AddressManager",
+      "descriptions": [
+        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+      ],
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -666,7 +765,8 @@
           "via": [
             {
               "address": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
-              "delay": 0
+              "delay": 0,
+              "description": "set and change address mappings."
             }
           ]
         }
@@ -702,6 +802,20 @@
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0x53c165169401764778F780a69701385eb0FF19B7",
+        "$pastUpgrades": [
+          [
+            "2024-01-22T20:19:59.000Z",
+            ["0x53c165169401764778F780a69701385eb0FF19B7"]
+          ],
+          [
+            "2024-06-10T18:29:23.000Z",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2024-06-10T18:29:23.000Z",
+            ["0x53c165169401764778F780a69701385eb0FF19B7"]
+          ]
+        ],
         "$upgradeCount": 3,
         "guardian": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
         "GUARDIAN_SLOT": "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68",
@@ -711,7 +825,7 @@
       }
     },
     {
-      "name": "BaseMultisig",
+      "name": "BaseMultisig1",
       "address": "0x9855054731540A48b28990B63DcF4f33d8AE46A1",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -743,6 +857,12 @@
       "address": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1610850364,
       "values": {
@@ -771,11 +891,22 @@
     {
       "name": "wstETHEscrow",
       "address": "0x9de443AdC5A411E83F1878Ef24C3F52C61571e72",
+      "template": "lido/L1ERC20TokenBridge",
       "proxyType": "EIP1967 proxy",
+      "displayName": "L1ERC20TokenBridge",
+      "descriptions": [
+        "Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally."
+      ],
       "sinceTimestamp": 1695935315,
       "values": {
         "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "$implementation": "0x313819736457910aC1Dd21a712a37f3d7595645A",
+        "$pastUpgrades": [
+          [
+            "2023-09-28T21:08:35.000Z",
+            ["0x313819736457910aC1Dd21a712a37f3d7595645A"]
+          ]
+        ],
         "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -878,6 +1009,10 @@
       "name": "Lib_AddressManager",
       "address": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
       "template": "opstack/AddressManager",
+      "displayName": "AddressManager",
+      "descriptions": [
+        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+      ],
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -885,7 +1020,8 @@
           "via": [
             {
               "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
-              "delay": 0
+              "delay": 0,
+              "description": "set and change address mappings."
             }
           ]
         }
@@ -936,7 +1072,6 @@
     { "address": "0x9Eb11A55132c851b9991F148b3Af791ca498fD7A" },
     { "address": "0xa3D3c103442F162856163d564b983ae538c6202D" },
     { "address": "0xa7a5e47D3959bf134e3EcdEb1f62e054f0D58a18" },
-    { "address": "0xac9D11cD4D7eF6e54F14643a393F68Ca014287AB" },
     { "address": "0xAf6E19BE0F9cE7f8afd49a1824851023A8249e8a" },
     { "address": "0xB011a32ED8b4F70D9943A2199F539bbeCd7b62F7" },
     { "address": "0xb23794fd6BA1CEAd01Cf54D772b8341F2F0197A5" },
@@ -1532,10 +1667,12 @@
     ]
   },
   "usedTemplates": {
+    "base/Challenger1of2": "0x32d554b8ce1f170230fd5d4467fd9f63b541d9e40d61f24b04ee0df7e7b3a05d",
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "gnosisSafeModules/DeputyGuardianModule": "0xd3930cda89001876a722ed430ea8ed07e4823c83ed910e621744eccab9becba1",
     "gnosisSafeModules/LivenessModule": "0x93a18dea68cf1d0abddfc33adec077c82356344dd7b49ae5542b16ca9319bb91",
-    "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
+    "lido/L1ERC20TokenBridge": "0xa297506a5551518c3ed10a3817c661bc02da5794e2745084217d9c8f6c440482",
+    "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
@@ -1546,5 +1683,5 @@
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

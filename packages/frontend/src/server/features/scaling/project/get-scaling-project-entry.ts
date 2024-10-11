@@ -76,17 +76,21 @@ export async function getScalingProjectEntry(project: ScalingProject) {
   }
 
   // L3
-  const hostChain = layer2s.find((layer2) => layer2.id === project.hostChain)!
-  const baseLayerRosetteValues = getScalingRosetteValues(hostChain.riskView)
+  const hostChain = layer2s.find((layer2) => layer2.id === project.hostChain)
+  const baseLayerRosetteValues = hostChain
+    ? getScalingRosetteValues(hostChain.riskView)
+    : undefined
   const stackedRosetteValues = project.stackedRiskView
     ? getScalingRosetteValues(project.stackedRiskView)
     : undefined
+  const isHostChainVerified = !!projectsVerificationStatuses[project.hostChain]
 
   const projectDetails = await getL3ProjectDetails({
     project,
     hostChain,
     isVerified,
     rosetteValues,
+    isHostChainVerified,
     manuallyVerifiedContracts,
     implementationChangeReport,
     contractsVerificationStatuses,
@@ -102,7 +106,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
     },
     baseLayerRosetteValues,
     stackedRosetteValues,
-    hostChainName: hostChain.display.name,
+    hostChainName: hostChain?.display.name,
     projectDetails,
   }
 }
