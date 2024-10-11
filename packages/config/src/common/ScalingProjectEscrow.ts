@@ -22,7 +22,12 @@ export interface ElasticChainEscrow {
   l2BridgeAddress: EthereumAddress
   /** ERC20 address of ether on L2 */
   l2EtherAddress: EthereumAddress
-  includeL1Tokens?: string[]
+  /** Which tokens from L1 shared bridge should be assigned to this project,
+   * this is a heuristic and works only until other projects using this bridge
+   * are not bridging this token. This flag was added to handle
+   * non-ETH gas tokens e.g. OKB, GPT
+   */
+  tokensToAssignFromL1?: string[]
 }
 
 export type SharedEscrow = AggLayerEscrow | ElasticChainEscrow
