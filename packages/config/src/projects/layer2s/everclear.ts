@@ -40,6 +40,7 @@ export const everclear: Layer2 = orbitStackL2({
         'Can upgrade any project implementation via UpgradeExecutor, potentially gaining access to all funds.',
     },
   ],
+  associatedTokens: ['NEXT'],
   rpcUrl: 'https://rpc.everclear.raas.gelato.cloud',
   discovery,
   bridge: discovery.getContract('Bridge'),
