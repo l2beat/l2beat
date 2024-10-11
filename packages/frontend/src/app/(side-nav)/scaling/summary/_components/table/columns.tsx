@@ -4,11 +4,8 @@ import { UpcomingBadge } from '~/components/badge/upcoming-badge'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/pizza-rosette-cell'
 import { NumberCell } from '~/components/table/cells/number-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
+import { RiskCell } from '~/components/table/cells/risk-cell'
 import { StageCell } from '~/components/table/cells/stage/stage-cell'
-import {
-  TypeCell,
-  TypeExplanationTooltip,
-} from '~/components/table/cells/type-cell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { sortStages } from '~/components/table/sorting/functions/stage-sorting'
 import { EM_DASH } from '~/consts/characters'
@@ -34,14 +31,10 @@ export const scalingSummaryColumns = [
       headClassName: 'w-0',
     },
   }),
-  columnHelper.accessor('category', {
-    header: 'Type',
-    cell: (ctx) => (
-      <TypeCell provider={ctx.row.original.provider}>{ctx.getValue()}</TypeCell>
-    ),
-    meta: {
-      tooltip: <TypeExplanationTooltip />,
-    },
+  columnHelper.accessor('stateValidation', {
+    header: 'Proof system',
+    cell: (ctx) => <RiskCell risk={ctx.getValue()} colorful={false} />,
+    enableSorting: false,
   }),
   columnHelper.accessor('stage', {
     cell: (ctx) => <StageCell stageConfig={ctx.getValue()} />,

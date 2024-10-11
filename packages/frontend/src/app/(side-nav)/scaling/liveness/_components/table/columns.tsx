@@ -5,10 +5,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
-import {
-  TypeCell,
-  TypeExplanationTooltip,
-} from '~/components/table/cells/type-cell'
+import { RiskCell } from '~/components/table/cells/risk-cell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { LIVENESS_ANOMALIES_COMING_SOON_PROJECTS } from '~/consts/projects'
 import { InfoIcon } from '~/icons/info'
@@ -69,14 +66,10 @@ export const columns = [
       }),
     ],
   }),
-  columnHelper.accessor('category', {
-    header: 'Type',
-    cell: (ctx) => (
-      <TypeCell provider={ctx.row.original.provider}>{ctx.getValue()}</TypeCell>
-    ),
-    meta: {
-      tooltip: <TypeExplanationTooltip showOnlyRollupsDefinitions />,
-    },
+  columnHelper.accessor('stateValidation', {
+    header: 'Proof system',
+    cell: (ctx) => <RiskCell risk={ctx.getValue()} colorful={false} />,
+    enableSorting: false,
   }),
   columnHelper.accessor('anomalies', {
     header: '30-day\nanomalies',

@@ -81,5 +81,6 @@ export function getCommonScalingEntry(
       project.type === 'layer2'
         ? project.stage
         : ({ stage: 'NotApplicable' } satisfies StageConfig),
+    stateValidation: project.riskView.stateValidation,
   }
 }

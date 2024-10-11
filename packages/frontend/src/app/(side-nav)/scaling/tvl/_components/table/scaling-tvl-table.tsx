@@ -18,7 +18,7 @@ export function ScalingTvlTable({ entries }: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
   const includeFilters = useScalingFilter()
 
-  const allProjects = useMemo(
+  const tableEntries = useMemo(
     () =>
       toTableRows({
         projects: entries.filter(includeFilters),
@@ -28,7 +28,7 @@ export function ScalingTvlTable({ entries }: Props) {
   )
 
   const table = useTable({
-    data: allProjects,
+    data: tableEntries,
     columns: scalingTvlColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -48,7 +48,7 @@ export function ScalingTvlTable({ entries }: Props) {
 
   return (
     <div className="space-y-3 md:space-y-6">
-      <ScalingTvlFilters items={allProjects} />
+      <ScalingTvlFilters items={tableEntries} />
       <BasicTable table={table} insideMainPageCard />
     </div>
   )
