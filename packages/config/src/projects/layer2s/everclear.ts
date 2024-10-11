@@ -46,4 +46,14 @@ export const everclear: Layer2 = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  milestones: [
+    {
+      name: 'Mainnet Beta launch',
+      link: 'https://blog.everclear.org/everclears-mainnet-is-live-24dedd572d56?gi=2c5d29c1443a',
+      date: '2024-09-18T00:00:00Z',
+      description:
+        'Everclear Hub, the first Clearing Layer, is Live on Mainnet Beta.',
+      type: 'general',
+    },
+  ],
 })
