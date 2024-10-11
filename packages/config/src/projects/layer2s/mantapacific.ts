@@ -86,4 +86,11 @@ export const mantapacific: Layer2 = opStackL2({
     },
   ],
   badges: [Badge.DA.Celestia, Badge.RaaS.Caldera],
+  knowledgeNuggets: [
+    {
+      title: 'Unveiling Blobstream and Celestia Architecture',
+      url: 'https://www.youtube.com/watch?v=cn_fN6pkakQ',
+      thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
+    },
+  ],
 })
