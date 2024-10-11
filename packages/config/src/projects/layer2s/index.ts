@@ -34,9 +34,8 @@ import { degate } from './degate'
 import { degate2 } from './degate2'
 import { degate3 } from './degate3'
 import { dydx } from './dydx'
-import { ebi } from './ebi'
 import { ebichain } from './ebichain'
-import { edgeless } from './edgeless'
+import { edgeless, edgeless } from './edgeless'
 import { ethernity } from './ethernity'
 import { everclear } from './everclear'
 import { fhenix } from './fhenix'
@@ -203,7 +202,6 @@ export const layer2s: Layer2[] = [
   degate2,
   degate3,
   dydx,
-  ebi,
   edgeless,
   ethernity,
   everclear,
