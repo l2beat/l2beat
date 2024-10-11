@@ -174,11 +174,18 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
     }
   }
 }
-function getTokenAddress(config: AmountConfigEntry & { configId: string }) {
-  return config.type === 'aggLayerL2Token'
-    ? config.l1Address
-    : config.type === 'aggLayerNativeEtherPreminted' ||
-        config.type === 'aggLayerNativeEtherWrapped'
-      ? 'native'
-      : config.address
+function getTokenAddress(
+  config: AmountConfigEntry & { configId: string },
+): EthereumAddress | 'native' {
+  switch (config.type) {
+    case 'aggLayerL2Token':
+    case 'elasticChainL2Token':
+      return config.l1Address
+    case 'aggLayerNativeEtherPreminted':
+    case 'aggLayerNativeEtherWrapped':
+    case 'elasticChainEther':
+      return 'native'
+    default:
+      return config.address
+  }
 }
