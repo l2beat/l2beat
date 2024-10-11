@@ -1,10 +1,15 @@
 import { MainPageCard } from '~/components/main-page-card'
 import { MainPageHeader } from '~/components/main-page-header'
-import { getScalingLivenessEntries } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
+import { env } from '~/env'
+import {
+  type ScalingLivenessEntry,
+  getScalingLivenessEntries,
+} from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
 import { LivenessTimeRangeContextProvider } from './_components/liveness-time-range-context'
 import { LivenessWarning } from './_components/liveness-warning'
+import { ScalingLivenessRollupsTable } from './_components/table/scaling-liveness-rollups-table'
 import { ScalingLivenessTable } from './_components/table/scaling-liveness-table'
 
 export const metadata = getDefaultMetadata({
@@ -22,9 +27,16 @@ export default async function Page() {
         <MainPageHeader>Liveness</MainPageHeader>
         <LivenessWarning />
         <MainPageCard>
-          <ScalingLivenessTable entries={entries} />
+          <Table entries={entries} />
         </MainPageCard>
       </LivenessTimeRangeContextProvider>
     </ScalingFilterContextProvider>
   )
+}
+
+async function Table({ entries }: { entries: ScalingLivenessEntry[] }) {
+  if (env.NEXT_PUBLIC_FEATURE_RECATEGORISATION) {
+    return <ScalingLivenessRollupsTable entries={entries} />
+  }
+  return <ScalingLivenessTable entries={entries} />
 }

@@ -14,6 +14,7 @@ const Table = React.forwardRef<
           ref={ref}
           className={cn('w-full border-collapse text-left', className)}
           cellSpacing={0}
+          cellPadding={0}
           {...props}
         />
       </div>

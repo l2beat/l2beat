@@ -56,7 +56,7 @@
   }
 
   body:has(.sidebar) {
-    @apply bg-surface-primary md:bg-background;
+    @apply bg-background;
   }
 
   /* 

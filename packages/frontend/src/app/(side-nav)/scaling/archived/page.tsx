@@ -1,17 +1,57 @@
+import {
+  DirectoryTabs,
+  DirectoryTabsContent,
+  DirectoryTabsList,
+  DirectoryTabsTrigger,
+} from '~/components/core/directory-tabs'
 import { MainPageCard } from '~/components/main-page-card'
 import { MainPageHeader } from '~/components/main-page-header'
-import { getScalingArchivedEntries } from '~/server/features/scaling/archived/get-scaling-archived-entries'
+import { env } from '~/env'
+import {
+  type ScalingArchivedEntry,
+  getScalingArchivedEntries,
+} from '~/server/features/scaling/archived/get-scaling-archived-entries'
+import { groupByMainCategories } from '~/utils/group-by-main-categories'
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
 import { ScalingArchivedTable } from './_components/table/scaling-archived-table'
 
 export default async function Page() {
   const entries = await getScalingArchivedEntries()
   return (
-    <ScalingFilterContextProvider>
+    <>
       <MainPageHeader>Archived</MainPageHeader>
-      <MainPageCard>
-        <ScalingArchivedTable entries={entries} />
-      </MainPageCard>
-    </ScalingFilterContextProvider>
+      <Table entries={entries} />
+    </>
+  )
+}
+
+function Table({ entries }: { entries: ScalingArchivedEntry[] }) {
+  if (env.NEXT_PUBLIC_FEATURE_RECATEGORISATION) {
+    const { rollups, validiumsAndOptimiums } = groupByMainCategories(entries)
+    return (
+      <DirectoryTabs defaultValue="rollups">
+        <DirectoryTabsList>
+          <DirectoryTabsTrigger value="rollups">Rollups</DirectoryTabsTrigger>
+          <DirectoryTabsTrigger value="validiums-and-optimiums">
+            Validiums & Optimiums
+          </DirectoryTabsTrigger>
+        </DirectoryTabsList>
+        <DirectoryTabsContent value="rollups">
+          <ScalingFilterContextProvider>
+            <ScalingArchivedTable entries={rollups} />
+          </ScalingFilterContextProvider>
+        </DirectoryTabsContent>
+        <DirectoryTabsContent value="validiums-and-optimiums">
+          <ScalingFilterContextProvider>
+            <ScalingArchivedTable entries={validiumsAndOptimiums} />
+          </ScalingFilterContextProvider>
+        </DirectoryTabsContent>
+      </DirectoryTabs>
+    )
+  }
+  return (
+    <MainPageCard>
+      <ScalingArchivedTable entries={entries} />
+    </MainPageCard>
   )
 }

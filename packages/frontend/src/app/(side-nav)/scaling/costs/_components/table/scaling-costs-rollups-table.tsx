@@ -1,9 +1,10 @@
 'use client'
-import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { getCoreRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { useScalingFilter } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
 import { ScalingFilters } from '~/app/(side-nav)/scaling/_components/scaling-filters'
-import { BasicTable } from '~/components/table/basic-table'
+import { RollupsTable } from '~/components/table/rollups-table'
+import { getStageSortedRowModel } from '~/components/table/sorting/get-stage-sorting-row-model'
 import { useTable } from '~/hooks/use-table'
 import { COSTS_UPCOMING_PROJECTS } from '~/server/features/scaling/costs/consts'
 import { type CostsTableData } from '~/server/features/scaling/costs/get-costs-table-data'
@@ -23,7 +24,7 @@ interface Props {
   entries: ScalingCostsEntry[]
 }
 
-export function ScalingCostsTable(props: Props) {
+export function ScalingCostsRollupsTable(props: Props) {
   const { range, setRange } = useCostsTimeRangeContext()
   const { unit } = useCostsUnitContext()
   const { metric, setMetric } = useCostsMetricContext()
@@ -47,7 +48,7 @@ export function ScalingCostsTable(props: Props) {
     data: tableEntries,
     columns: scalingCostsColumns,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
+    getSortedRowModel: getStageSortedRowModel(),
     manualFiltering: true,
     initialState: {
       sorting: [
@@ -75,7 +76,7 @@ export function ScalingCostsTable(props: Props) {
         <ScalingFilters items={filteredEntries} />
         <CostsMetricControls value={metric} onValueChange={onMetricChange} />
       </div>
-      <BasicTable table={table} />
+      <RollupsTable table={table} />
     </div>
   )
 }

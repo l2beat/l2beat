@@ -1,6 +1,6 @@
 import { type ColumnHelper } from '@tanstack/react-table'
 import Image from 'next/image'
-import { IndexCell } from './cells/index-cell'
+import { IndexCell } from '../cells/index-cell'
 
 interface BaseProject {
   slug: string

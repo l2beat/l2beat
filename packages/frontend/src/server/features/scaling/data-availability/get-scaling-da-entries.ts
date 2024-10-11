@@ -29,7 +29,6 @@ export async function getScalingDaEntries() {
       )
     })
     .filter(notUndefined)
-
   return orderByTvl(entries, tvl)
 }
 

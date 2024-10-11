@@ -41,6 +41,7 @@ export const env = createEnv({
   client: {
     NEXT_PUBLIC_FEATURE_FLAG_ASSET_RISKS: featureFlag.default('false'),
     NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT: featureFlag.default('false'),
+    NEXT_PUBLIC_FEATURE_RECATEGORISATION: featureFlag.default('false'),
     NEXT_PUBLIC_GITCOIN_ROUND_LIVE: featureFlag.default('false'),
     NEXT_PUBLIC_PLAUSIBLE_DOMAIN: z.string().default('localhost'),
     NEXT_PUBLIC_PLAUSIBLE_ENABLED: coerceBoolean.optional(),
@@ -69,6 +70,8 @@ export const env = createEnv({
       process.env.NEXT_PUBLIC_FEATURE_FLAG_ASSET_RISKS,
     NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT:
       process.env.NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT,
+    NEXT_PUBLIC_FEATURE_RECATEGORISATION:
+      process.env.NEXT_PUBLIC_FEATURE_RECATEGORISATION,
     NEXT_PUBLIC_GITCOIN_ROUND_LIVE: process.env.FEATURE_FLAG_GITCOIN_OPTION,
     NEXT_PUBLIC_PLAUSIBLE_DOMAIN: process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN,
     NEXT_PUBLIC_PLAUSIBLE_ENABLED: process.env.NEXT_PUBLIC_PLAUSIBLE_ENABLED,

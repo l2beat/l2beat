@@ -8,7 +8,7 @@ import {
   getCommonScalingEntry,
 } from '../get-common-scaling-entry'
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
-import { orderByTvl } from '../tvl/utils/order-by-tvl'
+import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
 
 export type ScalingCostsEntry = CommonScalingEntry & {
   entryType: 'costs'
@@ -41,5 +41,5 @@ export async function getScalingCostsEntries(): Promise<ScalingCostsEntry[]> {
     })
     .filter(notUndefined)
 
-  return orderByTvl(entries, tvl)
+  return orderByStageAndTvl(entries, tvl)
 }

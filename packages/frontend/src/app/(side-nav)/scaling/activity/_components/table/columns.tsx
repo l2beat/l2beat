@@ -1,7 +1,7 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { NumberCell } from '~/components/table/cells/number-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
-import { getCommonProjectColumns } from '~/components/table/common-project-columns'
+import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
 import { EM_DASH } from '~/consts/characters'
 import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
 import { formatNumber } from '~/utils/format-number'

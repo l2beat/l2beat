@@ -9,8 +9,8 @@ import {
   TypeCell,
   TypeExplanationTooltip,
 } from '~/components/table/cells/type-cell'
-import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { sortStages } from '~/components/table/sorting/functions/stage-sorting'
+import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
 import { EM_DASH } from '~/consts/characters'
 import { formatNumber } from '~/utils/format-number'
 import { type ScalingSummaryTableRow } from '../../_utils/to-table-rows'
@@ -108,4 +108,9 @@ export const scalingSummaryColumns = [
       tooltip: 'Transactions per second averaged over the past day.',
     },
   }),
+]
+
+export const scalingSummaryValidiumAndOptimiumsColumns = [
+  ...scalingSummaryColumns.slice(0, 4),
+  ...scalingSummaryColumns.slice(6),
 ]
