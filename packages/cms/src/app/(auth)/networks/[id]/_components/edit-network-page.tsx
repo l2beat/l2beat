@@ -1,6 +1,10 @@
 'use client'
 
-import { type NetworkRecord } from '@l2beat/database'
+import {
+  type NetworkExplorerRecord,
+  type NetworkRpcRecord,
+  type NetworkRecord,
+} from '@l2beat/database'
 import { ExplorerType } from '@l2beat/database/enums'
 import { ChevronLeft, Trash2 } from 'lucide-react'
 import { useForm, useFieldArray } from 'react-hook-form'
@@ -43,7 +47,7 @@ import { SelectValue } from '@radix-ui/react-select'
 const networkFormSchema = z.object({
   name: z.string().min(3).max(191),
   logoUrl: z.string().url().or(z.literal('')),
-  chainId: z.number().int().positive(),
+  chainId: z.string(),
   coingeckoId: z.string(),
   axelarId: z.string(),
   axelarGatewayAddress: z.string(),
@@ -66,21 +70,28 @@ const networkFormSchema = z.object({
 
 export function EditNetworkPage({
   network,
-}: { network: NetworkRecord | null }) {
+}: {
+  network:
+    | (NetworkRecord & {
+        explorers: NetworkExplorerRecord[]
+        rpcs: NetworkRpcRecord[]
+      })
+    | null
+}) {
   const router = useRouter()
   const form = useForm<z.infer<typeof networkFormSchema>>({
     defaultValues: {
       name: network?.name ?? '',
       logoUrl: network?.logoUrl ?? '',
-      chainId: network?.chainId ?? 0,
+      chainId: network?.chainId?.toString() ?? '0',
       coingeckoId: network?.coingeckoId ?? '',
       axelarId: network?.axelarId ?? '',
       axelarGatewayAddress: network?.axelarGatewayAddress ?? '',
       orbitId: network?.orbitId ?? '',
       wormholeId: network?.wormholeId ?? '',
       layerZeroV1EndpointAddress: network?.layerZeroV1EndpointAddress ?? '',
-      rpcs: [],
-      explorers: [],
+      rpcs: network?.rpcs ?? [],
+      explorers: network?.explorers ?? [],
     },
     resolver: zodResolver(networkFormSchema),
   })
@@ -115,6 +126,8 @@ export function EditNetworkPage({
           rawData.layerZeroV1EndpointAddress !== ''
             ? rawData.layerZeroV1EndpointAddress
             : null,
+        rpcs: rawData.rpcs,
+        explorers: rawData.explorers,
       }
       const result = network
         ? await updateNetwork({ ...data, id: network.id })
@@ -151,14 +164,24 @@ export function EditNetworkPage({
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="mx-auto grid w-full max-w-[59rem] flex-1 auto-rows-max gap-4">
           <div className="flex items-center gap-4">
-            <Button onClick={onDiscard} variant="ghost" size="icon">
+            <Button
+              onClick={onDiscard}
+              type="button"
+              variant="ghost"
+              size="icon"
+            >
               <ChevronLeft className="size-4" />
             </Button>
             <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">
               {network?.name ?? 'New network'}
             </h1>
             <div className="hidden items-center gap-2 md:ml-auto md:flex">
-              <Button variant="secondary" size="sm" onClick={onDiscard}>
+              <Button
+                variant="secondary"
+                type="button"
+                size="sm"
+                onClick={onDiscard}
+              >
                 Discard
               </Button>
               <Button>Save Network</Button>
@@ -332,160 +355,164 @@ export function EditNetworkPage({
               />
             </CardContent>
           </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>RPCs</CardTitle>
-            </CardHeader>
-            <CardContent className="flex flex-col gap-4">
-              {rpcs.fields.length === 0 && (
-                <p className="text-sm text-muted-foreground">
-                  No RPCs added yet.
-                </p>
-              )}
-              {rpcs.fields.map((field, index) => (
-                <FormField
-                  key={field.id}
-                  control={form.control}
-                  name={`rpcs.${index}.url`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>RPC {index + 1}</FormLabel>
-                      <div className="flex items-center gap-2">
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => rpcs.remove(index)}
-                        >
-                          <Trash2 className="size-4" />
-                        </Button>
-                      </div>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              ))}
-            </CardContent>
-            <CardFooter className="flex justify-end">
-              <Button type="button" onClick={() => rpcs.append({ url: '' })}>
-                Add RPC
-              </Button>
-            </CardFooter>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>Explorers</CardTitle>
-            </CardHeader>
-            <CardContent className="flex flex-col gap-4">
-              {explorers.fields.length === 0 && (
-                <p className="text-sm text-muted-foreground">
-                  No explorers added yet.
-                </p>
-              )}
-              {explorers.fields.map((field, index) => (
-                <div key={field.id} className="flex flex-row gap-4">
-                  <Card key={field.id} className="flex-1">
-                    <CardHeader>
-                      <CardTitle>Explorer {index + 1}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="flex flex-col gap-2">
-                        <FormField
-                          control={form.control}
-                          name={`explorers.${index}.type`}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Type</FormLabel>
-                              <FormControl>
-                                <Select
-                                  value={field.value}
-                                  onValueChange={field.onChange}
-                                >
-                                  <SelectTrigger>
-                                    <SelectValue />
-                                  </SelectTrigger>
-                                  <SelectContent>
-                                    {Object.values(ExplorerType).map((type) => (
-                                      <SelectItem key={type} value={type}>
-                                        {type}
-                                      </SelectItem>
-                                    ))}
-                                  </SelectContent>
-                                </Select>
-                              </FormControl>
-                              <FormDescription>
-                                The type of the explorer. This determines which
-                                handler is used in Token DB.
-                              </FormDescription>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name={`explorers.${index}.url`}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>URL</FormLabel>
-                              <FormControl>
-                                <Input {...field} />
-                              </FormControl>
-                              <FormDescription>
-                                The URL of the explorer.
-                              </FormDescription>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name={`explorers.${index}.apiKey`}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>API Key</FormLabel>
-                              <FormControl>
-                                <Input {...field} />
-                              </FormControl>
-                              <FormDescription>
-                                The API key for the explorer.
-                              </FormDescription>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                    </CardContent>
-                  </Card>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => explorers.remove(index)}
-                  >
-                    <Trash2 className="size-4" />
-                  </Button>
-                </div>
-              ))}
-            </CardContent>
-            <CardFooter className="flex justify-end">
-              <Button
-                type="button"
-                onClick={() =>
-                  explorers.append({
-                    type: 'Etherscan',
-                    url: '',
-                    apiKey: '',
-                  })
-                }
-              >
-                Add Explorer
-              </Button>
-            </CardFooter>
-          </Card>
+          <div className="flex flex-row gap-4">
+            <Card className="flex-1">
+              <CardHeader>
+                <CardTitle>RPCs</CardTitle>
+              </CardHeader>
+              <CardContent className="flex flex-col gap-4">
+                {rpcs.fields.length === 0 && (
+                  <p className="text-sm text-muted-foreground">
+                    No RPCs added yet.
+                  </p>
+                )}
+                {rpcs.fields.map((field, index) => (
+                  <FormField
+                    key={field.id}
+                    control={form.control}
+                    name={`rpcs.${index}.url`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>RPC {index + 1}</FormLabel>
+                        <div className="flex items-center gap-2">
+                          <FormControl>
+                            <Input {...field} />
+                          </FormControl>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => rpcs.remove(index)}
+                          >
+                            <Trash2 className="size-4" />
+                          </Button>
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                ))}
+              </CardContent>
+              <CardFooter className="flex justify-end">
+                <Button type="button" onClick={() => rpcs.append({ url: '' })}>
+                  Add RPC
+                </Button>
+              </CardFooter>
+            </Card>
+            <Card className="flex-1">
+              <CardHeader>
+                <CardTitle>Explorers</CardTitle>
+              </CardHeader>
+              <CardContent className="flex flex-col gap-4">
+                {explorers.fields.length === 0 && (
+                  <p className="text-sm text-muted-foreground">
+                    No explorers added yet.
+                  </p>
+                )}
+                {explorers.fields.map((field, index) => (
+                  <div key={field.id} className="flex flex-row gap-2">
+                    <Card key={field.id} className="flex-1">
+                      <CardHeader>
+                        <CardTitle>Explorer {index + 1}</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="flex flex-col gap-2">
+                          <FormField
+                            control={form.control}
+                            name={`explorers.${index}.type`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Type</FormLabel>
+                                <FormControl>
+                                  <Select
+                                    value={field.value}
+                                    onValueChange={field.onChange}
+                                  >
+                                    <SelectTrigger>
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      {Object.values(ExplorerType).map(
+                                        (type) => (
+                                          <SelectItem key={type} value={type}>
+                                            {type}
+                                          </SelectItem>
+                                        ),
+                                      )}
+                                    </SelectContent>
+                                  </Select>
+                                </FormControl>
+                                <FormDescription>
+                                  The type of the explorer. This determines
+                                  which handler is used in Token DB.
+                                </FormDescription>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={form.control}
+                            name={`explorers.${index}.url`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>URL</FormLabel>
+                                <FormControl>
+                                  <Input {...field} />
+                                </FormControl>
+                                <FormDescription>
+                                  The URL of the explorer.
+                                </FormDescription>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={form.control}
+                            name={`explorers.${index}.apiKey`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>API Key</FormLabel>
+                                <FormControl>
+                                  <Input {...field} />
+                                </FormControl>
+                                <FormDescription>
+                                  The API key for the explorer.
+                                </FormDescription>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      </CardContent>
+                    </Card>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => explorers.remove(index)}
+                    >
+                      <Trash2 className="size-4" />
+                    </Button>
+                  </div>
+                ))}
+              </CardContent>
+              <CardFooter className="flex justify-end">
+                <Button
+                  type="button"
+                  onClick={() =>
+                    explorers.append({
+                      type: 'Etherscan',
+                      url: '',
+                      apiKey: '',
+                    })
+                  }
+                >
+                  Add Explorer
+                </Button>
+              </CardFooter>
+            </Card>
+          </div>
           {network && (
-            <>
-              <Card>
+            <div className="flex flex-row gap-4">
+              <Card className="flex-1">
                 <CardHeader>
                   <CardTitle>Network ID</CardTitle>
                   <CardDescription>
@@ -496,7 +523,7 @@ export function EditNetworkPage({
                   <ReadonlyCopyInput value={network?.id ?? ''} />
                 </CardContent>
               </Card>
-              <Card>
+              <Card className="flex-1">
                 <CardHeader>
                   <CardTitle>Delete Network</CardTitle>
                   <CardDescription>
@@ -513,7 +540,7 @@ export function EditNetworkPage({
                   </Button>
                 </CardFooter>
               </Card>
-            </>
+            </div>
           )}
         </div>
         <DiscardChangesDialog

@@ -111,6 +111,36 @@ export class NetworkRepository extends BaseRepository {
     return row
   }
 
+  async findByIdWithConfigs(id: string): Promise<
+    | (NetworkRecord & {
+        explorers: NetworkExplorerRecord[]
+        rpcs: NetworkRpcRecord[]
+      })
+    | undefined
+  > {
+    const network = await this.findById(id)
+    if (!network) return undefined
+
+    const [explorers, rpcs] = await Promise.all([
+      this.db
+        .selectFrom('NetworkExplorer')
+        .select(selectNetworkExplorer)
+        .where('NetworkExplorer.networkId', '=', id)
+        .execute(),
+      this.db
+        .selectFrom('NetworkRpc')
+        .select(selectNetworkRpc)
+        .where('NetworkRpc.networkId', '=', id)
+        .execute(),
+    ])
+
+    return {
+      ...network,
+      explorers,
+      rpcs,
+    }
+  }
+
   async findByChainId(chainId: number): Promise<NetworkRecord | undefined> {
     const row = await this.db
       .selectFrom('Network')
@@ -173,8 +203,11 @@ export class NetworkRepository extends BaseRepository {
   }
 
   async update(id: string, record: UpsertableNetworkRecord): Promise<void> {
-    const row = upsertableToRow(record)
-    await this.db.updateTable('Network').set(row).where('id', '=', id).execute()
+    await this.db
+      .updateTable('Network')
+      .set(record)
+      .where('id', '=', id)
+      .execute()
   }
 
   async updateByCoingeckoId(

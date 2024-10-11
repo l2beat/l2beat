@@ -1,3 +1,4 @@
+import { ExplorerType } from '@l2beat/database/enums'
 import { z } from 'zod'
 
 export const insertNetworkSchema = z.object({
@@ -10,6 +11,14 @@ export const insertNetworkSchema = z.object({
   orbitId: z.string().nullable(),
   wormholeId: z.string().nullable(),
   layerZeroV1EndpointAddress: z.string().nullable(),
+  rpcs: z.array(z.object({ url: z.string() })),
+  explorers: z.array(
+    z.object({
+      type: z.nativeEnum(ExplorerType),
+      url: z.string(),
+      apiKey: z.string(),
+    }),
+  ),
 })
 
 export const networkIdSchema = z.object({

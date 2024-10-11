@@ -4,11 +4,11 @@ import { EditNetworkPage } from './_components/edit-network-page'
 
 export default async function Page({ params }: { params: { id: string } }) {
   const isNew = params.id === 'new'
-  const network = isNew ? null : await db.network.findById(params.id)
+  const network = isNew ? null : await db.network.findByIdWithConfigs(params.id)
 
   if (!isNew && !network) {
     return notFound()
   }
 
-  return <EditNetworkPage network={network} />
+  return <EditNetworkPage network={network ?? null} />
 }

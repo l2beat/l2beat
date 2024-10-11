@@ -175,8 +175,8 @@ export function EditBridgePage({
             </CardContent>
           </Card>
           {bridge && (
-            <>
-              <Card>
+            <div className="flex flex-row gap-4">
+              <Card className="flex-1">
                 <CardHeader>
                   <CardTitle>Bridge ID</CardTitle>
                   <CardDescription>
@@ -187,7 +187,7 @@ export function EditBridgePage({
                   <ReadonlyCopyInput value={bridge?.id ?? ''} />
                 </CardContent>
               </Card>
-              <Card>
+              <Card className="flex-1">
                 <CardHeader>
                   <CardTitle>Delete Bridge</CardTitle>
                   <CardDescription>
@@ -205,7 +205,7 @@ export function EditBridgePage({
                   </Button>
                 </CardFooter>
               </Card>
-            </>
+            </div>
           )}
         </div>
         <DiscardChangesDialog

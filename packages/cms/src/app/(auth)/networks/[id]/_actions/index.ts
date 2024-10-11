@@ -13,8 +13,18 @@ export const insertNetwork = actionClient
   .schema(insertNetworkSchema)
   .action(async ({ parsedInput }) => {
     revalidatePath('/', 'layout')
+    const { explorers, rpcs, ...data } = parsedInput
     try {
-      const id = await db.network.insert(parsedInput)
+      const id = await db.transaction(async () => {
+        const { id: networkId } = await db.network.insert(data)
+        await db.networkExplorer.insertMany(
+          explorers.map((explorer) => ({ ...explorer, networkId })),
+        )
+        await db.networkRpc.insertMany(
+          rpcs.map((rpc) => ({ ...rpc, networkId })),
+        )
+        return networkId
+      })
       return { success: { id } }
     } catch (_) {
       return { failure: 'Failed to insert network' }
@@ -24,13 +34,25 @@ export const insertNetwork = actionClient
 export const updateNetwork = actionClient
   .schema(updateNetworkSchema)
   .action(async ({ parsedInput }) => {
-    const { id, ...data } = parsedInput
+    const { id, explorers, rpcs, ...data } = parsedInput
     revalidatePath('/', 'layout')
     try {
-      await db.network.update(id, data)
+      await db.transaction(async () => {
+        await db.network.update(id, data)
+        await db.networkExplorer.deleteManyByNetworkId(id)
+        await db.networkRpc.deleteManyByNetworkId(id)
+        await db.networkExplorer.insertMany(
+          explorers.map((explorer) => ({ ...explorer, networkId: id })),
+        )
+        await db.networkRpc.insertMany(
+          rpcs.map((rpc) => ({ ...rpc, networkId: id })),
+        )
+      })
       return { success: { id } }
     } catch (_) {
-      return { failure: 'Failed to update network' }
+      return {
+        failure: 'Failed to update network, reason: ' + JSON.stringify(_),
+      }
     }
   })
 
