@@ -1,4 +1,36 @@
-Generated with discovered.json: 0x553bd30da949808436817b40bcbf76e77278c579
+Generated with discovered.json: 0x65820f0ea0b2811e386d42f1bdcf89d25a3e6004
+
+# Diff at Fri, 11 Oct 2024 10:32:30 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@8f7c5fd25193054458be38552e62a708c480b2c8 block: 20912724
+- current block number: 20941801
+
+## Description
+
+Owner of token contracts changed from Multisig to EIGEN Timelock
+
+## Watched changes
+
+```diff
+    contract bEIGEN token (0x83E9115d334D248Ce39a6f36144aEaB5b3456e75) {
+    +++ description: None
+      values.owner:
+-        "0xbb00DDa2832850a43840A3A86515E3Fe226865F2"
++        "0x2520C6b2C1FBE1813AB5c7c1018CDa39529e9FF2"
+    }
+```
+
+```diff
+    contract EIGEN token (0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83) {
+    +++ description: None
+      values.owner:
+-        "0xbb00DDa2832850a43840A3A86515E3Fe226865F2"
++        "0x2520C6b2C1FBE1813AB5c7c1018CDa39529e9FF2"
+    }
+```
+
+Generated with discovered.json: 0xdcf2548e6f1cd23113b79cda6f858c3859f35a3e
 
 # Diff at Mon, 07 Oct 2024 09:16:44 GMT:
 

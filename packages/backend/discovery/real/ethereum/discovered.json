@@ -1,7 +1,7 @@
 {
   "name": "real",
   "chain": "ethereum",
-  "blockNumber": 20842802,
+  "blockNumber": 20941805,
   "configHash": "0x1e689ea14e63d7fe49e821c441dd0b4613865dac6f6f4d71b18746a5545dc7ed",
   "contracts": [
     {
@@ -92,12 +92,12 @@
           "0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C"
         ],
         "allowedOutboxList": ["0x8592Ca44dE1D354A20F75160F5602E5933D33761"],
-        "delayedMessageCount": 4360,
+        "delayedMessageCount": 4585,
         "nativeToken": "0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
         "rollup": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
         "sequencerInbox": "0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0",
-        "sequencerMessageCount": 2938,
-        "sequencerReportedSubMessageCount": 753785
+        "sequencerMessageCount": 3021,
+        "sequencerReportedSubMessageCount": 808372
       },
       "derivedName": "ERC20Bridge"
     },
@@ -204,19 +204,20 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 2938,
+        "batchCount": 3021,
         "batchPosters": ["0x0e00df1afC8574762Ac4C4D8E5D1a19bD6A8Fa2E"],
         "bridge": "0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03",
         "dacKeyset": {
           "requiredSignatures": 1,
-          "membersCount": 1,
+          "membersCount": 2,
           "blsSignatures": [
-            "YAWa/w4rq6sHO4ozBBwPL3un0A6NDa3V163lAXaJmPZmihk4ntRlBqwcjz3Hq2NJWgcMOYyZicf+cyzYzT33XiJRcNMidWZ04qP6b7ZRHZh7R0p+YycNLqBxfRdNtllWJglg7ynQO4Suel9bqlzc+0Yq8ZuoHTHJXVVd4psJariQ/dNE16NqExPpV/jfJdFVThaAoNqowj5K/bl0VWEKPzxnf4ttwFM38wnUOIvmNHvVOREbkiWzus6H/6B7Cl7BygWo5cs97lUTeMuatpIqR/yNw352EkRLOLrmFTrg36zV9F8jebStSVDZ3M002mBH1gpxq5pQFaCb0lpXE0vmB08dfg7jS6KWU/OMlLZzVPk2DVKhkqtpDC5JAMkRNxrwfQ=="
+            "YBJCXtJZAUzwENdMJDCrgB6pWhA4ldiCFRNdySmzbLpcXriGq7NeKGLHyW5RcbP49QLgp7h9Asr+8KEc4coM7E0hRWXz6pU6W/rGUBAM1F0BtZNWdVQIp45BfwocbS4wxBWylr0ibVn8sJhVWG5uOY0kF0EddnVBElucIld+gTUyuTcNNKTHUqC1RdOI91XkKAC28qY5HGhdk41zEU8swBwjAIKmUbg+fcrKyxy/hs8OmySPr9YmPKnEv42CR0O0oBnadp/8W8WVrJRit2jwBQAXxLj52BxnGJkRA6x0DLkM+mXhU0ASMQB3EcWz5UaMZBfSXy4taHskYoDrqicHh5CCEAq7KoWive1o/stdn9VfnaGNL+uUqhGPg6Qbr/+oMw==",
+            "YBRYWM3r9QjDsxiTYDBsz7DLQsSk8ww7UeuNmhhAa+Spo31J5lWspLpAwHynMqRoDRkEg0bP1Y6Wivt1kwBOM2fDRs97y2vUB/OQpju9aok8WdBTJ16K9sM6Hlv0bT62ChK2Otjpjug8u839aoVPAZhojuYmW1hslHipM/JqYlCaVwHlB1hyp4kc8v230j6I6gsE1Bw1WMvxVXbP05bXwnO7ZIM+dQugQFWoDDZOS1HMIY+I9B+389vkEFGkjF8CPw5uGnIgdhabcqQFRkceDLVb7vMqJGgf/Oi4nKy6CKEJILwsf+grAdHY1MDDpe0WWRJflAnSemnZbpCaGqIEY1sEE/69idZuSbuqiHtmU0AGWcFcngv+WFjfG6Xr1V1tRw=="
           ]
         },
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
-        "keySetUpdates": 1,
+        "keySetUpdates": 2,
         "maxDataSize": 117964,
         "maxTimeVariation": {
           "delayBlocks": 5760,
@@ -227,7 +228,7 @@
         "rollup": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 4359
+        "totalDelayedMessagesRead": 4584
       },
       "fieldMeta": {
         "maxTimeVariation": {
@@ -248,15 +249,15 @@
       "values": {
         "$immutable": true,
         "assetsVault": "0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294",
-        "getAllStrategiesValue": "371942213824938665401",
+        "getAllStrategiesValue": "442860323380082341091",
         "getAllStrategyPendingValue": 0,
         "getStrategies": {
           "addrs": ["0x679D4C1cC6855C57726BEA1784F578315d6431f6"],
           "allocations": [1000000]
         },
         "getTotalInvestedValue": {
-          "_value": "371942213824938665401",
-          "strategiesValue": ["371942213824938665401"]
+          "_value": "442860323380082341091",
+          "strategiesValue": ["442860323380082341091"]
         },
         "realVault": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1"
       },
@@ -269,7 +270,7 @@
       "sinceTimestamp": 1710542279,
       "values": {
         "$immutable": true,
-        "getTokenPrice": "1011644279539643263",
+        "getTokenPrice": "1012744453115845048",
         "real": "0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
         "vault": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1"
       },
@@ -286,9 +287,9 @@
       "sinceTimestamp": 1715706239,
       "values": {
         "$immutable": true,
-        "getInvestedValue": "371942213824938665401",
+        "getInvestedValue": "442860323380082341091",
         "getStETHWithdrawalStatus": { "requestIds": [], "statuses": [] },
-        "getTotalValue": "371942213824938665401",
+        "getTotalValue": "442860323380082341091",
         "governance": "0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3",
         "manager": "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8",
         "MAX_STETH_WITHDRAWAL_AMOUNT": "1000000000000000000000",
@@ -423,7 +424,6 @@
           "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d",
           "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d",
           "0xc85aC6d2fdC376F335455D4cCA30c45ED1080849",
-          "0x27b1682E9C5Cb0E58Ff474F3a13EeCC36E708ad3",
           "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
           "0xf83bC4688979b13Da02CB94c76cEB169540760b5",
           "0x547D0F472309e4239b296D01e03bEDc101241a26"
@@ -432,8 +432,8 @@
         "domainSeparator": "0xbe8c8ff5b263aabfa5957a21cfff3c301b7fe41d5c89b2189c54dba8c9251189",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "6 of 10 (60%)",
-        "nonce": 5,
+        "multisigThreshold": "6 of 9 (67%)",
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -477,8 +477,8 @@
         "minter": "0x655756824385F8903AC8cFDa17B656cc26f7C7da",
         "name": "Real Ether",
         "symbol": "reETH",
-        "tokenPrice": "1011644279539643263",
-        "totalSupply": "368157305191196371782"
+        "tokenPrice": "1012744453115845048",
+        "totalSupply": "438132407466722281583"
       },
       "derivedName": "Real"
     },
@@ -527,12 +527,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 2405,
+        "firstUnresolvedNode": 2484,
         "inbox": "0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11",
         "isERC20Enabled": false,
         "lastStakeBlock": 19524244,
-        "latestConfirmed": 2404,
-        "latestNodeCreated": 2439,
+        "latestConfirmed": 2483,
+        "latestNodeCreated": 2521,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x8592Ca44dE1D354A20F75160F5602E5933D33761",
@@ -712,7 +712,7 @@
       "sinceTimestamp": 1715706239,
       "values": {
         "$immutable": true,
-        "getBalance": "499583147115010585",
+        "getBalance": "852672787193560226",
         "realVault": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1",
         "strategyManager": "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8"
       },
@@ -732,7 +732,7 @@
       "values": {
         "$immutable": true,
         "assetsVault": "0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294",
-        "currentSharePrice": "1011644279539643263",
+        "currentSharePrice": "1012744453115845048",
         "feeRecipient": "0x0000000000000000000000000000000000000000",
         "minter": "0x655756824385F8903AC8cFDa17B656cc26f7C7da",
         "minWithdrawableShares": 100,
@@ -740,12 +740,12 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "proposal": "0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4",
         "real": "0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
-        "rebaseTime": 1727410511,
+        "rebaseTime": 1728616811,
         "rebaseTimeInterval": 86400,
         "strategyManager": "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8",
-        "withdrawableAmountInPast": "459583147115010585",
+        "withdrawableAmountInPast": "843672787193560226",
         "withdrawFeeRate": 0,
-        "withdrawingSharesInPast": "456700000000000000",
+        "withdrawingSharesInPast": "836185287933671463",
         "withdrawingSharesInRound": 0
       },
       "derivedName": "RealVault"
@@ -789,7 +789,6 @@
       "roles": ["Sequencer"]
     },
     { "address": "0x240B5E0746eda8cBc137Fc67210532a1D2B5b82A" },
-    { "address": "0x27b1682E9C5Cb0E58Ff474F3a13EeCC36E708ad3" },
     { "address": "0x28bB9385A588EF4747264D19B9A9F1603591680c" },
     { "address": "0x326FFa9E3836577C6C46b0aA5A5b223FB4a4067c" },
     {
