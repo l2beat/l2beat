@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20017695,
   "configHash": "0x17d2f88caa79b904561d5c3444555097dbf22c906defb717b2e8eaf887ea96fd",
-  "version": 14,
   "contracts": [
     {
       "name": "AxelarGasService",
@@ -20,6 +19,16 @@
       "values": {
         "$admin": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
         "$implementation": "0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b",
+        "$pastUpgrades": [
+          [
+            "2023-12-14T07:19:11.000Z",
+            ["0x4Fe2d119873790cc9e15F6cC53cae1C2eb2039dC"]
+          ],
+          [
+            "2024-06-04T04:22:47.000Z",
+            ["0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b"]
+          ]
+        ],
         "$upgradeCount": 2,
         "contractId": "0xfaa2f015f2ce5aee225904728de2def86eb8837491efd21f1a04fc20d8e923f6",
         "gasCollector": "0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC",
@@ -36,6 +45,45 @@
       "sinceTimestamp": 1640210870,
       "values": {
         "$implementation": "0x99B5FA03a5ea4315725c43346e55a6A6fbd94098",
+        "$pastUpgrades": [
+          [
+            "2022-03-02T19:54:40.000Z",
+            ["0x59C38B3A349BCf7e46b024Cddfb4778229609C28"]
+          ],
+          [
+            "2022-04-28T16:27:39.000Z",
+            ["0xBD3e8d41874bC123fB6913a2a6c6C8984c71876c"]
+          ],
+          [
+            "2022-05-09T17:27:03.000Z",
+            ["0xBc421722aDd7AD3cF23e7BbEFE709330bbfD6188"]
+          ],
+          [
+            "2022-06-09T01:50:50.000Z",
+            ["0x46E1F8E746ee9037fA42b3a718dcE6c36CB3f16f"]
+          ],
+          [
+            "2022-08-29T17:23:40.000Z",
+            ["0x212207006e5Ae344481Fa34a6F4960EB0f302Ff5"]
+          ],
+          [
+            "2022-12-08T00:29:47.000Z",
+            ["0xEd9938294aCF9EE52D097133CA2cAafF0C804F16"]
+          ],
+          [
+            "2023-10-23T21:13:23.000Z",
+            ["0x99B5FA03a5ea4315725c43346e55a6A6fbd94098"]
+          ],
+          [
+            "2023-10-24T06:02:35.000Z",
+            ["0x99B5FA03a5ea4315725c43346e55a6A6fbd94098"]
+          ],
+          [
+            "2023-10-29T02:12:23.000Z",
+            ["0x99B5FA03a5ea4315725c43346e55a6A6fbd94098"]
+          ]
+        ],
+        "$upgradeCount": 9,
         "allTokensFrozen": false,
         "authModule": "0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0",
         "contractId": "0xad2ae48b4d93c587cd1f0f8f269b84f57dbe98bbe5c61c4b6d324e6a667b3625",
@@ -407,5 +455,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

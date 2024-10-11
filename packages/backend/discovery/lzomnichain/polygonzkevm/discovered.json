@@ -3,7 +3,6 @@
   "chain": "polygonzkevm",
   "blockNumber": 14728552,
   "configHash": "0x710026b5135b5d108b40faf49d9063aa0102a28e3c1346da5da9851d474cdc27",
-  "version": 14,
   "contracts": [
     {
       "name": "",
@@ -132,6 +131,16 @@
       "values": {
         "$admin": "0x3c2269811836af69497E5F486A85D7316753cf62",
         "$implementation": "0xF622DFb40bf7340DBCf1e5147D6CFD95d7c5cF1F",
+        "$pastUpgrades": [
+          [
+            "2023-04-23T03:26:01.000Z",
+            ["0xC5fd9570ac1A5dAb9edA7839bD33229252B0C05d"]
+          ],
+          [
+            "2023-06-26T22:49:44.000Z",
+            ["0xF622DFb40bf7340DBCf1e5147D6CFD95d7c5cF1F"]
+          ]
+        ],
         "$upgradeCount": 2
       }
     },
@@ -151,6 +160,12 @@
       "values": {
         "$admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
         "$implementation": "0x0cA22b3dB505E13a9F40e6AB6DAf33B37D98Cf2f",
+        "$pastUpgrades": [
+          [
+            "2023-04-27T02:17:19.000Z",
+            ["0x0cA22b3dB505E13a9F40e6AB6DAf33B37D98Cf2f"]
+          ]
+        ],
         "$upgradeCount": 1
       }
     },
@@ -1555,5 +1570,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

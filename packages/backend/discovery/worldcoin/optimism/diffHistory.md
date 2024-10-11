@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x4a5cbb655b96453e6821e3bf742e1d536904f968
+
+# Diff at Tue, 01 Oct 2024 11:13:47 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 123584561
+- current block number: 123584561
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 123584561 (main branch discovery), not current.
+
+```diff
+    contract WorldIDRouterV1 (0x57f928158C3EE7CDad1e4D8642503c4D0201f611) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-07-11T09:35:11.000Z",["0x11cA3127182f7583EfC416a8771BD4d11Fae4334"]]]
+    }
+```
+
+```diff
+    contract WorldIDIdentityManagerV2 (0x86D26Ed31556EA7694BD0cC4e674D7526f70511a) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-07-15T09:35:37.000Z",["0x5198DD63b9cA3DcA4FD6f62f615e6989CA74F49B"]],["2024-07-15T09:35:37.000Z",["0xa3d93B74214B80760288091675688E1EaD7838F2"]]]
+    }
+```
+
 Generated with discovered.json: 0x84e38713f0b3bd025cebf4bb5c4e78d95ea8e44d
 
 # Diff at Fri, 23 Aug 2024 09:58:09 GMT:

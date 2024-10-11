@@ -1,3 +1,327 @@
+Generated with discovered.json: 0x1e9ffc2647406b77234b9ffd656cabfb97a0d331
+
+# Diff at Wed, 09 Oct 2024 13:09:22 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@37683e2b3d0587372f886eef49e921277810c8bf block: 20460352
+- current block number: 20927364
+
+## Description
+
+Move to discovery driven data.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20460352 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract DepositContract (0x00000000219ab540356cBB839Cbe05303d7705Fa)
+    +++ description: None
+```
+
+```diff
+    contract OptimismMintablePermitERC20Factory (0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      name:
+-        "MintableERC20FactoryProxy"
++        "OptimismMintablePermitERC20Factory"
+      issuedPermissions.0.target:
+-        "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"
++        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+      issuedPermissions.0.via.0:
++        {"address":"0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA","delay":0}
+      template:
++        "opstack/OptimismMintableERC20Factory"
+      displayName:
++        "OptimismMintableERC20Factory"
+      descriptions:
++        ["A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"configure","target":"0x8c5D64d10394cFa070066e70Ec19E67398b4dABE"},{"permission":"upgrade","target":"0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc"},{"permission":"upgrade","target":"0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"},{"permission":"upgrade","target":"0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2","description":"upgrading bridge implementation allows to access all funds and change every system component."},{"permission":"upgrade","target":"0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"},{"permission":"upgrade","target":"0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4"},{"permission":"upgrade","target":"0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"},{"permission":"upgrade","target":"0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5"}]
+      template:
++        "opstack/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"configure","target":"0x8c5D64d10394cFa070066e70Ec19E67398b4dABE","description":"set and change address mappings."},{"permission":"upgrade","target":"0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc"},{"permission":"upgrade","target":"0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"},{"permission":"upgrade","target":"0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2","description":"upgrading bridge implementation allows to access all funds and change every system component."},{"permission":"upgrade","target":"0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"},{"permission":"upgrade","target":"0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4"},{"permission":"upgrade","target":"0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"},{"permission":"upgrade","target":"0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5"}]
+    }
+```
+
+```diff
+    contract SystemConfig (0x34a9f273cbD847d49c3De015FC26c3E66825f8b2) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.1.target:
+-        "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"
++        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+      issuedPermissions.1.via.0:
++        {"address":"0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA","delay":0}
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      issuedPermissions.0.target:
+-        "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"
++        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+      issuedPermissions.0.via.0:
++        {"address":"0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA","delay":0,"description":"upgrading bridge implementation allows to access all funds and change every system component."}
+      categories:
++        ["Gateways&Escrows"]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions.0.target:
+-        "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"
++        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+      issuedPermissions.0.via.0:
++        {"address":"0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA","delay":0}
+      template:
++        "opstack/OptimismPortal"
+      descriptions:
++        ["The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."]
+    }
+```
+
+```diff
+    contract frxETH (0x5E8422345238F34275888049021821E8E08CAa1f) {
+    +++ description: frxETH token contract. Fraxtal uses Frax Ether as the designated gas token, allowing users to pay for blockspace with frxETH.
+      template:
++        "fraxtal/frxETH"
+      displayName:
++        "frxETH Token"
+      descriptions:
++        ["frxETH token contract. Fraxtal uses Frax Ether as the designated gas token, allowing users to pay for blockspace with frxETH."]
+      issuedPermissions:
++        [{"permission":"configure","target":"0x0000000000000000000000000000000000000000","via":[]},{"permission":"configure","target":"0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27","via":[{"address":"0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA","delay":172800,"description":"can add and remove frxETH minters and set a new timelock address."}]},{"permission":"configure","target":"0xbAFA44EFE7901E04E39Dad13167D089C559c1138","via":[]}]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4) {
+    +++ description: This is NOT the shared SuperchainConfig of the OP stack Superchain. This SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      template:
+-        "opstack/SuperchainConfig"
++        "opstack/SuperchainConfigFake"
+      descriptions.0:
+-        "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
++        "This is NOT the shared SuperchainConfig of the OP stack Superchain. This SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
+      issuedPermissions.0.target:
+-        "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"
++        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+      issuedPermissions.0.via.0:
++        {"address":"0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA","delay":0}
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.0.target:
+-        "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"
++        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+      issuedPermissions.0.via.0:
++        {"address":"0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA","delay":0}
+    }
+```
+
+```diff
+    contract Timelock (0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA) {
+    +++ description: Allows for time-delayed execution of transactions. Current delay is 2d.
+      values.delayFormatted:
++        "2d"
+      template:
++        "fraxtal/Timelock"
+      displayName:
++        "FrxEthTimelock"
+      descriptions:
++        ["Allows for time-delayed execution of transactions. Current delay is 2d."]
+      directlyReceivedPermissions:
++        [{"permission":"configure","target":"0x5E8422345238F34275888049021821E8E08CAa1f","description":"can add and remove frxETH minters and set a new timelock address."},{"permission":"configure","target":"0xbAFA44EFE7901E04E39Dad13167D089C559c1138","description":"can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`)."}]
+    }
+```
+
+```diff
+    contract AddressManager (0x8c5D64d10394cFa070066e70Ec19E67398b4dABE) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.target:
+-        "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"
++        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+      issuedPermissions.0.via.0:
++        {"address":"0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA","delay":0,"description":"set and change address mappings."}
+      descriptions:
++        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions.0.target:
+-        "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"
++        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+      issuedPermissions.0.via.0:
++        {"address":"0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA","delay":0}
+    }
+```
+
+```diff
+    contract sfrxETH (0xac3E018457B222d93114458476f3E3416Abbe38F) {
+    +++ description: Vault token contract (ERC-4626) for staked frxETH. The smart contract receives frxETH tokens and mints sfrxETH tokens.
+      descriptions:
++        ["Vault token contract (ERC-4626) for staked frxETH. The smart contract receives frxETH tokens and mints sfrxETH tokens."]
+    }
+```
+
+```diff
+    contract FraxtalTimelockMultisig (0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27) {
+    +++ description: None
+      name:
+-        "TimelockMultisig"
++        "FraxtalTimelockMultisig"
+      receivedPermissions:
++        [{"permission":"configure","target":"0x5E8422345238F34275888049021821E8E08CAa1f","description":"can add and remove frxETH minters and set a new timelock address.","via":[{"address":"0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA","delay":172800}]},{"permission":"configure","target":"0xbAFA44EFE7901E04E39Dad13167D089C559c1138","description":"can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`).","via":[{"address":"0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA","delay":172800}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA","delay":172800}]
+    }
+```
+
+```diff
+    contract frxETHMinter (0xbAFA44EFE7901E04E39Dad13167D089C559c1138) {
+    +++ description: Accepts user-supplied ETH and converts it to frxETH.
+      template:
++        "fraxtal/FrxEthMinter"
+      displayName:
++        "frxETH Minter"
+      descriptions:
++        ["Accepts user-supplied ETH and converts it to frxETH."]
+      issuedPermissions:
++        [{"permission":"configure","target":"0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27","via":[{"address":"0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA","delay":172800,"description":"can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`)."}]}]
+      receivedPermissions:
++        [{"permission":"configure","target":"0x5E8422345238F34275888049021821E8E08CAa1f","description":"can mint frxETH tokens."}]
+    }
+```
+
+```diff
+    contract FraxtalMultisig (0xe0d7755252873c4eF5788f7f45764E0e17610508) {
+    +++ description: None
+      receivedPermissions.8:
++        {"permission":"upgrade","target":"0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5","via":[{"address":"0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","target":"0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4","via":[{"address":"0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","target":"0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4","via":[{"address":"0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","target":"0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D","via":[{"address":"0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","target":"0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2","description":"upgrading bridge implementation allows to access all funds and change every system component.","via":[{"address":"0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","target":"0x34a9f273cbD847d49c3De015FC26c3E66825f8b2","via":[{"address":"0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"}]}
+      receivedPermissions.2:
++        {"permission":"upgrade","target":"0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc","via":[{"address":"0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"}]}
+      receivedPermissions.1:
++        {"permission":"configure","target":"0x8c5D64d10394cFa070066e70Ec19E67398b4dABE","description":"set and change address mappings.","via":[{"address":"0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"}]}
+      fieldMeta:
+-        {"getOwners":{"severity":"LOW","description":"Signers of the multisig, high severity if threshold changes"},"getThreshold":{"severity":"HIGH","description":"Multisig threshold"}}
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"}]
+    }
+```
+
+Generated with discovered.json: 0x1ae5470c03aafe40419de58bbffee6cafb6a5ed3
+
+# Diff at Tue, 01 Oct 2024 10:51:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20460352
+- current block number: 20460352
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20460352 (main branch discovery), not current.
+
+```diff
+    contract MintableERC20FactoryProxy (0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-02-01T18:20:11.000Z",["0x1120ef11d4C3dc90Aa6BDfce16Ab049dd5d18aE0"]],["2024-02-19T16:52:35.000Z",["0x6cA98f43719231d38F6426DB64C7F3D5C7CE7876"]]]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x126bcc31Bc076B3d515f60FBC81FddE0B0d542Ed) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades:
++        [["2024-02-01T18:20:11.000Z",["0x31c25985E6b10CF335FC01cf9790aF4890d0505c"]],["2024-05-14T20:13:47.000Z",["0x7a6b7F35D032c9b122C69F01EA4523e028f6ef4A"]],["2024-05-14T20:13:47.000Z",["0xC6e4ECE5576dC96846bb11eD8910f3dF3CE516b8"]]]
+      values.$upgradeCount:
++        3
+    }
+```
+
+```diff
+    contract SystemConfig (0x34a9f273cbD847d49c3De015FC26c3E66825f8b2) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.$pastUpgrades:
++        [["2024-02-01T18:20:11.000Z",["0x22052c592f763CA14a090D9974c5Bf9Fd3a44b8c"]],["2024-05-14T20:13:47.000Z",["0x7a6b7F35D032c9b122C69F01EA4523e028f6ef4A"]],["2024-05-14T20:13:47.000Z",["0x4D7A1a16d0DA89B50FBd8b524508FC393A6Dc367"]]]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract OptimismPortal (0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-02-01T18:20:23.000Z",["0x59B6903044Fa9439a5D621D3605789A6E654b1D6"]],["2024-05-14T20:13:47.000Z",["0x7a6b7F35D032c9b122C69F01EA4523e028f6ef4A"]],["2024-05-14T20:13:47.000Z",["0x47Ec03B67ba4f3C71a4320D2947f2173E0B45a23"]]]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      values.$pastUpgrades:
++        [["2024-02-01T18:19:59.000Z",["0x0d9C39c64CF8eDA1EdFeBD78AFa895bAA797eFc4"]],["2024-02-02T23:44:11.000Z",["0xb851fc304fCa88EDC89C287687AF4F6d7810bc14"]],["2024-02-02T23:44:11.000Z",["0x0d9C39c64CF8eDA1EdFeBD78AFa895bAA797eFc4"]]]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$pastUpgrades:
++        [["2024-02-01T18:20:23.000Z",["0xA30ADd78D5be6B2B55C934666bb4fF2C4429d800"]],["2024-02-02T23:44:11.000Z",["0x84c2f365733c6560bd49D8768d9c23B07A9DD630"]],["2024-05-14T20:13:47.000Z",["0x7a6b7F35D032c9b122C69F01EA4523e028f6ef4A"]],["2024-05-14T20:13:47.000Z",["0x6f3CcC8C9DAf8B9b39aDe481213Ff7A626a42B65"]]]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.$pastUpgrades:
++        [["2024-02-01T18:20:11.000Z",["0x23A0478996241F9f966b7054c06FdeB96Ddf3475"]],["2024-05-14T20:13:47.000Z",["0x7a6b7F35D032c9b122C69F01EA4523e028f6ef4A"]],["2024-05-14T20:13:47.000Z",["0x7eE1637C33Ed0DFEE6403f3301B6d404106018e4"]]]
+    }
+```
+
 Generated with discovered.json: 0xbfc6c834494fb0269111ffaaaa7db04f1ce9acf9
 
 # Diff at Thu, 12 Sep 2024 15:36:07 GMT:
@@ -702,7 +1026,7 @@ Generated with discovered.json: 0xf0c97ee110e8ec5c671f43cd04bf06c74a0ebd67
 
 ## Description
 
-One signer of fraxtal Multisig is replaced and L2 fee calculation is switched to [post-Ecotone encoding](https://specs.optimism.io/protocol/system_config.html#ecotone-scalar-overhead-uint256uint256-change).
+One signer of fraxtal Multisig is replaced and L2 fee calculation is switched to [post-Ecotone encoding](https://specs.optimism.io/protocol/system-config.html#ecotone-scalar-overhead-uint256uint256-change).
 
 ## Watched changes
 

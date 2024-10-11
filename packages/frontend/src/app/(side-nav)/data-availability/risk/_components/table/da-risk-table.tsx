@@ -8,7 +8,6 @@ import {
   getSortedRowModel,
 } from '@tanstack/react-table'
 import Link from 'next/link'
-import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/basic-table'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { RiskCell } from '~/components/table/cells/risk-cell'
@@ -18,8 +17,6 @@ import { type DaRiskEntry } from '~/server/features/data-availability/risks/get-
 import { cn } from '~/utils/cn'
 import { DaTableLastSubRowCell } from '../../../_components/da-table-last-sub-row-cell'
 import { DaTableSubRowCell } from '../../../_components/da-table-sub-row-cell'
-import { useDaFilter } from '../../../_components/filters/da-filter-context'
-import { DaFilters } from '../../../_components/filters/da-filters'
 import { columns } from './columns'
 
 interface Props {
@@ -27,16 +24,10 @@ interface Props {
 }
 
 export function DaRiskTable({ items }: Props) {
-  const filter = useDaFilter()
-
-  const filteredEntries = useMemo(() => {
-    return items.filter(filter)
-  }, [items, filter])
-
   const breakpoint = useBreakpoint()
 
   const table = useTable({
-    data: filteredEntries,
+    data: items,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -59,8 +50,7 @@ export function DaRiskTable({ items }: Props) {
    */
 
   return (
-    <>
-      <DaFilters items={filteredEntries} />
+    <div className="space-y-3 md:space-y-6">
       <BasicTable
         table={table}
         rowColoringMode="ethereum-only"
@@ -88,7 +78,7 @@ export function DaRiskTable({ items }: Props) {
                     <td colSpan={3} className="pointer-events-none"></td>
                     <td
                       className={cn(
-                        'group whitespace-pre bg-black/[0.05] pr-3 align-middle group-hover:bg-black/[0.1] dark:bg-white/[0.1] dark:group-hover:bg-white/[0.2]',
+                        'group whitespace-pre bg-n-gray-200 pr-3 align-middle group-hover:bg-black/[0.1] dark:bg-white/[0.1] dark:group-hover:bg-white/[0.2]',
                         !lastRow &&
                           'border-b border-b-gray-200 dark:border-b-zinc-700',
                         firstRow && 'rounded-tl-xl',
@@ -152,6 +142,6 @@ export function DaRiskTable({ items }: Props) {
           )
         }}
       />
-    </>
+    </div>
   )
 }

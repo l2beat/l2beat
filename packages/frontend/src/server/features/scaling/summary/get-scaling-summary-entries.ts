@@ -1,19 +1,32 @@
 import { layer2s, layer3s } from '@l2beat/config'
 import { compact } from 'lodash'
-import { getL2Risks } from '~/app/(side-nav)/(other)/scaling/_utils/get-l2-risks'
+import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
+import { getActivityLatestTps } from '../activity/get-activity-latest-tps'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { get7dTokenBreakdown } from '../tvl/utils/get-7d-token-breakdown'
 import { getAssociatedTokenWarning } from '../tvl/utils/get-associated-token-warning'
 import { orderByTvl } from '../tvl/utils/order-by-tvl'
 
+export type ScalingSummaryEntry = Awaited<
+  ReturnType<typeof getScalingSummaryEntries>
+>[number]
 export async function getScalingSummaryEntries() {
-  const implementationChangeReport = await getImplementationChangeReport()
-  const projectsVerificationStatuses = await getProjectsVerificationStatuses()
-  const tvl = await get7dTokenBreakdown({ type: 'layer2' })
-
-  const projects = [...layer2s, ...layer3s]
+  const projects = [...layer2s, ...layer3s].filter(
+    (project) => !project.isUpcoming && !project.isArchived,
+  )
+  const [
+    implementationChangeReport,
+    projectsVerificationStatuses,
+    tvl,
+    projectsActivity,
+  ] = await Promise.all([
+    getImplementationChangeReport(),
+    getProjectsVerificationStatuses(),
+    get7dTokenBreakdown({ type: 'layer2' }),
+    getActivityLatestTps(projects),
+  ])
 
   const entries = projects.map((project) => {
     const isVerified = !!projectsVerificationStatuses[project.id.toString()]
@@ -21,6 +34,7 @@ export async function getScalingSummaryEntries() {
       !!implementationChangeReport.projects[project.id.toString()]
 
     const latestTvl = tvl.projects[project.id.toString()]
+    const activity = projectsActivity[project.id.toString()]
 
     const associatedTokenWarning =
       latestTvl && latestTvl.breakdown.total > 0
@@ -48,7 +62,12 @@ export async function getScalingSummaryEntries() {
           associatedTokenWarning?.sentiment === 'bad' && associatedTokenWarning,
         ]),
       },
-      marketShare: latestTvl && latestTvl.breakdown.total / tvl.total,
+      activity: activity
+        ? {
+            pastDayTps: activity.pastDayTps,
+            change: activity.change,
+          }
+        : undefined,
     }
 
     if (project.type === 'layer2') {
@@ -73,9 +92,8 @@ export async function getScalingSummaryEntries() {
     // L3
     return {
       ...common,
-      risks: projectRisks,
+      risks: stackedRisks ? getL2Risks(stackedRisks) : projectRisks,
       baseLayerRisks,
-      stackedRisks,
     }
   })
 
@@ -86,7 +104,3 @@ export async function getScalingSummaryEntries() {
 
   return orderByTvl(entries, remappedForOrdering)
 }
-
-export type ScalingSummaryEntry = Awaited<
-  ReturnType<typeof getScalingSummaryEntries>
->[number]

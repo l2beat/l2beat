@@ -103,7 +103,7 @@ export function IndividualPizzaRosetteIcon({
         </clipPath>
       </defs>
 
-      <g clip-path="url(#outer-clip)">
+      <g clipPath="url(#outer-clip)">
         {background ? (
           <circle
             cx="90"
@@ -113,7 +113,7 @@ export function IndividualPizzaRosetteIcon({
           />
         ) : null}
 
-        <g clip-path="url(#inner-clip)">
+        <g clipPath="url(#inner-clip)">
           <g
             onMouseEnter={() =>
               selectRisk(innerSequencerFailure, outerSequencerFailure, 'bottom')
@@ -305,7 +305,7 @@ export function IndividualPizzaRosetteIcon({
             cy="90"
             r="52"
             className="stroke-gray-100 dark:stroke-neutral-700"
-            stroke-width="10"
+            strokeWidth="10"
           />
         </g>
       </g>

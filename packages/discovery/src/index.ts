@@ -12,10 +12,7 @@ export { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
 export { RawDiscoveryConfig } from './discovery/config/RawDiscoveryConfig'
 export { DiscoveryLogger } from './discovery/DiscoveryLogger'
 export { getContractField } from './discovery/utils/metaGetters'
-export {
-  DISCOVERY_LOGIC_VERSION,
-  DiscoveryEngine,
-} from './discovery/engine/DiscoveryEngine'
+export { DiscoveryEngine } from './discovery/engine/DiscoveryEngine'
 export { flattenDiscoveredSources } from './discovery/output/flattenDiscoveredSource'
 export { HandlerExecutor } from './discovery/handlers/HandlerExecutor'
 export { diffContracts, type FieldDiff } from './discovery/output/diffContracts'
@@ -39,6 +36,8 @@ export { normalizeDiffPath } from './discovery/utils/normalizeDiffPath'
 export { sortBySeverity } from './discovery/utils/sortDiffs'
 export type { HashedChunks, HashedFileContent } from './flatten/utils'
 export { type DiscoveryCache } from './discovery/provider/ReorgAwareCache'
+export { SQLiteCache } from './discovery/provider/SQLiteCache'
+export { NoCache } from './discovery/provider/NoCache'
 export {
   buildSimilarityHashmap,
   estimateSimilarity,

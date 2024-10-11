@@ -21,8 +21,8 @@ import {
 } from 'viem/chains'
 import { z } from 'zod'
 import { env } from '../env.js'
-import { isExplorerType } from '../utils/isExplorerType.js'
-import { zodFetch } from '../utils/zodFetch.js'
+import { isExplorerType } from '../utils/is-explorer-type.js'
+import { zodFetch } from '../utils/zod-fetch.js'
 
 export const chainsConfig = [
   arbitrum,
@@ -212,7 +212,7 @@ async function resetDb() {
 
 */
 
-const db = createDatabase()
+const db = createDatabase({ connectionString: env.DATABASE_URL })
 
 // await resetDb()
 await seed()

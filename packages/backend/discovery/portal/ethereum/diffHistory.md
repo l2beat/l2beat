@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x5761ecd4e31ad63de2d327a5cfd3d99b1109591d
+
+# Diff at Tue, 01 Oct 2024 10:54:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20089055
+- current block number: 20089055
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20089055 (main branch discovery), not current.
+
+```diff
+    contract WormholeRelayer (0x27428DD2d3DD32A4D7f7C497eAaa23130d894911) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-06-16T17:56:23.000Z",["0x25688636CEc6CE0F1434b1e7dd0A223F3f258336"]],["2023-06-16T17:56:23.000Z",["0x00337a31aEE3Ed37f5D5FBF892031d0090Da2EeF"]],["2023-11-16T18:42:23.000Z",["0x90995DBd1aae85872451b50A569dE947D34ac4ee"]]]
+    }
+```
+
+```diff
+    contract TokenBridge (0x3ee18B2214AFF97000D974cf647E7C347E8fa585) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2021-09-13T12:26:07.000Z",["0x51e9027eaBE500466cAA0F4Be882afC4446C4eFE"]],["2021-09-13T12:26:07.000Z",["0x6c4c12987303b2c94b2C76c612Fc5F4D2F0360F7"]],["2021-11-01T16:56:25.000Z",["0x67145cdb0d69678e9c48106F646C1b7ef69813A4"]],["2022-01-27T16:35:52.000Z",["0x91175AEE6dAc41B9C1f749ded077568aD93B84Ca"]],["2022-07-08T17:04:13.000Z",["0xB203b2057E2F08aDCE8F73Cc99709Ffdd8EDffEa"]],["2022-08-24T17:35:44.000Z",["0x76364611e457b1f97cd58FfC332DDC7561a193F6"]],["2022-09-01T14:23:24.000Z",["0xfA71B241B168d2876722c6D8856d3E4F311B8C1e"]],["2022-09-12T15:54:42.000Z",["0xADE06bc75Dc1FC3fB7442e0CFb8Ca544B23aF789"]],["2022-09-20T16:24:59.000Z",["0x299b4F6066d231521d11FAE8331fb1A4fe794F58"]],["2023-10-17T19:13:23.000Z",["0x381752f5458282d317d12C30D2Bd4D6E1FD8841e"]]]
+    }
+```
+
+```diff
+    contract NFTBridge (0x6FFd7EdE62328b3Af38FCD61461Bbfc52F5651fE) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2021-09-21T10:10:43.000Z",["0xeF31003B774B45963FEa40bdF8653994f991AeAa"]],["2021-09-21T10:10:43.000Z",["0x19AA39217dE9F568cdEb4141be1654670862a596"]],["2022-03-08T21:44:45.000Z",["0x516f156987fb1C7763b31EA0e8a07d23077f7e04"]],["2022-07-08T17:03:44.000Z",["0x29C502cF186012734c5F8861C4004C27c55578df"]],["2022-09-12T15:55:50.000Z",["0x3e41904B3766F4cCEb145Cc53D75fEB61722a96C"]]]
+    }
+```
+
+```diff
+    contract DeliveryProviderImplementation (0x7A0a53847776f7e94Cc35742971aCb2217b0Db81) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-06-16T17:45:59.000Z",["0xedd08D4363820603fb1B261F7667B8ee170c37a5"]],["2023-06-16T17:45:59.000Z",["0x401d3A2ec0a071e2A8f8Fc9B4C69313C1a04540c"]],["2023-11-07T19:13:23.000Z",["0x0b89ccD6b803CCEC4f0E0fBeFAeE1f7d16e734e2"]]]
+    }
+```
+
+```diff
+    contract WormholeCore (0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2021-08-04T16:10:44.000Z",["0x736D2A394f7810C17b3c6fEd017d5BC7D60c077d"]],["2022-07-08T17:04:44.000Z",["0x8C0041566e0bc27Efe285a9E98D0B4217a46809c"]],["2022-09-12T15:52:42.000Z",["0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0"]]]
+    }
+```
+
+```diff
+    contract CircleIntegration (0xAaDA05BD399372f0b0463744C09113c137636f6a) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-04-20T19:28:23.000Z",["0x52e3C3D0Ca2fa372263289836c4E258C34a4523B"]],["2023-04-20T19:28:23.000Z",["0x37f26277B1927c6bEDbD94e5C21C337A706af31c"]]]
+    }
+```
+
 Generated with discovered.json: 0x3ddb411f820e2d4832e562c7966815312b87b793
 
 # Diff at Fri, 23 Aug 2024 09:54:30 GMT:

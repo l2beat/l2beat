@@ -5,11 +5,11 @@ import { useChartLoading } from './chart-loading-context'
 
 export const FIRST_LABEL_HEIGHT_PX = 20
 
-export function ChartLabels({
-  className,
-}: {
+interface Props {
   className?: string
-}) {
+}
+
+export function ChartLabels({ className }: Props) {
   const { labels, columns } = useChartContext()
   const isLoading = useChartLoading()
   return (
@@ -20,6 +20,7 @@ export function ChartLabels({
         className,
       )}
     >
+      <ChartLabel isLoading={isLoading} />
       {labels.map((label, i) => (
         <ChartLabel key={i} isLoading={isLoading}>
           {label}
@@ -32,15 +33,31 @@ export function ChartLabels({
 function ChartLabel({
   children,
   isLoading,
-}: { children?: ReactNode; isLoading: boolean }) {
+  className,
+}: {
+  children?: ReactNode
+  isLoading: boolean
+  className?: string
+}) {
   return (
     <div className="relative">
-      {!isLoading ? (
-        <span className="absolute bottom-0 left-0 pb-0.5 text-sm text-gray-500 text-opacity-50 dark:text-white dark:text-opacity-50">
+      {!isLoading && children ? (
+        <span
+          className={cn(
+            'absolute bottom-0 left-1 pb-0.5 text-sm text-gray-500 dark:text-white',
+            'sidebar:text-zinc-500 sidebar:dark:text-zinc-300',
+            className,
+          )}
+        >
           {children}
         </span>
       ) : null}
-      <hr className="border-gray-850/30 dark:border-white/30" />
+      <hr
+        className={cn(
+          'border-gray-850/30 dark:border-white/30',
+          'sidebar:border-zinc-500/30 sidebar:dark:border-zinc-300/30',
+        )}
+      />
     </div>
   )
 }

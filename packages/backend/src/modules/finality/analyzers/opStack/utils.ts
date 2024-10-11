@@ -47,7 +47,7 @@ export function decompressToByteArray(compressedData: Uint8Array) {
   const lowerNibble = channelVersionByte & 0x0f
 
   // NOTE(radomski): Based on this spec
-  // https://github.com/ethereum-optimism/specs/blob/main/specs/fjord/derivation.md#brotli-channel-compression
+  // https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/fjord/derivation.md#brotli-channel-compression
   if (
     lowerNibble === CHANNEL_VERSION_ZLIB_LOWER_NIBBLE_DEFALTE ||
     lowerNibble === CHANNEL_VERSION_ZLIB_LOWER_NIBBLE_RESERVED

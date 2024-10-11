@@ -1,3 +1,66 @@
+Generated with discovered.json: 0x38aad1481151a89c2ea4d20c9aef1cf3d10e0e3d
+
+# Diff at Thu, 10 Oct 2024 08:32:18 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@cb5ff535ffc194baf7396bd6db8232883e2ad088 block: 20675639
+- current block number: 20934032
+
+## Description
+
+New Hub added (Worldchain).
+
+## Watched changes
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.480:
++        "0x8eBebfc894047bEE213A561b8792fCa71241731f"
+      values.CrossChainContracts.480:
++        "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract WorldChain_Adapter (0x8eBebfc894047bEE213A561b8792fCa71241731f)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/WorldChain_Adapter.sol          | 591 +++++++++++++++++++++
+ 1 file changed, 591 insertions(+)
+```
+
+Generated with discovered.json: 0xfd768f13b611e4a0af3411019ac6f2f75bea7357
+
+# Diff at Tue, 01 Oct 2024 10:49:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20675639
+- current block number: 20675639
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20675639 (main branch discovery), not current.
+
+```diff
+    contract Ethereum_SpokePool (0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-04-24T16:52:35.000Z",["0xA667498F46457548f1D3ad557340b95Fdb290148"]],["2023-08-22T00:20:59.000Z",["0x326510c1bf9d85Fb73d0AB8d20Aa5BbE9c7561e9"]],["2023-10-03T13:48:47.000Z",["0x5ab0A812327aD959dE664AEC8408Ef8c6ABe7184"]],["2024-02-21T18:04:23.000Z",["0x90438AD3d81a0739ce1Cb20C73564682388c5FdD"]],["2024-03-18T13:40:47.000Z",["0xa4D3535f33549749Fb97fA42903AC80F6fb54af6"]],["2024-05-15T15:11:59.000Z",["0x08C21b200eD06D2e32cEC91a770C3FcA8aD5F877"]],["2024-09-03T15:48:23.000Z",["0x48Dcf75EA18233BA947E4480dCd70594720449C1"]]]
+    }
+```
+
 Generated with discovered.json: 0x2a73e7d79017ef77856103254e8631297be55635
 
 # Diff at Wed, 04 Sep 2024 07:12:24 GMT:

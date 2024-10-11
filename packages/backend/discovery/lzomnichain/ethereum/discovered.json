@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20240876,
   "configHash": "0x9d96b20a841797ca5d2e377b9c244b1781d5c5b56faf0686676a0c3d77c5503a",
-  "version": 14,
   "contracts": [
     {
       "name": "FPValidator",
@@ -64,6 +63,7 @@
       "values": {
         "$admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
         "$implementation": "0x154c7B3Eee18ABCFaede98fae00e58e7737d96dE",
+        "$pastUpgrades": [],
         "$upgradeCount": 0
       }
     },
@@ -1488,6 +1488,16 @@
       "values": {
         "$admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
         "$implementation": "0x3eEA8d627ab6983fFFc7027ee623Fd7699343fc1",
+        "$pastUpgrades": [
+          [
+            "2023-02-08T19:58:23.000Z",
+            ["0xccEf13cFEB6873c167f62A365548A57C9ed29DC5"]
+          ],
+          [
+            "2023-04-27T02:38:47.000Z",
+            ["0x3eEA8d627ab6983fFFc7027ee623Fd7699343fc1"]
+          ]
+        ],
         "$upgradeCount": 2
       },
       "derivedName": ""
@@ -1546,6 +1556,7 @@
       "values": {
         "$admin": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
         "$implementation": "0x61Ab01Ce58D1dFf3562bb25870020d555e39D849",
+        "$pastUpgrades": [],
         "$upgradeCount": 0
       }
     },
@@ -1565,6 +1576,32 @@
       "values": {
         "$admin": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
         "$implementation": "0xB830a5AfCBEBb936c30C607a18BbbA9f5B0a592f",
+        "$pastUpgrades": [
+          [
+            "2022-11-21T22:41:47.000Z",
+            ["0x4E341b9Cf90514A5b7dfec2c9A1f20AA4514C260"]
+          ],
+          [
+            "2023-02-03T23:06:47.000Z",
+            ["0xDD55F55CB9a39EF1eed4Ee1a84EE1b7411bE306a"]
+          ],
+          [
+            "2023-04-23T04:37:11.000Z",
+            ["0x9512a85438606dEdE54297634dEd7C7C0c231874"]
+          ],
+          [
+            "2023-06-26T23:20:23.000Z",
+            ["0xaF34771b16960ea77484A866a34CCDAFDc913D9C"]
+          ],
+          [
+            "2023-09-20T19:37:35.000Z",
+            ["0x8775e9D584008f84daFe7abe75a62f6C91491027"]
+          ],
+          [
+            "2023-09-22T14:15:59.000Z",
+            ["0xB830a5AfCBEBb936c30C607a18BbbA9f5B0a592f"]
+          ]
+        ],
         "$upgradeCount": 6
       },
       "derivedName": ""
@@ -2014,5 +2051,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

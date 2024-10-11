@@ -7,7 +7,6 @@ import {
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -120,7 +119,7 @@ export const honeypot: Layer2 = {
     bridge: { type: 'Enshrined' },
     mode: 'Transaction data',
   }),
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,
       value: 'None',
@@ -141,7 +140,7 @@ export const honeypot: Layer2 = {
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
     destinationToken: RISK_VIEW.CANONICAL,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-  }),
+  },
   technology: {
     stateCorrectness: {
       name: 'Fraud proofs are in development',

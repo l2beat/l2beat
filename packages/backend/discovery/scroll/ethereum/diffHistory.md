@@ -1,3 +1,321 @@
+Generated with discovered.json: 0x733494d407e555a98739d03978d0302e5362a2a4
+
+# Diff at Fri, 04 Oct 2024 08:46:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@000446ee962492b0a3a917c3f907d3277663f719 block: 20847193
+- current block number: 20891049
+
+## Description
+
+Hide external escrow governance.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20847193 (main branch discovery), not current.
+
+```diff
+    contract wstETHescrowLido (0x6625C6332c9F91F2D27c304E729B86db87A3f504) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0xCC2C53556Bc75217cf698721b29071d6f12628A9","via":[]}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x9eBf2f33526CD571f8b2ad312492cb650870CFd6)
+    +++ description: None
+```
+
+```diff
+    contract pufETHEscrow (0xA033Ff09f2da45f0e9ae495f525363722Df42b2a) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","target":"0x9eBf2f33526CD571f8b2ad312492cb650870CFd6","via":[]}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PufferFinanceOpsMultisig (0xC0896ab1A8cae8c2C1d27d011eb955Cca955580d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract wstETHescrowLidoProxyAdmin (0xCC2C53556Bc75217cf698721b29071d6f12628A9)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x5d92e37e7058817c7609154f19f728454dc8c25e
+
+# Diff at Tue, 01 Oct 2024 10:54:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20847193
+- current block number: 20847193
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20847193 (main branch discovery), not current.
+
+```diff
+    contract L1MessageQueue (0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-10-08T16:25:11.000Z",["0xBC9D741501A20F962756C95BF906b4abffadcf8F"]],["2024-02-22T08:20:23.000Z",["0xeBaed7A81c298B24EE6d59c22698A951dc448E01"]],["2024-08-20T23:36:35.000Z",["0x137CC585F607EDeBBc3CA6360AffCFeab507B374"]]]
+    }
+```
+
+```diff
+    contract L1BatchBridgeGateway (0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-05-20T05:48:59.000Z",["0xFAf8f72e54d1089fa1882b6f597BfDFF59a8AFca"]],["2024-05-20T06:38:59.000Z",["0x7999cdD5E2893475D89211A2E3FdA67a841E3233"]]]
+    }
+```
+
+```diff
+    contract L1ERC721Gateway (0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-10-08T16:25:23.000Z",["0xDE3be7C2AA151D1E152DDfcBf0962FcDf5323DAe"]],["2024-02-22T08:20:23.000Z",["0xd1841c5756428812233eEA78afC17cb2D3e392bb"]]]
+    }
+```
+
+```diff
+    contract wstETHescrowLido (0x6625C6332c9F91F2D27c304E729B86db87A3f504) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-10-10T06:48:23.000Z",["0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb"]],["2024-03-05T07:48:59.000Z",["0xF4f2066EE72D62e3caF9678459149BA7FCf2262F"]]]
+    }
+```
+
+```diff
+    contract DaiEscrow (0x67260A8B73C5B77B55c1805218A42A7A6F98F515) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-10-10T06:41:35.000Z",["0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb"]]]
+    }
+```
+
+```diff
+    contract L1ScrollMessenger (0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-10-08T16:25:23.000Z",["0xAf2F898a8680cb52766ABE0588ebe6b9bFe37845"]],["2024-02-22T08:20:23.000Z",["0x72981fD00087fF4F60aBFdE9f353cB1912A37fb6"]]]
+    }
+```
+
+```diff
+    contract EnforcedTxGateway (0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-10-08T16:25:23.000Z",["0x642af405bF64660665B37977449C9C536B806318"]]]
+    }
+```
+
+```diff
+    contract L1WETHGateway (0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-10-08T16:25:23.000Z",["0xd3c42158682D55E082EaBe08a29F7515A97cA307"]],["2024-02-22T08:20:23.000Z",["0xa4F400593DFfc0ae02F940ab58f6e3Cc6fb9FB49"]]]
+    }
+```
+
+```diff
+    contract L1ETHGateway (0x7F2b8C31F88B6006c382775eea88297Ec1e3E905) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-10-08T16:25:23.000Z",["0x1fcbE079c4Bbab37406daB7Dfd35AcAe37D5C55d"]],["2024-02-22T08:20:23.000Z",["0x546E0bF31FB6e7babD493452e4e6999191367B42"]]]
+    }
+```
+
+```diff
+    contract OLD_L2GasPriceOracle (0x987e300fDfb06093859358522a79098848C33852) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-10-08T16:25:11.000Z",["0xfDF1eE0098168eaa61BF87Db68C39c85151a4E9E"]]]
+    }
+```
+
+```diff
+    contract pufETHEscrow (0xA033Ff09f2da45f0e9ae495f525363722Df42b2a) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-15T09:31:47.000Z",["0xc4d46E8402F476F269c379677C99F18E22Ea030e"]],["2024-04-15T09:31:47.000Z",["0x08D77Ea90DB9BF6c0d3f66E6b8394DA2E81B9a03"]],["2024-04-15T09:31:47.000Z",["0x08D77Ea90DB9BF6c0d3f66E6b8394DA2E81B9a03"]]]
+    }
+```
+
+```diff
+    contract ScrollChain (0xa13BAF47339d63B743e7Da8741db5456DAc1E556) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-10-08T16:25:23.000Z",["0x2E07f0FBA71709bb5e1f045b02152E45B451D75f"]],["2024-02-22T08:20:23.000Z",["0xFA148514d03420b7b1a13eC74da06D2Ca875539C"]],["2024-04-28T22:06:35.000Z",["0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8"]],["2024-07-02T10:10:47.000Z",["0x4F250B05262240C787a1eE222687C6eC395C628A"]],["2024-08-20T23:36:35.000Z",["0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f"]]]
+    }
+```
+
+```diff
+    contract L1CustomERC20Gateway (0xb2b10a289A229415a124EFDeF310C10cb004B6ff) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-10-08T16:25:23.000Z",["0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb"]],["2024-02-22T08:20:23.000Z",["0x7F512E2E9dfC4552941D99A5b2405BBcF5781C2c"]]]
+    }
+```
+
+```diff
+    contract L1ERC1155Gateway (0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-10-08T16:25:23.000Z",["0xCb4638620E4C6DeCef26374e71b0dd4871863593"]],["2024-02-22T08:20:23.000Z",["0x244BF7aEf29F03916569470a51fA0794B62F8cd7"]]]
+    }
+```
+
+```diff
+    contract L1StandardERC20Gateway (0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-10-08T16:25:23.000Z",["0x9218732389D80f9b8723C3f32a38865B7a63564A"]],["2024-02-22T08:20:23.000Z",["0x4015Fc868C06689ABEba4a9dC8FA43B804F6239c"]]]
+    }
+```
+
+```diff
+    contract L1USDCGateway (0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-10-10T06:29:11.000Z",["0x6667123b5017AAB9945F73345848B82D7A953AA8"]],["2024-02-22T08:20:23.000Z",["0x56ce8A8E8399f6cD5e7e4f549E8BfD673f2AfF5e"]]]
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-10-08T16:25:23.000Z",["0xb93Ac04010Bd61F45BF492022A5b49a902F798F3"]]]
+    }
+```
+
+Generated with discovered.json: 0x1138ed1c264dc3d7d38d5979f5b35487ff768d7b
+
+# Diff at Sat, 28 Sep 2024 05:59:58 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@f2cc4f81d34dcc94ba050327e26d02cce77f37f4 block: 20842760
+- current block number: 20847193
+
+## Description
+
+Rename pufETHEscrow (external), fix references, single signer change in Executor- and EmergencyMultisig.
+
+## Watched changes
+
+```diff
+    contract ExecutorMultisig (0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) {
+    +++ description: None
+      values.$members.4:
+-        "0xdA66Df3920091eF4B54782B9463587c314DAdD41"
++        "0x568993632c34604098e35a184C52aD390c70f754"
+    }
+```
+
+```diff
+    contract EmergencyMultisig (0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) {
+    +++ description: None
+      values.$members.4:
+-        "0xdA66Df3920091eF4B54782B9463587c314DAdD41"
++        "0x568993632c34604098e35a184C52aD390c70f754"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20842760 (main branch discovery), not current.
+
+```diff
+    contract pufETHEscrow (0xA033Ff09f2da45f0e9ae495f525363722Df42b2a) {
+    +++ description: None
+      name:
+-        "pufEthEscrow"
++        "pufETHEscrow"
+    }
+```
+
+Generated with discovered.json: 0xe6b73b280820baf18ebcfc54742ab25d435f0f0d
+
+# Diff at Fri, 27 Sep 2024 15:09:56 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@4cb14cc1bdc343d171a7988f9f91f11edbf568a8 block: 20725971
+- current block number: 20842760
+
+## Description
+
+Add DAI escrow, upgradeable by ScrollMultisig.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20725971 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0xEB803eb3F501998126bf37bB823646Ed3D59d072) {
+    +++ description: None
+      receivedPermissions.14:
++        {"permission":"upgrade","target":"0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"}
+      receivedPermissions.13.target:
+-        "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
++        "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B"
+      receivedPermissions.12.target:
+-        "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B"
++        "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9"
+      receivedPermissions.11.target:
+-        "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9"
++        "0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6"
+      receivedPermissions.10.target:
+-        "0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6"
++        "0xb2b10a289A229415a124EFDeF310C10cb004B6ff"
+      receivedPermissions.9.target:
+-        "0xb2b10a289A229415a124EFDeF310C10cb004B6ff"
++        "0xa13BAF47339d63B743e7Da8741db5456DAc1E556"
+      receivedPermissions.8.target:
+-        "0xa13BAF47339d63B743e7Da8741db5456DAc1E556"
++        "0x987e300fDfb06093859358522a79098848C33852"
+      receivedPermissions.7.target:
+-        "0x987e300fDfb06093859358522a79098848C33852"
++        "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905"
+      receivedPermissions.6.target:
+-        "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905"
++        "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE"
+      receivedPermissions.5.target:
+-        "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE"
++        "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d"
+      receivedPermissions.4.target:
+-        "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d"
++        "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"
+      receivedPermissions.3.target:
+-        "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"
++        "0x67260A8B73C5B77B55c1805218A42A7A6F98F515"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DaiEscrow (0x67260A8B73C5B77B55c1805218A42A7A6F98F515)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x6b5bd6fa0124dd6da49839e5d834a8f046e373fe
 
 # Diff at Wed, 11 Sep 2024 07:47:40 GMT:

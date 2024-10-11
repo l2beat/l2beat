@@ -3,7 +3,6 @@
   "chain": "zksync2",
   "blockNumber": 43367152,
   "configHash": "0x04bcea5ee3d1dbb85b9f4514ecd0cd9710c3e155a03fd4f908d1e8e6824410bc",
-  "version": 14,
   "contracts": [
     {
       "name": "EraOwner",
@@ -57,6 +56,16 @@
       "values": {
         "$admin": "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98",
         "$implementation": "0xdBA32e62e929a7e2Fa65782F812416CA65208E40",
+        "$pastUpgrades": [
+          [
+            "2024-03-01T12:44:39.000Z",
+            ["0x022c9D356d6B020D3128de430458A28C7183a13d"]
+          ],
+          [
+            "2024-04-04T06:25:17.000Z",
+            ["0xdBA32e62e929a7e2Fa65782F812416CA65208E40"]
+          ]
+        ],
         "$upgradeCount": 2
       },
       "derivedName": ""
@@ -77,6 +86,20 @@
       "values": {
         "$admin": "0x3334552599C9aA1FE08CfF276A02033FF37646ca",
         "$implementation": "0xC9bBbdCf1778A4aA86544F02CccBf09fd3A0706E",
+        "$pastUpgrades": [
+          [
+            "2024-03-01T08:10:24.000Z",
+            ["0x1D3A82B3BDE1d23D3989b77325C4875395c9D6a9"]
+          ],
+          [
+            "2024-03-09T10:21:56.000Z",
+            ["0xCaAeA20e1e35214342f4Efe87d3912493E3e1CE5"]
+          ],
+          [
+            "2024-04-22T02:28:56.000Z",
+            ["0xC9bBbdCf1778A4aA86544F02CccBf09fd3A0706E"]
+          ]
+        ],
         "$upgradeCount": 3
       },
       "derivedName": ""
@@ -177,5 +200,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

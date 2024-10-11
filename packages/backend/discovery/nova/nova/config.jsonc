@@ -75,7 +75,8 @@
       }
     },
     "L2ArbitrumToken": {
-      "ignoreMethods": ["getPastTotalSupply"]
+      "ignoreMethods": ["getPastTotalSupply"],
+      "ignoreInWatchMode": ["totalSupply"]
     }
   }
 }

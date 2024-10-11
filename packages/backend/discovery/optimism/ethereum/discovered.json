@@ -1,9 +1,8 @@
 {
   "name": "optimism",
   "chain": "ethereum",
-  "blockNumber": 20785025,
-  "configHash": "0xa79e8e6a94de9fe57ccc5f741635dc811567356907fdbeb1356cec21353d43a0",
-  "version": 14,
+  "blockNumber": 20935110,
+  "configHash": "0x3c6748f4154b3403666ecc1a409d2ec7f2022a49b905a7e173a0e7e665295c30",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -150,6 +149,20 @@
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0x1B5CC028A4276597C607907F24E1AC05d3852cFC",
+        "$pastUpgrades": [
+          [
+            "2024-05-16T19:17:35.000Z",
+            ["0x6B7da1647Aa9684F54B2BEeB699F91F31cd35Fb9"]
+          ],
+          [
+            "2024-09-11T00:54:59.000Z",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2024-09-11T00:54:59.000Z",
+            ["0x1B5CC028A4276597C607907F24E1AC05d3852cFC"]
+          ]
+        ],
         "$upgradeCount": 3,
         "disputeGameFactory": "0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -177,6 +190,36 @@
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0xF56D96B2535B932656d3c04Ebf51baBff241D886",
+        "$pastUpgrades": [
+          [
+            "2023-06-06T15:58:47.000Z",
+            ["0x5efa852e92800D1C982711761e45c3FE39a2b6D8"]
+          ],
+          [
+            "2024-02-26T21:44:11.000Z",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2024-02-26T21:44:11.000Z",
+            ["0x33A032ec93Ec0C492Ec4BF0B30D5f51986E5a314"]
+          ],
+          [
+            "2024-04-11T20:49:59.000Z",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2024-04-11T20:49:59.000Z",
+            ["0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1"]
+          ],
+          [
+            "2024-06-10T16:42:59.000Z",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2024-06-10T16:42:59.000Z",
+            ["0xF56D96B2535B932656d3c04Ebf51baBff241D886"]
+          ]
+        ],
         "$upgradeCount": 7,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "0x6887246668a3b87F54DeB3b94Ba47a6f63F32985",
@@ -251,8 +294,51 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65",
+        "$pastUpgrades": [
+          [
+            "2021-06-22T22:29:27.000Z",
+            ["0x16393737D09d2722AD13DcA3cA8C3DB957699F1D"]
+          ],
+          [
+            "2021-06-26T00:52:47.000Z",
+            ["0xbfba066b5cA610Fe70AdCE45FcB622F945891bb0"]
+          ],
+          [
+            "2021-11-11T17:37:56.000Z",
+            ["0x0000000000000000000000000000000000000000"]
+          ],
+          [
+            "2021-11-11T19:29:14.000Z",
+            ["0xd9166833FF12A5F900ccfBf2c8B62a90F1Ca1FD5"]
+          ],
+          [
+            "2023-06-06T15:58:47.000Z",
+            ["0x0000000000000000000000000000000000000000"]
+          ],
+          [
+            "2023-06-06T18:24:11.000Z",
+            ["0x2150Bc3c64cbfDDbaC9815EF615D6AB8671bfe43"]
+          ],
+          [
+            "2024-02-26T21:44:11.000Z",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2024-02-26T21:44:11.000Z",
+            ["0xa95B24af19f8907390eD15f8348A1a5e6Ccbc5C6"]
+          ],
+          [
+            "2024-04-11T20:49:59.000Z",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2024-04-11T20:49:59.000Z",
+            ["0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"]
+          ]
+        ],
+        "$upgradeCount": 10,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292755383",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292758266",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -311,7 +397,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+          "target": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+          "description": "set and change address mappings."
         },
         {
           "permission": "upgrade",
@@ -373,6 +460,7 @@
         {
           "permission": "configure",
           "target": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+          "description": "set and change address mappings.",
           "via": [{ "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }]
         },
         {
@@ -476,6 +564,32 @@
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d",
+        "$pastUpgrades": [
+          [
+            "2022-10-04T22:08:59.000Z",
+            ["0x3268Ed09f76e619331528270B6267D4d2C5Ab5C2"]
+          ],
+          [
+            "2023-06-06T18:24:11.000Z",
+            ["0x3268Ed09f76e619331528270B6267D4d2C5Ab5C2"]
+          ],
+          [
+            "2024-02-26T21:44:11.000Z",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2024-02-26T21:44:11.000Z",
+            ["0xc599Fa757c2bCaA5aE3753Ab129237F38C10da0b"]
+          ],
+          [
+            "2024-04-11T20:49:59.000Z",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2024-04-11T20:49:59.000Z",
+            ["0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"]
+          ]
+        ],
         "$upgradeCount": 6,
         "messenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "MESSENGER": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
@@ -498,7 +612,8 @@
         "$immutable": true,
         "nominatedOwner": "0x0000000000000000000000000000000000000000",
         "owner": "0xEb3107117FEAd7de89Cd14D463D340A2E6917769"
-      }
+      },
+      "derivedName": "SynthetixBridgeEscrow"
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -524,6 +639,28 @@
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846",
+        "$pastUpgrades": [
+          [
+            "2023-06-06T18:24:11.000Z",
+            ["0xaE849EFA4BcFc419593420e14707996936E365E2"]
+          ],
+          [
+            "2024-02-26T21:44:11.000Z",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2024-02-26T21:44:11.000Z",
+            ["0x74e273220Fa1cB62Fd756FE6CbDA8BBb89404deD"]
+          ],
+          [
+            "2024-04-11T20:49:59.000Z",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2024-04-11T20:49:59.000Z",
+            ["0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846"]
+          ]
+        ],
         "$upgradeCount": 5,
         "bridge": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
         "BRIDGE": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
@@ -533,44 +670,27 @@
     {
       "name": "wstETHEscrow",
       "address": "0x76943C0D61395d8F2edF9060e1533529cAe05dE6",
+      "template": "lido/L1ERC20TokenBridge",
       "proxyType": "EIP1967 proxy",
+      "displayName": "L1ERC20TokenBridge",
+      "descriptions": [
+        "Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally."
+      ],
       "sinceTimestamp": 1659687799,
       "values": {
         "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "$implementation": "0x29C5c51A031165CE62F964966A6399b81165EFA4",
+        "$pastUpgrades": [
+          [
+            "2022-08-05T08:23:19.000Z",
+            ["0x29C5c51A031165CE62F964966A6399b81165EFA4"]
+          ]
+        ],
         "$upgradeCount": 1,
-        "accessControl": {
-          "DEFAULT_ADMIN_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]
-          },
-          "0x4b43b36766bde12c5e9cbbc37d15f8d1f769f08f54720ab370faeb4ce893753a": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]
-          },
-          "0x63f736f21cb2943826cd50b191eb054ebbea670e4e962d0527611f830cd399d6": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-              "0x73b047fe6337183A454c5217241D780a932777bD"
-            ]
-          },
-          "0x9ab8816a3dc0b3849ec1ac00483f6ec815b07eee2fd766a353311c823ad59d0d": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]
-          },
-          "0x94a954c0bc99227eddbc0715a62a7e1056ed8784cd719c2303b685683908857c": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-              "0x73b047fe6337183A454c5217241D780a932777bD"
-            ]
-          }
-        },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DEPOSITS_DISABLER_ROLE": "0x63f736f21cb2943826cd50b191eb054ebbea670e4e962d0527611f830cd399d6",
         "DEPOSITS_ENABLER_ROLE": "0x4b43b36766bde12c5e9cbbc37d15f8d1f769f08f54720ab370faeb4ce893753a",
-        "isDepositsEnabled": true,
+        "isDepositsEnabled": false,
         "isInitialized": true,
         "isWithdrawalsEnabled": true,
         "l1Token": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
@@ -611,6 +731,12 @@
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0x71e966Ae981d1ce531a7b6d23DC0f27B38409087",
+        "$pastUpgrades": [
+          [
+            "2024-08-29T23:45:23.000Z",
+            ["0x71e966Ae981d1ce531a7b6d23DC0f27B38409087"]
+          ]
+        ],
         "$upgradeCount": 1,
         "config": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "decimals": 18,
@@ -618,7 +744,7 @@
         "name": "Wrapped Ether",
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
-        "totalSupply": "15375188000000000000",
+        "totalSupply": "20502782000000000000",
         "version": "1.1.0"
       },
       "derivedName": "DelayedWETH"
@@ -677,6 +803,20 @@
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0x53c165169401764778F780a69701385eb0FF19B7",
+        "$pastUpgrades": [
+          [
+            "2024-01-22T20:19:59.000Z",
+            ["0x53c165169401764778F780a69701385eb0FF19B7"]
+          ],
+          [
+            "2024-06-10T18:29:23.000Z",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2024-06-10T18:29:23.000Z",
+            ["0x53c165169401764778F780a69701385eb0FF19B7"]
+          ]
+        ],
         "$upgradeCount": 3,
         "guardian": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
         "GUARDIAN_SLOT": "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68",
@@ -712,6 +852,7 @@
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "l2TokenBridge": "optimism:0x4200000000000000000000000000000000000010",
         "messenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
@@ -801,6 +942,12 @@
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0x71e966Ae981d1ce531a7b6d23DC0f27B38409087",
+        "$pastUpgrades": [
+          [
+            "2024-08-29T23:45:35.000Z",
+            ["0x71e966Ae981d1ce531a7b6d23DC0f27B38409087"]
+          ]
+        ],
         "$upgradeCount": 1,
         "config": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "decimals": 18,
@@ -808,7 +955,7 @@
         "name": "Wrapped Ether",
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
-        "totalSupply": "1280000000000000000",
+        "totalSupply": 0,
         "version": "1.1.0"
       },
       "derivedName": "DelayedWETH"
@@ -891,6 +1038,36 @@
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0xe2F826324b2faf99E513D16D266c3F80aE87832B",
+        "$pastUpgrades": [
+          [
+            "2023-06-06T18:24:11.000Z",
+            ["0x28a55488fef40005309e2DA0040DbE9D300a64AB"]
+          ],
+          [
+            "2024-02-26T21:44:11.000Z",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2024-02-26T21:44:11.000Z",
+            ["0xaBAbe63514dDd6277356F8cc3d6518aA8BDEB4de"]
+          ],
+          [
+            "2024-04-11T20:49:59.000Z",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2024-04-11T20:49:59.000Z",
+            ["0x2D778797049FE9259d947D1ED8e5442226dFB589"]
+          ],
+          [
+            "2024-06-10T16:42:59.000Z",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2024-06-10T16:42:59.000Z",
+            ["0xe2F826324b2faf99E513D16D266c3F80aE87832B"]
+          ]
+        ],
         "$upgradeCount": 7,
         "disputeGameFactory": "0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
         "disputeGameFinalityDelaySeconds": 302400,
@@ -899,7 +1076,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 20784985
+          "prevBlockNum": 20935035
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -972,6 +1149,9 @@
       "name": "AddressManager",
       "address": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
       "template": "opstack/AddressManager",
+      "descriptions": [
+        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+      ],
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -979,7 +1159,8 @@
           "via": [
             {
               "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
-              "delay": 0
+              "delay": 0,
+              "description": "set and change address mappings."
             }
           ]
         }
@@ -1018,8 +1199,14 @@
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0xc641A33cab81C559F2bd4b21EA34C290E2440C2B",
+        "$pastUpgrades": [
+          [
+            "2024-05-16T19:17:35.000Z",
+            ["0xc641A33cab81C559F2bd4b21EA34C290E2440C2B"]
+          ]
+        ],
         "$upgradeCount": 1,
-        "gameCount": 2443,
+        "gameCount": 2946,
         "gameImpls": [
           "0xA6f3DFdbf4855a43c529bc42EDE96797252879af",
           "0x050ed6F6273c7D836a111E42153BC00D0380b87d",
@@ -1033,36 +1220,6 @@
         "version": "1.0.0"
       },
       "derivedName": "DisputeGameFactory"
-    },
-    {
-      "name": "SynthetixMultisig",
-      "address": "0xEb3107117FEAd7de89Cd14D463D340A2E6917769",
-      "template": "GnosisSafe",
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1583108804,
-      "values": {
-        "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "0x148a2c821687686CFBeEbC138534E05797D65984",
-          "0x1C8236B406911A376369e33D39189F1b4B39F27D",
-          "0x26E10fF641839cA457695CE955Cb90657D6E3F53",
-          "0x0B67bab43157e53D21965Af0d83f83BeD9553E0a",
-          "0xe1Efa5C91cA533E4a51884d805879249E3FCB2BC",
-          "0x599e835cbFC903eF09f3Dd5E08D1cF63c32AF8d8",
-          "0x347c3190bD015FBD0e47fb90AA4917138A8A32FE",
-          "0x562948111d50BF039A39Eea48D127f2Ae51ddF02"
-        ],
-        "$threshold": 4,
-        "domainSeparator": "0x812bd2187bbdb6f18e0fde445c3e46e10661c15c4af7f51d5795d4dec4fb4caa",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 3182,
-        "VERSION": "1.3.0"
-      },
-      "derivedName": "GnosisSafe"
     }
   ],
   "eoas": [
@@ -1070,20 +1227,13 @@
     { "address": "0x000000000000000000000000000000000000dEaD" },
     { "address": "0x07dC0893cAfbF810e3E72505041f2865726Fd073" },
     { "address": "0x0a122d8aA40758FBAFf0360BFB391EdFfD9758b8" },
-    { "address": "0x0B67bab43157e53D21965Af0d83f83BeD9553E0a" },
-    { "address": "0x148a2c821687686CFBeEbC138534E05797D65984" },
     { "address": "0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e" },
-    { "address": "0x1C8236B406911A376369e33D39189F1b4B39F27D" },
-    { "address": "0x26E10fF641839cA457695CE955Cb90657D6E3F53" },
     { "address": "0x3041BA32f451F5850c147805F5521AC206421623" },
-    { "address": "0x347c3190bD015FBD0e47fb90AA4917138A8A32FE" },
     { "address": "0x4665374939642965EfD8357D4568D2A77f677429" },
     { "address": "0x473300df21D047806A082244b417f96b32f13A33" },
     { "address": "0x4A7322258c9E690e4CB8Cea6e5251443E956e61E" },
     { "address": "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15" },
     { "address": "0x51aCb8e1205De850D1b512584FeE9C29C3813dDa" },
-    { "address": "0x562948111d50BF039A39Eea48D127f2Ae51ddF02" },
-    { "address": "0x599e835cbFC903eF09f3Dd5E08D1cF63c32AF8d8" },
     { "address": "0x5C0F529d5B025540c54f71d2BcbB4c78F368C47e" },
     { "address": "0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865" },
     { "address": "0x6887246668a3b87F54DeB3b94Ba47a6f63F32985" },
@@ -1091,14 +1241,12 @@
     { "address": "0x7cB07FE039a92B3D784f284D919503A381BEC54f" },
     { "address": "0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39" },
     { "address": "0x8Afe777B5A4D1e156435ab44Ad4b73A318cE0EA4" },
-    { "address": "0x8E01013243a96601a86eb3153F0d9Fa4fbFb6957" },
     { "address": "0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa" },
     { "address": "0x9Eb11A55132c851b9991F148b3Af791ca498fD7A" },
     { "address": "0xAAAA45d9549EDA09E70937013520214382Ffc4A2" },
     { "address": "0xb23794fd6BA1CEAd01Cf54D772b8341F2F0197A5" },
     { "address": "0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8" },
     { "address": "0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9" },
-    { "address": "0xe1Efa5C91cA533E4a51884d805879249E3FCB2BC" },
     { "address": "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e" },
     { "address": "0xE895076cD050F1f042d1040E47b5929bE989E514" },
     { "address": "0xFF00000000000000000000000000000000000010" }
@@ -1981,9 +2129,6 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "0xEb3107117FEAd7de89Cd14D463D340A2E6917769": [
-      "constructor(address _masterCopy)"
-    ],
     "0xF56D96B2535B932656d3c04Ebf51baBff241D886": [
       "constructor()",
       "event ConfigUpdate(uint256 indexed version, uint8 indexed updateType, bytes data)",
@@ -2030,7 +2175,8 @@
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "gnosisSafeModules/DeputyGuardianModule": "0xd3930cda89001876a722ed430ea8ed07e4823c83ed910e621744eccab9becba1",
     "gnosisSafeModules/LivenessModule": "0x93a18dea68cf1d0abddfc33adec077c82356344dd7b49ae5542b16ca9319bb91",
-    "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
+    "lido/L1ERC20TokenBridge": "0xa297506a5551518c3ed10a3817c661bc02da5794e2745084217d9c8f6c440482",
+    "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/AnchorStateRegistry": "0xd777a643e82bcaa34c6605409142defa095bd558d37580cb92153eb68d721b3b",
     "opstack/DelayedWETH": "0x68c3c46b77dde7a7af0ae6477fe17a8531050e799e7ee4c01be128dee3c59447",
     "opstack/DisputeGameFactory": "0x02f89510f08edb9ae5191064b00ab809feddc1544be93f761bbf30427ef5ae5b",
@@ -2042,5 +2188,5 @@
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837"
   },
-  "shapeFilesHash": "0x758ecb4ea0d8bb2a1e8607d280316516dd4d1c682ace9d04170aa23a9f5f3498"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

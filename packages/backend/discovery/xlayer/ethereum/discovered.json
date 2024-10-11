@@ -1,9 +1,8 @@
 {
   "name": "xlayer",
   "chain": "ethereum",
-  "blockNumber": 20325087,
-  "configHash": "0x1faa6e35d2bc7ed2a0ebe00bbb2796abcb918b5266d117b92e441acd4aded7bf",
-  "version": 14,
+  "blockNumber": 20832964,
+  "configHash": "0x44089e74887a0b7cff4d60e42ec30908ccc4bbda5a190d87b0b495495d3902ab",
   "contracts": [
     {
       "name": "XLayerValidiumDAC",
@@ -20,6 +19,12 @@
       "values": {
         "$admin": "0x1e37EA18e9515db29b3E94A00eD31484A3130204",
         "$implementation": "0xd620Ca1ad5c3888e4521c3374cE4088Cb78079b8",
+        "$pastUpgrades": [
+          [
+            "2024-03-30T08:28:47.000Z",
+            ["0xd620Ca1ad5c3888e4521c3374cE4088Cb78079b8"]
+          ]
+        ],
         "$upgradeCount": 1,
         "committeeHash": "0xfa0cdb192e4e3d5bda14ab176fe857843eda35d462548ac406f8e2be43d29ec7",
         "getAmountOfMembers": 2,
@@ -70,6 +75,12 @@
       "values": {
         "$admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "$implementation": "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
+        "$pastUpgrades": [
+          [
+            "2024-03-30T08:02:35.000Z",
+            ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
+          ]
+        ],
         "$upgradeCount": 1,
         "admin": "0x491619874b866c3cDB7C8553877da223525ead01",
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
@@ -90,7 +101,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x2f47fc343d6bd90f3098bf78737782176f902a41f2a0e694333e2207d47ca079",
+        "lastAccInputHash": "0x840f76b0a9670a3a164fdb1dd7c3604b272176d7f9fb60bc1dc10169e7804853",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "X Layer",
@@ -105,54 +116,14 @@
         "trustedSequencerURL": "https://rpc.xlayer.tech"
       },
       "derivedName": "PolygonValidiumStorageMigration"
-    },
-    {
-      "name": "OKBImplementation",
-      "address": "0x75231F58b43240C9718Dd58B4967c5114342a86c",
-      "proxyType": "ZeppelinOS proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x4A164CA582D169f7caad471250991Dd861ddA981",
-          "via": []
-        }
-      ],
-      "sinceTimestamp": 1556264879,
-      "values": {
-        "$admin": "0x4A164CA582D169f7caad471250991Dd861ddA981",
-        "$immutable": false,
-        "$implementation": "0x5DbA7dfCDbfb8812D30FDd99d9441F8b7a605621",
-        "decimals": 18,
-        "implementation": "0x5DbA7dfCDbfb8812D30FDd99d9441F8b7a605621",
-        "lawEnforcementRole": "0x5B27e98516fD2Bd5001D4dfE3f5a2263f702f634",
-        "name": "OKB",
-        "owner": "0xc3d82e22501f3D836727e335d3cf2151b07947d7",
-        "paused": false,
-        "proxyOwner": "0x4A164CA582D169f7caad471250991Dd861ddA981",
-        "supplyController": "0x4a11078a99b118BbFee78a5c187D98D264360433",
-        "symbol": "OKB",
-        "totalSupply": "300000000000000000000000000"
-      }
     }
   ],
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x19A81baC80f9cE3A45095f3df3a7cF69ef18fC08" },
     { "address": "0x491619874b866c3cDB7C8553877da223525ead01" },
-    { "address": "0x4a11078a99b118BbFee78a5c187D98D264360433" },
-    {
-      "address": "0x4A164CA582D169f7caad471250991Dd861ddA981",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x75231F58b43240C9718Dd58B4967c5114342a86c"
-        }
-      ]
-    },
-    { "address": "0x5B27e98516fD2Bd5001D4dfE3f5a2263f702f634" },
     { "address": "0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA" },
     { "address": "0xAF9d27ffe4d51eD54AC8eEc78f2785D7E11E5ab1" },
-    { "address": "0xc3d82e22501f3D836727e335d3cf2151b07947d7" },
     { "address": "0xE4c5BFaddbf21a1F35AE66F180F78822078FBfDE" },
     { "address": "0xE94Ac3cBc1C7EFFEACca68e3Bfe5D81E26A659B5" }
   ],
@@ -306,58 +277,6 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x5DbA7dfCDbfb8812D30FDd99d9441F8b7a605621": [
-      "function name() view returns (string)",
-      "function approve(address spender, uint256 value) returns (bool)",
-      "function totalSupply() view returns (uint256)",
-      "function transferFrom(address _from, address _to, uint256 _value) returns (bool)",
-      "function decimals() view returns (uint8)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function setLawEnforcementRole(address _newLawEnforcementRole)",
-      "function unpause()",
-      "function unfreeze(address _addr)",
-      "function setSupplyController(address _newSupplyController)",
-      "function paused() view returns (bool)",
-      "function balanceOf(address _addr) view returns (uint256)",
-      "function initialize()",
-      "function pause()",
-      "function freeze(address _addr)",
-      "function owner() view returns (address)",
-      "function symbol() view returns (string)",
-      "function decreaseSupply(uint256 _value) returns (bool success)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function lawEnforcementRole() view returns (address)",
-      "function transfer(address _to, uint256 _value) returns (bool)",
-      "function increaseSupply(uint256 _value) returns (bool success)",
-      "function allowance(address _owner, address spender) view returns (uint256)",
-      "function wipeFrozenAddress(address _addr)",
-      "function isFrozen(address _addr) view returns (bool)",
-      "function supplyController() view returns (address)",
-      "function transferOwnership(address _newOwner)",
-      "constructor()",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event OwnershipTransferred(address indexed oldOwner, address indexed newOwner)",
-      "event Pause()",
-      "event Unpause()",
-      "event AddressFrozen(address indexed addr)",
-      "event AddressUnfrozen(address indexed addr)",
-      "event FrozenAddressWiped(address indexed addr)",
-      "event LawEnforcementRoleSet(address indexed oldLawEnforcementRole, address indexed newLawEnforcementRole)",
-      "event SupplyIncreased(address indexed to, uint256 value)",
-      "event SupplyDecreased(address indexed from, uint256 value)",
-      "event SupplyControllerSet(address indexed oldSupplyController, address indexed newSupplyController)"
-    ],
-    "0x75231F58b43240C9718Dd58B4967c5114342a86c": [
-      "function proxyOwner() view returns (address owner)",
-      "function upgradeTo(address implementation)",
-      "function upgradeToAndCall(address implementation, bytes data) payable",
-      "function implementation() view returns (address impl)",
-      "function transferProxyOwnership(address newOwner)",
-      "constructor()",
-      "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
-      "event Upgraded(address indexed implementation)"
-    ],
     "0xd620Ca1ad5c3888e4521c3374cE4088Cb78079b8": [
       "constructor()",
       "error CommitteeAddressDoesNotExist()",
@@ -384,5 +303,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

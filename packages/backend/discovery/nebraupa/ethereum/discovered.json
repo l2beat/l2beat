@@ -1,9 +1,8 @@
 {
   "name": "nebraupa",
   "chain": "ethereum",
-  "blockNumber": 20756756,
+  "blockNumber": 20826378,
   "configHash": "0x4bbd4c33e95701f84a8a0db0888706ee07343788ddd5bfe2a40540c3f7a18360",
-  "version": 14,
   "contracts": [
     {
       "name": "UpaVerifier",
@@ -27,9 +26,15 @@
       "values": {
         "$admin": "0xb463603469Bf31f189E3F6625baf8378880Df14e",
         "$implementation": "0xB6cD7eD75c008d0033ED241872639a1D8a35020a",
+        "$pastUpgrades": [
+          [
+            "2024-08-14T16:32:47.000Z",
+            ["0xB6cD7eD75c008d0033ED241872639a1D8a35020a"]
+          ]
+        ],
         "$upgradeCount": 1,
         "aggregatorCollateral": "10000000000000000",
-        "claimableFees": "22910344681620000",
+        "claimableFees": "69718270173240000",
         "DUMMY_PROOF_ID": "0x84636c7b9793a9833ef7ca3e1c118d7d21dadb97ef7bf1fbfd549c10bca3553f",
         "feeAllocated": 0,
         "feeRecipient": "0x0188485989e211eDde9e5ba5794a3c6a3429BDb4",
@@ -37,16 +42,18 @@
         "getCircuitIds": [
           "0x1e9db3d963302f5f365388325c3d4f45ee02ae52725f9b81d17fc57d0d288b5c",
           "0x20040b0a9eb54f6cdbc68333ada4803cb9d09a0a51c43ac891ebd5c797f2a868",
-          "0x20dca5aeaaa412308a341546b48893f6c4c8f3b5b2774ccbd46e95a9bde9f03b"
+          "0x20dca5aeaaa412308a341546b48893f6c4c8f3b5b2774ccbd46e95a9bde9f03b",
+          "0x6dd87ed53c75bcf4b71ea175076439d03ce87fd155ef425a77f53b8e95c60e38",
+          "0xce48e1cc84d60e97002a3a2cf4922518d29807902411c8fab5717ba51e0a3fa4"
         ],
-        "getNextSubmissionIdx": 61,
-        "lastVerifiedSubmissionHeight": 20756355,
+        "getNextSubmissionIdx": 83,
+        "lastVerifiedSubmissionHeight": 20825974,
         "MAX_DUPLICATE_SUBMISSIONS": 256,
         "MAX_NUM_PROOFS_PER_SUBMISSION": 32,
         "MAX_SUBMISSION_MERKLE_DEPTH": 5,
         "maxNumPublicInputs": 16,
-        "nextProofIdx": 209,
-        "nextSubmissionIdxToVerify": 59,
+        "nextProofIdx": 284,
+        "nextSubmissionIdxToVerify": 83,
         "outerVerifier": "0xE990F8e3505391d2b42C80683d403A8371Ee88B9",
         "owner": "0xb463603469Bf31f189E3F6625baf8378880Df14e",
         "paused": false,
@@ -308,5 +315,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xf88245b9d159fbebb8172c35cb99a4992a99ddc4
+
+# Diff at Tue, 01 Oct 2024 10:54:49 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20017695
+- current block number: 20017695
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20017695 (main branch discovery), not current.
+
+```diff
+    contract AxelarGasService (0x2d5d7d31F671F86C782533cc367F14109a082712) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-12-14T07:19:11.000Z",["0x4Fe2d119873790cc9e15F6cC53cae1C2eb2039dC"]],["2024-06-04T04:22:47.000Z",["0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b"]]]
+    }
+```
+
+```diff
+    contract Gateway (0x4F4495243837681061C4743b74B3eEdf548D56A5) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2022-03-02T19:54:40.000Z",["0x59C38B3A349BCf7e46b024Cddfb4778229609C28"]],["2022-04-28T16:27:39.000Z",["0xBD3e8d41874bC123fB6913a2a6c6C8984c71876c"]],["2022-05-09T17:27:03.000Z",["0xBc421722aDd7AD3cF23e7BbEFE709330bbfD6188"]],["2022-06-09T01:50:50.000Z",["0x46E1F8E746ee9037fA42b3a718dcE6c36CB3f16f"]],["2022-08-29T17:23:40.000Z",["0x212207006e5Ae344481Fa34a6F4960EB0f302Ff5"]],["2022-12-08T00:29:47.000Z",["0xEd9938294aCF9EE52D097133CA2cAafF0C804F16"]],["2023-10-23T21:13:23.000Z",["0x99B5FA03a5ea4315725c43346e55a6A6fbd94098"]],["2023-10-24T06:02:35.000Z",["0x99B5FA03a5ea4315725c43346e55a6A6fbd94098"]],["2023-10-29T02:12:23.000Z",["0x99B5FA03a5ea4315725c43346e55a6A6fbd94098"]]]
+      values.$upgradeCount:
++        9
+    }
+```
+
 Generated with discovered.json: 0x9d710cdd924be52ffd8993451325b15ef74f197b
 
 # Diff at Fri, 23 Aug 2024 09:54:59 GMT:

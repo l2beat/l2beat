@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20240831,
   "configHash": "0x7fda11b24b5eed1d80b7cd4d4072385ee8cff7a3cc6537727d204842c13b9d88",
-  "version": 14,
   "contracts": [
     {
       "name": "WTIA_OFTAdapter",
@@ -42,6 +41,16 @@
       "values": {
         "$admin": "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
         "$implementation": "0xDaC2d26317C42ae3CB21357B73404120E1dA4232",
+        "$pastUpgrades": [
+          [
+            "2024-01-26T22:27:23.000Z",
+            ["0x1E45F27F0e96e9757cff938F2c9d697AA8279C85"]
+          ],
+          [
+            "2024-07-04T23:54:35.000Z",
+            ["0xDaC2d26317C42ae3CB21357B73404120E1dA4232"]
+          ]
+        ],
         "$upgradeCount": 2
       }
     },
@@ -432,6 +441,16 @@
       "values": {
         "$admin": "0xe16d201cA134345601631D327a971A3741646B0d",
         "$implementation": "0xcb75F0dFFf5c5046CAA9dB1DE56645a962FeFFc2",
+        "$pastUpgrades": [
+          [
+            "2024-02-24T02:03:23.000Z",
+            ["0x156C3E0384459E07Dca7849b79196FbC5877dc3A"]
+          ],
+          [
+            "2024-02-24T03:05:35.000Z",
+            ["0xcb75F0dFFf5c5046CAA9dB1DE56645a962FeFFc2"]
+          ]
+        ],
         "$upgradeCount": 2,
         "getLzMessageLibLength": 1,
         "layerZeroEndpointV1": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
@@ -2625,5 +2644,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

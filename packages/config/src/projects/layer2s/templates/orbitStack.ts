@@ -27,7 +27,6 @@ import {
   ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
   pickWorseRisk,
   sumRisk,
 } from '../../../common'
@@ -136,7 +135,7 @@ export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
   > & {
     category?: Layer3Display['category']
   }
-  stackedRiskView?: ScalingProjectRiskView
+  stackedRiskView?: Partial<ScalingProjectRiskView>
   hostChain: ProjectId
   nativeToken?: string
 }
@@ -359,8 +358,8 @@ export function orbitStackCommon(
       stateCorrectness:
         templateVars.nonTemplateTechnology?.stateCorrectness ?? undefined,
       dataAvailability:
-        templateVars.nonTemplateTechnology?.dataAvailability ??
-        postsToExternalDA
+        (templateVars.nonTemplateTechnology?.dataAvailability ??
+        postsToExternalDA)
           ? (() => {
               const DAC = templateVars.discovery.getContractValue<{
                 membersCount: number
@@ -521,7 +520,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     upgradeDelay: 'No delay',
   }
 
-  const riskView = makeBridgeCompatible({
+  const riskView = {
     stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
       ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(
         nOfChallengers,
@@ -530,7 +529,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
       secondLine: `${formatSeconds(challengePeriodSeconds)} challenge period`,
     },
     dataAvailability:
-      templateVars.nonTemplateRiskView?.dataAvailability ?? postsToExternalDA
+      (templateVars.nonTemplateRiskView?.dataAvailability ?? postsToExternalDA)
         ? (() => {
             const DAC = templateVars.discovery.getContractValue<{
               membersCount: number
@@ -560,7 +559,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     destinationToken:
       templateVars.nonTemplateRiskView?.destinationToken ??
       RISK_VIEW.NATIVE_AND_CANONICAL(),
-  })
+  }
 
   const getStackedRisks = () => {
     assert(
@@ -576,32 +575,42 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
       baseChainRiskView,
       `Could not find base chain ${templateVars.hostChain} in layer2s`,
     )
-    return makeBridgeCompatible({
-      stateValidation: pickWorseRisk(
-        riskView.stateValidation,
-        baseChainRiskView.stateValidation,
-      ),
-      dataAvailability: pickWorseRisk(
-        riskView.dataAvailability,
-        baseChainRiskView.dataAvailability,
-      ),
-      exitWindow: pickWorseRisk(
-        riskView.exitWindow,
-        baseChainRiskView.exitWindow,
-      ),
-      sequencerFailure: sumRisk(
-        riskView.sequencerFailure,
-        baseChainRiskView.sequencerFailure,
-        RISK_VIEW.SEQUENCER_SELF_SEQUENCE,
-      ),
-      proposerFailure: sumRisk(
-        riskView.proposerFailure,
-        baseChainRiskView.proposerFailure,
-        RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
-      ),
-      validatedBy: riskView.validatedBy,
-      destinationToken: riskView.destinationToken,
-    })
+    return {
+      stateValidation:
+        templateVars.stackedRiskView?.stateValidation ??
+        pickWorseRisk(
+          riskView.stateValidation,
+          baseChainRiskView.stateValidation,
+        ),
+      dataAvailability:
+        templateVars.stackedRiskView?.dataAvailability ??
+        pickWorseRisk(
+          riskView.dataAvailability,
+          baseChainRiskView.dataAvailability,
+        ),
+      exitWindow:
+        templateVars.stackedRiskView?.exitWindow ??
+        pickWorseRisk(riskView.exitWindow, baseChainRiskView.exitWindow),
+      sequencerFailure:
+        templateVars.stackedRiskView?.sequencerFailure ??
+        sumRisk(
+          riskView.sequencerFailure,
+          baseChainRiskView.sequencerFailure,
+          RISK_VIEW.SEQUENCER_SELF_SEQUENCE,
+        ),
+      proposerFailure:
+        templateVars.stackedRiskView?.sequencerFailure ??
+        sumRisk(
+          riskView.proposerFailure,
+          baseChainRiskView.proposerFailure,
+          RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
+        ),
+      validatedBy:
+        templateVars.stackedRiskView?.validatedBy ?? riskView.validatedBy,
+      destinationToken:
+        templateVars.stackedRiskView?.destinationToken ??
+        riskView.destinationToken,
+    }
   }
 
   return {
@@ -619,9 +628,8 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
       provider: 'Arbitrum',
       category:
-        templateVars.display.category ?? postsToExternalDA
-          ? 'Optimium'
-          : 'Optimistic Rollup',
+        templateVars.display.category ??
+        (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup'),
     },
     dataAvailability: postsToExternalDA
       ? (() => {
@@ -646,7 +654,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
           bridge: { type: 'Enshrined' },
           mode: 'Transaction data (compressed)',
         }),
-    stackedRiskView: templateVars.stackedRiskView ?? getStackedRisks(),
+    stackedRiskView: getStackedRisks(),
     riskView,
     config: {
       associatedTokens: templateVars.associatedTokens,
@@ -722,9 +730,8 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
   }
 
   const category =
-    templateVars.display.category ?? postsToExternalDA
-      ? 'Optimium'
-      : 'Optimistic Rollup'
+    templateVars.display.category ??
+    (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup')
 
   return {
     type: 'layer2',
@@ -741,7 +748,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       },
       liveness: postsToExternalDA
         ? undefined
-        : templateVars.display.liveness ?? {
+        : (templateVars.display.liveness ?? {
             warnings: {
               stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
             },
@@ -752,7 +759,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
             )}. The state root gets finalized ${formatSeconds(
               challengePeriodSeconds,
             )} after it has been posted.`,
-          },
+          }),
     },
     stage:
       templateVars.stage ??
@@ -809,7 +816,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           bridge: { type: 'Enshrined' },
           mode: 'Transaction data (compressed)',
         }),
-    riskView: makeBridgeCompatible({
+    riskView: {
       stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
         ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(
           nOfChallengers,
@@ -818,7 +825,8 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
         secondLine: `${formatSeconds(challengePeriodSeconds)} challenge period`,
       },
       dataAvailability:
-        templateVars.nonTemplateRiskView?.dataAvailability ?? postsToExternalDA
+        (templateVars.nonTemplateRiskView?.dataAvailability ??
+        postsToExternalDA)
           ? (() => {
               const DAC = templateVars.discovery.getContractValue<{
                 membersCount: number
@@ -848,7 +856,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       destinationToken:
         templateVars.nonTemplateRiskView?.destinationToken ??
         RISK_VIEW.NATIVE_AND_CANONICAL(),
-    }),
+    },
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: [

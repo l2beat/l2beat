@@ -1,4 +1,4 @@
-import { Color } from './color'
+import { OklchColor, RGBColor } from './color'
 
 const multiplyMatrices = (A: number[], B: number[]) => [
   // biome-ignore lint/style/noNonNullAssertion: We know it's there
@@ -10,10 +10,8 @@ const multiplyMatrices = (A: number[], B: number[]) => [
 ]
 
 // NOTE(radomski): Clamps the result between 0 - 255
-// l :: 0 - 1
-// c :: 0 - 0.37
-// h :: 0 - 360
-export function oklch2rgb(l: number, c: number, h: number): Color {
+export function oklch2rgb(color: OklchColor): RGBColor {
+  const { l, c, h } = color
   const lab = [
     l,
     Number.isNaN(h) ? 0 : c * Math.cos((h * Math.PI) / 180),

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xf64431a2b31fceb223cd8c07679bebcb4755d352
+
+# Diff at Tue, 01 Oct 2024 11:14:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 44113900
+- current block number: 44113900
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 44113900 (main branch discovery), not current.
+
+```diff
+    contract ZkToken (0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-05-21T18:48:46.000Z",["0x3931e73ebA79a7C898D3b0e02c7C62bA4F11cB14"]],["2024-06-10T09:25:38.000Z",["0x01a6715d3560241E09E865a46122bf347A576c09"]]]
+    }
+```
+
 Generated with discovered.json: 0x8280118b8556ab1e638dadc43c445dd09f499c68
 
 # Diff at Fri, 13 Sep 2024 15:33:54 GMT:

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x14adb1baf1cda825cdf9da55e8649636ca9a2551
+
+# Diff at Tue, 01 Oct 2024 11:11:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 19876012
+- current block number: 19876012
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19876012 (main branch discovery), not current.
+
+```diff
+    contract SynapseBridge (0x2796317b0fF8538F253012862c06787Adfb8cEb6) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2021-08-20T14:42:12.000Z",["0x1622B32113bd2dFE1d92B30dA7FB68b7E5FA81b2"]],["2021-08-24T02:26:46.000Z",["0x346B928D29827a02bC06A4A66D7FF37D250bcEE8"]],["2021-08-24T03:58:48.000Z",["0x36829ba54e6A0f11fB6e5A45aC5aD2742ec86a0B"]],["2021-08-27T07:21:29.000Z",["0xEfD2F730c9D92E53d0B402ACA05FE597F1A47001"]],["2021-08-27T07:50:15.000Z",["0x7D971Ffc482d70831075fCf07c50EDED782aA9Fd"]],["2021-08-27T08:12:40.000Z",["0xFb4a5F07427C4de0051c5FCe5b6f9E8cBf8A544C"]],["2021-09-01T20:52:07.000Z",["0x64f80a3B1ac0d394d652DF0beCfBeA9DB2320782"]],["2021-09-15T02:17:08.000Z",["0x9007A80247D23Cc5C213A6DAcB385c632c4e19F2"]],["2021-09-28T05:07:48.000Z",["0x4cF1471B56D18c7D5a16D48ff5B761BdAEBd2f0b"]],["2021-11-07T08:18:09.000Z",["0x472822517a019e1eEd4533De2d800719057716F1"]],["2022-02-17T18:32:45.000Z",["0x31fe393815822edacBd81C2262467402199EFD0D"]]]
+    }
+```
+
 Generated with discovered.json: 0xeae97c384e719b131ce027f1cc7c46e8fc9cc8fe
 
 # Diff at Fri, 30 Aug 2024 08:01:24 GMT:

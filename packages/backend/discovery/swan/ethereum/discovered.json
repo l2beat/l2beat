@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20413034,
   "configHash": "0xa442e5c0750802e9d260f0d1d4044419dcba21e638219df1f8e1e8ad6fe8f86f",
-  "version": 14,
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -19,6 +18,13 @@
       "values": {
         "$immutable": false,
         "$implementation": "0x76A8Eb93D4a200e8594B1ab1021ab5595CDfB57D",
+        "$pastUpgrades": [
+          [
+            "2024-06-17T17:27:11.000Z",
+            ["0x76A8Eb93D4a200e8594B1ab1021ab5595CDfB57D"]
+          ]
+        ],
+        "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
         "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620027",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
@@ -69,6 +75,12 @@
       "values": {
         "$admin": "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3",
         "$implementation": "0x0092400cf9cbAC5ABD8518960Cb1F90663607630",
+        "$pastUpgrades": [
+          [
+            "2024-06-17T17:27:35.000Z",
+            ["0x0092400cf9cbAC5ABD8518960Cb1F90663607630"]
+          ]
+        ],
         "$upgradeCount": 1,
         "challenger": "0x3FcB6E08A960EF52Ec3101A444f71A2Fd964b248",
         "CHALLENGER": "0x3FcB6E08A960EF52Ec3101A444f71A2Fd964b248",
@@ -114,6 +126,12 @@
       "values": {
         "$admin": "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3",
         "$implementation": "0x621729Ef0571a76E438689ec2bC88ee8E3f2Beff",
+        "$pastUpgrades": [
+          [
+            "2024-06-17T17:25:59.000Z",
+            ["0x621729Ef0571a76E438689ec2bC88ee8E3f2Beff"]
+          ]
+        ],
         "$upgradeCount": 1,
         "messenger": "0x15567C4FfD9109795dFf1D9A5233D10aef0738D2",
         "MESSENGER": "0x15567C4FfD9109795dFf1D9A5233D10aef0738D2",
@@ -154,6 +172,12 @@
       "values": {
         "$admin": "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3",
         "$implementation": "0x7CDAEa613E1D17e78F24CAF6349bCCf2bC364F0a",
+        "$pastUpgrades": [
+          [
+            "2024-06-17T17:25:23.000Z",
+            ["0x7CDAEa613E1D17e78F24CAF6349bCCf2bC364F0a"]
+          ]
+        ],
         "$upgradeCount": 1,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "0xde794bEc196832474f2F218135bFd0f7cA7fb038",
@@ -206,6 +230,9 @@
       "name": "AddressManager",
       "address": "0x55Aec4EE11dA7d655565cCc2EB3bF21a46C94e6f",
       "template": "opstack/AddressManager",
+      "descriptions": [
+        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+      ],
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -213,7 +240,8 @@
           "via": [
             {
               "address": "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3",
-              "delay": 0
+              "delay": 0,
+              "description": "set and change address mappings."
             }
           ]
         }
@@ -233,6 +261,7 @@
         {
           "permission": "configure",
           "target": "0x55Aec4EE11dA7d655565cCc2EB3bF21a46C94e6f",
+          "description": "set and change address mappings.",
           "via": [{ "address": "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3" }]
         },
         {
@@ -324,6 +353,12 @@
       "values": {
         "$admin": "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3",
         "$implementation": "0x704Ad7cb61f3Ff97F790FAA747279244Eb2a1802",
+        "$pastUpgrades": [
+          [
+            "2024-06-17T17:21:11.000Z",
+            ["0x704Ad7cb61f3Ff97F790FAA747279244Eb2a1802"]
+          ]
+        ],
         "$upgradeCount": 1,
         "guardian": "0x3FcB6E08A960EF52Ec3101A444f71A2Fd964b248",
         "GUARDIAN_SLOT": "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68",
@@ -357,6 +392,12 @@
       "values": {
         "$admin": "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3",
         "$implementation": "0x1606beCd26316B935B2dFE31D57C1C0B39f4f52f",
+        "$pastUpgrades": [
+          [
+            "2024-06-17T17:27:59.000Z",
+            ["0x1606beCd26316B935B2dFE31D57C1C0B39f4f52f"]
+          ]
+        ],
         "$upgradeCount": 1,
         "guardian": "0x3FcB6E08A960EF52Ec3101A444f71A2Fd964b248",
         "GUARDIAN": "0x3FcB6E08A960EF52Ec3101A444f71A2Fd964b248",
@@ -382,7 +423,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x55Aec4EE11dA7d655565cCc2EB3bF21a46C94e6f"
+          "target": "0x55Aec4EE11dA7d655565cCc2EB3bF21a46C94e6f",
+          "description": "set and change address mappings."
         },
         {
           "permission": "upgrade",
@@ -446,6 +488,12 @@
       "values": {
         "$admin": "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3",
         "$implementation": "0x351ABA1B5B72E6bA8d530740f073993069e7BC69",
+        "$pastUpgrades": [
+          [
+            "2024-06-17T17:26:11.000Z",
+            ["0x351ABA1B5B72E6bA8d530740f073993069e7BC69"]
+          ]
+        ],
         "$upgradeCount": 1,
         "bridge": "0xed7525946A09056C6AaE29941b8323017382050e",
         "BRIDGE": "0xed7525946A09056C6AaE29941b8323017382050e",
@@ -478,6 +526,7 @@
       "values": {
         "$admin": "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3",
         "$implementation": "0xc7e1EA328166Eea934429Eaa9F6c55Ef5548Efe7",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x15567C4FfD9109795dFf1D9A5233D10aef0738D2",
@@ -883,7 +932,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
-    "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
+    "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
@@ -894,5 +943,5 @@
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0xb3e808e6410511e5cdb557ab187aac264a51956c695f8cc327ebaa202f7514fd"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

@@ -7,7 +7,7 @@ export interface SpanBatchDecoderOpts {
   genesisTimestamp: UnixTime
 }
 
-// https://specs.optimism.io/protocol/span-batches.html#span-batch-format
+// https://specs.optimism.io/protocol/holocene/derivation.html#span-batches
 export function decodeSpanBatch(batch: Uint8Array, opts: SpanBatchDecoderOpts) {
   assert(
     batch[0] === SPAN_BATCH_VERSION,

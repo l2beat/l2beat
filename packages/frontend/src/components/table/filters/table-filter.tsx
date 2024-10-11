@@ -2,22 +2,13 @@
 import { assert } from '@l2beat/shared-pure'
 import { type Dispatch, type SetStateAction, useState } from 'react'
 import {
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from '~/components/core/drawer'
-import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from '~/components/core/select'
-import { useBreakpoint } from '~/hooks/use-is-mobile'
 import { CloseIcon } from '~/icons/close'
-import { ExpandIcon } from '~/icons/expand'
 
 const UNDEFINED_VALUE = 'undefined-value'
 
@@ -35,15 +26,9 @@ interface Props<T extends string> {
 
 export function TableFilter<T extends string>(props: Props<T>) {
   const [open, setOpen] = useState(false)
-  const breakpoint = useBreakpoint()
-  const showDrawer = breakpoint === 'tablet' || breakpoint === 'mobile'
 
   if (props.value) {
     return <SelectedValue {...props} />
-  }
-
-  if (showDrawer) {
-    return <TableFilterDrawer {...props} open={open} setOpen={setOpen} />
   }
 
   return <TableFilterSelect {...props} open={open} setOpen={setOpen} />
@@ -59,13 +44,11 @@ function SelectedValue<T extends string>({
   return (
     <button
       onClick={() => onValueChange(undefined)}
-      className="cursor-pointer select-none rounded-lg bg-gray-200 p-1 text-base font-semibold outline-none transition-colors hover:bg-gray-400 dark:bg-zinc-700 dark:hover:bg-slate-600"
+      className="flex h-8 cursor-pointer select-none items-center justify-center gap-1.5 whitespace-pre rounded-lg bg-gray-200 px-2.5 text-sm font-medium text-brand outline-none transition-colors hover:bg-gray-400 sidebar:!bg-surface-secondary sidebar:hover:!bg-surface-tertiary dark:bg-zinc-700 dark:hover:bg-slate-600"
     >
-      <div className="inline-flex w-max items-center gap-1.5 rounded-md bg-white px-2 dark:bg-black dark:group-hover:bg-gray-950">
-        <span>{option.label}</span>
-        <div className="flex size-3 items-center justify-center rounded-sm bg-black dark:bg-white">
-          <CloseIcon className="size-2.5 fill-white dark:fill-black dark:group-hover:fill-gray-950" />
-        </div>
+      <span>{option.label}</span>
+      <div className="inline-flex size-3 items-center justify-center rounded-sm bg-current">
+        <CloseIcon className="size-2.5 fill-white dark:fill-black dark:group-hover:fill-gray-950" />
       </div>
     </button>
   )
@@ -98,6 +81,7 @@ function TableFilterSelect<T extends string>({
           | undefined
         onValueChange(mappedValue)
       }}
+      disabled={options.length === 0}
     >
       <SelectTrigger>
         <SelectValue placeholder={title} />
@@ -110,51 +94,6 @@ function TableFilterSelect<T extends string>({
         ))}
       </SelectContent>
     </Select>
-  )
-}
-
-function TableFilterDrawer<T extends string>({
-  open,
-  setOpen,
-  title,
-  options,
-  onValueChange,
-}: Props<T> & {
-  open: boolean
-  setOpen: Dispatch<SetStateAction<boolean>>
-}) {
-  return (
-    <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>
-        <button className="inline-flex w-max cursor-pointer select-none items-center gap-1.5 whitespace-pre rounded-lg bg-gray-200 p-1 px-3 text-base font-semibold transition-colors data-[state=selected]:hover:bg-gray-400 dark:bg-zinc-700 dark:data-[state=selected]:hover:bg-slate-600">
-          {title}
-          <ExpandIcon
-            width={12}
-            height={12}
-            className="my-auto fill-black dark:fill-white"
-          />
-        </button>
-      </DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader>
-          <DrawerTitle>{title}</DrawerTitle>
-        </DrawerHeader>
-        <div className="max-h-[60vh] overflow-y-scroll [@supports(height:100dvh)]:max-h-[60dvh]">
-          {options.map((option) => (
-            <button
-              key={option.label}
-              className="w-full gap-1.5 rounded-lg px-2.5 py-2 text-left text-base font-semibold outline-none transition-colors hover:bg-gray-400 dark:hover:bg-zinc-800"
-              onClick={() => {
-                onValueChange(option.value)
-                setOpen(false)
-              }}
-            >
-              {option.label}
-            </button>
-          ))}
-        </div>
-      </DrawerContent>
-    </Drawer>
   )
 }
 

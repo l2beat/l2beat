@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20711342,
   "configHash": "0x762971154db7098aa282de45a263463872ec729b207c21c5002056300a160230",
-  "version": 14,
   "contracts": [
     {
       "name": "ParadexImplementationGovernorMultisig",
@@ -54,6 +53,21 @@
         "$admin": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
         "$immutable": false,
         "$implementation": "0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77",
+        "$pastUpgrades": [
+          [
+            "2023-08-18T06:47:11.000Z",
+            ["0x6Fd62239f3A441d1898683C5a84ce3681bB42C16"]
+          ],
+          [
+            "2024-05-28T11:01:11.000Z",
+            ["0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"]
+          ],
+          [
+            "2024-06-15T09:52:23.000Z",
+            ["0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"]
+          ]
+        ],
+        "$upgradeCount": 3,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -140,6 +154,21 @@
         ],
         "$immutable": false,
         "$implementation": "0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC",
+        "$pastUpgrades": [
+          [
+            "2023-07-20T11:05:35.000Z",
+            ["0xA964D693cd45FCBe4303524E0EFe0988cfF5ed08"]
+          ],
+          [
+            "2024-03-13T16:21:59.000Z",
+            ["0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24"]
+          ],
+          [
+            "2024-09-08T16:05:35.000Z",
+            ["0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC"]
+          ]
+        ],
+        "$upgradeCount": 3,
         "aggregatorProgramHash": "1161178844461337253856226043908368523817098764221830529880464854589141231910",
         "configHash": "2741190170141984203224468507008497105532196084369172236871397222510074358631",
         "getMaxL1MsgFee": "1000000000000000000",
@@ -451,5 +480,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

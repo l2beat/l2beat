@@ -14,7 +14,7 @@ export function DaTableSubRowCell({
   return (
     <td
       className={cn(
-        'size-full whitespace-pre bg-black/[0.05] pr-3 group-hover:bg-black/[0.1] dark:bg-white/[0.1] dark:group-hover:bg-white/[0.2]',
+        'size-full whitespace-pre bg-n-gray-200 pr-3 text-xs group-hover:bg-black/[0.1] dark:bg-white/[0.1] dark:group-hover:bg-white/[0.2] md:text-base',
         !lastRow && 'border-b border-b-gray-200 dark:border-b-zinc-700',
       )}
     >

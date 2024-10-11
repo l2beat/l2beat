@@ -1,3 +1,150 @@
+Generated with discovered.json: 0x15517beca4a095d532eb18080e8b792831885b8d
+
+# Diff at Wed, 09 Oct 2024 13:10:25 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@37683e2b3d0587372f886eef49e921277810c8bf block: 20920069
+- current block number: 20920069
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20920069 (main branch discovery), not current.
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+```diff
+    contract AddressManager (0x87630a802a3789463eC4b00f89b27b1e9f6b92e9) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.via.0.description:
++        "set and change address mappings."
+      descriptions:
++        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9) {
+    +++ description: None
+      directlyReceivedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+Generated with discovered.json: 0x0d00d1c4e97a77321515b7cf757d33b25a81d930
+
+# Diff at Tue, 08 Oct 2024 16:27:39 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@bca55174129419533cd4173605c170ea99ac6f98 block: 20775932
+- current block number: 20920069
+
+## Description
+
+Move to discovery driven data.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20775932 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.scalar:
+-        {"severity":"LOW","description":"A system configuration parameter used as dynamic L2 gas overhead in the L2 fee calculation."}
+    }
+```
+
+```diff
+    contract OrderlyMultisig (0xcE10372313Ca39Fbf75A09e7f4c0E57F070259f4) {
+    +++ description: None
+      name:
+-        "ChallengerMultisig"
++        "OrderlyMultisig"
+    }
+```
+
+Generated with discovered.json: 0xbabcc2ea6910170e7f642c9c3436761368428543
+
+# Diff at Tue, 01 Oct 2024 10:53:56 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20775932
+- current block number: 20775932
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20775932 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x5e76821C3c1AbB9fD6E310224804556C61D860e0) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$pastUpgrades:
++        [["2023-10-06T16:10:47.000Z",["0x334251f91a3795c043663172CB59a963a9029aed"]]]
+    }
+```
+
+```diff
+    contract SystemConfig (0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.$pastUpgrades:
++        [["2023-10-06T16:08:47.000Z",["0x240B3bd6b95cE40497Aafd71aD4705d0345A33CD"]]]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x91493a61ab83b62943E6dCAa5475Dd330704Cc84) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.$pastUpgrades:
++        [["2023-10-06T16:11:11.000Z",["0x7A163eb6Df3EEBbf817A7A9769F53FB2a441D47E"]]]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x934Ab59Ef14b638653b1C0FEf7aB9a72186393DC) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.$pastUpgrades:
++        [["2023-10-06T16:09:35.000Z",["0x701E95156dfD378d1985C6CC405D0Ee3d2af8503"]]]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0xc76543A64666d9a073FaEF4e75F651c88e7DBC08) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades:
++        [["2023-10-06T16:06:11.000Z",["0xc76543A64666d9a073FaEF4e75F651c88e7DBC08"]],["2023-10-06T16:10:23.000Z",["0xB6767fA038e8fbe3B60d42866dbeF0fca3B1a7d6"]]]
+      values.$upgradeCount:
++        2
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xe07eA0436100918F157DF35D01dCE5c11b16D1F1) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      values.$pastUpgrades:
++        []
+    }
+```
+
 Generated with discovered.json: 0x6587e77b1bc0109902cce14ed8418d8c477b4747
 
 # Diff at Wed, 18 Sep 2024 11:34:38 GMT:

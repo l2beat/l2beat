@@ -1,8 +1,10 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
 export const xpla: Layer2 = upcomingL2({
   id: 'xpla',
+  createdAt: new UnixTime(1716818766), // 2024-05-27T14:06:06Z
   display: {
     name: 'zkXPLA',
     slug: 'xpla',
@@ -13,10 +15,10 @@ export const xpla: Layer2 = upcomingL2({
     provider: 'ZK Stack',
     links: {
       websites: ['https://xpla.io'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
+      apps: ['https://vault.xpla.io/'],
+      documentation: ['https://docs.xpla.io'],
+      explorers: ['https://explorer.xpla.io'],
+      repositories: ['https://github.com/xpladev'],
       socialMedia: ['https://x.com/XPLA_Official'],
     },
   },

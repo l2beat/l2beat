@@ -3,7 +3,6 @@
   "chain": "scroll",
   "blockNumber": 6694912,
   "configHash": "0x9fa65037b0e93c454add856c6e9edc2c563b21e5c0a40fdad3a2286de4532ff0",
-  "version": 14,
   "contracts": [
     {
       "name": "StargatePoolUSDC",
@@ -398,5 +397,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

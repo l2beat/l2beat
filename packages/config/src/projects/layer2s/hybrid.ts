@@ -1,8 +1,10 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
 export const hybrid: Layer2 = upcomingL2({
   id: 'hybrid',
+  createdAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
   display: {
     name: 'Hybrid',
     slug: 'hybrid',
@@ -14,10 +16,13 @@ export const hybrid: Layer2 = upcomingL2({
     links: {
       websites: ['https://buildonhybrid.com/'],
       apps: [],
-      documentation: [],
+      documentation: ['https://docs.buildonhybrid.com'],
       explorers: [],
-      repositories: [],
-      socialMedia: ['https://x.com/BuildOnHybrid'],
+      repositories: ['https://github.com/buildonhybrid'],
+      socialMedia: [
+        'https://x.com/BuildOnHybrid',
+        'https://t.me/HybridCommunity',
+      ],
     },
   },
 })

@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20491473,
   "configHash": "0x5a18dc94a699ce771faca7fc8fd756e0d22f96fe60d5e177d853ca3c8c90f379",
-  "version": 14,
   "contracts": [
     {
       "name": "FflonkVerifier",
@@ -20,6 +19,12 @@
       "values": {
         "$admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "$implementation": "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
+        "$pastUpgrades": [
+          [
+            "2024-06-16T17:25:35.000Z",
+            ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
+          ]
+        ],
         "$upgradeCount": 1,
         "admin": "0xd0676f1Ee81d7C6fe9B0F2EEf9FF74C3E984f94b",
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
@@ -86,6 +91,12 @@
       "values": {
         "$admin": "0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039",
         "$implementation": "0xD26B535AD58715C4c2ffFAC32908b13674533DAe",
+        "$pastUpgrades": [
+          [
+            "2024-06-17T13:16:47.000Z",
+            ["0xD26B535AD58715C4c2ffFAC32908b13674533DAe"]
+          ]
+        ],
         "$upgradeCount": 1,
         "committeeHash": "0xace9b9575687718c86bc75396cf67aa59aeedd9f0cf40b3975e77638952b84b4",
         "getAmountOfMembers": 2,
@@ -291,5 +302,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

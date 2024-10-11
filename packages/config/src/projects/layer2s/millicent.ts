@@ -1,8 +1,10 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
 export const millicent: Layer2 = upcomingL2({
   id: 'millicent',
+  createdAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
   display: {
     name: 'Millicent One',
     slug: 'millicent',
@@ -14,7 +16,7 @@ export const millicent: Layer2 = upcomingL2({
     links: {
       websites: ['https://millicent.io/'],
       apps: [],
-      documentation: [],
+      documentation: ['https://docs.millicent.io'],
       explorers: [],
       repositories: [],
       socialMedia: ['https://x.com/MillicentLabs'],

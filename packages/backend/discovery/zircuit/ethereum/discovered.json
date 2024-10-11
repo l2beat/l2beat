@@ -1,9 +1,8 @@
 {
   "name": "zircuit",
   "chain": "ethereum",
-  "blockNumber": 20619826,
+  "blockNumber": 20827058,
   "configHash": "0x330c9a4c080f7df41bcc8d1a7e0bd71f6ea13408e4589b56d9be2e7b823394a9",
-  "version": 14,
   "contracts": [
     {
       "name": "OptimismPortal",
@@ -25,26 +24,40 @@
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0xde8B916B972cE3c27C21157Fc2b107c413062b9d",
+        "$pastUpgrades": [
+          [
+            "2024-07-02T16:13:23.000Z",
+            ["0x8Ab1b1E21c2f229a7bB1430CF3ADfb0644a69ab7"]
+          ],
+          [
+            "2024-07-16T08:48:59.000Z",
+            ["0x304a52C8354f323672191Ebf1347Cd3d494Ea830"]
+          ],
+          [
+            "2024-07-17T12:11:35.000Z",
+            ["0xde8B916B972cE3c27C21157Fc2b107c413062b9d"]
+          ]
+        ],
         "$upgradeCount": 3,
         "ethThrottleDeposits": {
           "maxAmountPerPeriod": 0,
           "periodLength": 0,
-          "maxAmountTotal": "3000000000000000000000"
+          "maxAmountTotal": 0
         },
         "ethThrottleWithdrawals": {
-          "maxAmountPerPeriod": "500000000000000000000",
+          "maxAmountPerPeriod": "1000000000000000000000",
           "periodLength": 3600,
           "maxAmountTotal": 0
         },
         "getEthThrottleDepositsCredits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "getEthThrottleWithdrawalsCredits": "500000000000000000000",
+        "getEthThrottleWithdrawalsCredits": "1000000000000000000000",
         "guardian": "0x2c0B27F7C8F083B539557a0bA787041BF22DB276",
         "l2Oracle": "0x92Ef6Af472b39F1b363da45E35530c24619245A4",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 287624,
-          "prevBlockNum": 20619685,
+          "prevBlockNum": 20825616,
           "prevTxCount": 1
         },
         "paused": false,
@@ -75,9 +88,15 @@
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0x6c01D349d3010Cc2953fFA0A5e8d176fc273B834",
+        "$pastUpgrades": [
+          [
+            "2024-07-02T16:12:35.000Z",
+            ["0x6c01D349d3010Cc2953fFA0A5e8d176fc273B834"]
+          ]
+        ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621836",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622800",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -118,7 +137,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 6,
+        "nonce": 7,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -148,6 +167,12 @@
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0xA03E2f3Ee6dBa20411A2326D7FA9CCCc6a9A53de",
+        "$pastUpgrades": [
+          [
+            "2024-07-02T16:11:47.000Z",
+            ["0xA03E2f3Ee6dBa20411A2326D7FA9CCCc6a9A53de"]
+          ]
+        ],
         "$upgradeCount": 1,
         "basefeeScalar": 1368,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
@@ -219,10 +244,28 @@
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0xA4ba8bd753695B6121722CBB7cd81c71BCFBCA28",
+        "$pastUpgrades": [
+          [
+            "2024-07-02T16:11:59.000Z",
+            ["0x7409668285336dBBe720bE3525AEe372Fce4c2ab"]
+          ],
+          [
+            "2024-07-16T08:48:59.000Z",
+            ["0xE14b12F4843447114A093D99Dc9322b93a967DE6"]
+          ],
+          [
+            "2024-07-16T08:48:59.000Z",
+            ["0x0Fc6203310c494963eBAdd1157780a613B67eCDf"]
+          ],
+          [
+            "2024-07-17T12:11:35.000Z",
+            ["0xA4ba8bd753695B6121722CBB7cd81c71BCFBCA28"]
+          ]
+        ],
         "$upgradeCount": 4,
         "accessController": "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
         "ethThrottleDeposits": {
-          "maxAmountPerPeriod": "50000000000000000000",
+          "maxAmountPerPeriod": 0,
           "periodLength": 2592000,
           "maxAmountTotal": 0
         },
@@ -299,6 +342,20 @@
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0x13A06FF21E46BCCd4B03E5Cb04372bB7aE7f2168",
+        "$pastUpgrades": [
+          [
+            "2024-07-02T16:13:35.000Z",
+            ["0x6a8497798ae8B398608B49b003ECB23aC0756E06"]
+          ],
+          [
+            "2024-07-03T09:00:47.000Z",
+            ["0xA153Ec874DaB9e6590cFcf4DC3f5bb86FfaC08B9"]
+          ],
+          [
+            "2024-08-12T16:32:59.000Z",
+            ["0x13A06FF21E46BCCd4B03E5Cb04372bB7aE7f2168"]
+          ]
+        ],
         "$upgradeCount": 3,
         "version": "0c13cfbb19b823f524a346e7ff5b352e24b8d79b"
       },
@@ -320,6 +377,12 @@
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0xA47314C96ab9572af656788e15143B459F99AE0f",
+        "$pastUpgrades": [
+          [
+            "2024-07-02T16:08:11.000Z",
+            ["0xA47314C96ab9572af656788e15143B459F99AE0f"]
+          ]
+        ],
         "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -375,6 +438,12 @@
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0xaaF7FCc7252eb739E0001D8727800deAE04A84f1",
+        "$pastUpgrades": [
+          [
+            "2024-07-02T16:12:59.000Z",
+            ["0xaaF7FCc7252eb739E0001D8727800deAE04A84f1"]
+          ]
+        ],
         "$upgradeCount": 1,
         "challenger": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "CHALLENGER": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
@@ -383,10 +452,10 @@
         "finalizationPeriodSeconds": 18000,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 2411100,
-        "latestOutputIndex": 5974,
-        "nextBlockNumber": 2411101,
-        "nextOutputIndex": 5975,
+        "latestBlockNumber": 3661348,
+        "latestOutputIndex": 9374,
+        "nextBlockNumber": 3661349,
+        "nextOutputIndex": 9375,
         "proposer": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "PROPOSER": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "startingBlockNumber": 0,
@@ -419,6 +488,12 @@
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0x3B21dC86c412aC34fF4c679497b274509D73cDcC",
+        "$pastUpgrades": [
+          [
+            "2024-07-02T16:12:11.000Z",
+            ["0x3B21dC86c412aC34fF4c679497b274509D73cDcC"]
+          ]
+        ],
         "$upgradeCount": 1,
         "messenger": "0x2a721cBE81a128be0F01040e3353c3805A5EA091",
         "MESSENGER": "0x2a721cBE81a128be0F01040e3353c3805A5EA091",
@@ -483,6 +558,12 @@
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0xf885DA6A3B4c93905b02f36f9a13680922A554b0",
+        "$pastUpgrades": [
+          [
+            "2024-07-02T16:12:23.000Z",
+            ["0xf885DA6A3B4c93905b02f36f9a13680922A554b0"]
+          ]
+        ],
         "$upgradeCount": 1,
         "bridge": "0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8",
         "BRIDGE": "0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8",
@@ -969,5 +1050,5 @@
     "opstack/OptimismPortal": "0x2a32f6874a8c0e85e685fa944143e7968d675fed43b46e7385411ad11f8a1a43",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0xb3e808e6410511e5cdb557ab187aac264a51956c695f8cc327ebaa202f7514fd"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

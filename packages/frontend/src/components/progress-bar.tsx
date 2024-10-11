@@ -23,6 +23,11 @@ export function ProgressBar() {
   )
 }
 
+/**
+ * This code is copied from next13-progressbar to fix some edge cases for our app
+ * https://github.com/ndungtse/next13-progressbar
+ */
+
 export function useRouterWithProgressBar() {
   const router = useNextRouter()
   const pathname = usePathname()
@@ -152,12 +157,27 @@ const Next13ProgressBar = React.memo(
         // Skip anchors with download attribute
         if (anchorElement.hasAttribute('download')) return
 
-        const hasTooltip = Array.from(anchorElement.children).some(
-          (child) => child.getAttribute('data-role') === 'tooltip-trigger',
+        // Skip anchors with tooltip as children on mobile
+
+        const hasTooltip = recursivelyCheckElements(
+          anchorElement,
+          (e) => e.getAttribute('data-role') === 'tooltip-trigger',
+          event.target as HTMLElement,
         )
 
-        // Skip anchors with tooltip as children on mobile
         if (isMobile && hasTooltip) {
+          return
+        }
+
+        // Skip anchors with nested buttons (tables)
+
+        const hasButton = recursivelyCheckElements(
+          anchorElement,
+          (e) => e.tagName === 'BUTTON',
+          event.target as HTMLElement,
+        )
+
+        if (hasButton) {
           return
         }
 
@@ -217,6 +237,8 @@ const Next13ProgressBar = React.memo(
         mutationObserver.disconnect()
       }
     }, [delay, isMobile, showOnShallow])
+
+    if (breakpoint === undefined) return null
 
     return (
       <style>
@@ -301,3 +323,23 @@ const Next13ProgressBar = React.memo(
   () => true,
 )
 Next13ProgressBar.displayName = 'Next13ProgressBar'
+
+function recursivelyCheckElements(
+  anchor: HTMLAnchorElement,
+  predicate: (element: HTMLElement) => boolean,
+  target: HTMLElement,
+) {
+  if (anchor.isEqualNode(target)) {
+    return false
+  }
+
+  if (predicate(target)) {
+    return true
+  }
+
+  if (target.parentElement) {
+    return recursivelyCheckElements(anchor, predicate, target.parentElement)
+  }
+
+  return false
+}

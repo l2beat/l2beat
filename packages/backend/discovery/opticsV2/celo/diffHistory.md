@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x5f7f3a34564634f4b6bb89fb0bd70a3154322e6f
+
+# Diff at Tue, 01 Oct 2024 11:14:17 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 26689586
+- current block number: 26689586
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 26689586 (main branch discovery), not current.
+
+```diff
+    contract BeaconProxy (0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2022-07-12T10:32:51.000Z",["0x8Dbce625664E61Bd3902Ec84DE5E22d2B12c3fb6"]]]
+      values.$upgradeCount:
++        1
+    }
+```
+
 Generated with discovered.json: 0xe1a5fd42d4d3a356b8500da014c3aa9aedfe3a3f
 
 # Diff at Fri, 30 Aug 2024 08:17:40 GMT:

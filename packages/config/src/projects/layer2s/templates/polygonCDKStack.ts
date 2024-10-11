@@ -34,7 +34,6 @@ import {
   ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../../common'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { Badge, BadgeId, badges } from '../../badges'
@@ -149,11 +148,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       category:
         templateVars.daProvider !== undefined ? 'Validium' : 'ZK Rollup',
       provider: 'Polygon',
-      tvlWarning: templateVars.display.tvlWarning ?? {
-        content:
-          'The TVL is currently shared among all projects using the shared Polygon CDK contracts.',
-        sentiment: 'warning',
-      },
+      tvlWarning: templateVars.display.tvlWarning,
       finality: templateVars.display.finality ?? {
         finalizationPeriod: 0,
         warnings: {
@@ -321,7 +316,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
             bridge: { type: 'Enshrined' },
             mode: 'Transaction data',
           }),
-    riskView: makeBridgeCompatible({
+    riskView: {
       stateValidation: {
         ...RISK_VIEW.STATE_ZKP_SN,
         sources: [
@@ -376,7 +371,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       },
       destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
       validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-    }),
+    },
     stage:
       daProvider !== undefined
         ? { stage: 'NotApplicable' }

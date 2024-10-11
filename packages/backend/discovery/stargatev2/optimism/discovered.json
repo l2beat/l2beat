@@ -3,7 +3,6 @@
   "chain": "optimism",
   "blockNumber": 121594324,
   "configHash": "0x9ac92b5366c1020988935c7832fca42559018edd2bdc62f02c7ed212dc145aaa",
-  "version": 14,
   "contracts": [
     {
       "name": "StargatePoolMigratable",
@@ -526,5 +525,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

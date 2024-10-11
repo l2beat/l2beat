@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { Database } from '@l2beat/database'
 import { upsertManyTokensWithMeta } from '../db/helpers.js'
 import { TokenUpdateQueue } from '../utils/queue/wrap.js'
-import { zodFetch } from '../utils/zodFetch.js'
+import { zodFetch } from '../utils/zod-fetch.js'
 
 export { buildCoingeckoSource }
 

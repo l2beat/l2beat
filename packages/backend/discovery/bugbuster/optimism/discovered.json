@@ -1,9 +1,8 @@
 {
   "name": "bugbuster",
   "chain": "optimism",
-  "blockNumber": 124709499,
-  "configHash": "0xb437a8e2fcabd221aa37136fe35c70fe5d8ed6f9da198d5396e20bd86bd659dc",
-  "version": 14,
+  "blockNumber": 125928338,
+  "configHash": "0xe953850a981b00c36111bdd24c7471747259e06fe892adffcfc41d77f3e1db86",
   "contracts": [
     {
       "name": "History",
@@ -13,6 +12,18 @@
         "$immutable": true,
         "owner": "0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35"
       }
+    },
+    {
+      "name": "BugBuster",
+      "address": "0x3FF5C7383F614256053c3F6B86A47bA974937299",
+      "sinceTimestamp": 1726799059,
+      "values": {
+        "$immutable": true,
+        "getConsensus": "0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35",
+        "getTemplateHash": "0x8fa989ac6c95375f2f07c8fa900a87bce79ae243a5a5f90c9531ccc9e1fceafc",
+        "owner": "0x7f9e54fEa7F266bcE775DbC3E34061D9407b1ed3"
+      },
+      "derivedName": "CartesiDApp"
     },
     {
       "name": "Authority",
@@ -38,22 +49,10 @@
         "$immutable": true,
         "getInputBox": "0x59b22D57D4f067708AB0c00552767405926dc768"
       }
-    },
-    {
-      "name": "BugBuster",
-      "address": "0x9cb6C6E904cE6BF3Ca6d0002b9629acce74Ea89b",
-      "sinceTimestamp": 1723556373,
-      "values": {
-        "$immutable": true,
-        "getConsensus": "0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35",
-        "getTemplateHash": "0x5c2fe1b1667706cb40b3908ccf03d6205e64d42f869ee3a64997e2cdc942a1a7",
-        "owner": "0x35c353a7fE08b2d09a51b48fe6f1E102F043f445"
-      },
-      "derivedName": "CartesiDApp"
     }
   ],
   "eoas": [
-    { "address": "0x35c353a7fE08b2d09a51b48fe6f1E102F043f445" },
+    { "address": "0x7f9e54fEa7F266bcE775DbC3E34061D9407b1ed3" },
     { "address": "0xD330C12e8DBD00570616D9406614106e2B3A1cf5" }
   ],
   "abis": {
@@ -70,6 +69,33 @@
       "function renounceOwnership()",
       "function submitClaim(bytes _claimData)",
       "function transferOwnership(address newOwner)"
+    ],
+    "0x3FF5C7383F614256053c3F6B86A47bA974937299": [
+      "constructor(address _consensus, address _owner, bytes32 _templateHash)",
+      "error EtherTransferFailed()",
+      "error IncorrectEpochHash()",
+      "error IncorrectOutputHashesRootHash()",
+      "error IncorrectOutputsEpochRootHash()",
+      "error InputIndexOutOfClaimBounds()",
+      "error OnlyDApp()",
+      "error VoucherReexecutionNotAllowed()",
+      "event NewConsensus(address newConsensus)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event VoucherExecuted(uint256 voucherId)",
+      "function executeVoucher(address _destination, bytes _payload, tuple(tuple(uint64 inputIndexWithinEpoch, uint64 outputIndexWithinInput, bytes32 outputHashesRootHash, bytes32 vouchersEpochRootHash, bytes32 noticesEpochRootHash, bytes32 machineStateHash, bytes32[] outputHashInOutputHashesSiblings, bytes32[] outputHashesInEpochSiblings) validity, bytes context) _proof) returns (bool)",
+      "function getConsensus() view returns (address)",
+      "function getTemplateHash() view returns (bytes32)",
+      "function migrateToConsensus(address _newConsensus)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function validateNotice(bytes _notice, tuple(tuple(uint64 inputIndexWithinEpoch, uint64 outputIndexWithinInput, bytes32 outputHashesRootHash, bytes32 vouchersEpochRootHash, bytes32 noticesEpochRootHash, bytes32 machineStateHash, bytes32[] outputHashInOutputHashesSiblings, bytes32[] outputHashesInEpochSiblings) validity, bytes context) _proof) view returns (bool)",
+      "function wasVoucherExecuted(uint256 _inputIndex, uint256 _outputIndexWithinInput) view returns (bool)",
+      "function withdrawEther(address _receiver, uint256 _value)"
     ],
     "0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35": [
       "constructor(address _owner)",
@@ -99,35 +125,8 @@
       "constructor(address _inputBox)",
       "function depositERC20Tokens(address _token, address _dapp, uint256 _amount, bytes _execLayerData)",
       "function getInputBox() view returns (address)"
-    ],
-    "0x9cb6C6E904cE6BF3Ca6d0002b9629acce74Ea89b": [
-      "constructor(address _consensus, address _owner, bytes32 _templateHash)",
-      "error EtherTransferFailed()",
-      "error IncorrectEpochHash()",
-      "error IncorrectOutputHashesRootHash()",
-      "error IncorrectOutputsEpochRootHash()",
-      "error InputIndexOutOfClaimBounds()",
-      "error OnlyDApp()",
-      "error VoucherReexecutionNotAllowed()",
-      "event NewConsensus(address newConsensus)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event VoucherExecuted(uint256 voucherId)",
-      "function executeVoucher(address _destination, bytes _payload, tuple(tuple(uint64 inputIndexWithinEpoch, uint64 outputIndexWithinInput, bytes32 outputHashesRootHash, bytes32 vouchersEpochRootHash, bytes32 noticesEpochRootHash, bytes32 machineStateHash, bytes32[] outputHashInOutputHashesSiblings, bytes32[] outputHashesInEpochSiblings) validity, bytes context) _proof) returns (bool)",
-      "function getConsensus() view returns (address)",
-      "function getTemplateHash() view returns (bytes32)",
-      "function migrateToConsensus(address _newConsensus)",
-      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
-      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
-      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function transferOwnership(address newOwner)",
-      "function validateNotice(bytes _notice, tuple(tuple(uint64 inputIndexWithinEpoch, uint64 outputIndexWithinInput, bytes32 outputHashesRootHash, bytes32 vouchersEpochRootHash, bytes32 noticesEpochRootHash, bytes32 machineStateHash, bytes32[] outputHashInOutputHashesSiblings, bytes32[] outputHashesInEpochSiblings) validity, bytes context) _proof) view returns (bool)",
-      "function wasVoucherExecuted(uint256 _inputIndex, uint256 _outputIndexWithinInput) view returns (bool)",
-      "function withdrawEther(address _receiver, uint256 _value)"
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

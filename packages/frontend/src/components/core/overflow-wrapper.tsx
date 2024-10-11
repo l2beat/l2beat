@@ -69,7 +69,7 @@ export const OverflowWrapper = forwardRef<HTMLDivElement, OverflowWrapperProps>(
 
     useEffect(() => {
       onScroll()
-    }, [onScroll])
+    }, [children, onScroll])
 
     useEventListener('scroll', onScroll, contentRef)
     useEventListener('resize', onScroll)

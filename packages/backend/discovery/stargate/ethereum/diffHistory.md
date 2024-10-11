@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x4e354eec060dee36a608f249b5e8a44f10ea30d8
+
+# Diff at Tue, 01 Oct 2024 10:55:35 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20240852
+- current block number: 20240852
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20240852 (main branch discovery), not current.
+
+```diff
+    contract TSS Oracle (0x5a54fe5234E811466D5366846283323c954310B2) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-02-08T19:58:23.000Z",["0xccEf13cFEB6873c167f62A365548A57C9ed29DC5"]],["2023-04-27T02:38:47.000Z",["0x3eEA8d627ab6983fFFc7027ee623Fd7699343fc1"]]]
+    }
+```
+
+```diff
+    contract LayerZero Relayer (0x902F09715B6303d4173037652FA7377e5b98089E) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2022-11-21T22:41:47.000Z",["0x4E341b9Cf90514A5b7dfec2c9A1f20AA4514C260"]],["2023-02-03T23:06:47.000Z",["0xDD55F55CB9a39EF1eed4Ee1a84EE1b7411bE306a"]],["2023-04-23T04:37:11.000Z",["0x9512a85438606dEdE54297634dEd7C7C0c231874"]],["2023-06-26T23:20:23.000Z",["0xaF34771b16960ea77484A866a34CCDAFDc913D9C"]],["2023-09-20T19:37:35.000Z",["0x8775e9D584008f84daFe7abe75a62f6C91491027"]],["2023-09-22T14:15:59.000Z",["0xB830a5AfCBEBb936c30C607a18BbbA9f5B0a592f"]]]
+    }
+```
+
 Generated with discovered.json: 0x7fa5352e64f49c1e8051f0480ca4244275a894b4
 
 # Diff at Fri, 30 Aug 2024 08:01:09 GMT:

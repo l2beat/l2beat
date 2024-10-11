@@ -1,3 +1,61 @@
+Generated with discovered.json: 0xfc0452d58abac01438b8c50c014c8b8ffcb6daec
+
+# Diff at Tue, 01 Oct 2024 11:11:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20832964
+- current block number: 20832964
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20832964 (main branch discovery), not current.
+
+```diff
+    contract XLayerValidiumDAC (0x05652Ec92366F3C2255991a265c499E01Ba58e6a) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-30T08:28:47.000Z",["0xd620Ca1ad5c3888e4521c3374cE4088Cb78079b8"]]]
+    }
+```
+
+```diff
+    contract XLayerValidium (0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-30T08:02:35.000Z",["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]]]
+    }
+```
+
+Generated with discovered.json: 0xeca515205bc21e41e7fb9686e79741467dbd28a4
+
+# Diff at Thu, 26 Sep 2024 06:22:35 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@374d77799a44e3b2fcc4828675ccc0b0ff6146d0 block: 20325087
+- current block number: 20832964
+
+## Description
+
+Ignore gas token.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20325087 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract OKBImplementation (0x75231F58b43240C9718Dd58B4967c5114342a86c)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x529839bbd0d774852f45035d2084596df11b078e
 
 # Diff at Fri, 30 Aug 2024 08:01:34 GMT:

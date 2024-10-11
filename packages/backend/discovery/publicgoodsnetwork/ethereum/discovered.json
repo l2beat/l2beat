@@ -1,14 +1,16 @@
 {
   "name": "publicgoodsnetwork",
   "chain": "ethereum",
-  "blockNumber": 20775939,
-  "configHash": "0x1556cca6a43d40327c72021678db58a02c5dcb18b6d8b1c8301d3657294568c5",
-  "version": 14,
+  "blockNumber": 20913652,
+  "configHash": "0x3a54f3ab3aeb854af2a1777b38da8dc8dc9f3879d47ee4eda3de6e36ed655d68",
   "contracts": [
     {
       "name": "AddressManager",
       "address": "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e",
       "template": "opstack/AddressManager",
+      "descriptions": [
+        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+      ],
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -16,7 +18,8 @@
           "via": [
             {
               "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4",
-              "delay": 0
+              "delay": 0,
+              "description": "set and change address mappings."
             }
           ]
         }
@@ -25,15 +28,14 @@
       "values": {
         "$immutable": true,
         "owner": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4"
-      },
-      "derivedName": "AddressManager"
+      }
     },
     {
-      "name": "GuardianMultisig",
+      "name": "PgnMultisig",
       "address": "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "roles": ["Challenger"],
+      "roles": ["Challenger", "Guardian"],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1689022727,
       "values": {
@@ -66,6 +68,7 @@
         {
           "permission": "configure",
           "target": "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e",
+          "description": "set and change address mappings.",
           "via": [{ "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4" }]
         },
         {
@@ -120,7 +123,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 50,
+        "nonce": 52,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -155,6 +158,12 @@
       "values": {
         "$admin": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4",
         "$implementation": "0x463B3777d3DD6a90234b594D1f94002267CE7948",
+        "$pastUpgrades": [
+          [
+            "2023-07-11T20:24:47.000Z",
+            ["0x463B3777d3DD6a90234b594D1f94002267CE7948"]
+          ]
+        ],
         "$upgradeCount": 1,
         "batcherHash": "0x99526b0e49A95833E734EB556A6aBaFFAb0Ee167",
         "gasLimit": 30000000,
@@ -185,8 +194,7 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         }
-      },
-      "derivedName": "SystemConfig"
+      }
     },
     {
       "name": "L1CrossDomainMessenger",
@@ -202,8 +210,19 @@
       "values": {
         "$immutable": false,
         "$implementation": "0x1d8180D739D01dC97e837478af8d494215C5EF5e",
+        "$pastUpgrades": [
+          [
+            "2023-07-11T20:24:47.000Z",
+            ["0x0000000000000000000000000000000000000000"]
+          ],
+          [
+            "2023-07-11T20:25:23.000Z",
+            ["0x1d8180D739D01dC97e837478af8d494215C5EF5e"]
+          ]
+        ],
+        "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639487",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639488",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -216,8 +235,7 @@
         "ResolvedDelegateProxy_addressManager": "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e",
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "version": "1.4.0"
-      },
-      "derivedName": "L1CrossDomainMessenger"
+      }
     },
     {
       "name": "L2OutputOracle",
@@ -249,27 +267,36 @@
       "values": {
         "$admin": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4",
         "$implementation": "0x76983dfED43C7ae7ebB592A92Be2BE972cAE4348",
+        "$pastUpgrades": [
+          [
+            "2023-07-11T20:25:23.000Z",
+            ["0x76983dfED43C7ae7ebB592A92Be2BE972cAE4348"]
+          ]
+        ],
         "$upgradeCount": 1,
         "CHALLENGER": "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84",
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 18763200,
-        "latestOutputIndex": 10423,
-        "nextBlockNumber": 18765000,
-        "nextOutputIndex": 10424,
+        "latestBlockNumber": 19596600,
+        "latestOutputIndex": 10886,
+        "nextBlockNumber": 19598400,
+        "nextOutputIndex": 10887,
         "PROPOSER": "0x69968Ce0E92d9c101BAd81de55EFbcb69603cFe3",
         "startingBlockNumber": 0,
         "startingTimestamp": 1689106727,
         "SUBMISSION_INTERVAL": 1800,
         "version": "1.3.0"
-      },
-      "derivedName": "L2OutputOracle"
+      }
     },
     {
       "name": "OptimismPortal",
       "address": "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c",
+      "template": "opstack/OptimismPortal",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -287,6 +314,12 @@
       "values": {
         "$admin": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4",
         "$implementation": "0x436e9FC7894e26718637f086d42B4a06439C8ae0",
+        "$pastUpgrades": [
+          [
+            "2023-07-11T20:25:23.000Z",
+            ["0x436e9FC7894e26718637f086d42B4a06439C8ae0"]
+          ]
+        ],
         "$upgradeCount": 1,
         "GUARDIAN": "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84",
         "L2_ORACLE": "0xA38d0c4E6319F9045F20318BA5f04CDe94208608",
@@ -294,13 +327,12 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 20760438
+          "prevBlockNum": 20792218
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9",
         "version": "1.6.0"
-      },
-      "derivedName": "OptimismPortal"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -309,7 +341,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e"
+          "target": "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e",
+          "description": "set and change address mappings."
         },
         {
           "permission": "upgrade",
@@ -362,14 +395,14 @@
       "values": {
         "$admin": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4",
         "$implementation": "0x459bA3BD8fb18CCBf557Ae9Fab13ceD2542B0d8E",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x97BAf688E5d0465E149d1d5B497Ca99392a6760e",
         "MESSENGER": "0x97BAf688E5d0465E149d1d5B497Ca99392a6760e",
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000010",
         "version": "1.1.0"
-      },
-      "derivedName": "L1StandardBridge"
+      }
     }
   ],
   "eoas": [
@@ -657,12 +690,13 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
-    "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
+    "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
     "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
+    "opstack/OptimismPortal": "0x2a32f6874a8c0e85e685fa944143e7968d675fed43b46e7385411ad11f8a1a43",
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0xc2b2af326d311f3d03fc7620f421703794cce7b4ddb9f30cdcf6d025b4cdec01"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

@@ -3,7 +3,6 @@
   "chain": "optimism",
   "blockNumber": 122593187,
   "configHash": "0x31a3019cd0013048c71bd882672a02bed221167c8934d74ae1189dbeb3ceb61b",
-  "version": 14,
   "contracts": [
     {
       "name": "MintManagerOwner",
@@ -52,6 +51,7 @@
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xc0d3c0d3C0d3c0D3c0d3C0D3c0d3C0d3c0D30002",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "owner": "0x0000000000000000000000000000000000000000",
         "version": "1.0.0"
@@ -78,6 +78,7 @@
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "MESSAGE_VERSION": 1,
@@ -115,6 +116,16 @@
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xa919894851548179A0750865e7974DA599C0Fac7",
+        "$pastUpgrades": [
+          [
+            "2024-03-14T00:00:01.000Z",
+            ["0xb528D11cC114E026F138fE568744c6D45ce6Da7A"]
+          ],
+          [
+            "2024-07-10T16:00:01.000Z",
+            ["0xa919894851548179A0750865e7974DA599C0Fac7"]
+          ]
+        ],
         "$upgradeCount": 2,
         "baseFee": 0,
         "baseFeeScalar": 5227,
@@ -150,6 +161,7 @@
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "l1TokenBridge": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
         "messenger": "0x4200000000000000000000000000000000000007",
@@ -179,6 +191,7 @@
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "l1FeeWallet": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
         "MIN_WITHDRAWAL_AMOUNT": "10000000000000000000",
@@ -207,6 +220,7 @@
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xc0D3c0d3C0d3c0d3c0D3c0d3c0D3c0D3c0D30012",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "BRIDGE": "0x4200000000000000000000000000000000000010",
         "version": "1.1.0"
@@ -232,6 +246,7 @@
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0D3C0d3C0D3c0D3C0d3c0D3C0d3c0d3C0d30013",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "version": "1.0.0"
       },
@@ -257,6 +272,12 @@
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014",
+        "$pastUpgrades": [
+          [
+            "2022-10-04T21:36:13.000Z",
+            ["0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"]
+          ]
+        ],
         "$upgradeCount": 1,
         "messenger": "0x4200000000000000000000000000000000000007",
         "MESSENGER": "0x4200000000000000000000000000000000000007",
@@ -293,6 +314,12 @@
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0x07dbe8500fc591d1852B76feE44d5a05e13097Ff",
+        "$pastUpgrades": [
+          [
+            "2024-03-14T00:00:01.000Z",
+            ["0x07dbe8500fc591d1852B76feE44d5a05e13097Ff"]
+          ]
+        ],
         "$upgradeCount": 1,
         "basefee": 2198118884,
         "baseFeeScalar": 5227,
@@ -330,6 +357,7 @@
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "MESSAGE_VERSION": 1,
         "version": "1.0.0"
@@ -356,6 +384,7 @@
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xc0d3C0d3C0d3C0d3C0d3c0d3C0D3C0d3C0D30017",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "BRIDGE": "0x4200000000000000000000000000000000000014",
         "REMOTE_CHAIN_ID": 1,
@@ -449,6 +478,7 @@
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "addressManager": "0x0000000000000000000000000000000000000000",
         "isUpgrading": false,
@@ -476,6 +506,7 @@
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "MIN_WITHDRAWAL_AMOUNT": "10000000000000000000",
         "RECIPIENT": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
@@ -503,6 +534,7 @@
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "MIN_WITHDRAWAL_AMOUNT": "10000000000000000000",
         "RECIPIENT": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
@@ -530,6 +562,12 @@
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0x6232208d66bAc2305b46b4Cb6BCB3857B298DF13",
+        "$pastUpgrades": [
+          [
+            "2023-07-27T22:05:33.000Z",
+            ["0x6232208d66bAc2305b46b4Cb6BCB3857B298DF13"]
+          ]
+        ],
         "$upgradeCount": 1,
         "version": "1.0.1"
       }
@@ -554,6 +592,12 @@
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0x4E0275Ea5a89e7a3c1B58411379D1a0eDdc5b088",
+        "$pastUpgrades": [
+          [
+            "2023-07-27T22:05:33.000Z",
+            ["0x4E0275Ea5a89e7a3c1B58411379D1a0eDdc5b088"]
+          ]
+        ],
         "$upgradeCount": 1,
         "getAttestTypeHash": "0xdbfdf8dc2b135c26253e00d5b6cbe6f20457e003fd526d97cea183883570de61",
         "getDomainSeparator": "0xd963157246e3d9bacafb6121ee5c596e8048baf5c3814c1b9fa094fdc4d6aed1",
@@ -578,18 +622,6 @@
         "totalSupply": "4294967294179743819541674335"
       },
       "derivedName": "GovernanceToken"
-    },
-    {
-      "name": "OldQuixoticNFTBridge",
-      "address": "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D",
-      "sinceTimestamp": 1664918893,
-      "values": {
-        "$immutable": true,
-        "messenger": "0x4200000000000000000000000000000000000007",
-        "otherBridge": "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D",
-        "version": "1.0.0"
-      },
-      "derivedName": "L2ERC721Bridge"
     },
     {
       "name": "MintManager",
@@ -976,17 +1008,6 @@
       "function timestamp(bytes32 data) returns (uint64)",
       "function version() view returns (string)"
     ],
-    "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D": [
-      "constructor(address _messenger, address _otherBridge)",
-      "event ERC721BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 tokenId, bytes extraData)",
-      "event ERC721BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 tokenId, bytes extraData)",
-      "function bridgeERC721(address _localToken, address _remoteToken, uint256 _tokenId, uint32 _minGasLimit, bytes _extraData)",
-      "function bridgeERC721To(address _localToken, address _remoteToken, address _to, uint256 _tokenId, uint32 _minGasLimit, bytes _extraData)",
-      "function finalizeBridgeERC721(address _localToken, address _remoteToken, address _from, address _to, uint256 _tokenId, bytes _extraData)",
-      "function messenger() view returns (address)",
-      "function otherBridge() view returns (address)",
-      "function version() view returns (string)"
-    ],
     "0x5C4e7Ba1E219E47948e6e3F55019A647bA501005": [
       "constructor(address _upgrader, address _governanceToken)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -1244,5 +1265,5 @@
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

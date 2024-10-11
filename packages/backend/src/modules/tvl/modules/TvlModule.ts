@@ -1,27 +1,19 @@
 import { Logger } from '@l2beat/backend-tools'
-
-import { ConfigMapping, chains, createPriceId } from '@l2beat/config'
-import { assert, ChainConverter, ChainId, UnixTime } from '@l2beat/shared-pure'
-import { Config, TvlConfig } from '../../../config/Config'
+import { ConfigMapping } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
+import { Config } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { Clock } from '../../../tools/Clock'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { ApplicationModule } from '../../ApplicationModule'
-import { createTvlRouter } from '../api/TvlRouter'
-import { AggregatedService } from '../api/services/AggregatedService'
-import { TokenService } from '../api/services/TokenService'
-import { TvlService } from '../api/services/TvlService'
-import { AmountsDataService } from '../api/services/data/AmountsDataService'
-import { DataStatusService } from '../api/services/data/DataStatusService'
-import { PricesDataService } from '../api/services/data/PricesDataService'
-import { ValuesDataService } from '../api/services/data/ValuesDataService'
-import { ApiProject, AssociatedToken } from '../api/utils/types'
 import { HourlyIndexer } from '../indexers/HourlyIndexer'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { TvlCleaner } from '../utils/TvlCleaner'
+import { initAggLayerModule } from './AggLayerModule'
 import { initBlockTimestampModule } from './BlockTimestampModule'
 import { initChainModule } from './ChainModule'
 import { initCirculatingSupplyModule } from './CirculatingSupplyModule'
+import { initElasticChainModule } from './ElasticChainModule'
 import { initPremintedModule } from './PremintedModule'
 import { initPriceModule } from './PriceModule'
 
@@ -114,65 +106,26 @@ export function initTvlModule(
     blockTimestampModule?.blockTimestampIndexers,
   )
 
-  const dataStatusService = new DataStatusService(peripherals.database)
-
-  const pricesDataService = new PricesDataService({
-    db: peripherals.database,
-    dataStatusService,
-    clock,
-    etherPriceConfig: getEtherPriceConfig(config.tvl),
+  const aggLayerModule = initAggLayerModule(
+    config.tvl,
     logger,
-  })
-
-  const amountsDataService = new AmountsDataService({
-    db: peripherals.database,
-    dataStatusService,
-    clock,
-    logger,
-  })
-
-  const valuesDataService = new ValuesDataService({
-    db: peripherals.database,
+    peripherals,
+    syncOptimizer,
     indexerService,
-    clock,
-    logger,
-  })
-
-  const chainConverter = new ChainConverter(
-    chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
+    configMapping,
+    priceModule.descendant,
+    blockTimestampModule?.blockTimestampIndexers,
   )
 
-  const tokenService = new TokenService({
-    amountsDataService,
-    pricesDataService,
+  const elasticChainModule = initElasticChainModule(
+    config.tvl,
+    logger,
+    peripherals,
+    syncOptimizer,
+    indexerService,
     configMapping,
-    clock,
-  })
-
-  const aggregatedService = new AggregatedService({
-    valuesDataService,
-    pricesDataService,
-    clock,
-    tokenService,
-  })
-
-  const tvlService = new TvlService({
-    valuesDataService,
-    pricesDataService,
-    amountsDataService,
-    tokenService,
-    clock,
-    configMapping,
-    chainConverter,
-  })
-
-  const tvlRouter = createTvlRouter(
-    tvlService,
-    aggregatedService,
-    tokenService,
-    getApiProjects(config.tvl, configMapping),
-    getAssociatedTokens(config.tvl, configMapping),
-    clock,
+    priceModule.descendant,
+    blockTimestampModule?.blockTimestampIndexers,
   )
 
   const start = async () => {
@@ -182,6 +135,8 @@ export function initTvlModule(
     await chainModule?.start()
     await premintedModule?.start()
     await circulatingSupplyModule?.start()
+    await aggLayerModule?.start()
+    await elasticChainModule?.start()
 
     if (config.tvl && config.tvl.tvlCleanerEnabled) {
       tvlCleaner.start()
@@ -189,100 +144,6 @@ export function initTvlModule(
   }
 
   return {
-    routers: [tvlRouter],
     start,
-  }
-}
-
-function getEtherPriceConfig(config: TvlConfig) {
-  const ethPrice = config.prices.find(
-    (p) => p.chain === 'ethereum' && p.address === 'native',
-  )
-  assert(ethPrice, 'Eth priceId not found')
-  const etherPriceConfig = { ...ethPrice, configId: createPriceId(ethPrice) }
-  return etherPriceConfig
-}
-
-function getApiProjects(
-  config: TvlConfig,
-  configMapping: ConfigMapping,
-): ApiProject[] {
-  return config.projects.flatMap(({ projectId, type, slug }) => {
-    if (config.projectsExcludedFromApi.includes(projectId.toString())) {
-      return []
-    }
-
-    const amounts = configMapping.getAmountsByProject(projectId)
-    if (!amounts) {
-      return []
-    }
-    assert(amounts, 'Config not found: ' + projectId.toString())
-    const minTimestamp = amounts
-      .map((x) => x.sinceTimestamp)
-      .reduce((a, b) => UnixTime.min(a, b), UnixTime.now())
-
-    const sources = new Map<string, { name: string; minTimestamp: UnixTime }>()
-    for (const amount of amounts) {
-      const source = sources.get(amount.dataSource)
-      if (!source || source.minTimestamp.gt(amount.sinceTimestamp)) {
-        sources.set(amount.dataSource, {
-          name: amount.dataSource,
-          minTimestamp: amount.sinceTimestamp,
-        })
-      }
-    }
-    return { id: projectId, minTimestamp, type, slug, sources }
-  })
-}
-
-function getAssociatedTokens(
-  config: TvlConfig,
-  configMapping: ConfigMapping,
-): AssociatedToken[] {
-  return config.projects.flatMap(({ projectId, type }) => {
-    if (config.projectsExcludedFromApi.includes(projectId.toString())) {
-      return []
-    }
-
-    const amounts = configMapping.getAmountsByProject(projectId)
-    if (!amounts) {
-      return []
-    }
-
-    const uniqueTokens = new Map<string, string>()
-
-    const associatedAmounts = amounts
-      .filter((x) => x.isAssociated === true)
-      .filter((amount) => {
-        const u = uniqueTokens.get(`${amount.address}-${amount.chain}`)
-        if (u) {
-          assert(amount.source === u, 'Type mismatch')
-          return false
-        }
-        uniqueTokens.set(`${amount.address}-${amount.chain}`, amount.source)
-        return true
-      })
-
-    return associatedAmounts.map((amount) => {
-      return {
-        address: amount.address,
-        chain: amount.chain,
-        type: amount.source,
-        includeInTotal: amount.includeInTotal,
-        project: projectId,
-        projectType: getType(type),
-      }
-    })
-  })
-}
-
-function getType(type: 'layer2' | 'bridge' | 'layer3'): 'layers2s' | 'bridges' {
-  switch (type) {
-    case 'layer2':
-      return 'layers2s'
-    case 'bridge':
-      return 'bridges'
-    case 'layer3':
-      return 'layers2s'
   }
 }

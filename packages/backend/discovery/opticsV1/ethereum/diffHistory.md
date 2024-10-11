@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x1bf385d64ed8247c664b7de58758be96127da678
+
+# Diff at Tue, 01 Oct 2024 10:53:35 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 19532023
+- current block number: 19532023
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19532023 (main branch discovery), not current.
+
+```diff
+    contract GovernanceRouterBeaconProxy (0x42303634F37956687fB7ff2c6146AC842481A052) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2021-09-08T21:56:48.000Z",["0xDFb2A95900d6b7c8AA95F2E46563a5FCFb5505A1"]]]
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract BridgeRouterBeaconProxy (0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2021-09-08T23:13:15.000Z",["0x67364232A8f8dA6f22dF3bE3408ef9872132F2A6"]]]
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract ReplicaBeaconProxy (0x7725EadaC5Ee986CAc8317a1d2fB16e59e079E8b) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2021-09-08T22:00:31.000Z",["0xFC4060e4Fd5979f848b8EDc8505d2f89D83b9E04"]]]
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract HomeBeaconProxy (0xf25C5932bb6EFc7afA4895D9916F2abD7151BF97) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2021-09-08T21:55:49.000Z",["0xfAc41463ef1E01546F2130F92184a053A0E3Fa14"]]]
+      values.$upgradeCount:
++        1
+    }
+```
+
 Generated with discovered.json: 0x8048e5b509dddc334872b2efbb48bbc1c9dbcdb0
 
 # Diff at Fri, 30 Aug 2024 07:54:09 GMT:

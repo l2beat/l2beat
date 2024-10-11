@@ -15,6 +15,14 @@ export class TokenMetaRepository extends BaseRepository {
     return rows
   }
 
+  async getByTokenId(tokenId: string): Promise<TokenMetaRecord[]> {
+    return await this.db
+      .selectFrom('TokenMeta')
+      .select(selectTokenMeta)
+      .where('tokenId', '=', tokenId)
+      .execute()
+  }
+
   async upsert(record: UpsertableTokenMetaRecord): Promise<{ id: string }> {
     const row = upsertableToRow(record)
 
@@ -43,7 +51,7 @@ export class TokenMetaRepository extends BaseRepository {
 
     const rows = records.map(upsertableToRow)
 
-    await this.batch(rows, 1_000, async (batch) => {
+    await this.batch(rows, 100, async (batch) => {
       await this.db
         .insertInto('TokenMeta')
         .values(batch)
@@ -58,9 +66,13 @@ export class TokenMetaRepository extends BaseRepository {
             updatedAt: eb.ref('excluded.updatedAt'),
           })),
         )
-        .returning('TokenMeta.id')
         .execute()
     })
     return records.length
+  }
+
+  async deleteAll(): Promise<bigint> {
+    const result = await this.db.deleteFrom('TokenMeta').executeTakeFirst()
+    return result.numDeletedRows
   }
 }

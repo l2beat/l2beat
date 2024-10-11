@@ -1,7 +1,7 @@
 import { assert } from '@l2beat/shared-pure'
 import { EM_DASH } from '~/consts/characters'
 
-const MONTHS: Record<
+export const MONTHS: Record<
   string,
   {
     longName: string

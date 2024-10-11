@@ -1,7 +1,7 @@
-import { ProxyDetails } from '@l2beat/discovery-types'
+import { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
-
 import { IProvider } from '../../provider/IProvider'
+import { getPastUpgradesSingleEvent } from '../pastUpgrades'
 
 export async function getEternalStorageProxy(
   provider: IProvider,
@@ -20,11 +20,18 @@ export async function getEternalStorageProxy(
   if (!implementation || !admin) {
     return undefined
   }
+  const pastUpgrades = await getPastUpgradesSingleEvent(
+    provider,
+    address,
+    'event Upgraded(uint256 version, address indexed implementation)',
+  )
   return {
     type: 'Eternal Storage proxy',
     values: {
       $admin: admin.toString(),
       $implementation: implementation.toString(),
+      $pastUpgrades: pastUpgrades as ContractValue,
+      $upgradeCount: pastUpgrades.length,
     },
   }
 }

@@ -16,7 +16,6 @@ const ZBigNumber = z.instanceof(BigNumber).transform((n) => n.toBigInt())
 
 const StarknetStateUpdate = z.object({
   programOutput: z.array(ZBigNumber),
-  kzgProof: z.string(),
 })
 type StarknetStateUpdate = z.infer<typeof StarknetStateUpdate>
 
@@ -52,14 +51,13 @@ export class StarknetFinalityAnalyzer extends BaseAnalyzer {
 }
 
 function decodeTransaction(data: string) {
-  const signature = `updateStateKzgDA(uint256[] programOutput, bytes kzgProof)`
+  const signature = `updateStateKzgDA(uint256[] programOutput, bytes[] kzgProofs)`
   const iface = new utils.Interface([`function ${signature}`])
 
   const decodedInput = iface.decodeFunctionData(signature, data)
 
   return StarknetStateUpdate.parse({
     programOutput: decodedInput.programOutput,
-    kzgProof: decodedInput.kzgProof,
   })
 }
 

@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20138492,
   "configHash": "0xa2d3b73f464bf088bb88deb4941464593bad0f0eb4cf4151a94504c3d2a3ec56",
-  "version": 14,
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -43,6 +42,28 @@
       "values": {
         "$admin": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
         "$implementation": "0x4906b8E690EB1E09Fec924422452d1105D59d042",
+        "$pastUpgrades": [
+          [
+            "2022-03-12T23:49:50.000Z",
+            ["0x279ac60785A2FCb85550EB243B9A42A543171Cc7"]
+          ],
+          [
+            "2022-03-16T22:52:30.000Z",
+            ["0xD0eE149a4Ceec165C456C1E2D4372318e4Df82bd"]
+          ],
+          [
+            "2022-05-12T18:33:22.000Z",
+            ["0x6C0CbaC5337Cf577452e99A18320fc5656Bd61E7"]
+          ],
+          [
+            "2022-07-26T15:35:56.000Z",
+            ["0x256415A1f9468E5405abdAfD9B76c4f24451d7E7"]
+          ],
+          [
+            "2023-12-30T09:50:47.000Z",
+            ["0x4906b8E690EB1E09Fec924422452d1105D59d042"]
+          ]
+        ],
         "$upgradeCount": 5,
         "baseGas": 21000,
         "getExecutorManager": "0xbd761D917fB77381B4398Bda89C7F0d9A2BD1399",
@@ -82,6 +103,12 @@
       "values": {
         "$admin": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
         "$implementation": "0x79E559AC5b499A5676e28f0074e29763F6c2A27e",
+        "$pastUpgrades": [
+          [
+            "2022-05-12T13:04:49.000Z",
+            ["0x79E559AC5b499A5676e28f0074e29763F6c2A27e"]
+          ]
+        ],
         "$upgradeCount": 1,
         "owner": "0xD76b82204BE75Ab9610B04CF27c4F4a34291D5E6",
         "paused": false
@@ -102,6 +129,20 @@
       "values": {
         "$admin": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
         "$implementation": "0x38391eA26F9EeE3ab81DE3C7eE9e168da5149103",
+        "$pastUpgrades": [
+          [
+            "2022-03-12T23:49:02.000Z",
+            ["0x6cc7E949807c0945afcb2be0C92F42191b31dFD7"]
+          ],
+          [
+            "2022-05-12T18:25:42.000Z",
+            ["0x52a592fFE0377b351c8FD99189e5333ec362d66A"]
+          ],
+          [
+            "2023-12-30T09:47:23.000Z",
+            ["0x38391eA26F9EeE3ab81DE3C7eE9e168da5149103"]
+          ]
+        ],
         "$upgradeCount": 3,
         "BASE_DIVISOR": "1000000000000000000",
         "owner": "0xD76b82204BE75Ab9610B04CF27c4F4a34291D5E6",
@@ -329,5 +370,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

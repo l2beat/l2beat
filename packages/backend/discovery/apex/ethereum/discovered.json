@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 19825348,
   "configHash": "0x337a5ff15a122bd974e00bbfe46a4cf2b443ee344d041a199bbf3b8bf4e15bda",
-  "version": 14,
   "contracts": [
     {
       "name": "AggregationRouterV4",
@@ -160,6 +159,49 @@
           "0xdD5f42B087C1D2F73a2b443249b7D3DbE148a859",
           "0x34E7cfedF99995A47B3e3D0AB88ba67072B55035"
         ],
+        "$pastUpgrades": [
+          [
+            "2022-08-11T21:07:19.000Z",
+            [
+              "0x67bC2461000cfbe67e9b623EC8B460168BdEC5F0",
+              "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
+              "0x8f62a4a85B64dF803FDB644a1c7F595BFC6fF8dA",
+              "0xBdc6c96D298408415Ac70D334BedEbc8862B3C41",
+              "0xf1f087A5da4c5938E3ee091Edeea4f773fe203CA"
+            ]
+          ],
+          [
+            "2022-08-23T13:51:05.000Z",
+            [
+              "0x67bC2461000cfbe67e9b623EC8B460168BdEC5F0",
+              "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
+              "0x8f62a4a85B64dF803FDB644a1c7F595BFC6fF8dA",
+              "0xBdc6c96D298408415Ac70D334BedEbc8862B3C41",
+              "0xf1f087A5da4c5938E3ee091Edeea4f773fe203CA"
+            ]
+          ],
+          [
+            "2022-12-22T08:17:35.000Z",
+            [
+              "0xdD813397b79f8df581eEb0c4B8aB72304c528396",
+              "0x533a7f4bE5453513049EB94A2b115F2CcE161dce",
+              "0x564EA75a26Dc0Bb5c5033B4752f88953A25AD058",
+              "0xdD5f42B087C1D2F73a2b443249b7D3DbE148a859",
+              "0x34E7cfedF99995A47B3e3D0AB88ba67072B55035"
+            ]
+          ],
+          [
+            "2023-01-06T06:29:35.000Z",
+            [
+              "0xdD813397b79f8df581eEb0c4B8aB72304c528396",
+              "0x533a7f4bE5453513049EB94A2b115F2CcE161dce",
+              "0x564EA75a26Dc0Bb5c5033B4752f88953A25AD058",
+              "0xdD5f42B087C1D2F73a2b443249b7D3DbE148a859",
+              "0x34E7cfedF99995A47B3e3D0AB88ba67072B55035"
+            ]
+          ]
+        ],
+        "$upgradeCount": 4,
         "configurationDelay": 0,
         "DEPOSIT_CANCEL_DELAY": 172800,
         "escapeVerifier": "0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD",
@@ -286,6 +328,29 @@
           "0x5BfbE850d18b73ed98FB830e0A5E9F4970Bb93dA",
           "0x229BbdF97eBc4993efe1433c0ae4A0bE79A4fe21"
         ],
+        "$pastUpgrades": [
+          [
+            "2023-10-18T12:19:47.000Z",
+            [
+              "0x3167617e913BF59afb90e5ec1A7B32D4Ea03eae4",
+              "0x5a50e280883B1FB39Aa04Eb263BCA47630D17D8E",
+              "0x3F3A131caB7eb5b4EAE9497Bebb9E06bE80F2809",
+              "0x5BfbE850d18b73ed98FB830e0A5E9F4970Bb93dA",
+              "0x229BbdF97eBc4993efe1433c0ae4A0bE79A4fe21"
+            ]
+          ],
+          [
+            "2023-11-28T15:26:47.000Z",
+            [
+              "0x3167617e913BF59afb90e5ec1A7B32D4Ea03eae4",
+              "0x5a50e280883B1FB39Aa04Eb263BCA47630D17D8E",
+              "0x3F3A131caB7eb5b4EAE9497Bebb9E06bE80F2809",
+              "0x5BfbE850d18b73ed98FB830e0A5E9F4970Bb93dA",
+              "0x229BbdF97eBc4993efe1433c0ae4A0bE79A4fe21"
+            ]
+          ]
+        ],
+        "$upgradeCount": 2,
         "configurationDelay": 0,
         "DEPOSIT_CANCEL_DELAY": 172800,
         "escapeVerifier": "0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD",
@@ -1131,5 +1196,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

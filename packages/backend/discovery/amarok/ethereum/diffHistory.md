@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xaec4a912a3d3f29861db6f1357f53e67ba7a296f
+
+# Diff at Tue, 01 Oct 2024 10:49:35 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20640712
+- current block number: 20640712
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20640712 (main branch discovery), not current.
+
+```diff
+    contract ConnextBridge (0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+      values.$upgradeCount:
++        0
+    }
+```
+
 Generated with discovered.json: 0x8bff205d514a54237007fec22c001f4543d064c7
 
 # Diff at Fri, 30 Aug 2024 10:12:23 GMT:

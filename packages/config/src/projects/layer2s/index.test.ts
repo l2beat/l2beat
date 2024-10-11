@@ -8,17 +8,17 @@ import {
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { utils } from 'ethers'
-import { startsWith } from 'lodash'
+import { startsWith, uniq } from 'lodash'
 
 import { get$Implementations } from '@l2beat/discovery-types'
 import { chains } from '../../chains'
 import {
   NUGGETS,
-  ScalingProjectReference,
-  ScalingProjectRiskViewEntry,
-  ScalingProjectTechnologyChoice,
+  type ScalingProjectReference,
+  type ScalingProjectRiskViewEntry,
+  type ScalingProjectTechnologyChoice,
 } from '../../common'
-import { ScalingProjectTechnology } from '../../common/ScalingProjectTechnology'
+import type { ScalingProjectTechnology } from '../../common/ScalingProjectTechnology'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { checkRisk } from '../../test/helpers'
 import { tokenList } from '../../tokens'
@@ -207,6 +207,8 @@ describe('layer2s', () => {
                     return []
                   case 'sharpSubmission':
                     return []
+                  case 'sharedBridge':
+                    return []
                   default:
                     assertUnreachable(x)
                 }
@@ -345,6 +347,42 @@ describe('layer2s', () => {
               expect(
                 contractAddresses.some((a) => referencedAddresses.includes(a)),
               ).toEqual(true)
+            })
+          }
+        } catch {
+          continue
+        }
+      }
+    })
+
+    describe('technology references are valid', () => {
+      for (const layer2 of layer2s) {
+        try {
+          const discovery = new ProjectDiscovery(layer2.id.toString())
+          if (layer2.technology.isUnderReview === true) continue
+
+          for (const [key, choicesAny] of Object.entries(layer2.technology)) {
+            if (choicesAny === undefined) {
+              continue
+            }
+            it(`${layer2.id.toString()} : ${key}`, () => {
+              const choicesTyped = choicesAny as
+                | ScalingProjectTechnologyChoice
+                | ScalingProjectTechnologyChoice[]
+
+              const choices = Array.isArray(choicesTyped)
+                ? choicesTyped
+                : [choicesTyped]
+              const referencedAddresses = getReferencedAddresses(
+                choices.flatMap((c) => c.references).map((ref) => ref.href),
+              )
+
+              const allAddresses = discovery
+                .getAllContractAddresses()
+                .concat(discovery.getContractsAndEoas().map((m) => m.address))
+              for (const address of referencedAddresses) {
+                expect(allAddresses.includes(address)).toBeTruthy()
+              }
             })
           }
         } catch {
@@ -580,6 +618,27 @@ describe('layer2s', () => {
         })
       }
     })
+  })
+
+  describe('badges', () => {
+    for (const layer2 of layer2s) {
+      if (layer2.badges === undefined) {
+        continue
+      }
+      it(`${layer2.display.name} does not have duplicated badges`, () => {
+        expect(layer2.badges?.length).toEqual(uniq(layer2.badges).length)
+      })
+    }
+  })
+
+  describe('upcoming project have createdAt', () => {
+    for (const layer2 of layer2s) {
+      if (layer2.isUpcoming) {
+        it(layer2.display.name, () => {
+          expect(layer2.createdAt).not.toEqual(undefined)
+        })
+      }
+    }
   })
 })
 

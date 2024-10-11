@@ -37,7 +37,7 @@ export const sygma: Bridge = {
       ],
       apps: [
         `https://subbridge.io`,
-        'https://docs.buildwithsygma.com/environments/testnet/obtain-testnet-tokens',
+        'https://docs.buildwithsygma.com/resources/environments/testnet/#testnet-faucet',
         'https://sygma-react-widget.pages.dev/',
         'https://validator.faucet.chainsafe.dev/upload',
       ],
@@ -176,12 +176,12 @@ export const sygma: Bridge = {
   knowledgeNuggets: [
     {
       title: 'Architecture overview',
-      url: 'https://docs.buildwithsygma.com/architecture',
+      url: 'https://docs.buildwithsygma.com/protocol',
       thumbnail: NUGGETS.THUMBNAILS.L2BEAT_01,
     },
     {
       title: 'Audits',
-      url: 'https://docs.buildwithsygma.com/audits',
+      url: 'https://docs.buildwithsygma.com/resources/audits',
       thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
     },
     {

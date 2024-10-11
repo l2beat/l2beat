@@ -1,6 +1,7 @@
 import { expect } from 'earl'
 
 import { assert, ChainId } from '@l2beat/shared-pure'
+import { uniq } from 'lodash'
 import { chains } from '../../chains'
 import { NUGGETS } from '../../common'
 import { tokenList } from '../../tokens'
@@ -148,5 +149,26 @@ describe('layer3s', () => {
         })
       }
     })
+  })
+
+  describe('badges', () => {
+    for (const layer3 of layer3s) {
+      if (layer3.badges === undefined) {
+        continue
+      }
+      it(`${layer3.display.name} does not have duplicated badges`, () => {
+        expect(layer3.badges?.length).toEqual(uniq(layer3.badges).length)
+      })
+    }
+  })
+
+  describe('upcoming project have createdAt', () => {
+    for (const layer3 of layer3s) {
+      if (layer3.isUpcoming) {
+        it(layer3.display.name, () => {
+          expect(layer3.createdAt).not.toEqual(undefined)
+        })
+      }
+    }
   })
 })

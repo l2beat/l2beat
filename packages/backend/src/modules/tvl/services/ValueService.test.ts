@@ -5,6 +5,7 @@ import {
   AssetId,
   EthereumAddress,
   ProjectId,
+  TotalSupplyEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
@@ -36,24 +37,26 @@ describe(ValueService.name, () => {
     const project: ProjectId = ProjectId('project')
     const source: string = 'chain'
     const addressA = EthereumAddress.random()
-    const CONFIG_A = mockObject<AmountConfigEntry>({
+    const CONFIG_A = mockObject<TotalSupplyEntry>({
       assetId: AssetId.create('chain', addressA),
       sinceTimestamp: UnixTime.ZERO,
       address: addressA,
       chain: 'chain',
       includeInTotal: true,
+      untilTimestamp: undefined,
       decimals: DECIMALS,
       source: 'canonical',
       isAssociated: false,
       category: 'ether',
     })
     const addressB = EthereumAddress.random()
-    const CONFIG_B = mockObject<AmountConfigEntry>({
+    const CONFIG_B = mockObject<TotalSupplyEntry>({
       assetId: AssetId.create('chain', addressB),
       sinceTimestamp: new UnixTime(300),
       address: addressB,
       chain: 'chain',
       includeInTotal: false,
+      untilTimestamp: undefined,
       decimals: DECIMALS,
       source: 'external',
       isAssociated: false,

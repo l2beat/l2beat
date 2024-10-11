@@ -1,49 +1,78 @@
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '~/components/core/select'
 import { useIsClient } from '~/hooks/use-is-client'
-import { formatRange } from '~/utils/dates'
+import { useBreakpoint } from '~/hooks/use-is-mobile'
+import { cn } from '~/utils/cn'
 import { RadioGroup, RadioGroupItem } from '../../core/radio-group'
 import { Skeleton } from '../../core/skeleton'
-import { useChartLoading } from './chart-loading-context'
 
 interface Props<T extends string> {
   value: T | undefined
   setValue: (range: T) => void
-  range: [number, number] | undefined
   options: { value: T; disabled?: boolean; label: string }[]
+  projectSection?: boolean
 }
 
 export function ChartTimeRangeControls<T extends string>({
   value,
   setValue,
-  range,
   options,
+  projectSection,
 }: Props<T>) {
-  const loading = useChartLoading()
   const isClient = useIsClient()
+  const breakpoint = useBreakpoint()
+  const showSelect = projectSection
+    ? breakpoint === 'tablet' || breakpoint === 'mobile'
+    : breakpoint === 'mobile'
 
-  return (
-    <div className="flex flex-wrap-reverse justify-between gap-2">
-      {loading ? (
-        <Skeleton className="h-8 w-40" />
-      ) : (
-        <p className="flex h-8 items-center font-bold transition-opacity duration-200">
-          {range ? formatRange(...range) : null}
-        </p>
-      )}
-      {!isClient ? (
-        <Skeleton className="h-8 w-[292px]" />
-      ) : (
-        <RadioGroup value={value} onValueChange={setValue}>
+  if (!isClient) {
+    return (
+      <Skeleton
+        className={cn(
+          'h-8 w-20',
+          projectSection ? 'lg:w-[292px]' : 'md:w-[292px]',
+        )}
+      />
+    )
+  }
+
+  if (showSelect) {
+    return (
+      <Select value={value} onValueChange={setValue}>
+        <SelectTrigger>
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
           {options.map((option) => (
-            <RadioGroupItem
+            <SelectItem
               key={option.value}
               value={option.value}
               disabled={option.disabled}
             >
               {option.label}
-            </RadioGroupItem>
+            </SelectItem>
           ))}
-        </RadioGroup>
-      )}
-    </div>
+        </SelectContent>
+      </Select>
+    )
+  }
+
+  return (
+    <RadioGroup value={value} onValueChange={setValue}>
+      {options.map((option) => (
+        <RadioGroupItem
+          key={option.value}
+          value={option.value}
+          disabled={option.disabled}
+        >
+          {option.label}
+        </RadioGroupItem>
+      ))}
+    </RadioGroup>
   )
 }

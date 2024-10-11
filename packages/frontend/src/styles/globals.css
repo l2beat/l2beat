@@ -1,32 +1,75 @@
-@import './markdown.css';
-@import './article.css';
+@import "./markdown.css";
+@import "./article.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@media (min-width: 750px) {
+@layer base {
   :root {
-    --header-height: 2rem !important;
+    --primary: #131215;
+    --primary-invert: #fafafa;
+    --secondary: #5f6470;
+    --brand: #ab3bd2;
+    --background: #e6e7ec;
+    --surface-primary: #fafafa;
+    --surface-secondary: #e6e7ec;
+    --surface-tertiary: #ccd0da;
   }
+
+  .dark {
+    --primary: #fafafa;
+    --primary-invert: #131215;
+    --secondary: #868b98;
+    --brand: #db8bf7;
+    --background: #090a0b;
+    --surface-primary: #1f2025;
+    --surface-secondary: #393c43;
+    --surface-tertiary: #464a52;
+  }
+}
+
+@layer base {
+  :root {
+    --header-height: 4rem;
+  }
+
   :root:has(.header-height-glossary) {
-    --header-height: 9rem !important;
- }
-}
-:root {
-  --header-height: 4rem;
-}
-:root:has(.header-height-glossary) {
-  --header-height: 7rem;
-}
+    --header-height: 7rem;
+  }
 
-html {
-  scroll-padding-top: var(--header-height);
-}
+  @media (min-width: 750px) {
+    :root {
+      --header-height: 2rem !important;
+    }
+    :root:has(.header-height-glossary) {
+      --header-height: 9rem !important;
+    }
+  }
 
+  html {
+    scroll-padding-top: var(--header-height);
+  }
 
-body {
-  @apply bg-white dark:bg-neutral-900 text-base text-black dark:text-white md:text-lg font-sans transition-colors;
+  body {
+    @apply bg-white dark:bg-neutral-900 text-base text-primary md:text-lg font-sans transition-colors;
+  }
+
+  body:has(.sidebar) {
+    @apply bg-surface-primary md:bg-background;
+  }
+
+  /* 
+   It has to be done this way because we want to keep the old styles for select component for top nav pages.
+   It can not be achieved by using sidebar variant as the content is rendered inside a portal (outside div containing sidebar classname).
+   Temporary solution until project page is redesigned to new colors.
+  */
+  body:has(.sidebar) [data-role="select-content"] {
+    @apply bg-surface-secondary;
+  }
+  body:has(.sidebar) [data-role="select-content"] [role="option"] {
+    @apply focus:bg-surface-tertiary;
+  }
 }
 
 @layer utilities {
@@ -34,24 +77,72 @@ body {
     transition-duration: 50ms !important;
   }
 
+  .scrollbar-gutter-stable {
+    scrollbar-gutter: stable;
+  }
+
   /* Masks for overflow wrapper */
   .fade-out-to-left {
-    -webkit-mask-image: linear-gradient(to left, transparent 0, black 0px, black calc(100% - 30px), transparent 100%);
-    mask-image: linear-gradient(to left, transparent 0, black 0px, black calc(100% - 30px), transparent 100%);
+    -webkit-mask-image: linear-gradient(
+      to left,
+      transparent 0,
+      black 0px,
+      black calc(100% - 30px),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to left,
+      transparent 0,
+      black 0px,
+      black calc(100% - 30px),
+      transparent 100%
+    );
   }
 
   .fade-out-to-right {
-    -webkit-mask-image: linear-gradient(to right, transparent 0, black 0px, black calc(100% - 30px), transparent 100%);
-    mask-image: linear-gradient(to right, transparent 0, black 0px, black calc(100% - 30px), transparent 100%);
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      black 0px,
+      black calc(100% - 30px),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      black 0px,
+      black calc(100% - 30px),
+      transparent 100%
+    );
   }
   .fade-out-horizontal {
-    -webkit-mask-image: linear-gradient(90deg, transparent, black 30px calc(100% - 30px), transparent) !important;
-    mask-image: linear-gradient(90deg, transparent, black 30px calc(100% - 30px), transparent) !important;
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent,
+      black 30px calc(100% - 30px),
+      transparent
+    ) !important;
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      black 30px calc(100% - 30px),
+      transparent
+    ) !important;
   }
 
   .chart-fade-out-to-bottom {
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0, black 0px, transparent 100%);
-    mask-image: linear-gradient(to bottom, transparent 0, black 0px, transparent 100%);
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      black 0px,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      black 0px,
+      transparent 100%
+    );
   }
 
   /* For Webkit-based browsers (Chrome, Safari and Opera) */

@@ -1,9 +1,8 @@
 {
   "name": "cronoszkevm",
   "chain": "ethereum",
-  "blockNumber": 20777184,
-  "configHash": "0x20df2368413a2d48f66af6b288a963f4f0d782b613562841ced24b1e3a14caa4",
-  "version": 14,
+  "blockNumber": 20876242,
+  "configHash": "0x7a789bc124be6456459090c6b58224c6681e9c3839189815b3039ea531d50615",
   "contracts": [
     {
       "name": "CronosChainAdminMultisig",
@@ -25,15 +24,15 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 1,
+        "nonce": 2,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
     },
     {
       "name": "CronosZkEVMAdmin",
-      "address": "0x66eF951aEC26987915582340bCAA569E5Be67cDC",
-      "sinceTimestamp": 1722386879,
+      "address": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4",
+      "sinceTimestamp": 1726967543,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -45,7 +44,8 @@
             "adminRole": "ADMIN",
             "members": [
               "0xfD7a03Cdb68E6488F950108A4d24f15519b87339",
-              "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce"
+              "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce",
+              "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b"
             ]
           },
           "ORACLE": {
@@ -59,14 +59,16 @@
             "adminRole": "ADMIN",
             "members": [
               "0xfD7a03Cdb68E6488F950108A4d24f15519b87339",
-              "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce"
+              "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce",
+              "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b"
             ]
           },
           "FEE_ADMIN": {
             "adminRole": "ADMIN",
             "members": [
               "0xfD7a03Cdb68E6488F950108A4d24f15519b87339",
-              "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce"
+              "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce",
+              "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b"
             ]
           }
         },
@@ -112,6 +114,36 @@
           "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C",
           "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
         ],
+        "$pastUpgrades": [
+          [
+            "2024-07-30T16:30:35.000Z",
+            [
+              "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
+              "0xE60E94fCCb18a81D501a38959E532C0A85A1be89",
+              "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C",
+              "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
+            ]
+          ],
+          [
+            "2024-07-30T16:30:35.000Z",
+            [
+              "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
+              "0xE60E94fCCb18a81D501a38959E532C0A85A1be89",
+              "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C",
+              "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
+            ]
+          ],
+          [
+            "2024-10-02T06:36:11.000Z",
+            [
+              "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
+              "0xE60E94fCCb18a81D501a38959E532C0A85A1be89",
+              "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C",
+              "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
+            ]
+          ]
+        ],
+        "$upgradeCount": 3,
         "baseTokenGasPriceMultiplierDenominator": 1,
         "baseTokenGasPriceMultiplierNominator": 25000,
         "daMode": 1,
@@ -201,30 +233,30 @@
             "revertBatchesSharedBridge(uint256,uint256)"
           ]
         },
-        "getAdmin": "0x66eF951aEC26987915582340bCAA569E5Be67cDC",
+        "getAdmin": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4",
         "getBaseToken": "0x28Ff2E4dD1B58efEB0fC138602A28D5aE81e44e2",
         "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 2752,
+        "getFirstUnprocessedPriorityTx": 2853,
         "getL2BootloaderBytecodeHash": "0x010008e742608b21bf7eb23c1a9d0602047e3618b464c9b59c0fba3b3d7ab66e",
         "getL2DefaultAccountBytecodeHash": "0x01000563374c277a2c1e34659a2a1e87371bb6d852ce142022d497bfb50b9e32",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 16,
+        "getPriorityQueueSize": 9,
         "getPriorityTxMaxGasLimit": 72000000,
-        "getProtocolVersion": 103079215105,
+        "getProtocolVersion": 103079215106,
         "getPubdataPricingMode": 1,
-        "getSemverProtocolVersion": [0, 24, 1],
+        "getSemverProtocolVersion": [0, 24, 2],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 78,
-        "getTotalBatchesExecuted": 76,
-        "getTotalBatchesVerified": 77,
-        "getTotalBlocksCommitted": 78,
-        "getTotalBlocksExecuted": 76,
-        "getTotalBlocksVerified": 77,
-        "getTotalPriorityTxs": 2768,
+        "getTotalBatchesCommitted": 94,
+        "getTotalBatchesExecuted": 92,
+        "getTotalBatchesVerified": 93,
+        "getTotalBlocksCommitted": 94,
+        "getTotalBlocksExecuted": 92,
+        "getTotalBlocksVerified": 93,
+        "getTotalPriorityTxs": 2862,
         "getVerifier": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
@@ -233,8 +265,8 @@
         },
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": {
-          "canonicalTxHash": "0x9c574f6dd4e9d17f7c2bc54665197960e59ca6d6914813f8f8825b618d6b9fff",
-          "expirationTimestamp": 1726589471,
+          "canonicalTxHash": "0xec9e78cb47b1fc5fbce2c356ab2464844c2913f0da9bbe983498c4815b424dca",
+          "expirationTimestamp": 1727732699,
           "layer2Tip": 0
         },
         "txFilterer": [
@@ -272,7 +304,7 @@
       }
     },
     {
-      "name": "DenyListOwnerMultisig",
+      "name": "TxFiltererOwnerMultisig",
       "address": "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -293,7 +325,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 3,
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -312,11 +344,13 @@
     "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce": [
       "constructor(address _singleton)"
     ],
-    "0x66eF951aEC26987915582340bCAA569E5Be67cDC": [
+    "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4": [
       "constructor(address _adminFacet, address _admin)",
+      "event CallExecuted(tuple(address target, uint256 value, bytes data) _call, bool _success, bytes _returnData)",
       "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
       "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
       "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event UpdateUpgradeTimestamp(uint256 indexed _protocolVersion, uint256 _upgradeTimestamp)",
       "function ADMIN() view returns (bytes32)",
       "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
       "function FEE_ADMIN() view returns (bytes32)",
@@ -329,6 +363,8 @@
       "function getRoleAdmin(bytes32 role) view returns (bytes32)",
       "function grantRole(bytes32 role, address account)",
       "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function multicall(tuple(address target, uint256 value, bytes data)[] _calls, bool _requireSuccess) payable",
+      "function protocolVersionToUpgradeTimestamp(uint256 protocolVersion) view returns (uint256 upgradeTimestamp)",
       "function removeValidator(address _timelockAddress, uint256 _chainId, address _validator)",
       "function renounceRole(bytes32 role, address account)",
       "function revokeFeeAdmin(address _feeAdmin)",
@@ -341,6 +377,7 @@
       "function setPubdataPricingMode(uint8 _pricingMode)",
       "function setTokenMultiplier(uint128 _nominator, uint128 _denominator)",
       "function setTransactionFilterer(address _transactionFilterer)",
+      "function setUpgradeTimestamp(uint256 _protocolVersion, uint256 _upgradeTimestamp)",
       "function setUpgrader(address _upgrader)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function transferAdmin(address _newAdmin)",
@@ -524,5 +561,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xb6e46b170efd15afbf70eda9aacc79ef764a0f5216fa0bbdd72c2d37bd743e94"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

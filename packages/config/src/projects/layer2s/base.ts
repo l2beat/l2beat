@@ -7,21 +7,6 @@ import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('base')
 
-const upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
-
-const superchainUpgradeability = {
-  upgradableBy: ['SuperchainProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
-
-const livenessInterval = discovery.getContractValue<string>(
-  'LivenessModule',
-  'livenessInterval',
-)
-
 export const base: Layer2 = opStackL2({
   discovery,
   display: {
@@ -52,7 +37,6 @@ export const base: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  upgradeability,
   rpcUrl: 'https://developer-access-mainnet.base.org',
   finality: {
     type: 'OPStack-blob',
@@ -65,6 +49,7 @@ export const base: Layer2 = opStackL2({
   genesisTimestamp: new UnixTime(1686796655),
   stateDerivation: DERIVATION.OPSTACK('BASE'),
   isNodeAvailable: true,
+  discoveryDrivenData: true,
   milestones: [
     {
       name: 'Chain stall',
@@ -96,70 +81,6 @@ export const base: Layer2 = opStackL2({
       tokens: ['wstETH'],
       description:
         'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
-    }),
-  ],
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'AdminMultisig',
-      'This address is the owner of the ProxyAdmin. It can upgrade the bridge implementation potentially gaining access to all funds.',
-    ),
-    ...discovery.getMultisigPermission(
-      'BaseMultisig',
-      "Core multisig of the Base team, it's a member of the AdminMultisig, meaning it can upgrade the bridge implementation potentially gaining access to all funds. Note that the signature of Optimism Foundation multisig is also required.",
-    ),
-    ...discovery.getMultisigPermission(
-      'BaseMultisig2',
-      'Base Multisig being a member of a Challenger1of2 contract. It can challenge state roots without going through the fault proof process.',
-    ),
-    discovery.contractAsPermissioned(
-      discovery.getContract('SuperchainProxyAdmin'),
-      'Admin of the shared SuperchainConfig contract.',
-    ),
-    ...discovery.getMultisigPermission(
-      'SuperchainProxyAdminOwner',
-      'Owner of the SuperchainProxyAdmin.',
-    ),
-    ...discovery.getMultisigPermission(
-      'GuardianMultisig',
-      'Address allowed to pause withdrawals in case of an emergency. It is controlled by the Security Council multisig, but a deputy module allows the Foundation to act through it. The Security Council can disable the module if the Foundation acts maliciously.',
-    ),
-    ...discovery.getMultisigPermission(
-      'FoundationMultisig_1',
-      'Member of the SuperChainProxyAdminOwner.',
-    ),
-    ...discovery.getMultisigPermission(
-      'SecurityCouncilMultisig',
-      `Member of the ProxyAdminOwner. It implements a LivenessModule used to remove inactive (${livenessInterval}) members while making sure that the threshold remains above 75%. If the number of members falls below 8, the Foundation takes ownership of the Security Council.`,
-      [
-        {
-          text: 'Security Council members - Optimism Collective forum',
-          href: 'https://gov.optimism.io/t/security-council-vote-2-initial-member-ratification/7118',
-        },
-      ],
-    ),
-    ...discovery.getMultisigPermission(
-      'FoundationMultisig_2',
-      'Deputy to the GuardianMultisig. It can also challenge state roots without going through the fault proof process. Its signature is also required to upgrade the system.',
-    ),
-  ],
-  nonTemplateContracts: [
-    discovery.getContractDetails('Challenger1of2', {
-      description:
-        "This contract is the permissioned challenger of the system. It can delete non finalized roots without going through the fault proof process. It is functionally equivalent to a 1/2 multisig where neither party can remove the other's permission to execute a Challenger call. It is controlled by the GuardianMultisig and the OptimismMultisig.",
-    }),
-    discovery.getContractDetails('SuperchainConfig', {
-      description:
-        'The SuperchainConfig contract is used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.',
-      ...superchainUpgradeability,
-    }),
-    discovery.getContractDetails('DeputyGuardianModule', {
-      description:
-        'The DeputyGuardianModule is a Gnosis Safe module that allows the OP Foundation to act through the GuardianMultisig, which is owned by the Security Council. It is used to pause withdrawals in case of an emergency. In chains that have fault proofs enabled, it allows to blacklist games, disable the proof system, and update the anchor state. The Security Council can disable the module if the OP Foundation acts maliciously.',
-      ...superchainUpgradeability,
-    }),
-    discovery.getContractDetails('LivenessModule', {
-      description: `The LivenessModule is a Gnosis Safe nodule used to remove Security Council members that have been inactive for ${livenessInterval} while making sure that the threshold remains above 75%. If the number of members falls below 8, the FoundationMultisig_1 takes ownership of the multisig.`,
-      ...superchainUpgradeability,
     }),
   ],
   chainConfig: {

@@ -41,5 +41,5 @@ export const ham: Layer3 = opStackL3({
   genesisTimestamp: new UnixTime(1716590734),
   isNodeAvailable: true,
   rpcUrl: 'https://rpc.ham.fun', // chainId: 5112
-  useDiscoveryMetaOnly: true,
+  discoveryDrivenData: true,
 })

@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20059608,
   "configHash": "0x4e88d6fb0be4958e0b30fdd0f2ec80cb14364904a842304176a12cf8fb7fbbe9",
-  "version": 14,
   "contracts": [
     {
       "name": "ExchangeV3",
@@ -28,6 +27,37 @@
         "$admin": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
         "$immutable": false,
         "$implementation": "0x26d8Ba776a067C5928841985bCe342f75BAE7E82",
+        "$pastUpgrades": [
+          [
+            "2020-10-29T11:12:20.000Z",
+            ["0xa01d4d1FE18A34902Ac2e4045a5e8f553dDe9685"]
+          ],
+          [
+            "2020-12-14T06:16:14.000Z",
+            ["0x2fefbeF4d1445F523941c56349C2414cd5e9675d"]
+          ],
+          [
+            "2021-01-18T03:06:54.000Z",
+            ["0x8c63D8E608fF702a92D5908730C91457b0447Ad7"]
+          ],
+          [
+            "2021-03-25T03:26:10.000Z",
+            ["0xCFba78aecfBcc0B4B748fA58c530D4675BB5D32F"]
+          ],
+          [
+            "2021-03-29T03:54:19.000Z",
+            ["0x4fb117dcd6D09abF1a99B502d488A99F5a17e7eC"]
+          ],
+          [
+            "2021-09-01T04:24:19.000Z",
+            ["0x3c294fCF74129d649325F8995afC2f9CfaFAB9dA"]
+          ],
+          [
+            "2021-12-14T02:21:21.000Z",
+            ["0x26d8Ba776a067C5928841985bCe342f75BAE7E82"]
+          ]
+        ],
+        "$upgradeCount": 7,
         "domainSeparator": "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264",
         "getAgentRegistry": "0x39B9bf169a7e225ba037C443A40460c77438ea14",
         "getAmmFeeBips": 20,
@@ -797,5 +827,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

@@ -1,3 +1,155 @@
+Generated with discovered.json: 0xfcb8579d577b945d4c77686724964edb6c196c8e
+
+# Diff at Wed, 09 Oct 2024 13:11:00 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@37683e2b3d0587372f886eef49e921277810c8bf block: 20327427
+- current block number: 20327427
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20327427 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x9e48d6bBca781c23392Ec459BfB3657C40a794A8) {
+    +++ description: None
+      directlyReceivedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+```diff
+    contract AddressManager (0xBdF852e2cc26Ea3C2dee7b493B1Fc12dA406175a) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.via.0.description:
++        "set and change address mappings."
+      descriptions:
++        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
+    }
+```
+
+```diff
+    contract RollupOwnerMultisig (0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+Generated with discovered.json: 0x3e4777ce52cf67140c7802362e5d0262d9bd7ee4
+
+# Diff at Tue, 01 Oct 2024 11:11:55 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20327427
+- current block number: 20327427
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20327427 (main branch discovery), not current.
+
+```diff
+    contract DelayedWETH (0x0eCe16401A80551345bB672f177f51A8755FF775) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-05-24T08:53:11.000Z",["0x911465C106e5AB1EC11BEd89247Aa3DaF62Ec4Fa"]]]
+    }
+```
+
+```diff
+    contract DataAvailabilityChallenge (0x16193e14197c10109F3e81b938153A04A2a00190) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-05-24T08:45:47.000Z",["0x36b9F31874b8790d4caf341168A95FE165bA3C91"]]]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x28d56C3BBbe4807c19Cc81E6D5207Fb681C3726b) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.$pastUpgrades:
++        [["2024-05-24T08:51:11.000Z",["0x53699fbA16599c1425D2637B839bA59c121a2e6a"]]]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x2AD84AbD52050956AcC9c490D024b821A59e3FB6) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0x443164F044D8840479234e00E7aD5bb06b85fC78) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-05-24T08:52:47.000Z",["0x0a3D54e40093044296Ee9F2077f26a13337757Eb"]]]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x515A0c8b1d9574C65EA1924eCd767B1d9b6AC32f) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      values.$pastUpgrades:
++        [["2024-05-24T08:51:23.000Z",["0x78Bd7b48E74669Dd6709C111200c6B862505Fc4A"]]]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x5A0492D20D984eE904E46E6Ff24572bc755abb28) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$pastUpgrades:
++        [["2024-05-24T08:52:23.000Z",["0x48Ef83Cf812f291EDB00C2D48440Ee90cD12be1a"]]]
+    }
+```
+
+```diff
+    contract SystemConfig (0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.$pastUpgrades:
++        [["2024-05-24T08:50:35.000Z",["0x42557f7920a257C7be82C2dfafcEd7aC1CCDb43F"]]]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x702dF90E92A6841c9013faE6D724ddFA8F141d5C) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades:
++        [["2024-05-24T08:51:59.000Z",["0x5eAAeabB78C28EF184Bb0cF9B0af6D2DA232679a"]]]
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract OptimismPortal (0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.$pastUpgrades:
++        [["2024-05-24T08:53:23.000Z",["0xb6a5DCc244EfAbE3194cf5e5590a463f44eD5784"]]]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0xcbF423525a5471Fc5037a5397F99f6F09fe41379) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      values.$pastUpgrades:
++        [["2024-05-24T08:44:23.000Z",["0x17bcBF2A2CF8156cf4603f8aFAAB27Ec4e998888"]]]
+    }
+```
+
 Generated with discovered.json: 0x33e57dd75ef384978c94432854bbc169fc83a440
 
 # Diff at Sun, 08 Sep 2024 17:24:50 GMT:

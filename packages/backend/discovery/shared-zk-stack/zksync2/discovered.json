@@ -3,7 +3,6 @@
   "chain": "zksync2",
   "blockNumber": 44113900,
   "configHash": "0x21ae6606a13e918f3d6bf6dc010d84fad998cc1ceae7eca7cb2ad993ed21d286",
-  "version": 14,
   "contracts": [
     {
       "name": "ZkTokenGovernor",
@@ -185,6 +184,16 @@
       "values": {
         "$admin": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
         "$implementation": "0x01a6715d3560241E09E865a46122bf347A576c09",
+        "$pastUpgrades": [
+          [
+            "2024-05-21T18:48:46.000Z",
+            ["0x3931e73ebA79a7C898D3b0e02c7C62bA4F11cB14"]
+          ],
+          [
+            "2024-06-10T09:25:38.000Z",
+            ["0x01a6715d3560241E09E865a46122bf347A576c09"]
+          ]
+        ],
         "$upgradeCount": 2,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -748,5 +757,5 @@
   "usedTemplates": {
     "shared-zk-stack/ZkGovernor": "0xe15d64e5edc29411af258c9d294f406eed6ab8e538f5a7818a7d9c2e6784c2e2"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

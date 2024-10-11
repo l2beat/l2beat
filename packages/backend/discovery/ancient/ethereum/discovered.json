@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20775882,
   "configHash": "0x40ef5e7ec6070e99fc0753c31b29859c9086903a0d48af264137629c2d536643",
-  "version": 14,
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -19,6 +18,17 @@
       "values": {
         "$immutable": false,
         "$implementation": "0x09A25EB69b0d2858800A769Da90934371C7174A9",
+        "$pastUpgrades": [
+          [
+            "2024-01-23T16:30:47.000Z",
+            ["0x012c341506ee1939e56084F43Ae5dbCe224Ce2af"]
+          ],
+          [
+            "2024-01-23T16:30:59.000Z",
+            ["0x09A25EB69b0d2858800A769Da90934371C7174A9"]
+          ]
+        ],
+        "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
         "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620099",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
@@ -66,6 +76,12 @@
       "values": {
         "$admin": "0x75a223Fb459461B9Fa61dd25109EA05522b4b492",
         "$implementation": "0x188370729584052260214A6e0847B9810e3a120d",
+        "$pastUpgrades": [
+          [
+            "2024-01-23T16:30:59.000Z",
+            ["0x188370729584052260214A6e0847B9810e3a120d"]
+          ]
+        ],
         "$upgradeCount": 1,
         "batcherHash": "0x6079e9c37b87fE06D0bDe2431a0fa309826c9b67",
         "gasLimit": 30000000,
@@ -124,6 +140,7 @@
       "values": {
         "$admin": "0x75a223Fb459461B9Fa61dd25109EA05522b4b492",
         "$implementation": "0x2362ff553A9E66bf378E971b2AAa631A4570b53d",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x012c341506ee1939e56084F43Ae5dbCe224Ce2af",
@@ -137,6 +154,9 @@
       "name": "AddressManager",
       "address": "0x15A52Fed1c448028A240b603dD93f2697E12Dc82",
       "template": "opstack/AddressManager",
+      "descriptions": [
+        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+      ],
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -144,7 +164,8 @@
           "via": [
             {
               "address": "0x75a223Fb459461B9Fa61dd25109EA05522b4b492",
-              "delay": 0
+              "delay": 0,
+              "description": "set and change address mappings."
             }
           ]
         }
@@ -199,6 +220,7 @@
         {
           "permission": "configure",
           "target": "0x15A52Fed1c448028A240b603dD93f2697E12Dc82",
+          "description": "set and change address mappings.",
           "via": [{ "address": "0x75a223Fb459461B9Fa61dd25109EA05522b4b492" }]
         },
         {
@@ -283,6 +305,12 @@
       "values": {
         "$admin": "0x75a223Fb459461B9Fa61dd25109EA05522b4b492",
         "$implementation": "0x9FC6A608B45c6F129650c26a34bbe5d26959E75e",
+        "$pastUpgrades": [
+          [
+            "2024-01-23T16:30:59.000Z",
+            ["0x9FC6A608B45c6F129650c26a34bbe5d26959E75e"]
+          ]
+        ],
         "$upgradeCount": 1,
         "GUARDIAN": "0x1B1ecDdbd5F9601b34262Aa3Ca346209E61aA68f",
         "L2_ORACLE": "0xB09DC08428C8b4EFB4ff9C0827386CDF34277996",
@@ -305,7 +333,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x15A52Fed1c448028A240b603dD93f2697E12Dc82"
+          "target": "0x15A52Fed1c448028A240b603dD93f2697E12Dc82",
+          "description": "set and change address mappings."
         },
         {
           "permission": "upgrade",
@@ -367,6 +396,12 @@
       "values": {
         "$admin": "0x75a223Fb459461B9Fa61dd25109EA05522b4b492",
         "$implementation": "0x1F61619E8c228fb67204cD157A3e50Aa6690FbF6",
+        "$pastUpgrades": [
+          [
+            "2024-01-23T16:30:59.000Z",
+            ["0x1F61619E8c228fb67204cD157A3e50Aa6690FbF6"]
+          ]
+        ],
         "$upgradeCount": 1,
         "CHALLENGER": "0x1B1ecDdbd5F9601b34262Aa3Ca346209E61aA68f",
         "deletedOutputs": [],
@@ -408,6 +443,12 @@
       "values": {
         "$admin": "0x75a223Fb459461B9Fa61dd25109EA05522b4b492",
         "$implementation": "0x132b3456300332d488f946B818eB9512931eBCAa",
+        "$pastUpgrades": [
+          [
+            "2024-01-23T16:30:59.000Z",
+            ["0x132b3456300332d488f946B818eB9512931eBCAa"]
+          ]
+        ],
         "$upgradeCount": 1,
         "messenger": "0x012c341506ee1939e56084F43Ae5dbCe224Ce2af",
         "MESSENGER": "0x012c341506ee1939e56084F43Ae5dbCe224Ce2af",
@@ -727,7 +768,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
-    "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
+    "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
@@ -736,5 +777,5 @@
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0xb3e808e6410511e5cdb557ab187aac264a51956c695f8cc327ebaa202f7514fd"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

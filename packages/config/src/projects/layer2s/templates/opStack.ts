@@ -32,7 +32,6 @@ import {
   ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
   pickWorseRisk,
   sumRisk,
 } from '../../../common'
@@ -106,7 +105,7 @@ export interface OpStackConfigCommon {
   isUnderReview?: boolean
   stage?: StageConfig
   badges?: BadgeId[]
-  useDiscoveryMetaOnly?: boolean
+  discoveryDrivenData?: boolean
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -237,10 +236,6 @@ export function opStackCommon(
               l2OutputOracle,
             )}#code`,
           },
-          {
-            text: 'Decentralizing the sequencer - OP Stack docs',
-            href: 'https://community.optimism.io/docs/protocol/#decentralizing-the-sequencer',
-          },
         ],
       },
       forceTransactions: templateVars.nonTemplateTechnology
@@ -318,7 +313,7 @@ export function opStackCommon(
       ],
     },
     permissions:
-      templateVars.useDiscoveryMetaOnly === true
+      templateVars.discoveryDrivenData === true
         ? [
             ...templateVars.discovery.getDiscoveredRoles(),
             ...templateVars.discovery.getDiscoveredPermissions(),
@@ -336,7 +331,7 @@ export function opStackCommon(
     nativePermissions: templateVars.nonTemplateNativePermissions,
     contracts: {
       addresses:
-        templateVars.useDiscoveryMetaOnly === true
+        templateVars.discoveryDrivenData === true
           ? templateVars.discovery.getDiscoveredContracts()
           : [
               ...templateVars.discovery.getOpStackContractDetails(
@@ -356,9 +351,9 @@ export function opStackCommon(
         thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
       },
       {
-        title: 'Bedrock Explainer',
-        url: 'https://community.optimism.io/docs/developers/bedrock/explainer/',
-        thumbnail: NUGGETS.THUMBNAILS.OPTIMISM_04,
+        title: 'Superchain Explainer',
+        url: 'https://docs.optimism.io/stack/explainer',
+        thumbnail: NUGGETS.THUMBNAILS.OPTIMISM_03,
       },
       {
         title: 'Modular Rollup Theory',
@@ -370,6 +365,7 @@ export function opStackCommon(
       [Badge.Stack.OPStack, Badge.VM.EVM, daBadge],
       templateVars.badges ?? [],
     ),
+    discoveryDrivenData: templateVars.discoveryDrivenData,
   }
 }
 
@@ -432,9 +428,8 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
       ...templateVars.display,
       provider: 'OP Stack',
       category:
-        templateVars.display.category ?? daProvider !== undefined
-          ? 'Optimium'
-          : 'Optimistic Rollup',
+        templateVars.display.category ??
+        (daProvider !== undefined ? 'Optimium' : 'Optimistic Rollup'),
       warning:
         templateVars.display.warning === undefined
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
@@ -504,7 +499,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
       trackedTxs:
         daProvider !== undefined
           ? undefined
-          : templateVars.nonTemplateTrackedTxs ?? [
+          : (templateVars.nonTemplateTrackedTxs ?? [
               {
                 uses: [
                   { type: 'liveness', subtype: 'batchSubmissions' },
@@ -534,7 +529,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
                   ),
                 },
               },
-            ],
+            ]),
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
     dataAvailability:
@@ -555,7 +550,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
             bridge: { type: 'Enshrined' },
             mode: 'Transaction data (compressed)',
           }),
-    riskView: makeBridgeCompatible({
+    riskView: {
       stateValidation: {
         ...RISK_VIEW.STATE_NONE,
         secondLine: `${formatSeconds(
@@ -610,7 +605,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
       },
       destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
       validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-    }),
+    },
     stage:
       templateVars.stage === undefined
         ? daProvider !== undefined || templateVars.isNodeAvailable === undefined
@@ -642,8 +637,8 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
               {
                 rollupNodeLink:
                   templateVars.isNodeAvailable === true
-                    ? templateVars.nodeSourceLink ??
-                      'https://github.com/ethereum-optimism/optimism/tree/develop/op-node'
+                    ? (templateVars.nodeSourceLink ??
+                      'https://github.com/ethereum-optimism/optimism/tree/develop/op-node')
                     : '',
               },
             )
@@ -686,7 +681,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     upgradeDelay: 'No delay',
   }
 
-  const riskView = makeBridgeCompatible({
+  const riskView = {
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: {
       ...riskViewDA(daProvider),
@@ -736,7 +731,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-  })
+  }
 
   const getStackedRisks = () => {
     assert(
@@ -752,7 +747,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
       baseChainRiskView,
       `Could not find base chain ${templateVars.hostChain} in layer2s`,
     )
-    return makeBridgeCompatible({
+    return {
       stateValidation: pickWorseRisk(
         riskView.stateValidation,
         baseChainRiskView.stateValidation,
@@ -777,7 +772,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
       ),
       validatedBy: riskView.validatedBy,
       destinationToken: riskView.destinationToken,
-    })
+    }
   }
 
   const architectureImage = templateVars.discovery.hasContract(
@@ -795,9 +790,8 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
       ...templateVars.display,
       provider: 'OP Stack',
       category:
-        templateVars.display.category ?? daProvider !== undefined
-          ? 'Optimium'
-          : 'Optimistic Rollup',
+        templateVars.display.category ??
+        (daProvider !== undefined ? 'Optimium' : 'Optimistic Rollup'),
       warning:
         templateVars.display.warning === undefined
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'

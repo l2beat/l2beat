@@ -7,6 +7,8 @@ import {
   CirculatingSupplyEntry,
   CoingeckoId,
   CoingeckoPriceConfigEntry,
+  ElasticChainEther,
+  ElasticChainL2Token,
   EscrowEntry,
   PremintedEntry,
   PriceConfigEntry,
@@ -19,6 +21,7 @@ import { AggLayerService } from '../services/AggLayerService'
 import { AmountService } from '../services/AmountService'
 import { BlockTimestampProvider } from '../services/BlockTimestampProvider'
 import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
+import { ElasticChainService } from '../services/ElasticChainService'
 import { PriceService } from '../services/PriceService'
 import { ValueService } from '../services/ValueService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
@@ -49,6 +52,16 @@ export type AggLayerAmountConfig =
 export interface AggLayerAmountIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<AggLayerAmountConfig>, 'name'> {
   aggLayerService: AggLayerService
+  db: Database
+  syncOptimizer: SyncOptimizer
+  chain: string
+}
+
+export type ElasticChainAmountConfig = ElasticChainL2Token | ElasticChainEther
+
+export interface ElasticChainAmountIndexerDeps
+  extends Omit<ManagedMultiIndexerOptions<ElasticChainAmountConfig>, 'name'> {
+  elasticChainService: ElasticChainService
   db: Database
   syncOptimizer: SyncOptimizer
   chain: string

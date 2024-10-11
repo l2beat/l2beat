@@ -1,3 +1,139 @@
+Generated with discovered.json: 0x0703ec863413d4777006fa1131d89b673d67f4ce
+
+# Diff at Wed, 09 Oct 2024 13:09:11 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@37683e2b3d0587372f886eef49e921277810c8bf block: 20032828
+- current block number: 20032828
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20032828 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0x19b5804B88F10262A55ac731f28A3BbC4209853a) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.via.0.description:
++        "set and change address mappings."
+      descriptions:
++        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x7E54107731EC43e78DA678DFa5fB6222Ad036e03) {
+    +++ description: None
+      directlyReceivedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+```diff
+    contract ProxyAdminOwner (0xc2259E7Fb719411f97aBdCdf449f6Ba3B9D75398) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+Generated with discovered.json: 0x74cc3490a03a5c24e9added87e705464116aabf5
+
+# Diff at Tue, 01 Oct 2024 10:50:32 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20032828
+- current block number: 20032828
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20032828 (main branch discovery), not current.
+
+```diff
+    contract DataAvailabilityChallenge (0x10E34EfE14E4D270C0f77Bf1aF01b6C832161B49) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-18T08:52:59.000Z",["0x0d93eAA86eb6948b977857750A5512Bef6B05C51"]],["2024-05-14T07:21:47.000Z",["0x414066fd3dadC875531BE2992770aDab2ecB6366"]],["2024-05-14T07:51:23.000Z",["0x0d93eAA86eb6948b977857750A5512Bef6B05C51"]]]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x12a580c05466eefb2c467C6b115844cDaF55B255) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x1aeC4c3BE47C30d0BEfa7514Cf9D99EaC596959D) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      values.$pastUpgrades:
++        [["2024-04-18T08:51:47.000Z",["0x579f8dFDAF8F180050C67B5D41342d686F2b28a6"]]]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x1d59bc9fcE6B8E2B1bf86D4777289FFd83D24C99) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.$pastUpgrades:
++        [["2024-04-18T09:00:35.000Z",["0xACfD93B4887cef4F05cF3440d150D2cE97339142"]]]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x3c01ebF22e9c111528c1E027D68944eDaB08Dfc9) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades:
++        [["2024-04-18T08:59:23.000Z",["0x849d0821B1D313b65f6FF152176F4b6a0AF7aa56"]]]
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x4F4B716627D2Ba0439327Ce8B563b4443aF47Dbd) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.$pastUpgrades:
++        [["2024-04-18T08:58:35.000Z",["0x1234c7a75f40551Fce5aFf1d58efD72F2ee2AFB1"]]]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x51A00470Eb50D758EcFF3B96DB0bF4A8e86268F4) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      values.$pastUpgrades:
++        [["2024-04-18T08:58:47.000Z",["0x985F187489954435ddf9571D45500184566e4B46"]]]
+    }
+```
+
+```diff
+    contract SystemConfig (0x5D1F4bbaF6D484fA9D5D9705f92dE6063bff6055) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.$pastUpgrades:
++        [["2024-04-18T08:57:59.000Z",["0x726C6ac8A53061e56AfB2c890545348ba6f0DF0E"]]]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xa669A743b065828682eE16109273F5CFeF5e676d) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$pastUpgrades:
++        [["2024-04-18T08:59:47.000Z",["0x93E1c0D8ef27930130fb809CE18ca681A8C32F85"]]]
+    }
+```
+
 Generated with discovered.json: 0x4bb4a0cce5002d546b21d49a859ce205e742497e
 
 # Diff at Thu, 12 Sep 2024 15:35:40 GMT:

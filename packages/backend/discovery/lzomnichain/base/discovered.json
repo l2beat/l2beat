@@ -3,7 +3,6 @@
   "chain": "base",
   "blockNumber": 16700316,
   "configHash": "0x489ee895d4bd7a38439afd393b89ea7e8a7d6a413f919925b9c3a2cf0a79bfcc",
-  "version": 14,
   "contracts": [
     {
       "name": "LayerZero Multisig",
@@ -1101,6 +1100,20 @@
       "values": {
         "$admin": "0xFe7C30860D01e28371D40434806F4A8fcDD3A098",
         "$implementation": "0x6BD792911F4B3714E88FbDf32B351632e7d22c70",
+        "$pastUpgrades": [
+          [
+            "2023-07-14T02:29:09.000Z",
+            ["0x6F475642a6e85809B1c36Fa62763669b1b48DD5B"]
+          ],
+          [
+            "2023-09-20T19:39:09.000Z",
+            ["0x61Ab01Ce58D1dFf3562bb25870020d555e39D849"]
+          ],
+          [
+            "2023-09-22T14:19:09.000Z",
+            ["0x6BD792911F4B3714E88FbDf32B351632e7d22c70"]
+          ]
+        ],
         "$upgradeCount": 3
       }
     },
@@ -1450,5 +1463,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

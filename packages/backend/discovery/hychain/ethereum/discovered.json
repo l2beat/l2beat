@@ -1,9 +1,8 @@
 {
   "name": "hychain",
   "chain": "ethereum",
-  "blockNumber": 20583935,
+  "blockNumber": 20842790,
   "configHash": "0x458250d292e419f2eaa6a57927e5331270194aae69a4d7184342f91c03ba0051",
-  "version": 14,
   "contracts": [
     {
       "name": "Outbox",
@@ -20,6 +19,12 @@
       "values": {
         "$admin": "0x4C5984E3841790335E6DC2e7ed92802FbF8a300F",
         "$implementation": "0x19431dc37098877486532250FB3158140717C00C",
+        "$pastUpgrades": [
+          [
+            "2024-03-05T02:34:47.000Z",
+            ["0x19431dc37098877486532250FB3158140717C00C"]
+          ]
+        ],
         "$upgradeCount": 1,
         "bridge": "0x73C6af7029E714DFf1F1554F88b79B335011Da68",
         "l2ToL1BatchNum": 0,
@@ -119,6 +124,12 @@
       "values": {
         "$admin": "0x4C5984E3841790335E6DC2e7ed92802FbF8a300F",
         "$implementation": "0x302275067251F5FcdB9359Bda735fD8f7A4A54c0",
+        "$pastUpgrades": [
+          [
+            "2024-03-05T02:34:47.000Z",
+            ["0x302275067251F5FcdB9359Bda735fD8f7A4A54c0"]
+          ]
+        ],
         "$upgradeCount": 1,
         "bridge": "0x73C6af7029E714DFf1F1554F88b79B335011Da68",
         "rollup": "0x8f98f9ae2f2836Ed3a628c23311Ad9976B9fBF1B"
@@ -144,6 +155,12 @@
       "values": {
         "$admin": "0x4C5984E3841790335E6DC2e7ed92802FbF8a300F",
         "$implementation": "0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab",
+        "$pastUpgrades": [
+          [
+            "2024-03-05T02:34:47.000Z",
+            ["0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab"]
+          ]
+        ],
         "$upgradeCount": 1,
         "activeOutbox": "0x0000000000000000000000000000000000000000",
         "allowedDelayedInboxList": [
@@ -151,12 +168,12 @@
           "0x617f70525Dc4D2BBbd6ADFd3781DbEAe5C8F0048"
         ],
         "allowedOutboxList": ["0x0389E24A4Bc96518169f83F50FCDdA442dD8eAFd"],
-        "delayedMessageCount": 5836,
+        "delayedMessageCount": 7084,
         "nativeToken": "0xcccCb68e1A848CBDB5b60a974E07aAE143ed40C3",
         "rollup": "0x8f98f9ae2f2836Ed3a628c23311Ad9976B9fBF1B",
         "sequencerInbox": "0xaF5800ADF22301968613c37DA9C3C2a486eA915A",
-        "sequencerMessageCount": 4131,
-        "sequencerReportedSubMessageCount": 1920593
+        "sequencerMessageCount": 5024,
+        "sequencerReportedSubMessageCount": 2268362
       },
       "derivedName": "ERC20Bridge"
     },
@@ -209,6 +226,12 @@
       "values": {
         "$admin": "0x4C5984E3841790335E6DC2e7ed92802FbF8a300F",
         "$implementation": "0x6c21303F5986180B1394d2C89f3e883890E2867b",
+        "$pastUpgrades": [
+          [
+            "2024-03-05T02:34:47.000Z",
+            ["0x6c21303F5986180B1394d2C89f3e883890E2867b"]
+          ]
+        ],
         "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -263,6 +286,16 @@
           "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A",
           "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
         ],
+        "$pastUpgrades": [
+          [
+            "2024-03-05T02:34:47.000Z",
+            [
+              "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A",
+              "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
+            ]
+          ]
+        ],
+        "$upgradeCount": 1,
         "baseStake": "100000000000000000",
         "bridge": "0x73C6af7029E714DFf1F1554F88b79B335011Da68",
         "chainId": 2911,
@@ -271,12 +304,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 890,
+        "firstUnresolvedNode": 1035,
         "inbox": "0xD6c596b7ca17870DD50D322393deCE6C2085a116",
         "isERC20Enabled": false,
         "lastStakeBlock": 19366386,
-        "latestConfirmed": 889,
-        "latestNodeCreated": 915,
+        "latestConfirmed": 1034,
+        "latestNodeCreated": 1059,
         "loserStakeEscrow": "0x42875471D43d54B538B333F041E75a9a45Bf3Aa0",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0389E24A4Bc96518169f83F50FCDdA442dD8eAFd",
@@ -334,7 +367,8 @@
             "0x68e4fe5023f792d4ef584796c84d710303a5e12ea02d6e37e2b5e9c4332507c4": "ArbOS v11.1 wasmModuleRoot",
             "0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4": "ArbOS v20 wasmModuleRoot",
             "0xb0de9cb89e4d944ae6023a3b62276e54804c242fd8c4c2d8e6cc4450f5fa8b1b": "ArbOS v30 wasmModuleRoot",
-            "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot"
+            "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
+            "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot"
           }
         }
       ]
@@ -373,8 +407,14 @@
       "values": {
         "$admin": "0x4C5984E3841790335E6DC2e7ed92802FbF8a300F",
         "$implementation": "0x873484Ba63353C8b71210ce123B465512d408B27",
+        "$pastUpgrades": [
+          [
+            "2024-03-05T02:34:47.000Z",
+            ["0x873484Ba63353C8b71210ce123B465512d408B27"]
+          ]
+        ],
         "$upgradeCount": 1,
-        "batchCount": 4131,
+        "batchCount": 5024,
         "batchPosters": ["0xC1d59449a546bA80d332De629724df8e9A9e9584"],
         "bridge": "0x73C6af7029E714DFf1F1554F88b79B335011Da68",
         "dacKeyset": {
@@ -397,7 +437,7 @@
         "rollup": "0x8f98f9ae2f2836Ed3a628c23311Ad9976B9fBF1B",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 5835
+        "totalDelayedMessagesRead": 7083
       },
       "fieldMeta": {
         "maxTimeVariation": {
@@ -421,6 +461,12 @@
       "values": {
         "$admin": "0x4C5984E3841790335E6DC2e7ed92802FbF8a300F",
         "$implementation": "0x31fAAAB44e74eB408d1FC69A14806B4b9cA09da2",
+        "$pastUpgrades": [
+          [
+            "2024-03-05T02:34:47.000Z",
+            ["0x31fAAAB44e74eB408d1FC69A14806B4b9cA09da2"]
+          ]
+        ],
         "$upgradeCount": 1,
         "allowListEnabled": false,
         "bridge": "0x73C6af7029E714DFf1F1554F88b79B335011Da68",
@@ -452,6 +498,12 @@
       "values": {
         "$admin": "0x4C5984E3841790335E6DC2e7ed92802FbF8a300F",
         "$implementation": "0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754",
+        "$pastUpgrades": [
+          [
+            "2024-03-05T02:34:47.000Z",
+            ["0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754"]
+          ]
+        ],
         "$upgradeCount": 1,
         "bridge": "0x73C6af7029E714DFf1F1554F88b79B335011Da68",
         "osp": "0x09824fe72BFF474d16D9c2774432E381BBD60662",
@@ -1083,5 +1135,5 @@
     "orbitstack/RollupProxy": "0xdd22b1785ae5df34e829d0b04131559e112131325c3f223825d0fe61e675fb1a",
     "orbitstack/SequencerInbox": "0x096f13a8297d3243cf02cbc39d065c1c6f37b23602fce0c63f3ff74d7d65b1ee"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

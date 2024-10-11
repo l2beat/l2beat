@@ -1,3 +1,296 @@
+Generated with discovered.json: 0x9367ead40fa2e88d3076d9ab0981d35f34ea14ec
+
+# Diff at Thu, 10 Oct 2024 10:37:21 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@cb5ff535ffc194baf7396bd6db8232883e2ad088 block: 259311792
+- current block number: 262322423
+
+## Description
+
+A new OFT adapter contract (for the Sanko gas token DMT) is added as allowed Outbox to the main bridge. This gives the OFT adapter full the permission to make any calls as the bridge (including sending all tokens from the bridge).
+
+No 'withdrawal' activity yet through this adapter, only [one test deposit](https://app.blocksec.com/explorer/tx/arbitrum/0x2d172fd2e773bb05250421bc0dd54334118101118b09436852b4b8421f71f454?line=23).
+
+## Watched changes
+
+```diff
+    contract Bridge (0x2f285781B8d58678a3483de52D618198E4d27532) {
+    +++ description: None
+      values.allowedOutboxList.1:
++        "0xa9Aa07F082D9c15D0B6D7e9e5B68b1f898399C29"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SankoOftMultisig (0x2227E9C08ae00750e0a5eD8da09Fa321A9DD7185)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OrbitProxyOFT1_2 (0xa9Aa07F082D9c15D0B6D7e9e5B68b1f898399C29)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../sanko/arbitrum/.flat/OrbitProxyOFT1_2.sol      | 1883 ++++++++++++++++++++
+ .../.flat/SankoOftMultisig/GnosisSafeL2.sol        | 1032 +++++++++++
+ .../.flat/SankoOftMultisig/GnosisSafeProxy.p.sol   |   35 +
+ 3 files changed, 2950 insertions(+)
+```
+
+Generated with discovered.json: 0x75d47a0556cc401ed7f7dbc3eafd6a8c8334e173
+
+# Diff at Tue, 01 Oct 2024 15:47:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@974999225bba0722b5e81edd4c1b80928d80ef33 block: 257934843
+- current block number: 259311792
+
+## Description
+
+Upgrade of SequencerInbox and OSP to newer versions that are known from other orbit chains. No overall logic / config changes.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMemory (0x0aE035b3aAFFd8419d043920635Fe9CAdf179615)
+    +++ description: None
+```
+
+```diff
+    contract ChallengeManager (0x1f269F38196484ef81e58C0144AaD2c5F6394bB4) {
+    +++ description: None
+      values.$implementation:
+-        "0x935239e066F4F449D87D600e6d7c1a4F24c50f97"
++        "0x63AB51383384a09734b8B8F6646647213bdD54aC"
+      values.$pastUpgrades.1:
++        ["2024-09-30T15:15:30.000Z",["0x63AB51383384a09734b8B8F6646647213bdD54aC"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.osp:
+-        "0xD16048EC58016FAbaC4d4E4C1203e49c0d9090E4"
++        "0xc78778b1D7416FB8211e864dBA3e277DF39f2c71"
+    }
+```
+
+```diff
+    contract SequencerInbox (0x24B68936C13A414cd91437aE7AA730321B9ff159) {
+    +++ description: State batches / commitments get posted here.
+      values.$implementation:
+-        "0x1d182075d07744D71E37f77f1654165f6DAFad08"
++        "0x083c2b4D0C745224E8E484Dfd41eDC9b19f21Feb"
+      values.$pastUpgrades.1:
++        ["2024-09-30T15:15:30.000Z",["0x083c2b4D0C745224E8E484Dfd41eDC9b19f21Feb"]]
+      values.$upgradeCount:
+-        1
++        2
++++ description: Struct: delayBlocks, futureBlocks, delaySeconds, futureSeconds. onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed.
+      values.maxTimeVariation:
+-        {"delayBlocks":17280,"futureBlocks":48,"delaySeconds":86400,"futureSeconds":3600}
++        [17280,48,86400,3600]
+      values.batchPosterManager:
++        "0x0000000000000000000000000000000000000000"
+      values.BROTLI_MESSAGE_HEADER_FLAG:
++        "0x00"
+      values.DAS_MESSAGE_HEADER_FLAG:
++        "0x80"
+      values.DATA_BLOB_HEADER_FLAG:
++        "0x50"
+      values.isUsingFeeToken:
++        true
+      values.reader4844:
++        "0x0000000000000000000000000000000000000000"
+      values.TREE_DAS_MESSAGE_HEADER_FLAG:
++        "0x08"
+      values.ZERO_HEAVY_MESSAGE_HEADER_FLAG:
++        "0x20"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverHostIo (0x8D90460169D34d34a441F765A246a3C7f54C77C1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProofEntry (0xD16048EC58016FAbaC4d4E4C1203e49c0d9090E4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProver0 (0xd49141eB2c63D210b70542D6CE8453b049aab03A)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMath (0xF07A4a947E1ca7B9e46D99Dbe625C30f5b60C706)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (0x19c077b3269D988f87DBe3E0FAE2937a3aA37De4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (0x6322893cf9Eb2A7cF5A2C34bd7cC77064e8fB9BE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProofEntry (0xc78778b1D7416FB8211e864dBA3e277DF39f2c71)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMath (0xdeC2bEA51D608C1Fb2cCBC4F654eE0ffF848A73d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (0xF0981852f26053B6506582f819b54cF2DD6b8cC3)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ChallengeManager/ChallengeManager.sol          |   6 +
+ .../OneStepProverHostIo.sol                        | 107 +++-
+ .../SequencerInbox/SequencerInbox.sol              | 662 ++++++++++++++++-----
+ 3 files changed, 611 insertions(+), 164 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 257934843 (main branch discovery), not current.
+
+```diff
+    contract ChallengeManager (0x1f269F38196484ef81e58C0144AaD2c5F6394bB4) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-12T21:49:58.000Z",["0x935239e066F4F449D87D600e6d7c1a4F24c50f97"]]]
+    }
+```
+
+```diff
+    contract SequencerInbox (0x24B68936C13A414cd91437aE7AA730321B9ff159) {
+    +++ description: State batches / commitments get posted here.
+      values.$pastUpgrades:
++        [["2024-04-12T21:49:58.000Z",["0x1d182075d07744D71E37f77f1654165f6DAFad08"]]]
+    }
+```
+
+```diff
+    contract Bridge (0x2f285781B8d58678a3483de52D618198E4d27532) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-12T21:49:58.000Z",["0xC5Db571093C4600559e239497d147476F7543b15"]]]
+    }
+```
+
+```diff
+    contract ERC20RollupEventInbox (0x365ce7234CE515c2e0139f3578b6c5989da1a863) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-12T21:49:58.000Z",["0xf2bCB26dbb571EBC82CFAe6453AeF0DE90d93421"]]]
+    }
+```
+
+```diff
+    contract Outbox (0x575d32f7ff0C72921645e302cb14d2757E300786) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-12T21:49:58.000Z",["0xCa2F31F3C6553c2FD9897f7AA464406a431959A9"]]]
+    }
+```
+
+```diff
+    contract Inbox (0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-12T21:49:58.000Z",["0x2675b9DEb473ECaC13ddd71dF8A0Ef13FeF6a75D"]]]
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-12T21:49:58.000Z",["0x20C6be2A0429A82a7bF113905a29d36CF6753B10"]]]
+    }
+```
+
+```diff
+    contract L1OrbitGatewayRouter (0x847186fbeEBf41eEe9c230360D0bF8585c0Db57B) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-12T21:50:11.000Z",["0x922db00d292477AD99Ef8A0c41101a664Ee79D2b"]]]
+    }
+```
+
+```diff
+    contract RollupProxy (0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      values.$pastUpgrades:
++        [["2024-04-12T21:49:58.000Z",["0xc326D023758d7D212d529D1E58D7f271CAe49fcf","0xD92D49e8A2230E2C7a73c3ff4Df1AED09dA32a07"]]]
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract L1OrbitERC20Gateway (0xb4951c0C41CFceB0D195A95FE66280457A80a990) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-12T21:50:11.000Z",["0x652F65f950b71d7aD04AffB1725F43786ed5f6Cc"]],["2024-04-26T01:40:32.000Z",["0xF5CE2B2a046f5C5440506F76d512375fdB301BCa"]]]
+    }
+```
+
+Generated with discovered.json: 0xdefe742156380a642fd956abd8d242a3e8c303c9
+
+# Diff at Fri, 27 Sep 2024 15:35:20 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@4cb14cc1bdc343d171a7988f9f91f11edbf568a8 block: 251657470
+- current block number: 257934843
+
+## Description
+
+Config.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 251657470 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      usedTypes.0.arg.0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39:
++        "ArbOS v32 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0x74b0beb0abc992d417da24b1ff59a3d9ceb344f1
 
 # Diff at Mon, 09 Sep 2024 08:41:15 GMT:

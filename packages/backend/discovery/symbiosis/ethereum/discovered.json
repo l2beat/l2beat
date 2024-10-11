@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 19532236,
   "configHash": "0x6f289441b363ced9d2f5f1500c425c462ed7923c113afec9d7de7b772d896e22",
-  "version": 14,
   "contracts": [
     {
       "name": "ProxyAdminBridgeV2",
@@ -84,6 +83,12 @@
       "values": {
         "$admin": "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75",
         "$implementation": "0x7057aB3fB2BeE9c18e0cDe4240DE4ff7f159E365",
+        "$pastUpgrades": [
+          [
+            "2022-11-14T06:18:47.000Z",
+            ["0x7057aB3fB2BeE9c18e0cDe4240DE4ff7f159E365"]
+          ]
+        ],
         "$upgradeCount": 1,
         "currentChainId": 1,
         "mpc": "0x4Bb117e73b7e50D063C146b94bD291688D9f5658",
@@ -110,6 +115,32 @@
       "values": {
         "$admin": "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75",
         "$implementation": "0x326adbE46D7E6C1B3927e9309B96DF478bda6D16",
+        "$pastUpgrades": [
+          [
+            "2022-11-14T06:19:11.000Z",
+            ["0xda8057acB94905eb6025120cB2c38415Fd81BfEB"]
+          ],
+          [
+            "2022-12-13T13:24:47.000Z",
+            ["0x81aB74A9f9d7457fF47dfD102e78A340cF72EC39"]
+          ],
+          [
+            "2022-12-16T05:47:35.000Z",
+            ["0x1a039cE63AE35a67Bf0E9F6DbFaE969639D59eC8"]
+          ],
+          [
+            "2023-02-08T06:36:35.000Z",
+            ["0x8a7F930003BedD63A1ebD99C5917FD6aE7E3dedf"]
+          ],
+          [
+            "2023-09-19T05:08:35.000Z",
+            ["0x086488E659253FF26D0C743325C059FB57Ca7934"]
+          ],
+          [
+            "2023-12-19T10:42:59.000Z",
+            ["0x326adbE46D7E6C1B3927e9309B96DF478bda6D16"]
+          ]
+        ],
         "$upgradeCount": 6,
         "bridge": "0x5523985926Aa12BA58DC5Ad00DDca99678D7227E",
         "metaRouter": "0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F",
@@ -137,6 +168,28 @@
       "values": {
         "$admin": "0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA",
         "$implementation": "0x61608F9520C311052D88Bc7d0c2c4Cba1c964662",
+        "$pastUpgrades": [
+          [
+            "2022-02-04T09:48:01.000Z",
+            ["0xFb8aBa430cE64DC038a3078CDcB01A838d7f64b7"]
+          ],
+          [
+            "2022-02-23T07:23:54.000Z",
+            ["0x9c13159c5D5903dd07F52f46308Dbd7A6Ea68DB9"]
+          ],
+          [
+            "2022-05-11T06:52:49.000Z",
+            ["0xFC875FbdBaFeCD99FF0D2Cdf3DEF93FfcEc73949"]
+          ],
+          [
+            "2022-06-21T08:42:53.000Z",
+            ["0xa3E661b51e9F6D8577968065D5d0f286553452c6"]
+          ],
+          [
+            "2022-06-23T08:11:24.000Z",
+            ["0x61608F9520C311052D88Bc7d0c2c4Cba1c964662"]
+          ]
+        ],
         "$upgradeCount": 5
       },
       "derivedName": ""
@@ -367,5 +420,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

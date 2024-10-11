@@ -3,7 +3,6 @@
   "chain": "arbitrum",
   "blockNumber": 249925893,
   "configHash": "0x4e258a6d37db579d90ca6b8795256e842346300928c347ad3abfdd97b2620488",
-  "version": 14,
   "contracts": [
     {
       "name": "ArbitrumProxyAdmin",
@@ -38,6 +37,16 @@
       "values": {
         "$admin": "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
         "$implementation": "0x413552461b0b2c13f117d885b52AaA2f23374B1D",
+        "$pastUpgrades": [
+          [
+            "2024-03-01T08:07:57.000Z",
+            ["0xA194FB4EaB262EC9886A119609bbB2800bdD3a2E"]
+          ],
+          [
+            "2024-03-09T10:55:57.000Z",
+            ["0x413552461b0b2c13f117d885b52AaA2f23374B1D"]
+          ]
+        ],
         "$upgradeCount": 2,
         "ARB_SYS": "0x0000000000000000000000000000000000000064",
         "getRemoteGateway": "0x273D59aed2d793167c162E64b9162154B07583C0",
@@ -101,6 +110,16 @@
       "values": {
         "$admin": "0x48698A17D193bFc882395AC06a1DEdbb222F2917",
         "$implementation": "0x1202e0557A23531D09015C802e993d6423685FfB",
+        "$pastUpgrades": [
+          [
+            "2024-03-01T12:42:53.000Z",
+            ["0x5f58BcCE409CDaFBbD705e720743b1EfF9fef28c"]
+          ],
+          [
+            "2024-04-04T06:25:57.000Z",
+            ["0x1202e0557A23531D09015C802e993d6423685FfB"]
+          ]
+        ],
         "$upgradeCount": 2,
         "l2Bridge": "0x6B7551DBbaE2fb728cF851baee5c3A52DF6F60a4",
         "l2TokenBeacon": "0x7804969714BF5Ff6356E25acF2Bcb657368c8A01",
@@ -132,6 +151,20 @@
       "values": {
         "$admin": "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
         "$implementation": "0xe2cd603BFAe63EEFBDf0C51485f835D8B419A305",
+        "$pastUpgrades": [
+          [
+            "2024-03-01T08:07:08.000Z",
+            ["0x50efC7f1290479cb879473512D89fDC80B726211"]
+          ],
+          [
+            "2024-03-09T10:39:17.000Z",
+            ["0x04C6a52f3bf9F73618cD70F234AdB95a73325D1e"]
+          ],
+          [
+            "2024-04-22T02:29:43.000Z",
+            ["0xe2cd603BFAe63EEFBDf0C51485f835D8B419A305"]
+          ]
+        ],
         "$upgradeCount": 3,
         "feeParams": {
           "pubdataPricingMode": 0,
@@ -389,5 +422,5 @@
     "zklinknova/secondaryGateway": "0xb8fdb3c993db014b3b0c1cdd56f21ecb1aac5dd63185bc3f87a6c0e45e9168c6",
     "zklinknova/secondaryZkLink": "0x3038879967ecfd740f8377d1280264034b6959ad28bea99ebcedd97c6127a904"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

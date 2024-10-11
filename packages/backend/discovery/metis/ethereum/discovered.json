@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20211335,
   "configHash": "0x6550d030fed3b00ba55a8cbdceab43d131d61699b914915ddbd5fb38b8a3c710",
-  "version": 14,
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -13,6 +12,13 @@
       "values": {
         "$immutable": false,
         "$implementation": "0x8bF439ef7167023F009E24b21719Ca5f768Ecb36",
+        "$pastUpgrades": [
+          [
+            "2021-11-16T15:26:15.000Z",
+            ["0x8bF439ef7167023F009E24b21719Ca5f768Ecb36"]
+          ]
+        ],
+        "$upgradeCount": 1,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "0xDD6FFC7D9a4Fb420b637747edc6456340d12d377",
         "paused": false,
@@ -36,6 +42,16 @@
       "values": {
         "$admin": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8",
         "$implementation": "0x0D30F0d7934f53aaF6a1630A4c109AF4513a65cC",
+        "$pastUpgrades": [
+          [
+            "2024-03-13T07:27:47.000Z",
+            ["0x8db636418F10d514c4c68235ee3d640dDBCC7a8a"]
+          ],
+          [
+            "2024-06-29T01:46:35.000Z",
+            ["0x0D30F0d7934f53aaF6a1630A4c109AF4513a65cC"]
+          ]
+        ],
         "$upgradeCount": 2,
         "bridge": "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
         "l1Token": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
@@ -99,6 +115,7 @@
       "values": {
         "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "$implementation": "0xa0cfE8Af2AB5C9232714647702DbACf862EA4798",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "addressmgr": "0x918778e825747a892b17C66fe7D24C618262867d",
         "DEFAULT_CHAINID": 1088,
@@ -258,6 +275,7 @@
       "values": {
         "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "$implementation": "0xC878771A4ff7466B7be8b59FB8766719AEa8d562",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "CONFIG_OWNER_KEY": "METIS_MANAGER",
         "getStakeBaseCost": "100000000000000000",
@@ -378,6 +396,7 @@
       "values": {
         "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "$implementation": "0x6b1Cd90796Dc97C859734dDA4fF7816f703DDb48",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "batches": "0x10739F09f6e62689c0aA8A1878816de9e166d6f9",
         "DEFAULT_CHAINID": 1088,
@@ -431,6 +450,16 @@
       "values": {
         "$admin": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8",
         "$implementation": "0xD8f38c831E5032d23065Eaaee8c0620e17c04D60",
+        "$pastUpgrades": [
+          [
+            "2024-03-13T07:28:59.000Z",
+            ["0xd87Da73F82abe83915d61342199A4690cfdf4718"]
+          ],
+          [
+            "2024-06-29T01:46:35.000Z",
+            ["0xD8f38c831E5032d23065Eaaee8c0620e17c04D60"]
+          ]
+        ],
         "$upgradeCount": 2,
         "BLOCK_REWARD": "10629122270000000",
         "currentBatch": 20,
@@ -499,6 +528,7 @@
       "values": {
         "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "$implementation": "0x47b5A78E127Dfd521532Fdca89651c832Acb7e0E",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "activeChallenges": 0,
         "challenges": [],
@@ -527,6 +557,7 @@
       "values": {
         "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "$implementation": "0x7b5AFdA01ef32d95858A22E5fc0a6821A12CDAe5",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "addressmgr": "0x918778e825747a892b17C66fe7D24C618262867d",
         "CONFIG_OWNER_KEY": "METIS_MANAGER",
@@ -1166,5 +1197,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

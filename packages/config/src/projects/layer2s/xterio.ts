@@ -23,7 +23,7 @@ const daResolveWindow = formatSeconds(
 
 export const xterio: Layer2 = opStackL2({
   discovery,
-  badges: [Badge.DA.CustomDA],
+  badges: [Badge.DA.CustomDA, Badge.RaaS.AltLayer],
   display: {
     name: 'Xterio Chain',
     slug: 'xterio',

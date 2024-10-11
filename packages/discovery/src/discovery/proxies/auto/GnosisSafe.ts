@@ -64,8 +64,7 @@ export async function detectGnosisSafe(
   assert(threshold !== undefined, 'Cannot retrieve threshold')
 
   const thresholdString = `${threshold} of ${ownerCount} (${(
-    (threshold / ownerCount) *
-    100
+    (threshold / ownerCount) * 100
   ).toFixed()}%)`
 
   return {

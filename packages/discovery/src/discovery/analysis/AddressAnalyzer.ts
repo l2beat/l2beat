@@ -2,6 +2,7 @@ import {
   ContractParameters,
   ContractValue,
   FieldMeta,
+  get$PastUpgrades,
 } from '@l2beat/discovery-types'
 import { assert, EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
@@ -128,6 +129,7 @@ export class AddressAnalyzer {
       overrides?.proxyType,
     )
     const implementations = get$Implementations(proxy?.values)
+    const pastUpgrades = get$PastUpgrades(proxy?.values)
 
     const sources = await this.sourceCodeService.getSources(
       provider,
@@ -188,7 +190,7 @@ export class AddressAnalyzer {
     const relatives = getRelativesWithSuggestedTemplates(
       results.concat(proxyResults),
       overrides?.ignoreRelatives,
-      implementations,
+      implementations.concat(pastUpgrades.flatMap((e) => e[1])),
       overrides?.fields,
     )
 
@@ -312,8 +314,8 @@ export class AddressAnalyzer {
     const fieldOverrides: Record<string, DiscoveryContractField>[] = [
       overrides?.fields ?? {},
       template !== undefined
-        ? this.templateService.loadContractTemplate(template.template).fields ??
-          {}
+        ? (this.templateService.loadContractTemplate(template.template)
+            .fields ?? {})
         : {},
     ]
 

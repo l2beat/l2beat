@@ -6,6 +6,7 @@ import {
   Bytes,
   EthereumAddress,
   UnixTime,
+  notUndefined,
 } from '@l2beat/shared-pure'
 import { BigNumber, utils } from 'ethers'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
@@ -106,6 +107,13 @@ export class AggLayerService {
 
     return responses.map((response, index) => {
       const token = tokens[index]
+      if (response.data.toString() === '0x') {
+        return {
+          configId: token.id,
+          timestamp,
+          amount: 0n,
+        }
+      }
       const [value] = erc20Interface.decodeFunctionResult(
         'totalSupply',
         response.data.toString(),
@@ -137,17 +145,23 @@ export class AggLayerService {
       blockNumber,
     )
 
-    return responses.map((response, index) => {
-      const token = tokens[index]
-      const [address] = bridgeInterface.decodeFunctionResult(
-        'getTokenWrappedAddress',
-        response.data.toString(),
-      )
-      return {
-        ...token,
-        address: address as EthereumAddress,
-      }
-    })
+    return responses
+      .map((response, index) => {
+        const token = tokens[index]
+        if (response.data.toString() === '0x') {
+          return
+        }
+
+        const [address] = bridgeInterface.decodeFunctionResult(
+          'getTokenWrappedAddress',
+          response.data.toString(),
+        )
+        return {
+          ...token,
+          address,
+        }
+      })
+      .filter(notUndefined)
   }
 
   async getNativeEtherPremintedAmount(

@@ -1,3 +1,69 @@
+Generated with discovered.json: 0xfd114aea5cefc6d78beca95054cdbf1d08805327
+
+# Diff at Tue, 01 Oct 2024 11:14:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 75517853
+- current block number: 75517853
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 75517853 (main branch discovery), not current.
+
+```diff
+    contract L2GatewayRouter (0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2022-06-27T06:57:53.000Z",["0x09854610F48462a7029fF192FA0AfB7F00133F54"]],["2022-08-08T17:57:32.000Z",["0x8f377770289863DF73Fe665B74460579F82321fb"]]]
+    }
+```
+
+```diff
+    contract L2WethGateway (0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2022-06-27T07:27:43.000Z",["0x3525f734fcE1a26a6CEffFca43538290DC239771"]],["2022-08-08T17:59:07.000Z",["0x190C993Db842097df8b8d71c910f1802df0724C3"]],["2023-02-10T03:19:59.000Z",["0x190C993Db842097df8b8d71c910f1802df0724C3"]],["2023-02-10T18:07:59.000Z",["0xbe04Ab2728c924D678f9FC833E379688c6eFA317"]]]
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-03-16T12:08:03.000Z",["0x3096EAEdcb3A3B665552660F4d921E565D0073cB"]]]
+    }
+```
+
+```diff
+    contract L2ARBGateway (0xbf544970E6BD77b21C6492C281AB60d0770451F4) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2022-06-27T06:58:04.000Z",["0xb1d943d67b793D61F08b5F536AC591a057306fe5"]],["2022-08-08T17:58:06.000Z",["0x6e04b9dd87CF2cD3b7D81C50D2DF72d24BC0Cc4C"]],["2022-12-06T01:54:51.000Z",["0x554e12DBAa0fBeB8A35583a6Fd9D04BaA4ff597f"]]]
+    }
+```
+
+```diff
+    contract L2ERC20Gateway (0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2022-06-27T06:57:59.000Z",["0xEa2562667c98Bfe329995616454BeA9ea3290D1C"]],["2022-08-08T17:57:48.000Z",["0x466155FD6d8BbF1c0d5ca32818814cB28b6884d8"]]]
+    }
+```
+
+```diff
+    contract L2ArbitrumToken (0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-03-16T12:08:15.000Z",["0x099bC495EA4Fd828FEe7C636F0Ab84d0f501B96d"]]]
+    }
+```
+
 Generated with discovered.json: 0x725318d87ea1063fd83db489d27cea82908e4362
 
 # Diff at Mon, 02 Sep 2024 08:41:14 GMT:

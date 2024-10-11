@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x9e285b4f843aa0880b0cd0dd80f360cbe2927449
+
+# Diff at Tue, 01 Oct 2024 10:53:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20420398
+- current block number: 20420398
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20420398 (main branch discovery), not current.
+
+```diff
+    contract ERC20 Vault V2 (0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2021-12-30T12:33:01.000Z",["0xE01a9c36170b8Fa163C6a54D7aB3015C85e0186c"]],["2022-09-28T12:38:47.000Z",["0xfbc347975C48578F4A25ECeEB61BC16356abE8a2"]],["2022-09-28T16:39:59.000Z",["0xD331E3EB139D1433D1c988D5DC1cd6eCB971233b"]],["2023-05-15T13:06:35.000Z",["0x1cfE92176eefc0C53aF05a298F271C319b73E0aB"]],["2023-05-15T20:54:35.000Z",["0xD331E3EB139D1433D1c988D5DC1cd6eCB971233b"]],["2023-05-17T11:24:59.000Z",["0x34D085516f9D7794192aDB10C995d9c532E335aF"]]]
+    }
+```
+
+```diff
+    contract EthPntv2 (0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2022-09-26T16:13:23.000Z",["0x8474a898677C3bc97f35A86c387aE34Bf272C860"]],["2024-01-10T15:43:35.000Z",["0xd88a13c72443D069Fc0d44A4989AC8dd132Ac38b"]]]
+    }
+```
+
 Generated with discovered.json: 0x4dd3d16bcb573c541fe98468156621eb98a1c4f2
 
 # Diff at Fri, 30 Aug 2024 07:54:24 GMT:

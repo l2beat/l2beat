@@ -18,7 +18,6 @@ import {
   NUGGETS,
   RISK_VIEW,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../common'
 import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
@@ -171,10 +170,12 @@ export const optimism: Layer2 = {
       ],
       repositories: ['https://github.com/ethereum-optimism/optimism'],
       socialMedia: [
+        'https://x.com/Optimism',
         'https://optimism.mirror.xyz/',
         'https://twitter.com/OPLabsPBC',
         'https://youtube.com/playlist?list=PLX_rXoLYCf5HqTWygUfoMfzRirGz5lekH',
         'https://twitch.tv/optimismpbc',
+        'https://discord.gg/optimism',
       ],
       rollupCodes: 'https://rollup.codes/optimism',
     },
@@ -335,7 +336,7 @@ export const optimism: Layer2 = {
     bridge: { type: 'Enshrined' },
     mode: 'Transaction data (compressed)',
   }),
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_INT,
       sources: [
@@ -358,7 +359,7 @@ export const optimism: Layer2 = {
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-  }),
+  },
   technology: {
     stateCorrectness: {
       name: 'Fraud proofs ensure state correctness',
@@ -377,7 +378,7 @@ export const optimism: Layer2 = {
         },
         {
           text: 'FaultDisputeGame.sol - Etherscan source code, attack() function',
-          href: 'https://etherscan.io/address/0xf691F8A6d908B58C534B624cF16495b491E633BA#code',
+          href: 'https://etherscan.io/address/0xA6f3DFdbf4855a43c529bc42EDE96797252879af#code',
         },
       ],
     },
@@ -402,12 +403,6 @@ export const optimism: Layer2 = {
     },
     operator: {
       ...OPERATOR.CENTRALIZED_SEQUENCER,
-      references: [
-        {
-          text: 'Decentralizing the sequencer - OP Stack docs',
-          href: 'https://community.optimism.io/docs/protocol/#decentralizing-the-sequencer',
-        },
-      ],
     },
     forceTransactions: {
       ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
@@ -478,7 +473,7 @@ export const optimism: Layer2 = {
   stateDerivation: {
     ...DERIVATION.OPSTACK('OP_MAINNET'),
     genesisState:
-      'Since OP Mainnet has migrated from the OVM to Bedrock, a node must be synced using a data directory that can be found [here](https://community.optimism.io/docs/useful-tools/networks/#links). To reproduce the migration itself, see this [guide](https://blog.oplabs.co/reproduce-bedrock-migration/).',
+      'Since OP Mainnet has migrated from the OVM to Bedrock, a node must be synced using a data directory that can be found [here](https://docs.optimism.io/builders/node-operators/management/snapshots). To reproduce the migration itself, see this [guide](https://blog.oplabs.co/reproduce-bedrock-migration/).',
   },
   stateValidation: {
     description:

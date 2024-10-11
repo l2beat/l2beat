@@ -58,11 +58,11 @@ export const redstone: Layer2 = opStackL2({
       references: [
         {
           text: 'OP Plasma specification',
-          href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/experimental/plasma.md',
+          href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/experimental/alt-da.md',
         },
         {
           text: 'Universal Plasma and DA Challenges - Ethresear.ch',
-          href: 'https://ethresear.ch/t/universal-plasma-and-da-challenges/18629https://redstone.xyz/docs',
+          href: 'https://ethresear.ch/t/universal-plasma-and-da-challenges/18629',
         },
       ],
       risks: [

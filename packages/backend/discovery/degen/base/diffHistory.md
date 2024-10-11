@@ -1,3 +1,113 @@
+Generated with discovered.json: 0x9305ee48207cf473c0977937e5b32f5025047bfb
+
+# Diff at Tue, 01 Oct 2024 11:13:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20331015
+- current block number: 20331015
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20331015 (main branch discovery), not current.
+
+```diff
+    contract Inbox (0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-10T16:17:21.000Z",["0xcA00Db0289131B71A6624f62666bd54305697BB2"]]]
+    }
+```
+
+```diff
+    contract SequencerInbox (0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221) {
+    +++ description: State batches / commitments get posted here.
+      values.$pastUpgrades:
++        [["2024-03-10T16:17:21.000Z",["0x5ad3e9141D0EAd2132afFF0CD74487964cE9135A"]],["2024-07-02T00:12:17.000Z",["0x98DB769A9E15D66EA04665da0dF616596c296BA8"]]]
+    }
+```
+
+```diff
+    contract ChallengeManager (0x67812161Bbb6aCF891aA6028BC614a660961ceD8) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-10T16:17:21.000Z",["0x9Db0bB898C500DD84C7c7bd7fFFFE914569a6677"]],["2024-07-02T00:12:17.000Z",["0x377A5b786E94cAcdcB2B309451C373c8F2166A79"]]]
+    }
+```
+
+```diff
+    contract ERC20RollupEventInbox (0x766DD3A13d17C6D175975C89225bde89F052dBc4) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-10T16:17:21.000Z",["0x4326B3755539d35b0A8846bF9b33982A8eA42c93"]]]
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xaA3A7A2ec2477A61082E1C41a2c6710587917028) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-10T16:17:21.000Z",["0x3C4DF76De31816443C207E49F9fE48737C8F2746"]]]
+    }
+```
+
+```diff
+    contract RollupProxy (0xD34F3a11F10DB069173b32d84F02eDA578709143) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      values.$pastUpgrades:
++        [["2024-03-10T16:17:21.000Z",["0x3A59b13eB3F661DE35a1e203Bd12b3B4123976cf","0xB7202d306936B79Ba29907b391faA87D3BEec33A"]]]
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract Outbox (0xe63ddb12FBb6211a73F12a4367b10dA0834B82da) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-10T16:17:21.000Z",["0x20fA6358f89Ed16d48F6588a8f500887354Ff56c"]]]
+    }
+```
+
+```diff
+    contract Bridge (0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-10T16:17:21.000Z",["0xc00336Cdf86AE7AD58D8773B0114082C190D28D5"]]]
+    }
+```
+
+Generated with discovered.json: 0x044d6e7fe4fe9e38553717547bdc6f8635e51bdf
+
+# Diff at Fri, 27 Sep 2024 15:37:03 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@4cb14cc1bdc343d171a7988f9f91f11edbf568a8 block: 16561766
+- current block number: 20331015
+
+## Description
+
+Config.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 16561766 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0xD34F3a11F10DB069173b32d84F02eDA578709143) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      usedTypes.0.arg.0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39:
++        "ArbOS v32 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0x64af12a25354a086a656231a452f885e6d32d619
 
 # Diff at Sun, 01 Sep 2024 08:47:47 GMT:

@@ -3,7 +3,6 @@
   "chain": "metis",
   "blockNumber": 17386539,
   "configHash": "0x03bfc54a4e2ae6a05a108e8ab2267d96d0404d2c89eb1d6c4a3e907bc2bd00da",
-  "version": 14,
   "contracts": [
     {
       "name": "StargatePool",
@@ -522,5 +521,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

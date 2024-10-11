@@ -3,7 +3,6 @@
   "chain": "linea",
   "blockNumber": 9010064,
   "configHash": "0x6c55b858b842e046139e5aa87fd8f201e2b06d85311095d9aec21c8711b5ab0e",
-  "version": 14,
   "contracts": [
     {
       "name": "LineaOwner",
@@ -88,6 +87,63 @@
           "0x495220D99B432b0de3e1F1fe206AA0E26A051C63",
           "0x9f2E11F287733c4EF5B9A6ED923b780c28062727"
         ],
+        "$pastUpgrades": [
+          [
+            "2024-02-29T14:48:05.000Z",
+            [
+              "0x73B076425025A3Bf059001D5bE0E21384C8cf049",
+              "0xfE3EB2e5AfaA936093C0DD2dB8898F4a2643FfE0",
+              "0x6052B353022dA2C61a999bf081C349260de993Af",
+              "0x5e7077bf147Fc1Bb8f46039cc40bBd39F2dDfEa0"
+            ]
+          ],
+          [
+            "2024-03-04T03:26:13.000Z",
+            [
+              "0x73B076425025A3Bf059001D5bE0E21384C8cf049",
+              "0xfE3EB2e5AfaA936093C0DD2dB8898F4a2643FfE0",
+              "0x5e7077bf147Fc1Bb8f46039cc40bBd39F2dDfEa0",
+              "0x841f709F4219a1283300c0250cA7c582aD2B289c"
+            ]
+          ],
+          [
+            "2024-03-09T09:54:34.000Z",
+            [
+              "0x73B076425025A3Bf059001D5bE0E21384C8cf049",
+              "0xfE3EB2e5AfaA936093C0DD2dB8898F4a2643FfE0",
+              "0x5e7077bf147Fc1Bb8f46039cc40bBd39F2dDfEa0",
+              "0x841f709F4219a1283300c0250cA7c582aD2B289c"
+            ]
+          ],
+          [
+            "2024-03-09T10:02:42.000Z",
+            [
+              "0xcE8E69a2685c80Eb6bd825d0552f44BB34f35503",
+              "0xb1d0354063527E4426c4bEcbDB75fE0fb112e3CB",
+              "0x11bf5BC6327f7BECB0AE753932A181c8fB5780bA",
+              "0x1b19287CE898217D937571EABa97ec50F27d1206"
+            ]
+          ],
+          [
+            "2024-04-23T02:48:53.000Z",
+            [
+              "0x2b1f8EcEc8C5E09395D83910b5Cbf0E149E271DC",
+              "0xF3d053C29666D653Fa8629190579844BffE9FB92",
+              "0x253AbB100Dd2606e73E41A26D03269fd13de5548",
+              "0x268F47D6058c3122131e2f8Df1B634793e4B0a7c"
+            ]
+          ],
+          [
+            "2024-05-22T15:53:09.000Z",
+            [
+              "0xB76Ee80B3344D86580C990638bDE1915E58d2c6f",
+              "0xF3d053C29666D653Fa8629190579844BffE9FB92",
+              "0x495220D99B432b0de3e1F1fe206AA0E26A051C63",
+              "0x9f2E11F287733c4EF5B9A6ED923b780c28062727"
+            ]
+          ]
+        ],
+        "$upgradeCount": 6,
         "facetAddresses": [
           "0xB76Ee80B3344D86580C990638bDE1915E58d2c6f",
           "0xF3d053C29666D653Fa8629190579844BffE9FB92",
@@ -238,6 +294,16 @@
       "values": {
         "$admin": "0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec",
         "$implementation": "0xDe1d7311d3eb7bc94f7EBAEd86978d3a82d5328A",
+        "$pastUpgrades": [
+          [
+            "2024-02-29T14:48:33.000Z",
+            ["0xB8017A397E7844635c5a2750d0BEB2af97506461"]
+          ],
+          [
+            "2024-04-03T12:30:11.000Z",
+            ["0xDe1d7311d3eb7bc94f7EBAEd86978d3a82d5328A"]
+          ]
+        ],
         "$upgradeCount": 2,
         "l2Bridge": "0x01c3f51294494e350AD69B999Db6B382b3B510b9",
         "l2TokenBeacon": "0x45A4e87354154EB95c2896A43B65bf1148F34908",
@@ -261,6 +327,16 @@
       "values": {
         "$admin": "0x0Bff4B38792a95314b3463E1Bf9831BDa1995391",
         "$implementation": "0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518",
+        "$pastUpgrades": [
+          [
+            "2024-03-01T07:52:25.000Z",
+            ["0xaFc54E8277f8Bb8c195C794B0D10D6766e89DF0a"]
+          ],
+          [
+            "2024-03-09T10:50:34.000Z",
+            ["0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518"]
+          ]
+        ],
         "$upgradeCount": 2,
         "getRemoteGateway": "0x803460416C2682Ac54FccF03eF77b10A12f2809b",
         "MESSAGE_SERVICE": "0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
@@ -596,5 +672,5 @@
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "zklinknova/secondaryGateway": "0xb8fdb3c993db014b3b0c1cdd56f21ecb1aac5dd63185bc3f87a6c0e45e9168c6"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

@@ -8,7 +8,7 @@ interface WarningProps {
 
 export function CriticalWarning(props: WarningProps) {
   return (
-    <div className="flex items-center gap-1 text-sm font-semibold text-red-700">
+    <div className="flex items-center gap-1 text-sm font-medium text-red-700">
       <CriticalBadgeIcon />
       <span>{`${props.count} ${pluralize(props.count, 'critical')}`}</span>
     </div>

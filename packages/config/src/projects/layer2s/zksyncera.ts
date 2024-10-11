@@ -10,6 +10,8 @@ const discovery_ZKstackGovL2 = new ProjectDiscovery(
   'shared-zk-stack',
   'zksync2',
 )
+const shared = new ProjectDiscovery('shared-zk-stack')
+const bridge = shared.getContract('L1SharedBridge')
 
 const executionDelayOldS = discovery.getContractValue<number>(
   'ValidatorTimelockOld',
@@ -105,15 +107,32 @@ export const zksyncera: Layer2 = zkStackL2({
       type: 'etherscan',
     },
     minTimestampForTvl: new UnixTime(1676384520),
+    multicallContracts: [
+      {
+        version: '3',
+        address: EthereumAddress('0xF9cda624FBC7e059355ce98a31693d299FACd963'),
+        batchSize: 150,
+        sinceBlock: 3908235,
+      },
+    ],
     coingeckoPlatform: 'zksync',
   },
   associatedTokens: ['ZK'],
   nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
-    discovery.getEscrowDetails({
-      address: EthereumAddress('0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB'),
+    shared.getEscrowDetails({
+      address: bridge.address,
       tokens: '*',
       description:
-        'Shared bridge for depositing tokens to ZKsync Era and, in the future, other ZK stack chains.',
+        'Shared bridge for depositing tokens to ZKsync Era and other ZK stack chains.',
+      sharedEscrow: {
+        type: 'ElasticChian',
+        l2BridgeAddress: EthereumAddress(
+          '0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102',
+        ),
+        l2EtherAddress: EthereumAddress(
+          '0x000000000000000000000000000000000000800A',
+        ),
+      },
       ...zkStackUpgrades,
     }),
     discovery.getEscrowDetails({
@@ -183,6 +202,18 @@ export const zksyncera: Layer2 = zkStackL2({
       },
     },
     {
+      uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+      query: {
+        formula: 'sharedBridge',
+        chainId: 324,
+        address: EthereumAddress('0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E'),
+        selector: '0x6edd4f12',
+        functionSignature:
+          'function commitBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment) _lastCommittedBatchData, (uint64 batchNumber, uint64 timestamp, uint64 indexRepeatedStorageChanges, bytes32 newStateRoot, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 bootloaderHeapInitialContentsHash, bytes32 eventsQueueStateHash, bytes systemLogs, bytes pubdataCommitments)[] _newBatchesData)',
+        sinceTimestamp: new UnixTime(1722410363),
+      },
+    },
+    {
       uses: [
         { type: 'liveness', subtype: 'proofSubmissions' },
         { type: 'l2costs', subtype: 'proofSubmissions' },
@@ -244,6 +275,21 @@ export const zksyncera: Layer2 = zkStackL2({
     },
     {
       uses: [
+        { type: 'liveness', subtype: 'proofSubmissions' },
+        { type: 'l2costs', subtype: 'proofSubmissions' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        chainId: 324,
+        address: EthereumAddress('0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E'),
+        selector: '0xc37533bb',
+        functionSignature:
+          'function proveBatchesSharedBridge(uint256 _chainId,(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment) _prevBatch, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _committedBatches, (uint256[] recursiveAggregationInput, uint256[] serializedProof) _proof)',
+        sinceTimestamp: new UnixTime(1722410363),
+      },
+    },
+    {
+      uses: [
         { type: 'liveness', subtype: 'stateUpdates' },
         { type: 'l2costs', subtype: 'stateUpdates' },
       ],
@@ -300,6 +346,21 @@ export const zksyncera: Layer2 = zkStackL2({
           'function executeBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _newBatchesData)',
         sinceTimestamp: new UnixTime(1717683407),
         untilTimestamp: new UnixTime(1722410363),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        chainId: 324,
+        address: EthereumAddress('0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E'),
+        selector: '0x6f497ac6',
+        functionSignature:
+          'function executeBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _batchesData)',
+        sinceTimestamp: new UnixTime(1722410363),
       },
     },
   ],

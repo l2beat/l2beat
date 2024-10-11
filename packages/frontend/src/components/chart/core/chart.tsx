@@ -8,29 +8,36 @@ import { ChartLoader } from './chart-loader'
 import { ChartMilestones } from './chart-milestones'
 import { ChartNoDataState } from './chart-no-data-state'
 import { ChartRenderer } from './chart-renderer'
+import { ChartTimeline } from './chart-timeline'
 
 interface Props {
   className?: string
+  disableHovers?: boolean
+  disableMilestones?: boolean
 }
 
-export function Chart({ className }: Props) {
+export function Chart({ className, disableHovers, disableMilestones }: Props) {
   return (
     <div
-      className={cn('relative h-[160px] xs:h-[200px] sm:h-[260px]', className)}
+      className={cn(
+        'relative mb-5 h-[140px] select-none md:h-[180px] xl:h-[210px]',
+        className,
+      )}
       role="img"
       aria-label="chart"
     >
       <ChartRenderer />
       <ChartLabels />
       <ChartLoader />
-      <ChartInteractionZone />
-      <ChartHover />
-      <ChartMilestones />
+      {!disableHovers && <ChartInteractionZone />}
+      {!disableHovers && <ChartHover />}
+      {!disableMilestones && <ChartMilestones />}
       <ChartNoDataState />
       <Logo
         animated={false}
-        className="absolute bottom-2 right-2 z-30 h-[25px] w-[60px] opacity-20"
+        className="absolute left-1/2 top-1/4 z-30 h-8 w-20 -translate-x-1/2 opacity-[0.33]"
       />
+      <ChartTimeline />
     </div>
   )
 }

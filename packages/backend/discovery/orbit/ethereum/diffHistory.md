@@ -1,3 +1,61 @@
+Generated with discovered.json: 0xaba7b92fe4492b2bcd2d7c44a1c1252aa32b0fab
+
+# Diff at Tue, 01 Oct 2024 10:53:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20792032
+- current block number: 20792032
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20792032 (main branch discovery), not current.
+
+```diff
+    contract  (0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-02-23T02:38:47.000Z",["0x88022f07eB8F5c6FfECCd50152A6c7CAf69Bfc62"]],["2024-03-18T08:25:23.000Z",["0x2BeBced27D2c7ECE9C6cEa9daFD2711aDdc8a1Bc"]],["2024-06-20T02:59:11.000Z",["0xb4D37E8f6e970344c1cc99F65D8D1Afd5F7590D9"]],["2024-09-20T05:02:35.000Z",["0x59fF8Eb9B384a6e1146194D7b2e754694957c5Af"]]]
+    }
+```
+
+```diff
+    contract USDT Farm (0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract USDC Farm (0x830433dE03ABedE062660CC629e1A2c714272474) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract DAI Farm (0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract WBTC Farm (0xd910f6F23889919fAd9C8cE3171dd557cE0308Da) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+    }
+```
+
 Generated with discovered.json: 0xac54d983e1bb572e4fb773ca0797b11461ff5438
 
 # Diff at Fri, 20 Sep 2024 13:15:33 GMT:

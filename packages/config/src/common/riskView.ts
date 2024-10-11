@@ -11,15 +11,6 @@ import { ScalingProjectRiskViewEntry } from './ScalingProjectRisk'
 import { ScalingProjectRiskView } from './ScalingProjectRiskView'
 import { DATA_AVAILABILITY } from './dataAvailability'
 
-export function makeBridgeCompatible(
-  entry: Omit<ScalingProjectRiskView, 'sourceUpgradeability'>,
-): ScalingProjectRiskView {
-  return {
-    ...entry,
-    sourceUpgradeability: entry.exitWindow,
-  }
-}
-
 // State validation
 
 export const STATE_NONE: ScalingProjectRiskViewEntry = {
@@ -275,7 +266,7 @@ export const UPCOMING_RISK: ScalingProjectRiskViewEntry = {
   sentiment: 'neutral',
 }
 
-export const UPCOMING_RISK_VIEW: ScalingProjectRiskView = makeBridgeCompatible({
+export const UPCOMING_RISK_VIEW: ScalingProjectRiskView = {
   stateValidation: UPCOMING_RISK,
   dataAvailability: UPCOMING_RISK,
   exitWindow: UPCOMING_RISK,
@@ -283,7 +274,7 @@ export const UPCOMING_RISK_VIEW: ScalingProjectRiskView = makeBridgeCompatible({
   proposerFailure: UPCOMING_RISK,
   destinationToken: UPCOMING_RISK,
   validatedBy: UPCOMING_RISK,
-})
+}
 
 export const UNDER_REVIEW_RISK: ScalingProjectRiskViewEntry = {
   value: 'Under Review',
@@ -291,18 +282,15 @@ export const UNDER_REVIEW_RISK: ScalingProjectRiskViewEntry = {
   sentiment: 'UnderReview',
 }
 
-export const UNDER_REVIEW_RISK_VIEW: ScalingProjectRiskView =
-  makeBridgeCompatible({
-    stateValidation: UNDER_REVIEW_RISK,
-    dataAvailability: UNDER_REVIEW_RISK,
-    exitWindow: UNDER_REVIEW_RISK,
-    sequencerFailure: UNDER_REVIEW_RISK,
-    proposerFailure: UNDER_REVIEW_RISK,
-    destinationToken: UNDER_REVIEW_RISK,
-    validatedBy: UNDER_REVIEW_RISK,
-  })
-
-/* New risks for stages */
+export const UNDER_REVIEW_RISK_VIEW: ScalingProjectRiskView = {
+  stateValidation: UNDER_REVIEW_RISK,
+  dataAvailability: UNDER_REVIEW_RISK,
+  exitWindow: UNDER_REVIEW_RISK,
+  sequencerFailure: UNDER_REVIEW_RISK,
+  proposerFailure: UNDER_REVIEW_RISK,
+  destinationToken: UNDER_REVIEW_RISK,
+  validatedBy: UNDER_REVIEW_RISK,
+}
 
 // SEQUENCER COLUMN
 
@@ -530,17 +518,12 @@ export function EXIT_WINDOW(
 export function EXIT_WINDOW_ZKSTACK(
   upgradeDelay: number,
 ): ScalingProjectRiskViewEntry {
-  // const warning: WarningValueWithSentiment = {
-  //   value: 'The EmergencyUpgradeBoard can upgrade with no delay.',
-  //   sentiment: 'bad',
-  // }
   return {
     value: 'None',
     sentiment: 'bad',
     description: `There is no window for users to exit in case of an unwanted standard upgrade bacause the central operator can censor withdrawal transactions by implementing a TransactionFilterer with no delay. The standard upgrade delay is ${formatSeconds(
       upgradeDelay,
     )}.`,
-    // warning: warning,
   }
 }
 
@@ -593,15 +576,8 @@ export const EXIT_WINDOW_UNKNOWN: ScalingProjectRiskViewEntry = {
   definingMetric: -Infinity,
 }
 
-export const UPGRADABLE_YES: ScalingProjectRiskViewEntry = {
-  value: 'Yes',
-  description:
-    'The code that secures the system can be changed arbitrarily and without notice.',
-  sentiment: 'bad',
-  definingMetric: -Infinity,
-}
-
 export const RISK_VIEW = {
+  // stateValidation
   STATE_NONE,
   STATE_FP,
   STATE_FP_1R,
@@ -612,6 +588,8 @@ export const RISK_VIEW = {
   STATE_ZKP_L3,
   STATE_EXITS_ONLY,
   STATE_ARBITRUM_FRAUD_PROOFS,
+
+  // dataAvailability
   DATA_ON_CHAIN,
   DATA_ON_CHAIN_STATE_DIFFS,
   DATA_ON_CHAIN_L3,
@@ -621,12 +599,17 @@ export const RISK_VIEW = {
   DATA_EXTERNAL,
   DATA_EXTERNAL_L3,
   DATA_CELESTIA,
-  UPGRADABLE_YES,
+
+  // validatedBy
   VALIDATED_BY_ETHEREUM,
   VALIDATED_BY_L2,
+
+  // destinationToken
   NATIVE_AND_CANONICAL,
   CANONICAL,
   CANONICAL_USDC,
+
+  // sequencerFailure
   SEQUENCER_SELF_SEQUENCE,
   SEQUENCER_SELF_SEQUENCE_ZK,
   SEQUENCER_FORCE_VIA_L1,
@@ -634,6 +617,8 @@ export const RISK_VIEW = {
   SEQUENCER_FORCE_VIA_L1_LOOPRING,
   SEQUENCER_ENQUEUE_VIA,
   SEQUENCER_NO_MECHANISM,
+
+  // proposerFailure
   PROPOSER_CANNOT_WITHDRAW,
   PROPOSER_WHITELIST_GOVERNANCE,
   PROPOSER_USE_ESCAPE_HATCH_ZK,
@@ -643,12 +628,15 @@ export const RISK_VIEW = {
   PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
   PROPOSER_SELF_PROPOSE_ZK,
   PROPOSER_SELF_PROPOSE_ROOTS,
-  UNDER_REVIEW_RISK,
+
+  // exitWindow
   EXIT_WINDOW,
   EXIT_WINDOW_NITRO,
   EXIT_WINDOW_ZKSTACK,
   EXIT_WINDOW_NON_UPGRADABLE,
   EXIT_WINDOW_UNKNOWN,
+
+  UNDER_REVIEW_RISK,
 }
 
 export function pickWorseRisk(

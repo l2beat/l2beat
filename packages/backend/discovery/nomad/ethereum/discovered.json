@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 19531994,
   "configHash": "0xfb467e6b9ab858c1d1c3e015cef485c6f6f857e7aa631e3963d36849d272027c",
-  "version": 14,
   "contracts": [
     {
       "name": "ReplicaBeaconProxy",
@@ -21,6 +20,21 @@
       "values": {
         "$admin": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
         "$implementation": "0x7f221A1850c12b57fed1f0831dd25399a13b68c2",
+        "$pastUpgrades": [
+          [
+            "2022-01-11T10:52:17.000Z",
+            ["0x7F58bb8311DB968AB110889F2Dfa04ab7E8E831B"]
+          ],
+          [
+            "2022-06-21T18:39:29.000Z",
+            ["0xB92336759618F55bd0F8313bd843604592E27bd8"]
+          ],
+          [
+            "2022-11-30T19:54:11.000Z",
+            ["0x7f221A1850c12b57fed1f0831dd25399a13b68c2"]
+          ]
+        ],
+        "$upgradeCount": 3,
         "committedRoot": "0xbdbc1d35568f4eba93ad3dddeb36adaa97b9362ec579bfe302bc4555758c79f9",
         "homeDomainHash": "0x6d99fb87e3b04d5511e33963be35e5bf1413faef07088eb5a343ed9bae06d90c",
         "LEGACY_STATUS_NONE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -74,6 +88,21 @@
       "values": {
         "$admin": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
         "$implementation": "0xE9F0a0a787CEEA82f1c8fE7A783826eBD181e707",
+        "$pastUpgrades": [
+          [
+            "2022-01-11T10:51:01.000Z",
+            ["0x569D80f7FC17316B4C83f072b92EF37B72819DE0"]
+          ],
+          [
+            "2022-06-21T18:39:29.000Z",
+            ["0xfBea6D67DDd90E1f726C2622c6C42b016fDad5a7"]
+          ],
+          [
+            "2022-11-30T19:54:11.000Z",
+            ["0xE9F0a0a787CEEA82f1c8fE7A783826eBD181e707"]
+          ]
+        ],
+        "$upgradeCount": 3,
         "domains": [1650811245, 25393, 2019844457, 1635148152, 1702260083],
         "governor": "0x93277b8f5939975b9E6694d5Fd2837143afBf68A",
         "governorDomain": 6648936,
@@ -111,6 +140,21 @@
       "values": {
         "$admin": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
         "$implementation": "0xe0db61ac718f502B485DEc66D013afbbE0B52F84",
+        "$pastUpgrades": [
+          [
+            "2022-01-11T11:10:23.000Z",
+            ["0xD3dfD3eDe74E0DCEBC1AA685e151332857efCe2d"]
+          ],
+          [
+            "2022-06-21T18:39:29.000Z",
+            ["0x15fdA9F60310d09FEA54E3c99d1197DfF5107248"]
+          ],
+          [
+            "2022-11-30T19:54:11.000Z",
+            ["0xe0db61ac718f502B485DEc66D013afbbE0B52F84"]
+          ]
+        ],
+        "$upgradeCount": 3,
         "accountant": "0xa4B86BcbB18639D8e708d6163a0c734aFcDB770c",
         "DUST_AMOUNT": "60000000000000000",
         "OpticsBeacon_beacon": "0xB70588b1A51F847d13158ff18E9Cac861dF5Fb00",
@@ -146,6 +190,21 @@
       "values": {
         "$admin": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
         "$implementation": "0xf3bb7e2d4B26ae2C3EAC41171840c227f457EA06",
+        "$pastUpgrades": [
+          [
+            "2022-01-11T10:50:10.000Z",
+            ["0x8F184D6Aa1977fd2F9d9024317D0ea5cF5815b6f"]
+          ],
+          [
+            "2022-06-21T18:39:29.000Z",
+            ["0x1f98FDc4D8d0806eB3902d57df7a2183b333B80C"]
+          ],
+          [
+            "2022-11-30T19:54:11.000Z",
+            ["0xf3bb7e2d4B26ae2C3EAC41171840c227f457EA06"]
+          ]
+        ],
+        "$upgradeCount": 3,
         "committedRoot": "0xe18ac8f4c08b5cb8d38126206e555344f57eb4fcebf1033f6d722c2ed865d28f",
         "count": 20122,
         "homeDomainHash": "0x112314385541338d132d96253c1d3cb02a64b68804296e64e833f21583d1c512",
@@ -563,5 +622,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

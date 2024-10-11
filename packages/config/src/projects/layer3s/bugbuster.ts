@@ -6,7 +6,6 @@ import {
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
@@ -48,7 +47,7 @@ export const bugbuster: Layer3 = {
       websites: ['https://bugbuster.app/'],
       apps: [],
       explorers: [
-        'https://optimism.cartesiscan.io/applications/0x9cb6c6e904ce6bf3ca6d0002b9629acce74ea89b',
+        'https://optimism.cartesiscan.io/applications/0x3ff5c7383f614256053c3f6b86a47ba974937299',
       ],
     },
     activityDataSource: 'Blockchain RPC',
@@ -56,7 +55,7 @@ export const bugbuster: Layer3 = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x9cb6C6E904cE6BF3Ca6d0002b9629acce74Ea89b'),
+        address: EthereumAddress('0x3ff5c7383f614256053c3f6b86a47ba974937299'),
         tokens: '*',
         description: 'DApp Contract storing bounties funds.',
       }),
@@ -86,7 +85,7 @@ export const bugbuster: Layer3 = {
         },
         {
           text: 'CartesiDApp.sol#L201 - Optimism Etherscan source code, migrateToConsensus function',
-          href: 'https://optimistic.etherscan.io/address/0x9cb6C6E904cE6BF3Ca6d0002b9629acce74Ea89b#code#F1#L201',
+          href: 'https://optimistic.etherscan.io/address/0x3ff5c7383f614256053c3f6b86a47ba974937299#code#F1#L201',
         },
       ],
     },
@@ -120,7 +119,7 @@ export const bugbuster: Layer3 = {
     bridge: { type: 'Enshrined' },
     mode: 'Transaction data',
   }),
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,
       value: 'None',
@@ -141,8 +140,8 @@ export const bugbuster: Layer3 = {
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
     destinationToken: RISK_VIEW.CANONICAL,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-  }),
-  stackedRiskView: makeBridgeCompatible({
+  },
+  stackedRiskView: {
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN_L3,
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
@@ -152,7 +151,7 @@ export const bugbuster: Layer3 = {
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
     destinationToken: RISK_VIEW.CANONICAL,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-  }),
+  },
   permissions: [
     {
       name: 'BugBuster Owner',

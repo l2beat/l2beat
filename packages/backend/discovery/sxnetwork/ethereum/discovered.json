@@ -1,9 +1,8 @@
 {
   "name": "sxnetwork",
   "chain": "ethereum",
-  "blockNumber": 20589788,
+  "blockNumber": 20842812,
   "configHash": "0x76cdd7de74389c1b47b7748556d1a712fc3e3306f0c234aa9ddd7816a730d22d",
-  "version": 14,
   "contracts": [
     {
       "name": "OneStepProverHostIo",
@@ -58,6 +57,16 @@
           "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A",
           "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
         ],
+        "$pastUpgrades": [
+          [
+            "2024-07-05T09:57:59.000Z",
+            [
+              "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A",
+              "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
+            ]
+          ]
+        ],
+        "$upgradeCount": 1,
         "baseStake": "100000000000000000",
         "bridge": "0xa104C0426e95a5538e89131DbB4163d230C35f86",
         "chainId": 4162,
@@ -66,12 +75,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 99,
+        "firstUnresolvedNode": 189,
         "inbox": "0xEa83E8907C89Bc0D9517632f0ba081972E328631",
         "isERC20Enabled": false,
         "lastStakeBlock": 20269009,
-        "latestConfirmed": 98,
-        "latestNodeCreated": 124,
+        "latestConfirmed": 188,
+        "latestNodeCreated": 201,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xB360b2f57c645E847148d7C479b7468AbF6F707d",
@@ -126,7 +135,8 @@
             "0x68e4fe5023f792d4ef584796c84d710303a5e12ea02d6e37e2b5e9c4332507c4": "ArbOS v11.1 wasmModuleRoot",
             "0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4": "ArbOS v20 wasmModuleRoot",
             "0xb0de9cb89e4d944ae6023a3b62276e54804c242fd8c4c2d8e6cc4450f5fa8b1b": "ArbOS v30 wasmModuleRoot",
-            "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot"
+            "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
+            "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot"
           }
         }
       ]
@@ -152,6 +162,12 @@
       "values": {
         "$admin": "0xe8606A55d105EF857F187C32Ae0E9a168aF8F497",
         "$implementation": "0x6c21303F5986180B1394d2C89f3e883890E2867b",
+        "$pastUpgrades": [
+          [
+            "2024-07-05T09:57:59.000Z",
+            ["0x6c21303F5986180B1394d2C89f3e883890E2867b"]
+          ]
+        ],
         "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -206,6 +222,12 @@
       "values": {
         "$admin": "0xe8606A55d105EF857F187C32Ae0E9a168aF8F497",
         "$implementation": "0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43",
+        "$pastUpgrades": [
+          [
+            "2024-07-05T09:57:59.000Z",
+            ["0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43"]
+          ]
+        ],
         "$upgradeCount": 1,
         "bridge": "0xa104C0426e95a5538e89131DbB4163d230C35f86",
         "osp": "0x57EA090Ac0554d174AE0e2855B460e84A1A7C221",
@@ -259,6 +281,12 @@
       "values": {
         "$admin": "0xe8606A55d105EF857F187C32Ae0E9a168aF8F497",
         "$implementation": "0x302275067251F5FcdB9359Bda735fD8f7A4A54c0",
+        "$pastUpgrades": [
+          [
+            "2024-07-05T09:57:59.000Z",
+            ["0x302275067251F5FcdB9359Bda735fD8f7A4A54c0"]
+          ]
+        ],
         "$upgradeCount": 1,
         "bridge": "0xa104C0426e95a5538e89131DbB4163d230C35f86",
         "rollup": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F"
@@ -284,6 +312,12 @@
       "values": {
         "$admin": "0xe8606A55d105EF857F187C32Ae0E9a168aF8F497",
         "$implementation": "0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab",
+        "$pastUpgrades": [
+          [
+            "2024-07-05T09:57:59.000Z",
+            ["0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab"]
+          ]
+        ],
         "$upgradeCount": 1,
         "activeOutbox": "0x0000000000000000000000000000000000000000",
         "allowedDelayedInboxList": [
@@ -291,12 +325,12 @@
           "0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3"
         ],
         "allowedOutboxList": ["0xB360b2f57c645E847148d7C479b7468AbF6F707d"],
-        "delayedMessageCount": 70,
+        "delayedMessageCount": 104,
         "nativeToken": "0xbe9F61555F50DD6167f2772e9CF7519790d96624",
         "rollup": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
         "sequencerInbox": "0xD80a805c86C14c879420eC6acb366D04D318fC0C",
-        "sequencerMessageCount": 168,
-        "sequencerReportedSubMessageCount": 502399
+        "sequencerMessageCount": 247,
+        "sequencerReportedSubMessageCount": 1137756
       },
       "derivedName": "ERC20Bridge"
     },
@@ -315,6 +349,12 @@
       "values": {
         "$admin": "0xe8606A55d105EF857F187C32Ae0E9a168aF8F497",
         "$implementation": "0x19431dc37098877486532250FB3158140717C00C",
+        "$pastUpgrades": [
+          [
+            "2024-07-05T09:57:59.000Z",
+            ["0x19431dc37098877486532250FB3158140717C00C"]
+          ]
+        ],
         "$upgradeCount": 1,
         "bridge": "0xa104C0426e95a5538e89131DbB4163d230C35f86",
         "l2ToL1BatchNum": 0,
@@ -361,8 +401,14 @@
       "values": {
         "$admin": "0xe8606A55d105EF857F187C32Ae0E9a168aF8F497",
         "$implementation": "0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A",
+        "$pastUpgrades": [
+          [
+            "2024-07-05T09:57:59.000Z",
+            ["0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A"]
+          ]
+        ],
         "$upgradeCount": 1,
-        "batchCount": 168,
+        "batchCount": 247,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x90906eA9eb38B6afC104bB761F493b2a78c85024"],
         "bridge": "0xa104C0426e95a5538e89131DbB4163d230C35f86",
@@ -388,7 +434,7 @@
         "rollup": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 70,
+        "totalDelayedMessagesRead": 104,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -448,6 +494,12 @@
       "values": {
         "$admin": "0xe8606A55d105EF857F187C32Ae0E9a168aF8F497",
         "$implementation": "0x31fAAAB44e74eB408d1FC69A14806B4b9cA09da2",
+        "$pastUpgrades": [
+          [
+            "2024-07-05T09:57:59.000Z",
+            ["0x31fAAAB44e74eB408d1FC69A14806B4b9cA09da2"]
+          ]
+        ],
         "$upgradeCount": 1,
         "allowListEnabled": false,
         "bridge": "0xa104C0426e95a5538e89131DbB4163d230C35f86",
@@ -1072,5 +1124,5 @@
   "usedTemplates": {
     "orbitstack/RollupProxy": "0xdd22b1785ae5df34e829d0b04131559e112131325c3f223825d0fe61e675fb1a"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

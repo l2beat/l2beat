@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x3feebd6e9b9d1b6de86173f784d48831f04f959c
+
+# Diff at Tue, 01 Oct 2024 10:54:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20711342
+- current block number: 20711342
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20711342 (main branch discovery), not current.
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-08-18T06:47:11.000Z",["0x6Fd62239f3A441d1898683C5a84ce3681bB42C16"]],["2024-05-28T11:01:11.000Z",["0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"]],["2024-06-15T09:52:23.000Z",["0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"]]]
+      values.$upgradeCount:
++        3
+    }
+```
+
+```diff
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-07-20T11:05:35.000Z",["0xA964D693cd45FCBe4303524E0EFe0988cfF5ed08"]],["2024-03-13T16:21:59.000Z",["0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24"]],["2024-09-08T16:05:35.000Z",["0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC"]]]
+      values.$upgradeCount:
++        3
+    }
+```
+
 Generated with discovered.json: 0xdc3306b785cc9e7d6a26a2f16a3579d38722b9b2
 
 # Diff at Mon, 09 Sep 2024 06:43:56 GMT:

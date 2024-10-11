@@ -90,6 +90,28 @@ jobs:
       - name: Build tx-decoder
         run: yarn build:tx-decoder
 
+  build-uops-dashboard:
+    name: Build uops-dashboard
+    runs-on: ubuntu-latest
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Build tx-decoder
+        run: yarn build:uops-dashboard
+
   typecheck:
     name: Typecheck
     runs-on: ubuntu-latest

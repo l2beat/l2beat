@@ -4,7 +4,7 @@ import {
   EthereumAddress,
   ProjectId,
   UnixTime,
-  formatLargeNumberShared,
+  formatLargeNumber,
   formatSeconds,
 } from '@l2beat/shared-pure'
 
@@ -19,7 +19,6 @@ import {
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
@@ -146,7 +145,7 @@ function formatMaxTotalBalanceString(
   ) {
     return 'There is no bridge cap.'
   } else {
-    return `The current bridge cap is ${formatLargeNumberShared(
+    return `The current bridge cap is ${formatLargeNumber(
       maxTotalBalance / 10 ** decimals,
     )} ${ticker}.`
   }
@@ -420,7 +419,7 @@ export const starknet: Layer2 = {
     finality: {
       lag: 0,
       type: 'Starknet',
-      minTimestamp: new UnixTime(1710252998),
+      minTimestamp: new UnixTime(1724856347),
       stateUpdate: 'disabled',
     },
     trackedTxs: [
@@ -508,7 +507,21 @@ export const starknet: Layer2 = {
           formula: 'sharpSubmission',
           sinceTimestamp: new UnixTime(1724856227),
           programHashes: [
-            '853638403225561750106379562222782223909906501242604214771127703946595519856',
+            '853638403225561750106379562222782223909906501242604214771127703946595519856', // Starknet OS
+          ],
+        },
+        _hackCostMultiplier: 0.65,
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestamp: new UnixTime(1724856227),
+          programHashes: [
+            '1161178844461337253856226043908368523817098764221830529880464854589141231910', // Aggregator
           ],
         },
         _hackCostMultiplier: 0.65,
@@ -543,6 +556,23 @@ export const starknet: Layer2 = {
           functionSignature:
             'function updateStateKzgDA(uint256[] programOutput, bytes kzgProof)',
           sinceTimestamp: new UnixTime(1710252995),
+          untilTimestamp: new UnixTime(1724856227),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
+          ),
+          selector: '0x507ee528',
+          functionSignature:
+            'function updateStateKzgDA(uint256[] programOutput, bytes[] kzgProofs)',
+          sinceTimestamp: new UnixTime(1724856227),
         },
       },
       {
@@ -586,7 +616,7 @@ export const starknet: Layer2 = {
           functionSignature:
             'function registerContinuousMemoryPage(uint256 startAddr,uint256[] values,uint256 z,uint256 alpha,uint256 prime)',
           sinceTimestamp: new UnixTime(1710342000),
-          untilTimestamp: new UnixTime(1722161267),
+          untilTimestamp: new UnixTime(1722197315),
         },
         _hackCostMultiplier: 0.5,
       },
@@ -600,7 +630,7 @@ export const starknet: Layer2 = {
           selector: '0x5578ceae',
           functionSignature:
             'function registerContinuousMemoryPage(uint256 startAddr,uint256[] values,uint256 z,uint256 alpha,uint256 prime)',
-          sinceTimestamp: new UnixTime(1722161267),
+          sinceTimestamp: new UnixTime(1722197315),
         },
         _hackCostMultiplier: 0.5,
       },
@@ -614,7 +644,7 @@ export const starknet: Layer2 = {
           selector: '0x739ef303',
           functionSignature:
             'function registerContinuousPageBatch((uint256 startAddr, uint256[] values, uint256 z, uint256 alpha, uint256 prime)[] memoryPageEntries)',
-          sinceTimestamp: new UnixTime(1722161267),
+          sinceTimestamp: new UnixTime(1722197315),
         },
         _hackCostMultiplier: 0.5,
       },
@@ -644,6 +674,21 @@ export const starknet: Layer2 = {
           functionSignature:
             'function verifyFRI(uint256[] proof,uint256[] friQueue,uint256 evaluationPoint,uint256 friStepSize,uint256 expectedRoot)',
           sinceTimestamp: new UnixTime(1710342000),
+          untilTimestamp: new UnixTime(1722197315),
+        },
+        _hackCostMultiplier: 0.65,
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400',
+          ),
+          selector: '0xe85a6a28',
+          functionSignature:
+            'function verifyFRI(uint256[] proof,uint256[] friQueue,uint256 evaluationPoint,uint256 friStepSize,uint256 expectedRoot)',
+          sinceTimestamp: new UnixTime(1722197315),
         },
         _hackCostMultiplier: 0.65,
       },
@@ -673,7 +718,7 @@ export const starknet: Layer2 = {
           functionSignature:
             'function verifyMerkle(uint256[] merkleView,uint256[] initialMerkleQueue,uint256 height,uint256 expectedRoot)',
           sinceTimestamp: new UnixTime(1710342000),
-          untilTimestamp: new UnixTime(1722161267),
+          untilTimestamp: new UnixTime(1722197315),
         },
         _hackCostMultiplier: 0.65,
       },
@@ -687,7 +732,7 @@ export const starknet: Layer2 = {
           selector: '0x3fe317a6',
           functionSignature:
             'function verifyMerkle(uint256[] merkleView,uint256[] initialMerkleQueue,uint256 height,uint256 expectedRoot)',
-          sinceTimestamp: new UnixTime(1722161267),
+          sinceTimestamp: new UnixTime(1722197315),
         },
         _hackCostMultiplier: 0.65,
       },
@@ -698,7 +743,7 @@ export const starknet: Layer2 = {
     bridge: { type: 'Enshrined' },
     mode: 'State diffs',
   }),
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
       sources: [
@@ -743,7 +788,7 @@ export const starknet: Layer2 = {
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-  }),
+  },
   stage: getStage(
     {
       stage0: {
@@ -987,6 +1032,10 @@ At present, the StarkNet Foundation hosts voting for STRK token holders (or thei
         'Can upgrade implementation of the ETH escrow, potentially gaining access to all funds stored in the bridge. ' +
         delayDescriptionFromSeconds(escrowETHDelaySeconds),
     },
+    ...discovery.getMultisigPermission(
+      'StarkgateETHSecurityAgentMultisig',
+      'Can enable the token withdrawal limit of the Starkgate escrow for ETH.',
+    ),
     {
       name: 'StarkGate WBTC owner',
       accounts: getProxyGovernance(discovery, ESCROW_WBTC_ADDRESS),

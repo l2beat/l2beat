@@ -1,3 +1,125 @@
+Generated with discovered.json: 0x9281dc62a7c1cbfda3c467c88bf7126945197cb9
+
+# Diff at Tue, 01 Oct 2024 11:12:02 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20675743
+- current block number: 20675743
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20675743 (main branch discovery), not current.
+
+```diff
+    contract Arbitrator (0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-01T06:39:59.000Z",["0xD2b679671354087ead3C683F48da4b738f0fC675"]],["2024-03-09T10:40:35.000Z",["0xb3EE39F57d96C3F2A5ab3886572dDc4EA34B529a"]],["2024-04-20T12:21:59.000Z",["0x7a0Bb4805EcB7fD3C8DAbbE4AFa0E91cB1761E34"]]]
+    }
+```
+
+```diff
+    contract ArbitrumL1Gateway (0x273D59aed2d793167c162E64b9162154B07583C0) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-01T08:23:35.000Z",["0xa005091c98e6793b90E1340Bbd36C5d6De36fB60"]],["2024-03-09T10:43:11.000Z",["0xF69302b6fF21116F9266bFA2fbE4ee23f6292875"]]]
+    }
+```
+
+```diff
+    contract BlastL1Gateway (0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-14T12:14:35.000Z",["0x1DFF9a84A7Df94084995cAE2feac4a31fBCf4c9E"]],["2024-04-20T12:21:59.000Z",["0x01334Df58feE28db184ae9D11467F38F7437FD80"]]]
+    }
+```
+
+```diff
+    contract BaseL1Gateway (0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-22T08:24:47.000Z",["0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518"]]]
+    }
+```
+
+```diff
+    contract zkLink (0x5fD9F73286b7E8683Bab45019C94553b93e015Cf) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-01T07:39:59.000Z",["0xA89aa7e3D34516EAB7129E401215d5d1239Ce715"]],["2024-03-09T10:10:11.000Z",["0xCC8256b3eBF21e27f04E360eED012f5752c1F5DD"]],["2024-04-20T12:21:59.000Z",["0xeaC8E6c1acBabC7135Fc8357FF2D718a36177Ab7"]]]
+    }
+```
+
+```diff
+    contract MantaL1Gateway (0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-01T08:18:23.000Z",["0x161f4BAAb4052f20F5f4347eC4422556aA0477f0"]],["2024-03-09T10:47:11.000Z",["0x6d6Ce5A491cC2BE2f56AA02aa68AaE8acE927962"]]]
+    }
+```
+
+```diff
+    contract OptimismL1Gateway (0x668e8F67adB8219e1816C2E5bBEa055A78AF3026) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-22T07:31:47.000Z",["0x2e8AD1434663b209EE59eF1a6612114239F4a190"]]]
+    }
+```
+
+```diff
+    contract LineaL1Gateway (0x803460416C2682Ac54FccF03eF77b10A12f2809b) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-01T08:16:47.000Z",["0x67EBB0b6273A2e5728410Af81609226A96ACcb3e"]],["2024-03-09T10:45:11.000Z",["0xD2ED3FA35be899fe850075946Fc7320bB4c18C29"]]]
+    }
+```
+
+```diff
+    contract EthereumL1Gateway (0x83Bc7394738A7A084081aF22EEC0051908c0055c) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-01T07:42:59.000Z",["0x87743f9CccA4a6DFbFfB2856dC6839b1919a43FB"]],["2024-03-09T10:41:35.000Z",["0x240cfBdb89eBc09b678b24ba5d640A27B7D3051b"]],["2024-04-20T12:21:59.000Z",["0x65c7B3E1B877131986247B49474834b0347eF332"]]]
+    }
+```
+
+```diff
+    contract ScrollL1Gateway (0x986c905087a663db3C81ad319b94c1E9dd388e92) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-06-10T07:33:11.000Z",["0xdB97dBF9c0A20aA8B4787563B6bE04e83E7ECDFB"]]]
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0xAd16eDCF7DEB7e90096A259c81269d811544B6B6) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-01T12:15:23.000Z",["0xc271a8e9eB2b10FCDe1709D76de6681249669D2e"]],["2024-04-04T06:23:47.000Z",["0x3203E813930bD710043c1d899fE38dD359307352"]]]
+    }
+```
+
+```diff
+    contract MantleL1Gateway (0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-01T08:20:11.000Z",["0xa86ef37098C0507196A5f411AfFbf8f51FCe9637"]],["2024-03-09T10:46:11.000Z",["0xe98EDDAd1f49abc7586eE516d019D834FBDc2951"]]]
+    }
+```
+
+```diff
+    contract EraL1Gateway (0xeCD189e0f390826E137496a4e4a23ACf76c942Ab) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-01T08:22:35.000Z",["0xFF2568C81453a0741b1b97f3Fe598B07a927d79E"]],["2024-03-05T07:02:23.000Z",["0x04bF7cf48a68dfC744fc22662B90e2ecaf14D716"]],["2024-03-09T10:44:11.000Z",["0x8915B1750f337342F2b6A2eF1BF12e279e3b497E"]],["2024-04-20T12:21:59.000Z",["0x59Ad3580c9e0992D474954327f5879AF5B3e4a22"]]]
+    }
+```
+
 Generated with discovered.json: 0x724ebaf74ecc31838a2726032cc7f4dbf1157f46
 
 # Diff at Wed, 04 Sep 2024 07:32:57 GMT:

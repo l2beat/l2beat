@@ -1,3 +1,94 @@
+Generated with discovered.json: 0x3a94a8b28edaa88a724e637b67fd3f1fc11e7976
+
+# Diff at Wed, 02 Oct 2024 14:25:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d101c705b5f4fd0b3af2e251678b85e1005b31d8 block: 20871621
+- current block number: 20878389
+
+## Description
+
+Config related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20871621 (main branch discovery), not current.
+
+```diff
+    contract Blobstream (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-06-05T19:21:47.000Z",["0x41a87C543EBcbD93706CF5260AD057D9eCBA1caE"]],["2024-08-26T18:55:23.000Z",["0x47fd660D5252Bd6F9D2c71507E46aa1d6e957c23"]]]
+    }
+```
+
+Generated with discovered.json: 0xbaaadc999e15bab5458f9d03f1ac9cea3dd706c0
+
+# Diff at Tue, 01 Oct 2024 15:45:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@974999225bba0722b5e81edd4c1b80928d80ef33 block: 20733790
+- current block number: 20871621
+
+## Description
+
+New verifier.
+
+## Watched changes
+
+```diff
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: None
++++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-09-21.
+      values.oldVerifier2.1:
+-        false
++        true
++++ description: The prover contract address for SP1, and whether it is frozen (true if frozen).
+      values.verifier.0:
+-        "0x0000000000000000000000000000000000000000"
++        "0x1764C29FBd94865198588f10FC75D4f6636d158d"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0x1764C29FBd94865198588f10FC75D4f6636d158d)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0x1764C29FBd94865198588f10FC75D4f6636d158d.sol | 1428 ++++++++++++++++++++
+ 1 file changed, 1428 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20733790 (main branch discovery), not current.
+
+```diff
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: None
++++ description: The prover contract address for SP1, and whether it is frozen (true if frozen).
+      values.verifier.0:
+-        "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc"
++        "0x0000000000000000000000000000000000000000"
++++ description: The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-09-21.
+      values.oldVerifier2:
++        ["0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",false]
+      fieldMeta.verifier.description:
+-        "The verifier contract address for SP1, and whether it is frozen (true if frozen)."
++        "The prover contract address for SP1, and whether it is frozen (true if frozen)."
+      fieldMeta.oldVerifier2:
++        {"description":"The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-09-21."}
+    }
+```
+
 Generated with discovered.json: 0x3eadd19bf219e615506b7a4f6cc2e2b18262c27c
 
 # Diff at Thu, 12 Sep 2024 16:04:28 GMT:

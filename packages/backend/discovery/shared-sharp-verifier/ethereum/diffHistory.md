@@ -1,3 +1,65 @@
+Generated with discovered.json: 0x655bf55d66d80bcdb4dd88847fe4b44a090b1bdf
+
+# Diff at Tue, 01 Oct 2024 11:34:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@44a272605826a951722a52b2a862abdf86e16896 block: 20842982
+- current block number: 20842982
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20842982 (main branch discovery), not current.
+
+```diff
+    contract SHARPVerifierProxy (0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2021-10-24T13:06:25.000Z",["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]],["2022-05-02T16:49:21.000Z",["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]],["2022-08-07T10:50:09.000Z",["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]],["2023-03-06T12:34:23.000Z",["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]],["2024-02-26T09:25:23.000Z",["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]],["2024-02-26T09:25:23.000Z",["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]],["2024-07-28T10:07:47.000Z",["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]],["2024-07-28T20:08:35.000Z",["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]]]
+      values.$upgradeCount:
++        8
+    }
+```
+
+Generated with discovered.json: 0xb29a39303bfc9827c15a8514e8c3e6f06ac66853
+
+# Diff at Fri, 27 Sep 2024 15:54:28 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@4cb14cc1bdc343d171a7988f9f91f11edbf568a8 block: 20756791
+- current block number: 20842982
+
+## Description
+
+Add signer to SHARPVerifierGovernorMultisig.
+
+## Watched changes
+
+```diff
+    contract SHARPVerifierGovernorMultisig (0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4) {
+    +++ description: None
+      values.$members.3:
++        "0x955B978F3ee7818dA71fA25c676062E6BC462Fec"
+      values.$members.2:
+-        "0x955B978F3ee7818dA71fA25c676062E6BC462Fec"
++        "0xebc8416179fE90854fe8B3f774801165572cfD7F"
+      values.$members.1:
+-        "0xebc8416179fE90854fe8B3f774801165572cfD7F"
++        "0x59232aC80E6d403b6381393e52f4665ECA328558"
+      values.$members.0:
+-        "0x59232aC80E6d403b6381393e52f4665ECA328558"
++        "0x0405107a60391Eb51821be373ff978115Ee58488"
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "2 of 4 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x23ac602e5cc33add49f501507d85408bc3f89b74
 
 # Diff at Sun, 15 Sep 2024 15:05:41 GMT:

@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20432700,
   "configHash": "0x5a6adcb84f69f3427bb3009dbeca4565d6d8f3f0b71acce213a8c26f17995b0a",
-  "version": 14,
   "contracts": [
     {
       "name": "VerifierExit",
@@ -20,6 +19,7 @@
       "values": {
         "$admin": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
         "$implementation": "0x41455808B3109AD0f79672C44D75933D3529FEaE",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "getMaster": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
         "getTarget": "0x41455808B3109AD0f79672C44D75933D3529FEaE"
@@ -100,6 +100,7 @@
       "values": {
         "$admin": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
         "$implementation": "0x6659174CdB0c445B897aEd25181f293E468941a5",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "getMaster": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
         "getTarget": "0x6659174CdB0c445B897aEd25181f293E468941a5",
@@ -191,6 +192,7 @@
       "values": {
         "$admin": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
         "$implementation": "0x44DedA2C824458A5DfE1e363c679dea33f1ffA39",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "getMaster": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
         "getTarget": "0x44DedA2C824458A5DfE1e363c679dea33f1ffA39"
@@ -211,6 +213,7 @@
       "values": {
         "$admin": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
         "$implementation": "0x5f3bE7846efC473552C5619b929F7d4aa640fb54",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "getMaster": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
         "getTarget": "0x5f3bE7846efC473552C5619b929F7d4aa640fb54",
@@ -233,6 +236,7 @@
       "values": {
         "$admin": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
         "$implementation": "0xD06986022EFE62A5BC8258299e4495Bb27567BE0",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "baseURI": "",
         "contractURI": "",
@@ -790,5 +794,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

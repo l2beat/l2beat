@@ -1,3 +1,4 @@
+import { cn } from '~/utils/cn'
 import {
   Tooltip,
   TooltipContent,
@@ -10,6 +11,8 @@ import { PentagonRosetteTooltip } from './pentagon-rosette-tooltip'
 export interface PentagonRosetteCellProps {
   values: RosetteValue[]
   isUnderReview?: boolean
+  hasNoBridge?: boolean
+  className?: string
 }
 
 export function PentagonRosetteCell(props: PentagonRosetteCellProps) {
@@ -19,17 +22,25 @@ export function PentagonRosetteCell(props: PentagonRosetteCellProps) {
 
   return (
     <Tooltip>
-      <TooltipTrigger className="flex size-full items-center justify-center">
+      <TooltipTrigger
+        className={cn(
+          'flex size-full items-center justify-center',
+          props.className,
+        )}
+      >
         <PentagonRosetteIcon
           values={props.values}
           className="size-6 md:size-8"
           background={false}
+          isUnderReview={isUnderReview}
+          hasNoBridge={props.hasNoBridge}
         />
       </TooltipTrigger>
       <TooltipContent fitContent>
         <PentagonRosetteTooltip
           values={props.values}
           isUnderReview={isUnderReview}
+          hasNoBridge={props.hasNoBridge}
         />
       </TooltipContent>
     </Tooltip>

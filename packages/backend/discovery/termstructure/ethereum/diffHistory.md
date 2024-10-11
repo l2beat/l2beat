@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xbf5d5f21b57910ca4c48634d1c5cba4eba4c34d3
+
+# Diff at Tue, 01 Oct 2024 11:11:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20469346
+- current block number: 20469346
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20469346 (main branch discovery), not current.
+
+```diff
+    contract ZkTrueUp (0x09E01425780094a9754B2bd8A3298f73ce837CF9) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+      values.$upgradeCount:
++        0
+    }
+```
+
 Generated with discovered.json: 0x0fb28134a22ea657557a0b814d8439210d51cafe
 
 # Diff at Fri, 09 Aug 2024 10:12:51 GMT:

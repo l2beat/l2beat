@@ -1,3 +1,47 @@
+Generated with discovered.json: 0x68be1854901efa50732995e8e547f158d367442c
+
+# Diff at Tue, 01 Oct 2024 11:13:57 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 9010064
+- current block number: 9010064
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 9010064 (main branch discovery), not current.
+
+```diff
+    contract zkLink (0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-02-29T14:48:05.000Z",["0x73B076425025A3Bf059001D5bE0E21384C8cf049","0xfE3EB2e5AfaA936093C0DD2dB8898F4a2643FfE0","0x6052B353022dA2C61a999bf081C349260de993Af","0x5e7077bf147Fc1Bb8f46039cc40bBd39F2dDfEa0"]],["2024-03-04T03:26:13.000Z",["0x73B076425025A3Bf059001D5bE0E21384C8cf049","0xfE3EB2e5AfaA936093C0DD2dB8898F4a2643FfE0","0x5e7077bf147Fc1Bb8f46039cc40bBd39F2dDfEa0","0x841f709F4219a1283300c0250cA7c582aD2B289c"]],["2024-03-09T09:54:34.000Z",["0x73B076425025A3Bf059001D5bE0E21384C8cf049","0xfE3EB2e5AfaA936093C0DD2dB8898F4a2643FfE0","0x5e7077bf147Fc1Bb8f46039cc40bBd39F2dDfEa0","0x841f709F4219a1283300c0250cA7c582aD2B289c"]],["2024-03-09T10:02:42.000Z",["0xcE8E69a2685c80Eb6bd825d0552f44BB34f35503","0xb1d0354063527E4426c4bEcbDB75fE0fb112e3CB","0x11bf5BC6327f7BECB0AE753932A181c8fB5780bA","0x1b19287CE898217D937571EABa97ec50F27d1206"]],["2024-04-23T02:48:53.000Z",["0x2b1f8EcEc8C5E09395D83910b5Cbf0E149E271DC","0xF3d053C29666D653Fa8629190579844BffE9FB92","0x253AbB100Dd2606e73E41A26D03269fd13de5548","0x268F47D6058c3122131e2f8Df1B634793e4B0a7c"]],["2024-05-22T15:53:09.000Z",["0xB76Ee80B3344D86580C990638bDE1915E58d2c6f","0xF3d053C29666D653Fa8629190579844BffE9FB92","0x495220D99B432b0de3e1F1fe206AA0E26A051C63","0x9f2E11F287733c4EF5B9A6ED923b780c28062727"]]]
+      values.$upgradeCount:
++        6
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x62cE247f34dc316f93D3830e4Bf10959FCe630f8) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-02-29T14:48:33.000Z",["0xB8017A397E7844635c5a2750d0BEB2af97506461"]],["2024-04-03T12:30:11.000Z",["0xDe1d7311d3eb7bc94f7EBAEd86978d3a82d5328A"]]]
+    }
+```
+
+```diff
+    contract LineaL2Gateway (0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-01T07:52:25.000Z",["0xaFc54E8277f8Bb8c195C794B0D10D6766e89DF0a"]],["2024-03-09T10:50:34.000Z",["0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518"]]]
+    }
+```
+
 Generated with discovered.json: 0x2047c328c746078051cc84da5403cc8f907080a8
 
 # Diff at Fri, 30 Aug 2024 08:17:32 GMT:

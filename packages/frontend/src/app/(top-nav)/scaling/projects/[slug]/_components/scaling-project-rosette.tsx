@@ -29,7 +29,9 @@ function L3ScalingProjectRosette({
   project,
 }: { project: ScalingProjectEntry & { type: 'layer3' } }) {
   const projectRisks = toRosetteTuple(project.header.rosetteValues)
-  const hostChainRisks = toRosetteTuple(project.baseLayerRosetteValues)
+  const hostChainRisks = project.baseLayerRosetteValues
+    ? toRosetteTuple(project.baseLayerRosetteValues)
+    : undefined
   const stackedChainRisks = project.stackedRosetteValues
     ? toRosetteTuple(project.stackedRosetteValues)
     : undefined
@@ -38,15 +40,22 @@ function L3ScalingProjectRosette({
     stackedChainRisks ? 'combined' : 'individual',
   )
 
-  const WrapperWithSelector = ({ children }: { children: React.ReactNode }) => (
+  const Wrapper = ({
+    children,
+    hideSelector,
+  }: { children: React.ReactNode; hideSelector?: boolean }) => (
     <div className="mt-auto flex flex-col gap-3 max-lg:hidden">
-      <RosetteSelector
-        rosetteType={rosetteType}
-        setRosetteType={setRosetteType}
-        // Offset for labels
-        className="-ml-7 mb-3"
-        isDisabled={project.isUnderReview || project.isUpcoming}
-      />
+      {!hideSelector && (
+        <RosetteSelector
+          rosetteType={rosetteType}
+          setRosetteType={setRosetteType}
+          // Offset for labels
+          className="mb-3"
+          isDisabled={
+            project.isUnderReview || project.isUpcoming || !hostChainRisks
+          }
+        />
+      )}
       {children}
     </div>
   )
@@ -54,21 +63,30 @@ function L3ScalingProjectRosette({
   // L3 - general under review/upcoming
   if (project.isUnderReview || project.isUpcoming) {
     return (
-      <WrapperWithSelector>
+      <Wrapper>
         {/* Under review/upcoming thus no risks so we let the basic rosette fallback to question mark */}
         <BigPizzaRosette
           values={project.header.rosetteValues}
           isUnderReview={project.isUnderReview}
           isUpcoming={project.isUpcoming}
         />
-      </WrapperWithSelector>
+      </Wrapper>
+    )
+  }
+
+  // L3 - no host chain (Multiple), should not happen
+  if (!hostChainRisks || !project.hostChainName) {
+    return (
+      <Wrapper hideSelector>
+        <BigPizzaRosette values={projectRisks} />
+      </Wrapper>
     )
   }
 
   // L3 - has stacked risks
   if (stackedChainRisks) {
     return (
-      <WrapperWithSelector>
+      <Wrapper>
         {rosetteType === 'individual' ? (
           <BigIndividualRosette
             l2={{
@@ -77,19 +95,19 @@ function L3ScalingProjectRosette({
             }}
             l3={{
               name: project.name,
-              risks: stackedChainRisks,
+              risks: projectRisks,
             }}
           />
         ) : (
           <BigPizzaRosette values={stackedChainRisks} />
         )}
-      </WrapperWithSelector>
+      </Wrapper>
     )
   }
 
   // L3 - no stacked risks - so only switch and individual rosette is there
   return (
-    <WrapperWithSelector>
+    <Wrapper>
       {rosetteType === 'individual' ? (
         <BigIndividualRosette
           l2={{
@@ -105,6 +123,6 @@ function L3ScalingProjectRosette({
         // Force under review for combined - values doesn't matter
         <BigPizzaRosette values={hostChainRisks} isUnderReview />
       )}
-    </WrapperWithSelector>
+    </Wrapper>
   )
 }

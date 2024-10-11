@@ -3,7 +3,6 @@
   "chain": "arbitrum",
   "blockNumber": 256572673,
   "configHash": "0x7ce82aed984bee2ddba4926b8b4b3729e64a78877c09ef4b2fad92e173bfe2c4",
-  "version": 14,
   "contracts": [
     {
       "name": "L2ERC20Gateway",
@@ -21,6 +20,24 @@
       "values": {
         "$admin": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86",
         "$implementation": "0x1DCf7D03574fbC7C205F41f2e116eE094a652e93",
+        "$pastUpgrades": [
+          [
+            "2021-06-26T14:01:05.000Z",
+            ["0x4bF6365278F340E759e7BB4732fE8B507784eAEB"]
+          ],
+          [
+            "2021-08-26T16:19:50.000Z",
+            ["0x370ED500E9FEBC1ab05aC0A1617F8775aB80c48e"]
+          ],
+          [
+            "2021-08-30T17:47:17.000Z",
+            ["0xEdE95739749BfA021134E41F520d784c99323D6B"]
+          ],
+          [
+            "2022-08-08T17:33:55.000Z",
+            ["0x1DCf7D03574fbC7C205F41f2e116eE094a652e93"]
+          ]
+        ],
         "$upgradeCount": 4,
         "beaconProxyFactory": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
@@ -81,6 +98,12 @@
       "values": {
         "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
         "$implementation": "0x41740588b86B4e0629b83A4e28786FF94361c3A3",
+        "$pastUpgrades": [
+          [
+            "2023-03-16T12:08:28.000Z",
+            ["0x41740588b86B4e0629b83A4e28786FF94361c3A3"]
+          ]
+        ],
         "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -207,6 +230,20 @@
       "values": {
         "$admin": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86",
         "$implementation": "0xe80eb0238029333e368e0bDDB7acDf1b9cb28278",
+        "$pastUpgrades": [
+          [
+            "2021-08-26T16:19:50.000Z",
+            ["0xb30751052797AdBDdbF4847045E51E65e48BAF9c"]
+          ],
+          [
+            "2021-08-30T17:47:17.000Z",
+            ["0x176a9d89d235512Ad5CB4b6A0879D704D8315eF8"]
+          ],
+          [
+            "2022-08-08T17:33:55.000Z",
+            ["0xe80eb0238029333e368e0bDDB7acDf1b9cb28278"]
+          ]
+        ],
         "$upgradeCount": 3,
         "counterpartGateway": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
         "defaultGateway": "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
@@ -229,6 +266,28 @@
       "values": {
         "$admin": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86",
         "$implementation": "0x806421D09cDb253aa9d128a658e60c0B95eFFA01",
+        "$pastUpgrades": [
+          [
+            "2021-06-28T22:19:37.000Z",
+            ["0xb01dB0529B80B73a86ecD75Ae3559844319575E5"]
+          ],
+          [
+            "2021-08-26T16:19:50.000Z",
+            ["0xc4940069140142236D4065b866018f7b2BeC77fD"]
+          ],
+          [
+            "2021-08-30T17:48:09.000Z",
+            ["0x0db4f16c99B0aE9b00fc09bF69b36c7d73c45CBE"]
+          ],
+          [
+            "2022-08-08T17:33:55.000Z",
+            ["0xB642058A41D414D9De3F36D14051623e557f1052"]
+          ],
+          [
+            "2023-02-10T03:20:53.000Z",
+            ["0x806421D09cDb253aa9d128a658e60c0B95eFFA01"]
+          ]
+        ],
         "$upgradeCount": 5,
         "counterpartGateway": "0xd92023E9d9911199a6711321D1277285e6d4e2db",
         "l1Weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -283,6 +342,12 @@
       "values": {
         "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
         "$implementation": "0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9",
+        "$pastUpgrades": [
+          [
+            "2023-03-16T12:08:28.000Z",
+            ["0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9"]
+          ]
+        ],
         "$upgradeCount": 1,
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
@@ -318,6 +383,12 @@
       "values": {
         "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
         "$implementation": "0xC4ed0A9Ea70d5bCC69f748547650d32cC219D882",
+        "$pastUpgrades": [
+          [
+            "2023-03-16T12:08:28.000Z",
+            ["0xC4ed0A9Ea70d5bCC69f748547650d32cC219D882"]
+          ]
+        ],
         "$upgradeCount": 1,
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x81e28e6f37e32d4756bbeaf3c057b82178ac53398af819adfc680fad31b2ecd5",
@@ -419,6 +490,12 @@
       "values": {
         "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
         "$implementation": "0x41740588b86B4e0629b83A4e28786FF94361c3A3",
+        "$pastUpgrades": [
+          [
+            "2023-03-16T12:08:28.000Z",
+            ["0x41740588b86B4e0629b83A4e28786FF94361c3A3"]
+          ]
+        ],
         "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -467,6 +544,12 @@
       "values": {
         "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
         "$implementation": "0x5D96786d3Eb13CAd05c9Fd7d0f7bb9560b4E5056",
+        "$pastUpgrades": [
+          [
+            "2023-03-16T12:07:15.000Z",
+            ["0x5D96786d3Eb13CAd05c9Fd7d0f7bb9560b4E5056"]
+          ]
+        ],
         "$upgradeCount": 1,
         "counterpartGateway": "0xbbcE8aA77782F13D4202a230d978F361B011dB27",
         "exitNum": 1962,
@@ -489,6 +572,12 @@
       "values": {
         "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
         "$implementation": "0x7A013834D54e9B22d1978aAe3aaDDC909Aa79115",
+        "$pastUpgrades": [
+          [
+            "2023-03-16T12:08:28.000Z",
+            ["0x7A013834D54e9B22d1978aAe3aaDDC909Aa79115"]
+          ]
+        ],
         "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -528,6 +617,12 @@
       "values": {
         "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
         "$implementation": "0x468dA0eE5570Bdb1Dd81bFd925BAf028A93Dce64",
+        "$pastUpgrades": [
+          [
+            "2023-08-15T22:36:05.000Z",
+            ["0x468dA0eE5570Bdb1Dd81bFd925BAf028A93Dce64"]
+          ]
+        ],
         "$upgradeCount": 1,
         "COHORT_REPLACER_ROLE": "0x1b3e51262cf8f48cf0dc9fdd7d86c0378cf467608e72e72cd4da66efe423f195",
         "cohortSize": 6,
@@ -696,6 +791,12 @@
       "values": {
         "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
         "$implementation": "0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9",
+        "$pastUpgrades": [
+          [
+            "2023-03-16T12:08:28.000Z",
+            ["0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9"]
+          ]
+        ],
         "$upgradeCount": 1,
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
@@ -1446,5 +1547,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xb3e808e6410511e5cdb557ab187aac264a51956c695f8cc327ebaa202f7514fd"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

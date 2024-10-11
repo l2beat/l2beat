@@ -1,3 +1,112 @@
+Generated with discovered.json: 0x7e793b8eb1972aef96146082a4be74d43b7eb250
+
+# Diff at Mon, 07 Oct 2024 09:49:08 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@ec3878239ad71f9055b207bdcd338b2f207af050 block: 20842973
+- current block number: 20912886
+
+## Description
+
+New plugs and vaults.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.102:
++        "0x76ddfc271089e58Af68D8597D41aEF52Fb53EC3D"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.101:
++        "0x88A05556Af1a8a5BB5964c46Be9D56C379a5E155"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.100:
++        "0x895b6c1413243562128a9281a7f8891640Ca073f"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract eUSD Vault Kinto (0xDB0e855F55ff35dA8754e5297925bd6c4Cb1Fa48)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../socket/ethereum/.flat/eUSD Vault Kinto.sol     | 887 +++++++++++++++++++++
+ 1 file changed, 887 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20842973 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract USDC Vault Hook (0x855Aaf2f690Ef6e5EF451D7AE73EC3fa61c50981)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract WETH Vault Hook (0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MKR Vault Kinto (0x0fC783f611A888A2cAbC3dA482Add3215334dCc2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract eBTC Vault Lyra (0x25d35C8796c9dcD3857abE90D802FC17b1FB55A5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EIGEN Vault Kinto (0xdb161cdc9c11892922F7121a409b196f3b00e640)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x9b4f75a1a9988e34fa54d9b52bd97b60b289328c
+
+# Diff at Fri, 27 Sep 2024 15:52:26 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@4cb14cc1bdc343d171a7988f9f91f11edbf568a8 block: 20756881
+- current block number: 20842973
+
+## Description
+
+Add new plugs / vaults.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.99:
++        "0x094570E556C8E58119E21f47759F02F50Ae3bB49"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.98:
++        "0xBc978f47AD1122bdFE85855fcc40b3afdF4b5df3"
+    }
+```
+
 Generated with discovered.json: 0x4c060329e6eb5170679402c0a4d7d995c0a7fed8
 
 # Diff at Sun, 15 Sep 2024 15:22:34 GMT:

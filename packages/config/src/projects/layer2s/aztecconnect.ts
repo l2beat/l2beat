@@ -99,12 +99,6 @@ export const aztecconnect: Layer2 = {
     proposerFailure: {
       ...RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
     },
-    sourceUpgradeability: {
-      description:
-        'The ownership of the rollup contract (ProxyAdmin) has been irrevocably renounced, which makes it immutable.',
-      sentiment: 'good',
-      value: 'Immutable',
-    },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
       sources: [
@@ -175,7 +169,7 @@ export const aztecconnect: Layer2 = {
       references: [
         {
           text: 'Verifier28x32.sol#L150 - Etherscan source code',
-          href: 'https://etherscan.io/address/0xB656f4219f565b93DF57D531B574E17FE0F25939#code#F3#L150',
+          href: 'https://etherscan.io/address/0xb7baA1420f88b7758E341c93463426A2b7651CFB#code#F3#L150',
         },
       ],
     },

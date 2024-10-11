@@ -1,3 +1,173 @@
+Generated with discovered.json: 0xa91ad5520a88b83052a58008938b283dcbb00dbe
+
+# Diff at Tue, 01 Oct 2024 10:51:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20777943
+- current block number: 20777943
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20777943 (main branch discovery), not current.
+
+```diff
+    contract StakeRegistry (0x006124Ae7976137266feeBFb3F4D2BE4C073139D) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-05T21:49:59.000Z",["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]],["2024-04-05T21:49:59.000Z",["0x1C468cf7089D263c2f53e2579b329B16aBc4dd96"]]]
+    }
+```
+
+```diff
+    contract BLSApkRegistry (0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-05T21:49:59.000Z",["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]],["2024-04-05T21:49:59.000Z",["0x5d0B9cE2e277Daf508528E9f6Bf6314E79e4eD2b"]]]
+    }
+```
+
+```diff
+    contract RegistryCoordinator (0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum
+      values.$pastUpgrades:
++        [["2024-04-05T21:49:47.000Z",["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]],["2024-04-05T21:49:59.000Z",["0xd3e09a0c2A9A6FDf5E92aE65D3CC090A4dF8EECF"]],["2024-07-24T15:18:11.000Z",["0xdcabf0bE991d4609096CCe316df08d091356E03F"]]]
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      values.$pastUpgrades:
++        [["2023-12-05T15:47:23.000Z",["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]]]
+    }
+```
+
+```diff
+    contract EjectionManager (0x130d8EA0052B45554e4C99079B84df292149Bd5E) {
+    +++ description: Contract used for ejection of operators from the RegistryCoordinator.
+      values.$pastUpgrades:
++        [["2024-05-10T13:31:35.000Z",["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]],["2024-05-10T13:31:35.000Z",["0x1A27AC48D40F70213Ae6ec64f66852e0A1a0E6fa"]],["2024-08-07T15:52:47.000Z",["0x33A517608999DF5CEfFa2b2EbA88B4461c26Af6f"]]]
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      values.$pastUpgrades:
++        [["2023-12-05T15:47:23.000Z",["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]]]
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      values.$pastUpgrades:
++        [["2023-06-09T22:16:59.000Z",["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]]]
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x298aFB19A105D59E74658C4C334Ff360BadE6dd2) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      values.$pastUpgrades:
++        [["2024-01-05T20:15:23.000Z",["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]]]
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      values.$pastUpgrades:
++        [["2023-06-09T22:16:59.000Z",["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]]]
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x57ba429517c3473B6d34CA9aCd56c0e735b94c02) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      values.$pastUpgrades:
++        [["2023-12-05T15:47:23.000Z",["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]]]
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x7CA911E83dabf90C90dD3De5411a10F1A6112184) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      values.$pastUpgrades:
++        [["2023-12-05T15:47:23.000Z",["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]]]
+    }
+```
+
+```diff
+    contract EigenDAServiceManager (0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-05T21:49:47.000Z",["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]],["2024-04-05T21:49:59.000Z",["0xF5fD25A90902c27068CF5eBe53Be8da693Ac899e"]],["2024-05-09T21:13:11.000Z",["0x26089e9738b809d8308B0011B93b4225a112DB8C"]],["2024-05-21T19:56:59.000Z",["0xCDFFF07d5b8AcdAd13607615118a2e65030f5be1"]],["2024-08-03T16:14:35.000Z",["0x0D2C5FD4Bb956cDD48A23fC3Ef77a768a5cDbAf7"]],["2024-09-17T14:17:11.000Z",["0x58fDE694Db83e589ABb21A6Fe66cb20Ce5554a07"]]]
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      values.$pastUpgrades:
++        [["2024-01-05T20:15:23.000Z",["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]]]
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x93c4b944D05dfe6df7645A86cd2206016c51564D) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      values.$pastUpgrades:
++        [["2023-06-09T22:16:59.000Z",["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]]]
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      values.$pastUpgrades:
++        [["2023-12-05T15:47:23.000Z",["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]]]
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0xa4C637e0F704745D182e4D38cAb7E7485321d059) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      values.$pastUpgrades:
++        [["2023-12-05T15:47:23.000Z",["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]]]
+    }
+```
+
+```diff
+    contract EigenStrategy (0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      values.$pastUpgrades:
++        [["2024-04-18T04:30:11.000Z",["0x27e7a3A81741B9fcc5Ad7edCBf9F8a72a5c00428"]]]
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0xAe60d8180437b5C34bB956822ac2710972584473) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      values.$pastUpgrades:
++        [["2024-01-05T20:15:23.000Z",["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]]]
+    }
+```
+
+```diff
+    contract IndexRegistry (0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-04-05T21:49:59.000Z",["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]],["2024-04-05T21:49:59.000Z",["0x1ae0b73118906f39D5ED30Ae4A484ce2F479a14c"]]]
+    }
+```
+
 Generated with discovered.json: 0xf57bca95bc2f9c5a0ff66a0694131823eb2943bd
 
 # Diff at Wed, 18 Sep 2024 14:02:13 GMT:

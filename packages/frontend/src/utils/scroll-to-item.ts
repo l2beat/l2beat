@@ -1,11 +1,13 @@
 interface ScrollToItemOptions {
   item: HTMLElement
   overflowingContainer: HTMLElement
+  behavior?: ScrollBehavior
 }
 
 export function scrollHorizontallyToItem({
   item,
   overflowingContainer,
+  behavior,
 }: ScrollToItemOptions) {
   const scrollPosition =
     item.offsetLeft -
@@ -13,13 +15,14 @@ export function scrollHorizontallyToItem({
     item.offsetWidth / 2
   overflowingContainer.scrollTo({
     left: scrollPosition,
-    behavior: 'smooth',
+    behavior,
   })
 }
 
 export function scrollVerticallyToItem({
   item,
   overflowingContainer,
+  behavior,
 }: ScrollToItemOptions) {
   const scrollPosition =
     item.offsetTop -
@@ -27,6 +30,6 @@ export function scrollVerticallyToItem({
     item.offsetHeight / 2
   overflowingContainer.scrollTo({
     top: scrollPosition,
-    behavior: 'smooth',
+    behavior,
   })
 }

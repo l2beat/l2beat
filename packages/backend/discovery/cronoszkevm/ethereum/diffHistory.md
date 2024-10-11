@@ -1,3 +1,151 @@
+Generated with discovered.json: 0x87ece57be9c4c765e7d3656e3fbcff36d397e2ca
+
+# Diff at Wed, 02 Oct 2024 07:13:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@97b544adfba04e970ecc4cdd40ee3ff679944269 block: 20862570
+- current block number: 20876242
+
+## Description
+
+upgradeChainFromVersion() called, upgrading to protocol version 103079215106. This is the latest version used by ZKsync Era, effectively bringing no changes for CronosZkEvm since the postUpgradeCalldata is empty and the diamond implementations are the same as last version. (Era used this upgrade to change an admin) Upgrader role is given to the old Admin EOA (no net perm changes).
+
+## Watched changes
+
+```diff
+    contract CronosZkEVMAdmin (0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4) {
+    +++ description: None
+      values.accessControl.UPGRADER.members.2:
++        "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b"
+    }
+```
+
+```diff
+    contract CronosZkEvm (0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc) {
+    +++ description: None
+      values.$pastUpgrades.2:
++        ["2024-10-02T06:36:11.000Z",["0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a","0xE60E94fCCb18a81D501a38959E532C0A85A1be89","0xCDB6228b616EEf8Df47D69A372C4f725C43e718C","0xaD193aDe635576d8e9f7ada71Af2137b16c64075"]]
+      values.$upgradeCount:
+-        2
++        3
++++ description: Protocol version, increments with each protocol change
++++ severity: MEDIUM
+      values.getProtocolVersion:
+-        103079215105
++        103079215106
+      values.getSemverProtocolVersion.2:
+-        1
++        2
+    }
+```
+
+Generated with discovered.json: 0x94fa59118b88752205637a2b6454460d2c28b0da
+
+# Diff at Tue, 01 Oct 2024 10:50:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20862570
+- current block number: 20862570
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20862570 (main branch discovery), not current.
+
+```diff
+    contract CronosZkEvm (0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-07-30T16:30:35.000Z",["0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a","0xE60E94fCCb18a81D501a38959E532C0A85A1be89","0xCDB6228b616EEf8Df47D69A372C4f725C43e718C","0xaD193aDe635576d8e9f7ada71Af2137b16c64075"]],["2024-07-30T16:30:35.000Z",["0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a","0xE60E94fCCb18a81D501a38959E532C0A85A1be89","0xCDB6228b616EEf8Df47D69A372C4f725C43e718C","0xaD193aDe635576d8e9f7ada71Af2137b16c64075"]]]
+      values.$upgradeCount:
++        2
+    }
+```
+
+Generated with discovered.json: 0xab96172d00f6f2326ada7aab90076ea973d78e84
+
+# Diff at Mon, 30 Sep 2024 09:28:14 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@eec6993b988ab9a9f325d04da2e9717ed24ad0b9 block: 20777184
+- current block number: 20862570
+
+## Description
+
+CronosZkEVMAdmin upgrade: New IChainAdmin interface with multicall ability, thus fully inheriting the ChainAdmin permissions in the Diamond. Project config updated, transactionFilterer permissions added.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract CronosZkEVMAdmin (0x66eF951aEC26987915582340bCAA569E5Be67cDC)
+    +++ description: None
+```
+
+```diff
+    contract CronosZkEvm (0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc) {
+    +++ description: None
+      values.getAdmin:
+-        "0x66eF951aEC26987915582340bCAA569E5Be67cDC"
++        "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract CronosChainAdminMultisig (0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CronosZkEVMAdmin (0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat/CronosChainAdminMultisig/GnosisSafe.sol  | 953 +++++++++++++++++++++
+ .../CronosChainAdminMultisig/GnosisSafeProxy.p.sol |  35 +
+ .../{.flat@20777184 => .flat}/CronosZkEVMAdmin.sol |  60 +-
+ 3 files changed, 1047 insertions(+), 1 deletion(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20777184 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract CronosChainAdminMultisig (0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce)
+    +++ description: None
+```
+
+```diff
+    contract CronosZkEVMAdmin (0x66eF951aEC26987915582340bCAA569E5Be67cDC) {
+    +++ description: None
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"ADMIN":{"adminRole":"ADMIN","members":["0xfD7a03Cdb68E6488F950108A4d24f15519b87339","0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce"]},"ORACLE":{"adminRole":"ADMIN","members":["0xfD7a03Cdb68E6488F950108A4d24f15519b87339","0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce"]},"UPGRADER":{"adminRole":"ADMIN","members":["0xfD7a03Cdb68E6488F950108A4d24f15519b87339","0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce"]},"FEE_ADMIN":{"adminRole":"ADMIN","members":["0xfD7a03Cdb68E6488F950108A4d24f15519b87339","0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce"]}}
+    }
+```
+
+```diff
+    contract TxFiltererOwnerMultisig (0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b) {
+    +++ description: None
+      name:
+-        "DenyListOwnerMultisig"
++        "TxFiltererOwnerMultisig"
+    }
+```
+
 Generated with discovered.json: 0x6000c0e91f82353e42d690f3d482b9e384a2c0b3
 
 # Diff at Wed, 18 Sep 2024 11:29:40 GMT:

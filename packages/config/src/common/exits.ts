@@ -171,8 +171,8 @@ const STARKNET_REGULAR: ScalingProjectTechnologyChoice = {
     ' Note that the withdrawal request can be censored by the Sequencer.',
   references: [
     {
-      text: ' Withdrawing is based on l2 to l1 messages - Starknet documentation',
-      href: 'https://www.cairo-lang.org/docs/hello_starknet/l1l2.html',
+      text: 'Withdrawing is based on l2 to l1 messages - Starknet documentation',
+      href: 'https://book.cairo-lang.org/ch16-04-L1-L2-messaging.html#sending-messages-from-starknet-to-ethereum',
     },
   ],
   risks: [OPERATOR_CENSORS_WITHDRAWAL],
@@ -199,7 +199,7 @@ const STARKEX_BLOCKLIST: ScalingProjectTechnologyChoice = {
   references: [
     {
       text: 'Blocklist - Implementation on etherscan',
-      href: 'https://etherscan.io/address/0x654cEF88e1EDD4B5a6d10815439768c60ca109a1#code#F4#L27',
+      href: 'https://etherscan.io/address/0x5524cB52490e01CBa4EB64F230CC661780cB6298#code#F4#L33',
     },
   ],
 }

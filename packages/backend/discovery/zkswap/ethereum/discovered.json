@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20311131,
   "configHash": "0x651914ce661d79a29f4959d5466bfd8b5c975114bf075b964500a1fc70ee5547",
-  "version": 14,
   "contracts": [
     {
       "name": "Governance",
@@ -20,6 +19,7 @@
       "values": {
         "$admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
         "$implementation": "0x9d3fdf9b4782753d12f6262bf22B6322608962b8",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
         "getTarget": "0x9d3fdf9b4782753d12f6262bf22B6322608962b8",
@@ -44,6 +44,7 @@
       "values": {
         "$admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
         "$implementation": "0x165dFA76DFD3F6ad6Ad614aE4566C2E9262E532F",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
         "getTarget": "0x165dFA76DFD3F6ad6Ad614aE4566C2E9262E532F"
@@ -88,6 +89,7 @@
       "values": {
         "$admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
         "$implementation": "0x65Fab217f1948af2D7A8eEB11fF111B0993C5Df8",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
         "getTarget": "0x65Fab217f1948af2D7A8eEB11fF111B0993C5Df8"
@@ -166,6 +168,7 @@
       "values": {
         "$admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
         "$implementation": "0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "EMPTY_STRING_KECCAK": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
         "exodusMode": false,
@@ -205,6 +208,7 @@
       "values": {
         "$admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
         "$implementation": "0xd12F4D8329584F36aEd67f807F42D9a02bEb9534",
+        "$pastUpgrades": [],
         "$upgradeCount": 0,
         "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
         "getTarget": "0xd12F4D8329584F36aEd67f807F42D9a02bEb9534"
@@ -449,5 +453,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

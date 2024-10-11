@@ -1,10 +1,16 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "AddressManager",
+  "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
   "fields": {
     "owner": {
       "target": {
-        "permissions": [{ "type": "configure" }]
+        "permissions": [
+          {
+            "type": "configure",
+            "description": "set and change address mappings."
+          }
+        ]
       }
     }
   }

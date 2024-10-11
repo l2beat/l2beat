@@ -1,3 +1,137 @@
+Generated with discovered.json: 0x891bbe5e65ababf5e14bd5d3cb1c9bd4d5c7c148
+
+# Diff at Tue, 01 Oct 2024 11:12:35 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 257931565
+- current block number: 257931565
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 257931565 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-11-19T04:23:39.000Z",["0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"]]]
+    }
+```
+
+```diff
+    contract RollupEventInbox (0x0fF7A97caAb356c5507e5355b6819CB8b93d5591) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-11-19T04:23:39.000Z",["0xF40C24bA346aA459ED28e196D4A46Cf17174bD6C"]]]
+    }
+```
+
+```diff
+    contract ChallengeManager (0x383eFE8D410285c5CbE1B4F296022640759aA834) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-11-19T04:23:39.000Z",["0x09824fe72BFF474d16D9c2774432E381BBD60662"]]]
+    }
+```
+
+```diff
+    contract RollupProxy (0x846387C3D6001F74170455B1074D01f05eB3067a) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      values.$pastUpgrades:
++        [["2023-11-19T04:23:39.000Z",["0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754","0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A"]]]
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract Outbox (0xA597e0212971e65f53f288Ff1fFd26A6C8201f83) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-11-19T04:23:39.000Z",["0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"]]]
+    }
+```
+
+```diff
+    contract L1CustomGateway (0xa8f6bB820eaD521cf834B7b371cFe025bdacEE99) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-11-19T05:32:46.000Z",["0x7785047A920B43d23D181C6E68fa9405c874997c"]]]
+    }
+```
+
+```diff
+    contract L1ERC20Gateway (0xB155C77a440DA7c282993a89FeA609598293017A) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-11-19T05:32:46.000Z",["0xA8531c989b2f8531e123F1daf2edAe83bf4aa190"]]]
+    }
+```
+
+```diff
+    contract Bridge (0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-11-19T04:23:39.000Z",["0xB23214f241bdEb275f7dCBfbb1EA79349101d4B0"]]]
+    }
+```
+
+```diff
+    contract SequencerInbox (0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-11-19T04:23:39.000Z",["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]]]
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0xe507b9EF563DB6CcFDcE270160C50b2005BeED20) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-11-19T05:32:46.000Z",["0x2fB33D8e4a8E989E7814D914973096736ed718b5"]]]
+    }
+```
+
+```diff
+    contract Inbox (0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-11-19T04:23:39.000Z",["0x8f6406781cC955398C45a48DcEfeEBDb2c8e2CaA"]]]
+    }
+```
+
+Generated with discovered.json: 0xca199f795d8e47869109877d321e5f15aca53206
+
+# Diff at Fri, 27 Sep 2024 15:21:48 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@4cb14cc1bdc343d171a7988f9f91f11edbf568a8 block: 225980981
+- current block number: 257931565
+
+## Description
+
+Config.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 225980981 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x846387C3D6001F74170455B1074D01f05eB3067a) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      usedTypes.0.arg.0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39:
++        "ArbOS v32 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0x0e014aa77b3e98f0479abdfed43c504155a35197
 
 # Diff at Sun, 01 Sep 2024 08:46:01 GMT:

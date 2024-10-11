@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x7c87a2e0a4db5d14422f9472a93df79728f1ded7
+
+# Diff at Tue, 01 Oct 2024 11:14:34 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 43367152
+- current block number: 43367152
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 43367152 (main branch discovery), not current.
+
+```diff
+    contract L1ERC20Bridge (0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-01T12:44:39.000Z",["0x022c9D356d6B020D3128de430458A28C7183a13d"]],["2024-04-04T06:25:17.000Z",["0xdBA32e62e929a7e2Fa65782F812416CA65208E40"]]]
+    }
+```
+
+```diff
+    contract zkLink (0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-01T08:10:24.000Z",["0x1D3A82B3BDE1d23D3989b77325C4875395c9D6a9"]],["2024-03-09T10:21:56.000Z",["0xCaAeA20e1e35214342f4Efe87d3912493E3e1CE5"]],["2024-04-22T02:28:56.000Z",["0xC9bBbdCf1778A4aA86544F02CccBf09fd3A0706E"]]]
+    }
+```
+
 Generated with discovered.json: 0x99950caada60d529c7280593f7c0b38503ffe929
 
 # Diff at Wed, 04 Sep 2024 07:33:16 GMT:

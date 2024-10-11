@@ -17,7 +17,7 @@ export const kinto: Layer2 = orbitStackL2({
     headerWarning: '',
     description:
       'Kinto is an Orbit stack L2 with account abstraction and KYC enabled for all users, supporting both modern financial institutions and decentralized protocols.',
-    purposes: ['Universal', 'DeFi'],
+    purposes: ['DeFi', 'RWA'],
     links: {
       websites: ['https://kinto.xyz'],
       apps: ['https://engen.kinto.xyz'],
@@ -251,17 +251,21 @@ export const kinto: Layer2 = orbitStackL2({
       tokens: ['USDe'],
       chain: 'ethereum',
     },
-    // {
-    //   address: EthereumAddress('0xdb161cdc9c11892922F7121a409b196f3b00e640'),
-    //   sinceTimestamp: new UnixTime(),
-    //   source: 'external',
-    //   bridge: {
-    //     name: 'Socket bridge',
-    //     slug: 'socket',
-    //   },
-    //   tokens: ['EIGEN'],
-    //   chain: 'ethereum',
-    // },
+    {
+      address: EthereumAddress('0xdb161cdc9c11892922F7121a409b196f3b00e640'),
+      sinceTimestamp: new UnixTime(1716143711),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['EIGEN'],
+      chain: 'ethereum',
+    },
     {
       address: EthereumAddress('0xc7a542f73049C11f9719Be6Ff701fCA882D60020'),
       sinceTimestamp: new UnixTime(1716143759),

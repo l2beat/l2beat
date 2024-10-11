@@ -3,7 +3,6 @@
   "chain": "linea",
   "blockNumber": 5996230,
   "configHash": "0xb518fa3786fc0cee82738c9a8889c9d5275704fe7a50710cc695c1e0b1907a91",
-  "version": 14,
   "contracts": [
     {
       "name": "TokenMessaging",
@@ -270,5 +269,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

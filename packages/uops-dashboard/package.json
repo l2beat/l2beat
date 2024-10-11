@@ -1,0 +1,36 @@
+{
+  "name": "@l2beat/uops-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "format": "biome format .",
+    "format:fix": "biome format --write .",
+    "lint:fix": "biome check --formatter-enabled=false --write .",
+    "lint": "biome check --formatter-enabled=false .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@types/uuid": "^10.0.0",
+    "ethers": "^5.7.2",
+    "flowbite-react": "^0.10.1",
+    "next": "14.2.6",
+    "react": "^18",
+    "react-dom": "^18",
+    "uuid": "^10.0.0",
+    "viem": "^2.18.6",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.6",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5"
+  }
+}

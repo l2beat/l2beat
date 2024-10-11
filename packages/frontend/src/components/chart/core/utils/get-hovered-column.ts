@@ -6,7 +6,7 @@ import { getMilestoneHoverIndex } from './get-milestone-hover-index'
 interface Props {
   event: MouseEvent | Touch
   rect: DOMRect
-  columns: ChartColumn<unknown>[]
+  columns: ChartColumn[]
   valuesStyle: SeriesStyle[]
   getY: (value: number) => number
   isMobile: boolean
@@ -64,6 +64,10 @@ export function getHoveredColumn({
   return {
     left,
     yValues,
-    column,
+    column: {
+      ...column,
+      milestone:
+        milestoneHoverIndex !== undefined ? column.milestone : undefined,
+    },
   }
 }

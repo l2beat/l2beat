@@ -1,3 +1,68 @@
+Generated with discovered.json: 0xa513efaf6e24057f268b8cace31dbb24a947c021
+
+# Diff at Thu, 10 Oct 2024 09:15:27 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@cb5ff535ffc194baf7396bd6db8232883e2ad088 block: 20389671
+- current block number: 20934247
+
+## Description
+
+Signer swapped in AdminMultisig.
+
+## Watched changes
+
+```diff
+    contract AdminMultisig (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      values.$members.4:
+-        "0x36a0b60162d7F407d74bd1def01410D20437F87B"
++        "0x9376c137AF5124FFc39bD8940A3D88D1cd508992"
+    }
+```
+
+Generated with discovered.json: 0xe6232787bad87e3865c174553e77fde10d29dcbf
+
+# Diff at Tue, 01 Oct 2024 10:52:12 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20389671
+- current block number: 20389671
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20389671 (main branch discovery), not current.
+
+```diff
+    contract ERC20Bridge (0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-08-03T13:04:35.000Z",["0x6ccfD65b0b14F67259C77Ca6267104e058dDB292"]],["2024-06-05T11:49:35.000Z",["0xd52c09E67aF3BE0977B52b4817366e9BaB5dCFA2"]]]
+    }
+```
+
+```diff
+    contract USDCBridge (0x504A330327A089d8364C4ab3811Ee26976d388ce) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-08-03T18:11:11.000Z",["0x16Db542C30fB3519D11CF8F632077c62c1a944fd"]],["2023-09-01T20:25:47.000Z",["0x0eC393209674090368C592A591B25811e490BF36"]]]
+    }
+```
+
+```diff
+    contract zkEVM (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2023-07-12T11:05:23.000Z",["0xE8f627df6Cb02e415b2e6d6e112323BD269b4706"]],["2023-07-12T12:57:47.000Z",["0xE8f627df6Cb02e415b2e6d6e112323BD269b4706"]],["2023-07-15T13:31:23.000Z",["0x4c8d4Ce72afAA417d1F7E833725FdB4E793cd6b3"]],["2023-08-08T16:58:47.000Z",["0xb32c3D0dDb0063FfB15E8a50b40cC62230D820B3"]],["2024-02-13T08:39:59.000Z",["0xAA4b3a9515c921996Abe7930bF75Eff7466a4457"]],["2024-03-26T10:29:47.000Z",["0x934Dd4C63E285551CEceF8459103554D0096c179"]],["2024-06-05T11:49:35.000Z",["0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562"]]]
+    }
+```
+
 Generated with discovered.json: 0xf202e5cd4d42d8539223ef886681136b305c0e8a
 
 # Diff at Fri, 30 Aug 2024 07:53:27 GMT:

@@ -38,7 +38,6 @@ export class UpdateMonitor {
     private readonly chainConverter: ChainConverter,
     private readonly logger: Logger,
     private readonly runOnStart: boolean,
-    private readonly version: number,
   ) {
     this.logger = this.logger.for(this)
     this.taskQueue = new TaskQueue(
@@ -226,7 +225,6 @@ export class UpdateMonitor {
       timestamp,
       blockNumber,
       discovery,
-      version: this.version,
       configHash: projectConfig.hash,
     })
 
@@ -280,17 +278,6 @@ export class UpdateMonitor {
         runner.chain,
       )
     }
-
-    if (previousDiscovery.version === this.version) {
-      return previousDiscovery
-    }
-    this.logger.info(
-      'Discovery logic version changed, discovering with new logic',
-      {
-        chain: runner.chain,
-        project: projectConfig.name,
-      },
-    )
 
     const result = await runner.run(
       projectConfig,

@@ -1,9 +1,10 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { upcomingL3 } from '../layer2s/templates/upcoming'
 import { Layer3 } from './types'
 
 export const mxc: Layer3 = upcomingL3({
   id: ProjectId('mxc'),
+  createdAt: new UnixTime(1710847645), // 2024-03-19T11:27:25Z
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'MXC Moonchain zkEVM',

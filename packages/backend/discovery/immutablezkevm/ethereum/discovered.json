@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20691264,
   "configHash": "0x6b6dab3cd65839582c4908c86c7f3aa050e752f18bffbf700efbcfad069ade2e",
-  "version": 14,
   "contracts": [
     {
       "name": "AxelarGatewayProxyMultisig",
@@ -26,6 +25,12 @@
       "values": {
         "$admin": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8",
         "$implementation": "0xE2E91C1Ae2873720C3b975a8034e887A35323345",
+        "$pastUpgrades": [
+          [
+            "2023-12-19T05:10:23.000Z",
+            ["0xE2E91C1Ae2873720C3b975a8034e887A35323345"]
+          ]
+        ],
         "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -88,6 +93,12 @@
       "values": {
         "$admin": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8",
         "$implementation": "0x177EaFe0f1F3359375B1728dae0530a75C83E154",
+        "$pastUpgrades": [
+          [
+            "2023-12-19T05:09:23.000Z",
+            ["0x177EaFe0f1F3359375B1728dae0530a75C83E154"]
+          ]
+        ],
         "$upgradeCount": 1,
         "ADAPTOR_MANAGER_ROLE": "0xa6d0b532cacea090bc411482cd491720e2eac14d48ce5d0402b8851e0bb2aec1",
         "childERC20Bridge": "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
@@ -470,5 +481,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

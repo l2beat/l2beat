@@ -145,7 +145,7 @@ export const cBridge: Bridge = {
         },
         {
           text: 'xAsset V2',
-          href: 'https://blog.celer.network/2022/06/02/celer-cbridge-launches-xasset-v2-to-support-omni-directional-cross-chain-transfers-for-bridged-tokens/',
+          href: 'https://www.cryptoninjas.net/2022/06/03/celer-cbridge-launches-xasset-v2-for-omnidirectional-cross-chain-transfers-for-bridged-tokens/',
         },
         {
           text: 'StableSwap',

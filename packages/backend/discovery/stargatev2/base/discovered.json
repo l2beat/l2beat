@@ -3,7 +3,6 @@
   "chain": "base",
   "blockNumber": 15999031,
   "configHash": "0xc0a7d7c47e2dbe233b490f384061748fd864b11466ecb85dfa1b0c26f30b66d7",
-  "version": 14,
   "contracts": [
     {
       "name": "StargatePoolUSDC",
@@ -398,5 +397,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

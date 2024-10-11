@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20775895,
   "configHash": "0x47f63439da6b399312c0e54a5ddf19c780f316833ebd19f0ffe82e23c73ea170",
-  "version": 14,
   "contracts": [
     {
       "name": "GnosisSafe",
@@ -100,6 +99,12 @@
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9",
+        "$pastUpgrades": [
+          [
+            "2024-07-28T04:33:47.000Z",
+            ["0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9"]
+          ]
+        ],
         "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -132,6 +137,12 @@
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B",
+        "$pastUpgrades": [
+          [
+            "2024-07-28T04:37:47.000Z",
+            ["0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B"]
+          ]
+        ],
         "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -171,6 +182,12 @@
       "values": {
         "$admin": "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC",
         "$implementation": "0xa8E15d2B1bf6B0Fd3Bc9Ead06323c0730b67f8d4",
+        "$pastUpgrades": [
+          [
+            "2024-07-28T04:29:47.000Z",
+            ["0xa8E15d2B1bf6B0Fd3Bc9Ead06323c0730b67f8d4"]
+          ]
+        ],
         "$upgradeCount": 1,
         "getVersionComponents": { "major": 1, "minor": 0, "patch": 0 },
         "owner": "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC",
@@ -411,5 +428,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xbde3658d9829dc6a2b849d26602a57c5fd2a8972a78d434d59fb754595ff1019"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

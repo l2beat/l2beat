@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20777100,
   "configHash": "0xf41f5585c77adf0b930ba1fa5720083a61fe1cdf8f4a27045c4e098c8348e149",
-  "version": 14,
   "contracts": [
     {
       "name": "GnosisSafe",
@@ -100,6 +99,16 @@
       "values": {
         "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
         "$implementation": "0x509dA1BE24432F8804C4A9FF4a3c3f80284CDd13",
+        "$pastUpgrades": [
+          [
+            "2024-06-04T17:03:59.000Z",
+            ["0x12f893689f9603991a8c22C249FFd0509Be95661"]
+          ],
+          [
+            "2024-09-09T13:09:23.000Z",
+            ["0x509dA1BE24432F8804C4A9FF4a3c3f80284CDd13"]
+          ]
+        ],
         "$upgradeCount": 2,
         "admin": "0x2cf3bD6a9056b39999F3883955E183F655345063",
         "chainsCreated": [
@@ -439,6 +448,16 @@
       "values": {
         "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
         "$implementation": "0xed1Dc7F0Be2B19cb02a2476150C8ea24A37c5274",
+        "$pastUpgrades": [
+          [
+            "2024-06-04T17:04:23.000Z",
+            ["0x8279B7E48fA074f966385d87AEf29Bd031e54fD5"]
+          ],
+          [
+            "2024-08-06T08:56:59.000Z",
+            ["0xed1Dc7F0Be2B19cb02a2476150C8ea24A37c5274"]
+          ]
+        ],
         "$upgradeCount": 2,
         "admin": "0x2cf3bD6a9056b39999F3883955E183F655345063",
         "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
@@ -531,6 +550,16 @@
       "values": {
         "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
         "$implementation": "0xb56A8225A745756DD215faf22E4796f373561AcD",
+        "$pastUpgrades": [
+          [
+            "2024-06-04T17:17:59.000Z",
+            ["0xCba1aF8f0bB223b2544F8eB8f69d1c7960f788dB"]
+          ],
+          [
+            "2024-08-26T07:51:11.000Z",
+            ["0xb56A8225A745756DD215faf22E4796f373561AcD"]
+          ]
+        ],
         "$upgradeCount": 2,
         "admin": "0x2cf3bD6a9056b39999F3883955E183F655345063",
         "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
@@ -1035,5 +1064,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xb6e46b170efd15afbf70eda9aacc79ef764a0f5216fa0bbdd72c2d37bd743e94"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

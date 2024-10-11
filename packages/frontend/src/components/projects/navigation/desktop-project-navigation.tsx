@@ -1,11 +1,19 @@
 'use client'
-import { type CSSProperties, useEffect, useMemo, useRef, useState } from 'react'
+import {
+  type CSSProperties,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 
 import Image from 'next/image'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { useCurrentSection } from '~/hooks/use-current-section'
-import { SummaryIcon } from '~/icons/pages/summary'
+import { SummaryIcon } from '~/icons/summary'
 import { cn } from '~/utils/cn'
+import { scrollVerticallyToItem } from '~/utils/scroll-to-item'
 import { UnderReviewCallout } from '../under-review-callout'
 import { type ProjectNavigationSection } from './types'
 
@@ -84,11 +92,31 @@ function ProjectNavigationList({
   sections,
   style,
 }: Pick<ProjectNavigationProps, 'sections'> & { style?: CSSProperties }) {
+  const currentMenuEntry = useRef<HTMLAnchorElement>(null)
+  const menuContainer = useRef<HTMLDivElement>(null)
   const currentSection = useCurrentSection()
+
+  const scrollToItem = useCallback(
+    (item: HTMLElement, overflowingContainer: HTMLElement) =>
+      scrollVerticallyToItem({
+        item,
+        overflowingContainer,
+        behavior: 'smooth',
+      }),
+    [],
+  )
+
+  useEffect(() => {
+    if (currentMenuEntry.current && menuContainer.current) {
+      scrollToItem(currentMenuEntry.current, menuContainer.current)
+    }
+  }, [currentSection, scrollToItem])
+
   return (
     <div
-      className="absolute top-0 flex flex-col gap-3 leading-none transition-[top] duration-300"
+      className="absolute top-0 flex max-h-[calc(100vh-220px)] w-[246px] min-w-[246px] flex-col gap-3 overflow-y-auto leading-none transition-[top] duration-300"
       style={style}
+      ref={menuContainer}
     >
       <a
         href="#"
@@ -102,10 +130,12 @@ function ProjectNavigationList({
       </a>
       {sections.map((section, i) => {
         const selected = currentSection?.id === section.id
+
         return (
           <a
             key={section.id}
             href={`#${section.id}`}
+            ref={selected ? currentMenuEntry : null}
             className={cn(
               'flex flex-row items-center transition-opacity hover:opacity-100',
               !selected && 'opacity-60',

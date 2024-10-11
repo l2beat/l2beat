@@ -1,3 +1,87 @@
+Generated with discovered.json: 0xb81d3b00e3bf20bbf472f7ce4bf1ae1c9a9021bd
+
+# Diff at Tue, 01 Oct 2024 10:53:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bd754dc73c66120164006054f8d25c5fae9cd910 block: 20211335
+- current block number: 20211335
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20211335 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x081D1101855bD523bA69A9794e0217F0DB6323ff) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2021-11-16T15:26:15.000Z",["0x8bF439ef7167023F009E24b21719Ca5f768Ecb36"]]]
+      values.$upgradeCount:
++        1
+    }
+```
+
+```diff
+    contract LockingInfo (0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-13T07:27:47.000Z",["0x8db636418F10d514c4c68235ee3d640dDBCC7a8a"]],["2024-06-29T01:46:35.000Z",["0x0D30F0d7934f53aaF6a1630A4c109AF4513a65cC"]]]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract MVM_CanonicalTransaction (0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract StateCommitmentChain (0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract LockingPool (0xD54c868362C2098E0E46F12E7D924C6A332952Dd) {
+    +++ description: None
+      values.$pastUpgrades:
++        [["2024-03-13T07:28:59.000Z",["0xd87Da73F82abe83915d61342199A4690cfdf4718"]],["2024-06-29T01:46:35.000Z",["0xD8f38c831E5032d23065Eaaee8c0620e17c04D60"]]]
+    }
+```
+
+```diff
+    contract MVM_Verifier (0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+    }
+```
+
+```diff
+    contract MVM_L2ChainManagerOnL1 (0xf3d58D1794f2634d6649a978f2dc093898FEEBc0) {
+    +++ description: None
+      values.$pastUpgrades:
++        []
+    }
+```
+
 Generated with discovered.json: 0x8063b8a835380221625fb5e93e5b60a87eba1e12
 
 # Diff at Fri, 30 Aug 2024 07:53:44 GMT:

@@ -57,6 +57,7 @@ export async function getL2ProjectDetails({
       contracts: project.contracts,
       isUnderReview: project.isUnderReview,
       escrows: project.config.escrows,
+      architectureImage: project.display.architectureImage,
     },
     contractsVerificationStatuses,
     manuallyVerifiedContracts,
@@ -302,7 +303,8 @@ export async function getL2ProjectDetails({
         content: project.upgradesAndGovernance,
         diagram: {
           type: 'upgrades-and-governance',
-          slug: project.display.slug,
+          slug:
+            project.display.upgradesAndGovernanceImage ?? project.display.slug,
         },
         mdClassName: 'text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
         isUnderReview: project.isUnderReview,

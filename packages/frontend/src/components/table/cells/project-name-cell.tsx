@@ -4,12 +4,10 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { Markdown } from '~/components/markdown/markdown'
-import { Layer3sIcon } from '~/icons/layer3s'
 import { ShieldIcon } from '~/icons/shield'
 import { UnderReviewIcon } from '~/icons/under-review'
 import { UnverifiedIcon } from '~/icons/unverified'
 import { type SyncStatus } from '~/types/sync-status'
-import { cn } from '~/utils/cn'
 import { NotSyncedBadge } from '../../badge/not-synced-badge'
 
 export interface ProjectCellProps {
@@ -22,58 +20,41 @@ export interface ProjectCellProps {
     showProjectUnderReview?: boolean
     hasImplementationChanged?: boolean
     data?: { syncStatus?: SyncStatus }
+    hostChain?: string
   }
-  type?: 'layer2' | 'layer3' | 'bridge'
-  showIsL3?: boolean
   className?: string
 }
 
-export function ProjectNameCell({
-  project,
-  showIsL3,
-  type,
-  className,
-}: ProjectCellProps) {
+export function ProjectNameCell({ project, className }: ProjectCellProps) {
   return (
-    <div className={cn('flex items-center pl-2 2xl:pl-3', className)}>
-      <span className="text-base font-bold md:text-lg">
-        {project.shortName ?? project.name}
-      </span>
-      {showIsL3 && type === 'layer3' && (
-        <span className="pl-1.5">
-          <div className="inline-block">
-            <Layer3sIcon className="relative top-px size-4" />
-          </div>
+    <div className={className}>
+      <div className="flex items-center gap-1.5">
+        <span className="text-xs font-bold !leading-none md:text-base">
+          {project.shortName ?? project.name}
         </span>
-      )}
-      {project.isVerified === false && (
-        <span className="pl-1.5">
+        {project.isVerified === false && (
           <Tooltip>
             <TooltipTrigger>
-              <UnverifiedIcon className="relative top-px size-4 fill-red-300" />
+              <UnverifiedIcon className="size-3.5 fill-red-300 md:size-4" />
             </TooltipTrigger>
             <TooltipContent>
               This project contains unverified contracts.
             </TooltipContent>
           </Tooltip>
-        </span>
-      )}
-      {project.redWarning && (
-        <span className="pl-1.5">
+        )}
+        {project.redWarning && (
           <Tooltip>
             <TooltipTrigger>
-              <ShieldIcon className="relative top-px size-4 fill-red-300" />
+              <ShieldIcon className="relative -top-px size-3.5 fill-red-300 md:size-4" />
             </TooltipTrigger>
             <TooltipContent>{project.redWarning}</TooltipContent>
           </Tooltip>
-        </span>
-      )}
-      {(!!project.showProjectUnderReview ||
-        !!project.hasImplementationChanged) && (
-        <span className="pl-1.5">
+        )}
+        {(!!project.showProjectUnderReview ||
+          !!project.hasImplementationChanged) && (
           <Tooltip>
             <TooltipTrigger>
-              <UnderReviewIcon className="relative top-px size-4" />
+              <UnderReviewIcon className="size-3.5 md:size-4" />
             </TooltipTrigger>
             <TooltipContent>
               {getUnderReviewText(
@@ -82,13 +63,11 @@ export function ProjectNameCell({
               )}
             </TooltipContent>
           </Tooltip>
-        </span>
-      )}
-      {project.headerWarning && (
-        <span className="pl-1.5">
+        )}
+        {project.headerWarning && (
           <Tooltip>
             <TooltipTrigger>
-              <ShieldIcon className="relative top-px h-4 fill-yellow-700 dark:fill-yellow-300" />
+              <ShieldIcon className="relative -top-px size-3.5 fill-yellow-700 dark:fill-yellow-300 md:size-4" />
             </TooltipTrigger>
             <TooltipContent>
               <Markdown inline ignoreGlossary>
@@ -96,12 +75,15 @@ export function ProjectNameCell({
               </Markdown>
             </TooltipContent>
           </Tooltip>
-        </span>
-      )}
-      {project.data?.syncStatus?.isSynced === false && (
-        <div className="mb-1.5 flex items-center justify-center pl-1.5">
+        )}
+        {project.data?.syncStatus?.isSynced === false && (
           <NotSyncedBadge syncedUntil={project.data?.syncStatus.syncedUntil} />
-        </div>
+        )}
+      </div>
+      {project.hostChain && (
+        <span className="block text-[0.8125rem] font-medium leading-[0.9375rem] text-secondary">
+          L3 on {project.hostChain}
+        </span>
       )}
     </div>
   )

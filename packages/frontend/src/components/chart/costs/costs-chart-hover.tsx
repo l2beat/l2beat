@@ -1,4 +1,4 @@
-import { formatCostValue } from '~/app/(side-nav)/(other)/scaling/costs/_utils/format-cost-value'
+import { formatCostValue } from '~/app/(side-nav)/scaling/costs/_utils/format-cost-value'
 import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import { formatTimestamp } from '~/utils/dates'
 import { HorizontalSeparator } from '../../core/horizontal-separator'
