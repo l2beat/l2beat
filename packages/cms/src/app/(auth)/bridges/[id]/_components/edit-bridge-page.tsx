@@ -36,8 +36,11 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { insertBridgeSchema, updateBridgeSchema } from '../_actions/schemas'
 import { type z } from 'zod'
 import { deleteBridge, insertBridge, updateBridge } from '../_actions'
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
+import { DiscardChangesDialog } from '~/components/discard-changes-dialog'
+import { DeleteDialog } from '~/components/delete-dialog'
 
 const selectNullValue = '$null$'
 
@@ -52,15 +55,19 @@ export function EditBridgePage({
     },
     resolver: zodResolver(insertBridgeSchema),
   })
+  const [discardDialogOpen, setDiscardDialogOpen] = useState(false)
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
 
   const onSubmit = useCallback(
     async (data: z.infer<typeof insertBridgeSchema>) => {
-      if (bridge) {
-        await updateBridge({ ...data, id: bridge.id })
+      const result = bridge
+        ? await updateBridge({ ...data, id: bridge.id })
+        : await insertBridge(data)
+      if (result?.data?.failure) {
+        toast.error(result.data.failure)
       } else {
-        await insertBridge(data)
+        router.replace('/bridges')
       }
-      router.replace('/bridges')
     },
     [bridge, router],
   )
@@ -89,7 +96,11 @@ export function EditBridgePage({
               {bridge?.name ?? 'New bridge'}
             </h1>
             <div className="hidden items-center gap-2 md:ml-auto md:flex">
-              <Button variant="secondary" size="sm">
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => setDiscardDialogOpen(true)}
+              >
                 Discard
               </Button>
               <Button>Save Bridge</Button>
@@ -144,9 +155,10 @@ export function EditBridgePage({
                       </SelectContent>
                     </Select>
                     <FormDescription>
-                      The handler to use for this bridge. Selecting a handler
-                      will cause the tokens to be automatically marked as
-                      bridged using this bridge
+                      The handler to use for this bridge. Keep in mind that
+                      there can be only one bridge per handler. Selecting a
+                      handler will cause the tokens to be automatically marked
+                      as bridged using this bridge
                       {bridge ? (
                         <span>
                           , and manually configured entries may be deleted. If
@@ -187,7 +199,7 @@ export function EditBridgePage({
                   <Button
                     variant="destructive"
                     type="button"
-                    onClick={onDelete}
+                    onClick={() => setDeleteDialogOpen(true)}
                   >
                     Delete Bridge
                   </Button>
@@ -196,6 +208,16 @@ export function EditBridgePage({
             </>
           )}
         </div>
+        <DiscardChangesDialog
+          open={discardDialogOpen}
+          onOpenChange={setDiscardDialogOpen}
+          onAction={onDiscard}
+        />
+        <DeleteDialog
+          open={deleteDialogOpen}
+          onOpenChange={setDeleteDialogOpen}
+          onAction={onDelete}
+        />
       </form>
     </Form>
   )

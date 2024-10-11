@@ -10,7 +10,7 @@ import {
 } from '~/components/ui/dialog'
 import { Button } from './ui/button'
 
-export function DiscardChangesDialog({
+export function DeleteDialog({
   open,
   onOpenChange,
   onAction,
@@ -25,12 +25,12 @@ export function DiscardChangesDialog({
         <DialogHeader>
           <DialogTitle>Are you absolutely sure?</DialogTitle>
           <DialogDescription>
-            You are about to discard all changes.
+            You are about to delete this item. This action is irreversible.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <Button variant="destructive" type="button" onClick={onAction}>
-            Discard
+            Delete
           </Button>
         </DialogFooter>
       </DialogContent>
