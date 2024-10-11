@@ -16,6 +16,8 @@ import { getAggLayerL2TokenEntry } from './amounts/aggLayerL2Tokens'
 import { getAggLayerNativeEtherPremintedEntry } from './amounts/aggLayerNativeEtherPreminted'
 import { getAggLayerNativeEtherWrappedEntry } from './amounts/aggLayerNativeEtherWrapped'
 import { getCirculatingSupplyEntry } from './amounts/circulatingSupply'
+import { getElasticChainEtherEntry } from './amounts/elasticChainEther'
+import { getElasticChainL2TokenEntry } from './amounts/elasticChainL2Tokens'
 import { getEscrowEntry } from './amounts/escrow'
 import { getPremintedEntry } from './amounts/preminted'
 import { getTotalSupplyEntry } from './amounts/totalSupply'
@@ -23,7 +25,7 @@ import { getTotalSupplyEntry } from './amounts/totalSupply'
 export function getTvlAmountsConfig(
   projects: BackendProject[],
 ): AmountConfigEntry[] {
-  const entries: AmountConfigEntry[] = []
+  let entries: AmountConfigEntry[] = []
 
   const nonZeroSupplyTokens = tokenList.filter((t) => t.supply !== 'zero')
   for (const token of nonZeroSupplyTokens) {
@@ -38,10 +40,106 @@ export function getTvlAmountsConfig(
 
   for (const project of projects) {
     for (const escrow of project.escrows) {
-      if (escrow.sharedEscrow?.type === 'AggLayer') {
+      switch (escrow.sharedEscrow?.type) {
+        case 'AggLayer': {
+          const aggLayerEntries = aggLayerEscrowToEntries(escrow, project)
+          entries.push(...aggLayerEntries)
+          break
+        }
+        case 'ElasticChian': {
+          const elasticChainEntries = elasticChainEscrowToEntries(
+            escrow,
+            project,
+          )
+          entries.push(...elasticChainEntries)
+          break
+        }
+        default: {
+          for (const token of escrow.tokens) {
+            const chain = chains.find((x) => x.chainId === +token.chainId)
+            assert(chain, `Chain not found for token ${token.id}`)
+            assert(
+              chain.name === escrow.chain,
+              'Programmer error: chain mismatch',
+            )
+
+            const configEntry = projectEscrowToConfigEntry(
+              chain,
+              token,
+              escrow,
+              project,
+            )
+
+            entries.push(configEntry)
+          }
+        }
+      }
+    }
+  }
+
+  const projectsWithZKCroConfig = projects.filter((p) =>
+    p.escrows.some(
+      (e) =>
+        e.sharedEscrow?.type === 'ElasticChian' &&
+        e.sharedEscrow?.includeAllzkCROFromL1,
+    ),
+  )
+
+  if (projectsWithZKCroConfig.length > 0) {
+    entries = handleZKCROentries(projectsWithZKCroConfig, entries)
+  }
+
+  const projectsWithOKBConfig = projects.filter((p) =>
+    p.escrows.some(
+      (e) =>
+        e.sharedEscrow?.type === 'AggLayer' &&
+        e.sharedEscrow?.includeAllOKBFromL1,
+    ),
+  )
+
+  if (projectsWithOKBConfig.length > 0) {
+    entries = handleOKBentries(projectsWithOKBConfig, entries)
+  }
+
+  return entries
+}
+
+/** Lighter version of `getTvlAmountsConfig`, does not that much nor enforces full configuration compatibility  */
+export function getTvlAmountsConfigForProject(
+  project: BackendProject,
+): AmountConfigEntry[] {
+  let entries: AmountConfigEntry[] = []
+
+  const nonZeroSupplyTokens = tokenList.filter((t) => t.supply !== 'zero')
+
+  const projectTokens = nonZeroSupplyTokens.filter(
+    (t) =>
+      chainToProject.get(chainConverter.toName(t.chainId)) ===
+      project.projectId,
+  )
+
+  for (const token of projectTokens) {
+    const chain = chains.find((x) => x.chainId === +token.chainId)
+    assert(chain, `Chain not found for token ${token.symbol}`)
+
+    const configEntry = projectTokenToConfigEntry(chain, token, project)
+
+    entries.push(configEntry)
+  }
+
+  for (const escrow of project.escrows) {
+    switch (escrow.sharedEscrow?.type) {
+      case 'AggLayer': {
         const aggLayerEntries = aggLayerEscrowToEntries(escrow, project)
         entries.push(...aggLayerEntries)
-      } else {
+        break
+      }
+      case 'ElasticChian': {
+        const elasticChainEntries = elasticChainEscrowToEntries(escrow, project)
+        entries.push(...elasticChainEntries)
+        break
+      }
+      default: {
         for (const token of escrow.tokens) {
           const chain = chains.find((x) => x.chainId === +token.chainId)
           assert(chain, `Chain not found for token ${token.id}`)
@@ -63,64 +161,24 @@ export function getTvlAmountsConfig(
     }
   }
 
-  const projectsWithOKBConfig = projects.filter((p) =>
-    p.escrows.some((e) => e.sharedEscrow?.includeAllOKBFromL1),
-  )
-
-  if (projectsWithOKBConfig.length > 0) {
-    return handleOKBentries(projectsWithOKBConfig, entries)
+  if (
+    project.escrows.some(
+      (e) =>
+        e.sharedEscrow?.type === 'AggLayer' &&
+        e.sharedEscrow?.includeAllOKBFromL1,
+    )
+  ) {
+    entries = handleOKBentries([project], entries)
   }
 
-  return entries
-}
-
-/** Lighter version of `getTvlAmountsConfig`, does not that much nor enforces full configuration compatibility  */
-export function getTvlAmountsConfigForProject(
-  project: BackendProject,
-): AmountConfigEntry[] {
-  const entries: AmountConfigEntry[] = []
-
-  const nonZeroSupplyTokens = tokenList.filter((t) => t.supply !== 'zero')
-
-  const projectTokens = nonZeroSupplyTokens.filter(
-    (t) =>
-      chainToProject.get(chainConverter.toName(t.chainId)) ===
-      project.projectId,
-  )
-
-  for (const token of projectTokens) {
-    const chain = chains.find((x) => x.chainId === +token.chainId)
-    assert(chain, `Chain not found for token ${token.symbol}`)
-
-    const configEntry = projectTokenToConfigEntry(chain, token, project)
-
-    entries.push(configEntry)
-  }
-
-  for (const escrow of project.escrows) {
-    if (escrow.sharedEscrow?.type === 'AggLayer') {
-      const aggLayerEntries = aggLayerEscrowToEntries(escrow, project)
-      entries.push(...aggLayerEntries)
-    } else {
-      for (const token of escrow.tokens) {
-        const chain = chains.find((x) => x.chainId === +token.chainId)
-        assert(chain, `Chain not found for token ${token.id}`)
-        assert(chain.name === escrow.chain, 'Programmer error: chain mismatch')
-
-        const configEntry = projectEscrowToConfigEntry(
-          chain,
-          token,
-          escrow,
-          project,
-        )
-
-        entries.push(configEntry)
-      }
-    }
-  }
-
-  if (project.escrows.some((e) => e.sharedEscrow?.includeAllOKBFromL1)) {
-    return handleOKBentries([project], entries)
+  if (
+    project.escrows.some(
+      (e) =>
+        e.sharedEscrow?.type === 'ElasticChian' &&
+        e.sharedEscrow?.includeAllzkCROFromL1,
+    )
+  ) {
+    entries = handleZKCROentries([project], entries)
   }
 
   return entries
@@ -143,7 +201,9 @@ function handleOKBentries(
   assert(okbToken)
 
   const escrow = projectWithOKBConfig[0].escrows.find(
-    (e) => e.sharedEscrow?.includeAllOKBFromL1,
+    (e) =>
+      e.sharedEscrow?.type === 'AggLayer' &&
+      e.sharedEscrow?.includeAllOKBFromL1,
   )
   assert(escrow)
 
@@ -158,6 +218,39 @@ function handleOKBentries(
 
   return entries.filter(
     (e) => e.type !== 'aggLayerL2Token' || e.assetId !== AssetId.OKB,
+  )
+}
+
+function handleZKCROentries(
+  projectWithZKCroConfig: BackendProject[],
+  entries: AmountConfigEntry[],
+) {
+  assert(projectWithZKCroConfig.length === 1)
+  const zkCROToken = tokenList.find(
+    (t) =>
+      AssetId.create(chainConverter.toName(t.chainId), t.address) ===
+      AssetId.ZKCRO,
+  )
+  assert(zkCROToken)
+
+  const escrow = projectWithZKCroConfig[0].escrows.find(
+    (e) =>
+      e.sharedEscrow?.type === 'ElasticChian' &&
+      e.sharedEscrow?.includeAllzkCROFromL1,
+  )
+  assert(escrow)
+
+  const l1ZKCroEntry = getEscrowEntry(
+    ethereum,
+    zkCROToken,
+    escrow,
+    projectWithZKCroConfig[0],
+  )
+
+  entries.push(l1ZKCroEntry)
+
+  return entries.filter(
+    (e) => e.type !== 'elasticChainL2Token' || e.assetId !== AssetId.ZKCRO,
   )
 }
 
@@ -211,6 +304,50 @@ function aggLayerEscrowToEntries(
 
     entries.push(configEntry)
   }
+
+  return entries
+}
+
+function elasticChainEscrowToEntries(
+  escrow: BackendProjectEscrow,
+  project: BackendProject,
+) {
+  assert(
+    escrow.sharedEscrow?.type === 'ElasticChian',
+    'ElasticChian escrow expected',
+  )
+  const entries: AmountConfigEntry[] = []
+
+  for (const token of escrow.tokens) {
+    if (token.address === undefined) {
+      continue
+    }
+    const chain = chains.find((x) => x.chainId === +token.chainId)
+    assert(chain, `Chain not found for token ${token.id}`)
+    assert(chain.name === escrow.chain, 'Programmer error: chain mismatch')
+
+    const configEntry = getElasticChainL2TokenEntry(
+      chain,
+      token,
+      escrow,
+      project,
+    )
+
+    entries.push(configEntry)
+  }
+
+  const ether = tokenList.find(
+    (t) => AssetId.create(ethereum.name, t.address) === AssetId.ETH,
+  )
+  assert(ether, 'ETH on ethereum not found')
+
+  const etherEntry = getElasticChainEtherEntry(
+    ethereum,
+    { ...ether, address: escrow.sharedEscrow.l2EtherAddress },
+    escrow,
+    project,
+  )
+  entries.push(etherEntry)
 
   return entries
 }

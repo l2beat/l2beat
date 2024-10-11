@@ -1,4 +1,48 @@
-Generated with discovered.json: 0x33d48e5784201f1648cc9e36d7065b194addd693
+Generated with discovered.json: 0xb289324db913b645ce267e5ed730cb2ff0d60d36
+
+# Diff at Wed, 09 Oct 2024 13:10:55 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@37683e2b3d0587372f886eef49e921277810c8bf block: 20777124
+- current block number: 20777124
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20777124 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x38593Cce8FaB9887Ef9760f5F6aB3d6C595143cF) {
+    +++ description: None
+      directlyReceivedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+```diff
+    contract TBHMultisig (0x48EC051349dDc7E8baBafCBfe27696ECF2A8a8B3) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+```diff
+    contract AddressManager (0x8173904703995c6BbA59a42B8bBf8405F978758a) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.via.0.description:
++        "set and change address mappings."
+      descriptions:
++        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
+    }
+```
+
+Generated with discovered.json: 0xfe2f5b39beb6b55c3e6c262c2c9960d9470f0bee
 
 # Diff at Tue, 01 Oct 2024 11:11:26 GMT:
 

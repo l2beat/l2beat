@@ -15,7 +15,6 @@ import {
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
@@ -112,7 +111,7 @@ export const tanx: Layer2 = {
     },
     mode: 'State diffs',
   }),
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: {
       ...RISK_VIEW.DATA_EXTERNAL_DAC({
@@ -136,7 +135,7 @@ export const tanx: Layer2 = {
     ),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(freezeGracePeriod),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
-  }),
+  },
   technology: {
     stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
     dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKEX_OFF_CHAIN,

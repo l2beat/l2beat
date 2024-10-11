@@ -13,12 +13,12 @@ import {
 } from './chart-loading-context'
 import { ChartRectContextProvider } from './chart-rect-context'
 
-export interface ChartProviderProps<T>
+export interface ChartProviderProps<T extends { timestamp: number }>
   extends ChartContextProviderParams<T>,
     ChartHoverContextProviderParams<T>,
     ChartLoadingContextProviderParams {}
 
-export function ChartProvider<T>({
+export function ChartProvider<T extends { timestamp: number }>({
   children,
   renderHoverContents,
   isLoading,

@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20675914,
   "configHash": "0x557042a89ff459f09daf8e1652bea33d5fefcdb080824682bfd2c5e4d3c5ab04",
-  "version": 15,
   "contracts": [
     {
       "name": "EthCrossChainManager",
@@ -447,5 +446,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

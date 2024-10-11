@@ -35,10 +35,5 @@ export const stack: Layer3 = opStackL3({
   rpcUrl: 'https://rpc.stack.so',
   genesisTimestamp: new UnixTime(1709683711),
   isNodeAvailable: 'UnderReview',
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'StackMultisig',
-      'Is the ProxyAdmin (owner).',
-    ),
-  ],
+  discoveryDrivenData: true,
 })

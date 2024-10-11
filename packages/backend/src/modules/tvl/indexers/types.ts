@@ -7,6 +7,7 @@ import {
   CirculatingSupplyEntry,
   CoingeckoId,
   CoingeckoPriceConfigEntry,
+  ElasticChainEther,
   ElasticChainL2Token,
   EscrowEntry,
   PremintedEntry,
@@ -56,7 +57,7 @@ export interface AggLayerAmountIndexerDeps
   chain: string
 }
 
-export type ElasticChainAmountConfig = ElasticChainL2Token
+export type ElasticChainAmountConfig = ElasticChainL2Token | ElasticChainEther
 
 export interface ElasticChainAmountIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<ElasticChainAmountConfig>, 'name'> {

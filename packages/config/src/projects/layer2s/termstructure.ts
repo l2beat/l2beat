@@ -1,9 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import {
-  CONTRACTS,
-  addSentimentToDataAvailability,
-  makeBridgeCompatible,
-} from '../../common'
+import { CONTRACTS, addSentimentToDataAvailability } from '../../common'
 import { EXITS } from '../../common/exits'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
 import { NEW_CRYPTOGRAPHY } from '../../common/newCryptography'
@@ -144,7 +140,7 @@ export const termstructure: Layer2 = {
     ],
   },
   type: 'layer2',
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
       sources: [
@@ -172,7 +168,7 @@ export const termstructure: Layer2 = {
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_ZK,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-  }),
+  },
   stage: getStage({
     stage0: {
       callsItselfRollup: true,

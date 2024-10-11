@@ -15,7 +15,6 @@ import {
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
-  makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -151,7 +150,7 @@ export const zkfair: Layer2 = {
     bridge: { type: 'DAC Members', requiredSignatures, membersCount },
     mode: 'State diffs',
   }),
-  riskView: makeBridgeCompatible({
+  riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
       sources: [
@@ -207,7 +206,7 @@ export const zkfair: Layer2 = {
     },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-  }),
+  },
   stage: {
     stage: 'NotApplicable',
   },

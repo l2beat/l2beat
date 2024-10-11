@@ -1,5 +1,3 @@
-import React from 'react'
-
 import Link from 'next/link'
 import { Button } from '~/components/core/button'
 import { LinkWithThumbnail } from '~/components/link-with-thumbnail'
@@ -46,7 +44,7 @@ function Publication({ publication }: PublicationProps) {
       src={`/meta-images/governance/publications/${publication.id}.png`}
       href={`/governance/publications/${publication.id}`}
       topAccessory={
-        <p className="text-2xs font-semibold uppercase text-purple-100 dark:text-pink-200">
+        <p className="text-2xs font-medium uppercase text-purple-100 dark:text-pink-200">
           {publication.publishedOn}
         </p>
       }

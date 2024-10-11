@@ -14,7 +14,7 @@ export default function Page() {
         <ReportBanner />
         <ReportDownloadButton fileUrl={multisigReportUrl} />
         <div className="mb-6 mt-12 w-full leading-7">
-          <h2 className="mb-3 text-2xl font-extrabold md:mb-5 md:text-4xl">
+          <h2 className="mb-3 text-2xl font-bold md:mb-5 md:text-4xl">
             About the report
           </h2>
           <div>

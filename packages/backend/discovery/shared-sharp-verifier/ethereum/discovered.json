@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20842982,
   "configHash": "0x899e53b29b077d1af0417c2dcf901f5a4bfdb20a2598939c95c06827ec471499",
-  "version": 15,
   "contracts": [
     {
       "name": "EcdsaPointsXColumn",
@@ -3319,5 +3318,5 @@
     "shared-sharp-verifier/ignoreCompute": "0xa8aa26763cc2441a6b27a0af65fbedb173bdc79f80d6b91e42c0980da6c2c5c9",
     "shared-sharp-verifier/Verifier": "0xd2279a320c1ee8e95b9990e28e9f4382c1cb9ddd8493a36417796e57a77222a2"
   },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

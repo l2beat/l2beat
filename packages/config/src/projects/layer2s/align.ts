@@ -1,8 +1,10 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
 export const align: Layer2 = upcomingL2({
   id: 'align',
+  createdAt: new UnixTime(1719931843), // 2024-07-02T14:50:43Z
   display: {
     name: 'Align Network',
     slug: 'align',

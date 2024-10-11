@@ -21,10 +21,9 @@ export class TokenBridgeRepository extends BaseRepository {
       .insertInto('TokenBridge')
       .values(row)
       .onConflict((cb) =>
-        cb.doUpdateSet((eb) => ({
-          sourceTokenId: eb.ref('excluded.sourceTokenId'),
-          targetTokenId: eb.ref('excluded.targetTokenId'),
+        cb.column('targetTokenId').doUpdateSet((eb) => ({
           externalBridgeId: eb.ref('excluded.externalBridgeId'),
+          sourceTokenId: eb.ref('excluded.sourceTokenId'),
         })),
       )
       .returning('id')
@@ -35,15 +34,14 @@ export class TokenBridgeRepository extends BaseRepository {
     if (records.length === 0) return 0
 
     const rows = records.map(upsertableToRecord)
-    await this.batch(rows, 1_000, async (batch) => {
+    await this.batch(rows, 100, async (batch) => {
       await this.db
         .insertInto('TokenBridge')
         .values(batch)
         .onConflict((cb) =>
-          cb.doUpdateSet((eb) => ({
-            sourceTokenId: eb.ref('excluded.sourceTokenId'),
-            targetTokenId: eb.ref('excluded.targetTokenId'),
+          cb.column('targetTokenId').doUpdateSet((eb) => ({
             externalBridgeId: eb.ref('excluded.externalBridgeId'),
+            sourceTokenId: eb.ref('excluded.sourceTokenId'),
           })),
         )
         .execute()

@@ -1,3 +1,4 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { Analysis } from '../analysis/AddressAnalyzer'
 import {
   Node,
@@ -10,9 +11,11 @@ export function resolveAnalysis(analyses: Analysis[]): ResolvedPermission[] {
 
   for (const analysis of analyses) {
     let threshold = 1
+    let multisigOwners: EthereumAddress[] = []
 
     if (analysis.type === 'Contract') {
       threshold = Number(analysis.values['$threshold']) ?? 1
+      multisigOwners = (analysis.values['$members'] as EthereumAddress[]) ?? []
     }
 
     const address = analysis.address
@@ -20,7 +23,11 @@ export function resolveAnalysis(analyses: Analysis[]): ResolvedPermission[] {
       address,
       delay: 0,
       threshold,
-      edges: [],
+      edges: multisigOwners.map((o) => ({
+        toNode: o,
+        delay: 0,
+        permission: 'member',
+      })),
     }
     if (analysis.combinedMeta === undefined) {
       continue

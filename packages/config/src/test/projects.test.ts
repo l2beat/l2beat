@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { assert, EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { bridges, layer2s, layer3s } from '../'
@@ -85,7 +85,15 @@ describe('projects', () => {
 
           if ('address' in contract && project.permissions !== 'UnderReview') {
             const upgradableBy = contract.upgradableBy
-            const actors = project.permissions?.map((x) => x.name) ?? []
+            const actors =
+              project.permissions?.map((x) => {
+                if (x.name === 'EOA') {
+                  assert(x.accounts[0].type === 'EOA')
+                  return x.accounts[0].address
+                }
+                return x.name
+              }) ?? []
+
             if (upgradableBy) {
               it(`contracts[${i}].upgradableBy is valid`, () => {
                 expect(actors).toInclude(...upgradableBy)
@@ -173,5 +181,20 @@ describe('projects', () => {
         }
       })
     }
+  })
+
+  describe('regular L3s have proper host chain set', () => {
+    it('should have proper host chain set', () => {
+      const applicableProjects = layer3s.filter(
+        (l3) => !l3.isUpcoming && !l3.isUnderReview,
+      )
+
+      // Name mapping for easier test resolution
+      const l3sWithInvalidHostChain = applicableProjects
+        .filter((l3) => l3.hostChain === 'Multiple')
+        .map((l3) => l3.display.name)
+
+      expect(l3sWithInvalidHostChain).toEqual([])
+    })
   })
 })

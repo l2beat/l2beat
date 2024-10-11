@@ -5,6 +5,7 @@ import { aiechain } from './aiechain'
 import { alephzero } from './alephzero'
 import { alienx } from './alienx'
 import { align } from './align'
+import { allo } from './allo'
 import { ancient } from './ancient'
 import { apex } from './apex'
 import { arbitrum } from './arbitrum'
@@ -29,7 +30,6 @@ import { creator } from './creator'
 import { cronoszkevm } from './cronoszkevm'
 import { cyber } from './cyber'
 import { dbk } from './dbk'
-import { debank } from './debank'
 import { degate } from './degate'
 import { degate2 } from './degate2'
 import { degate3 } from './degate3'
@@ -172,6 +172,7 @@ export const layer2s: Layer2[] = [
   aevo,
   aiechain,
   alephzero,
+  allo,
   ancient,
   apex,
   arbitrum,
@@ -198,7 +199,6 @@ export const layer2s: Layer2[] = [
   creator,
   cronoszkevm,
   dbk,
-  debank,
   honeypot,
   degate,
   degate2,

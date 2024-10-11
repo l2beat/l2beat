@@ -18,219 +18,212 @@ import {
 } from './CoingeckoQueryService'
 
 describe(CoingeckoQueryService.name, () => {
-  describe(
-    CoingeckoQueryService.prototype.getUsdPriceHistoryHourly.name,
-    () => {
-      it('is called with correct parameters', async () => {
-        const coingeckoClient = mockObject<CoingeckoClient>({
-          getCoinMarketChartRange: mockFn().returns({
+  describe(CoingeckoQueryService.prototype.getUsdPriceHistoryHourly
+    .name, () => {
+    it('is called with correct parameters', async () => {
+      const coingeckoClient = mockObject<CoingeckoClient>({
+        getCoinMarketChartRange: mockFn().returns({
+          marketCaps: [mock()],
+          prices: [mock()],
+        }),
+      })
+      const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+      await coingeckoQueryService.getUsdPriceHistoryHourly(
+        CoingeckoId('weth'),
+        UnixTime.fromDate(new Date('2021-01-01')),
+        UnixTime.fromDate(new Date('2021-02-01')),
+      )
+      expect(coingeckoClient.getCoinMarketChartRange).toHaveBeenOnlyCalledWith(
+        CoingeckoId('weth'),
+        'usd',
+        UnixTime.fromDate(new Date('2021-01-01')).add(-14, 'days'),
+        UnixTime.fromDate(new Date('2021-01-01')).add(
+          MAX_DAYS_FOR_HOURLY_PRECISION - 14,
+          'days',
+        ),
+        undefined,
+      )
+    })
+
+    it('handles regular hours range returned from API', async () => {
+      const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
+
+      const coingeckoClient = mockObject<CoingeckoClient>({
+        getCoinMarketChartRange: mockFn().returns({
+          prices: [
+            { date: START.toDate(), value: 1200 },
+            { date: START.add(1, 'hours').toDate(), value: 1000 },
+            { date: START.add(2, 'hours').toDate(), value: 1100 },
+          ],
+          marketCaps: [mock(), mock(), mock()],
+        }),
+      })
+      const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+      const prices = await coingeckoQueryService.getUsdPriceHistoryHourly(
+        CoingeckoId('weth'),
+        START,
+        START.add(2, 'hours'),
+      )
+      expect(prices).toEqual([
+        { timestamp: START, value: 1200, deltaMs: 0 },
+        { timestamp: START.add(1, 'hours'), value: 1000, deltaMs: 0 },
+        { timestamp: START.add(2, 'hours'), value: 1100, deltaMs: 0 },
+      ])
+    })
+
+    it('handles multiple calls to get hourly', async () => {
+      const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
+
+      const coingeckoClient = mockObject<CoingeckoClient>({
+        getCoinMarketChartRange: mockFn()
+          .returnsOnce({
+            prices: [{ date: START.toDate(), value: 1200 }],
             marketCaps: [mock()],
-            prices: [mock()],
-          }),
-        })
-        const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
-        await coingeckoQueryService.getUsdPriceHistoryHourly(
-          CoingeckoId('weth'),
-          UnixTime.fromDate(new Date('2021-01-01')),
-          UnixTime.fromDate(new Date('2021-02-01')),
-        )
-        expect(
-          coingeckoClient.getCoinMarketChartRange,
-        ).toHaveBeenOnlyCalledWith(
-          CoingeckoId('weth'),
-          'usd',
-          UnixTime.fromDate(new Date('2021-01-01')).add(-14, 'days'),
-          UnixTime.fromDate(new Date('2021-01-01')).add(
-            MAX_DAYS_FOR_HOURLY_PRECISION - 14,
-            'days',
-          ),
-          undefined,
-        )
-      })
-
-      it('handles regular hours range returned from API', async () => {
-        const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
-
-        const coingeckoClient = mockObject<CoingeckoClient>({
-          getCoinMarketChartRange: mockFn().returns({
+          })
+          .returnsOnce({
             prices: [
-              { date: START.toDate(), value: 1200 },
-              { date: START.add(1, 'hours').toDate(), value: 1000 },
-              { date: START.add(2, 'hours').toDate(), value: 1100 },
-            ],
-            marketCaps: [mock(), mock(), mock()],
-          }),
-        })
-        const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
-        const prices = await coingeckoQueryService.getUsdPriceHistoryHourly(
-          CoingeckoId('weth'),
-          START,
-          START.add(2, 'hours'),
-        )
-        expect(prices).toEqual([
-          { timestamp: START, value: 1200, deltaMs: 0 },
-          { timestamp: START.add(1, 'hours'), value: 1000, deltaMs: 0 },
-          { timestamp: START.add(2, 'hours'), value: 1100, deltaMs: 0 },
-        ])
-      })
-
-      it('handles multiple calls to get hourly', async () => {
-        const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
-
-        const coingeckoClient = mockObject<CoingeckoClient>({
-          getCoinMarketChartRange: mockFn()
-            .returnsOnce({
-              prices: [{ date: START.toDate(), value: 1200 }],
-              marketCaps: [mock()],
-            })
-            .returnsOnce({
-              prices: [
-                {
-                  date: START.add(
-                    MAX_DAYS_FOR_HOURLY_PRECISION,
-                    'days',
-                  ).toDate(),
-                  value: 1800,
-                },
-              ],
-              marketCaps: [mock()],
-            })
-            .returnsOnce({
-              prices: [
-                {
-                  date: START.add(
-                    2 * MAX_DAYS_FOR_HOURLY_PRECISION,
-                    'days',
-                  ).toDate(),
-                  value: 2400,
-                },
-              ],
-              marketCaps: [mock()],
-            }),
-        })
-        const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
-        const prices = await coingeckoQueryService.getUsdPriceHistoryHourly(
-          CoingeckoId('weth'),
-          START,
-          START.add(2 * MAX_DAYS_FOR_HOURLY_PRECISION, 'hours'),
-        )
-
-        const timestamps = getHourlyTimestamps(
-          START,
-          START.add(2 * MAX_DAYS_FOR_HOURLY_PRECISION, 'hours'),
-        )
-        const constPrices = [
-          { date: START.toDate(), value: 1200 },
-          {
-            date: START.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days').toDate(),
-            value: 2400,
-          },
-          {
-            date: START.add(2 * MAX_DAYS_FOR_HOURLY_PRECISION, 'days').toDate(),
-            value: 2600,
-          },
-        ]
-
-        expect(prices).toEqual(pickClosestValues(constPrices, timestamps))
-      })
-
-      it('handles duplicates in data returned from API', async () => {
-        const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
-
-        const coingeckoClient = mockObject<CoingeckoClient>({
-          getCoinMarketChartRange: mockFn().returns({
-            prices: [
-              { date: START.toDate(), value: 1200 },
-              { date: START.toDate(), value: 1200 },
-              { date: START.add(1, 'hours').toDate(), value: 1000 },
-              { date: START.add(1, 'hours').toDate(), value: 1000 },
-              { date: START.add(1, 'hours').toDate(), value: 1000 },
-              { date: START.add(2, 'hours').toDate(), value: 1100 },
-              { date: START.add(2, 'hours').toDate(), value: 1100 },
-            ],
-            marketCaps: Array(7).fill(mock()),
-          }),
-        })
-        const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
-        const prices = await coingeckoQueryService.getUsdPriceHistoryHourly(
-          CoingeckoId('weth'),
-          START,
-          START.add(2, 'hours'),
-        )
-        expect(prices).toEqual([
-          { timestamp: START, value: 1200, deltaMs: 0 },
-          { timestamp: START.add(1, 'hours'), value: 1000, deltaMs: 0 },
-          { timestamp: START.add(2, 'hours'), value: 1100, deltaMs: 0 },
-        ])
-      })
-
-      it('handles irregular data returned from API', async () => {
-        const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
-
-        const coingeckoClient = mockObject<CoingeckoClient>({
-          getCoinMarketChartRange: mockFn().returns({
-            prices: [
-              { date: START.add(-2, 'minutes').toDate(), value: 1200 },
-              { date: START.add(1, 'hours').toDate(), value: 1000 },
               {
-                date: START.add(2, 'hours').add(2, 'minutes').toDate(),
-                value: 1100,
+                date: START.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days').toDate(),
+                value: 1800,
               },
             ],
-            marketCaps: Array(3).fill(mock()),
-          }),
-        })
-        const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
-        const prices = await coingeckoQueryService.getUsdPriceHistoryHourly(
-          CoingeckoId('weth'),
-          START,
-          START.add(2, 'hours'),
-        )
-        expect(prices).toEqual([
-          { timestamp: START, value: 1200, deltaMs: -2 * 60 * 1000 },
-          { timestamp: START.add(1, 'hours'), value: 1000, deltaMs: 0 },
-          {
-            timestamp: START.add(2, 'hours'),
-            value: 1100,
-            deltaMs: 2 * 60 * 1000,
-          },
-        ])
-      })
-
-      it('handles unsorted data returned from API', async () => {
-        const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
-
-        const coingeckoClient = mockObject<CoingeckoClient>({
-          getCoinMarketChartRange: mockFn().returns({
+            marketCaps: [mock()],
+          })
+          .returnsOnce({
             prices: [
-              { date: START.add(1, 'hours').toDate(), value: 1000 },
-              { date: START.toDate(), value: 1200 },
               {
-                date: START.add(2, 'hours').toDate(),
-                value: 1100,
+                date: START.add(
+                  2 * MAX_DAYS_FOR_HOURLY_PRECISION,
+                  'days',
+                ).toDate(),
+                value: 2400,
               },
             ],
-            marketCaps: Array(3).fill(mock()),
+            marketCaps: [mock()],
           }),
-        })
-        const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
-        const prices = await coingeckoQueryService.getUsdPriceHistoryHourly(
-          CoingeckoId('weth'),
-          START,
-          START.add(2, 'hours'),
-        )
-        expect(prices).toEqual([
-          { timestamp: START, value: 1200, deltaMs: 0 },
-          { timestamp: START.add(1, 'hours'), value: 1000, deltaMs: 0 },
-          {
-            timestamp: START.add(2, 'hours'),
-            value: 1100,
-            deltaMs: 0,
-          },
-        ])
       })
-    },
-  )
+      const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+      const prices = await coingeckoQueryService.getUsdPriceHistoryHourly(
+        CoingeckoId('weth'),
+        START,
+        START.add(2 * MAX_DAYS_FOR_HOURLY_PRECISION, 'hours'),
+      )
+
+      const timestamps = getHourlyTimestamps(
+        START,
+        START.add(2 * MAX_DAYS_FOR_HOURLY_PRECISION, 'hours'),
+      )
+      const constPrices = [
+        { date: START.toDate(), value: 1200 },
+        {
+          date: START.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days').toDate(),
+          value: 2400,
+        },
+        {
+          date: START.add(2 * MAX_DAYS_FOR_HOURLY_PRECISION, 'days').toDate(),
+          value: 2600,
+        },
+      ]
+
+      expect(prices).toEqual(pickClosestValues(constPrices, timestamps))
+    })
+
+    it('handles duplicates in data returned from API', async () => {
+      const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
+
+      const coingeckoClient = mockObject<CoingeckoClient>({
+        getCoinMarketChartRange: mockFn().returns({
+          prices: [
+            { date: START.toDate(), value: 1200 },
+            { date: START.toDate(), value: 1200 },
+            { date: START.add(1, 'hours').toDate(), value: 1000 },
+            { date: START.add(1, 'hours').toDate(), value: 1000 },
+            { date: START.add(1, 'hours').toDate(), value: 1000 },
+            { date: START.add(2, 'hours').toDate(), value: 1100 },
+            { date: START.add(2, 'hours').toDate(), value: 1100 },
+          ],
+          marketCaps: Array(7).fill(mock()),
+        }),
+      })
+      const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+      const prices = await coingeckoQueryService.getUsdPriceHistoryHourly(
+        CoingeckoId('weth'),
+        START,
+        START.add(2, 'hours'),
+      )
+      expect(prices).toEqual([
+        { timestamp: START, value: 1200, deltaMs: 0 },
+        { timestamp: START.add(1, 'hours'), value: 1000, deltaMs: 0 },
+        { timestamp: START.add(2, 'hours'), value: 1100, deltaMs: 0 },
+      ])
+    })
+
+    it('handles irregular data returned from API', async () => {
+      const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
+
+      const coingeckoClient = mockObject<CoingeckoClient>({
+        getCoinMarketChartRange: mockFn().returns({
+          prices: [
+            { date: START.add(-2, 'minutes').toDate(), value: 1200 },
+            { date: START.add(1, 'hours').toDate(), value: 1000 },
+            {
+              date: START.add(2, 'hours').add(2, 'minutes').toDate(),
+              value: 1100,
+            },
+          ],
+          marketCaps: Array(3).fill(mock()),
+        }),
+      })
+      const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+      const prices = await coingeckoQueryService.getUsdPriceHistoryHourly(
+        CoingeckoId('weth'),
+        START,
+        START.add(2, 'hours'),
+      )
+      expect(prices).toEqual([
+        { timestamp: START, value: 1200, deltaMs: -2 * 60 * 1000 },
+        { timestamp: START.add(1, 'hours'), value: 1000, deltaMs: 0 },
+        {
+          timestamp: START.add(2, 'hours'),
+          value: 1100,
+          deltaMs: 2 * 60 * 1000,
+        },
+      ])
+    })
+
+    it('handles unsorted data returned from API', async () => {
+      const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
+
+      const coingeckoClient = mockObject<CoingeckoClient>({
+        getCoinMarketChartRange: mockFn().returns({
+          prices: [
+            { date: START.add(1, 'hours').toDate(), value: 1000 },
+            { date: START.toDate(), value: 1200 },
+            {
+              date: START.add(2, 'hours').toDate(),
+              value: 1100,
+            },
+          ],
+          marketCaps: Array(3).fill(mock()),
+        }),
+      })
+      const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+      const prices = await coingeckoQueryService.getUsdPriceHistoryHourly(
+        CoingeckoId('weth'),
+        START,
+        START.add(2, 'hours'),
+      )
+      expect(prices).toEqual([
+        { timestamp: START, value: 1200, deltaMs: 0 },
+        { timestamp: START.add(1, 'hours'), value: 1000, deltaMs: 0 },
+        {
+          timestamp: START.add(2, 'hours'),
+          value: 1100,
+          deltaMs: 0,
+        },
+      ])
+    })
+  })
 
   describe(CoingeckoQueryService.prototype.getCirculatingSupplies.name, () => {
     it('returns circulating supplies', async () => {

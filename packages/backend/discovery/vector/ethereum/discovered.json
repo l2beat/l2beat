@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20878383,
   "configHash": "0xe0a2d3f5e51b27ca876a625fdc0cebdce0da10a0965bb3e4fe5e11743ed6e5fc",
-  "version": 15,
   "contracts": [
     {
       "name": "SP1Vector",
@@ -385,5 +384,5 @@
     "succinct/SP1SuccinctGateway": "0xe0ec8df0fec605a6cb059948b08432aee71379584a5fa43412fa24a07701c877",
     "succinct/SP1Vector": "0xe1b6515d881fe5c6bf2819550b85bc508c9adf9df527c4be5cf4e0ed65cd4533"
   },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

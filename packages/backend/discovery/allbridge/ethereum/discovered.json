@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20785156,
   "configHash": "0x849d1c199ab72e8c4bfcbd944c1df393655ea421b29a431a4d7b3bf1604946d2",
-  "version": 15,
   "contracts": [
     {
       "name": "GasOracle",
@@ -591,5 +590,5 @@
   "usedTemplates": {
     "allbridge/pool": "0xbb30bf6f8a272cfbe6959733a828fa750a29898e627c9a1aa4ef1a5ed4e223f8"
   },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

@@ -32,7 +32,7 @@ export function TotalValueLockedCell(data: TotalValueLockedCellProps) {
   if (total === 0) {
     return (
       <div className="flex flex-col items-center">
-        <span className="text-base font-bold md:text-lg">{EM_DASH}</span>
+        <span className="text-base font-bold">{EM_DASH}</span>
       </div>
     )
   }
@@ -48,13 +48,13 @@ export function TotalValueLockedCell(data: TotalValueLockedCellProps) {
                 sentiment={anyBadWarnings ? 'bad' : 'warning'}
               />
             ) : null}
-            <span className="text-base font-bold md:text-lg">
+            <span className="text-base font-bold">
               {formatCurrency(total, 'usd')}
             </span>
             {data.change !== undefined && (
               <PercentChange
                 value={data.change}
-                className="ml-1 !text-base font-medium"
+                className="ml-1 text-xs font-medium md:text-base"
               />
             )}
           </div>

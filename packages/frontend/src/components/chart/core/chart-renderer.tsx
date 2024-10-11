@@ -80,6 +80,13 @@ export function ChartRenderer() {
     render()
   })
 
+  useEventListener('scroll', () => {
+    const rect = ref.current?.parentElement?.getBoundingClientRect()
+    if (rect) {
+      setRect(rect)
+    }
+  })
+
   return (
     <canvas
       ref={ref}

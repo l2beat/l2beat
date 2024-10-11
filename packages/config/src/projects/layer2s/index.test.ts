@@ -14,11 +14,11 @@ import { get$Implementations } from '@l2beat/discovery-types'
 import { chains } from '../../chains'
 import {
   NUGGETS,
-  ScalingProjectReference,
-  ScalingProjectRiskViewEntry,
-  ScalingProjectTechnologyChoice,
+  type ScalingProjectReference,
+  type ScalingProjectRiskViewEntry,
+  type ScalingProjectTechnologyChoice,
 } from '../../common'
-import { ScalingProjectTechnology } from '../../common/ScalingProjectTechnology'
+import type { ScalingProjectTechnology } from '../../common/ScalingProjectTechnology'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { checkRisk } from '../../test/helpers'
 import { tokenList } from '../../tokens'
@@ -206,6 +206,8 @@ describe('layer2s', () => {
                   case 'transfer':
                     return []
                   case 'sharpSubmission':
+                    return []
+                  case 'sharedBridge':
                     return []
                   default:
                     assertUnreachable(x)
@@ -626,6 +628,16 @@ describe('layer2s', () => {
       it(`${layer2.display.name} does not have duplicated badges`, () => {
         expect(layer2.badges?.length).toEqual(uniq(layer2.badges).length)
       })
+    }
+  })
+
+  describe('upcoming project have createdAt', () => {
+    for (const layer2 of layer2s) {
+      if (layer2.isUpcoming) {
+        it(layer2.display.name, () => {
+          expect(layer2.createdAt).not.toEqual(undefined)
+        })
+      }
     }
   })
 })

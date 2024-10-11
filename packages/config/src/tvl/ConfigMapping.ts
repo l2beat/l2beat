@@ -53,10 +53,12 @@ export class ConfigMapping {
         assetId = amountConfig.assetId
         break
       case 'aggLayerL2Token':
+      case 'elasticChainL2Token':
         assetId = AssetId.create(ethereum.name, amountConfig.l1Address)
         break
       case 'aggLayerNativeEtherPreminted':
       case 'aggLayerNativeEtherWrapped':
+      case 'elasticChainEther':
         assetId = AssetId.create(ethereum.name, 'native')
         break
       default:

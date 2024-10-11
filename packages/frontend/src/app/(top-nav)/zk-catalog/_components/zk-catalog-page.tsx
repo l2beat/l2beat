@@ -91,7 +91,7 @@ export function ZkCatalogPage(props: ZkCatalogViewProps) {
           <AccordionContent className="relative -top-3 rounded-b-xl border border-t-0 border-gray-300 pt-3 dark:border-gray-800 md:space-y-2 md:px-6 md:pb-6">
             {item.shortDescription ? (
               <div className="my-7 flex flex-col gap-0.5 px-5">
-                <div className="text-2xs font-semibold uppercase text-gray-500">
+                <div className="text-2xs font-medium uppercase text-gray-500">
                   Description
                 </div>
                 <div className="text-sm font-medium">

@@ -3,7 +3,6 @@
   "chain": "optimism",
   "blockNumber": 122593187,
   "configHash": "0x31a3019cd0013048c71bd882672a02bed221167c8934d74ae1189dbeb3ceb61b",
-  "version": 15,
   "contracts": [
     {
       "name": "MintManagerOwner",
@@ -1266,5 +1265,5 @@
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091"
   },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

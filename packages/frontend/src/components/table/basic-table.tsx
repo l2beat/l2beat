@@ -42,6 +42,10 @@ interface Props<T extends BasicEntry> {
    * If the sub component is a raw component (e.g. renders a tr element), false by default
    */
   rawSubComponent?: boolean
+  /**
+   * If the table is inside a main page card - bypass right margin by adding classes
+   */
+  insideMainPageCard?: boolean
   rowColoringMode?: 'default' | 'ethereum-only'
 }
 
@@ -87,37 +91,50 @@ export function BasicTable<T extends BasicEntry>({
   const groupedHeader = maxDepth === 1 ? headerGroups[0] : undefined
   const actualHeader = maxDepth === 1 ? headerGroups[1]! : headerGroups[0]!
 
+  const columnLength =
+    actualHeader.headers.length +
+    (groupedHeader
+      ? groupedHeader.headers.filter((h) => !h.isPlaceholder).length
+      : 0)
+
   return (
     <Table className={className}>
       {groupedHeader && <ColGroup headers={groupedHeader.headers} />}
       <TableHeader>
-        {groupedHeader && (
-          <TableHeaderRow className="border-none">
-            {groupedHeader.headers.map((header) => {
-              return (
-                <React.Fragment key={header.id}>
-                  <th
-                    colSpan={header.colSpan}
-                    className={cn(
-                      'text-base text-black dark:text-white',
-                      !header.isPlaceholder &&
-                        !!header.column.columnDef.header &&
-                        'rounded-t-lg px-6 pt-4',
-                    )}
-                  >
-                    {!header.isPlaceholder &&
-                      !!header.column.columnDef.header &&
-                      flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
+        {groupedHeader &&
+          groupedHeader.headers.some(
+            (header) =>
+              !header.isPlaceholder && !!header.column.columnDef.header,
+          ) && (
+            <TableHeaderRow>
+              {groupedHeader.headers.map((header) => {
+                return (
+                  <React.Fragment key={header.id}>
+                    <th
+                      colSpan={header.colSpan}
+                      className={cn(
+                        'font-medium tracking-[-0.13px] text-primary',
+                        !header.isPlaceholder &&
+                          !!header.column.columnDef.header &&
+                          'rounded-t-lg px-6 pt-4',
+                        header.column.getIsPinned() &&
+                          getRowTypeClassNamesWithoutOpacity(null),
                       )}
-                  </th>
-                  {!header.isPlaceholder && <ColumnFiller as="th" />}
-                </React.Fragment>
-              )
-            })}
-          </TableHeaderRow>
-        )}
+                      style={getCommonPinningStyles(header.column)}
+                    >
+                      {!header.isPlaceholder &&
+                        !!header.column.columnDef.header &&
+                        flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
+                    </th>
+                    {!header.isPlaceholder && <ColumnFiller as="th" />}
+                  </React.Fragment>
+                )
+              })}
+            </TableHeaderRow>
+          )}
         <TableHeaderRow>
           {actualHeader.headers.map((header) => {
             const groupParams = getGroupParams(header.column)
@@ -167,6 +184,12 @@ export function BasicTable<T extends BasicEntry>({
             )
           })}
         </TableHeaderRow>
+        <TableHeaderRow>
+          <th
+            colSpan={columnLength}
+            className="mx-0.5 h-0.5 rounded-full bg-surface-tertiary"
+          />
+        </TableHeaderRow>
       </TableHeader>
       <TableBody>
         {table.getRowModel().rows.map((row) => {
@@ -185,6 +208,7 @@ export function BasicTable<T extends BasicEntry>({
                   const { meta } = cell.column.columnDef
                   const groupParams = getGroupParams(cell.column)
                   const href = getHref(row.original.href, meta?.hash)
+
                   return (
                     <React.Fragment key={`${row.id}-${cell.id}`}>
                       <TableCell
@@ -194,7 +218,13 @@ export function BasicTable<T extends BasicEntry>({
                           cell.column.getIsPinned() &&
                             getRowTypeClassNamesWithoutOpacity(rowType),
                           groupParams?.isFirstInGroup && 'pl-6',
-                          groupParams?.isLastInGroup && 'pr-6',
+                          groupParams?.isLastInGroup && '!pr-6',
+                          cell.column.getCanSort() && meta?.align === undefined
+                            ? groupParams?.isFirstInGroup
+                              ? 'pl-10'
+                              : 'pl-4'
+                            : undefined,
+
                           meta?.cellClassName,
                         )}
                         style={getCommonPinningStyles(cell.column)}
@@ -237,9 +267,7 @@ function ColGroup<T, V>(props: { headers: Header<T, V>[] }) {
     return (
       <React.Fragment key={header.id}>
         <colgroup
-          className={cn(
-            !header.isPlaceholder && 'bg-gray-100 dark:bg-zinc-800',
-          )}
+          className={cn(!header.isPlaceholder && 'bg-surface-secondary')}
         >
           {range(header.colSpan).map((i) => (
             <col key={`${header.id}-${i}`} />
@@ -361,11 +389,11 @@ export function getRowTypeClassNamesWithoutOpacity(rowType: RowType | null) {
     case 'ethereum':
       return 'bg-blue-400 group-hover/row:bg-blue-400 dark:bg-blue-900 dark:border-b-blue-500 dark:group-hover/row:bg-blue-900'
     case 'unverified':
-      return 'bg-[#FDDDDD] v2:bg-[#FEE4E4] dark:bg-[#311413] v2:dark:bg-[#391617] group-hover/row:bg-[#FDDDDD] dark:group-hover/row:bg-[#3F1111] v2:dark:group-hover/row:bg-[#401213]'
+      return 'bg-[#FEE4E4] dark:bg-[#391617] group-hover/row:bg-[#FDDDDD] dark:group-hover/row:bg-[#401213]'
     case 'under-review':
     case 'implementation-changed':
-      return 'bg-[#faf5e6] dark:bg-[#2a2418] v2:dark:bg-[#363122] group-hover/row:!bg-[#FBEFC9] dark:group-hover/row:!bg-[#3f351b] v2:dark:group-hover/row:!bg-[#4C411F]'
+      return 'bg-[#faf5e6] dark:bg-[#363122] group-hover/row:!bg-[#FBEFC9] dark:group-hover/row:!bg-[#4C411F]'
     default:
-      return 'bg-white v2:bg-pure-white dark:bg-neutral-900 v2:dark:bg-[#1F2025] group-hover/row:shadow-sm group-hover/row:bg-[#EEEEEE] dark:group-hover/row:bg-[#2a292c] v2:dark:group-hover/row:bg-[#35363A]'
+      return 'bg-surface-primary group-hover/row:shadow-sm group-hover/row:bg-[#EEEEEE] dark:group-hover/row:bg-[#35363A]'
   }
 }

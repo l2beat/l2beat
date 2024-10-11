@@ -1053,6 +1053,20 @@
       "supply": "zero"
     },
     {
+      "name": "Cronos zkEVM CRO",
+      "coingeckoId": "cronos-zkevm-cro",
+      "address": "0x28Ff2E4dD1B58efEB0fC138602A28D5aE81e44e2",
+      "symbol": "zkCRO",
+      "decimals": 18,
+      "deploymentTimestamp": 1718769911,
+      "coingeckoListingTimestamp": 1724803200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39734/large/Screenshot_2024-08-16_at_10.42.41%E2%80%AFAM.png?1723776225",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Curve DAO Token",
       "coingeckoId": "curve-dao-token",
       "address": "0xD533a949740bb3306d119CC777fa900bA034cd52",
@@ -1362,6 +1376,20 @@
       "supply": "zero"
     },
     {
+      "name": "Eigen",
+      "coingeckoId": "eigenlayer",
+      "address": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+      "symbol": "EIGEN",
+      "decimals": 18,
+      "deploymentTimestamp": 1697499563,
+      "coingeckoListingTimestamp": 1727740800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37441/large/eigen.jpg?1728023974",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Ekubo Protocol",
       "coingeckoId": "ekubo-protocol",
       "address": "0x04C46E830Bb56ce22735d5d8Fc9CB90309317d0f",
@@ -1468,6 +1496,20 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "ether.fi BTC",
+      "coingeckoId": "ether-fi-staked-btc",
+      "address": "0x657e8C867D8B37dCC18fA4Caead9C45EB088C642",
+      "symbol": "eBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1723597307,
+      "coingeckoListingTimestamp": 1727654400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50411/large/eBTC.png?1727664788",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -4371,6 +4413,20 @@
       "supply": "zero"
     },
     {
+      "name": "Veno yield bearing ETH",
+      "coingeckoId": "veno-eth",
+      "address": "0x76bf2D1e6dFda645c0c17440B17Eccc181dfC351",
+      "symbol": "ybETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1721279435,
+      "coingeckoListingTimestamp": 1724198400,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39776/large/Screenshot_2024-08-19_at_5.07.51%E2%80%AFPM.png?1724058891",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "VENT",
       "coingeckoId": "vent-finance",
       "address": "0x5F0bc16D50F72d10b719dBF6845DE2E599eb5624",
@@ -6591,20 +6647,6 @@
       }
     },
     {
-      "name": "USD+",
-      "coingeckoId": "dinari-usd",
-      "address": "0x6F086dB0f6A621a915bC90295175065c9e5d9b8c",
-      "symbol": "USD+",
-      "decimals": 6,
-      "deploymentTimestamp": 1718908690,
-      "coingeckoListingTimestamp": 1719360000,
-      "category": "stablecoin",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/38879/large/USDplus-200.png?1719374938",
-      "chainId": 7887,
-      "source": "native",
-      "supply": "totalSupply"
-    },
-    {
       "name": "Aerodrome",
       "coingeckoId": "aerodrome-finance",
       "address": "0x940181a94A35A4569E4529A3CDfB74e38FD98631",
@@ -7165,6 +7207,27 @@
       }
     },
     {
+      "name": "Aethir Token",
+      "coingeckoId": "aethir",
+      "address": "0xc87B37a581ec3257B734886d9d3a581F5A9d056c",
+      "symbol": "ATH",
+      "decimals": 18,
+      "deploymentTimestamp": 1717572209,
+      "coingeckoListingTimestamp": 1718150400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36179/large/logogram_circle_dark_green_vb_green_%281%29.png?1718232706",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Axelar (ITS)"
+          }
+        ]
+      }
+    },
+    {
       "name": "Arbitrum",
       "coingeckoId": "arbitrum",
       "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
@@ -7296,6 +7359,20 @@
       "coingeckoListingTimestamp": 1684800000,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/30505/large/dmt.png?1696529391",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "name": "Eigenpie",
+      "coingeckoId": "eigenpie",
+      "address": "0x7E7a7C916c19a45769f6BDAF91087f93c6C12F78",
+      "symbol": "EGP",
+      "decimals": 18,
+      "deploymentTimestamp": 1726032245,
+      "coingeckoListingTimestamp": 1727222400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37810/large/eigenpie.jpeg?1715597613",
       "chainId": 42161,
       "source": "native",
       "supply": "circulatingSupply"
