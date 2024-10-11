@@ -1,18 +1,12 @@
 import { createHash } from 'crypto'
-import { existsSync, readFileSync, readdirSync } from 'fs'
+import { existsSync, readFileSync, readdirSync, writeFileSync } from 'fs'
 import path, { join } from 'path'
 import chalk from 'chalk'
 
 import { hashJson } from '@l2beat/shared'
 import { Hash256, json, stripAnsiEscapeCodes } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
-import {
-  HashedFileContent,
-  buildSimilarityHashmap,
-  estimateSimilarity,
-  flattenFirstSource,
-  removeComments,
-} from '../../flatten/utils'
+import { flattenFirstSource } from '../../flatten/utils'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
 import {
   DiscoveryContract,
@@ -20,6 +14,7 @@ import {
 } from '../config/RawDiscoveryConfig'
 import { ContractSources } from '../source/SourceCodeService'
 import { readJsonc } from '../utils/readJsonc'
+import { format } from '../../flatten/format'
 
 const TEMPLATES_PATH = path.join('discovery', '_templates')
 const TEMPLATE_SHAPE_FOLDER = 'shape'
@@ -71,7 +66,7 @@ export class TemplateService {
   }
 
   findMatchingTemplates(
-    name: string,
+    _: string,
     sources: ContractSources,
   ): Record<string, number> {
     const result: Record<string, number> = {}
@@ -79,43 +74,43 @@ export class TemplateService {
       return result
     }
 
-    const flatSource = flattenFirstSource(sources)
-    if (flatSource === undefined) {
+    const needleSource = flattenFirstSource(sources)
+    if (needleSource === undefined) {
       return result
     }
 
-    const processedSource = removeComments(flatSource)
-    const sourceHashed: HashedFileContent = {
-      path: '',
-      hashChunks: buildSimilarityHashmap(processedSource),
-      content: processedSource,
-    }
-
+    const needleHash = sha1(formatIntoHashable(needleSource))
     const allTemplates = this.listAllTemplates()
     for (const [templateId, shapeFilePaths] of Object.entries(allTemplates)) {
-      const similarities: number[] = []
-      for (const shapeFilePath of shapeFilePaths) {
-        const shapeFileContent = removeComments(
-          readFileSync(shapeFilePath, 'utf8'),
-        )
-        const shapeFileHashed: HashedFileContent = {
-          path: shapeFilePath,
-          hashChunks: buildSimilarityHashmap(shapeFileContent),
-          content: shapeFileContent,
+      const haystackHashes = shapeFilePaths.map((p) =>
+        sha1(formatIntoHashable(readFileSync(p, 'utf8'))),
+      )
+
+      /*
+      if (
+        templateId === 'opstack/OptimismMintableERC20Factory' &&
+        name === 'OptimismMintableERC20Factory'
+      ) {
+        writeFileSync('needle.sol', needleSource)
+        for (const path of shapeFilePaths) {
+          const hash = sha1(format(readFileSync(path, 'utf8')))
+          if (
+            hash ===
+            'e1fa27db9fa70d4d332c781b7f476cf9142ad69ccac8397d2f586f7d2d8f0ad1'
+          ) {
+            writeFileSync('haystack.sol', format(readFileSync(path, 'utf8')))
+          }
         }
-        const similarity = estimateSimilarity(sourceHashed, shapeFileHashed)
-        similarities.push(similarity)
+
+        console.log('shrek', name, haystackHashes, needleHash)
       }
-      const maxSimilarity = Math.max(...similarities)
-      this.executedMatches[name] ??= []
-      this.executedMatches[name]?.push({
-        templateId,
-        similarity: maxSimilarity,
-      })
-      if (maxSimilarity >= this.similarityThreshold) {
-        result[templateId] = maxSimilarity
+      */
+
+      if (haystackHashes.includes(needleHash)) {
+        result[templateId] = 1
       }
     }
+
     return result
   }
 
@@ -253,6 +248,24 @@ export function printExecutedMatches(
     }
     console.log('')
   }
+}
+
+function formatIntoHashable(source: string) {
+  let formatted = format(source)
+
+  if (formatted.startsWith('pragma')) {
+    const firstNewlineIndex = formatted.indexOf('\n')
+    formatted =
+      firstNewlineIndex === -1
+        ? formatted
+        : formatted.slice(firstNewlineIndex + 1)
+  }
+
+  return formatted.trim()
+}
+
+function sha1(str: string): string {
+  return createHash('sha256').update(str).digest('hex')
 }
 
 export function colorMap(value: number): string {
