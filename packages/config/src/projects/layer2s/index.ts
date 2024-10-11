@@ -5,6 +5,7 @@ import { aiechain } from './aiechain'
 import { alephzero } from './alephzero'
 import { alienx } from './alienx'
 import { align } from './align'
+import { allo } from './allo'
 import { ancient } from './ancient'
 import { apex } from './apex'
 import { arbitrum } from './arbitrum'
@@ -170,6 +171,7 @@ export const layer2s: Layer2[] = [
   aevo,
   aiechain,
   alephzero,
+  allo,
   ancient,
   apex,
   arbitrum,

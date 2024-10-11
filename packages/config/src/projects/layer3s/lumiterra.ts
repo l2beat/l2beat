@@ -1,10 +1,11 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { underReviewL3 } from '../layer2s/templates/underReview'
+import { upcomingL3 } from '../layer2s/templates/upcoming'
 import { Layer3 } from './types'
 
-export const lumiterra: Layer3 = underReviewL3({
+export const lumiterra: Layer3 = upcomingL3({
   id: 'lumiterra',
+  createdAt: new UnixTime(1728665516),
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Lumiterra',
