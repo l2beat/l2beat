@@ -1,4 +1,5 @@
 import { createHash } from 'crypto'
+import { Hash256 } from '@l2beat/shared-pure'
 import { ContractSources } from '../discovery/source/SourceCodeService'
 import { ContractSource } from '../utils/IEtherscanClient'
 import { FileContent } from './ParsedFilesManager'
@@ -81,8 +82,8 @@ export function formatIntoHashable(source: string) {
   return formatted.trim()
 }
 
-export function sha2_256bit(str: string): string {
-  return createHash('sha256').update(str).digest('hex')
+export function sha2_256bit(str: string): Hash256 {
+  return Hash256(`0x${createHash('sha256').update(str).digest('hex')}`)
 }
 
 export function removeComments(source: string): string {

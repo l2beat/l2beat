@@ -1,4 +1,3 @@
-import { createHash } from 'crypto'
 import { existsSync, readFileSync, readdirSync } from 'fs'
 import path, { join } from 'path'
 
@@ -67,12 +66,8 @@ export class TemplateService {
     }
 
     const needleHash = sha2_256bit(formatIntoHashable(needleSource))
-    const allTemplates = this.listAllTemplates()
-    for (const [templateId, shapeFilePaths] of Object.entries(allTemplates)) {
-      const haystackHashes = shapeFilePaths.map((p) =>
-        sha2_256bit(formatIntoHashable(readFileSync(p, 'utf8'))),
-      )
-
+    const allShapes = this.getAllShapeHashes()
+    for (const [templateId, haystackHashes] of Object.entries(allShapes)) {
       if (haystackHashes.includes(needleHash)) {
         result.push(templateId)
       }
@@ -99,6 +94,19 @@ export class TemplateService {
     return hashJson(templateJson as json)
   }
 
+  getAllShapeHashes(): Record<string, Hash256[]> {
+    const result: Record<string, Hash256[]> = {}
+    const allTemplates = this.listAllTemplates()
+    for (const [templateId, shapeFilePaths] of Object.entries(allTemplates)) {
+      const haystackHashes = shapeFilePaths.map((p) =>
+        sha2_256bit(formatIntoHashable(readFileSync(p, 'utf8'))),
+      )
+      result[templateId] = haystackHashes
+    }
+
+    return result
+  }
+
   getAllTemplateHashes(): Record<string, Hash256> {
     const result: Record<string, Hash256> = {}
     const allTemplates = this.listAllTemplates()
@@ -106,27 +114,6 @@ export class TemplateService {
       result[templateId] = this.getTemplateHash(templateId)
     }
     return result
-  }
-
-  getShapeFilesHash(): Hash256 {
-    const hash = createHash('sha256')
-    const allTemplates = this.listAllTemplates()
-
-    const sortedTemplateIds = Object.keys(allTemplates)
-    sortedTemplateIds.sort()
-
-    for (const templateId of sortedTemplateIds) {
-      const sortedShapeFilePaths = allTemplates[templateId] ?? []
-      sortedShapeFilePaths.sort()
-      for (const shapeFilePath of sortedShapeFilePaths) {
-        const shapeFileContent = readFileSync(shapeFilePath, 'utf8')
-        hash.update(templateId)
-        hash.update('\0') // null byte separator
-        hash.update(shapeFileContent)
-        hash.update('\0') // null byte separator
-      }
-    }
-    return Hash256('0x' + hash.digest('hex'))
   }
 
   applyTemplateOnContractOverrides(

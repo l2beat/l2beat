@@ -14,7 +14,6 @@ export function toDiscoveryOutput(
   configHash: Hash256,
   blockNumber: number,
   results: Analysis[],
-  shapeFilesHash: Hash256,
 ): DiscoveryOutput {
   return {
     name,
@@ -23,7 +22,6 @@ export function toDiscoveryOutput(
     configHash,
     ...processAnalysis(results),
     usedTemplates: collectUsedTemplatesWithHashes(results),
-    shapeFilesHash,
   }
 }
 
