@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { assert, EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { bridges, layer2s, layer3s } from '../'
@@ -85,7 +85,15 @@ describe('projects', () => {
 
           if ('address' in contract && project.permissions !== 'UnderReview') {
             const upgradableBy = contract.upgradableBy
-            const actors = project.permissions?.map((x) => x.name) ?? []
+            const actors =
+              project.permissions?.map((x) => {
+                if (x.name === 'EOA') {
+                  assert(x.accounts[0].type === 'EOA')
+                  return x.accounts[0].address
+                }
+                return x.name
+              }) ?? []
+
             if (upgradableBy) {
               it(`contracts[${i}].upgradableBy is valid`, () => {
                 expect(actors).toInclude(...upgradableBy)
