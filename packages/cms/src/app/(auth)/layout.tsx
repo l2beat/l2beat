@@ -6,7 +6,6 @@ import {
   Network,
   Search,
   SendToBack,
-  Sun,
 } from 'lucide-react'
 
 import { Button } from '~/components/ui/button'
@@ -72,7 +71,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   key={name}
                   href={href}
                   name={name}
-                  icon={<Icon className="h-4 w-4" />}
+                  icon={<Icon className="size-4" />}
                   activeBehavior={{ type: 'prefix', prefix: href }}
                 />
               ))}
@@ -89,18 +88,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 size="icon"
                 className="shrink-0 md:hidden"
               >
-                <Menu className="h-5 w-5" />
+                <Menu className="size-5" />
                 <span className="sr-only">Toggle navigation menu</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="flex flex-col">
-              <nav className="grid gap-2 text-lg font-medium mt-6">
+              <nav className="mt-6 grid gap-2 text-lg font-medium">
                 {menu.map(({ name, href, icon: Icon }) => (
                   <NavMenuItem
                     key={name}
                     href={href}
                     name={name}
-                    icon={<Icon className="h-4 w-4" />}
+                    icon={<Icon className="size-4" />}
                     activeBehavior={{ type: 'prefix', prefix: href }}
                   />
                 ))}
@@ -110,7 +109,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="w-full flex-1">
             <form>
               <div className="relative">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Search className="absolute left-2.5 top-2.5 size-4 text-muted-foreground" />
                 <Input
                   type="search"
                   placeholder="Search networks..."
@@ -122,15 +121,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="secondary" size="icon" className="rounded-full">
-                <CircleUser className="h-5 w-5" />
+                <CircleUser className="size-5" />
                 <span className="sr-only">Toggle user menu</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Support</DropdownMenuItem>
+              {/*<DropdownMenuItem>Settings</DropdownMenuItem>*/}
               <DropdownMenuSeparator />
               <form action={logout}>
                 <DropdownMenuItem asChild>
@@ -140,9 +138,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </DropdownMenuContent>
           </DropdownMenu>
         </header>
-        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-          {children}
-        </main>
+        <div className="flex flex-1 flex-col">
+          <main className="flex w-full flex-col gap-4 p-4 lg:gap-6 lg:p-6">
+            {children}
+          </main>
+          <footer className="border-t p-4 text-center text-sm text-muted-foreground lg:p-6">
+            &copy; {new Date().getFullYear()} L2BEAT. All rights reserved.
+          </footer>
+        </div>
       </div>
     </div>
   )

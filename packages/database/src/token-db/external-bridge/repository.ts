@@ -15,7 +15,7 @@ export class ExternalBridgeRepository extends BaseRepository {
     return rows
   }
 
-  async getById(id: string): Promise<ExternalBridgeRecord | null> {
+  async findById(id: string): Promise<ExternalBridgeRecord | null> {
     const row = await this.db
       .selectFrom('ExternalBridge')
       .select(selectExternalBridge)

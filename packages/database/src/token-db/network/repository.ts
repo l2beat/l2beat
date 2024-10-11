@@ -131,6 +131,15 @@ export class NetworkRepository extends BaseRepository {
     return row
   }
 
+  async insert(network: UpsertableNetworkRecord): Promise<{ id: string }> {
+    const row = upsertableToRow(network)
+    return await this.db
+      .insertInto('Network')
+      .values(row)
+      .returning('id')
+      .executeTakeFirstOrThrow()
+  }
+
   async upsert(network: UpsertableNetworkRecord): Promise<{ id: string }> {
     const row = upsertableToRow(network)
     return await this.db
@@ -163,6 +172,11 @@ export class NetworkRepository extends BaseRepository {
     return networks.length
   }
 
+  async update(id: string, record: UpsertableNetworkRecord): Promise<void> {
+    const row = upsertableToRow(record)
+    await this.db.updateTable('Network').set(row).where('id', '=', id).execute()
+  }
+
   async updateByCoingeckoId(
     coingeckoId: string,
     record: UpsertableNetworkRecord,
@@ -173,6 +187,10 @@ export class NetworkRepository extends BaseRepository {
       .set(row)
       .where('coingeckoId', '=', coingeckoId)
       .execute()
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.db.deleteFrom('Network').where('id', '=', id).execute()
   }
 
   async deleteAll(): Promise<bigint> {
