@@ -1,11 +1,12 @@
 import { createHash } from 'crypto'
-import { existsSync, readFileSync, readdirSync, writeFileSync } from 'fs'
+import { existsSync, readFileSync, readdirSync } from 'fs'
 import path, { join } from 'path'
 import chalk from 'chalk'
 
 import { hashJson } from '@l2beat/shared'
-import { Hash256, json, stripAnsiEscapeCodes } from '@l2beat/shared-pure'
+import { Hash256, json } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
+import { format } from '../../flatten/format'
 import { flattenFirstSource } from '../../flatten/utils'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
 import {
@@ -14,27 +15,14 @@ import {
 } from '../config/RawDiscoveryConfig'
 import { ContractSources } from '../source/SourceCodeService'
 import { readJsonc } from '../utils/readJsonc'
-import { format } from '../../flatten/format'
 
 const TEMPLATES_PATH = path.join('discovery', '_templates')
 const TEMPLATE_SHAPE_FOLDER = 'shape'
-const TEMPLATE_SIMILARITY_THRESHOLD = 0.995 // TODO: why two identical files are not 1.0?
-
-export interface MatchResult {
-  similarity: number
-  templateId: string
-}
-
-export type ExecutedMatches = Record<string, MatchResult[]>
 
 export class TemplateService {
   private readonly loadedTemplates: Record<string, DiscoveryContract> = {}
-  readonly executedMatches: ExecutedMatches = {}
 
-  constructor(
-    private readonly rootPath: string = '',
-    private readonly similarityThreshold: number = TEMPLATE_SIMILARITY_THRESHOLD,
-  ) {}
+  constructor(private readonly rootPath: string = '') {}
 
   /**
    * @returns A record where the keys are template IDs (relative paths from the templates
@@ -65,11 +53,8 @@ export class TemplateService {
     return result
   }
 
-  findMatchingTemplates(
-    _: string,
-    sources: ContractSources,
-  ): Record<string, number> {
-    const result: Record<string, number> = {}
+  findMatchingTemplates(sources: ContractSources): string[] {
+    const result: string[] = []
     if (!sources.isVerified) {
       return result
     }
@@ -87,7 +72,7 @@ export class TemplateService {
       )
 
       if (haystackHashes.includes(needleHash)) {
-        result[templateId] = 1
+        result.push(templateId)
       }
     }
 
@@ -187,49 +172,6 @@ function listAllPaths(path: string): string[] {
   return result
 }
 
-function formatRow(entry: MatchResult, longestTemplateId: number): string {
-  return `${entry.templateId.padStart(longestTemplateId)} : ${colorMap(
-    entry.similarity,
-  )}`
-}
-
-export function printExecutedMatches(
-  executedMatches: ExecutedMatches,
-  similarityCutoff: number,
-) {
-  let longestTemplateId = Number.MIN_SAFE_INTEGER
-  for (const entries of Object.values(executedMatches)) {
-    const filtered = entries.filter((e) => e.similarity >= similarityCutoff)
-    longestTemplateId = Math.max(
-      longestTemplateId,
-      ...filtered.map((e) => e.templateId.length),
-    )
-  }
-
-  const phantomRow = formatRow(
-    { similarity: 1, templateId: 'a' },
-    longestTemplateId,
-  )
-  const rowLength = stripAnsiEscapeCodes(phantomRow).length
-
-  for (const [key, entries] of Object.entries(executedMatches)) {
-    const filtered = entries
-      .filter((e) => e.similarity >= similarityCutoff)
-      .sort((a, b) => b.similarity - a.similarity)
-
-    console.log(`${`=== ${key} ===`.padEnd(rowLength, '=')}\n`)
-    if (filtered.length === 0) {
-      console.log(chalk.yellow('No entries\n'))
-      continue
-    }
-
-    for (const entry of filtered) {
-      console.log(formatRow(entry, longestTemplateId))
-    }
-    console.log('')
-  }
-}
-
 function formatIntoHashable(source: string) {
   let formatted = format(source)
 
@@ -246,26 +188,4 @@ function formatIntoHashable(source: string) {
 
 function sha1(str: string): string {
   return createHash('sha256').update(str).digest('hex')
-}
-
-export function colorMap(value: number): string {
-  const valueString = value.toFixed(2)
-
-  if (value < 0.125) {
-    return chalk.grey(valueString)
-  } else if (value < 0.25) {
-    return chalk.red(valueString)
-  } else if (value < 0.375) {
-    return chalk.redBright(valueString)
-  } else if (value < 0.5) {
-    return chalk.magenta(valueString)
-  } else if (value < 0.625) {
-    return chalk.magentaBright(valueString)
-  } else if (value < 0.75) {
-    return chalk.yellow(valueString)
-  } else if (value < 0.875) {
-    return chalk.yellowBright(valueString)
-  } else {
-    return chalk.greenBright(valueString)
-  }
 }

@@ -23,7 +23,7 @@ describe(AddressAnalyzer.name, () => {
         mockObject<SourceCodeService>(),
         mockObject<HandlerExecutor>(),
         mockObject<TemplateService>({
-          findMatchingTemplates: () => ({}),
+          findMatchingTemplates: () => [],
         }),
         DiscoveryLogger.SILENT,
       )
@@ -119,7 +119,7 @@ describe(AddressAnalyzer.name, () => {
           }),
         }),
         mockObject<TemplateService>({
-          findMatchingTemplates: () => ({}),
+          findMatchingTemplates: () => [],
         }),
         DiscoveryLogger.SILENT,
       )
@@ -241,7 +241,7 @@ describe(AddressAnalyzer.name, () => {
           }),
         }),
         mockObject<TemplateService>({
-          findMatchingTemplates: () => ({}),
+          findMatchingTemplates: () => [],
         }),
         DiscoveryLogger.SILENT,
       )
@@ -359,7 +359,7 @@ describe(AddressAnalyzer.name, () => {
           }),
         }),
         mockObject<TemplateService>({
-          findMatchingTemplates: () => ({}),
+          findMatchingTemplates: () => [],
         }),
         DiscoveryLogger.SILENT,
       )
@@ -444,7 +444,7 @@ describe(AddressAnalyzer.name, () => {
             }),
         }),
         mockObject<TemplateService>({
-          findMatchingTemplates: () => ({}),
+          findMatchingTemplates: () => [],
         }),
         DiscoveryLogger.SILENT,
       )
@@ -519,7 +519,7 @@ describe(AddressAnalyzer.name, () => {
             }),
         }),
         mockObject<TemplateService>({
-          findMatchingTemplates: () => ({}),
+          findMatchingTemplates: () => [],
         }),
         DiscoveryLogger.SILENT,
       )
@@ -568,7 +568,7 @@ describe(AddressAnalyzer.name, () => {
         }),
         mockObject<HandlerExecutor>(),
         mockObject<TemplateService>({
-          findMatchingTemplates: () => ({}),
+          findMatchingTemplates: () => [],
         }),
         DiscoveryLogger.SILENT,
       )
@@ -616,7 +616,7 @@ describe(AddressAnalyzer.name, () => {
         }),
         mockObject<HandlerExecutor>(),
         mockObject<TemplateService>({
-          findMatchingTemplates: () => ({}),
+          findMatchingTemplates: () => [],
         }),
         DiscoveryLogger.SILENT,
       )
@@ -666,7 +666,7 @@ describe(AddressAnalyzer.name, () => {
       mockObject<SourceCodeService>(),
       mockObject<HandlerExecutor>(),
       mockObject<TemplateService>({
-        findMatchingTemplates: () => ({}),
+        findMatchingTemplates: () => [],
       }),
       DiscoveryLogger.SILENT,
     )

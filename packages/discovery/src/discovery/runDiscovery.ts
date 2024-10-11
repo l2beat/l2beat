@@ -7,10 +7,6 @@ import { HttpClient } from '../utils/HttpClient'
 import { printSharedModuleInfo } from '../utils/printSharedModuleInfo'
 import { DiscoveryLogger } from './DiscoveryLogger'
 import { Analysis } from './analysis/AddressAnalyzer'
-import {
-  ExecutedMatches,
-  printExecutedMatches,
-} from './analysis/TemplateService'
 import { ConfigReader } from './config/ConfigReader'
 import { DiscoveryConfig } from './config/DiscoveryConfig'
 import { getDiscoveryEngine } from './getDiscoveryEngine'
@@ -39,13 +35,7 @@ export async function runDiscovery(
       : undefined)
 
   const logger = DiscoveryLogger.CLI
-  const {
-    result,
-    blockNumber,
-    providerStats,
-    shapeFilesHash,
-    executedMatches,
-  } = await discover(
+  const { result, blockNumber, providerStats, shapeFilesHash } = await discover(
     chainConfigs,
     projectConfig,
     logger,
@@ -77,12 +67,6 @@ export async function runDiscovery(
 
   if (config.printStats) {
     printProviderStats(providerStats)
-  }
-  if (config.printTemplateSimilarity) {
-    printExecutedMatches(
-      executedMatches,
-      config.templateSimilarityCutoff ?? 0.5,
-    )
   }
 }
 
@@ -153,7 +137,6 @@ export async function discover(
   blockNumber: number
   providerStats: AllProviderStats
   shapeFilesHash: Hash256
-  executedMatches: ExecutedMatches
 }> {
   const sqliteCache = new SQLiteCache()
   await sqliteCache.init()
@@ -172,6 +155,5 @@ export async function discover(
     blockNumber,
     providerStats: allProviders.getStats(config.chain),
     shapeFilesHash: templateService.getShapeFilesHash(),
-    executedMatches: templateService.executedMatches,
   }
 }
