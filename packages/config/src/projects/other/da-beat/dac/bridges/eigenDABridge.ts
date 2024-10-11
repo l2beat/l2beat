@@ -86,7 +86,7 @@ export const eigenDAbridge = {
     risks: [
       {
         category: 'Funds can be lost if',
-        text: 'the bridge contract receives a malicious code upgrade. There is no delay on code upgrades.',
+        text: 'the bridge contract or any of its EigenLayer dependencies receives a malicious code upgrade. There is no delay on code upgrades.',
       },
       {
         category: 'Funds can be lost if',
