@@ -66,4 +66,8 @@ export class ExternalBridgeRepository extends BaseRepository {
         .executeTakeFirstOrThrow())
     )
   }
+
+  async delete(id: string) {
+    await this.db.deleteFrom('ExternalBridge').where('id', '=', id).execute()
+  }
 }

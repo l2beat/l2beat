@@ -67,11 +67,11 @@ export default async function Page({
                   <TableRow key={bridge.id}>
                     <TableCell className="font-mono">{bridge.id}</TableCell>
                     <TableCell>{bridge.name}</TableCell>
-                    <TableCell>{bridge.type}</TableCell>
+                    <TableCell>{bridge.type ?? 'None'}</TableCell>
                     <TableCell className="text-right">
                       <Link href={`/bridges/${bridge.id}`} key={bridge.id}>
                         <Button variant="ghost" size="icon">
-                          <ChevronRight className="w-4 h-4" />
+                          <ChevronRight className="size-4" />
                         </Button>
                       </Link>
                     </TableCell>

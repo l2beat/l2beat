@@ -6,6 +6,10 @@ export const insertBridgeSchema = z.object({
   type: z.nativeEnum(ExternalBridgeType).nullable(),
 })
 
-export const updateBridgeSchema = insertBridgeSchema.extend({
+export const bridgeIdSchema = z.object({
   id: z.string().length(21),
 })
+
+export const updateBridgeSchema = insertBridgeSchema.extend(
+  bridgeIdSchema.shape,
+)

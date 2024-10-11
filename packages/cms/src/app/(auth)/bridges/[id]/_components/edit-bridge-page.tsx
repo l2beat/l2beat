@@ -13,6 +13,7 @@ import {
   CardTitle,
   CardContent,
   CardDescription,
+  CardFooter,
 } from '~/components/ui/card'
 import {
   Form,
@@ -33,8 +34,8 @@ import {
 } from '~/components/ui/select'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { insertBridgeSchema, updateBridgeSchema } from '../_actions/schemas'
-import { z } from 'zod'
-import { insertBridge, updateBridge } from '../_actions'
+import { type z } from 'zod'
+import { deleteBridge, insertBridge, updateBridge } from '../_actions'
 import { useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 
@@ -68,14 +69,20 @@ export function EditBridgePage({
     router.replace('/bridges')
   }, [router])
 
+  const onDelete = useCallback(async () => {
+    if (!bridge) return
+    await deleteBridge({ id: bridge.id })
+    router.replace('/bridges')
+  }, [bridge, router])
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="mx-auto grid max-w-[59rem] w-full flex-1 auto-rows-max gap-4">
+        <div className="mx-auto grid w-full max-w-[59rem] flex-1 auto-rows-max gap-4">
           <div className="flex items-center gap-4">
             <Link href="/bridges">
               <Button variant="ghost" size="icon">
-                <ChevronLeft className="w-4 h-4" />
+                <ChevronLeft className="size-4" />
               </Button>
             </Link>
             <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">
@@ -156,17 +163,37 @@ export function EditBridgePage({
             </CardContent>
           </Card>
           {bridge && (
-            <Card>
-              <CardHeader>
-                <CardTitle>Bridge ID</CardTitle>
-                <CardDescription>
-                  Unique identifier of this bridge.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ReadonlyCopyInput value={bridge?.id ?? ''} />
-              </CardContent>
-            </Card>
+            <>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Bridge ID</CardTitle>
+                  <CardDescription>
+                    Unique identifier of this bridge.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ReadonlyCopyInput value={bridge?.id ?? ''} />
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Delete Bridge</CardTitle>
+                  <CardDescription>
+                    This action is irreversible and will delete the bridge,
+                    together with all associated token connections.
+                  </CardDescription>
+                </CardHeader>
+                <CardFooter className="flex justify-end">
+                  <Button
+                    variant="destructive"
+                    type="button"
+                    onClick={onDelete}
+                  >
+                    Delete Bridge
+                  </Button>
+                </CardFooter>
+              </Card>
+            </>
           )}
         </div>
       </form>
