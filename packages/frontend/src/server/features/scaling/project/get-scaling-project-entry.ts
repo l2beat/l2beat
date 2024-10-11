@@ -83,12 +83,14 @@ export async function getScalingProjectEntry(project: ScalingProject) {
   const stackedRosetteValues = project.stackedRiskView
     ? getScalingRosetteValues(project.stackedRiskView)
     : undefined
+  const isHostChainVerified = !!projectsVerificationStatuses[project.hostChain]
 
   const projectDetails = await getL3ProjectDetails({
     project,
     hostChain,
     isVerified,
     rosetteValues,
+    isHostChainVerified,
     manuallyVerifiedContracts,
     implementationChangeReport,
     contractsVerificationStatuses,

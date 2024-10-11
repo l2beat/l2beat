@@ -1,3 +1,40 @@
+Generated with discovered.json: 0x703063db158c49e4060498530101ba6f2f7ca6db
+
+# Diff at Thu, 10 Oct 2024 09:43:54 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@cb5ff535ffc194baf7396bd6db8232883e2ad088 block: 257933728
+- current block number: 262309561
+
+## Description
+
+Signer changes in Caldera MS.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig (0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      values.$members.4:
++        "0x356000Cec4fC967f8FC372381D983426760A0391"
+      values.$members.3:
+-        "0x356000Cec4fC967f8FC372381D983426760A0391"
++        "0x4919167EA334BE84B1604Cbc82A26A7746D5943e"
+      values.$members.2:
+-        "0x4919167EA334BE84B1604Cbc82A26A7746D5943e"
++        "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
+      values.$members.1:
+-        "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
++        "0xbf853295743511e8DC5F03809d209C33fC136d24"
+      values.$members.0:
+-        "0xbf853295743511e8DC5F03809d209C33fC136d24"
++        "0xD61640d06dC7A61C46d9515680b4DDd2AC51E9A9"
+      values.multisigThreshold:
+-        "3 of 4 (75%)"
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0x896562db29c17ca0f822bd2070e7268a404e8a74
 
 # Diff at Tue, 01 Oct 2024 11:12:46 GMT:

@@ -1,8 +1,8 @@
 {
   "name": "sanko",
   "chain": "arbitrum",
-  "blockNumber": 259311792,
-  "configHash": "0x22d5409de9ec2ed8989d6ffc9b7aa1197344c488351b8c3ebcc90c2d6fa8c36e",
+  "blockNumber": 262322423,
+  "configHash": "0x82618ed17d174a78ff00d6a31ce69a28b4ad157cc36bc5876eac9c6183c3dc00",
   "contracts": [
     {
       "name": "ValidatorWalletCreator",
@@ -55,6 +55,32 @@
       "derivedName": "ChallengeManager"
     },
     {
+      "name": "SankoOftMultisig",
+      "address": "0x2227E9C08ae00750e0a5eD8da09Fa321A9DD7185",
+      "template": "GnosisSafe",
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1687470506,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$members": [
+          "0x45931634c4496e9cdc3d0cCA700A387d581b6009",
+          "0x201598e7F51dD57FF41a1743aBd5892EaFED97a0",
+          "0x03eb90D1E10EEd08b0B3Ca1b3eb85FcFED3d94f4",
+          "0x82Ef0CBb725852D7CC30ADeA95415e23B8f433E3"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x723c430a24671da5244eed13bd41fd485c01c75e495cabc77f7e8ff6c1dcb647",
+        "getChainId": 42161,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 4 (50%)",
+        "nonce": 15,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafeL2"
+    },
+    {
       "name": "SequencerInbox",
       "address": "0x24B68936C13A414cd91437aE7AA730321B9ff159",
       "template": "orbitstack/SequencerInbox",
@@ -83,7 +109,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 3343,
+        "batchCount": 3552,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x2f4dDaD3aB0AC4225fd8023EE07d04e2A758017a"],
         "bridge": "0x2f285781B8d58678a3483de52D618198E4d27532",
@@ -107,7 +133,7 @@
         "rollup": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 12737,
+        "totalDelayedMessagesRead": 61656,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -150,13 +176,16 @@
           "0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD",
           "0x365ce7234CE515c2e0139f3578b6c5989da1a863"
         ],
-        "allowedOutboxList": ["0x575d32f7ff0C72921645e302cb14d2757E300786"],
-        "delayedMessageCount": 12743,
+        "allowedOutboxList": [
+          "0x575d32f7ff0C72921645e302cb14d2757E300786",
+          "0xa9Aa07F082D9c15D0B6D7e9e5B68b1f898399C29"
+        ],
+        "delayedMessageCount": 61704,
         "nativeToken": "0x8B0E6f19Ee57089F7649A455D89D7bC6314D04e8",
         "rollup": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
         "sequencerInbox": "0x24B68936C13A414cd91437aE7AA730321B9ff159",
-        "sequencerMessageCount": 3343,
-        "sequencerReportedSubMessageCount": 1685992
+        "sequencerMessageCount": 3552,
+        "sequencerReportedSubMessageCount": 1853925
       },
       "derivedName": "ERC20Bridge"
     },
@@ -209,7 +238,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 2,
+        "nonce": 9,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -416,12 +445,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1041,
+        "firstUnresolvedNode": 1076,
         "inbox": "0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD",
         "isERC20Enabled": false,
         "lastStakeBlock": 19642604,
-        "latestConfirmed": 1040,
-        "latestNodeCreated": 1066,
+        "latestConfirmed": 1075,
+        "latestNodeCreated": 1101,
         "loserStakeEscrow": "0xe8216687Ef40C65F64D6dcd335b0aaab4A1Bc400",
         "minimumAssertionPeriod": 75,
         "outbox": "0x575d32f7ff0C72921645e302cb14d2757E300786",
@@ -487,6 +516,26 @@
       "address": "0x9e83136d4B3AD04C766591EA51712F9aEa3194C0",
       "sinceTimestamp": 1704540879,
       "values": { "$immutable": true }
+    },
+    {
+      "name": "OrbitProxyOFT1_2",
+      "address": "0xa9Aa07F082D9c15D0B6D7e9e5B68b1f898399C29",
+      "ignoreInWatchMode": ["circulatingSupply"],
+      "sinceTimestamp": 1728393375,
+      "values": {
+        "$immutable": true,
+        "circulatingSupply": "1000000000000000000000000",
+        "DEFAULT_PAYLOAD_SIZE_LIMIT": 10000,
+        "lzEndpoint": "0x3c2269811836af69497E5F486A85D7316753cf62",
+        "NO_EXTRA_GAS": 0,
+        "owner": "0x2227E9C08ae00750e0a5eD8da09Fa321A9DD7185",
+        "precrime": "0x0000000000000000000000000000000000000000",
+        "PT_SEND": 0,
+        "PT_SEND_AND_CALL": 1,
+        "sharedDecimals": 6,
+        "token": "0x8B0E6f19Ee57089F7649A455D89D7bC6314D04e8"
+      },
+      "derivedName": "OrbitProxyOFT1_2"
     },
     {
       "name": "L1OrbitERC20Gateway",
@@ -597,6 +646,7 @@
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x02867114B27d686f3565E2060424e985a1E565f5" },
+    { "address": "0x03eb90D1E10EEd08b0B3Ca1b3eb85FcFED3d94f4" },
     { "address": "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A" },
     { "address": "0x201598e7F51dD57FF41a1743aBd5892EaFED97a0" },
     {
@@ -611,6 +661,7 @@
       "address": "0x795aA8E945b571c57b12E7b5B77De10A88a1FADe",
       "roles": ["Validator"]
     },
+    { "address": "0x82Ef0CBb725852D7CC30ADeA95415e23B8f433E3" },
     { "address": "0xAf574BbE2139e39F560C4db1A118E1245aC0983d" },
     { "address": "0xC75725f4644D54865d11B78d3Ca6b7779FA61581" },
     { "address": "0xE1D7b68b36f14c9c86683d295f1C403008ecc943" },
@@ -735,6 +786,9 @@
       "function renounceRole(bytes32 role, address account)",
       "function revokeRole(bytes32 role, address account)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
+    ],
+    "0x2227E9C08ae00750e0a5eD8da09Fa321A9DD7185": [
+      "constructor(address _singleton)"
     ],
     "0x24B68936C13A414cd91437aE7AA730321B9ff159": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -979,6 +1033,62 @@
       "function requireRejectable(address rollup) view",
       "function stakedNodes(address rollup, address staker) view returns (uint64[])",
       "function timedOutChallenges(address rollup, uint64 startIndex, uint64 max) view returns (uint64[], bool hasMore)"
+    ],
+    "0xa9Aa07F082D9c15D0B6D7e9e5B68b1f898399C29": [
+      "constructor(address _token, uint8 _sharedDecimals, address _lzEndpoint, address _bridge)",
+      "error AmountOverflow()",
+      "error OwnerNotSendCaller()",
+      "error SharedDecimalsTooBig()",
+      "error TokenDecimalsFetchFailed()",
+      "event CallOFTReceivedSuccess(uint16 indexed _srcChainId, bytes _srcAddress, uint64 _nonce, bytes32 _hash)",
+      "event MessageFailed(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload, bytes _reason)",
+      "event NonContractAddress(address _address)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ReceiveFromChain(uint16 indexed _srcChainId, address indexed _to, uint256 _amount)",
+      "event RetryMessageSuccess(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes32 _payloadHash)",
+      "event SendToChain(uint16 indexed _dstChainId, address indexed _from, bytes32 indexed _toAddress, uint256 _amount)",
+      "event SetMinDstGas(uint16 _dstChainId, uint16 _type, uint256 _minDstGas)",
+      "event SetPrecrime(address precrime)",
+      "event SetTrustedRemote(uint16 _remoteChainId, bytes _path)",
+      "event SetTrustedRemoteAddress(uint16 _remoteChainId, bytes _remoteAddress)",
+      "function DEFAULT_PAYLOAD_SIZE_LIMIT() view returns (uint256)",
+      "function NO_EXTRA_GAS() view returns (uint256)",
+      "function PT_SEND() view returns (uint8)",
+      "function PT_SEND_AND_CALL() view returns (uint8)",
+      "function callOnOFTReceived(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes32 _from, address _to, uint256 _amount, bytes _payload, uint256 _gasForCall)",
+      "function circulatingSupply() view returns (uint256)",
+      "function creditedPackets(uint16, bytes, uint64) view returns (bool)",
+      "function estimateSendAndCallFee(uint16 _dstChainId, bytes32 _toAddress, uint256 _amount, bytes _payload, uint64 _dstGasForCall, bool _useZro, bytes _adapterParams) view returns (uint256 nativeFee, uint256 zroFee)",
+      "function estimateSendFee(uint16 _dstChainId, bytes32 _toAddress, uint256 _amount, bool _useZro, bytes _adapterParams) view returns (uint256 nativeFee, uint256 zroFee)",
+      "function failedMessages(uint16, bytes, uint64) view returns (bytes32)",
+      "function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress)",
+      "function getConfig(uint16 _version, uint16 _chainId, address, uint256 _configType) view returns (bytes)",
+      "function getTrustedRemoteAddress(uint16 _remoteChainId) view returns (bytes)",
+      "function isTrustedRemote(uint16 _srcChainId, bytes _srcAddress) view returns (bool)",
+      "function lzEndpoint() view returns (address)",
+      "function lzReceive(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload)",
+      "function minDstGasLookup(uint16, uint16) view returns (uint256)",
+      "function nonblockingLzReceive(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload)",
+      "function owner() view returns (address)",
+      "function payloadSizeLimitLookup(uint16) view returns (uint256)",
+      "function precrime() view returns (address)",
+      "function renounceOwnership()",
+      "function retryMessage(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload) payable",
+      "function sendAndCall(address _from, uint16 _dstChainId, bytes32 _toAddress, uint256 _amount, bytes _payload, uint64 _dstGasForCall, tuple(address refundAddress, address zroPaymentAddress, bytes adapterParams) _callParams) payable",
+      "function sendFrom(address _from, uint16 _dstChainId, bytes32 _toAddress, uint256 _amount, tuple(address refundAddress, address zroPaymentAddress, bytes adapterParams) _callParams) payable",
+      "function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes _config)",
+      "function setMinDstGas(uint16 _dstChainId, uint16 _packetType, uint256 _minGas)",
+      "function setPayloadSizeLimit(uint16 _dstChainId, uint256 _size)",
+      "function setPrecrime(address _precrime)",
+      "function setReceiveVersion(uint16 _version)",
+      "function setSendVersion(uint16 _version)",
+      "function setTrustedRemote(uint16 _remoteChainId, bytes _path)",
+      "function setTrustedRemoteAddress(uint16 _remoteChainId, bytes _remoteAddress)",
+      "function sharedDecimals() view returns (uint8)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function token() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function trustedRemoteLookup(uint16) view returns (bytes)"
     ],
     "0xb4951c0C41CFceB0D195A95FE66280457A80a990": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1307,5 +1417,5 @@
     "orbitstack/RollupProxy": "0xdd22b1785ae5df34e829d0b04131559e112131325c3f223825d0fe61e675fb1a",
     "orbitstack/SequencerInbox": "0x096f13a8297d3243cf02cbc39d065c1c6f37b23602fce0c63f3ff74d7d65b1ee"
   },
-  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

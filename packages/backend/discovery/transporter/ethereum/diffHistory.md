@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x378fd135b50bc5105635a7cf3631617ef9faf8a3
+
+# Diff at Thu, 10 Oct 2024 09:40:14 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@cb5ff535ffc194baf7396bd6db8232883e2ad088 block: 20862628
+- current block number: 20934364
+
+## Description
+
+New pools (handled by shapes).
+
+## Watched changes
+
+```diff
+    contract PriceRegistry (0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad) {
+    +++ description: None
+      values.getFeeTokens.2:
++        "0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (0x2c5C39F515277E64D96C28f3fc49Ad1d6a25B5B4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnWithFromMintTokenPool (0x45A103142585bdFc49cdb137f2a45D1AE7F84b6b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (0xa35304aA2D659e5E06A768fEc4Af3B443916C215)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...0x45A103142585bdFc49cdb137f2a45D1AE7F84b6b.sol} |    0
+ ...-0x66D40E0D2819a2264B2a61f5DD578573B9dedCEc.sol | 1312 ++++++++++++++++++
+ ...-0x2c5C39F515277E64D96C28f3fc49Ad1d6a25B5B4.sol | 1408 ++++++++++++++++++++
+ ...-0xa35304aA2D659e5E06A768fEc4Af3B443916C215.sol | 1408 ++++++++++++++++++++
+ 4 files changed, 4128 insertions(+)
+```
+
 Generated with discovered.json: 0xc37ce95daf3e1510d769b2f36f8677e6be3006d6
 
 # Diff at Tue, 01 Oct 2024 11:11:41 GMT:

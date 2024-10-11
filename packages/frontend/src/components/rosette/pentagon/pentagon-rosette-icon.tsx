@@ -10,6 +10,7 @@ import { type RosetteValue } from '../types'
 interface Props {
   values: RosetteValue[]
   isUnderReview?: boolean
+  hasNoBridge?: boolean
   className?: string
   background?: boolean
 }
@@ -17,6 +18,7 @@ interface Props {
 export function PentagonRosetteIcon({
   values,
   isUnderReview,
+  hasNoBridge,
   className,
   background = true,
 }: Props) {
@@ -29,6 +31,9 @@ export function PentagonRosetteIcon({
   const setContent = context?.setContent
   const content = context?.content
   const [first, second, third, fourth, fifth] = values
+
+  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+  const shouldGrayOut = isUnderReview || hasNoBridge
 
   assert(first && second && third && fourth && fifth, 'Invalid number of risks')
 
@@ -66,7 +71,7 @@ export function PentagonRosetteIcon({
         className={cn(
           'transition-opacity',
           sentimentToFillColor(first.sentiment),
-          isUnderReview && sentimentToFillColor('UnderReview'),
+          shouldGrayOut && sentimentToFillColor('UnderReview'),
           content && content.risk.name !== first.name && 'opacity-20',
         )}
         onMouseEnter={() => selectRisk(first, 'bottom')}
@@ -77,7 +82,7 @@ export function PentagonRosetteIcon({
         className={cn(
           'transition-opacity',
           sentimentToFillColor(second.sentiment),
-          isUnderReview && sentimentToFillColor('UnderReview'),
+          shouldGrayOut && sentimentToFillColor('UnderReview'),
           content && content.risk.name !== second.name && 'opacity-20',
         )}
         onMouseEnter={() => selectRisk(second, 'top')}
@@ -88,7 +93,7 @@ export function PentagonRosetteIcon({
         className={cn(
           'transition-opacity',
           sentimentToFillColor(third.sentiment),
-          isUnderReview && sentimentToFillColor('UnderReview'),
+          shouldGrayOut && sentimentToFillColor('UnderReview'),
           content && content.risk.name !== third.name && 'opacity-20',
         )}
         onMouseEnter={() => selectRisk(third, 'top')}
@@ -99,7 +104,7 @@ export function PentagonRosetteIcon({
         className={cn(
           'transition-opacity',
           sentimentToFillColor(fourth.sentiment),
-          isUnderReview && sentimentToFillColor('UnderReview'),
+          shouldGrayOut && sentimentToFillColor('UnderReview'),
           content && content.risk.name !== fourth.name && 'opacity-20',
         )}
         onMouseEnter={() => selectRisk(fourth, 'top')}
@@ -110,7 +115,7 @@ export function PentagonRosetteIcon({
         className={cn(
           'transition-opacity',
           sentimentToFillColor(fifth.sentiment),
-          isUnderReview && sentimentToFillColor('UnderReview'),
+          shouldGrayOut && sentimentToFillColor('UnderReview'),
           content && content.risk.name !== fifth.name && 'opacity-20',
         )}
         onMouseEnter={() => selectRisk(fifth, 'bottom')}
@@ -126,6 +131,19 @@ export function PentagonRosetteIcon({
           <path
             d="M97.6529 130C102.071 130 105.653 126.418 105.653 122C105.653 117.582 102.071 114 97.6529 114C93.2346 114 89.6529 117.582 89.6529 122C89.6529 126.418 93.2346 130 97.6529 130Z"
             fill="#FFC107"
+          />
+        </>
+      ) : null}
+
+      {hasNoBridge ? (
+        <>
+          <path
+            d="M99.001 132C103.419 132 107.001 128.418 107.001 124C107.001 119.582 103.419 116 99.001 116C94.5827 116 91.001 119.582 91.001 124C91.001 128.418 94.5827 132 99.001 132Z"
+            fill="#FF3024"
+          />
+          <path
+            d="M105.223 68H92.7784C92.5384 67.9998 92.3008 68.0482 92.08 68.1423C91.8592 68.2363 91.6597 68.3742 91.4935 68.5474C91.3274 68.7207 91.1981 68.9258 91.1134 69.1504C91.0287 69.375 90.9903 69.6144 91.0007 69.8542L92.7784 110.743C92.7982 111.201 92.9941 111.634 93.3254 111.951C93.6567 112.268 94.0977 112.445 94.5562 112.444H103.445C103.904 112.445 104.345 112.268 104.676 111.951C105.007 111.634 105.203 111.201 105.223 110.743L107.001 69.8542C107.011 69.6144 106.973 69.375 106.888 69.1504C106.803 68.9258 106.674 68.7207 106.508 68.5474C106.342 68.3742 106.142 68.2363 105.921 68.1423C105.701 68.0482 105.463 67.9998 105.223 68Z"
+            fill="#FF3024"
           />
         </>
       ) : null}

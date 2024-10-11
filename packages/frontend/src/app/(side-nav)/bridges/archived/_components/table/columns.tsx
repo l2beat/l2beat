@@ -44,7 +44,7 @@ export const bridgesArchivedColumns = [
   }),
   columnHelper.accessor('totalTvl', {
     id: 'total',
-    header: 'Total',
+    header: 'Total value locked',
     cell: (ctx) => {
       const value = ctx.getValue()
       if (value === undefined) {
@@ -72,7 +72,7 @@ export const bridgesArchivedColumns = [
     meta: {
       align: 'right',
       tooltip:
-        'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
+        'Total Value Locked is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens.',
     },
   }),
 ]

@@ -1,3 +1,40 @@
+Generated with discovered.json: 0x38aad1481151a89c2ea4d20c9aef1cf3d10e0e3d
+
+# Diff at Thu, 10 Oct 2024 08:32:18 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@cb5ff535ffc194baf7396bd6db8232883e2ad088 block: 20675639
+- current block number: 20934032
+
+## Description
+
+New Hub added (Worldchain).
+
+## Watched changes
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.480:
++        "0x8eBebfc894047bEE213A561b8792fCa71241731f"
+      values.CrossChainContracts.480:
++        "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract WorldChain_Adapter (0x8eBebfc894047bEE213A561b8792fCa71241731f)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/WorldChain_Adapter.sol          | 591 +++++++++++++++++++++
+ 1 file changed, 591 insertions(+)
+```
+
 Generated with discovered.json: 0xfd768f13b611e4a0af3411019ac6f2f75bea7357
 
 # Diff at Tue, 01 Oct 2024 10:49:24 GMT:
