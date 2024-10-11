@@ -41,7 +41,11 @@ export function underReviewL2(templateVars: UnderReviewConfigL2): Layer2 {
       ...templateVars.display,
     },
     stage: {
-      stage: 'UnderReview',
+      stage:
+        templateVars.display.category === 'Optimistic Rollup' ||
+        templateVars.display.category === 'ZK Rollup'
+          ? 'NotApplicable'
+          : 'UnderReview',
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
