@@ -3,7 +3,6 @@
   "chain": "mantle",
   "blockNumber": 65329557,
   "configHash": "0xc64f0c7d05713cc872e2a5262959e8eda63ce1eb9cb5c467e2cc3ec3cb89ef48",
-  "version": 15,
   "contracts": [
     {
       "name": "TokenMessaging",
@@ -655,5 +654,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }
