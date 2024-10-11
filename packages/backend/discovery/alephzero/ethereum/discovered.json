@@ -1,8 +1,8 @@
 {
   "name": "alephzero",
   "chain": "ethereum",
-  "blockNumber": 20942645,
-  "configHash": "0x5ac6ff4892b4ee1af4954655045a795e086d5b468039a8bdb5fff3cbbf9ab2b6",
+  "blockNumber": 20942700,
+  "configHash": "0x7a197dfe956104571f5d68aabc2880fdbfe8da2aa50a67af3117e10f8634912a",
   "contracts": [
     {
       "name": "OneStepProverHostIo",
@@ -471,46 +471,6 @@
       }
     },
     {
-      "name": "GnosisSafe",
-      "address": "0xdaD87f2a69540DF393b0e126895DE26C548dF131",
-      "template": "GnosisSafe",
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1725371291,
-      "values": {
-        "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "0xB6FD43368011e27CB1334009922635bF6a2Ed780",
-          "0xDE19BDa05Eaf943E4A7cd02e69aC2C88Ef7BCcdE",
-          "0x87daeDD6016960E366119FBE03B9C37b98E1C775",
-          "0xa4Bb7E5d9B4A6411fC6096D34fE3dCf1B4DC8cb0"
-        ],
-        "$threshold": 2,
-        "domainSeparator": "0xf76f1cf61223211f3698663efabf96ec9611408278073811b133bbeb18381434",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 5,
-        "VERSION": "1.3.0"
-      }
-    },
-    {
-      "name": "AzeroERC20",
-      "address": "0xdD0ae774F7E300CdAA4EA371cD55169665Ee6AFe",
-      "sinceTimestamp": 1721400911,
-      "values": {
-        "$immutable": true,
-        "decimals": 18,
-        "minterBurner": "0xdaD87f2a69540DF393b0e126895DE26C548dF131",
-        "name": "Aleph Zero",
-        "owner": "0xdaD87f2a69540DF393b0e126895DE26C548dF131",
-        "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "symbol": "AZERO",
-        "totalSupply": "121100000000000000000000"
-      }
-    },
-    {
       "name": "L1OrbitGatewayRouter",
       "address": "0xeBb17f398ed30d02F2e8733e7c1e5cf566e17812",
       "proxyType": "EIP1967 proxy",
@@ -612,15 +572,11 @@
     },
     { "address": "0x380636029F3E079683fF06e80Dc3e1B7FAC30C86" },
     { "address": "0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341" },
-    { "address": "0x87daeDD6016960E366119FBE03B9C37b98E1C775" },
-    { "address": "0xa4Bb7E5d9B4A6411fC6096D34fE3dCf1B4DC8cb0" },
-    { "address": "0xB6FD43368011e27CB1334009922635bF6a2Ed780" },
     {
       "address": "0xbc35c3fBd56318Bf360086f50576233Dc93AFF20",
       "roles": ["Sequencer"]
     },
-    { "address": "0xD296d45171B97720D3aBdb68B0232be01F1A9216" },
-    { "address": "0xDE19BDa05Eaf943E4A7cd02e69aC2C88Ef7BCcdE" }
+    { "address": "0xD296d45171B97720D3aBdb68B0232be01F1A9216" }
   ],
   "abis": {
     "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A": [
@@ -1212,92 +1168,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
-      "constructor()",
-      "event AddedOwner(address owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address handler)",
-      "event ChangedGuard(address guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address module)",
-      "event EnabledModule(address module)",
-      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
-      "event RemovedOwner(address owner)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeThreshold(uint256 _threshold)",
-      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
-      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getChainId() view returns (uint256)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isModuleEnabled(address module) view returns (bool)",
-      "function isOwner(address owner) view returns (bool)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
-      "function setFallbackHandler(address handler)",
-      "function setGuard(address guard)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
-    "0xdaD87f2a69540DF393b0e126895DE26C548dF131": [
-      "constructor(address _singleton)"
-    ],
-    "0xdD0ae774F7E300CdAA4EA371cD55169665Ee6AFe": [
-      "constructor()",
-      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
-      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
-      "error ERC20InvalidApprover(address approver)",
-      "error ERC20InvalidReceiver(address receiver)",
-      "error ERC20InvalidSender(address sender)",
-      "error ERC20InvalidSpender(address spender)",
-      "error NotMinterBurner()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function acceptOwnership()",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 value) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function burn(uint256 _amount)",
-      "function decimals() view returns (uint8)",
-      "function mint(address _to, uint256 _amount)",
-      "function minterBurner() view returns (address)",
-      "function name() view returns (string)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function renounceOwnership()",
-      "function setMinterBurner(address _minter_burner)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 value) returns (bool)",
-      "function transferFrom(address from, address to, uint256 value) returns (bool)",
-      "function transferOwnership(address newOwner)"
-    ],
     "0xe80b4E0ed5e92d865F4708eeE0E1564287a7D848": [
       "event DepositInitiated(address l1Token, address indexed _from, address indexed _to, uint256 indexed _sequenceNumber, uint256 _amount)",
       "event TxToL2(address indexed _from, address indexed _to, uint256 indexed _seqNum, bytes _data)",
@@ -1341,7 +1211,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "orbitstack/RollupProxy": "0xdd22b1785ae5df34e829d0b04131559e112131325c3f223825d0fe61e675fb1a",
     "orbitstack/SequencerInbox": "0x096f13a8297d3243cf02cbc39d065c1c6f37b23602fce0c63f3ff74d7d65b1ee"
   },

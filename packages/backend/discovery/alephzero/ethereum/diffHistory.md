@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xb9eb043357c97bb60e7cb1c925956c4cde543bd4
+Generated with discovered.json: 0xe534319d537464183f9c8c88ad23b0e7e79abdca
 
-# Diff at Fri, 11 Oct 2024 13:22:15 GMT:
+# Diff at Fri, 11 Oct 2024 13:33:22 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
-- current block number: 20942645
+- current block number: 20942700
 
 ## Description
 
@@ -116,18 +116,6 @@ Standard Orbit stack Optimium with native token AZERO.
 ```diff
 +   Status: CREATED
     contract L1OrbitERC20Gateway (0xccaF21F002EAF230c9Fa810B34837a3739B70F7B)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract GnosisSafe (0xdaD87f2a69540DF393b0e126895DE26C548dF131)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract AzeroERC20 (0xdD0ae774F7E300CdAA4EA371cD55169665Ee6AFe)
     +++ description: None
 ```
 
