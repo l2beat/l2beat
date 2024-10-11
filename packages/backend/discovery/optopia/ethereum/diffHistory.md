@@ -1,4 +1,48 @@
-Generated with discovered.json: 0x49f65fadf4f07f26c07befb882f1b87739e2f68c
+Generated with discovered.json: 0xe82340fa5c6319c40d18783214d23c7bfec13ad6
+
+# Diff at Wed, 09 Oct 2024 13:10:21 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@37683e2b3d0587372f886eef49e921277810c8bf block: 20427351
+- current block number: 20427351
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20427351 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0x039A3B4AF85A91626f428b8B881603b6DD1f6C4C) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.via.0.description:
++        "set and change address mappings."
+      descriptions:
++        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x161aF05fA6BdA1c6E7Ee12839d470931bA796948) {
+    +++ description: None
+      directlyReceivedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+```diff
+    contract Optopia Multisig (0x2C73A1610EE822a8C2C21eddd455e725A3334c8C) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+Generated with discovered.json: 0x45d4c134035fe754e6f58d267b73d408d01a7d43
 
 # Diff at Tue, 01 Oct 2024 10:53:46 GMT:
 

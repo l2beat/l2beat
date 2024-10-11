@@ -1,9 +1,8 @@
 {
   "name": "kroma",
   "chain": "ethereum",
-  "blockNumber": 20232340,
+  "blockNumber": 20912649,
   "configHash": "0x2dc78fa0c026b5bfa1b50ed5ae271d153b773a2e2f38e5ace3d7934eae709860",
-  "version": 15,
   "contracts": [
     {
       "name": "L2OutputOracle",
@@ -36,10 +35,10 @@
         "COLOSSEUM": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 13102200,
-        "latestOutputIndex": 7279,
-        "nextBlockNumber": 13104000,
-        "nextOutputIndex": 7280,
+        "latestBlockNumber": 17204400,
+        "latestOutputIndex": 9558,
+        "nextBlockNumber": 17206200,
+        "nextOutputIndex": 9559,
         "startingBlockNumber": 0,
         "startingTimestamp": 1693880387,
         "SUBMISSION_INTERVAL": 1800,
@@ -150,7 +149,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 200000,
-          "prevBlockNum": 20232340
+          "prevBlockNum": 20906854
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35",
@@ -293,7 +292,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 0,
-        "messageNonce": 3602,
+        "messageNonce": 3979,
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -662,9 +661,9 @@
             "feeVault": "0x8898EF6f9838A0Ec088F174A77F8a094fB788C4e",
             "defaultFeeAmount": 2000000000000000
           },
-          "spSnap": { "evalValue": "1264343537265083327923" },
+          "spSnap": { "evalValue": "974041155081783749744" },
           "assets": ["0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee"],
-          "snaps": [{ "evalValue": "1264343537265083327923" }]
+          "snaps": [{ "evalValue": "974041155081783749744" }]
         },
         "owner": "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f",
         "paused": false,
@@ -768,7 +767,7 @@
         ],
         "$upgradeCount": 2,
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 20232340,
+        "clock": 20912649,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -855,7 +854,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "clock": 20232340,
+        "clock": 20912649,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "DOMAIN_SEPARATOR": "0x1630586f33defc933258f4512df143dd6bf7adb1b4d039178e748d4cac4813b8",
         "eip712Domain": {
@@ -884,14 +883,14 @@
           "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
           "0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A",
           "0x8ECF028Cd647379E580DaA6701A11154750fcd3c",
-          "0xbDeE962137373A755a71C716E01B9946B1a27686",
+          "0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1",
           "0x7B3225ADc5D908668FaA050246680CBE4e75A93f",
           "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80",
           "0xECe4AAf6A41aa81A164363Ec6C420510617Fc998",
           "0x3a4F65D1ACFb2A3F5AD93ef7b240bfa1079052e0",
-          "0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1"
+          "0x66FA82F4AEA284d1d208437F179dFE13d8118f3A"
         ],
-        "tokens": [0, 11, 4, 5, 6, 7, 8, 9, 10],
+        "tokens": [0, 11, 4, 10, 6, 7, 8, 9, 12],
         "tokenURI": [
           "https://nft.kroma.network/sc/1.png",
           "https://nft.kroma.network/sc/3.png"
@@ -951,7 +950,7 @@
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "symbol": "spETH",
-        "totalSupply": "1213261748343680177753"
+        "totalSupply": "927904832582073518161"
       },
       "derivedName": "SPETH"
     },
@@ -996,7 +995,7 @@
         "$upgradeCount": 3,
         "L2_ORACLE": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
         "MAX_UNBOND": 10,
-        "nextValidator": "0xe35002a892EA997CC10500DE27B5bA3E32FEaC61",
+        "nextValidator": "0xC74970A67e867Ee3dA881B6030B3f7785CFbca0A",
         "PORTAL": "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de",
         "REQUIRED_BOND_AMOUNT": "200000000000000000",
         "ROUND_DURATION": 1800,
@@ -1004,7 +1003,7 @@
         "TAX_DENOMINATOR": 100,
         "TAX_NUMERATOR": 20,
         "TRUSTED_VALIDATOR": "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
-        "validatorCount": 361,
+        "validatorCount": 248,
         "VAULT_REWARD_GAS_LIMIT": 100000,
         "version": "1.0.1"
       },
@@ -1023,6 +1022,7 @@
     { "address": "0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1" },
     { "address": "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80" },
     { "address": "0x61e0D34b5206Fa8005EC1De8000df9B9dDee23Db" },
+    { "address": "0x66FA82F4AEA284d1d208437F179dFE13d8118f3A" },
     { "address": "0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A" },
     { "address": "0x7B3225ADc5D908668FaA050246680CBE4e75A93f" },
     {
@@ -1045,8 +1045,7 @@
     { "address": "0x8898EF6f9838A0Ec088F174A77F8a094fB788C4e" },
     { "address": "0x8ECF028Cd647379E580DaA6701A11154750fcd3c" },
     { "address": "0x994C074BD9503e4f01CB834e2c409FA16b41E587" },
-    { "address": "0xbDeE962137373A755a71C716E01B9946B1a27686" },
-    { "address": "0xe35002a892EA997CC10500DE27B5bA3E32FEaC61" },
+    { "address": "0xC74970A67e867Ee3dA881B6030B3f7785CFbca0A" },
     { "address": "0xECe4AAf6A41aa81A164363Ec6C420510617Fc998" },
     { "address": "0xfF00000000000000000000000000000000000255" }
   ],
@@ -1937,5 +1936,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

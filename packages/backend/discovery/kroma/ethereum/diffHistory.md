@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x192ec46727290d3f2d3b8213fa58f007f2fd1280
+
+# Diff at Mon, 07 Oct 2024 09:02:03 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@ec3878239ad71f9055b207bdcd338b2f207af050 block: 20232340
+- current block number: 20912649
+
+## Description
+
+One SC signer swapped its EOA (Xangle): https://www.tally.xyz/gov/kroma-security-council-l2/proposal/66793954205565734871927487347209424383799739452575476193452192540588648719016.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncilToken (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
+    +++ description: None
+      values.tokenOwners.8:
+-        "0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1"
++        "0x66FA82F4AEA284d1d208437F179dFE13d8118f3A"
+      values.tokenOwners.3:
+-        "0xbDeE962137373A755a71C716E01B9946B1a27686"
++        "0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1"
+      values.tokens.8:
+-        10
++        12
+      values.tokens.3:
+-        5
++        10
+    }
+```
+
 Generated with discovered.json: 0x5b6193f2a97f297ba8bb7924dd948346e3654372
 
 # Diff at Tue, 01 Oct 2024 10:51:49 GMT:

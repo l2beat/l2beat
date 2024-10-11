@@ -1,4 +1,49 @@
-Generated with discovered.json: 0x47cc844d1f050b93848c0eab1bf4709b7c447671
+Generated with discovered.json: 0x9367ead40fa2e88d3076d9ab0981d35f34ea14ec
+
+# Diff at Thu, 10 Oct 2024 10:37:21 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@cb5ff535ffc194baf7396bd6db8232883e2ad088 block: 259311792
+- current block number: 262322423
+
+## Description
+
+A new OFT adapter contract (for the Sanko gas token DMT) is added as allowed Outbox to the main bridge. This gives the OFT adapter full the permission to make any calls as the bridge (including sending all tokens from the bridge).
+
+No 'withdrawal' activity yet through this adapter, only [one test deposit](https://app.blocksec.com/explorer/tx/arbitrum/0x2d172fd2e773bb05250421bc0dd54334118101118b09436852b4b8421f71f454?line=23).
+
+## Watched changes
+
+```diff
+    contract Bridge (0x2f285781B8d58678a3483de52D618198E4d27532) {
+    +++ description: None
+      values.allowedOutboxList.1:
++        "0xa9Aa07F082D9c15D0B6D7e9e5B68b1f898399C29"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SankoOftMultisig (0x2227E9C08ae00750e0a5eD8da09Fa321A9DD7185)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OrbitProxyOFT1_2 (0xa9Aa07F082D9c15D0B6D7e9e5B68b1f898399C29)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../sanko/arbitrum/.flat/OrbitProxyOFT1_2.sol      | 1883 ++++++++++++++++++++
+ .../.flat/SankoOftMultisig/GnosisSafeL2.sol        | 1032 +++++++++++
+ .../.flat/SankoOftMultisig/GnosisSafeProxy.p.sol   |   35 +
+ 3 files changed, 2950 insertions(+)
+```
+
+Generated with discovered.json: 0x75d47a0556cc401ed7f7dbc3eafd6a8c8334e173
 
 # Diff at Tue, 01 Oct 2024 15:47:56 GMT:
 

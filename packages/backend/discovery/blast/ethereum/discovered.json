@@ -1,13 +1,15 @@
 {
   "name": "blast",
   "chain": "ethereum",
-  "blockNumber": 20661171,
-  "configHash": "0x223c7ca358ed369b6d2c0b6cca7a4dcf0b87d48d45c08a6e5760c503f1b5c50b",
-  "version": 15,
+  "blockNumber": 20921743,
+  "configHash": "0x8baa00b782bb67bbb3dbda04886f2e9cd1f0ae7afc48216b0637f6b98a650fb5",
   "contracts": [
     {
       "name": "DSRYieldProvider",
       "address": "0x0733F618118bF420b6b604c969498ecf143681a8",
+      "descriptions": [
+        "Yield Provider for DAI investing DAI into the MakerDAO DSR."
+      ],
       "sinceTimestamp": 1708813619,
       "values": {
         "$immutable": true,
@@ -24,7 +26,11 @@
     {
       "name": "OptimismPortal",
       "address": "0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb",
+      "template": "opstack/OptimismPortal",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -55,16 +61,15 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 100000,
-          "prevBlockNum": 20661143
+          "prevBoughtGas": 509262,
+          "prevBlockNum": 20921709
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
         "systemConfig": "0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
         "version": "1.10.0",
         "yieldManager": "0x98078db053902644191f93988341E31289E1C8FE"
-      },
-      "derivedName": "OptimismPortal"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -72,7 +77,8 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xE064B565Cf2A312a3e66Fe4118890583727380C0"
+          "target": "0xE064B565Cf2A312a3e66Fe4118890583727380C0",
+          "description": "set and change address mappings."
         },
         {
           "permission": "upgrade",
@@ -88,7 +94,8 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524"
+          "target": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
+          "description": "upgrading bridge implementation allows to access all funds and change every system component."
         },
         {
           "permission": "upgrade",
@@ -109,14 +116,6 @@
         {
           "permission": "upgrade",
           "target": "0xa45A0c7C47DB8C6e99b2d7C4939F7f7Cf69C8975"
-        },
-        {
-          "permission": "upgrade",
-          "target": "0xBbE2cd60BD30Ef2aaceFD74C3199282ee35fBBa6"
-        },
-        {
-          "permission": "upgrade",
-          "target": "0xcFF70D7F37b1EBeE89c08E485f08ACAB5f6ff873"
         }
       ],
       "sinceTimestamp": 1708812851,
@@ -131,6 +130,9 @@
       "name": "L1BlastBridge",
       "address": "0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "Custom bridge gateway for Blast that allows the Operators to reinvest L1 tokens while they are bridged to the L2."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -154,11 +156,13 @@
         "portal": "0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb",
         "usdYieldManager": "0xa230285d5683C74935aD14c446e137c8c8828438",
         "version": "1.0.0"
-      }
+      },
+      "derivedName": "L1BlastBridge"
     },
     {
       "name": "LidoYieldProvider",
       "address": "0x4316A00D31da1313617DbB04fD92F9fF8D1aF7Db",
+      "descriptions": ["Yield Provider for ETH investing ETH into stETH."],
       "sinceTimestamp": 1708813595,
       "values": {
         "$immutable": true,
@@ -178,6 +182,14 @@
       "address": "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
+      "roles": ["Challenger", "Guardian"],
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1708813211,
       "values": {
@@ -203,15 +215,24 @@
     {
       "name": "SystemConfig",
       "address": "0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
+      "template": "opstack/SystemConfig",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
+      ],
       "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
           "via": []
         }
       ],
-      "ignoreInWatchMode": ["scalar"],
+      "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1708812899,
       "values": {
         "$admin": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
@@ -267,13 +288,17 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         }
-      },
-      "derivedName": "SystemConfig"
+      }
     },
     {
       "name": "L1CrossDomainMessenger",
       "address": "0x5D4472f31Bd9385709ec61305AFc749F0fA8e9d0",
+      "template": "opstack/L1CrossDomainMessenger",
       "proxyType": "resolved delegate proxy",
+      "descriptions": [
+        "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
+      ],
+      "categories": ["Core"],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1708812983,
       "values": {
@@ -295,7 +320,7 @@
         ],
         "$upgradeCount": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292735017",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292736365",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -309,8 +334,7 @@
         "ResolvedDelegateProxy_addressManager": "0xE064B565Cf2A312a3e66Fe4118890583727380C0",
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "version": "1.7.1"
-      },
-      "derivedName": "L1CrossDomainMessenger"
+      }
     },
     {
       "name": "LaunchBridge",
@@ -359,10 +383,10 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "PSM": "0x89B78CfA322F6C5dE0aBcEecab66Aee45393cC5A",
         "staker": "0x9eDFc192fC4d29b8f2b18f484211161b6Fc8063E",
-        "totalETHBalance": "1408868681700478415198",
-        "totalETHShares": "1372647420014463669339",
-        "totalUSDBalanceNoUpdate": "308273939899832733950255",
-        "totalUSDShares": "290973292859627372273590",
+        "totalETHBalance": "1300085465740785651018",
+        "totalETHShares": "1262749265366146659353",
+        "totalUSDBalanceNoUpdate": "295108575846968337120756",
+        "totalUSDShares": "276938324863032263562161",
         "USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "USDT": "0xdAC17F958D2ee523a2206206994597C13D831ec7"
       },
@@ -404,7 +428,12 @@
     {
       "name": "L1StandardBridge",
       "address": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
+      "template": "opstack/L1StandardBridge",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
+      ],
+      "categories": ["Gateways&Escrows"],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -424,13 +453,16 @@
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000010",
         "otherBridge": "0x4200000000000000000000000000000000000010",
         "version": "1.4.1"
-      },
-      "derivedName": "L1StandardBridge"
+      }
     },
     {
       "name": "OptimismMintableERC20Factory",
       "address": "0x6B916DcCa661d23794e78509723A6f4348564847",
+      "template": "opstack/OptimismMintableERC20Factory",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -457,7 +489,11 @@
     {
       "name": "L2OutputOracle",
       "address": "0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76",
+      "template": "opstack/L2OutputOracle",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -497,10 +533,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 8222400,
-        "latestOutputIndex": 4567,
-        "nextBlockNumber": 8224200,
-        "nextOutputIndex": 4568,
+        "latestBlockNumber": 9793800,
+        "latestOutputIndex": 5440,
+        "nextBlockNumber": 9795600,
+        "nextOutputIndex": 5441,
         "proposer": "0x082b616Ec99167B2FEdee053F07db6795D4dA821",
         "PROPOSER": "0x082b616Ec99167B2FEdee053F07db6795D4dA821",
         "startingBlockNumber": 0,
@@ -508,13 +544,13 @@
         "SUBMISSION_INTERVAL": 1800,
         "submissionInterval": 1800,
         "version": "1.6.0"
-      },
-      "derivedName": "L2OutputOracle"
+      }
     },
     {
       "name": "ETHYieldManager",
       "address": "0x98078db053902644191f93988341E31289E1C8FE",
       "proxyType": "EIP1967 proxy",
+      "descriptions": ["Contract managing Yield Providers for ETH."],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -532,7 +568,7 @@
         "accumulatedNegativeYields": 0,
         "admin": "0xF0218c491421B5830cbf96804CD9680b56ef70BD",
         "blastBridge": "0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115",
-        "getLockedBalance": "17540282470135210447672",
+        "getLockedBalance": "9000822861975789166894",
         "insurance": "0xcFF70D7F37b1EBeE89c08E485f08ACAB5f6ff873",
         "insuranceFeeBips": 0,
         "insuranceWithdrawalBuffer": 10,
@@ -556,6 +592,9 @@
       "name": "USDYieldManager",
       "address": "0xa230285d5683C74935aD14c446e137c8c8828438",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI)."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -573,7 +612,7 @@
         "accumulatedNegativeYields": 0,
         "admin": "0xF0218c491421B5830cbf96804CD9680b56ef70BD",
         "blastBridge": "0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115",
-        "getLockedBalance": "2773025638814333054805000",
+        "getLockedBalance": "1303082184209434810283000",
         "insurance": "0xBbE2cd60BD30Ef2aaceFD74C3199282ee35fBBa6",
         "insuranceFeeBips": 0,
         "insuranceWithdrawalBuffer": 0,
@@ -596,7 +635,11 @@
     {
       "name": "L1ERC721Bridge",
       "address": "0xa45A0c7C47DB8C6e99b2d7C4939F7f7Cf69C8975",
+      "template": "opstack/L1ERC721Bridge",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "Used to bridge ERC-721 tokens from host chain to this chain."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -623,51 +666,12 @@
       }
     },
     {
-      "name": "Insurance",
-      "address": "0xBbE2cd60BD30Ef2aaceFD74C3199282ee35fBBa6",
-      "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
-          "via": []
-        }
-      ],
-      "sinceTimestamp": 1708812971,
-      "values": {
-        "$admin": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
-        "$implementation": "0xEDeFE92e0CEF091149E1749Dd12d8F44Dd94DBb3",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
-        "admin": "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05",
-        "version": "1.0.0"
-      }
-    },
-    {
-      "name": "Insurance",
-      "address": "0xcFF70D7F37b1EBeE89c08E485f08ACAB5f6ff873",
-      "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
-          "via": []
-        }
-      ],
-      "sinceTimestamp": 1708812959,
-      "values": {
-        "$admin": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
-        "$implementation": "0x787BC7274Ba165d1dd3D89c1a9159cFf5f92B327",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
-        "admin": "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05",
-        "version": "1.0.0"
-      }
-    },
-    {
       "name": "AddressManager",
       "address": "0xE064B565Cf2A312a3e66Fe4118890583727380C0",
       "template": "opstack/AddressManager",
+      "descriptions": [
+        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+      ],
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -679,21 +683,23 @@
       "values": {
         "$immutable": true,
         "owner": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883"
-      },
-      "derivedName": "AddressManager"
+      }
     }
   ],
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x000000000000000000000000000000000000dEaD" },
-    { "address": "0x082b616Ec99167B2FEdee053F07db6795D4dA821" },
+    {
+      "address": "0x082b616Ec99167B2FEdee053F07db6795D4dA821",
+      "roles": ["Proposer"]
+    },
     { "address": "0x164768144C688BF2bDa28E4072B2b30Ab705d568" },
     { "address": "0x1f97306039530ADB4173C3786e86fab5e6b90F41" },
     { "address": "0x2cF48F69a61261e67e3317D28Cf0EdD1aCAfA03d" },
-    { "address": "0x415c8893D514F9BC5211d36eEDA4183226b84AA7" },
-    { "address": "0x4200000000000000000000000000000000000007" },
-    { "address": "0x4200000000000000000000000000000000000010" },
-    { "address": "0x4200000000000000000000000000000000000014" },
+    {
+      "address": "0x415c8893D514F9BC5211d36eEDA4183226b84AA7",
+      "roles": ["Sequencer"]
+    },
     { "address": "0x4300000000000000000000000000000000000005" },
     { "address": "0x46e31F27Df5047D7Fad9b1E8DFFec635cF6efAcF" },
     { "address": "0x480Ea8bA8De8d05A30F4f4CBedE1e28E05aE1B2C" },
@@ -992,19 +998,6 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "0x787BC7274Ba165d1dd3D89c1a9159cFf5f92B327": [
-      "constructor(address _yieldManager)",
-      "error CannotSetAdminAsZeroAddress()",
-      "error InsufficientBalance()",
-      "error OnlyAdmin()",
-      "error OnlyAdminOrYieldManager()",
-      "event Initialized(uint8 version)",
-      "function admin() view returns (address)",
-      "function coverLoss(address token, uint256 amount)",
-      "function initialize(address _admin)",
-      "function setAdmin(address _admin)",
-      "function version() view returns (string)"
-    ],
     "0x7A2075519Dd9598b62075FD397aF0Dd34b14619a": [
       "constructor()",
       "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
@@ -1171,14 +1164,6 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "0xBbE2cd60BD30Ef2aaceFD74C3199282ee35fBBa6": [
-      "constructor(address _owner)",
-      "function getImplementation() returns (address)",
-      "function getOwner() returns (address)",
-      "function setCode(bytes _code)",
-      "function setOwner(address _owner)",
-      "function setStorage(bytes32 _key, bytes32 _value)"
-    ],
     "0xBF21bc9AFaF817145B3886caDAF0860A2A0D782F": [
       "constructor()",
       "event Initialized(uint8 version)",
@@ -1191,14 +1176,6 @@
       "function createStandardL2Token(address _remoteToken, string _name, string _symbol) returns (address)",
       "function initialize(address _bridge)",
       "function version() view returns (string)"
-    ],
-    "0xcFF70D7F37b1EBeE89c08E485f08ACAB5f6ff873": [
-      "constructor(address _owner)",
-      "function getImplementation() returns (address)",
-      "function getOwner() returns (address)",
-      "function setCode(bytes _code)",
-      "function setOwner(address _owner)",
-      "function setStorage(bytes32 _key, bytes32 _value)"
     ],
     "0xD2C23A5A280AFF9182b953579f62EDdDF1c7ff22": [
       "constructor()",
@@ -1373,19 +1350,6 @@
       "function unstake(uint256 idx, address providerAddress, uint256 amount)",
       "function version() view returns (string)"
     ],
-    "0xEDeFE92e0CEF091149E1749Dd12d8F44Dd94DBb3": [
-      "constructor(address _yieldManager)",
-      "error CannotSetAdminAsZeroAddress()",
-      "error InsufficientBalance()",
-      "error OnlyAdmin()",
-      "error OnlyAdminOrYieldManager()",
-      "event Initialized(uint8 version)",
-      "function admin() view returns (address)",
-      "function coverLoss(address token, uint256 amount)",
-      "function initialize(address _admin)",
-      "function setAdmin(address _admin)",
-      "function version() view returns (string)"
-    ],
     "0xf2F6148327B3020610FCa26E094D9A5cc4689525": [
       "constructor()",
       "error CallerIsNotAdmin()",
@@ -1466,7 +1430,14 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
-    "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b"
+    "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
+    "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
+    "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
+    "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
+    "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
+    "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
+    "opstack/OptimismPortal": "0x2a32f6874a8c0e85e685fa944143e7968d675fed43b46e7385411ad11f8a1a43",
+    "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

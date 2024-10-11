@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20311131,
   "configHash": "0x651914ce661d79a29f4959d5466bfd8b5c975114bf075b964500a1fc70ee5547",
-  "version": 15,
   "contracts": [
     {
       "name": "Governance",
@@ -454,5 +453,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

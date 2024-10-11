@@ -37,7 +37,7 @@ export function ScalingRiskTable({ entries }: { entries: ScalingRiskEntry[] }) {
   })
 
   return (
-    <div className="mt-4 space-y-6 sm:mt-8">
+    <div className="space-y-3 md:space-y-6">
       <ScalingFilters items={filteredEntries} />
       <BasicTable table={table} />
     </div>

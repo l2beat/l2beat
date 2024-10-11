@@ -47,6 +47,15 @@ export function createAmountId(amountConfig: AmountConfigEntry): AmountId {
       input.push(amountConfig.wethAddress.toString())
       input.push(amountConfig.escrowAddress.toString())
       break
+    case 'elasticChainL2Token':
+      input.push(amountConfig.l1Address.toString())
+      input.push(amountConfig.escrowAddress.toString())
+      input.push(amountConfig.l2BridgeAddress.toString())
+      break
+    case 'elasticChainEther':
+      input.push(amountConfig.address.toString())
+      input.push(amountConfig.escrowAddress.toString())
+      break
     default:
       assertUnreachable(amountConfig)
   }

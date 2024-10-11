@@ -3,7 +3,6 @@
   "chain": "arbitrum",
   "blockNumber": 259634526,
   "configHash": "0x35e5e717c4a2aa85786676763cae5aa4fac40b5a9a9d13d364af595d709eda64",
-  "version": 15,
   "contracts": [
     {
       "name": "SP1Verifier",
@@ -604,5 +603,5 @@
     "succinct/SP1Blobstream": "0xb0717b3e2a9ebc9678d934fa77de178537019305cf6fd12950b8f116da2a0e9c",
     "succinct/SP1SuccinctGateway": "0xe0ec8df0fec605a6cb059948b08432aee71379584a5fa43412fa24a07701c877"
   },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

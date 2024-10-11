@@ -1,8 +1,10 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
 export const thanos: Layer2 = upcomingL2({
   id: 'thanos',
+  createdAt: new UnixTime(1726844759), // 2024-09-20T15:05:59Z
   display: {
     name: 'THANOS',
     slug: 'thanos',

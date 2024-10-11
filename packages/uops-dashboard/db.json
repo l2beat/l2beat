@@ -127,6 +127,7 @@
     ["0xb91d544e", "u"],
     ["0x2f2ff15d", "grantRole"],
     ["0x98a6e993", "mintWithSignature"],
-    ["0x3dbfd97c", "login"]
+    ["0x3dbfd97c", "login"],
+    ["0x82ad56cb", "aggregate3"]
   ]
 }

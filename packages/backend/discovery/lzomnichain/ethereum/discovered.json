@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 20240876,
   "configHash": "0x9d96b20a841797ca5d2e377b9c244b1781d5c5b56faf0686676a0c3d77c5503a",
-  "version": 15,
   "contracts": [
     {
       "name": "FPValidator",
@@ -2052,5 +2051,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

@@ -22,7 +22,6 @@ interface Risk {
   description?: string
   warning?: WarningValueWithSentiment
   secondLine?: string
-  secondSentiment?: Sentiment
 }
 
 interface Props {
@@ -53,29 +52,21 @@ export function RiskCell({ risk, emptyMode = 'no-info' }: Props) {
         {risk.warning && (
           <RoundedWarningIcon
             className={cn(
-              'size-5',
+              'size-4 md:size-5',
               sentimentToFillColor(risk.warning.sentiment),
             )}
           />
         )}
       </div>
-      {risk.secondLine &&
-        (risk.secondSentiment ? (
-          <SentimentText
-            sentiment={risk.secondSentiment}
-            className="block text-xs leading-none"
-          >
-            {risk.secondLine}
-          </SentimentText>
-        ) : (
-          <span
-            className={
-              '-mt-1 mb-1 text-2xs text-gray-550 dark:text-gray-500 md:m-0 md:text-xs md:leading-none'
-            }
-          >
-            {risk.secondLine}
-          </span>
-        ))}
+      {risk.secondLine && (
+        <span
+          className={
+            '-mt-1 mb-1 text-xs text-secondary md:m-0 md:text-xs md:leading-none'
+          }
+        >
+          {risk.secondLine}
+        </span>
+      )}
     </div>
   )
 

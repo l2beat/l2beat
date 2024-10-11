@@ -1,4 +1,4 @@
-export interface CoingeckoId extends String {
+export type CoingeckoId = string & {
   _CoingeckoIdBrand: string
 }
 

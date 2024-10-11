@@ -3,6 +3,7 @@ import {
   assert,
   type AmountConfigEntry,
   type AssetId,
+  type EthereumAddress,
   type ProjectId,
   UnixTime,
   asNumber,
@@ -16,7 +17,7 @@ import { recordToSortedBreakdown } from './record-to-sorted-breakdown'
 import { type BreakdownRecord, type CanonicalAssetBreakdownData } from './types'
 
 const SHARED_ESCROW_WARNING =
-  'There might be a 1% difference with the actual amounts locked due to pending deposits and withdrawals.'
+  'Does not account for differences in locked value due to pending deposits and withdrawals.'
 
 export function getTvlBreakdown(configMapping: ConfigMapping) {
   return async function (projectId: ProjectId, target?: UnixTime) {
@@ -74,8 +75,10 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
               config.type === 'preminted' ||
               config.type === 'aggLayerL2Token' ||
               config.type === 'aggLayerNativeEtherPreminted' ||
-              config.type === 'aggLayerNativeEtherWrapped',
-            'Only escrow, preminted, AggLayer tokens can be canonical',
+              config.type === 'aggLayerNativeEtherWrapped' ||
+              config.type === 'elasticChainL2Token' ||
+              config.type === 'elasticChainEther',
+            'Only escrow, preminted, AggLayer, Elastic tokens can be canonical',
           )
 
           let isSharedEscrow
@@ -83,6 +86,8 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
             case 'aggLayerL2Token':
             case 'aggLayerNativeEtherPreminted':
             case 'aggLayerNativeEtherWrapped':
+            case 'elasticChainL2Token':
+            case 'elasticChainEther':
               isSharedEscrow = true
               break
             case 'escrow':

@@ -57,14 +57,8 @@ export function TokenCombobox({
       <PopoverTrigger
         className={cn('group/popover-trigger h-8 justify-between', className)}
       >
-        {value ? (
-          <TokenItem
-            token={allTokens.find((t) => t.assetId === value.assetId)!}
-          />
-        ) : (
-          'Tokens'
-        )}
-        <ChevronIcon className="ml-2 size-4 shrink-0 opacity-50 transition-transform group-data-[state=open]/popover-trigger:rotate-180" />
+        {value ? <TokenItem token={value} /> : 'Tokens'}
+        <ChevronIcon className="size-3 shrink-0 transition-transform group-data-[state=open]/popover-trigger:rotate-180" />
       </PopoverTrigger>
       <PopoverContent className="p-0" align="start">
         <Command shouldFilter={false}>

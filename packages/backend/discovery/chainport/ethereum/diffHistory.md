@@ -1,4 +1,29 @@
-Generated with discovered.json: 0xe92aa59403071b52c3f2b77cfed372f8448d14a1
+Generated with discovered.json: 0xbc0a5fcca57a83e5ca93ba57e600138d1dc8d4e7
+
+# Diff at Thu, 10 Oct 2024 09:11:08 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@cb5ff535ffc194baf7396bd6db8232883e2ad088 block: 20454449
+- current block number: 20934226
+
+## Description
+
+New proposal (and execution) to unpause the unverified contract `0xd02c8a355599fee7e4f1d1d71f7a01c0108e353c`.
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: MEDIUM
+      values.proposalCount:
+-        59
++        60
+    }
+```
+
+Generated with discovered.json: 0xdf8464b1ecc09fd1f5c660488df3f88bfdc79bea
 
 # Diff at Tue, 01 Oct 2024 10:50:26 GMT:
 

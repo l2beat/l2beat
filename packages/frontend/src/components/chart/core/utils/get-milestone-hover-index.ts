@@ -15,7 +15,7 @@ export function getMilestoneHoverIndex({
   mouseX: number
   mouseY: number
   canvasWidth: number
-  columns: ChartColumn<unknown>[]
+  columns: ChartColumn[]
   getCanvasX: (index: number) => number
   isMobile: boolean
 }) {

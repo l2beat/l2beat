@@ -1,4 +1,27 @@
-Generated with discovered.json: 0x7e83399f80f2e85ba6baf73b486bd44d1ff98ac9
+Generated with discovered.json: 0xa513efaf6e24057f268b8cace31dbb24a947c021
+
+# Diff at Thu, 10 Oct 2024 09:15:27 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@cb5ff535ffc194baf7396bd6db8232883e2ad088 block: 20389671
+- current block number: 20934247
+
+## Description
+
+Signer swapped in AdminMultisig.
+
+## Watched changes
+
+```diff
+    contract AdminMultisig (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      values.$members.4:
+-        "0x36a0b60162d7F407d74bd1def01410D20437F87B"
++        "0x9376c137AF5124FFc39bD8940A3D88D1cd508992"
+    }
+```
+
+Generated with discovered.json: 0xe6232787bad87e3865c174553e77fde10d29dcbf
 
 # Diff at Tue, 01 Oct 2024 10:52:12 GMT:
 

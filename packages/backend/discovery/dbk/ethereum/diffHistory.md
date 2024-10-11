@@ -1,4 +1,48 @@
-Generated with discovered.json: 0x04914120f4784d14afb24638ffb46b799431968c
+Generated with discovered.json: 0x707be71dd9ca05e6feda44bc8458f38eda5c0bff
+
+# Diff at Wed, 09 Oct 2024 13:09:15 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@37683e2b3d0587372f886eef49e921277810c8bf block: 20792021
+- current block number: 20792021
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20792021 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0x306402f889035e2Cbd7e396080bf365ADB38B7DC) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.via.0.description:
++        "set and change address mappings."
+      descriptions:
++        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x830e68669019a05F41676546417D2A06fdfFF9fB) {
+    +++ description: None
+      directlyReceivedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+```diff
+    contract DeBankChainMultisig (0xfB04A190dC7D91E86109433858A48E0B98EF1450) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+Generated with discovered.json: 0xd5377df58b3380cef458319fad2091476d4e0adc
 
 # Diff at Tue, 01 Oct 2024 10:50:35 GMT:
 

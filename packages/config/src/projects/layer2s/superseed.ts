@@ -1,8 +1,10 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
 export const superseed: Layer2 = upcomingL2({
   id: 'superseed',
+  createdAt: new UnixTime(1714316238), // 2024-04-28T14:57:18Z
   display: {
     name: 'Superseed',
     slug: 'superseed',

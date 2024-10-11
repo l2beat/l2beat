@@ -10,7 +10,7 @@ export function RequiredTools(props: Props) {
   return (
     <table className="w-full">
       <thead>
-        <tr className="border-b border-gray-200 align-bottom text-xs font-semibold uppercase text-gray-500 dark:border-zinc-700 dark:text-gray-50">
+        <tr className="border-b border-gray-200 align-bottom text-xs font-medium uppercase text-gray-500 dark:border-zinc-700 dark:text-gray-50">
           <th className="px-4 py-2 text-start">Tool name</th>
           <th className="py-2 pr-4 text-start">Version</th>
           <th className="py-2 pr-4 text-start">Tool docs</th>

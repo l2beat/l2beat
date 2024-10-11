@@ -3,7 +3,6 @@
   "chain": "ethereum",
   "blockNumber": 19531425,
   "configHash": "0x6d3ba500f9e18492dde71766f7b8c6d0490b243723f0b0fc9f69d49a1ec55561",
-  "version": 15,
   "contracts": [
     {
       "name": "TreasuryV2",
@@ -435,5 +434,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
 }

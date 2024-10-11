@@ -6,17 +6,20 @@ import { TableTooltip } from './table-tooltip'
 const Table = React.forwardRef<
   HTMLTableElement,
   React.HTMLAttributes<HTMLTableElement>
->(({ className, ...props }, ref) => (
-  <div className="relative w-full overflow-auto pb-3">
-    <table
-      ref={ref}
-      className={cn('w-full border-collapse text-left text-base', className)}
-      cellPadding={0}
-      cellSpacing={0}
-      {...props}
-    />
-  </div>
-))
+>(({ className, ...props }, ref) => {
+  return (
+    <div className="max-md:-mr-4">
+      <div className={cn('relative w-full overflow-auto pb-3 max-md:pr-4')}>
+        <table
+          ref={ref}
+          className={cn('w-full border-collapse text-left', className)}
+          cellSpacing={0}
+          {...props}
+        />
+      </div>
+    </div>
+  )
+})
 Table.displayName = 'Table'
 
 const TableHeader = React.forwardRef<
@@ -26,7 +29,7 @@ const TableHeader = React.forwardRef<
   <thead
     ref={ref}
     className={cn(
-      'group/header whitespace-pre py-2 align-bottom text-xs font-medium uppercase text-gray-500 dark:text-gray-50 [&_tr]:border-b',
+      'group/header whitespace-pre py-2 align-bottom text-xs font-medium uppercase text-zinc-500 dark:text-n-zinc-300',
       className,
     )}
     {...props}
@@ -50,14 +53,7 @@ const TableHeaderRow = React.forwardRef<
   HTMLTableRowElement,
   React.HTMLAttributes<HTMLTableRowElement>
 >(({ className, ...props }, ref) => (
-  <tr
-    ref={ref}
-    className={cn(
-      'border-b border-b-gray-200 dark:border-b-zinc-700',
-      className,
-    )}
-    {...props}
-  />
+  <tr ref={ref} className={className} {...props} />
 ))
 TableHeaderRow.displayName = 'TableHeaderRow'
 
@@ -67,7 +63,10 @@ const TableRow = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <TableHeaderRow
     ref={ref}
-    className={cn('group/row hover:shadow-sm', className)}
+    className={cn(
+      'group/row border-b border-b-gray-200 hover:shadow-sm dark:border-b-gray-850',
+      className,
+    )}
     {...props}
   />
 ))
@@ -112,7 +111,7 @@ const TableCell = React.forwardRef<
   <td
     ref={ref}
     className={cn(
-      'group h-9 whitespace-pre align-middle md:h-14',
+      'group h-9 whitespace-pre p-0 align-middle text-xs md:h-14 md:text-sm',
       !href && [
         'pr-3 first:pl-2 last:pr-2 md:pr-4',
         align === 'center' && 'text-center',

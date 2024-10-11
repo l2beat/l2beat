@@ -3,6 +3,7 @@ import { assert } from '@l2beat/shared-pure'
 import {
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
+  TrackedTxSharedBridgeConfig,
   TrackedTxSharpSubmissionConfig,
 } from '@l2beat/shared'
 import { Configuration } from '../../../tools/uif/multi/types'
@@ -10,6 +11,7 @@ import {
   BigQueryFunctionCallResult,
   TrackedTxFunctionCallResult,
 } from '../types/model'
+import { isChainIdMatching } from './isChainIdMatching'
 import { isProgramHashProven } from './isProgramHashProven'
 
 export function transformFunctionCallsQueryResult(
@@ -18,6 +20,9 @@ export function transformFunctionCallsQueryResult(
   >[],
   sharpSubmissions: Configuration<
     TrackedTxConfigEntry & { params: TrackedTxSharpSubmissionConfig }
+  >[],
+  sharedBridgesConfig: Configuration<
+    TrackedTxConfigEntry & { params: TrackedTxSharedBridgeConfig }
   >[],
   queryResults: BigQueryFunctionCallResult[],
 ): TrackedTxFunctionCallResult[] {
@@ -29,14 +34,23 @@ export function transformFunctionCallsQueryResult(
         c.properties.params.selector === selector &&
         c.properties.params.address === r.to_address,
     )
+
     const matchingSubmissions = sharpSubmissions.filter(
       (c) =>
         c.properties.params.selector === selector &&
         c.properties.params.address === r.to_address,
     )
 
+    const matchingSharedBridgeCalls = sharedBridgesConfig.filter(
+      (c) =>
+        c.properties.params.selector === selector &&
+        c.properties.params.address === r.to_address,
+    )
+
     assert(
-      matchingCalls.length > 0 || matchingSubmissions.length > 0,
+      matchingCalls.length > 0 ||
+        matchingSubmissions.length > 0 ||
+        matchingSharedBridgeCalls.length > 0,
       'There should be at least one matching config',
     )
 
@@ -44,7 +58,15 @@ export function transformFunctionCallsQueryResult(
       isProgramHashProven(r, c.properties.params.programHashes),
     )
 
-    const results = [...matchingCalls, ...filteredSubmissions].map(
+    const filteredSharedBridgeCalls = matchingSharedBridgeCalls.filter((c) =>
+      isChainIdMatching(r.input, c.properties.params),
+    )
+
+    const results = [
+      ...matchingCalls,
+      ...filteredSubmissions,
+      ...filteredSharedBridgeCalls,
+    ].map(
       (config) =>
         ({
           id: config.id,

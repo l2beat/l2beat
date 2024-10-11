@@ -1,4 +1,3 @@
-import React from 'react'
 import { cn } from '~/utils/cn'
 import { useChartLoading } from './chart-loading-context'
 
@@ -9,7 +8,7 @@ export function ChartLoader() {
     <svg
       data-role="chart-loader"
       className={cn(
-        'pointer-events-none absolute inset-0 z-40 m-auto select-none opacity-40 duration-500',
+        'pointer-events-none absolute inset-0 z-40 m-auto translate-y-[20%] select-none opacity-40 duration-500',
         !loading && 'opacity-0 animate-out fade-out-0 zoom-out-75',
       )}
       width="50px"
