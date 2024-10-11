@@ -86,26 +86,6 @@ export class TemplateService {
         sha1(formatIntoHashable(readFileSync(p, 'utf8'))),
       )
 
-      /*
-      if (
-        templateId === 'opstack/OptimismMintableERC20Factory' &&
-        name === 'OptimismMintableERC20Factory'
-      ) {
-        writeFileSync('needle.sol', needleSource)
-        for (const path of shapeFilePaths) {
-          const hash = sha1(format(readFileSync(path, 'utf8')))
-          if (
-            hash ===
-            'e1fa27db9fa70d4d332c781b7f476cf9142ad69ccac8397d2f586f7d2d8f0ad1'
-          ) {
-            writeFileSync('haystack.sol', format(readFileSync(path, 'utf8')))
-          }
-        }
-
-        console.log('shrek', name, haystackHashes, needleHash)
-      }
-      */
-
       if (haystackHashes.includes(needleHash)) {
         result[templateId] = 1
       }
