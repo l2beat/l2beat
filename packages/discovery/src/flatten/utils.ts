@@ -1,6 +1,9 @@
+import { createHash } from 'crypto'
 import { ContractSources } from '../discovery/source/SourceCodeService'
+import { ContractSource } from '../utils/IEtherscanClient'
 import { FileContent } from './ParsedFilesManager'
 import { flattenStartingFrom } from './flatten'
+import { format } from './format'
 
 export interface HashedChunks {
   content: string
@@ -46,6 +49,40 @@ export function flattenFirstSource(
     source.source.remappings,
   )
   return output
+}
+
+export function flatteningHash(source: ContractSource): string | undefined {
+  if (!source.isVerified) {
+    return undefined
+  }
+
+  const input: FileContent[] = Object.entries(source.files)
+    .map(([fileName, content]) => ({
+      path: fileName,
+      content,
+    }))
+    .filter((e) => e.path.endsWith('.sol'))
+
+  const flat = flattenStartingFrom(source.name, input, source.remappings)
+  return sha2_256bit(formatIntoHashable(flat))
+}
+
+export function formatIntoHashable(source: string) {
+  let formatted = format(source)
+
+  if (formatted.startsWith('pragma')) {
+    const firstNewlineIndex = formatted.indexOf('\n')
+    formatted =
+      firstNewlineIndex === -1
+        ? formatted
+        : formatted.slice(firstNewlineIndex + 1)
+  }
+
+  return formatted.trim()
+}
+
+export function sha2_256bit(str: string): string {
+  return createHash('sha256').update(str).digest('hex')
 }
 
 export function removeComments(source: string): string {

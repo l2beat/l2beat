@@ -1,13 +1,15 @@
 import { createHash } from 'crypto'
 import { existsSync, readFileSync, readdirSync } from 'fs'
 import path, { join } from 'path'
-import chalk from 'chalk'
 
 import { hashJson } from '@l2beat/shared'
 import { Hash256, json } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
-import { format } from '../../flatten/format'
-import { flattenFirstSource } from '../../flatten/utils'
+import {
+  flattenFirstSource,
+  formatIntoHashable,
+  sha2_256bit,
+} from '../../flatten/utils'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
 import {
   DiscoveryContract,
@@ -64,11 +66,11 @@ export class TemplateService {
       return result
     }
 
-    const needleHash = sha1(formatIntoHashable(needleSource))
+    const needleHash = sha2_256bit(formatIntoHashable(needleSource))
     const allTemplates = this.listAllTemplates()
     for (const [templateId, shapeFilePaths] of Object.entries(allTemplates)) {
       const haystackHashes = shapeFilePaths.map((p) =>
-        sha1(formatIntoHashable(readFileSync(p, 'utf8'))),
+        sha2_256bit(formatIntoHashable(readFileSync(p, 'utf8'))),
       )
 
       if (haystackHashes.includes(needleHash)) {
@@ -170,22 +172,4 @@ function listAllPaths(path: string): string[] {
     result = result.concat(listAllPaths(subPath))
   }
   return result
-}
-
-function formatIntoHashable(source: string) {
-  let formatted = format(source)
-
-  if (formatted.startsWith('pragma')) {
-    const firstNewlineIndex = formatted.indexOf('\n')
-    formatted =
-      firstNewlineIndex === -1
-        ? formatted
-        : formatted.slice(firstNewlineIndex + 1)
-  }
-
-  return formatted.trim()
-}
-
-function sha1(str: string): string {
-  return createHash('sha256').update(str).digest('hex')
 }

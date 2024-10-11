@@ -88,6 +88,7 @@ export type ContractParameters = {
   descriptions?: string[]
   derivedName?: string
   template?: string
+  sourceHashes?: string[]
   unverified?: true
   sinceTimestamp?: number
   address: EthereumAddress

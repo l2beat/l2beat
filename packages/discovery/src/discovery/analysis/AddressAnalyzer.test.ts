@@ -7,7 +7,8 @@ import { ContractOverrides } from '../config/DiscoveryOverrides'
 import { HandlerExecutor } from '../handlers/HandlerExecutor'
 import { IProvider } from '../provider/IProvider'
 import { ProxyDetector } from '../proxies/ProxyDetector'
-import { ContractSources, SourceCodeService } from '../source/SourceCodeService'
+import { ContractSources } from '../source/SourceCodeService'
+import { SourceCodeService } from '../source/SourceCodeService'
 import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
 import { AddressAnalyzer } from './AddressAnalyzer'
 import { TemplateService } from './TemplateService'
@@ -59,6 +60,7 @@ describe(AddressAnalyzer.name, () => {
         },
         sources: [
           {
+            hash: Hash256.random(),
             name: 'Proxy1',
             address: address,
             source: {
@@ -72,6 +74,7 @@ describe(AddressAnalyzer.name, () => {
             },
           },
           {
+            hash: Hash256.random(),
             name: 'Impl1',
             address: implementation,
             source: {
@@ -181,6 +184,7 @@ describe(AddressAnalyzer.name, () => {
         },
         sources: [
           {
+            hash: Hash256.random(),
             name: 'Test',
             address,
             source: {
@@ -194,6 +198,7 @@ describe(AddressAnalyzer.name, () => {
             },
           },
           {
+            hash: Hash256.random(),
             name: 'Test2',
             address: implementation,
             source: {
@@ -304,6 +309,7 @@ describe(AddressAnalyzer.name, () => {
         },
         sources: [
           {
+            hash: Hash256.random(),
             name: 'Test',
             address,
             source: {
@@ -317,6 +323,7 @@ describe(AddressAnalyzer.name, () => {
             },
           },
           {
+            hash: Hash256.random(),
             name: 'Test',
             address,
             source: {

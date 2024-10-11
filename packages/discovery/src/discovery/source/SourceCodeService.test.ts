@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { ContractSource } from '../../utils/IEtherscanClient'
@@ -55,6 +55,7 @@ describe(SourceCodeService.name, () => {
       name: 'Foo',
       sources: [
         {
+          hash: Hash256.random(),
           name: 'Foo',
           address: FOO_ADDRESS,
           source: FOO_METADATA,
@@ -81,6 +82,7 @@ describe(SourceCodeService.name, () => {
       name: 'Bar',
       sources: [
         {
+          hash: Hash256.random(),
           name: 'Bar',
           address: BAR_ADDRESS,
           source: BAR_METADATA,
@@ -110,11 +112,13 @@ describe(SourceCodeService.name, () => {
       name: 'Baz',
       sources: [
         {
+          hash: Hash256.random(),
           name: 'Bar',
           address: BAR_ADDRESS,
           source: BAR_METADATA,
         },
         {
+          hash: Hash256.random(),
           name: 'Baz',
           address: BAZ_ADDRESS,
           source: BAZ_METADATA,
@@ -143,11 +147,13 @@ describe(SourceCodeService.name, () => {
       name: 'Foo',
       sources: [
         {
+          hash: Hash256.random(),
           name: 'Bar',
           address: BAR_ADDRESS,
           source: BAR_METADATA,
         },
         {
+          hash: Hash256.random(),
           name: 'Foo',
           address: FOO_ADDRESS,
           source: FOO_METADATA,
