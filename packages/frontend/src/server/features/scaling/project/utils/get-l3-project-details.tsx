@@ -21,6 +21,7 @@ import { getTokensForProject } from '../../tvl/tokens/get-tokens-for-project'
 interface Params {
   project: Layer3
   isVerified: boolean
+  isHostChainVerified: boolean
   contractsVerificationStatuses: ContractsVerificationStatuses
   manuallyVerifiedContracts: ManuallyVerifiedContracts
   implementationChangeReport: ImplementationChangeReportApiResponse
@@ -32,14 +33,15 @@ interface Params {
 
 export async function getL3ProjectDetails({
   project,
+  hostChain,
   isVerified,
-  contractsVerificationStatuses,
+  rosetteValues,
+  isHostChainVerified,
+  combinedRosetteValues,
+  hostChainRosetteValues,
   manuallyVerifiedContracts,
   implementationChangeReport,
-  rosetteValues,
-  hostChain,
-  hostChainRosetteValues,
-  combinedRosetteValues,
+  contractsVerificationStatuses,
 }: Params) {
   const permissionsSection = project.permissions
     ? getPermissionsSection(
@@ -71,6 +73,10 @@ export async function getL3ProjectDetails({
     manuallyVerifiedContracts,
     implementationChangeReport,
   )
+
+  const hostChainRisksSummary = hostChain
+    ? getScalingRiskSummarySection(hostChain, isHostChainVerified)
+    : hostChain
   const riskSummary = getScalingRiskSummarySection(project, isVerified)
   const technologySection = getScalingTechnologySection(project)
   const operatorSection = getOperatorSection(project)
@@ -107,6 +113,18 @@ export async function getL3ProjectDetails({
     ) ?? []
 
   const items: ProjectDetailsSection[] = []
+
+  const hostChainWarning = hostChain
+    ? { hostChain: hostChain.display }
+    : undefined
+  const hostChainWarningWithRiskCount =
+    hostChain && hostChainRisksSummary
+      ? {
+          hostChain: hostChain.display,
+          riskCount: hostChainRisksSummary.riskGroups.flatMap((rg) => rg.items)
+            .length,
+        }
+      : undefined
 
   if (!project.isUpcoming && tvlChartData.length > 0) {
     items.push({
@@ -168,6 +186,7 @@ export async function getL3ProjectDetails({
         ...riskSummary,
         id: 'risk-summary',
         title: 'Risk summary',
+        hostChainWarning: hostChainWarningWithRiskCount,
       },
     })
   }
@@ -226,6 +245,7 @@ export async function getL3ProjectDetails({
         id: 'technology',
         title: 'Technology',
         ...technologySection,
+        hostChainWarning,
       },
     })
   }
@@ -262,6 +282,7 @@ export async function getL3ProjectDetails({
         id: 'operator',
         title: 'Operator',
         ...operatorSection,
+        hostChainWarning,
       },
     })
   }
@@ -273,6 +294,7 @@ export async function getL3ProjectDetails({
         id: 'withdrawals',
         title: 'Withdrawals',
         ...withdrawalsSection,
+        hostChainWarning,
       },
     })
   }
