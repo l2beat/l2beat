@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x25f08550ddf3f2809c1f85dcd6b23c2558ce5b23
+Generated with discovered.json: 0x97f6e9d4d5cdd349a1b3f9f190b8950ba2d9ab1d
 
-# Diff at Fri, 11 Oct 2024 08:57:38 GMT:
+# Diff at Fri, 11 Oct 2024 10:34:24 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
 - comparing to: main@8f7c5fd25193054458be38552e62a708c480b2c8 block: 20368673
-- current block number: 20941331
+- current block number: 20941810
 
 ## Description
 
@@ -29,6 +29,158 @@ Getalo MS signer removed.
       values.multisigThreshold:
 -        "6 of 10 (60%)"
 +        "6 of 9 (67%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20368673 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x05f23282FFDCA8286E4738C1aF79079f3d843750) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.1.target:
+-        "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      issuedPermissions.1.via.1:
++        {"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d","delay":0}
+      issuedPermissions.1.via.0.address:
+-        "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"
++        "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x113cB99283AF242Da0A0C54347667edF531Aa7d6) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.0.target:
+-        "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      issuedPermissions.0.via.1:
++        {"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d","delay":0}
+      issuedPermissions.0.via.0.address:
+-        "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"
++        "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x2658723Bf70c7667De6B25F99fcce13A16D25d08) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      issuedPermissions.0.target:
+-        "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      issuedPermissions.0.via.1:
++        {"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d","delay":0,"description":"upgrading bridge implementation allows to access all funds and change every system component."}
+      issuedPermissions.0.via.0.address:
+-        "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"
++        "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"
+      issuedPermissions.0.via.0.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x26C7bFB430d68Bf74d2d52497836d4336b555dE7) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions.0.target:
+-        "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      issuedPermissions.0.via.1:
++        {"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d","delay":0}
+      issuedPermissions.0.via.0.address:
+-        "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"
++        "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"
+    }
+```
+
+```diff
+    contract OptimismPortal (0x26dB93F8b8b4f7016240af62F7730979d353f9A7) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions.0.target:
+-        "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      issuedPermissions.0.via.1:
++        {"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d","delay":0}
+      issuedPermissions.0.via.0.address:
+-        "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"
++        "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"
+    }
+```
+
+```diff
+    contract AddressManager (0x2dF7057d3F25212E51aFEA8dA628668229Ea423f) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.target:
+-        "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      issuedPermissions.0.via.1:
++        {"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d","delay":0,"description":"set and change address mappings."}
+      issuedPermissions.0.via.0.address:
+-        "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"
++        "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"
+      issuedPermissions.0.via.0.description:
+-        "set and change address mappings."
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x3A44A3b263FB631cdbf25f339e2D29497511A81f) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions.0.target:
+-        "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      issuedPermissions.0.via.1:
++        {"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d","delay":0}
+      issuedPermissions.0.via.0.address:
+-        "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"
++        "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"
+    }
+```
+
+```diff
+    contract GelatoMultisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      receivedPermissions.8:
++        {"permission":"upgrade","target":"0xc1dA06CC5DD5cE23bABa924463de7F762039252d","via":[{"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"},{"address":"0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","target":"0x3A44A3b263FB631cdbf25f339e2D29497511A81f","via":[{"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"},{"address":"0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","target":"0x26dB93F8b8b4f7016240af62F7730979d353f9A7","via":[{"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"},{"address":"0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","target":"0x26C7bFB430d68Bf74d2d52497836d4336b555dE7","via":[{"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"},{"address":"0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","target":"0x2658723Bf70c7667De6B25F99fcce13A16D25d08","description":"upgrading bridge implementation allows to access all funds and change every system component.","via":[{"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"},{"address":"0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","target":"0x113cB99283AF242Da0A0C54347667edF531Aa7d6","via":[{"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"},{"address":"0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"}]}
+      receivedPermissions.2:
++        {"permission":"upgrade","target":"0x05f23282FFDCA8286E4738C1aF79079f3d843750","via":[{"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"},{"address":"0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"}]}
+      receivedPermissions.1:
++        {"permission":"configure","target":"0x2dF7057d3F25212E51aFEA8dA628668229Ea423f","description":"set and change address mappings.","via":[{"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"},{"address":"0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"}]}
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xc1dA06CC5DD5cE23bABa924463de7F762039252d) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      issuedPermissions.0.target:
+-        "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      issuedPermissions.0.via.1:
++        {"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d","delay":0}
+      issuedPermissions.0.via.0.address:
+-        "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"
++        "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"
+    }
+```
+
+```diff
+    contract LiskRollupOwnerMultisig (0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"configure","target":"0x2dF7057d3F25212E51aFEA8dA628668229Ea423f","description":"set and change address mappings.","via":[{"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"}]},{"permission":"upgrade","target":"0x05f23282FFDCA8286E4738C1aF79079f3d843750","via":[{"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"}]},{"permission":"upgrade","target":"0x113cB99283AF242Da0A0C54347667edF531Aa7d6","via":[{"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"}]},{"permission":"upgrade","target":"0x2658723Bf70c7667De6B25F99fcce13A16D25d08","description":"upgrading bridge implementation allows to access all funds and change every system component.","via":[{"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"}]},{"permission":"upgrade","target":"0x26C7bFB430d68Bf74d2d52497836d4336b555dE7","via":[{"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"}]},{"permission":"upgrade","target":"0x26dB93F8b8b4f7016240af62F7730979d353f9A7","via":[{"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"}]},{"permission":"upgrade","target":"0x3A44A3b263FB631cdbf25f339e2D29497511A81f","via":[{"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"}]},{"permission":"upgrade","target":"0xc1dA06CC5DD5cE23bABa924463de7F762039252d","via":[{"address":"0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"}]}]
     }
 ```
 

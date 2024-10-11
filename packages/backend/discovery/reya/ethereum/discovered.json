@@ -1,7 +1,7 @@
 {
   "name": "reya",
   "chain": "ethereum",
-  "blockNumber": 20941346,
+  "blockNumber": 20941807,
   "configHash": "0xb622748b58849e14f85cae3fd26c49fe49ef696343c3644d6f0ba4244cef6214",
   "contracts": [
     {
@@ -114,11 +114,11 @@
           "0xFd9f59554351122b231F832a0e0A1aBb0604D7fd"
         ],
         "allowedOutboxList": ["0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9"],
-        "delayedMessageCount": 20560,
+        "delayedMessageCount": 20562,
         "rollup": "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
         "sequencerInbox": "0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d",
-        "sequencerMessageCount": 19383,
-        "sequencerReportedSubMessageCount": 47760469
+        "sequencerMessageCount": 19385,
+        "sequencerReportedSubMessageCount": 47763837
       },
       "derivedName": "Bridge"
     },
@@ -326,7 +326,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 19383,
+        "batchCount": 19385,
         "batchPosters": ["0xf5636Df6f86f31668aeAe9bB8a1C4F0ED147926a"],
         "bridge": "0x383c03c4EfF819E73409DbC690755a9992393814",
         "dacKeyset": {
@@ -351,7 +351,7 @@
         "rollup": "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 20559
+        "totalDelayedMessagesRead": 20561
       },
       "derivedName": "SequencerInbox"
     },

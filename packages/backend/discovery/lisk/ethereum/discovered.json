@@ -1,7 +1,7 @@
 {
   "name": "lisk",
   "chain": "ethereum",
-  "blockNumber": 20941331,
+  "blockNumber": 20941810,
   "configHash": "0x54b600f138a147f390a890b238a88a803b26d43d59f30b55edf592f85fcc7e87",
   "contracts": [
     {
@@ -297,8 +297,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 490798,
-          "prevBlockNum": 20941261
+          "prevBoughtGas": 489262,
+          "prevBlockNum": 20941766
         },
         "paused": false,
         "superchainConfig": "0x26C7bFB430d68Bf74d2d52497836d4336b555dE7",
@@ -359,7 +359,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621299",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621301",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,

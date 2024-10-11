@@ -1,7 +1,7 @@
 {
   "name": "shared-eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 20941391,
+  "blockNumber": 20941801,
   "configHash": "0xf33bc24a9b31fe178eed08ff32ec7e944375ad6817ae20cb4e8a90fdcd7a251a",
   "contracts": [
     {
@@ -11,8 +11,8 @@
       "sinceTimestamp": 1602667372,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0x83261a0000000000",
-        "get_deposit_root": "0xf76401cc6e8f3c506a12464c9763c99f1d67da5c15378edd108e7a70db61e331"
+        "get_deposit_count": "0x89261a0000000000",
+        "get_deposit_root": "0xc4482e2345702ecb7766d43bf04ba4837e16f10f0f4b6360474234c604d06ca1"
       },
       "derivedName": "DepositContract"
     },
