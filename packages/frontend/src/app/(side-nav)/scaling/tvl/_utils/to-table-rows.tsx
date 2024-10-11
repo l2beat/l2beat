@@ -1,5 +1,6 @@
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 
+export type ScalingTvlTableRow = ReturnType<typeof toTableRows>[number]
 export function toTableRows({
   projects,
   excludeAssociatedTokens,
@@ -41,5 +42,3 @@ export function toTableRows({
     }
   })
 }
-
-export type ScalingTvlTableRow = ReturnType<typeof toTableRows>[number]

@@ -12,7 +12,7 @@ import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
 // Optional type and category is needed to support Ethereum L1 entry
 export type CommonScalingEntry = SetOptional<
   ReturnType<typeof getCommonScalingEntry>,
-  'type' | 'category' | 'purposes'
+  'type' | 'category' | 'purposes' | 'stateValidation'
 >
 
 export function getCommonScalingEntry(
@@ -47,6 +47,7 @@ export function getCommonScalingEntry(
       isUnderReview: false,
       stage: { stage: 'NotApplicable' as const },
       badges: [],
+      stateValidation: undefined,
     }
   }
 
