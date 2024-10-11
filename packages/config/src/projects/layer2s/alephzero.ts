@@ -1,18 +1,19 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { subtractOne } from '../../common/assessCount'
-import { underReviewL2 } from './templates/underReview'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
+import { orbitStackL2 } from './templates/orbitStack'
 import { Layer2 } from './types'
 
-export const alephzero: Layer2 = underReviewL2({
-  id: 'alephzero',
+const discovery = new ProjectDiscovery('alephzero')
+
+export const alephzero: Layer2 = orbitStackL2({
+  discovery,
+  badges: [Badge.DA.DAC, Badge.RaaS.Gelato],
   display: {
     name: 'Aleph Zero EVM',
     slug: 'aleph-zero',
     description:
-      'Aleph Zero is an Optimium on Ethereum, built on the Orbit stack. It aims at enabling developers to build privacy-enhancing applications through zkOS, and provide advanced account abstraction capabilities.',
-    purposes: ['Privacy'],
-    category: 'Optimium',
-    provider: 'Arbitrum',
+      'Aleph Zero is an Optimium on Ethereum, built on the Orbit stack. It aims to offer seamless interoperability with the Aleph Zero Layer 1 and a suite of developer tools for building privacy-enhancing dapps.',
+    purposes: ['Privacy', 'Universal'],
     links: {
       websites: ['https://alephzero.org/'],
       apps: ['https://bridge.gelato.network/bridge/aleph-zero-evm'],
@@ -24,20 +25,9 @@ export const alephzero: Layer2 = underReviewL2({
     activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['AZERO'],
+  nativeToken: 'AZERO',
   rpcUrl: 'https://rpc.alephzero.raas.gelato.cloud',
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://rpc.alephzero.raas.gelato.cloud',
-    startBlock: 1,
-    defaultCallsPerMinute: 1500,
-    assessCount: subtractOne,
-  },
-  escrows: [
-    {
-      chain: 'ethereum',
-      address: EthereumAddress('0x41Ec9456AB918f2aBA81F38c03Eb0B93b78E84d9'), // ERC20Bridge
-      sinceTimestamp: new UnixTime(1722297600),
-      tokens: '*',
-    },
-  ],
+  bridge: discovery.getContract('Bridge'),
+  rollupProxy: discovery.getContract('RollupProxy'),
+  sequencerInbox: discovery.getContract('SequencerInbox'),
 })
