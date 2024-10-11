@@ -6,7 +6,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('everclear')
 
 export const everclear: Layer2 = orbitStackL2({
-  badges: [Badge.RaaS.Gelato, Badge.DA.EigenDA],
+  badges: [Badge.RaaS.Gelato],
   display: {
     name: 'Everclear',
     slug: 'everclear',
