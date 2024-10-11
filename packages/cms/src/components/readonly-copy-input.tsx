@@ -19,11 +19,11 @@ export function ReadonlyCopyInput({ value }: { value: string }) {
         variant="ghost"
         className="absolute right-0 top-1/2 -translate-y-1/2"
         onClick={() => {
-          navigator.clipboard.writeText(value)
+          void navigator.clipboard.writeText(value)
           toast.success('Copied to clipboard')
         }}
       >
-        <Copy className="w-4 h-4" />
+        <Copy className="size-4" />
       </Button>
     </div>
   )
