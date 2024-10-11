@@ -1,5 +1,9 @@
 import { providers } from 'ethers'
-import { Block } from './types'
+
+export interface AnalyzedBlock {
+  transactionsLength: number
+  uopsLength: number
+}
 
 export interface Analyzer {
   analyzeBlock(rpcBlock: {
@@ -7,5 +11,5 @@ export interface Analyzer {
     timestamp: number
     hash: string
     transactions: providers.TransactionResponse[]
-  }): Promise<Block>
+  }): Promise<AnalyzedBlock>
 }

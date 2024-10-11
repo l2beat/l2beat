@@ -14,14 +14,12 @@ export const ERC4337_methods: Method[] = [
         if (op.initCode && op.initCode !== '0x') {
           operations.push({
             type: 'static',
-            name: 'contract_deployment',
             count: 1,
           })
         }
         operations.push({
           type: 'recursive',
           calldata: op.callData,
-          to: op.sender,
         })
         return operations
       })
@@ -38,14 +36,12 @@ export const ERC4337_methods: Method[] = [
         if (op.initCode && op.initCode !== '0x') {
           operations.push({
             type: 'static',
-            name: 'contract_deployment',
             count: 1,
           })
         }
         operations.push({
           type: 'recursive',
           calldata: op.callData,
-          to: op.sender,
         })
         return operations
       })
@@ -235,11 +231,6 @@ function decodeCalldata(
     const executionCalldataBuffer = ethers.utils.arrayify(executionCalldata)
 
     if (callType === CALLTYPE_SINGLE) {
-      // First 32 bytes is the address
-      const to = ethers.utils.getAddress(
-        ethers.utils.hexlify(executionCalldataBuffer.slice(0, 20)),
-      )
-
       // Next 32 bytes is the value (amount in wei to send)
       const _value = ethers.BigNumber.from(
         executionCalldataBuffer.slice(20, 52),
@@ -252,7 +243,6 @@ function decodeCalldata(
         {
           type: 'recursive',
           calldata: ethers.utils.hexlify(data),
-          to,
         },
       ]
     }
@@ -271,7 +261,6 @@ function decodeCalldata(
         operations.push({
           type: 'recursive',
           calldata: value.callData,
-          to: value.target,
         })
       })
 
@@ -279,11 +268,6 @@ function decodeCalldata(
     }
 
     if (callType === CALLTYPE_DELEGATECALL) {
-      // First 32 bytes is the address
-      const to = ethers.utils.getAddress(
-        ethers.utils.hexlify(executionCalldataBuffer.slice(0, 20)),
-      )
-
       // The rest is the calldata
       const calldata = ethers.utils.hexlify(executionCalldataBuffer.slice(20))
 
@@ -291,7 +275,6 @@ function decodeCalldata(
         {
           type: 'recursive',
           calldata,
-          to,
         },
       ]
     }
@@ -301,7 +284,6 @@ function decodeCalldata(
     return [
       {
         type: 'static',
-        name: 'FAILED_TO_DECODE',
         count: 1,
       },
     ]
