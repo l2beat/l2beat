@@ -1,8 +1,10 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
 export const allo: Layer2 = upcomingL2({
   id: 'allo',
+  createdAt: new UnixTime(1728665516),
   display: {
     name: 'Allo',
     slug: 'allo',
