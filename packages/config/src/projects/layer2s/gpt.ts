@@ -117,7 +117,7 @@ export const gpt: Layer2 = polygonCDKStack({
       sharedEscrow: {
         type: 'AggLayer',
         nativeAsset: 'etherWrapped',
-        includeL1Tokens: ['GPT'],
+        tokensToAssignFromL1: ['GPT'],
         wethAddress: EthereumAddress(
           '0x5A77f1443D16ee5761d310e38b62f77f726bC71c',
         ),

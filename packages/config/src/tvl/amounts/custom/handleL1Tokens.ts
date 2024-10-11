@@ -12,13 +12,13 @@ export function handleL1Tokens(
       (e) =>
         (e.sharedEscrow?.type === 'AggLayer' ||
           e.sharedEscrow?.type === 'ElasticChian') &&
-        e.sharedEscrow?.includeL1Tokens?.length &&
-        e.sharedEscrow.includeL1Tokens.length > 0,
+        e.sharedEscrow?.tokensToAssignFromL1?.length &&
+        e.sharedEscrow.tokensToAssignFromL1.length > 0,
     )
     assert(escrow)
-    assert(escrow.sharedEscrow?.includeL1Tokens)
+    assert(escrow.sharedEscrow?.tokensToAssignFromL1)
 
-    for (const tokenSymbol of escrow.sharedEscrow.includeL1Tokens) {
+    for (const tokenSymbol of escrow.sharedEscrow.tokensToAssignFromL1) {
       const token = escrow.tokens.find((t) => t.symbol === tokenSymbol)
       assert(token, `Token ${tokenSymbol} not found in escrow tokens`)
 

@@ -38,7 +38,7 @@ export function getTvlAmountsConfig(
     p.escrows.flatMap(
       (e) =>
         (e.sharedEscrow?.type === 'AggLayer' &&
-          e.sharedEscrow?.includeL1Tokens) ||
+          e.sharedEscrow?.tokensToAssignFromL1) ||
         [],
     ),
   )
@@ -101,8 +101,8 @@ export function getTvlAmountsConfig(
       (e) =>
         (e.sharedEscrow?.type === 'AggLayer' ||
           e.sharedEscrow?.type === 'ElasticChian') &&
-        e.sharedEscrow?.includeL1Tokens?.length &&
-        e.sharedEscrow.includeL1Tokens.length > 0,
+        e.sharedEscrow?.tokensToAssignFromL1?.length &&
+        e.sharedEscrow.tokensToAssignFromL1.length > 0,
     ),
   )
 
@@ -142,7 +142,7 @@ export function getTvlAmountsConfigForProject(
         const aggLayerEntries = aggLayerEscrowToEntries(
           escrow,
           project,
-          escrow.sharedEscrow.includeL1Tokens ?? [],
+          escrow.sharedEscrow.tokensToAssignFromL1 ?? [],
         )
         entries.push(...aggLayerEntries)
         break
@@ -181,8 +181,8 @@ export function getTvlAmountsConfigForProject(
   if (
     project.escrows.some(
       (e) =>
-        e.sharedEscrow?.includeL1Tokens?.length &&
-        e.sharedEscrow.includeL1Tokens.length > 0,
+        e.sharedEscrow?.tokensToAssignFromL1?.length &&
+        e.sharedEscrow.tokensToAssignFromL1.length > 0,
     )
   ) {
     entries = handleL1Tokens([project], entries)
