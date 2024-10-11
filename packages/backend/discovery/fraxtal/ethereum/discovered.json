@@ -1424,7 +1424,7 @@
   "usedTemplates": {
     "fraxtal/frxETH": "0xe5482b6c32a0742121bc11ad168d5b887a7553531f6f04145597db129a8b0a8d",
     "fraxtal/FrxEthMinter": "0xb3496e9ff1bb9694e50fc29dd6bddc7340da994d9679cc0e51dd2e3dad9a74fd",
-    "fraxtal/Timelock": "0xe4a5f2aa5b29efb0adbf27e8e4631b0f753028241ee48858a2e30fe456a21508",
+    "fraxtal/Timelock": "0xfb84a150b2dede291d087c46dac44d27f03fb609f506a60ed3ffe2b92651ea35",
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",

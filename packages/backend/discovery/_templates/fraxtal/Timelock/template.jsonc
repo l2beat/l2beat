@@ -13,7 +13,7 @@
     },
     "admin": {
       "target": {
-        "permissions": [{ "type": "act", "delay": "{{ delay }}" }]
+        "permissions": [{ "type": "act", "delay": "{{delay}}" }]
       }
     }
   }
