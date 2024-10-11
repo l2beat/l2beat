@@ -20,7 +20,7 @@ const BASE_CONTRACT: AnalyzedContract = {
 }
 
 describe(resolveAnalysis.name, () => {
-  it('vault controlled by 7/2 multisig', () => {
+  it('vault controlled by 2/7 multisig', () => {
     const vaultAddress = EthereumAddress.random()
     const msigAddress = EthereumAddress.random()
     const members = Array.from({ length: 7 }, () => EthereumAddress.random())
@@ -78,8 +78,7 @@ describe(resolveAnalysis.name, () => {
   it('vault controlled by 2/2 multisig', () => {
     const vaultAddress = EthereumAddress.random()
     const msigAddress = EthereumAddress.random()
-    const member1 = EthereumAddress.random()
-    const member2 = EthereumAddress.random()
+    const members = Array.from({ length: 2 }, () => EthereumAddress.random())
 
     const input: Analysis[] = [
       {
@@ -91,7 +90,7 @@ describe(resolveAnalysis.name, () => {
         address: msigAddress,
         values: {
           $threshold: 2,
-          $members: [member1, member2],
+          $members: members,
         },
         combinedMeta: {
           permissions: [
@@ -103,14 +102,13 @@ describe(resolveAnalysis.name, () => {
           ],
         },
       },
-      {
-        type: 'EOA',
-        address: member1,
-      },
-      {
-        type: 'EOA',
-        address: member2,
-      },
+      ...members.map(
+        (m) =>
+          ({
+            type: 'EOA',
+            address: m,
+          }) as Analysis,
+      ),
     ]
 
     expect(resolveAnalysis(input)).toEqual([
@@ -132,11 +130,10 @@ describe(resolveAnalysis.name, () => {
     ])
   })
 
-  it('vault controlled by 2/1 multisig', () => {
+  it('vault controlled by 1/7 multisig', () => {
     const vaultAddress = EthereumAddress.random()
     const msigAddress = EthereumAddress.random()
-    const member1 = EthereumAddress.random()
-    const member2 = EthereumAddress.random()
+    const members = Array.from({ length: 7 }, () => EthereumAddress.random())
 
     const input: Analysis[] = [
       {
@@ -148,7 +145,7 @@ describe(resolveAnalysis.name, () => {
         address: msigAddress,
         values: {
           $threshold: 1,
-          $members: [member1, member2],
+          $members: members,
         },
         combinedMeta: {
           permissions: [
@@ -160,18 +157,17 @@ describe(resolveAnalysis.name, () => {
           ],
         },
       },
-      {
-        type: 'EOA',
-        address: member1,
-      },
-      {
-        type: 'EOA',
-        address: member2,
-      },
+      ...members.map(
+        (m) =>
+          ({
+            type: 'EOA',
+            address: m,
+          }) as Analysis,
+      ),
     ]
 
-    expect(resolveAnalysis(input)).toEqual([
-      {
+    expect(resolveAnalysis(input)).toEqual(
+      members.map((m) => ({
         permission: 'configure',
         path: [
           {
@@ -185,13 +181,53 @@ describe(resolveAnalysis.name, () => {
             description: undefined,
           },
           {
-            address: member1,
+            address: m,
             delay: 0,
             description: undefined,
           },
         ],
+      })),
+    )
+  })
+
+  it('vault controlled by 1/2 multisig', () => {
+    const vaultAddress = EthereumAddress.random()
+    const msigAddress = EthereumAddress.random()
+    const members = Array.from({ length: 2 }, () => EthereumAddress.random())
+
+    const input: Analysis[] = [
+      {
+        ...BASE_CONTRACT,
+        address: vaultAddress,
       },
       {
+        ...BASE_CONTRACT,
+        address: msigAddress,
+        values: {
+          $threshold: 1,
+          $members: members,
+        },
+        combinedMeta: {
+          permissions: [
+            {
+              type: 'configure',
+              delay: 0,
+              target: vaultAddress,
+            },
+          ],
+        },
+      },
+      ...members.map(
+        (m) =>
+          ({
+            type: 'EOA',
+            address: m,
+          }) as Analysis,
+      ),
+    ]
+
+    expect(resolveAnalysis(input)).toEqual(
+      members.map((m) => ({
         permission: 'configure',
         path: [
           {
@@ -205,19 +241,19 @@ describe(resolveAnalysis.name, () => {
             description: undefined,
           },
           {
-            address: member2,
+            address: m,
             delay: 0,
             description: undefined,
           },
         ],
-      },
-    ])
+      })),
+    )
   })
 
   it('vault controlled by 1/1 multisig', () => {
     const vaultAddress = EthereumAddress.random()
     const msigAddress = EthereumAddress.random()
-    const member = EthereumAddress.random()
+    const members = Array.from({ length: 1 }, () => EthereumAddress.random())
 
     const input: Analysis[] = [
       {
@@ -229,7 +265,7 @@ describe(resolveAnalysis.name, () => {
         address: msigAddress,
         values: {
           $threshold: 1,
-          $members: [member],
+          $members: members,
         },
         combinedMeta: {
           permissions: [
@@ -241,14 +277,17 @@ describe(resolveAnalysis.name, () => {
           ],
         },
       },
-      {
-        type: 'EOA',
-        address: member,
-      },
+      ...members.map(
+        (m) =>
+          ({
+            type: 'EOA',
+            address: m,
+          }) as Analysis,
+      ),
     ]
 
-    expect(resolveAnalysis(input)).toEqual([
-      {
+    expect(resolveAnalysis(input)).toEqual(
+      members.map((m) => ({
         permission: 'configure',
         path: [
           {
@@ -262,13 +301,13 @@ describe(resolveAnalysis.name, () => {
             description: undefined,
           },
           {
-            address: member,
+            address: m,
             delay: 0,
             description: undefined,
           },
         ],
-      },
-    ])
+      })),
+    )
   })
 
   it('single analyzed contract with meta', () => {
