@@ -26,7 +26,7 @@ export default async function Page() {
 }
 
 function Table({ entries }: { entries: ScalingArchivedEntry[] }) {
-  if (env.NEXT_PUBLIC_FEATURE_RECATEGORISATION) {
+  if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
     const { rollups, validiumsAndOptimiums } = groupByMainCategories(entries)
     return (
       <DirectoryTabs defaultValue="rollups">
@@ -51,7 +51,9 @@ function Table({ entries }: { entries: ScalingArchivedEntry[] }) {
   }
   return (
     <MainPageCard>
-      <ScalingArchivedTable entries={entries} />
+      <ScalingFilterContextProvider>
+        <ScalingArchivedTable entries={entries} />
+      </ScalingFilterContextProvider>
     </MainPageCard>
   )
 }

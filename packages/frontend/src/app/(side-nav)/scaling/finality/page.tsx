@@ -33,7 +33,7 @@ export default async function Page() {
 }
 
 async function Table({ entries }: { entries: ScalingFinalityEntry[] }) {
-  if (env.NEXT_PUBLIC_FEATURE_RECATEGORISATION) {
+  if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
     return <ScalingFinalityRollupsTable projects={entries} />
   }
   return <ScalingFinalityTable projects={entries} />

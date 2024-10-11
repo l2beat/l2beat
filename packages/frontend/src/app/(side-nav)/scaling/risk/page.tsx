@@ -37,7 +37,7 @@ export default async function Page() {
 }
 
 async function Tables({ entries }: { entries: ScalingRiskEntry[] }) {
-  if (env.NEXT_PUBLIC_FEATURE_RECATEGORISATION) {
+  if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
     const grouped = await mapToRecategorisedEntries(entries)
     return (
       <DirectoryTabs className="mt-6" defaultValue="rollups">

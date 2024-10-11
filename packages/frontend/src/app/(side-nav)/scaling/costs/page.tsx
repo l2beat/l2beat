@@ -54,7 +54,7 @@ export default async function Page() {
 }
 
 async function Table({ entries }: { entries: ScalingCostsEntry[] }) {
-  if (env.NEXT_PUBLIC_FEATURE_RECATEGORISATION) {
+  if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
     return <ScalingCostsRollupsTable entries={entries} />
   }
   return <ScalingCostsTable entries={entries} />

@@ -27,7 +27,7 @@ export default function Page() {
 }
 
 function Table({ entries }: { entries: ScalingUpcomingEntry[] }) {
-  if (env.NEXT_PUBLIC_FEATURE_RECATEGORISATION) {
+  if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
     const { rollups, validiumsAndOptimiums } = groupByMainCategories(entries)
     return (
       <Suspense>

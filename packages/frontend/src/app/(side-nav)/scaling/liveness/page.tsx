@@ -35,7 +35,7 @@ export default async function Page() {
 }
 
 async function Table({ entries }: { entries: ScalingLivenessEntry[] }) {
-  if (env.NEXT_PUBLIC_FEATURE_RECATEGORISATION) {
+  if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
     return <ScalingLivenessRollupsTable entries={entries} />
   }
   return <ScalingLivenessTable entries={entries} />
