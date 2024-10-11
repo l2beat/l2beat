@@ -1,8 +1,8 @@
-import { expect } from 'earl'
-import { resolveAnalysis } from './resolveAnalysis'
-import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
-import { EthereumAddress } from '@l2beat/shared-pure'
 import { randomUUID } from 'crypto'
+import { EthereumAddress } from '@l2beat/shared-pure'
+import { expect } from 'earl'
+import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
+import { resolveAnalysis } from './resolveAnalysis'
 
 const BASE_CONTRACT: AnalyzedContract = {
   type: 'Contract',
@@ -19,7 +19,7 @@ const BASE_CONTRACT: AnalyzedContract = {
   relatives: {},
 }
 
-describe.only(resolveAnalysis.name, () => {
+describe(resolveAnalysis.name, () => {
   it('vault controlled by 7/2 multisig', () => {
     const vaultAddress = EthereumAddress.random()
     const msigAddress = EthereumAddress.random()
@@ -47,10 +47,13 @@ describe.only(resolveAnalysis.name, () => {
           ],
         },
       },
-      ...members.map((m) => ({
-        type: 'EOA',
-        address: m,
-      } as Analysis)),
+      ...members.map(
+        (m) =>
+          ({
+            type: 'EOA',
+            address: m,
+          }) as Analysis,
+      ),
     ]
 
     expect(resolveAnalysis(input)).toEqual([
