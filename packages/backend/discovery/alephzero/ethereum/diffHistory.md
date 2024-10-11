@@ -7,7 +7,7 @@ Generated with discovered.json: 0xb9eb043357c97bb60e7cb1c925956c4cde543bd4
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Standard Orbit stack Optimium with native token AZERO.
 
 ## Initial discovery
 

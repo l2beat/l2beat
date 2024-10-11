@@ -9,6 +9,8 @@ export const alephzero: Layer2 = orbitStackL2({
   discovery,
   badges: [Badge.DA.DAC, Badge.RaaS.Gelato],
   display: {
+    redWarning:
+      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     name: 'Aleph Zero EVM',
     slug: 'aleph-zero',
     description:
@@ -24,6 +26,17 @@ export const alephzero: Layer2 = orbitStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
+  nonTemplatePermissions: [
+    {
+      name: 'AdminEOA',
+      accounts: discovery.getAccessControlRolePermission(
+        'UpgradeExecutor',
+        'EXECUTOR_ROLE',
+      ),
+      description:
+        'Can upgrade any project implementation via UpgradeExecutor, potentially gaining access to all funds.',
+    },
+  ],
   associatedTokens: ['AZERO'],
   nativeToken: 'AZERO',
   rpcUrl: 'https://rpc.alephzero.raas.gelato.cloud',
