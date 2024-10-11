@@ -1,3 +1,47 @@
+Generated with discovered.json: 0x0703ec863413d4777006fa1131d89b673d67f4ce
+
+# Diff at Wed, 09 Oct 2024 13:09:11 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@37683e2b3d0587372f886eef49e921277810c8bf block: 20032828
+- current block number: 20032828
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20032828 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0x19b5804B88F10262A55ac731f28A3BbC4209853a) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.via.0.description:
++        "set and change address mappings."
+      descriptions:
++        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x7E54107731EC43e78DA678DFa5fB6222Ad036e03) {
+    +++ description: None
+      directlyReceivedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+```diff
+    contract ProxyAdminOwner (0xc2259E7Fb719411f97aBdCdf449f6Ba3B9D75398) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
 Generated with discovered.json: 0x74cc3490a03a5c24e9added87e705464116aabf5
 
 # Diff at Tue, 01 Oct 2024 10:50:32 GMT:

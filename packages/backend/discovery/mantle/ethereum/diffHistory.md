@@ -1,3 +1,436 @@
+Generated with discovered.json: 0x589fa6c1f41bd30699661de22473549ba8e0cc9b
+
+# Diff at Wed, 09 Oct 2024 12:30:38 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@37683e2b3d0587372f886eef49e921277810c8bf block: 20675899
+- current block number: 20928041
+
+## Description
+
+Move to discovery driven data.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20675899 (main branch discovery), not current.
+
+```diff
+    contract MantleTokenProxyAdmin (0x0cac2B1a172ac24012621101634DD5ABD6399ADd) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x3c3a81e81dc49A522A592e7622A7E711c06bf354"}]
+      template:
++        "opstack/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x3c3a81e81dc49A522A592e7622A7E711c06bf354"}]
+    }
+```
+
+```diff
+    contract BLSRegistry (0x1eD35B793d887e028493dAC4a11AA5Feb811dd67) {
+    +++ description: This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum.
+      issuedPermissions.0.target:
+-        "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.via.0:
++        {"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb","delay":0}
+      descriptions:
++        ["This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum."]
+    }
+```
+
+```diff
+    contract InvestmentManager (0x23754725a49c0f003C349A6C7869fF8609a7CEfd) {
+    +++ description: Contract managing different investment strategies, forked from EigenLayer StrategyManager.
+      issuedPermissions.0.target:
+-        "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.via.0:
++        {"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83","delay":0}
+      descriptions:
++        ["Contract managing different investment strategies, forked from EigenLayer StrategyManager."]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract CanonicalTransactionChain (0x291dc3819b863e19b0a9b9809F8025d2EB4aaE93)
+    +++ description: None
+```
+
+```diff
+    contract ProxyAdmin (0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x23754725a49c0f003C349A6C7869fF8609a7CEfd"},{"permission":"upgrade","target":"0xA937660031787C4408587D2c6A67Ec4B260630F5"},{"permission":"upgrade","target":"0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01"},{"permission":"upgrade","target":"0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1"},{"permission":"upgrade","target":"0xeA4F1fE4928f1f83a450899C068bcd455BaF4798"}]
+      template:
++        "opstack/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x23754725a49c0f003C349A6C7869fF8609a7CEfd"},{"permission":"upgrade","target":"0xA937660031787C4408587D2c6A67Ec4B260630F5"},{"permission":"upgrade","target":"0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01"},{"permission":"upgrade","target":"0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1"},{"permission":"upgrade","target":"0xeA4F1fE4928f1f83a450899C068bcd455BaF4798"}]
+    }
+```
+
+```diff
+    contract MantleEngineeringMultisig (0x2F44BD2a54aC3fB20cd7783cF94334069641daC9) {
+    +++ description: None
+      roles:
++        ["Challenger","Guardian"]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      template:
++        "opstack/L2OutputOracle"
+      descriptions:
++        ["Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."]
+    }
+```
+
+```diff
+    contract L1MantleToken (0x3c3a81e81dc49A522A592e7622A7E711c06bf354) {
+    +++ description: MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.
+      issuedPermissions.0.target:
+-        "0x0cac2B1a172ac24012621101634DD5ABD6399ADd"
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.via.0:
++        {"address":"0x0cac2B1a172ac24012621101634DD5ABD6399ADd","delay":0}
+      descriptions:
++        ["MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT."]
+    }
+```
+
+```diff
+    contract SystemConfig (0x427Ea0710FA5252057F0D88274f7aeb308386cAf) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0xca35F8338054739D138884685e08b39EE2217794","delay":0}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.via.0:
+-        {"address":"0xca35F8338054739D138884685e08b39EE2217794","delay":0}
+      template:
++        "opstack/SystemConfig"
+      descriptions:
++        ["Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."]
+      fieldMeta:
++        {"gasLimit":{"severity":"LOW","description":"Gas limit for blocks on L2."}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x47D58744D8515d9aaEAf961bc03625118bd91EBb) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x1eD35B793d887e028493dAC4a11AA5Feb811dd67"},{"permission":"upgrade","target":"0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1"},{"permission":"upgrade","target":"0x92986cd63C3409b7dA2882624B6d6E7Cf660707a"},{"permission":"upgrade","target":"0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94"},{"permission":"upgrade","target":"0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D"}]
+      template:
++        "opstack/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x1eD35B793d887e028493dAC4a11AA5Feb811dd67"},{"permission":"upgrade","target":"0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1"},{"permission":"upgrade","target":"0x92986cd63C3409b7dA2882624B6d6E7Cf660707a"},{"permission":"upgrade","target":"0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94"},{"permission":"upgrade","target":"0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D"}]
+    }
+```
+
+```diff
+    contract MantleSecurityMultisig (0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    +++ description: None
+      receivedPermissions.17:
++        {"permission":"upgrade","target":"0xeA4F1fE4928f1f83a450899C068bcd455BaF4798","via":[{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}]}
+      receivedPermissions.16:
++        {"permission":"upgrade","target":"0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D","via":[{"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"}]}
+      receivedPermissions.15:
++        {"permission":"upgrade","target":"0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1","via":[{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}]}
+      receivedPermissions.14:
++        {"permission":"upgrade","target":"0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94","via":[{"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"}]}
+      receivedPermissions.13:
++        {"permission":"upgrade","target":"0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb","via":[{"address":"0xca35F8338054739D138884685e08b39EE2217794"}]}
+      receivedPermissions.12:
++        {"permission":"upgrade","target":"0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01","via":[{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}]}
+      receivedPermissions.11:
++        {"permission":"upgrade","target":"0xA937660031787C4408587D2c6A67Ec4B260630F5","via":[{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}]}
+      receivedPermissions.10:
++        {"permission":"upgrade","target":"0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012","description":"upgrading bridge implementation allows to access all funds and change every system component.","via":[{"address":"0xca35F8338054739D138884685e08b39EE2217794"}]}
+      receivedPermissions.9:
++        {"permission":"upgrade","target":"0x92986cd63C3409b7dA2882624B6d6E7Cf660707a","via":[{"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","target":"0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1","via":[{"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","target":"0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A"}
+      receivedPermissions.6:
++        {"permission":"upgrade","target":"0x427Ea0710FA5252057F0D88274f7aeb308386cAf","via":[{"address":"0xca35F8338054739D138884685e08b39EE2217794"}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","target":"0x3c3a81e81dc49A522A592e7622A7E711c06bf354","via":[{"address":"0x0cac2B1a172ac24012621101634DD5ABD6399ADd"}]}
+      receivedPermissions.4.target:
+-        "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb"
++        "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
+      receivedPermissions.3.target:
+-        "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"
++        "0x23754725a49c0f003C349A6C7869fF8609a7CEfd"
+      receivedPermissions.3.via.0.address:
+-        "0xca35F8338054739D138884685e08b39EE2217794"
++        "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
+      receivedPermissions.2.target:
+-        "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A"
++        "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67"
+      receivedPermissions.2.via:
++        [{"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"}]
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "configure"
+      receivedPermissions.1.target:
+-        "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
++        "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42"
+      receivedPermissions.1.description:
++        "set and change address mappings."
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      receivedPermissions.0.target:
+-        "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
++        "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
+      receivedPermissions.0.via:
+-        [{"address":"0xca35F8338054739D138884685e08b39EE2217794"}]
+      receivedPermissions.0.description:
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      directlyReceivedPermissions.3:
++        {"permission":"act","target":"0xca35F8338054739D138884685e08b39EE2217794"}
+      directlyReceivedPermissions.2:
++        {"permission":"act","target":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"}
+      directlyReceivedPermissions.1:
++        {"permission":"act","target":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}
+      directlyReceivedPermissions.0.target:
+-        "0xca35F8338054739D138884685e08b39EE2217794"
++        "0x0cac2B1a172ac24012621101634DD5ABD6399ADd"
+    }
+```
+
+```diff
+    contract DataLayrServiceManager (0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1) {
+    +++ description: This contract is the main entry point for data availability. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures.
+      issuedPermissions.0.target:
+-        "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.via.0:
++        {"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb","delay":0}
+      descriptions:
++        ["This contract is the main entry point for data availability. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures."]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ChainStorageContainerCTC (0x5Dd48eF85B99E3e3d711Ca8B41cBC07dA1677F3E)
+    +++ description: None
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x676A795fe6E43C17c668de16730c3F690FEB7120) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      template:
++        "opstack/L1CrossDomainMessenger"
+      descriptions:
++        ["Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."]
+      categories:
++        ["Core"]
+    }
+```
+
+```diff
+    contract Lib_AddressManager (0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      name:
+-        "AddressManager"
++        "Lib_AddressManager"
+      values.BondManager:
+-        "0x0000000000000000000000000000000000000000"
+      values.CanonicalTransactionChain:
+-        "0x291dc3819b863e19b0a9b9809F8025d2EB4aaE93"
+      values.ChainStorageContainerCTC:
+-        "0x5Dd48eF85B99E3e3d711Ca8B41cBC07dA1677F3E"
+      values.ChainStorageContainerSCC:
+-        "0xd3f0BD982D72e28cccc69e0A9dA439e9D587b3bD"
+      values.FraudVerifier:
+-        "0x0000000000000000000000000000000000000000"
+      values.L1CrossDomainMessenger:
+-        "0xb8DE82551fA4BA3bE4B3d9097763EDBeED541308"
+      values.L1CrossDomainMessengerProxy:
+-        "0x676A795fe6E43C17c668de16730c3F690FEB7120"
+      values.L1MantleAddress:
+-        "0x3c3a81e81dc49A522A592e7622A7E711c06bf354"
+      values.L1StandardBridgeProxy:
+-        "0x0000000000000000000000000000000000000000"
+      values.proposer:
+-        "0x0000000000000000000000000000000000000000"
+      values.rolluper:
+-        "0x6667961f5e9C98A76a48767522150889703Ed77D"
+      values.sequencer:
+-        "0x0000000000000000000000000000000000000000"
+      values.StateCommitmentChain:
+-        "0x89E9D387555AF0cDE22cb98833Bae40d640AD7fa"
+      values.TssGroupManager:
+-        "0xF7576237087F808eB39531cA490b4F8eFd4a0c69"
+      values.TssGroupManagerProxy:
+-        "0x399ca67660B79F7aA8A7Efd5BEF9836A4c19CACF"
+      values.TssStakingSlashing:
+-        "0x09b276F9EcB83Fb6a37970e655863B04143Dc431"
+      values.TssStakingSlashingProxy:
+-        "0x78CF48880E9e1b3ab209779c0D8A76f611e53e81"
+      template:
++        "opstack/AddressManager"
+      displayName:
++        "AddressManager"
+      descriptions:
++        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
+      issuedPermissions:
++        [{"permission":"configure","target":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0xca35F8338054739D138884685e08b39EE2217794","delay":0,"description":"set and change address mappings."}]}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract StateCommitmentChain (0x89E9D387555AF0cDE22cb98833Bae40d640AD7fa)
+    +++ description: None
+```
+
+```diff
+    contract PubkeyCompendium (0x92986cd63C3409b7dA2882624B6d6E7Cf660707a) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.via.0:
++        {"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb","delay":0}
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      issuedPermissions.0.via.0.description:
++        "upgrading bridge implementation allows to access all funds and change every system component."
+      template:
++        "opstack/L1StandardBridge"
+      descriptions:
++        ["The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."]
+    }
+```
+
+```diff
+    contract MantleSecondStrat (0xA937660031787C4408587D2c6A67Ec4B260630F5) {
+    +++ description: Basic do-nothing investment strategy.
+      issuedPermissions.0.target:
+-        "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.via.0:
++        {"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83","delay":0}
+      descriptions:
++        ["Basic do-nothing investment strategy."]
+    }
+```
+
+```diff
+    contract RegistryPermission (0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.via.0:
++        {"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83","delay":0}
+    }
+```
+
+```diff
+    contract OptimismPortal (0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      template:
++        "opstack/OptimismPortal"
+      descriptions:
++        ["The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."]
+    }
+```
+
+```diff
+    contract DataLayrChallenge (0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.via.0:
++        {"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb","delay":0}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xca35F8338054739D138884685e08b39EE2217794) {
+    +++ description: None
+      directlyReceivedPermissions.4:
++        {"permission":"upgrade","target":"0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb"}
+      directlyReceivedPermissions.3.target:
+-        "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb"
++        "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"
+      directlyReceivedPermissions.3.description:
++        "upgrading bridge implementation allows to access all funds and change every system component."
+      directlyReceivedPermissions.2.target:
+-        "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"
++        "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
+      directlyReceivedPermissions.1.target:
+-        "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
++        "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
+      directlyReceivedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      directlyReceivedPermissions.0.target:
+-        "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
++        "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42"
+      directlyReceivedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+```diff
+    contract MantleFirstStrat (0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1) {
+    +++ description: Basic do-nothing investment strategy.
+      issuedPermissions.0.target:
+-        "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.via.0:
++        {"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83","delay":0}
+      descriptions:
++        ["Basic do-nothing investment strategy."]
+    }
+```
+
+```diff
+    contract DataLayrChallengeUtils (0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.via.0:
++        {"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb","delay":0}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ChainStorageContainerSCC (0xd3f0BD982D72e28cccc69e0A9dA439e9D587b3bD)
+    +++ description: None
+```
+
+```diff
+    contract Delegation (0xeA4F1fE4928f1f83a450899C068bcd455BaF4798) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.via.0:
++        {"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83","delay":0}
+    }
+```
+
 Generated with discovered.json: 0x4bc1aea05c2646ed4a46497d6d84f24ee0904a70
 
 # Diff at Tue, 01 Oct 2024 10:52:32 GMT:
