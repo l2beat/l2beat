@@ -809,12 +809,12 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
               {
                 stage0: {
                   callsItselfRollup: true,
-                  stateRootsPostedToBaseLayer: true,
-                  dataAvailabilityOnBaseLayer: true,
+                  stateRootsPostedToL1: true,
+                  dataAvailabilityOnL1: true,
                   rollupNodeSourceAvailable: templateVars.isNodeAvailable,
                 },
                 stage1: {
-                  stateVerificationOnBaseLayer: false,
+                  stateVerificationOnL1: false,
                   fraudProofSystemAtLeast5Outsiders: null,
                   usersHave7DaysToExit: false,
                   usersCanExitWithoutCooperation: false,
@@ -833,7 +833,6 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
                     ? (templateVars.nodeSourceLink ??
                       'https://github.com/ethereum-optimism/optimism/tree/develop/op-node')
                     : '',
-                baselayer: templateVars.hostChain,
               },
             )
         : templateVars.stage,

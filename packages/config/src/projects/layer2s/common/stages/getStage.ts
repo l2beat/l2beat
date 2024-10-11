@@ -1,55 +1,29 @@
-import { slugToDisplayName } from '@l2beat/frontend/src/utils/project/slug-to-display-name'
 import { createGetStage, isSatisfied } from './stage'
 import { ChecklistTemplate } from './types'
 
 export type StageChecklist = Parameters<typeof getStage>[0]
-
 interface GetStageOptions {
   rollupNodeLink?: string
-  baselayer?: string
 }
-
-type Blueprint = ReturnType<typeof createBlueprint>
+type Blueprint = ReturnType<typeof getBlueprint>
 type BlueprintChecklist = ChecklistTemplate<Blueprint>
 
 export const getStage = (
   blueprintChecklist: BlueprintChecklist,
-  opts: GetStageOptions = {},
+  opts?: GetStageOptions,
 ) => {
-  const { rollupNodeLink, baselayer = 'ethereum' } = opts
-
   const rollupNode = isSatisfied(
     blueprintChecklist.stage0.rollupNodeSourceAvailable,
   )
-  if (rollupNode === true && !rollupNodeLink) {
+  if (rollupNode === true && !opts?.rollupNodeLink) {
     throw new Error('Rollup node link is required')
   }
 
-  let displayBaselayer: string
-  try {
-    const result = slugToDisplayName(baselayer)
-    if (result === undefined) {
-      throw new Error('slugToDisplayName returned undefined')
-    }
-    displayBaselayer = result
-  } catch (_error) {
-    console.warn(
-      `Failed to convert baselayer slug: ${baselayer}. Using default 'Ethereum L1'.`,
-    )
-    displayBaselayer = 'Ethereum L1'
-  }
-
-  const blueprint = createBlueprint({
-    rollupNodeLink,
-    baselayer: displayBaselayer,
-  })
+  const blueprint = getBlueprint(opts)
   return createGetStage(blueprint)(blueprintChecklist)
 }
 
-const createBlueprint = ({
-  baselayer,
-  rollupNodeLink,
-}: { baselayer: string; rollupNodeLink?: string }) =>
+const getBlueprint = (opts?: GetStageOptions) =>
   ({
     stage0: {
       name: 'Stage 0',
@@ -59,19 +33,27 @@ const createBlueprint = ({
           negative: "The project doesn't call itself a rollup.",
         },
         stateRootsPostedToL1: {
-          positive: `L2 state roots are posted to ${baselayer}.`,
-          negative: `L2 state roots are not posted to ${baselayer}.`,
+          positive: 'State roots are posted to Ethereum L1.',
+          negative: 'State roots are not posted to Ethereum L1.',
         },
         dataAvailabilityOnL1: {
-          positive: `Inputs for the state transition function are posted to ${baselayer}.`,
-          negative: `All the data to reconstruct the L2 state is not available on ${baselayer}.`,
+          positive:
+            'Inputs for the state transition function are posted to Ethereum L1.',
+          negative:
+            'All the data to reconstruct the L2 state is not available on Ethereum L1.',
         },
         rollupNodeSourceAvailable: {
-          positive: createRollupNodeMessage(baselayer, rollupNodeLink),
-          negative: `No source-available node exists that can recreate the state from ${baselayer} data.`,
+          positive:
+            'A source-available node exists that can recreate the state from Ethereum L1 data. Please note that the L2BEAT team has not verified the validity of the node source code.' +
+            (opts?.rollupNodeLink
+              ? ` [View code](${opts.rollupNodeLink})`
+              : ''),
+          negative:
+            'No source-available node exists that can recreate the state from L1 data.',
           underReviewMessage:
             'The requirement for available node software is under review',
-          warningMessage: `There is no available node software that can reconstruct the state from ${baselayer} data, hence there is no way to verify that this system is a rollup.`,
+          warningMessage:
+            'There is no available node software that can reconstruct the state from L1 data, hence there is no way to verify that this system is a rollup.',
         },
       },
     },
@@ -88,10 +70,8 @@ const createBlueprint = ({
           negative: 'Fraud proof submission is not sufficiently decentralized.',
         },
         usersCanExitWithoutCooperation: {
-          positive:
-            'Users are able to exit without the help of the permissioned operators.',
-          negative:
-            "Users' withdrawals can be censored by the permissioned operators.",
+          positive: `Users are able to exit without the help of the permissioned operators.`,
+          negative: `Users' withdrawals can be censored by the permissioned operators.`,
         },
         usersHave7DaysToExit: {
           positive:
@@ -122,20 +102,8 @@ const createBlueprint = ({
         proofSystemOverriddenOnlyInCaseOfABug: {
           positive:
             'The Security Council is limited to acting solely on on-chain provable bugs.',
-          negative:
-            "The Security Council's actions are not confined to on-chain provable bugs.",
+          negative: `The Security Council's actions are not confined to on-chain provable bugs.`,
         },
       },
     },
   }) as const
-
-const createRollupNodeMessage = (
-  baselayer: string,
-  rollupNodeLink?: string,
-) => {
-  let message = `A source-available node exists that can recreate the state from ${baselayer} data. Please note that the L2BEAT team has not verified the validity of the node source code.`
-  if (rollupNodeLink) {
-    message += ` [View code](${rollupNodeLink})`
-  }
-  return message
-}

@@ -27,7 +27,6 @@ describe(getStage.name, () => {
       },
       {
         rollupNodeLink: 'randomlink',
-        baselayer: 'Ethereum L1',
       },
     )
     expect(result).toEqual({
@@ -49,7 +48,7 @@ describe(getStage.name, () => {
               satisfied: true,
             },
             {
-              description: 'L2 state roots are posted to Ethereum L1.',
+              description: 'State roots are posted to Ethereum L1.',
               satisfied: true,
             },
             {
