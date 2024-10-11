@@ -1,4 +1,4 @@
-import { TokenMetaRecord } from '@l2beat/database'
+import { type TokenMetaRecord } from '@l2beat/database'
 import { ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import { TableControls } from '~/components/table-controls'
@@ -90,7 +90,7 @@ export default async function Page({
                     <TableCell className="text-right">
                       <Link href={`/tokens/${token.id}`} key={token.id}>
                         <Button variant="ghost" size="icon">
-                          <ChevronRight className="w-4 h-4" />
+                          <ChevronRight className="size-4" />
                         </Button>
                       </Link>
                     </TableCell>

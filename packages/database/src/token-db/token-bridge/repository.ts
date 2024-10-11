@@ -15,6 +15,28 @@ export class TokenBridgeRepository extends BaseRepository {
     return rows
   }
 
+  async getByTokenId(tokenId: string): Promise<TokenBridgeRecord[]> {
+    const rows = await this.db
+      .selectFrom('TokenBridge')
+      .select(selectTokenBridge)
+      .where((eb) =>
+        eb('targetTokenId', '=', tokenId).or('sourceTokenId', '=', tokenId),
+      )
+      .execute()
+    return rows
+  }
+
+  async getByExternalBridgeId(
+    externalBridgeId: string,
+  ): Promise<TokenBridgeRecord[]> {
+    const rows = await this.db
+      .selectFrom('TokenBridge')
+      .select(selectTokenBridge)
+      .where('externalBridgeId', '=', externalBridgeId)
+      .execute()
+    return rows
+  }
+
   async upsert(record: UpsertableTokenBridgeRecord): Promise<{ id: string }> {
     const row = upsertableToRecord(record)
     return await this.db

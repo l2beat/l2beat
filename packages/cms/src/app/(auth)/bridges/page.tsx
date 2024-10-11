@@ -32,7 +32,7 @@ export default async function Page({
   return (
     <>
       <div className="flex items-center justify-between gap-4">
-        <h1 className="text-lg font-semibold md:text-2xl">Bridges</h1>
+        <h1 className="text-lg font-semibold md:text-2xl">3rd Party Bridges</h1>
         <Link href="/bridges/new">
           <Button size="sm">Add Bridge</Button>
         </Link>

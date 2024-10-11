@@ -31,14 +31,14 @@ const menu = [
     icon: Network,
   },
   {
-    name: 'Bridges',
-    href: '/bridges' as const,
-    icon: SendToBack,
-  },
-  {
     name: 'Tokens',
     href: '/tokens' as const,
     icon: Coins,
+  },
+  {
+    name: '3rd Party Bridges',
+    href: '/bridges' as const,
+    icon: SendToBack,
   },
 ]
 
