@@ -34,7 +34,7 @@ export const layerzerov2oft: Bridge = {
         'https://docs.layerzero.network/v2/developers/evm/oft/quickstart',
       ],
       socialMedia: [
-        'https://x.com/LayerZero_Labs',
+        'https://x.com/layerzero_core',
         'https://t.me/joinchat/VcqxYkStIDsyN2Rh',
         'https://discord.com/invite/ktbvm8Nkcr',
         'https://medium.com/layerzero-official',
