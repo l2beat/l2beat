@@ -1,7 +1,7 @@
 {
   "name": "shared-eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 20912724,
+  "blockNumber": 20941353,
   "configHash": "0xf33bc24a9b31fe178eed08ff32ec7e944375ad6817ae20cb4e8a90fdcd7a251a",
   "contracts": [
     {
@@ -11,8 +11,8 @@
       "sinceTimestamp": 1602667372,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0xab1a1a0000000000",
-        "get_deposit_root": "0x94dccdd2e3ce3165a9dc8930bd85c1dc196f975b9e77af720c3454c09bfc7a4c"
+        "get_deposit_count": "0x83261a0000000000",
+        "get_deposit_root": "0xf76401cc6e8f3c506a12464c9763c99f1d67da5c15378edd108e7a70db61e331"
       },
       "derivedName": "DepositContract"
     },
@@ -65,7 +65,7 @@
           "expirationTimestamp": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
         },
         "isExpired": false,
-        "latestPress": 1728065387,
+        "latestPress": 1728522011,
         "owner": "0xbb00DDa2832850a43840A3A86515E3Fe226865F2"
       },
       "fieldMeta": {
@@ -462,9 +462,9 @@
         },
         "Minters": ["0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563"],
         "name": "Backing Eigen",
-        "owner": "0xbb00DDa2832850a43840A3A86515E3Fe226865F2",
+        "owner": "0x2520C6b2C1FBE1813AB5c7c1018CDa39529e9FF2",
         "symbol": "bEIGEN",
-        "totalSupply": "1683946032397180984615384624",
+        "totalSupply": "1685233452911246107692307701",
         "transferRestrictionsDisabledAfter": 0
       },
       "fieldMeta": {
@@ -596,7 +596,7 @@
         "delegationManager": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "eigenPodBeacon": "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
-        "numPods": 32237,
+        "numPods": 32262,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
@@ -676,7 +676,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 72,
+        "nonce": 76,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -864,9 +864,9 @@
           "extensions": []
         },
         "name": "Eigen",
-        "owner": "0xbb00DDa2832850a43840A3A86515E3Fe226865F2",
+        "owner": "0x2520C6b2C1FBE1813AB5c7c1018CDa39529e9FF2",
         "symbol": "EIGEN",
-        "totalSupply": "1683946032397180984615384624",
+        "totalSupply": "1685233452911246107692307701",
         "transferRestrictionsDisabledAfter": 0
       },
       "fieldMeta": {
