@@ -15,11 +15,16 @@ export const abstract: Layer2 = upcomingL2({
     provider: 'ZK Stack',
     links: {
       websites: ['https://abs.xyz/'],
-      apps: [],
+      apps: ['https://portal.testnet.abs.xyz/bridge/'],
       documentation: ['https://docs.abs.xyz/'],
-      explorers: [],
+      explorers: ['https://explorer.testnet.abs.xyz/'],
       repositories: [],
-      socialMedia: ['https://x.com/abstractchain'],
+      socialMedia: [
+        'https://x.com/abstractchain',
+        'https://discord.com/invite/abstractchain',
+        'https://x.com/Abstract_Eco',
+        'https://t.me/abstract_chain',
+      ],
     },
   },
 })
