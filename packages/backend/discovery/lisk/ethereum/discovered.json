@@ -1,7 +1,7 @@
 {
   "name": "lisk",
   "chain": "ethereum",
-  "blockNumber": 20368673,
+  "blockNumber": 20941331,
   "configHash": "0x54b600f138a147f390a890b238a88a803b26d43d59f30b55edf592f85fcc7e87",
   "contracts": [
     {
@@ -76,7 +76,7 @@
           "systemTxMaxGas": 1000000,
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
-        "scalar": "452312848583266388373324160190187140051835877600158453279137049993765998810",
+        "scalar": "452312848583266388373324160190187140051835877600158453279134629208464056484",
         "sequencerInbox": "0xFf00000000000000000000000000000000001135",
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
         "startBlock": 19788851,
@@ -148,10 +148,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 3499200,
-        "latestOutputIndex": 323,
-        "nextBlockNumber": 3510000,
-        "nextOutputIndex": 324,
+        "latestBlockNumber": 6944400,
+        "latestOutputIndex": 642,
+        "nextBlockNumber": 6955200,
+        "nextOutputIndex": 643,
         "proposer": "0x0AbD6da1cE10D1cD6c7C9C14b905786D20f3EB23",
         "PROPOSER": "0x0AbD6da1cE10D1cD6c7C9C14b905786D20f3EB23",
         "startingBlockNumber": 0,
@@ -297,8 +297,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 491310,
-          "prevBlockNum": 20368647
+          "prevBoughtGas": 490798,
+          "prevBlockNum": 20941261
         },
         "paused": false,
         "superchainConfig": "0x26C7bFB430d68Bf74d2d52497836d4336b555dE7",
@@ -359,7 +359,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620314",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621299",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -513,7 +513,6 @@
           "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d",
           "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d",
           "0xc85aC6d2fdC376F335455D4cCA30c45ED1080849",
-          "0x27b1682E9C5Cb0E58Ff474F3a13EeCC36E708ad3",
           "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
           "0xf83bC4688979b13Da02CB94c76cEB169540760b5",
           "0x547D0F472309e4239b296D01e03bEDc101241a26"
@@ -522,8 +521,8 @@
         "domainSeparator": "0xbe8c8ff5b263aabfa5957a21cfff3c301b7fe41d5c89b2189c54dba8c9251189",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "6 of 10 (60%)",
-        "nonce": 5,
+        "multisigThreshold": "6 of 9 (67%)",
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -651,7 +650,6 @@
       "address": "0x0AbD6da1cE10D1cD6c7C9C14b905786D20f3EB23",
       "roles": ["Proposer"]
     },
-    { "address": "0x27b1682E9C5Cb0E58Ff474F3a13EeCC36E708ad3" },
     { "address": "0x28bB9385A588EF4747264D19B9A9F1603591680c" },
     { "address": "0x547D0F472309e4239b296D01e03bEDc101241a26" },
     { "address": "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d" },
