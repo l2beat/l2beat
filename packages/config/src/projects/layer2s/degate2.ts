@@ -150,12 +150,12 @@ export const degate2: Layer2 = {
   stage: getStage({
     stage0: {
       callsItselfRollup: true,
-      stateRootsPostedToBaseLayer: true,
-      dataAvailabilityOnBaseLayer: true,
+      stateRootsPostedToL1: true,
+      dataAvailabilityOnL1: true,
       rollupNodeSourceAvailable: 'UnderReview',
     },
     stage1: {
-      stateVerificationOnBaseLayer: true,
+      stateVerificationOnL1: true,
       fraudProofSystemAtLeast5Outsiders: null,
       usersHave7DaysToExit: null,
       usersCanExitWithoutCooperation: true,

@@ -63,12 +63,12 @@ export const honeypot: Layer2 = {
     {
       stage0: {
         callsItselfRollup: true,
-        stateRootsPostedToBaseLayer: true,
-        dataAvailabilityOnBaseLayer: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
       },
       stage1: {
-        stateVerificationOnBaseLayer: [
+        stateVerificationOnL1: [
           false,
           'There is no onchain fraud proof system.',
         ],

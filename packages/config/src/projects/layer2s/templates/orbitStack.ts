@@ -641,13 +641,13 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
             {
               stage0: {
                 callsItselfRollup: true,
-                stateRootsPostedToBaseLayer: true,
-                dataAvailabilityOnBaseLayer: true,
+                stateRootsPostedToL1: true,
+                dataAvailabilityOnL1: true,
                 rollupNodeSourceAvailable:
                   templateVars.isNodeAvailable ?? 'UnderReview',
               },
               stage1: {
-                stateVerificationOnBaseLayer: true,
+                stateVerificationOnL1: true,
                 fraudProofSystemAtLeast5Outsiders: false,
                 usersHave7DaysToExit: false,
                 usersCanExitWithoutCooperation: true,
@@ -804,13 +804,13 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
             {
               stage0: {
                 callsItselfRollup: true,
-                stateRootsPostedToBaseLayer: true,
-                dataAvailabilityOnBaseLayer: true,
+                stateRootsPostedToL1: true,
+                dataAvailabilityOnL1: true,
                 rollupNodeSourceAvailable:
                   templateVars.isNodeAvailable ?? 'UnderReview',
               },
               stage1: {
-                stateVerificationOnBaseLayer: true,
+                stateVerificationOnL1: true,
                 fraudProofSystemAtLeast5Outsiders: false,
                 usersHave7DaysToExit: false,
                 usersCanExitWithoutCooperation: true,

@@ -272,12 +272,12 @@ export const kroma: Layer2 = {
     {
       stage0: {
         callsItselfRollup: true,
-        stateRootsPostedToBaseLayer: true,
-        dataAvailabilityOnBaseLayer: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
       },
       stage1: {
-        stateVerificationOnBaseLayer: false,
+        stateVerificationOnL1: false,
         fraudProofSystemAtLeast5Outsiders: true,
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: true,

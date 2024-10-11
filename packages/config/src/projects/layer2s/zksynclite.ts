@@ -242,12 +242,12 @@ export const zksynclite: Layer2 = {
     {
       stage0: {
         callsItselfRollup: true,
-        stateRootsPostedToBaseLayer: true,
-        dataAvailabilityOnBaseLayer: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
       },
       stage1: {
-        stateVerificationOnBaseLayer: true,
+        stateVerificationOnL1: true,
         fraudProofSystemAtLeast5Outsiders: null,
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,

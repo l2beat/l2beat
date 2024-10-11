@@ -58,11 +58,11 @@ const createBlueprint = ({
           positive: 'The project calls itself a rollup.',
           negative: "The project doesn't call itself a rollup.",
         },
-        stateRootsPostedToBaseLayer: {
+        stateRootsPostedToL1: {
           positive: `L2 state roots are posted to ${baselayer}.`,
           negative: `L2 state roots are not posted to ${baselayer}.`,
         },
-        dataAvailabilityOnBaseLayer: {
+        dataAvailabilityOnL1: {
           positive: `Inputs for the state transition function are posted to ${baselayer}.`,
           negative: `All the data to reconstruct the L2 state is not available on ${baselayer}.`,
         },
@@ -78,7 +78,7 @@ const createBlueprint = ({
     stage1: {
       name: 'Stage 1',
       items: {
-        stateVerificationOnBaseLayer: {
+        stateVerificationOnL1: {
           positive: 'A complete and functional proof system is deployed.',
           negative: 'The proof system is still under development.',
         },
