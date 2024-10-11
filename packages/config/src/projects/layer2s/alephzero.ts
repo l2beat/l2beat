@@ -43,4 +43,13 @@ export const alephzero: Layer2 = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  milestones: [
+    {
+      name: 'Mainnet launch',
+      link: 'https://alephzero.org/blog/aleph-zero-evm-mainnet/',
+      date: '2024-08-12T00:00:00Z',
+      description: 'Aleph Zero EVM L2 is open for all users.',
+      type: 'general',
+    },
+  ],
 })
