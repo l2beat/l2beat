@@ -2,8 +2,7 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { UpcomingBadge } from '~/components/badge/upcoming-badge'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/pizza-rosette-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
-import { TypeExplanationTooltip } from '~/components/table/cells/type-cell'
-import { TypeCell } from '~/components/table/cells/type-cell'
+import { RiskCell } from '~/components/table/cells/risk-cell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { EM_DASH } from '~/consts/characters'
 import { type ScalingArchivedEntry } from '~/server/features/scaling/archived/get-scaling-archived-entries'
@@ -35,14 +34,10 @@ export const scalingArchivedColumns = [
       cellClassName: 'justify-center',
     },
   }),
-  columnHelper.accessor('category', {
-    header: 'Type',
-    cell: (ctx) => (
-      <TypeCell provider={ctx.row.original.provider}>{ctx.getValue()}</TypeCell>
-    ),
-    meta: {
-      tooltip: <TypeExplanationTooltip />,
-    },
+  columnHelper.accessor('stateValidation', {
+    header: 'Proof system',
+    cell: (ctx) => <RiskCell risk={ctx.getValue()} colorful={false} />,
+    enableSorting: false,
   }),
   columnHelper.accessor('purposes', {
     header: 'Purpose',

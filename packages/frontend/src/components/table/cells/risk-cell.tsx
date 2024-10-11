@@ -25,11 +25,16 @@ interface Risk {
 }
 
 interface Props {
+  colorful?: boolean
   risk: Risk | undefined
   emptyMode?: 'em-dash' | 'no-info'
 }
 
-export function RiskCell({ risk, emptyMode = 'no-info' }: Props) {
+export function RiskCell({
+  risk,
+  emptyMode = 'no-info',
+  colorful = true,
+}: Props) {
   if (!risk) {
     if (emptyMode === 'em-dash') {
       return (
@@ -48,12 +53,14 @@ export function RiskCell({ risk, emptyMode = 'no-info' }: Props) {
   const trigger = (
     <div className="flex flex-col">
       <div className="flex items-center gap-1">
-        <SentimentText sentiment={risk.sentiment}>{risk.value}</SentimentText>
+        <SentimentText sentiment={risk.sentiment} colorful={colorful}>
+          {risk.value}
+        </SentimentText>
         {risk.warning && (
           <RoundedWarningIcon
             className={cn(
               'size-4 md:size-5',
-              sentimentToFillColor(risk.warning.sentiment),
+              colorful && sentimentToFillColor(risk.warning.sentiment),
             )}
           />
         )}

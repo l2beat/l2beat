@@ -2,10 +2,7 @@ import { formatSeconds } from '@l2beat/shared-pure'
 import { type Row, createColumnHelper } from '@tanstack/react-table'
 import { Badge } from '~/components/badge/badge'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
-import {
-  TypeCell,
-  TypeExplanationTooltip,
-} from '~/components/table/cells/type-cell'
+import { RiskCell } from '~/components/table/cells/risk-cell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/types'
 import { FinalityDurationCell } from './finality-duration-cell'
@@ -29,14 +26,10 @@ export const scalingFinalityColumns = [
   columnHelper.accessor('name', {
     cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
   }),
-  columnHelper.accessor('category', {
-    header: 'Type',
-    cell: (ctx) => (
-      <TypeCell provider={ctx.row.original.provider}>{ctx.getValue()}</TypeCell>
-    ),
-    meta: {
-      tooltip: <TypeExplanationTooltip showOnlyRollupsDefinitions />,
-    },
+  columnHelper.accessor('stateValidation', {
+    header: 'Proof system',
+    cell: (ctx) => <RiskCell risk={ctx.getValue()} colorful={false} />,
+    enableSorting: false,
   }),
   columnHelper.accessor('dataAvailabilityMode', {
     header: 'DA Mode',

@@ -1,10 +1,7 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { SentimentText } from '~/components/sentiment-text'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
-import {
-  TypeCell,
-  TypeExplanationTooltip,
-} from '~/components/table/cells/type-cell'
+import { RiskCell } from '~/components/table/cells/risk-cell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { sortSentiments } from '~/components/table/sorting/functions/sentiment-sorting'
 import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
@@ -16,16 +13,10 @@ export const columns = [
   columnHelper.accessor('name', {
     cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
   }),
-  columnHelper.accessor('category', {
-    header: 'Type',
-    meta: {
-      tooltip: <TypeExplanationTooltip />,
-    },
-    cell: (ctx) => (
-      <TypeCell provider={ctx.row.original.provider}>
-        {ctx.row.original.category}
-      </TypeCell>
-    ),
+  columnHelper.accessor('stateValidation', {
+    header: 'Proof system',
+    cell: (ctx) => <RiskCell risk={ctx.getValue()} colorful={false} />,
+    enableSorting: false,
   }),
   columnHelper.accessor('dataAvailability.layer', {
     header: 'DA Layer',
