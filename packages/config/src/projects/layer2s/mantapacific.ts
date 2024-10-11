@@ -1,5 +1,9 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
+import {
+  NUGGETS,
+} from '../../common'
+
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
