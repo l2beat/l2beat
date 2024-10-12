@@ -34,7 +34,7 @@ jobs:
       #   run: yarn
 
       - name: Fetch and save L2s data
-        run: cwd && cd packages/config && yarn && yarn layer2-details
+        run:  cd packages/config && yarn && yarn layer2-details
 
 
       - name: Create Pull Request
