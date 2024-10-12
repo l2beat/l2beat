@@ -18,8 +18,8 @@ export const align: Layer2 = upcomingL2({
       apps: [],
       documentation: ['https://docs.align.network/docs/getting-started'],
       explorers: [],
-      repositories: [],
-      socialMedia: ['https://x.com/align_network'],
+      repositories: ['https://github.com/alignnetwork'],
+      socialMedia: ['https://x.com/align_network','https://discord.com/invite/KCSkfqW5js','https://warpcast.com/~/channel/align'],
     },
   },
 })
