@@ -27,14 +27,14 @@ jobs:
         run: yarn build:dependencies
 
 
-      - name: Goto configs
-        run: cd packages/config
+      # - name: Goto configs
+      #   run: cd packages/config
 
-      - name: Install dependencies
-        run: yarn
+      # - name: Install dependencies
+      #   run: yarn
 
       - name: Fetch and save L2s data
-        run: yarn layer2-details
+        run: cwd && cd packages/config && yarn && yarn layer2-details
 
 
       - name: Create Pull Request
