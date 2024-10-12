@@ -72,7 +72,7 @@ const main = async () => {
       const lastCommit = await getLastCommit(
         path.join(__dirname, `../src/projects/layer2s/${layer2.id}.ts`)
       );
-      // FOUND COMMIT HISTORY BEFORE 25 HRS :: KEEP 1HR Buffer for cron
+      // FOUND COMMIT HISTORY BEFORE 24 HRS 
       if (
         (lastCommit && !has24HoursPassed(new Date(lastCommit.date))) ||
         !lastCommit
