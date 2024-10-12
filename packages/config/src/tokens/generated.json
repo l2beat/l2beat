@@ -8796,28 +8796,6 @@
       }
     },
     {
-      "name": "CAVIAR",
-      "coingeckoId": "caviar-3",
-      "address": "0xB08F026f8a096E6d92eb5BcbE102c273A7a2d51C",
-      "symbol": "CVR",
-      "decimals": 18,
-      "deploymentTimestamp": 1716242260,
-      "coingeckoListingTimestamp": 1720483200,
-      "category": "other",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/39058/large/tangible.jpg?1720166380",
-      "chainId": 111188,
-      "source": "native",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Layer Zero",
-            "slug": "omnichain"
-          }
-        ]
-      }
-    },
-    {
       "name": "MORE",
       "coingeckoId": "stack-2",
       "address": "0x25ea98ac87A38142561eA70143fd44c4772A16b6",
