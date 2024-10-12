@@ -21,7 +21,7 @@ async function getLastCommit(filePath: string) {
       return null;
     }
   } catch (error) {
-    console.log(`Error fetching git log: ${error.message}`);
+    console.log(`Error fetching git log: ${error}`);
     return null;
   }
 }
