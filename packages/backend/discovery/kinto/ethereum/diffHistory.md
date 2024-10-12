@@ -1,3 +1,38 @@
+Generated with discovered.json: 0x994037948ef2900c64ad0927c5c60625d918ad6a
+
+# Diff at Sat, 12 Oct 2024 07:41:15 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@86ddd4ba846ebcaec5953fa3bbd1a66f324e7175 block: 20842784
+- current block number: 20948097
+
+## Description
+
+Add 3 new validators. (Total vali count is 5 now)
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      values.setValidatorCount:
+-        2
++        3
+      values.validators.4:
++        "0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f"
+      values.validators.3:
++        "0x9A6a3354Ea78572EDB7df8458911e1ceD733c224"
+      values.validators.2:
++        "0x944eB0a2829A859959586b10D54229278534a696"
+      values.validators.1:
+-        "0x944eB0a2829A859959586b10D54229278534a696"
++        "0x64Cf65036a76E3827e448cadbc53D31EefDCE04a"
+      values.validators.0:
+-        "0x64Cf65036a76E3827e448cadbc53D31EefDCE04a"
++        "0x2bfDA59220413DEd39dD0E443620b5277EcE6348"
+    }
+```
+
 Generated with discovered.json: 0x8ddb56eb447e9f62e0031486081732d2d537625f
 
 # Diff at Tue, 01 Oct 2024 10:51:44 GMT:
