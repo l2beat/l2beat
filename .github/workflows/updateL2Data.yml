@@ -17,10 +17,15 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
-          node-version: 14.x
+          node-version: 18.x
+          cache: 'yarn'
 
       - name: Install dependencies
-        run: yarn
+        run: yarn --frozen-lockfile
+
+      - name: Build packages
+        run: yarn build:dependencies
+
 
       - name: Goto configs
         run: cd packages/config
