@@ -8796,6 +8796,28 @@
       }
     },
     {
+      "name": "CAVIAR",
+      "coingeckoId": "caviar-3",
+      "address": "0xB08F026f8a096E6d92eb5BcbE102c273A7a2d51C",
+      "symbol": "CVR",
+      "decimals": 18,
+      "deploymentTimestamp": 1716242260,
+      "coingeckoListingTimestamp": 1720483200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39058/large/tangible.jpg?1720166380",
+      "chainId": 111188,
+      "source": "native",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      }
+    },
+    {
       "name": "MORE",
       "coingeckoId": "stack-2",
       "address": "0x25ea98ac87A38142561eA70143fd44c4772A16b6",
@@ -8849,6 +8871,20 @@
       "coingeckoListingTimestamp": 1720483200,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/38626/large/RWA_200x200.png?1718168632",
+      "chainId": 111188,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "UK Real Estate",
+      "coingeckoId": "uk-real-estate",
+      "address": "0x835d3E1C0aA079C6164AAd21DCb23E60eb71AF48",
+      "symbol": "UKRE",
+      "decimals": 18,
+      "deploymentTimestamp": 1716417748,
+      "coingeckoListingTimestamp": 1720483200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38625/large/image_%281%29.png?1718168417",
       "chainId": 111188,
       "source": "native",
       "supply": "totalSupply"

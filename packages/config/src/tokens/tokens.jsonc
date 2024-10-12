@@ -4025,7 +4025,7 @@
       "symbol": "UKRE",
       "address": "0x835d3E1C0aA079C6164AAd21DCb23E60eb71AF48",
       "source": "native",
-      "supply": "totalSupply",
+      "supply": "totalSupply", // no circulating on CG, but seems to be fully circulating
       "coingeckoId": "uk-real-estate"
     },
     {
