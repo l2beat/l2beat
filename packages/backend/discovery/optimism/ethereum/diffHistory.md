@@ -1,3 +1,83 @@
+Generated with discovered.json: 0xa2d43aa280997cb9afa421b5ed3382e0c9b95f9a
+
+# Diff at Sat, 12 Oct 2024 07:40:30 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@86ddd4ba846ebcaec5953fa3bbd1a66f324e7175 block: 20935110
+- current block number: 20948093
+
+## Description
+
+New custom escrow for wstETH, supports rebasable wstETH on L2. Escrowed token is still wstETH.
+
+## Watched changes
+
+```diff
+    contract wstETHEscrow (0x76943C0D61395d8F2edF9060e1533529cAe05dE6) {
+    +++ description: Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally.
+      template:
+-        "lido/L1ERC20TokenBridge"
++        "lido/L1LidoTokensBridge"
+      descriptions.0:
+-        "Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally."
++        "Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally."
+      values.$implementation:
+-        "0x29C5c51A031165CE62F964966A6399b81165EFA4"
++        "0x168Cfea1Ad879d7032B3936eF3b0E90790b6B6D4"
+      values.$pastUpgrades.1:
++        ["2024-10-11T16:21:11.000Z",["0x168Cfea1Ad879d7032B3936eF3b0E90790b6B6D4"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.isDepositsEnabled:
+-        false
++        true
+      values.l1Token:
+-        "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
+      values.l2Token:
+-        "0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb"
+      values.messenger:
+-        "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1"
+      values.proxy__getImplementation:
+-        "0x29C5c51A031165CE62F964966A6399b81165EFA4"
++        "0x168Cfea1Ad879d7032B3936eF3b0E90790b6B6D4"
+      values.accesscontrol:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]},"0x4b43b36766bde12c5e9cbbc37d15f8d1f769f08f54720ab370faeb4ce893753a":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]},"0x63f736f21cb2943826cd50b191eb054ebbea670e4e962d0527611f830cd399d6":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","0x73b047fe6337183A454c5217241D780a932777bD"]},"0x9ab8816a3dc0b3849ec1ac00483f6ec815b07eee2fd766a353311c823ad59d0d":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]},"0x94a954c0bc99227eddbc0715a62a7e1056ed8784cd719c2303b685683908857c":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","0x73b047fe6337183A454c5217241D780a932777bD"]}}
+      values.ACCOUNTING_ORACLE:
++        "0x852deD011285fe67063a08005c71a85690503Cee"
+      values.GENESIS_TIME:
++        1606824023
+      values.getContractVersion:
++        2
+      values.L1_TOKEN_NON_REBASABLE:
++        "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
+      values.L1_TOKEN_REBASABLE:
++        "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
+      values.L2_TOKEN_NON_REBASABLE:
++        "0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb"
+      values.L2_TOKEN_REBASABLE:
++        "0x76A50b8c7349cCDDb7578c6627e79b5d99D24138"
+      values.MESSENGER:
++        "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1"
+      values.SECONDS_PER_SLOT:
++        12
+      values.TOKEN_RATE_DECIMALS:
++        27
+      values.WSTETH:
++        "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
+      derivedName:
+-        "L1ERC20TokenBridge"
++        "L1LidoTokensBridge"
+    }
+```
+
+## Source code changes
+
+```diff
+.../wstETHEscrow/L1LidoTokensBridge.sol}           | 1864 ++++++++++++--------
+ 1 file changed, 1082 insertions(+), 782 deletions(-)
+```
+
 Generated with discovered.json: 0x41f2c0b7c194a335bce74f0146ed7b8824b7db6f
 
 # Diff at Thu, 10 Oct 2024 12:08:56 GMT:
