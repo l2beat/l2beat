@@ -42,7 +42,7 @@ const saveL2DataToFile = async (filePath: string, data: string) => {
   }
 };
 
-function has25HoursPassed(timestamp: Date) {
+function has24HoursPassed(timestamp: Date) {
   const currentTime = new Date().getTime();
   const pastTime = new Date(timestamp).getTime();
 
@@ -50,7 +50,7 @@ function has25HoursPassed(timestamp: Date) {
   const timeDifference = currentTime - pastTime;
 
   // Convert 24 hours to milliseconds (24 * 60 * 60 * 1000)
-  const twentyFourHoursInMs = 25 * 60 * 60 * 1000;
+  const twentyFourHoursInMs = 24 * 60 * 60 * 1000;
 
   return timeDifference >= twentyFourHoursInMs;
 }
@@ -74,7 +74,7 @@ const main = async () => {
       );
       // FOUND COMMIT HISTORY BEFORE 25 HRS :: KEEP 1HR Buffer for cron
       if (
-        (lastCommit && !has25HoursPassed(new Date(lastCommit.date))) ||
+        (lastCommit && !has24HoursPassed(new Date(lastCommit.date))) ||
         !lastCommit
       ) {
         console.log("STORE DATA EXPIRED ::: UPDATING", layer2?.id);
