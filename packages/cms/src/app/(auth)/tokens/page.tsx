@@ -28,14 +28,27 @@ export default async function Page({
     },
     {} as Record<string, TokenMetaRecord>,
   )
-  const allTokens = (await db.token.getAll()).sort((a, b) => {
-    const aMeta = tokenMeta[a.id]
-    const bMeta = tokenMeta[b.id]
-    if (!aMeta?.name && !bMeta?.name) return 0
-    if (!aMeta?.name) return 1
-    if (!bMeta?.name) return -1
-    return aMeta.name.localeCompare(bMeta.name)
-  })
+  const allTokens = (await db.token.getAll())
+    .sort((a, b) => {
+      const aMeta = tokenMeta[a.id]
+      const bMeta = tokenMeta[b.id]
+      if (!aMeta?.name && !bMeta?.name) return 0
+      if (!aMeta?.name) return 1
+      if (!bMeta?.name) return -1
+      return aMeta.name.localeCompare(bMeta.name)
+    })
+    // TODO: this should be probably moved (or done in DB)
+    .filter((token) => {
+      if (!searchParams.search) return true
+      const search = (searchParams.search as string).toLowerCase()
+      const meta = tokenMeta[token.id]
+      return (
+        token.address.toLowerCase().includes(search) ||
+        meta?.name?.toLowerCase().includes(search) ||
+        meta?.symbol?.toLowerCase().includes(search)
+      )
+    })
+
   const count = allTokens.length
   const pagination = getServerPagination({
     count,

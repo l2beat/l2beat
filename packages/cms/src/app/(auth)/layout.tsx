@@ -1,12 +1,5 @@
 import Link from 'next/link'
-import {
-  CircleUser,
-  Coins,
-  Menu,
-  Network,
-  Search,
-  SendToBack,
-} from 'lucide-react'
+import { CircleUser, Coins, Menu, Network, SendToBack } from 'lucide-react'
 
 import { Button } from '~/components/ui/button'
 import {
@@ -17,12 +10,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu'
-import { Input } from '~/components/ui/input'
 import { Sheet, SheetContent, SheetTrigger } from '~/components/ui/sheet'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { NavMenuItem } from './_components/nav-menu-item'
 import { ThemeToggle } from './_components/theme-toggle'
+import { Search } from './_components/search'
 
 const menu = [
   {
@@ -107,16 +100,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </SheetContent>
           </Sheet>
           <div className="w-full flex-1">
-            <form>
-              <div className="relative">
-                <Search className="absolute left-2.5 top-2.5 size-4 text-muted-foreground" />
-                <Input
-                  type="search"
-                  placeholder="Search networks..."
-                  className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
-                />
-              </div>
-            </form>
+            <Search />
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

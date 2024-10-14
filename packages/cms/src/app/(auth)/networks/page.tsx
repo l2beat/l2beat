@@ -18,9 +18,17 @@ export default async function Page({
 }: {
   searchParams: Record<string, string | string[] | undefined>
 }) {
-  const allNetworks = (await db.network.getAll()).sort((a, b) =>
-    a.name.localeCompare(b.name),
-  )
+  const allNetworks = (await db.network.getAll())
+    .filter((network) => {
+      if (!searchParams.search) return true
+      const search = (searchParams.search as string).toLowerCase()
+      return (
+        network.name.toLowerCase().includes(search) ||
+        network.chainId.toString().includes(search) ||
+        network.coingeckoId?.toLowerCase().includes(search)
+      )
+    })
+    .sort((a, b) => a.name.localeCompare(b.name))
   const count = allNetworks.length
   const pagination = getServerPagination({
     count,
