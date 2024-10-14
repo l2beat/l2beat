@@ -6,6 +6,8 @@ export interface ActivityRecord {
   projectId: ProjectId
   timestamp: UnixTime
   count: number
+  uopsCount: number | null
+  ratio: number | null
   start: number
   end: number
 }
