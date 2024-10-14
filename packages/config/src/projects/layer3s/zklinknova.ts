@@ -400,10 +400,7 @@ export const zklinknova: Layer3 = {
     validatedBy: RISK_VIEW.VALIDATED_BY_L2(ProjectId('linea')),
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     stateValidation: {
-      value: 'ZK proofs',
-      description:
-        'Uses PLONK zero-knowledge proof system with KZG commitments. Proofs are verified on Linea.',
-      sentiment: 'good',
+      ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
       sources: [
         {
           contract: 'zkLink',

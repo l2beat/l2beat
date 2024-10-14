@@ -330,10 +330,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
           }),
     riskView: {
       stateValidation: {
-        value: 'ZK proofs',
-        description:
-          'Uses PLONK zero-knowledge proof system with KZG commitments.',
-        sentiment: 'good',
+        ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
         sources: [
           {
             contract: 'ValidatorTimelock',
