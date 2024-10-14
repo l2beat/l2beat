@@ -12,7 +12,7 @@ export const odyssey: Layer2 = underReviewL2({
     category: 'Optimium',
     provider: 'OP Stack',
     links: {
-      websites: ['https://ithaca.xyz'],
+      websites: ['https://ithaca.xyz/updates/odyssey'],
       apps: [],
       documentation: [],
       explorers: [],
