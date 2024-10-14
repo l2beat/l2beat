@@ -18,9 +18,16 @@ export default async function Page({
 }: {
   searchParams: Record<string, string | string[] | undefined>
 }) {
-  const allBridges = (await db.externalBridge.getAll()).sort((a, b) =>
-    a.name.localeCompare(b.name),
-  )
+  const allBridges = (await db.externalBridge.getAll())
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .filter((bridge) => {
+      if (!searchParams.search) return true
+      const search = (searchParams.search as string).toLowerCase()
+      return (
+        bridge.name.toLowerCase().includes(search) ||
+        bridge.type?.toLowerCase().includes(search)
+      )
+    })
   const count = allBridges.length
   const pagination = getServerPagination({
     count,
