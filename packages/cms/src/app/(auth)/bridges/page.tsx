@@ -18,7 +18,9 @@ export default async function Page({
 }: {
   searchParams: Record<string, string | string[] | undefined>
 }) {
-  const allBridges = await db.externalBridge.getAll()
+  const allBridges = (await db.externalBridge.getAll()).sort((a, b) =>
+    a.name.localeCompare(b.name),
+  )
   const count = allBridges.length
   const pagination = getServerPagination({
     count,
@@ -54,7 +56,6 @@ export default async function Page({
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>ID</TableHead>
                 <TableHead>Name</TableHead>
                 <TableHead>Handler</TableHead>
                 <TableHead />
@@ -65,7 +66,6 @@ export default async function Page({
                 .sort((a, b) => a.name.localeCompare(b.name))
                 .map((bridge) => (
                   <TableRow key={bridge.id}>
-                    <TableCell className="font-mono">{bridge.id}</TableCell>
                     <TableCell>{bridge.name}</TableCell>
                     <TableCell>{bridge.type ?? 'None'}</TableCell>
                     <TableCell className="text-right">
