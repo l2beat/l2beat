@@ -1,6 +1,7 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { zip } from 'lodash'
 
+import { flatteningHash } from '../../flatten/utils'
 import { ContractSource } from '../../utils/IEtherscanClient'
 import { IProvider } from '../provider/IProvider'
 import { deduplicateAbi } from './deduplicateAbi'
@@ -8,6 +9,7 @@ import { getLegacyDerivedName } from './getDerivedName'
 import { skipIgnoredFunctions } from './skipIgnoredFunctions'
 
 export interface PerContractSource {
+  hash?: string
   name: string
   address: EthereumAddress
   source: ContractSource
@@ -46,6 +48,7 @@ export class SourceCodeService {
       }
 
       sources.push({
+        hash: flatteningHash(item),
         name: item.name,
         address: address,
         source: item,

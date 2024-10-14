@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x8a05133975bb1027304e2670f309337f5b486160
+
+# Diff at Mon, 14 Oct 2024 10:51:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20138492
+- current block number: 20138492
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20138492 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x13a4cC0750296bB72Eb0006febec306551A4f472) {
+    +++ description: None
+      sourceHashes:
++        ["0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"]
+    }
+```
+
+```diff
+    contract LiquidityPool (0x2A5c2568b10A0E826BfA892Cf21BA7218310180b) {
+    +++ description: None
+      sourceHashes:
++        ["0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a","0x2704718af75269b1336700ebb7c17f20b7c71a8cfda9618bf04f5c3b6c1ed995"]
+    }
+```
+
+```diff
+    contract ExecutorManager (0xbd761D917fB77381B4398Bda89C7F0d9A2BD1399) {
+    +++ description: None
+      sourceHashes:
++        ["0x892e396c29b5c992295525eefa7f4625709df8fd34d319dcc638eb61bacef0d6"]
+    }
+```
+
+```diff
+    contract TokenManager (0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168) {
+    +++ description: None
+      sourceHashes:
++        ["0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a","0xb4b188b21027295cc23be58bdfb8244712968fff71cb2dd2af67a5b10df99202"]
+    }
+```
+
+```diff
+    contract LiquidityProviders (0xebaB24F13de55789eC1F3fFe99A285754e15F7b9) {
+    +++ description: None
+      sourceHashes:
++        ["0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a","0xbf180146f00753d63babbadf58b1dd574f2f626ca5e0f02e65e2ab5a4975fbe5"]
+    }
+```
+
 Generated with discovered.json: 0x365cdb12b6bb4c57fe799d04f671f936b2a68aef
 
 # Diff at Tue, 01 Oct 2024 10:51:29 GMT:

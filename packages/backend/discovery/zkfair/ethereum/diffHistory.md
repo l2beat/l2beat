@@ -1,3 +1,131 @@
+Generated with discovered.json: 0xa0c4ce65cf181235fbd1149e5548c3369202f00c
+
+# Diff at Mon, 14 Oct 2024 10:58:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20711816
+- current block number: 20711816
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20711816 (main branch discovery), not current.
+
+```diff
+    contract BridgeAdminMultiSig (0x0110B1B231aA3b96a94c900eb3056297526AB725) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract ZKFairValidium (0x1CbC08bf0D48b18F9f97796c61352b192d1850A5) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
++        "0x52882c7564fAca480549145fAc4d0b09eD0D9c17"
+      issuedPermissions.0.via.0:
++        {"address":"0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3","delay":0}
+      sourceHashes:
++        ["0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a","0xf130a993ad1c6ad92168bdcb2f36fa45071cfdfccb13dd005d7d45e454089482"]
+    }
+```
+
+```diff
+    contract Timelock (0x52882c7564fAca480549145fAc4d0b09eD0D9c17) {
+    +++ description: None
+      sourceHashes:
++        ["0x1946b3da4b7b9101624b6f56e88c5546848e9acadd62375f5cc8772c0f11f92c"]
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x1CbC08bf0D48b18F9f97796c61352b192d1850A5","via":[{"address":"0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"}]},{"permission":"upgrade","target":"0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b","via":[{"address":"0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"}]},{"permission":"upgrade","target":"0x997CfB0838544f68E59f877EDc905001456F125b","via":[{"address":"0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"}]},{"permission":"upgrade","target":"0x9cb4706e20A18E59a48ffa7616d700A3891e1861","via":[{"address":"0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"}]
+    }
+```
+
+```diff
+    contract GlobalExitRoot (0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
++        "0x52882c7564fAca480549145fAc4d0b09eD0D9c17"
+      issuedPermissions.0.via.0:
++        {"address":"0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3","delay":0}
+      sourceHashes:
++        ["0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a","0xb7beee2e185ac88119ddf52a7b183100c31b13dbb35154dd5b60e74c16684cba"]
+    }
+```
+
+```diff
+    contract FflonkVerifier (0x769E285d2120472c3400A09684B82A842012F46d) {
+    +++ description: None
+      sourceHashes:
++        ["0x2a8d8b10f3b85cd700a19db2ebb050c5acc6bdfd7bbd10f8b8229541fd5264ab"]
+    }
+```
+
+```diff
+    contract ZKFairOwner (0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract ZKFairValidiumDAC (0x997CfB0838544f68E59f877EDc905001456F125b) {
+    +++ description: Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.
+      issuedPermissions.0.target:
+-        "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
++        "0x52882c7564fAca480549145fAc4d0b09eD0D9c17"
+      issuedPermissions.0.via.0:
++        {"address":"0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3","delay":0}
+      sourceHashes:
++        ["0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a","0x9cc000b5f37484491701d9b554b9a01ea89a6a59f918d1d53c8e173b5b14a0fe"]
+    }
+```
+
+```diff
+    contract Bridge (0x9cb4706e20A18E59a48ffa7616d700A3891e1861) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
++        "0x52882c7564fAca480549145fAc4d0b09eD0D9c17"
+      issuedPermissions.0.via.0:
++        {"address":"0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3","delay":0}
+      sourceHashes:
++        ["0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3","0x63f00c3d965d6858168ed7d73fd0c413524877b196c4c5e3cf8fbc6ba40846e8"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"},{"permission":"upgrade","target":"0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b"},{"permission":"upgrade","target":"0x997CfB0838544f68E59f877EDc905001456F125b"},{"permission":"upgrade","target":"0x9cb4706e20A18E59a48ffa7616d700A3891e1861"}]
+      template:
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"},{"permission":"upgrade","target":"0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b"},{"permission":"upgrade","target":"0x997CfB0838544f68E59f877EDc905001456F125b"},{"permission":"upgrade","target":"0x9cb4706e20A18E59a48ffa7616d700A3891e1861"}]
+    }
+```
+
+```diff
+    contract ZKFairAdmin (0xcd14BE1959928BB8c160D11817E2BE2129e2F25F) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
 Generated with discovered.json: 0x41c594cf7d07adfb0a9de1a71bd31001abe520df
 
 # Diff at Tue, 01 Oct 2024 11:11:59 GMT:

@@ -7,6 +7,9 @@
     {
       "name": "ChainportCongressMembersRegistry",
       "address": "0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa",
+      "sourceHashes": [
+        "0x3a8dc61e76d801c8f238572cf0ed2aff6136a21f2b1730dff7360717e9b32db7"
+      ],
       "sinceTimestamp": 1621598125,
       "values": {
         "$immutable": true,
@@ -31,6 +34,10 @@
       "name": "MultisigVault2",
       "address": "0x450aD18B4442ce2972Af2a7A12439984db4Afaf9",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1641296925,
@@ -55,6 +62,9 @@
     {
       "name": "ProxyAdmin",
       "address": "0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F",
+      "sourceHashes": [
+        "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -141,6 +151,10 @@
       "name": "MultisigVault1",
       "address": "0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1627899254,
@@ -165,6 +179,9 @@
     {
       "name": "ChainportCongress",
       "address": "0xB6b4C7aC240b1f176c5589d064733066a83884a1",
+      "sourceHashes": [
+        "0x6fc47885abd30d6674764b88e43a68f4c96a8dd3dd28c11c769a1089b41158cc"
+      ],
       "sinceTimestamp": 1621598093,
       "values": {
         "$immutable": true,
@@ -303,6 +320,5 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
-  },
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+  }
 }

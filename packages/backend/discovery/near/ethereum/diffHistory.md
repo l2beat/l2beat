@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x60a64ce9c978e6311c5ba40a526009d4f921b959
+
+# Diff at Mon, 14 Oct 2024 10:53:12 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 19531990
+- current block number: 19531990
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531990 (main branch discovery), not current.
+
+```diff
+    contract NearProver (0x051AD3F020274910065Dcb421629cd2e6E5b46c4) {
+    +++ description: None
+      sourceHashes:
++        ["0xcd16841a968d4ea28094de73ada515cdb0661691dec1b02c5c9e86a08bcc5d06"]
+    }
+```
+
+```diff
+    contract ERC20Locker (0x23Ddd3e3692d1861Ed57EDE224608875809e127f) {
+    +++ description: None
+      sourceHashes:
++        ["0x74501db8a51bd105da4453dc8907e59a99756bc2651ce3a861485f0ffe7cf724"]
+    }
+```
+
+```diff
+    contract BridgeAdminMultisig (0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1) {
+    +++ description: None
+      sourceHashes:
++        ["0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract NearBridge (0x3FEFc5A4B1c02f21cBc8D3613643ba0635b9a873) {
+    +++ description: None
+      sourceHashes:
++        ["0x52e85c821a158edace9ff11f0bda7524bc7bee826844981293fd48259887aaf1"]
+    }
+```
+
+```diff
+    contract EthCustodian (0x6BFaD42cFC4EfC96f529D786D643Ff4A8B89FA52) {
+    +++ description: None
+      sourceHashes:
++        ["0x38ac1699854c55e7085ee14f17acf067140394f315915c61dbb7aed0ff7bce59"]
+    }
+```
+
 Generated with discovered.json: 0x360ebcabc3aa641d59211739fef063326a7c5bd4
 
 # Diff at Fri, 09 Aug 2024 10:10:44 GMT:
