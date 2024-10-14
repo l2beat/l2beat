@@ -281,17 +281,21 @@ export function EditTokenPage({
             <CardContent>
               <Table>
                 <TableHeader>
-                  <TableHead>Source</TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Symbol</TableHead>
-                  <TableHead>Decimals</TableHead>
-                  <TableHead>Logo URL</TableHead>
-                  <TableHead>Contract Name</TableHead>
+                  <TableRow>
+                    <TableHead>Source</TableHead>
+                    <TableHead>External ID</TableHead>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Symbol</TableHead>
+                    <TableHead>Decimals</TableHead>
+                    <TableHead>Logo URL</TableHead>
+                    <TableHead>Contract Name</TableHead>
+                  </TableRow>
                 </TableHeader>
                 <TableBody>
                   {token?.meta.map((meta) => (
                     <TableRow key={meta.source}>
                       <TableCell>{meta.source}</TableCell>
+                      <TableCell>{meta.externalId}</TableCell>
                       <TableCell>{meta.name}</TableCell>
                       <TableCell>{meta.symbol}</TableCell>
                       <TableCell>{meta.decimals}</TableCell>

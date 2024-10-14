@@ -56,7 +56,6 @@ export default async function Page({
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>ID</TableHead>
                 <TableHead>Name</TableHead>
                 <TableHead>Chain ID</TableHead>
                 <TableHead>CoinGecko ID</TableHead>
@@ -68,7 +67,6 @@ export default async function Page({
                 .sort((a, b) => a.chainId - b.chainId)
                 .map((network) => (
                   <TableRow key={network.id}>
-                    <TableCell className="font-mono">{network.id}</TableCell>
                     <TableCell>{network.name}</TableCell>
                     <TableCell>
                       {network.chainId} (0x{network.chainId.toString(16)})
