@@ -1,6 +1,5 @@
-import { Layer2, Layer3, layer2s, layer3s } from '@l2beat/config'
 import { cn } from '~/utils/cn'
-import { SearchBar } from './search-bar'
+import { SearchBarButton } from './search-bar/search-bar-button'
 
 interface Props {
   children: string
@@ -9,16 +8,6 @@ interface Props {
 }
 
 export function MainPageHeader({ children, description, className }: Props) {
-  const projects = [...layer2s, ...layer3s]
-  const recentlyAdded = projects
-    .filter((p) => p.isUpcoming)
-    .sort(
-      (a, b) => (b.createdAt?.toNumber() ?? 0) - (a.createdAt?.toNumber() ?? 0),
-    )
-    .slice(0, 5)
-    .map(toProject)
-  const allProjects = projects.map(toProject)
-
   return (
     <header
       className={cn(
@@ -39,15 +28,7 @@ export function MainPageHeader({ children, description, className }: Props) {
           <p className="mt-0.5 text-xs text-secondary">{description}</p>
         )}
       </div>
-      <SearchBar recentlyAdded={recentlyAdded} allProjects={allProjects} />
+      <SearchBarButton />
     </header>
   )
-}
-
-function toProject(project: Layer2 | Layer3) {
-  return {
-    id: project.id,
-    name: project.display.name,
-    slug: project.display.slug,
-  }
 }

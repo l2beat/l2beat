@@ -15,7 +15,7 @@ const Command = React.forwardRef<
   <CommandPrimitive
     ref={ref}
     className={cn(
-      'custom-scrollbar flex size-full flex-col overflow-hidden rounded-md bg-gray-200 dark:bg-zinc-700',
+      'custom-scrollbar flex size-full flex-col overflow-hidden rounded-md bg-gray-200 sidebar:!bg-surface-secondary dark:bg-zinc-700',
       className,
     )}
     {...props}
@@ -27,7 +27,7 @@ const CommandDialog = ({ children, ...props }: DialogProps) => {
   return (
     <Dialog {...props}>
       <DialogContent className="overflow-hidden p-0 shadow-lg">
-        <Command className="[&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:size-5">
+        <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-secondary [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:size-5">
           {children}
         </Command>
       </DialogContent>
@@ -43,14 +43,14 @@ const CommandInput = React.forwardRef<
 >(({ className, reset, ...props }, ref) => {
   return (
     <div
-      className="flex items-center border-b border-gray-400 px-3 dark:border-gray-650"
+      className="flex items-center border-b border-gray-400 px-3 sidebar:!border-surface-tertiary dark:border-gray-650"
       cmdk-input-wrapper=""
     >
-      <SearchIcon className="mr-2 size-4 shrink-0 stroke-gray-500 opacity-50 dark:stroke-gray-50" />
+      <SearchIcon className="mr-2 size-4 shrink-0 stroke-gray-500 opacity-50 sidebar:!stroke-surface-tertiary dark:stroke-gray-50" />
       <CommandPrimitive.Input
         ref={ref}
         className={cn(
-          'flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-gray-500 disabled:cursor-not-allowed disabled:opacity-50 dark:placeholder:text-gray-50',
+          'sidebar:!placeholder:text-surface-tertiary flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-gray-500 disabled:cursor-not-allowed disabled:opacity-50 dark:placeholder:text-gray-50',
           className,
         )}
         {...props}
@@ -120,7 +120,10 @@ const CommandSeparator = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.Separator
     ref={ref}
-    className={cn('-mx-1 h-px bg-gray-400 dark:bg-gray-650', className)}
+    className={cn(
+      '-mx-1 h-px bg-gray-400 sidebar:!bg-surface-tertiary dark:bg-gray-650',
+      className,
+    )}
     {...props}
   />
 ))
@@ -133,7 +136,7 @@ const CommandItem = React.forwardRef<
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected='true']:bg-gray-400 data-[disabled=true]:opacity-50 dark:data-[selected='true']:bg-zinc-800",
+      "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected='true']:bg-gray-400 data-[disabled=true]:opacity-50 sidebar:data-[selected='true']:!bg-surface-tertiary dark:data-[selected='true']:bg-zinc-800",
       className,
     )}
     {...props}
