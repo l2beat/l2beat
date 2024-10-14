@@ -16,7 +16,10 @@ export interface ActivityIndexerDeps
 }
 
 export interface TxsCountProvider {
-  getTxsCount(from: number, to: number): Promise<ActivityRecord[]>
+  getTxsCount(
+    from: number,
+    to: number,
+  ): Promise<Omit<ActivityRecord, 'ratio'>[]>
 }
 
 export interface DayActivityIndexerDeps extends ActivityIndexerDeps {
