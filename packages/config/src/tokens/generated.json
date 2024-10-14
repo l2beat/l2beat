@@ -8903,6 +8903,20 @@
       "supply": "totalSupply"
     },
     {
+      "name": "UK Real Estate",
+      "coingeckoId": "uk-real-estate",
+      "address": "0x835d3E1C0aA079C6164AAd21DCb23E60eb71AF48",
+      "symbol": "UKRE",
+      "decimals": 18,
+      "deploymentTimestamp": 1716417748,
+      "coingeckoListingTimestamp": 1720483200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38625/large/image_%281%29.png?1718168417",
+      "chainId": 111188,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "US T-Bill",
       "coingeckoId": "real-us-t-bill",
       "address": "0x83feDBc0B85c6e29B589aA6BdefB1Cc581935ECD",
