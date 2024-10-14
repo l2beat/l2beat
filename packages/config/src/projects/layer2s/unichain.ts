@@ -9,12 +9,12 @@ export const unichain: Layer2 = upcomingL2({
     name: 'Unichain',
     slug: 'unichain',
     description:
-      'Unichain, a faster, cheaper L2 designed to be the home for DeFi and the home for multichain liquidity. ',
+      'Unichain, a faster, cheaper L2 designed to be the home for DeFi and the home for multichain liquidity.',
     purposes: ['Universal', 'DeFi'],
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
     links: {
-      websites: ['https://www.unichain.org/'],
+      websites: ['https://unichain.org/'],
       apps: [],
       documentation: ['https://docs.unichain.org/docs'],
       explorers: [],
