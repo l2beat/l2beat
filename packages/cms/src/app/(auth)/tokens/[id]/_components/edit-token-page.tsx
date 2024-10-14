@@ -334,7 +334,7 @@ export function EditTokenPage({
                       >
                         {meta.source}
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="max-w-[200px] break-words font-mono text-xs">
                         {/* eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing */}
                         {meta.externalId || 'N/A'}
                       </TableCell>
@@ -359,6 +359,8 @@ export function EditTokenPage({
                       >
                         {meta.decimals}
                       </TableCell>
+                      <TableCell>{meta.logoUrl}</TableCell>
+                      <TableCell>{meta.contractName}</TableCell>
                     </TableRow>
                   ))}
                   <TableRow>
