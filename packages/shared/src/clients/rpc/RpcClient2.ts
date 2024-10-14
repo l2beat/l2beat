@@ -3,7 +3,7 @@ import { RateLimiter, UnixTime } from '@l2beat/shared-pure'
 import { generateId } from '../../tools/generateId'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 import { HttpClient2 } from '../http/HttpClient2'
-import { Block, RpcResponse } from './types'
+import { Block, Quantity, RpcResponse } from './types'
 
 interface RpcClient2Deps {
   http: HttpClient2
@@ -25,7 +25,7 @@ export class RpcClient2 {
   async getBlock(blockNumber: number | 'latest') {
     const method = 'eth_getBlockByNumber'
     const encodedNumber =
-      blockNumber === 'latest' ? 'latest' : `0x${blockNumber.toString(16)}`
+      blockNumber === 'latest' ? 'latest' : Quantity.encode(blockNumber)
     const blockResponse = await this.query(method, [encodedNumber, false])
 
     const block = Block.safeParse(blockResponse)
