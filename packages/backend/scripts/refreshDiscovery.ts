@@ -81,6 +81,7 @@ function discoveryNeedsRefresh(
 
     if (contract.template !== undefined) {
       if (
+        allShapeHashes[contract.template].length > 0 &&
         !allShapeHashes[contract.template]
           .map((h) => h.toString())
           .includes(hashes[0])
