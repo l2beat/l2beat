@@ -82,6 +82,7 @@ function discoveryNeedsRefresh(
     if (contract.template !== undefined) {
       if (
         allShapeHashes[contract.template].length > 0 &&
+        config.overrides.get(contract.address).extends === undefined &&
         !allShapeHashes[contract.template]
           .map((h) => h.toString())
           .includes(hashes[0])
