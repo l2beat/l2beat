@@ -7,7 +7,7 @@ export const odyssey: Layer2 = underReviewL2({
     name: 'Odyssey',
     slug: 'odyssey',
     description:
-      'Ithaca is developing Odyssey, an open-source Layer 2 network, built with Reth, the OP Stack and Conduit.',
+      'Odyssey is a OP Stack rollup aimed at enabling experimentation of bleeding edge Ethereum Research.',
     purposes: ['Universal'],
     category: 'Optimium',
     provider: 'OP Stack',
