@@ -75,7 +75,6 @@ export const discoveredJsonStub: DiscoveryOutput = {
   abis: {},
   configHash: Hash256.random(),
   usedTemplates: {},
-  shapeFilesHash: Hash256.random(),
 }
 
 export const discoveredOpStackJsonStub: DiscoveryOutput = {
@@ -143,5 +142,4 @@ export const discoveredOpStackJsonStub: DiscoveryOutput = {
   abis: {},
   configHash: Hash256.random(),
   usedTemplates: {},
-  shapeFilesHash: Hash256.random(),
 }

@@ -1,3 +1,64 @@
+Generated with discovered.json: 0xd841085d5e6926c5981e003384a8768b3569b012
+
+# Diff at Mon, 14 Oct 2024 10:57:55 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20832964
+- current block number: 20832964
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20832964 (main branch discovery), not current.
+
+```diff
+    contract XLayerValidiumDAC (0x05652Ec92366F3C2255991a265c499E01Ba58e6a) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x1e37EA18e9515db29b3E94A00eD31484A3130204"
++        "0xE4c5BFaddbf21a1F35AE66F180F78822078FBfDE"
+      issuedPermissions.0.via.0:
++        {"address":"0x1e37EA18e9515db29b3E94A00eD31484A3130204","delay":0}
+      sourceHashes:
++        ["0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1","0xf7c38d00c4b6000f1840ed38f9ae99d753da8ac69ee1b6ac9ed614f2b60d470f"]
+    }
+```
+
+```diff
+    contract XLayerVerifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81) {
+    +++ description: None
+      sourceHashes:
++        ["0x0bc67d276b40b2ba13903d94fd6c25ae4d3d5162bc942763c418afdc11bc9b32"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x1e37EA18e9515db29b3E94A00eD31484A3130204) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x05652Ec92366F3C2255991a265c499E01Ba58e6a"}]
+      template:
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x05652Ec92366F3C2255991a265c499E01Ba58e6a"}]
+    }
+```
+
+```diff
+    contract XLayerValidium (0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507) {
+    +++ description: None
+      sourceHashes:
++        ["0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4","0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"]
+    }
+```
+
 Generated with discovered.json: 0xfc0452d58abac01438b8c50c014c8b8ffcb6daec
 
 # Diff at Tue, 01 Oct 2024 11:11:52 GMT:

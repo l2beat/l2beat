@@ -8,6 +8,10 @@
       "name": "OpticsV2Governor",
       "address": "0x070c2843402Aa0637ae0F2E2edf601aAB5E72509",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "values": {
@@ -35,6 +39,9 @@
     {
       "name": "UpgradeBeacon",
       "address": "0x4a594E07D5295E4e4cd1fF728e85a317A20A5010",
+      "sourceHashes": [
+        "0x22841c972728a5327e28da1a887ae68b6db4dc5f1d658e516abcba1a265b21d8"
+      ],
       "proxyType": "immutable",
       "values": { "$immutable": true },
       "derivedName": "UpgradeBeacon"
@@ -42,6 +49,9 @@
     {
       "name": "UpgradeBeaconController",
       "address": "0x5A4E9B127183130b1814858F6ca5d1B1c6d799Ee",
+      "sourceHashes": [
+        "0x12e387edec9bf90c8c2ee351a4b607488ae3e01f861eb7dabbf3e4fdd078ad48"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -56,16 +66,25 @@
     {
       "name": "UpgradeBeaconProxy",
       "address": "0x5EE2BA07742D9276b2F51Ee4AD949016b7F164c1",
+      "sourceHashes": [
+        "0xbe5d364ff65b55d089681036cc772258083d96100d71309b7cd76d6f69ced388"
+      ],
       "values": { "$immutable": true }
     },
     {
       "name": "UpgradeBeaconProxy",
       "address": "0x913EE05036f3cbc94Ee4afDea87ceb430524648a",
+      "sourceHashes": [
+        "0xbe5d364ff65b55d089681036cc772258083d96100d71309b7cd76d6f69ced388"
+      ],
       "values": { "$immutable": true }
     },
     {
       "name": "XAppConnectionManager",
       "address": "0xaa099aF87ACE9E437b9B410a687F263eeaeC4321",
+      "sourceHashes": [
+        "0xb64e5af8c508ce86c29728805a64c3b45bf37a0a28c4ea602902a3e23de80dfd"
+      ],
       "values": {
         "$immutable": true,
         "home": "0x913EE05036f3cbc94Ee4afDea87ceb430524648a",
@@ -76,6 +95,10 @@
     {
       "name": "BeaconProxy",
       "address": "0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE",
+      "sourceHashes": [
+        "0xbe5d364ff65b55d089681036cc772258083d96100d71309b7cd76d6f69ced388",
+        "0xfe51330f918cf664ca579984982dbeeab54d9a2461dcd1938ff2d46b9c77b306"
+      ],
       "proxyType": "Optics Beacon proxy",
       "issuedPermissions": [
         {
@@ -246,6 +269,5 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
-  },
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+  }
 }

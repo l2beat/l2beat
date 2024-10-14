@@ -7,6 +7,9 @@
     {
       "name": "StargatePoolUSDC",
       "address": "0x3Fc69CC4A842838bCDC9499178740226062b14E4",
+      "sourceHashes": [
+        "0x0ef9b0bca6f74cd24daa9d50e734dfec2ecbc71cef5b209fa0c0f93561ad2640"
+      ],
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -48,6 +51,9 @@
     {
       "name": "TokenMessaging",
       "address": "0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038",
+      "sourceHashes": [
+        "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
+      ],
       "sinceTimestamp": 1716837029,
       "values": {
         "$immutable": true,
@@ -88,6 +94,9 @@
     {
       "name": "StargatePoolNative",
       "address": "0xC2b638Cb5042c1B3c5d5C969361fB50569840583",
+      "sourceHashes": [
+        "0x63ac97930921267a1251904351ae2409e0d62d3d3c3fcb2ed7bc1fc4775321f7"
+      ],
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -396,6 +405,5 @@
       "function withdrawTreasuryFee(address _to, uint64 _amountSD)"
     ]
   },
-  "usedTemplates": {},
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+  "usedTemplates": {}
 }

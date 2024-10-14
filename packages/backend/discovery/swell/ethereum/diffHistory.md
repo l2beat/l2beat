@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x77106dd9943e0d347db6198e66f087f3424ed9ba
+
+# Diff at Mon, 14 Oct 2024 10:56:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20016207
+- current block number: 20016207
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20016207 (main branch discovery), not current.
+
+```diff
+    contract SwellMultisig (0x20fDF47509C5eFC0e1101e3CE443691781C17F90) {
+    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract SwellL2PrelaunchVault (0x38D43a6Cb8DA0E855A42fB6b0733A0498531d774) {
+    +++ description: None
+      sourceHashes:
++        ["0x3905f28c9b0500b746756a8cf7d0bed4cb79c6bee28f80b384514d7fdd969bac"]
+    }
+```
+
+```diff
+    contract Zap (0xBD9fc4FdB07e46a69349101E862e82aa002aDe0d) {
+    +++ description: None
+      sourceHashes:
++        ["0x7f2346203319dad1511cb447159e190292bb6ea303b20a40341503c6d2c8b839"]
+    }
+```
+
+```diff
+    contract Timelock (0xCa2DF225ba3c4743E02611EC423FaAC311dEEEd4) {
+    +++ description: None
+      sourceHashes:
++        ["0x43aeca3d5513c5b43391523911d8ee8061fb1a83b088fdc0d3abb16e4a9659b9"]
+    }
+```
+
 Generated with discovered.json: 0x9e6c7c4b43e6357d45c7118b468f6d727a21335d
 
 # Diff at Fri, 09 Aug 2024 10:12:38 GMT:

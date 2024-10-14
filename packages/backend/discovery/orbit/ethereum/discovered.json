@@ -44,6 +44,10 @@
     {
       "name": "ETH Vault",
       "address": "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a",
+      "sourceHashes": [
+        "0x14ff670031a318957fb84a598af08c637cec739b303d25c08d5d870d3df03482",
+        "0x2e54618fac09ff40e0bfc745f840cab0e89c2aa480df85e74a97612aa959df76"
+      ],
       "proxyType": "call implementation proxy",
       "ignoreInWatchMode": ["depositCount", "transactionCount"],
       "sinceTimestamp": 1603950507,
@@ -202,6 +206,9 @@
     {
       "name": "ProxyAdmin",
       "address": "0xFb504CD4eD46024B83c4337044995CF112205f18",
+      "sourceHashes": [
+        "0x579c6df39480618101e39d5b997df14c347d7f8a880df6cf0e1ae526771a0444"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -412,6 +419,5 @@
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ]
   },
-  "usedTemplates": {},
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+  "usedTemplates": {}
 }
