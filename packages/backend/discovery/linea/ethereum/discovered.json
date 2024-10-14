@@ -7,12 +7,21 @@
     {
       "name": "ERC20Bridge",
       "address": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+      "sourceHashes": [
+        "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
+        "0x4c5d4e5696bc435eefd0ba909c6a8a7748c4c49260fcb51a360f07af3c38d76f"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
-          "via": []
+          "target": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "via": [
+            {
+              "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1691067875,
@@ -44,6 +53,9 @@
     {
       "name": "BridgedToken",
       "address": "0x36f274C1C197F277EA3C57859729398FCc8a3763",
+      "sourceHashes": [
+        "0x8a6c3f5b047664111c8f981a4cb5d8a79c5652771665343ffdd15ae64fa253bf"
+      ],
       "sinceTimestamp": 1691067827,
       "values": {
         "_decimals": 0,
@@ -68,6 +80,9 @@
     {
       "name": "USDCBridgeProxyAdmin",
       "address": "0x41fAD3Df1B07B647D120D055259E474fE8046eb5",
+      "sourceHashes": [
+        "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -84,6 +99,10 @@
     {
       "name": "USDCBridge",
       "address": "0x504A330327A089d8364C4ab3811Ee26976d388ce",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0x27a9694e3bfad3a6ec23be7f15d8e6093b4d3a12eba4d10de0d9c660f5a47d30"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -121,6 +140,10 @@
       "name": "AdminMultisig",
       "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1689149759,
@@ -150,6 +173,9 @@
     {
       "name": "ERC20UpgradableBeacon",
       "address": "0x971f46a2852d11D59dbF0909e837cfd06f357DeB",
+      "sourceHashes": [
+        "0x02777a2575f23718a66224f10ac65db704c8c844f66d08dd5f9afd58b869f133"
+      ],
       "sinceTimestamp": 1691067839,
       "values": {
         "$immutable": true,
@@ -161,12 +187,18 @@
     {
       "name": "MultiSend",
       "address": "0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761",
+      "sourceHashes": [
+        "0x3b1182a0432445f884d447d11823ec4b120a198eeaa3d9f3024384d87ee77cf1"
+      ],
       "sinceTimestamp": 1621955912,
       "values": { "$immutable": true }
     },
     {
       "name": "VerifierProofType3",
       "address": "0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F",
+      "sourceHashes": [
+        "0x47f89dc90dfffe4c8914bdac8b7c92bc4cbee0df1bf52f3926e43fe0934a2ff4"
+      ],
       "sinceTimestamp": 1721038943,
       "values": { "$immutable": true },
       "derivedName": "PlonkVerifierForMultiTypeDataAggregation"
@@ -174,12 +206,21 @@
     {
       "name": "zkEVM",
       "address": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "sourceHashes": [
+        "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
+        "0x9107909af0d0c9abd3904984ff1b8b0824d489b8b1ac2902b805ce7d417e2e9f"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
-          "via": []
+          "target": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "via": [
+            {
+              "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
+              "delay": 0
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": [
@@ -301,6 +342,27 @@
     {
       "name": "Timelock",
       "address": "0xd6B95c960779c72B8C6752119849318E5d550574",
+      "sourceHashes": [
+        "0xaf04cf94ef4bf759d6466fa262a5e8e54f6d5c9652286fe5d71c9a904de27e5c"
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "via": [{ "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "via": [{ "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
+        }
+      ],
       "sinceTimestamp": 1689150959,
       "values": {
         "$immutable": true,
@@ -338,6 +400,9 @@
     {
       "name": "Roles",
       "address": "0xF24f1DC519d88246809B660eb56D94048575d083",
+      "sourceHashes": [
+        "0x699a67bde09c0d73c29ec9de66133bfee484544494865d954ac01f9736efed30"
+      ],
       "proxyType": "gnosis safe zodiac module",
       "sinceTimestamp": 1700506439,
       "values": {
@@ -405,7 +470,11 @@
     {
       "name": "ProxyAdmin",
       "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
-      "receivedPermissions": [
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
+      ],
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "target": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
@@ -914,7 +983,7 @@
     ]
   },
   "usedTemplates": {
+    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
-  },
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+  }
 }
