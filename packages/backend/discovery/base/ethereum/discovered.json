@@ -1,8 +1,8 @@
 {
   "name": "base",
   "chain": "ethereum",
-  "blockNumber": 20928224,
-  "configHash": "0xeb04765510e530fc3671da807d5e613dba512c4d465d4c96f63218f344a15c7a",
+  "blockNumber": 20941326,
+  "configHash": "0xe46088b8a34a06f4d38288a4dfac15fea2d77390a56bbcac099882d6f94647bc",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -175,7 +175,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 11 (27%)",
-        "nonce": 37,
+        "nonce": 39,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -299,7 +299,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 20928202
+          "prevBlockNum": 20941323
         },
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -391,10 +391,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 20844000,
-        "latestOutputIndex": 11579,
-        "nextBlockNumber": 20845800,
-        "nextOutputIndex": 11580,
+        "latestBlockNumber": 20921400,
+        "latestOutputIndex": 11622,
+        "nextBlockNumber": 20923200,
+        "nextOutputIndex": 11623,
         "proposer": "0x642229f238fb9dE03374Be34B0eD8D9De80752c5",
         "PROPOSER": "0x642229f238fb9dE03374Be34B0eD8D9De80752c5",
         "startingBlockNumber": 0,
@@ -533,7 +533,7 @@
           ]
         }
       ],
-      "ignoreInWatchMode": ["scalar", "overhead"],
+      "ignoreInWatchMode": ["gasLimit", "overhead"],
       "sinceTimestamp": 1686793895,
       "values": {
         "$admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
@@ -556,7 +556,7 @@
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "0x5050F69a9786F081509234F1a7F4684b5E5b76C9",
         "batchInbox": "0xFf00000000000000000000000000000000008453",
-        "gasLimit": 144000000,
+        "gasLimit": 156000000,
         "L1_CROSS_DOMAIN_MESSENGER_SLOT": "0x383f291819e6d54073bc9a648251d97421076bdd101933c0c022219ce9580636",
         "L1_ERC_721_BRIDGE_SLOT": "0x46adcbebc6be8ce551740c29c47c8798210f23f7f4086c41752944352568d5a7",
         "L1_STANDARD_BRIDGE_SLOT": "0x9904ba90dde5696cda05c9e0dab5cbaa0fea005ace4d11218a02ac668dad6376",
@@ -732,7 +732,7 @@
         ],
         "$upgradeCount": 4,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292902163",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292902975",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,

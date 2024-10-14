@@ -1,3 +1,116 @@
+Generated with discovered.json: 0x1eab557d9f7513c1fc0acf91e2fedc94864292c3
+
+# Diff at Sat, 12 Oct 2024 07:46:18 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@86ddd4ba846ebcaec5953fa3bbd1a66f324e7175 block: 20934364
+- current block number: 20948118
+
+## Description
+
+Add new lanes with undocumented chainSelectors.
+
+## Watched changes
+
+```diff
+    contract Router (0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.17:
++        {"sourceChainSelector":"6422105447186081193","offRamp":"0x33276152d082120F5190362e6E5F6783bbCb2B26"}
+      values.offRamps.16:
++        {"sourceChainSelector":"4348158687435793198","offRamp":"0x0aB48c500AbD8392620c3C4E4fdD5d7063C44554"}
+      values.offRamps.15:
++        {"sourceChainSelector":"3016212468291539606","offRamp":"0x3c672f0f9E73cB7984A5Ab486C7839f84C8EDC09"}
+      values.onRamps.3016212468291539606:
++        "0xBA1Aa22D51692AA0D7746F996cBE657781653332"
+      values.onRamps.4348158687435793198:
++        "0x33417f13DFBC2FfB9e1B43051c3737370F3691a4"
+      values.onRamps.6422105447186081193:
++        "0xD8E8720709a3d9A18a9B281E6148E94149B2E252"
+    }
+```
+
+```diff
+    contract PriceRegistry (0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad) {
+    +++ description: None
+      values.getPriceUpdaters.17:
++        "0xFa94e57b12b6C45A3aD3CBb9451ba99a997eb210"
+      values.getPriceUpdaters.16:
++        "0xD9d3d90D729F50794741Da7a2d54d8B12dC3Da72"
+      values.getPriceUpdaters.15:
++        "0x1A3D582d1aB9CF630b44B91C54CBD16Ca7e35a8d"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0x0aB48c500AbD8392620c3C4E4fdD5d7063C44554)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0x1A3D582d1aB9CF630b44B91C54CBD16Ca7e35a8d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0x33276152d082120F5190362e6E5F6783bbCb2B26)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0x33417f13DFBC2FfB9e1B43051c3737370F3691a4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0x3c672f0f9E73cB7984A5Ab486C7839f84C8EDC09)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0xBA1Aa22D51692AA0D7746F996cBE657781653332)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0xD8E8720709a3d9A18a9B281E6148E94149B2E252)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0xD9d3d90D729F50794741Da7a2d54d8B12dC3Da72)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0xFa94e57b12b6C45A3aD3CBb9451ba99a997eb210)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0x1A3D582d1aB9CF630b44B91C54CBD16Ca7e35a8d.sol | 1297 ++++++++
+ ...-0xD9d3d90D729F50794741Da7a2d54d8B12dC3Da72.sol | 1297 ++++++++
+ ...-0xFa94e57b12b6C45A3aD3CBb9451ba99a997eb210.sol | 1297 ++++++++
+ ...-0x0aB48c500AbD8392620c3C4E4fdD5d7063C44554.sol | 3430 ++++++++++++++++++++
+ ...-0x33276152d082120F5190362e6E5F6783bbCb2B26.sol | 3430 ++++++++++++++++++++
+ ...-0x3c672f0f9E73cB7984A5Ab486C7839f84C8EDC09.sol | 3430 ++++++++++++++++++++
+ ...-0x33417f13DFBC2FfB9e1B43051c3737370F3691a4.sol | 2982 +++++++++++++++++
+ ...-0xBA1Aa22D51692AA0D7746F996cBE657781653332.sol | 2982 +++++++++++++++++
+ ...-0xD8E8720709a3d9A18a9B281E6148E94149B2E252.sol | 2982 +++++++++++++++++
+ 9 files changed, 23127 insertions(+)
+```
+
 Generated with discovered.json: 0x378fd135b50bc5105635a7cf3631617ef9faf8a3
 
 # Diff at Thu, 10 Oct 2024 09:40:14 GMT:

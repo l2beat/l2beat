@@ -33,18 +33,18 @@ const getBlueprint = (opts?: GetStageOptions) =>
           negative: "The project doesn't call itself a rollup.",
         },
         stateRootsPostedToL1: {
-          positive: 'L2 state roots are posted to Ethereum L1.',
-          negative: 'L2 state roots are not posted to Ethereum L1.',
+          positive: 'State roots are posted to Ethereum L1.',
+          negative: 'State roots are not posted to Ethereum L1.',
         },
         dataAvailabilityOnL1: {
           positive:
-            'Inputs for the state transition function are posted to L1.',
+            'Inputs for the state transition function are posted to Ethereum L1.',
           negative:
-            'All the data to reconstruct the L2 state is not available on L1.',
+            'All the data to reconstruct the L2 state is not available on Ethereum L1.',
         },
         rollupNodeSourceAvailable: {
           positive:
-            'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code.' +
+            'A source-available node exists that can recreate the state from Ethereum L1 data. Please note that the L2BEAT team has not verified the validity of the node source code.' +
             (opts?.rollupNodeLink
               ? ` [View code](${opts.rollupNodeLink})`
               : ''),

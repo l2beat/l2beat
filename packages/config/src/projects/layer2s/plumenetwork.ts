@@ -15,10 +15,10 @@ export const plumenetwork: Layer2 = upcomingL2({
     provider: 'Arbitrum',
     links: {
       websites: ['https://plumenetwork.xyz/'],
-      apps: [],
+      apps: ['https://miles.plumenetwork.xyz'],
       documentation: ['https://docs.plumenetwork.xyz/plume'],
-      explorers: [],
-      repositories: [],
+      explorers: ['https://test-explorer.plumenetwork.xyz'],
+      repositories: ['https://github.com/plumenetwork'],
       socialMedia: [
         'https://twitter.com/plumenetwork',
         'https://discord.gg/plume',

@@ -4026,6 +4026,13 @@
       "coingeckoId": "re-al"
     },
     {
+      "symbol": "UKRE",
+      "address": "0x835d3E1C0aA079C6164AAd21DCb23E60eb71AF48",
+      "source": "native",
+      "supply": "totalSupply", // no circulating on CG, but seems to be fully circulating
+      "coingeckoId": "uk-real-estate"
+    },
+    {
       "symbol": "USTB",
       "address": "0x83fedbc0b85c6e29b589aa6bdefb1cc581935ecd",
       "source": "external",

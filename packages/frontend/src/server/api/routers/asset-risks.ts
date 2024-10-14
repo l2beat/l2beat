@@ -83,7 +83,7 @@ export const assetRisksRouter = router({
         if (chain) {
           acc[id] = {
             name: chain.display.name,
-            stage: 'stage' in chain ? chain.stage.stage : undefined,
+            stage: 'stage' in chain ? chain.stage?.stage : undefined,
             risks: (chain?.technology
               ? [
                   chain.technology.stateCorrectness,
