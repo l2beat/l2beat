@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   Command,
   CommandDialog,
@@ -39,15 +39,40 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [setOpen])
 
-  const filteredProjects =
-    value === ''
-      ? recentlyAdded
-      : allProjects.filter((p) =>
-          p.name.toLowerCase().includes(value.toLowerCase()),
-        )
+  const filteredProjects = useMemo(
+    () =>
+      value === ''
+        ? recentlyAdded
+        : allProjects
+            .filter((p) => p.name.toLowerCase().includes(value.toLowerCase()))
+            .sort((a, b) => {
+              // Sort filtered pages: exact matches first, then partial matches
+              const searchTerm = value.toLowerCase()
+              return (
+                (a.name.toLowerCase().startsWith(searchTerm) ? -1 : 1) ||
+                (a.name.toLowerCase().includes(searchTerm) ? -1 : 1) ||
+                a.name.localeCompare(b.name)
+              )
+            })
+            .slice(0, 15),
+    [value],
+  )
+
+  const onEscapeKeyDown = (e: KeyboardEvent) => {
+    e.preventDefault()
+    if (value !== '') {
+      setValue('')
+      return
+    }
+    setOpen(false)
+  }
 
   return (
-    <CommandDialog open={open} onOpenChange={setOpen}>
+    <CommandDialog
+      open={open}
+      onOpenChange={setOpen}
+      onEscapeKeyDown={onEscapeKeyDown}
+    >
       <Command shouldFilter={false} sidebar>
         <CommandInput
           placeholder="Search for projects"
