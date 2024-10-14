@@ -334,7 +334,10 @@ export function EditTokenPage({
                       >
                         {meta.source}
                       </TableCell>
-                      <TableCell>{meta.externalId}</TableCell>
+                      <TableCell>
+                        {/* eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing */}
+                        {meta.externalId || 'N/A'}
+                      </TableCell>
                       <TableCell
                         className={
                           meta.source === 'Aggregate' ? 'font-bold' : ''
@@ -360,6 +363,7 @@ export function EditTokenPage({
                   ))}
                   <TableRow>
                     <TableCell>Overrides</TableCell>
+                    <TableCell>N/A</TableCell>
                     <TableCell>
                       <FormField
                         control={form.control}
