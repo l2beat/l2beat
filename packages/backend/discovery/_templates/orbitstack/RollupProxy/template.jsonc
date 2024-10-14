@@ -1,25 +1,44 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.",
-  "ignoreMethods": [
-    // Execution reverted
-    "proxiableUUID"
-  ],
+  "displayName": "RollupProxy",
+  "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
+  "ignoreMethods": ["proxiableUUID"],
   "ignoreInWatchMode": [
     "firstUnresolvedNode",
     "latestConfirmed",
     "latestNodeCreated"
   ],
   "fields": {
-    // when this changes, it means the validators have changed
+    "validators": {
+      "target": {
+        "permissions": [
+          {
+            "type": "propose",
+            "description": "can submit state roots to the RollupProxy contract on the host chain."
+          },
+          {
+            "type": "challenge",
+            "description": "can challenge state roots on the host chain."
+          }
+        ]
+      },
+      "handler": {
+        "type": "arbitrumActors",
+        "actorType": "validator"
+      }
+    },
     "confirmPeriodBlocks": {
       "description": "Challenge period. (Number of blocks until a node is confirmed)."
     },
     "wasmModuleRoot": {
-      "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.",
+      "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."
+    },
+    "arbOsFromWmRoot": {
+      "description": "ArbOS version derived from known wasmModuleRoots.",
       "returnType": "(ArbOsWasmModuleRoot)"
     },
     "setValidatorCount": {
+      "description": "Increments on each Validator change.",
       "handler": {
         "type": "eventCount",
         "topics": [
@@ -31,6 +50,7 @@
       }
     },
     "challenges": {
+      "description": "Emitted on createChallenge() in RollupUserLogic.",
       "handler": {
         "type": "stateFromEvent",
         "event": "RollupChallengeStarted",
@@ -40,15 +60,6 @@
           "challenger",
           "challengedNode"
         ]
-      }
-    },
-    "validators": {
-      "target": {
-        "role": "Validator"
-      },
-      "handler": {
-        "type": "arbitrumActors",
-        "actorType": "validator"
       }
     }
   }
