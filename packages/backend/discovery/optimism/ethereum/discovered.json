@@ -8,6 +8,9 @@
       "name": "LivenessModule",
       "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
       "template": "gnosisSafeModules/LivenessModule",
+      "sourceHashes": [
+        "0x998654cb64c7fc216505bdb3322b20e7d7c95704005228ad1f878bc631c4af8d"
+      ],
       "descriptions": [
         "used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig"
       ],
@@ -31,6 +34,9 @@
     {
       "name": "PermissionedDisputeGame",
       "address": "0x050ed6F6273c7D836a111E42153BC00D0380b87d",
+      "sourceHashes": [
+        "0x6aa2de634fc13396d9ea0b7d9d0869633db9d2bfc5b834f530fdc61ab1184bf6"
+      ],
       "sinceTimestamp": 1724975159,
       "values": {
         "$immutable": true,
@@ -78,6 +84,10 @@
       "name": "GuardianMultisig",
       "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "roles": ["Guardian"],
       "ignoreInWatchMode": ["nonce"],
@@ -99,6 +109,9 @@
     {
       "name": "L1DAITokenBridge",
       "address": "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F",
+      "sourceHashes": [
+        "0x4c5465ff113d9808b9b99013be373f52fcb90c8df71628dd658f0adbceff1366"
+      ],
       "sinceTimestamp": 1625675779,
       "values": {
         "$immutable": true,
@@ -115,6 +128,9 @@
       "name": "MIPS",
       "address": "0x16e83cE5Ce29BF90AD9Da06D2fE6a15d5f344ce4",
       "template": "opstack/MIPS",
+      "sourceHashes": [
+        "0x8144cb5736a5296d5afc2433b58a1fcb99f995c2836fd16aeca18eda86fb2f91"
+      ],
       "descriptions": [
         "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute."
       ],
@@ -129,6 +145,10 @@
       "name": "AnchorStateRegistry",
       "address": "0x18DAc71c228D1C32c99489B7323d441E1175e443",
       "template": "opstack/AnchorStateRegistry",
+      "sourceHashes": [
+        "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
+        "0x6ceb1548721dae770e84e1c1059e5415381a07285cd687fdb032aa2d320e1f20"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "Contains the latest confirmed state root that can be used as a starting point in a dispute game."
@@ -172,6 +192,10 @@
     {
       "name": "SystemConfig",
       "address": "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
+      "sourceHashes": [
+        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
+        "0xbbb92920a096eced30e3ce67bbc443f134b217e8847433fbb192ecb9fdddcbc2"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -273,6 +297,9 @@
     {
       "name": "LivenessGuard",
       "address": "0x24424336F04440b1c28685a38303aC33C9D14a25",
+      "sourceHashes": [
+        "0xe771f3d1c51456e08e2c93a904b12010870dc4fa79ee82e4bc90433557931f05"
+      ],
       "sinceTimestamp": 1717149791,
       "values": {
         "$immutable": true,
@@ -284,6 +311,10 @@
       "name": "L1CrossDomainMessenger",
       "address": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
       "template": "opstack/L1CrossDomainMessenger",
+      "sourceHashes": [
+        "0x6e4b297b822bdda2bb8bbf4dde360ee51379af5a0de55c0d726a2d7b68791bf7",
+        "0x1cc8a3b7de3d2c54c4706bb3f3015714d3b56647fc9fbfd6f8b068f5f63c1c25"
+      ],
       "proxyType": "resolved delegate proxy",
       "descriptions": [
         "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
@@ -365,6 +396,10 @@
       "name": "GnosisSafe",
       "address": "0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678243007,
@@ -387,13 +422,19 @@
     {
       "name": "L1Escrow",
       "address": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
+      "sourceHashes": [
+        "0xe3c0ee54209bc4a4d457bc5e251aff40a83fc784e37b8b90fd9158c6b0f29e5c"
+      ],
       "sinceTimestamp": 1625675683,
       "values": { "$immutable": true }
     },
     {
       "name": "SuperchainProxyAdmin",
       "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
-      "template": "opstack/ProxyAdmin",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
+      ],
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
@@ -455,6 +496,10 @@
       "name": "SuperchainProxyAdminOwner",
       "address": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
@@ -544,6 +589,10 @@
       "name": "L1ERC721Bridge",
       "address": "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D",
       "template": "opstack/L1ERC721Bridge",
+      "sourceHashes": [
+        "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
+        "0x482ec6e91304ac39a3fb4505634427bddfddee23b8e93a4f7f995ca5083ae3c3"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "Used to bridge ERC-721 tokens from host chain to this chain."
@@ -607,6 +656,9 @@
     {
       "name": "SynthetixBridgeEscrow",
       "address": "0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f",
+      "sourceHashes": [
+        "0x9fdc8650f5cfe4f5ce38accccf178614c6a57917867d6ee7fcc9c5a690ade600"
+      ],
       "sinceTimestamp": 1620680982,
       "values": {
         "$immutable": true,
@@ -619,6 +671,10 @@
       "name": "OptimismMintableERC20Factory",
       "address": "0x75505a97BD334E7BD3C476893285569C4136Fa0F",
       "template": "opstack/OptimismMintableERC20Factory",
+      "sourceHashes": [
+        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
+        "0x4c5ac4e53576924cabbd2a471f368a541bc3f4b1f53fa41a389692fcc62f6176"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."
@@ -671,6 +727,10 @@
       "name": "wstETHEscrow",
       "address": "0x76943C0D61395d8F2edF9060e1533529cAe05dE6",
       "template": "lido/L1LidoTokensBridge",
+      "sourceHashes": [
+        "0x698ae88793265d087e07a445b69bf16b450cdcf636b9073b86221936e912a135",
+        "0xee07202651af1cf311f14f1f29908dd5524a050efc650832b6ee88c9a9cf86fd"
+      ],
       "proxyType": "EIP1967 proxy",
       "displayName": "L1ERC20TokenBridge",
       "descriptions": [
@@ -749,6 +809,10 @@
       "name": "DelayedWETH_PermissionlessGames",
       "address": "0x82511d494B5C942BE57498a70Fdd7184Ee33B975",
       "template": "opstack/DelayedWETH",
+      "sourceHashes": [
+        "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
+        "0xfff6f4cca21febd4323222e2ca87ec8b78edfdeeca942468fbf331e537815484"
+      ],
       "proxyType": "EIP1967 proxy",
       "displayName": "DelayedWETH",
       "descriptions": [
@@ -793,6 +857,10 @@
       "name": "FoundationMultisig_1",
       "address": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420755,
@@ -822,6 +890,10 @@
       "name": "SuperchainConfig",
       "address": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
       "template": "opstack/SuperchainConfig",
+      "sourceHashes": [
+        "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
+        "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
@@ -870,6 +942,10 @@
       "name": "L1StandardBridge",
       "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
       "template": "opstack/L1StandardBridge",
+      "sourceHashes": [
+        "0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd",
+        "0x1010ff7f40ab4d53e6d9996aefa04423dabe9d0e22fac2d02b330ed3aa2c5740"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
@@ -912,6 +988,10 @@
       "name": "FoundationMultisig_2",
       "address": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
+        "0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1610850364,
@@ -941,6 +1021,9 @@
     {
       "name": "PreimageOracle",
       "address": "0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277",
+      "sourceHashes": [
+        "0xda65cfcdd58c88318ad76812d92be7f0d10716f389549846646b82ceecf47b2b"
+      ],
       "sinceTimestamp": 1724975087,
       "values": {
         "$immutable": true,
@@ -960,6 +1043,10 @@
       "name": "DelayedWETH_PermissionedGames",
       "address": "0x9F9b897e37de5052cD70Db6D08474550DDb07f39",
       "template": "opstack/DelayedWETH",
+      "sourceHashes": [
+        "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
+        "0xfff6f4cca21febd4323222e2ca87ec8b78edfdeeca942468fbf331e537815484"
+      ],
       "proxyType": "EIP1967 proxy",
       "displayName": "DelayedWETH",
       "descriptions": [
@@ -1003,6 +1090,9 @@
     {
       "name": "FeesCollector",
       "address": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
+      "sourceHashes": [
+        "0xa58ba822ad1db27a90c11078dd6ececa7d90a2f12794716b21e0ffaa038ff101"
+      ],
       "ignoreInWatchMode": ["getNextSequenceId"],
       "sinceTimestamp": 1672938575,
       "values": {
@@ -1016,6 +1106,9 @@
     {
       "name": "FaultDisputeGame",
       "address": "0xA6f3DFdbf4855a43c529bc42EDE96797252879af",
+      "sourceHashes": [
+        "0x6a8cfd738d026b64f2e5aaaf5faac411dcdc8c0d8ef834587d82144340812a2c"
+      ],
       "sinceTimestamp": 1724975147,
       "values": {
         "$immutable": true,
@@ -1060,6 +1153,10 @@
     {
       "name": "OptimismPortal",
       "address": "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
+      "sourceHashes": [
+        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
+        "0x41be46bdb67af1b7af90e1bd70a1fcd31a3352282beb83b846a5189675c37ac1"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -1138,6 +1235,10 @@
       "name": "SecurityCouncilMultisig",
       "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420419,
@@ -1173,6 +1274,9 @@
       "name": "DeputyGuardianModule",
       "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
       "template": "gnosisSafeModules/DeputyGuardianModule",
+      "sourceHashes": [
+        "0x9624d67fb3738cf1ce1e1f48e2cf433e9373345386943d12f1d751d6b8475cd6"
+      ],
       "descriptions": [
         "allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe."
       ],
@@ -1189,6 +1293,9 @@
       "name": "AddressManager",
       "address": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
       "template": "opstack/AddressManager",
+      "sourceHashes": [
+        "0xe5211497d15a7ea75577cf992ab6093dd0f6083f45c955f0136737810e44c205"
+      ],
       "descriptions": [
         "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
       ],
@@ -1218,6 +1325,10 @@
       "name": "DisputeGameFactory",
       "address": "0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
       "template": "opstack/DisputeGameFactory",
+      "sourceHashes": [
+        "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
+        "0x7f307d6191215a72b6c24c01b3c2fc87c84f7fb346790132e58736caa2d1dd14"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them."
@@ -2235,6 +2346,7 @@
     ]
   },
   "usedTemplates": {
+    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "gnosisSafeModules/DeputyGuardianModule": "0xd3930cda89001876a722ed430ea8ed07e4823c83ed910e621744eccab9becba1",
     "gnosisSafeModules/LivenessModule": "0x93a18dea68cf1d0abddfc33adec077c82356344dd7b49ae5542b16ca9319bb91",
@@ -2248,8 +2360,6 @@
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
     "opstack/MIPS": "0x2c304ef99a23cb31331231c111188b04a54bacddeaac088b13abd2c81ff74217",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
-    "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837"
-  },
-  "shapeFilesHash": "0x20008bc81f1885d080a8d46533555615bc98f9cf9a1b781eeb3f1ff8eeeca94f"
+  }
 }

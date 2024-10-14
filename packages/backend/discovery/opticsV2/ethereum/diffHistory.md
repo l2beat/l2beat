@@ -1,3 +1,117 @@
+Generated with discovered.json: 0xde7d1bae80ba58c11f5c8aae53adfb8a8ae78618
+
+# Diff at Mon, 14 Oct 2024 10:53:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20878317
+- current block number: 20878317
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20878317 (main branch discovery), not current.
+
+```diff
+    contract HomeUpgradeBeacon (0x101a39eA1143cb252fc8093847399046fc35Db89) {
+    +++ description: None
+      sourceHashes:
++        ["0x22841c972728a5327e28da1a887ae68b6db4dc5f1d658e516abcba1a265b21d8"]
+    }
+```
+
+```diff
+    contract ReplicaBeaconProxy (0x27658c5556A9a57f96E69Bbf6d3B8016f001a785) {
+    +++ description: None
+      sourceHashes:
++        ["0xbe5d364ff65b55d089681036cc772258083d96100d71309b7cd76d6f69ced388","0x3fa6a34a243dd0723157d70d7d21fc377ce2b0f38dea55d089556c264972063f"]
+    }
+```
+
+```diff
+    contract RecoveryManager (0x2bB2a5A724170357cb691841F40d26A950d8C33D) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract GovernanceUpgradeBeacon (0x4d89F34dB307015F8002F97c1d100d84e3AFb76c) {
+    +++ description: None
+      sourceHashes:
++        ["0x22841c972728a5327e28da1a887ae68b6db4dc5f1d658e516abcba1a265b21d8"]
+    }
+```
+
+```diff
+    contract UpgradeBeaconController (0x4F50a7081792063693F46A6402390b9647562457) {
+    +++ description: None
+      sourceHashes:
++        ["0x12e387edec9bf90c8c2ee351a4b607488ae3e01f861eb7dabbf3e4fdd078ad48"]
+    }
+```
+
+```diff
+    contract BridgeRouterBeaconProxy (0x4fc16De11deAc71E8b2Db539d82d93BE4b486892) {
+    +++ description: None
+      sourceHashes:
++        ["0xbe5d364ff65b55d089681036cc772258083d96100d71309b7cd76d6f69ced388","0x5bd24b5259f733f1cb0c93cd38718fd109ef8701385499565ac77523dac5dfd7"]
+    }
+```
+
+```diff
+    contract UpdaterManager (0x81B97dfBB743c343983e9bE7B863dB636DbD7373) {
+    +++ description: None
+      sourceHashes:
++        ["0x4ac3e27d1d1ef6c9a05335874ae7286f305ae29a71c239cd1095617d01efbaf0"]
+    }
+```
+
+```diff
+    contract XAppConnectionManager (0x8A926cE79f83A5A4C234BeE93feAFCC85b1E40cD) {
+    +++ description: None
+      sourceHashes:
++        ["0xb64e5af8c508ce86c29728805a64c3b45bf37a0a28c4ea602902a3e23de80dfd"]
+    }
+```
+
+```diff
+    contract ReplicaUpgradeBeacon (0xA734EDE8229970776e1B68085D579b6b6E97dAd4) {
+    +++ description: None
+      sourceHashes:
++        ["0x22841c972728a5327e28da1a887ae68b6db4dc5f1d658e516abcba1a265b21d8"]
+    }
+```
+
+```diff
+    contract HomeBeaconProxy (0xa73a3a74C7044B5411bD61E1990618A1400DA379) {
+    +++ description: None
+      sourceHashes:
++        ["0xbe5d364ff65b55d089681036cc772258083d96100d71309b7cd76d6f69ced388","0xd4e593cba02e81da0882f30e09e38c2015c6f635b3911e27d19b579b1b92eba5"]
+    }
+```
+
+```diff
+    contract BridgeUpgradeBeacon (0xB6bB41B1fb8c381b002C405B8abB5D1De0C0abFE) {
+    +++ description: None
+      sourceHashes:
++        ["0x22841c972728a5327e28da1a887ae68b6db4dc5f1d658e516abcba1a265b21d8"]
+    }
+```
+
+```diff
+    contract GovernanceRouterBeaconProxy (0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94) {
+    +++ description: None
+      sourceHashes:
++        ["0xbe5d364ff65b55d089681036cc772258083d96100d71309b7cd76d6f69ced388","0xfe51330f918cf664ca579984982dbeeab54d9a2461dcd1938ff2d46b9c77b306"]
+    }
+```
+
 Generated with discovered.json: 0xec58ac97c0167d5fe9923d5d2baff04c7e4ac2b8
 
 # Diff at Tue, 01 Oct 2024 10:53:38 GMT:

@@ -2,11 +2,14 @@
   "name": "mantle",
   "chain": "ethereum",
   "blockNumber": 20928041,
-  "configHash": "0xe69595e10e9c6c872cfbaea4fa36444ddd6708cd7f6b5f3f841856368f1a44bf",
+  "configHash": "0xa39508c1a37137b5d253b3c944b145c30702c339856e3d0ed998e50dfe9ff9d7",
   "contracts": [
     {
       "name": "PauserRegistry",
       "address": "0x075a48633dc6845f92339741E9c96b88f1b2A86f",
+      "sourceHashes": [
+        "0x8fa8f20d7c33aea934963671e5ac4fc1d3b586d40deb93cc4768d4a6ef323662"
+      ],
       "sinceTimestamp": 1687930847,
       "values": {
         "$immutable": true,
@@ -18,7 +21,10 @@
     {
       "name": "MantleTokenProxyAdmin",
       "address": "0x0cac2B1a172ac24012621101634DD5ABD6399ADd",
-      "template": "opstack/ProxyAdmin",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
+      ],
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -35,6 +41,10 @@
     {
       "name": "BLSRegistry",
       "address": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
+      "sourceHashes": [
+        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
+        "0x25c9049ce3c6e3d0fb455a5ceecf01cc2d9a92f415e869786ef2f2221e85b803"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum."
@@ -98,6 +108,10 @@
     {
       "name": "InvestmentManager",
       "address": "0x23754725a49c0f003C349A6C7869fF8609a7CEfd",
+      "sourceHashes": [
+        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
+        "0x943049d488a42420a15934ca27ae2fc159c395727536ee64c38afdde4215c561"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "Contract managing different investment strategies, forked from EigenLayer StrategyManager."
@@ -143,7 +157,10 @@
     {
       "name": "ProxyAdmin",
       "address": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
-      "template": "opstack/ProxyAdmin",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
+      ],
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -176,6 +193,10 @@
       "name": "MantleEngineeringMultisig",
       "address": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "roles": ["Challenger", "Guardian"],
       "ignoreInWatchMode": ["nonce"],
@@ -206,6 +227,10 @@
       "name": "L2OutputOracle",
       "address": "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
       "template": "opstack/L2OutputOracle",
+      "sourceHashes": [
+        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
+        "0x45368d302fba850124115aa8ee67238f47d47d89c2b1b8c5dfd39818369e6cea"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
@@ -257,6 +282,10 @@
     {
       "name": "L1MantleToken",
       "address": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
+      "sourceHashes": [
+        "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
+        "0x13e07c3c64aef03cfd7f5c01b2b1b443fd1dfb19c4128447fe316bb5fcd128cd"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT."
@@ -303,6 +332,10 @@
       "name": "SystemConfig",
       "address": "0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
       "template": "opstack/SystemConfig",
+      "sourceHashes": [
+        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
+        "0xb2a3bda11c08328ecb46ec5789f3264be5d816bc218a5024a4cafd1c59017160"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
@@ -371,7 +404,10 @@
     {
       "name": "ProxyAdmin",
       "address": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
-      "template": "opstack/ProxyAdmin",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
+      ],
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -403,6 +439,9 @@
     {
       "name": "PauserRegistry2",
       "address": "0x4ca725D446EcE6e3fFd3E072A6f2A6a16Ca492D0",
+      "sourceHashes": [
+        "0x8fa8f20d7c33aea934963671e5ac4fc1d3b586d40deb93cc4768d4a6ef323662"
+      ],
       "sinceTimestamp": 1687931903,
       "values": {
         "$immutable": true,
@@ -415,6 +454,10 @@
       "name": "MantleSecurityMultisig",
       "address": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
@@ -560,6 +603,10 @@
     {
       "name": "EigenDataLayerChain",
       "address": "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A",
+      "sourceHashes": [
+        "0x63677738b5ca073872cd350783b51e6dcd4bf6469f02eadf4cead9aef171c781",
+        "0x5333d2d13f53d445ff99fbe5845e2658fbafd68944683fb56a2644d76e5a4f36"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -605,6 +652,10 @@
     {
       "name": "DataLayrServiceManager",
       "address": "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
+      "sourceHashes": [
+        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
+        "0xf52658c0dbe857c858ac93c9c3dad449fff36d7e6454b67ac61a5bf3dcecca30"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "This contract is the main entry point for data availability. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures."
@@ -678,6 +729,10 @@
       "name": "L1CrossDomainMessenger",
       "address": "0x676A795fe6E43C17c668de16730c3F690FEB7120",
       "template": "opstack/L1CrossDomainMessenger",
+      "sourceHashes": [
+        "0x6e4b297b822bdda2bb8bbf4dde360ee51379af5a0de55c0d726a2d7b68791bf7",
+        "0x430d270834512dafe98bf268d6912f12a10c5a6287e7463830a22e4616dd63a0"
+      ],
       "proxyType": "resolved delegate proxy",
       "descriptions": [
         "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
@@ -726,6 +781,9 @@
       "name": "Lib_AddressManager",
       "address": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
       "template": "opstack/AddressManager",
+      "sourceHashes": [
+        "0x763c5728a19538783edf38c17731f9cf79ff6f38bfa4bce61333cef0aac5452e"
+      ],
       "displayName": "AddressManager",
       "descriptions": [
         "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
@@ -753,6 +811,10 @@
       "name": "GnosisSafe",
       "address": "0x7735cDcc85E63A7684C29652DbE8B845e0b4635A",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1684377983,
@@ -775,6 +837,10 @@
     {
       "name": "PubkeyCompendium",
       "address": "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a",
+      "sourceHashes": [
+        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
+        "0x8ae883de7991fc1ec2291f58deabd148cec4b61384f2eafa6c703304b9a2c757"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -812,6 +878,10 @@
       "name": "L1StandardBridge",
       "address": "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
       "template": "opstack/L1StandardBridge",
+      "sourceHashes": [
+        "0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd",
+        "0x1cd5cb2fa146b2a5dfb07279a52cd93855b268115912df60292b18394cc532e8"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
@@ -846,6 +916,10 @@
     {
       "name": "MantleSecondStrat",
       "address": "0xA937660031787C4408587D2c6A67Ec4B260630F5",
+      "sourceHashes": [
+        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
+        "0x20018f70ed5942c8b643f26e7f19c6d30f27dead8e6eb6f1127d87a2f2a04589"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": ["Basic do-nothing investment strategy."],
       "issuedPermissions": [
@@ -885,6 +959,10 @@
     {
       "name": "RegistryPermission",
       "address": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
+      "sourceHashes": [
+        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
+        "0xc65400995a550bff2a6272beee2e54f8cf8f9369406fe8531bd5d39add1635b7"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -939,6 +1017,10 @@
       "name": "OptimismPortal",
       "address": "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb",
       "template": "opstack/OptimismPortal",
+      "sourceHashes": [
+        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
+        "0x3a064711ad01291b3644b5f657fd8317cd07f19222c9f216e25557d4d69ea295"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
@@ -984,6 +1066,10 @@
     {
       "name": "DataLayrChallenge",
       "address": "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94",
+      "sourceHashes": [
+        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
+        "0xe8b1ba037124dea50d3eec5112ed3b8507e29739b723810a9f6f00976b9e2d08"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -1021,7 +1107,10 @@
     {
       "name": "ProxyAdmin",
       "address": "0xca35F8338054739D138884685e08b39EE2217794",
-      "template": "opstack/ProxyAdmin",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
+      ],
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
@@ -1057,6 +1146,10 @@
     {
       "name": "MantleFirstStrat",
       "address": "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1",
+      "sourceHashes": [
+        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
+        "0x20018f70ed5942c8b643f26e7f19c6d30f27dead8e6eb6f1127d87a2f2a04589"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": ["Basic do-nothing investment strategy."],
       "issuedPermissions": [
@@ -1096,6 +1189,10 @@
     {
       "name": "DataLayrChallengeUtils",
       "address": "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D",
+      "sourceHashes": [
+        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
+        "0x9dc36b80e92cea40c02d3b9d2684d85d4141dcab44cf882b91cf3148476432ee"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -1136,6 +1233,10 @@
     {
       "name": "Delegation",
       "address": "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
+      "sourceHashes": [
+        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
+        "0xa961eebaaac6cb33d38501294b0f98165b96d04af2f99311bd99b282798990be"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -2108,14 +2209,13 @@
     ]
   },
   "usedTemplates": {
+    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
     "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
     "opstack/OptimismPortal": "0x2a32f6874a8c0e85e685fa944143e7968d675fed43b46e7385411ad11f8a1a43",
-    "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
-  },
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+  }
 }
