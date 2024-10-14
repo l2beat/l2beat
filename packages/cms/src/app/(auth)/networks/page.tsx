@@ -18,7 +18,9 @@ export default async function Page({
 }: {
   searchParams: Record<string, string | string[] | undefined>
 }) {
-  const allNetworks = await db.network.getAll()
+  const allNetworks = (await db.network.getAll()).sort((a, b) =>
+    a.name.localeCompare(b.name),
+  )
   const count = allNetworks.length
   const pagination = getServerPagination({
     count,
@@ -75,7 +77,7 @@ export default async function Page({
                     <TableCell className="text-right">
                       <Link href={`/networks/${network.id}`} key={network.id}>
                         <Button variant="ghost" size="icon">
-                          <ChevronRight className="w-4 h-4" />
+                          <ChevronRight className="size-4" />
                         </Button>
                       </Link>
                     </TableCell>
