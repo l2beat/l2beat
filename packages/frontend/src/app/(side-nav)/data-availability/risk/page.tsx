@@ -1,4 +1,5 @@
 import { MainPageCard } from '~/components/main-page-card'
+import { MainPageHeader } from '~/components/main-page-header'
 import {
   type DaRiskEntry,
   getDaRiskEntries,
@@ -21,9 +22,7 @@ export default async function Page() {
 
   return (
     <div>
-      <h1 className="my-5 ml-6 text-3xl font-bold max-lg:hidden">
-        Risk Analysis
-      </h1>
+      <MainPageHeader>Risk Analysis</MainPageHeader>
       <div className="flex flex-col gap-6">
         <MainPageCard className="flex flex-col gap-4">
           <h2 className="text-xl font-bold">Public blockchains</h2>
