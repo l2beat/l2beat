@@ -10,17 +10,21 @@ interface HttpClient2Options {
   logger?: Logger
 }
 
+const DEFAULT_HTTP_RETRY_STRATEGY = {
+  timeoutMs: 10_000,
+  initialRetryDelayMs: 1000,
+  maxRetries: 5, // 1 2 4 8 16 = 31s
+  maxRetryDelayMs: Infinity,
+  statusCodesToRetry: [408, 429, 500, 502, 503, 504],
+}
+
 export class HttpClient2 {
   private readonly $: Required<HttpClient2Options>
 
   constructor($: HttpClient2Options = {}) {
     this.$ = {
-      timeoutMs: 10_000,
-      maxRetries: 10,
-      initialRetryDelayMs: 1000,
-      maxRetryDelayMs: 30000,
-      statusCodesToRetry: [408, 429, 500, 502, 503, 504],
       logger: Logger.SILENT,
+      ...DEFAULT_HTTP_RETRY_STRATEGY,
       ...$,
     }
     this.$.logger = this.$.logger.for(this)
