@@ -48,7 +48,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
 
   return (
     <CommandDialog open={open} onOpenChange={setOpen}>
-      <Command shouldFilter={false}>
+      <Command shouldFilter={false} sidebar>
         <CommandInput
           placeholder="Search for projects"
           value={value}
