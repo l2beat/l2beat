@@ -1,8 +1,4 @@
-import {
-  assert,
-  AmountConfigEntry,
-  AssetId,
-} from '@l2beat/shared-pure'
+import { assert, AmountConfigEntry, AssetId } from '@l2beat/shared-pure'
 import { BackendProject, BackendProjectEscrow } from '../../../backend'
 import { chains } from '../../../chains'
 import { ethereum } from '../../../chains/ethereum'
@@ -66,9 +62,7 @@ export function aggLayerEscrowToEntries(
   return entries
 }
 
-function getChain(
-  project: BackendProject,
-): ChainConfig {
+function getChain(project: BackendProject): ChainConfig {
   const chain = chains.find((x) => x.name === project.projectId)
   assert(chain, `Chain not found for project ${project.projectId}`)
   return chain
