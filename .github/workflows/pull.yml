@@ -3,4 +3,4 @@ rules:
   - base: main
     upstream: l2beat:main  # change `wei` to the owner of upstream repo
     mergeMethod: merge
-label: "automerge"
+label: automerge
