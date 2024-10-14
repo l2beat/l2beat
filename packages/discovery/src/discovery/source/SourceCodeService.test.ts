@@ -24,7 +24,7 @@ describe(SourceCodeService.name, () => {
     isVerified: true,
     solidityVersion: '0.8.0',
     constructorArguments: '',
-    files: {},
+    files: { 'root.sol': 'contract Bar {}' },
     remappings: [],
   }
 
@@ -35,7 +35,7 @@ describe(SourceCodeService.name, () => {
     isVerified: true,
     solidityVersion: '0.8.0',
     constructorArguments: '',
-    files: {},
+    files: { 'root.sol': 'contract Baz {}' },
     remappings: [],
   }
 
@@ -55,7 +55,7 @@ describe(SourceCodeService.name, () => {
       name: 'Foo',
       sources: [
         {
-          hash: Hash256.random(),
+          hash: undefined,
           name: 'Foo',
           address: FOO_ADDRESS,
           source: FOO_METADATA,
@@ -82,7 +82,9 @@ describe(SourceCodeService.name, () => {
       name: 'Bar',
       sources: [
         {
-          hash: Hash256.random(),
+          hash: Hash256(
+            '0xec81a410d9701878fa4bffb9afa6a6602c33e540e61ea2442a7f72a2795c01c2',
+          ),
           name: 'Bar',
           address: BAR_ADDRESS,
           source: BAR_METADATA,
@@ -112,13 +114,17 @@ describe(SourceCodeService.name, () => {
       name: 'Baz',
       sources: [
         {
-          hash: Hash256.random(),
+          hash: Hash256(
+            '0xec81a410d9701878fa4bffb9afa6a6602c33e540e61ea2442a7f72a2795c01c2',
+          ),
           name: 'Bar',
           address: BAR_ADDRESS,
           source: BAR_METADATA,
         },
         {
-          hash: Hash256.random(),
+          hash: Hash256(
+            '0x4aedd5d0f7a147c734bad2257077654a842ef3840e9641be8859e2bcc707fb3d',
+          ),
           name: 'Baz',
           address: BAZ_ADDRESS,
           source: BAZ_METADATA,
@@ -147,13 +153,15 @@ describe(SourceCodeService.name, () => {
       name: 'Foo',
       sources: [
         {
-          hash: Hash256.random(),
+          hash: Hash256(
+            '0xec81a410d9701878fa4bffb9afa6a6602c33e540e61ea2442a7f72a2795c01c2',
+          ),
           name: 'Bar',
           address: BAR_ADDRESS,
           source: BAR_METADATA,
         },
         {
-          hash: Hash256.random(),
+          hash: undefined,
           name: 'Foo',
           address: FOO_ADDRESS,
           source: FOO_METADATA,
