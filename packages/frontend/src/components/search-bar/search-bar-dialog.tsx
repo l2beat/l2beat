@@ -55,7 +55,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
               )
             })
             .slice(0, 15),
-    [value],
+    [value, allProjects, recentlyAdded],
   )
 
   const onEscapeKeyDown = (e: KeyboardEvent) => {
