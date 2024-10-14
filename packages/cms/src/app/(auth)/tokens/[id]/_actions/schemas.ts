@@ -4,11 +4,20 @@ export const insertTokenSchema = z.object({
   networkId: z.string().length(21),
   address: z.string().length(42),
   relations: z.array(
-    z.object({
-      sourceTokenId: z.string().length(21),
-      targetTokenId: z.string().length(21),
-      externalBridgeId: z.string().length(21).nullable(),
-    }),
+    z
+      .object({
+        externalBridgeId: z.string().length(21).nullable(),
+      })
+      .and(
+        z.union([
+          z.object({
+            sourceTokenId: z.string().length(21),
+          }),
+          z.object({
+            targetTokenId: z.string().length(21),
+          }),
+        ]),
+      ),
   ),
   customMeta: z
     .object({

@@ -4,7 +4,6 @@ import {
   type TokenBridgeRecord,
   type TokenRecord,
   type TokenMetaRecord,
-  NetworkRecord,
 } from '@l2beat/database'
 import { ChevronLeft, Trash2 } from 'lucide-react'
 import { useForm, useFieldArray } from 'react-hook-form'
@@ -56,9 +55,14 @@ import Link from 'next/link'
 const tokenFormSchema = z.object({
   networkId: z.string().length(21),
   address: z.string().length(42),
-  relations: z.array(
+  backedBy: z.array(
     z.object({
       sourceTokenId: z.string().length(21),
+      externalBridgeId: z.string().length(21).or(z.literal('')),
+    }),
+  ),
+  backing: z.array(
+    z.object({
       targetTokenId: z.string().length(21),
       externalBridgeId: z.string().length(21).or(z.literal('')),
     }),
@@ -76,9 +80,13 @@ const tokenFormSchema = z.object({
 
 export function EditTokenPage({
   token,
+  tokens,
+  bridges,
   networks,
 }: {
   networks: { id: string; name: string }[]
+  bridges: { id: string; name: string }[]
+  tokens: { tokenId: string; name: string | null }[]
   token:
     | (TokenRecord & {
         relations: TokenBridgeRecord[]
@@ -87,12 +95,15 @@ export function EditTokenPage({
     | null
 }) {
   const router = useRouter()
-  const aggregatedMeta = useMemo(
-    () => token?.meta.filter((m) => m.source === 'Aggregate'),
-    [token?.meta],
-  )
-  const metaOverrides = useMemo(
-    () => token?.meta.find((m) => m.source === 'Manual'),
+  const tokenMeta = useMemo(
+    () =>
+      token?.meta && {
+        aggregate: token.meta.filter((m) => m.source === 'Aggregate'),
+        manual: token.meta.find((m) => m.source === 'Manual'),
+        rest: token.meta.filter(
+          (m) => m.source !== 'Aggregate' && m.source !== 'Manual',
+        ),
+      },
     [token?.meta],
   )
 
@@ -100,17 +111,26 @@ export function EditTokenPage({
     defaultValues: {
       networkId: token?.networkId ?? '',
       address: token?.address ?? '',
-      relations:
-        token?.relations.map((r) => ({
-          ...r,
-          externalBridgeId: r.externalBridgeId ?? '',
-        })) ?? [],
+      backedBy:
+        token?.relations
+          .filter((r) => r.sourceTokenId !== token.id)
+          .map((r) => ({
+            sourceTokenId: r.sourceTokenId,
+            externalBridgeId: r.externalBridgeId ?? '',
+          })) ?? [],
+      backing:
+        token?.relations
+          .filter((r) => r.targetTokenId !== token.id)
+          .map((r) => ({
+            targetTokenId: r.targetTokenId,
+            externalBridgeId: r.externalBridgeId ?? '',
+          })) ?? [],
       customMeta: {
-        name: metaOverrides?.name ?? '',
-        symbol: metaOverrides?.symbol ?? '',
-        decimals: metaOverrides?.decimals?.toString() ?? '',
-        logoUrl: metaOverrides?.logoUrl ?? '',
-        contractName: metaOverrides?.contractName ?? '',
+        name: tokenMeta?.manual?.name ?? '',
+        symbol: tokenMeta?.manual?.symbol ?? '',
+        decimals: tokenMeta?.manual?.decimals?.toString() ?? '',
+        logoUrl: tokenMeta?.manual?.logoUrl ?? '',
+        contractName: tokenMeta?.manual?.contractName ?? '',
       },
     },
     resolver: zodResolver(tokenFormSchema),
@@ -118,9 +138,14 @@ export function EditTokenPage({
   const [discardDialogOpen, setDiscardDialogOpen] = useState(false)
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
 
-  const relations = useFieldArray({
+  const backedBy = useFieldArray({
     control: form.control,
-    name: 'relations',
+    name: 'backedBy',
+  })
+
+  const backing = useFieldArray({
+    control: form.control,
+    name: 'backing',
   })
 
   const onSubmit = useCallback(
@@ -128,11 +153,6 @@ export function EditTokenPage({
       const data = {
         networkId: rawData.networkId,
         address: rawData.address,
-        relations: rawData.relations.filter((r) => ({
-          ...r,
-          externalBridgeId:
-            r.externalBridgeId === '' ? null : r.externalBridgeId,
-        })),
         customMeta:
           rawData.customMeta &&
           Object.values(rawData.customMeta).some((value) => value !== '')
@@ -159,6 +179,16 @@ export function EditTokenPage({
                     : null,
               }
             : null,
+        relations: [
+          ...rawData.backedBy.map((r) => ({
+            targetTokenId: r.sourceTokenId,
+            externalBridgeId: r.externalBridgeId,
+          })),
+          ...rawData.backing.map((r) => ({
+            sourceTokenId: r.targetTokenId,
+            externalBridgeId: r.externalBridgeId,
+          })),
+        ],
       }
       const result = token
         ? await updateToken({ ...data, id: token.id })
@@ -292,15 +322,40 @@ export function EditTokenPage({
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {token?.meta.map((meta) => (
+                  {[
+                    ...(tokenMeta?.aggregate ?? []),
+                    ...(tokenMeta?.rest ?? []),
+                  ].map((meta) => (
                     <TableRow key={meta.source}>
-                      <TableCell>{meta.source}</TableCell>
+                      <TableCell
+                        className={
+                          meta.source === 'Aggregate' ? 'font-bold' : ''
+                        }
+                      >
+                        {meta.source}
+                      </TableCell>
                       <TableCell>{meta.externalId}</TableCell>
-                      <TableCell>{meta.name}</TableCell>
-                      <TableCell>{meta.symbol}</TableCell>
-                      <TableCell>{meta.decimals}</TableCell>
-                      <TableCell>{meta.logoUrl}</TableCell>
-                      <TableCell>{meta.contractName}</TableCell>
+                      <TableCell
+                        className={
+                          meta.source === 'Aggregate' ? 'font-bold' : ''
+                        }
+                      >
+                        {meta.name}
+                      </TableCell>
+                      <TableCell
+                        className={
+                          meta.source === 'Aggregate' ? 'font-bold' : ''
+                        }
+                      >
+                        {meta.symbol}
+                      </TableCell>
+                      <TableCell
+                        className={
+                          meta.source === 'Aggregate' ? 'font-bold' : ''
+                        }
+                      >
+                        {meta.decimals}
+                      </TableCell>
                     </TableRow>
                   ))}
                   <TableRow>
@@ -382,38 +437,106 @@ export function EditTokenPage({
           </Card>
           <Card>
             <CardHeader>
-              <CardTitle>Relations</CardTitle>
-              <CardDescription>The relations of this token.</CardDescription>
+              <CardTitle>Backed by</CardTitle>
+              <CardDescription>
+                Shows which tokens this token is backed by.
+              </CardDescription>
             </CardHeader>
             <CardContent>
-              {relations.fields.length === 0 ? (
+              {backedBy.fields.length === 0 ? (
                 <p className="text-sm text-muted-foreground">
-                  No relations yet.
+                  This token is not backed by any other token.
                 </p>
               ) : (
                 <Table>
                   <TableHeader>
-                    <TableHead>Source</TableHead>
-                    <TableHead>Target</TableHead>
+                    <TableHead>Token</TableHead>
                     <TableHead>Bridge</TableHead>
+                    <TableHead className="w-0" />
                   </TableHeader>
                   <TableBody>
-                    {relations.fields.map((field) => (
+                    {backedBy.fields.map((field, index) => (
                       <TableRow key={field.id}>
                         <TableCell>
-                          <Link href={`/tokens/${field.sourceTokenId}`}>
-                            {field.sourceTokenId}
-                          </Link>
+                          <FormField
+                            control={form.control}
+                            name={`backedBy.${index}.sourceTokenId`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormControl>
+                                  <Select
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
+                                  >
+                                    <SelectTrigger>
+                                      <SelectValue placeholder="Select a token" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      {tokens.slice(0, 10).map((token) => (
+                                        <SelectItem
+                                          key={token.tokenId}
+                                          value={token.tokenId}
+                                        >
+                                          {token.name ?? 'Unknown'}{' '}
+                                          <span className="text-xs text-muted-foreground">
+                                            ({token.tokenId})
+                                          </span>
+                                        </SelectItem>
+                                      ))}
+                                    </SelectContent>
+                                  </Select>
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
                         </TableCell>
                         <TableCell>
-                          <Link href={`/tokens/${field.targetTokenId}`}>
-                            {field.targetTokenId}
-                          </Link>
+                          <FormField
+                            control={form.control}
+                            name={`backedBy.${index}.externalBridgeId`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormControl>
+                                  <Select
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
+                                  >
+                                    <SelectTrigger>
+                                      <SelectValue placeholder="Select a bridge" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      {bridges
+                                        .sort((a, b) =>
+                                          a.name.localeCompare(b.name),
+                                        )
+                                        .map((bridge) => (
+                                          <SelectItem
+                                            key={bridge.id}
+                                            value={bridge.id}
+                                          >
+                                            {bridge.name}{' '}
+                                            <span className="text-xs text-muted-foreground">
+                                              ({bridge.id})
+                                            </span>
+                                          </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                  </Select>
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
                         </TableCell>
                         <TableCell>
-                          <Link href={`/bridges/${field.externalBridgeId}`}>
-                            {field.externalBridgeId}
-                          </Link>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => backedBy.remove(index)}
+                          >
+                            <Trash2 className="size-4" />
+                          </Button>
                         </TableCell>
                       </TableRow>
                     ))}
@@ -421,6 +544,136 @@ export function EditTokenPage({
                 </Table>
               )}
             </CardContent>
+            <CardFooter className="flex justify-end">
+              <Button
+                type="button"
+                onClick={() =>
+                  backedBy.append({ sourceTokenId: '', externalBridgeId: '' })
+                }
+              >
+                Add
+              </Button>
+            </CardFooter>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Backing</CardTitle>
+              <CardDescription>
+                Shows which tokens is this token backing.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {backing.fields.length === 0 ? (
+                <p className="text-sm text-muted-foreground">
+                  This token is not backing any other token.
+                </p>
+              ) : (
+                <Table>
+                  <TableHeader>
+                    <TableHead>Token</TableHead>
+                    <TableHead>Bridge</TableHead>
+                    <TableHead className="w-0" />
+                  </TableHeader>
+                  <TableBody>
+                    {backing.fields.map((field, index) => (
+                      <TableRow key={field.id}>
+                        <TableCell>
+                          <FormField
+                            control={form.control}
+                            name={`backedBy.${index}.sourceTokenId`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormControl>
+                                  <Select
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
+                                  >
+                                    <SelectTrigger>
+                                      <SelectValue placeholder="Select a token" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      {tokens.slice(0, 10).map((token) => (
+                                        <SelectItem
+                                          key={token.tokenId}
+                                          value={token.tokenId}
+                                        >
+                                          {token.name ?? 'Unknown'}{' '}
+                                          <span className="text-xs text-muted-foreground">
+                                            ({token.tokenId})
+                                          </span>
+                                        </SelectItem>
+                                      ))}
+                                    </SelectContent>
+                                  </Select>
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <FormField
+                            control={form.control}
+                            name={`backedBy.${index}.externalBridgeId`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormControl>
+                                  <Select
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
+                                  >
+                                    <SelectTrigger>
+                                      <SelectValue placeholder="Select a bridge" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      {bridges
+                                        .sort((a, b) =>
+                                          a.name.localeCompare(b.name),
+                                        )
+                                        .map((bridge) => (
+                                          <SelectItem
+                                            key={bridge.id}
+                                            value={bridge.id}
+                                          >
+                                            {bridge.name}{' '}
+                                            <span className="text-xs text-muted-foreground">
+                                              ({bridge.id})
+                                            </span>
+                                          </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                  </Select>
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => backing.remove(index)}
+                          >
+                            <Trash2 className="size-4" />
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              )}
+            </CardContent>
+            <CardFooter className="flex justify-end">
+              <Button
+                type="button"
+                onClick={() =>
+                  backing.append({ targetTokenId: '', externalBridgeId: '' })
+                }
+              >
+                Add
+              </Button>
+            </CardFooter>
           </Card>
           {token && (
             <div className="flex flex-row gap-4">

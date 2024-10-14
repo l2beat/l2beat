@@ -15,6 +15,17 @@ export class TokenBridgeRepository extends BaseRepository {
     return rows
   }
 
+  async getByTargetTokenIds(
+    targetTokenIds: string[],
+  ): Promise<TokenBridgeRecord[]> {
+    const rows = await this.db
+      .selectFrom('TokenBridge')
+      .select(selectTokenBridge)
+      .where('targetTokenId', 'in', targetTokenIds)
+      .execute()
+    return rows
+  }
+
   async getByTokenId(tokenId: string): Promise<TokenBridgeRecord[]> {
     const rows = await this.db
       .selectFrom('TokenBridge')

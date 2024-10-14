@@ -19,8 +19,23 @@ export default async function Page({
 }: {
   searchParams: Record<string, string | string[] | undefined>
 }) {
+  const networks = await db.network.getAll()
   // TODO: proper pagination support in repository
-  const allTokens = await db.token.getAll()
+  const tokenMeta = (await db.tokenMeta.getBySource('Aggregate')).reduce(
+    (acc, meta) => {
+      acc[meta.tokenId] = meta
+      return acc
+    },
+    {} as Record<string, TokenMetaRecord>,
+  )
+  const allTokens = (await db.token.getAll()).sort((a, b) => {
+    const aMeta = tokenMeta[a.id]
+    const bMeta = tokenMeta[b.id]
+    if (!aMeta?.name && !bMeta?.name) return 0
+    if (!aMeta?.name) return 1
+    if (!bMeta?.name) return -1
+    return aMeta.name.localeCompare(bMeta.name)
+  })
   const count = allTokens.length
   const pagination = getServerPagination({
     count,
@@ -29,13 +44,6 @@ export default async function Page({
   const tokens = allTokens.slice(
     pagination.skip,
     pagination.skip + pagination.take,
-  )
-  const tokenMeta = (await db.tokenMeta.getBySource('Aggregate')).reduce(
-    (acc, meta) => {
-      acc[meta.tokenId] = meta
-      return acc
-    },
-    {} as Record<string, TokenMetaRecord>,
   )
 
   return (
@@ -63,11 +71,10 @@ export default async function Page({
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>ID</TableHead>
-                <TableHead>Network ID</TableHead>
-                <TableHead>Address</TableHead>
                 <TableHead>Name</TableHead>
-                <TableHead className="w-full">Symbol</TableHead>
+                <TableHead>Symbol</TableHead>
+                <TableHead className="w-full">Network</TableHead>
+                <TableHead>Address</TableHead>
                 <TableHead />
               </TableRow>
             </TableHeader>
@@ -76,17 +83,17 @@ export default async function Page({
                 .sort((a, b) => a.address.localeCompare(b.address))
                 .map((token) => (
                   <TableRow key={token.id}>
-                    <TableCell className="font-mono">{token.id}</TableCell>
-                    <TableCell className="font-mono">
-                      {token.networkId}
-                    </TableCell>
-                    <TableCell className="font-mono">{token.address}</TableCell>
                     <TableCell className="whitespace-nowrap">
                       {tokenMeta[token.id]?.name ?? 'Unknown'}
                     </TableCell>
                     <TableCell>
                       {tokenMeta[token.id]?.symbol ?? 'Unknown'}
                     </TableCell>
+                    <TableCell>
+                      {networks.find((n) => n.id === token.networkId)?.name ??
+                        `Unknown ${token.networkId}`}
+                    </TableCell>
+                    <TableCell className="font-mono">{token.address}</TableCell>
                     <TableCell className="text-right">
                       <Link href={`/tokens/${token.id}`} key={token.id}>
                         <Button variant="ghost" size="icon">

@@ -55,6 +55,17 @@ export class TokenMetaRepository extends BaseRepository {
       .execute()
   }
 
+  async getBasicAggregatedMeta(): Promise<
+    { tokenId: string; name: string | null }[]
+  > {
+    return await this.db
+      .selectFrom('TokenMeta')
+      .select(['tokenId', 'name'])
+      .where('source', '=', 'Aggregate')
+      .orderBy('name', 'asc')
+      .execute()
+  }
+
   async upsert(record: UpsertableTokenMetaRecord): Promise<{ id: string }> {
     const row = upsertableToRow(record)
 
