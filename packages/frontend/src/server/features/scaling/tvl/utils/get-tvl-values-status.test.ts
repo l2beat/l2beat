@@ -83,7 +83,7 @@ function mockValue(source: string, timestamp: number) {
 }
 function mockProject(sources: string[]): TvlProject {
   return {
-    id: ProjectId('project'),
+    projectId: ProjectId('project'),
     minTimestamp: UnixTime.ZERO,
     type: 'layer2', // does not matter here
     slug: 'slug', // does not matter here

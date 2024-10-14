@@ -51,7 +51,7 @@ export type TvlChartData = Awaited<ReturnType<typeof getCachedTvlChartData>>
 export const getCachedTvlChartData = cache(
   async ({ range, excludeAssociatedTokens, filter }: TvlChartDataParams) => {
     const projectsFilter = createTvlProjectsFilter(filter)
-    const tvlProjects = getTvlProjects().filter(projectsFilter)
+    const tvlProjects = getTvlProjects(projectsFilter)
 
     const [ethPrices, values] = await Promise.all([
       getEthPrices(),

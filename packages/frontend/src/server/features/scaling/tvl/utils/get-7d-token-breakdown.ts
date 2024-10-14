@@ -6,7 +6,7 @@ import {
 } from 'next/cache'
 import { env } from '~/env'
 import { getTokenBreakdown } from './get-token-breakdown'
-import { type TvlProject, getTvlProjects } from './get-tvl-projects'
+import { type BaseProject, getTvlProjects } from './get-tvl-projects'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
 
 export function get7dTokenBreakdown(
@@ -24,11 +24,11 @@ export const getCached7dTokenBreakdown = cache(
   async ({ type }: { type: 'layer2' | 'bridge' }) => {
     const filter =
       type === 'layer2'
-        ? (project: TvlProject) =>
+        ? (project: BaseProject) =>
             project.type === 'layer2' || project.type === 'layer3'
-        : (project: TvlProject) => project.type === 'bridge'
+        : (project: BaseProject) => project.type === 'bridge'
 
-    const projectsToQuery = getTvlProjects().filter(filter)
+    const projectsToQuery = getTvlProjects(filter)
 
     const tvlValues = await getTvlValuesForProjects(projectsToQuery, '7d')
 

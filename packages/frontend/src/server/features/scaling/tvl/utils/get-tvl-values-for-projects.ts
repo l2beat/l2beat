@@ -20,13 +20,15 @@ export async function getTvlValuesForProjects(
   const from = days !== Infinity && target.add(-days, 'days')
 
   // NOTE: This cannot be optimized using from because the values need to be interpolated
-  const valueRecords = await db.value.getForProjects(projects.map((p) => p.id))
+  const valueRecords = await db.value.getForProjects(
+    projects.map((p) => p.projectId),
+  )
 
   const valuesByProject = groupBy(valueRecords, 'projectId')
 
   const result: Dictionary<Dictionary<ValueRecord[]>> = {}
   for (const [projectId, projectValues] of Object.entries(valuesByProject)) {
-    const project = projects.find((p) => p.id === projectId)
+    const project = projects.find((p) => p.projectId === projectId)
     assert(project, `Project ${projectId.toString()} not found`)
 
     const valuesByTimestamp = groupBy(projectValues, 'timestamp')

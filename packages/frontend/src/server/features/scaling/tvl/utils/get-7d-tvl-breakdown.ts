@@ -27,7 +27,7 @@ export type SevenDayTvlBreakdown = Awaited<
 const getCached7dTvlBreakdown = cache(
   async () => {
     const tvlValues = await getTvlValuesForProjects(
-      getTvlProjects().filter(
+      getTvlProjects(
         (project) => project.type === 'layer2' || project.type === 'layer3',
       ),
       '7d',

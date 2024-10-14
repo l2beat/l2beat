@@ -38,6 +38,11 @@ export function getTvlAmountsConfig(
     entries.push(configEntry)
   }
 
+  const chainMap: Record<number, ChainConfig> = {}
+  for (const chain of chains) {
+    chainMap[chain.chainId] = chain
+  }
+
   for (const project of projects) {
     for (const escrow of project.escrows) {
       switch (escrow.sharedEscrow?.type) {
@@ -127,6 +132,11 @@ export function getTvlAmountsConfigForProject(
     entries.push(configEntry)
   }
 
+  const chainMap: Record<number, ChainConfig> = {}
+  for (const chain of chains) {
+    chainMap[chain.chainId] = chain
+  }
+
   for (const escrow of project.escrows) {
     switch (escrow.sharedEscrow?.type) {
       case 'AggLayer': {
@@ -141,7 +151,7 @@ export function getTvlAmountsConfigForProject(
       }
       default: {
         for (const token of escrow.tokens) {
-          const chain = chains.find((x) => x.chainId === +token.chainId)
+          const chain = chainMap[+token.chainId]
           assert(chain, `Chain not found for token ${token.id}`)
           assert(
             chain.name === escrow.chain,
