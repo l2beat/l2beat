@@ -5,7 +5,7 @@ import { type ClassNameValue } from 'tailwind-merge'
 import { useEventCallback } from '~/hooks/use-event-callback'
 import { useEventListener } from '~/hooks/use-event-listener'
 import { cn } from '~/utils/cn'
-import { formatNumberWithCommas } from '~/utils/format-number'
+import { formatNumberWithCommas } from '~/utils/number-format/format-number'
 
 type BreakdownValue = {
   name: string

@@ -6,7 +6,7 @@ import {
 import { PercentChange } from '~/components/percent-change'
 import { InfoIcon } from '~/icons/info'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/format'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 
 type ValueWithChange = {
   value: number

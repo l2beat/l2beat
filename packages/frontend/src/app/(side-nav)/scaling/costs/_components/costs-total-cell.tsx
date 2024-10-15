@@ -2,7 +2,6 @@ import { type WarningWithSentiment } from '@l2beat/config'
 
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
-import { UpcomingBadge } from '~/components/badge/upcoming-badge'
 import { CostsBreakdown } from '~/components/breakdown/costs-breakdown'
 import { Callout } from '~/components/callout'
 import { Skeleton } from '~/components/core/skeleton'
@@ -32,8 +31,6 @@ export function CostsTotalCell({ data, warning }: CellProps) {
     switch (data.reason) {
       case 'loading':
         return <Skeleton className="h-8 w-full" />
-      case 'coming-soon':
-        return <UpcomingBadge />
       case 'no-data':
         return <NoDataBadge />
       case 'no-per-tx-metric':

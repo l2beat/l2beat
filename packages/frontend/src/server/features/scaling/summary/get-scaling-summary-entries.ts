@@ -45,7 +45,6 @@ export async function getScalingSummaryEntries() {
             associatedTokens: project.config.associatedTokens ?? [],
           })
         : undefined
-
     const common = {
       entryType: 'scaling' as const,
       ...getCommonScalingEntry({

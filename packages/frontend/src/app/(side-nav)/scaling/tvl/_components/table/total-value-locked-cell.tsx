@@ -11,7 +11,8 @@ import {
 import { PercentChange } from '~/components/percent-change'
 import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import { formatCurrency } from '~/utils/format'
+import { cn } from '~/utils/cn'
+import { formatTvlTableNumber } from '~/utils/number-format/format-tvl-number'
 
 export interface TotalValueLockedCellProps {
   breakdown: {
@@ -40,7 +41,7 @@ export function TotalValueLockedCell(data: TotalValueLockedCellProps) {
   return (
     <Tooltip>
       <TooltipTrigger>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-end">
           <div className="flex items-center gap-1">
             {tvlWarnings.length ? (
               <RoundedWarningIcon
@@ -48,8 +49,13 @@ export function TotalValueLockedCell(data: TotalValueLockedCellProps) {
                 sentiment={anyBadWarnings ? 'bad' : 'warning'}
               />
             ) : null}
-            <span className="text-base font-bold">
-              {formatCurrency(total, 'usd')}
+            <span
+              className={cn(
+                'text-base',
+                total !== 0 ? 'font-bold' : 'text-secondary',
+              )}
+            >
+              {formatTvlTableNumber(total)}
             </span>
             {data.change !== undefined && (
               <PercentChange

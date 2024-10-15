@@ -1,5 +1,3 @@
-import round from 'lodash/round'
-
 import { assert, type StringWithAutocomplete } from '@l2beat/shared-pure'
 import { formatNumber } from './format-number'
 
@@ -10,7 +8,7 @@ const currencyToSymbol: Record<string, string> = {
 
 interface FormatCurrencyOptions {
   decimals?: number
-  showLessThanMinimum?: boolean
+  formatFn?: (value: number, decimals: number) => string
 }
 
 export function formatCurrency(
@@ -21,17 +19,19 @@ export function formatCurrency(
   const symbol = currencyToSymbol[currency.toLowerCase()]
 
   const decimals = opts?.decimals ?? 2
-  const showLessThanMinimum = opts?.showLessThanMinimum ?? true
 
-  if (showLessThanMinimum) {
-    const minimum = round(Math.pow(10, -decimals), decimals)
-    if (value < minimum) {
-      return symbol ? `<${symbol}${minimum}` : `<${minimum} ${currency}`
+  const formatFn = opts?.formatFn ?? formatNumber
+  const num = formatFn(value, decimals)
+
+  if (symbol) {
+    if (num.startsWith('<') || num.startsWith('>')) {
+      return `${num.slice(0, 1)}${symbol}${num.slice(1)}`
     }
+
+    return `${symbol}${num}`
   }
 
-  const num = formatNumber(value, decimals)
-  return symbol ? `${symbol}${num}` : `${num} ${currency}`
+  return `${num} ${currency}`
 }
 
 export function formatCurrencyExactValue(value: number, currency: string) {

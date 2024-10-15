@@ -5,10 +5,16 @@ export function getPercentageChange(now: number, then: number) {
   return now / then - 1
 }
 
-export function formatPercent(value: number, addPlus = false) {
-  const result = (value * 100).toFixed(2) + '%'
-  if (addPlus && !result.startsWith('-')) {
-    return '+' + result
+export function formatPercent(value: number) {
+  if (value >= 10) {
+    return '>1K%'
   }
-  return result
+  if (value >= 1) {
+    return (value * 100).toFixed(0) + '%'
+  }
+  if (value >= 0.1) {
+    return (value * 100).toFixed(1) + '%'
+  }
+
+  return (value * 100).toFixed(2) + '%'
 }

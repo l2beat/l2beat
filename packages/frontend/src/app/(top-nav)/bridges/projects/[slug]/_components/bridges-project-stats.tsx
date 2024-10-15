@@ -15,7 +15,7 @@ import { InfoIcon } from '~/icons/info'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { type BridgesProjectEntry } from '~/server/features/bridges/project/get-bridges-project-entry'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/format'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 
 interface Props {
   project: BridgesProjectEntry
@@ -41,9 +41,6 @@ export function BridgesProjectStats({ project }: Props) {
                       {formatCurrency(
                         project.header.tvl.tvlBreakdown.total,
                         'usd',
-                        {
-                          showLessThanMinimum: false,
-                        },
                       )}
                     </span>
                     <PercentChange

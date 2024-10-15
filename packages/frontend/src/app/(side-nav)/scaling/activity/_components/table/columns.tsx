@@ -1,11 +1,11 @@
 import { createColumnHelper } from '@tanstack/react-table'
+import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { NumberCell } from '~/components/table/cells/number-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
-import { EM_DASH } from '~/consts/characters'
 import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
-import { formatNumber } from '~/utils/format-number'
-import { formatTps } from '~/utils/format-tps'
+import { formatInteger } from '~/utils/number-format/format-integer'
+import { formatTps } from '~/utils/number-format/format-tps'
 import { MaxTpsCell } from './max-tps-cell'
 
 const columnHelper = createColumnHelper<ScalingActivityEntry>()
@@ -20,12 +20,13 @@ export const scalingActivityColumns = [
     cell: (ctx) => {
       const data = ctx.row.original.data
       if (!data) {
-        return EM_DASH
+        return <NoDataBadge />
       }
       return formatTps(data.pastDayTps)
     },
     sortUndefined: 'last',
     meta: {
+      align: 'right',
       tooltip: 'Transactions per second averaged over the past day.',
     },
   }),
@@ -35,7 +36,7 @@ export const scalingActivityColumns = [
     cell: (ctx) => {
       const data = ctx.row.original.data
       if (!data) {
-        return EM_DASH
+        return <NoDataBadge />
       }
       return (
         <MaxTpsCell
@@ -44,18 +45,21 @@ export const scalingActivityColumns = [
         />
       )
     },
+    meta: {
+      align: 'right',
+    },
   }),
   columnHelper.accessor('data.summedCount', {
     header: '30D Count',
     cell: (ctx) => {
       const data = ctx.row.original.data
       if (!data) {
-        return EM_DASH
+        return <NoDataBadge />
       }
       return (
-        <div className="flex items-center">
+        <div className="flex items-center justify-end">
           <NumberCell className="font-bold">
-            {formatNumber(data.summedCount)}
+            {formatInteger(data.summedCount)}
           </NumberCell>
           <NumberCell signed className="ml-1 !text-base font-medium">
             {data.change}
@@ -64,6 +68,9 @@ export const scalingActivityColumns = [
       )
     },
     sortUndefined: 'last',
+    meta: {
+      align: 'right',
+    },
   }),
   columnHelper.accessor('dataSource', {
     header: 'Data source',

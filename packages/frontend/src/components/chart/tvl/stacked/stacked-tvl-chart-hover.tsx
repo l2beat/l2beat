@@ -1,6 +1,6 @@
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
-import { formatCurrency } from '~/utils/format'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 import { type ChartUnit } from '../../types'
 
 interface Props {

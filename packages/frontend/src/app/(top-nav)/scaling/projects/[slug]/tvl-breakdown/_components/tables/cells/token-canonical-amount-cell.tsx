@@ -6,7 +6,7 @@ import {
 import { WarningBar } from '~/components/warning-bar'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { cn } from '~/utils/cn'
-import { formatNumberWithCommas } from '~/utils/format-number'
+import { formatNumberWithCommas } from '~/utils/number-format/format-number'
 
 interface Props {
   isDescendant: boolean

@@ -12,7 +12,7 @@ import {
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { sortStages } from '~/components/table/sorting/functions/stage-sorting'
 import { EM_DASH } from '~/consts/characters'
-import { formatNumber } from '~/utils/format-number'
+import { formatNumber } from '~/utils/number-format/format-number'
 import { type ScalingSummaryTableRow } from '../../_utils/to-table-rows'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
@@ -91,6 +91,11 @@ export const scalingSummaryColumns = [
       if (!data) {
         return EM_DASH
       }
+      const formattedTps = formatNumber(ctx.getValue())
+      if (formattedTps === '0.00') {
+        return EM_DASH
+      }
+
       return (
         <div className="flex items-center">
           <NumberCell className="font-bold">

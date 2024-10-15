@@ -1,5 +1,5 @@
 import { formatTimestamp } from '~/utils/dates'
-import { formatCurrencyExactValue } from '~/utils/format'
+import { formatCurrencyExactValue } from '~/utils/number-format/format-currency'
 
 export interface TvlChartPointData {
   timestamp: number

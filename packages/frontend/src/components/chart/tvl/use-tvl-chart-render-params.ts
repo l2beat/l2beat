@@ -1,7 +1,7 @@
 import { type Milestone } from '@l2beat/config'
 import { useCallback, useMemo } from 'react'
 import { type CostsUnit } from '~/server/features/scaling/costs/types'
-import { formatCurrency } from '~/utils/format'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 import { type SeriesStyle } from '../core/styles'
 import { getChartRange } from '../core/utils/get-chart-range-from-columns'
 import { mapMilestones } from '../core/utils/map-milestones'
@@ -22,8 +22,7 @@ export function useTvlChartRenderParams({ data, milestones, unit }: Params) {
   )
 
   const formatYAxisLabel = useCallback(
-    (value: number) =>
-      formatCurrency(value, unit, { showLessThanMinimum: false }),
+    (value: number) => formatCurrency(value, unit),
     [unit],
   )
 

@@ -32,19 +32,21 @@ const getCachedActivityLatestTps = cache(
       Object.entries(grouped).map(([projectId, records]) => {
         const pastDayTps = getLastDayTps(records)
         const previousDayTps = getLastDayTps(records, 1)
-
         const change = pastDayTps / previousDayTps - 1
         return [
           projectId,
           {
             pastDayTps,
-            change,
+            change:
+              change === Infinity || change === null || isNaN(change)
+                ? 0
+                : change,
           },
         ]
       }),
     )
   },
-  ['activityLatestTps'],
+  ['activityLatestTpsXDD'],
   {
     revalidate: UnixTime.HOUR,
   },

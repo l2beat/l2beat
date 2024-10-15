@@ -14,7 +14,7 @@ import { TypeCell } from '~/components/table/cells/type-cell'
 import { InfoIcon } from '~/icons/info'
 import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { cn } from '~/utils/cn'
-import { formatNumber } from '~/utils/format-number'
+import { formatNumber } from '~/utils/number-format/format-number'
 import { TokenBreakdownStat } from './token-breakdown-stat'
 
 interface Props {

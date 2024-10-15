@@ -11,8 +11,8 @@ import { PercentChange } from '~/components/percent-change'
 import { Square } from '~/components/square'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
-import { formatCurrency } from '~/utils/format'
 import { unifyPercentagesAsIntegers } from '~/utils/math'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 
 export interface ValueLockedBreakdown {
   totalChange: number
@@ -38,27 +38,21 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
     {
       label: 'Canonically Bridged',
       shortLabel: 'Canonical',
-      value: formatCurrency(params.breakdown.canonical, 'usd', {
-        showLessThanMinimum: false,
-      }),
+      value: formatCurrency(params.breakdown.canonical, 'usd'),
       usage: params.usage.canonical,
       icon: <Square variant="canonical" size="small" />,
     },
     {
       label: 'Externally Bridged',
       shortLabel: 'External',
-      value: formatCurrency(params.breakdown.external, 'usd', {
-        showLessThanMinimum: false,
-      }),
+      value: formatCurrency(params.breakdown.external, 'usd'),
       usage: params.usage.external,
       icon: <Square variant="external" size="small" />,
     },
     {
       label: 'Natively Minted',
       shortLabel: 'Native',
-      value: formatCurrency(params.breakdown.native, 'usd', {
-        showLessThanMinimum: false,
-      }),
+      value: formatCurrency(params.breakdown.native, 'usd'),
       usage: params.usage.native,
       icon: <Square variant="native" size="small" />,
     },
@@ -79,9 +73,7 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
             <Tooltip>
               <TooltipTrigger className="flex items-center gap-1">
                 <p className="text-lg font-bold md:text-2xl md:leading-none">
-                  {formatCurrency(params.breakdown.total, 'usd', {
-                    showLessThanMinimum: false,
-                  })}
+                  {formatCurrency(params.breakdown.total, 'usd')}
                 </p>
                 {params.breakdown.total > 0 && (
                   <p className="text-xs font-bold md:text-base">
@@ -102,9 +94,7 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
           ) : (
             <div className="flex items-center gap-1">
               <p className="text-nowrap text-lg font-bold md:text-2xl md:leading-none">
-                {formatCurrency(params.breakdown.total, 'usd', {
-                  showLessThanMinimum: false,
-                })}
+                {formatCurrency(params.breakdown.total, 'usd')}
               </p>
               {params.breakdown.total > 0 && (
                 <p className="text-xs font-bold md:text-base">
