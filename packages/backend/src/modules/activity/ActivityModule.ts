@@ -32,7 +32,7 @@ import { RpcTxsCountProvider } from './services/providers/RpcTxsCountProvider'
 import { StarkexTxsCountProvider } from './services/providers/StarkexTxsCountProvider'
 import { StarknetTxsCountProvider } from './services/providers/StarknetTxsCountProvider'
 import { ZKsyncLiteTxsCountProvider } from './services/providers/ZKsyncLiteTxsCountProvider'
-import { RpcUopsAnalyzer } from './services/uops-analyzers/RpcUopsAnalyzer'
+import { RpcUopsAnalyzer } from './services/uops/analyzers/RpcUopsAnalyzer'
 import { getBatchSizeFromCallsPerMinute } from './utils/getBatchSizeFromCallsPerMinute'
 
 export function createActivityModule(

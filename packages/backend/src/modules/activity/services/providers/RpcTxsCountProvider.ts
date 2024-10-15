@@ -4,7 +4,7 @@ import { range } from 'lodash'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import { ActivityRecordWithoutRatio } from '../../types'
 import { aggregatePerDay } from '../../utils/aggregatePerDay'
-import { RpcUopsAnalyzer } from '../uops-analyzers/RpcUopsAnalyzer'
+import { RpcUopsAnalyzer } from '../uops/analyzers/RpcUopsAnalyzer'
 
 export class RpcTxsCountProvider {
   constructor(

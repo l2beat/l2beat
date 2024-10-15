@@ -2,7 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import { activityRecord, transactions } from '../../utils/aggregatePerDay.test'
-import { RpcUopsAnalyzer } from '../uops-analyzers/RpcUopsAnalyzer'
+import { RpcUopsAnalyzer } from '../uops/analyzers/RpcUopsAnalyzer'
 import { RpcTxsCountProvider } from './RpcTxsCountProvider'
 
 const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
