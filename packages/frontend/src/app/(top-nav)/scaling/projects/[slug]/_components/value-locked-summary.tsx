@@ -134,7 +134,7 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
             <span className="whitespace-nowrap text-base font-medium leading-none">
               {s.value}
               {params.breakdown.total > 0 && (
-                <span className="hidden font-normal text-gray-500 @[200px]:inline">
+                <span className="hidden w-[54px] text-right font-normal text-gray-500 @[210px]:inline-block">
                   {` (${s.usage}%)`}
                 </span>
               )}

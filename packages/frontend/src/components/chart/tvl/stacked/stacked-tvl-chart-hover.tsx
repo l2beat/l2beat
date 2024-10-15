@@ -44,7 +44,7 @@ export function StackedTvlChartHover(props: Props) {
       </div>
       <div className="flex w-full items-center justify-between gap-2">
         <span className="text-sm text-gray-700 dark:text-gray-50">
-          Total TVL
+          Total value locked
         </span>
         {total}
       </div>

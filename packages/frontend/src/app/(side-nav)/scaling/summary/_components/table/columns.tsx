@@ -1,6 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { TotalCell } from '~/app/(side-nav)/scaling/summary/_components/table/total-cell'
-import { UpcomingBadge } from '~/components/badge/upcoming-badge'
+import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/pizza-rosette-cell'
 import { NumberCell } from '~/components/table/cells/number-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
@@ -11,7 +11,6 @@ import {
 } from '~/components/table/cells/type-cell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { sortStages } from '~/components/table/sorting/functions/stage-sorting'
-import { EM_DASH } from '~/consts/characters'
 import { formatNumber } from '~/utils/number-format/format-number'
 import { type ScalingSummaryTableRow } from '../../_utils/to-table-rows'
 
@@ -50,13 +49,13 @@ export const scalingSummaryColumns = [
       hash: 'stage',
     },
   }),
-  columnHelper.accessor('tvl', {
+  columnHelper.accessor('tvl.breakdown.total', {
     id: 'total',
     header: 'Total value locked',
     cell: (ctx) => {
       const value = ctx.row.original.tvl
-      if (!value.breakdown) {
-        return <UpcomingBadge />
+      if (value.breakdown?.total === undefined) {
+        return <NoDataBadge />
       }
 
       return (
@@ -68,16 +67,7 @@ export const scalingSummaryColumns = [
         />
       )
     },
-    sortingFn: ({ original: a }, { original: b }) => {
-      const aTvl = a.tvl.breakdown?.total ?? 0
-      const bTvl = b.tvl.breakdown?.total ?? 0
-
-      if (aTvl === bTvl) {
-        return b.name.localeCompare(a.name)
-      }
-
-      return aTvl - bTvl
-    },
+    sortUndefined: 'last',
     meta: {
       align: 'right',
       tooltip:
@@ -89,11 +79,7 @@ export const scalingSummaryColumns = [
     cell: (ctx) => {
       const data = ctx.row.original.activity
       if (!data) {
-        return EM_DASH
-      }
-      const formattedTps = formatNumber(ctx.getValue())
-      if (formattedTps === '0.00') {
-        return EM_DASH
+        return <NoDataBadge />
       }
 
       return (

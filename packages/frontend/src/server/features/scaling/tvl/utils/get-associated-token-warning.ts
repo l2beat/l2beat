@@ -1,4 +1,4 @@
-import { formatPercent } from '~/utils/get-percentage-change'
+import { formatPercent } from '~/utils/calculate-percentage-change'
 
 interface Params {
   name: string

@@ -9,7 +9,6 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { PercentChange } from '~/components/percent-change'
-import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { cn } from '~/utils/cn'
 import { formatTvlTableNumber } from '~/utils/number-format/format-tvl-number'
@@ -29,14 +28,6 @@ export function TotalValueLockedCell(data: TotalValueLockedCellProps) {
   const anyBadWarnings = tvlWarnings.some((w) => w?.sentiment === 'bad')
   const total =
     data.breakdown.canonical + data.breakdown.external + data.breakdown.native
-
-  if (total === 0) {
-    return (
-      <div className="flex flex-col items-center">
-        <span className="text-base font-bold">{EM_DASH}</span>
-      </div>
-    )
-  }
 
   return (
     <Tooltip>

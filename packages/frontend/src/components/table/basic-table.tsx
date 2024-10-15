@@ -155,7 +155,9 @@ export function BasicTable<T extends BasicEntry>({
                     ],
                     header.column.getIsPinned() &&
                       getRowTypeClassNamesWithoutOpacity(null),
-                    header.column.columnDef.meta?.headClassName,
+                    !header.isPlaceholder &&
+                      header.column.getCanSort() &&
+                      header.column.columnDef.meta?.headClassName,
                   )}
                   align={header.column.columnDef.meta?.align}
                   tooltip={header.column.columnDef.meta?.tooltip}

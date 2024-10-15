@@ -1,6 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { TotalCell } from '~/app/(side-nav)/scaling/summary/_components/table/total-cell'
-import { UpcomingBadge } from '~/components/badge/upcoming-badge'
+import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { NoInfoCell } from '~/components/table/cells/no-info-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { RiskCell } from '~/components/table/cells/risk-cell'
@@ -42,13 +42,13 @@ export const bridgesSummaryActiveColumns = [
         'Token bridges use escrows and mint tokens. Liquidity Networks use pools and swap tokens. Hybrid do both.',
     },
   }),
-  columnHelper.accessor('tvl', {
+  columnHelper.accessor('tvl.breakdown.total', {
     id: 'total',
     header: 'Total',
     cell: (ctx) => {
       const value = ctx.row.original.tvl
-      if (!value.breakdown) {
-        return <UpcomingBadge />
+      if (!value.breakdown?.total) {
+        return <NoDataBadge />
       }
 
       return (
@@ -60,16 +60,7 @@ export const bridgesSummaryActiveColumns = [
         />
       )
     },
-    sortingFn: ({ original: a }, { original: b }) => {
-      const aTvl = a.tvl.breakdown?.total ?? 0
-      const bTvl = b.tvl.breakdown?.total ?? 0
-
-      if (aTvl === bTvl) {
-        return b.name.localeCompare(a.name)
-      }
-
-      return aTvl - bTvl
-    },
+    sortUndefined: 'last',
     meta: {
       align: 'right',
       tooltip:

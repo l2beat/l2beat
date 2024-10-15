@@ -1,5 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { UpcomingBadge } from '~/components/badge/upcoming-badge'
+import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/pizza-rosette-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { TypeExplanationTooltip } from '~/components/table/cells/type-cell'
@@ -55,7 +55,7 @@ export const scalingArchivedColumns = [
     cell: (ctx) => {
       const value = ctx.getValue()
       if (value === undefined) {
-        return <UpcomingBadge />
+        return <NoDataBadge />
       }
 
       return (

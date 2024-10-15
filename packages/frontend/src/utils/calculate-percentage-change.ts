@@ -1,8 +1,12 @@
-export function getPercentageChange(now: number, then: number) {
+export function calculatePercentageChange(now: number, then: number) {
   if (now === then || then === 0) {
     return 0
   }
-  return now / then - 1
+  const change = now / then - 1
+  if (change === Infinity || change === null || isNaN(change)) {
+    return 0
+  }
+  return change
 }
 
 export function formatPercent(value: number) {

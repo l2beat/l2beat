@@ -7,6 +7,7 @@ import {
   unstable_noStore as noStore,
 } from 'next/cache'
 import { env } from '~/env'
+import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
 import { getTvlBreakdown } from './get-tvl-breakdown'
 import { getTvlProjects } from './get-tvl-projects'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
@@ -49,7 +50,7 @@ const getCached7dTvlBreakdown = cache(
           projectId,
           {
             total: total / 100,
-            totalChange: (total - oldTotal) / total,
+            totalChange: calculatePercentageChange(total, oldTotal),
             breakdown: {
               native: breakdown.native / 100,
               canonical: breakdown.canonical / 100,
