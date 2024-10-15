@@ -72,7 +72,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </div>
-      <div className="flex flex-col">
+      <div className="flex min-h-full flex-col">
         <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
           <Sheet>
             <SheetTrigger asChild>
@@ -123,7 +123,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </DropdownMenu>
         </header>
         <div className="flex flex-1 flex-col">
-          <main className="flex w-full flex-col gap-4 p-4 lg:gap-6 lg:p-6">
+          <main className="flex w-full flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
             {children}
           </main>
           <footer className="border-t p-4 text-center text-sm text-muted-foreground lg:p-6">
