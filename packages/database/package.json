@@ -2,8 +2,16 @@
   "name": "@l2beat/database",
   "private": true,
   "version": "0.0.0",
-  "main": "dist/index.js",
-  "types": "src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./src/index.ts"
+    },
+    "./enums": {
+      "import": "./dist/kysely/generated/enums.js",
+      "types": "./dist/kysely/generated/enums.d.ts"
+    }
+  },
   "scripts": {
     "clean": "rm -rf dist",
     "build": "tsc -p tsconfig.build.json",
