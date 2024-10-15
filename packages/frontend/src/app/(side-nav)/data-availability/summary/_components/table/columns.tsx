@@ -155,6 +155,7 @@ const slashableStakeForCustomSystem = columnHelper.accessor(
       return <DaEconomicSecurityCell value={value} />
     },
     meta: {
+      align: 'right',
       tooltip:
         'The assets that are slashable in case of a data withholding attack (the amount of funds a committee would need to burn to successfully deceive the DA bridge). It’s equal to 2/3 of the total validating stake, if any.',
     },
@@ -199,7 +200,7 @@ export const customSystemsColumns = [
   daBridgeColumn,
   risksColumn,
   tvsColumn,
-  slashableStakeForCustomSystem,
-  challengeMechanismColumn,
   fallbackColumn,
+  challengeMechanismColumn,
+  slashableStakeForCustomSystem,
 ]
