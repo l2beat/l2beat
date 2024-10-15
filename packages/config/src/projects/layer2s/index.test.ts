@@ -23,6 +23,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { checkRisk } from '../../test/helpers'
 import { tokenList } from '../../tokens'
 import { layer2s, milestonesLayer2s } from './index'
+import { describe } from 'mocha'
 
 describe('layer2s', () => {
   describe('links', () => {
@@ -636,6 +637,17 @@ describe('layer2s', () => {
       if (layer2.isUpcoming) {
         it(layer2.display.name, () => {
           expect(layer2.createdAt).not.toEqual(undefined)
+        })
+      }
+    }
+  })
+
+  describe('Other category projects have proposer and challenger', () => {
+    for (const layer2 of layer2s) {
+      if (layer2.display.category === 'Other') {
+        it(layer2.display.name, () => {
+          expect(layer2.display.proposer).not.toEqual(undefined)
+          expect(layer2.display.challenger).not.toEqual(undefined)
         })
       }
     }
