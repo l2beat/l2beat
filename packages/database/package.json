@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "exports": {
     ".": {
-      "types": "./src/index.ts",
+      "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
     "./enums": {
-      "types": "./src/kysely/generated/enums.ts",
+      "types": "./dist/kysely/generated/enums.d.ts",
       "default": "./dist/kysely/generated/enums.js"
     }
   },
