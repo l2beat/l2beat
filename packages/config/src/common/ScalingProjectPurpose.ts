@@ -8,6 +8,7 @@ export type ScalingProjectPurpose =
   | 'DeFi'
   | 'Exchange'
   | 'Gaming'
+  | 'Identity'
   | 'Information'
   | 'Interoperability'
   | 'Launchpad'
