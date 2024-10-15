@@ -137,7 +137,7 @@ export const eigenDAbridge = {
   technology: `
     ## Architecture
 
-    ![EigenDA architecture](/images/da-bridge-technology/eigenda/architecture.png#center)
+    ![EigenDA architecture once stored](/images/da-bridge-technology/eigenda/architecture1.png#center)
 
     The EigenDAServiceManager acts as a DA bridge smart contract verifying data availability claims from operators via signature verification.
     The checkSignature function checks that the signature of all signers plus non-signers is equal to the registered quorum aggregated public key from the BLS registry. The quorum aggregated public key gets updated every time an operator is registered.
@@ -145,7 +145,7 @@ export const eigenDAbridge = {
     To verify the threshold is met, the function takes the total stake at the reference block for the quorum from the StakeRegistry, and it subtracts the stake of non signers to get the signed stake.
     Finally, it checks that the signed stake over the total stake is more than the required stake threshold.
 
-    ![EigenDA once stored](/images/da-layer-technology/eigenda/oncestored.png#center)
+    ![EigenDA bridge architecture](/images/da-bridge-technology/eigenda/architecture2.png#center)
 
     Although thresholds are not enforced by the confirmBatch method, current quorum thresholds are set to ${quorum1Threshold}% of registered stake for the ETH quorum and ${quorum2Threshold}% for the EIGEN token quorum. The quorum thresholds are set on the EigenDAServiceManager contract and can be changed by the contract owner.
     There is a maximum of ${operatorSetParamsQuorum1[0]} operators that can register for the ETH quorum and ${operatorSetParamsQuorum2[0]} for the EIGEN token quorum. Once the cap is reached, new operators must have 10% more weight than the lowest-weighted operator to join the active set. Entering the quorum is subject to the approval of the churn approver. Operators can be ejected from a quorum by the ejectors without delay should they violate the Service Legal Agreement (SLA).
