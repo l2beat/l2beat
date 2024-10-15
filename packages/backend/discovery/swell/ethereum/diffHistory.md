@@ -1,3 +1,46 @@
+Generated with discovered.json: 0x9fd2289066719a81108d257277c08f5a7d8d0f18
+
+# Diff at Mon, 14 Oct 2024 14:18:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f799449f5bf9f715885662e0303a221ca27f97a5 block: 20016207
+- current block number: 20964349
+
+## Description
+
+One new signer added to SwellMultisig.
+
+## Watched changes
+
+```diff
+    contract SwellMultisig (0x20fDF47509C5eFC0e1101e3CE443691781C17F90) {
+    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem
+      values.$members.6:
++        "0x5b27b9279251904AaF2127463eeFf91E0037F725"
+      values.$members.5:
+-        "0x5b27b9279251904AaF2127463eeFf91E0037F725"
++        "0x66Ed79Ee4865c1cb4574b42d467C7Fee28bB4D59"
+      values.$members.4:
+-        "0x66Ed79Ee4865c1cb4574b42d467C7Fee28bB4D59"
++        "0x042d200e5375204F022570361f3913b245488091"
+      values.$members.3:
+-        "0x042d200e5375204F022570361f3913b245488091"
++        "0x284C633962F2386590E934c4fBD2D3EafA0944A3"
+      values.$members.2:
+-        "0x284C633962F2386590E934c4fBD2D3EafA0944A3"
++        "0xD8DbDb15e91596c50A72E77d95dbC866ebdA8238"
+      values.$members.1:
+-        "0xD8DbDb15e91596c50A72E77d95dbC866ebdA8238"
++        "0xd08b294dBD8Bc760c57AbdEC26515Da626511B40"
+      values.$members.0:
+-        "0xd08b294dBD8Bc760c57AbdEC26515Da626511B40"
++        "0xF14E35C4F1E51BF7Ed930813eCD2e2dA1fc86072"
+      values.multisigThreshold:
+-        "4 of 6 (67%)"
++        "4 of 7 (57%)"
+    }
+```
+
 Generated with discovered.json: 0x77106dd9943e0d347db6198e66f087f3424ed9ba
 
 # Diff at Mon, 14 Oct 2024 10:56:30 GMT:
