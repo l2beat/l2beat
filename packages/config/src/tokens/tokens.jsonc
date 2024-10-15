@@ -600,7 +600,8 @@
     },
     {
       "symbol": "GPT",
-      "address": "0xCdb4A8742ed7D0259b51E3454C46C9D6C48d5e88"
+      "address": "0xCdb4A8742ed7D0259b51E3454C46C9D6C48d5e88",
+      "deploymentTimestamp": 1716807971
     },
     {
       "symbol": "GRT",
