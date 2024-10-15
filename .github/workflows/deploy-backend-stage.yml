@@ -1,10 +1,11 @@
-name: Deploy backend
+name: Deploy backend stage
 
 concurrency:
-  group: backend-deployment
+  group: backend-deployment-stage
 permissions: {}
 
 on:
+  workflow_dispatch: {}
   push:
     branches:
       - main
@@ -34,11 +35,9 @@ jobs:
             TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
           tags: |
             registry.heroku.com/${{ secrets.HEROKU_BACKEND_DEV }}/web
-            registry.heroku.com/${{ secrets.HEROKU_BACKEND_PROD }}/web
       - name: Release published containers
         run: |
           heroku container:release -a ${{ secrets.HEROKU_BACKEND_DEV }} -v web
-          heroku container:release -a ${{ secrets.HEROKU_BACKEND_PROD }} -v web
         env:
           HEROKU_ORGANIZATION: ${{ vars.HEROKU_ORG }}
           HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}

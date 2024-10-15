@@ -10,6 +10,7 @@ export const eigenDA: DaLayer = {
   id: 'eigen-da',
   type: 'DaLayer',
   kind: 'DAC',
+  systemCategory: 'public',
   display: {
     name: 'EigenDA',
     slug: 'eigenda',
@@ -24,7 +25,8 @@ export const eigenDA: DaLayer = {
       socialMedia: ['https://x.com/eigen_da'],
     },
   },
-  technology: `
+  technology: {
+    description: `
 
     ## Architecture
 
@@ -55,12 +57,15 @@ export const eigenDA: DaLayer = {
     The EigenDARollupUtils.sol library's verifyBlob() function can then used by scaling solutions to verify that a data blob is included within a confirmed batch in the EigenDAServiceManager. 
 
   `,
+  },
   bridges: [
     NO_BRIDGE({
       layer: 'EigenDA',
       description:
         'The risk profile in this page refers to scaling solutions that do not integrate with a data availability bridge.',
-      technology: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
+      technology: {
+        description: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
+      },
       usedIn: [...toUsedInProject([donatuz])],
     }),
     eigenDAbridge,

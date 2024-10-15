@@ -549,6 +549,20 @@
       "supply": "zero"
     },
     {
+      "name": "Binary Token",
+      "coingeckoId": "binary-holdings",
+      "address": "0x04E9D7e336f79Cdab911b06133D3Ca2Cd0721ce3",
+      "symbol": "BNRY",
+      "decimals": 18,
+      "deploymentTimestamp": 1718764151,
+      "coingeckoListingTimestamp": 1714608000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37521/large/Vector-1.png?1714634222",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "BitDAO",
       "coingeckoId": "bitdao",
       "address": "0x1A4b46696b2bB4794Eb3D4c26f1c55F9170fa4C5",
@@ -1940,7 +1954,7 @@
       "address": "0xCdb4A8742ed7D0259b51E3454C46C9D6C48d5e88",
       "symbol": "GPT",
       "decimals": 18,
-      "deploymentTimestamp": 1705478411,
+      "deploymentTimestamp": 1716807971,
       "coingeckoListingTimestamp": 1710201600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/35929/large/gpt.png?1710225428",
@@ -6742,6 +6756,20 @@
       "chainId": 8453,
       "source": "canonical",
       "supply": "zero"
+    },
+    {
+      "name": "EURC",
+      "coingeckoId": "euro-coin",
+      "address": "0x60a3E35Cc302bFA44Cb288Bc5a4F316Fdb1adb42",
+      "symbol": "EURC",
+      "decimals": 6,
+      "deploymentTimestamp": 1717005065,
+      "coingeckoListingTimestamp": 1656547200,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/26045/large/euro.png?1696525125",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "FRIEND",

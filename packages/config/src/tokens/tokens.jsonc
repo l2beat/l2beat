@@ -216,6 +216,11 @@
       "address": "0xF17e65822b568B3903685a7c9F496CF7656Cc6C2"
     },
     {
+      "symbol": "BNRY",
+      "address": "0x04E9D7e336f79Cdab911b06133D3Ca2Cd0721ce3",
+      "coingeckoId": "binary-holdings"
+    },
+    {
       "symbol": "BIT",
       "address": "0x1A4b46696b2bB4794Eb3D4c26f1c55F9170fa4C5"
     },
@@ -600,7 +605,8 @@
     },
     {
       "symbol": "GPT",
-      "address": "0xCdb4A8742ed7D0259b51E3454C46C9D6C48d5e88"
+      "address": "0xCdb4A8742ed7D0259b51E3454C46C9D6C48d5e88",
+      "deploymentTimestamp": 1716807971
     },
     {
       "symbol": "GRT",
@@ -2484,6 +2490,13 @@
     }
   ],
   "base": [
+    {
+      "symbol": "EURC",
+      "address": "0x60a3E35Cc302bFA44Cb288Bc5a4F316Fdb1adb42",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
+    },
     {
       "symbol": "cbBTC",
       "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",

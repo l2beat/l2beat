@@ -133,8 +133,8 @@ const tvsColumn = columnHelper.accessor('tvs', {
   },
 })
 
-const economicSecurityColumn = columnHelper.accessor('economicSecurity', {
-  header: 'Economic security',
+const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
+  header: 'Slashable stake',
   cell: (ctx) => <DaEconomicSecurityCell value={ctx.getValue()} />,
   meta: {
     tooltip:
@@ -157,7 +157,7 @@ export const columns = [
   daBridgeColumn,
   risksColumn,
   tvsColumn,
-  economicSecurityColumn,
+  slashableStakeColumn,
   usedInColumn,
 ]
 
