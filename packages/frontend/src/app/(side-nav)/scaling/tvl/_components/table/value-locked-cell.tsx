@@ -7,7 +7,6 @@ export interface ValueLockedCellProps {
 }
 
 export function ValueLockedCell(data: ValueLockedCellProps) {
-  console.log(data.value, data.change)
   return (
     <div className="flex items-center">
       <span className="text-base font-bold">
