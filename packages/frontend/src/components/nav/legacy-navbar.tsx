@@ -4,6 +4,7 @@ import { env } from '~/env'
 import { HiringBadge } from '../badge/hiring-badge'
 import { DarkThemeToggle } from '../dark-theme-toggle'
 import { Logo } from '../logo'
+import { SmallSearchBarButton } from '../search-bar/search-bar-button'
 import { SocialLinks } from '../social-links'
 import { LegacyNavLink } from './legacy-nav-link'
 import { type NavGroup } from './types'
@@ -53,6 +54,7 @@ export function LegacyNavbar({
           })}
         </ul>
         <div className="flex h-full items-center gap-5">
+          <SmallSearchBarButton />
           <ul className="hidden items-center gap-4 xl:flex">
             <SocialLinks />
           </ul>
