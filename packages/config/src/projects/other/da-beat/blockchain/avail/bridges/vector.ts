@@ -67,9 +67,11 @@ export const vector = {
       },
     ],
   },
-  technology: ` 
+  technology: {
+    description: ` 
    Vector SP1 is an implementation of zero-knowledge proof circuits for Vector, Avail's Data Attestation Bridge.
    The VectorSP1 contract should be used to store the latest data from the Avail chain, including the headers and data commitments.`,
+  },
   permissions: [
     ...discovery.getMultisigPermission(
       'SuccinctGatewaySP1Multisig',

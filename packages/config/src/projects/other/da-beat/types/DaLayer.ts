@@ -9,6 +9,7 @@ import { DaEconomicSecurity } from './DaEconomicSecurity'
 import { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
 import { DaLinks } from './DaLinks'
+import { DaTechnology } from './DaTechnology'
 import { DataAvailabilitySampling } from './DataAvailabilitySampling'
 import { UsedInProject } from './UsedInProject'
 
@@ -42,8 +43,8 @@ export type CommonDaLayer = {
   isUpcoming?: boolean
   /** Is the DA layer under review? */
   isUnderReview?: boolean
-  /** The technology used by the data availability layer. [MARKDOWN] */
-  technology: string
+  /** The technology used by the data availability layer. */
+  technology: DaTechnology
   /** List of projects given da layer is being used in. */
   usedIn: UsedInProject[]
   /** Risks associated with the data availability layer. */

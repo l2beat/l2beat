@@ -33,7 +33,8 @@ export const avail: DaLayer = {
       ],
     },
   },
-  technology: `
+  technology: {
+    description: `
     ## Consensus
     Avail implements a Nominated Proof-of-Stake (NPoS) Sybil resistance mechanism, combined with the BABE/GRANDPA consensus protocol. 
     BABE handles block production by assigning block production slots according to validators' stake and using a Verifiable Random Function (VRF). 
@@ -67,12 +68,15 @@ export const avail: DaLayer = {
     App-specific data can be reconstructed by app clients, which request and assemble missing cells from the network to complete the data reconstruction process.
 
     `,
+  },
   bridges: [
     NO_BRIDGE({
       layer: 'Avail',
       description:
         'The risk profile in this page refers to scaling solutions that do not integrate with a data availability bridge.',
-      technology: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
+      technology: {
+        description: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
+      },
     }),
     vector,
   ],
