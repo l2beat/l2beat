@@ -549,6 +549,20 @@
       "supply": "zero"
     },
     {
+      "name": "Binary Token",
+      "coingeckoId": "binary-holdings",
+      "address": "0x04E9D7e336f79Cdab911b06133D3Ca2Cd0721ce3",
+      "symbol": "BNRY",
+      "decimals": 18,
+      "deploymentTimestamp": 1718764151,
+      "coingeckoListingTimestamp": 1714608000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37521/large/Vector-1.png?1714634222",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "BitDAO",
       "coingeckoId": "bitdao",
       "address": "0x1A4b46696b2bB4794Eb3D4c26f1c55F9170fa4C5",
