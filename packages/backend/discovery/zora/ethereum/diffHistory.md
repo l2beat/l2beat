@@ -8,7 +8,7 @@ Generated with discovered.json: 0xedded29113f7fb08eea6114fd9b1dbefdf5fcefb
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Rename Multisig to make it clear that it is not shared.
 
 ## Config/verification related changes
 
