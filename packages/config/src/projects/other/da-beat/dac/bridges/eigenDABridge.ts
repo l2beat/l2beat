@@ -134,7 +134,8 @@ export const eigenDAbridge = {
       },
     ],
   },
-  technology: `## DA Bridge
+  technology: {
+    description: `## DA Bridge
     The EigenDAServiceManager acts as a DA bridge smart contract verifying data availability claims from operators via signature verification.
     The checkSignature function checks that the signature of all signers plus non-signers is equal to the registered quorum aggregated public key from the BLS registry. The quorum aggregated public key gets updated every time an operator is registered.
     The bridge requires a threshold of signatures to be met before the data commitment is accepted. 
@@ -146,6 +147,7 @@ export const eigenDAbridge = {
     Although thresholds are not enforced by the confirmBatch method, current quorum thresholds are set to ${quorum1Threshold}% of registered stake for the ETH quorum and ${quorum2Threshold}% for the EIGEN token quorum. The quorum thresholds are set on the EigenDAServiceManager contract and can be changed by the contract owner.
     There is a maximum of ${operatorSetParamsQuorum1[0]} operators that can register for the ETH quorum and ${operatorSetParamsQuorum2[0]} for the EIGEN token quorum. Once the cap is reached, new operators must have 10% more weight than the lowest-weighted operator to join the active set. Entering the quorum is subject to the approval of the churn approver. Operators can be ejected from a quorum by the ejectors without delay should they violate the Service Legal Agreement (SLA).
   `,
+  },
   permissions: [
     {
       name: 'EigenDAProxyAdmin',
