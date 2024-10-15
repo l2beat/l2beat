@@ -14,7 +14,7 @@ export const world: Layer2 = opStackL2({
     name: 'World Chain',
     slug: 'world',
     description:
-      "World Chain is an OP Stack Rollup built to scale World ID's Proof of Personhood and aiming to prioritize users with a valid World ID on the rollup.",
+      'World Chain is an OP Stack Rollup built to scale Proof of Personhood, aiming to offer priority blockspace for users with a World ID.',
     purposes: ['Identity', 'Universal'],
     links: {
       websites: ['https://worldcoin.org/world-chain'],
