@@ -72,12 +72,6 @@ const tokenFormSchema = z.object({
       externalBridgeId: z.string().length(21).or(z.literal('')),
     }),
   ),
-  backing: z.array(
-    z.object({
-      targetTokenId: z.string().length(21),
-      externalBridgeId: z.string().length(21).or(z.literal('')),
-    }),
-  ),
   customMeta: z
     .object({
       name: z.string(),
@@ -129,13 +123,6 @@ export function EditTokenPage({
             sourceTokenId: r.sourceTokenId,
             externalBridgeId: r.externalBridgeId ?? '',
           })) ?? [],
-      backing:
-        token?.relations
-          .filter((r) => r.targetTokenId !== token.id)
-          .map((r) => ({
-            targetTokenId: r.targetTokenId,
-            externalBridgeId: r.externalBridgeId ?? '',
-          })) ?? [],
       customMeta: {
         name: tokenMeta?.manual?.name ?? '',
         symbol: tokenMeta?.manual?.symbol ?? '',
@@ -154,10 +141,13 @@ export function EditTokenPage({
     name: 'backedBy',
   })
 
-  const backing = useFieldArray({
-    control: form.control,
-    name: 'backing',
-  })
+  const backing =
+    token?.relations
+      .filter((r) => r.targetTokenId !== token.id)
+      .map((r) => ({
+        targetTokenId: r.targetTokenId,
+        externalBridgeId: r.externalBridgeId ?? '',
+      })) ?? []
 
   const onSubmit = useCallback(
     async (rawData: z.infer<typeof tokenFormSchema>) => {
@@ -614,7 +604,7 @@ export function EditTokenPage({
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {backing.fields.length === 0 ? (
+              {backing.length === 0 ? (
                 <p className="text-sm text-muted-foreground">
                   This token is not backing any other token.
                 </p>
@@ -623,108 +613,18 @@ export function EditTokenPage({
                   <TableHeader>
                     <TableHead>Token</TableHead>
                     <TableHead>Bridge</TableHead>
-                    <TableHead className="w-0" />
                   </TableHeader>
                   <TableBody>
-                    {backing.fields.map((field, index) => (
-                      <TableRow key={field.id}>
-                        <TableCell>
-                          <FormField
-                            control={form.control}
-                            name={`backedBy.${index}.sourceTokenId`}
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormControl>
-                                  <Select
-                                    onValueChange={field.onChange}
-                                    defaultValue={field.value}
-                                  >
-                                    <SelectTrigger>
-                                      <SelectValue placeholder="Select a token" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                      {tokens.slice(0, 10).map((token) => (
-                                        <SelectItem
-                                          key={token.tokenId}
-                                          value={token.tokenId}
-                                        >
-                                          {token.name ?? 'Unknown'}{' '}
-                                          <span className="text-xs text-muted-foreground">
-                                            ({token.tokenId})
-                                          </span>
-                                        </SelectItem>
-                                      ))}
-                                    </SelectContent>
-                                  </Select>
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <FormField
-                            control={form.control}
-                            name={`backedBy.${index}.externalBridgeId`}
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormControl>
-                                  <Select
-                                    onValueChange={field.onChange}
-                                    defaultValue={field.value}
-                                  >
-                                    <SelectTrigger>
-                                      <SelectValue placeholder="Select a bridge" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                      {bridges
-                                        .sort((a, b) =>
-                                          a.name.localeCompare(b.name),
-                                        )
-                                        .map((bridge) => (
-                                          <SelectItem
-                                            key={bridge.id}
-                                            value={bridge.id}
-                                          >
-                                            {bridge.name}{' '}
-                                            <span className="text-xs text-muted-foreground">
-                                              ({bridge.id})
-                                            </span>
-                                          </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                  </Select>
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => backing.remove(index)}
-                          >
-                            <Trash2 className="size-4" />
-                          </Button>
-                        </TableCell>
+                    {backing.map((field, index) => (
+                      <TableRow key={index}>
+                        <TableCell>{field.targetTokenId}</TableCell>
+                        <TableCell>{field.externalBridgeId}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
                 </Table>
               )}
             </CardContent>
-            <CardFooter className="flex justify-end">
-              <Button
-                type="button"
-                onClick={() =>
-                  backing.append({ targetTokenId: '', externalBridgeId: '' })
-                }
-              >
-                Add
-              </Button>
-            </CardFooter>
           </Card>
           {token && (
             <div className="flex flex-row gap-4">
