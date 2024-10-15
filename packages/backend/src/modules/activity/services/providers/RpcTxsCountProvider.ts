@@ -37,7 +37,6 @@ export class RpcTxsCountProvider {
         uopsCount,
         ratio,
         timestamp,
-        uopsCount: null,
         number: block.number,
       }
     })
