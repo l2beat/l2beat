@@ -6758,6 +6758,20 @@
       "supply": "zero"
     },
     {
+      "name": "EURC",
+      "coingeckoId": "euro-coin",
+      "address": "0x60a3E35Cc302bFA44Cb288Bc5a4F316Fdb1adb42",
+      "symbol": "EURC",
+      "decimals": 6,
+      "deploymentTimestamp": 1717005065,
+      "coingeckoListingTimestamp": 1656547200,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/26045/large/euro.png?1696525125",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "FRIEND",
       "coingeckoId": "friend-tech",
       "address": "0x0bD4887f7D41B35CD75DFF9FfeE2856106f86670",
