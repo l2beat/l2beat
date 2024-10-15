@@ -14,7 +14,6 @@ export const SAFE_methods: Method[] = [
         operations.push({
           type: 'recursive',
           calldata: op.data,
-          to: op.to,
         })
         return operations
       })
