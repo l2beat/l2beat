@@ -27,6 +27,9 @@ export const eigenDA: DaLayer = {
   technology: `
 
     ## Architecture
+
+    ![EigenDA architecture](/images/da-layer-technology/eigenda/architecture.png#center)
+
     EigenDA is composed by three types of off-chain entities: node operators, a disperser and a retriever.
     - EigenDA **operators** are node operators running the EigenDA node software and are registered to the EigenDA AVS in EigenLayer.
     - The **disperser** is the entity resposible for collecting the blobs from the sequencer, erasure coding them and generating the encoded blob's KZG commitments for each chunk. Although the disperser could be rollup-operated, it is currently a centralised entity operated by Eigen Labs.

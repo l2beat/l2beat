@@ -134,7 +134,11 @@ export const eigenDAbridge = {
       },
     ],
   },
-  technology: `## DA Bridge
+  technology: `
+    ## Architecture
+
+    ![EigenDA architecture](/images/da-bridge-technology/eigenda/architecture.png#center)
+
     The EigenDAServiceManager acts as a DA bridge smart contract verifying data availability claims from operators via signature verification.
     The checkSignature function checks that the signature of all signers plus non-signers is equal to the registered quorum aggregated public key from the BLS registry. The quorum aggregated public key gets updated every time an operator is registered.
     The bridge requires a threshold of signatures to be met before the data commitment is accepted. 
