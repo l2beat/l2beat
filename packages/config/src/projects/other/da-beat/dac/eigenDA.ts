@@ -10,6 +10,7 @@ export const eigenDA: DaLayer = {
   id: 'eigen-da',
   type: 'DaLayer',
   kind: 'DAC',
+  systemCategory: 'public',
   display: {
     name: 'EigenDA',
     slug: 'eigenda',

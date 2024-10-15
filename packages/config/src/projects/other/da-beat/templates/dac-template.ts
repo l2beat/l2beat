@@ -129,6 +129,7 @@ export function DAC(template: TemplateVars): DacDaLayer {
     id: `${template.project.display.slug}-dac-layer`,
     kind: 'DAC',
     type: 'DaLayer',
+    systemCategory: 'custom',
     display: layerDisplay,
     technology: {
       description: layerTechnology,

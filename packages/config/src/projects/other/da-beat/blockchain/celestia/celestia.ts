@@ -12,6 +12,7 @@ export const celestia: DaLayer = {
   id: 'celestia',
   type: 'DaLayer',
   kind: 'PublicBlockchain',
+  systemCategory: 'public',
   display: {
     name: 'Celestia',
     slug: 'celestia',

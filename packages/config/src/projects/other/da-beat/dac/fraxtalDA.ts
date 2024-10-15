@@ -8,6 +8,7 @@ export const fraxtalDA: DaLayer = {
   id: 'dac',
   type: 'DaLayer',
   kind: 'DAC',
+  systemCategory: 'custom',
   display: {
     name: 'FraxtalDA',
     slug: 'fraxtal',
