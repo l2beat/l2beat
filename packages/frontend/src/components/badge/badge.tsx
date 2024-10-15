@@ -1,5 +1,5 @@
 import { type VariantProps, cva } from 'class-variance-authority'
-import React, { type ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import { cn } from '~/utils/cn'
 
 export interface BadgeProps extends VariantProps<typeof badgeVariants> {
@@ -11,7 +11,7 @@ const badgeVariants = cva('rounded text-center font-medium', {
   variants: {
     type: {
       error: 'bg-red-500 text-white',
-      gray: 'bg-gray-200 font-medium text-gray-700 dark:bg-zinc-700 dark:text-gray-50',
+      gray: 'bg-gray-200 font-medium text-gray-700 sidebar:!bg-surface-tertiary sidebar:!text-secondary dark:bg-zinc-700 dark:text-gray-50',
       warning: 'bg-yellow-500 text-black',
       brightYellow: 'bg-yellow-200 text-purple-700',
       pink: 'bg-pink-900 text-white',
@@ -35,7 +35,7 @@ const badgeVariants = cva('rounded text-center font-medium', {
 
 export function Badge(props: BadgeProps) {
   return (
-    <span
+    <div
       className={cn(
         badgeVariants({
           type: props.type,
@@ -46,6 +46,6 @@ export function Badge(props: BadgeProps) {
       )}
     >
       {props.children}
-    </span>
+    </div>
   )
 }

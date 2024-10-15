@@ -7,6 +7,10 @@
     {
       "name": "Bridge",
       "address": "0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6",
+      "sourceHashes": [
+        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+        "0xb920455f1e366c7a89719abdd8d8174e4e7d353f2d4b7dea11b0571bf9526eae"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -48,6 +52,10 @@
     {
       "name": "Outbox",
       "address": "0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2",
+      "sourceHashes": [
+        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+        "0x28eec040eca7563195b19e22e11429d0f977820bfb60ac52e567ffde3c92cf77"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -82,12 +90,18 @@
     {
       "name": "OneStepProver0",
       "address": "0x1135265fE014D3FA32B3507E325642B92aFFeAEb",
+      "sourceHashes": [
+        "0x20330713abbbcf0219ef7d1c0aa3a6ede1b421f14c9d21b25c973e54fb75f5df"
+      ],
       "sinceTimestamp": 1700037168,
       "values": { "$immutable": true }
     },
     {
       "name": "ValidatorWalletCreator",
       "address": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
+      "sourceHashes": [
+        "0x4ef3473c840bed3b4c6258271a494794c1545f0d0f13c6a386d1e39e6180d67c"
+      ],
       "ignoreInWatchMode": ["template"],
       "sinceTimestamp": 1700037517,
       "values": {
@@ -100,6 +114,10 @@
     {
       "name": "UpgradeExecutor",
       "address": "0x3d0b021E1d2A8747411E3724d5165716B35448f3",
+      "sourceHashes": [
+        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+        "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -148,6 +166,9 @@
     {
       "name": "OneStepProverMath",
       "address": "0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1",
+      "sourceHashes": [
+        "0xb2555ede3dfe7d6df28bd96d12a0113b658c213c7ce4e34fa539df7497bc51a1"
+      ],
       "sinceTimestamp": 1700037242,
       "values": { "$immutable": true }
     },
@@ -155,6 +176,11 @@
       "name": "RollupProxy",
       "address": "0x65AD139061B3f6DDb16170a07b925337ddf42407",
       "template": "orbitstack/RollupProxy",
+      "sourceHashes": [
+        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca",
+        "0x8b48118fe606012c0dcac2ccc1821785935aec89fab8f219f47b32c482b0017e",
+        "0xef94a66bd5339efd18fb9ca1f8031482e7ef7bbe6c5a0a10fae254ab83712406"
+      ],
       "proxyType": "Arbitrum proxy",
       "descriptions": [
         "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
@@ -265,6 +291,9 @@
     {
       "name": "ValidatorUtils",
       "address": "0x6c21303F5986180B1394d2C89f3e883890E2867b",
+      "sourceHashes": [
+        "0xd9b36ec321be937cc727b5bdb0afa0e1a0a28448ef1a202d4f181a01ce57bdc8"
+      ],
       "sinceTimestamp": 1700037477,
       "values": { "$immutable": true }
     },
@@ -272,6 +301,10 @@
       "name": "ProofOfPlayMultisig",
       "address": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1701465533,
@@ -300,6 +333,10 @@
     {
       "name": "RollupEventInbox",
       "address": "0x7b18A3073774e00C072DeBd390ed6fE4251493A7",
+      "sourceHashes": [
+        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+        "0xcd37abd5bdcc8c37cbf37dcfa4889d5b238388344d913b3a48914f659e0d627b"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -333,12 +370,18 @@
     {
       "name": "OneStepProverHostIo",
       "address": "0x89AF7C4C2198c426cFe6E86de0680A0850503e06",
+      "sourceHashes": [
+        "0x0a8f8db8198082757cc8145891c633c20ed4313dab05beab40618258e534a1e8"
+      ],
       "sinceTimestamp": 1700037277,
       "values": { "$immutable": true }
     },
     {
       "name": "OneStepProofEntry",
       "address": "0x99a2A31300816C1FA3f40818AC9280fe7271F878",
+      "sourceHashes": [
+        "0xf3479c667d20b1c17ea2573dc7fe09e4315a3e20bc09d31bc92603520cc962cc"
+      ],
       "sinceTimestamp": 1700037315,
       "values": {
         "$immutable": true,
@@ -352,6 +395,10 @@
       "name": "SequencerInbox",
       "address": "0xa58F38102579dAE7C584850780dDA55744f67DF1",
       "template": "orbitstack/SequencerInbox",
+      "sourceHashes": [
+        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+        "0x08792f333db7e8a060c38033f92e3fc10c30e2648c56fc49c7460ee1c94343a0"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": ["State batches / commitments get posted here."],
       "issuedPermissions": [
@@ -408,6 +455,10 @@
     {
       "name": "ChallengeManager",
       "address": "0xaF57dD96a0c0E8757329D55C56De6eC50Aac73Ea",
+      "sourceHashes": [
+        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+        "0x7e1cd1e10119e118ffaa576ddbe1c0f9810a0859a4bf2f65a4ff596c0ed4183d"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -438,6 +489,10 @@
     {
       "name": "Inbox",
       "address": "0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1",
+      "sourceHashes": [
+        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+        "0x99872d99b7163c705118e0a168f99728c3c7089581779077707271cdaad30be3"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -469,6 +524,9 @@
     {
       "name": "ProxyAdmin",
       "address": "0xCC6f49cff395c4d160C61112522700dcB007c41d",
+      "sourceHashes": [
+        "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -508,6 +566,9 @@
     {
       "name": "OneStepProverMemory",
       "address": "0xDf94F0474F205D086dbc2e66D69a856FCf520622",
+      "sourceHashes": [
+        "0x731b4466319a83c95ce227d1a6c85aa03864f5d2bed03bda186843033a8b8d61"
+      ],
       "sinceTimestamp": 1700037203,
       "values": { "$immutable": true }
     }
@@ -1135,6 +1196,5 @@
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "orbitstack/RollupProxy": "0xdd22b1785ae5df34e829d0b04131559e112131325c3f223825d0fe61e675fb1a",
     "orbitstack/SequencerInbox": "0x096f13a8297d3243cf02cbc39d065c1c6f37b23602fce0c63f3ff74d7d65b1ee"
-  },
-  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
+  }
 }

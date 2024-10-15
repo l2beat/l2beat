@@ -3,12 +3,15 @@
   "chain": "zksync2",
   "blockNumber": 43367152,
   "configHash": "0x04bcea5ee3d1dbb85b9f4514ecd0cd9710c3e155a03fd4f908d1e8e6824410bc",
-  "version": 15,
   "contracts": [
     {
       "name": "EraOwner",
       "address": "0x3334552599C9aA1FE08CfF276A02033FF37646ca",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
@@ -108,6 +111,9 @@
     {
       "name": "EraProxyAdmin",
       "address": "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98",
+      "sourceHashes": [
+        "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -200,6 +206,5 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
-  },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  }
 }

@@ -48,8 +48,6 @@ export function NO_BRIDGE(template: TemplateVars): NoDaBridge {
     name: 'No bridge',
     slug: `no-bridge`,
     description,
-    redWarning:
-      'Without a DA bridge, Ethereum has no proof of data availability for this project.',
     links: {
       websites: [],
       documentation: [],

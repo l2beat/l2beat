@@ -10,6 +10,7 @@ import { keyInYN } from 'readline-sync'
 const configReader = new ConfigReader()
 const templateService = new TemplateService()
 const allTemplateHashes = templateService.getAllTemplateHashes()
+const allShapeHashes = templateService.getAllShapeHashes()
 
 void main().catch((e) => {
   console.log(e)
@@ -64,13 +65,40 @@ function discoveryNeedsRefresh(
   discovery: DiscoveryOutput,
   config: DiscoveryConfig,
 ): string | undefined {
-  // Disable this check because it is too strict
-  // and soon, with new formatter and 1-to-1 shape comparison,
-  // it will not be necessary anymore.
-  //
-  // if (discovery.shapeFilesHash !== shapeFilesHash) {
-  //   return 'some shape files have changed'
-  // }
+  for (const contract of discovery.contracts) {
+    if (contract.sourceHashes === undefined) {
+      continue
+    }
+    const hashes =
+      contract.sourceHashes.length === 1
+        ? contract.sourceHashes
+        : contract.sourceHashes.slice(1)
+
+    if (hashes.length > 1) {
+      // NOTE(radomski): Diamonds don't really work well with templates right now
+      continue
+    }
+
+    if (contract.template !== undefined) {
+      if (
+        allShapeHashes[contract.template].length > 0 &&
+        config.overrides.get(contract.address).extends === undefined &&
+        !allShapeHashes[contract.template]
+          .map((h) => h.toString())
+          .includes(hashes[0])
+      ) {
+        return 'A contract which currently has a template, no longer matches that template'
+      }
+    } else {
+      if (
+        Object.values(allShapeHashes)
+          .flatMap((h) => h.toString())
+          .includes(hashes[0])
+      ) {
+        return 'A contract which currently does not have a template matches a template'
+      }
+    }
+  }
 
   if (discovery.configHash !== config.hash) {
     return 'project config or used template has changed'

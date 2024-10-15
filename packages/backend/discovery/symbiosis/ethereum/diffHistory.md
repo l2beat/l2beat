@@ -1,4 +1,78 @@
-Generated with discovered.json: 0xcef330f21fed601d71cfb46d329322edb55b4380
+Generated with discovered.json: 0xc79a381650466bfa12516c4ab7bea65ab4d4ed00
+
+# Diff at Mon, 14 Oct 2024 10:56:42 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 19532236
+- current block number: 19532236
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19532236 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdminBridgeV2 (0x1Da522B35363c1eda4833bc121c8F3c67B2caa75) {
+    +++ description: None
+      sourceHashes:
++        ["0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"]
+    }
+```
+
+```diff
+    contract ProxyAdminBridge (0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA) {
+    +++ description: None
+      sourceHashes:
++        ["0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"]
+    }
+```
+
+```diff
+    contract Multisig (0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract BridgeV2 (0x5523985926Aa12BA58DC5Ad00DDca99678D7227E) {
+    +++ description: None
+      sourceHashes:
++        ["0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a","0xbd76088c97afed7c4594c70e7bca2da6186fb16ab28e0f1f3f2521d3a62e67b8"]
+    }
+```
+
+```diff
+    contract Portal (0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8) {
+    +++ description: None
+      sourceHashes:
++        ["0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a","0x4754c4887d8e1782eeead45b2652e3639e4887315d18aaac0050cbcdbdf3a0fa"]
+    }
+```
+
+```diff
+    contract MetaRouter (0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F) {
+    +++ description: None
+      sourceHashes:
++        ["0xfdf630e9703ba4569d93c7c67f39804b269eb0215618561b27da33c2dce9fc86"]
+    }
+```
+
+```diff
+    contract MetaRouterGateway (0xfCEF2Fe72413b65d3F393d278A714caD87512bcd) {
+    +++ description: None
+      sourceHashes:
++        ["0xf78ec1ebb9770d063d83b96f47dbc97738175104c0ca567882812245a5939087"]
+    }
+```
+
+Generated with discovered.json: 0x4d0b99984e7072fc89a7f31cb00357403aabb432
 
 # Diff at Tue, 01 Oct 2024 11:11:14 GMT:
 

@@ -2,8 +2,9 @@
 
 import Link from 'next/link'
 import { Skeleton } from '~/components/core/skeleton'
+import { CustomLink } from '~/components/link/custom-link'
 import { ChevronIcon } from '~/icons/chevron'
-import { type ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
+import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/react'
 import { Chart } from '../core/chart'
 import { ChartProvider } from '../core/chart-provider'
@@ -54,21 +55,31 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
 function Header({ scalingFactor }: { scalingFactor: number | undefined }) {
   return (
     <div className="flex items-start justify-between">
-      <div className="flex items-center gap-3">
-        <span className="text-xl font-bold">Activity</span>
-        <Link
-          className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-blue-400 px-3 py-2 text-[13px] font-bold leading-none text-[#1459CB] dark:border-blue-500 dark:text-blue-500 max-md:hidden"
+      <div>
+        <div className="flex items-center gap-3">
+          <span className="text-xl font-bold">Activity</span>
+          <Link
+            className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-blue-400 px-3 py-2 text-[13px] font-bold leading-none text-[#1459CB] dark:border-blue-500 dark:text-blue-500 max-md:hidden"
+            href="/scaling/activity"
+          >
+            View details
+            <ChevronIcon className="size-[10px] -rotate-90 fill-current" />
+          </Link>
+        </div>
+        <CustomLink
           href="/scaling/activity"
+          className="flex items-center gap-1 text-xs leading-[1.15] md:hidden"
+          underline={false}
         >
-          View details{' '}
+          Details
           <ChevronIcon className="size-[10px] -rotate-90 fill-current" />
-        </Link>
+        </CustomLink>
       </div>
       <div className="flex flex-col items-end">
         <div className="flex items-baseline gap-1">
           {scalingFactor !== undefined ? (
             <>
-              <span className="whitespace-nowrap text-right text-base font-bold max-md:hidden">
+              <span className="whitespace-nowrap text-right text-base font-bold">
                 Scaling factor:{' '}
               </span>
               <div className="whitespace-nowrap text-right text-xl font-bold">

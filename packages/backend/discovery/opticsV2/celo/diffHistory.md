@@ -1,4 +1,78 @@
-Generated with discovered.json: 0xb8d9b1b14c66da90237be6ad39abcb66e23eaf7c
+Generated with discovered.json: 0x1819134ddfe4741c00ce8f38f5ab14b42793cd62
+
+# Diff at Mon, 14 Oct 2024 11:00:45 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 26689586
+- current block number: 26689586
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 26689586 (main branch discovery), not current.
+
+```diff
+    contract OpticsV2Governor (0x070c2843402Aa0637ae0F2E2edf601aAB5E72509) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract UpgradeBeacon (0x4a594E07D5295E4e4cd1fF728e85a317A20A5010) {
+    +++ description: None
+      sourceHashes:
++        ["0x22841c972728a5327e28da1a887ae68b6db4dc5f1d658e516abcba1a265b21d8"]
+    }
+```
+
+```diff
+    contract UpgradeBeaconController (0x5A4E9B127183130b1814858F6ca5d1B1c6d799Ee) {
+    +++ description: None
+      sourceHashes:
++        ["0x12e387edec9bf90c8c2ee351a4b607488ae3e01f861eb7dabbf3e4fdd078ad48"]
+    }
+```
+
+```diff
+    contract UpgradeBeaconProxy (0x5EE2BA07742D9276b2F51Ee4AD949016b7F164c1) {
+    +++ description: None
+      sourceHashes:
++        ["0xbe5d364ff65b55d089681036cc772258083d96100d71309b7cd76d6f69ced388"]
+    }
+```
+
+```diff
+    contract UpgradeBeaconProxy (0x913EE05036f3cbc94Ee4afDea87ceb430524648a) {
+    +++ description: None
+      sourceHashes:
++        ["0xbe5d364ff65b55d089681036cc772258083d96100d71309b7cd76d6f69ced388"]
+    }
+```
+
+```diff
+    contract XAppConnectionManager (0xaa099aF87ACE9E437b9B410a687F263eeaeC4321) {
+    +++ description: None
+      sourceHashes:
++        ["0xb64e5af8c508ce86c29728805a64c3b45bf37a0a28c4ea602902a3e23de80dfd"]
+    }
+```
+
+```diff
+    contract BeaconProxy (0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE) {
+    +++ description: None
+      sourceHashes:
++        ["0xbe5d364ff65b55d089681036cc772258083d96100d71309b7cd76d6f69ced388","0xfe51330f918cf664ca579984982dbeeab54d9a2461dcd1938ff2d46b9c77b306"]
+    }
+```
+
+Generated with discovered.json: 0x5f7f3a34564634f4b6bb89fb0bd70a3154322e6f
 
 # Diff at Tue, 01 Oct 2024 11:14:17 GMT:
 

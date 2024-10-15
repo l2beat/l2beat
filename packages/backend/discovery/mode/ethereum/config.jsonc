@@ -7,37 +7,7 @@
     "0x2901dA832a4D0297FF0691100A8E496626cc626D" //L1ERC721Bridge"
   ],
   "names": {
-    "0x8B34b14c7c7123459Cf3076b8Cb929BE097d0C07": "OptimismPortal",
-    "0x735aDBbE72226BD52e818E7181953f42E3b0FF21": "L1StandardBridge",
-    "0x4317ba146D4933D889518a3e5E11Fe7a53199b04": "L2OutputOracle",
-    "0x50eF494573f28Cad6B64C31b7a00Cdaa48306e15": "AddressManager",
-    "0x309Fe2536d01867018D120b40e4676723C53A14C": "ChallengerMultisig",
-    "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "ConduitMultisig",
-    "0x5e6432F18Bc5d497B1Ab2288a025Fbf9D69E2221": "SystemConfig",
-    "0x95bDCA6c8EdEB69C98Bd5bd17660BaCef1298A6f": "L1CrossDomainMessenger",
-    "0x543bA4AADBAb8f9025686Bd03993043599c6fB04": "SuperchainProxyAdmin",
-    "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": "SuperchainProxyAdminOwner",
-    "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": "SecurityCouncilMultisig",
-    "0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "FoundationMultisig_1",
-    "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "FoundationMultisig_2",
-    "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": "GuardianMultisig",
-    "0x0454092516c9A4d636d3CAfA1e82161376C8a748": "LivenessModule"
+    "0x309Fe2536d01867018D120b40e4676723C53A14C": "ModeMultisig"
   },
-  "overrides": {
-    "FoundationMultisig_1": {
-      "ignoreInWatchMode": ["nonce"]
-    },
-    "FoundationMultisig_2": {
-      "ignoreInWatchMode": ["nonce"]
-    },
-    "LivenessModule": {
-      "ignoreMethods": ["getRequiredThreshold"]
-    },
-    "0x735aDBbE72226BD52e818E7181953f42E3b0FF21": {
-      "extends": "opstack/L1StandardBridge"
-    },
-    "0x2901dA832a4D0297FF0691100A8E496626cc626D": {
-      "extends": "opstack/L1ERC721Bridge"
-    }
-  }
+  "overrides": {}
 }

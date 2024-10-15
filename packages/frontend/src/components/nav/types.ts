@@ -14,6 +14,7 @@ export type NavGroup =
 
 interface NavLink {
   title: string
+  shortTitle?: string
   href: string
   disabled?: boolean
 }

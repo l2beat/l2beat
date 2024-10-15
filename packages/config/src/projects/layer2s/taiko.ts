@@ -196,7 +196,7 @@ export const taiko: Layer2 = {
         Each proof goes through a cooldown window allowing for contestation. Contested blocks require proof from a higher level tier. If no contestation is made, or the block has been proven by the highest tier, the proof is considered valid.
         The system allows for an invalid state to be proven by either a compromised SGX instance or compromised Guardians (the highest tier). This can lead to a state being proven as valid when it is not.`,
       sentiment: 'bad',
-      value: 'SGX Proofs',
+      value: 'SGX proofs',
       secondLine: `${SGXcooldownWindow} challenge period`,
     },
     dataAvailability: {

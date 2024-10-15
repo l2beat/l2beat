@@ -7,6 +7,9 @@
     {
       "name": "Verifier",
       "address": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+      "sourceHashes": [
+        "0x0bc67d276b40b2ba13903d94fd6c25ae4d3d5162bc942763c418afdc11bc9b32"
+      ],
       "sinceTimestamp": 1711291211,
       "values": { "$immutable": true },
       "derivedName": "FflonkVerifier"
@@ -14,12 +17,21 @@
     {
       "name": "SiliconDAC",
       "address": "0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A",
+      "sourceHashes": [
+        "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
+        "0xf7c38d00c4b6000f1840ed38f9ae99d753da8ac69ee1b6ac9ed614f2b60d470f"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3F74698A4ADb075c0501DF739745ACA55Ae543a1",
-          "via": []
+          "target": "0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
+          "via": [
+            {
+              "address": "0x3F74698A4ADb075c0501DF739745ACA55Ae543a1",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1724259359,
@@ -58,7 +70,11 @@
     {
       "name": "DACProxyAdmin",
       "address": "0x3F74698A4ADb075c0501DF739745ACA55Ae543a1",
-      "receivedPermissions": [
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
+      ],
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "target": "0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A"
@@ -74,6 +90,10 @@
     {
       "name": "SiliconValidium",
       "address": "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
+      "sourceHashes": [
+        "0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4",
+        "0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"
+      ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1724183531,
@@ -130,7 +150,22 @@
     { "address": "0x47ed9538faA1522be7abD8a8BCAEc8d9C04Ed60D" },
     { "address": "0x88eb99475d70cCdB891171344c7Ee90688Fa134c" },
     { "address": "0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA" },
-    { "address": "0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7" }
+    {
+      "address": "0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A",
+          "via": [{ "address": "0x3F74698A4ADb075c0501DF739745ACA55Ae543a1" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0x3F74698A4ADb075c0501DF739745ACA55Ae543a1"
+        }
+      ]
+    }
   ],
   "abis": {
     "0x0775e11309d75aA6b0967917fB0213C5673eDf81": [
@@ -307,6 +342,7 @@
       "function verifyMessage(bytes32 signedHash, bytes signaturesAndAddrs) view"
     ]
   },
-  "usedTemplates": {},
-  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
+  "usedTemplates": {
+    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091"
+  }
 }

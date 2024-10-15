@@ -16,7 +16,6 @@ import { ConfigReader } from '../discovery/config/ConfigReader'
 import { dryRunDiscovery, runDiscovery } from '../discovery/runDiscovery'
 import { HttpClient } from '../utils/HttpClient'
 import { ChainValue } from './types'
-import { ZeroToOneValue } from './types'
 
 export const DiscoverCommand = command({
   name: 'discover',
@@ -78,20 +77,6 @@ export const DiscoverCommand = command({
       long: 'block-number',
       short: 'b',
       description: 'the block number on which the discovery will be performed',
-    }),
-    printTemplateSimilarity: flag({
-      type: boolean,
-      long: 'print-template-similarity',
-      short: 't',
-      description:
-        'at the end of discovery run print statistics about template similarity matching',
-    }),
-    templateSimilarityCutoff: option({
-      type: ZeroToOneValue,
-      long: 'template-similarity-cutoff',
-      description: 'the minimal similarity of template matching to print out',
-      defaultValue: () => 0.5,
-      defaultValueIsSerializable: true,
     }),
   },
   handler: (args) => {

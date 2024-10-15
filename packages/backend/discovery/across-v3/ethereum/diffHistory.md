@@ -1,3 +1,290 @@
+Generated with discovered.json: 0xd724021c94c1d6affef9e3b5adf59952c248f1fb
+
+# Diff at Mon, 14 Oct 2024 10:48:32 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20934032
+- current block number: 20934032
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20934032 (main branch discovery), not current.
+
+```diff
+    contract Zora_Adapter (0x024F2fC31CBDD8de17194b1892c834f98Ef5169b) {
+    +++ description: None
+      sourceHashes:
++        ["0x6d9e4b79712a4e81c51941fb986f4c55774da36be108106577ca01ccb35a0f87"]
+    }
+```
+
+```diff
+    contract VotingToken (0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828) {
+    +++ description: None
+      sourceHashes:
++        ["0x349b0f612f02a8599667c43efe1e547bf4f18a46732001b3afb6b425a87325e9"]
+    }
+```
+
+```diff
+    contract Redstone_Adapter (0x188F8C95B7cfB7993B53a4F643efa687916f73fA) {
+    +++ description: None
+      sourceHashes:
++        ["0x0c32a0cfde3cb87843b5521bf184be1dd2b0031a8e91c2bc7885a2e10db010c1"]
+    }
+```
+
+```diff
+    contract Boba_Adapter (0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3) {
+    +++ description: None
+      sourceHashes:
++        ["0x9f8b082009430546d55daaa8e166eca77ef9ca17f7831f03de4635bdc4a32b31"]
+    }
+```
+
+```diff
+    contract Finder (0x40f941E48A552bF496B154Af6bf55725f18D77c3) {
+    +++ description: None
+      sourceHashes:
++        ["0x6b81a32a0de6b3e8ed743f089a6518d3791b0e4d373300269439642482338ddb"]
+    }
+```
+
+```diff
+    contract ProposerV2 (0x50efaC9619225d7fB4703C5872da978849B6E7cC) {
+    +++ description: None
+      sourceHashes:
++        ["0x28c93f7b68e31548857633c6cb61284d9d2860cc0fbbcaaede8f631d364d66a4"]
+    }
+```
+
+```diff
+    contract Ethereum_Adapter (0x527E872a5c3f0C7c24Fe33F2593cFB890a285084) {
+    +++ description: None
+      sourceHashes:
++        ["0x14afbe84cefefdcb06132c680d267b8892f0834a39fc23ca0ea563758653a21a"]
+    }
+```
+
+```diff
+    contract Arbitrum_Adapter (0x5473CBD30bEd1Bf97C0c9d7c59d268CD620dA426) {
+    +++ description: None
+      sourceHashes:
++        ["0xa1c171564a6e837069132a07b8c6d217e08cf53cd6a43151a7f497440d2f1e33"]
+    }
+```
+
+```diff
+    contract Ethereum_SpokePool (0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5) {
+    +++ description: None
+      sourceHashes:
++        ["0x669da4e91a9ad0ca23205a174e7f8931e4d7d128453132164ba6458f11f15c72","0x7bae4a313d267e381b0aa01e463be4435e016d0c53c26b0f4136d4caa180fa88"]
+    }
+```
+
+```diff
+    contract GovernorV2 (0x7b292034084A41B9D441B71b6E3557Edd0463fa8) {
+    +++ description: None
+      sourceHashes:
++        ["0xdf7f17e5c8ba1f0103fcfaf495da624089f8bfb3d5052217537bb064ca8c60b9"]
+    }
+```
+
+```diff
+    contract LpTokenFactory (0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d) {
+    +++ description: None
+      sourceHashes:
++        ["0x54ab5e1f981929fca37e28c313db9ab35343de3df6907dbaeb29dda3840aadcd"]
+    }
+```
+
+```diff
+    contract Linea_Adapter (0x7Ea0D1882D610095A45E512B0113f79cA98a8EfE) {
+    +++ description: None
+      sourceHashes:
++        ["0x6cc7cfdaa6b4d79d35a624dafc13713137f61d46c6536a4837a2793c3fa3fc4d"]
+    }
+```
+
+```diff
+    contract EmergencyProposalExecutor (0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a) {
+    +++ description: None
+      sourceHashes:
++        ["0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract Lisk_Adapter (0x8229E812f20537caA1e8Fb41749b4887B8a75C3B) {
+    +++ description: None
+      sourceHashes:
++        ["0x4d929bc632eff7818792b2ad5539b8b5dbc8842e7d23c9d9bfb116acb05eb96a"]
+    }
+```
+
+```diff
+    contract OptimisticGovernor (0x8692B776d1Ff0664177c90465038056Dc64f8991) {
+    +++ description: None
+      sourceHashes:
++        ["0xcecd27c998c8fd83d7532693da2bdff346a1dbedbaab4744f21d2bcf1986e9de"]
+    }
+```
+
+```diff
+    contract WorldChain_Adapter (0x8eBebfc894047bEE213A561b8792fCa71241731f) {
+    +++ description: None
+      sourceHashes:
++        ["0xa2716832109570351047beb288a3a96a17d443cc548980a1327bb59729b74efe"]
+    }
+```
+
+```diff
+    contract EmergencyProposer (0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748) {
+    +++ description: None
+      sourceHashes:
++        ["0x435ceb597bcf7bd820f593bdbc0e3ce4d223cc2203b368911d2b29fa6bc5e048"]
+    }
+```
+
+```diff
+    contract Polygon_Adapter (0xb4AeF0178f5725392A26eE18684C2aB62adc912e) {
+    +++ description: None
+      sourceHashes:
++        ["0xf598be4ed345b6b3e83e04dff2cb5472dc4df0b8476f8f74a4c75c473dee6347"]
+    }
+```
+
+```diff
+    contract HubPool Multisig (0xB524735356985D2f267FA010D681f061DfF03715) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract Scroll_Adapter (0xb6129Ab69aEA75e6884c2D6ecf25293C343C519F) {
+    +++ description: None
+      sourceHashes:
++        ["0x56586e3315f76ed277970410b47da25a0980ca9400f2a97fd38139e2a1f2dc5e"]
+    }
+```
+
+```diff
+    contract CoveredCallFinancialProductLibrary (0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58) {
+    +++ description: None
+      sourceHashes:
++        ["0x626fc280735c432e9187554bc59d556389dc73435f1b570e64f424d257f68d09"]
+    }
+```
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      sourceHashes:
++        ["0x3afa0a01f4cde6c678d6ec12443078407e69293b9a4519105445f694671b2dec"]
+    }
+```
+
+```diff
+    contract Base_Adapter (0xE1421233BF7158A19f89F17c9735F9cbd3D9529c) {
+    +++ description: None
+      sourceHashes:
++        ["0x172a1f27f0fecf665d90a6adc1287223f05a73acd9ed19d9c446972880ccce0f"]
+    }
+```
+
+```diff
+    contract Optimism_Adapter (0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b) {
+    +++ description: None
+      sourceHashes:
++        ["0x59784b70d01278196c00fbfe1f237b01ec891dca28b0542cdf8dcc9e672b3849"]
+    }
+```
+
+```diff
+    contract ZkSync_Adapter (0xE233009838CB898b50e0012a6E783FC9FeE447FB) {
+    +++ description: None
+      sourceHashes:
++        ["0xc4f838b87ec9ed41b647f7d3a4a508abdb28aef5a4908a9e0829ccb37f319cc8"]
+    }
+```
+
+```diff
+    contract BondToken (0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea) {
+    +++ description: None
+      sourceHashes:
++        ["0x1d9754ae4e99e4320201bbc6f0e19aa5ecac917dcacaadba3b70cfa018910754"]
+    }
+```
+
+```diff
+    contract Mode_Adapter (0xf1B59868697f3925b72889ede818B9E7ba0316d0) {
+    +++ description: None
+      sourceHashes:
++        ["0x1b1b271fd3f736024fda7dd869d78943819efee5dcbf6f4075af9647cfb16cac"]
+    }
+```
+
+```diff
+    contract Blast_Adapter (0xF2bEf5E905AAE0295003ab14872F811E914EdD81) {
+    +++ description: None
+      sourceHashes:
++        ["0x596bdc0b39f0ff19cde625424cdc037dd3e79355ee2c845bd8a6e5e42b3bc332"]
+    }
+```
+
+```diff
+    contract OptimisticOracleV3 (0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE) {
+    +++ description: None
+      sourceHashes:
++        ["0xfb2c9056673690384bb615fd326655f97b80fa2a5601a15a35065b0a68186ae7"]
+    }
+```
+
+Generated with discovered.json: 0x38aad1481151a89c2ea4d20c9aef1cf3d10e0e3d
+
+# Diff at Thu, 10 Oct 2024 08:32:18 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@cb5ff535ffc194baf7396bd6db8232883e2ad088 block: 20675639
+- current block number: 20934032
+
+## Description
+
+New Hub added (Worldchain).
+
+## Watched changes
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.480:
++        "0x8eBebfc894047bEE213A561b8792fCa71241731f"
+      values.CrossChainContracts.480:
++        "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract WorldChain_Adapter (0x8eBebfc894047bEE213A561b8792fCa71241731f)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/WorldChain_Adapter.sol          | 591 +++++++++++++++++++++
+ 1 file changed, 591 insertions(+)
+```
+
 Generated with discovered.json: 0xfd768f13b611e4a0af3411019ac6f2f75bea7357
 
 # Diff at Tue, 01 Oct 2024 10:49:24 GMT:

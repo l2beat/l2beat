@@ -1,4 +1,94 @@
-Generated with discovered.json: 0x6cdf832afb6d97a8cc9a3cc407f07210dcbfe884
+Generated with discovered.json: 0x038ed0c796a80592082c759749567fe7fae25f98
+
+# Diff at Mon, 14 Oct 2024 10:50:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 19531527
+- current block number: 19531527
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531527 (main branch discovery), not current.
+
+```diff
+    contract DeBridgeGate (0x43dE2d77BF8027e25dBD179B491e8d64f38398aA) {
+    +++ description: None
+      sourceHashes:
++        ["0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a","0xcd8bce7612cc46b4eb6dae7d913880fdd47ee8fcd03d90bd5d99fe145638685c"]
+    }
+```
+
+```diff
+    contract Admin Multisig (0x6bec1faF33183e1Bc316984202eCc09d46AC92D5) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract DeBridgeTokenDeployer (0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464) {
+    +++ description: None
+      sourceHashes:
++        ["0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a","0x90a8fe0eeb8f61a691fd579cb10499f4fd9167497e9aeab3b1ce4f6427fabc96"]
+    }
+```
+
+```diff
+    contract CallProxy (0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824) {
+    +++ description: None
+      sourceHashes:
++        ["0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a","0xd67e23441d8b22dcf363c048ad14a86a4de64b242cb242fd7ef0fa11da2cb6ff"]
+    }
+```
+
+```diff
+    contract SignatureVerifier (0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c) {
+    +++ description: None
+      sourceHashes:
++        ["0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a","0xbda27aaf69ce4f365f73f0436a7e06bffede3a693579569ec42ae41718b94c75"]
+    }
+```
+
+```diff
+    contract GnosisSafe (0xa0D6062Be29710c666aE850395Ac1A2AeCd14885) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract SimpleFeeProxy (0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636) {
+    +++ description: None
+      sourceHashes:
++        ["0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a","0xc18d3818f9e809ced3dcce60fbe4287220ce2fced4f6c66711de5e704738bb9a"]
+    }
+```
+
+```diff
+    contract DeBridgeToken (0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B) {
+    +++ description: None
+      sourceHashes:
++        ["0x13def2c5fc95163873f1d15d260b9e03ac811bd830b6ed282e527268e3ca7759"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xE4427af3555CD9303D728C491364FAdFDD7494Fe) {
+    +++ description: None
+      sourceHashes:
++        ["0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"]
+    }
+```
+
+Generated with discovered.json: 0xcc37d0b5927f57a7bfcca5b67187d28a067d781f
 
 # Diff at Tue, 01 Oct 2024 10:50:38 GMT:
 

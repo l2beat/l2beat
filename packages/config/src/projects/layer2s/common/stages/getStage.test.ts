@@ -48,17 +48,17 @@ describe(getStage.name, () => {
               satisfied: true,
             },
             {
-              description: 'L2 state roots are posted to Ethereum L1.',
+              description: 'State roots are posted to Ethereum L1.',
               satisfied: true,
             },
             {
               description:
-                'Inputs for the state transition function are posted to L1.',
+                'Inputs for the state transition function are posted to Ethereum L1.',
               satisfied: true,
             },
             {
               description:
-                'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code. [View code](randomlink)',
+                'A source-available node exists that can recreate the state from Ethereum L1 data. Please note that the L2BEAT team has not verified the validity of the node source code. [View code](randomlink)',
               satisfied: true,
             },
           ],

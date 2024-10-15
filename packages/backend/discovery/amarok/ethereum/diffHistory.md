@@ -1,4 +1,254 @@
-Generated with discovered.json: 0x1c0a21fa3c3b77c2484fbf8a14b65ab8b12bf994
+Generated with discovered.json: 0x043a4fcdeb9603f1615fbe53788e59778a48b5c4
+
+# Diff at Mon, 14 Oct 2024 10:49:12 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20640712
+- current block number: 20640712
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20640712 (main branch discovery), not current.
+
+```diff
+    contract MainnetSpokeConnector (0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc) {
+    +++ description: None
+      sourceHashes:
++        ["0xafd1330f5a43ba6b2a2db1315900ef6a75051e339fa9194fe9f671742c237a57"]
+    }
+```
+
+```diff
+    contract VotingToken (0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828) {
+    +++ description: None
+      sourceHashes:
++        ["0x349b0f612f02a8599667c43efe1e547bf4f18a46732001b3afb6b425a87325e9"]
+    }
+```
+
+```diff
+    contract OptimisticGovernor (0x172fB6b07D6aB708dd67392a09e1c40d16dA0460) {
+    +++ description: None
+      sourceHashes:
++        ["0xcecd27c998c8fd83d7532693da2bdff346a1dbedbaab4744f21d2bcf1986e9de"]
+    }
+```
+
+```diff
+    contract BaseHubConnector (0x23b7abe4cc664F24Eb68E80cFAdc572857799a94) {
+    +++ description: None
+      sourceHashes:
++        ["0xe1e1cddf981135f49c5ed0fd4a3ec66db79e2bb91e3cfea59e69f5da6ab165df"]
+    }
+```
+
+```diff
+    contract xLayerZkHubConnector (0x279fDA9AdDB854541f0bb86733d924e28c24c625) {
+    +++ description: None
+      sourceHashes:
++        ["0x8481f131a096c9d34bb43b220f73a7469f938128e441e7f5009eef26a021b104"]
+    }
+```
+
+```diff
+    contract UpgradeBeaconProxy (0x28A9e7bbed277092E2431F186E1aF898962d4E92) {
+    +++ description: None
+      sourceHashes:
++        ["0x096b81df0c8f5335503eff3f349aa3136ee8cc6a502b3929f5112ae8b164ee0a"]
+    }
+```
+
+```diff
+    contract Finder (0x40f941E48A552bF496B154Af6bf55725f18D77c3) {
+    +++ description: None
+      sourceHashes:
++        ["0x6b81a32a0de6b3e8ed743f089a6518d3791b0e4d373300269439642482338ddb"]
+    }
+```
+
+```diff
+    contract Connext Multisig (0x4d50a469fc788a3c0CdC8Fd67868877dCb246625) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract ProposerV2 (0x50efaC9619225d7fB4703C5872da978849B6E7cC) {
+    +++ description: None
+      sourceHashes:
++        ["0x28c93f7b68e31548857633c6cb61284d9d2860cc0fbbcaaede8f631d364d66a4"]
+    }
+```
+
+```diff
+    contract RootManager (0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A) {
+    +++ description: None
+      sourceHashes:
++        ["0x2ca55720c3cf2b2da110bcd8d47329f5a7924e3de8b3324c8b55b45f99eb94fd"]
+    }
+```
+
+```diff
+    contract LineaHubConnector (0x56Ab287e5c33Ee70158c951f34818bd095446255) {
+    +++ description: None
+      sourceHashes:
++        ["0xa7941f612635ebe90bf4c5a4dbbb4a7aff8c388f20ac06c5f881670d8554004c"]
+    }
+```
+
+```diff
+    contract MantleHubConnector (0x5B0E1a507E786f0a7c11C972ad5F4dd254661e24) {
+    +++ description: None
+      sourceHashes:
++        ["0x874db65420d6ae87b7f30ff1947bd1ee09a2498028cb98e58d43ad47ff6e936f"]
+    }
+```
+
+```diff
+    contract OptimismHubConnector (0x5c2149869146DeA55cDD1CF2DD828e4e1548bb2A) {
+    +++ description: None
+      sourceHashes:
++        ["0xe1e1cddf981135f49c5ed0fd4a3ec66db79e2bb91e3cfea59e69f5da6ab165df"]
+    }
+```
+
+```diff
+    contract WatcherManager (0x79e6E0242405A66B2dd8B96DEd3b2F0216Fd417d) {
+    +++ description: None
+      sourceHashes:
++        ["0x291566f24c232f7b88a3772c2a88517ba7bf4aeb4224c9053aabaa34ae92f50c"]
+    }
+```
+
+```diff
+    contract GovernorV2 (0x7b292034084A41B9D441B71b6E3557Edd0463fa8) {
+    +++ description: None
+      sourceHashes:
++        ["0xdf7f17e5c8ba1f0103fcfaf495da624089f8bfb3d5052217537bb064ca8c60b9"]
+    }
+```
+
+```diff
+    contract ModeHubConnector (0x7b2bE683266909A6a4068e743083dd40621d663E) {
+    +++ description: None
+      sourceHashes:
++        ["0xe1e1cddf981135f49c5ed0fd4a3ec66db79e2bb91e3cfea59e69f5da6ab165df"]
+    }
+```
+
+```diff
+    contract Connext Fee Multisig (0x7bE978Cc84612E08f7844672B0E6A6F367FE2b6A) {
+    +++ description: None
+      sourceHashes:
++        ["0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5","0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"]
+    }
+```
+
+```diff
+    contract UpgradeBeaconProxy (0x7D2596D7E44b0990611d390Fbb0Bd24e64845694) {
+    +++ description: None
+      sourceHashes:
++        ["0x096b81df0c8f5335503eff3f349aa3136ee8cc6a502b3929f5112ae8b164ee0a"]
+    }
+```
+
+```diff
+    contract PolygonZkHubConnector (0x7ed49D0a13255802A281C08688563bd8D5f726b1) {
+    +++ description: None
+      sourceHashes:
++        ["0x8481f131a096c9d34bb43b220f73a7469f938128e441e7f5009eef26a021b104"]
+    }
+```
+
+```diff
+    contract GnosisSafe (0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a) {
+    +++ description: None
+      sourceHashes:
++        ["0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract ArbitrumHubConnector (0x83096c7455f24E593aaC9A7c73f849d36d3EEb82) {
+    +++ description: None
+      sourceHashes:
++        ["0xec9f14911fa9c31669685bd1b89abbfa1a6a8bdd87f11af719c41ff7ec03987e"]
+    }
+```
+
+```diff
+    contract ConnextBridge (0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6) {
+    +++ description: None
+      sourceHashes:
++        ["0xddff88cf097843837c49f9ed19ac3343d4f1950d3e0508e63669fbd972e4100c","0x72a9f0d6928e2ccb1a94e23690974a84ecc5be50d3be866e39469534323eebed","0x662d43eeaf35f8a6d80e9b833573360c1a83f418e93c65db17cf46c7b47758e8","0xf9087df539d680461ace025dfe27bd79d2eb110215ae416303b44629d7389219","0xa76e155468cff4d404ed0288be360d31e5ad958e5c2608e63134e03ec1d030c4","0xeaf1c83d9906c268afae35bf023ae9d7861e4bcdca5969bfd3c839e07bf3ae25","0x8692d1c129e074dfd45ba266215947cd7415ac1620b6aeca2d04cdfd593732ad","0x53d627be0e3afee6df116dcbf8d5988fe3b0e0c75fac31d03ec65870d7eb688e","0x6f2682c1f11312a6a8d948a5cf458cd0878e0b512e4e28f28c8444fd8a4bc91b","0x535e1a3124295865c51f088c9c1b0d4aff2003c3ed2744a9f3d8c24d059b1de2","0x96019d37901a28e311eaa7c1cf12caa35106001dba2273cfd3380b89952f6108","0x9efc9e4ba3961b565b36b5d255c7be95f240531bb7ffb97a3503db6bc34a5b77","0xdbc90380d4658e61987fc156f3647d7db9f8c00d8af551f3abbd1bae5ded1e28"]
+    }
+```
+
+```diff
+    contract EmergencyProposer (0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748) {
+    +++ description: None
+      sourceHashes:
++        ["0x435ceb597bcf7bd820f593bdbc0e3ce4d223cc2203b368911d2b29fa6bc5e048"]
+    }
+```
+
+```diff
+    contract MetisHubConnector (0x9Ba7D2Ab079Bd1924859e2fECDAD1bEBe5B119Fa) {
+    +++ description: None
+      sourceHashes:
++        ["0x8260bb2699f6ede98283b1bd9e2d1fdd52e11144aca41b7ba56f4257cee0dd9d"]
+    }
+```
+
+```diff
+    contract WormholeHubConnector (0xae6B9cDE6191b710F5A18D82f751Ba52B78a99DA) {
+    +++ description: None
+      sourceHashes:
++        ["0xa4857ef08af1733cc8a6fb1ce54561fe834c6dae2d6a2be176506833af7d6f9f"]
+    }
+```
+
+```diff
+    contract PolygonHubConnector (0xE8cF9EbB1cFB137c692a0a4E470E257B9417d116) {
+    +++ description: None
+      sourceHashes:
++        ["0x801d3cc7883546ac5e0bbb1c4872555739352f0ecf116f9f317f51732c9d08f6"]
+    }
+```
+
+```diff
+    contract GnosisHubConnector (0xF1c78967584D5E0ffF66dA103b8eb06c82EC020d) {
+    +++ description: None
+      sourceHashes:
++        ["0xbe5ddf3ceaa76404a16ca4237ea9850cc76d59636c8de1526fab611e7d70ae6f"]
+    }
+```
+
+```diff
+    contract NewWormholeHubConnector (0xf5a3372ed529FCD0690b6013EAaE04170ec0626b) {
+    +++ description: None
+      sourceHashes:
++        ["0xa4857ef08af1733cc8a6fb1ce54561fe834c6dae2d6a2be176506833af7d6f9f"]
+    }
+```
+
+```diff
+    contract OptimisticOracleV3 (0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE) {
+    +++ description: None
+      sourceHashes:
++        ["0xfb2c9056673690384bb615fd326655f97b80fa2a5601a15a35065b0a68186ae7"]
+    }
+```
+
+Generated with discovered.json: 0xaec4a912a3d3f29861db6f1357f53e67ba7a296f
 
 # Diff at Tue, 01 Oct 2024 10:49:35 GMT:
 

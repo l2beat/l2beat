@@ -10,4 +10,4 @@ export type SourceTagParams =
   | { type: 'Wormhole'; details?: never }
 
 export const sourceTag = (params: SourceTagParams) =>
-  `${params.type}${params.details && `-${params.details}`}`
+  `${params.type}${params.details ? `-${params.details}` : ''}`

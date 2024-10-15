@@ -7,6 +7,9 @@
     {
       "name": "Permit2",
       "address": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
+      "sourceHashes": [
+        "0x84beffbcb4624fb74fab61c80beeb566023a939418284a8f44357b71cd40b63b"
+      ],
       "sinceTimestamp": 1668647879,
       "values": {
         "$immutable": true,
@@ -16,7 +19,11 @@
     {
       "name": "SharedProxyAdmin",
       "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
-      "receivedPermissions": [
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
+      ],
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "target": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
@@ -41,6 +48,10 @@
       "name": "RollupManagerAdminMultisig",
       "address": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678956815,
@@ -65,12 +76,21 @@
     {
       "name": "Bridge",
       "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+      "sourceHashes": [
+        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
+        "0x058729592838a622eff2eb394278ff5d53065feeca04c216a67e973178ac1ac2"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
-          "via": []
+          "target": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "via": [
+            {
+              "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+              "delay": 0
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": ["getRoot"],
@@ -106,6 +126,10 @@
       "name": "SecurityCouncil",
       "address": "0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678429487,
@@ -135,6 +159,9 @@
     {
       "name": "POL",
       "address": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
+      "sourceHashes": [
+        "0xb814773e3a4cf3d1dd288afdeed9cbdc361edda62de8fa393290e5be836ffae0"
+      ],
       "ignoreInWatchMode": ["lastMint", "totalSupply"],
       "sinceTimestamp": 1698224783,
       "values": {
@@ -168,12 +195,21 @@
     {
       "name": "PolygonRollupManager",
       "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0x0457cd9bbeaa5adb6ffff74ca828707e8797cdd25b13768eb37dcc7a120ce3c6"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
-          "via": []
+          "target": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "via": [
+            {
+              "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+              "delay": 0
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": [
@@ -409,12 +445,21 @@
     {
       "name": "GlobalExitRootV2",
       "address": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0x23dd296130348943833ff04807c22fab6b51e87b4d0d59ba0e35e802e3e1f079"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
-          "via": []
+          "target": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "via": [
+            {
+              "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+              "delay": 0
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": ["getRoot", "depositCount"],
@@ -444,6 +489,10 @@
       "name": "CreateRollupMultisig",
       "address": "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1722533147,
@@ -471,6 +520,32 @@
     {
       "name": "Timelock",
       "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+      "sourceHashes": [
+        "0x7de9e4256607fc137552230010585d417c818730e4f56e29065699cdb97f9cf1"
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "via": [{ "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "via": [{ "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+          "via": [{ "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
+        }
+      ],
       "sinceTimestamp": 1679653187,
       "values": {
         "$immutable": true,
@@ -1150,7 +1225,7 @@
     ]
   },
   "usedTemplates": {
+    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
-  },
-  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
+  }
 }
