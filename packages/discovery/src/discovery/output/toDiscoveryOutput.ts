@@ -14,7 +14,6 @@ export function toDiscoveryOutput(
   configHash: Hash256,
   blockNumber: number,
   results: Analysis[],
-  shapeFilesHash: Hash256,
 ): DiscoveryOutput {
   return {
     name,
@@ -23,7 +22,6 @@ export function toDiscoveryOutput(
     configHash,
     ...processAnalysis(results),
     usedTemplates: collectUsedTemplatesWithHashes(results),
-    shapeFilesHash,
   }
 }
 
@@ -64,6 +62,9 @@ export function processAnalysis(
           address: x.address,
           unverified: x.isVerified ? undefined : true,
           template: x.extendedTemplate?.template,
+          sourceHashes: x.isVerified
+            ? x.sourceBundles.map((b) => b.hash as string)
+            : undefined,
           proxyType: x.proxyType,
           displayName:
             displayName && displayName !== x.name ? displayName : undefined,

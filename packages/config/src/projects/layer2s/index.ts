@@ -90,6 +90,7 @@ import { network3 } from './network3'
 import { neva } from './neva'
 import { nil } from './nil'
 import { nova } from './nova'
+import { odyssey } from './odyssey'
 import { oev } from './oev'
 import { ola } from './ola'
 import { omgnetwork } from './omgnetwork'
@@ -144,6 +145,7 @@ import { thebinaryholdings } from './thebinaryholdings'
 import { treasure } from './treasure'
 import { turboprotocol } from './turboprotocol'
 import { Layer2 } from './types'
+import { unichain } from './unichain'
 import { wirex } from './wirex'
 import { witness } from './witness'
 import { world } from './world'
@@ -259,6 +261,7 @@ export const layer2s: Layer2[] = [
   network3,
   neva,
   nova,
+  odyssey,
   oev,
   ola,
   omgnetwork,
@@ -311,6 +314,7 @@ export const layer2s: Layer2[] = [
   thanos,
   treasure,
   turboprotocol,
+  unichain,
   wirex,
   witness,
   world,

@@ -28,7 +28,7 @@ export function createDiscoveryRunner(
     }
   }
 
-  const { allProviders, discoveryEngine, templateService } = getDiscoveryEngine(
+  const { allProviders, discoveryEngine } = getDiscoveryEngine(
     chainConfigs,
     discoveryCache,
     http,
@@ -36,11 +36,5 @@ export function createDiscoveryRunner(
     chain,
   )
 
-  return new DiscoveryRunner(
-    allProviders,
-    discoveryEngine,
-    configReader,
-    chain,
-    templateService,
-  )
+  return new DiscoveryRunner(allProviders, discoveryEngine, configReader, chain)
 }

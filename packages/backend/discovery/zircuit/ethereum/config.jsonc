@@ -16,19 +16,6 @@
     "0x6BCe7408c0781dcE7b71494274302D4b75a1447c": "Verifier"
   },
   "overrides": {
-    "SystemConfig": {
-      "extends": "opstack/SystemConfig"
-    },
-    "OptimismPortal": {
-      "extends": "opstack/OptimismPortal"
-    },
-    "L1CrossDomainMessenger": {
-      "extends": "opstack/L1CrossDomainMessenger"
-    },
-    "L2OutputOracle": {
-      // larger diff due to verifier logic, but template fits
-      "extends": "opstack/L2OutputOracle"
-    },
     "ZircuitSuperchainConfig": {
       "fields": {
         "accessControl": {
@@ -41,12 +28,6 @@
           }
         }
       }
-    },
-    "L1ERC721Bridge": {
-      "extends": "opstack/L1ERC721Bridge"
-    },
-    "L1StandardBridge": {
-      "extends": "opstack/L1StandardBridge"
     }
   }
 }
