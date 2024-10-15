@@ -35,9 +35,12 @@ export const eigenDA: DaLayer = {
     - The **disperser** is the entity resposible for collecting the blobs from the sequencer, erasure coding them and generating the encoded blob's KZG commitments for each chunk. Although the disperser could be rollup-operated, it is currently a centralised entity operated by Eigen Labs.
     - Lastly, the **retriever** client is responsible for querying the EigenDA operators to retrieve blob chunks, verifying their integrity and reconstructs the original blob. 
     
+    ### Operators Registration 
     Operators register with the EigenDAServiceManager via the registerOperatorToAVS() function, enabling them to participate in the data availability network. They are resposible for holding and serving blobs data, and earn rewards for their participation in the network.
 
     ![EigenDA operator registration](/images/da-layer-technology/eigenda/registration.png#center)
+
+    ### Operators Blob Storage and Retrieval 
 
     The process of storing a blob on EigenDA works as follows. A sequencer submits blobs to the EigenDA Disperser, which erasure codes the blobs into chunks and generates KZG commitments and proofs for each chunk, certifying the correctness of the data. The disperser then sends the chunks, KZG commitments, and KZG proofs to the operators.
     Multiple operators are responsible for storing chunks of the encoded data blobs and their associated KZG commitment and proof.
