@@ -1,6 +1,5 @@
 {
   "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "ConduitMultisig",
-  "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72": "ChallengerMultisig",
   "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": "SuperchainProxyAdminOwner",
   "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": "SecurityCouncilMultisig",
   "0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "FoundationMultisig_1",
