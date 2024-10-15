@@ -36,8 +36,14 @@ export const blobstreamBase = CELESTIA_BLOBSTREAM({
       socialMedia: [],
     },
   },
+
   technology: {
     description: `
+
+    ## Architecture
+        
+    ![Celestia blobstream architecture](/images/da-bridge-technology/celestia/blobstream/architecture.png#center)
+    
     The Blobstream bridge is a data availability bridge that facilitates data availability commitments to be bridged between Celestia and ${chainName}.
     The Blobstream bridge is composed of three main components: the **Blobstream** contract, the **Succinct Gateway** contracts, and the **Verifier** contracts.  <br /> 
     By default, Blobstream operates asynchronously, handling requests in a fulfillment-based manner. First, zero-knowledge proofs of Celestia block ranges are requested for proving. Requests can be submitted either off-chain through the Succinct API, or onchain through the requestCall() method of the Succinct Gateway smart contract.
