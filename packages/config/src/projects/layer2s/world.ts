@@ -14,7 +14,7 @@ export const world: Layer2 = opStackL2({
     name: 'World Chain',
     slug: 'world',
     description:
-      "World Chain is an OP Stack Rollup used to scale World ID's Proof of Personhood.",
+      "World Chain is an OP Stack Rollup used to scale World ID's Proof of Personhood and aiming to prioritize Users with a valid World ID onchain.",
     purposes: ['Identity', 'Universal'],
     links: {
       websites: ['https://worldcoin.org/world-chain'],
@@ -52,4 +52,13 @@ export const world: Layer2 = opStackL2({
     }),
   ],
   discoveryDrivenData: true,
+  milestones: [
+    {
+      name: 'World Chain Launch',
+      link: 'https://worldcoin.org/blog/announcements/introducing-world-chain', // TO UPDATE
+      date: '2024-10-17T00:00:00Z', // TO UPDATE
+      description: 'World Chain Mainnet is officially live.',
+      type: 'general',
+    },
+  ],
 })
