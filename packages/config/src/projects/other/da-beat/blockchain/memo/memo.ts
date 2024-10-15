@@ -8,6 +8,7 @@ export const memo: DaLayer = {
   id: 'memo',
   type: 'DaLayer',
   kind: 'PublicBlockchain',
+  systemCategory: 'public',
   display: {
     name: 'Meeda',
     slug: 'memo',

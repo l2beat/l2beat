@@ -25,6 +25,7 @@ export const xterioDA: DaLayer = {
   id: 'xterio-da',
   type: 'DaLayer',
   kind: 'DAC',
+  systemCategory: 'custom',
   display: {
     name: 'XterioDA',
     slug: 'xterio',

@@ -12,6 +12,7 @@ export const avail: DaLayer = {
   id: 'avail',
   type: 'DaLayer',
   kind: 'PublicBlockchain',
+  systemCategory: 'public',
   display: {
     name: 'Avail',
     slug: 'avail',
