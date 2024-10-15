@@ -8,18 +8,18 @@ import { DaSummaryTable } from './_components/table/da-summary-table'
 
 export default async function Page() {
   const items = await getDaSummaryEntries()
-  const { dacs, other } = items.reduce<
-    Record<'dacs' | 'other', DaSummaryEntry[]>
+  const { publicSystem, customSystem } = items.reduce<
+    Record<'publicSystem' | 'customSystem', DaSummaryEntry[]>
   >(
     (acc, item) => {
-      if (item.kind === 'DAC') {
-        acc.dacs.push(item)
+      if (item.systemCategory === 'public') {
+        acc.publicSystem.push(item)
       } else {
-        acc.other.push(item)
+        acc.customSystem.push(item)
       }
       return acc
     },
-    { dacs: [], other: [] },
+    { publicSystem: [], customSystem: [] },
   )
 
   return (
@@ -28,11 +28,11 @@ export default async function Page() {
       <div className="flex flex-col gap-6">
         <MainPageCard className="flex flex-col gap-4">
           <h2 className="text-xl font-bold">Public blockchains</h2>
-          <DaSummaryTable items={other} />
+          <DaSummaryTable items={publicSystem} />
         </MainPageCard>
         <MainPageCard className="flex flex-col gap-4">
           <h2 className="text-xl font-bold">DACs</h2>
-          <DaSummaryDacsTable items={dacs} />
+          <DaSummaryDacsTable items={customSystem} />
         </MainPageCard>
       </div>
     </div>
