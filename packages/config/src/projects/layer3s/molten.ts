@@ -12,6 +12,7 @@ export const molten: Layer3 = orbitStackL3({
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Molten Network',
+    shortName: 'Molten',
     slug: 'molten',
     description:
       'Molten is an Orbit stack L3 on Arbitrum with AnyTrust DA, created by the UniDex team.',

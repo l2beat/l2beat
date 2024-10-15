@@ -383,8 +383,7 @@ export const taiko: Layer2 = {
     ),
     {
       name: 'GuardianProvers',
-      description:
-        'Guardians can prove blocks on the highest tier. Guardians are selected by the TaikoAdmin multisig.',
+      description: `Guardians can prove blocks on the highest tier. Guardians are selected by the TaikoAdmin multisig. Acts as a ${GuardianProverMinSigners}/${NumGuardiansProver} multisig.`,
       accounts: discovery.getPermissionedAccounts(
         'GuardianProver',
         'guardians',
@@ -392,8 +391,7 @@ export const taiko: Layer2 = {
     },
     {
       name: 'GuardianMinorityProver',
-      description:
-        'Minority guardians can prove blocks on the second highest tier. Guardians are selected by the TaikoAdmin multisig.',
+      description: `Minority guardians can prove blocks on the second highest tier. Guardians are selected by the TaikoAdmin multisig. Acts as a ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} multisig.`,
       accounts: discovery.getPermissionedAccounts(
         'GuardianMinorityProver',
         'guardians',

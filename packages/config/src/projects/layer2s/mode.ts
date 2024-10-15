@@ -13,6 +13,7 @@ export const mode: Layer2 = opStackL2({
   badges: [Badge.Infra.Superchain, Badge.RaaS.Conduit],
   display: {
     name: 'Mode Network',
+    shortName: 'Mode',
     slug: 'mode',
     warning:
       'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
