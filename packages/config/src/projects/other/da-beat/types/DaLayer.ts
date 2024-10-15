@@ -1,3 +1,4 @@
+import { DataAvailabilityLayer as ScalingDaLayerOption } from '../../../../common'
 import {
   DacBridge,
   EnshrinedBridge,
@@ -41,6 +42,8 @@ export type CommonDaLayer = {
   systemCategory: 'public' | 'custom'
   /** Whether given solution has challenge mechanism in place */
   hasChallengeMechanism?: boolean
+  /** Fallback */
+  fallback?: ScalingDaLayerOption
   /** Display information for the data availability layer. */
   display: DaLayerDisplay
   /** Is the DA layer upcoming? */

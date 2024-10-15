@@ -178,6 +178,11 @@ const challengeMechanismColumn = columnHelper.accessor(
   },
 )
 
+const fallbackColumn = columnHelper.accessor('fallback', {
+  header: 'Fallback',
+  cell: (ctx) => ctx.getValue() ?? 'None',
+})
+
 export const columns = [
   ...getCommonProjectColumns(columnHelper),
   nameColumn,
@@ -196,4 +201,5 @@ export const customSystemsColumns = [
   tvsColumn,
   slashableStakeForCustomSystem,
   challengeMechanismColumn,
+  fallbackColumn,
 ]
