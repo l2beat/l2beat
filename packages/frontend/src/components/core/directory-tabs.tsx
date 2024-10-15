@@ -58,7 +58,7 @@ const DirectoryTabsTrigger = React.forwardRef<
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
-      'flex h-8 shrink-0 items-center justify-center max-md:px-6 md:h-10 md:min-w-60 rounded-t-lg',
+      'flex h-8 shrink-0 items-center justify-center rounded-t-lg max-md:px-6 md:h-10 md:min-w-60',
       'whitespace-nowrap text-xs font-bold md:text-sm',
       'ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2',
       'data-[state=inactive]:bg-surface-tertiary dark:data-[state=inactive]:bg-gradient-to-t dark:data-[state=inactive]:from-[#2A2C33]  dark:data-[state=inactive]:to-[#1F2025]',
