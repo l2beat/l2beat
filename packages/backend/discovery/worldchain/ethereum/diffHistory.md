@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xa7927bae9da68dea06fbe15a31cc98cb66459e71
+Generated with discovered.json: 0x13cc1720de828f3d3e90e891aa33ed2d00a385cf
 
-# Diff at Tue, 15 Oct 2024 10:37:27 GMT:
+# Diff at Tue, 15 Oct 2024 11:07:13 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 20970413
+- current block number: 20970561
 
 ## Description
 
@@ -56,7 +56,7 @@ Initial discovery: OP stack with old L2OutputOracle and unused, but deployed Dis
 ```diff
 +   Status: CREATED
     contract SuperchainConfig (0xa231f8be37e583f276f93dF516D88a043bfe47E3)
-    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+    +++ description: This is NOT the shared SuperchainConfig of the OP stack Superchain. This SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
 ```
 
 ```diff

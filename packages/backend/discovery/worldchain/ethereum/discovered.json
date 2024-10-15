@@ -1,8 +1,8 @@
 {
   "name": "worldchain",
   "chain": "ethereum",
-  "blockNumber": 20970413,
-  "configHash": "0x60c65ce93d3ebbcc973edf386066c1a90e9cc0c3993daf20a73d40e614f164fd",
+  "blockNumber": 20970561,
+  "configHash": "0x47642483b0e76bbf95d9b9e5359b4db14f7b40e614823acd2c7c68d26828da4f",
   "contracts": [
     {
       "name": "L1OpUSDCBridgeAdapter",
@@ -385,14 +385,14 @@
     {
       "name": "SuperchainConfig",
       "address": "0xa231f8be37e583f276f93dF516D88a043bfe47E3",
-      "template": "opstack/SuperchainConfig",
+      "template": "opstack/SuperchainConfigFake",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
       ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
-        "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
+        "This is NOT the shared SuperchainConfig of the OP stack Superchain. This SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
       ],
       "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
@@ -505,8 +505,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 489262,
-          "prevBlockNum": 20970336
+          "prevBoughtGas": 1301449,
+          "prevBlockNum": 20970526
         },
         "paused": false,
         "superchainConfig": "0xa231f8be37e583f276f93dF516D88a043bfe47E3",
@@ -591,7 +591,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621903",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621904",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1168,7 +1168,7 @@
     "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
     "opstack/OptimismPortal": "0x2a32f6874a8c0e85e685fa944143e7968d675fed43b46e7385411ad11f8a1a43",
-    "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
+    "opstack/SuperchainConfigFake": "0x17951c3ed31f2fe002926d8927d2f05c9fd3502df1cad17c765d965c1e3f07a6",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
   }
 }
