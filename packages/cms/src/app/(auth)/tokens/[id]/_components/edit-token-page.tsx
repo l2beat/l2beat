@@ -1,5 +1,6 @@
 'use client'
 
+import Dagre from '@dagrejs/dagre'
 import {
   type TokenBridgeRecord,
   type TokenRecord,
@@ -51,6 +52,16 @@ import {
   TableRow,
 } from '~/components/ui/table'
 import Link from 'next/link'
+import {
+  ReactFlow,
+  Controls,
+  Background,
+  type Edge,
+  type Node,
+  Position,
+} from '@xyflow/react'
+import '@xyflow/react/dist/style.css'
+import { api } from '~/trpc/react'
 
 const tokenFormSchema = z.object({
   networkId: z.string().length(21),
@@ -219,6 +230,28 @@ export function EditTokenPage({
     await deleteToken({ id: token.id })
     router.replace('/tokens')
   }, [token, router])
+
+  const { data: flowDiagram } = api.tokens.tokensFlowDiagram.useQuery({
+    tokenIds: token ? [token.id] : [],
+  })
+
+  const { nodes, edges } = useMemo(() => {
+    return getLayoutedElements(
+      flowDiagram?.nodes.map((node) => ({
+        id: node.tokenId,
+        position: { x: 0, y: 0 },
+        data: { label: node.meta?.name ?? node.tokenId },
+      })) ?? [],
+      flowDiagram?.edges.map((edge) => ({
+        id: `${edge.source}-${edge.target}`,
+        source: edge.source,
+        target: edge.target,
+      })) ?? [],
+      {
+        direction: 'LR',
+      },
+    )
+  }, [flowDiagram?.nodes, flowDiagram?.edges])
 
   return (
     <Form {...form}>
@@ -439,6 +472,18 @@ export function EditTokenPage({
                   </TableRow>
                 </TableBody>
               </Table>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Flow</CardTitle>
+              <CardDescription>Flow of tokens.</CardDescription>
+            </CardHeader>
+            <CardContent className="h-[256px] w-full">
+              <ReactFlow fitView nodes={nodes} edges={edges}>
+                <Background />
+                <Controls />
+              </ReactFlow>
             </CardContent>
           </Card>
           <Card>
@@ -727,4 +772,37 @@ export function EditTokenPage({
       </form>
     </Form>
   )
+}
+
+function getLayoutedElements<N extends Node, E extends Edge>(
+  nodes: N[],
+  edges: E[],
+  options: { direction: 'TB' | 'LR' },
+) {
+  const g = new Dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}))
+  g.setGraph({ rankdir: options.direction })
+
+  edges.forEach((edge) => g.setEdge(edge.source, edge.target))
+  nodes.forEach((node) =>
+    g.setNode(node.id, {
+      ...node,
+      width: 200,
+      height: 100,
+    }),
+  )
+
+  Dagre.layout(g)
+
+  return {
+    nodes: nodes.map((node) => {
+      const position = g.node(node.id)
+      // We are shifting the dagre node position (anchor=center center) to the top left
+      // so it matches the React Flow node anchor point (top left).
+      const x = position.x - (node.measured?.width ?? 0) / 2
+      const y = position.y - (node.measured?.height ?? 0) / 2
+
+      return { ...node, position: { x, y } }
+    }),
+    edges,
+  }
 }
