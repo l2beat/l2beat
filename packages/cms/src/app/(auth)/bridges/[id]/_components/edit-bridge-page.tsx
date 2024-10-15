@@ -1,27 +1,34 @@
 'use client'
 
+import { zodResolver } from '@hookform/resolvers/zod'
 import { type ExternalBridgeRecord } from '@l2beat/database'
 import { ExternalBridgeType } from '@l2beat/database/enums'
 import { ChevronLeft } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import { type z } from 'zod'
+import { DeleteDialog } from '~/components/delete-dialog'
+import { DiscardChangesDialog } from '~/components/discard-changes-dialog'
 import { ReadonlyCopyInput } from '~/components/readonly-copy-input'
 import { Button } from '~/components/ui/button'
 import {
   Card,
-  CardHeader,
-  CardTitle,
   CardContent,
   CardDescription,
   CardFooter,
+  CardHeader,
+  CardTitle,
 } from '~/components/ui/card'
 import {
   Form,
+  FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormControl,
-  FormDescription,
   FormMessage,
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
@@ -32,15 +39,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/ui/select'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { insertBridgeSchema, updateBridgeSchema } from '../_actions/schemas'
-import { type z } from 'zod'
 import { deleteBridge, insertBridge, updateBridge } from '../_actions'
-import { useCallback, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { toast } from 'sonner'
-import { DiscardChangesDialog } from '~/components/discard-changes-dialog'
-import { DeleteDialog } from '~/components/delete-dialog'
+import { insertBridgeSchema, updateBridgeSchema } from '../_actions/schemas'
 
 const selectNullValue = '$null$'
 

@@ -1,9 +1,9 @@
 'use client'
 
-import { Input } from '~/components/ui/input'
 import { Search as SearchIcon } from 'lucide-react'
-import { useQueryState } from 'nuqs'
 import { usePathname } from 'next/navigation'
+import { useQueryState } from 'nuqs'
+import { Input } from '~/components/ui/input'
 
 export function Search() {
   const pathname = usePathname()

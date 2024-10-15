@@ -1,9 +1,9 @@
 'use client'
 
 import { Copy } from 'lucide-react'
+import { toast } from 'sonner'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
-import { toast } from 'sonner'
 
 export function ReadonlyCopyInput({ value }: { value: string }) {
   return (

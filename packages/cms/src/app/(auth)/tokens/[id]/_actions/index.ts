@@ -1,9 +1,9 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
 import { db } from '~/db'
 import { actionClient } from '~/lib/safe-action'
-import { tokenIdSchema, insertTokenSchema, updateTokenSchema } from './schemas'
-import { revalidatePath } from 'next/cache'
+import { insertTokenSchema, tokenIdSchema, updateTokenSchema } from './schemas'
 
 export const insertToken = actionClient
   .schema(insertTokenSchema)

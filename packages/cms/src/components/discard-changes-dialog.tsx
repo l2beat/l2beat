@@ -3,10 +3,10 @@
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
   DialogDescription,
-  DialogTitle,
   DialogFooter,
+  DialogHeader,
+  DialogTitle,
 } from '~/components/ui/dialog'
 import { Button } from './ui/button'
 

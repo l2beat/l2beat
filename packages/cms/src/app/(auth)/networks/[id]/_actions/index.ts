@@ -1,13 +1,13 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
 import { db } from '~/db'
 import { actionClient } from '~/lib/safe-action'
 import {
-  networkIdSchema,
   insertNetworkSchema,
+  networkIdSchema,
   updateNetworkSchema,
 } from './schemas'
-import { revalidatePath } from 'next/cache'
 
 export const insertNetwork = actionClient
   .schema(insertNetworkSchema)

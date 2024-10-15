@@ -1,6 +1,6 @@
+import { assert } from '@l2beat/shared-pure'
 import { clamp } from 'lodash'
 import { defaultLimits } from './shared'
-import { assert } from '@l2beat/shared-pure'
 
 export function getServerPagination({
   count,

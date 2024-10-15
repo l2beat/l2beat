@@ -1,48 +1,48 @@
 'use client'
 
+import { zodResolver } from '@hookform/resolvers/zod'
 import {
   type NetworkExplorerRecord,
-  type NetworkRpcRecord,
   type NetworkRecord,
+  type NetworkRpcRecord,
 } from '@l2beat/database'
 import { ExplorerType } from '@l2beat/database/enums'
+import { SelectValue } from '@radix-ui/react-select'
 import { ChevronLeft, Trash2 } from 'lucide-react'
-import { useForm, useFieldArray } from 'react-hook-form'
+import { useRouter } from 'next/navigation'
+import { useCallback, useState } from 'react'
+import { useFieldArray, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import { z } from 'zod'
+import { DeleteDialog } from '~/components/delete-dialog'
+import { DiscardChangesDialog } from '~/components/discard-changes-dialog'
 import { ReadonlyCopyInput } from '~/components/readonly-copy-input'
 import { Button } from '~/components/ui/button'
 import {
   Card,
-  CardHeader,
-  CardTitle,
   CardContent,
   CardDescription,
   CardFooter,
+  CardHeader,
+  CardTitle,
 } from '~/components/ui/card'
 import {
   Form,
+  FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormControl,
-  FormDescription,
   FormMessage,
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import { deleteNetwork, insertNetwork, updateNetwork } from '../_actions'
-import { useCallback, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { toast } from 'sonner'
-import { DiscardChangesDialog } from '~/components/discard-changes-dialog'
-import { DeleteDialog } from '~/components/delete-dialog'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
 } from '~/components/ui/select'
-import { SelectValue } from '@radix-ui/react-select'
+import { deleteNetwork, insertNetwork, updateNetwork } from '../_actions'
 
 const networkFormSchema = z.object({
   name: z.string().min(3).max(191),

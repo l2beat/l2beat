@@ -1,5 +1,6 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
 import { db } from '~/db'
 import { actionClient } from '~/lib/safe-action'
 import {
@@ -7,7 +8,6 @@ import {
   insertBridgeSchema,
   updateBridgeSchema,
 } from './schemas'
-import { revalidatePath } from 'next/cache'
 
 export const insertBridge = actionClient
   .schema(insertBridgeSchema)

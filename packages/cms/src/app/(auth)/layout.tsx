@@ -1,6 +1,8 @@
-import Link from 'next/link'
 import { CircleUser, Coins, Menu, Network, SendToBack } from 'lucide-react'
+import Link from 'next/link'
 
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 import { Button } from '~/components/ui/button'
 import {
   DropdownMenu,
@@ -11,11 +13,9 @@ import {
   DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu'
 import { Sheet, SheetContent, SheetTrigger } from '~/components/ui/sheet'
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
 import { NavMenuItem } from './_components/nav-menu-item'
-import { ThemeToggle } from './_components/theme-toggle'
 import { Search } from './_components/search'
+import { ThemeToggle } from './_components/theme-toggle'
 
 const menu = [
   {

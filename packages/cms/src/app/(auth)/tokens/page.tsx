@@ -5,11 +5,11 @@ import { TableControls } from '~/components/table-controls'
 import { Button } from '~/components/ui/button'
 import {
   Table,
-  TableHeader,
-  TableRow,
-  TableHead,
   TableBody,
   TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from '~/components/ui/table'
 import { db } from '~/db'
 import { getServerPagination } from '~/lib/server-pagination/server'

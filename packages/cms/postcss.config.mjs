@@ -4,7 +4,7 @@ const config = {
     tailwindcss: {},
     autoprefixer: {},
   },
-};
+}
 
 // biome-ignore lint/style/noDefaultExport: config file
-export default config;
+export default config

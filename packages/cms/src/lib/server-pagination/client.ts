@@ -1,9 +1,9 @@
 'use client'
 
+import { clamp } from 'lodash'
 import { parseAsInteger, useQueryState } from 'nuqs'
 import { useMemo } from 'react'
 import { defaultLimits } from './shared'
-import { clamp } from 'lodash'
 
 export function useServerPagination(
   count: number,

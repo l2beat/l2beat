@@ -6,8 +6,12 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:dependencies": "cd ../.. && yarn build:dependencies",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "format": "biome check .",
+    "format:fix": "biome check --write ."
   },
   "dependencies": {
     "@dagrejs/dagre": "^1.1.4",

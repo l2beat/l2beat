@@ -1,7 +1,7 @@
+import { type TokenBridgeRecord, type TokenMetaRecord } from '@l2beat/database'
 import { z } from 'zod'
-import { procedure, router } from '../trpc'
 import { db } from '~/db'
-import { type TokenMetaRecord, type TokenBridgeRecord } from '@l2beat/database'
+import { procedure, router } from '../trpc'
 
 export const tokensRouter = router({
   tokensFlowDiagram: procedure.THIS_SHOULD_BE_PRIVATE_BUT_IS_NOT_YET.input(

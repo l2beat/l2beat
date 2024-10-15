@@ -1,14 +1,14 @@
 'use client'
 
-import { useServerPagination } from '~/lib/server-pagination/client'
-import { Select, SelectContent, SelectItem, SelectTrigger } from './ui/select'
-import { Button } from './ui/button'
 import {
   ChevronLeft,
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
 } from 'lucide-react'
+import { useServerPagination } from '~/lib/server-pagination/client'
+import { Button } from './ui/button'
+import { Select, SelectContent, SelectItem, SelectTrigger } from './ui/select'
 
 export function TableControls({
   count,

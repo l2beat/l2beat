@@ -18,8 +18,7 @@ export const env = createEnv({
   /**
    * Environment variables exposed to the client (should be prefixed with `NEXT_PUBLIC_`)
    */
-  client: {
-  },
+  client: {},
 
   /**
    * You can't destruct `process.env` as a regular object in the Next.js edge runtimes (e.g.
