@@ -29,9 +29,7 @@ const EIGENUpgradeDelay = eigenDiscovery.getContractValue<number>(
 
 const EIGENUpgrades = {
   upgradableBy: ['EIGEN Timelock'],
-  upgradeDelay: `${formatSeconds(
-    EIGENUpgradeDelay,
-  )} delay.`,
+  upgradeDelay: `${formatSeconds(EIGENUpgradeDelay)} delay.`,
 }
 
 const quorumThresholds = discovery.getContractValue<string>(
@@ -133,29 +131,26 @@ export const eigenDAbridge = {
       },
       {
         ...eigenDiscovery.getContractDetails('DelegationManager', {
-          description:
-            `The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.`,
+          description: `The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.`,
         }),
-        ...eigenLayerUpgrades
+        ...eigenLayerUpgrades,
       },
       {
         ...eigenDiscovery.getContractDetails('StrategyManager', {
           description:
             'The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.',
         }),
-        ...eigenLayerUpgrades
+        ...eigenLayerUpgrades,
       },
       {
         ...discovery.getContractDetails('EigenStrategy', {
-          description:
-            `The EigenStrategy contract is responsible for managing the bEIGEN token strategy, representing the stake for the second EigenDA quorum.`,
+          description: `The EigenStrategy contract is responsible for managing the bEIGEN token strategy, representing the stake for the second EigenDA quorum.`,
         }),
-        ...eigenLayerUpgrades
+        ...eigenLayerUpgrades,
       },
       {
         ...eigenDiscovery.getContractDetails('EIGEN token', {
-          description:
-            `The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults).
+          description: `The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults).
               EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.`,
         }),
         ...EIGENUpgrades,
@@ -172,7 +167,7 @@ export const eigenDAbridge = {
       },
       {
         category: 'Funds can be lost if',
-        text: `EigenLayer EIGEN token contract receives a malicious code upgrade. There is a ${formatSeconds( EIGENUpgradeDelay)} delay on code upgrades.`,
+        text: `EigenLayer EIGEN token contract receives a malicious code upgrade. There is a ${formatSeconds(EIGENUpgradeDelay)} delay on code upgrades.`,
       },
       {
         category: 'Funds can be lost if',
@@ -271,7 +266,10 @@ export const eigenDAbridge = {
       participants: [
         {
           address: EthereumAddress(
-            eigenDiscovery.getContractValue<string>('EigenLayerProxyAdmin', 'owner'),
+            eigenDiscovery.getContractValue<string>(
+              'EigenLayerProxyAdmin',
+              'owner',
+            ),
           ),
           type: 'MultiSig',
         },
