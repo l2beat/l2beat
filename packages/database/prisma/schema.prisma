@@ -100,15 +100,21 @@ model NetworkExplorer {
 
 model Network {
   id                         String           @id @db.Char(21)
+  // Network details
   name                       String           @db.VarChar(256)
   logoUrl                    String?          @db.VarChar(256)
-  chainId                    Int
+  // STI
+  type                       NetworkType?
+  // EVM network data
+  chainId                    Int?
+  // External IDs and addresses
   coingeckoId                String?          @unique @db.VarChar(256)
   axelarId                   String?          @db.VarChar(256)
   axelarGatewayAddress       String?          @db.Char(42)
   orbitId                    String?          @db.VarChar(256)
   wormholeId                 String?          @db.VarChar(256)
   layerZeroV1EndpointAddress String?          @db.Char(42)
+  // Other
   bridgeEscrows              BridgeEscrow[]   @relation("network")
   canonicalBridgeEscrows     BridgeEscrow[]   @relation("canonicalNetwork")
   rpcs                       NetworkRpc[]
@@ -116,6 +122,10 @@ model Network {
   tokens                     Token[]
   updatedAt                  DateTime         @updatedAt
   createdAt                  DateTime         @default(now())
+}
+
+enum NetworkType {
+  EVM
 }
 
 model TokenBridge {
