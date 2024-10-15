@@ -1,4 +1,5 @@
 import { providers } from 'ethers'
+import { sum } from 'lodash'
 import type { AnalyzedBlock, Analyzer } from './analyzer'
 import {
   ENTRY_POINT_ADDRESS_0_6_0,
@@ -10,7 +11,7 @@ import {
   SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
 } from './protocols/gnosisSafe/const'
 import { SAFE_methods } from './protocols/gnosisSafe/methods'
-import type { CountedOperation, Method, Operation, Transaction } from './types'
+import type { CountedOperation, Method, Operation } from './types'
 
 export class RpcUopsAnalyzer implements Analyzer {
   async analyzeBlock(rpcBlock: {
@@ -22,14 +23,14 @@ export class RpcUopsAnalyzer implements Analyzer {
       ),
     )
     return {
-      uopsLength: uops.reduce((acc, tx) => acc + tx.operationsCount, 0),
+      uopsLength: sum(uops),
       transactionsLength: rpcBlock.transactions.length,
     }
   }
 
   private async mapTransaction(
     tx: providers.TransactionResponse,
-  ): Promise<Transaction> {
+  ): Promise<number> {
     if (
       tx.to?.toLowerCase() === ENTRY_POINT_ADDRESS_0_6_0 ||
       tx.to?.toLowerCase() === ENTRY_POINT_ADDRESS_0_7_0 ||
@@ -43,20 +44,16 @@ export class RpcUopsAnalyzer implements Analyzer {
       return this.createTransaction(tx)
     }
 
-    return {
-      operationsCount: 1,
-    }
+    return 1
   }
 
   private async createTransaction(
     tx: providers.TransactionResponse,
-  ): Promise<Transaction> {
+  ): Promise<number> {
     const methods = ERC4337_methods.concat(SAFE_methods)
     const countedOperation = await this.countUserOperations(tx.data, methods)
 
-    return {
-      operationsCount: countedOperation.count,
-    }
+    return countedOperation.count
   }
 
   private async countUserOperations(

@@ -1,7 +1,3 @@
-export type Transaction = {
-  operationsCount: number
-}
-
 export interface CountedOperation {
   count: number
   children: CountedOperation[]
