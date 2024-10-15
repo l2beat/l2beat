@@ -65,6 +65,43 @@ describe(BlockActivityIndexer.name, () => {
       ])
       expect(newSafeHeight).toEqual(10)
     })
+
+    it('it calculates ratio to 2 decimals', async () => {
+      const activityRepository = mockObject<Database['activity']>({
+        getByProjectAndTimeRange: mockFn().resolvesTo([
+          activityRecord('a', START, 7, 10, 0, 8),
+        ]),
+        upsertMany: mockFn().resolvesTo(undefined),
+      })
+
+      const txsCountProvider = mockObject<TxsCountProvider>({
+        getTxsCount: mockFn().resolvesTo([
+          activityRecord('a', START, 5, 12, 9, 10),
+        ]),
+      })
+
+      const indexer = createIndexer({
+        txsCountProvider,
+        db: mockDatabase({ activity: activityRepository }),
+        batchSize: 100,
+      })
+
+      const newSafeHeight = await indexer.update(0, 10)
+
+      expect(txsCountProvider.getTxsCount).toHaveBeenCalledWith(0, 10)
+      expect(activityRepository.upsertMany).toHaveBeenCalledWith([
+        {
+          projectId: ProjectId('a'),
+          timestamp: START,
+          count: 12,
+          uopsCount: 22,
+          ratio: 1.83,
+          start: 0,
+          end: 10,
+        },
+      ])
+      expect(newSafeHeight).toEqual(10)
+    })
   })
 
   describe(BlockActivityIndexer.prototype.getDatabaseEntries.name, () => {
@@ -206,7 +243,7 @@ function activityRecord(
     timestamp,
     count,
     uopsCount,
-    ratio: uopsCount ? uopsCount / count : null,
+    ratio: uopsCount ? parseFloat((uopsCount / count).toFixed(2)) : null,
     start,
     end,
   }

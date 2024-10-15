@@ -103,7 +103,7 @@ function activityRecord(
     timestamp,
     count,
     uopsCount,
-    ratio: uopsCount ? uopsCount / count : null,
+    ratio: uopsCount ? parseFloat((uopsCount / count).toFixed(2)) : null,
     start: timestamp.toStartOf('day').toNumber(),
     end: timestamp.toEndOf('day').add(-1, 'seconds').toNumber(),
   }

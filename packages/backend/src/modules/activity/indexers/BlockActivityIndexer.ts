@@ -44,7 +44,7 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
           timestamp: timestamp,
           count,
           uopsCount,
-          ratio: uopsCount ? uopsCount / count : null,
+          ratio: uopsCount ? parseFloat((uopsCount / count).toFixed(2)) : null,
           start: currentRecord ? Math.min(currentRecord.start, start) : start,
           end: currentRecord ? Math.max(currentRecord.end, end) : end,
         }
