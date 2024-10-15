@@ -1,0 +1,471 @@
+{
+  "name": "shibarium",
+  "chain": "ethereum",
+  "blockNumber": 20973708,
+  "configHash": "0x4a909108cac0153eefe8daee5a4537269e24dbfca1957e8648ef81e4f492aae0",
+  "version": 15,
+  "contracts": [
+    {
+      "name": "Merkle",
+      "address": "0x32262DDD01fFF9bb367586317A5e40Dbe2bCcbe2",
+      "sinceTimestamp": 1691242415,
+      "values": { "$immutable": true }
+    },
+    {
+      "name": "StateSender",
+      "address": "0x3a122785bC4d951D132B2CAD31FC187D6DC7A21C",
+      "sinceTimestamp": 1691243927,
+      "values": {
+        "$immutable": true,
+        "counter": 35822,
+        "isOwner": false,
+        "owner": "0x80Cc222EA02F4334F67e9E55E7412fed62599004"
+      }
+    },
+    {
+      "name": "ERC20PredicateProxy",
+      "address": "0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa",
+      "proxyType": "Polygon proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1691475539,
+      "values": {
+        "$admin": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
+        "$implementation": "0xfffC2D781999F09A8b127f8Ef419a3EeD2EDa1dd",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "implementation": "0xfffC2D781999F09A8b127f8Ef419a3EeD2EDa1dd",
+        "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
+        "proxyOwner": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
+        "proxyType": 2,
+        "TOKEN_TYPE": "0x8ae85d849167ff996c04040c44924fd364217285e4cad818292c7ac37c0a345b",
+        "TRANSFER_EVENT_SIG": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+      },
+      "derivedName": "ERC20Predicate"
+    },
+    {
+      "name": "DepositManagerProxy",
+      "address": "0x885fcE983b6a01633f764325B8c3c5D31032C995",
+      "proxyType": "EIP897 proxy",
+      "sinceTimestamp": 1691243951,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x79a674D373551e6CfD22b2ed65cc1Ac09250F430",
+        "childChain": "0x32262DDD01fFF9bb367586317A5e40Dbe2bCcbe2",
+        "deposits": [
+          [
+            "0x0000000000000000000000000000000000000000000000000000000000000000",
+            0
+          ],
+          [
+            "0x0000000000000000000000000000000000000000000000000000000000000000",
+            0
+          ],
+          [
+            "0x0000000000000000000000000000000000000000000000000000000000000000",
+            0
+          ],
+          [
+            "0x0000000000000000000000000000000000000000000000000000000000000000",
+            0
+          ],
+          [
+            "0x0000000000000000000000000000000000000000000000000000000000000000",
+            0
+          ]
+        ],
+        "governance": "0xC476E20c2F7FA3B35aC242aBE71B59e902242f06",
+        "implementation": "0x79a674D373551e6CfD22b2ed65cc1Ac09250F430",
+        "isOwner": false,
+        "locked": false,
+        "maxErc20Deposit": "100000000000000000000000000000",
+        "owner": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
+        "proxyType": 2,
+        "registry": "0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
+        "rootChain": "0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9",
+        "stateSender": "0x3a122785bC4d951D132B2CAD31FC187D6DC7A21C"
+      },
+      "derivedName": "DepositManager"
+    },
+    {
+      "name": "EtherPredicateProxy",
+      "address": "0xc3897302aB4B42931cB4857050Fa60f53B775870",
+      "proxyType": "Polygon proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1691475959,
+      "values": {
+        "$admin": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
+        "$implementation": "0x3f3bF9Ce73CE5a152561f4BF0306de3E3526f8FA",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "implementation": "0x3f3bF9Ce73CE5a152561f4BF0306de3E3526f8FA",
+        "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
+        "proxyOwner": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
+        "proxyType": 2,
+        "TOKEN_TYPE": "0xa234e09165f88967a714e2a476288e4c6d88b4b69fe7c300a03190b858990bfc",
+        "TRANSFER_EVENT_SIG": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+      },
+      "derivedName": "EtherPredicate"
+    },
+    {
+      "name": "Governance",
+      "address": "0xC476E20c2F7FA3B35aC242aBE71B59e902242f06",
+      "proxyType": "EIP897 proxy",
+      "sinceTimestamp": 1691242715,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x3ca9770a30c61e6cF0a4bDD66A26Cee61AE51e65",
+        "implementation": "0x3ca9770a30c61e6cF0a4bDD66A26Cee61AE51e65",
+        "isOwner": false,
+        "owner": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
+        "proxyType": 2
+      }
+    },
+    {
+      "name": "RootChain",
+      "address": "0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9",
+      "proxyType": "EIP897 proxy",
+      "sinceTimestamp": 1691243771,
+      "values": {
+        "_nextHeaderBlock": 183020000,
+        "$immutable": false,
+        "$implementation": "0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
+        "CHAINID": 109,
+        "currentHeaderBlock": 183010000,
+        "getLastChildBlock": 7368732,
+        "headerBlocks": [
+          [
+            "0x0000000000000000000000000000000000000000000000000000000000000000",
+            0,
+            0,
+            0,
+            "0x0000000000000000000000000000000000000000"
+          ],
+          [
+            "0x0000000000000000000000000000000000000000000000000000000000000000",
+            0,
+            0,
+            0,
+            "0x0000000000000000000000000000000000000000"
+          ],
+          [
+            "0x0000000000000000000000000000000000000000000000000000000000000000",
+            0,
+            0,
+            0,
+            "0x0000000000000000000000000000000000000000"
+          ],
+          [
+            "0x0000000000000000000000000000000000000000000000000000000000000000",
+            0,
+            0,
+            0,
+            "0x0000000000000000000000000000000000000000"
+          ],
+          [
+            "0x0000000000000000000000000000000000000000000000000000000000000000",
+            0,
+            0,
+            0,
+            "0x0000000000000000000000000000000000000000"
+          ]
+        ],
+        "heimdallId": "0x2d1b61c7cbff527a84da0d1da4e5ba94d46c39894530664ecfb67e21036736f1",
+        "implementation": "0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
+        "isOwner": false,
+        "networkId": "0x6d",
+        "owner": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
+        "proxyType": 2,
+        "VOTE_TYPE": 2
+      }
+    },
+    {
+      "name": "Registry",
+      "address": "0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
+      "sinceTimestamp": 1691243735,
+      "values": {
+        "$immutable": true,
+        "erc20Predicate": "0xa700BCC4E31BFE9375f5f55cD6fD133323F911D6",
+        "erc721Predicate": "0x6EF5E716911aEc0EFFECCe9E9b8Be0d8249e2377",
+        "getChildChainAndStateSender": [
+          "0x32262DDD01fFF9bb367586317A5e40Dbe2bCcbe2",
+          "0x3a122785bC4d951D132B2CAD31FC187D6DC7A21C"
+        ],
+        "getDepositManagerAddress": "0x885fcE983b6a01633f764325B8c3c5D31032C995",
+        "getSlashingManagerAddress": "0x8ed7d143Ef452316Ab1123d28Ab302dC3b80d3ce",
+        "getStakeManagerAddress": "0x65218A41Fb92637254B4f8c97448d3dF343A3064",
+        "getValidatorShareAddress": "0xD59C6d8CDEDc5B6336BF599A69336cC222cfc62c",
+        "getWethTokenAddress": "0x0000000000000000000000000000000000000000",
+        "getWithdrawManagerAddress": "0x5F683665ca87dbC3D1358913da80e3C71c328Fb0",
+        "governance": "0xC476E20c2F7FA3B35aC242aBE71B59e902242f06"
+      }
+    }
+  ],
+  "eoas": [
+    {
+      "address": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa"
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xc3897302aB4B42931cB4857050Fa60f53B775870"
+        }
+      ]
+    }
+  ],
+  "abis": {
+    "0x3a122785bC4d951D132B2CAD31FC187D6DC7A21C": [
+      "event NewRegistration(address indexed user, address indexed sender, address indexed receiver)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RegistrationUpdated(address indexed user, address indexed sender, address indexed receiver)",
+      "event StateSynced(uint256 indexed id, address indexed contractAddress, bytes data)",
+      "function counter() view returns (uint256)",
+      "function isOwner() view returns (bool)",
+      "function owner() view returns (address)",
+      "function register(address sender, address receiver)",
+      "function registrations(address) view returns (address)",
+      "function renounceOwnership()",
+      "function syncState(address receiver, bytes data)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "0x3ca9770a30c61e6cF0a4bDD66A26Cee61AE51e65": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function isOwner() view returns (bool)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function update(address target, bytes data)"
+    ],
+    "0x3f3bF9Ce73CE5a152561f4BF0306de3E3526f8FA": [
+      "constructor()",
+      "event ExitedEther(address indexed exitor, uint256 amount)",
+      "event LockedEther(address indexed depositor, address indexed depositReceiver, uint256 amount)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function MANAGER_ROLE() view returns (bytes32)",
+      "function TOKEN_TYPE() view returns (bytes32)",
+      "function TRANSFER_EVENT_SIG() view returns (bytes32)",
+      "function exitTokens(address, address, bytes log)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address _owner)",
+      "function lockTokens(address depositor, address depositReceiver, address, bytes depositData)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)"
+    ],
+    "0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa": [
+      "constructor(address _proxyTo)",
+      "event ProxyOwnerUpdate(address _new, address _old)",
+      "event ProxyUpdated(address indexed _new, address indexed _old)",
+      "function implementation() view returns (address)",
+      "function proxyOwner() view returns (address)",
+      "function proxyType() pure returns (uint256 proxyTypeId)",
+      "function transferProxyOwnership(address newOwner)",
+      "function updateAndCall(address _newProxyTo, bytes data) payable",
+      "function updateImplementation(address _newProxyTo)"
+    ],
+    "0x79a674D373551e6CfD22b2ed65cc1Ac09250F430": [
+      "constructor()",
+      "event MaxErc20DepositUpdate(uint256 indexed oldLimit, uint256 indexed newLimit)",
+      "event NewDepositBlock(address indexed owner, address indexed token, uint256 amountOrNFTId, uint256 depositBlockId)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function childChain() view returns (address)",
+      "function depositBulk(address[] _tokens, uint256[] _amountOrTokens, address _user)",
+      "function depositERC20(address _token, uint256 _amount)",
+      "function depositERC20ForUser(address _token, address _user, uint256 _amount)",
+      "function depositERC721(address _token, uint256 _tokenId)",
+      "function depositERC721ForUser(address _token, address _user, uint256 _tokenId)",
+      "function depositEther() payable",
+      "function deposits(uint256) view returns (bytes32 depositHash, uint256 createdAt)",
+      "function governance() view returns (address)",
+      "function isOwner() view returns (bool)",
+      "function lock()",
+      "function locked() view returns (bool)",
+      "function maxErc20Deposit() view returns (uint256)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function owner() view returns (address)",
+      "function registry() view returns (address)",
+      "function renounceOwnership()",
+      "function rootChain() view returns (address)",
+      "function stateSender() view returns (address)",
+      "function transferAssets(address _token, address _user, uint256 _amountOrNFTId)",
+      "function transferOwnership(address newOwner)",
+      "function unlock()",
+      "function updateChildChainAndStateSender()",
+      "function updateMaxErc20Deposit(uint256 maxDepositAmount)",
+      "function updateRootChain(address _rootChain)"
+    ],
+    "0x885fcE983b6a01633f764325B8c3c5D31032C995": [
+      "constructor(address _proxyTo, address _registry, address _rootChain, address _governance)",
+      "event MaxErc20DepositUpdate(uint256 indexed oldLimit, uint256 indexed newLimit)",
+      "event NewDepositBlock(address indexed owner, address indexed token, uint256 amountOrNFTId, uint256 depositBlockId)",
+      "event OwnerUpdate(address _prevOwner, address _newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ProxyUpdated(address indexed _new, address indexed _old)",
+      "function childChain() view returns (address)",
+      "function deposits(uint256) view returns (bytes32 depositHash, uint256 createdAt)",
+      "function governance() view returns (address)",
+      "function implementation() view returns (address)",
+      "function isOwner() view returns (bool)",
+      "function lock()",
+      "function locked() view returns (bool)",
+      "function maxErc20Deposit() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function proxyType() pure returns (uint256 proxyTypeId)",
+      "function registry() view returns (address)",
+      "function renounceOwnership()",
+      "function rootChain() view returns (address)",
+      "function stateSender() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function unlock()",
+      "function updateImplementation(address _newProxyTo)"
+    ],
+    "0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA": [
+      "event NewHeaderBlock(address indexed proposer, uint256 indexed headerBlockId, uint256 indexed reward, uint256 start, uint256 end, bytes32 root)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ResetHeaderBlock(address indexed proposer, uint256 indexed headerBlockId)",
+      "function CHAINID() view returns (uint256)",
+      "function VOTE_TYPE() view returns (uint8)",
+      "function _nextHeaderBlock() view returns (uint256)",
+      "function currentHeaderBlock() view returns (uint256)",
+      "function getLastChildBlock() view returns (uint256)",
+      "function headerBlocks(uint256) view returns (bytes32 root, uint256 start, uint256 end, uint256 createdAt, address proposer)",
+      "function heimdallId() view returns (bytes32)",
+      "function isOwner() view returns (bool)",
+      "function networkId() view returns (bytes)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function setHeimdallId(string _heimdallId)",
+      "function setNextHeaderBlock(uint256 _value)",
+      "function slash()",
+      "function submitCheckpoint(bytes data, uint256[3][] sigs)",
+      "function submitHeaderBlock(bytes data, bytes sigs)",
+      "function transferOwnership(address newOwner)",
+      "function updateDepositId(uint256 numDeposits) returns (uint256 depositId)"
+    ],
+    "0xc3897302aB4B42931cB4857050Fa60f53B775870": [
+      "constructor(address _proxyTo)",
+      "event ProxyOwnerUpdate(address _new, address _old)",
+      "event ProxyUpdated(address indexed _new, address indexed _old)",
+      "function implementation() view returns (address)",
+      "function proxyOwner() view returns (address)",
+      "function proxyType() pure returns (uint256 proxyTypeId)",
+      "function transferProxyOwnership(address newOwner)",
+      "function updateAndCall(address _newProxyTo, bytes data) payable",
+      "function updateImplementation(address _newProxyTo)"
+    ],
+    "0xC476E20c2F7FA3B35aC242aBE71B59e902242f06": [
+      "constructor(address _proxyTo)",
+      "event OwnerUpdate(address _prevOwner, address _newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ProxyUpdated(address indexed _new, address indexed _old)",
+      "function implementation() view returns (address)",
+      "function isOwner() view returns (bool)",
+      "function owner() view returns (address)",
+      "function proxyType() pure returns (uint256 proxyTypeId)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function updateImplementation(address _newProxyTo)"
+    ],
+    "0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9": [
+      "constructor(address _proxyTo, address _registry, string _heimdallId)",
+      "event NewHeaderBlock(address indexed proposer, uint256 indexed headerBlockId, uint256 indexed reward, uint256 start, uint256 end, bytes32 root)",
+      "event OwnerUpdate(address _prevOwner, address _newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ProxyUpdated(address indexed _new, address indexed _old)",
+      "event ResetHeaderBlock(address indexed proposer, uint256 indexed headerBlockId)",
+      "function CHAINID() view returns (uint256)",
+      "function VOTE_TYPE() view returns (uint8)",
+      "function _nextHeaderBlock() view returns (uint256)",
+      "function headerBlocks(uint256) view returns (bytes32 root, uint256 start, uint256 end, uint256 createdAt, address proposer)",
+      "function heimdallId() view returns (bytes32)",
+      "function implementation() view returns (address)",
+      "function isOwner() view returns (bool)",
+      "function networkId() view returns (bytes)",
+      "function owner() view returns (address)",
+      "function proxyType() pure returns (uint256 proxyTypeId)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function updateImplementation(address _newProxyTo)"
+    ],
+    "0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB": [
+      "constructor(address _governance)",
+      "event ContractMapUpdated(bytes32 indexed key, address indexed previousContract, address indexed newContract)",
+      "event PredicateAdded(address indexed predicate, address indexed from)",
+      "event PredicateRemoved(address indexed predicate, address indexed from)",
+      "event ProofValidatorAdded(address indexed validator, address indexed from)",
+      "event ProofValidatorRemoved(address indexed validator, address indexed from)",
+      "event TokenMapped(address indexed rootToken, address indexed childToken)",
+      "function addErc20Predicate(address predicate)",
+      "function addErc721Predicate(address predicate)",
+      "function addPredicate(address predicate, uint8 _type)",
+      "function childToRootToken(address) view returns (address)",
+      "function contractMap(bytes32) view returns (address)",
+      "function erc20Predicate() view returns (address)",
+      "function erc721Predicate() view returns (address)",
+      "function getChildChainAndStateSender() view returns (address, address)",
+      "function getDepositManagerAddress() view returns (address)",
+      "function getSlashingManagerAddress() view returns (address)",
+      "function getStakeManagerAddress() view returns (address)",
+      "function getValidatorShareAddress() view returns (address)",
+      "function getWethTokenAddress() view returns (address)",
+      "function getWithdrawManagerAddress() view returns (address)",
+      "function governance() view returns (address)",
+      "function isChildTokenErc721(address childToken) view returns (bool)",
+      "function isERC721(address) view returns (bool)",
+      "function isTokenMapped(address _token) view returns (bool)",
+      "function isTokenMappedAndGetPredicate(address _token) view returns (address)",
+      "function isTokenMappedAndIsErc721(address _token) view returns (bool)",
+      "function mapToken(address _rootToken, address _childToken, bool _isERC721)",
+      "function predicates(address) view returns (uint8 _type)",
+      "function proofValidatorContracts(address) view returns (bool)",
+      "function removePredicate(address predicate)",
+      "function rootToChildToken(address) view returns (address)",
+      "function updateContractMap(bytes32 _key, address _address)"
+    ],
+    "0xfffC2D781999F09A8b127f8Ef419a3EeD2EDa1dd": [
+      "constructor()",
+      "event LockedERC20(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256 amount)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function MANAGER_ROLE() view returns (bytes32)",
+      "function TOKEN_TYPE() view returns (bytes32)",
+      "function TRANSFER_EVENT_SIG() view returns (bytes32)",
+      "function exitTokens(address, address rootToken, bytes log)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address _owner)",
+      "function lockTokens(address depositor, address depositReceiver, address rootToken, bytes depositData)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)"
+    ]
+  },
+  "usedTemplates": {},
+  "shapeFilesHash": "0x46cbf03af638e8cd8f74ebc7dbd4fd9736d1eec6e533e59799863bc4ea44a1ea"
+}

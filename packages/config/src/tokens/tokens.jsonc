@@ -184,6 +184,11 @@
       "address": "0xAC57De9C1A09FeC648E93EB98875B212DB0d460B"
     },
     {
+      "symbol": "BAD",
+      "address": "0x32b86b99441480a7E5BD3A26c124ec2373e3F015",
+      "coingeckoId": "bad-idea-ai"
+    },
+    {
       "symbol": "BAL",
       "address": "0xba100000625a3754423978a60c9317c58a424e3D"
     },
@@ -230,6 +235,11 @@
     {
       "symbol": "BOBA",
       "address": "0x42bBFa2e77757C645eeaAd1655E0911a7553Efbc"
+    },
+    {
+      "symbol": "BONE",
+      "address": "0x9813037ee2218799597d83D4a5B6F3b6778218d9",
+      "coingeckoId": "bone-shibaswap"
     },
     {
       "symbol": "BORG",
@@ -371,7 +381,8 @@
     {
       "symbol": "DAI",
       "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-      "category": "stablecoin"
+      "category": "stablecoin",
+      "coingeckoId": "dai"
     },
     {
       "symbol": "DAO",
@@ -541,6 +552,11 @@
       "address": "0x50D1c9771902476076eCFc8B2A83Ad6b9355a4c9"
     },
     {
+      "symbol": "FUND",
+      "address": "0xe9B076B476D8865cDF79D1Cf7DF420EE397a7f75",
+      "coingeckoId": "unification"
+    },
+    {
       "symbol": "FX",
       "address": "0x8c15Ef5b4B21951d50E53E4fbdA8298FFAD25057"
     },
@@ -683,6 +699,11 @@
       "address": "0xdeFA4e8a7bcBA345F687a2f1456F5Edd9CE97202"
     },
     {
+      "symbol": "KNINE",
+      "address": "0x91fbB2503AC69702061f1AC6885759Fc853e6EaE",
+      "coingeckoId": "k9-finance-dao"
+    },
+    {
       "symbol": "KOI",
       "address": "0x9d14bce1daddf408d77295bb1be9b343814f44de"
     },
@@ -705,6 +726,11 @@
     {
       "symbol": "LDY",
       "address": "0x482dF7483a52496F4C65AB499966dfcdf4DDFDbc"
+    },
+    {
+      "symbol": "LEASH",
+      "address": "0x27C70Cd1946795B66be9d954418546998b546634",
+      "coingeckoId": "leash"
     },
     {
       "symbol": "LEO",
@@ -1107,7 +1133,8 @@
     },
     {
       "symbol": "SHIB",
-      "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE"
+      "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+      "coingeckoId": "shiba-inu"
     },
     {
       "symbol": "Silo",
@@ -1294,7 +1321,8 @@
     {
       "symbol": "USDC",
       "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-      "category": "stablecoin"
+      "category": "stablecoin",
+      "coingeckoId": "usd-coin"
     },
     {
       "symbol": "USDD",
@@ -1324,7 +1352,8 @@
     {
       "symbol": "USDT",
       "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-      "category": "stablecoin"
+      "category": "stablecoin",
+      "coingeckoId": "tether"
     },
     {
       "symbol": "VENT",
@@ -1353,7 +1382,8 @@
     },
     {
       "symbol": "WBTC",
-      "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
+      "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+      "coingeckoId": "wrapped-bitcoin"
     },
     {
       "symbol": "weETH",
@@ -1409,6 +1439,11 @@
       "symbol": "XDB",
       "address": "0xB9EefC4b0d472A44be93970254Df4f4016569d27",
       "coingeckoId": "digitalbits"
+    },
+    {
+      "symbol": "xFUND",
+      "address": "0x892A6f9dF0147e5f079b0993F486F9acA3c87881",
+      "coingeckoId": "xfund"
     },
     {
       "symbol": "xSUSHI",

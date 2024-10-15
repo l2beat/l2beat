@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "shibarium",
+  "maxDepth": 1,
+  "maxAddresses": 200,
+  "initialAddresses": [
+    "0x885fcE983b6a01633f764325B8c3c5D31032C995", // DepositManagerProxy for BONE bridge deposits
+    "0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa", // ERC20PredicateProxy for ERC20 tokens bridge deposits
+    "0xc3897302aB4B42931cB4857050Fa60f53B775870"  // EtherPredicateProxy for ETH bridge deposits
+  ],
+  "names": {
+    "0x885fcE983b6a01633f764325B8c3c5D31032C995": "DepositManagerProxy",
+    "0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa": "ERC20PredicateProxy",
+    "0xc3897302aB4B42931cB4857050Fa60f53B775870": "EtherPredicateProxy"
+  }
+}
