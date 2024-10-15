@@ -13,6 +13,7 @@ export const orderly: Layer2 = opStackL2({
   discovery,
   display: {
     name: 'Orderly Network',
+    shortName: 'Orderly',
     slug: 'orderly',
     warning:
       'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
