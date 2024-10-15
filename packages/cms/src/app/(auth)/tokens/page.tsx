@@ -76,7 +76,9 @@ export default async function Page({
             <p className="text-sm text-muted-foreground">
               You can add a token by clicking the button below.
             </p>
-            <Button className="mt-4">Add Token</Button>
+            <Link href="/tokens/new">
+              <Button className="mt-4">Add Token</Button>
+            </Link>
           </div>
         </div>
       ) : (

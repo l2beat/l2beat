@@ -55,7 +55,9 @@ export default async function Page({
             <p className="text-sm text-muted-foreground">
               You can add a bridge by clicking the button below.
             </p>
-            <Button className="mt-4">Add Bridge</Button>
+            <Link href="/bridges/new">
+              <Button className="mt-4">Add Bridge</Button>
+            </Link>
           </div>
         </div>
       ) : (

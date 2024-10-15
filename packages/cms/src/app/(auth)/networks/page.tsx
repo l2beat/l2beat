@@ -56,7 +56,9 @@ export default async function Page({
             <p className="text-sm text-muted-foreground">
               You can add a network by clicking the button below.
             </p>
-            <Button className="mt-4">Add Network</Button>
+            <Link href="/networks/new">
+              <Button className="mt-4">Add Network</Button>
+            </Link>
           </div>
         </div>
       ) : (
