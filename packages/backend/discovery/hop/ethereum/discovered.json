@@ -3,12 +3,15 @@
   "chain": "ethereum",
   "blockNumber": 19531595,
   "configHash": "0xb65597dc170a417db4f9924962294d8b248d20068901b7ecf5ea3307ec89d78d",
-  "version": 15,
   "contracts": [
     {
       "name": "Hop Multisig",
       "address": "0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
+        "0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1625076853,
@@ -34,6 +37,9 @@
     {
       "name": "MATIC Bridge",
       "address": "0x22B1Cbb8D98a01a3B71D034BB899775A76Eb1cc2",
+      "sourceHashes": [
+        "0x75e421fb2a98b163a7e8946c6cd7a5ed33e6fbc412c10c85963f5f25be17f56c"
+      ],
       "sinceTimestamp": 1628225875,
       "values": {
         "$immutable": true,
@@ -51,6 +57,9 @@
     {
       "name": "Timelock",
       "address": "0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7",
+      "sourceHashes": [
+        "0xd8c1c87ab8dd6a488c6544d121da18bd936a01cde20a7dd2b3d0f771e376fe37"
+      ],
       "sinceTimestamp": 1625550046,
       "values": {
         "$immutable": true,
@@ -65,6 +74,9 @@
     {
       "name": "USDC Bridge",
       "address": "0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a",
+      "sourceHashes": [
+        "0x0280d9153cd7cca43f1ed48d033d6863660ddf85ced54664b3491bf99b2af313"
+      ],
       "sinceTimestamp": 1623907245,
       "values": {
         "$immutable": true,
@@ -82,6 +94,9 @@
     {
       "name": "DAI Bridge",
       "address": "0x3d4Cc8A61c7528Fd86C55cfe061a78dCBA48EDd1",
+      "sourceHashes": [
+        "0x75e421fb2a98b163a7e8946c6cd7a5ed33e6fbc412c10c85963f5f25be17f56c"
+      ],
       "sinceTimestamp": 1631654328,
       "values": {
         "$immutable": true,
@@ -99,6 +114,9 @@
     {
       "name": "USDT Bridge",
       "address": "0x3E4a3a4796d16c0Cd582C382691998f7c06420B6",
+      "sourceHashes": [
+        "0x75e421fb2a98b163a7e8946c6cd7a5ed33e6fbc412c10c85963f5f25be17f56c"
+      ],
       "sinceTimestamp": 1626739308,
       "values": {
         "$immutable": true,
@@ -116,6 +134,9 @@
     {
       "name": "SNX Bridge",
       "address": "0x893246FACF345c99e4235E5A7bbEE7404c988b96",
+      "sourceHashes": [
+        "0x2b7aa191c2727e479449690cdb41f98bbcc67a31189e00edcd25ef5e4d272224"
+      ],
       "sinceTimestamp": 1664398079,
       "values": {
         "$immutable": true,
@@ -133,6 +154,9 @@
     {
       "name": "HOP Bridge",
       "address": "0x914f986a44AcB623A277d6Bd17368171FCbe4273",
+      "sourceHashes": [
+        "0x8a2a80add79397b17c716d503c7aa7cc60889161cdef47d55c8b8b519f5b90d7"
+      ],
       "sinceTimestamp": 1663897247,
       "values": {
         "$immutable": true,
@@ -151,6 +175,9 @@
     {
       "name": "ETH Bridge",
       "address": "0xb8901acB165ed027E32754E0FFe830802919727f",
+      "sourceHashes": [
+        "0xaed8456169cf92120561541e8b5eee9af6a7b97882c06a21febf326148a53bc3"
+      ],
       "sinceTimestamp": 1633066189,
       "values": {
         "$immutable": true,
@@ -167,6 +194,9 @@
     {
       "name": "WBTC Bridge",
       "address": "0xb98454270065A31D71Bf635F6F7Ee6A518dFb849",
+      "sourceHashes": [
+        "0x75e421fb2a98b163a7e8946c6cd7a5ed33e6fbc412c10c85963f5f25be17f56c"
+      ],
       "sinceTimestamp": 1635022634,
       "values": {
         "$immutable": true,
@@ -184,6 +214,9 @@
     {
       "name": "Hop Governor",
       "address": "0xed8Bdb5895B8B7f9Fdb3C087628FD8410E853D48",
+      "sourceHashes": [
+        "0x6b63f571e92a25b4c3f2638c0d2dfbc59d1208a0253e4e99ee58a21c681621ba"
+      ],
       "sinceTimestamp": 1654646429,
       "values": {
         "$immutable": true,
@@ -205,6 +238,9 @@
     {
       "name": "Timelock Controller",
       "address": "0xeeA8422a08258e73c139Fc32a25e10410c14bd7a",
+      "sourceHashes": [
+        "0xa6a292449d803c10fc738e9af7e5ad07eac4346aee687901ea5a9957b3ff4272"
+      ],
       "sinceTimestamp": 1654646382,
       "values": {
         "$immutable": true,
@@ -892,6 +928,5 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
-  },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  }
 }

@@ -1,4 +1,102 @@
-Generated with discovered.json: 0xa63e88cc8fbc876df0bce3bca1440ca5e66383c8
+Generated with discovered.json: 0xf6192299bf8f0cfafd08ba909d8c45448203246f
+
+# Diff at Mon, 14 Oct 2024 10:56:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20469346
+- current block number: 20469346
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20469346 (main branch discovery), not current.
+
+```diff
+    contract ZkTrueUp (0x09E01425780094a9754B2bd8A3298f73ce837CF9) {
+    +++ description: None
+      sourceHashes:
++        ["0xaf4593a06cce3e50624c82a06b485e27462a6374717492c2830694f306501a24","0xaf4593a06cce3e50624c82a06b485e27462a6374717492c2830694f306501a24","0xfe9a185d63abab90311e0fe1c1ac9cf8ff75eb18b8894eec37fc861eaad40d34","0xa0a7ab911e7d45110b829d570dafda338f8d219d6019764635afa4bca84fc59a","0xbe47fc752b9cc901076df497fc8cb6a2ddbcb637a2bd4933e613cceb18dd3402","0xf7c59de1978d9e9fc84cd56a13c68c6e5ed1927c1ae7254246618c7060ffcae5","0x642645c3c922206e870ca2360d10224c192a227d6d54c8faa196f25ad2611213","0x1b6b15362c8920645517802d39895f30af39a6b2f35827f36b2dc5bb93165043","0xe98e94b140bcf95af7426dfd8ef8d9898155a8f2b1b0ba63ac31d11dd3c6bc4a","0xdc8abdeeb2ddb258e61ab5c393c746cf9dde680b929037b31a3741aea32fd2b5","0x7330507f8514566e42d7ae9942cb8825f30a89685dfadea06e8f02d6477e9ec8"]
+    }
+```
+
+```diff
+    contract Verifier (0x23369A60E5A8f422E38d799eD55e7AD8Ed4A86cE) {
+    +++ description: None
+      sourceHashes:
++        ["0x67dda2434d66037220b8cf67f02205cb656fc8378fc0b5d0371ce8031274f4ce"]
+    }
+```
+
+```diff
+    contract VaultMultisig (0x23bCad9BFB1378cd45b32525B835F037b673f529) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract InsuranceMultisig (0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract EvacuationFacet (0x882aBFb2F6A67d36350499991638044e8Bd83a72) {
+    +++ description: None
+      sourceHashes:
++        ["0x7330507f8514566e42d7ae9942cb8825f30a89685dfadea06e8f02d6477e9ec8"]
+    }
+```
+
+```diff
+    contract AccountFacet (0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A) {
+    +++ description: None
+      sourceHashes:
++        ["0xfe9a185d63abab90311e0fe1c1ac9cf8ff75eb18b8894eec37fc861eaad40d34"]
+    }
+```
+
+```diff
+    contract RollupFacet (0x955cdD2E56Ca2776a101a552A318d28fe311398D) {
+    +++ description: None
+      sourceHashes:
++        ["0x1b6b15362c8920645517802d39895f30af39a6b2f35827f36b2dc5bb93165043"]
+    }
+```
+
+```diff
+    contract EvacuVerifier (0x9c7Df3981A89eD04588907843fe2a6c1BcCc4467) {
+    +++ description: None
+      sourceHashes:
++        ["0x5c5089086b3995e62860454cc54ad1f86295fb59c0104a9bd303b2c1c0993c20"]
+    }
+```
+
+```diff
+    contract TermStructureMultisig (0xa00d50A40B1635D293c87BA36503bD2504b5D818) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract TreasuryMultisig (0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+Generated with discovered.json: 0xbf5d5f21b57910ca4c48634d1c5cba4eba4c34d3
 
 # Diff at Tue, 01 Oct 2024 11:11:24 GMT:
 

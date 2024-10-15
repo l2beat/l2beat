@@ -116,7 +116,7 @@ export const xlayer: Layer2 = polygonCDKStack({
         wethAddress: EthereumAddress(
           '0x5a77f1443d16ee5761d310e38b62f77f726bc71c',
         ),
-        includeAllOKBFromL1: true,
+        tokensToAssignFromL1: ['OKB'],
       },
     }),
   ],

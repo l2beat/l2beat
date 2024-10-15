@@ -12,8 +12,8 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import {
-  AggLayerEscrow,
   ScalingProjectEscrow,
+  SharedEscrow,
 } from '../common/ScalingProjectEscrow'
 import { ScalingProjectTransactionApi } from '../common/ScalingProjectTransactionApi'
 import {
@@ -50,7 +50,7 @@ export interface BackendProjectEscrow {
   includeInTotal?: boolean
   source?: ScalingProjectEscrow['source']
   bridgedUsing?: TokenBridgedUsing
-  sharedEscrow?: AggLayerEscrow
+  sharedEscrow?: SharedEscrow
 }
 
 export function toBackendProject(
@@ -219,8 +219,17 @@ export function mapTokens(
   tokensOnChain: Token[],
 ): (Token & { isPreminted: boolean })[] {
   return tokensOnChain
-    .filter((token) => isTokenIncluded(token, escrow))
+    .filter(
+      (token) =>
+        isTokenIncluded(token, escrow) && !isTokenPhasedOut(token, escrow),
+    )
     .map((token) => ({ ...token, isPreminted: isPreminted(token, escrow) }))
+}
+
+function isTokenPhasedOut(token: Token, escrow: ScalingProjectEscrow): unknown {
+  if (token.untilTimestamp === undefined) return false
+
+  return token.untilTimestamp.lt(escrow.sinceTimestamp)
 }
 
 function isTokenIncluded(token: Token, escrow: ScalingProjectEscrow): boolean {

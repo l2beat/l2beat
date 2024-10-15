@@ -1,4 +1,70 @@
-Generated with discovered.json: 0x3ee583d352b79175765670a67ff6b4507b0419ec
+Generated with discovered.json: 0x869114443c04a6d89e9988d1e6e89b33e4a76491
+
+# Diff at Mon, 14 Oct 2024 10:50:13 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20876242
+- current block number: 20876242
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20876242 (main branch discovery), not current.
+
+```diff
+    contract CronosChainAdminMultisig (0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract CronosZkEVMAdmin (0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4) {
+    +++ description: None
+      sourceHashes:
++        ["0xe77f0ac44ab78d4c02668f0f81051a448ab8a4b96343747f6bd1143acc7748a8"]
+    }
+```
+
+```diff
+    contract Verifier (0x70F3FBf8a427155185Ec90BED8a3434203de9604) {
+    +++ description: None
+      sourceHashes:
++        ["0xb36dfb10be7530bb56af796b85f6c84bf90513603fe59c2f7f0d78fc2a9a9235"]
+    }
+```
+
+```diff
+    contract CronosZkEvm (0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc) {
+    +++ description: None
+      sourceHashes:
++        ["0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f","0x9ae32beaa5dc29055f75d3cd08fbec35ed3eee3e2ff35de263a78f7d63c610f9","0xd272def5b4e3f0a68e3019d7d40675ca6d3e3fc35500e9aafe864bce8c697de2","0x419cee160f60572fc9189007ec7c1e3c13e54d80bf1e78f837bc8fa001519685","0xe521f6bd6250a2c92af323768ad8a2274cc334725b5ed8960d8421f063fc3285"]
+    }
+```
+
+```diff
+    contract TransactionFiltererDenyList (0xA8998F231a660Eca365B382943c71ad9b7619139) {
+    +++ description: None
+      sourceHashes:
++        ["0x69b34ba871ceb0dbecab437be2d0701a5d768bb541a738bb3a7d2883d10a403e"]
+    }
+```
+
+```diff
+    contract TxFiltererOwnerMultisig (0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+Generated with discovered.json: 0x87ece57be9c4c765e7d3656e3fbcff36d397e2ca
 
 # Diff at Wed, 02 Oct 2024 07:13:23 GMT:
 

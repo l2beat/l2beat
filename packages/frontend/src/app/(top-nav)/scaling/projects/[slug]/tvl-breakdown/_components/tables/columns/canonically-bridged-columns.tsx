@@ -1,6 +1,5 @@
 import { notUndefined } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
-import { formatNumberWithCommas } from '~/utils/format-number'
 import { type CanonicallyBridgedTokenEntry } from '../canonically-bridged-table'
 import { MultipleEscrowsCell } from '../cells/multiple-escrows-cell'
 import { TokenAddressCell } from '../cells/token-address-cell'
@@ -25,49 +24,23 @@ export const canonicallyBridgedColumns = [
     },
   }),
   columnHelper.display({
-    id: 'escrow',
-    header: 'Escrow',
-    cell: (ctx) => {
-      const value = ctx.row.original
-      const isExpended = ctx.row.getIsExpanded()
-      const toggleExpandedHandler = ctx.row.getToggleExpandedHandler()
-
-      if (value.escrows.length > 1) {
-        return (
-          <MultipleEscrowsCell
-            setIsExpanded={toggleExpandedHandler}
-            isExpanded={isExpended}
-          />
-        )
-      }
-
-      return (
-        <TokenAddressCell
-          address={value.escrows[0]!.escrowAddress}
-          explorer={value.explorerUrl}
-        />
-      )
-    },
-  }),
-  columnHelper.display({
-    id: 'price',
-    header: 'Price',
+    id: 'value',
+    header: 'Value',
     meta: {
       align: 'right',
-      tooltip: 'Prices are fetched from CoinGecko',
     },
     cell: (ctx) => {
-      // Do not bloat table if parent row is expanded
-      const parentRow = ctx.row.getParentRow()
+      const isParentMultiEscrow = Boolean(
+        ctx.row.getParentRow()?.original.escrows.length ?? 0 > 1,
+      )
 
-      if (parentRow?.getIsExpanded()) {
-        return null
-      }
+      const { usdValue } = ctx.row.original
 
       return (
-        <div className="pr-2 text-xs font-medium">
-          ${formatNumberWithCommas(Number(ctx.row.original.usdPrice))}
-        </div>
+        <TokenCanonicalValueCell
+          usdValue={usdValue}
+          isDescendant={isParentMultiEscrow}
+        />
       )
     },
   }),
@@ -98,23 +71,47 @@ export const canonicallyBridgedColumns = [
     },
   }),
   columnHelper.display({
-    id: 'value',
-    header: 'Value',
+    id: 'escrow',
+    header: 'Escrow',
     meta: {
-      align: 'right',
+      headClassName: 'md:pl-6',
+      cellClassName: 'md:pl-6',
     },
     cell: (ctx) => {
-      const isParentMultiEscrow = Boolean(
-        ctx.row.getParentRow()?.original.escrows.length ?? 0 > 1,
-      )
+      const value = ctx.row.original
+      const isExpended = ctx.row.getIsExpanded()
+      const toggleExpandedHandler = ctx.row.getToggleExpandedHandler()
 
-      const { usdValue } = ctx.row.original
+      if (value.escrows.length > 1) {
+        return (
+          <MultipleEscrowsCell
+            setIsExpanded={toggleExpandedHandler}
+            isExpanded={isExpended}
+          />
+        )
+      }
 
       return (
-        <TokenCanonicalValueCell
-          usdValue={usdValue}
-          isDescendant={isParentMultiEscrow}
+        <TokenAddressCell
+          address={value.escrows[0]!.escrowAddress}
+          explorer={value.explorerUrl}
         />
+      )
+    },
+  }),
+  columnHelper.display({
+    id: 'contract',
+    header: 'Contract',
+    cell: (ctx) => {
+      const value = ctx.row.original
+
+      return value.tokenAddress ? (
+        <TokenAddressCell
+          address={value.tokenAddress}
+          explorer={value.explorerUrl}
+        />
+      ) : (
+        '-'
       )
     },
   }),

@@ -1,4 +1,126 @@
-Generated with discovered.json: 0x04281d3207a7a5a46f1ff9ce106dd357d87f8264
+Generated with discovered.json: 0xcd86a1638f8b7a9fa2d849928549de06d217a102
+
+# Diff at Mon, 14 Oct 2024 10:49:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 19825348
+- current block number: 19825348
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825348 (main branch discovery), not current.
+
+```diff
+    contract AggregationRouterV4 (0x1111111254fb6c44bAC0beD2854e76F90643097d) {
+    +++ description: None
+      sourceHashes:
++        ["0xcf1a7058461495ed508bbdc19356705fd4208d5522d226052109f79f3b1c07a3"]
+    }
+```
+
+```diff
+    contract CommitteeUSDC (0x23Cab3CF1aa7B929Df5e9f3712aCA3A6Fb9494E4) {
+    +++ description: None
+      sourceHashes:
++        ["0x581fe96c5df565dd8524d044e5dcfdad1b613513021dce348f4c85f8c881a7b5"]
+    }
+```
+
+```diff
+    contract MultiSigPoolUSDT (0x379c15156B527D6E693bED60d1FBb44CE46046b8) {
+    +++ description: None
+      sourceHashes:
++        ["0x641d1fce90ca144fc5ced3c8ee055f6876620610fc3afa756a5dc174f53963d3"]
+    }
+```
+
+```diff
+    contract FinalizableGpsFactAdapterUSDT (0x40e1e5Ece49A878062fA9F87eA6dc81281098B22) {
+    +++ description: None
+      sourceHashes:
++        ["0x395444e8f8af03cea56ff4137d997fc94a06817d06cea35a2b467a45c6ee136b"]
+    }
+```
+
+```diff
+    contract AggregationRouterV4Owner (0x5E89f8d81C74E311458277EA1Be3d3247c7cd7D1) {
+    +++ description: None
+      sourceHashes:
++        ["0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract CommitteeUSDT (0x7249082BfAFE9BCA502d38a686Ef3df37A0cf800) {
+    +++ description: None
+      sourceHashes:
++        ["0xab5a8f616268fb3ec919ff2c4566b29938a53013be74e966348bf881eecd4c0a"]
+    }
+```
+
+```diff
+    contract StarkExchangeUSDC (0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb) {
+    +++ description: None
+      sourceHashes:
++        ["0xb5e622bd6406dd3d2188cae22f160599ee0953d520795bb86831c4c266e45587","0x758db67adde840068b01898c25f007a0d0549aaf9d431c2e0ae77ae4c2c56b33","0x5ebd3f192c54b3d36f0d57e1cb14f418ae69a1694f7dc7d19d006883fc89e525","0x473fc9765112e835124640cb91a4642354e09e94f92462929139d9ab5b6ddcf4","0xb8c0122f24ea2e559e908278def38aa80b6cd27b39b2d74402dbf5ba2585c7c5","0x0c38b010717f86413abfb52412e5eb50b689b8d172e8c39ef81fc428fe5a1e52"]
+    }
+```
+
+```diff
+    contract PerpetualEscapeVerifier (0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD) {
+    +++ description: None
+      sourceHashes:
++        ["0xb56ab8d20ca2ce7897c0448957f5ad2bb634a2019411b1cb0453afe5c86f4f5f"]
+    }
+```
+
+```diff
+    contract TransferRegistry (0xBE9a129909EbCb954bC065536D2bfAfBd170d27A) {
+    +++ description: None
+      sourceHashes:
++        ["0xca65c90eab3222ece5205fccdae3a20a07419751133d38894a85db4802060a14"]
+    }
+```
+
+```diff
+    contract PerpetualGovernanceMultisig (0xC532d2976209A56DdF4a99B844130f7c0daCa7B6) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract StarkExchangeUSDT (0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b) {
+    +++ description: None
+      sourceHashes:
++        ["0xfd5ac94c5a362e7426efd613abbaca3b838cf7f6089b44d9c0d4f675ca4467b3","0xc8c9c0e9c5171cb82b707e7e4b4ea80d427ba6f1dc21fc604efdce0ffa40323d","0xf6d00f2bc5db71a79b854049b38819f78c8fbbd98dcc2e4555f70946f6e58069","0xb60327bf3481ca8d5ad46cb4fcec2f2db0b7d9eaa2cc0479fda600eb1021de93","0xdfa7b8bf4884e9f9933980cec5bcf744d2e522c291ed2a383c140cfb8c795f29","0xe29824efd6d907d93d9b4b2b0737630ab974bce5e0017cb1459975c66a798280"]
+    }
+```
+
+```diff
+    contract FinalizableGpsFactAdapterUSDC (0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953) {
+    +++ description: None
+      sourceHashes:
++        ["0x395444e8f8af03cea56ff4137d997fc94a06817d06cea35a2b467a45c6ee136b"]
+    }
+```
+
+```diff
+    contract MultiSigPoolUSDC (0xe95b3Dc78c0881dEa17A69BaFC6cFeB8d891e9DE) {
+    +++ description: None
+      sourceHashes:
++        ["0x331aa6df8abe04615c862e5d29cee5ef8b680ab3d244de1399ca760503ebe945"]
+    }
+```
+
+Generated with discovered.json: 0x178e64287c3e8af6289050a0c0e1dcf63b924ab0
 
 # Diff at Tue, 01 Oct 2024 10:49:40 GMT:
 

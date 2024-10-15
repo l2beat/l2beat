@@ -1,3 +1,197 @@
+Generated with discovered.json: 0xb298ccb30658a03330fa529c2264e7fd25bf4c7b
+
+# Diff at Mon, 14 Oct 2024 10:49:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20919938
+- current block number: 20919938
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20919938 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes:
++        ["0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617","0xdf9a11b46747139bfe0135df8a65a2728a2dbd60a689e2398c45627915cdd752"]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x4d898F66327Fa050131A17ed17a39EBeCC81f0c3) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      sourceHashes:
++        ["0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617","0x4c5ac4e53576924cabbd2a471f368a541bc3f4b1f53fa41a389692fcc62f6176"]
+    }
+```
+
+```diff
+    contract BobaMultisig (0x56121a8612474C3eB65D69a3b871f284705b9bC4) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x6D4528d192dB72E282265D6092F4B872f9Dff69e) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes:
++        ["0x6e4b297b822bdda2bb8bbf4dde360ee51379af5a0de55c0d726a2d7b68791bf7","0xf3c7ecc8a3ece866c00e54f90a65843e8fd20e40ebc52fac59682640c2e1ca4b"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc) {
+    +++ description: None
+      template:
+-        "opstack/ProxyAdmin"
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x7B02D13904D8e6E0f0Efaf756aB14Cb0FF21eE7e) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      sourceHashes:
++        ["0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617","0xe35fb7bc0433439337b3eadda3d6fb7991918162f62a337a695e8c7f948cdd35"]
+    }
+```
+
+```diff
+    contract Lib_AddressManager (0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      sourceHashes:
++        ["0xe5211497d15a7ea75577cf992ab6093dd0f6083f45c955f0136737810e44c205"]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x996ffD627901f10C80A7d4B72A12316D2e77c076) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      sourceHashes:
++        ["0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617","0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0xA6Ad22bb0E73DEF40a24E510cFbc93807d8bf87e) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sourceHashes:
++        ["0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617","0x482ec6e91304ac39a3fb4505634427bddfddee23b8e93a4f7f995ca5083ae3c3"]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xbB7aD3f9CCbC94085b7F7B1D5258e59F5F068741) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      sourceHashes:
++        ["0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617","0x025c187b0231be4785898f25f98d749f953f5d06781772aef242812e2ecf52e3"]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      sourceHashes:
++        ["0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd","0x3ffed4eb8169f2ebc4abe07aaa71451c53653f6b89400b483cdd4be5dbc8513a"]
+    }
+```
+
+Generated with discovered.json: 0x6f645ed4b338834b648c21b4f0979a3a0fcc5042
+
+# Diff at Wed, 09 Oct 2024 13:09:07 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@37683e2b3d0587372f886eef49e921277810c8bf block: 20919938
+- current block number: 20919938
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20919938 (main branch discovery), not current.
+
+```diff
+    contract BobaMultisig (0x56121a8612474C3eB65D69a3b871f284705b9bC4) {
+    +++ description: None
+      receivedPermissions.1.description:
++        "set and change address mappings."
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc) {
+    +++ description: None
+      directlyReceivedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+```diff
+    contract Lib_AddressManager (0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.via.0.description:
++        "set and change address mappings."
+      displayName:
++        "AddressManager"
+      descriptions:
++        ["Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."]
+    }
+```
+
+Generated with discovered.json: 0x23e388bff7edd9b963516c7c4e0874b575b809df
+
+# Diff at Tue, 08 Oct 2024 16:23:20 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@bca55174129419533cd4173605c170ea99ac6f98 block: 19960612
+- current block number: 20919938
+
+## Description
+
+Move to discovery driven data.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19960612 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      descriptions.0:
+-        "It contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address."
++        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
+      fieldMeta.unsafeBlockSigner:
+-        {"severity":"LOW","description":"Blocks are gossiped around the L2 p2p network before they are made available on L1. To prevent denial of service on the p2p layer, these unsafe blocks must be signed with a particular key to be accepted as 'canonical' unsafe blocks. The address corresponding to this key is the unsafeBlockSigner."}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x6D4528d192dB72E282265D6092F4B872f9Dff69e) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      template:
++        "opstack/L1CrossDomainMessenger"
+      descriptions:
++        ["Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."]
+    }
+```
+
 Generated with discovered.json: 0x2b228aabc53db39c3f30b455b5446a59439ba6e8
 
 # Diff at Tue, 01 Oct 2024 10:50:16 GMT:

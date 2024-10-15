@@ -1,4 +1,54 @@
-Generated with discovered.json: 0xc58f9d5a20b04b9eb187a9cf927d366721f150af
+Generated with discovered.json: 0xb21d3e4034fc5aac8846696c2c86350f9521a412
+
+# Diff at Mon, 14 Oct 2024 10:59:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 223440408
+- current block number: 223440408
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 223440408 (main branch discovery), not current.
+
+```diff
+    contract TokenMessaging (0x19cFCE47eD54a88614648DC3f19A5980097007dD) {
+    +++ description: None
+      sourceHashes:
++        ["0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"]
+    }
+```
+
+```diff
+    contract StargatePoolNative (0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F) {
+    +++ description: None
+      sourceHashes:
++        ["0x63ac97930921267a1251904351ae2409e0d62d3d3c3fcb2ed7bc1fc4775321f7"]
+    }
+```
+
+```diff
+    contract StargatePoolMigratable (0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0) {
+    +++ description: None
+      sourceHashes:
++        ["0xad746913c310c0ee643e98f0a0f4bc6095877e7c82e0779cb5d5e852e0e12c8d"]
+    }
+```
+
+```diff
+    contract StargatePoolUSDC (0xe8CDF27AcD73a434D661C84887215F7598e7d0d3) {
+    +++ description: None
+      sourceHashes:
++        ["0x0ef9b0bca6f74cd24daa9d50e734dfec2ecbc71cef5b209fa0c0f93561ad2640"]
+    }
+```
+
+Generated with discovered.json: 0x7559bc174f0a386821108794c4238dd4aa0e7dd4
 
 # Diff at Tue, 30 Jul 2024 11:17:27 GMT:
 

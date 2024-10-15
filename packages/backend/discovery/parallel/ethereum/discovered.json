@@ -3,11 +3,14 @@
   "chain": "ethereum",
   "blockNumber": 20842798,
   "configHash": "0x3c393e38d3a0c4192d3c292b3a4c74216e488212eb4b8f4b26be8344d87510fa",
-  "version": 15,
   "contracts": [
     {
       "name": "Inbox",
       "address": "0x12485B9d469c1D51d05b5C39e009D50eF0170cF7",
+      "sourceHashes": [
+        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+        "0x99872d99b7163c705118e0a168f99728c3c7089581779077707271cdaad30be3"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -38,6 +41,10 @@
     {
       "name": "L1WETHGateway",
       "address": "0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d",
+      "sourceHashes": [
+        "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
+        "0x486a6ad1cedca553753b8d912f0cd16058ebb0ce6aa547072fb76288e0d23a84"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -67,6 +74,9 @@
     {
       "name": "OneStepProverHostIo",
       "address": "0x17e7F68ce50A77e55C7834ddF31AEf86403B8010",
+      "sourceHashes": [
+        "0x5b0a5e16100b7e163dcf39dc6a9034f12a7bad7a475cdffc73054b937be0683d"
+      ],
       "sinceTimestamp": 1710413171,
       "values": { "$immutable": true }
     },
@@ -74,6 +84,10 @@
       "name": "ParallelMultisig",
       "address": "0x19293FBec52F94165f903708a74513Dd6dFedd0a",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1692705983,
@@ -107,6 +121,10 @@
     {
       "name": "ChallengeManager",
       "address": "0x28c32059d7e6147cf5257DFC127f7258beA1cdf4",
+      "sourceHashes": [
+        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+        "0x58a6261c83c2766f749641902ad6fdb695ea189d2747f073b57a8f35b9a547e5"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -141,12 +159,19 @@
     {
       "name": "ValidatorUtils",
       "address": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
+      "sourceHashes": [
+        "0xd9b36ec321be937cc727b5bdb0afa0e1a0a28448ef1a202d4f181a01ce57bdc8"
+      ],
       "sinceTimestamp": 1701973151,
       "values": { "$immutable": true }
     },
     {
       "name": "RollupEventInbox",
       "address": "0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2",
+      "sourceHashes": [
+        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+        "0xcd37abd5bdcc8c37cbf37dcfa4889d5b238388344d913b3a48914f659e0d627b"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -173,6 +198,9 @@
     {
       "name": "OneStepProofEntry",
       "address": "0x57EA090Ac0554d174AE0e2855B460e84A1A7C221",
+      "sourceHashes": [
+        "0xf3479c667d20b1c17ea2573dc7fe09e4315a3e20bc09d31bc92603520cc962cc"
+      ],
       "sinceTimestamp": 1710413183,
       "values": {
         "$immutable": true,
@@ -185,6 +213,10 @@
     {
       "name": "Bridge",
       "address": "0x5a961c7D162195a9Dc5a357Cc168b0694283382E",
+      "sourceHashes": [
+        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+        "0xb920455f1e366c7a89719abdd8d8174e4e7d353f2d4b7dea11b0571bf9526eae"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -226,6 +258,10 @@
     {
       "name": "L1GatewayRouter",
       "address": "0x5D657b905275F36AD62C3d5C36966975613aFB96",
+      "sourceHashes": [
+        "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
+        "0x61cc407871b0c56af41887c99354633d150e4586f0a6d237c6efd10966b17bd7"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -257,6 +293,11 @@
       "name": "RollupProxy",
       "address": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877",
       "template": "orbitstack/RollupProxy",
+      "sourceHashes": [
+        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca",
+        "0x8b48118fe606012c0dcac2ccc1821785935aec89fab8f219f47b32c482b0017e",
+        "0xef94a66bd5339efd18fb9ca1f8031482e7ef7bbe6c5a0a10fae254ab83712406"
+      ],
       "proxyType": "Arbitrum proxy",
       "descriptions": [
         "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
@@ -367,6 +408,9 @@
     {
       "name": "ProxyAdmin",
       "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
+      "sourceHashes": [
+        "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -423,6 +467,10 @@
     {
       "name": "L1ERC20Gateway",
       "address": "0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d",
+      "sourceHashes": [
+        "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
+        "0x12b277cae4866b3d1f1772fcb7f861dc23247452179f0736c9dbe7012f6c14f6"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -454,6 +502,9 @@
     {
       "name": "OneStepProver0",
       "address": "0x72B166070781a552D7b95a907eF59ca05d3D5a62",
+      "sourceHashes": [
+        "0x20330713abbbcf0219ef7d1c0aa3a6ede1b421f14c9d21b25c973e54fb75f5df"
+      ],
       "sinceTimestamp": 1710413135,
       "values": { "$immutable": true }
     },
@@ -467,18 +518,27 @@
     {
       "name": "OneStepProverMemory",
       "address": "0x8b73Ef238ADaB31EBC7c05423d243c345241a22f",
+      "sourceHashes": [
+        "0x731b4466319a83c95ce227d1a6c85aa03864f5d2bed03bda186843033a8b8d61"
+      ],
       "sinceTimestamp": 1710413147,
       "values": { "$immutable": true }
     },
     {
       "name": "OneStepProverMath",
       "address": "0x90eC62De2EB7C7512a22bD2D55926AD6bA609F38",
+      "sourceHashes": [
+        "0xb2555ede3dfe7d6df28bd96d12a0113b658c213c7ce4e34fa539df7497bc51a1"
+      ],
       "sinceTimestamp": 1710413159,
       "values": { "$immutable": true }
     },
     {
       "name": "ValidatorWalletCreator",
       "address": "0x9CAd81628aB7D8e239F1A5B497313341578c5F71",
+      "sourceHashes": [
+        "0x4ef3473c840bed3b4c6258271a494794c1545f0d0f13c6a386d1e39e6180d67c"
+      ],
       "sinceTimestamp": 1701973211,
       "values": {
         "$immutable": true,
@@ -489,6 +549,10 @@
     {
       "name": "L1CustomGateway",
       "address": "0xa1c86E2362dba0525075622af6d5f739B1304D45",
+      "sourceHashes": [
+        "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
+        "0x8d9e1660cd96605e8727f611f7b96ef82ad6cd8a76db94cd253b74cddd1c6bce"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -519,6 +583,10 @@
     {
       "name": "SequencerInbox",
       "address": "0xb4795A0edae98d7820C37F06f6b858e7acb51DF8",
+      "sourceHashes": [
+        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+        "0x50cf57b01499408fa99da27cf0fee96ec30f0d40667d1aa090c442bc80f0636b"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -583,6 +651,10 @@
     {
       "name": "Outbox",
       "address": "0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3",
+      "sourceHashes": [
+        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+        "0x28eec040eca7563195b19e22e11429d0f977820bfb60ac52e567ffde3c92cf77"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -617,6 +689,10 @@
     {
       "name": "UpgradeExecutor",
       "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+      "sourceHashes": [
+        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+        "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -1446,6 +1522,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "orbitstack/RollupProxy": "0xdd22b1785ae5df34e829d0b04131559e112131325c3f223825d0fe61e675fb1a"
-  },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  }
 }

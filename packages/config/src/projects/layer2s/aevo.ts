@@ -1,5 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
+import { NUGGETS } from '../../common'
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -63,6 +64,7 @@ export const aevo: Layer2 = opStackL2({
   },
   genesisTimestamp: new UnixTime(1679202395),
   isNodeAvailable: false,
+  discoveryDrivenData: true,
   milestones: [
     {
       name: 'Aevo Open Mainnet Launch',
@@ -87,10 +89,11 @@ export const aevo: Layer2 = opStackL2({
       type: 'general',
     },
   ],
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'ConduitMultisig',
-      'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
-    ),
+  knowledgeNuggets: [
+    {
+      title: 'Blobstream and Celestia Architecture',
+      url: 'https://www.youtube.com/watch?v=cn_fN6pkakQ',
+      thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
+    },
   ],
 })

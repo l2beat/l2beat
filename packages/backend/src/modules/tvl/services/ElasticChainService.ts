@@ -36,15 +36,66 @@ export class ElasticChainService {
   async fetchAmounts(
     timestamp: UnixTime,
     blockNumber: number,
-    tokens: Config<'elasticChainL2Token'>[],
+    tokens: Config<'elasticChainL2Token' | 'elasticChainEther'>[],
   ): Promise<AmountRecord[]> {
+    const results: AmountRecord[] = []
+
+    const ether = tokens.find((token) => token.type === 'elasticChainEther')
+    if (ether) {
+      const etherAmount = await this.getEtherAmount(
+        timestamp,
+        blockNumber,
+        ether,
+      )
+      results.push(etherAmount)
+    }
+
+    const l2Tokens = tokens.filter(
+      (token) => token.type === 'elasticChainL2Token',
+    )
     const l2TokensAmounts = await this.getL2TokensAmounts(
       timestamp,
       blockNumber,
-      tokens,
+      l2Tokens,
+    )
+    results.push(...l2TokensAmounts)
+
+    return results
+  }
+
+  async getEtherAmount(
+    timestamp: UnixTime,
+    blockNumber: number,
+    token: Config<'elasticChainEther'>,
+  ): Promise<AmountRecord> {
+    const response = await this.$.rpcClient.call(
+      {
+        to: token.address,
+        data: Bytes.fromHex(
+          erc20Interface.encodeFunctionData('totalSupply', []),
+        ),
+      },
+      blockNumber,
     )
 
-    return l2TokensAmounts
+    if (response.toString() === '0x') {
+      return {
+        configId: token.id,
+        amount: 0n,
+        timestamp,
+      }
+    }
+
+    const [totalSupply] = erc20Interface.decodeFunctionResult(
+      'totalSupply',
+      response.toString(),
+    )
+
+    return {
+      configId: token.id,
+      amount: (totalSupply as BigNumber).toBigInt(),
+      timestamp,
+    }
   }
 
   async getL2TokensAmounts(

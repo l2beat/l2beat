@@ -1,4 +1,297 @@
-Generated with discovered.json: 0x6c30996002e0caa007f6510aee5b6414e22868d1
+Generated with discovered.json: 0xb085b6a914c777e4a67d0bafce9fe842720533bd
+
+# Diff at Mon, 14 Oct 2024 10:54:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20941805
+- current block number: 20941805
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20941805 (main branch discovery), not current.
+
+```diff
+    contract OneStepProofEntry (0x09824fe72BFF474d16D9c2774432E381BBD60662) {
+    +++ description: None
+      sourceHashes:
++        ["0xf3479c667d20b1c17ea2573dc7fe09e4315a3e20bc09d31bc92603520cc962cc"]
+    }
+```
+
+```diff
+    contract ValidatorUtils (0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF) {
+    +++ description: None
+      sourceHashes:
++        ["0xd9b36ec321be937cc727b5bdb0afa0e1a0a28448ef1a202d4f181a01ce57bdc8"]
+    }
+```
+
+```diff
+    contract ChallengeManager (0x369001149fe80892665a7b0c17fe8Db6BeFC7F5d) {
+    +++ description: None
+      sourceHashes:
++        ["0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67","0x7e1cd1e10119e118ffaa576ddbe1c0f9810a0859a4bf2f65a4ff596c0ed4183d"]
+    }
+```
+
+```diff
+    contract Bridge (0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03) {
+    +++ description: None
+      sourceHashes:
++        ["0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67","0x057de68a7007d55f4394ba6eafb2c802efcaf13583ff9342ea4d0ee3924d9be1"]
+    }
+```
+
+```diff
+    contract OneStepProverMemory (0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1) {
+    +++ description: None
+      sourceHashes:
++        ["0x731b4466319a83c95ce227d1a6c85aa03864f5d2bed03bda186843033a8b8d61"]
+    }
+```
+
+```diff
+    contract L1OrbitGatewayRouter (0x490f337Ac108b2a555183f5b5fd2ee84a7F45a18) {
+    +++ description: None
+      sourceHashes:
++        ["0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1","0x33422e0ac90902db5dad442b006c9df60e262556d8ad286808d133b5429a3eb0"]
+    }
+```
+
+```diff
+    contract SwapManager (0x4AC36E1Fa7daBeFEc885f30B163c571080b2c335) {
+    +++ description: None
+      sourceHashes:
++        ["0x2c2f591c433021e5d54b67a3354fdc84c7f692a02fa61ec538dd633e890c4ad7"]
+    }
+```
+
+```diff
+    contract ERC20RollupEventInbox (0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C) {
+    +++ description: None
+      sourceHashes:
++        ["0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67","0x88c3a2fa81cad2f98a156402c78de0fc804b2a1866ea4f449aa90ae92ceabc6c"]
+    }
+```
+
+```diff
+    contract SequencerInbox (0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0) {
+    +++ description: State batches / commitments get posted here.
+      sourceHashes:
++        ["0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67","0x08792f333db7e8a060c38033f92e3fc10c30e2648c56fc49c7460ee1c94343a0"]
+    }
+```
+
+```diff
+    contract StrategyManager (0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8) {
+    +++ description: None
+      sourceHashes:
++        ["0x6c6e93784f31191cf2b9284f57d6baac2bb7aef141c3482e250edade70dfa4be"]
+    }
+```
+
+```diff
+    contract Minter (0x655756824385F8903AC8cFDa17B656cc26f7C7da) {
+    +++ description: None
+      sourceHashes:
++        ["0x426161bad834d6302cbb3deabf564724483a57f7cdcdd24427d7dd9ea6405056"]
+    }
+```
+
+```diff
+    contract LidoStEthStrategy (0x679D4C1cC6855C57726BEA1784F578315d6431f6) {
+    +++ description: None
+      sourceHashes:
++        ["0xc18d8670e65f3ea1dc2fe9ee3114bfad504f6ee8998a9f9d6f79cc971a03814a"]
+    }
+```
+
+```diff
+    contract Outbox (0x8592Ca44dE1D354A20F75160F5602E5933D33761) {
+    +++ description: None
+      sourceHashes:
++        ["0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67","0x3073f29910dee50069a001fb20e58cca3dcc1b3c8da4b91809af2dd356ef0c8c"]
+    }
+```
+
+```diff
+    contract OneStepProverMath (0x89AF7C4C2198c426cFe6E86de0680A0850503e06) {
+    +++ description: None
+      sourceHashes:
++        ["0xb2555ede3dfe7d6df28bd96d12a0113b658c213c7ce4e34fa539df7497bc51a1"]
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (0x99a2A31300816C1FA3f40818AC9280fe7271F878) {
+    +++ description: None
+      sourceHashes:
++        ["0x0a8f8db8198082757cc8145891c633c20ed4313dab05beab40618258e534a1e8"]
+    }
+```
+
+```diff
+    contract ValidatorWalletCreator (0x9CAd81628aB7D8e239F1A5B497313341578c5F71) {
+    +++ description: None
+      sourceHashes:
++        ["0x4ef3473c840bed3b4c6258271a494794c1545f0d0f13c6a386d1e39e6180d67c"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xB032ff02cd6425e4b816137207AA8560932180f1) {
+    +++ description: None
+      sourceHashes:
++        ["0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"]
+    }
+```
+
+```diff
+    contract GelatoMultisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract Bridger (0xbf2F26cadbC10C4d61ac7e424D514d79a12126f8) {
+    +++ description: None
+      sourceHashes:
++        ["0xd1f7ca44e10a593bfb38d908f60152c671082099b46d925d37a1eeba4f33bfda","0xaeb5734c5862ad1b95a66ae767bb08920938ed5de5fd7455221098e0d37c44dd"]
+    }
+```
+
+```diff
+    contract Real (0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421) {
+    +++ description: None
+      sourceHashes:
++        ["0xf263e5f0d820b658ef0dd05015c2b4b333f38c76fcee96b52b307a19e0654162"]
+    }
+```
+
+```diff
+    contract RollupProxy (0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      sourceHashes:
++        ["0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca","0x8b48118fe606012c0dcac2ccc1821785935aec89fab8f219f47b32c482b0017e","0xef94a66bd5339efd18fb9ca1f8031482e7ef7bbe6c5a0a10fae254ab83712406"]
+    }
+```
+
+```diff
+    contract EscrowMultisig (0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a) {
+    +++ description: None
+      sourceHashes:
++        ["0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67","0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"]
+    }
+```
+
+```diff
+    contract OneStepProver0 (0xDf94F0474F205D086dbc2e66D69a856FCf520622) {
+    +++ description: None
+      sourceHashes:
++        ["0x20330713abbbcf0219ef7d1c0aa3a6ede1b421f14c9d21b25c973e54fb75f5df"]
+    }
+```
+
+```diff
+    contract Inbox (0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11) {
+    +++ description: None
+      sourceHashes:
++        ["0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67","0xcb390b491549387c8fcc09fb22fbea7adf54cc74b7247a0c738369ddd7049b92"]
+    }
+```
+
+```diff
+    contract AssetsVault (0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294) {
+    +++ description: None
+      sourceHashes:
++        ["0x530019aa460a94ec770462491a461be4caebfe1a7a4e9adc91beb51d7a98187c"]
+    }
+```
+
+```diff
+    contract RealVault (0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1) {
+    +++ description: None
+      sourceHashes:
++        ["0x3a95f1a37b3000abfc131510d1895ebfa14d26888610509cb2dd8ff7ffe4c81c"]
+    }
+```
+
+```diff
+    contract L1OrbitERC20Gateway (0xfC89B875970122E24C6C5ADd4Dea139443943ea7) {
+    +++ description: None
+      sourceHashes:
++        ["0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1","0x17c9d8bf5017982cb88ab1d4f22a085c097ab9c7a910fa109fe9e7204840bef8"]
+    }
+```
+
+Generated with discovered.json: 0x98a0771c749aa0ed8dc3faf94a63cc876be2d3a1
+
+# Diff at Fri, 11 Oct 2024 10:33:15 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@8f7c5fd25193054458be38552e62a708c480b2c8 block: 20842802
+- current block number: 20941805
+
+## Description
+
+Gelato MS signer removed, one DAC member added, one changed.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0) {
+    +++ description: State batches / commitments get posted here.
+      values.dacKeyset.membersCount:
+-        1
++        2
+      values.dacKeyset.blsSignatures.1:
++        "YBRYWM3r9QjDsxiTYDBsz7DLQsSk8ww7UeuNmhhAa+Spo31J5lWspLpAwHynMqRoDRkEg0bP1Y6Wivt1kwBOM2fDRs97y2vUB/OQpju9aok8WdBTJ16K9sM6Hlv0bT62ChK2Otjpjug8u839aoVPAZhojuYmW1hslHipM/JqYlCaVwHlB1hyp4kc8v230j6I6gsE1Bw1WMvxVXbP05bXwnO7ZIM+dQugQFWoDDZOS1HMIY+I9B+389vkEFGkjF8CPw5uGnIgdhabcqQFRkceDLVb7vMqJGgf/Oi4nKy6CKEJILwsf+grAdHY1MDDpe0WWRJflAnSemnZbpCaGqIEY1sEE/69idZuSbuqiHtmU0AGWcFcngv+WFjfG6Xr1V1tRw=="
+      values.dacKeyset.blsSignatures.0:
+-        "YAWa/w4rq6sHO4ozBBwPL3un0A6NDa3V163lAXaJmPZmihk4ntRlBqwcjz3Hq2NJWgcMOYyZicf+cyzYzT33XiJRcNMidWZ04qP6b7ZRHZh7R0p+YycNLqBxfRdNtllWJglg7ynQO4Suel9bqlzc+0Yq8ZuoHTHJXVVd4psJariQ/dNE16NqExPpV/jfJdFVThaAoNqowj5K/bl0VWEKPzxnf4ttwFM38wnUOIvmNHvVOREbkiWzus6H/6B7Cl7BygWo5cs97lUTeMuatpIqR/yNw352EkRLOLrmFTrg36zV9F8jebStSVDZ3M002mBH1gpxq5pQFaCb0lpXE0vmB08dfg7jS6KWU/OMlLZzVPk2DVKhkqtpDC5JAMkRNxrwfQ=="
++        "YBJCXtJZAUzwENdMJDCrgB6pWhA4ldiCFRNdySmzbLpcXriGq7NeKGLHyW5RcbP49QLgp7h9Asr+8KEc4coM7E0hRWXz6pU6W/rGUBAM1F0BtZNWdVQIp45BfwocbS4wxBWylr0ibVn8sJhVWG5uOY0kF0EddnVBElucIld+gTUyuTcNNKTHUqC1RdOI91XkKAC28qY5HGhdk41zEU8swBwjAIKmUbg+fcrKyxy/hs8OmySPr9YmPKnEv42CR0O0oBnadp/8W8WVrJRit2jwBQAXxLj52BxnGJkRA6x0DLkM+mXhU0ASMQB3EcWz5UaMZBfSXy4taHskYoDrqicHh5CCEAq7KoWive1o/stdn9VfnaGNL+uUqhGPg6Qbr/+oMw=="
+      values.keySetUpdates:
+-        1
++        2
+    }
+```
+
+```diff
+    contract GelatoMultisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      values.$members.9:
+-        "0x547D0F472309e4239b296D01e03bEDc101241a26"
+      values.$members.8:
+-        "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
++        "0x547D0F472309e4239b296D01e03bEDc101241a26"
+      values.$members.7:
+-        "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
++        "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
+      values.$members.6:
+-        "0x27b1682E9C5Cb0E58Ff474F3a13EeCC36E708ad3"
++        "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
+      values.multisigThreshold:
+-        "6 of 10 (60%)"
++        "6 of 9 (67%)"
+    }
+```
+
+Generated with discovered.json: 0xee942efa816220afd64b71592d5a041bf9650916
 
 # Diff at Tue, 01 Oct 2024 10:54:31 GMT:
 

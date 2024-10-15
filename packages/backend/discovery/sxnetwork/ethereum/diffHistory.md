@@ -1,4 +1,158 @@
-Generated with discovered.json: 0x6dd31fa423ef2c083dab8cc42ab7cd8e243613e1
+Generated with discovered.json: 0xdd356c8d2587372ca4de65c4f404bb164336047d
+
+# Diff at Mon, 14 Oct 2024 10:56:35 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20842812
+- current block number: 20842812
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20842812 (main branch discovery), not current.
+
+```diff
+    contract OneStepProverHostIo (0x17e7F68ce50A77e55C7834ddF31AEf86403B8010) {
+    +++ description: None
+      sourceHashes:
++        ["0x5b0a5e16100b7e163dcf39dc6a9034f12a7bad7a475cdffc73054b937be0683d"]
+    }
+```
+
+```diff
+    contract ValidatorUtils (0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF) {
+    +++ description: None
+      sourceHashes:
++        ["0xd9b36ec321be937cc727b5bdb0afa0e1a0a28448ef1a202d4f181a01ce57bdc8"]
+    }
+```
+
+```diff
+    contract RollupProxy (0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      sourceHashes:
++        ["0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca","0x8b48118fe606012c0dcac2ccc1821785935aec89fab8f219f47b32c482b0017e","0xef94a66bd5339efd18fb9ca1f8031482e7ef7bbe6c5a0a10fae254ab83712406"]
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a) {
+    +++ description: None
+      sourceHashes:
++        ["0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67","0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"]
+    }
+```
+
+```diff
+    contract OneStepProofEntry (0x57EA090Ac0554d174AE0e2855B460e84A1A7C221) {
+    +++ description: None
+      sourceHashes:
++        ["0xf3479c667d20b1c17ea2573dc7fe09e4315a3e20bc09d31bc92603520cc962cc"]
+    }
+```
+
+```diff
+    contract OneStepProver0 (0x72B166070781a552D7b95a907eF59ca05d3D5a62) {
+    +++ description: None
+      sourceHashes:
++        ["0x20330713abbbcf0219ef7d1c0aa3a6ede1b421f14c9d21b25c973e54fb75f5df"]
+    }
+```
+
+```diff
+    contract ChallengeManager (0x73cfa0F6ae141212115657ad91Ad918E5d34d882) {
+    +++ description: None
+      sourceHashes:
++        ["0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67","0x58a6261c83c2766f749641902ad6fdb695ea189d2747f073b57a8f35b9a547e5"]
+    }
+```
+
+```diff
+    contract OneStepProverMemory (0x8b73Ef238ADaB31EBC7c05423d243c345241a22f) {
+    +++ description: None
+      sourceHashes:
++        ["0x731b4466319a83c95ce227d1a6c85aa03864f5d2bed03bda186843033a8b8d61"]
+    }
+```
+
+```diff
+    contract OneStepProverMath (0x90eC62De2EB7C7512a22bD2D55926AD6bA609F38) {
+    +++ description: None
+      sourceHashes:
++        ["0xb2555ede3dfe7d6df28bd96d12a0113b658c213c7ce4e34fa539df7497bc51a1"]
+    }
+```
+
+```diff
+    contract ValidatorWalletCreator (0x9CAd81628aB7D8e239F1A5B497313341578c5F71) {
+    +++ description: None
+      sourceHashes:
++        ["0x4ef3473c840bed3b4c6258271a494794c1545f0d0f13c6a386d1e39e6180d67c"]
+    }
+```
+
+```diff
+    contract ERC20RollupEventInbox (0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3) {
+    +++ description: None
+      sourceHashes:
++        ["0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67","0x88c3a2fa81cad2f98a156402c78de0fc804b2a1866ea4f449aa90ae92ceabc6c"]
+    }
+```
+
+```diff
+    contract Bridge (0xa104C0426e95a5538e89131DbB4163d230C35f86) {
+    +++ description: None
+      sourceHashes:
++        ["0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67","0x057de68a7007d55f4394ba6eafb2c802efcaf13583ff9342ea4d0ee3924d9be1"]
+    }
+```
+
+```diff
+    contract Outbox (0xB360b2f57c645E847148d7C479b7468AbF6F707d) {
+    +++ description: None
+      sourceHashes:
++        ["0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67","0x3073f29910dee50069a001fb20e58cca3dcc1b3c8da4b91809af2dd356ef0c8c"]
+    }
+```
+
+```diff
+    contract SXNetwork (0xbe9F61555F50DD6167f2772e9CF7519790d96624) {
+    +++ description: None
+      sourceHashes:
++        ["0xf0c4746faa53f945ab6c15c9630e1b188aa435746b6884440517abe9ee182100"]
+    }
+```
+
+```diff
+    contract SequencerInbox (0xD80a805c86C14c879420eC6acb366D04D318fC0C) {
+    +++ description: None
+      sourceHashes:
++        ["0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67","0x50cf57b01499408fa99da27cf0fee96ec30f0d40667d1aa090c442bc80f0636b"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xe8606A55d105EF857F187C32Ae0E9a168aF8F497) {
+    +++ description: None
+      sourceHashes:
++        ["0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"]
+    }
+```
+
+```diff
+    contract Inbox (0xEa83E8907C89Bc0D9517632f0ba081972E328631) {
+    +++ description: None
+      sourceHashes:
++        ["0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67","0xcb390b491549387c8fcc09fb22fbea7adf54cc74b7247a0c738369ddd7049b92"]
+    }
+```
+
+Generated with discovered.json: 0x4e40a2a60e9490930c99e5d32e36ed46599751f6
 
 # Diff at Tue, 01 Oct 2024 11:11:08 GMT:
 

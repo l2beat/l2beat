@@ -11,6 +11,7 @@ type BaseAssetBreakdownData = {
   amount: number
   usdValue: number
   usdPrice: string
+  tokenAddress?: EthereumAddress
 }
 
 export type CanonicalAssetBreakdownData = BaseAssetBreakdownData & {
@@ -24,13 +25,10 @@ export type CanonicalAssetBreakdownData = BaseAssetBreakdownData & {
 }
 
 export type ExternalAssetBreakdownData = BaseAssetBreakdownData & {
-  tokenAddress?: EthereumAddress
   bridgedUsing: TokenBridgedUsing
 }
 
-export type NativeAssetBreakdownData = BaseAssetBreakdownData & {
-  tokenAddress?: EthereumAddress
-}
+export type NativeAssetBreakdownData = BaseAssetBreakdownData
 
 export type BreakdownRecord = {
   canonical: Map<AssetId, CanonicalAssetBreakdownData>

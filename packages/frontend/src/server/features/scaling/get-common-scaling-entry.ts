@@ -77,9 +77,6 @@ export function getCommonScalingEntry(
     type: project.type,
     provider: project.display.provider,
     hostChain: getHostChain(project),
-    stage:
-      project.type === 'layer2'
-        ? project.stage
-        : ({ stage: 'NotApplicable' } satisfies StageConfig),
+    stage: project.stage ?? ({ stage: 'NotApplicable' } satisfies StageConfig),
   }
 }

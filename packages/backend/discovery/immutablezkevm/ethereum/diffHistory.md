@@ -1,4 +1,90 @@
-Generated with discovered.json: 0x109fb78d1f476e5cf365770b1b2b6fc828ee41b3
+Generated with discovered.json: 0xe59c199d16c2b67bda5e774e36a718e4b7ed8028
+
+# Diff at Mon, 14 Oct 2024 10:51:43 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20691264
+- current block number: 20691264
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20691264 (main branch discovery), not current.
+
+```diff
+    contract AxelarGatewayProxyMultisig (0x4F4495243837681061C4743b74B3eEdf548D56A5) {
+    +++ description: None
+      sourceHashes:
++        ["0xe65732e356e64373f949ce1e543c2af7a89f91a8e3e8337cf9b83a3cd6ae9082"]
+    }
+```
+
+```diff
+    contract RootAxelarBridgeAdaptor (0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8"
++        "0xD2C37fC6fD89563187f3679304975655e448D192"
+      issuedPermissions.0.via.0:
++        {"address":"0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8","delay":0}
+      sourceHashes:
++        ["0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad","0x3bbb1bbee722c566a76a1dbd006c8014bc97e10583a6ff7cc69a72725948746e"]
+    }
+```
+
+```diff
+    contract ChildERC20 (0x8804A8aA1F18f23aE8A456dD73806FdA3219FaD1) {
+    +++ description: None
+      sourceHashes:
++        ["0x444c835c000c2401ad8e7d4d0a67fe0a11cf78d3eccdb105ed7c591296c4cf30"]
+    }
+```
+
+```diff
+    contract Bridge (0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8"
++        "0xD2C37fC6fD89563187f3679304975655e448D192"
+      issuedPermissions.0.via.0:
++        {"address":"0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8","delay":0}
+      sourceHashes:
++        ["0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad","0xe3da0044c1cc2966f6a45573c47d38d8a1b647879b25570db9b2b8c6efe43e45"]
+    }
+```
+
+```diff
+    contract OwnerMultisig (0xD2C37fC6fD89563187f3679304975655e448D192) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932","via":[{"address":"0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8"}]},{"permission":"upgrade","target":"0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6","via":[{"address":"0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8"}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932"},{"permission":"upgrade","target":"0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6"}]
+      template:
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932"},{"permission":"upgrade","target":"0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6"}]
+    }
+```
+
+Generated with discovered.json: 0x57162fd7b7d46fb42f4ddab8de5ff97039d0ecc5
 
 # Diff at Tue, 01 Oct 2024 10:51:37 GMT:
 

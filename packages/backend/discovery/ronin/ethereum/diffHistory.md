@@ -1,4 +1,70 @@
-Generated with discovered.json: 0x4ba66d578ec0b681e28671406dee900ded45df50
+Generated with discovered.json: 0x36c1204da028156053480e3aea1f4e0ba4776a1f
+
+# Diff at Mon, 14 Oct 2024 10:55:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20675893
+- current block number: 20675893
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20675893 (main branch discovery), not current.
+
+```diff
+    contract MainchainBridgeManager (0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB) {
+    +++ description: None
+      sourceHashes:
++        ["0x33cd2cf791b018347e2c994f787d0a24c830435bccfe913456ab337de909570e","0xb95d73d375b1e25c5ddb15cbfa79b70a14b58ce1467a12bd841a4f59b063e2f9"]
+    }
+```
+
+```diff
+    contract RoninManagerMultiSig (0x2DA02aC5f19Ae362a4121718d990e655eB628D96) {
+    +++ description: None
+      sourceHashes:
++        ["0x34de320a4a2a66cb410c0b6b04558c98586ea66fe69b35df6ee3ff7816eae03b"]
+    }
+```
+
+```diff
+    contract RoninAdminMultisig (0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract MainchainGateway (0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08) {
+    +++ description: None
+      sourceHashes:
++        ["0xdf743526ddd44d53db1ae516488019ca52e6b6434e33ad8fbd5b060c138653a2","0x2d39ee54cf7dc52198aeac3324e8b8034b0d5db06ad5192305aaa80c1e10fca6"]
+    }
+```
+
+```diff
+    contract WETH9 (0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2) {
+    +++ description: None
+      sourceHashes:
++        ["0xec8c1fea9a5a10c4c028664a56d678a0776b07cfc510fc7fa54db0aed0978f49"]
+    }
+```
+
+```diff
+    contract PauseEnforcer (0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4) {
+    +++ description: None
+      sourceHashes:
++        ["0x38ea3c443d8341f4b59ebeae4d05a6064ff361f2f672ae8e49e2a96514a2261d"]
+    }
+```
+
+Generated with discovered.json: 0xccfeb558d600b03e7888e1cb5d794c0e03e59e11
 
 # Diff at Tue, 01 Oct 2024 10:54:44 GMT:
 

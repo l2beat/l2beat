@@ -3,11 +3,13 @@
   "chain": "ethereum",
   "blockNumber": 20138492,
   "configHash": "0xa2d3b73f464bf088bb88deb4941464593bad0f0eb4cf4151a94504c3d2a3ec56",
-  "version": 15,
   "contracts": [
     {
       "name": "ProxyAdmin",
       "address": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
+      "sourceHashes": [
+        "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -31,6 +33,10 @@
     {
       "name": "LiquidityPool",
       "address": "0x2A5c2568b10A0E826BfA892Cf21BA7218310180b",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0x2704718af75269b1336700ebb7c17f20b7c71a8cfda9618bf04f5c3b6c1ed995"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -77,6 +83,9 @@
     {
       "name": "ExecutorManager",
       "address": "0xbd761D917fB77381B4398Bda89C7F0d9A2BD1399",
+      "sourceHashes": [
+        "0x892e396c29b5c992295525eefa7f4625709df8fd34d319dcc638eb61bacef0d6"
+      ],
       "sinceTimestamp": 1647128800,
       "values": {
         "$immutable": true,
@@ -92,6 +101,10 @@
     {
       "name": "TokenManager",
       "address": "0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0xb4b188b21027295cc23be58bdfb8244712968fff71cb2dd2af67a5b10df99202"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -118,6 +131,10 @@
     {
       "name": "LiquidityProviders",
       "address": "0xebaB24F13de55789eC1F3fFe99A285754e15F7b9",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0xbf180146f00753d63babbadf58b1dd574f2f626ca5e0f02e65e2ab5a4975fbe5"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -370,6 +387,5 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ]
   },
-  "usedTemplates": {},
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "usedTemplates": {}
 }

@@ -227,6 +227,7 @@ function mockBaseConfig(
     source: 'canonical' as const,
     sinceTimestamp: new UnixTime(123),
     includeInTotal: true,
+    untilTimestamp: undefined,
     decimals: 18,
     symbol: 'SYMBOL',
     isAssociated: false,

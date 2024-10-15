@@ -31,7 +31,7 @@ export default async function Page() {
               <a
                 key={item.id}
                 href={`#${item.id}`}
-                className="text-base font-semibold text-gray-850 transition hover:text-pink-900 dark:text-white dark:opacity-80 dark:hover:text-pink-200 dark:hover:opacity-100"
+                className="text-base font-medium text-gray-850 transition hover:text-brand dark:text-white dark:opacity-80 dark:hover:opacity-100"
               >
                 {item.question}
               </a>

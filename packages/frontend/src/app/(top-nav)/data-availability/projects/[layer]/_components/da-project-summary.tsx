@@ -35,6 +35,7 @@ export function DaProjectSummary({ project, header }: Props) {
           className="mt-auto max-lg:hidden"
           values={project.header.rosetteValues}
           isUnderReview={project.isUnderReview}
+          hasNoBridge={project.selectedBridge.type === 'NoBridge'}
         />
       </div>
 

@@ -3,11 +3,13 @@
   "chain": "mantle",
   "blockNumber": 65329557,
   "configHash": "0xc64f0c7d05713cc872e2a5262959e8eda63ce1eb9cb5c467e2cc3ec3cb89ef48",
-  "version": 15,
   "contracts": [
     {
       "name": "TokenMessaging",
       "address": "0x41B491285A4f888F9f636cEc8a363AB9770a0AEF",
+      "sourceHashes": [
+        "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
+      ],
       "sinceTimestamp": 1716837058,
       "values": {
         "$immutable": true,
@@ -57,6 +59,9 @@
     {
       "name": "StargatePool",
       "address": "0x4c1d3Fc3fC3c177c3b633427c2F769276c547463",
+      "sourceHashes": [
+        "0xf0d2f0cd5f3481632b35bc976e24b16d77ccdeefeb7307139a3f3d2adf485094"
+      ],
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -96,6 +101,9 @@
     {
       "name": "StargatePoolUSDC",
       "address": "0xAc290Ad4e0c891FDc295ca4F0a6214cf6dC6acDC",
+      "sourceHashes": [
+        "0x0ef9b0bca6f74cd24daa9d50e734dfec2ecbc71cef5b209fa0c0f93561ad2640"
+      ],
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -137,6 +145,9 @@
     {
       "name": "StargatePoolMigratable",
       "address": "0xB715B85682B731dB9D5063187C450095c91C57FC",
+      "sourceHashes": [
+        "0xad746913c310c0ee643e98f0a0f4bc6095877e7c82e0779cb5d5e852e0e12c8d"
+      ],
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -178,6 +189,9 @@
     {
       "name": "StargatePool",
       "address": "0xF7628d84a2BbD9bb9c8E686AC95BB5d55169F3F1",
+      "sourceHashes": [
+        "0xf0d2f0cd5f3481632b35bc976e24b16d77ccdeefeb7307139a3f3d2adf485094"
+      ],
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -654,6 +668,5 @@
       "function withdrawTreasuryFee(address _to, uint64 _amountSD)"
     ]
   },
-  "usedTemplates": {},
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "usedTemplates": {}
 }

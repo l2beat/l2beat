@@ -1,4 +1,192 @@
-Generated with discovered.json: 0x97b78204eceaa5f3b6ab9c34ed62d3cfd3b73101
+Generated with discovered.json: 0x98baa30df9d5baaf9d425fd06f85f9cd4e21d610
+
+# Diff at Mon, 14 Oct 2024 10:50:50 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20777943
+- current block number: 20777943
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20777943 (main branch discovery), not current.
+
+```diff
+    contract StakeRegistry (0x006124Ae7976137266feeBFb3F4D2BE4C073139D) {
+    +++ description: None
+      sourceHashes:
++        ["0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d","0x249715f12cf118070103f30534be5816b6847d0b1cd8fe8cae8e1833c6afd1f8"]
+    }
+```
+
+```diff
+    contract BLSApkRegistry (0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505) {
+    +++ description: None
+      sourceHashes:
++        ["0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d","0xb4ca65ab7fb0cd9a8fd6f0c4b7805ea96914dcb6dd65309b2557931358ad1ff3"]
+    }
+```
+
+```diff
+    contract RegistryCoordinator (0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum
+      sourceHashes:
++        ["0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d","0x223309c7d816ce318a9371a50683d99b1ace4ccb775c4a4b3e6ec1238f0a5c68"]
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sourceHashes:
++        ["0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d","0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"]
+    }
+```
+
+```diff
+    contract EjectionManager (0x130d8EA0052B45554e4C99079B84df292149Bd5E) {
+    +++ description: Contract used for ejection of operators from the RegistryCoordinator.
+      sourceHashes:
++        ["0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d","0xe0842698f9d2aadda65d129ee9797efd5820d2c146dc3f368826b9815f5b8c9f"]
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sourceHashes:
++        ["0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d","0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"]
+    }
+```
+
+```diff
+    contract GnosisSafe (0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sourceHashes:
++        ["0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d","0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"]
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x298aFB19A105D59E74658C4C334Ff360BadE6dd2) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sourceHashes:
++        ["0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d","0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"]
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sourceHashes:
++        ["0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d","0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"]
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x57ba429517c3473B6d34CA9aCd56c0e735b94c02) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sourceHashes:
++        ["0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d","0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"]
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x7CA911E83dabf90C90dD3De5411a10F1A6112184) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sourceHashes:
++        ["0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d","0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"]
+    }
+```
+
+```diff
+    contract eigenDAProxyAdmin (0x8247EF5705d3345516286B72bFE6D690197C2E99) {
+    +++ description: None
+      template:
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"]
+    }
+```
+
+```diff
+    contract EigenDAServiceManager (0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
+    +++ description: None
+      sourceHashes:
++        ["0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d","0xb0f8e019272d9343047a9e89cbb9526954b9e2a1149fdc2476e7c29759b38951"]
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sourceHashes:
++        ["0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d","0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"]
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x93c4b944D05dfe6df7645A86cd2206016c51564D) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sourceHashes:
++        ["0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d","0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"]
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sourceHashes:
++        ["0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d","0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"]
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0xa4C637e0F704745D182e4D38cAb7E7485321d059) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sourceHashes:
++        ["0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d","0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"]
+    }
+```
+
+```diff
+    contract EigenStrategy (0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sourceHashes:
++        ["0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad","0x4c5ff062896caf72eb8999dc0f839adca5dbec7dd71c1aa6d0b1defce8ee6046"]
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0xAe60d8180437b5C34bB956822ac2710972584473) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sourceHashes:
++        ["0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d","0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"]
+    }
+```
+
+```diff
+    contract IndexRegistry (0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030) {
+    +++ description: None
+      sourceHashes:
++        ["0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d","0x0a21d40cd8eeee384b8feb55d745d69c6793753a08622872cc24972811a97da9"]
+    }
+```
+
+Generated with discovered.json: 0xa91ad5520a88b83052a58008938b283dcbb00dbe
 
 # Diff at Tue, 01 Oct 2024 10:51:04 GMT:
 

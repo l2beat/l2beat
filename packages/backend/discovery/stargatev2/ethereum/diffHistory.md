@@ -1,4 +1,158 @@
-Generated with discovered.json: 0xd0d1c2b5f452dd475e0ab79c5bcc4523050a63b0
+Generated with discovered.json: 0x814d12129d0fc192efca6b68d1d0490e105b370b
+
+# Diff at Mon, 14 Oct 2024 10:56:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20340229
+- current block number: 20340229
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20340229 (main branch discovery), not current.
+
+```diff
+    contract Treasurer (0x1041D127b2d4BC700F0F563883bC689502606918) {
+    +++ description: None
+      sourceHashes:
++        ["0x3857982ba9867dfe0d878491a8f43962a5ae20721e924738425e3e6902cf9097"]
+    }
+```
+
+```diff
+    contract EndpointV2 (0x1a44076050125825900e736c501f859c50fE728c) {
+    +++ description: Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner.
+      sourceHashes:
++        ["0x399160e7d36a21fca31097d7875daed8f421f788b77f2a71974d51938c3ea520"]
+    }
+```
+
+```diff
+    contract StargatePool (0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D) {
+    +++ description: None
+      sourceHashes:
++        ["0xf0d2f0cd5f3481632b35bc976e24b16d77ccdeefeb7307139a3f3d2adf485094"]
+    }
+```
+
+```diff
+    contract StargateMultiRewarder (0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881) {
+    +++ description: None
+      sourceHashes:
++        ["0xc36d2c5087e47e6fad11a1bea54e8da1eba1b67863c32a5961968d43a77b2f0b"]
+    }
+```
+
+```diff
+    contract Treasury (0x5ebB3f2feaA15271101a927869B3A56837e73056) {
+    +++ description: None
+      sourceHashes:
++        ["0x79f573a9d94def8dc0b4319d44595f806685b0ca5875891eff1ed40a9ff6b6e0"]
+    }
+```
+
+```diff
+    contract Stargate Multisig (0x65bb797c2B9830d891D87288F029ed8dACc19705) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract CreditMessaging (0x6b8aD17795d89B283e6D0362A87A403f3544bb9d) {
+    +++ description: None
+      sourceHashes:
++        ["0xb151141227bb08ead5b1a7d464402bf23feaf60625a773cb8ced48745eb66fe6"]
+    }
+```
+
+```diff
+    contract TokenMessaging (0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980) {
+    +++ description: This is a Layer Zero OApp. It also handles the batching logic: bus, taxi, quotes
+      sourceHashes:
++        ["0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"]
+    }
+```
+
+```diff
+    contract StargatePoolNative (0x77b2043768d28E9C9aB44E1aBfC95944bcE57931) {
+    +++ description: None
+      sourceHashes:
++        ["0x63ac97930921267a1251904351ae2409e0d62d3d3c3fcb2ed7bc1fc4775321f7"]
+    }
+```
+
+```diff
+    contract StargatePoolMigratable (0x933597a323Eb81cAe705C5bC29985172fd5A3973) {
+    +++ description: None
+      sourceHashes:
++        ["0xad746913c310c0ee643e98f0a0f4bc6095877e7c82e0779cb5d5e852e0e12c8d"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3) {
+    +++ description: None
+      sourceHashes:
++        ["0x130b90ae0c02f239d1ce8b414a1a9a49d97708bb4f07d7e9c69af4f7c8a8f5bc"]
+    }
+```
+
+```diff
+    contract Nethermind Verifier (0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5) {
+    +++ description: None
+      sourceHashes:
++        ["0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"]
+    }
+```
+
+```diff
+    contract SendUln302 (0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1) {
+    +++ description: Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.
+      sourceHashes:
++        ["0x159d8f84a5100285a7401e1ccb3d40a64fe944d9beb951c81749de40279a5876"]
+    }
+```
+
+```diff
+    contract StargatePoolUSDC (0xc026395860Db2d07ee33e05fE50ed7bD583189C7) {
+    +++ description: None
+      sourceHashes:
++        ["0x0ef9b0bca6f74cd24daa9d50e734dfec2ecbc71cef5b209fa0c0f93561ad2640"]
+    }
+```
+
+```diff
+    contract ReceiveUln302 (0xc02Ab410f0734EFa3F14628780e6e695156024C2) {
+    +++ description: Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.
+      sourceHashes:
++        ["0x3904c78c7b0abf91f9544ebb9f08f2d2bc83028df65c912a7f7a6ca1ca109dde"]
+    }
+```
+
+```diff
+    contract LayerZero Multisig (0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract StargatePool (0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3) {
+    +++ description: None
+      sourceHashes:
++        ["0xf0d2f0cd5f3481632b35bc976e24b16d77ccdeefeb7307139a3f3d2adf485094"]
+    }
+```
+
+Generated with discovered.json: 0xecfd2cf0baf40fdc870412a7c19be626aa1ac2fa
 
 # Diff at Tue, 01 Oct 2024 11:10:53 GMT:
 

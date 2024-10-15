@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { cn } from '~/utils/cn'
 
 export interface LogoProps {
@@ -11,7 +9,7 @@ export interface LogoProps {
 export function Logo({ className, animated = true, small = false }: LogoProps) {
   return (
     <svg
-      className={cn('overflow-visible', className)}
+      className={cn('translate-y-[-2.5px] overflow-visible', className)}
       width={small ? '36' : '88'}
       height="36"
       viewBox={`0 0 ${small ? '36' : '88'} 36`}

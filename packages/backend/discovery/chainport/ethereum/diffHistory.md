@@ -1,4 +1,87 @@
-Generated with discovered.json: 0xe92aa59403071b52c3f2b77cfed372f8448d14a1
+Generated with discovered.json: 0xf6709846e5a835843a794501a79f75d51b28e328
+
+# Diff at Mon, 14 Oct 2024 10:50:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20934226
+- current block number: 20934226
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20934226 (main branch discovery), not current.
+
+```diff
+    contract ChainportCongressMembersRegistry (0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa) {
+    +++ description: None
+      sourceHashes:
++        ["0x3a8dc61e76d801c8f238572cf0ed2aff6136a21f2b1730dff7360717e9b32db7"]
+    }
+```
+
+```diff
+    contract MultisigVault2 (0x450aD18B4442ce2972Af2a7A12439984db4Afaf9) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F) {
+    +++ description: None
+      sourceHashes:
++        ["0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"]
+    }
+```
+
+```diff
+    contract MultisigVault1 (0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19) {
+    +++ description: None
+      sourceHashes:
++        ["0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
+      sourceHashes:
++        ["0x6fc47885abd30d6674764b88e43a68f4c96a8dd3dd28c11c769a1089b41158cc"]
+    }
+```
+
+Generated with discovered.json: 0xbc0a5fcca57a83e5ca93ba57e600138d1dc8d4e7
+
+# Diff at Thu, 10 Oct 2024 09:11:08 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@cb5ff535ffc194baf7396bd6db8232883e2ad088 block: 20454449
+- current block number: 20934226
+
+## Description
+
+New proposal (and execution) to unpause the unverified contract `0xd02c8a355599fee7e4f1d1d71f7a01c0108e353c`.
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: MEDIUM
+      values.proposalCount:
+-        59
++        60
+    }
+```
+
+Generated with discovered.json: 0xdf8464b1ecc09fd1f5c660488df3f88bfdc79bea
 
 # Diff at Tue, 01 Oct 2024 10:50:26 GMT:
 

@@ -3,12 +3,15 @@
   "chain": "ethereum",
   "blockNumber": 19719123,
   "configHash": "0x0dd5bab61ec77857fe1c60af951691b7e98a6e3c42494d257ff554f15a42c5e8",
-  "version": 15,
   "contracts": [
     {
       "name": "ProxyAdminOwner",
       "address": "0x13fD1622F0E7e50A87B79cb296cbAf18362631C0",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1601280823,
@@ -35,6 +38,10 @@
     {
       "name": "DepositBoxERC1155",
       "address": "0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0xf1249b1702e937c0b400c431224c31f04de782b043f625ab4e1dd18d9ba95863"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -94,6 +101,10 @@
     {
       "name": "DepositBoxEth",
       "address": "0x49F583d263e4Ef938b9E09772D3394c71605Df94",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0x85c164a0c91eb9d4eb34a3a81e63e66c588a8acd2ec2cdbb4cbcf227807eb359"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -153,6 +164,10 @@
     {
       "name": "CommunityPool",
       "address": "0x588801cA36558310D91234aFC2511502282b1621",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0x7b0e65347fa56a4d48ac991663275c6d3bd6cda491d2b19e0a25927709c7e0cf"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -215,6 +230,10 @@
     {
       "name": "Linker",
       "address": "0x6ef406953bac772C2146389ED37846BA3b6086D1",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0x64d57ba715ab14476dad60dec42ebcc0f939e5c516d5a33d0d2b2c142c8c8995"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -264,6 +283,10 @@
     {
       "name": "DepositBoxERC721",
       "address": "0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0xafde9f814c1cf9acd1b9fe1079c4a8b2dad9af902314bae9c98ecc95d370023a"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -323,6 +346,10 @@
     {
       "name": "MessageProxyForMainnet",
       "address": "0x8629703a9903515818C2FeB45a6f6fA5df8Da404",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0x38c7c002f7f26b4053f16644ee44ad6d50b4f2df5daf198fedfc8adc2e14589f"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -403,6 +430,10 @@
     {
       "name": "DepositBoxERC20",
       "address": "0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0x6d6c213f615227669bc439b652e8d47403e0c630f5182fc3221d871255939029"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -467,6 +498,10 @@
     {
       "name": "DepositBoxERC721WithMetadata",
       "address": "0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0xc330381a32c8728fbbdb79c094a22af35e910194c1397147dd089acf552b0c64"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -510,6 +545,9 @@
     {
       "name": "ProxyAdmin",
       "address": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
+      "sourceHashes": [
+        "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -1130,6 +1168,5 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
-  },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  }
 }

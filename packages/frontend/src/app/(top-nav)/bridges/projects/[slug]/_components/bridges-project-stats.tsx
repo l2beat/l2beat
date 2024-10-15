@@ -47,7 +47,7 @@ export function BridgesProjectStats({ project }: Props) {
                       )}
                     </span>
                     <PercentChange
-                      className="text-base font-semibold"
+                      className="text-base font-medium"
                       value={project.header.tvl.tvlBreakdown.totalChange}
                     />
                     {project.header.tvl.tokenBreakdown.warnings.length > 0 && (
@@ -120,7 +120,7 @@ function ProjectStat(props: ProjectStat) {
         )}
       </div>
 
-      <span className="text-lg font-semibold !leading-none md:text-xl md:font-bold">
+      <span className="text-lg font-medium !leading-none md:text-xl md:font-bold">
         {props.value}
       </span>
     </li>

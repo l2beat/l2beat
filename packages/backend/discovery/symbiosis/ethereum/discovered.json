@@ -3,11 +3,13 @@
   "chain": "ethereum",
   "blockNumber": 19532236,
   "configHash": "0x6f289441b363ced9d2f5f1500c425c462ed7923c113afec9d7de7b772d896e22",
-  "version": 15,
   "contracts": [
     {
       "name": "ProxyAdminBridgeV2",
       "address": "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75",
+      "sourceHashes": [
+        "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -28,6 +30,9 @@
     {
       "name": "ProxyAdminBridge",
       "address": "0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA",
+      "sourceHashes": [
+        "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -45,6 +50,10 @@
       "name": "Multisig",
       "address": "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1668412331,
@@ -71,6 +80,10 @@
     {
       "name": "BridgeV2",
       "address": "0x5523985926Aa12BA58DC5Ad00DDca99678D7227E",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0xbd76088c97afed7c4594c70e7bca2da6186fb16ab28e0f1f3f2521d3a62e67b8"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -103,6 +116,10 @@
     {
       "name": "Portal",
       "address": "0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0x4754c4887d8e1782eeead45b2652e3639e4887315d18aaac0050cbcdbdf3a0fa"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -198,6 +215,9 @@
     {
       "name": "MetaRouter",
       "address": "0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F",
+      "sourceHashes": [
+        "0xfdf630e9703ba4569d93c7c67f39804b269eb0215618561b27da33c2dce9fc86"
+      ],
       "sinceTimestamp": 1702970243,
       "values": {
         "$immutable": true,
@@ -208,6 +228,9 @@
     {
       "name": "MetaRouterGateway",
       "address": "0xfCEF2Fe72413b65d3F393d278A714caD87512bcd",
+      "sourceHashes": [
+        "0xf78ec1ebb9770d063d83b96f47dbc97738175104c0ca567882812245a5939087"
+      ],
       "sinceTimestamp": 1702970243,
       "values": {
         "$immutable": true,
@@ -420,6 +443,5 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
-  },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  }
 }

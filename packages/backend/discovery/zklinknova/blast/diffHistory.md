@@ -1,4 +1,62 @@
-Generated with discovered.json: 0xdba0722ae7ddb59be7eb6a34531efdcbbbe6cb69
+Generated with discovered.json: 0x66129e1e46def098497a56c9c9a46694b5f18702
+
+# Diff at Mon, 14 Oct 2024 11:01:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 8312690
+- current block number: 8312690
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 8312690 (main branch discovery), not current.
+
+```diff
+    contract zkLink (0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD) {
+    +++ description: None
+      sourceHashes:
++        ["0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6","0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"]
+    }
+```
+
+```diff
+    contract BlastL2Gateway (0x3f64e2e09732969813904a8473074CFADeE66AF1) {
+    +++ description: None
+      sourceHashes:
++        ["0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6","0x54984eed0ba905283811bcd69e63428602cc4c290c8eed30fc28011383549ff2"]
+    }
+```
+
+```diff
+    contract BlastOwner (0x730200f698cc8Ff16C00F4E8520Fd780B916D50E) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"]
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b) {
+    +++ description: None
+      sourceHashes:
++        ["0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8","0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"]
+    }
+```
+
+```diff
+    contract BlastProxyAdmin (0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19) {
+    +++ description: None
+      sourceHashes:
++        ["0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"]
+    }
+```
+
+Generated with discovered.json: 0xa8f63a3833c49f92aed8dcd694791cc10c8a9fd1
 
 # Diff at Tue, 01 Oct 2024 11:14:53 GMT:
 

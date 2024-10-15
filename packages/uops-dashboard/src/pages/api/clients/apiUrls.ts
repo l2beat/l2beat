@@ -8,15 +8,16 @@ const API_URLS: Map<ChainId, string> = new Map([
   ['taiko', 'https://rpc.taiko.xyz'],
   ['arbitrum', 'https://cold-fluent-card.arbitrum-mainnet.quiknode.pro'],
   ['gravity', 'https://rpc.gravity.xyz'],
+  ['optimism', 'https://icy-late-sailboat.optimism.quiknode.pro'],
 ])
 
 const SCAN_URLS: Map<ChainId, string> = new Map([
   ['base', 'https://api.basescan.org'],
   ['ethereum', 'https://api.etherscan.io'],
   ['xai', 'https://api.xaiscan.io'],
-  ['taiko', 'https://api.taikoscan.io/'],
+  ['taiko', 'https://api.taikoscan.io'],
   ['arbitrum', 'https://api.arbiscan.io'],
-  ['gravity', 'https://explorer.gravity.xyz/api'],
+  ['optimism', 'https://mainnet.optimism.io'],
 ])
 
 export type ApiKeyType = 'RPC' | 'SCAN'

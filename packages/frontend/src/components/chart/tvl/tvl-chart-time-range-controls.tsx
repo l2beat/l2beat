@@ -4,16 +4,17 @@ import { ChartTimeRangeControls } from '../core/chart-time-range-controls'
 export interface Props {
   timeRange: TvlChartRange
   setTimeRange: (value: TvlChartRange) => void
-  range: [number, number] | undefined
+  projectSection?: boolean
 }
 
 export function TvlChartTimeRangeControls({
   timeRange,
   setTimeRange,
-  range,
+  projectSection,
 }: Props) {
   return (
     <ChartTimeRangeControls
+      projectSection={projectSection}
       value={timeRange}
       setValue={setTimeRange}
       options={[
@@ -24,7 +25,6 @@ export function TvlChartTimeRangeControls({
         { value: '1y', label: '1Y' },
         { value: 'max', label: 'MAX' },
       ]}
-      range={range}
     />
   )
 }

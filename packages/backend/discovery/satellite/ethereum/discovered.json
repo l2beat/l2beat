@@ -3,11 +3,14 @@
   "chain": "ethereum",
   "blockNumber": 20017695,
   "configHash": "0x17d2f88caa79b904561d5c3444555097dbf22c906defb717b2e8eaf887ea96fd",
-  "version": 15,
   "contracts": [
     {
       "name": "AxelarGasService",
       "address": "0x2d5d7d31F671F86C782533cc367F14109a082712",
+      "sourceHashes": [
+        "0x8fa191bfa9dc72a70e40c3074333b73f30f8db135dc11d16443f6f26a079ddfe",
+        "0xffdc4806ed0369d49b542adf6eb3b3572e0f76d44bda8f0a093467ebcbe225df"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -42,6 +45,10 @@
     {
       "name": "Gateway",
       "address": "0x4F4495243837681061C4743b74B3eEdf548D56A5",
+      "sourceHashes": [
+        "0xe65732e356e64373f949ce1e543c2af7a89f91a8e3e8337cf9b83a3cd6ae9082",
+        "0x5247a49385cad8b341a34b9f96cde901c1b9567eeb27372b65747f673832df87"
+      ],
       "proxyType": "Axelar proxy",
       "sinceTimestamp": 1640210870,
       "values": {
@@ -98,6 +105,9 @@
     {
       "name": "AxelarGasServiceOperators",
       "address": "0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC",
+      "sourceHashes": [
+        "0xa898c8df7706ef8117978fb0d8653aea9d509fa5e96475894390689c93b28187"
+      ],
       "sinceTimestamp": 1702533995,
       "values": {
         "$immutable": true,
@@ -109,12 +119,18 @@
     {
       "name": "TokenDeployer",
       "address": "0xb28478319B64f8D47e19A120209A211D902F8b8f",
+      "sourceHashes": [
+        "0xb697944037f1be572b23ca3eabbb455b59abdb05b45851313635da227ccc52c3"
+      ],
       "sinceTimestamp": 1697785883,
       "values": { "$immutable": true }
     },
     {
       "name": "Multisig",
       "address": "0xCC940AE49C78F20E3F13F3cF37e996b98Ac3EC68",
+      "sourceHashes": [
+        "0xfca353778b820ad49261c7887cf13ab259a89edab86eef4aeb90e1b2b2a948f5"
+      ],
       "sinceTimestamp": 1697769227,
       "values": {
         "$immutable": true,
@@ -134,6 +150,9 @@
     {
       "name": "AxelarAuthWeighted",
       "address": "0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0",
+      "sourceHashes": [
+        "0xc6735e0060a5046f6ed1ea96805049e3e5167271060aa505f72fbade315a82cb"
+      ],
       "ignoreInWatchMode": ["currentEpoch"],
       "sinceTimestamp": 1697785871,
       "values": {
@@ -147,6 +166,9 @@
     {
       "name": "InterchainGovernance",
       "address": "0xfDF36A30070ea0241d69052ea85ff44Ad0476a66",
+      "sourceHashes": [
+        "0x36106df3599f7c698c4c70652810248df4da03bd579b99553e2852b368632ff6"
+      ],
       "sinceTimestamp": 1697842379,
       "values": {
         "$immutable": true,
@@ -455,6 +477,5 @@
       "function withdraw(address recipient, uint256 amount)"
     ]
   },
-  "usedTemplates": {},
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "usedTemplates": {}
 }

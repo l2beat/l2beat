@@ -1,4 +1,54 @@
-Generated with discovered.json: 0x6175efd28b284dc0681e004d8c8fe75961b20d22
+Generated with discovered.json: 0x8d9a0a95d3aa11dcfa7af73f65dccf0b530d8b0e
+
+# Diff at Mon, 14 Oct 2024 10:49:34 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 19816414
+- current block number: 19816414
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19816414 (main branch discovery), not current.
+
+```diff
+    contract DefiBridgeProxy (0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487) {
+    +++ description: None
+      sourceHashes:
++        ["0x4c3447f738f38931105bfe030716b1bdc26c6e9ca0bbed38fff31afccabc90fb"]
+    }
+```
+
+```diff
+    contract Verifier28x32 (0xb7baA1420f88b7758E341c93463426A2b7651CFB) {
+    +++ description: None
+      sourceHashes:
++        ["0x55fc1304c184842e528edeff31d00322f57295e9f369b6e457f0c9944bc77de9"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xC5b735d05c26579B701Be9bED253Bb588503B26B) {
+    +++ description: None
+      sourceHashes:
++        ["0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"]
+    }
+```
+
+```diff
+    contract RollupProcessorV3 (0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455) {
+    +++ description: None
+      sourceHashes:
++        ["0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67","0xca3afcf92a9c12ce307d9de265b57fe02f7022f6a5f0eab38511eccafbfff478"]
+    }
+```
+
+Generated with discovered.json: 0x3c5215d997e8351ca277c5a3aa3274c3d2a6f161
 
 # Diff at Tue, 01 Oct 2024 10:49:57 GMT:
 

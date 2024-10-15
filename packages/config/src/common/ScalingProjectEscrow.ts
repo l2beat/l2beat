@@ -1,5 +1,4 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-
 import { ScalingProjectContractSingleAddress } from './ScalingProjectContracts'
 
 export type ScalingProjectEscrow = OldProjectEscrow | NewProjectEscrow
@@ -10,8 +9,28 @@ export interface AggLayerEscrow {
   wethAddress?: EthereumAddress
   /** It has to be string because frontend need to serialize it as cache key */
   premintedAmount?: string
-  includeAllOKBFromL1?: boolean
+  /** Which tokens from L1 shared bridge should be assigned to this project,
+   * this is a heuristic and works only until other projects using this bridge
+   * are not bridging this token. This flag was added to handle
+   * non-ETH gas tokens e.g. OKB, GPT
+   */
+  tokensToAssignFromL1?: string[]
 }
+
+export interface ElasticChainEscrow {
+  type: 'ElasticChian'
+  l2BridgeAddress: EthereumAddress
+  /** ERC20 address of ether on L2 */
+  l2EtherAddress: EthereumAddress
+  /** Which tokens from L1 shared bridge should be assigned to this project,
+   * this is a heuristic and works only until other projects using this bridge
+   * are not bridging this token. This flag was added to handle
+   * non-ETH gas tokens e.g. OKB, GPT
+   */
+  tokensToAssignFromL1?: string[]
+}
+
+export type SharedEscrow = AggLayerEscrow | ElasticChainEscrow
 
 interface OldProjectEscrow {
   address: EthereumAddress
@@ -43,7 +62,7 @@ interface OldProjectEscrow {
     }[]
     warning?: string
   }
-  sharedEscrow?: AggLayerEscrow
+  sharedEscrow?: SharedEscrow
 }
 
 interface NewProjectEscrow {
@@ -81,5 +100,5 @@ interface NewProjectEscrow {
     }[]
     warning?: string
   }
-  sharedEscrow?: AggLayerEscrow
+  sharedEscrow?: SharedEscrow
 }
