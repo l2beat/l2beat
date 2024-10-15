@@ -10,7 +10,7 @@
     "jsx": "react",
     "lib": ["es2022"],
     "module": "CommonJS",
-    "moduleResolution": "Node16",
+    "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
     "resolveJsonModule": true,
