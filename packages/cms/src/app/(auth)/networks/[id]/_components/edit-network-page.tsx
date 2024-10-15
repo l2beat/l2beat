@@ -6,7 +6,7 @@ import {
   type NetworkRecord,
   type NetworkRpcRecord,
 } from '@l2beat/database'
-import { ExplorerType } from '@l2beat/database/enums'
+import { ExplorerType } from '@l2beat/database/dist/kysely/generated/enums'
 import { SelectValue } from '@radix-ui/react-select'
 import { ChevronLeft, Trash2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'

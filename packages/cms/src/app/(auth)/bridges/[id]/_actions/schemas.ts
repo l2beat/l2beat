@@ -1,4 +1,4 @@
-import { ExternalBridgeType } from '@l2beat/database/enums'
+import { ExternalBridgeType } from '@l2beat/database/dist/kysely/generated/enums'
 import { z } from 'zod'
 
 export const insertBridgeSchema = z.object({

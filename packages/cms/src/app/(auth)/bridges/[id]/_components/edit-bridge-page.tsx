@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { type ExternalBridgeRecord } from '@l2beat/database'
-import { ExternalBridgeType } from '@l2beat/database/enums'
+import { ExternalBridgeType } from '@l2beat/database/dist/kysely/generated/enums'
 import { ChevronLeft } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
