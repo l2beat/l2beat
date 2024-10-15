@@ -48,6 +48,7 @@ export async function getDaSummaryEntries() {
           daBridge: toDaBridge(daBridge),
           kind: daLayer.kind,
           systemCategory: daLayer.systemCategory,
+          hasChallengeMechanism: daLayer.hasChallengeMechanism,
           layerType: kindToType(daLayer.kind),
           risks: getDaRisks(daLayer, daBridge, tvs, projectEconomicSecurity),
           isUnderReview: !!daLayer.isUnderReview || daBridge.isUnderReview,

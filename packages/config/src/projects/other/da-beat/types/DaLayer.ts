@@ -39,6 +39,8 @@ export type CommonDaLayer = {
   id: string
   /** Classification layers will be split based on */
   systemCategory: 'public' | 'custom'
+  /** Whether given solution has challenge mechanism in place */
+  hasChallengeMechanism?: boolean
   /** Display information for the data availability layer. */
   display: DaLayerDisplay
   /** Is the DA layer upcoming? */

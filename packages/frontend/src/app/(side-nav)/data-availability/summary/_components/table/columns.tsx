@@ -170,6 +170,14 @@ const usedInColumn = columnHelper.accessor('usedIn', {
   enableSorting: false,
 })
 
+const challengeMechanismColumn = columnHelper.accessor(
+  'hasChallengeMechanism',
+  {
+    header: 'Challenge\nmechanism',
+    cell: (ctx) => (ctx.getValue() ? 'Yes' : 'None'),
+  },
+)
+
 export const columns = [
   ...getCommonProjectColumns(columnHelper),
   nameColumn,
@@ -187,4 +195,5 @@ export const customSystemsColumns = [
   risksColumn,
   tvsColumn,
   slashableStakeForCustomSystem,
+  challengeMechanismColumn,
 ]
