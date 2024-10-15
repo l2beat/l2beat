@@ -7,6 +7,9 @@
     {
       "name": "TimeLock1",
       "address": "0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d",
+      "sourceHashes": [
+        "0x9e2584b52fbf6729573afbb5c1cbab7d1159455f10d4de2a581c460e49852e70"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -28,6 +31,9 @@
     {
       "name": "Multisig2",
       "address": "0x2028834B2c0A36A918c10937EeA71BE4f932da52",
+      "sourceHashes": [
+        "0xf716f94059215d0e4c8d8edf41e5a65e741bce5005c2afee04eaafcf5c210d20"
+      ],
       "ignoreInWatchMode": ["transactionCount"],
       "sinceTimestamp": 1684401563,
       "values": {
@@ -49,6 +55,10 @@
     {
       "name": "DefaultDepositContract",
       "address": "0x54D7aE423Edb07282645e740C046B9373970a168",
+      "sourceHashes": [
+        "0x09274cec6469e731822a31ef5a200ae33fc319aca366cf599f707b6359f97613",
+        "0x84fb4e2bbd657c64908e8875c1bbe3610271899626eaf9cf56d6b69400a607b3"
+      ],
       "proxyType": "ZeppelinOS proxy",
       "issuedPermissions": [
         {
@@ -80,6 +90,9 @@
     {
       "name": "Multisig1",
       "address": "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C",
+      "sourceHashes": [
+        "0xf716f94059215d0e4c8d8edf41e5a65e741bce5005c2afee04eaafcf5c210d20"
+      ],
       "ignoreInWatchMode": ["transactionCount"],
       "sinceTimestamp": 1614841682,
       "values": {
@@ -101,6 +114,9 @@
     {
       "name": "LoopringV3",
       "address": "0x9385aCd9d78dFE854c543294770d0C94c2B07EDC",
+      "sourceHashes": [
+        "0x1a927b8a2febc8b60253ee7277d887fe95ec3e23241d77d0ec9e6f424239438e"
+      ],
       "sinceTimestamp": 1699746311,
       "values": {
         "$immutable": true,
@@ -118,6 +134,9 @@
     {
       "name": "LoopringIOExchangeOwner",
       "address": "0x9b93e47b7F61ad1358Bd47Cd01206708E85AE5eD",
+      "sourceHashes": [
+        "0x80a64d522f935661e6a91ce240c8fab04db5aa499462cca019fcda5e0494b18e"
+      ],
       "sinceTimestamp": 1699747007,
       "values": {
         "$immutable": true,
@@ -132,6 +151,10 @@
     {
       "name": "ExchangeV3",
       "address": "0x9C07A72177c5A05410cA338823e790876E79D73B",
+      "sourceHashes": [
+        "0x09274cec6469e731822a31ef5a200ae33fc319aca366cf599f707b6359f97613",
+        "0x0eb913bdd3a56c7e954cf0d749fde579620dce50157f8736c1938de91acd7127"
+      ],
       "proxyType": "ZeppelinOS proxy",
       "issuedPermissions": [
         {
@@ -237,6 +260,9 @@
     {
       "name": "BlockVerifier",
       "address": "0xE3B7fE3ce0fa54C5AC7F48E7ED9E52dA045bE4d6",
+      "sourceHashes": [
+        "0x1154ee2a46fb0e5586723354429b36343227a2e36a12e518d7e985031b67695d"
+      ],
       "sinceTimestamp": 1699746155,
       "values": {
         "$immutable": true,
@@ -247,6 +273,9 @@
     {
       "name": "TimeLock2",
       "address": "0xf2991507952d9594E71A44A54fb19f3109D213A5",
+      "sourceHashes": [
+        "0x9e2584b52fbf6729573afbb5c1cbab7d1159455f10d4de2a581c460e49852e70"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -570,6 +599,5 @@
       "function setPendingAdmin(address pendingAdmin_)"
     ]
   },
-  "usedTemplates": {},
-  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
+  "usedTemplates": {}
 }

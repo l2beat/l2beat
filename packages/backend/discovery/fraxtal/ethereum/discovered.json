@@ -1,30 +1,32 @@
 {
   "name": "fraxtal",
   "chain": "ethereum",
-  "blockNumber": 20460352,
-  "configHash": "0x3e2dc7e022e9938085df51572e3b11183280786767e123280350b230e4c8c300",
+  "blockNumber": 20927364,
+  "configHash": "0xe04923fd0c02d55e0e5259b648cf39f8e019bd6cf6b2b4f8f0f0524d02af1275",
   "contracts": [
     {
-      "name": "DepositContract",
-      "address": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
-      "ignoreInWatchMode": ["get_deposit_count", "get_deposit_root"],
-      "sinceTimestamp": 1602667372,
-      "values": {
-        "$immutable": true,
-        "get_deposit_count": "0x21d5180000000000",
-        "get_deposit_root": "0xb71aab8046efc244f4e6aa122cc69aebbd9f53a714470bc3631e611688d23c70"
-      },
-      "derivedName": "DepositContract"
-    },
-    {
-      "name": "MintableERC20FactoryProxy",
+      "name": "OptimismMintablePermitERC20Factory",
       "address": "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc",
+      "template": "opstack/OptimismMintableERC20Factory",
+      "sourceHashes": [
+        "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
+        "0x42f31c7757e8d3066477571abb4a04e8b817c654c63f6c9f12c96af2a3d000ca"
+      ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "OptimismMintableERC20Factory",
+      "descriptions": [
+        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
-          "via": []
+          "target": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "via": [
+            {
+              "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1706811599,
@@ -45,13 +47,16 @@
         "bridge": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
         "BRIDGE": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
         "version": "1.9.0"
-      },
-      "derivedName": "OptimismMintablePermitERC20Factory"
+      }
     },
     {
       "name": "L1CrossDomainMessenger",
       "address": "0x126bcc31Bc076B3d515f60FBC81FddE0B0d542Ed",
       "template": "opstack/L1CrossDomainMessenger",
+      "sourceHashes": [
+        "0x20a2eb4d3677fc8a15e944f7b1843acd01b2e92acdc4c7a7f7a35b07b891149b",
+        "0x1cc8a3b7de3d2c54c4706bb3f3015714d3b56647fc9fbfd6f8b068f5f63c1c25"
+      ],
       "proxyType": "resolved delegate proxy",
       "descriptions": [
         "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
@@ -78,7 +83,7 @@
         ],
         "$upgradeCount": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292625725",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292631359",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -95,16 +100,20 @@
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "superchainConfig": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
         "version": "2.3.0"
-      },
-      "derivedName": "L1CrossDomainMessenger"
+      }
     },
     {
       "name": "ProxyAdmin",
       "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
-      "receivedPermissions": [
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x1d29007e3a6ea19186d632b4d79251aa21baae9b59fbc0b4c88ff3958b5c2730"
+      ],
+      "directlyReceivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE"
+          "target": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
+          "description": "set and change address mappings."
         },
         {
           "permission": "upgrade",
@@ -142,13 +151,16 @@
         "addressManager": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
         "isUpgrading": false,
         "owner": "0xe0d7755252873c4eF5788f7f45764E0e17610508"
-      },
-      "derivedName": "ProxyAdmin"
+      }
     },
     {
       "name": "SystemConfig",
       "address": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
       "template": "opstack/SystemConfig",
+      "sourceHashes": [
+        "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
+        "0xdf9a11b46747139bfe0135df8a65a2728a2dbd60a689e2398c45627915cdd752"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
@@ -161,8 +173,13 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
-          "via": []
+          "target": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "via": [
+            {
+              "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
+              "delay": 0
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
@@ -230,22 +247,32 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         }
-      },
-      "derivedName": "SystemConfig"
+      }
     },
     {
       "name": "L1StandardBridge",
       "address": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
       "template": "opstack/L1StandardBridge",
+      "sourceHashes": [
+        "0xe60978aadd7b7babd6a7af621f97d7f7e58f1e93f631dd66a13fe4eae9b14761",
+        "0x1010ff7f40ab4d53e6d9996aefa04423dabe9d0e22fac2d02b330ed3aa2c5740"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
       ],
+      "categories": ["Gateways&Escrows"],
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
-          "via": []
+          "target": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "via": [
+            {
+              "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
+              "delay": 0,
+              "description": "upgrading bridge implementation allows to access all funds and change every system component."
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1706811599,
@@ -262,18 +289,30 @@
         "paused": false,
         "superchainConfig": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
         "version": "2.1.0"
-      },
-      "derivedName": "L1StandardBridge"
+      }
     },
     {
       "name": "OptimismPortal",
       "address": "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
+      "template": "opstack/OptimismPortal",
+      "sourceHashes": [
+        "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
+        "0xddf64101e7b6f558921307e9d122e69bbb712db51cff893729c03c588865838f"
+      ],
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
-          "via": []
+          "target": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "via": [
+            {
+              "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
+              "delay": 0
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": ["params"],
@@ -306,7 +345,7 @@
         "params": {
           "prevBaseFee": 10000000,
           "prevBoughtGas": 490798,
-          "prevBlockNum": 20460268
+          "prevBlockNum": 20924889
         },
         "paused": false,
         "superchainConfig": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
@@ -319,6 +358,37 @@
     {
       "name": "frxETH",
       "address": "0x5E8422345238F34275888049021821E8E08CAa1f",
+      "template": "fraxtal/frxETH",
+      "sourceHashes": [
+        "0x35d2793b796cde40be8f1ddaa988ae1c8fd2ad9f55b4b4d74946d35832703efa"
+      ],
+      "displayName": "frxETH Token",
+      "descriptions": [
+        "frxETH token contract. Fraxtal uses Frax Ether as the designated gas token, allowing users to pay for blockspace with frxETH."
+      ],
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x0000000000000000000000000000000000000000",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "target": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
+          "via": [
+            {
+              "address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
+              "delay": 172800,
+              "description": "can add and remove frxETH minters and set a new timelock address."
+            }
+          ]
+        },
+        {
+          "permission": "configure",
+          "target": "0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1665022895,
       "values": {
@@ -334,24 +404,32 @@
         "owner": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
         "symbol": "frxETH",
         "timelock_address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
-        "totalSupply": "189645594005276764153970"
-      },
-      "derivedName": "frxETH"
+        "totalSupply": "175454522144428952474885"
+      }
     },
     {
       "name": "SuperchainConfig",
       "address": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
-      "template": "opstack/SuperchainConfig",
+      "template": "opstack/SuperchainConfigFake",
+      "sourceHashes": [
+        "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
+        "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
-        "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
+        "This is NOT the shared SuperchainConfig of the OP stack Superchain. This SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
       ],
       "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
-          "via": []
+          "target": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "via": [
+            {
+              "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1706811599,
@@ -378,13 +456,16 @@
         "paused": false,
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
-      },
-      "derivedName": "SuperchainConfig"
+      }
     },
     {
       "name": "L2OutputOracle",
       "address": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
       "template": "opstack/L2OutputOracle",
+      "sourceHashes": [
+        "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
+        "0x025c187b0231be4785898f25f98d749f953f5d06781772aef242812e2ecf52e3"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
@@ -392,8 +473,13 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
-          "via": []
+          "target": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "via": [
+            {
+              "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
+              "delay": 0
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": [
@@ -432,10 +518,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 8011800,
-        "latestOutputIndex": 4450,
-        "nextBlockNumber": 8013600,
-        "nextOutputIndex": 4451,
+        "latestBlockNumber": 10827000,
+        "latestOutputIndex": 6014,
+        "nextBlockNumber": 10828800,
+        "nextOutputIndex": 6015,
         "proposer": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
         "PROPOSER": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
         "startingBlockNumber": 0,
@@ -443,13 +529,16 @@
         "SUBMISSION_INTERVAL": 1800,
         "submissionInterval": 1800,
         "version": "1.8.0"
-      },
-      "derivedName": "L2OutputOracle"
+      }
     },
     {
       "name": "frxETHMultisig",
       "address": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1665087971,
@@ -470,7 +559,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 1055,
+        "nonce": 1100,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -478,40 +567,75 @@
     {
       "name": "Timelock",
       "address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
+      "template": "fraxtal/Timelock",
+      "sourceHashes": [
+        "0xf74d5abe93255d485a607a353bb85161caf16d07541125865eb5fd9220bce6c7"
+      ],
+      "displayName": "FrxEthTimelock",
+      "descriptions": [
+        "Allows for time-delayed execution of transactions. Current delay is 2d."
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x5E8422345238F34275888049021821E8E08CAa1f",
+          "description": "can add and remove frxETH minters and set a new timelock address."
+        },
+        {
+          "permission": "configure",
+          "target": "0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
+          "description": "can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`)."
+        }
+      ],
       "sinceTimestamp": 1608140486,
       "values": {
         "$immutable": true,
         "admin": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
         "delay": 172800,
+        "delayFormatted": "2d",
         "GRACE_PERIOD": 1209600,
         "MAXIMUM_DELAY": 2592000,
         "MINIMUM_DELAY": 172800,
         "pendingAdmin": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "Timelock"
+      }
     },
     {
       "name": "AddressManager",
       "address": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
       "template": "opstack/AddressManager",
+      "sourceHashes": [
+        "0xdc86a850f11dc2b5c0472a05d0e3c14f239baf2c3b1ab19631591b0827985380"
+      ],
+      "descriptions": [
+        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+      ],
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
-          "via": []
+          "target": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "via": [
+            {
+              "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
+              "delay": 0,
+              "description": "set and change address mappings."
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1706811599,
       "values": {
         "$immutable": true,
         "owner": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"
-      },
-      "derivedName": "AddressManager"
+      }
     },
     {
       "name": "L1ERC721Bridge",
       "address": "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5",
       "template": "opstack/L1ERC721Bridge",
+      "sourceHashes": [
+        "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
+        "0x482ec6e91304ac39a3fb4505634427bddfddee23b8e93a4f7f995ca5083ae3c3"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "Used to bridge ERC-721 tokens from host chain to this chain."
@@ -519,8 +643,13 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
-          "via": []
+          "target": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "via": [
+            {
+              "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1706811599,
@@ -549,12 +678,17 @@
         "paused": false,
         "superchainConfig": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
         "version": "2.1.0"
-      },
-      "derivedName": "L1ERC721Bridge"
+      }
     },
     {
       "name": "sfrxETH",
       "address": "0xac3E018457B222d93114458476f3E3416Abbe38F",
+      "sourceHashes": [
+        "0xfe65651a8179606cdf20c60070a93224cb7b8fd4e89fb0d668b795503e8da33c"
+      ],
+      "descriptions": [
+        "Vault token contract (ERC-4626) for staked frxETH. The smart contract receives frxETH tokens and mints sfrxETH tokens."
+      ],
       "ignoreInWatchMode": [
         "lastRewardAmount",
         "lastSync",
@@ -569,23 +703,58 @@
         "asset": "0x5E8422345238F34275888049021821E8E08CAa1f",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0xe8254029df4a5fbfcf2de75f8fcf68b1060354a363693b1507e1197cc3dcc29b",
-        "lastRewardAmount": "94221000000000000000",
-        "lastSync": 1722484367,
+        "lastRewardAmount": "93537000000000000000",
+        "lastSync": 1727917379,
         "name": "Staked Frax Ether",
-        "pricePerShare": "1094279299273108798",
-        "rewardsCycleEnd": 1723075200,
+        "pricePerShare": "1101001163210941880",
+        "rewardsCycleEnd": 1728518400,
         "rewardsCycleLength": 604800,
         "symbol": "sfrxETH",
-        "totalAssets": "148617427128469074139816",
-        "totalSupply": "135813066396477021109314"
+        "totalAssets": "131661212397721570628721",
+        "totalSupply": "119583172840387336900095"
       },
       "derivedName": "sfrxETH"
     },
     {
-      "name": "TimelockMultisig",
+      "name": "FraxtalTimelockMultisig",
       "address": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x5E8422345238F34275888049021821E8E08CAa1f",
+          "description": "can add and remove frxETH minters and set a new timelock address.",
+          "via": [
+            {
+              "address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "configure",
+          "target": "0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
+          "description": "can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`).",
+          "via": [
+            {
+              "address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
+              "delay": 172800
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
+          "delay": 172800
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1629667690,
       "values": {
@@ -603,7 +772,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 5730,
+        "nonce": 5854,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -611,30 +780,59 @@
     {
       "name": "frxETHMinter",
       "address": "0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
+      "template": "fraxtal/FrxEthMinter",
+      "sourceHashes": [
+        "0xeb2d3e06200c7350a7bcb0c3b1b64c466c15459f1119fb068ae8a69483c30d55"
+      ],
+      "displayName": "frxETH Minter",
+      "descriptions": ["Accepts user-supplied ETH and converts it to frxETH."],
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
+          "via": [
+            {
+              "address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
+              "delay": 172800,
+              "description": "can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`)."
+            }
+          ]
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x5E8422345238F34275888049021821E8E08CAa1f",
+          "description": "can mint frxETH tokens."
+        }
+      ],
       "ignoreInWatchMode": ["currentWithheldETH", "numValidators"],
       "sinceTimestamp": 1665022895,
       "values": {
         "$immutable": true,
-        "currentWithheldETH": "506071866734796415524",
+        "currentWithheldETH": "1096329984141409675745",
         "DEPOSIT_SIZE": "32000000000000000000",
         "depositContract": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
         "depositEtherPaused": false,
         "frxETHToken": "0x5E8422345238F34275888049021821E8E08CAa1f",
         "nominatedOwner": "0x0000000000000000000000000000000000000000",
-        "numValidators": 203,
+        "numValidators": 200,
         "owner": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
         "RATIO_PRECISION": 1000000,
         "sfrxETHToken": "0xac3E018457B222d93114458476f3E3416Abbe38F",
         "submitPaused": false,
         "timelock_address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
         "withholdRatio": 980000
-      },
-      "derivedName": "frxETHMinter"
+      }
     },
     {
       "name": "FraxtalMultisig",
       "address": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "roles": ["Challenger", "Guardian"],
       "receivedPermissions": [
@@ -642,6 +840,54 @@
           "permission": "configure",
           "target": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+        },
+        {
+          "permission": "configure",
+          "target": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
+          "description": "set and change address mappings.",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
+          "description": "upgrading bridge implementation allows to access all funds and change every system component.",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -664,21 +910,20 @@
         "nonce": 29,
         "VERSION": "1.3.0"
       },
-      "fieldMeta": {
-        "getOwners": {
-          "severity": "LOW",
-          "description": "Signers of the multisig, high severity if threshold changes"
-        },
-        "getThreshold": {
-          "severity": "HIGH",
-          "description": "Multisig threshold"
-        }
-      },
       "derivedName": "GnosisSafe"
     }
   ],
   "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
+    {
+      "address": "0x0000000000000000000000000000000000000000",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x5E8422345238F34275888049021821E8E08CAa1f",
+          "description": "can mint frxETH tokens."
+        }
+      ]
+    },
     { "address": "0x000000000000000000000000000000000000dEaD" },
     { "address": "0x05FB8eC3C41da95b26fCb85503DaF8B89B89A935" },
     { "address": "0x17e06ce6914E3969f7BD37D8b2a563890cA1c96e" },
@@ -701,14 +946,6 @@
     { "address": "0xfF000000000000000000000000000000000420fC" }
   ],
   "abis": {
-    "0x00000000219ab540356cBB839Cbe05303d7705Fa": [
-      "constructor()",
-      "event DepositEvent(bytes pubkey, bytes withdrawal_credentials, bytes amount, bytes signature, bytes index)",
-      "function deposit(bytes pubkey, bytes withdrawal_credentials, bytes signature, bytes32 deposit_data_root) payable",
-      "function get_deposit_count() view returns (bytes)",
-      "function get_deposit_root() view returns (bytes32)",
-      "function supportsInterface(bytes4 interfaceId) pure returns (bool)"
-    ],
     "0x0d9C39c64CF8eDA1EdFeBD78AFa895bAA797eFc4": [
       "constructor()",
       "event ConfigUpdate(uint8 indexed updateType, bytes data)",
@@ -1247,14 +1484,19 @@
     ]
   },
   "usedTemplates": {
+    "fraxtal/frxETH": "0xe5482b6c32a0742121bc11ad168d5b887a7553531f6f04145597db129a8b0a8d",
+    "fraxtal/FrxEthMinter": "0xb3496e9ff1bb9694e50fc29dd6bddc7340da994d9679cc0e51dd2e3dad9a74fd",
+    "fraxtal/Timelock": "0xfb84a150b2dede291d087c46dac44d27f03fb609f506a60ed3ffe2b92651ea35",
+    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
-    "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
+    "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
     "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
-    "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
+    "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
+    "opstack/OptimismPortal": "0x2a32f6874a8c0e85e685fa944143e7968d675fed43b46e7385411ad11f8a1a43",
+    "opstack/SuperchainConfigFake": "0x17951c3ed31f2fe002926d8927d2f05c9fd3502df1cad17c765d965c1e3f07a6",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
-  },
-  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
+  }
 }

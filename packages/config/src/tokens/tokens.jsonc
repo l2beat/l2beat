@@ -1527,6 +1527,25 @@
   ],
   "arbitrum": [
     {
+      "symbol": "EGP",
+      "address": "0x7E7a7C916c19a45769f6BDAF91087f93c6C12F78",
+      "source": "native",
+      "supply": "circulatingSupply" // somehow coingecko does not exclude half the supply sitting in a multisig :(
+    },
+    {
+      "symbol": "ATH",
+      "address": "0xc87B37a581ec3257B734886d9d3a581F5A9d056c",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Axelar (ITS)"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "PMON",
       "address": "0xBC9B77acA82f6BE43927076D71cd453b625165B8",
       "source": "canonical",
@@ -3132,16 +3151,6 @@
       "supply": "circulatingSupply"
     }
   ],
-  "kinto": [
-    {
-      "symbol": "USD+",
-      "address": "0x6F086dB0f6A621a915bC90295175065c9e5d9b8c",
-      "category": "stablecoin",
-      "source": "native",
-      "supply": "totalSupply",
-      "coingeckoId": "dinari-usd"
-    }
-  ],
   "kroma": [
     {
       "symbol": "M-BTC",
@@ -4015,6 +4024,13 @@
       "source": "native",
       "supply": "totalSupply",
       "coingeckoId": "re-al"
+    },
+    {
+      "symbol": "UKRE",
+      "address": "0x835d3E1C0aA079C6164AAd21DCb23E60eb71AF48",
+      "source": "native",
+      "supply": "totalSupply", // no circulating on CG, but seems to be fully circulating
+      "coingeckoId": "uk-real-estate"
     },
     {
       "symbol": "USTB",

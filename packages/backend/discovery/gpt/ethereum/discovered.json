@@ -7,6 +7,9 @@
     {
       "name": "Verifier",
       "address": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+      "sourceHashes": [
+        "0x0bc67d276b40b2ba13903d94fd6c25ae4d3d5162bc942763c418afdc11bc9b32"
+      ],
       "sinceTimestamp": 1711291211,
       "values": { "$immutable": true },
       "derivedName": "FflonkVerifier"
@@ -14,12 +17,21 @@
     {
       "name": "GptProtocolDAC",
       "address": "0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8",
+      "sourceHashes": [
+        "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
+        "0xf7c38d00c4b6000f1840ed38f9ae99d753da8ac69ee1b6ac9ed614f2b60d470f"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xada59D145126A746976F0F56477aafFEB3acc8e3",
-          "via": []
+          "target": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
+          "via": [
+            {
+              "address": "0xada59D145126A746976F0F56477aafFEB3acc8e3",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1718797871,
@@ -54,7 +66,11 @@
     {
       "name": "DACProxyAdmin",
       "address": "0xada59D145126A746976F0F56477aafFEB3acc8e3",
-      "receivedPermissions": [
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
+      ],
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "target": "0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8"
@@ -70,6 +86,10 @@
     {
       "name": "GptProtocolValidium",
       "address": "0xC4E903D3Af4c3d2e437492d602adcC9d9b536858",
+      "sourceHashes": [
+        "0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4",
+        "0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"
+      ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1716807971,
@@ -126,7 +146,22 @@
     { "address": "0x5B8C9f36c8F84E49EC89Ae2881D920Ceb36D7F40" },
     { "address": "0x7417EDBE8906093Ef3a5eF67D9d422aBe3398527" },
     { "address": "0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA" },
-    { "address": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe" }
+    {
+      "address": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8",
+          "via": [{ "address": "0xada59D145126A746976F0F56477aafFEB3acc8e3" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0xada59D145126A746976F0F56477aafFEB3acc8e3"
+        }
+      ]
+    }
   ],
   "abis": {
     "0x0775e11309d75aA6b0967917fB0213C5673eDf81": [
@@ -303,6 +338,7 @@
       "event Upgraded(address indexed implementation)"
     ]
   },
-  "usedTemplates": {},
-  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
+  "usedTemplates": {
+    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091"
+  }
 }

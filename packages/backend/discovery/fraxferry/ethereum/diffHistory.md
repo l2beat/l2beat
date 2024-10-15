@@ -1,4 +1,86 @@
-Generated with discovered.json: 0xc372c149a58d2bc847cb8261bb21cfdad15efd14
+Generated with discovered.json: 0x11d3bad860ea3b889405af2307afe7747ef3b752
+
+# Diff at Mon, 14 Oct 2024 10:51:12 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 19697870
+- current block number: 19697870
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19697870 (main branch discovery), not current.
+
+```diff
+    contract sfraxFerryBridgeFraxtal (0x2b4864c2F2A2C275C6C66B90a2ae6BE9fA9cbE47) {
+    +++ description: None
+      sourceHashes:
++        ["0x326f7d9a81994cc621445ba82a4fa9f93494434ebeba2c62e615409b7195b095"]
+    }
+```
+
+```diff
+    contract fxsFerryBridgeFraxtal (0x4A6d155df9Ec9A1BB3639e6B7B99E46Fb68D42f6) {
+    +++ description: None
+      sourceHashes:
++        ["0x326f7d9a81994cc621445ba82a4fa9f93494434ebeba2c62e615409b7195b095"]
+    }
+```
+
+```diff
+    contract sfrxFerryBridgeFraxtal (0x5c5f05cF8528FFe925A2264743bFfEdbAB2b0FE3) {
+    +++ description: None
+      sourceHashes:
++        ["0x326f7d9a81994cc621445ba82a4fa9f93494434ebeba2c62e615409b7195b095"]
+    }
+```
+
+```diff
+    contract fraxFerryBridgeFraxtal (0x5e1D94021484642863Ea8E7Cb4F0188e56B18FEE) {
+    +++ description: None
+      sourceHashes:
++        ["0x326f7d9a81994cc621445ba82a4fa9f93494434ebeba2c62e615409b7195b095"]
+    }
+```
+
+```diff
+    contract FPI Multisig (0x6A7efa964Cf6D9Ab3BC3c47eBdDB853A8853C502) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract fpisFerryBridgeFraxtal (0x958815f476cD07354c0BC034EE5077B20fD93003) {
+    +++ description: None
+      sourceHashes:
++        ["0x326f7d9a81994cc621445ba82a4fa9f93494434ebeba2c62e615409b7195b095"]
+    }
+```
+
+```diff
+    contract fpiFerryBridgeFraxtal (0x9A576A3d39c589A861B46864C253288bcA428a6c) {
+    +++ description: None
+      sourceHashes:
++        ["0x326f7d9a81994cc621445ba82a4fa9f93494434ebeba2c62e615409b7195b095"]
+    }
+```
+
+```diff
+    contract Frax Finance Multisig (0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+Generated with discovered.json: 0x9598b6dfc01a4c33497bb0731e19ac551ee890f3
 
 # Diff at Fri, 09 Aug 2024 10:09:33 GMT:
 

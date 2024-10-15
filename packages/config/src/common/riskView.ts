@@ -56,7 +56,7 @@ export const STATE_FP_INT_ZK: ScalingProjectRiskViewEntry = {
 export const STATE_ZKP_SN: ScalingProjectRiskViewEntry = {
   value: 'ZK proofs (SN)',
   description:
-    'zkSNARKS are zero knowledge proofs that ensure state correctness, but require trusted setup.',
+    'SNARKs are zero knowledge proofs that ensure state correctness, but require trusted setup.',
   sentiment: 'good',
   definingMetric: Infinity,
 }
@@ -64,7 +64,15 @@ export const STATE_ZKP_SN: ScalingProjectRiskViewEntry = {
 export const STATE_ZKP_ST: ScalingProjectRiskViewEntry = {
   value: 'ZK proofs (ST)',
   description:
-    'zkSTARKS are zero knowledge proofs that ensure state correctness.',
+    'STARKs are zero knowledge proofs that ensure state correctness.',
+  sentiment: 'good',
+  definingMetric: Infinity,
+}
+
+export const STATE_ZKP_ST_SN_WRAP: ScalingProjectRiskViewEntry = {
+  value: 'ZK proofs (ST, SN)',
+  description:
+    'STARKs and SNARKs are zero knowledge proofs that ensure state correctness. STARKs proofs are wrapped in SNARKs proofs for efficiency. SNARKs require a trusted setup.',
   sentiment: 'good',
   definingMetric: Infinity,
 }
@@ -585,6 +593,7 @@ export const RISK_VIEW = {
   STATE_FP_INT_ZK,
   STATE_ZKP_SN,
   STATE_ZKP_ST,
+  STATE_ZKP_ST_SN_WRAP,
   STATE_ZKP_L3,
   STATE_EXITS_ONLY,
   STATE_ARBITRUM_FRAUD_PROOFS,

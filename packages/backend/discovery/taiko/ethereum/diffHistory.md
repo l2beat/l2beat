@@ -1,4 +1,166 @@
-Generated with discovered.json: 0x321d6af8b30f741a71628a2d477df8c4b681ed9d
+Generated with discovered.json: 0x62bbf8ea8ccf69d33116a4be61f87ed5c169c163
+
+# Diff at Mon, 14 Oct 2024 10:56:48 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20367491
+- current block number: 20367491
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20367491 (main branch discovery), not current.
+
+```diff
+    contract PEMCertChainLib (0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169) {
+    +++ description: None
+      sourceHashes:
++        ["0x97476fc6413c58015ddf51b5d2e37c3fdfc6b85ced25779773a1652ecc154c77"]
+    }
+```
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      sourceHashes:
++        ["0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b","0xf13ac7cd2ef8d7b72cab625effe80906f11db83cf2a688e85a19d515da43f06f"]
+    }
+```
+
+```diff
+    contract TaikoToken (0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800) {
+    +++ description: None
+      sourceHashes:
++        ["0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b","0x5da570fbffd5ab663ce8983496a9ded290ed853a950b4052ac93b35217babac8"]
+    }
+```
+
+```diff
+    contract TierProvider (0x3a1A900680BaADb889202faf12915F7E47B71ddd) {
+    +++ description: None
+      sourceHashes:
++        ["0xb4bbf462798387aaf063a17fe37e8c1b7680ea832f5d7578bb385b9ea4d96e7b"]
+    }
+```
+
+```diff
+    contract SigVerifyLib (0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9) {
+    +++ description: None
+      sourceHashes:
++        ["0x5bf803a773ed2c117313ea970df3b38542eab3522714f18be2b65a75062e0ebf"]
+    }
+```
+
+```diff
+    contract GuardianMinorityProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c) {
+    +++ description: Verifier contract for blocks proven by Guardian minority.
+      sourceHashes:
++        ["0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b","0xb6ed017b0bf49c547dbaa4b24efcbcd5218c26aafd94f8cf06850d009e538347"]
+    }
+```
+
+```diff
+    contract L1RollupAddressManager (0x579f40D0BE111b823962043702cabe6Aaa290780) {
+    +++ description: None
+      sourceHashes:
++        ["0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b","0x06f614affc4908aeeac9faa505010855388740ee8e5ba632fbc0e5f56ee8927d"]
+    }
+```
+
+```diff
+    contract ProverSetProxy (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9) {
+    +++ description: A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO.
+      sourceHashes:
++        ["0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b","0x020f0e8ece4630d3f7e6458ef5f1d86c5408ed344c580633e3f32e53393ceab5"]
+    }
+```
+
+```diff
+    contract TierRouter (0x6E997f1F22C40ba37F633B08f3b07E10Ed43155a) {
+    +++ description: None
+      sourceHashes:
++        ["0x0586e314d29674146a289903abeb027df33bc789e1aa325ebe458284967fe8d6"]
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) {
+    +++ description: None
+      sourceHashes:
++        ["0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b","0xac51975c574b128e9dc1e8542c616ed655d4a2abc91d3233648ac688e530c68c"]
+    }
+```
+
+```diff
+    contract SharedERC20Vault (0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab) {
+    +++ description: None
+      sourceHashes:
++        ["0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b","0x3c7adf8e3200906bd67dec9e0b73fb813681e84ba1499dcede6987370ce146c9"]
+    }
+```
+
+```diff
+    contract TaikoAdmin (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract SignalService (0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) {
+    +++ description: None
+      sourceHashes:
++        ["0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b","0xa5cf6831e233f05c8a2f677c311dd359c75850355d61417bc5201d493db30039"]
+    }
+```
+
+```diff
+    contract SgxVerifier (0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81) {
+    +++ description: Verifier contract for SGX proven blocks.
+      sourceHashes:
++        ["0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b","0xdb8e8268242e52348760b0b2d154955236307b3ef1bc9cb0234fc6c0d01aa70f"]
+    }
+```
+
+```diff
+    contract MainnetProverSet (0xCE5a119479337a153CA3bd1b2bF9755c78F2B15A) {
+    +++ description: None
+      sourceHashes:
++        ["0x020f0e8ece4630d3f7e6458ef5f1d86c5408ed344c580633e3f32e53393ceab5"]
+    }
+```
+
+```diff
+    contract TaikoBridge (0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) {
+    +++ description: None
+      sourceHashes:
++        ["0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b","0x14240ef6b1d8181a009840162a21975c2777f78f27c22e8e550bc66b36357f78"]
+    }
+```
+
+```diff
+    contract GuardianProver (0xE3D777143Ea25A6E031d1e921F396750885f43aC) {
+    +++ description: Verifier contract for Guardian proven blocks.
+      sourceHashes:
++        ["0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b","0xb6ed017b0bf49c547dbaa4b24efcbcd5218c26aafd94f8cf06850d009e538347"]
+    }
+```
+
+```diff
+    contract L1SharedAddressManager (0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa) {
+    +++ description: None
+      sourceHashes:
++        ["0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b","0xa0dc6b4537f21ed3a4a43a7fb74645ff827cff8c2b26f2e3e4350ddec470c990"]
+    }
+```
+
+Generated with discovered.json: 0x23099ec7223b235b37cb37864d7faf0af142f3da
 
 # Diff at Tue, 01 Oct 2024 11:11:20 GMT:
 

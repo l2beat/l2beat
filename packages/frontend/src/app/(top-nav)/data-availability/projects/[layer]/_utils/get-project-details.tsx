@@ -70,6 +70,7 @@ export function getProjectDetails({
       rosetteType: 'pentagon',
       rosetteValues: rosetteValues,
       isUnderReview: !!daLayer.isUnderReview || daBridge.isUnderReview,
+      shouldHideRosette: daBridge.type === 'NoBridge',
       warning: daBridge.display.warning,
       redWarning: daBridge.display.redWarning,
       isVerified,

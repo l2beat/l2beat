@@ -5,6 +5,7 @@ import { aiechain } from './aiechain'
 import { alephzero } from './alephzero'
 import { alienx } from './alienx'
 import { align } from './align'
+import { allo } from './allo'
 import { ancient } from './ancient'
 import { apex } from './apex'
 import { arbitrum } from './arbitrum'
@@ -33,7 +34,6 @@ import { degate } from './degate'
 import { degate2 } from './degate2'
 import { degate3 } from './degate3'
 import { dydx } from './dydx'
-import { ebi } from './ebi'
 import { ebichain } from './ebichain'
 import { edgeless } from './edgeless'
 import { ethernity } from './ethernity'
@@ -90,6 +90,7 @@ import { network3 } from './network3'
 import { neva } from './neva'
 import { nil } from './nil'
 import { nova } from './nova'
+import { odyssey } from './odyssey'
 import { oev } from './oev'
 import { ola } from './ola'
 import { omgnetwork } from './omgnetwork'
@@ -142,7 +143,9 @@ import { ternoa } from './ternoa'
 import { thanos } from './thanos'
 import { thebinaryholdings } from './thebinaryholdings'
 import { treasure } from './treasure'
+import { turboprotocol } from './turboprotocol'
 import { Layer2 } from './types'
+import { unichain } from './unichain'
 import { wirex } from './wirex'
 import { witness } from './witness'
 import { world } from './world'
@@ -170,6 +173,7 @@ export const layer2s: Layer2[] = [
   aevo,
   aiechain,
   alephzero,
+  allo,
   ancient,
   apex,
   arbitrum,
@@ -201,7 +205,6 @@ export const layer2s: Layer2[] = [
   degate2,
   degate3,
   dydx,
-  ebi,
   edgeless,
   ethernity,
   everclear,
@@ -258,6 +261,7 @@ export const layer2s: Layer2[] = [
   network3,
   neva,
   nova,
+  odyssey,
   oev,
   ola,
   omgnetwork,
@@ -309,6 +313,8 @@ export const layer2s: Layer2[] = [
   thebinaryholdings,
   thanos,
   treasure,
+  turboprotocol,
+  unichain,
   wirex,
   witness,
   world,

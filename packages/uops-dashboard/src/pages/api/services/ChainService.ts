@@ -18,7 +18,8 @@ export class ChainService {
       case 'xai':
       case 'taiko':
       case 'arbitrum':
-      case 'gravity': {
+      case 'gravity':
+      case 'optimism': {
         this.analyzer = new RpcAnalyzer(chain, db)
         break
       }
