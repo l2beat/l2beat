@@ -36,6 +36,9 @@ export const eigenDA: DaLayer = {
     - Lastly, the **retriever** client is responsible for querying the EigenDA operators to retrieve blob chunks, verifying their integrity and reconstructs the original blob. 
     
     Operators register with the EigenDAServiceManager via the registerOperatorToAVS() function, enabling them to participate in the data availability network. They are resposible for holding and serving blobs data, and earn rewards for their participation in the network.
+
+    ![EigenDA operator registration](/images/da-layer-technology/eigenda/registration.png#center)
+
     The process of storing a blob on EigenDA works as follows. A sequencer submits blobs to the EigenDA Disperser, which erasure codes the blobs into chunks and generates KZG commitments and proofs for each chunk, certifying the correctness of the data. The disperser then sends the chunks, KZG commitments, and KZG proofs to the operators.
     Multiple operators are responsible for storing chunks of the encoded data blobs and their associated KZG commitment and proof.
     Once the chunks, KZG commitments, and KZG proofs are sent to the operators, each of them generates a signature certifying that they have stored the data. These signatures are then sent to the Disperser which aggregates them and uploads them to Ethereum by sending a transaction to the EigenDAServiceManager (the DA bridge).
