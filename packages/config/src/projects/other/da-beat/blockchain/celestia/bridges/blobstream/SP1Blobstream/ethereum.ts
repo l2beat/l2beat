@@ -36,6 +36,7 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
       socialMedia: [],
     },
   },
+
   technology: `
 
     ## Architecture
@@ -51,6 +52,7 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
      Verifying a header range includes verifying tendermint consensus (header signatures are 2/3 of stake) and verifying the data commitment root.
       By default, Blobstream on ${chainName} is updated by the Celestia operator at a regular cadence of ${updateInterval} hour.
     `,
+  },
   contracts: {
     addresses: [
       discovery.getContractDetails('Blobstream', {

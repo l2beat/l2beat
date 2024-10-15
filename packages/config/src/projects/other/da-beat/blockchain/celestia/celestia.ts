@@ -30,6 +30,7 @@ export const celestia: DaLayer = {
       ],
     },
   },
+
   technology: `
     ## Architecture
     
@@ -74,12 +75,15 @@ export const celestia: DaLayer = {
     Applications can then retrieve the data by querying the Celestia blockchain for the data root of the blob and the namespace of the application. The data can be reconstructed by querying the Celestia network for the shares of the data matrix and reconstructing the data using the erasure coding scheme.
 
     `,
+  },
   bridges: [
     NO_BRIDGE({
       layer: 'Celestia',
       description:
         'The risk profile in this page refers to scaling solutions that do not integrate with a data availability bridge.',
-      technology: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
+      technology: {
+        description: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
+      },
     }),
     ...blobstream,
   ],
