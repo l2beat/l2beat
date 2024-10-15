@@ -40,7 +40,7 @@ export const blobstreamArbitrum = CELESTIA_BLOBSTREAM({
 
     ## Architecture
         
-    ![Celestia blobstream architecture](/images/da-bridge-technology/celestia/architecture.png#center)
+    ![Celestia blobstream architecture](/images/da-bridge-technology/celestia/blobstream/architecture.png#center)
 
     The Blobstream bridge is a data availability bridge that facilitates data availability commitments to be bridged between Celestia and ${chainName}.
     The Blobstream bridge is composed of three main components: the **Blobstream** contract, the **Succinct Gateway** contracts, and the **Verifier** contracts.  <br /> 
