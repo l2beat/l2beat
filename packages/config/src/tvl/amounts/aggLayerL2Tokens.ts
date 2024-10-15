@@ -8,6 +8,7 @@ import {
 import { BackendProject, BackendProjectEscrow } from '../../backend'
 import { ethereum } from '../../chains/ethereum'
 import { ChainConfig } from '../../common'
+import { getEscrowUntilTimestamp } from '../../utils/getEscrowUntilTimestamp'
 
 export function getAggLayerL2TokenEntry(
   chain: ChainConfig,
@@ -24,9 +25,13 @@ export function getAggLayerL2TokenEntry(
     UnixTime.max(chain.minTimestampForTvl, token.sinceTimestamp),
     escrow.sinceTimestamp,
   )
+  const untilTimestamp = getEscrowUntilTimestamp(
+    token.untilTimestamp,
+    escrow.untilTimestamp,
+  )
   const includeInTotal = token.excludeFromTotal
     ? false
-    : escrow.includeInTotal ?? true
+    : (escrow.includeInTotal ?? true)
   const isAssociated = !!project.associatedTokens?.includes(token.symbol)
 
   // We are hardcoding assetId because aggLayerL2Token is an canonical token
@@ -36,20 +41,21 @@ export function getAggLayerL2TokenEntry(
   const dataSource = `${chain.name}_agglayer`
 
   return {
-    type: type,
-    originNetwork: originNetwork,
-    dataSource: dataSource,
-    l1Address: token.address,
     assetId: assetId,
-    chain: project.projectId,
-    escrowAddress: escrow.address,
-    project: project.projectId,
-    source: source,
-    sinceTimestamp: sinceTimestamp,
-    includeInTotal,
-    decimals: token.decimals,
-    symbol: token.symbol,
-    isAssociated,
     category: token.category,
+    chain: project.projectId,
+    dataSource: dataSource,
+    decimals: token.decimals,
+    escrowAddress: escrow.address,
+    includeInTotal,
+    isAssociated,
+    l1Address: token.address,
+    originNetwork: originNetwork,
+    project: project.projectId,
+    sinceTimestamp: sinceTimestamp,
+    source: source,
+    symbol: token.symbol,
+    type: type,
+    untilTimestamp: untilTimestamp,
   }
 }

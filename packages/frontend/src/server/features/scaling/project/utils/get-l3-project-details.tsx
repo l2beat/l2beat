@@ -20,26 +20,28 @@ import { getTokensForProject } from '../../tvl/tokens/get-tokens-for-project'
 
 interface Params {
   project: Layer3
-  hostChain: Layer2
   isVerified: boolean
+  isHostChainVerified: boolean
   contractsVerificationStatuses: ContractsVerificationStatuses
   manuallyVerifiedContracts: ManuallyVerifiedContracts
   implementationChangeReport: ImplementationChangeReportApiResponse
   rosetteValues: RosetteValue[]
-  hostChainRosetteValues: RosetteValue[]
+  hostChain?: Layer2
+  hostChainRosetteValues?: RosetteValue[]
   combinedRosetteValues?: RosetteValue[]
 }
 
 export async function getL3ProjectDetails({
   project,
+  hostChain,
   isVerified,
-  contractsVerificationStatuses,
+  rosetteValues,
+  isHostChainVerified,
+  combinedRosetteValues,
+  hostChainRosetteValues,
   manuallyVerifiedContracts,
   implementationChangeReport,
-  rosetteValues,
-  hostChain,
-  hostChainRosetteValues,
-  combinedRosetteValues,
+  contractsVerificationStatuses,
 }: Params) {
   const permissionsSection = project.permissions
     ? getPermissionsSection(
@@ -71,6 +73,10 @@ export async function getL3ProjectDetails({
     manuallyVerifiedContracts,
     implementationChangeReport,
   )
+
+  const hostChainRisksSummary = hostChain
+    ? getScalingRiskSummarySection(hostChain, isHostChainVerified)
+    : hostChain
   const riskSummary = getScalingRiskSummarySection(project, isVerified)
   const technologySection = getScalingTechnologySection(project)
   const operatorSection = getOperatorSection(project)
@@ -107,6 +113,18 @@ export async function getL3ProjectDetails({
     ) ?? []
 
   const items: ProjectDetailsSection[] = []
+
+  const hostChainWarning = hostChain
+    ? { hostChain: hostChain.display }
+    : undefined
+  const hostChainWarningWithRiskCount =
+    hostChain && hostChainRisksSummary
+      ? {
+          hostChain: hostChain.display,
+          riskCount: hostChainRisksSummary.riskGroups.flatMap((rg) => rg.items)
+            .length,
+        }
+      : undefined
 
   if (!project.isUpcoming && tvlChartData.length > 0) {
     items.push({
@@ -168,6 +186,7 @@ export async function getL3ProjectDetails({
         ...riskSummary,
         id: 'risk-summary',
         title: 'Risk summary',
+        hostChainWarning: hostChainWarningWithRiskCount,
       },
     })
   }
@@ -180,28 +199,59 @@ export async function getL3ProjectDetails({
     return items
   }
 
-  items.push({
-    type: 'L3RiskAnalysisSection',
-    props: {
-      id: 'risk-analysis',
-      title: 'Risk analysis',
-      l2: {
-        name: hostChain.display.name,
-        risks: toRosetteTuple(hostChainRosetteValues),
+  if (hostChain && hostChainRosetteValues) {
+    items.push({
+      type: 'L3RiskAnalysisSection',
+      props: {
+        id: 'risk-analysis',
+        title: 'Risk analysis',
+        l2: {
+          name: hostChain.display.name,
+          risks: toRosetteTuple(hostChainRosetteValues),
+        },
+        l3: {
+          name: project.display.name,
+          risks: toRosetteTuple(rosetteValues),
+        },
+        combined: combinedRosetteValues
+          ? toRosetteTuple(combinedRosetteValues)
+          : undefined,
+        warning: project.display.warning,
+        redWarning: project.display.redWarning,
+        isVerified,
+        isUnderReview: project.isUnderReview,
       },
-      l3: {
+    })
+  } else {
+    items.push({
+      type: 'RiskAnalysisSection',
+      props: {
+        id: 'risk-analysis',
+        title: 'Risk analysis',
+        rosetteType: 'pizza',
+        rosetteValues,
+        warning: project.display.warning,
+        redWarning: project.display.redWarning,
+        isVerified,
+        isUnderReview: project.isUnderReview,
+      },
+    })
+  }
+
+  if (project.stage && project.stage.stage !== 'NotApplicable') {
+    items.push({
+      type: 'StageSection',
+      props: {
+        id: 'stage',
+        title: 'Rollup stage',
+        stageConfig: project.stage,
         name: project.display.name,
-        risks: toRosetteTuple(rosetteValues),
+        icon: `/icons/${project.display.slug}.png`,
+        type: project.display.category,
+        isUnderReview: project.isUnderReview,
       },
-      combined: combinedRosetteValues
-        ? toRosetteTuple(combinedRosetteValues)
-        : undefined,
-      warning: project.display.warning,
-      redWarning: project.display.redWarning,
-      isVerified,
-      isUnderReview: project.isUnderReview,
-    },
-  })
+    })
+  }
 
   if (technologySection) {
     items.push({
@@ -210,6 +260,7 @@ export async function getL3ProjectDetails({
         id: 'technology',
         title: 'Technology',
         ...technologySection,
+        hostChainWarning,
       },
     })
   }
@@ -246,6 +297,7 @@ export async function getL3ProjectDetails({
         id: 'operator',
         title: 'Operator',
         ...operatorSection,
+        hostChainWarning,
       },
     })
   }
@@ -257,6 +309,7 @@ export async function getL3ProjectDetails({
         id: 'withdrawals',
         title: 'Withdrawals',
         ...withdrawalsSection,
+        hostChainWarning,
       },
     })
   }

@@ -32,8 +32,8 @@ import {
   ScalingProjectUpgradeability,
 } from '../common/ScalingProjectContracts'
 import {
-  AggLayerEscrow,
   ScalingProjectEscrow,
+  SharedEscrow,
 } from '../common/ScalingProjectEscrow'
 import {
   ScalingProjectPermission,
@@ -136,7 +136,7 @@ export class ProjectDiscovery {
     bridgedUsing?: TokenBridgedUsing
     isHistorical?: boolean
     untilTimestamp?: UnixTime
-    sharedEscrow?: AggLayerEscrow
+    sharedEscrow?: SharedEscrow
   }): ScalingProjectEscrow {
     const contractRaw = this.getContract(address.toString())
     const timestamp = sinceTimestamp?.toNumber() ?? contractRaw.sinceTimestamp
@@ -165,7 +165,7 @@ export class ProjectDiscovery {
       isUpcoming,
       chain: this.chain,
       includeInTotal:
-        includeInTotal ?? this.chain === 'ethereum' ? true : includeInTotal,
+        (includeInTotal ?? this.chain === 'ethereum') ? true : includeInTotal,
       source,
       bridgedUsing,
       isHistorical,

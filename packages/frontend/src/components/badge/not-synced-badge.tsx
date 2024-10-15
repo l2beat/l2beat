@@ -1,4 +1,3 @@
-import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import {
   Tooltip,
@@ -9,23 +8,14 @@ import { Badge } from './badge'
 
 interface NotSyncedBadgeProps {
   syncedUntil?: number
-  className?: string
 }
 
-export function NotSyncedBadge({
-  syncedUntil,
-  className,
-}: NotSyncedBadgeProps) {
-  if (!syncedUntil)
-    return (
-      <div className={cn('inline', className)}>
-        <NotSynced />
-      </div>
-    )
+export function NotSyncedBadge({ syncedUntil }: NotSyncedBadgeProps) {
+  if (!syncedUntil) return <NotSynced />
 
   return (
     <Tooltip>
-      <TooltipTrigger className="inline">
+      <TooltipTrigger>
         <NotSynced />
       </TooltipTrigger>
       <TooltipContent>
@@ -42,7 +32,12 @@ export function NotSyncedBadge({
 
 function NotSynced() {
   return (
-    <Badge size="extraSmall" padding="regular" type="gray">
+    <Badge
+      size="extraSmall"
+      padding="regular"
+      type="gray"
+      className="flex items-center justify-center !leading-none md:h-5"
+    >
       NOT SYNCED
     </Badge>
   )

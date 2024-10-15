@@ -1,3 +1,4 @@
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -9,6 +10,8 @@ const discovery_ZKstackGovL2 = new ProjectDiscovery(
   'shared-zk-stack',
   'zksync2',
 )
+const shared = new ProjectDiscovery('shared-zk-stack')
+const bridge = shared.getContract('L1SharedBridge')
 
 export const cronoszkevm: Layer2 = zkStackL2({
   discovery,
@@ -24,11 +27,6 @@ export const cronoszkevm: Layer2 = zkStackL2({
     Badge.Infra.ElasticChain,
   ],
   display: {
-    tvlWarning: {
-      content:
-        'The TVL is currently shared among all projects using the shared ZK stack contracts. See ZKsync Era TVL.',
-      sentiment: 'warning',
-    },
     name: 'Cronos zkEVM',
     slug: 'cronoszkevm',
     description:
@@ -49,16 +47,13 @@ export const cronoszkevm: Layer2 = zkStackL2({
   },
   associatedTokens: ['zkCRO'],
   rpcUrl: 'https://mainnet.zkevm.cronos.org',
-  // chainConfig: {
-  //   name: 'cronoszkevm',
-  //   chainId: 388,
-  //   explorerUrl: 'https://explorer.zkevm.cronos.org/',
-  //   explorerApi: {
-  //     url: '',
-  //     type: '',
-  //   },
-  //   minTimestampForTvl: new UnixTime(),
-  //   coingeckoPlatform: '',
+  chainConfig: {
+    name: 'cronoszkevm',
+    chainId: 388,
+    coingeckoPlatform: 'cronos-zkevm',
+    explorerUrl: 'https://explorer.zkevm.cronos.org/',
+    minTimestampForTvl: new UnixTime(1722394995),
+  },
   diamondContract: discovery.getContract('CronosZkEvm'),
   daProvider: {
     name: 'External',
@@ -95,6 +90,25 @@ export const cronoszkevm: Layer2 = zkStackL2({
       ],
     },
   },
+  nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
+    shared.getEscrowDetails({
+      address: bridge.address,
+      tokens: ['ybETH', 'CRO', 'USDC', 'WBTC', 'zkCRO'],
+      description:
+        'Shared bridge for depositing tokens to Cronos zkEVM and other ZK stack chains.',
+      sharedEscrow: {
+        type: 'ElasticChian',
+        l2BridgeAddress: EthereumAddress(
+          '0x309429DE3621992Cb0ab8982A448c9Cc5c38405b',
+        ),
+        l2EtherAddress: EthereumAddress(
+          '0x898b3560affd6d955b1574d87ee09e46669c60ea',
+        ),
+        tokensToAssignFromL1: ['zkCRO'],
+      },
+      ...zkStackUpgrades,
+    }),
+  ],
   nonTemplateContracts: (zkStackUpgrades: Upgradeability) => [
     discovery.getContractDetails('CronosZkEvm', {
       description:

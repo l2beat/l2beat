@@ -1,14 +1,16 @@
 {
   "name": "mode",
   "chain": "ethereum",
-  "blockNumber": 20769559,
-  "configHash": "0xd89337fb874a5743d959c408e6bfb963735585df43ff1d6f30b9a7a07921cb16",
-  "version": 15,
+  "blockNumber": 20927606,
+  "configHash": "0xab456cbc3a15cdff6b2027f311dad2f7b3cd330a5416d45a977336cdf034b2df",
   "contracts": [
     {
       "name": "LivenessModule",
       "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
       "template": "gnosisSafeModules/LivenessModule",
+      "sourceHashes": [
+        "0x998654cb64c7fc216505bdb3322b20e7d7c95704005228ad1f878bc631c4af8d"
+      ],
       "descriptions": [
         "used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig"
       ],
@@ -23,13 +25,16 @@
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
         "thresholdPercentage": 75,
         "version": "1.2.0"
-      },
-      "derivedName": "LivenessModule"
+      }
     },
     {
-      "name": "GuardianMultisig",
+      "name": "SuperchainGuardianMultisig",
       "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "roles": ["Guardian"],
       "ignoreInWatchMode": ["nonce"],
@@ -51,6 +56,9 @@
     {
       "name": "LivenessGuard",
       "address": "0x24424336F04440b1c28685a38303aC33C9D14a25",
+      "sourceHashes": [
+        "0xe771f3d1c51456e08e2c93a904b12010870dc4fa79ee82e4bc90433557931f05"
+      ],
       "sinceTimestamp": 1717149791,
       "values": {
         "$immutable": true,
@@ -62,6 +70,10 @@
       "name": "L1ERC721Bridge",
       "address": "0x2901dA832a4D0297FF0691100A8E496626cc626D",
       "template": "opstack/L1ERC721Bridge",
+      "sourceHashes": [
+        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
+        "0x482ec6e91304ac39a3fb4505634427bddfddee23b8e93a4f7f995ca5083ae3c3"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "Used to bridge ERC-721 tokens from host chain to this chain."
@@ -107,9 +119,13 @@
       }
     },
     {
-      "name": "ChallengerMultisig",
+      "name": "ModeMultisig",
       "address": "0x309Fe2536d01867018D120b40e4676723C53A14C",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "roles": ["Challenger"],
       "ignoreInWatchMode": ["nonce"],
@@ -139,6 +155,10 @@
       "name": "GnosisSafe",
       "address": "0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678243007,
@@ -162,6 +182,10 @@
       "name": "L2OutputOracle",
       "address": "0x4317ba146D4933D889518a3e5E11Fe7a53199b04",
       "template": "opstack/L2OutputOracle",
+      "sourceHashes": [
+        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
+        "0x025c187b0231be4785898f25f98d749f953f5d06781772aef242812e2ecf52e3"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
@@ -210,10 +234,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 13197600,
-        "latestOutputIndex": 7331,
-        "nextBlockNumber": 13199400,
-        "nextOutputIndex": 7332,
+        "latestBlockNumber": 14149800,
+        "latestOutputIndex": 7860,
+        "nextBlockNumber": 14151600,
+        "nextOutputIndex": 7861,
         "proposer": "0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB",
         "PROPOSER": "0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB",
         "startingBlockNumber": 0,
@@ -221,17 +245,20 @@
         "SUBMISSION_INTERVAL": 1800,
         "submissionInterval": 1800,
         "version": "1.8.0"
-      },
-      "derivedName": "L2OutputOracle"
+      }
     },
     {
       "name": "ProxyAdmin",
       "address": "0x470d87b1dae09a454A43D1fD772A561a03276aB7",
-      "template": "opstack/ProxyAdmin",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
+      ],
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x50eF494573f28Cad6B64C31b7a00Cdaa48306e15"
+          "target": "0x50eF494573f28Cad6B64C31b7a00Cdaa48306e15",
+          "description": "set and change address mappings."
         },
         {
           "permission": "upgrade",
@@ -271,6 +298,10 @@
       "name": "ConduitMultisig",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
@@ -298,7 +329,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 50,
+        "nonce": 53,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -307,6 +338,12 @@
       "name": "AddressManager",
       "address": "0x50eF494573f28Cad6B64C31b7a00Cdaa48306e15",
       "template": "opstack/AddressManager",
+      "sourceHashes": [
+        "0xdc86a850f11dc2b5c0472a05d0e3c14f239baf2c3b1ab19631591b0827985380"
+      ],
+      "descriptions": [
+        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+      ],
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -314,7 +351,8 @@
           "via": [
             {
               "address": "0x470d87b1dae09a454A43D1fD772A561a03276aB7",
-              "delay": 0
+              "delay": 0,
+              "description": "set and change address mappings."
             }
           ]
         }
@@ -323,17 +361,20 @@
       "values": {
         "$immutable": true,
         "owner": "0x470d87b1dae09a454A43D1fD772A561a03276aB7"
-      },
-      "derivedName": "AddressManager"
+      }
     },
     {
       "name": "SuperchainProxyAdmin",
       "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
-      "template": "opstack/ProxyAdmin",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
+      ],
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+          "target": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+          "description": "set and change address mappings."
         },
         {
           "permission": "upgrade",
@@ -353,16 +394,22 @@
       "name": "SuperchainProxyAdminOwner",
       "address": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
           "permission": "configure",
           "target": "0x50eF494573f28Cad6B64C31b7a00Cdaa48306e15",
+          "description": "set and change address mappings.",
           "via": [{ "address": "0x470d87b1dae09a454A43D1fD772A561a03276aB7" }]
         },
         {
           "permission": "configure",
           "target": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+          "description": "set and change address mappings.",
           "via": [{ "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }]
         },
         {
@@ -435,6 +482,10 @@
       "name": "SystemConfig",
       "address": "0x5e6432F18Bc5d497B1Ab2288a025Fbf9D69E2221",
       "template": "opstack/SystemConfig",
+      "sourceHashes": [
+        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
+        "0xdf9a11b46747139bfe0135df8a65a2728a2dbd60a689e2398c45627915cdd752"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
@@ -521,13 +572,16 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         }
-      },
-      "derivedName": "SystemConfig"
+      }
     },
     {
       "name": "OptimismMintableERC20Factory",
       "address": "0x69216395A62dFb243C05EF4F1C27AF8655096a95",
       "template": "opstack/OptimismMintableERC20Factory",
+      "sourceHashes": [
+        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
+        "0x4c5ac4e53576924cabbd2a471f368a541bc3f4b1f53fa41a389692fcc62f6176"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."
@@ -572,6 +626,10 @@
       "name": "L1StandardBridge",
       "address": "0x735aDBbE72226BD52e818E7181953f42E3b0FF21",
       "template": "opstack/L1StandardBridge",
+      "sourceHashes": [
+        "0xbfb58685ff2f2f07eaa01a3c4e3c33c97686bfd3ae7c50c49f9da6ef5098cb31",
+        "0x1010ff7f40ab4d53e6d9996aefa04423dabe9d0e22fac2d02b330ed3aa2c5740"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
@@ -604,13 +662,16 @@
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.1.0"
-      },
-      "derivedName": "L1StandardBridge"
+      }
     },
     {
       "name": "FoundationMultisig_1",
       "address": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420755,
@@ -640,6 +701,10 @@
       "name": "OptimismPortal",
       "address": "0x8B34b14c7c7123459Cf3076b8Cb929BE097d0C07",
       "template": "opstack/OptimismPortal",
+      "sourceHashes": [
+        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
+        "0xe35fb7bc0433439337b3eadda3d6fb7991918162f62a337a695e8c7f948cdd35"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
@@ -699,21 +764,24 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 490798,
-          "prevBlockNum": 20769471
+          "prevBoughtGas": 489262,
+          "prevBlockNum": 20927419
         },
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "SYSTEM_CONFIG": "0x5e6432F18Bc5d497B1Ab2288a025Fbf9D69E2221",
         "systemConfig": "0x5e6432F18Bc5d497B1Ab2288a025Fbf9D69E2221",
         "version": "2.5.0"
-      },
-      "derivedName": "OptimismPortal"
+      }
     },
     {
       "name": "SuperchainConfig",
       "address": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
       "template": "opstack/SuperchainConfig",
+      "sourceHashes": [
+        "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
+        "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
+      ],
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
@@ -761,6 +829,10 @@
       "name": "L1CrossDomainMessenger",
       "address": "0x95bDCA6c8EdEB69C98Bd5bd17660BaCef1298A6f",
       "template": "opstack/L1CrossDomainMessenger",
+      "sourceHashes": [
+        "0x20a2eb4d3677fc8a15e944f7b1843acd01b2e92acdc4c7a7f7a35b07b891149b",
+        "0x1cc8a3b7de3d2c54c4706bb3f3015714d3b56647fc9fbfd6f8b068f5f63c1c25"
+      ],
       "proxyType": "resolved delegate proxy",
       "descriptions": [
         "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
@@ -791,7 +863,7 @@
         ],
         "$upgradeCount": 4,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292827905",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292828484",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -808,13 +880,16 @@
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.3.0"
-      },
-      "derivedName": "L1CrossDomainMessenger"
+      }
     },
     {
       "name": "FoundationMultisig_2",
       "address": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
+        "0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1610850364,
@@ -845,6 +920,10 @@
       "name": "SecurityCouncilMultisig",
       "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420419,
@@ -880,6 +959,9 @@
       "name": "DeputyGuardianModule",
       "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
       "template": "gnosisSafeModules/DeputyGuardianModule",
+      "sourceHashes": [
+        "0x9624d67fb3738cf1ce1e1f48e2cf433e9373345386943d12f1d751d6b8475cd6"
+      ],
       "descriptions": [
         "allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe."
       ],
@@ -896,6 +978,13 @@
       "name": "Lib_AddressManager",
       "address": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
       "template": "opstack/AddressManager",
+      "sourceHashes": [
+        "0xe5211497d15a7ea75577cf992ab6093dd0f6083f45c955f0136737810e44c205"
+      ],
+      "displayName": "AddressManager",
+      "descriptions": [
+        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+      ],
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -903,7 +992,8 @@
           "via": [
             {
               "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
-              "delay": 0
+              "delay": 0,
+              "description": "set and change address mappings."
             }
           ]
         }
@@ -1465,19 +1555,18 @@
     ]
   },
   "usedTemplates": {
+    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "gnosisSafeModules/DeputyGuardianModule": "0xd3930cda89001876a722ed430ea8ed07e4823c83ed910e621744eccab9becba1",
     "gnosisSafeModules/LivenessModule": "0x93a18dea68cf1d0abddfc33adec077c82356344dd7b49ae5542b16ca9319bb91",
-    "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
+    "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
     "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
     "opstack/OptimismPortal": "0x2a32f6874a8c0e85e685fa944143e7968d675fed43b46e7385411ad11f8a1a43",
-    "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
     "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
-  },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  }
 }

@@ -1,4 +1,70 @@
-Generated with discovered.json: 0x1dbbe90a6b7d669cfd5f797a20f98b295c2a7f2e
+Generated with discovered.json: 0x27db14f25fed6063264540b67c2b37d01f425f11
+
+# Diff at Mon, 14 Oct 2024 10:58:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20777173
+- current block number: 20777173
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20777173 (main branch discovery), not current.
+
+```diff
+    contract Governance (0x0b622A2061EaccAE1c664eBC3E868b8438e03F61) {
+    +++ description: None
+      sourceHashes:
++        ["0x33d82f6564cf2a54b6bf9c51d42620b2702ccfa9393f498a5bee57c108a66055"]
+    }
+```
+
+```diff
+    contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: None
+      sourceHashes:
++        ["0x46ab6472330f39b5dde71de5fc30609f34ecfa68c11673e09438f6db607279ea","0x9ae32beaa5dc29055f75d3cd08fbec35ed3eee3e2ff35de263a78f7d63c610f9","0xd272def5b4e3f0a68e3019d7d40675ca6d3e3fc35500e9aafe864bce8c697de2","0x419cee160f60572fc9189007ec7c1e3c13e54d80bf1e78f837bc8fa001519685","0xe521f6bd6250a2c92af323768ad8a2274cc334725b5ed8960d8421f063fc3285"]
+    }
+```
+
+```diff
+    contract L1ERC20Bridge_wstETH (0x41527B2d03844dB6b0945f25702cB958b6d55989) {
+    +++ description: None
+      sourceHashes:
++        ["0x698ae88793265d087e07a445b69bf16b450cdcf636b9073b86221936e912a135","0x8d6377528b46831d215e352a53f276acbd18ec4bc66c04894dd72dad36288c4d"]
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063) {
+    +++ description: None
+      sourceHashes:
++        ["0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3","0xddcdd4b758b565f39e4924d6a66afc27850a66e5f1022fb1c008d10f85af1028"]
+    }
+```
+
+```diff
+    contract Verifier (0x70F3FBf8a427155185Ec90BED8a3434203de9604) {
+    +++ description: None
+      sourceHashes:
++        ["0xb36dfb10be7530bb56af796b85f6c84bf90513603fe59c2f7f0d78fc2a9a9235"]
+    }
+```
+
+```diff
+    contract ValidatorTimelockOld (0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD) {
+    +++ description: None
+      sourceHashes:
++        ["0x2aff1337a5d8a9be27e6d384ec8a2efd746fb4b73195773c82f3e42e2210c8ed"]
+    }
+```
+
+Generated with discovered.json: 0x72f5d92fd316fdb7f061934a187e7f72cfe50aee
 
 # Diff at Tue, 01 Oct 2024 11:12:21 GMT:
 

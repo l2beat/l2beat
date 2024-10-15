@@ -1,10 +1,7 @@
 import { assert } from '@l2beat/shared-pure'
 import { type ChartColumn } from '../chart-context'
 
-export function getSeriesGroups(
-  columns: ChartColumn<unknown>[],
-  seriesIndex: number,
-) {
+export function getSeriesGroups(columns: ChartColumn[], seriesIndex: number) {
   return columns.reduce<{ value: number; dashed?: boolean }[][]>(
     (acc, column) => {
       const lastGroup = acc.at(-1)

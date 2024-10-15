@@ -35,7 +35,6 @@ export class UpdateMonitorRepository extends BaseRepository {
             timestamp: eb.ref('excluded.timestamp'),
             discoveryJsonBlob: eb.ref('excluded.discoveryJsonBlob'),
             configHash: eb.ref('excluded.configHash'),
-            version: eb.ref('excluded.version'),
           })),
         )
         .execute()

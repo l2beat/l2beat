@@ -118,6 +118,7 @@ function toConnection(nodeId: string | undefined): Connection | undefined {
   }
   return {
     nodeId,
+    highlighted: false,
     // fields below will be updated by updateNodePositions
     from: { direction: 'left', x: 0, y: 0 },
     to: { direction: 'left', x: 0, y: 0 },

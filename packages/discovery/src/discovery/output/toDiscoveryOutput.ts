@@ -2,7 +2,6 @@ import { ContractParameters, DiscoveryOutput } from '@l2beat/discovery-types'
 import { Hash256 } from '@l2beat/shared-pure'
 
 import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
-import { DISCOVERY_LOGIC_VERSION } from '../engine/DiscoveryEngine'
 import { resolveAnalysis } from '../permission-resolving/resolveAnalysis'
 import {
   transformToIssued,
@@ -15,17 +14,14 @@ export function toDiscoveryOutput(
   configHash: Hash256,
   blockNumber: number,
   results: Analysis[],
-  shapeFilesHash: Hash256,
 ): DiscoveryOutput {
   return {
     name,
     chain,
     blockNumber,
     configHash,
-    version: DISCOVERY_LOGIC_VERSION,
     ...processAnalysis(results),
     usedTemplates: collectUsedTemplatesWithHashes(results),
-    shapeFilesHash,
   }
 }
 
@@ -66,6 +62,9 @@ export function processAnalysis(
           address: x.address,
           unverified: x.isVerified ? undefined : true,
           template: x.extendedTemplate?.template,
+          sourceHashes: x.isVerified
+            ? x.sourceBundles.map((b) => b.hash as string)
+            : undefined,
           proxyType: x.proxyType,
           displayName:
             displayName && displayName !== x.name ? displayName : undefined,

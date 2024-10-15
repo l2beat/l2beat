@@ -16,7 +16,7 @@ export interface NumberCellProps {
 }
 
 export function NumberCell(props: NumberCellProps) {
-  const className = cn('text-base v2:text-xs md:!text-lg', props.className)
+  const className = cn('text-xs md:text-base', props.className)
 
   if (props.signed && typeof props.children === 'number') {
     return <PercentChange value={props.children} className={className} />

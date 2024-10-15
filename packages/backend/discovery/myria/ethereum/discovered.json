@@ -3,11 +3,13 @@
   "chain": "ethereum",
   "blockNumber": 19825378,
   "configHash": "0x84d196c4fe19887c26a5c3ca981864854bfca64e0bb7b5f40d427063aadf9189",
-  "version": 15,
   "contracts": [
     {
       "name": "Committee",
       "address": "0x1e601435E181423e7A8430813d7500012a6169cB",
+      "sourceHashes": [
+        "0xbd4b616703456361720d7aaaa8a8d995f0efbd262e650ecd109f807107476380"
+      ],
       "sinceTimestamp": 1659542607,
       "values": {
         "$immutable": true,
@@ -30,6 +32,16 @@
     {
       "name": "StarkExchange",
       "address": "0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7",
+      "sourceHashes": [
+        "0x2c95972415c771f5ef6d71449bae168597b6c35245fbe8769425e5c9c753e918",
+        "0xadae235d029868dddc287e823167705942660a99a9154a4e487f5dfb4ddd01c9",
+        "0x70e4767336d4a44ecedb78b7cef6dc2810f5d8bc87a46c360083e65af451cb97",
+        "0x75d386d73767f57d5f11c11f7bf837a48cd417754eea559931fc98a96ef34152",
+        "0x0e101cfdb791ca1a86402273377c7da5e67225cf5799ac2f51d9a940227ee6be",
+        "0x7d557870276c694154e12790f8c0c09930c8c75320f470c47b67968bffd536a6",
+        "0x2a703c051ff2524868f044282fc50b01913736a92f794b64b31bd31363cd3fca",
+        "0xd5b06286e3bf5dccd0bb360c8cc876aec0a2ce288120d9f83dec45fa47c1aabc"
+      ],
       "proxyType": "StarkWare diamond",
       "issuedPermissions": [
         {
@@ -138,6 +150,9 @@
     {
       "name": "GpsFactRegistryAdapter",
       "address": "0x5339AB7557b3152b91A57D10B0Caf5da88Db5143",
+      "sourceHashes": [
+        "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
+      ],
       "sinceTimestamp": 1657453372,
       "values": {
         "$immutable": true,
@@ -150,6 +165,9 @@
     {
       "name": "OrderRegistry",
       "address": "0x806d435a82B0381bD884540c2235147c13B97fe6",
+      "sourceHashes": [
+        "0x1e28fda3c245bc1fc13d0ddc7b108be510d1e0220fc67552921c87724bb45a4c"
+      ],
       "sinceTimestamp": 1657453372,
       "values": {
         "$immutable": true,
@@ -526,6 +544,5 @@
       "function validatedSelectors() pure returns (bytes4[] selectors)"
     ]
   },
-  "usedTemplates": {},
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "usedTemplates": {}
 }

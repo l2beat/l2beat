@@ -358,8 +358,8 @@ export function orbitStackCommon(
       stateCorrectness:
         templateVars.nonTemplateTechnology?.stateCorrectness ?? undefined,
       dataAvailability:
-        templateVars.nonTemplateTechnology?.dataAvailability ??
-        postsToExternalDA
+        (templateVars.nonTemplateTechnology?.dataAvailability ??
+        postsToExternalDA)
           ? (() => {
               const DAC = templateVars.discovery.getContractValue<{
                 membersCount: number
@@ -529,7 +529,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
       secondLine: `${formatSeconds(challengePeriodSeconds)} challenge period`,
     },
     dataAvailability:
-      templateVars.nonTemplateRiskView?.dataAvailability ?? postsToExternalDA
+      (templateVars.nonTemplateRiskView?.dataAvailability ?? postsToExternalDA)
         ? (() => {
             const DAC = templateVars.discovery.getContractValue<{
               membersCount: number
@@ -631,6 +631,38 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
         templateVars.display.category ??
         (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup'),
     },
+    stage:
+      templateVars.stage ??
+      (postsToExternalDA
+        ? {
+            stage: 'NotApplicable',
+          }
+        : getStage(
+            {
+              stage0: {
+                callsItselfRollup: true,
+                stateRootsPostedToL1: true,
+                dataAvailabilityOnL1: true,
+                rollupNodeSourceAvailable:
+                  templateVars.isNodeAvailable ?? 'UnderReview',
+              },
+              stage1: {
+                stateVerificationOnL1: true,
+                fraudProofSystemAtLeast5Outsiders: false,
+                usersHave7DaysToExit: false,
+                usersCanExitWithoutCooperation: true,
+                securityCouncilProperlySetUp: false,
+              },
+              stage2: {
+                proofSystemOverriddenOnlyInCaseOfABug: false,
+                fraudProofSystemIsPermissionless: false,
+                delayWith30DExitWindow: false,
+              },
+            },
+            {
+              rollupNodeLink: templateVars.nodeSourceLink,
+            },
+          )),
     dataAvailability: postsToExternalDA
       ? (() => {
           const DAC = templateVars.discovery.getContractValue<{
@@ -748,7 +780,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       },
       liveness: postsToExternalDA
         ? undefined
-        : templateVars.display.liveness ?? {
+        : (templateVars.display.liveness ?? {
             warnings: {
               stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
             },
@@ -759,7 +791,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
             )}. The state root gets finalized ${formatSeconds(
               challengePeriodSeconds,
             )} after it has been posted.`,
-          },
+          }),
     },
     stage:
       templateVars.stage ??
@@ -825,7 +857,8 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
         secondLine: `${formatSeconds(challengePeriodSeconds)} challenge period`,
       },
       dataAvailability:
-        templateVars.nonTemplateRiskView?.dataAvailability ?? postsToExternalDA
+        (templateVars.nonTemplateRiskView?.dataAvailability ??
+        postsToExternalDA)
           ? (() => {
               const DAC = templateVars.discovery.getContractValue<{
                 membersCount: number

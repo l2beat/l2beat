@@ -1,13 +1,15 @@
 {
   "name": "mantle",
   "chain": "ethereum",
-  "blockNumber": 20675899,
-  "configHash": "0x545581edf4a871d69dbd50020ae765821e0885a5519c3ba149b700e1bfbbc8b3",
-  "version": 15,
+  "blockNumber": 20928041,
+  "configHash": "0xa39508c1a37137b5d253b3c944b145c30702c339856e3d0ed998e50dfe9ff9d7",
   "contracts": [
     {
       "name": "PauserRegistry",
       "address": "0x075a48633dc6845f92339741E9c96b88f1b2A86f",
+      "sourceHashes": [
+        "0x8fa8f20d7c33aea934963671e5ac4fc1d3b586d40deb93cc4768d4a6ef323662"
+      ],
       "sinceTimestamp": 1687930847,
       "values": {
         "$immutable": true,
@@ -19,7 +21,11 @@
     {
       "name": "MantleTokenProxyAdmin",
       "address": "0x0cac2B1a172ac24012621101634DD5ABD6399ADd",
-      "receivedPermissions": [
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
+      ],
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "target": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354"
@@ -35,12 +41,24 @@
     {
       "name": "BLSRegistry",
       "address": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
+      "sourceHashes": [
+        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
+        "0x25c9049ce3c6e3d0fb455a5ceecf01cc2d9a92f415e869786ef2f2221e85b803"
+      ],
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
-          "via": []
+          "target": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
+          "via": [
+            {
+              "address": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1687932047,
@@ -90,12 +108,24 @@
     {
       "name": "InvestmentManager",
       "address": "0x23754725a49c0f003C349A6C7869fF8609a7CEfd",
+      "sourceHashes": [
+        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
+        "0x943049d488a42420a15934ca27ae2fc159c395727536ee64c38afdde4215c561"
+      ],
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "Contract managing different investment strategies, forked from EigenLayer StrategyManager."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
-          "via": []
+          "target": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
+          "via": [
+            {
+              "address": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1687930955,
@@ -125,42 +155,13 @@
       "derivedName": "InvestmentManager"
     },
     {
-      "name": "CanonicalTransactionChain",
-      "address": "0x291dc3819b863e19b0a9b9809F8025d2EB4aaE93",
-      "ignoreInWatchMode": [
-        "getLastBlockNumber",
-        "getLastTimestamp",
-        "getNextQueueIndex",
-        "getNumPendingQueueElements",
-        "getQueueLength",
-        "getTotalBatches",
-        "getTotalElements"
-      ],
-      "sinceTimestamp": 1687952507,
-      "values": {
-        "$immutable": true,
-        "batches": "0x5Dd48eF85B99E3e3d711Ca8B41cBC07dA1677F3E",
-        "enqueueGasCost": 60000,
-        "enqueueL2GasPrepaid": 1920000,
-        "getLastBlockNumber": 19437175,
-        "getLastTimestamp": 1710467231,
-        "getNextQueueIndex": 61269,
-        "getNumPendingQueueElements": 0,
-        "getQueueLength": 61269,
-        "getTotalBatches": 22502,
-        "getTotalElements": 61171944,
-        "l2GasDiscountDivisor": 32,
-        "libAddressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
-        "MAX_ROLLUP_TX_SIZE": 50000,
-        "maxTransactionGasLimit": 30000000,
-        "MIN_ROLLUP_TX_GAS": 100000
-      },
-      "derivedName": "CanonicalTransactionChain"
-    },
-    {
       "name": "ProxyAdmin",
       "address": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
-      "receivedPermissions": [
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
+      ],
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "target": "0x23754725a49c0f003C349A6C7869fF8609a7CEfd"
@@ -192,7 +193,12 @@
       "name": "MantleEngineeringMultisig",
       "address": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
+      "roles": ["Challenger", "Guardian"],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1686902471,
       "values": {
@@ -220,7 +226,15 @@
     {
       "name": "L2OutputOracle",
       "address": "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
+      "template": "opstack/L2OutputOracle",
+      "sourceHashes": [
+        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
+        "0x45368d302fba850124115aa8ee67238f47d47d89c2b1b8c5dfd39818369e6cea"
+      ],
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -254,27 +268,38 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 68650946,
-        "latestOutputIndex": 4154,
-        "nextBlockNumber": 68652746,
-        "nextOutputIndex": 4155,
+        "latestBlockNumber": 70171946,
+        "latestOutputIndex": 4999,
+        "nextBlockNumber": 70173746,
+        "nextOutputIndex": 5000,
         "PROPOSER": "0x6667961f5e9C98A76a48767522150889703Ed77D",
         "startingBlockNumber": 61171946,
         "startingTimestamp": 1710474204,
         "SUBMISSION_INTERVAL": 1800,
         "version": "1.3.0"
-      },
-      "derivedName": "L2OutputOracle"
+      }
     },
     {
       "name": "L1MantleToken",
       "address": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
+      "sourceHashes": [
+        "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
+        "0x13e07c3c64aef03cfd7f5c01b2b1b443fd1dfb19c4128447fe316bb5fcd128cd"
+      ],
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x0cac2B1a172ac24012621101634DD5ABD6399ADd",
-          "via": []
+          "target": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
+          "via": [
+            {
+              "address": "0x0cac2B1a172ac24012621101634DD5ABD6399ADd",
+              "delay": 0
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": ["totalSupply"],
@@ -306,8 +331,21 @@
     {
       "name": "SystemConfig",
       "address": "0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
+      "template": "opstack/SystemConfig",
+      "sourceHashes": [
+        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
+        "0xb2a3bda11c08328ecb46ec5789f3264be5d816bc218a5024a4cafd1c59017160"
+      ],
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
+      ],
       "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
@@ -319,6 +357,7 @@
           ]
         }
       ],
+      "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1710440051,
       "values": {
         "$admin": "0xca35F8338054739D138884685e08b39EE2217794",
@@ -355,12 +394,21 @@
         "version": "1.3.0",
         "VERSION": 0
       },
-      "derivedName": "SystemConfig"
+      "fieldMeta": {
+        "gasLimit": {
+          "severity": "LOW",
+          "description": "Gas limit for blocks on L2."
+        }
+      }
     },
     {
       "name": "ProxyAdmin",
       "address": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
-      "receivedPermissions": [
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
+      ],
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "target": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67"
@@ -391,6 +439,9 @@
     {
       "name": "PauserRegistry2",
       "address": "0x4ca725D446EcE6e3fFd3E072A6f2A6a16Ca492D0",
+      "sourceHashes": [
+        "0x8fa8f20d7c33aea934963671e5ac4fc1d3b586d40deb93cc4768d4a6ef323662"
+      ],
       "sinceTimestamp": 1687931903,
       "values": {
         "$immutable": true,
@@ -403,12 +454,42 @@
       "name": "MantleSecurityMultisig",
       "address": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+        },
+        {
+          "permission": "configure",
+          "target": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
+          "description": "set and change address mappings.",
+          "via": [{ "address": "0xca35F8338054739D138884685e08b39EE2217794" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
+          "via": [{ "address": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x23754725a49c0f003C349A6C7869fF8609a7CEfd",
+          "via": [{ "address": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83" }]
+        },
         {
           "permission": "upgrade",
           "target": "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
           "via": [{ "address": "0xca35F8338054739D138884685e08b39EE2217794" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
+          "via": [{ "address": "0x0cac2B1a172ac24012621101634DD5ABD6399ADd" }]
         },
         {
           "permission": "upgrade",
@@ -421,16 +502,69 @@
         },
         {
           "permission": "upgrade",
+          "target": "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
+          "via": [{ "address": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a",
+          "via": [{ "address": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb" }]
+        },
+        {
+          "permission": "upgrade",
           "target": "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
+          "description": "upgrading bridge implementation allows to access all funds and change every system component.",
           "via": [{ "address": "0xca35F8338054739D138884685e08b39EE2217794" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xA937660031787C4408587D2c6A67Ec4B260630F5",
+          "via": [{ "address": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
+          "via": [{ "address": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83" }]
         },
         {
           "permission": "upgrade",
           "target": "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb",
           "via": [{ "address": "0xca35F8338054739D138884685e08b39EE2217794" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94",
+          "via": [{ "address": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1",
+          "via": [{ "address": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D",
+          "via": [{ "address": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
+          "via": [{ "address": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83" }]
         }
       ],
       "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0x0cac2B1a172ac24012621101634DD5ABD6399ADd"
+        },
+        {
+          "permission": "act",
+          "target": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
+        },
+        {
+          "permission": "act",
+          "target": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
+        },
         {
           "permission": "act",
           "target": "0xca35F8338054739D138884685e08b39EE2217794"
@@ -469,6 +603,10 @@
     {
       "name": "EigenDataLayerChain",
       "address": "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A",
+      "sourceHashes": [
+        "0x63677738b5ca073872cd350783b51e6dcd4bf6469f02eadf4cead9aef171c781",
+        "0x5333d2d13f53d445ff99fbe5845e2658fbafd68944683fb56a2644d76e5a4f36"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -514,12 +652,24 @@
     {
       "name": "DataLayrServiceManager",
       "address": "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
+      "sourceHashes": [
+        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
+        "0xf52658c0dbe857c858ac93c9c3dad449fff36d7e6454b67ac61a5bf3dcecca30"
+      ],
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "This contract is the main entry point for data availability. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
-          "via": []
+          "target": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
+          "via": [
+            {
+              "address": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
+              "delay": 0
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": ["dataStoresForDuration"],
@@ -547,15 +697,15 @@
         "dataLayrChallenge": "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94",
         "dataPermissionManager": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
         "dataStoresForDuration": {
-          "one_duration": 37603,
+          "one_duration": 40771,
           "two_duration": 0,
           "three_duration": 0,
           "four_duration": 0,
           "five_duration": 0,
           "six_duration": 0,
           "seven_duration": 0,
-          "dataStoreId": 37604,
-          "latestTime": 1725439931
+          "dataStoreId": 40772,
+          "latestTime": 1728480035
         },
         "DURATION_SCALE": 3600,
         "eigenLayrDelegation": "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
@@ -576,23 +726,18 @@
       "derivedName": "DataLayrServiceManager"
     },
     {
-      "name": "ChainStorageContainerCTC",
-      "address": "0x5Dd48eF85B99E3e3d711Ca8B41cBC07dA1677F3E",
-      "ignoreInWatchMode": ["getGlobalMetadata", "length"],
-      "sinceTimestamp": 1687951931,
-      "values": {
-        "$immutable": true,
-        "getGlobalMetadata": "0x0000000000000000012896770065f3a89f000000ef550003a568e8",
-        "length": 22502,
-        "libAddressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
-        "owner": "CanonicalTransactionChain"
-      },
-      "derivedName": "ChainStorageContainer"
-    },
-    {
       "name": "L1CrossDomainMessenger",
       "address": "0x676A795fe6E43C17c668de16730c3F690FEB7120",
+      "template": "opstack/L1CrossDomainMessenger",
+      "sourceHashes": [
+        "0x6e4b297b822bdda2bb8bbf4dde360ee51379af5a0de55c0d726a2d7b68791bf7",
+        "0x430d270834512dafe98bf268d6912f12a10c5a6287e7463830a22e4616dd63a0"
+      ],
       "proxyType": "resolved delegate proxy",
+      "descriptions": [
+        "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
+      ],
+      "categories": ["Core"],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1687953527,
       "values": {
@@ -617,7 +762,7 @@
         "HASH_MESSAGE_GAS_PER_BYTE": 2,
         "L1_MNT_ADDRESS": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292634816",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292636007",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -630,40 +775,46 @@
         "ResolvedDelegateProxy_addressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
         "ResolvedDelegateProxy_implementationName": "BVM_L1CrossDomainMessenger",
         "version": "1.5.0"
-      },
-      "derivedName": "L1CrossDomainMessenger"
+      }
     },
     {
-      "name": "AddressManager",
+      "name": "Lib_AddressManager",
       "address": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
+      "template": "opstack/AddressManager",
+      "sourceHashes": [
+        "0x763c5728a19538783edf38c17731f9cf79ff6f38bfa4bce61333cef0aac5452e"
+      ],
+      "displayName": "AddressManager",
+      "descriptions": [
+        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+      ],
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
+          "via": [
+            {
+              "address": "0xca35F8338054739D138884685e08b39EE2217794",
+              "delay": 0,
+              "description": "set and change address mappings."
+            }
+          ]
+        }
+      ],
       "sinceTimestamp": 1687951883,
       "values": {
         "$immutable": true,
-        "BondManager": "0x0000000000000000000000000000000000000000",
-        "CanonicalTransactionChain": "0x291dc3819b863e19b0a9b9809F8025d2EB4aaE93",
-        "ChainStorageContainerCTC": "0x5Dd48eF85B99E3e3d711Ca8B41cBC07dA1677F3E",
-        "ChainStorageContainerSCC": "0xd3f0BD982D72e28cccc69e0A9dA439e9D587b3bD",
-        "FraudVerifier": "0x0000000000000000000000000000000000000000",
-        "L1CrossDomainMessenger": "0xb8DE82551fA4BA3bE4B3d9097763EDBeED541308",
-        "L1CrossDomainMessengerProxy": "0x676A795fe6E43C17c668de16730c3F690FEB7120",
-        "L1MantleAddress": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
-        "L1StandardBridgeProxy": "0x0000000000000000000000000000000000000000",
-        "owner": "0xca35F8338054739D138884685e08b39EE2217794",
-        "proposer": "0x0000000000000000000000000000000000000000",
-        "rolluper": "0x6667961f5e9C98A76a48767522150889703Ed77D",
-        "sequencer": "0x0000000000000000000000000000000000000000",
-        "StateCommitmentChain": "0x89E9D387555AF0cDE22cb98833Bae40d640AD7fa",
-        "TssGroupManager": "0xF7576237087F808eB39531cA490b4F8eFd4a0c69",
-        "TssGroupManagerProxy": "0x399ca67660B79F7aA8A7Efd5BEF9836A4c19CACF",
-        "TssStakingSlashing": "0x09b276F9EcB83Fb6a37970e655863B04143Dc431",
-        "TssStakingSlashingProxy": "0x78CF48880E9e1b3ab209779c0D8A76f611e53e81"
-      },
-      "derivedName": "Lib_AddressManager"
+        "owner": "0xca35F8338054739D138884685e08b39EE2217794"
+      }
     },
     {
       "name": "GnosisSafe",
       "address": "0x7735cDcc85E63A7684C29652DbE8B845e0b4635A",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1684377983,
@@ -684,37 +835,23 @@
       }
     },
     {
-      "name": "StateCommitmentChain",
-      "address": "0x89E9D387555AF0cDE22cb98833Bae40d640AD7fa",
-      "ignoreInWatchMode": [
-        "getLastSequencerTimestamp",
-        "getTotalBatches",
-        "getTotalElements"
-      ],
-      "sinceTimestamp": 1687953815,
-      "values": {
-        "$immutable": true,
-        "batches": "0xd3f0BD982D72e28cccc69e0A9dA439e9D587b3bD",
-        "FRAUD_PROOF_WINDOW": 604800,
-        "getFraudProofWindow": 604800,
-        "getLastSequencerTimestamp": 1710467231,
-        "getTotalBatches": 19394,
-        "getTotalElements": 61171779,
-        "libAddressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
-        "messenger": "0x676A795fe6E43C17c668de16730c3F690FEB7120",
-        "SEQUENCER_PUBLISH_WINDOW": 12592000
-      },
-      "derivedName": "StateCommitmentChain"
-    },
-    {
       "name": "PubkeyCompendium",
       "address": "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a",
+      "sourceHashes": [
+        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
+        "0x8ae883de7991fc1ec2291f58deabd148cec4b61384f2eafa6c703304b9a2c757"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
-          "via": []
+          "target": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
+          "via": [
+            {
+              "address": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1687931999,
@@ -740,7 +877,15 @@
     {
       "name": "L1StandardBridge",
       "address": "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
+      "template": "opstack/L1StandardBridge",
+      "sourceHashes": [
+        "0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd",
+        "0x1cd5cb2fa146b2a5dfb07279a52cd93855b268115912df60292b18394cc532e8"
+      ],
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -748,7 +893,8 @@
           "via": [
             {
               "address": "0xca35F8338054739D138884685e08b39EE2217794",
-              "delay": 0
+              "delay": 0,
+              "description": "upgrading bridge implementation allows to access all funds and change every system component."
             }
           ]
         }
@@ -765,18 +911,27 @@
         "MESSENGER": "0x676A795fe6E43C17c668de16730c3F690FEB7120",
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000010",
         "version": "1.1.0"
-      },
-      "derivedName": "L1StandardBridge"
+      }
     },
     {
       "name": "MantleSecondStrat",
       "address": "0xA937660031787C4408587D2c6A67Ec4B260630F5",
+      "sourceHashes": [
+        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
+        "0x20018f70ed5942c8b643f26e7f19c6d30f27dead8e6eb6f1127d87a2f2a04589"
+      ],
       "proxyType": "EIP1967 proxy",
+      "descriptions": ["Basic do-nothing investment strategy."],
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
-          "via": []
+          "target": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
+          "via": [
+            {
+              "address": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1687931291,
@@ -804,12 +959,21 @@
     {
       "name": "RegistryPermission",
       "address": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
+      "sourceHashes": [
+        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
+        "0xc65400995a550bff2a6272beee2e54f8cf8f9369406fe8531bd5d39add1635b7"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
-          "via": []
+          "target": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
+          "via": [
+            {
+              "address": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1687930979,
@@ -852,7 +1016,15 @@
     {
       "name": "OptimismPortal",
       "address": "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb",
+      "template": "opstack/OptimismPortal",
+      "sourceHashes": [
+        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
+        "0x3a064711ad01291b3644b5f657fd8317cd07f19222c9f216e25557d4d69ea295"
+      ],
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
+      ],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -884,23 +1056,31 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 591926,
-          "prevBlockNum": 20675827
+          "prevBlockNum": 20927691
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
         "version": "1.7.0"
-      },
-      "derivedName": "OptimismPortal"
+      }
     },
     {
       "name": "DataLayrChallenge",
       "address": "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94",
+      "sourceHashes": [
+        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
+        "0xe8b1ba037124dea50d3eec5112ed3b8507e29739b723810a9f6f00976b9e2d08"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
-          "via": []
+          "target": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
+          "via": [
+            {
+              "address": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1687932023,
@@ -927,8 +1107,16 @@
     {
       "name": "ProxyAdmin",
       "address": "0xca35F8338054739D138884685e08b39EE2217794",
-      "template": "opstack/ProxyAdmin",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
+      ],
       "directlyReceivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
+          "description": "set and change address mappings."
+        },
         {
           "permission": "upgrade",
           "target": "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
@@ -939,7 +1127,8 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"
+          "target": "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
+          "description": "upgrading bridge implementation allows to access all funds and change every system component."
         },
         {
           "permission": "upgrade",
@@ -952,18 +1141,27 @@
         "addressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
         "isUpgrading": false,
         "owner": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
-      },
-      "derivedName": "ProxyAdmin"
+      }
     },
     {
       "name": "MantleFirstStrat",
       "address": "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1",
+      "sourceHashes": [
+        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
+        "0x20018f70ed5942c8b643f26e7f19c6d30f27dead8e6eb6f1127d87a2f2a04589"
+      ],
       "proxyType": "EIP1967 proxy",
+      "descriptions": ["Basic do-nothing investment strategy."],
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
-          "via": []
+          "target": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
+          "via": [
+            {
+              "address": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1687931243,
@@ -991,12 +1189,21 @@
     {
       "name": "DataLayrChallengeUtils",
       "address": "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D",
+      "sourceHashes": [
+        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
+        "0x9dc36b80e92cea40c02d3b9d2684d85d4141dcab44cf882b91cf3148476432ee"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
-          "via": []
+          "target": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
+          "via": [
+            {
+              "address": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1687931951,
@@ -1024,28 +1231,23 @@
       "derivedName": "DataLayrChallengeUtils"
     },
     {
-      "name": "ChainStorageContainerSCC",
-      "address": "0xd3f0BD982D72e28cccc69e0A9dA439e9D587b3bD",
-      "ignoreInWatchMode": ["getGlobalMetadata", "length"],
-      "sinceTimestamp": 1687952219,
-      "values": {
-        "$immutable": true,
-        "getGlobalMetadata": "0x00000000000000000000000000000000000065f3a89f0003a56843",
-        "length": 19394,
-        "libAddressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
-        "owner": "StateCommitmentChain"
-      },
-      "derivedName": "ChainStorageContainer"
-    },
-    {
       "name": "Delegation",
       "address": "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
+      "sourceHashes": [
+        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
+        "0xa961eebaaac6cb33d38501294b0f98165b96d04af2f99311bd99b282798990be"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
-          "via": []
+          "target": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
+          "via": [
+            {
+              "address": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1687930907,
@@ -1083,18 +1285,22 @@
     { "address": "0x1888e4aC2Ab37A73B33448B87bABdD1ce1dcBAbe" },
     { "address": "0x207E804758e28F2b3fD6E4219671B327100b82f8" },
     { "address": "0x2288226d687c01B7332c2A99A0C5A4a112c63f1e" },
-    { "address": "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749" },
+    {
+      "address": "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749",
+      "roles": ["Sequencer"]
+    },
     { "address": "0x3000BE80ad204D327990eB403654aCd1Eaa8eCeb" },
     { "address": "0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8" },
-    { "address": "0x4200000000000000000000000000000000000007" },
-    { "address": "0x4200000000000000000000000000000000000010" },
     { "address": "0x422f2df38B96395A7E61d4C02aDd4413bb79A9FC" },
     { "address": "0x550b3CB2D5fB5E4F0A08322CaC7b04291558CDa8" },
     { "address": "0x5881541E79f5D9d5d72c87E8Ea6F681CAb289B12" },
     { "address": "0x5a021DC06A9630bb56099b8aEdfaDC2dEa7eB317" },
     { "address": "0x61Af7a48B0EeA8481E5A055A35f829d0e8505fE3" },
     { "address": "0x630E93130809c4acE55249229Ee6B043b929A9Ad" },
-    { "address": "0x6667961f5e9C98A76a48767522150889703Ed77D" },
+    {
+      "address": "0x6667961f5e9C98A76a48767522150889703Ed77D",
+      "roles": ["Proposer"]
+    },
     { "address": "0x6cc5A6F5a9E4757790e4068Aa9757226Cb854B64" },
     { "address": "0x717c3DC6Df69c316d6Ac593077BC84Cc86f214A4" },
     { "address": "0x8A3D6c77E5BAcE8cb0822B28E4Fc56FC06fB5645" },
@@ -1180,36 +1386,6 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x291dc3819b863e19b0a9b9809F8025d2EB4aaE93": [
-      "constructor(address _libAddressManager, uint256 _maxTransactionGasLimit, uint256 _l2GasDiscountDivisor, uint256 _enqueueGasCost)",
-      "event CTCBatchReset(uint256 indexed _batchIndex, uint40 _nextqIndex, uint40 _totalElement, uint40 _batchSize, uint40 _numQueuedTransactions, uint40 _timestamp, uint40 _blockNumber)",
-      "event L2GasParamsUpdated(uint256 l2GasDiscountDivisor, uint256 enqueueGasCost, uint256 enqueueL2GasPrepaid)",
-      "event QueueBatchAppended(uint256 _startingQueueIndex, uint256 _numQueueElements, uint256 _totalElements)",
-      "event SequencerBatchAppended(uint256 _startingQueueIndex, uint256 _numQueueElements, uint256 _totalElements)",
-      "event TransactionBatchAppended(uint256 indexed _batchIndex, bytes32 _batchRoot, uint256 _batchSize, uint256 _prevTotalElements, bytes _signature, bytes _extraData)",
-      "event TransactionEnqueued(address indexed _l1TxOrigin, address indexed _target, uint256 _gasLimit, bytes _data, uint256 indexed _queueIndex, uint256 _timestamp)",
-      "function MAX_ROLLUP_TX_SIZE() view returns (uint256)",
-      "function MIN_ROLLUP_TX_GAS() view returns (uint256)",
-      "function appendSequencerBatch()",
-      "function batches() view returns (address)",
-      "function enqueue(address _target, uint256 _gasLimit, bytes _data)",
-      "function enqueueGasCost() view returns (uint256)",
-      "function enqueueL2GasPrepaid() view returns (uint256)",
-      "function getLastBlockNumber() view returns (uint40)",
-      "function getLastTimestamp() view returns (uint40)",
-      "function getNextQueueIndex() view returns (uint40)",
-      "function getNumPendingQueueElements() view returns (uint40)",
-      "function getQueueElement(uint256 _index) view returns (tuple(bytes32 transactionHash, uint40 timestamp, uint40 blockNumber) _element)",
-      "function getQueueLength() view returns (uint40)",
-      "function getTotalBatches() view returns (uint256 _totalBatches)",
-      "function getTotalElements() view returns (uint256 _totalElements)",
-      "function l2GasDiscountDivisor() view returns (uint256)",
-      "function libAddressManager() view returns (address)",
-      "function maxTransactionGasLimit() view returns (uint256)",
-      "function resetIndex(uint256 _batchIndex, uint40 _totalElement, uint40 _batchSize, uint40 _nextqIndex, uint40 _numQueuedTransactions, uint40 _timestamp, uint40 _blockNumber)",
-      "function resolve(string _name) view returns (address)",
-      "function setGasParams(uint256 _l2GasDiscountDivisor, uint256 _enqueueGasCost)"
-    ],
     "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -1294,20 +1470,6 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "0x5Dd48eF85B99E3e3d711Ca8B41cBC07dA1677F3E": [
-      "constructor(address _libAddressManager, string _owner)",
-      "function deleteElementsAfterInclusive(uint256 _index, bytes27 _globalMetadata)",
-      "function deleteElementsAfterInclusive(uint256 _index)",
-      "function get(uint256 _index) view returns (bytes32)",
-      "function getGlobalMetadata() view returns (bytes27)",
-      "function length() view returns (uint256)",
-      "function libAddressManager() view returns (address)",
-      "function owner() view returns (string)",
-      "function push(bytes32 _object, bytes27 _globalMetadata)",
-      "function push(bytes32 _object)",
-      "function resolve(string _name) view returns (address)",
-      "function setGlobalMetadata(bytes27 _globalMetadata)"
     ],
     "0x64F4244eEA17a361bb919A28F614C3ad1aC565ad": [
       "constructor(address _investmentManager, address _serviceManager, uint8 _NUMBER_OF_QUORUMS, address _pubkeyCompendium, address _permissionManager, address _forceDeregister)",
@@ -1468,29 +1630,6 @@
       "function transferOwnership(address newOwner)",
       "function undelegate()",
       "function unpause(uint256 newPausedStatus)"
-    ],
-    "0x89E9D387555AF0cDE22cb98833Bae40d640AD7fa": [
-      "constructor(address _libAddressManager, address _l1messenger, uint256 _fraudProofWindow, uint256 _sequencerPublishWindow)",
-      "event DistributeTssReward(uint256 indexed _startBlockNumber, uint256 _length, uint256 indexed _batchTime, address[] _tssMembers)",
-      "event RollBackL2Chain(uint256 indexed _startBlockNumber)",
-      "event StateBatchAppended(uint256 indexed _batchIndex, bytes32 _batchRoot, uint256 _batchSize, uint256 _prevTotalElements, bytes _signature, bytes _extraData)",
-      "event StateBatchDeleted(uint256 indexed _batchIndex, bytes32 _batchRoot)",
-      "function FRAUD_PROOF_WINDOW() view returns (uint256)",
-      "function SEQUENCER_PUBLISH_WINDOW() view returns (uint256)",
-      "function appendStateBatch(bytes32[] _batch, uint256 _shouldStartAtElement, bytes _signature)",
-      "function batches() view returns (address)",
-      "function deleteStateBatch(tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes signature, bytes extraData) _batchHeader)",
-      "function getFraudProofWindow() view returns (uint256 _fraudProofWindow)",
-      "function getLastSequencerTimestamp() view returns (uint256 _lastSequencerTimestamp)",
-      "function getTotalBatches() view returns (uint256 _totalBatches)",
-      "function getTotalElements() view returns (uint256 _totalElements)",
-      "function insideFraudProofWindow(tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes signature, bytes extraData) _batchHeader) view returns (bool _inside)",
-      "function libAddressManager() view returns (address)",
-      "function messenger() view returns (address)",
-      "function resolve(string _name) view returns (address)",
-      "function rollBackL2Chain(uint256 _shouldRollBack, uint256 _shouldStartAtElement, bytes _signature)",
-      "function setFraudProofWindow(uint256 _fraudProofWindow)",
-      "function verifyStateCommitment(bytes32 _element, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes signature, bytes extraData) _batchHeader, tuple(uint256 index, bytes32[] siblings) _proof) view returns (bool)"
     ],
     "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1906,20 +2045,6 @@
       "function startingTimestamp() view returns (uint256)",
       "function version() view returns (string)"
     ],
-    "0xd3f0BD982D72e28cccc69e0A9dA439e9D587b3bD": [
-      "constructor(address _libAddressManager, string _owner)",
-      "function deleteElementsAfterInclusive(uint256 _index, bytes27 _globalMetadata)",
-      "function deleteElementsAfterInclusive(uint256 _index)",
-      "function get(uint256 _index) view returns (bytes32)",
-      "function getGlobalMetadata() view returns (bytes27)",
-      "function length() view returns (uint256)",
-      "function libAddressManager() view returns (address)",
-      "function owner() view returns (string)",
-      "function push(bytes32 _object, bytes27 _globalMetadata)",
-      "function push(bytes32 _object)",
-      "function resolve(string _name) view returns (address)",
-      "function setGlobalMetadata(bytes27 _globalMetadata)"
-    ],
     "0xd8d731624d97a66e012E62208cFc921d7033c564": [
       "constructor()",
       "event Initialized(uint8 version)",
@@ -2084,8 +2209,13 @@
     ]
   },
   "usedTemplates": {
+    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
-    "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091"
-  },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+    "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
+    "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
+    "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
+    "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
+    "opstack/OptimismPortal": "0x2a32f6874a8c0e85e685fa944143e7968d675fed43b46e7385411ad11f8a1a43",
+    "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
+  }
 }

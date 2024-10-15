@@ -3,7 +3,6 @@
   "chain": "polygonzkevm",
   "blockNumber": 14728552,
   "configHash": "0x710026b5135b5d108b40faf49d9063aa0102a28e3c1346da5da9851d474cdc27",
-  "version": 15,
   "contracts": [
     {
       "name": "",
@@ -22,6 +21,9 @@
     {
       "name": "ProxyAdmin",
       "address": "0x3c2269811836af69497E5F486A85D7316753cf62",
+      "sourceHashes": [
+        "0xeb95d39e1b35f76b6331da863f87bf2e148dd21abf5666590443b65f6a125630"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -52,6 +54,10 @@
       "name": "LayerZeroMultisig_pzkevm",
       "address": "0x8df01A9F8bE5776F4280B7056e13A0Fc0E007827",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1712271299,
@@ -77,6 +83,9 @@
     {
       "name": "ProxyAdmin",
       "address": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
+      "sourceHashes": [
+        "0xeb95d39e1b35f76b6331da863f87bf2e148dd21abf5666590443b65f6a125630"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -92,6 +101,9 @@
     {
       "name": "Endpoint",
       "address": "0x9740FF91F1985D8d2B71494aE1A2f723bb3Ed9E4",
+      "sourceHashes": [
+        "0x945c3299d0cf62b9ea7a77d6328295d54327299d6a153e1e7b48d85fa9b77215"
+      ],
       "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"],
       "sinceTimestamp": 1679974014,
       "values": {
@@ -173,6 +185,9 @@
     {
       "name": "UltraLightNodeV2",
       "address": "0xFe7C30860D01e28371D40434806F4A8fcDD3A098",
+      "sourceHashes": [
+        "0x38c85ab54f670eaa1fc2b351aee39913bc12e2b26c460ee31cf89d3f1f7d59b9"
+      ],
       "ignoreInWatchMode": [
         "chainAddressSizeMap",
         "defaultAppConfig",
@@ -1570,6 +1585,5 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
-  },
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  }
 }

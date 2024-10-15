@@ -1,4 +1,78 @@
-Generated with discovered.json: 0x046a1ca8401133f68ae641fe1d28ecff32192638
+Generated with discovered.json: 0xc60b504df1f57f644cd413ab4761ea9cbafb37aa
+
+# Diff at Mon, 14 Oct 2024 10:58:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 16767881
+- current block number: 16767881
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 16767881 (main branch discovery), not current.
+
+```diff
+    contract Verifier (0x42F15EFE22993C88441EF3467f2E6Fa8FFA9ADef) {
+    +++ description: None
+      sourceHashes:
++        ["0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6","0xe57a7d24585183351134b42cf28e1fe88dc44f62c93f606e49489c95fb235b3a"]
+    }
+```
+
+```diff
+    contract ZkSync (0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3) {
+    +++ description: None
+      sourceHashes:
++        ["0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6","0xe89f1035c59a163546a58952321af25209cc7c946f7fe23f50b535818c980d29"]
+    }
+```
+
+```diff
+    contract Governance (0x86E527BC3C43E6Ba3eFf3A8CAd54A7Ed09cD8E8B) {
+    +++ description: None
+      sourceHashes:
++        ["0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6","0xfe2c75fea0224e9fcb9594039d0179faaeb8db2a5bd3a9219433c90b069d049d"]
+    }
+```
+
+```diff
+    contract ZkSwapListing (0xb3BFC153d60f51Fb10E69B04f5f7D2735fA0619E) {
+    +++ description: None
+      sourceHashes:
++        ["0xce4af2ec88a2ba33052ea9fe2da9580a88710e57fb6946fb00d5740600e11ee2"]
+    }
+```
+
+```diff
+    contract UniswapV2Factory (0xD2cbDcd7C6b3152BdFf6549C208052E4DBcd575D) {
+    +++ description: None
+      sourceHashes:
++        ["0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6","0x86e6238a6b2cd0e01b10a66c120be7cfb092bbeb23c0b83e457b160062477b45"]
+    }
+```
+
+```diff
+    contract ZkSyncCommitBlock (0xE26Ebb18144CD2d8DCB14cE87fdCfbEb81baCAD4) {
+    +++ description: None
+      sourceHashes:
++        ["0xaa78464b8e708b31da067db30b69023cdd0af596ac10c087dc5dbb0ba516ce00"]
+    }
+```
+
+```diff
+    contract ZksToken (0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6) {
+    +++ description: None
+      sourceHashes:
++        ["0xa7344a41ac050b7f10b2dd12807615cd0dbfd63e480cacec2c8a30dd7845522e"]
+    }
+```
+
+Generated with discovered.json: 0xea2052cc462e142b7083a2ff0331154482bb0113
 
 # Diff at Tue, 01 Oct 2024 11:12:15 GMT:
 

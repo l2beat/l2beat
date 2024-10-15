@@ -3,7 +3,7 @@ export function SubmitButton({ isLoading }: { isLoading: boolean }) {
     <button
       type="submit"
       disabled={isLoading}
-      className="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center font-medium text-sm text-white sm:w-auto dark:bg-blue-600 dark:hover:bg-blue-700 hover:bg-blue-800 focus:outline-none dark:focus:ring-blue-800 focus:ring-4 focus:ring-blue-300"
+      className="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center font-medium text-sm text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 sm:w-auto dark:bg-blue-600 dark:focus:ring-blue-800 dark:hover:bg-blue-700"
     >
       {!isLoading ? (
         'Go!'

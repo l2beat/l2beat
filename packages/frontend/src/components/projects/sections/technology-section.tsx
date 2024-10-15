@@ -1,3 +1,7 @@
+import {
+  HostChainRisksWarning,
+  type HostChainRisksWarningProps,
+} from '~/components/host-chain-risks-warning'
 import { Markdown } from '~/components/markdown/markdown'
 import { UnderReviewCallout } from '../under-review-callout'
 import { TechnologyIncompleteNote } from './contracts/technology-incomplete-note'
@@ -8,6 +12,7 @@ import { type ProjectSectionProps } from './types'
 
 export interface TechnologySectionProps extends ProjectSectionProps {
   items: TechnologyChoice[]
+  hostChainWarning?: HostChainRisksWarningProps
 }
 
 export interface TechnologyChoice {
@@ -22,10 +27,12 @@ export interface TechnologyChoice {
 
 export function TechnologySection({
   items,
+  hostChainWarning,
   ...sectionProps
 }: TechnologySectionProps) {
   return (
     <ProjectSection {...sectionProps}>
+      {hostChainWarning && <HostChainRisksWarning {...hostChainWarning} />}
       {items.map((item, i) => (
         <div className="mt-4 md:mt-6" key={i}>
           <h3 id={item.id} className="text-lg font-bold md:text-xl">

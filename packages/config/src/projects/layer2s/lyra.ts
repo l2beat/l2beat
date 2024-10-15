@@ -1,16 +1,13 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
+import { NUGGETS } from '../../common'
+
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('lyra')
-
-const upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
 
 export const lyra: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
@@ -38,7 +35,6 @@ export const lyra: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  upgradeability,
   rpcUrl: 'https://rpc.lyra.finance',
   finality: {
     type: 'OPStack',
@@ -48,6 +44,7 @@ export const lyra: Layer2 = opStackL2({
   genesisTimestamp: new UnixTime(1700022479),
   // stateDerivation: DERIVATION.OPSTACK('LYRA'),
   isNodeAvailable: 'UnderReview',
+  discoveryDrivenData: true,
   milestones: [
     {
       name: 'Derive rebrand',
@@ -70,15 +67,12 @@ export const lyra: Layer2 = opStackL2({
       type: 'general',
     },
   ],
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'ConduitMultisig',
-      'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
-    ),
-    ...discovery.getMultisigPermission(
-      'ChallengerMultisig',
-      'This address is the permissioned challenger of the system. It can delete non finalized roots without going through the fault proof process. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals.',
-    ),
+  knowledgeNuggets: [
+    {
+      title: 'Blobstream and Celestia Architecture',
+      url: 'https://www.youtube.com/watch?v=cn_fN6pkakQ',
+      thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
+    },
   ],
   nonTemplateEscrows: [
     // manually added with `yarn socket-convert` script and latest json: https://github.com/SocketDotTech/socket-plugs/blob/295ef847031ae5260361d67a5b15b9a44fe033f7/deployments/superbridge/prod_lyra_addresses.json

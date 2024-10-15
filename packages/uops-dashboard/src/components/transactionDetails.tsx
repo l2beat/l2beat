@@ -28,17 +28,14 @@ export function TransactionDetails({
       <>
         <p
           key={op.id}
-          className={`${
-            padding
-            // biome-ignore lint/nursery/useSortedClasses: space in front unnecessarily triggers the rule
-          } mt-0 text-gray-500 dark:text-gray-400`}
+          className={`${padding} mt-0 text-gray-500 dark:text-gray-400`}
         >
           {!op.contractAddress && `${op.methodName} (${op.count})`}
 
           {op.contractAddress && (
             <>
               <a
-                className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                className="font-medium text-blue-600 hover:underline dark:text-blue-500"
                 href={chain.getContractLink(op.contractAddress)}
                 target="_blank"
                 rel="noreferrer"
@@ -60,7 +57,7 @@ export function TransactionDetails({
       <button
         type="button"
         onClick={() => setModal(true)}
-        className="me-2 ml-2 inline-flex items-center rounded-full bg-blue-700 p-2 text-center font-medium text-sm text-white dark:bg-blue-600 dark:hover:bg-blue-700 hover:bg-blue-800 focus:outline-none dark:focus:ring-blue-800 focus:ring-4 focus:ring-blue-300"
+        className="me-2 ml-2 inline-flex items-center rounded-full bg-blue-700 p-2 text-center font-medium text-sm text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:focus:ring-blue-800 dark:hover:bg-blue-700"
       >
         <svg
           className="h-2 w-2"
@@ -87,14 +84,14 @@ export function TransactionDetails({
         >
           <div className="relative max-h-full w-full max-w-3xl p-4">
             <div className="relative rounded-lg bg-white shadow dark:bg-gray-700">
-              <div className="flex items-center justify-between rounded-t border-b p-4 dark:border-gray-600 md:p-5">
+              <div className="flex items-center justify-between rounded-t border-b p-4 md:p-5 dark:border-gray-600">
                 <h3 className="font-semibold text-gray-900 text-xl dark:text-white">
                   {tx.type}
                 </h3>
                 <button
                   type="button"
                   onClick={() => setModal(false)}
-                  className="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-gray-400 text-sm dark:hover:bg-gray-600 hover:bg-gray-200 dark:hover:text-white hover:text-gray-900"
+                  className="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-gray-400 text-sm hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
                   data-modal-hide="default-modal"
                 >
                   <svg
@@ -119,7 +116,7 @@ export function TransactionDetails({
                 <p className="mb-4 text-base text-gray-500 leading-relaxed dark:text-gray-400">
                   Hash:
                   <a
-                    className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                    className="font-medium text-blue-600 hover:underline dark:text-blue-500"
                     href={chain.getTxLink(tx.hash)}
                     target="_blank"
                     rel="noreferrer"

@@ -1,4 +1,4 @@
-export interface Hash160 extends String {
+export type Hash160 = string & {
   _Hash160Brand: string
 }
 

@@ -1,6 +1,6 @@
 import { constants, utils } from 'ethers'
 
-export interface EthereumAddress extends String {
+export type EthereumAddress = string & {
   _EthereumAddressBrand: string
 }
 

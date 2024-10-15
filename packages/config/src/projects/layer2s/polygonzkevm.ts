@@ -22,17 +22,9 @@ const isForcedBatchDisallowed =
     'forceBatchAddress',
   ) !== '0x0000000000000000000000000000000000000000'
 
-const ESCROW_wstETH_ADDRESS = '0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01'
-const ESCROW_USDC_ADDRESS = '0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB'
-const ESCROW_DAI_ADDRESS = '0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98'
-
-// TODO(radomski): Ideally this wouldn't be here, but we can't actually share
-// one escrow between multiple projects. Can be removed once TVL2 is done.
-const shared = new ProjectDiscovery('shared-polygon-cdk')
-const bridge = shared.getContract('Bridge')
-
+const bridge = discovery.getContract('Bridge')
 const upgradeDelayString = formatSeconds(
-  shared.getContractValue<number>('Timelock', 'getMinDelay'),
+  discovery.getContractValue<number>('Timelock', 'getMinDelay'),
 )
 
 export const polygonzkevm: Layer2 = polygonCDKStack({
@@ -143,7 +135,7 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
     },
   ],
   nonTemplateEscrows: [
-    shared.getEscrowDetails({
+    discovery.getEscrowDetails({
       address: bridge.address,
       tokens: '*',
       sharedEscrow: {
@@ -151,27 +143,6 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
         nativeAsset: 'etherPreminted',
         premintedAmount: '200000000000000000000000000',
       },
-    }),
-    discovery.getEscrowDetails({
-      address: EthereumAddress(ESCROW_wstETH_ADDRESS),
-      sinceTimestamp: new UnixTime(1703945135),
-      tokens: ['wstETH'],
-      description: 'Escrow for wstETH',
-      upgradableBy: ['EscrowAdmin'],
-    }),
-    discovery.getEscrowDetails({
-      address: EthereumAddress(ESCROW_USDC_ADDRESS),
-      sinceTimestamp: new UnixTime(1700125979),
-      tokens: ['USDC'],
-      description: 'Escrow for USDC',
-      upgradableBy: ['EscrowAdmin'],
-    }),
-    discovery.getEscrowDetails({
-      address: EthereumAddress(ESCROW_DAI_ADDRESS),
-      sinceTimestamp: new UnixTime(1695199499),
-      tokens: ['DAI', 'sDAI'],
-      description: 'Escrow for DAI',
-      upgradableBy: ['EscrowAdmin'],
     }),
   ],
   nonTemplateTechnology: {
@@ -205,7 +176,7 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
       'The trusted sequencer batches transactions according to the specifications documented [here](https://docs.polygon.technology/zkEVM/architecture/protocol/transaction-life-cycle/transaction-batching/).',
   },
   upgradesAndGovernance: [
-    `All main contracts and the verifier are upgradable by the ${shared.getMultisigStats(
+    `All main contracts and the verifier are upgradable by the ${discovery.getMultisigStats(
       'RollupManagerAdminMultisig',
     )} \`ProxyAdminOwner\` through a timelock that owns \`SharedProxyAdmin\`. Addresses of trusted sequencer, aggregator and operational parameters (like fees) on the \`PolygonRollupManager\` can be instantly set by the \`ProxyAdminOwner\`. Escrow contracts are upgradable by the \`EscrowsAdmin\` ${discovery.getMultisigStats(
       'EscrowsAdmin',
@@ -213,7 +184,7 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
     `\`PolygonZkEVMTimelock\` is a modified version of TimelockController that disables delay in case of a manually enabled or triggered emergency state in the \`PolygonRollupManager\`. It otherwise has a ${upgradeDelayString} delay.`,
     `The process to upgrade the \`PolygonRollupManager\`-implementation and / or the verifier has two steps: 1) A newRollupType-transaction is added by the \`ProxyAdminOwner\` to the timelock, which in turn can call the \`addNewRollupType()\` function in the \`PolygonRollupManager\`. In a non-emergency state, this allows potential reviews of the new rollup type while it sits in the timelock. 2) After the delay period, the rollup implementation can be upgraded to the new rollup type by the \`ProxyAdminOwner\` calling the \`updateRollup()\`-function in the \`PolygonRollupManager\` directly.`,
     `The critical roles in the \`PolygonRollupManager\` can be changed through the timelock, while the trusted Aggregator role can be granted by the \`ProxyAdminOwner\` directly.`,
-    `The ${shared.getMultisigStats(
+    `The ${discovery.getMultisigStats(
       'SecurityCouncil',
     )} \`SecurityCouncil\` multisig can manually enable the emergency state in the \`PolygonRollupManager\`.`,
   ].join('\n\n'),

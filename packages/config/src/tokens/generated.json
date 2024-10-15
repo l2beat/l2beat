@@ -549,6 +549,20 @@
       "supply": "zero"
     },
     {
+      "name": "Binary Token",
+      "coingeckoId": "binary-holdings",
+      "address": "0x04E9D7e336f79Cdab911b06133D3Ca2Cd0721ce3",
+      "symbol": "BNRY",
+      "decimals": 18,
+      "deploymentTimestamp": 1718764151,
+      "coingeckoListingTimestamp": 1714608000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37521/large/Vector-1.png?1714634222",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "BitDAO",
       "coingeckoId": "bitdao",
       "address": "0x1A4b46696b2bB4794Eb3D4c26f1c55F9170fa4C5",
@@ -1048,6 +1062,20 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/7310/large/cro_token_logo.png?1696507599",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Cronos zkEVM CRO",
+      "coingeckoId": "cronos-zkevm-cro",
+      "address": "0x28Ff2E4dD1B58efEB0fC138602A28D5aE81e44e2",
+      "symbol": "zkCRO",
+      "decimals": 18,
+      "deploymentTimestamp": 1718769911,
+      "coingeckoListingTimestamp": 1724803200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39734/large/Screenshot_2024-08-16_at_10.42.41%E2%80%AFAM.png?1723776225",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -1926,7 +1954,7 @@
       "address": "0xCdb4A8742ed7D0259b51E3454C46C9D6C48d5e88",
       "symbol": "GPT",
       "decimals": 18,
-      "deploymentTimestamp": 1705478411,
+      "deploymentTimestamp": 1716807971,
       "coingeckoListingTimestamp": 1710201600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/35929/large/gpt.png?1710225428",
@@ -4399,6 +4427,20 @@
       "supply": "zero"
     },
     {
+      "name": "Veno yield bearing ETH",
+      "coingeckoId": "veno-eth",
+      "address": "0x76bf2D1e6dFda645c0c17440B17Eccc181dfC351",
+      "symbol": "ybETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1721279435,
+      "coingeckoListingTimestamp": 1724198400,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39776/large/Screenshot_2024-08-19_at_5.07.51%E2%80%AFPM.png?1724058891",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "VENT",
       "coingeckoId": "vent-finance",
       "address": "0x5F0bc16D50F72d10b719dBF6845DE2E599eb5624",
@@ -6619,20 +6661,6 @@
       }
     },
     {
-      "name": "USD+",
-      "coingeckoId": "dinari-usd",
-      "address": "0x6F086dB0f6A621a915bC90295175065c9e5d9b8c",
-      "symbol": "USD+",
-      "decimals": 6,
-      "deploymentTimestamp": 1718908690,
-      "coingeckoListingTimestamp": 1719360000,
-      "category": "stablecoin",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/38879/large/USDplus-200.png?1719374938",
-      "chainId": 7887,
-      "source": "native",
-      "supply": "totalSupply"
-    },
-    {
       "name": "Aerodrome",
       "coingeckoId": "aerodrome-finance",
       "address": "0x940181a94A35A4569E4529A3CDfB74e38FD98631",
@@ -6728,6 +6756,20 @@
       "chainId": 8453,
       "source": "canonical",
       "supply": "zero"
+    },
+    {
+      "name": "EURC",
+      "coingeckoId": "euro-coin",
+      "address": "0x60a3E35Cc302bFA44Cb288Bc5a4F316Fdb1adb42",
+      "symbol": "EURC",
+      "decimals": 6,
+      "deploymentTimestamp": 1717005065,
+      "coingeckoListingTimestamp": 1656547200,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/26045/large/euro.png?1696525125",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "FRIEND",
@@ -7193,6 +7235,27 @@
       }
     },
     {
+      "name": "Aethir Token",
+      "coingeckoId": "aethir",
+      "address": "0xc87B37a581ec3257B734886d9d3a581F5A9d056c",
+      "symbol": "ATH",
+      "decimals": 18,
+      "deploymentTimestamp": 1717572209,
+      "coingeckoListingTimestamp": 1718150400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36179/large/logogram_circle_dark_green_vb_green_%281%29.png?1718232706",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Axelar (ITS)"
+          }
+        ]
+      }
+    },
+    {
       "name": "Arbitrum",
       "coingeckoId": "arbitrum",
       "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
@@ -7324,6 +7387,20 @@
       "coingeckoListingTimestamp": 1684800000,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/30505/large/dmt.png?1696529391",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "name": "Eigenpie",
+      "coingeckoId": "eigenpie",
+      "address": "0x7E7a7C916c19a45769f6BDAF91087f93c6C12F78",
+      "symbol": "EGP",
+      "decimals": 18,
+      "deploymentTimestamp": 1726032245,
+      "coingeckoListingTimestamp": 1727222400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37810/large/eigenpie.jpeg?1715597613",
       "chainId": 42161,
       "source": "native",
       "supply": "circulatingSupply"
@@ -8849,6 +8926,20 @@
       "coingeckoListingTimestamp": 1720483200,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/38626/large/RWA_200x200.png?1718168632",
+      "chainId": 111188,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "UK Real Estate",
+      "coingeckoId": "uk-real-estate",
+      "address": "0x835d3E1C0aA079C6164AAd21DCb23E60eb71AF48",
+      "symbol": "UKRE",
+      "decimals": 18,
+      "deploymentTimestamp": 1716417748,
+      "coingeckoListingTimestamp": 1720483200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38625/large/image_%281%29.png?1718168417",
       "chainId": 111188,
       "source": "native",
       "supply": "totalSupply"

@@ -1,3 +1,3 @@
-export interface EthereumAddress extends String {
+export type EthereumAddress = string & {
   _EthereumAddressBrand: string
 }

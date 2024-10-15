@@ -12,6 +12,7 @@ export const celestia: DaLayer = {
   id: 'celestia',
   type: 'DaLayer',
   kind: 'PublicBlockchain',
+  systemCategory: 'public',
   display: {
     name: 'Celestia',
     slug: 'celestia',
@@ -30,7 +31,12 @@ export const celestia: DaLayer = {
       ],
     },
   },
-  technology: `
+  technology: {
+    description: `
+    ## Architecture
+    
+    ![Celestia architecture](/images/da-layer-technology/celestia/architecture.png#center)
+
     ## Consensus
     Celestia uses CometBTF, the canonical implementation of Tendermint consensus protocol. The consensus protocol is fork-free by construction under an honest majority of stake assumption.
     Celestia achieves finality at each block, with an average time between blocks of 12 seconds.
@@ -70,12 +76,15 @@ export const celestia: DaLayer = {
     Applications can then retrieve the data by querying the Celestia blockchain for the data root of the blob and the namespace of the application. The data can be reconstructed by querying the Celestia network for the shares of the data matrix and reconstructing the data using the erasure coding scheme.
 
     `,
+  },
   bridges: [
     NO_BRIDGE({
       layer: 'Celestia',
       description:
         'The risk profile in this page refers to scaling solutions that do not integrate with a data availability bridge.',
-      technology: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
+      technology: {
+        description: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
+      },
     }),
     ...blobstream,
   ],

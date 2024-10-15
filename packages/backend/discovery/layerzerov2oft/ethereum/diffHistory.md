@@ -1,4 +1,286 @@
-Generated with discovered.json: 0x24736069ccff1490098aaaf30141f56a06bd0b45
+Generated with discovered.json: 0x2f349bb6c9d823953c6783bc1888cdc16695bf08
+
+# Diff at Mon, 14 Oct 2024 10:52:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20240831
+- current block number: 20240831
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20240831 (main branch discovery), not current.
+
+```diff
+    contract WTIA_OFTAdapter (0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2) {
+    +++ description: None
+      sourceHashes:
++        ["0xc645ae3293eef96881a8a34ad011853701ce0fc0f84f1e16be21348243dc23cd"]
+    }
+```
+
+```diff
+    contract TBankOFT (0x1762c17f671FA27cE6C59256f5F28242de9274d0) {
+    +++ description: None
+      sourceHashes:
++        ["0xba83e8b07a793eb94956a82d951d156b8192e46d2ec4a546c0582ec3012caca4"]
+    }
+```
+
+```diff
+    contract TRESTLE_OFTAdapter (0x17Ce6AEc7FD1aCcB5C0B2712eDDeFf8939BAB91E) {
+    +++ description: None
+      sourceHashes:
++        ["0x545dea510da54ad1f4ef1409aa1b7b6c39ffa522331dfcfdbaba275722af5b12"]
+    }
+```
+
+```diff
+    contract EndpointV2 (0x1a44076050125825900e736c501f859c50fE728c) {
+    +++ description: None
+      sourceHashes:
++        ["0x399160e7d36a21fca31097d7875daed8f421f788b77f2a71974d51938c3ea520"]
+    }
+```
+
+```diff
+    contract DineroOFTLockbox (0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208) {
+    +++ description: None
+      sourceHashes:
++        ["0xd0900deb37eddc5cdfd57b8661fdc3ce4992abe9370076218206793aa712f44c"]
+    }
+```
+
+```diff
+    contract StakedFraxEtherOFTAdapter (0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A) {
+    +++ description: None
+      sourceHashes:
++        ["0x4a403198a2a3bcd35a947c909f95e42965212a8cfee7b7f0a492a81b290343cb"]
+    }
+```
+
+```diff
+    contract StakedUSDeOFTAdapter (0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2) {
+    +++ description: None
+      sourceHashes:
++        ["0x24c3e4cbee746bcb3966b274859dcf02dd148b892f0b42a8ce393052c55e2066"]
+    }
+```
+
+```diff
+    contract FraxSharesOFTAdapter (0x23432452B720C80553458496D4D9d7C5003280d0) {
+    +++ description: None
+      sourceHashes:
++        ["0x3bced0e183d2d8be858477bfefec195b6ff414c579fba5e35fc6ba6f67dd7296"]
+    }
+```
+
+```diff
+    contract DVN (0x380275805876Ff19055EA900CDb2B46a94ecF20D) {
+    +++ description: None
+      sourceHashes:
++        ["0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"]
+    }
+```
+
+```diff
+    contract CyberTokenAdapter (0x3d2fe83ea885C2E43A422C82C738847669708210) {
+    +++ description: None
+      sourceHashes:
++        ["0xe07dd12133eb1c78e9a2cb67f7cb405dbbedc163d62174b5ffe3357666572473"]
+    }
+```
+
+```diff
+    contract MysoOFTAdapter (0x3e52fd3383E1ee6D3959Ce5c6Aa9d1fCb46AbFA6) {
+    +++ description: None
+      sourceHashes:
++        ["0x89688d13ddfdb2a91fb45b3eac55658cc0cd5b58fd0924e24cad003ba9b04758"]
+    }
+```
+
+```diff
+    contract ENAOFTAdapter (0x58538e6A46E07434d7E7375Bc268D3cb839C0133) {
+    +++ description: None
+      sourceHashes:
++        ["0x40d7122474d8afc304e108f00e9254fe8ef72f42c28ee634f42aa1ea6b8499cf"]
+    }
+```
+
+```diff
+    contract LayerZeroDVN (0x589dEDbD617e0CBcB916A9223F4d1300c294236b) {
+    +++ description: None
+      sourceHashes:
++        ["0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"]
+    }
+```
+
+```diff
+    contract USDeOFTAdapter (0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34) {
+    +++ description: None
+      sourceHashes:
++        ["0xccd3f36cc1147f6282362915f6dfbd4ad890475203975c33b3733ee32c3f75cf"]
+    }
+```
+
+```diff
+    contract Treasury (0x5ebB3f2feaA15271101a927869B3A56837e73056) {
+    +++ description: None
+      sourceHashes:
++        ["0x79f573a9d94def8dc0b4319d44595f806685b0ca5875891eff1ed40a9ff6b6e0"]
+    }
+```
+
+```diff
+    contract ParamOFTAdapter (0x6182995916d79DeDb60db1570776F9994fCdCA0a) {
+    +++ description: None
+      sourceHashes:
++        ["0xf5e370b31bd00c58182289a46e61d7a01400ad2073e75d0d64108c27cbfebf8f"]
+    }
+```
+
+```diff
+    contract MyOFTAdapter (0x801642B6efB861fE624dAD704b7A747779d9B433) {
+    +++ description: None
+      sourceHashes:
++        ["0x8f58c00c46fa24ad1de2834e09eb6c9113cb1bd0f3f93e317d41848b4267aed5"]
+    }
+```
+
+```diff
+    contract RSETH_OFTAdapter (0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3) {
+    +++ description: None
+      sourceHashes:
++        ["0x846cd86e3fbb7c7164e6107fcf83b92b24b0f4cf399c4b7b39e01cc88f44c91a"]
+    }
+```
+
+```diff
+    contract PolyhedraDVN (0x8ddF05F9A5c488b4973897E278B58895bF87Cb24) {
+    +++ description: None
+      sourceHashes:
++        ["0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad","0x28e4c0a9b19237dbabd13c2ff57934b80b69c88954b99bd66c38e3626a030b26"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3) {
+    +++ description: None
+      sourceHashes:
++        ["0x130b90ae0c02f239d1ce8b414a1a9a49d97708bb4f07d7e9c69af4f7c8a8f5bc"]
+    }
+```
+
+```diff
+    contract GnosisSafe (0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract WooTokenOFTAdapter (0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711) {
+    +++ description: None
+      sourceHashes:
++        ["0xf00fd4e6de8da1f5359ed1cbafdbeaf3ca5063b2099fd4eb70d150876d908e33"]
+    }
+```
+
+```diff
+    contract SendUln302 (0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1) {
+    +++ description: None
+      sourceHashes:
++        ["0x159d8f84a5100285a7401e1ccb3d40a64fe944d9beb951c81749de40279a5876"]
+    }
+```
+
+```diff
+    contract ReceiveUln302 (0xc02Ab410f0734EFa3F14628780e6e695156024C2) {
+    +++ description: None
+      sourceHashes:
++        ["0x3904c78c7b0abf91f9544ebb9f08f2d2bc83028df65c912a7f7a6ca1ca109dde"]
+    }
+```
+
+```diff
+    contract CyberTokenAdapter (0xCB07992DE144bDeE56fDb66Fff2454B43243b052) {
+    +++ description: None
+      sourceHashes:
++        ["0xdce3b87706451ccc7b085067f6799a004de54f2f3a9a58acc51b736e8c5b50c5"]
+    }
+```
+
+```diff
+    contract LayerZero Multisig (0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract GoogleCloudDVN (0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc) {
+    +++ description: None
+      sourceHashes:
++        ["0x1be31a02ca7158d467a49eeb964f0f8aa1d1e74019df854c1881d89d51260701"]
+    }
+```
+
+```diff
+    contract KinetixFinanceTokenOFTAdapter (0xdDF5a3259a88Ab79D5530eB3eB14c1C92CD97FCf) {
+    +++ description: None
+      sourceHashes:
++        ["0xbdb5d856720cc4b696952d51301dd3c0e81cff33f44b2b099679d8fe2d343861"]
+    }
+```
+
+```diff
+    contract VerifierFeeLib (0xdeA04ef31C4B4FDf31CB58923F37869739280d49) {
+    +++ description: None
+      sourceHashes:
++        ["0x37e1cee9d0a4ad6ebb439d27dbbf23925fcd9f9c0d5b43a33a6335e62b54d18c"]
+    }
+```
+
+```diff
+    contract ZkBridgeAdmin (0xe16d201cA134345601631D327a971A3741646B0d) {
+    +++ description: None
+      sourceHashes:
++        ["0x062ac536d5e166756d049e5291a179675915fffdd3c12bd2d98cc2d83f77403c"]
+    }
+```
+
+```diff
+    contract StakedFraxOFTAdapter (0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E) {
+    +++ description: None
+      sourceHashes:
++        ["0x4e7c9ed835cefe312e55b3bec6bd77fca1a30058b4bb1a6b1d32ce2968bd0e3e"]
+    }
+```
+
+```diff
+    contract MaviaOFTAdapter (0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D) {
+    +++ description: None
+      sourceHashes:
++        ["0xa6367e87486cfaf6777e95cef7398c1ad3fc2c50bdbdec7e25af7d2494eb448f"]
+    }
+```
+
+```diff
+    contract EtherFiOFTAdapter (0xFE7fe01F8B9A76803aF3750144C2715D9bcf7D0D) {
+    +++ description: None
+      sourceHashes:
++        ["0xfc3378db03fff87c68201589b229f1bb65fea0d487f8f4e41aa8f0381a7e0465"]
+    }
+```
+
+Generated with discovered.json: 0x3b28c41548de3136a11febbba6178e14a440d00e
 
 # Diff at Tue, 01 Oct 2024 10:52:06 GMT:
 

@@ -3,11 +3,14 @@
   "chain": "ethereum",
   "blockNumber": 20311131,
   "configHash": "0x651914ce661d79a29f4959d5466bfd8b5c975114bf075b964500a1fc70ee5547",
-  "version": 15,
   "contracts": [
     {
       "name": "Governance",
       "address": "0x02ecef526f806f06357659fFD14834fe82Ef4B04",
+      "sourceHashes": [
+        "0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6",
+        "0xdefeaa4f5c4b5e82fe2f743a1c06665f15c301ff4d76a526669ac3fb869d5869"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -55,6 +58,9 @@
     {
       "name": "ZkSyncCommitBlock",
       "address": "0x2c543eBd91DAB7Be40eDB671D48CeDF35A75e157",
+      "sourceHashes": [
+        "0x423fde4a6b6351d8f7f10a2e073dedc2c2250adb57d53e7cb226a30202e62863"
+      ],
       "sinceTimestamp": 1613135141,
       "values": {
         "$immutable": true,
@@ -100,6 +106,9 @@
     {
       "name": "UpgradeGatekeeper",
       "address": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
+      "sourceHashes": [
+        "0x1359a771e28c9c71730920ab6bee9509009c60908022ff865419a483f74f702b"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -150,6 +159,10 @@
     {
       "name": "ZkSync",
       "address": "0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad",
+      "sourceHashes": [
+        "0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6",
+        "0x86daad8532338dd22b2ad525c7955746dab5c88fca7bbd2e1a7fc07f47b2c5e3"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -453,6 +466,5 @@
       "function validators(address) view returns (bool)"
     ]
   },
-  "usedTemplates": {},
-  "shapeFilesHash": "0x1b71e6de9b37e27fa623d351c775f0b1129ddf53c2082f7042461e94e2b52e34"
+  "usedTemplates": {}
 }

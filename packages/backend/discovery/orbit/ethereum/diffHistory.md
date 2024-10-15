@@ -1,4 +1,38 @@
-Generated with discovered.json: 0xb7c590a470b6841173c7f49127d1e265a3523086
+Generated with discovered.json: 0xe6e001b29955cc8331855e99096408ccb9bd30b1
+
+# Diff at Mon, 14 Oct 2024 10:54:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20792032
+- current block number: 20792032
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20792032 (main branch discovery), not current.
+
+```diff
+    contract ETH Vault (0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a) {
+    +++ description: None
+      sourceHashes:
++        ["0x14ff670031a318957fb84a598af08c637cec739b303d25c08d5d870d3df03482","0x2e54618fac09ff40e0bfc745f840cab0e89c2aa480df85e74a97612aa959df76"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xFb504CD4eD46024B83c4337044995CF112205f18) {
+    +++ description: None
+      sourceHashes:
++        ["0x579c6df39480618101e39d5b997df14c347d7f8a880df6cf0e1ae526771a0444"]
+    }
+```
+
+Generated with discovered.json: 0xaba7b92fe4492b2bcd2d7c44a1c1252aa32b0fab
 
 # Diff at Tue, 01 Oct 2024 10:53:53 GMT:
 

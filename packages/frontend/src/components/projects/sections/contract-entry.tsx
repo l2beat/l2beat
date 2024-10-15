@@ -105,9 +105,7 @@ export function ContractEntry({
           )}
           {contract.upgradeableBy && contract.upgradeableBy.length > 0 && (
             <div className="mt-2 flex flex-wrap text-gray-850 dark:text-gray-400">
-              <strong className="text-black dark:text-white">
-                Can be upgraded by:
-              </strong>
+              <strong className="text-primary">Can be upgraded by:</strong>
               <div className="ml-1.5 flex flex-wrap gap-1.5">
                 {contract.upgradeableBy.map((name) => (
                   <CustomLink key={name} href={`#${name}`}>
@@ -119,9 +117,7 @@ export function ContractEntry({
           )}
           {contract.upgradeDelay && (
             <p className="mt-2 text-gray-850 dark:text-gray-400">
-              <strong className="text-black dark:text-white">
-                Upgrade delay:
-              </strong>{' '}
+              <strong className="text-primary">Upgrade delay:</strong>{' '}
               {contract.upgradeDelay}
             </p>
           )}

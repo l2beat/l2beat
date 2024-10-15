@@ -25,6 +25,7 @@ export const redstoneDA: DaLayer = {
   id: 'redstone-da',
   type: 'DaLayer',
   kind: 'DAC',
+  systemCategory: 'custom',
   display: {
     name: 'RedstoneDA',
     slug: 'redstone',
@@ -42,7 +43,8 @@ export const redstoneDA: DaLayer = {
       ],
     },
   },
-  technology: `
+  technology: {
+    description: `
     ## Data Availability Challenges
     Redstone relies on DA challenges for data availability. 
     The DA Provider submits an input commitment on Ethereum, and users can request the data behind the commitment off-chain from the DA Provider.
@@ -52,13 +54,16 @@ export const redstoneDA: DaLayer = {
     The system is not secure if the malicious sequencer is able to outspend the altruistic challengers. 
     If instead, after a challenge, the preimage data is not published, the chain reorgs to the last fully derivable state.
   `,
+  },
   bridges: [
     NO_BRIDGE({
       layer: 'RedstoneDA',
       description:
         'The risk profile in this page refers to scaling solutions that do not integrate with a data availability bridge.',
-      technology: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.
+      technology: {
+        description: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.
         However, there is a mechanism that allows users to challenge unavailability of data. \n`,
+      },
     }),
   ],
   usedIn: linkByDA({

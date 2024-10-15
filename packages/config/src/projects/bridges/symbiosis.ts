@@ -27,6 +27,7 @@ export const symbiosis: Bridge = {
         'https://medium.com/@symbiosis_fi',
         'https://twitter.com/symbiosis_fi',
       ],
+      documentation: ['https://docs.symbiosis.finance'],
     },
   },
   riskView: {

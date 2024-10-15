@@ -1,4 +1,65 @@
-Generated with discovered.json: 0x378b933075f90fb1f3a05e96130647a7f3209d32
+Generated with discovered.json: 0xd5475b6e2ea44681e3418c1c98714c3b59dee9c5
+
+# Diff at Mon, 14 Oct 2024 10:51:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20676773
+- current block number: 20676773
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20676773 (main branch discovery), not current.
+
+```diff
+    contract Verifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81) {
+    +++ description: None
+      sourceHashes:
++        ["0x0bc67d276b40b2ba13903d94fd6c25ae4d3d5162bc942763c418afdc11bc9b32"]
+    }
+```
+
+```diff
+    contract GptProtocolDAC (0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xada59D145126A746976F0F56477aafFEB3acc8e3"
++        "0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
+      issuedPermissions.0.via.0:
++        {"address":"0xada59D145126A746976F0F56477aafFEB3acc8e3","delay":0}
+      sourceHashes:
++        ["0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1","0xf7c38d00c4b6000f1840ed38f9ae99d753da8ac69ee1b6ac9ed614f2b60d470f"]
+    }
+```
+
+```diff
+    contract DACProxyAdmin (0xada59D145126A746976F0F56477aafFEB3acc8e3) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8"}]
+      template:
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8"}]
+    }
+```
+
+```diff
+    contract GptProtocolValidium (0xC4E903D3Af4c3d2e437492d602adcC9d9b536858) {
+    +++ description: None
+      sourceHashes:
++        ["0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4","0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"]
+    }
+```
+
+Generated with discovered.json: 0xb39d956055fabaea2143d896b9e483af6c66d214
 
 # Diff at Tue, 01 Oct 2024 10:51:16 GMT:
 

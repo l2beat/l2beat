@@ -7,17 +7,13 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('orderly')
 
-const upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
-
 export const orderly: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
   badges: [Badge.DA.Celestia, Badge.Infra.Superchain, Badge.RaaS.Conduit],
   discovery,
   display: {
     name: 'Orderly Network',
+    shortName: 'Orderly',
     slug: 'orderly',
     warning:
       'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
@@ -120,10 +116,10 @@ export const orderly: Layer2 = opStackL2({
       },
     },
   ],
-  upgradeability,
   rpcUrl: 'https://rpc.orderly.network',
   genesisTimestamp: new UnixTime(1696566432),
   isNodeAvailable: false,
+  discoveryDrivenData: true,
   milestones: [
     {
       name: 'Orderly Network Mainnet Launch',
@@ -132,11 +128,5 @@ export const orderly: Layer2 = opStackL2({
       description: 'Orderly Network is live on mainnet.',
       type: 'general',
     },
-  ],
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'ConduitMultisig',
-      'This address is the owner of the following contracts: ProxyAdmin, SystemConfig.',
-    ),
   ],
 })

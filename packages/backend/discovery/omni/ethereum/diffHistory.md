@@ -1,4 +1,102 @@
-Generated with discovered.json: 0x357ec45a7d5e3b723358c0b5a2b215ab06daf01f
+Generated with discovered.json: 0x868877ebf4194c312afb3c7cc6ea072a27f9b6d5
+
+# Diff at Mon, 14 Oct 2024 10:53:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20878347
+- current block number: 20878347
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20878347 (main branch discovery), not current.
+
+```diff
+    contract BridgeGovernance (0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6) {
+    +++ description: None
+      sourceHashes:
++        ["0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract GnosisSafe (0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract ForeignAMB (0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e) {
+    +++ description: None
+      sourceHashes:
++        ["0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705","0xd9dd29f51753144909a424e20a1281bc15263ea2de2f5f028666b183b00d5fc3"]
+    }
+```
+
+```diff
+    contract TokenFactory (0x71d5ba4e37de72415F685490B684538Aae8f0424) {
+    +++ description: None
+      sourceHashes:
++        ["0xc3fc18a2178145d16d7d8d6b50d97b6d7a405421b3fae66cdeb31fb52f4e7eed"]
+    }
+```
+
+```diff
+    contract PermittableToken (0x7c24d0061b484B267F286aa2DCe891220Db254b3) {
+    +++ description: None
+      sourceHashes:
++        ["0x064c46a3015079f17e93b171ff684cda28a0ecdbd55ecec09c4ddf50e0a5c312"]
+    }
+```
+
+```diff
+    contract AAVEInterestERC20 (0x87D48c565D0D85770406D248efd7dc3cbd41e729) {
+    +++ description: None
+      sourceHashes:
++        ["0xe9dafd12a790c5d8c0d3d444fdcfe8d4a6eed9555ba260f7ac7aa5590fba07ca"]
+    }
+```
+
+```diff
+    contract MultiTokenMediator (0x88ad09518695c6c3712AC10a214bE5109a655671) {
+    +++ description: None
+      sourceHashes:
++        ["0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705","0xb84afd7276ac99834f5104f7c4f890572ffc31fadd9629aabd82017025e7ada2"]
+    }
+```
+
+```diff
+    contract HashiOwnerMS (0x933d5CD392CDA19b481071a4aaf5Bc34324AB9a5) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract HashiManager (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9) {
+    +++ description: None
+      sourceHashes:
++        ["0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705","0x824f58e3acf3f9403dc26549af4869336347109f24d07d82aa11897bed907b17"]
+    }
+```
+
+```diff
+    contract BridgeValidators (0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064) {
+    +++ description: None
+      sourceHashes:
++        ["0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705","0x0ff53e04cc715e56805825c7eb45af72110792ad606dbfd4a97db98dfb75e6f7"]
+    }
+```
+
+Generated with discovered.json: 0x4262e512e3864b6ddccec6b83a098abac2faa184
 
 # Diff at Wed, 02 Oct 2024 14:15:29 GMT:
 

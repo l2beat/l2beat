@@ -1,4 +1,62 @@
-Generated with discovered.json: 0x4b2d761349799463e82fcf244b839938d1de60df
+Generated with discovered.json: 0x9926235f60f25618b25bedf9f3ff1eeb33aafbcc
+
+# Diff at Mon, 14 Oct 2024 11:01:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 8983528
+- current block number: 8983528
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 8983528 (main branch discovery), not current.
+
+```diff
+    contract zkLink (0x119B9459D9119D07c23aD06778AeaBec804Fd1a2) {
+    +++ description: None
+      sourceHashes:
++        ["0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6","0xcbd3207b9109e4f409b0253248655dee17cc83299a5e19d4d7c8bdc792b30008"]
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c) {
+    +++ description: None
+      sourceHashes:
++        ["0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8","0xd57c5157a667afc64df8bc542f1eb01744f7d6b961e031361d442aac61b7d5a0"]
+    }
+```
+
+```diff
+    contract ScrollProxyAdmin (0xC4673dAbfAf04D2A430e244B63F040D27199102f) {
+    +++ description: None
+      sourceHashes:
++        ["0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"]
+    }
+```
+
+```diff
+    contract ScrollL2Gateway (0xd8428A59B60Df2d81514D429D57DF23293f1bCe7) {
+    +++ description: None
+      sourceHashes:
++        ["0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6","0x3712da36508b3467318e72889e31c55c8421214be5ff058dba1d8a7cd33b4f9b"]
+    }
+```
+
+```diff
+    contract AdminMultisig (0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"]
+    }
+```
+
+Generated with discovered.json: 0x0207862695d7aed5e6c12dd54a711aa774318bb9
 
 # Diff at Tue, 01 Oct 2024 11:14:48 GMT:
 

@@ -221,6 +221,11 @@
       "address": "0xF17e65822b568B3903685a7c9F496CF7656Cc6C2"
     },
     {
+      "symbol": "BNRY",
+      "address": "0x04E9D7e336f79Cdab911b06133D3Ca2Cd0721ce3",
+      "coingeckoId": "binary-holdings"
+    },
+    {
       "symbol": "BIT",
       "address": "0x1A4b46696b2bB4794Eb3D4c26f1c55F9170fa4C5"
     },
@@ -616,7 +621,8 @@
     },
     {
       "symbol": "GPT",
-      "address": "0xCdb4A8742ed7D0259b51E3454C46C9D6C48d5e88"
+      "address": "0xCdb4A8742ed7D0259b51E3454C46C9D6C48d5e88",
+      "deploymentTimestamp": 1716807971
     },
     {
       "symbol": "GRT",
@@ -1189,6 +1195,12 @@
       "address": "0x476c5E26a75bd202a9683ffD34359C0CC15be0fF"
     },
     {
+      "symbol": "ybETH",
+      "category": "ether",
+      "address": "0x76bf2D1e6dFda645c0c17440B17Eccc181dfC351",
+      "coingeckoId": "veno-eth" // ybETH price currently is not on CG
+    },
+    {
       "symbol": "STARL",
       "address": "0x8E6cd950Ad6ba651F6DD608Dc70e5886B1AA6B24"
     },
@@ -1474,6 +1486,10 @@
       "address": "0xb2606492712D311be8f41d940AFE8CE742A52D44"
     },
     {
+      "symbol": "zkCRO",
+      "address": "0x28Ff2E4dD1B58efEB0fC138602A28D5aE81e44e2"
+    },
+    {
       "symbol": "ZKS",
       "address": "0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6",
       "coingeckoId": "zkspace"
@@ -1551,6 +1567,25 @@
     }
   ],
   "arbitrum": [
+    {
+      "symbol": "EGP",
+      "address": "0x7E7a7C916c19a45769f6BDAF91087f93c6C12F78",
+      "source": "native",
+      "supply": "circulatingSupply" // somehow coingecko does not exclude half the supply sitting in a multisig :(
+    },
+    {
+      "symbol": "ATH",
+      "address": "0xc87B37a581ec3257B734886d9d3a581F5A9d056c",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Axelar (ITS)"
+          }
+        ]
+      }
+    },
     {
       "symbol": "PMON",
       "address": "0xBC9B77acA82f6BE43927076D71cd453b625165B8",
@@ -2491,6 +2526,13 @@
   ],
   "base": [
     {
+      "symbol": "EURC",
+      "address": "0x60a3E35Cc302bFA44Cb288Bc5a4F316Fdb1adb42",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "symbol": "cbBTC",
       "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
       "source": "native",
@@ -3155,16 +3197,6 @@
       "address": "0x1cd3e2a23c45a690a18ed93fd1412543f464158f",
       "source": "native",
       "supply": "circulatingSupply"
-    }
-  ],
-  "kinto": [
-    {
-      "symbol": "USD+",
-      "address": "0x6F086dB0f6A621a915bC90295175065c9e5d9b8c",
-      "category": "stablecoin",
-      "source": "native",
-      "supply": "totalSupply",
-      "coingeckoId": "dinari-usd"
     }
   ],
   "kroma": [
@@ -4040,6 +4072,13 @@
       "source": "native",
       "supply": "totalSupply",
       "coingeckoId": "re-al"
+    },
+    {
+      "symbol": "UKRE",
+      "address": "0x835d3E1C0aA079C6164AAd21DCb23E60eb71AF48",
+      "source": "native",
+      "supply": "totalSupply", // no circulating on CG, but seems to be fully circulating
+      "coingeckoId": "uk-real-estate"
     },
     {
       "symbol": "USTB",

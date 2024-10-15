@@ -1,6 +1,5 @@
 {
   "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "ConduitMultisig",
-  "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72": "ChallengerMultisig",
   "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": "SuperchainProxyAdminOwner",
   "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": "SecurityCouncilMultisig",
   "0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "FoundationMultisig_1",
@@ -8,5 +7,6 @@
   "0x543bA4AADBAb8f9025686Bd03993043599c6fB04": "SuperchainProxyAdmin",
   "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": "SuperchainGuardianMultisig",
   "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb": "GelatoMultisig",
-  "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF": "Caldera Multisig"
+  "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF": "Caldera Multisig",
+  "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": "LidoDaoAgent"
 }

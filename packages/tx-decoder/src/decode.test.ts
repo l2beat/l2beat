@@ -1,6 +1,11 @@
 import { expect } from 'earl'
-import { encodeFunctionData, parseAbiItem } from 'viem'
-import { decode } from './decode'
+import {
+  encodeAbiParameters,
+  encodeFunctionData,
+  parseAbiItem,
+  parseAbiParameters,
+} from 'viem'
+import { decode, decodeCustom } from './decode'
 
 describe(decode.name, () => {
   it('simple function', () => {
@@ -12,7 +17,10 @@ describe(decode.name, () => {
     })
 
     const decoded = decode(encoded, [abi])
-    expect(decoded?.values).toEqual([
+    if (decoded?.type !== 'function') {
+      throw new Error('Decoding returned unexpected result')
+    }
+    expect(decoded.values).toEqual([
       {
         stack: ['0'],
         type: 'address',
@@ -32,7 +40,10 @@ describe(decode.name, () => {
     })
 
     const decoded = decode(encoded, [abi])
-    expect(decoded?.values).toEqual([
+    if (decoded?.type !== 'function') {
+      throw new Error('Decoding returned unexpected result')
+    }
+    expect(decoded.values).toEqual([
       { stack: ['0'], type: 'string', value: 'Hello' },
       { stack: ['1'], type: 'bytes', value: '0x12ab' },
     ])
@@ -47,7 +58,10 @@ describe(decode.name, () => {
     })
 
     const decoded = decode(encoded, [abi])
-    expect(decoded?.values).toEqual([
+    if (decoded?.type !== 'function') {
+      throw new Error('Decoding returned unexpected result')
+    }
+    expect(decoded.values).toEqual([
       {
         stack: ['0'],
         type: 'array(2)',
@@ -68,7 +82,10 @@ describe(decode.name, () => {
     })
 
     const decoded = decode(encoded, [abi])
-    expect(decoded?.values).toEqual([
+    if (decoded?.type !== 'function') {
+      throw new Error('Decoding returned unexpected result')
+    }
+    expect(decoded.values).toEqual([
       {
         stack: ['0'],
         type: 'array(2)',
@@ -94,7 +111,10 @@ describe(decode.name, () => {
     })
 
     const decoded = decode(encoded, [abi])
-    expect(decoded?.values).toEqual([
+    if (decoded?.type !== 'function') {
+      throw new Error('Decoding returned unexpected result')
+    }
+    expect(decoded.values).toEqual([
       {
         stack: ['0'],
         type: 'array(2)',
@@ -129,7 +149,10 @@ describe(decode.name, () => {
     })
 
     const decoded = decode(encoded, [abi])
-    expect(decoded?.values).toEqual([
+    if (decoded?.type !== 'function') {
+      throw new Error('Decoding returned unexpected result')
+    }
+    expect(decoded.values).toEqual([
       {
         stack: ['0'],
         type: 'tuple',
@@ -155,7 +178,10 @@ describe(decode.name, () => {
     })
 
     const decoded = decode(encoded, [abi])
-    expect(decoded?.values).toEqual([
+    if (decoded?.type !== 'function') {
+      throw new Error('Decoding returned unexpected result')
+    }
+    expect(decoded.values).toEqual([
       {
         stack: ['0'],
         type: 'array(2)',
@@ -198,7 +224,10 @@ describe(decode.name, () => {
     })
 
     const decoded = decode(encoded, [abi])
-    expect(decoded?.values).toEqual([
+    if (decoded?.type !== 'function') {
+      throw new Error('Decoding returned unexpected result')
+    }
+    expect(decoded.values).toEqual([
       {
         stack: ['0'],
         type: 'array(1)',
@@ -227,6 +256,43 @@ describe(decode.name, () => {
           },
         ],
       },
+    ])
+  })
+})
+
+describe(decodeCustom.name, () => {
+  it('fallbacks to decode for functions', () => {
+    const abi = 'function foo(address, uint, bool)'
+    const encoded = encodeFunctionData({
+      abi: [parseAbiItem(abi)],
+      functionName: 'foo',
+      args: ['0xABaBaBaBABabABabAbAbABAbABabababaBaBABaB', 2n, true],
+    })
+
+    const decoded = decodeCustom(encoded, abi)
+    expect(decoded).toEqual(decode(encoded, [abi]))
+  })
+
+  it('can decode parameters', () => {
+    const abi = '(address, uint, bool)'
+    const encoded = encodeAbiParameters(parseAbiParameters(abi.slice(1, -1)), [
+      '0xABaBaBaBABabABabAbAbABAbABabababaBaBABaB',
+      2n,
+      true,
+    ])
+
+    const decoded = decodeCustom(encoded, abi)
+    if (decoded?.type !== 'parameters') {
+      throw new Error('Decoding returned unexpected result')
+    }
+    expect(decoded.values).toEqual([
+      {
+        stack: ['0'],
+        type: 'address',
+        value: '0xABaBaBaBABabABabAbAbABAbABabababaBaBABaB',
+      },
+      { stack: ['1'], type: 'uint256', value: 2n },
+      { stack: ['2'], type: 'bool', value: true },
     ])
   })
 })

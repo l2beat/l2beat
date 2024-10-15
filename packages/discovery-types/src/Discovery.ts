@@ -38,9 +38,7 @@ export interface DiscoveryOutput {
   eoas: EoaParameters[]
   abis: Record<string, string[]>
   configHash: Hash256
-  version: number
   usedTemplates: Record<string, Hash256>
-  shapeFilesHash: Hash256
 }
 
 export interface DiscoveryCustomType {
@@ -89,6 +87,7 @@ export type ContractParameters = {
   descriptions?: string[]
   derivedName?: string
   template?: string
+  sourceHashes?: string[]
   unverified?: true
   sinceTimestamp?: number
   address: EthereumAddress
