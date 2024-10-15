@@ -62,14 +62,18 @@ const getCached7dTvlBreakdown = cache(
               },
             },
             change: {
-              native:
-                (breakdown.native - oldBreakdown.native) / breakdown.native,
-              canonical:
-                (breakdown.canonical - oldBreakdown.canonical) /
+              native: calculatePercentageChange(
+                breakdown.native,
+                oldBreakdown.native,
+              ),
+              canonical: calculatePercentageChange(
                 breakdown.canonical,
-              external:
-                (breakdown.external - oldBreakdown.external) /
+                oldBreakdown.canonical,
+              ),
+              external: calculatePercentageChange(
                 breakdown.external,
+                oldBreakdown.external,
+              ),
             },
           },
         ]

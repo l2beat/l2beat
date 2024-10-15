@@ -10,7 +10,6 @@ import {
 } from '~/components/core/tooltip/tooltip'
 import { PercentChange } from '~/components/percent-change'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import { cn } from '~/utils/cn'
 import { formatTvlTableNumber } from '~/utils/number-format/format-tvl-number'
 
 export interface TotalValueLockedCellProps {
@@ -40,20 +39,13 @@ export function TotalValueLockedCell(data: TotalValueLockedCellProps) {
                 sentiment={anyBadWarnings ? 'bad' : 'warning'}
               />
             ) : null}
-            <span
-              className={cn(
-                'text-base',
-                total !== 0 ? 'font-bold' : 'text-secondary',
-              )}
-            >
+            <span className="text-base font-bold">
               {formatTvlTableNumber(total)}
             </span>
-            {data.change !== undefined && (
-              <PercentChange
-                value={data.change}
-                className="ml-1 text-xs font-medium md:text-base"
-              />
-            )}
+            <PercentChange
+              value={data.change}
+              className="ml-1 text-xs font-medium md:text-base"
+            />
           </div>
           <ValueLockedBreakdown
             canonical={data.breakdown.canonical}
