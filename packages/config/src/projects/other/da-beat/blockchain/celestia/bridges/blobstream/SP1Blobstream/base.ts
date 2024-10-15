@@ -37,7 +37,8 @@ export const blobstreamBase = CELESTIA_BLOBSTREAM({
     },
   },
 
-  technology: `
+  technology: {
+    description: `
 
     ## Architecture
         

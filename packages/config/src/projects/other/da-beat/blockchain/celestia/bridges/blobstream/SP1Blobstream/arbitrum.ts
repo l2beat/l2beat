@@ -37,7 +37,8 @@ export const blobstreamArbitrum = CELESTIA_BLOBSTREAM({
     },
   },
 
-  technology: `
+  technology: {
+    description: `
 
     ## Architecture
         

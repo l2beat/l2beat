@@ -30,8 +30,8 @@ export const celestia: DaLayer = {
       ],
     },
   },
-
-  technology: `
+  technology: {
+    description: `
     ## Architecture
     
     ![Celestia architecture](/images/da-layer-technology/celestia/architecture.png#center)

@@ -37,7 +37,8 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
     },
   },
 
-  technology: `
+  technology: {
+    description: `
 
     ## Architecture
       
