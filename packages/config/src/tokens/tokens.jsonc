@@ -4039,6 +4039,21 @@
       "coingeckoId": "uk-real-estate"
     },
     {
+      "symbol": "USDR",
+      "address": "0xb2d75f8Aa33608cF15940Ed47bF139F7CD15d073",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      },
+      "coingeckoId": "real-usd"
+    },
+    {
       "symbol": "USTB",
       "address": "0x83fedbc0b85c6e29b589aa6bdefb1cc581935ecd",
       "source": "external",
