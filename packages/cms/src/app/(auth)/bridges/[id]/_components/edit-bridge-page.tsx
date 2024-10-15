@@ -36,13 +36,12 @@ import {
   Select,
   SelectContent,
   SelectItem,
+  selectNullValue,
   SelectTrigger,
   SelectValue,
 } from '~/components/ui/select'
 import { deleteBridge, insertBridge, updateBridge } from '../_actions'
-import { insertBridgeSchema, updateBridgeSchema } from '../_actions/schemas'
-
-const selectNullValue = '$null$'
+import { insertBridgeSchema } from '../_actions/schemas'
 
 export function EditBridgePage({
   bridge,

@@ -6,7 +6,10 @@ import {
   type NetworkRecord,
   type NetworkRpcRecord,
 } from '@l2beat/database'
-import { ExplorerType } from '@l2beat/database/dist/kysely/generated/enums'
+import {
+  ExplorerType,
+  NetworkType,
+} from '@l2beat/database/dist/kysely/generated/enums'
 import { SelectValue } from '@radix-ui/react-select'
 import { ChevronLeft, Trash2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -40,6 +43,7 @@ import {
   Select,
   SelectContent,
   SelectItem,
+  selectNullValue,
   SelectTrigger,
 } from '~/components/ui/select'
 import { deleteNetwork, insertNetwork, updateNetwork } from '../_actions'
@@ -47,6 +51,7 @@ import { deleteNetwork, insertNetwork, updateNetwork } from '../_actions'
 const networkFormSchema = z.object({
   name: z.string().min(3).max(191),
   logoUrl: z.string().url().or(z.literal('')),
+  type: z.nativeEnum(NetworkType).or(z.literal(selectNullValue)),
   chainId: z.string(),
   coingeckoId: z.string(),
   axelarId: z.string(),
@@ -113,6 +118,7 @@ export function EditNetworkPage({
       const data = {
         name: rawData.name,
         chainId: Number(rawData.chainId),
+        type: rawData.type !== selectNullValue ? rawData.type : null,
         logoUrl: rawData.logoUrl !== '' ? rawData.logoUrl : null,
         coingeckoId: rawData.coingeckoId !== '' ? rawData.coingeckoId : null,
         axelarId: rawData.axelarId !== '' ? rawData.axelarId : null,
@@ -225,33 +231,66 @@ export function EditNetworkPage({
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name="type"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Type</FormLabel>
+                    <FormControl>
+                      <Select
+                        defaultValue={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select network type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value={selectNullValue}>
+                            Custom
+                          </SelectItem>
+                          {Object.values(NetworkType).map((type) => (
+                            <SelectItem key={type} value={type}>
+                              {type}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormDescription>The type of the network.</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </CardContent>
           </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>EVM network data</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col gap-4">
-                <FormField
-                  control={form.control}
-                  name="chainId"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Chain ID</FormLabel>
-                      <FormControl>
-                        <Input type="number" {...field} />
-                      </FormControl>
-                      <FormDescription>
-                        The EVM chain ID of the network.
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </CardContent>
-          </Card>
+          {form.watch('type') === 'EVM' && (
+            <Card>
+              <CardHeader>
+                <CardTitle>EVM network data</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-col gap-4">
+                  <FormField
+                    control={form.control}
+                    name="chainId"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Chain ID</FormLabel>
+                        <FormControl>
+                          <Input type="number" {...field} />
+                        </FormControl>
+                        <FormDescription>
+                          The EVM chain ID of the network.
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </CardContent>
+            </Card>
+          )}
           <Card>
             <CardHeader>
               <CardTitle>External IDs and addresses</CardTitle>
