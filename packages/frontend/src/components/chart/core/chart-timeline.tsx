@@ -147,7 +147,7 @@ function get30dTimelineLabel(timestamp: number) {
 }
 
 function get90dTimelineLabel(timestamp: number) {
-  if (timestamp % (15 * UnixTime.DAY) !== 0) {
+  if ((timestamp + 3 * UnixTime.DAY) % (21 * UnixTime.DAY) !== 0) {
     return
   }
 

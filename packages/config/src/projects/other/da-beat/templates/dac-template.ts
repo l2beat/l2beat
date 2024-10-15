@@ -71,7 +71,7 @@ export function DAC(template: TemplateVars): DacDaLayer {
     `${template.project.display.name} DAC on Ethereum.`
 
   const bridgeTechnology =
-    template.bridge.technology ??
+    template.bridge.technology?.description ??
     `## Simple DA Bridge
     The DA bridge is a smart contract verifying a data availability claim from DAC Members via signature verification.
     The bridge requires a ${template.bridge.requiredMembers}/${template.bridge.totalMembers} threshold of signatures to be met before the data commitment is accepted.
@@ -92,7 +92,10 @@ export function DAC(template: TemplateVars): DacDaLayer {
     usedIn,
     ...template.bridge,
     display: bridgeDisplay,
-    technology: bridgeTechnology,
+    technology: {
+      description: bridgeTechnology,
+      risks: template.bridge.technology?.risks,
+    },
     risks: {
       attestations:
         template.risks?.attestations ?? DaAttestationSecurityRisk.NotVerified,
@@ -108,7 +111,7 @@ export function DAC(template: TemplateVars): DacDaLayer {
     'Set of parties responsible for signing and attesting to the availability of data.'
 
   const layerTechnology =
-    template.layer?.technology ??
+    template.layer?.technology?.description ??
     `## Simple Committee
   The Data Availability Committee (DAC) is a set of trusted parties responsible for storing data off-chain and serving it upon demand. 
   The security guarantees of DACs depend on the specific setup and can vary significantly based on the criteria for selecting committee members, 
@@ -127,7 +130,10 @@ export function DAC(template: TemplateVars): DacDaLayer {
     kind: 'DAC',
     type: 'DaLayer',
     display: layerDisplay,
-    technology: layerTechnology,
+    technology: {
+      description: layerTechnology,
+      risks: template.layer?.technology?.risks,
+    },
     usedIn,
     bridges: [dacBridge],
     risks: {
