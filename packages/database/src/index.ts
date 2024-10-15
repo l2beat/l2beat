@@ -32,8 +32,14 @@ export type { NetworkExplorerRecord } from './token-db/network-explorer/entity'
 export type { NetworkRpcRecord } from './token-db/network-rpc/entity'
 export type { NetworkRecord } from './token-db/network/entity'
 export type { TokenBridgeRecord } from './token-db/token-bridge/entity'
-export type { TokenMetaRecord } from './token-db/token-meta/entity'
-export type { TokenRecord } from './token-db/token/entity'
+export type {
+  TokenMetaRecord,
+  UpsertableTokenMetaRecord,
+} from './token-db/token-meta/entity'
+export type {
+  TokenRecord,
+  UpsertableTokenRecord,
+} from './token-db/token/entity'
 export type { AmountRecord } from './tvl/amount/entity'
 export type { BlockTimestampRecord } from './tvl/block-timestamp/entity'
 export type { PriceRecord } from './tvl/price/entity'
