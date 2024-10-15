@@ -11,6 +11,7 @@ import { utils } from 'ethers'
 import { startsWith, uniq } from 'lodash'
 
 import { get$Implementations } from '@l2beat/discovery-types'
+import { describe } from 'mocha'
 import { chains } from '../../chains'
 import {
   NUGGETS,
@@ -23,7 +24,6 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { checkRisk } from '../../test/helpers'
 import { tokenList } from '../../tokens'
 import { layer2s, milestonesLayer2s } from './index'
-import { describe } from 'mocha'
 
 describe('layer2s', () => {
   describe('links', () => {
