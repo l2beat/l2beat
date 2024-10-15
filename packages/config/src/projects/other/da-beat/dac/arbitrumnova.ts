@@ -19,7 +19,6 @@ const l1TimelockDelay = discovery.getContractValue<number>(
 const l2TimelockDelay = 259200 // 3 days, got from https://arbiscan.io/address/0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0#readProxyContract
 const totalDelay = l1TimelockDelay + challengeWindowSeconds + l2TimelockDelay
 
-
 const dac = discovery.getContractValue<{
   membersCount: number
   requiredSignatures: number
@@ -59,7 +58,7 @@ export const arbitrumNovaDac = DAC({
     L2 nodes reading from the sequencer inbox verify the certificate’s validity by checking the number of signers, the aggregated signature, and that the expiration time is at least two weeks ahead of the L2 timestamp. 
     If the DACert is valid, it provides a proof that the corresponding data is available from honest committee members.
 
-    `
+    `,
   },
   bridge: {
     chain: ChainId.ETHEREUM,
@@ -118,13 +117,18 @@ export const arbitrumNovaDac = DAC({
         'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',
       ),
       {
-        name: "UpgradeExecutor",
-        accounts: [{
-          address: EthereumAddress(discovery.getContractValue<string>('RollupProxy', 'owner')),
-          type: 'Contract',
-        }],
-        description: 'The UpgradeExecutor can change the Committee members by updating the valid keyset.',
-      }
+        name: 'UpgradeExecutor',
+        accounts: [
+          {
+            address: EthereumAddress(
+              discovery.getContractValue<string>('RollupProxy', 'owner'),
+            ),
+            type: 'Contract',
+          },
+        ],
+        description:
+          'The UpgradeExecutor can change the Committee members by updating the valid keyset.',
+      },
     ],
     contracts: {
       addresses: [
