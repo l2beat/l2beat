@@ -181,12 +181,11 @@ export function EditTokenPage({
               }
             : null,
         relations: [
+          ...(token?.relations ?? []).filter(
+            (r) => r.sourceTokenId === token?.id,
+          ),
           ...rawData.backedBy.map((r) => ({
-            targetTokenId: r.sourceTokenId,
-            externalBridgeId: r.externalBridgeId,
-          })),
-          ...rawData.backing.map((r) => ({
-            sourceTokenId: r.targetTokenId,
+            sourceTokenId: r.sourceTokenId,
             externalBridgeId: r.externalBridgeId,
           })),
         ],
