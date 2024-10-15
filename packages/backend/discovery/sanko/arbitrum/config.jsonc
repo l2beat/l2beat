@@ -14,9 +14,15 @@
     "0x575d32f7ff0C72921645e302cb14d2757E300786": "Outbox",
     "0x24B68936C13A414cd91437aE7AA730321B9ff159": "SequencerInbox",
     "0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276": "UpgradeExecutor",
-    "0x420B4d16119127E4b96E55CB8a9D0c2828a161BB": "Sanko Multisig"
+    "0x420B4d16119127E4b96E55CB8a9D0c2828a161BB": "Sanko Multisig",
+    "0xa9Aa07F082D9c15D0B6D7e9e5B68b1f898399C29": "OrbitProxyOFT1_2",
+    "0x2227E9C08ae00750e0a5eD8da09Fa321A9DD7185": "SankoOftMultisig"
   },
   "overrides": {
+    "OrbitProxyOFT1_2": {
+      "ignoreRelatives": ["lzEndpoint", "token"],
+      "ignoreInWatchMode": ["circulatingSupply"]
+    },
     "ChallengeManager": {
       "ignoreMethods": ["challenges"]
     },

@@ -8,6 +8,10 @@
       "name": "Multisig 1",
       "address": "0x002A5dc50bbB8d5808e418Aeeb9F060a2Ca17346",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
+        "0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1612680486,
@@ -35,6 +39,10 @@
       "name": "Multisig 2",
       "address": "0x19eD6cc20D44e5cF4Bb4894F50162F72402d8567",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
+        "0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1621970023,
@@ -64,6 +72,10 @@
       "name": "Multisig 3",
       "address": "0x225d3822De44E58eE935440E0c0B829C4232086e",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1587354416,
@@ -88,6 +100,10 @@
     {
       "name": "Governance",
       "address": "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01",
+      "sourceHashes": [
+        "0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6",
+        "0x56f13113f7f861d8b45c18702ac8aa2b4d13d510e35a53f063d80afb36d0785f"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -114,6 +130,9 @@
     {
       "name": "TokenGovernance",
       "address": "0x35cc31f63deef017c38d51B038891bAE7d614e86",
+      "sourceHashes": [
+        "0xbc5215ffaf06b3d4f7facebe48a2d345c8b0cf97c800aa3f8e644d843a86ae03"
+      ],
       "sinceTimestamp": 1645178700,
       "values": {
         "$immutable": true,
@@ -129,6 +148,9 @@
     {
       "name": "UpgradeGatekeeper",
       "address": "0x38A43F4330f24fe920F943409709fc9A6084C939",
+      "sourceHashes": [
+        "0x1359a771e28c9c71730920ab6bee9509009c60908022ff865419a483f74f702b"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -163,6 +185,10 @@
     {
       "name": "Verifier",
       "address": "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D",
+      "sourceHashes": [
+        "0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6",
+        "0xcf125cd39e9e7620aea95320666f3e3c19a3ae1da200337d94d11de29e8d97af"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -183,6 +209,9 @@
     {
       "name": "NftFactory",
       "address": "0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D",
+      "sourceHashes": [
+        "0x92b72fece19e4149fd14048afb074cee743d6f3386911f19d109ab73a8cc0208"
+      ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1626171128,
       "values": {
@@ -197,6 +226,11 @@
     {
       "name": "ZkSync",
       "address": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
+      "sourceHashes": [
+        "0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6",
+        "0xa219a8a62191e08fe0803a9bee5d9b4cf73ae71a969ff2e1bcbc00330880de07",
+        "0x51cc7e771fc0a90a4ac4c584004569333b8e5355dea67cb3b6a5e19d602e4a7c"
+      ],
       "proxyType": "zkSync Lite proxy",
       "issuedPermissions": [
         {
@@ -256,6 +290,9 @@
     {
       "name": "Proxy",
       "address": "0xAfC2F2D803479A2AF3A72022D54cc0901a0ec0d6",
+      "sourceHashes": [
+        "0x379cacebf61f1aa488b2a43b02fff3f8d7835d9dca8f342a13570553219e6e8c"
+      ],
       "sinceTimestamp": 1557156465,
       "values": { "$immutable": true }
     },
@@ -263,6 +300,10 @@
       "name": "ZkSync Multisig",
       "address": "0xE24f4870Ab85DE8E356C5fC56138587206c70d99",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
+        "0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1585581484,
@@ -680,6 +721,5 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
-  },
-  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
+  }
 }

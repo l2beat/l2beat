@@ -1,4 +1,286 @@
-Generated with discovered.json: 0x54708d6223b5f88881066a1eb09b1249621f95f5
+Generated with discovered.json: 0xbcd319fd7390579801128356d2ce62b2830bf551
+
+# Diff at Mon, 14 Oct 2024 10:54:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20862639
+- current block number: 20862639
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20862639 (main branch discovery), not current.
+
+```diff
+    contract ValidatorShare (0x053FA9b934b83E1E0ffc7e98a41aAdc3640bB462) {
+    +++ description: None
+      sourceHashes:
++        ["0xa285ec05fa42906a15190dac19b3737d705cec2feac2e84aaa9666c40bd8f336"]
+    }
+```
+
+```diff
+    contract ERC1155Predicate (0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f) {
+    +++ description: None
+      sourceHashes:
++        ["0x428926e63c344a25fc6e1854be10f620c64143f66904314e15837a6734e132b1","0xda2db56264809ae744116955fe8ee8083707b093633a4d3aa1713a6d5fc0ee1c"]
+    }
+```
+
+```diff
+    contract CustomPredicate (0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35) {
+    +++ description: None
+      sourceHashes:
++        ["0xd873771bacc2ec458452d650f61ff1f7907e3a4fe09888ae8b93cd61125511fa"]
+    }
+```
+
+```diff
+    contract ERC20EscrowPredicate (0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4) {
+    +++ description: None
+      sourceHashes:
++        ["0x66815b2f8b05e9960d6f4c23ca95251145298d7577c32c5e029b90f9a4e38bbb"]
+    }
+```
+
+```diff
+    contract StateSender (0x28e4F3a7f651294B9564800b2D01f35189A5bFbE) {
+    +++ description: None
+      sourceHashes:
++        ["0x2f6878db7119cba5b64851fc04d0bd822ce210db74bf11ca1255f000eb88065f"]
+    }
+```
+
+```diff
+    contract WithdrawManager (0x2A88696e0fFA76bAA1338F2C74497cC013495922) {
+    +++ description: None
+      sourceHashes:
++        ["0x05029129ea02d46e1d659b46c83ec5822b7d15f5d332a3dd100436ebeabb01b4","0xee5a9e827bcc91e480a2d03b37006a7a028e7785a3c351f49251fd7e6521ad30"]
+    }
+```
+
+```diff
+    contract MintableERC1155Predicate (0x2d641867411650cd05dB93B59964536b1ED5b1B7) {
+    +++ description: None
+      sourceHashes:
++        ["0xe451506fc197d18a883ecbc36c3792de9fb5966cf3ed7031a09148cb12b7f8fe","0x6bcd5917763490ae131f09d4c3a6866f1af10ca4a99f233b8965efaa8c358b6a"]
+    }
+```
+
+```diff
+    contract Registry (0x33a02E6cC863D393d6Bf231B697b82F6e499cA71) {
+    +++ description: None
+      sourceHashes:
++        ["0x918d93a767fea4cb4801e9046bb76680284c46253d3d3f38614e9999be36e5e8"]
+    }
+```
+
+```diff
+    contract ERC721PredicateBurnOnly (0x36C2503d53C6948331144b85D1e74a3B96731d1b) {
+    +++ description: None
+      sourceHashes:
++        ["0xf09e81f94877953f148b12864ec341367f4708956fbcd7803208c364bce87f8d"]
+    }
+```
+
+```diff
+    contract DepositManager (0x401F6c983eA34274ec46f84D70b31C151321188b) {
+    +++ description: None
+      sourceHashes:
++        ["0x56357b4fdb898e49aff0370db0c900b81a28004a5c5932d0cbe0f8ac8e017b39","0xc5b5f88996b07c7bbc95a43cde9d9dd36d460beb6780e633858131ed36e1cbc9"]
+    }
+```
+
+```diff
+    contract ERC20Predicate (0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf) {
+    +++ description: None
+      sourceHashes:
++        ["0x63f5481a49da196498b6cd77450d4e12da12c7608ab022b417dbed836935e0f7","0xdb2c7a7688883aa90817563334c9613daee6ccad8d086ff273d6b484340444ab"]
+    }
+```
+
+```diff
+    contract PolygonERC20MintBurnPredicate (0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5) {
+    +++ description: None
+      sourceHashes:
++        ["0x802005602f9307c4394cd8cee610c3c1373e6876b348605733983a5d3d5b9248"]
+    }
+```
+
+```diff
+    contract StakingNFT (0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F) {
+    +++ description: None
+      sourceHashes:
++        ["0x3d5900e83820883d56342fee2c6ac21046702b686ae86d2ce5d2ac1beafe8b9e"]
+    }
+```
+
+```diff
+    contract RootChainInitialImplementation (0x5A09cD4601b66bc107D377AB81E0dbb5dFABaA84) {
+    +++ description: None
+      sourceHashes:
++        ["0xd8261395dc342e63946716f52052725e094de2da9b6dca487e1f7cf3cecd797f"]
+    }
+```
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      sourceHashes:
++        ["0xb67879bcf8a6042a86ae7689dda6879e93241b0d8a0a4f82adb4d00ab828cd13","0xa084de5be3dc11f2a48e65491394d0ee5c3c2aecf08f90d10c9d1cce6faba01d"]
+    }
+```
+
+```diff
+    contract ERC20PredicateBurnOnly (0x626fb210bf50e201ED62cA2705c16DE2a53DC966) {
+    +++ description: None
+      sourceHashes:
++        ["0x092f79b45e87c85adda18907fcbba7aed8e404cfabc82f58091060b80b179a2c"]
+    }
+```
+
+```diff
+    contract EventsHub (0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b) {
+    +++ description: None
+      sourceHashes:
++        ["0x66fd0eba29db6a9a912c2986bcbdbd0e2dbef00e6507132ecf8a9e358d9ce7bd","0x6739012cebcf9f8a3b471a230adc99bb3840a605867d4f20a9c11bf6e7a05d96"]
+    }
+```
+
+```diff
+    contract Governance (0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48) {
+    +++ description: None
+      sourceHashes:
++        ["0x0df18be01283a9eaa99600142abf19bdd63f71974788d53044022ba32643a2f7","0x5a4efa55552545ebc05194d3649859f5731b5beb3358f26dadb38330cec78719"]
+    }
+```
+
+```diff
+    contract EtherPredicate (0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30) {
+    +++ description: None
+      sourceHashes:
++        ["0xcd0a12ca9277d60031fd022482b8174c79dabb5d731b80609041c6778a899455","0x366c91202d3a2d7866e03ca63c5642da8ae32252a79ec9f171a4ddb75437df71"]
+    }
+```
+
+```diff
+    contract RootChain (0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287) {
+    +++ description: None
+      sourceHashes:
++        ["0xf3a9eafd244e85252bdcfb1873e8503ed1e03781a220e97d71c01fa9dc3a5b33","0xd35b67d8f30e644710988f565f06bbc06eee75ae1ed4b4d46c3e193266e7163c"]
+    }
+```
+
+```diff
+    contract MintableERC721Predicate (0x932532aA4c0174b8453839A6E44eE09Cc615F2b7) {
+    +++ description: None
+      sourceHashes:
++        ["0x378a22860f926f5ba4dd478549ef1dc9f126335557b56556444e5c1393bdbfef","0x4dcf96c463738c373c6726e2304e718115843041080f89a520d8d6fb2f357820"]
+    }
+```
+
+```diff
+    contract MintableERC20Predicate (0x9923263fA127b3d1484cFD649df8f1831c2A74e4) {
+    +++ description: None
+      sourceHashes:
++        ["0x34f85d595f0b3aa60f0923146a83aa86f341f7af1ef6f77e26c1a270622921d8","0x32f8c95c75000ff3e167903d7561c542e4365588e0a7c4cdc6651b3891a40591"]
+    }
+```
+
+```diff
+    contract RootChainManager (0xA0c68C638235ee32657e8f720a23ceC1bFc77C77) {
+    +++ description: None
+      sourceHashes:
++        ["0xbbbf27b3fdffff6edc7bb78c7f8d8b0e49e427ea37c77f6c0ee0824742a1480a","0xdc4360c93969702ab43800fb0154ca71259a30c57fa03a1f9567c3a3937c4b3e"]
+    }
+```
+
+```diff
+    contract MaticWETH (0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8) {
+    +++ description: None
+      sourceHashes:
++        ["0x0d48a92770ee4436f7954622fc986c7382432501a9ff5b4753d102af8ae18c0f"]
+    }
+```
+
+```diff
+    contract StakingInfo (0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B) {
+    +++ description: None
+      sourceHashes:
++        ["0x6f083446e02260d9c548d8b66bfe0bf437ae747e1e7163a71a5f1a6c4cabcd54"]
+    }
+```
+
+```diff
+    contract MerklePatriciaProof (0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa) {
+    +++ description: None
+      sourceHashes:
++        ["0x4ed456a42fb2d64a519655fec3e48ae6f791f0dbd06960ead61664e86828a82b"]
+    }
+```
+
+```diff
+    contract ValidatorShareFactory (0xc4FA447A0e77Eff9717b09C057B40570813bb642) {
+    +++ description: None
+      sourceHashes:
++        ["0xe388adb0a2a9179ef6156bc2aff8d97746405656abea331f24a11da4b622a864"]
+    }
+```
+
+```diff
+    contract Timelock (0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf) {
+    +++ description: None
+      sourceHashes:
++        ["0x8dc59ef7baa1bce6bb67f6ec23ed1ceaebe480311b8e2a82f989d89be1b410f6"]
+    }
+```
+
+```diff
+    contract ChainExitERC1155Predicate (0xDB2382413bCb9c2F1B6b62B52238558266361D68) {
+    +++ description: None
+      sourceHashes:
++        ["0x75b6f36e579b7ca292618007259914df1193b03e1d05204fea00bc8e4d2eec83","0xbde7c4ae6d29f2d5ac51feeb27ed9d65ea22f779fda4a41e97f24622dcf84a46"]
+    }
+```
+
+```diff
+    contract ExitNFT (0xDF74156420Bd57ab387B195ed81EcA36F9fABAca) {
+    +++ description: None
+      sourceHashes:
++        ["0x8ab86a61175e5d05a7397611f3be4b4979a70b9c498bf772de63c31455e9393d"]
+    }
+```
+
+```diff
+    contract ERC721Predicate (0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD) {
+    +++ description: None
+      sourceHashes:
++        ["0x1d84e4aa2ca9808f7866a5d3c6c804956136d56a985525328da76b85a63238f3","0xfb5adba76f3e09db109bb95a396cf305bba6d711df04b5bfd12b226816fc5556"]
+    }
+```
+
+```diff
+    contract StakeManagerExtension (0xef49Ea6996073752b6840CDA34773FFA78F78166) {
+    +++ description: None
+      sourceHashes:
++        ["0x0efa258772085a1651cde756807a2fa451169f701ccba9eae9d4e25cb85fa558"]
+    }
+```
+
+```diff
+    contract PolygonMultisig (0xFa7D2a996aC6350f4b56C043112Da0366a59b74c) {
+    +++ description: None
+      sourceHashes:
++        ["0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+Generated with discovered.json: 0x18c74dd8f4b2dd18238d0c729a359b450b099e75
 
 # Diff at Tue, 01 Oct 2024 10:54:10 GMT:
 

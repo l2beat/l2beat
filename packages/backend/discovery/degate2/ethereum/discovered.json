@@ -7,6 +7,9 @@
     {
       "name": "LoopringIOExchangeOwner",
       "address": "0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215",
+      "sourceHashes": [
+        "0x80a64d522f935661e6a91ce240c8fab04db5aa499462cca019fcda5e0494b18e"
+      ],
       "sinceTimestamp": 1693304819,
       "values": {
         "$immutable": true,
@@ -21,6 +24,9 @@
     {
       "name": "LoopringV3",
       "address": "0x5F412bf72ceE6ceB3e9f8b0F966429b59255a9B7",
+      "sourceHashes": [
+        "0x1a927b8a2febc8b60253ee7277d887fe95ec3e23241d77d0ec9e6f424239438e"
+      ],
       "sinceTimestamp": 1693304687,
       "values": {
         "$immutable": true,
@@ -38,6 +44,9 @@
     {
       "name": "BlockVerifier",
       "address": "0x707B12e8921b442D4015eb03c86E66F3b8042Dd2",
+      "sourceHashes": [
+        "0x1154ee2a46fb0e5586723354429b36343227a2e36a12e518d7e985031b67695d"
+      ],
       "sinceTimestamp": 1693304675,
       "values": {
         "$immutable": true,
@@ -48,6 +57,9 @@
     {
       "name": "FeeVault",
       "address": "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C",
+      "sourceHashes": [
+        "0xf716f94059215d0e4c8d8edf41e5a65e741bce5005c2afee04eaafcf5c210d20"
+      ],
       "ignoreInWatchMode": ["transactionCount"],
       "sinceTimestamp": 1614841682,
       "values": {
@@ -69,6 +81,9 @@
     {
       "name": "ExchangeV3",
       "address": "0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7",
+      "sourceHashes": [
+        "0x0eb913bdd3a56c7e954cf0d749fde579620dce50157f8736c1938de91acd7127"
+      ],
       "ignoreInWatchMode": [
         "getBlockHeight",
         "getMerkleRoot",
@@ -155,6 +170,9 @@
     {
       "name": "DefaultDepositContract",
       "address": "0xF13e21653AEB763595D5E4baA1dC115689Da49b9",
+      "sourceHashes": [
+        "0x84fb4e2bbd657c64908e8875c1bbe3610271899626eaf9cf56d6b69400a607b3"
+      ],
       "sinceTimestamp": 1693304807,
       "values": {
         "$immutable": true,
@@ -371,6 +389,5 @@
       "function withdraw(address, address to, address token, uint256 amount) payable"
     ]
   },
-  "usedTemplates": {},
-  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
+  "usedTemplates": {}
 }

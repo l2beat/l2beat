@@ -105,6 +105,7 @@ export function DaSummaryDacsTable({ items }: Props) {
                         className="justify-start"
                         values={mapRisksToRosetteValues(subRow.risks)}
                         isUnderReview={subRow.isUnderReview}
+                        hasNoBridge={subRow.daBridge.type === 'NoBridge'}
                       />
                     </DaTableSubRowCell>
                     <DaTableLastSubRowCell

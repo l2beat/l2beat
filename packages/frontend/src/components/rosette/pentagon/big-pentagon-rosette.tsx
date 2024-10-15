@@ -22,6 +22,7 @@ export interface BigPentagonRosetteProps {
   values: RosetteValue[]
   isUpcoming?: boolean
   isUnderReview?: boolean
+  hasNoBridge?: boolean
   className?: string
 }
 
@@ -36,7 +37,7 @@ export function BigPentagonRosette(props: BigPentagonRosetteProps) {
     !!props.isUnderReview ||
     props.values.some((value) => value.sentiment === 'UnderReview')
 
-  if (!!props.isUpcoming || isUnderReview) {
+  if (!!props.isUpcoming || isUnderReview || !!props.hasNoBridge) {
     return (
       <div
         className={cn(
@@ -47,6 +48,7 @@ export function BigPentagonRosette(props: BigPentagonRosetteProps) {
         <PentagonRosetteIcon
           values={props.values}
           isUnderReview={isUnderReview}
+          hasNoBridge={props.hasNoBridge}
           className={cn(props.isUpcoming && 'opacity-30')}
         />
         {props.isUpcoming && (

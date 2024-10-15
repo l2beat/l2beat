@@ -1,8 +1,10 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
 export const soon: Layer2 = upcomingL2({
   id: 'soon',
+  createdAt: new UnixTime(1726836904), // 2024-09-20T12:55:04Z
   display: {
     name: 'Soon Mainet',
     slug: 'soon',
@@ -14,9 +16,9 @@ export const soon: Layer2 = upcomingL2({
       websites: ['https://soo.network/'],
       apps: [],
       documentation: ['https://soon-2.gitbook.io/home'],
-      explorers: [],
-      repositories: [],
-      socialMedia: ['https://x.com/soon_svm'],
+      explorers: ['https://explorer.devnet.soo.network'],
+      repositories: ['https://github.com/soonlabs'],
+      socialMedia: ['https://x.com/soon_svm', 'https://discord.gg/soon-svm'],
     },
   },
 })

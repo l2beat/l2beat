@@ -19,7 +19,6 @@ import {
   addSentimentToDataAvailability,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { getCommittee } from '../../discovery/starkware'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
@@ -83,6 +82,8 @@ export const dydx: Layer2 = {
     slug: 'dydx',
     warning:
       'This page describes dYdX v3, which is an L2 built on Ethereum. Recently deployed dYdX v4 is a separate blockchain based on Cosmos SDK, unrelated to Ethereum and is using different technology. No information on this page applies to dYdX v4.',
+    headerWarning:
+      'dYdX v3 is planned to shut down on October 28th at 12:05 P.M. UTC. [Read more](https://dydx.exchange/blog/v3-product-sunset)',
     description:
       'dYdX v3 aims to build a powerful and professional exchange for trading crypto assets where users can truly own their trades and, eventually, the exchange itself.',
     purposes: ['Exchange'],
@@ -408,7 +409,7 @@ export const dydx: Layer2 = {
       description:
         'Allowed to update state of the rollup. When Operator is down the state cannot be updated.',
     },
-    getCommittee(discovery),
+    // getCommittee(discovery), # Removed because even though it is set for some reason, it is not used in updateState()
     {
       name: 'Rollup Admin',
       accounts: [

@@ -1,4 +1,86 @@
-Generated with discovered.json: 0x7dc9db2d24f83c501e183b83e27ed4180369f6cf
+Generated with discovered.json: 0x041ce30299e6ffd23a5d9258cdee70bdc3e43522
+
+# Diff at Mon, 14 Oct 2024 10:56:38 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 19532229
+- current block number: 19532229
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19532229 (main branch discovery), not current.
+
+```diff
+    contract FeeHandlerRouter (0x1d34808907607FA82Fa1b51F5fBA5Ff5a3Fa90cF) {
+    +++ description: None
+      sourceHashes:
++        ["0x57d2aa380d47a54717ec0de4d2ce6f34d5618f91a876226f60828e03036c07bb"]
+    }
+```
+
+```diff
+    contract Permissionless Generic Handler (0x31282123E7bcd947e2c1Bc364d564839574fAdCD) {
+    +++ description: None
+      sourceHashes:
++        ["0x6cbae46385d34a7539ed992fd427d294cf815bc599a5b8814ba0272276864f21"]
+    }
+```
+
+```diff
+    contract Bridge (0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089) {
+    +++ description: None
+      sourceHashes:
++        ["0x70d800f2dae04f7c3240cdf754404e86a486cea0a8591eec762e903d2eec5c77"]
+    }
+```
+
+```diff
+    contract BasicFeeHandler (0x9f9778DA7c1D0AbE148314d6C1EA6E0A93C151C7) {
+    +++ description: None
+      sourceHashes:
++        ["0x057a9fc15bc757cf2e6b63ad07391d1629be177ca6f4c1af91bc407b7a7ef4c9"]
+    }
+```
+
+```diff
+    contract Community Multisig (0xc4d8b2F5501C765dE0C5E12550118F397B197D05) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract ERC20 Bridge Handler (0xC832588193cd5ED2185daDA4A531e0B26eC5B830) {
+    +++ description: None
+      sourceHashes:
++        ["0x6f164184a36f7f6b52d39867d75472915b53a643e2fca4319619d7f76706905e"]
+    }
+```
+
+```diff
+    contract Admin Multisig (0xde79695d5cefF7c324552B3ecbe6165f77FCdF53) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract AccessControlSegregator (0xf433EfDf1Fb438F9d79D1E71dF2c2bdeAc95e28E) {
+    +++ description: None
+      sourceHashes:
++        ["0xffa23c6121a2e1d41ad45b0ea97f759dbbc6b73bc7e8d810590d9cb36b3dfb2b"]
+    }
+```
+
+Generated with discovered.json: 0x3efb0456de1b5206037854e55e726d862297bdf2
 
 # Diff at Fri, 09 Aug 2024 10:12:40 GMT:
 

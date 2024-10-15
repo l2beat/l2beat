@@ -1,5 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
+import { NUGGETS } from '../../common'
+
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -75,18 +77,7 @@ export const mantapacific: Layer2 = opStackL2({
   },
   genesisTimestamp: new UnixTime(1679202395),
   isNodeAvailable: false,
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'AdminMultisig',
-      'Owner of the ProxyAdmin contract.',
-    ),
-    {
-      name: 'MantaOwner',
-      accounts: [discovery.getPermissionedAccount('SystemConfig', 'owner')],
-      description:
-        'Owner of the SystemConfig and configured as the Challenger and Guardian of the system.',
-    },
-  ],
+  discoveryDrivenData: true,
   milestones: [
     {
       name: 'Manta Pacific Network Launch',
@@ -97,4 +88,11 @@ export const mantapacific: Layer2 = opStackL2({
     },
   ],
   badges: [Badge.DA.Celestia, Badge.RaaS.Caldera],
+  knowledgeNuggets: [
+    {
+      title: 'Blobstream and Celestia Architecture',
+      url: 'https://www.youtube.com/watch?v=cn_fN6pkakQ',
+      thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
+    },
+  ],
 })

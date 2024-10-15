@@ -7,6 +7,9 @@
     {
       "name": "History",
       "address": "0x04395d494624D2B6e30C0dfDB74498a2839f805d",
+      "sourceHashes": [
+        "0x10336484f22cf6f3d30e974fe43a4aa644807bee582c7ee3c03b116024554eaa"
+      ],
       "sinceTimestamp": 1719500229,
       "values": {
         "$immutable": true,
@@ -16,6 +19,9 @@
     {
       "name": "BugBuster",
       "address": "0x3FF5C7383F614256053c3F6B86A47bA974937299",
+      "sourceHashes": [
+        "0x4ea587588e6035764e827917418aee9c41a353454a7a13fe807ca56724350d47"
+      ],
       "sinceTimestamp": 1726799059,
       "values": {
         "$immutable": true,
@@ -28,6 +34,9 @@
     {
       "name": "Authority",
       "address": "0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35",
+      "sourceHashes": [
+        "0xe4cf627ec9b7ed3b6b18711555d50a7002525d34e84a6242a2b1bd41aedb2f11"
+      ],
       "sinceTimestamp": 1719500229,
       "values": {
         "$immutable": true,
@@ -38,12 +47,18 @@
     {
       "name": "InputBox",
       "address": "0x59b22D57D4f067708AB0c00552767405926dc768",
+      "sourceHashes": [
+        "0x3bfaa3fe125375dfb9181df0c144cda2b17aa368e57292e88d6258c4aafe51ed"
+      ],
       "sinceTimestamp": 1690464759,
       "values": { "$immutable": true }
     },
     {
       "name": "ERC20Portal",
       "address": "0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB",
+      "sourceHashes": [
+        "0x0cb29769a693a89712c9c05a29f52a6e610ed38585db5d66f1fc56118e39493d"
+      ],
       "sinceTimestamp": 1690464775,
       "values": {
         "$immutable": true,
@@ -127,6 +142,5 @@
       "function getInputBox() view returns (address)"
     ]
   },
-  "usedTemplates": {},
-  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
+  "usedTemplates": {}
 }

@@ -202,6 +202,8 @@ model Activity {
   projectId String   @db.VarChar(255)
   timestamp DateTime @db.Timestamp(6)
   count     Int
+  uopsCount Int?
+  ratio     Float?   @db.Real
   start     Int      @default(0)
   end       Int      @default(0)
 

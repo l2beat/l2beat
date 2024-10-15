@@ -1,4 +1,8 @@
 import { type ScalingProjectRiskCategory } from '@l2beat/config'
+import {
+  HostChainRisksWarning,
+  type HostChainRisksWarningProps,
+} from '~/components/host-chain-risks-warning'
 import { WarningBar } from '~/components/warning-bar'
 import { ShieldIcon } from '~/icons/shield'
 import { UnverifiedIcon } from '~/icons/unverified'
@@ -10,6 +14,7 @@ export interface RiskSummarySectionProps extends ProjectSectionProps {
   warning: string | undefined
   isVerified: boolean | undefined
   redWarning: string | undefined
+  hostChainWarning?: HostChainRisksWarningProps
 }
 
 export interface RiskGroup {
@@ -29,6 +34,7 @@ export function RiskSummarySection({
   isVerified,
   redWarning,
   warning,
+  hostChainWarning,
   ...sectionProps
 }: RiskSummarySectionProps) {
   if (riskGroups.length === 0) {
@@ -36,6 +42,7 @@ export function RiskSummarySection({
   }
   return (
     <ProjectSection {...sectionProps}>
+      {hostChainWarning && <HostChainRisksWarning {...hostChainWarning} />}
       {isVerified === false && (
         <WarningBar
           text="This project includes unverified contracts."

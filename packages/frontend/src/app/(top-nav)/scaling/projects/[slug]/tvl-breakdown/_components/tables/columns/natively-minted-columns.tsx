@@ -15,9 +15,33 @@ export const nativelyMintedColumns = [
     cell: (ctx) => <TokenNameCell {...ctx.row.original} />,
   }),
   columnHelper.display({
+    id: 'value',
+    header: 'Value',
+    meta: {
+      align: 'right',
+    },
+    cell: (ctx) => <TokenSimpleValueCell {...ctx.row.original} />,
+  }),
+  columnHelper.display({
+    id: 'amount',
+    header: 'Amount',
+    meta: {
+      align: 'right',
+    },
+    cell: (ctx) => <TokenSimpleAmountCell {...ctx.row.original} />,
+  }),
+  columnHelper.display({
+    id: 'type',
+    header: 'Type',
+    meta: {
+      headClassName: 'md:pl-6',
+      cellClassName: 'md:pl-6',
+    },
+    cell: (ctx) => <TokenTypeCell {...ctx.row.original} />,
+  }),
+  columnHelper.display({
     id: 'contract',
     header: 'Contract',
-
     cell: (ctx) => {
       const value = ctx.row.original
 
@@ -30,26 +54,5 @@ export const nativelyMintedColumns = [
         )
       )
     },
-  }),
-  columnHelper.display({
-    id: 'type',
-    header: 'Type',
-    cell: (ctx) => <TokenTypeCell {...ctx.row.original} />,
-  }),
-  columnHelper.display({
-    id: 'amount',
-    header: 'Amount',
-    meta: {
-      align: 'right',
-    },
-    cell: (ctx) => <TokenSimpleAmountCell {...ctx.row.original} />,
-  }),
-  columnHelper.display({
-    id: 'value',
-    header: 'Value',
-    meta: {
-      align: 'right',
-    },
-    cell: (ctx) => <TokenSimpleValueCell {...ctx.row.original} />,
   }),
 ]
