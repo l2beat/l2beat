@@ -47,7 +47,7 @@ export const bridgesSummaryActiveColumns = [
     header: 'Total',
     cell: (ctx) => {
       const value = ctx.row.original.tvl
-      if (!value.breakdown?.total) {
+      if (value.breakdown?.total === undefined) {
         return <NoDataBadge />
       }
 
