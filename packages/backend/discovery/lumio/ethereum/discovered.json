@@ -210,7 +210,7 @@
     {
       "name": "ProxyAdmin",
       "address": "0xA6b2b6B6E621482aF877F304D46B94123a942Ae9",
-      "template": "opstack/ProxyAdmin",
+      "template": "global/ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
@@ -751,7 +751,7 @@
     "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
     "opstack/OptimismPortal": "0x1af81e069b7721f68b8f083eb7379b6f29e7b9510bc38ed2a7e2a33ebbf876dc",
-    "opstack/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
+    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "opstack/SystemConfig": "0x41420d04d26fe441d4f65a2475bb9f0cca38e0f7542d45347f063f3c7cf57b39"
   },
   "shapeFilesHash": "0xbde3658d9829dc6a2b849d26602a57c5fd2a8972a78d434d59fb754595ff1019"

@@ -7,6 +7,9 @@
     {
       "name": "BlockVerifier",
       "address": "0x1c602313cDDC68C5789aCb7df0C92a93B0E04C9e",
+      "sourceHashes": [
+        "0x034de7052cf5e10120ac3d5f4432bd52f50acc4c6d7d51d04aeaeffb45f9b87d"
+      ],
       "sinceTimestamp": 1681985879,
       "values": {
         "$immutable": true,
@@ -17,6 +20,9 @@
     {
       "name": "LoopringOwner",
       "address": "0x2028834B2c0A36A918c10937EeA71BE4f932da52",
+      "sourceHashes": [
+        "0xf716f94059215d0e4c8d8edf41e5a65e741bce5005c2afee04eaafcf5c210d20"
+      ],
       "ignoreInWatchMode": ["transactionCount"],
       "sinceTimestamp": 1684401563,
       "values": {
@@ -38,6 +44,9 @@
     {
       "name": "LoopringV3",
       "address": "0x4d707cae77c5E82a00BF9572A55d3ef3a4e0c458",
+      "sourceHashes": [
+        "0x1a927b8a2febc8b60253ee7277d887fe95ec3e23241d77d0ec9e6f424239438e"
+      ],
       "sinceTimestamp": 1681989995,
       "values": {
         "$immutable": true,
@@ -55,6 +64,9 @@
     {
       "name": "LoopringIOExchangeOwner",
       "address": "0x6B937A5920726e70c5bF1d4d4E18EEeEd46FaE83",
+      "sourceHashes": [
+        "0x80a64d522f935661e6a91ce240c8fab04db5aa499462cca019fcda5e0494b18e"
+      ],
       "sinceTimestamp": 1681993655,
       "values": {
         "$immutable": true,
@@ -72,6 +84,9 @@
     {
       "name": "FeeVault",
       "address": "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C",
+      "sourceHashes": [
+        "0xf716f94059215d0e4c8d8edf41e5a65e741bce5005c2afee04eaafcf5c210d20"
+      ],
       "ignoreInWatchMode": ["transactionCount"],
       "sinceTimestamp": 1614841682,
       "values": {
@@ -93,6 +108,9 @@
     {
       "name": "DefaultDepositContract",
       "address": "0x814d0c1903D69EB1c7ceB8F5190B20A06892d1dA",
+      "sourceHashes": [
+        "0x84fb4e2bbd657c64908e8875c1bbe3610271899626eaf9cf56d6b69400a607b3"
+      ],
       "sinceTimestamp": 1681991243,
       "values": {
         "$immutable": true,
@@ -104,6 +122,9 @@
     {
       "name": "ExchangeV3",
       "address": "0xe63602a9B3DFE983187525AC985Fec4F57B24eD5",
+      "sourceHashes": [
+        "0xfe68945beed1d671d49de42310f9808862fb79dd5fe0a529fe1a43b93aab8f03"
+      ],
       "ignoreInWatchMode": [
         "getBlockHeight",
         "getMerkleRoot",
@@ -429,6 +450,5 @@
       "function withdrawFromMerkleTree(tuple(tuple(uint32 accountID, address owner, uint256 pubKeyX, uint256 pubKeyY, uint32 nonce) accountLeaf, tuple(uint32 tokenID, uint248 balance) balanceLeaf, uint256[48] accountMerkleProof, uint256[48] balanceMerkleProof) merkleProof)"
     ]
   },
-  "usedTemplates": {},
-  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
+  "usedTemplates": {}
 }

@@ -799,6 +799,43 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     },
     stackedRiskView: templateVars.stackedRiskView ?? getStackedRisks(),
     riskView,
+    stage:
+      templateVars.stage === undefined
+        ? daProvider !== undefined || templateVars.isNodeAvailable === undefined
+          ? {
+              stage: 'NotApplicable',
+            }
+          : getStage(
+              {
+                stage0: {
+                  callsItselfRollup: true,
+                  stateRootsPostedToL1: true,
+                  dataAvailabilityOnL1: true,
+                  rollupNodeSourceAvailable: templateVars.isNodeAvailable,
+                },
+                stage1: {
+                  stateVerificationOnL1: false,
+                  fraudProofSystemAtLeast5Outsiders: null,
+                  usersHave7DaysToExit: false,
+                  usersCanExitWithoutCooperation: false,
+                  securityCouncilProperlySetUp:
+                    templateVars.hasProperSecurityCouncil ?? null,
+                },
+                stage2: {
+                  proofSystemOverriddenOnlyInCaseOfABug: null,
+                  fraudProofSystemIsPermissionless: null,
+                  delayWith30DExitWindow: false,
+                },
+              },
+              {
+                rollupNodeLink:
+                  templateVars.isNodeAvailable === true
+                    ? (templateVars.nodeSourceLink ??
+                      'https://github.com/ethereum-optimism/optimism/tree/develop/op-node')
+                    : '',
+              },
+            )
+        : templateVars.stage,
     dataAvailability:
       daProvider !== undefined
         ? addSentimentToDataAvailability({

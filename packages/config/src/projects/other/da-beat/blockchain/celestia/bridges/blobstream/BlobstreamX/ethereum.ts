@@ -46,7 +46,8 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
       socialMedia: [],
     },
   },
-  technology: `
+  technology: {
+    description: `
      The BlobstreamX bridge is a data availability bridge that facilitates data availability commitments to be bridged between Celestia and Ethereum.
      The BlobstreamX bridge is composed of three main components: the **BlobstreamX** contract, the **Succinct Gateway** contract and the **Verifier** contracts.
      By default, BlobstreamX operates asynchronously, handling requests in a fulfillment-based manner. First, zero-knowledge proofs of Celestia block ranges are requested for proving. Requests can be submitted either off-chain through the Succinct API, or onchain through the requestDataHeader() method of the blobstreamX smart contract.
@@ -60,6 +61,7 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
     By default, BlobstreamX on Ethereum is updated by the Celestia operator at a regular cadence of 4 hours.
 
     `,
+  },
   contracts: {
     addresses: [
       discovery.getContractDetails('Blobstream', {

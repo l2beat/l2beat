@@ -1,4 +1,78 @@
-Generated with discovered.json: 0xa3c5a2d76a5b4b32986ab4385619bf23a04db567
+Generated with discovered.json: 0x0651314515f38c5fb0ead4c76f7c53e53bc1f243
+
+# Diff at Mon, 14 Oct 2024 10:57:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20878383
+- current block number: 20878383
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20878383 (main branch discovery), not current.
+
+```diff
+    contract SP1Vector (0x02993cdC11213985b9B13224f3aF289F03bf298d) {
+    +++ description: None
+      sourceHashes:
++        ["0xca64a552160ec278e1bacf8ca23e8c71f49012ace91a33141b797451f4683731","0x0e469131222e34f50c12fe74205439de113446461e0fbd31fff1a43b081dbbeb"]
+    }
+```
+
+```diff
+    contract SP1Verifier (0x1764C29FBd94865198588f10FC75D4f6636d158d) {
+    +++ description: None
+      sourceHashes:
++        ["0xeb051b88e210e28fd696d01528e3cc9a131a08d69e20bf1983ac8d90dd9b1f4f"]
+    }
+```
+
+```diff
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: None
+      sourceHashes:
++        ["0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"]
+    }
+```
+
+```diff
+    contract SP1Verifier (0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc) {
+    +++ description: None
+      sourceHashes:
++        ["0xabb95b2d66749481071b7a258a3305198760dbaf12d7411cfaba5e4c26cc3a65"]
+    }
+```
+
+```diff
+    contract GnosisSafe (0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract SP1Verifier_OLD (0xc350F063C13a3Ca21331610fe159E697a5c9c2FB) {
+    +++ description: None
+      sourceHashes:
++        ["0x6e3bfeae0d549b79decfd956f551a8aeac66523cdd66da389ef55eb56ef72aac"]
+    }
+```
+
+```diff
+    contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+Generated with discovered.json: 0x7d9489c72ce965ec59331a95d7f397e78bb7e363
 
 # Diff at Wed, 02 Oct 2024 14:22:48 GMT:
 

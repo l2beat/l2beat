@@ -1,4 +1,54 @@
-Generated with discovered.json: 0x406a5fa977a43794258d5ea55da517629314d569
+Generated with discovered.json: 0x1560de61ca33caff8b0ec3bc99f0a815a8bf6b82
+
+# Diff at Mon, 14 Oct 2024 10:50:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 19825363
+- current block number: 19825363
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825363 (main branch discovery), not current.
+
+```diff
+    contract GpsFactRegistryAdapter (0x5339AB7557b3152b91A57D10B0Caf5da88Db5143) {
+    +++ description: None
+      sourceHashes:
++        ["0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"]
+    }
+```
+
+```diff
+    contract StarkExchange (0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d) {
+    +++ description: None
+      sourceHashes:
++        ["0x2c95972415c771f5ef6d71449bae168597b6c35245fbe8769425e5c9c753e918","0xadae235d029868dddc287e823167705942660a99a9154a4e487f5dfb4ddd01c9","0x70e4767336d4a44ecedb78b7cef6dc2810f5d8bc87a46c360083e65af451cb97","0x75d386d73767f57d5f11c11f7bf837a48cd417754eea559931fc98a96ef34152","0x0e101cfdb791ca1a86402273377c7da5e67225cf5799ac2f51d9a940227ee6be","0x7d557870276c694154e12790f8c0c09930c8c75320f470c47b67968bffd536a6","0x2a703c051ff2524868f044282fc50b01913736a92f794b64b31bd31363cd3fca","0xd5b06286e3bf5dccd0bb360c8cc876aec0a2ce288120d9f83dec45fa47c1aabc"]
+    }
+```
+
+```diff
+    contract OrderRegistry (0x806d435a82B0381bD884540c2235147c13B97fe6) {
+    +++ description: None
+      sourceHashes:
++        ["0x1e28fda3c245bc1fc13d0ddc7b108be510d1e0220fc67552921c87724bb45a4c"]
+    }
+```
+
+```diff
+    contract Committee (0x8B3A6662809195453645e37C2005d655f57ca818) {
+    +++ description: None
+      sourceHashes:
++        ["0x220ee35d4e83e9cca7e8fa42dcab4d9571ce3078b50bacbdb2fc75afa7f0290e"]
+    }
+```
+
+Generated with discovered.json: 0x86ba92cc3e60dd7307f470750b7039f1eb0ccde2
 
 # Diff at Tue, 01 Oct 2024 10:50:20 GMT:
 

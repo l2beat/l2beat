@@ -7,6 +7,10 @@
     {
       "name": "Challenge",
       "address": "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd",
+      "sourceHashes": [
+        "0x7e52f67f6162bc66d00626c817dcd5b11c2189fcf7bf5efcd32fd0821c22c0ad",
+        "0x90fc7abf9460afe3940188c51d98ab5da40ece530f7fc0e6e10c459a1b7f35f5"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -56,6 +60,10 @@
     {
       "name": "ChainOracle",
       "address": "0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04",
+      "sourceHashes": [
+        "0x7e52f67f6162bc66d00626c817dcd5b11c2189fcf7bf5efcd32fd0821c22c0ad",
+        "0x219c5860c98ee65c799aa9b6549168915088c6de2369583a157ee3a60cf65b47"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -87,6 +95,9 @@
     {
       "name": "LightLinkMultisig",
       "address": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
+      "sourceHashes": [
+        "0x4bbdb661859a4bbfa25496630a4c393bc0999fe0bdf4910997d7c098294d19e6"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -120,6 +131,10 @@
     {
       "name": "LightLinkBridge",
       "address": "0x3ca373F5ecB92ac762f9876f6e773082A4589995",
+      "sourceHashes": [
+        "0x271f364b7e28b516246603be8769c5002d3e585faea009e131bf170f073129e8",
+        "0x71f4b3f45f14bd6064069c36b9bb52b9b3efa4e4b40344614eaad2e50f5b78c6"
+      ],
       "proxyType": "LightLink proxy",
       "issuedPermissions": [
         {
@@ -150,6 +165,10 @@
     {
       "name": "L1BridgeRegistry",
       "address": "0x624631881655a310adcF0d1336658Cc977609b72",
+      "sourceHashes": [
+        "0xb5af2f6166dd24adeb4b7faf21f2bbfc8512fe699c249b64b565127766ff6e3d",
+        "0xc12eca0e011860efa4f71723a172994a15e062d037a0d89ef36b5aed423fb37a"
+      ],
       "proxyType": "LightLink proxy",
       "issuedPermissions": [
         {
@@ -188,6 +207,10 @@
     {
       "name": "LightLinkERC20Bridge",
       "address": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
+      "sourceHashes": [
+        "0x271f364b7e28b516246603be8769c5002d3e585faea009e131bf170f073129e8",
+        "0xc53e364c720158d2d3f89d1c4ffb1a3550689489699dfdaca67ee8a51967c9cc"
+      ],
       "proxyType": "LightLink proxy",
       "issuedPermissions": [
         {
@@ -218,6 +241,10 @@
     {
       "name": "CanonicalStateChain",
       "address": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE",
+      "sourceHashes": [
+        "0x7e52f67f6162bc66d00626c817dcd5b11c2189fcf7bf5efcd32fd0821c22c0ad",
+        "0x7c0a4f7fb2f2948ffde2e5550debf14c02fa682bec9a57aac718daf43c80c2c7"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -285,6 +312,9 @@
     {
       "name": "RLPReader",
       "address": "0xEe055Dddc462e35521005e1b00FcEFd78E1fc9E2",
+      "sourceHashes": [
+        "0xa54be4566b369d95be75b2911bdb9216ec62e1bc5dc86dff8ec6bcff42c7ec28"
+      ],
       "sinceTimestamp": 1717522283,
       "values": { "$immutable": true }
     }
@@ -626,6 +656,5 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ]
   },
-  "usedTemplates": {},
-  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
+  "usedTemplates": {}
 }

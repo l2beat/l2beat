@@ -27,11 +27,6 @@ export const cronoszkevm: Layer2 = zkStackL2({
     Badge.Infra.ElasticChain,
   ],
   display: {
-    tvlWarning: {
-      content:
-        'The TVL is currently shared among all projects using the shared ZK stack contracts. See ZKsync Era TVL.',
-      sentiment: 'warning',
-    },
     name: 'Cronos zkEVM',
     slug: 'cronoszkevm',
     description:
@@ -109,7 +104,7 @@ export const cronoszkevm: Layer2 = zkStackL2({
         l2EtherAddress: EthereumAddress(
           '0x898b3560affd6d955b1574d87ee09e46669c60ea',
         ),
-        includeAllzkCROFromL1: true,
+        tokensToAssignFromL1: ['zkCRO'],
       },
       ...zkStackUpgrades,
     }),

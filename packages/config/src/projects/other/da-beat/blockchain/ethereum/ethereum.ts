@@ -28,7 +28,8 @@ export const ethereum: DaLayer = {
       socialMedia: ['https://x.com/ethereum'],
     },
   },
-  technology: `
+  technology: {
+    description: `
     ## Consensus
     Ethereum's consensus protocol combines two separate consensus protocols, LMD GHOST and Casper FFG.
     LMD GHOST is a fork choice rule that ensures the liveness of the chain by selecting the Greedy Heaviest-Observed Sub-Tree (GHOST), and considering only the validators most recent vote (Latest Message Driven, LMD). 
@@ -85,6 +86,7 @@ export const ethereum: DaLayer = {
     ZK rollups, on the other hand, use the point evaluation precompile to verify that specific points in the polynomial (represented by the blob) match the expected values. 
     This method allows ZK rollups to prove that the data used in their validity proof is consistent with the blob data committed to Ethereum.
     `,
+  },
   bridges: [enshrinedBridge],
   usedIn: enshrinedBridge.usedIn,
   consensusAlgorithm: {

@@ -8,7 +8,9 @@ import { type ProjectDetailsSection } from '~/components/projects/sections/types
 import { type RosetteValue } from '~/components/rosette/types'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
+import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-risk'
 import { getDaOtherConsiderationsSection } from './get-da-other-considerations-section'
+import { getDaProjectRiskSummarySection } from './get-da-project-risk-summary-section'
 interface Params {
   daLayer: DaLayer
   daBridge: DaBridge
@@ -74,6 +76,17 @@ export function getProjectDetails({
 
   const items: ProjectDetailsSection[] = []
 
+  if (riskSummarySection.riskGroups.length > 0) {
+    items.push({
+      type: 'RiskSummarySection',
+      props: {
+        id: 'risk-summary',
+        title: 'Risk summary',
+        ...riskSummarySection,
+      },
+    })
+  }
+
   items.push({
     type: 'RiskAnalysisSection',
     props: {
@@ -82,6 +95,7 @@ export function getProjectDetails({
       rosetteType: 'pentagon',
       rosetteValues: rosetteValues,
       isUnderReview: !!daLayer.isUnderReview || daBridge.isUnderReview,
+      shouldHideRosette: daBridge.type === 'NoBridge',
       warning: daBridge.display.warning,
       redWarning: daBridge.display.redWarning,
       isVerified,
@@ -97,7 +111,8 @@ export function getProjectDetails({
         type: 'da-layer-technology',
         slug: daLayer.display.slug,
       },
-      content: daLayer.technology,
+      content: daLayer.technology.description,
+      risks: daLayer.technology.risks?.map(toTechnologyRisk),
     },
   })
 
@@ -110,7 +125,8 @@ export function getProjectDetails({
         type: 'da-bridge-technology',
         slug: `${daLayer.display.slug}-${daBridge.display.slug}`,
       },
-      content: daBridge.technology,
+      content: daBridge.technology.description,
+      risks: daBridge.technology.risks?.map(toTechnologyRisk),
     },
   })
 

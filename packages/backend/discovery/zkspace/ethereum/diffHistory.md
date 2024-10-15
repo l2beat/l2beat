@@ -1,4 +1,94 @@
-Generated with discovered.json: 0x97e336292d8b3389e5bec2bc0aa4ad81cfc8abb0
+Generated with discovered.json: 0x5885827a7cbb530fcc5911a29557d46df4e60c2d
+
+# Diff at Mon, 14 Oct 2024 10:58:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20432700
+- current block number: 20432700
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20432700 (main branch discovery), not current.
+
+```diff
+    contract VerifierExit (0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81) {
+    +++ description: None
+      sourceHashes:
++        ["0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6","0xfdcc7775fea6ed53c90da50c4e8dfc0660ab84c65f6075ede59ccf78ae8dd45d"]
+    }
+```
+
+```diff
+    contract ZkSync (0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8) {
+    +++ description: None
+      sourceHashes:
++        ["0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6","0x04c2a817fae899931571f8d2f3655b50f10a544cc9281094bf0e5fd5b2c7a173","0xd8f53791fc9bb0df1c3d903f577e3d06a232910af94919846aa5ede33e425de5","0x96364e118ebcb69d8bbaa8ce71f6639d303a031f47258821d77892edd89bb476","0x6578bc6e4cf4cc0ec7d845733d5337fcc6896e629499a4af73d602cac922868d"]
+    }
+```
+
+```diff
+    contract Governance (0x83Cb1531Ec8447366501aE440478da245EcffB89) {
+    +++ description: None
+      sourceHashes:
++        ["0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6","0x0ed1646d0bc938555ef2ea51e53f8a3440effc46825b7a79ee787ee9decb8cd3"]
+    }
+```
+
+```diff
+    contract ZkSwapListing (0x8aA2C56dca9d59F4317c2fad632c192b18127709) {
+    +++ description: None
+      sourceHashes:
++        ["0xce4af2ec88a2ba33052ea9fe2da9580a88710e57fb6946fb00d5740600e11ee2"]
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390) {
+    +++ description: None
+      sourceHashes:
++        ["0x1359a771e28c9c71730920ab6bee9509009c60908022ff865419a483f74f702b"]
+    }
+```
+
+```diff
+    contract Verifier (0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af) {
+    +++ description: None
+      sourceHashes:
++        ["0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6","0xcd9df57c71f79c48ecc98c2cbcbd634ca80c87f8e1fcde7d3a5082750f2ab1db"]
+    }
+```
+
+```diff
+    contract UniswapV2Factory (0xc07f850b60E0EEd49a09E455b01a869C25963735) {
+    +++ description: None
+      sourceHashes:
++        ["0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6","0x86e6238a6b2cd0e01b10a66c120be7cfb092bbeb23c0b83e457b160062477b45"]
+    }
+```
+
+```diff
+    contract ZkSeaNFT (0xc632347cc96A4400653E3514eA148630455295b5) {
+    +++ description: None
+      sourceHashes:
++        ["0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6","0xb46d8e739a276f260a8ac84136cd5b77d6b72025b08d7f524318665af69fa116"]
+    }
+```
+
+```diff
+    contract ZksToken (0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6) {
+    +++ description: None
+      sourceHashes:
++        ["0xa7344a41ac050b7f10b2dd12807615cd0dbfd63e480cacec2c8a30dd7845522e"]
+    }
+```
+
+Generated with discovered.json: 0x041d7a092df07a886f8438bf8cc2dc987d9b949a
 
 # Diff at Tue, 01 Oct 2024 11:12:04 GMT:
 

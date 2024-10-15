@@ -11,6 +11,7 @@ import { PentagonRosetteTooltip } from './pentagon-rosette-tooltip'
 export interface PentagonRosetteCellProps {
   values: RosetteValue[]
   isUnderReview?: boolean
+  hasNoBridge?: boolean
   className?: string
 }
 
@@ -31,12 +32,15 @@ export function PentagonRosetteCell(props: PentagonRosetteCellProps) {
           values={props.values}
           className="size-6 md:size-8"
           background={false}
+          isUnderReview={isUnderReview}
+          hasNoBridge={props.hasNoBridge}
         />
       </TooltipTrigger>
       <TooltipContent fitContent>
         <PentagonRosetteTooltip
           values={props.values}
           isUnderReview={isUnderReview}
+          hasNoBridge={props.hasNoBridge}
         />
       </TooltipContent>
     </Tooltip>

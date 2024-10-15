@@ -318,7 +318,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           }),
     riskView: {
       stateValidation: {
-        ...RISK_VIEW.STATE_ZKP_SN,
+        ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
         sources: [
           {
             contract: rollupManagerContract.name,

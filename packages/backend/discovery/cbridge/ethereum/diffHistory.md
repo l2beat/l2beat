@@ -1,4 +1,118 @@
-Generated with discovered.json: 0x081377f92c71ef855e967c0383605fe8f242cbc2
+Generated with discovered.json: 0xda935b498bfe310a4328d21399d910dd6873be91
+
+# Diff at Mon, 14 Oct 2024 10:50:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20512741
+- current block number: 20512741
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20512741 (main branch discovery), not current.
+
+```diff
+    contract PeggedTokenBridge (0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB) {
+    +++ description: None
+      sourceHashes:
++        ["0x3434f13a03ea3f4494cedceb0a2fe1054473c529ae3c067ba96d7102c3225852"]
+    }
+```
+
+```diff
+    contract MessageBus (0x4066D196A423b2b3B8B054f4F40efB47a74E200C) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cffb288804b4b9aa5855910610b396abe44ded0ad8ed35981ed74d056ae8ba1","0x985f30f6f1cec4239d77034618e116e07dae859f0ded01ba80f897dadb7101f3"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x520d812604E7b2ce71819FDBFE9aC40E56327F8f) {
+    +++ description: None
+      sourceHashes:
++        ["0xeb95d39e1b35f76b6331da863f87bf2e148dd21abf5666590443b65f6a125630"]
+    }
+```
+
+```diff
+    contract PeggedTokenBridgeV2 (0x52E4f244f380f8fA51816c8a10A63105dd4De084) {
+    +++ description: None
+      sourceHashes:
++        ["0xa8ad65c174f2e76f58ba6abc073545979d712d31810b818fa4ff50bfa9cffc09"]
+    }
+```
+
+```diff
+    contract Liquidity Network (0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820) {
+    +++ description: None
+      sourceHashes:
++        ["0x28057aec4ce9e7459369838e4a925c15a3b424afd948d070512e8a54c2870ec8"]
+    }
+```
+
+```diff
+    contract MessageBusOwner (0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175) {
+    +++ description: None
+      sourceHashes:
++        ["0x208be8f798080de1d60fcd5cba233b86c43f382ace673f95ad32b633d98be2dd"]
+    }
+```
+
+```diff
+    contract OriginalTokenVaultV2 (0x7510792A3B1969F9307F3845CE88e39578f2bAE1) {
+    +++ description: None
+      sourceHashes:
++        ["0x66b162a0fe8e04147d94a9ec40e3cf9a69114ed6e3fca427cc303eeb2d223fb9"]
+    }
+```
+
+```diff
+    contract SentinelProxyAdmin (0x8E339115b295DeD49880eA62C1F06d1dbec3496b) {
+    +++ description: None
+      sourceHashes:
++        ["0x1c9416031605fbda74b5da95a290e00995eaed2f6f6ba85ff2681131efe940a0"]
+    }
+```
+
+```diff
+    contract TransferAgent (0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b) {
+    +++ description: None
+      sourceHashes:
++        ["0xa8c0aeb1e8c7671f05a401b4d5b518a38e96dc6378d59e3f2b13ea55ea9f7f9f"]
+    }
+```
+
+```diff
+    contract OriginalTokenVault (0xB37D31b2A74029B5951a2778F959282E2D518595) {
+    +++ description: None
+      sourceHashes:
++        ["0xf4773d39e3c19f28a41b1b526474a51db5a28bb3fa5ea530f6af164e5263f209"]
+    }
+```
+
+```diff
+    contract Sentinel (0xF140024969F6c76494a78518D9a99c8776B55f70) {
+    +++ description: The Sentinel is itself a Governor and Pauser in the bridge contracts. It allows additional Sentinel-Governors to make changes in its name that can be restricted by Guards changing the Sentinel's relaxed state.
+      sourceHashes:
++        ["0x4a43bdaa7c21f911802bc9e3457cf5fef469f43b372ea6944d53823caf2f53f2","0x03c52122def17f5a3403dd9a188a1e30bee36b86dc98fb8c07a5157ccc7da286"]
+    }
+```
+
+```diff
+    contract SimpleGovernance (0xF380166F8490F24AF32Bf47D1aA217FBA62B6575) {
+    +++ description: None
+      sourceHashes:
++        ["0xd51a863b498f5cbb3e78ed94d7e69fa4cd246b862a12894d80ec1dedad934361"]
+    }
+```
+
+Generated with discovered.json: 0x53a0b030ae06797da89edce8548cf08b0cb903e5
 
 # Diff at Tue, 01 Oct 2024 10:50:23 GMT:
 

@@ -161,4 +161,14 @@ describe('layer3s', () => {
       })
     }
   })
+
+  describe('upcoming project have createdAt', () => {
+    for (const layer3 of layer3s) {
+      if (layer3.isUpcoming) {
+        it(layer3.display.name, () => {
+          expect(layer3.createdAt).not.toEqual(undefined)
+        })
+      }
+    }
+  })
 })

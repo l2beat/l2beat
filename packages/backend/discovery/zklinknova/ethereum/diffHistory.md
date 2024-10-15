@@ -1,4 +1,142 @@
-Generated with discovered.json: 0x8b8cb3e1e32a56e92041f78a13f6a64616a64c96
+Generated with discovered.json: 0x23351a9adc44a9685c0c4286af13eb6789211394
+
+# Diff at Mon, 14 Oct 2024 10:58:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20675743
+- current block number: 20675743
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20675743 (main branch discovery), not current.
+
+```diff
+    contract Arbitrator (0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002) {
+    +++ description: None
+      sourceHashes:
++        ["0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6","0xff7b9bda4ccb0ae0e1775f82206c54ef89c794f6b4ffa42edbb65996bf7d0e8c"]
+    }
+```
+
+```diff
+    contract ArbitrumL1Gateway (0x273D59aed2d793167c162E64b9162154B07583C0) {
+    +++ description: None
+      sourceHashes:
++        ["0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6","0x9158bf76b126cdaa6a8fe310085a77d400ab2458c21f79e637846d8bc3cc2a13"]
+    }
+```
+
+```diff
+    contract EthereumProxyAdmin (0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2) {
+    +++ description: None
+      sourceHashes:
++        ["0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"]
+    }
+```
+
+```diff
+    contract BlastL1Gateway (0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158) {
+    +++ description: None
+      sourceHashes:
++        ["0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6","0xc39118a9cebca411d42cb5759e7387270a0a8472860288b0e01aa3235777afe5"]
+    }
+```
+
+```diff
+    contract BaseL1Gateway (0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E) {
+    +++ description: None
+      sourceHashes:
++        ["0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6","0x9487f6c6e032e98bef376a27f09d5a3e8c83a059eaf6d8b092c80138cb37459f"]
+    }
+```
+
+```diff
+    contract zkLink (0x5fD9F73286b7E8683Bab45019C94553b93e015Cf) {
+    +++ description: None
+      sourceHashes:
++        ["0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6","0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"]
+    }
+```
+
+```diff
+    contract MantaL1Gateway (0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D) {
+    +++ description: None
+      sourceHashes:
++        ["0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6","0xb3ae8d5bec68fa0994192ecdc4f2ad4126bb1ef22051378f5b605d59193955e4"]
+    }
+```
+
+```diff
+    contract OptimismL1Gateway (0x668e8F67adB8219e1816C2E5bBEa055A78AF3026) {
+    +++ description: None
+      sourceHashes:
++        ["0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6","0x9487f6c6e032e98bef376a27f09d5a3e8c83a059eaf6d8b092c80138cb37459f"]
+    }
+```
+
+```diff
+    contract LineaL1Gateway (0x803460416C2682Ac54FccF03eF77b10A12f2809b) {
+    +++ description: None
+      sourceHashes:
++        ["0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6","0x7f9e12d70f78945c6ea417774b5faf2e0a78ed4fbbdcaec591bf123428f28197"]
+    }
+```
+
+```diff
+    contract EthereumL1Gateway (0x83Bc7394738A7A084081aF22EEC0051908c0055c) {
+    +++ description: None
+      sourceHashes:
++        ["0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6","0x6f5cdba451da8c1759148644f4daf8344ed2853d765413e18cd2fcf662f4694a"]
+    }
+```
+
+```diff
+    contract ScrollL1Gateway (0x986c905087a663db3C81ad319b94c1E9dd388e92) {
+    +++ description: None
+      sourceHashes:
++        ["0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6","0x91cc3c90f1b2c05558c8c2f9575ffcc8f7cb39a023073a028d6b6abb3986d601"]
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0xAd16eDCF7DEB7e90096A259c81269d811544B6B6) {
+    +++ description: None
+      sourceHashes:
++        ["0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8","0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"]
+    }
+```
+
+```diff
+    contract EthereumOwner (0xdb4D755E3b8735314147b9bB146327C269701E2D) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract MantleL1Gateway (0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269) {
+    +++ description: None
+      sourceHashes:
++        ["0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6","0xb3ae8d5bec68fa0994192ecdc4f2ad4126bb1ef22051378f5b605d59193955e4"]
+    }
+```
+
+```diff
+    contract EraL1Gateway (0xeCD189e0f390826E137496a4e4a23ACf76c942Ab) {
+    +++ description: None
+      sourceHashes:
++        ["0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6","0x070067bfd007d5f15c96e1e404a8b9b5eab4a2616d8ea8ebeab0a22f58262461"]
+    }
+```
+
+Generated with discovered.json: 0x9281dc62a7c1cbfda3c467c88bf7126945197cb9
 
 # Diff at Tue, 01 Oct 2024 11:12:02 GMT:
 

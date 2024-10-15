@@ -5,6 +5,7 @@ import { setupCanonicalQueues } from './queues/canonical.js'
 import { setupDeploymentQueues } from './queues/deployment.js'
 import { setupIndependentQueues } from './queues/independent.js'
 import { setupOnChainMetadataQueues } from './queues/on-chain.js'
+import { setupTokenMetaAggregatorQueue } from './queues/token-meta-aggregator.js'
 import { connection } from './redis/redis.js'
 import { getNetworksConfig } from './utils/get-networks-config.js'
 import { startQueueDashboard } from './utils/queue/dashboard.js'
@@ -48,6 +49,7 @@ const canonical = await setupCanonicalQueues(deps)
 const deployment = await setupDeploymentQueues(deps)
 const independent = await setupIndependentQueues(deps)
 const onChainMetadata = await setupOnChainMetadataQueues(deps)
+const tokenMetaAggregator = await setupTokenMetaAggregatorQueue(deps)
 
 // When token deployment is updated, route the event to the canonical processors since these are dependent on the deployment data
 const deploymentToCanonicalRoutingWorker = router.routingKey({
@@ -95,7 +97,11 @@ const refreshBroadcastWorker = router.broadcast({
 // Broadcast the token update events to the dependent sources to dependant sources
 const independentBroadcastWorker = router.broadcast({
   from: independent.inbox,
-  to: [deployment.routing.inbox, onChainMetadata.routing.inbox],
+  to: [
+    deployment.routing.inbox,
+    onChainMetadata.routing.inbox,
+    tokenMetaAggregator.inbox,
+  ],
 })
 
 // #region BullBoard
@@ -114,6 +120,9 @@ if (env.QUEUE_DASHBOARD_PORT) {
     deployment.routing.inbox,
     deployment.update.inbox,
     deployment.buses.map((b) => b.queue),
+
+    // TokenMetaAggregator
+    tokenMetaAggregator.inbox,
 
     // Canonical
     canonical.arbitrum.collector.queue,

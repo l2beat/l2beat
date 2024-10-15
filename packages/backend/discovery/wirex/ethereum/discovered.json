@@ -7,6 +7,9 @@
     {
       "name": "Verifier",
       "address": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+      "sourceHashes": [
+        "0x0bc67d276b40b2ba13903d94fd6c25ae4d3d5162bc942763c418afdc11bc9b32"
+      ],
       "sinceTimestamp": 1711291211,
       "values": { "$immutable": true },
       "derivedName": "FflonkVerifier"
@@ -14,7 +17,11 @@
     {
       "name": "DACProxyAdmin",
       "address": "0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78",
-      "receivedPermissions": [
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
+      ],
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "target": "0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5"
@@ -30,12 +37,21 @@
     {
       "name": "WirexPayChainDAC",
       "address": "0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5",
+      "sourceHashes": [
+        "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
+        "0xf7c38d00c4b6000f1840ed38f9ae99d753da8ac69ee1b6ac9ed614f2b60d470f"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78",
-          "via": []
+          "target": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
+          "via": [
+            {
+              "address": "0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78",
+              "delay": 0
+            }
+          ]
         }
       ],
       "sinceTimestamp": 1720547183,
@@ -70,6 +86,10 @@
     {
       "name": "WirexPayChainValidium",
       "address": "0x78253E2E6120164bd826668A4C96Db20f78A94c9",
+      "sourceHashes": [
+        "0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4",
+        "0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"
+      ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1720089623,
@@ -123,7 +143,22 @@
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x49a191471F248f7c86cA29477e6E969970BaEAdA" },
     { "address": "0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA" },
-    { "address": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe" },
+    {
+      "address": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5",
+          "via": [{ "address": "0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78"
+        }
+      ]
+    },
     { "address": "0xBf5B50887F0B2b3160A3a097EBA4edEd8A9dDed1" },
     { "address": "0xCEb82CC6e0C2541a19E4b6E2DBF237fF2d8E96f8" },
     { "address": "0xecEA75e2854FD52b0aE5C51C88f5eA8e2eC4bf9A" }
@@ -303,6 +338,7 @@
       "function verifyMessage(bytes32 signedHash, bytes signaturesAndAddrs) view"
     ]
   },
-  "usedTemplates": {},
-  "shapeFilesHash": "0xe0f207ecc129c923626e6f93ed1bbc718cc7b8b510ffc1d6b69d0e1d62e7f70f"
+  "usedTemplates": {
+    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091"
+  }
 }

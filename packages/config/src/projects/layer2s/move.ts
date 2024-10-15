@@ -1,8 +1,10 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
 export const move: Layer2 = upcomingL2({
   id: 'move',
+  createdAt: new UnixTime(1717924525), // 2024-06-09T09:15:25Z
   display: {
     name: 'M2',
     slug: 'move',
