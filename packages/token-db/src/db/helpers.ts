@@ -1,6 +1,6 @@
 import { Database } from '@l2beat/database'
-import { UpsertableTokenMetaRecord } from '@l2beat/database'
-import { UpsertableTokenRecord } from '@l2beat/database'
+import { type UpsertableTokenMetaRecord } from '@l2beat/database'
+import { type UpsertableTokenRecord } from '@l2beat/database'
 import { nanoid } from 'nanoid'
 import { Simplify } from 'type-fest'
 import { SourceTagParams, sourceTag } from '../utils/source-tag.js'
