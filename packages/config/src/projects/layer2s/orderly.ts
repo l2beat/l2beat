@@ -14,8 +14,7 @@ export const orderly: Layer2 = opStackL2({
   display: {
     name: 'Orderly Network',
     slug: 'orderly',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
+
     description:
       'Orderly is an OP stack Optimium on Ethereum using Celestia for data availability. It has a unified ledger for assets from multiple chains and an orderbook that can be used by apps that build on top of it.',
     detailedDescription:

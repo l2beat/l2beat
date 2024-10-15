@@ -37,8 +37,7 @@ export const metis: Layer2 = {
     slug: 'metis',
     description:
       'Metis Andromeda is an EVM-equivalent solution originally forked from Optimism OVM. Since April 2024 hashes of data blobs are posted to EOA similarly to OPStack chains. It uses a decentralized Sequencer pool running Tendermint consensus and MPC module to sign transaction batches.',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
+
     purposes: ['Universal'],
     provider: 'OVM',
     category: 'Optimium',

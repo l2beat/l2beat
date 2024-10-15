@@ -20,8 +20,7 @@ export const ancient: Layer2 = opStackL2({
   display: {
     name: 'Ancient8',
     slug: 'ancient8',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
+
     description:
       'Ancient8 Chain is a gaming-focused community-driven Ethereum Layer 2 built using OP Stack.',
     purposes: ['Gaming'],

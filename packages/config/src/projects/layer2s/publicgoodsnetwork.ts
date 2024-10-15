@@ -17,8 +17,7 @@ export const publicgoodsnetwork: Layer2 = opStackL2({
     shortName: 'PGN',
     slug: 'publicgoodsnetwork',
     architectureImage: 'publicgoodsnetwork',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
+
     description:
       'Public Goods Network is an OP stack chain focused on funding public goods.',
     purposes: ['Universal'],

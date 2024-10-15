@@ -14,8 +14,7 @@ export const mode: Layer2 = opStackL2({
   display: {
     name: 'Mode Network',
     slug: 'mode',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
+
     description:
       'Mode is an OP stack Optimistic Rollup building the AIFi economy. Their mission is to scale DeFi to billions of users through onchain agents and AI powered financial applications to build a more open, efficient, and inclusive financial future.',
     purposes: ['Universal'],
