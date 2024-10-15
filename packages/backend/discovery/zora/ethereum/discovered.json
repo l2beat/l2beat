@@ -1,8 +1,8 @@
 {
   "name": "zora",
   "chain": "ethereum",
-  "blockNumber": 20769566,
-  "configHash": "0x4f504880274f99c9783e5ed09c9ab707e056c1de0fa410a99b7139474a1dad7f",
+  "blockNumber": 20970978,
+  "configHash": "0xa14b37f05264d23aaf9493d93e86e30ca827917ccbc325307de28a7a7c64ac98",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -105,7 +105,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 20769472
+          "prevBlockNum": 20970963
         },
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -545,10 +545,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 19933380,
-        "latestOutputIndex": 11298,
-        "nextBlockNumber": 19935180,
-        "nextOutputIndex": 11299,
+        "latestBlockNumber": 21148380,
+        "latestOutputIndex": 11973,
+        "nextBlockNumber": 21150180,
+        "nextOutputIndex": 11974,
         "proposer": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
         "PROPOSER": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
         "startingBlockNumber": 0,
@@ -802,7 +802,7 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "ChallengerMultisig",
+      "name": "ZoraMultisig2",
       "address": "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -919,7 +919,7 @@
         ],
         "$upgradeCount": 4,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292623973",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292624875",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,

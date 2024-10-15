@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xedded29113f7fb08eea6114fd9b1dbefdf5fcefb
+
+# Diff at Tue, 15 Oct 2024 12:32:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@33bd64a73f84c81473940dfbc42995becf18b27b block: 20769566
+- current block number: 20970978
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20769566 (main branch discovery), not current.
+
+```diff
+    contract ZoraMultisig2 (0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72) {
+    +++ description: None
+      name:
+-        "ChallengerMultisig"
++        "ZoraMultisig2"
+    }
+```
+
 Generated with discovered.json: 0xf01266da9b95b4251e6769dda9b032b755395ac1
 
 # Diff at Mon, 14 Oct 2024 10:58:27 GMT:
