@@ -2,16 +2,14 @@
   "name": "@l2beat/database",
   "private": true,
   "version": "0.0.0",
-  "main": "dist/index.js",
-  "types": "src/index.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "types": "./src/index.ts"
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
     },
     "./enums": {
-      "import": "./dist/kysely/generated/enums.js",
-      "types": "./src/kysely/generated/enums.ts"
+      "types": "./src/kysely/generated/enums.ts",
+      "default": "./dist/kysely/generated/enums.js"
     }
   },
   "scripts": {
