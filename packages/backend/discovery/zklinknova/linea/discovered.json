@@ -8,6 +8,10 @@
       "name": "LineaOwner",
       "address": "0x0Bff4B38792a95314b3463E1Bf9831BDa1995391",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
@@ -43,6 +47,9 @@
     {
       "name": "ValidatorTimelock",
       "address": "0x509ff56c152315EdeE91A2e0f059195519507e01",
+      "sourceHashes": [
+        "0x12cecfbcc6781dd4b8196aa7774f756e4f6b1ffa89386aee473d301f8b6e50a9"
+      ],
       "sinceTimestamp": 1709977822,
       "values": {
         "$immutable": true,
@@ -65,6 +72,13 @@
     {
       "name": "zkLink",
       "address": "0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05",
+      "sourceHashes": [
+        "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f",
+        "0x0aeeb5887677b09d5c9b6dfb6fd52bf2c97728ae0aedb533baab3f7fe0653ac3",
+        "0xe7e19467e9bc94a61947db08bfecea640d85dd166beac055385b877417dfbd71",
+        "0xb6a5aa1fb38aec46fe13d3e977cb8a06b3e3fd7e5c1ec2ef87f58fa4d21d3f45",
+        "0xbe5fe6b595b02be18ecb35c95a6b4b18c75aa4a08ab3cf035b72e9e5f71109d9"
+      ],
       "proxyType": "EIP2535 diamond proxy",
       "ignoreInWatchMode": [
         "getPriorityQueueSize",
@@ -282,6 +296,10 @@
     {
       "name": "L1ERC20Bridge",
       "address": "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0xa03991e1bce15902cbac3b622d56b1d1a7ffac18bd69a20e1b22a38a350b1246"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -315,6 +333,10 @@
       "name": "LineaL2Gateway",
       "address": "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB",
       "template": "zklinknova/secondaryGateway",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x9cdec4676ceb81fecae56fb51bb2b303a5e0c13d98bb75c91e343bbe6b6d3d59"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -348,6 +370,9 @@
     {
       "name": "Verifier",
       "address": "0x902C3806A84f4e855a8746e92d7F1C9a51400458",
+      "sourceHashes": [
+        "0x456c64183a7130a9bf99039d4d381b4b827b7efe87e684f81c20871836d975cb"
+      ],
       "sinceTimestamp": 1709217961,
       "values": {
         "$immutable": true,
@@ -357,6 +382,9 @@
     {
       "name": "Governance",
       "address": "0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec",
+      "sourceHashes": [
+        "0x200762223206dfe40a648627db22f3403b1bdb04c59d8753a1e7525591876fda"
+      ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -671,6 +699,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "zklinknova/secondaryGateway": "0xb8fdb3c993db014b3b0c1cdd56f21ecb1aac5dd63185bc3f87a6c0e45e9168c6"
-  },
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+  }
 }

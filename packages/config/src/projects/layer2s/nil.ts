@@ -15,9 +15,9 @@ export const nil: Layer2 = upcomingL2({
     links: {
       websites: ['https://nil.foundation/'],
       apps: [],
-      documentation: ['https://docs.nil.foundation/nil/'],
-      explorers: [],
-      repositories: [],
+      documentation: ['https://docs.nil.foundation/'],
+      explorers: ['https://explore.nil.foundation'],
+      repositories: ['https://github.com/nilfoundation'],
       socialMedia: ['https://twitter.com/nil_foundation'],
     },
   },

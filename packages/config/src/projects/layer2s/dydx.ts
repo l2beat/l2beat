@@ -82,6 +82,8 @@ export const dydx: Layer2 = {
     slug: 'dydx',
     warning:
       'This page describes dYdX v3, which is an L2 built on Ethereum. Recently deployed dYdX v4 is a separate blockchain based on Cosmos SDK, unrelated to Ethereum and is using different technology. No information on this page applies to dYdX v4.',
+    headerWarning:
+      'dYdX v3 is planned to shut down on October 28th at 12:05 P.M. UTC. [Read more](https://dydx.exchange/blog/v3-product-sunset)',
     description:
       'dYdX v3 aims to build a powerful and professional exchange for trading crypto assets where users can truly own their trades and, eventually, the exchange itself.',
     purposes: ['Exchange'],

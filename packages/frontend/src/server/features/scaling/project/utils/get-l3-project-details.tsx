@@ -238,6 +238,21 @@ export async function getL3ProjectDetails({
     })
   }
 
+  if (project.stage && project.stage.stage !== 'NotApplicable') {
+    items.push({
+      type: 'StageSection',
+      props: {
+        id: 'stage',
+        title: 'Rollup stage',
+        stageConfig: project.stage,
+        name: project.display.name,
+        icon: `/icons/${project.display.slug}.png`,
+        type: project.display.category,
+        isUnderReview: project.isUnderReview,
+      },
+    })
+  }
+
   if (technologySection) {
     items.push({
       type: 'TechnologySection',

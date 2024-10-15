@@ -8,6 +8,10 @@
       "name": "GnosisSafe",
       "address": "0x0706Ffc1722D53a85ba90f32807880ccee968Fed",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1715256563,
@@ -31,6 +35,10 @@
       "name": "AuthorityMultisig",
       "address": "0x4720342419C1D316B948690d12C86D5b485C64E0",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1722032243,
@@ -55,6 +63,10 @@
       "name": "TreasuryOwner",
       "address": "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
@@ -87,6 +99,10 @@
     {
       "name": "EtherBridge",
       "address": "0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x6c9915deb3c1995718bd3919c08d1b3cd20ae7957820fa959345c6a6df1b2ab2"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -125,6 +141,10 @@
     {
       "name": "Mailbox",
       "address": "0xb23B2492f7A9631104A5877F7FFA00633660968d",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0xba13db03312283ce922ecc440fda2277ee898ec150ba63de910c6241181199ab"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -170,6 +190,10 @@
     {
       "name": "Treasury",
       "address": "0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x9bdc786276b4d7feab768c6c8c296d44e22918524e1a28b23db40678d2b0eeef"
+      ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
@@ -427,6 +451,5 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
-  },
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+  }
 }

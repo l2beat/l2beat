@@ -1,3 +1,93 @@
+Generated with discovered.json: 0x0a287cd83e7b82c8e6aca364356dd636a1878514
+
+# Diff at Mon, 14 Oct 2024 10:50:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 18939732
+- current block number: 18939732
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18939732 (main branch discovery), not current.
+
+```diff
+    contract TimeLock1 (0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d) {
+    +++ description: None
+      sourceHashes:
++        ["0x9e2584b52fbf6729573afbb5c1cbab7d1159455f10d4de2a581c460e49852e70"]
+    }
+```
+
+```diff
+    contract Multisig2 (0x2028834B2c0A36A918c10937EeA71BE4f932da52) {
+    +++ description: None
+      sourceHashes:
++        ["0xf716f94059215d0e4c8d8edf41e5a65e741bce5005c2afee04eaafcf5c210d20"]
+    }
+```
+
+```diff
+    contract DefaultDepositContract (0x54D7aE423Edb07282645e740C046B9373970a168) {
+    +++ description: None
+      sourceHashes:
++        ["0x09274cec6469e731822a31ef5a200ae33fc319aca366cf599f707b6359f97613","0x84fb4e2bbd657c64908e8875c1bbe3610271899626eaf9cf56d6b69400a607b3"]
+    }
+```
+
+```diff
+    contract Multisig1 (0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C) {
+    +++ description: None
+      sourceHashes:
++        ["0xf716f94059215d0e4c8d8edf41e5a65e741bce5005c2afee04eaafcf5c210d20"]
+    }
+```
+
+```diff
+    contract LoopringV3 (0x9385aCd9d78dFE854c543294770d0C94c2B07EDC) {
+    +++ description: None
+      sourceHashes:
++        ["0x1a927b8a2febc8b60253ee7277d887fe95ec3e23241d77d0ec9e6f424239438e"]
+    }
+```
+
+```diff
+    contract LoopringIOExchangeOwner (0x9b93e47b7F61ad1358Bd47Cd01206708E85AE5eD) {
+    +++ description: None
+      sourceHashes:
++        ["0x80a64d522f935661e6a91ce240c8fab04db5aa499462cca019fcda5e0494b18e"]
+    }
+```
+
+```diff
+    contract ExchangeV3 (0x9C07A72177c5A05410cA338823e790876E79D73B) {
+    +++ description: None
+      sourceHashes:
++        ["0x09274cec6469e731822a31ef5a200ae33fc319aca366cf599f707b6359f97613","0x0eb913bdd3a56c7e954cf0d749fde579620dce50157f8736c1938de91acd7127"]
+    }
+```
+
+```diff
+    contract BlockVerifier (0xE3B7fE3ce0fa54C5AC7F48E7ED9E52dA045bE4d6) {
+    +++ description: None
+      sourceHashes:
++        ["0x1154ee2a46fb0e5586723354429b36343227a2e36a12e518d7e985031b67695d"]
+    }
+```
+
+```diff
+    contract TimeLock2 (0xf2991507952d9594E71A44A54fb19f3109D213A5) {
+    +++ description: None
+      sourceHashes:
++        ["0x9e2584b52fbf6729573afbb5c1cbab7d1159455f10d4de2a581c460e49852e70"]
+    }
+```
+
 Generated with discovered.json: 0x68c2def71eb8a3e6ca2256bc56c9460090f68a93
 
 # Diff at Tue, 01 Oct 2024 10:50:45 GMT:

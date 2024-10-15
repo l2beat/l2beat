@@ -600,7 +600,8 @@
     },
     {
       "symbol": "GPT",
-      "address": "0xCdb4A8742ed7D0259b51E3454C46C9D6C48d5e88"
+      "address": "0xCdb4A8742ed7D0259b51E3454C46C9D6C48d5e88",
+      "deploymentTimestamp": 1716807971
     },
     {
       "symbol": "GRT",
@@ -4024,6 +4025,13 @@
       "source": "native",
       "supply": "totalSupply",
       "coingeckoId": "re-al"
+    },
+    {
+      "symbol": "UKRE",
+      "address": "0x835d3E1C0aA079C6164AAd21DCb23E60eb71AF48",
+      "source": "native",
+      "supply": "totalSupply", // no circulating on CG, but seems to be fully circulating
+      "coingeckoId": "uk-real-estate"
     },
     {
       "symbol": "USTB",

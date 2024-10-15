@@ -10,8 +10,11 @@ import { createValueId } from './createValueId'
 export function getValuesConfigHash(
   amountConfigs: AmountConfigEntry[],
   priceConfigs: CoingeckoPriceConfigEntry[],
+  indexerMinHeight: number,
 ): string {
   const valueIds: string[] = []
+
+  valueIds.push(indexerMinHeight.toString())
 
   for (const amount of amountConfigs) {
     const price = priceConfigs.find((p) => p.assetId === amount.assetId)
