@@ -65,7 +65,8 @@ export function DaProjectStats({ project }: Props) {
           project.header.usedIn.length !== 0 ? (
             <ProjectsUsedIn
               usedIn={project.header.usedIn}
-              className="flex-wrap justify-end"
+              className="flex-wrap justify-start"
+              maxProjects={Infinity}
             />
           ) : (
             'None'
