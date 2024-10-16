@@ -7,8 +7,8 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { CustomLink } from '~/components/link/custom-link'
-import { PercentChange } from '~/components/percent-change'
 import { Square } from '~/components/square'
+import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { unifyPercentagesAsIntegers } from '~/utils/math'
@@ -72,14 +72,13 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
           params.breakdown.warning ? (
             <Tooltip>
               <TooltipTrigger className="flex items-center gap-1">
-                <p className="text-lg font-bold md:text-2xl md:leading-none">
+                <ValueWithPercentageChange
+                  className="text-lg font-bold md:text-2xl md:leading-none"
+                  changeClassName="text-xs font-bold md:text-base"
+                  change={params.breakdown.totalChange}
+                >
                   {formatCurrency(params.breakdown.total, 'usd')}
-                </p>
-                {params.breakdown.total > 0 && (
-                  <p className="text-xs font-bold md:text-base">
-                    <PercentChange value={params.breakdown.totalChange} />
-                  </p>
-                )}
+                </ValueWithPercentageChange>
                 {params.breakdown.warning && (
                   <RoundedWarningIcon
                     className="size-4"
@@ -93,14 +92,13 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
             </Tooltip>
           ) : (
             <div className="flex items-center gap-1">
-              <p className="text-nowrap text-lg font-bold md:text-2xl md:leading-none">
+              <ValueWithPercentageChange
+                className="text-nowrap text-lg font-bold md:text-2xl md:leading-none"
+                changeClassName="text-xs font-bold md:text-base"
+                change={params.breakdown.totalChange}
+              >
                 {formatCurrency(params.breakdown.total, 'usd')}
-              </p>
-              {params.breakdown.total > 0 && (
-                <p className="text-xs font-bold md:text-base">
-                  <PercentChange value={params.breakdown.totalChange} />
-                </p>
-              )}
+              </ValueWithPercentageChange>
               {params.breakdown.warning && (
                 <RoundedWarningIcon className="size-4" sentiment="warning" />
               )}

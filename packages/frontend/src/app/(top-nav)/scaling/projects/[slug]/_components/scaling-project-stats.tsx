@@ -8,9 +8,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { StatWithChange } from '~/components/projects/stat-with-change'
 import { StageTooltip } from '~/components/table/cells/stage/stage-tooltip'
 import { TypeCell } from '~/components/table/cells/type-cell'
+import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { InfoIcon } from '~/icons/info'
 import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { cn } from '~/utils/cn'
@@ -41,10 +41,12 @@ export function ScalingProjectStats({ project, className }: Props) {
         tooltip="Transactions per second averaged over the past day displayed together with a percentage change compared to 7D ago."
         value={
           project.header.activity ? (
-            <StatWithChange
-              stat={project.header.activity.lastDayTps}
+            <ValueWithPercentageChange
               change={project.header.activity.tpsWeeklyChange}
-            />
+              changeClassName="text-base font-medium"
+            >
+              {project.header.activity.lastDayTps.toFixed(2)}
+            </ValueWithPercentageChange>
           ) : (
             <UpcomingBadge />
           )

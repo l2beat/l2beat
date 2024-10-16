@@ -7,6 +7,7 @@ interface Props {
   change: number | undefined
   containerClassName?: string
   className?: string
+  changeClassName?: string
 }
 
 export function ValueWithPercentageChange({
