@@ -42,6 +42,11 @@ export const eigenDA: DaLayer = {
 
     ![EigenDA operator registration](/images/da-layer-technology/eigenda/registration.png#center)
 
+    ### Operators Stake Update  
+    
+    EigenDA operators' stake for quorum verification is fetched from the EigenDA StakeRegistry contract. To keep the stake in sync with changes in share balances in the EigenLayer DelegationManager (e.g., due to tokens delegated/undelegated to operators), the permissionless updateOperatorStake() function on the RegistryCoordinator contract needs to be called periodically. This function updates the operators' quorum weight in the StakeRegistry contract based on the operators' shares in the EigenLayer DelegationManager contract.
+    ![EigenDA operator stake sync](/images/da-layer-technology/eigenda/stakesync.png#center)
+
     ### Operators Blob Storage and Retrieval 
 
     The process of storing a blob on EigenDA works as follows. A sequencer submits blobs to the EigenDA Disperser, which erasure codes the blobs into chunks and generates KZG commitments and proofs for each chunk, certifying the correctness of the data. The disperser then sends the chunks, KZG commitments, and KZG proofs to the operators.

@@ -8,7 +8,7 @@ Generated with discovered.json: 0xa1d2c9aeb745c143a3b314098a6a398c6368092c
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Added naming to distinguish the two different ProxyAdmin, one is for EigenLayer core contracts and one is for EIGEN token specifically.
 
 ## Config/verification related changes
 
