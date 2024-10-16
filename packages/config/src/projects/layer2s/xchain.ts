@@ -13,7 +13,7 @@ export const xchain: Layer2 = underReviewL2({
     provider: 'Arbitrum',
     description:
       'XCHAIN is an Optimium based on the Arbitrum Orbit stack. It is built to support IDEX - a high-performance perpetual swaps exchange. It allows for gas free and nearly instant settlement of all IDEX transactions.',
-    purposes: ['DeFi'],
+    purposes: ['Universal'],
     links: {
       websites: ['https://idex.io/'],
       apps: ['https://exchange.idex.io/'],

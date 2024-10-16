@@ -15,7 +15,7 @@ export const hook: Layer3 = underReviewL3({
     provider: 'Arbitrum',
     description:
       'Hook is an Orbit stack L3 Appchain on Arbitrum powering a perpetuals DEX for tokens and NFTs.',
-    purposes: ['DeFi', 'NFT', 'Exchange'],
+    purposes: ['Universal', 'NFT', 'Exchange'],
     links: {
       websites: ['https://hook.xyz/'],
       apps: ['https://hook.xyz/trade/'],
