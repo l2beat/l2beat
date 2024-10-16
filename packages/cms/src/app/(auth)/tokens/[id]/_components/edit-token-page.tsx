@@ -13,11 +13,9 @@ import {
   Controls,
   type Edge,
   type Node,
-  Position,
   ReactFlow,
 } from '@xyflow/react'
 import { ChevronLeft, Trash2 } from 'lucide-react'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useCallback, useMemo, useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
@@ -86,7 +84,7 @@ const tokenFormSchema = z.object({
 export function EditTokenPage({
   token,
   tokens,
-  bridges,
+  bridges: links,
   networks,
 }: {
   networks: { id: string; name: string }[]
@@ -491,7 +489,7 @@ export function EditTokenPage({
                 <Table>
                   <TableHeader>
                     <TableHead>Token</TableHead>
-                    <TableHead>Bridge</TableHead>
+                    <TableHead>Link</TableHead>
                     <TableHead className="w-0" />
                   </TableHeader>
                   <TableBody>
@@ -512,7 +510,7 @@ export function EditTokenPage({
                                       <SelectValue placeholder="Select a token" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                      {tokens.slice(0, 10).map((token) => (
+                                      {tokens.map((token) => (
                                         <SelectItem
                                           key={token.tokenId}
                                           value={token.tokenId}
@@ -543,10 +541,10 @@ export function EditTokenPage({
                                     defaultValue={field.value}
                                   >
                                     <SelectTrigger>
-                                      <SelectValue placeholder="Select a bridge" />
+                                      <SelectValue placeholder="Select a link" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                      {bridges
+                                      {links
                                         .sort((a, b) =>
                                           a.name.localeCompare(b.name),
                                         )
@@ -614,7 +612,7 @@ export function EditTokenPage({
                     <Table>
                       <TableHeader>
                         <TableHead>Token</TableHead>
-                        <TableHead>Bridge</TableHead>
+                        <TableHead>Link</TableHead>
                       </TableHeader>
                       <TableBody>
                         {backing.map((field, index) => (
@@ -631,9 +629,9 @@ export function EditTokenPage({
               <div className="flex flex-row gap-4">
                 <Card className="flex-1">
                   <CardHeader>
-                    <CardTitle>Bridge ID</CardTitle>
+                    <CardTitle>Token ID</CardTitle>
                     <CardDescription>
-                      Unique identifier of this bridge.
+                      Unique identifier of this token.
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
