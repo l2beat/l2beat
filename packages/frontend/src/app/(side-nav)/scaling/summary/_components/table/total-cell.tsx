@@ -45,10 +45,7 @@ export function TotalCell(data: TotalCellProps) {
               {formatTvlTableNumber(totalTvl)}
             </span>
             {data.change !== undefined && (
-              <PercentChange
-                value={data.change}
-                className="ml-1 font-medium md:text-base"
-              />
+              <PercentChange value={data.change} className="ml-1 font-medium" />
             )}
           </div>
           <TokenBreakdown

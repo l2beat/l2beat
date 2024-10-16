@@ -1,6 +1,7 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { NumberCell } from '~/components/table/cells/number-cell'
+import { PrimaryValueCell } from '~/components/table/cells/primary-value-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
@@ -22,7 +23,7 @@ export const scalingActivityColumns = [
       if (!data) {
         return <NoDataBadge />
       }
-      return formatTps(data.pastDayTps)
+      return <PrimaryValueCell>{formatTps(data.pastDayTps)}</PrimaryValueCell>
     },
     sortUndefined: 'last',
     meta: {
@@ -57,14 +58,12 @@ export const scalingActivityColumns = [
         return <NoDataBadge />
       }
       return (
-        <div className="flex items-center justify-end">
-          <NumberCell className="font-bold">
-            {formatInteger(data.summedCount)}
-          </NumberCell>
-          <NumberCell signed className="ml-1 !text-base font-medium">
+        <PrimaryValueCell className="flex items-center justify-end">
+          <NumberCell>{formatInteger(data.summedCount)}</NumberCell>
+          <NumberCell signed className="ml-1 font-medium">
             {data.change}
           </NumberCell>
-        </div>
+        </PrimaryValueCell>
       )
     },
     sortUndefined: 'last',

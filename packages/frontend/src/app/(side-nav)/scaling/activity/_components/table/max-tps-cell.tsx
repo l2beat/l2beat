@@ -1,5 +1,9 @@
 import { NumberCell } from '~/components/table/cells/number-cell'
-import { cn } from '~/utils/cn'
+import {
+  TwoRowCell,
+  TwoRowCellFirstRow,
+  TwoRowCellSecondRow,
+} from '~/components/table/cells/two-row-cell'
 import { formatTimestamp } from '~/utils/dates'
 import { formatTps } from '~/utils/number-format/format-tps'
 
@@ -10,16 +14,13 @@ interface Props {
 
 export function MaxTpsCell({ maxTps, timestamp }: Props) {
   return (
-    <span className="flex items-baseline justify-end gap-1.5">
-      <NumberCell>{formatTps(maxTps)}</NumberCell>
-      <span
-        className={cn(
-          'text-gray-700 dark:text-gray-300',
-          'block w-[108px] text-right',
-        )}
-      >
+    <TwoRowCell>
+      <TwoRowCellFirstRow className="text-right">
+        <NumberCell>{formatTps(maxTps)}</NumberCell>
+      </TwoRowCellFirstRow>
+      <TwoRowCellSecondRow className="text-right">
         on {formatTimestamp(timestamp)}
-      </span>
-    </span>
+      </TwoRowCellSecondRow>
+    </TwoRowCell>
   )
 }

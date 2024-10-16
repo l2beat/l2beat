@@ -54,8 +54,7 @@ export const scalingTvlColumns = [
           },
           sortUndefined: 'last',
           meta: {
-            headClassName: 'w-[180px]',
-            align: 'right',
+            align: 'center',
             tooltip: 'Total = Canonical + External + Native',
           },
         },

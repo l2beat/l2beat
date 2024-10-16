@@ -62,8 +62,6 @@ export const scalingCostsColumns = [
           align: 'center',
           tooltip:
             'The total cost that is a sum of the costs for calldata, computation, blobs, and overhead.',
-          cellClassName: '!px-2',
-          headClassName: '!px-2',
         },
       }),
     ],

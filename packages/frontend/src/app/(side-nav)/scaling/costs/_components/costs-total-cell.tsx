@@ -11,6 +11,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { DetailedOnHover } from '~/components/detailed-on-hover'
+import { PrimaryValueCell } from '~/components/table/cells/primary-value-cell'
 import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { formatCostValue } from '../_utils/format-cost-value'
@@ -47,9 +48,9 @@ export function CostsTotalCell({ data, warning }: CellProps) {
       <div className="flex flex-col items-end">
         <div className="flex items-center gap-1">
           {warning && <Warning warning={warning} />}
-          <span className="font-medium">
+          <PrimaryValueCell>
             <DetailedOnHover value={data.total}>{formatted}</DetailedOnHover>
-          </span>
+          </PrimaryValueCell>
         </div>
         <CostsBreakdown
           blobs={data.blobs}

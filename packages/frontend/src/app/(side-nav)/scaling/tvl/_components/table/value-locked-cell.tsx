@@ -1,4 +1,5 @@
 import { PercentChange } from '~/components/percent-change'
+import { PrimaryValueCell } from '~/components/table/cells/primary-value-cell'
 import { formatTvlTableNumber } from '~/utils/number-format/format-tvl-number'
 
 export interface ValueLockedCellProps {
@@ -8,14 +9,9 @@ export interface ValueLockedCellProps {
 
 export function ValueLockedCell(data: ValueLockedCellProps) {
   return (
-    <div className="flex items-center">
-      <span className="text-base font-bold">
-        {formatTvlTableNumber(data.value)}
-      </span>
-      <PercentChange
-        value={data.change}
-        className="ml-1 !text-base font-medium"
-      />
-    </div>
+    <PrimaryValueCell className="flex items-center">
+      <span className="font-bold">{formatTvlTableNumber(data.value)}</span>
+      <PercentChange value={data.change} className="ml-1 font-medium" />
+    </PrimaryValueCell>
   )
 }
