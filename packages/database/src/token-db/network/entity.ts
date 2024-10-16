@@ -1,7 +1,7 @@
 import { Insertable } from 'kysely'
 import { nanoid } from 'nanoid'
-import { Network } from '../../kysely/generated/types'
 import { NetworkType } from '../../kysely/generated/enums'
+import { Network } from '../../kysely/generated/types'
 
 export interface NetworkRecord {
   id: string

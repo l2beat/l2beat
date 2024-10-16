@@ -43,8 +43,8 @@ import {
   Select,
   SelectContent,
   SelectItem,
-  selectNullValue,
   SelectTrigger,
+  selectNullValue,
 } from '~/components/ui/select'
 import { deleteNetwork, insertNetwork, updateNetwork } from '../_actions'
 
