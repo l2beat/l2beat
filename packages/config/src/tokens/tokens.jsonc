@@ -2986,6 +2986,62 @@
   ],
   "linea": [
     {
+      "symbol": "M-BTC",
+      "address": "0xe4D584ae9b753e549cAE66200A6475d2f00705f7",
+      "coingeckoId": "merlin-s-seal-btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "BBTC",
+      "address": "0x93C12084dCFC08c759ad96B94234D9C39705689f",
+      "coingeckoId": "bouncebit-btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "SolvBTC.m",
+      "address": "0x5FFcE65A40f6d3de5332766ffF6A28BF491C868c",
+      "coingeckoId": "solv-btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "SolvBTC.b",
+      "address": "0x96155858A02c410c3C814BB32Fdc413b3241b62E",
+      "coingeckoId": "solv-btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "wBTC",
       "address": "0x3aAB2285ddcDdaD8edf438C1bAB47e1a9D05a9b4",
       "coingeckoId": "wrapped-bitcoin",
@@ -3174,7 +3230,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Free Bridge"
+            "name": "Free.tech Bridge (Meson)"
           }
         ]
       }
@@ -3473,7 +3529,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Free Bridge"
+            "name": "Free.tech Bridge (Meson)"
           }
         ]
       }
@@ -3564,7 +3620,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Free Bridge"
+            "name": "Free.tech Bridge (Meson)"
           }
         ]
       },
@@ -4009,7 +4065,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Free Bridge"
+            "name": "Free.tech Bridge (Meson)"
           }
         ]
       },
@@ -4023,7 +4079,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Free Bridge"
+            "name": "Free.tech Bridge (Meson)"
           }
         ]
       },
