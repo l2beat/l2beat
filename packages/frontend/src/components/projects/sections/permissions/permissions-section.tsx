@@ -17,6 +17,16 @@ export function PermissionsSection({
 }: PermissionsSectionProps) {
   return (
     <ProjectSection {...sectionProps} includeChildrenIfUnderReview>
+      {permissionedEntities && (
+        <h3 className="mt-4 font-bold">The DAC has the following members:</h3>
+      )}
+      {permissionedEntities?.map((entity) => (
+        <PermissionedEntityEntry
+          key={entity.href}
+          {...entity}
+          className="my-2"
+        />
+      ))}
       <h3 className="mt-4 font-bold">
         The system uses the following set of permissioned addresses:
       </h3>
@@ -52,18 +62,6 @@ export function PermissionsSection({
             )
           })}
       </div>
-      {permissionedEntities && (
-        <h3 className="mt-4 font-bold">
-          The system uses the following set of permissioned entities:
-        </h3>
-      )}
-      {permissionedEntities?.map((entity) => (
-        <PermissionedEntityEntry
-          key={entity.href}
-          {...entity}
-          className="my-2"
-        />
-      ))}
     </ProjectSection>
   )
 }
