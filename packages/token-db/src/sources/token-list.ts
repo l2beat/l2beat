@@ -5,6 +5,7 @@ import { z } from 'zod'
 import { upsertManyTokensWithMeta } from '../db/helpers.js'
 import { TokenUpdateQueue } from '../utils/queue/wrap.js'
 import { zodFetch } from '../utils/zod-fetch.js'
+import { assert } from '@l2beat/shared-pure'
 
 export { buildTokenListSource }
 
@@ -37,6 +38,8 @@ function buildTokenListSource({ db, url, tag, logger, queue }: Dependencies) {
         })
         return []
       }
+
+      assert(chain.chainId, 'chainId is required')
 
       return {
         networkId: chain.id,
