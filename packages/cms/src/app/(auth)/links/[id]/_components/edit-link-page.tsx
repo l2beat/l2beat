@@ -61,7 +61,10 @@ export function EditLinkPage({ link }: { link: ExternalBridgeRecord | null }) {
       const result = link
         ? await updateBridge({
             ...data,
-            managedBy: data.managedBy.length > 0 ? data.managedBy : null,
+            managedBy:
+              data.managedBy && data.managedBy.length > 0
+                ? data.managedBy
+                : null,
             id: link.id,
           })
         : await insertBridge(data)
