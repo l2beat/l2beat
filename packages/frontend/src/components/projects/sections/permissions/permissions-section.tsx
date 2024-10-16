@@ -1,16 +1,18 @@
-import React from 'react'
 import { ContractEntry, type TechnologyContract } from '../contract-entry'
+import { PermissionedEntityEntry } from '../permissioned-entity-entry'
 import { ProjectSection } from '../project-section'
 import { type ProjectSectionProps } from '../types'
 
 export interface PermissionsSectionProps extends ProjectSectionProps {
   permissions: TechnologyContract[]
   nativePermissions: Record<string, TechnologyContract[]>
+  permissionedEntities?: { name: string; href: string }[]
 }
 
 export function PermissionsSection({
   permissions,
   nativePermissions,
+  permissionedEntities,
   ...sectionProps
 }: PermissionsSectionProps) {
   return (
@@ -50,6 +52,18 @@ export function PermissionsSection({
             )
           })}
       </div>
+      {permissionedEntities && (
+        <h3 className="mt-4 font-bold">
+          The system uses the following set of permissioned entities:
+        </h3>
+      )}
+      {permissionedEntities?.map((entity) => (
+        <PermissionedEntityEntry
+          key={entity.href}
+          {...entity}
+          className="my-2"
+        />
+      ))}
     </ProjectSection>
   )
 }
