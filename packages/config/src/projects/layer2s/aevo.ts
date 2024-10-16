@@ -14,15 +14,13 @@ export const aevo: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
   associatedTokens: ['AEVO'],
   discovery,
+  additionalPurposes: ['Exchange'],
   display: {
     name: 'Aevo',
     slug: 'aevo',
     architectureImage: 'aevo',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
       'Aevo is a high-performance decentralized options exchange, powered by the OP Stack and Celestia DA.',
-    purposes: ['Exchange'],
     links: {
       websites: ['https://aevo.xyz/'],
       apps: ['https://app.aevo.xyz/'],
