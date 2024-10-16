@@ -13,7 +13,7 @@ export function ChartTimeline() {
   const isClient = useIsClient()
   const loading = useChartLoading()
   const { columns } = useChartContext()
-  if (!isClient || columns.length === 0) {
+  if (loading || !isClient || columns.length === 0) {
     return null
   }
 
@@ -21,20 +21,18 @@ export function ChartTimeline() {
 
   return (
     <div className="mt-2 w-full">
-      {!loading && isClient
-        ? columns.map((column, i) => {
-            const label = getTimelineLabel(column.data.timestamp, range)
-            if (!label) return null
-            return (
-              <TimelineLabel
-                key={column.data.timestamp}
-                x={i / (columns.length - 1)}
-              >
-                {label}
-              </TimelineLabel>
-            )
-          })
-        : null}
+      {columns.map((column, i) => {
+        const label = getTimelineLabel(column.data.timestamp, range)
+        if (!label) return null
+        return (
+          <TimelineLabel
+            key={column.data.timestamp}
+            x={i / (columns.length - 1)}
+          >
+            {label}
+          </TimelineLabel>
+        )
+      })}
     </div>
   )
 }
