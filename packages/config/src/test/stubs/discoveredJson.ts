@@ -5,6 +5,12 @@ export const contractStub: ContractParameters = {
   name: 'MockedContract',
   address: EthereumAddress('0x0D4C1222f5e839a911e2053860e45F18921D72ac'),
   proxyType: 'StarkWare diamond',
+  receivedPermissions: [
+    {
+      permission: 'sequence',
+      target: EthereumAddress('0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3'),
+    },
+  ],
   values: {
     $immutable: false,
     $implementation: EthereumAddress.random().toString(),
@@ -62,8 +68,24 @@ export const discoveredJsonStub: DiscoveryOutput = {
     },
   ],
   eoas: [
-    { address: EthereumAddress.from('0xaa11') },
-    { address: EthereumAddress.from('0xbb22') },
+    {
+      address: EthereumAddress.from('0xaa11'),
+      receivedPermissions: [
+        {
+          permission: 'validate',
+          target: EthereumAddress('0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3'),
+        },
+      ],
+    },
+    {
+      address: EthereumAddress.from('0xbb22'),
+      receivedPermissions: [
+        {
+          permission: 'sequence',
+          target: EthereumAddress('0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3'),
+        },
+      ],
+    },
   ],
   abis: {},
   configHash: Hash256.random(),
