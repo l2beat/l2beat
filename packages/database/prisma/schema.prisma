@@ -46,11 +46,12 @@ enum ExternalBridgeType {
 }
 
 model ExternalBridge {
-  id      String              @id @db.Char(21)
-  name    String              @db.VarChar(256)
-  type    ExternalBridgeType? @unique
-  tokens  TokenBridge[]
-  escrows BridgeEscrow[]
+  id        String              @id @db.Char(21)
+  name      String              @db.VarChar(256)
+  managedBy String?
+  type      ExternalBridgeType? @unique
+  tokens    TokenBridge[]
+  escrows   BridgeEscrow[]
 
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())

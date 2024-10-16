@@ -6,6 +6,7 @@ import { ExternalBridge } from '../../kysely/generated/types'
 export interface ExternalBridgeRecord {
   id: string
   name: string
+  managedBy: string | null
   type: ExternalBridgeType | null
   updatedAt: Date
   createdAt: Date

@@ -37,10 +37,9 @@ export class ExternalBridgeRepository extends BaseRepository {
   }
 
   async update(id: string, record: UpsertableExternalBridgeRecord) {
-    const row = upsertableToRecord(record)
     await this.db
       .updateTable('ExternalBridge')
-      .set(row)
+      .set(record)
       .where('id', '=', id)
       .execute()
   }
