@@ -1,11 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Database } from '@l2beat/database'
+import { assert } from '@l2beat/shared-pure'
 import { getAddress } from 'viem'
 import { z } from 'zod'
 import { upsertManyTokensWithMeta } from '../db/helpers.js'
 import { TokenUpdateQueue } from '../utils/queue/wrap.js'
 import { zodFetch } from '../utils/zod-fetch.js'
-import { assert } from '@l2beat/shared-pure'
 
 export { buildTokenListSource }
 
