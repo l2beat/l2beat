@@ -1,8 +1,8 @@
-import { ProjectId } from '@l2beat/shared-pure'
-import { Layer2 } from './types'
+import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { formatEther } from 'ethers/lib/utils'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { formatEther } from 'ethers/lib/utils'
+import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('fuel')
 const depositLimitGlobal = formatEther(
@@ -15,6 +15,7 @@ const isErc20whitelistActive = discovery.getContractValue<boolean>(
 
 export const fuel: Layer2 = {
   id: ProjectId('fuel'),
+  isUnderReview: true,
   display: {
     name: 'Fuel',
     slug: 'fuel',
@@ -37,7 +38,16 @@ export const fuel: Layer2 = {
   },
   type: 'layer2',
   config: {
-    escrows: [],
+    escrows: [
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67'),
+        tokens: '*',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf'),
+        tokens: ['ETH'],
+      }),
+    ],
   },
   riskView: {
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
@@ -77,7 +87,7 @@ export const fuel: Layer2 = {
       name: 'ERC20Gateway pausers',
       description: 'Whitelisted addresses that can pause the ERC20Gateway.',
       accounts: discovery.getAccessControlRolePermission(
-        'ERC20Gateway',
+        'FuelERC20Gateway',
         'PAUSER_ROLE',
       ),
     },
