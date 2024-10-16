@@ -43,14 +43,12 @@ import {
 import { deleteBridge, insertBridge, updateBridge } from '../_actions'
 import { insertBridgeSchema } from '../_actions/schemas'
 
-export function EditBridgePage({
-  bridge,
-}: { bridge: ExternalBridgeRecord | null }) {
+export function EditLinkPage({ link }: { link: ExternalBridgeRecord | null }) {
   const router = useRouter()
   const form = useForm({
     defaultValues: {
-      name: bridge?.name ?? '',
-      type: bridge?.type ?? null,
+      name: link?.name ?? '',
+      type: link?.type ?? null,
     },
     resolver: zodResolver(insertBridgeSchema),
   })
@@ -59,40 +57,40 @@ export function EditBridgePage({
 
   const onSubmit = useCallback(
     async (data: z.infer<typeof insertBridgeSchema>) => {
-      const result = bridge
-        ? await updateBridge({ ...data, id: bridge.id })
+      const result = link
+        ? await updateBridge({ ...data, id: link.id })
         : await insertBridge(data)
       if (result?.data?.failure) {
         toast.error(result.data.failure)
       } else {
-        router.replace('/bridges')
+        router.replace('/links')
       }
     },
-    [bridge, router],
+    [link, router],
   )
 
   const onDiscard = useCallback(() => {
-    router.replace('/bridges')
+    router.replace('/links')
   }, [router])
 
   const onDelete = useCallback(async () => {
-    if (!bridge) return
-    await deleteBridge({ id: bridge.id })
-    router.replace('/bridges')
-  }, [bridge, router])
+    if (!link) return
+    await deleteBridge({ id: link.id })
+    router.replace('/links')
+  }, [link, router])
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="mx-auto grid w-full max-w-[59rem] flex-1 auto-rows-max gap-4">
           <div className="flex items-center gap-4">
-            <Link href="/bridges">
+            <Link href="/links">
               <Button variant="ghost" size="icon">
                 <ChevronLeft className="size-4" />
               </Button>
             </Link>
             <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">
-              {bridge?.name ?? 'New bridge'}
+              {link?.name ?? 'New link'}
             </h1>
             <div className="hidden items-center gap-2 md:ml-auto md:flex">
               <Button
@@ -102,12 +100,12 @@ export function EditBridgePage({
               >
                 Discard
               </Button>
-              <Button>Save Bridge</Button>
+              <Button>Save Link</Button>
             </div>
           </div>
           <Card>
             <CardHeader>
-              <CardTitle>Bridge details</CardTitle>
+              <CardTitle>Link details</CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col gap-4">
               <FormField
@@ -120,7 +118,7 @@ export function EditBridgePage({
                       <Input {...field} />
                     </FormControl>
                     <FormDescription>
-                      The name of the bridge. This is displayed publicly in the
+                      The name of this link. This is displayed publicly in the
                       UI.
                     </FormDescription>
                     <FormMessage />
@@ -154,11 +152,11 @@ export function EditBridgePage({
                       </SelectContent>
                     </Select>
                     <FormDescription>
-                      The handler to use for this bridge. Keep in mind that
-                      there can be only one bridge per handler. Selecting a
-                      handler will cause the tokens to be automatically marked
-                      as bridged using this bridge
-                      {bridge ? (
+                      The handler to use for this link. Keep in mind that there
+                      can be only one link per handler. Selecting a handler will
+                      cause the tokens to be automatically marked as linked
+                      using this link
+                      {link ? (
                         <span>
                           , and manually configured entries may be deleted. If
                           changing this, proceed with caution.
@@ -173,24 +171,24 @@ export function EditBridgePage({
               />
             </CardContent>
           </Card>
-          {bridge && (
+          {link && (
             <div className="flex flex-row gap-4">
               <Card className="flex-1">
                 <CardHeader>
-                  <CardTitle>Bridge ID</CardTitle>
+                  <CardTitle>Link ID</CardTitle>
                   <CardDescription>
-                    Unique identifier of this bridge.
+                    Unique identifier of this link.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <ReadonlyCopyInput value={bridge?.id ?? ''} />
+                  <ReadonlyCopyInput value={link?.id ?? ''} />
                 </CardContent>
               </Card>
               <Card className="flex-1">
                 <CardHeader>
-                  <CardTitle>Delete Bridge</CardTitle>
+                  <CardTitle>Delete Link</CardTitle>
                   <CardDescription>
-                    This action is irreversible and will delete the bridge,
+                    This action is irreversible and will delete the link,
                     together with all associated token connections.
                   </CardDescription>
                 </CardHeader>
@@ -200,7 +198,7 @@ export function EditBridgePage({
                     type="button"
                     onClick={() => setDeleteDialogOpen(true)}
                   >
-                    Delete Bridge
+                    Delete Link
                   </Button>
                 </CardFooter>
               </Card>

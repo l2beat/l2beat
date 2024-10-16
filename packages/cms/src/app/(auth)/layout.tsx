@@ -29,8 +29,8 @@ const menu = [
     icon: Coins,
   },
   {
-    name: '3rd Party Bridges',
-    href: '/bridges' as const,
+    name: 'Links',
+    href: '/links' as const,
     icon: SendToBack,
   },
 ]
