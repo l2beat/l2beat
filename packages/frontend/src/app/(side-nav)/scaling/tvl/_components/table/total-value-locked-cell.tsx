@@ -8,7 +8,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { PercentChange } from '~/components/percent-change'
+import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { formatTvlTableNumber } from '~/utils/number-format/format-tvl-number'
 
@@ -39,13 +39,9 @@ export function TotalValueLockedCell(data: TotalValueLockedCellProps) {
                 sentiment={anyBadWarnings ? 'bad' : 'warning'}
               />
             ) : null}
-            <span className="text-base font-bold">
+            <ValueWithPercentageChange change={data.change}>
               {formatTvlTableNumber(total)}
-            </span>
-            <PercentChange
-              value={data.change}
-              className="ml-1 text-xs font-medium md:text-base"
-            />
+            </ValueWithPercentageChange>
           </div>
           <ValueLockedBreakdown
             canonical={data.breakdown.canonical}

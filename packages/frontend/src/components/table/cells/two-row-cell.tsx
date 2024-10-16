@@ -9,7 +9,10 @@ export function TwoRowCell({ children }: Props) {
   return <div>{children}</div>
 }
 
-export function TwoRowCellFirstRow({ children, className }: Props) {
+TwoRowCell.First = TwoRowCellFirstRow
+TwoRowCell.Second = TwoRowCellSecondRow
+
+function TwoRowCellFirstRow({ children, className }: Props) {
   return (
     <div
       className={cn(
@@ -22,7 +25,7 @@ export function TwoRowCellFirstRow({ children, className }: Props) {
   )
 }
 
-export function TwoRowCellSecondRow({ children, className }: Props) {
+function TwoRowCellSecondRow({ children, className }: Props) {
   return (
     <div
       className={cn(

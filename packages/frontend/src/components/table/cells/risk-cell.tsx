@@ -15,11 +15,7 @@ import {
 import { SentimentText } from '../../sentiment-text'
 import { WarningBar } from '../../warning-bar'
 import { NoInfoCell } from './no-info-cell'
-import {
-  TwoRowCell,
-  TwoRowCellFirstRow,
-  TwoRowCellSecondRow,
-} from './two-row-cell'
+import { TwoRowCell } from './two-row-cell'
 
 interface Risk {
   value: string
@@ -52,7 +48,7 @@ export function RiskCell({ risk, emptyMode = 'no-info' }: Props) {
 
   const trigger = (
     <TwoRowCell>
-      <TwoRowCellFirstRow className="flex items-center gap-1">
+      <TwoRowCell.First className="flex items-center gap-1">
         <SentimentText sentiment={risk.sentiment}>{risk.value}</SentimentText>
         {risk.warning && (
           <RoundedWarningIcon
@@ -62,15 +58,15 @@ export function RiskCell({ risk, emptyMode = 'no-info' }: Props) {
             )}
           />
         )}
-      </TwoRowCellFirstRow>
+      </TwoRowCell.First>
       {risk.secondLine && (
-        <TwoRowCellSecondRow
+        <TwoRowCell.Second
           className={
             '-mt-1 mb-1 text-xs text-secondary md:m-0 md:text-xs md:leading-none'
           }
         >
           {risk.secondLine}
-        </TwoRowCellSecondRow>
+        </TwoRowCell.Second>
       )}
     </TwoRowCell>
   )

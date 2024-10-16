@@ -2,13 +2,13 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { TotalCell } from '~/app/(side-nav)/scaling/summary/_components/table/total-cell'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/pizza-rosette-cell'
-import { NumberCell } from '~/components/table/cells/number-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { StageCell } from '~/components/table/cells/stage/stage-cell'
 import {
   TypeCell,
   TypeExplanationTooltip,
 } from '~/components/table/cells/type-cell'
+import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { sortStages } from '~/components/table/sorting/functions/stage-sorting'
 import { formatNumber } from '~/utils/number-format/format-number'
@@ -83,14 +83,9 @@ export const scalingSummaryColumns = [
       }
 
       return (
-        <div className="flex items-center">
-          <NumberCell className="font-bold">
-            {formatNumber(ctx.getValue())}
-          </NumberCell>
-          <NumberCell signed className="ml-1 font-medium">
-            {data.change}
-          </NumberCell>
-        </div>
+        <ValueWithPercentageChange change={data.change}>
+          {formatNumber(ctx.getValue())}
+        </ValueWithPercentageChange>
       )
     },
     sortUndefined: 'last',

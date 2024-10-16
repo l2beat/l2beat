@@ -1,8 +1,8 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
-import { NumberCell } from '~/components/table/cells/number-cell'
 import { PrimaryValueCell } from '~/components/table/cells/primary-value-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
+import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
 import { formatInteger } from '~/utils/number-format/format-integer'
@@ -58,12 +58,13 @@ export const scalingActivityColumns = [
         return <NoDataBadge />
       }
       return (
-        <PrimaryValueCell className="flex items-center justify-end">
-          <NumberCell>{formatInteger(data.summedCount)}</NumberCell>
-          <NumberCell signed className="ml-1 font-medium">
-            {data.change}
-          </NumberCell>
-        </PrimaryValueCell>
+        <ValueWithPercentageChange
+          change={data.change}
+          className="font-medium"
+          containerClassName="justify-end"
+        >
+          {formatInteger(data.summedCount)}
+        </ValueWithPercentageChange>
       )
     },
     sortUndefined: 'last',
