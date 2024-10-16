@@ -48,6 +48,7 @@ export function EditLinkPage({ link }: { link: ExternalBridgeRecord | null }) {
   const form = useForm({
     defaultValues: {
       name: link?.name ?? '',
+      managedBy: link?.managedBy ?? '',
       type: link?.type ?? null,
     },
     resolver: zodResolver(insertBridgeSchema),
@@ -58,7 +59,11 @@ export function EditLinkPage({ link }: { link: ExternalBridgeRecord | null }) {
   const onSubmit = useCallback(
     async (data: z.infer<typeof insertBridgeSchema>) => {
       const result = link
-        ? await updateBridge({ ...data, id: link.id })
+        ? await updateBridge({
+            ...data,
+            managedBy: data.managedBy.length > 0 ? data.managedBy : null,
+            id: link.id,
+          })
         : await insertBridge(data)
       if (result?.data?.failure) {
         toast.error(result.data.failure)
@@ -120,6 +125,22 @@ export function EditLinkPage({ link }: { link: ExternalBridgeRecord | null }) {
                     <FormDescription>
                       The name of this link. This is displayed publicly in the
                       UI.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="managedBy"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Managed By</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      The name of the entity that is responsible for this link.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

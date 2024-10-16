@@ -20,12 +20,13 @@ export default async function Page({
 }) {
   const allLinks = (await db.externalBridge.getAll())
     .sort((a, b) => a.name.localeCompare(b.name))
-    .filter((bridge) => {
+    .filter((link) => {
       if (!searchParams.search) return true
       const search = (searchParams.search as string).toLowerCase()
       return (
-        bridge.name.toLowerCase().includes(search) ||
-        bridge.type?.toLowerCase().includes(search)
+        link.name.toLowerCase().includes(search) ||
+        link.managedBy?.toLowerCase().includes(search) ||
+        link.type?.toLowerCase().includes(search)
       )
     })
   const count = allLinks.length
@@ -66,6 +67,7 @@ export default async function Page({
             <TableHeader>
               <TableRow>
                 <TableHead>Name</TableHead>
+                <TableHead>Managed By</TableHead>
                 <TableHead>Handler</TableHead>
                 <TableHead />
               </TableRow>
@@ -76,6 +78,7 @@ export default async function Page({
                 .map((link) => (
                   <TableRow key={link.id}>
                     <TableCell>{link.name}</TableCell>
+                    <TableCell>{link.managedBy ?? 'None'}</TableCell>
                     <TableCell>{link.type ?? 'None'}</TableCell>
                     <TableCell className="text-right">
                       <Link href={`/links/${link.id}`} key={link.id}>

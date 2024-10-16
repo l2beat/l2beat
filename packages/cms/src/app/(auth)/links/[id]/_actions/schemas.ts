@@ -3,6 +3,7 @@ import { z } from 'zod'
 
 export const insertBridgeSchema = z.object({
   name: z.string().min(3).max(191),
+  managedBy: z.string().nullable(),
   type: z.nativeEnum(ExternalBridgeType).nullable(),
 })
 
