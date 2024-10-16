@@ -9,23 +9,23 @@ const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
 
 describe(RpcTxsCountProvider.name, () => {
   describe(RpcTxsCountProvider.prototype.getTxsCount.name, () => {
-    const analyzer = new RpcUopsAnalyzer()
     it('should return txs and uops count', async () => {
+      const analyzer = new RpcUopsAnalyzer()
       const client = mockRpcClient([
         { timestamp: START, count: 1, number: 1 },
         { timestamp: START.add(1, 'hours'), count: 2, number: 2 },
         { timestamp: START.add(2, 'days'), count: 5, number: 3 },
       ])
       analyzer.analyzeBlock = mockFn()
-        .resolvesToOnce({
+        .returnsOnce({
           transactionsLength: 1,
           uopsLength: 2,
         })
-        .resolvesToOnce({
+        .returnsOnce({
           transactionsLength: 2,
           uopsLength: 3,
         })
-        .resolvesToOnce({
+        .returnsOnce({
           transactionsLength: 5,
           uopsLength: 7,
         })
@@ -44,6 +44,7 @@ describe(RpcTxsCountProvider.name, () => {
     })
 
     it('should return txs and uops count and use assessCount', async () => {
+      const analyzer = new RpcUopsAnalyzer()
       const client = mockRpcClient([
         { timestamp: START, count: 1, number: 1 },
         { timestamp: START.add(1, 'hours'), count: 2, number: 2 },
@@ -51,11 +52,11 @@ describe(RpcTxsCountProvider.name, () => {
       const assessCount = mockFn((count) => count - 1)
 
       analyzer.analyzeBlock = mockFn()
-        .resolvesToOnce({
+        .returnsOnce({
           transactionsLength: 1,
           uopsLength: 2,
         })
-        .resolvesToOnce({
+        .returnsOnce({
           transactionsLength: 2,
           uopsLength: 3,
         })
