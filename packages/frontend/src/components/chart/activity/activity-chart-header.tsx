@@ -1,5 +1,7 @@
 import { InfoIcon } from '~/icons/info'
 import { type ActivityChartStats } from '~/server/features/scaling/activity/get-activity-chart-stats'
+import { countToTps } from '~/server/features/scaling/activity/utils/count-to-tps'
+import { cn } from '~/utils/cn'
 import { formatTps } from '~/utils/number-format/format-tps'
 import { Skeleton } from '../../core/skeleton'
 import {
@@ -8,7 +10,6 @@ import {
   TooltipTrigger,
 } from '../../core/tooltip/tooltip'
 import { ChartTimeRange } from '../core/chart-time-range'
-import { countToTps } from '~/server/features/scaling/activity/utils/count-to-tps'
 
 interface Props {
   stats: ActivityChartStats | undefined
@@ -52,11 +53,11 @@ export function ActivityChartHeader({ stats, range }: Props) {
   )
 }
 
-function ScalingFactorTooltip({ className }: { className?: string }) {
+export function ScalingFactorTooltip({ className }: { className?: string }) {
   return (
     <Tooltip>
-      <TooltipTrigger className={className}>
-        <InfoIcon className="size-3.5 fill-current" />
+      <TooltipTrigger>
+        <InfoIcon className={cn('size-3.5 fill-current', className)} />
       </TooltipTrigger>
       <TooltipContent>
         <div className="flex flex-col gap-2">

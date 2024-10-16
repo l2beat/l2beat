@@ -11,6 +11,7 @@ import { api } from '~/trpc/react'
 import { formatTps } from '~/utils/number-format/format-tps'
 import { Chart } from '../core/chart'
 import { ChartProvider } from '../core/chart-provider'
+import { ScalingFactorTooltip } from './activity-chart-header'
 import { ActivityChartHover } from './activity-chart-hover'
 import { useActivityChartRenderParams } from './use-activity-chart-render-params'
 
@@ -85,9 +86,12 @@ function Header({ stats }: { stats: ActivityChartStats | undefined }) {
               <div className="whitespace-nowrap text-right text-xl font-bold">
                 {formatTps(countToTps(stats.latestProjectsTxCount))} TPS
               </div>
-              <span className="whitespace-nowrap text-right text-xs leading-[1.15] text-secondary">
-                Scaling factor: {stats.scalingFactor.toFixed(2)}x
-              </span>
+              <div className="flex items-center gap-1">
+                <span className="whitespace-nowrap text-right text-xs leading-[1.15] text-secondary">
+                  Scaling factor: {stats.scalingFactor.toFixed(2)}x
+                </span>
+                <ScalingFactorTooltip className="size-3" />
+              </div>
             </>
           ) : (
             <>
