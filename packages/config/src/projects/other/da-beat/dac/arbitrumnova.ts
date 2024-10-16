@@ -154,4 +154,5 @@ export const arbitrumNovaDac = DAC({
       risks: [],
     },
   },
+  fallback: 'Ethereum (calldata)',
 })

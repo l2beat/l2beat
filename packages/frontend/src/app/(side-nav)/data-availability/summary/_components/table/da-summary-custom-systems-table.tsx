@@ -20,17 +20,17 @@ import { formatCurrency } from '~/utils/format'
 import { DaTableLastSubRowCell } from '../../../_components/da-table-last-sub-row-cell'
 import { DaTableSubRowCell } from '../../../_components/da-table-sub-row-cell'
 import { mapRisksToRosetteValues } from '../../../_utils/map-risks-to-rosette-values'
-import { dacsColumns } from './columns'
+import { customSystemsColumns } from './columns'
 
 interface Props {
   items: DaSummaryEntry[]
 }
 
-export function DaSummaryDacsTable({ items }: Props) {
+export function DaSummaryCustomSystemsTable({ items }: Props) {
   const breakpoint = useBreakpoint()
   const table = useTable({
     data: items,
-    columns: dacsColumns,
+    columns: customSystemsColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),

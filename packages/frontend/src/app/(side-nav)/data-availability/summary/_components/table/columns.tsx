@@ -142,6 +142,26 @@ const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
   },
 })
 
+const slashableStakeForCustomSystem = columnHelper.accessor(
+  'economicSecurity',
+  {
+    header: 'Slashable stake',
+    cell: (ctx) => {
+      const value = ctx.getValue()
+      if (ctx.row.original.risks.economicSecurity.type === 'Unknown') {
+        return formatCurrency(0, 'usd', { showLessThanMinimum: false })
+      }
+
+      return <DaEconomicSecurityCell value={value} />
+    },
+    meta: {
+      align: 'right',
+      tooltip:
+        'The assets that are slashable in case of a data withholding attack (the amount of funds a committee would need to burn to successfully deceive the DA bridge). It’s equal to 2/3 of the total validating stake, if any.',
+    },
+  },
+)
+
 const usedInColumn = columnHelper.accessor('usedIn', {
   header: 'Used in',
   cell: (ctx) => {
@@ -149,6 +169,19 @@ const usedInColumn = columnHelper.accessor('usedIn', {
     return value.length > 0 ? <ProjectsUsedIn usedIn={value} /> : EM_DASH
   },
   enableSorting: false,
+})
+
+const challengeMechanismColumn = columnHelper.accessor(
+  'hasChallengeMechanism',
+  {
+    header: 'Challenge\nmechanism',
+    cell: (ctx) => (ctx.getValue() ? 'Yes' : 'None'),
+  },
+)
+
+const fallbackColumn = columnHelper.accessor('fallback', {
+  header: 'Fallback',
+  cell: (ctx) => ctx.getValue() ?? 'None',
 })
 
 export const columns = [
@@ -161,10 +194,13 @@ export const columns = [
   usedInColumn,
 ]
 
-export const dacsColumns = [
+export const customSystemsColumns = [
   ...getCommonProjectColumns(columnHelper),
   nameColumn,
   daBridgeColumn,
   risksColumn,
   tvsColumn,
+  fallbackColumn,
+  challengeMechanismColumn,
+  slashableStakeForCustomSystem,
 ]

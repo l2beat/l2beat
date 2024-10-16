@@ -44,6 +44,7 @@ export const xterioDA: DaLayer = {
       ],
     },
   },
+  hasChallengeMechanism: true,
   technology: {
     description: `
     ## Data Availability Challenges
