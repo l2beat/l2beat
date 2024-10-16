@@ -1,10 +1,9 @@
 import { formatSeconds } from '@l2beat/shared-pure'
 import { DaRiskViewOptions } from './DaRiskView'
 
-export type DaExitWindowRisk =
+export type DaUpgradeabilityRisk =
   | typeof NoBridge
   | typeof Immutable
-  | typeof Enshrined
   | ReturnType<typeof Eoa>
   | ReturnType<typeof LowOrNoDelay>
   | ReturnType<typeof SecurityCouncil>
@@ -105,19 +104,10 @@ function LowOrNoDelay(delaySeconds?: number) {
   } as const
 }
 
-const Enshrined = {
-  type: 'Enshrined',
-  value: '∞',
-  sentiment: 'good',
-  description:
-    'Blob commitments posted to Ethereum become irreversible after the block that includes them is finalized. Under normal network conditions, finalization takes two epochs, equivalent to 12.8 minutes.',
-} as const
-
-export const DaExitWindowRisk = {
+export const DaUpgradeabilityRisk = {
   Eoa,
   NoBridge,
   Immutable,
   LowOrNoDelay,
   SecurityCouncil,
-  Enshrined,
 } satisfies DaRiskViewOptions

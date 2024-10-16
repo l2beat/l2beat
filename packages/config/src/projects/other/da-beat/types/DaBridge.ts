@@ -5,11 +5,11 @@ import {
 } from '../../../../common'
 import { DaAccessibilityRisk } from './DaAccessibilityRisk'
 import { DaAttestationSecurityRisk } from './DaAttestationSecurityRisk'
-import { DaExitWindowRisk } from './DaExitWindowRisk'
 import { DaLinks } from './DaLinks'
 import { DaTechnology } from './DaTechnology'
 import { DacTransactionDataType } from './DacTransactionDataType'
 import { UsedInProject } from './UsedInProject'
+import { DaUpgradeabilityRisk } from './DaUpgradeabilityRisk'
 
 export type DaBridge =
   | NoDaBridge
@@ -94,8 +94,8 @@ interface DaBridgeDisplay {
 export type DaBridgeRisks = {
   /** Attestation - TBD. */
   attestations: DaAttestationSecurityRisk
-  /** Exit window - TBD. @unit seconds. */
-  exitWindow: DaExitWindowRisk
+  /** Upgradeability - TBD. @unit seconds. */
+  upgradeability: DaUpgradeabilityRisk
   /** Accessibility - TBD. */
   accessibility: DaAccessibilityRisk
 }
