@@ -18,6 +18,7 @@ import {
   ScalingProjectContract,
   ScalingProjectEscrow,
   ScalingProjectPermission,
+  ScalingProjectPurpose,
   ScalingProjectRisk,
   ScalingProjectRiskView,
   ScalingProjectStateDerivation,
@@ -126,12 +127,13 @@ export interface OrbitStackConfigCommon {
   nonTemplateContractRisks?: ScalingProjectRisk[]
   nativeAddresses?: Record<string, ScalingProjectContract[]>
   nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
+  additionalPurposes?: ScalingProjectPurpose[]
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
   display: Omit<
     Layer3Display,
-    'provider' | 'category' | 'dataAvailabilityMode'
+    'provider' | 'category' | 'dataAvailabilityMode' | 'purposes'
   > & {
     category?: Layer3Display['category']
   }
@@ -143,7 +145,7 @@ export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
   display: Omit<
     Layer2Display,
-    'provider' | 'category' | 'dataAvailabilityMode'
+    'provider' | 'category' | 'dataAvailabilityMode' | 'purposes'
   > & {
     category?: Layer2Display['category']
   }
@@ -623,6 +625,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     hostChain: templateVars.hostChain,
     display: {
       stateValidationImage: 'orbit',
+      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       ...templateVars.display,
       warning:
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
@@ -770,6 +773,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     ...orbitStackCommon(templateVars, ETHEREUM_EXPLORER_URL, 12),
     display: {
       stateValidationImage: 'orbit',
+      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       warning:
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
       ...templateVars.display,

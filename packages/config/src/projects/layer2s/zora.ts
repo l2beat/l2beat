@@ -11,14 +11,12 @@ const discovery = new ProjectDiscovery('zora')
 export const zora: Layer2 = opStackL2({
   discovery,
   badges: [Badge.Infra.Superchain, Badge.RaaS.Conduit],
+  additionalPurposes: ['NFT'],
   display: {
     name: 'Zora',
     slug: 'zora',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
       'Zora is a fast, cost-efficient, and scalable Layer 2 built to help bring media onchain, powered by the OP Stack.',
-    purposes: ['Universal', 'NFT'],
     links: {
       websites: ['https://zora.energy/', 'https://zora.co/'],
       apps: [],

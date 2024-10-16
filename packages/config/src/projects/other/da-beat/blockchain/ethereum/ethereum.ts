@@ -7,6 +7,7 @@ export const ethereum: DaLayer = {
   id: 'ethereum',
   type: 'DaLayer',
   kind: 'PublicBlockchain',
+  systemCategory: 'public',
   display: {
     name: 'Ethereum (EIP-4844)',
     slug: 'ethereum',

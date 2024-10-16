@@ -131,14 +131,34 @@ const tvsColumn = columnHelper.accessor('tvs', {
   },
 })
 
-const economicSecurityColumn = columnHelper.accessor('economicSecurity', {
-  header: 'Economic security',
+const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
+  header: 'Slashable stake',
   cell: (ctx) => <DaEconomicSecurityCell value={ctx.getValue()} />,
   meta: {
     tooltip:
       'The assets that are slashable in case of a data withholding attack (the amount of funds a committee would need to burn to successfully deceive the DA bridge). It’s equal to 2/3 of the total validating stake, if any.',
   },
 })
+
+const slashableStakeForCustomSystem = columnHelper.accessor(
+  'economicSecurity',
+  {
+    header: 'Slashable stake',
+    cell: (ctx) => {
+      const value = ctx.getValue()
+      if (ctx.row.original.risks.economicSecurity.type === 'Unknown') {
+        return formatCurrency(0, 'usd', { showLessThanMinimum: false })
+      }
+
+      return <DaEconomicSecurityCell value={value} />
+    },
+    meta: {
+      align: 'right',
+      tooltip:
+        'The assets that are slashable in case of a data withholding attack (the amount of funds a committee would need to burn to successfully deceive the DA bridge). It’s equal to 2/3 of the total validating stake, if any.',
+    },
+  },
+)
 
 const usedInColumn = columnHelper.accessor('usedIn', {
   header: 'Used in',
@@ -149,20 +169,36 @@ const usedInColumn = columnHelper.accessor('usedIn', {
   enableSorting: false,
 })
 
+const challengeMechanismColumn = columnHelper.accessor(
+  'hasChallengeMechanism',
+  {
+    header: 'Challenge\nmechanism',
+    cell: (ctx) => (ctx.getValue() ? 'Yes' : 'None'),
+  },
+)
+
+const fallbackColumn = columnHelper.accessor('fallback', {
+  header: 'Fallback',
+  cell: (ctx) => ctx.getValue() ?? 'None',
+})
+
 export const columns = [
   ...getCommonProjectColumns(columnHelper),
   nameColumn,
   daBridgeColumn,
   risksColumn,
   tvsColumn,
-  economicSecurityColumn,
+  slashableStakeColumn,
   usedInColumn,
 ]
 
-export const dacsColumns = [
+export const customSystemsColumns = [
   ...getCommonProjectColumns(columnHelper),
   nameColumn,
   daBridgeColumn,
   risksColumn,
   tvsColumn,
+  fallbackColumn,
+  challengeMechanismColumn,
+  slashableStakeForCustomSystem,
 ]
