@@ -54,6 +54,10 @@ export const getCached7dTokenBreakdown = cache(
               breakdown.total,
               oldBreakdown.total,
             ),
+            associatedTokensExcludedChange: calculatePercentageChange(
+              breakdown.total - breakdown.associated,
+              oldBreakdown.total - oldBreakdown.associated,
+            ),
           },
         ]
       }),
@@ -88,6 +92,7 @@ function getMock7dTokenBreakdown(): LatestTvl {
             stablecoin: 15,
             associated: 5,
           },
+          associatedTokensExcludedChange: Math.random(),
           change: Math.random(),
         },
       ]),
