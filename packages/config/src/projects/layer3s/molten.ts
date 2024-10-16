@@ -16,7 +16,6 @@ export const molten: Layer3 = orbitStackL3({
     slug: 'molten',
     description:
       'Molten is an Orbit stack L3 on Arbitrum with AnyTrust DA, created by the UniDex team.',
-    purposes: ['DeFi'],
     links: {
       websites: ['https://moltennetwork.com/'],
       apps: [
