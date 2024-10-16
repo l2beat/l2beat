@@ -13,18 +13,17 @@ import { Method } from '../types'
 import { RpcUopsAnalyzer } from './RpcUopsAnalyzer'
 
 describe(RpcUopsAnalyzer.name, () => {
-  const analyzer = new RpcUopsAnalyzer()
-
   describe(RpcUopsAnalyzer.prototype.analyzeBlock.name, () => {
     it('should correctly sum the number of txs and uops', async () => {
+      const analyzer = new RpcUopsAnalyzer()
       const tx1 = mockObject<providers.TransactionResponse>()
       const tx2 = mockObject<providers.TransactionResponse>()
       const tx3 = mockObject<providers.TransactionResponse>()
 
       analyzer.mapTransaction = mockFn()
-        .resolvesToOnce(1)
-        .resolvesToOnce(2)
-        .resolvesToOnce(4)
+        .returnsOnce(1)
+        .returnsOnce(2)
+        .returnsOnce(4)
 
       const block = {
         transactions: [tx1, tx2, tx3],
@@ -38,6 +37,7 @@ describe(RpcUopsAnalyzer.name, () => {
 
   describe(RpcUopsAnalyzer.prototype.mapTransaction.name, () => {
     it('should handle ERC-4337:EntryPoint0.6.0', async () => {
+      const analyzer = new RpcUopsAnalyzer()
       const tx = mockObject<providers.TransactionResponse>({
         to: ENTRY_POINT_ADDRESS_0_6_0,
         data: '0x1234abcd',
@@ -50,6 +50,7 @@ describe(RpcUopsAnalyzer.name, () => {
     })
 
     it('should handle ERC-4337:EntryPoint0.7.0', async () => {
+      const analyzer = new RpcUopsAnalyzer()
       const tx = mockObject<providers.TransactionResponse>({
         to: ENTRY_POINT_ADDRESS_0_7_0,
         data: '0x1234abcd',
@@ -62,6 +63,7 @@ describe(RpcUopsAnalyzer.name, () => {
     })
 
     it('should handle Safe:MultiSendCallOnly1.3.0', async () => {
+      const analyzer = new RpcUopsAnalyzer()
       const tx = mockObject<providers.TransactionResponse>({
         to: SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
         data: '0x1234abcd',
@@ -74,6 +76,7 @@ describe(RpcUopsAnalyzer.name, () => {
     })
 
     it('should handle Safe:Singleton1.3.0', async () => {
+      const analyzer = new RpcUopsAnalyzer()
       const tx = mockObject<providers.TransactionResponse>({
         to: EthereumAddress.random(),
         data: `${SAFE_EXEC_TRANSACTION_SELECTOR}1234abcd`,
@@ -86,6 +89,7 @@ describe(RpcUopsAnalyzer.name, () => {
     })
 
     it('should handle unrecognized tx', async () => {
+      const analyzer = new RpcUopsAnalyzer()
       const tx = mockObject<providers.TransactionResponse>({
         to: EthereumAddress.random(),
         data: '0x1234abcd',
@@ -100,6 +104,7 @@ describe(RpcUopsAnalyzer.name, () => {
 
   describe(RpcUopsAnalyzer.prototype.countUserOperations.name, () => {
     it('should correctly count static operations', () => {
+      const analyzer = new RpcUopsAnalyzer()
       const mockMethods: Method[] = [
         { selector: '0x1234abcd', count: () => [{ type: 'static', count: 1 }] },
       ]
@@ -109,6 +114,7 @@ describe(RpcUopsAnalyzer.name, () => {
     })
 
     it('should correctly count recursive operations', () => {
+      const analyzer = new RpcUopsAnalyzer()
       const mockMethods: Method[] = [
         {
           selector: '0x1234abcd',
@@ -128,6 +134,7 @@ describe(RpcUopsAnalyzer.name, () => {
     })
 
     it('should handle unknown selectors', () => {
+      const analyzer = new RpcUopsAnalyzer()
       const mockMethods: Method[] = [
         { selector: '0x1234abcd', count: () => [{ type: 'static', count: 2 }] },
       ]
