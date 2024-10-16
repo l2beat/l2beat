@@ -11,10 +11,5 @@ export function formatTps(
 
   const decimals =
     opts?.morePrecision && tps < 1 ? getFirstTwoNonZeroPrecision(tps) : 2
-  const minimum = 10 ** -decimals
-  if (tps !== 0 && tps < minimum) {
-    return '~0.00'
-  }
-
   return formatNumber(tps, decimals)
 }
