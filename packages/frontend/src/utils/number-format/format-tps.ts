@@ -5,8 +5,12 @@ export function formatTps(
   tps: number,
   opts?: { morePrecision: boolean },
 ): string {
+  if (tps === 0) {
+    return '0.00'
+  }
+
   const decimals =
-  opts?.morePrecision && tps < 1 ? getFirstTwoNonZeroPrecision(tps) : 2
+    opts?.morePrecision && tps < 1 ? getFirstTwoNonZeroPrecision(tps) : 2
   const minimum = 10 ** -decimals
   if (tps !== 0 && tps < minimum) {
     return '~0.00'
