@@ -121,6 +121,13 @@ export const orderly: Layer2 = opStackL2({
   discoveryDrivenData: true,
   milestones: [
     {
+      name: 'ORDER Token Airdrop',
+      link: 'https://taiko.mirror.xyz/VSOtILX2DQsc_6IMt5hBT1fEYSH8243pZ8IA_pBfHks',
+      date: '2024-08-26T00:00:00.00Z',
+      description: 'ORDER token launched as a governance token.',
+      type: 'general',
+    },
+    {
       name: 'Orderly Network Mainnet Launch',
       link: 'https://twitter.com/OrderlyNetwork/status/1749419001913237526',
       date: '2024-01-22T00:00:00Z',
