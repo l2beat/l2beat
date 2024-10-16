@@ -26,7 +26,7 @@ export function getServerPagination({
   const limit = clamp(
     urlLimit ? urlLimit : limits[0],
     limits[0],
-    limits[limits.length - 1] as number,
+    limits[limits.length - 1]!,
   )
   const pageCount = Math.ceil(count / limit)
 

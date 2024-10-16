@@ -19,7 +19,7 @@ export default function Page() {
     redirect('/')
   }
   return (
-    <div className="min-h-screen w-screen flex flex-col items-center justify-center">
+    <div className="flex min-h-screen w-screen flex-col items-center justify-center">
       <Card>
         <CardHeader>
           <CardTitle>L2BEAT</CardTitle>

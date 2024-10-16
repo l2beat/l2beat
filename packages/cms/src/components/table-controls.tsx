@@ -22,9 +22,9 @@ export function TableControls({
   )
 
   return (
-    <div className="flex items-center flex-row justify-between gap-6 lg:gap-8 w-full py-4 px-2">
+    <div className="flex w-full flex-row items-center justify-between gap-6 px-2 py-4 lg:gap-8">
       <div className="flex flex-row items-center gap-2">
-        <div className="text-sm font-medium whitespace-nowrap">
+        <div className="whitespace-nowrap text-sm font-medium">
           Rows per page
         </div>
         <Select
@@ -42,7 +42,7 @@ export function TableControls({
         </Select>
       </div>
       <div className="flex flex-row items-center justify-between gap-6">
-        <div className="flex items-center justify-center text-sm font-medium whitespace-nowrap">
+        <div className="flex items-center justify-center whitespace-nowrap text-sm font-medium">
           Page {page} of {pageCount}
         </div>
         <div className="flex items-center space-x-2">
@@ -52,7 +52,7 @@ export function TableControls({
             onClick={() => setPage(1)}
             disabled={page === 1}
           >
-            <ChevronsLeft className="h-4 w-4" />
+            <ChevronsLeft className="size-4" />
           </Button>
           <Button
             variant="secondary"
@@ -60,7 +60,7 @@ export function TableControls({
             onClick={() => setPage(page - 1)}
             disabled={page === 1}
           >
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="size-4" />
           </Button>
           <Button
             variant="secondary"
@@ -68,7 +68,7 @@ export function TableControls({
             onClick={() => setPage(page + 1)}
             disabled={page === pageCount}
           >
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="size-4" />
           </Button>
           <Button
             variant="secondary"
@@ -76,7 +76,7 @@ export function TableControls({
             onClick={() => setPage(pageCount)}
             disabled={page === pageCount}
           >
-            <ChevronsRight className="h-4 w-4" />
+            <ChevronsRight className="size-4" />
           </Button>
         </div>
       </div>

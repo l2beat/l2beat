@@ -16,11 +16,11 @@ export function ThemeToggle({ className }: { className?: string }) {
       className={className}
     >
       {isServer ? (
-        <Loader2 className="h-4 w-4 animate-spin" />
+        <Loader2 className="size-4 animate-spin" />
       ) : resolvedTheme === 'dark' ? (
-        <Sun className="h-4 w-4" />
+        <Sun className="size-4" />
       ) : (
-        <Moon className="h-4 w-4" />
+        <Moon className="size-4" />
       )}
     </Button>
   )
