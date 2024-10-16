@@ -13,13 +13,11 @@ import { SAFE_methods } from '../protocols/gnosisSafe/methods'
 import type { AnalyzedBlock, Analyzer, Method, Operation } from '../types'
 
 export class RpcUopsAnalyzer implements Analyzer {
-  async analyzeBlock(rpcBlock: {
+  analyzeBlock(rpcBlock: {
     transactions: providers.TransactionResponse[]
-  }): Promise<AnalyzedBlock> {
-    const uops = await Promise.all(
-      rpcBlock.transactions.map((tx: providers.TransactionResponse) =>
-        this.mapTransaction(tx),
-      ),
+  }): AnalyzedBlock {
+    const uops = rpcBlock.transactions.map(
+      (tx: providers.TransactionResponse) => this.mapTransaction(tx),
     )
     return {
       uopsLength: sum(uops),
@@ -27,7 +25,7 @@ export class RpcUopsAnalyzer implements Analyzer {
     }
   }
 
-  async mapTransaction(tx: providers.TransactionResponse): Promise<number> {
+  mapTransaction(tx: providers.TransactionResponse): number {
     const methods = ERC4337_methods.concat(SAFE_methods)
 
     const selector = tx.data.slice(0, 10)
@@ -37,7 +35,7 @@ export class RpcUopsAnalyzer implements Analyzer {
       tx.to?.toLowerCase() === SAFE_MULTI_SEND_CALL_ONLY_1_3_0 ||
       selector === SAFE_EXEC_TRANSACTION_SELECTOR
     ) {
-      return await this.countUserOperations(tx.data, methods)
+      return this.countUserOperations(tx.data, methods)
     }
 
     return 1

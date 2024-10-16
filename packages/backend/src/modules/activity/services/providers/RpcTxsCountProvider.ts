@@ -21,7 +21,7 @@ export class RpcTxsCountProvider {
     const queries = range(from, to + 1).map(async (blockNumber) => {
       const block = await this.rpcClient.getBlockWithTransactions(blockNumber)
       const { transactionsLength, uopsLength } =
-        await this.uopsAnalyzer.analyzeBlock(block)
+        this.uopsAnalyzer.analyzeBlock(block)
       const timestamp = new UnixTime(block.timestamp)
 
       const txsCount =

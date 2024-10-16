@@ -11,7 +11,7 @@ export interface Analyzer {
     timestamp: number
     hash: string
     transactions: providers.TransactionResponse[]
-  }): Promise<AnalyzedBlock>
+  }): AnalyzedBlock
 }
 
 export type Operation = StaticOperation | RecursiveOperation
