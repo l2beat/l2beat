@@ -14,8 +14,8 @@ export interface ExternalBridgeRecord {
 
 export type UpsertableExternalBridgeRecord = Omit<
   ExternalBridgeRecord,
-  'id' | 'createdAt' | 'updatedAt'
->
+  'id' | 'createdAt' | 'updatedAt' | 'managedBy'
+> & { managedBy?: string | null }
 
 export function upsertableToRecord(
   record: UpsertableExternalBridgeRecord,
