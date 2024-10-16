@@ -45,7 +45,7 @@ export const alienx: Layer2 = orbitStackL2({
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'AlienXMultisig',
-      'Admin that can upgrade the smart contract system (via UpgradeExecutor) at any time and gain access to all funds.',
+      'Can upgrade the smart contract system (via UpgradeExecutor) at any time and gain access to all funds.',
     ),
   ],
   milestones: [
