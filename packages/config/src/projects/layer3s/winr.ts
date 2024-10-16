@@ -31,7 +31,7 @@ export const winr: Layer3 = orbitStackL3({
   nativeToken: 'WINR',
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
-      'WinrMultisig',
+      'ConduitMultisig2',
       'Can upgrade any system contract and potentially steal all funds.',
     ),
   ],

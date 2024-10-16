@@ -48,7 +48,7 @@ export const popboss: Layer3 = orbitStackL3({
   },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
-      'ProofOfPlayMultisig',
+      'ConduitMultisig2',
       (() => {
         const discoveredAdminOwner = discovery.getAddressFromValue(
           'ProxyAdmin',
@@ -61,7 +61,7 @@ export const popboss: Layer3 = orbitStackL3({
           'EXECUTOR_ROLE',
         ).members[0]
         const discoveredRollupOwnerMultisig = discovery.getContract(
-          'ProofOfPlayMultisig',
+          'ConduitMultisig2',
         ).address
         assert(
           discoveredAdminOwner === discoveredUpgradeExecutorAddy &&
