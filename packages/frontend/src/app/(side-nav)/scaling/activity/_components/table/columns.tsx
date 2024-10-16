@@ -7,6 +7,7 @@ import { getCommonProjectColumns } from '~/components/table/common-project-colum
 import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
 import { formatInteger } from '~/utils/number-format/format-integer'
 import { formatTps } from '~/utils/number-format/format-tps'
+import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
 import { MaxTpsCell } from './max-tps-cell'
 
 const columnHelper = createColumnHelper<ScalingActivityEntry>()
@@ -15,6 +16,9 @@ export const scalingActivityColumns = [
   ...getCommonProjectColumns(columnHelper),
   columnHelper.accessor('name', {
     cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
+    meta: {
+      headClassName: 'w-0',
+    },
   }),
   columnHelper.accessor('data.pastDayTps', {
     header: 'Past day TPS',
@@ -23,11 +27,16 @@ export const scalingActivityColumns = [
       if (!data) {
         return <NoDataBadge />
       }
-      return <PrimaryValueCell>{formatTps(data.pastDayTps)}</PrimaryValueCell>
+      return (
+        <SyncStatusWrapper syncStatus={data.syncStatus}>
+          <PrimaryValueCell>{formatTps(data.pastDayTps)}</PrimaryValueCell>
+        </SyncStatusWrapper>
+      )
     },
     sortUndefined: 'last',
     meta: {
       align: 'right',
+      headClassName: 'max-w-[60px]',
       tooltip: 'Transactions per second averaged over the past day.',
     },
   }),
@@ -40,10 +49,12 @@ export const scalingActivityColumns = [
         return <NoDataBadge />
       }
       return (
-        <MaxTpsCell
-          maxTps={data.maxTps.value}
-          timestamp={data.maxTps.timestamp}
-        />
+        <SyncStatusWrapper syncStatus={data.syncStatus}>
+          <MaxTpsCell
+            maxTps={data.maxTps.value}
+            timestamp={data.maxTps.timestamp}
+          />
+        </SyncStatusWrapper>
       )
     },
     meta: {
@@ -58,13 +69,15 @@ export const scalingActivityColumns = [
         return <NoDataBadge />
       }
       return (
-        <ValueWithPercentageChange
-          change={data.change}
-          className="font-medium"
-          containerClassName="justify-end"
-        >
-          {formatInteger(data.summedCount)}
-        </ValueWithPercentageChange>
+        <SyncStatusWrapper syncStatus={data.syncStatus}>
+          <ValueWithPercentageChange
+            change={data.change}
+            className="font-medium"
+            containerClassName="justify-end"
+          >
+            {formatInteger(data.summedCount)}
+          </ValueWithPercentageChange>
+        </SyncStatusWrapper>
       )
     },
     sortUndefined: 'last',
@@ -74,5 +87,8 @@ export const scalingActivityColumns = [
   }),
   columnHelper.accessor('dataSource', {
     header: 'Data source',
+    meta: {
+      headClassName: 'w-0',
+    },
   }),
 ]

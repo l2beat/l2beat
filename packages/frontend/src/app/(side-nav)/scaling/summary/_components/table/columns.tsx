@@ -30,7 +30,7 @@ export const scalingSummaryColumns = [
     ),
     enableSorting: false,
     meta: {
-      headClassName: 'w-0',
+      align: 'center',
     },
   }),
   columnHelper.accessor('category', {

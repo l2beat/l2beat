@@ -13,7 +13,7 @@ export function ChartTimeline() {
   const isClient = useIsClient()
   const loading = useChartLoading()
   const { columns } = useChartContext()
-  if (columns.length === 0) {
+  if (!isClient || columns.length === 0) {
     return null
   }
 
