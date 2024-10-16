@@ -1,6 +1,6 @@
 import { INFINITY } from '~/consts/characters'
 import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
-import { formatCurrency } from '~/utils/format'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 import { Skeleton } from '../../core/skeleton'
 import { PercentChange } from '../../percent-change'
 import { useChartLoading } from '../core/chart-loading-context'
@@ -45,9 +45,7 @@ export function TvlChartHeader({
           {value === undefined ? (
             <Skeleton className="my-0.5 h-[26px] w-32 md:h-8" />
           ) : (
-            formatCurrency(value, unit, {
-              showLessThanMinimum: false,
-            })
+            formatCurrency(value, unit)
           )}
         </div>
         {loading ? (

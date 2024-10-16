@@ -1,5 +1,5 @@
 import { formatTimestamp } from '~/utils/dates'
-import { formatCurrencyExactValue } from '~/utils/format'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 
 export interface TvlChartPointData {
   timestamp: number
@@ -8,22 +8,26 @@ export interface TvlChartPointData {
 }
 
 export function TvlChartHover({ data }: { data: TvlChartPointData }) {
-  const formattedUsd = formatCurrencyExactValue(data.usdValue, 'USD')
-  const formattedEth = formatCurrencyExactValue(data.ethValue, 'ETH')
+  const formattedUsd = formatCurrency(data.usdValue, 'usd')
+  const formattedEth = formatCurrency(data.ethValue, 'eth')
   return (
-    <div>
+    <div className="flex flex-col gap-1">
       <div className="mb-1 whitespace-nowrap">
         {formatTimestamp(data.timestamp, {
           mode: 'datetime',
         })}
       </div>
-      <div className="flex w-full items-center justify-between gap-2">
-        <span className="text-sm text-gray-700 dark:text-gray-50">USD</span>
-        {formattedUsd}
-      </div>
-      <div className="flex w-full items-center justify-between gap-2">
-        <span className="text-sm text-gray-700 dark:text-gray-50">ETH</span>
-        {formattedEth}
+      <span className="text-sm text-gray-700 dark:text-gray-50">Total</span>
+      <hr className="w-full border-gray-200 dark:border-gray-650 md:border-t" />
+      <div>
+        <div className="flex w-full items-center justify-between gap-2">
+          <span>USD</span>
+          <span className="font-medium">{formattedUsd}</span>
+        </div>
+        <div className="flex w-full items-center justify-between gap-2">
+          <span>ETH</span>
+          <span className="font-medium">{formattedEth}</span>
+        </div>
       </div>
     </div>
   )

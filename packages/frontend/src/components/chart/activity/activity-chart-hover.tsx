@@ -25,9 +25,7 @@ export function ActivityChartHover(props: Props) {
       <div className="flex w-full items-center justify-between gap-2">
         <div className="flex items-center gap-1">
           <div className="relative -top-px inline-block size-2 rounded-full border-2 border-current bg-red-300"></div>
-          <span className="text-sm text-gray-700 dark:text-gray-50 ">
-            {props.singleProject ? 'Project' : 'Projects'}
-          </span>
+          <span>{props.singleProject ? 'Project' : 'Projects'}</span>
         </div>
         <span className="whitespace-nowrap font-bold tabular-nums">
           {props.count.toFixed(2)}
@@ -38,9 +36,7 @@ export function ActivityChartHover(props: Props) {
         <div className="flex w-full items-center justify-between gap-2">
           <div className="flex items-center gap-1">
             <div className="relative -top-px inline-block size-2 border-2 border-current bg-blue-600"></div>
-            <span className="text-sm text-gray-700 dark:text-gray-50 ">
-              Ethereum
-            </span>
+            <span>Ethereum</span>
           </div>
           <span className="whitespace-nowrap font-bold tabular-nums">
             {props.ethereumCount.toFixed(2)}

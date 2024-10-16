@@ -6,7 +6,7 @@ import { EM_DASH } from '~/consts/characters'
 import { ChevronIcon } from '~/icons/chevron'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/format'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 import { mapRisksToRosetteValues } from '../../../_utils/map-risks-to-rosette-values'
 import { DaEconomicSecurityCell } from './da-economic-security-cell'
 import { ProjectsUsedIn } from './projects-used-in'
@@ -124,9 +124,7 @@ const tvsColumn = columnHelper.accessor('tvs', {
   header: 'Total value secured',
   cell: (ctx) =>
     ctx.row.original.usedIn.length > 0
-      ? formatCurrency(ctx.row.original.tvs, 'usd', {
-          showLessThanMinimum: false,
-        })
+      ? formatCurrency(ctx.row.original.tvs, 'usd')
       : EM_DASH,
   meta: {
     tooltip: 'The total value locked of all L2s using this layer.',
@@ -149,7 +147,7 @@ const slashableStakeForCustomSystem = columnHelper.accessor(
     cell: (ctx) => {
       const value = ctx.getValue()
       if (ctx.row.original.risks.economicSecurity.type === 'Unknown') {
-        return formatCurrency(0, 'usd', { showLessThanMinimum: false })
+        return formatCurrency(0, 'usd')
       }
 
       return <DaEconomicSecurityCell value={value} />
