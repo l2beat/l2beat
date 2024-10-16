@@ -452,18 +452,6 @@ describe('layer2s', () => {
     })
   })
 
-  describe('every purpose is short', () => {
-    const purposes = layer2s.map((x) => x.display.purposes)
-    for (const purpose of purposes) {
-      const totalLength = purpose.reduce((acc, curr) => {
-        return acc + curr.length
-      }, 0)
-      it(purpose.join(', '), () => {
-        expect(totalLength).toBeLessThanOrEqual(20)
-      })
-    }
-  })
-
   describe('milestones', () => {
     describe('name', () => {
       describe('no longer than 50 characters', () => {

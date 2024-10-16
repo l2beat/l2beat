@@ -10,7 +10,7 @@ export const unichain: Layer2 = upcomingL2({
     slug: 'unichain',
     description:
       'Unichain, a faster, cheaper L2 designed to be the home for DeFi and the home for multichain liquidity.',
-    purposes: ['Universal', 'DeFi'],
+    purposes: ['Universal', 'Exchange'],
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
     links: {

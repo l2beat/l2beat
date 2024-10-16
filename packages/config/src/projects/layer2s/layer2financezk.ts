@@ -29,7 +29,7 @@ export const layer2financezk: Layer2 = {
       'Layer2.finance-ZK has been shut down, users are encouraged to use optimistic rollup version.',
     description:
       'Celer’s Layer2.finance in ZK proofs Mode Built with StarkEx from StarkWare.',
-    purposes: ['DeFi'],
+    purposes: ['Exchange'],
     provider: 'StarkEx',
     category: 'Validium',
     links: {

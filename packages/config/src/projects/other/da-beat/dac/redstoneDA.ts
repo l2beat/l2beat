@@ -43,6 +43,7 @@ export const redstoneDA: DaLayer = {
       ],
     },
   },
+  hasChallengeMechanism: true,
   technology: {
     description: `
     ## Data Availability Challenges

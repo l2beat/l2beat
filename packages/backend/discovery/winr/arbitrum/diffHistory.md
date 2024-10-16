@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x66b77d12751a018b1ea8760b08851019d46b97ca
+
+# Diff at Wed, 16 Oct 2024 10:19:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b6ff61526cf3d704839d0155008ae72cc9070de8 block: 262718848
+- current block number: 264379343
+
+## Description
+
+Rename shared Conduit MS.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 262718848 (main branch discovery), not current.
+
+```diff
+    contract ConduitMultisig2 (0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      name:
+-        "WinrMultisig"
++        "ConduitMultisig2"
+    }
+```
+
 Generated with discovered.json: 0x3bb8c4e52d94ba51f6b905d4110e2925ba2a9a30
 
 # Diff at Mon, 14 Oct 2024 10:59:21 GMT:

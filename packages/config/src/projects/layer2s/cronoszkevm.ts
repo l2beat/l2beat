@@ -31,7 +31,6 @@ export const cronoszkevm: Layer2 = zkStackL2({
     slug: 'cronoszkevm',
     description:
       'Cronos zkEVM is a general-purpose Validium on Ethereum built on the ZK Stack, scaling the existing portfolio of Cronos apps and chains.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://cronos.org/zkevm'],
       apps: ['https://zkevm.cronos.org/bridge'],

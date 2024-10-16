@@ -1,8 +1,6 @@
-import React from 'react'
-
 import { TrendArrowDownIcon, TrendArrowUpIcon } from '~/icons/trend-arrow'
+import { formatPercent } from '~/utils/calculate-percentage-change'
 import { cn } from '~/utils/cn'
-import { formatPercent } from '~/utils/get-percentage-change'
 
 interface Props {
   value: number
@@ -23,12 +21,19 @@ export function PercentChange({ value, className }: Props) {
       )}
     >
       {isMore && (
-        <TrendArrowUpIcon className="absolute top-1/2 -translate-y-1/2" />
+        <TrendArrowUpIcon className="absolute left-0.5 top-1/2 -translate-y-1/2" />
       )}
       {isLess && (
-        <TrendArrowDownIcon className="absolute top-1/2 -translate-y-1/2" />
+        <TrendArrowDownIcon className="absolute left-0.5 top-1/2 -translate-y-1/2" />
       )}
-      <span className="relative pl-3.5">{formatPercent(Math.abs(value))}</span>
+      <span
+        className={cn(
+          'relative inline-block w-[52px] pl-3.5 text-right text-xs',
+          value === 0 && 'text-secondary',
+        )}
+      >
+        {formatPercent(Math.abs(value))}
+      </span>
     </span>
   )
 }

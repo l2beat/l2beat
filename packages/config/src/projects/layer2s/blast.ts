@@ -15,7 +15,6 @@ export const blast: Layer2 = opStackL2({
     architectureImage: 'blast',
     description:
       'Blast is an EVM-compatible Optimistic Rollup supporting native yield. It invests funds deposited into the L1 bridge into various DeFi protocols transferring yield back to the L2.',
-    purposes: ['Universal', 'DeFi'],
     links: {
       websites: ['https://blast.io/en'],
       apps: ['https://blast.io/en/bridge'],

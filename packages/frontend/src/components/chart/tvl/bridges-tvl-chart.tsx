@@ -6,7 +6,7 @@ import { useCookieState } from '~/hooks/use-cookie-state'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
-import { formatCurrency } from '~/utils/format'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 import { Skeleton } from '../../core/skeleton'
 import { PercentChange } from '../../percent-change'
 import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
@@ -102,9 +102,7 @@ function BridgesChartHeader({
           {!value || loading ? (
             <Skeleton className="my-0.5 h-[26px] w-32 md:h-8" />
           ) : (
-            formatCurrency(value, unit, {
-              showLessThanMinimum: false,
-            })
+            formatCurrency(value, unit)
           )}
         </div>
         {loading ? (

@@ -4,6 +4,8 @@ export function GrayedOut(props: {
   children: React.ReactNode
 }) {
   return (
-    <div className="!text-gray-500 [&_*]:!text-gray-500">{props.children}</div>
+    <div className="!fill-secondary !text-secondary [&_*]:!fill-secondary [&_*]:!text-secondary">
+      {props.children}
+    </div>
   )
 }

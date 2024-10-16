@@ -5,7 +5,3 @@ export function formatTps(tps: number): string {
   }
   return fixed
 }
-
-export function formatTpsWithUnit(tps: number): string {
-  return `${formatTps(tps)} TPS`
-}

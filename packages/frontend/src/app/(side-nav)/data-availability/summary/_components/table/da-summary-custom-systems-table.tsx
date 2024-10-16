@@ -16,21 +16,21 @@ import { useBreakpoint } from '~/hooks/use-is-mobile'
 import { useTable } from '~/hooks/use-table'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/format'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 import { DaTableLastSubRowCell } from '../../../_components/da-table-last-sub-row-cell'
 import { DaTableSubRowCell } from '../../../_components/da-table-sub-row-cell'
 import { mapRisksToRosetteValues } from '../../../_utils/map-risks-to-rosette-values'
-import { dacsColumns } from './columns'
+import { customSystemsColumns } from './columns'
 
 interface Props {
   items: DaSummaryEntry[]
 }
 
-export function DaSummaryDacsTable({ items }: Props) {
+export function DaSummaryCustomSystemsTable({ items }: Props) {
   const breakpoint = useBreakpoint()
   const table = useTable({
     data: items,
-    columns: dacsColumns,
+    columns: customSystemsColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -114,9 +114,7 @@ export function DaSummaryDacsTable({ items }: Props) {
                       lastRow={lastRow}
                     >
                       {subRow.usedIn.length > 0
-                        ? formatCurrency(subRow.tvs, 'usd', {
-                            showLessThanMinimum: false,
-                          })
+                        ? formatCurrency(subRow.tvs, 'usd')
                         : EM_DASH}
                     </DaTableLastSubRowCell>
                   </tr>
