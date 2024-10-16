@@ -265,7 +265,7 @@ export const taiko: Layer2 = {
         },
         {
           text: 'TaikoL1.sol - Etherscan source code, liveness bond',
-          href: 'https://etherscan.io/address/0xBA1d90BCfA74163bFE09e8eF609b346507D83231#code',
+          href: 'https://etherscan.io/address/0xf0E6d34937701622cA887a75c150cC23d4FFDf2F#code',
         },
       ],
       risks: [
@@ -291,7 +291,7 @@ export const taiko: Layer2 = {
       references: [
         {
           text: 'TaikoL1.sol - Etherscan source code, proposeBlock function',
-          href: 'https://etherscan.io/address/0xBA1d90BCfA74163bFE09e8eF609b346507D83231#code',
+          href: 'https://etherscan.io/address/0xf0E6d34937701622cA887a75c150cC23d4FFDf2F#code',
         },
       ],
       risks: [],
