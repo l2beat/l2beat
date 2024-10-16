@@ -87,7 +87,7 @@ function Header({ stats }: { stats: ActivityChartStats | undefined }) {
                 {formatTps(countToTps(stats.latestProjectsTxCount))} TPS
               </div>
               <div className="flex items-center gap-1">
-                <span className="whitespace-nowrap text-right text-xs leading-[1.15] text-secondary">
+                <span className="whitespace-nowrap text-right text-xs text-secondary">
                   Scaling factor: {stats.scalingFactor.toFixed(2)}x
                 </span>
                 <ScalingFactorTooltip className="size-3" />
