@@ -12,11 +12,8 @@ export const base: Layer2 = opStackL2({
   display: {
     name: 'Base',
     slug: 'base',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
       'Base is an Optimistic Rollup built with the OP Stack. It offers a low-cost and builder-friendly way for anyone, anywhere, to build onchain.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://base.org/'],
       apps: ['https://bridge.base.org/'],

@@ -24,6 +24,7 @@ import {
   ScalingProjectContract,
   ScalingProjectEscrow,
   ScalingProjectPermission,
+  ScalingProjectPurpose,
   ScalingProjectRiskView,
   ScalingProjectRiskViewEntry,
   ScalingProjectStateDerivation,
@@ -106,12 +107,13 @@ export interface OpStackConfigCommon {
   stage?: StageConfig
   badges?: BadgeId[]
   discoveryDrivenData?: boolean
+  additionalPurposes?: ScalingProjectPurpose[]
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
   display: Omit<
     Layer2Display,
-    'provider' | 'category' | 'dataAvailabilityMode'
+    'provider' | 'category' | 'dataAvailabilityMode' | 'purposes'
   > & {
     category?: Layer2Display['category']
   }
@@ -120,7 +122,7 @@ export interface OpStackConfigL2 extends OpStackConfigCommon {
 export interface OpStackConfigL3 extends OpStackConfigCommon {
   display: Omit<
     Layer3Display,
-    'provider' | 'category' | 'dataAvailabilityMode'
+    'provider' | 'category' | 'dataAvailabilityMode' | 'purposes'
   > & {
     category?: Layer3Display['category']
   }
@@ -424,6 +426,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     type: 'layer2',
     ...opStackCommon(templateVars),
     display: {
+      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       architectureImage,
       ...templateVars.display,
       provider: 'OP Stack',
@@ -787,6 +790,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     hostChain: templateVars.hostChain,
     display: {
       architectureImage,
+      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       ...templateVars.display,
       provider: 'OP Stack',
       category:

@@ -52,13 +52,13 @@ export const rss3: Layer2 = opStackL2({
   },
   associatedTokens: ['RSS3'],
   discovery,
+  additionalPurposes: ['AI', 'Information'],
   display: {
     shortName: 'RSS3 VSL',
     name: 'RSS3 Value Sublayer',
     slug: 'rss3',
     description:
       'The RSS3 Value Sublayer (VSL) as part of the RSS3 Network, is an Ethereum Layer2 built with OP Stack, handling the value and ownership of AI and Open Information.',
-    purposes: ['AI', 'Information'],
     links: {
       websites: ['https://rss3.io'],
       apps: [

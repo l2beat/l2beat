@@ -10,18 +10,16 @@ const discovery = new ProjectDiscovery('orderly')
 export const orderly: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
   badges: [Badge.DA.Celestia, Badge.Infra.Superchain, Badge.RaaS.Conduit],
+  additionalPurposes: ['Exchange'],
   discovery,
   display: {
     name: 'Orderly Network',
     shortName: 'Orderly',
     slug: 'orderly',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
       'Orderly is an OP stack Optimium on Ethereum using Celestia for data availability. It has a unified ledger for assets from multiple chains and an orderbook that can be used by apps that build on top of it.',
     detailedDescription:
       'While ETH deposited to Orderly is using an OP Stack canonical bridge, the multichain USDC escrows are sending / receiving their deposit / withdrawal messages through the external LayerZero v1 AMB.',
-    purposes: ['DeFi', 'Exchange'],
     links: {
       websites: ['https://orderly.network/'],
       apps: ['https://app.orderly.network/'],

@@ -15,16 +15,14 @@ const upgradeability = {
 export const ancient: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
   badges: [Badge.DA.Celestia, Badge.RaaS.Conduit],
+  additionalPurposes: ['Gaming'],
   discovery,
   associatedTokens: ['A8'],
   display: {
     name: 'Ancient8',
     slug: 'ancient8',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
       'Ancient8 Chain is a gaming-focused community-driven Ethereum Layer 2 built using OP Stack.',
-    purposes: ['Gaming'],
     links: {
       websites: ['https://ancient8.gg/'],
       apps: ['https://bridge.ancient8.gg/', 'https://space3.gg/A8Layer2'],

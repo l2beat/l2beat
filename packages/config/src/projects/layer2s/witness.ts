@@ -32,6 +32,7 @@ const upgradeability = {
 export const witness: Layer2 = polygonCDKStack({
   discovery,
   badges: [Badge.DA.DAC],
+  additionalPurposes: ['IoT', 'Oracles'],
   daProvider: {
     name: 'DAC',
     bridge: {
@@ -79,7 +80,6 @@ export const witness: Layer2 = polygonCDKStack({
       'Witness Chain is using AggLayer, meaning it shares the TVL escrow contracts with Polygon zkEVM and other connected chains.',
     description:
       'Witness Chain is a Validium built on the Polygon CDK stack and Eigenlayer validates services. The purpose of the project is to create a DePIN coordination Layer.',
-    purposes: ['IoT', 'Oracles'],
     links: {
       websites: ['https://witnesschain.com/'],
       apps: ['https://witnesschain-bridge.eu-north-2.gateway.fm'],

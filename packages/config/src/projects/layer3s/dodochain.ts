@@ -12,7 +12,7 @@ export const dodochain: Layer3 = underReviewL3({
     category: 'Optimium',
     description:
       'DODOchain is an Omni-Trading Layer-3 connecting liquidity from all chains including BTC and ETH L2s.',
-    purposes: ['DeFi'],
+    purposes: ['Universal', 'Interoperability'],
     provider: 'Arbitrum',
     links: {
       websites: ['https://dodochain.com/'],

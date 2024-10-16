@@ -36,7 +36,6 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
     warning: 'The forced transaction mechanism is currently disabled.',
     description:
       'Polygon zkEVM is a EVM-compatible ZK Rollup built by Polygon Labs.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://polygon.technology/polygon-zkevm'],
       apps: ['https://bridge.zkevm-rpc.com'],
