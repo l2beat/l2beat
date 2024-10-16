@@ -84,7 +84,7 @@
         },
         "batchPosters": {
           "target": {
-            "role": "Sequencer"
+            "permissions": [{ "type": "sequence", "delay": 0 }]
           },
           "handler": {
             "type": "arbitrumActors",

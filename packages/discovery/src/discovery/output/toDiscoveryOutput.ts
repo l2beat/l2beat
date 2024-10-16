@@ -69,7 +69,6 @@ export function processAnalysis(
           displayName:
             displayName && displayName !== x.name ? displayName : undefined,
           descriptions: x.combinedMeta?.descriptions,
-          roles: setToSortedArray(x.combinedMeta?.roles),
           categories: setToSortedArray(x.combinedMeta?.categories),
           types: setToSortedArray(x.combinedMeta?.types),
           severity: x.combinedMeta?.severity,
@@ -105,7 +104,6 @@ export function processAnalysis(
         return {
           address: x.address,
           descriptions: x.combinedMeta?.descriptions,
-          roles: setToSortedArray(x.combinedMeta?.roles),
           categories: setToSortedArray(x.combinedMeta?.categories),
           types: setToSortedArray(x.combinedMeta?.types),
           severity: x.combinedMeta?.severity,

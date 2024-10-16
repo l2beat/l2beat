@@ -7,12 +7,12 @@
   "fields": {
     "guardian": {
       "target": {
-        "role": "Guardian"
+        "permissions": [{ "type": "guard", "delay": 0 }]
       }
     },
     "GUARDIAN": {
       "target": {
-        "role": "Guardian"
+        "permissions": [{ "type": "guard", "delay": 0 }]
       }
     }
   }

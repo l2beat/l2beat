@@ -316,10 +316,7 @@ export function opStackCommon(
     },
     permissions:
       templateVars.discoveryDrivenData === true
-        ? [
-            ...templateVars.discovery.getDiscoveredRoles(),
-            ...templateVars.discovery.getDiscoveredPermissions(),
-          ]
+        ? templateVars.discovery.getDiscoveredPermissions()
         : [
             ...templateVars.discovery.getOpStackPermissions({
               batcherHash: 'Sequencer',
@@ -502,7 +499,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
       trackedTxs:
         daProvider !== undefined
           ? undefined
-          : (templateVars.nonTemplateTrackedTxs ?? [
+          : templateVars.nonTemplateTrackedTxs ?? [
               {
                 uses: [
                   { type: 'liveness', subtype: 'batchSubmissions' },
@@ -532,7 +529,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
                   ),
                 },
               },
-            ]),
+            ],
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
     dataAvailability:
@@ -640,8 +637,8 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
               {
                 rollupNodeLink:
                   templateVars.isNodeAvailable === true
-                    ? (templateVars.nodeSourceLink ??
-                      'https://github.com/ethereum-optimism/optimism/tree/develop/op-node')
+                    ? templateVars.nodeSourceLink ??
+                      'https://github.com/ethereum-optimism/optimism/tree/develop/op-node'
                     : '',
               },
             )
@@ -834,8 +831,8 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
               {
                 rollupNodeLink:
                   templateVars.isNodeAvailable === true
-                    ? (templateVars.nodeSourceLink ??
-                      'https://github.com/ethereum-optimism/optimism/tree/develop/op-node')
+                    ? templateVars.nodeSourceLink ??
+                      'https://github.com/ethereum-optimism/optimism/tree/develop/op-node'
                     : '',
               },
             )

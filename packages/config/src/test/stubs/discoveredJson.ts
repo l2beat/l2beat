@@ -5,7 +5,6 @@ export const contractStub: ContractParameters = {
   name: 'MockedContract',
   address: EthereumAddress('0x0D4C1222f5e839a911e2053860e45F18921D72ac'),
   proxyType: 'StarkWare diamond',
-  roles: ['Sequencer'],
   values: {
     $immutable: false,
     $implementation: EthereumAddress.random().toString(),
@@ -63,14 +62,8 @@ export const discoveredJsonStub: DiscoveryOutput = {
     },
   ],
   eoas: [
-    {
-      address: EthereumAddress.from('0xaa11'),
-      roles: ['Validator'],
-    },
-    {
-      address: EthereumAddress.from('0xbb22'),
-      roles: ['Sequencer'],
-    },
+    { address: EthereumAddress.from('0xaa11') },
+    { address: EthereumAddress.from('0xbb22') },
   ],
   abis: {},
   configHash: Hash256.random(),

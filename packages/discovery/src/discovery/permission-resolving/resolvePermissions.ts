@@ -23,7 +23,16 @@ import { assert, EthereumAddress } from '@l2beat/shared-pure'
 // what to do in a scenario when one members has a smaller delay than others
 // and such a case should be discussed.
 
-export type Permission = 'member' | 'act' | 'configure' | 'upgrade'
+export const RolePermissionEntries = [
+  'challenge',
+  'guard',
+  'propose',
+  'sequence',
+  'validate',
+] as const
+export type RolePermission = typeof RolePermissionEntries[number]
+export type BasePermission = 'member' | 'act' | 'configure' | 'upgrade'
+export type Permission = BasePermission | RolePermission
 
 export interface Node<T = EthereumAddress> {
   address: T
@@ -56,7 +65,7 @@ export function resolvePermissions<T>(
   const result: ResolvedPermission<T>[] = []
   for (const node of graph) {
     const seedingEdges = node.edges.filter(
-      (e) => e.permission === 'configure' || e.permission === 'upgrade',
+      (e) => e.permission !== 'member' && e.permission !== 'act',
     )
     for (const edge of seedingEdges) {
       const toNode = getNode(edge.toNode, graph)

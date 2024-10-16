@@ -1,6 +1,7 @@
 import {
   ConfigReader,
   InvertedAddresses,
+  RolePermissionEntries,
   calculateInversion,
 } from '@l2beat/discovery'
 import {
@@ -11,7 +12,6 @@ import {
   PermissionType,
   ResolvedPermission,
   ResolvedPermissionPath,
-  StackRole,
   get$Admins,
   get$Implementations,
   toAddressArray,
@@ -24,7 +24,7 @@ import {
   notUndefined,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { groupBy, isArray, isString, sum, uniq } from 'lodash'
+import { groupBy, isArray, isString, sum } from 'lodash'
 
 import { join } from 'path'
 import {
@@ -165,7 +165,7 @@ export class ProjectDiscovery {
       isUpcoming,
       chain: this.chain,
       includeInTotal:
-        (includeInTotal ?? this.chain === 'ethereum') ? true : includeInTotal,
+        includeInTotal ?? this.chain === 'ethereum' ? true : includeInTotal,
       source,
       bridgedUsing,
       isHistorical,
@@ -676,25 +676,14 @@ export class ProjectDiscovery {
     return [...contracts, ...eoas]
   }
 
-  getPermissionsByRole(role: StackRole): ScalingProjectPermissionedAccount[] {
+  getPermissionsByRole(
+    role: (typeof RolePermissionEntries)[number],
+  ): ScalingProjectPermissionedAccount[] {
     return this.getContractsAndEoas()
-      .filter((x) => x.roles?.includes(role))
+      .filter((x) =>
+        (x.receivedPermissions ?? []).find((p) => p.permission === role),
+      )
       .map((x) => this.formatPermissionedAccount(x.address))
-  }
-
-  getDiscoveredRoles(): ScalingProjectPermission[] {
-    const contractsAndEoas = this.getContractsAndEoas()
-
-    const roles = uniq(
-      contractsAndEoas.flatMap((x) => x.roles).filter(notUndefined),
-    )
-    roles.sort()
-    return roles.map((role) => ({
-      name: role,
-      accounts: this.getPermissionsByRole(role),
-      description: roleDescriptions[role] ?? '',
-      chain: this.chain,
-    }))
   }
 
   describeGnosisSafeMembership(
@@ -714,11 +703,29 @@ export class ProjectDiscovery {
       : ['Member of ' + safesWithThisMember.join(', ') + '.']
   }
 
-  describeRoles(contractOrEoa: ContractParameters | EoaParameters): string[] {
-    const roles = contractOrEoa.roles
-    return roles === undefined
-      ? []
-      : [(roles.length === 1 ? 'A ' : '') + roles.join(', ') + '.']
+  describeRolePermissions(
+    relevantContracts: (ContractParameters | EoaParameters)[],
+  ): ScalingProjectPermission[] {
+    const result: ScalingProjectPermission[] = []
+    for (const role of RolePermissionEntries) {
+      const matching = relevantContracts.filter(
+        (c) =>
+          (c.receivedPermissions ?? []).find((p) => p.permission === role) !==
+          undefined,
+      )
+
+      if (matching.length === 0) {
+        continue
+      }
+
+      const addresses = matching.map((c) => c.address)
+      const accounts = addresses.map((a) => this.formatPermissionedAccount(a))
+      result.push({
+        ...roleDescriptions[role],
+        accounts,
+      })
+    }
+    return result
   }
 
   describeUltimatelyReceivedPermissions(
@@ -730,6 +737,11 @@ export class ProjectDiscovery {
       configure: 'Can change configuration of',
       upgrade: 'Can upgrade implementation of',
       act: undefined,
+      guard: 'Is a Guardian',
+      challenge: 'Is a Challenger',
+      propose: 'Is a Proposer',
+      sequence: 'Is a Sequencer',
+      validate: 'Is a Validator',
     }
 
     const formatVia = (via: ResolvedPermissionPath[]) =>
@@ -762,15 +774,22 @@ export class ProjectDiscovery {
       if (prefix === undefined) {
         return ''
       }
+
+      const showTargets = ['configure', 'upgrade', 'act'].includes(permission)
+      const addressesString = showTargets
+        ? entries
+            .map((entry) => this.getContract(entry.target.toString()).name)
+            .join(', ')
+        : ''
+
       const detailsString =
-        entries
-          .map((entry) => this.getContract(entry.target.toString()).name)
-          .join(', ') +
-        via +
-        formatPermissionDescription(description)
-      return `${
-        ultimatePermissionToPrefix[permission as PermissionType]
-      } ${detailsString}.`
+        addressesString + via + formatPermissionDescription(description)
+      return `${[
+        ultimatePermissionToPrefix[permission as PermissionType],
+        detailsString,
+      ]
+        .join(' ')
+        .trim()}.`
     })
   }
 
@@ -783,6 +802,11 @@ export class ProjectDiscovery {
       configure: 'Can be used to configure',
       upgrade: 'Can be used to upgrade implementation of',
       act: 'Can act on behalf of',
+      guard: 'Can act as a Guardian',
+      challenge: 'Can act as a Challenger',
+      propose: 'Can act as a Proposer',
+      sequence: 'Can act as a Sequencer',
+      validate: 'Can act as a Validator',
     }
 
     return Object.entries(
@@ -794,12 +818,20 @@ export class ProjectDiscovery {
     ).map(([key, entries]) => {
       const permission = key.split(':')[0] as PermissionType
       const description = key.split(':', 2)[1] ?? ''
-      const addressesString = entries
-        .map((entry) => this.getContract(entry.target.toString()).name)
-        .join(', ')
-      return `${
-        directPermissionToPrefix[permission]
-      } ${addressesString}${formatPermissionDescription(description)}.`
+      const showTargets = ['configure', 'upgrade', 'act'].includes(permission)
+      const addressesString = showTargets
+        ? entries
+            .map((entry) => this.getContract(entry.target.toString()).name)
+            .join(', ')
+        : ''
+
+      return `${[
+        directPermissionToPrefix[permission],
+        addressesString,
+        formatPermissionDescription(description),
+      ]
+        .join(' ')
+        .trim()}.`
     })
   }
 
@@ -808,7 +840,6 @@ export class ProjectDiscovery {
     includeDirectPermissions: boolean = true,
   ): string[] {
     return [
-      ...this.describeRoles(contractOrEoa),
       ...this.describeGnosisSafeMembership(contractOrEoa),
       ...(includeDirectPermissions
         ? this.describeDirectlyReceivedPermissions(contractOrEoa)
@@ -851,6 +882,10 @@ export class ProjectDiscovery {
           contract.proxyType === 'gnosis safe',
       ),
     ]
+    const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
+
+    result.push(...this.describeRolePermissions(relevantContracts))
+    result.push(...this.describeRolePermissions(eoas))
 
     for (const contract of relevantContracts) {
       const descriptions = this.describeContractOrEoa(contract, true)
@@ -873,7 +908,6 @@ export class ProjectDiscovery {
       }
     }
 
-    const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
     for (const eoa of eoas) {
       if (eoa.receivedPermissions === undefined) {
         continue
@@ -981,16 +1015,37 @@ export function stringFormat(str: string, ...val: string[]) {
   return str
 }
 
-const roleDescriptions: { [key in StackRole]: string } = {
-  Sequencer:
-    'Sequencer is an actor allowed to commit transactions from current layer to the host chain.',
-  Proposer:
-    'Proposer is an actor allowed to post new state roots of current layer to the host chain.',
-  Challenger:
-    'Challenger is an actor allowed to delete state roots proposed by a Proposer.',
-  Guardian: 'Guardian is an actor allowed to pause deposits and withdrawals.',
-  Validator:
-    'Validator is an actor that validates the correctness of state transitions.',
+const roleDescriptions: {
+  [key in (typeof RolePermissionEntries)[number]]: {
+    name: string
+    description: string
+  }
+} = {
+  sequence: {
+    name: 'Sequencer',
+    description:
+      'Sequencer is an actor allowed to commit transactions from current layer to the host chain.',
+  },
+  propose: {
+    name: 'Proposer',
+    description:
+      'Proposer is an actor allowed to post new state roots of current layer to the host chain.',
+  },
+  challenge: {
+    name: 'Challenger',
+    description:
+      'Challenger is an actor allowed to delete state roots proposed by a Proposer.',
+  },
+  guard: {
+    name: 'Guardian',
+    description:
+      'Guardian is an actor allowed to pause deposits and withdrawals.',
+  },
+  validate: {
+    name: 'Validator',
+    description:
+      'Validator is an actor that validates the correctness of state transitions.',
+  },
 }
 
 export function formatAsBulletPoints(description: string[]): string {

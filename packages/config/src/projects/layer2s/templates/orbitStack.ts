@@ -310,7 +310,7 @@ export function orbitStackCommon(
 
   const validators: ScalingProjectPermission = {
     name: 'Validators/Proposers',
-    accounts: templateVars.discovery.getPermissionsByRole('Validator'),
+    accounts: templateVars.discovery.getPermissionsByRole('validate'),
     description:
       'They can submit new state roots and challenge state roots. Some of the operators perform their duties through special purpose smart contracts.',
     chain: templateVars.discovery.chain,
@@ -323,7 +323,7 @@ export function orbitStackCommon(
 
   const sequencers: ScalingProjectPermission = {
     name: 'Sequencers',
-    accounts: templateVars.discovery.getPermissionsByRole('Sequencer'),
+    accounts: templateVars.discovery.getPermissionsByRole('sequence'),
     description: 'Central actors allowed to submit transaction batches to L1.',
     chain: templateVars.discovery.chain,
   }
