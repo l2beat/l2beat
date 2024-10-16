@@ -10,13 +10,7 @@ import {
   SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
 } from '../protocols/gnosisSafe/const'
 import { SAFE_methods } from '../protocols/gnosisSafe/methods'
-import type {
-  AnalyzedBlock,
-  Analyzer,
-  CountedOperation,
-  Method,
-  Operation,
-} from '../types'
+import type { AnalyzedBlock, Analyzer, Method, Operation } from '../types'
 
 export class RpcUopsAnalyzer implements Analyzer {
   async analyzeBlock(rpcBlock: {
@@ -33,78 +27,50 @@ export class RpcUopsAnalyzer implements Analyzer {
     }
   }
 
-  private async mapTransaction(
-    tx: providers.TransactionResponse,
-  ): Promise<number> {
+  async mapTransaction(tx: providers.TransactionResponse): Promise<number> {
+    const methods = ERC4337_methods.concat(SAFE_methods)
+
+    const selector = tx.data.slice(0, 10)
     if (
       tx.to?.toLowerCase() === ENTRY_POINT_ADDRESS_0_6_0 ||
       tx.to?.toLowerCase() === ENTRY_POINT_ADDRESS_0_7_0 ||
-      tx.to?.toLowerCase() === SAFE_MULTI_SEND_CALL_ONLY_1_3_0
+      tx.to?.toLowerCase() === SAFE_MULTI_SEND_CALL_ONLY_1_3_0 ||
+      selector === SAFE_EXEC_TRANSACTION_SELECTOR
     ) {
-      return await this.createTransaction(tx)
-    }
-
-    const selector = tx.data.slice(0, 10)
-    if (selector === SAFE_EXEC_TRANSACTION_SELECTOR) {
-      return this.createTransaction(tx)
+      return await this.countUserOperations(tx.data, methods)
     }
 
     return 1
   }
 
-  private async createTransaction(
-    tx: providers.TransactionResponse,
-  ): Promise<number> {
-    const methods = ERC4337_methods.concat(SAFE_methods)
-    const countedOperation = await this.countUserOperations(tx.data, methods)
-
-    return countedOperation.count
-  }
-
-  private async countUserOperations(
-    calldata: string,
-    methods: Method[],
-  ): Promise<CountedOperation> {
+  countUserOperations(calldata: string, methods: Method[]): number {
     const countOperationsRecursive = (
       operation: Operation,
-      level: number,
       methods: Method[],
-    ): CountedOperation => {
+    ): number => {
       if (operation.type === 'static') {
-        return {
-          count: operation.count,
-          children: [],
-        }
+        return operation.count
       }
 
       const selector = operation.calldata.slice(0, 10)
       const method = methods.find((m) => m.selector === selector)
 
       if (!method) {
-        return {
-          count: 1,
-          children: [],
-        }
+        return 1
       }
 
       const operations = method.count(operation.calldata)
       let count = 0
-      const children: CountedOperation[] = []
       for (const operation of operations) {
-        const result = countOperationsRecursive(operation, level + 1, methods)
-        count += result.count
-        children.push(result)
+        const result = countOperationsRecursive(operation, methods)
+        count += result
       }
 
-      return {
-        count,
-        children,
-      }
+      return count
     }
 
     const rootOperation = countOperationsRecursive(
       { type: 'recursive', calldata },
-      0,
       methods,
     )
     return rootOperation
