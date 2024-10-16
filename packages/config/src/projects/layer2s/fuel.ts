@@ -1,10 +1,9 @@
-import { UnixTime } from '@l2beat/shared-pure'
-import { upcomingL2 } from './templates/upcoming'
+import { ProjectId } from '@l2beat/shared-pure'
 import { Layer2 } from './types'
+import { RISK_VIEW } from '../../common/riskView'
 
-export const fuel: Layer2 = upcomingL2({
-  id: 'fuel',
-  createdAt: new UnixTime(1700571075), // 2023-11-21T12:51:15Z
+export const fuel: Layer2 = {
+  id: ProjectId('fuel'),
   display: {
     name: 'Fuel',
     slug: 'fuel',
@@ -25,4 +24,45 @@ export const fuel: Layer2 = upcomingL2({
       ],
     },
   },
-})
+  type: 'layer2',
+  config: {
+    escrows: [],
+  },
+  riskView: {
+    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
+    stateValidation: {
+      description: '',
+      sentiment: 'UnderReview',
+      value: '',
+    },
+    dataAvailability: {
+      description: '',
+      sentiment: 'bad',
+      value: '',
+    },
+    exitWindow: {
+      description: '',
+      sentiment: 'bad',
+      value: '',
+    },
+    sequencerFailure: {
+      description: '',
+      sentiment: 'bad',
+      value: '',
+    },
+    proposerFailure: {
+      description: '',
+      sentiment: 'bad',
+      value: '',
+    },
+  },
+  stage: {
+    stage: 'UnderReview',
+  },
+  technology: {},
+  contracts: {
+    addresses: [],
+    risks: [],
+  },
+}
