@@ -30,7 +30,7 @@ export const RolePermissionEntries = [
   'sequence',
   'validate',
 ] as const
-export type RolePermission = typeof RolePermissionEntries[number]
+export type RolePermission = (typeof RolePermissionEntries)[number]
 export type BasePermission = 'member' | 'act' | 'configure' | 'upgrade'
 export type Permission = BasePermission | RolePermission
 
