@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xa1d2c9aeb745c143a3b314098a6a398c6368092c
+
+# Diff at Tue, 15 Oct 2024 19:04:47 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@828756363b270234da1839c4fa419fef7ba4cd6c block: 20941801
+- current block number: 20972929
+
+## Description
+
+Added naming to distinguish the two different ProxyAdmin, one is for EigenLayer core contracts and one is for EIGEN token specifically.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20941801 (main branch discovery), not current.
+
+```diff
+    contract EigenLayerProxyAdmin (0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444) {
+    +++ description: None
+      name:
+-        "ProxyAdmin"
++        "EigenLayerProxyAdmin"
+    }
+```
+
+```diff
+    contract EIGENProxyAdmin (0xB8915E195121f2B5D989Ec5727fd47a5259F1CEC) {
+    +++ description: ProxyAdmin owner of the timelock contract owning the EIGEN token contract.
+      name:
+-        "ProxyAdmin"
++        "EIGENProxyAdmin"
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+      displayName:
++        "ProxyAdmin"
+      descriptions:
++        ["ProxyAdmin owner of the timelock contract owning the EIGEN token contract."]
+    }
+```
+
 Generated with discovered.json: 0x55cac16837d40e0875fd0535c3f06ba946d68e69
 
 # Diff at Mon, 14 Oct 2024 10:55:37 GMT:
