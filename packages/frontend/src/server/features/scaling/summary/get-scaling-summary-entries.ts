@@ -63,7 +63,7 @@ export async function getScalingSummaryEntries() {
           latestTvl?.associatedTokensExcludedChange,
         associatedTokens: project.config.associatedTokens ?? [],
         warnings: compact([
-          associatedTokensExcludedWarnings,
+          ...associatedTokensExcludedWarnings,
           associatedTokenWarning?.sentiment === 'bad' && associatedTokenWarning,
         ]),
         associatedTokensExcludedWarnings,

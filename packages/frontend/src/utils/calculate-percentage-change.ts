@@ -10,15 +10,21 @@ export function calculatePercentageChange(now: number, then: number) {
 }
 
 export function formatPercent(value: number) {
-  if (value >= 10) {
+  const percent = value * 100
+
+  if (percent >= 1000) {
     return '>1K%'
   }
-  if (value >= 1) {
-    return (value * 100).toFixed(0) + '%'
+  if (percent >= 100) {
+    return fixedPercent(percent, 0) + '%'
   }
-  if (value >= 0.1) {
-    return (value * 100).toFixed(1) + '%'
+  if (percent >= 10) {
+    return fixedPercent(percent, 1) + '%'
   }
 
-  return (value * 100).toFixed(2) + '%'
+  return fixedPercent(percent, 2) + '%'
+}
+
+function fixedPercent(value: number, digits: number) {
+  return value.toFixed(digits).slice(0, 4)
 }

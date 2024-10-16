@@ -13,7 +13,7 @@ export function toTableRows({
       tvl: {
         ...project.tvl,
         warnings: excludeAssociatedTokens
-          ? project.tvl.associatedTokensExcludedChange
+          ? project.tvl.associatedTokensExcludedWarnings
           : project.tvl.warnings,
         change: excludeAssociatedTokens
           ? project.tvl.associatedTokensExcludedChange

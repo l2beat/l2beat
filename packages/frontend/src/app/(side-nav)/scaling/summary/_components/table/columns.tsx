@@ -49,31 +49,36 @@ export const scalingSummaryColumns = [
       hash: 'stage',
     },
   }),
-  columnHelper.accessor('tvl.breakdown.total', {
-    id: 'total',
-    header: 'Total value locked',
-    cell: (ctx) => {
-      const value = ctx.row.original.tvl
-      if (value.breakdown?.total === undefined) {
-        return <NoDataBadge />
-      }
+  columnHelper.accessor(
+    (e) => {
+      return e.tvl?.breakdown?.total
+    },
+    {
+      id: 'total',
+      header: 'Total value locked',
+      cell: (ctx) => {
+        const value = ctx.row.original.tvl
+        if (value.breakdown?.total === undefined) {
+          return <NoDataBadge />
+        }
 
-      return (
-        <TotalCell
-          associatedTokenSymbols={value.associatedTokens}
-          tvlWarnings={value.warnings}
-          breakdown={value.breakdown}
-          change={value.change}
-        />
-      )
+        return (
+          <TotalCell
+            associatedTokenSymbols={value.associatedTokens}
+            tvlWarnings={value.warnings}
+            breakdown={value.breakdown}
+            change={value.change}
+          />
+        )
+      },
+      sortUndefined: 'last',
+      meta: {
+        align: 'right',
+        tooltip:
+          'Total Value Locked is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens.',
+      },
     },
-    sortUndefined: 'last',
-    meta: {
-      align: 'right',
-      tooltip:
-        'Total Value Locked is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens.',
-    },
-  }),
+  ),
   columnHelper.accessor('activity.pastDayTps', {
     header: 'Past day TPS',
     cell: (ctx) => {
