@@ -161,6 +161,7 @@ model Token {
   id                 String              @id @db.Char(21)
   networkId          String              @db.Char(21)
   network            Network             @relation(fields: [networkId], references: [id])
+  // Either an address or "native"
   address            String
   deployment         Deployment?
   metadata           TokenMeta[]

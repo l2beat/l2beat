@@ -1,3 +1,4 @@
+import { NetworkType } from '@l2beat/database'
 import { ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import { TableControls } from '~/components/table-controls'
@@ -28,7 +29,7 @@ export default async function Page({
         network.coingeckoId?.toLowerCase().includes(search)
       )
     })
-    .sort((a, b) => a.name.localeCompare(b.name))
+    .sort((a, b) => (a.chainId ?? 0) - (b.chainId ?? 0))
   const count = allNetworks.length
   const pagination = getServerPagination({
     count,
@@ -73,24 +74,26 @@ export default async function Page({
               </TableRow>
             </TableHeader>
             <TableBody>
-              {networks
-                .sort((a, b) => a.chainId - b.chainId)
-                .map((network) => (
-                  <TableRow key={network.id}>
-                    <TableCell>{network.name}</TableCell>
-                    <TableCell>
-                      {network.chainId} (0x{network.chainId.toString(16)})
-                    </TableCell>
-                    <TableCell>{network.coingeckoId}</TableCell>
-                    <TableCell className="text-right">
-                      <Link href={`/networks/${network.id}`} key={network.id}>
-                        <Button variant="ghost" size="icon">
-                          <ChevronRight className="size-4" />
-                        </Button>
-                      </Link>
-                    </TableCell>
-                  </TableRow>
-                ))}
+              {networks.map((network) => (
+                <TableRow key={network.id}>
+                  <TableCell>{network.name}</TableCell>
+                  <TableCell>
+                    {network.type === NetworkType.EVM
+                      ? `${network.chainId} (0x${network.chainId?.toString(
+                          16,
+                        )})`
+                      : 'N/A'}
+                  </TableCell>
+                  <TableCell>{network.coingeckoId}</TableCell>
+                  <TableCell className="text-right">
+                    <Link href={`/networks/${network.id}`} key={network.id}>
+                      <Button variant="ghost" size="icon">
+                        <ChevronRight className="size-4" />
+                      </Button>
+                    </Link>
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
           <TableControls count={allNetworks.length} />

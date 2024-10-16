@@ -118,7 +118,8 @@ export function EditNetworkPage({
     async (rawData: z.infer<typeof networkFormSchema>) => {
       const data = {
         name: rawData.name,
-        chainId: !!rawData.chainId ? Number(rawData.chainId) : null,
+        chainId:
+          rawData.type !== NetworkType.EVM ? null : Number(rawData.chainId),
         type: rawData.type !== selectNullValue ? rawData.type : null,
         logoUrl: rawData.logoUrl !== '' ? rawData.logoUrl : null,
         coingeckoId: rawData.coingeckoId !== '' ? rawData.coingeckoId : null,
