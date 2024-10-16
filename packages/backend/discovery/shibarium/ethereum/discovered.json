@@ -1,23 +1,28 @@
 {
   "name": "shibarium",
   "chain": "ethereum",
-  "blockNumber": 20973708,
-  "configHash": "0x4a909108cac0153eefe8daee5a4537269e24dbfca1957e8648ef81e4f492aae0",
-  "version": 15,
+  "blockNumber": 20979977,
+  "configHash": "0x5ecd8a4e697e3560bf0d51df300b783945cd7a053cff847299946653f8ba48bd",
   "contracts": [
     {
       "name": "Merkle",
       "address": "0x32262DDD01fFF9bb367586317A5e40Dbe2bCcbe2",
+      "sourceHashes": [
+        "0xf1be6e7e57f3ffb6af67424c57b1907e1fd54a410e2020ae110857774ea0a4b7"
+      ],
       "sinceTimestamp": 1691242415,
       "values": { "$immutable": true }
     },
     {
       "name": "StateSender",
       "address": "0x3a122785bC4d951D132B2CAD31FC187D6DC7A21C",
+      "sourceHashes": [
+        "0x2f6878db7119cba5b64851fc04d0bd822ce210db74bf11ca1255f000eb88065f"
+      ],
       "sinceTimestamp": 1691243927,
       "values": {
         "$immutable": true,
-        "counter": 35822,
+        "counter": 35840,
         "isOwner": false,
         "owner": "0x80Cc222EA02F4334F67e9E55E7412fed62599004"
       }
@@ -25,6 +30,10 @@
     {
       "name": "ERC20PredicateProxy",
       "address": "0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa",
+      "sourceHashes": [
+        "0x63f5481a49da196498b6cd77450d4e12da12c7608ab022b417dbed836935e0f7",
+        "0x093a1d884a048e1f39d3bb4ebd1bab3f52d07ed9cfd823099f6ddb87098f2de2"
+      ],
       "proxyType": "Polygon proxy",
       "issuedPermissions": [
         {
@@ -52,34 +61,16 @@
     {
       "name": "DepositManagerProxy",
       "address": "0x885fcE983b6a01633f764325B8c3c5D31032C995",
+      "sourceHashes": [
+        "0x5a03169cc01515b7d5ddd8f76da3641dcf8ffd451fc1d8edede0459191021835",
+        "0x6abce1ddeb9ae9c18a0e3da61c77df366e4fc7b1837de5dbc51cdbd50fb6004c"
+      ],
       "proxyType": "EIP897 proxy",
       "sinceTimestamp": 1691243951,
       "values": {
         "$immutable": false,
         "$implementation": "0x79a674D373551e6CfD22b2ed65cc1Ac09250F430",
         "childChain": "0x32262DDD01fFF9bb367586317A5e40Dbe2bCcbe2",
-        "deposits": [
-          [
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            0
-          ],
-          [
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            0
-          ],
-          [
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            0
-          ],
-          [
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            0
-          ],
-          [
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            0
-          ]
-        ],
         "governance": "0xC476E20c2F7FA3B35aC242aBE71B59e902242f06",
         "implementation": "0x79a674D373551e6CfD22b2ed65cc1Ac09250F430",
         "isOwner": false,
@@ -96,6 +87,10 @@
     {
       "name": "EtherPredicateProxy",
       "address": "0xc3897302aB4B42931cB4857050Fa60f53B775870",
+      "sourceHashes": [
+        "0xcd0a12ca9277d60031fd022482b8174c79dabb5d731b80609041c6778a899455",
+        "0xa949b42c0c7697496d06fe3d513ba1663e62f99796bacd265ab50e6453e4dcbb"
+      ],
       "proxyType": "Polygon proxy",
       "issuedPermissions": [
         {
@@ -123,6 +118,10 @@
     {
       "name": "Governance",
       "address": "0xC476E20c2F7FA3B35aC242aBE71B59e902242f06",
+      "sourceHashes": [
+        "0x8694e089b35ef48bca7c4041191923b03d5a5c1350e09e9074b44199d1df6cc3",
+        "0x5a4efa55552545ebc05194d3649859f5731b5beb3358f26dadb38330cec78719"
+      ],
       "proxyType": "EIP897 proxy",
       "sinceTimestamp": 1691242715,
       "values": {
@@ -137,52 +136,19 @@
     {
       "name": "RootChain",
       "address": "0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9",
+      "sourceHashes": [
+        "0x561d13767c8364feca3a6af598f52c824a2ce67ac37855df5d2f678e5fa13410",
+        "0x53df93798909c51b914d7f286a3fb02bd08bbc999d189bb089c2a7bb6f273426"
+      ],
       "proxyType": "EIP897 proxy",
       "sinceTimestamp": 1691243771,
       "values": {
-        "_nextHeaderBlock": 183020000,
+        "_nextHeaderBlock": 183310000,
         "$immutable": false,
         "$implementation": "0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
         "CHAINID": 109,
-        "currentHeaderBlock": 183010000,
-        "getLastChildBlock": 7368732,
-        "headerBlocks": [
-          [
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            0,
-            0,
-            0,
-            "0x0000000000000000000000000000000000000000"
-          ],
-          [
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            0,
-            0,
-            0,
-            "0x0000000000000000000000000000000000000000"
-          ],
-          [
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            0,
-            0,
-            0,
-            "0x0000000000000000000000000000000000000000"
-          ],
-          [
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            0,
-            0,
-            0,
-            "0x0000000000000000000000000000000000000000"
-          ],
-          [
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            0,
-            0,
-            0,
-            "0x0000000000000000000000000000000000000000"
-          ]
-        ],
+        "currentHeaderBlock": 183300000,
+        "getLastChildBlock": 7383580,
         "heimdallId": "0x2d1b61c7cbff527a84da0d1da4e5ba94d46c39894530664ecfb67e21036736f1",
         "implementation": "0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
         "isOwner": false,
@@ -190,11 +156,15 @@
         "owner": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
         "proxyType": 2,
         "VOTE_TYPE": 2
-      }
+      },
+      "derivedName": "RootChain"
     },
     {
       "name": "Registry",
       "address": "0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
+      "sourceHashes": [
+        "0x8629d952a05ac151ee3cf2d7096112e2b03c6404c26409be4a6f9dfd8cdc30ba"
+      ],
       "sinceTimestamp": 1691243735,
       "values": {
         "$immutable": true,
@@ -466,6 +436,5 @@
       "function revokeRole(bytes32 role, address account)"
     ]
   },
-  "usedTemplates": {},
-  "shapeFilesHash": "0x46cbf03af638e8cd8f74ebc7dbd4fd9736d1eec6e533e59799863bc4ea44a1ea"
+  "usedTemplates": {}
 }

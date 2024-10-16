@@ -12,6 +12,15 @@
   "names": {
     "0x885fcE983b6a01633f764325B8c3c5D31032C995": "DepositManagerProxy",
     "0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa": "ERC20PredicateProxy",
-    "0xc3897302aB4B42931cB4857050Fa60f53B775870": "EtherPredicateProxy"
+    "0xc3897302aB4B42931cB4857050Fa60f53B775870": "EtherPredicateProxy",
+    "0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9": "RootChain"
+  },
+  "overrides": {
+    "DepositManagerProxy": {
+      "ignoreMethods": ["deposits"]
+    },
+    "RootChain": {
+      "ignoreMethods": ["headerBlocks"]
+    }
   }
 }
