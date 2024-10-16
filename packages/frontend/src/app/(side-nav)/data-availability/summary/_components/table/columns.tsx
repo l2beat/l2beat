@@ -147,7 +147,7 @@ const slashableStakeForCustomSystem = columnHelper.accessor(
     cell: (ctx) => {
       const value = ctx.getValue()
       if (ctx.row.original.risks.economicSecurity.type === 'Unknown') {
-        return formatCurrency(0, 'usd', { showLessThanMinimum: false })
+        return formatCurrency(0, 'usd')
       }
 
       return <DaEconomicSecurityCell value={value} />
