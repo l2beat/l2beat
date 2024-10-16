@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x751199bac42bc0c1523804f7be9c930ec2174805
+Generated with discovered.json: 0x6f2210231fe50cbcfaa54eeb66b00a8cecb1cd9d
 
-# Diff at Wed, 16 Oct 2024 09:14:41 GMT:
+# Diff at Wed, 16 Oct 2024 10:10:20 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 20977146
+- current block number: 20977432
 
 ## Description
 
@@ -889,7 +889,7 @@ New contracts handled by templates, but also many old contracts in the diff. (??
 
 ```diff
 +   Status: CREATED
-    contract  (0xE31009Ac8385147A74463F686Dd148e99d291739)
+    contract LockReleaseTokenPoolAndProxy (0xE31009Ac8385147A74463F686Dd148e99d291739)
     +++ description: None
 ```
 
