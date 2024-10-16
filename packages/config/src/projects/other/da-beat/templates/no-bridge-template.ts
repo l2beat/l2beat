@@ -21,6 +21,7 @@ type Optionals = Partial<{
   redWarnings: NoDaBridge['display']['redWarning']
   description: NoDaBridge['display']['description']
   technology: NoDaBridge['technology']
+  otherConsiderations: NoDaBridge['otherConsiderations']
 }>
 
 type TemplateVars = Optionals & TemplateSpecific
@@ -73,5 +74,6 @@ export function NO_BRIDGE(template: TemplateVars): NoDaBridge {
     risks,
     technology,
     usedIn,
+    otherConsiderations: template.otherConsiderations,
   }
 }
