@@ -4,6 +4,7 @@ import { Method, Operation } from '../../types'
 import { defineMethod } from '../defineMetod'
 
 export const ERC4337_methods: Method[] = [
+  // ERC-4337:EntryPoint0.6.0
   defineMethod(
     parseAbiItem(
       'function handleOps((address sender, uint256 nonce, bytes initCode, bytes callData, uint256 callGasLimit, uint256 verificationGasLimit, uint256 preVerificationGas, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, bytes paymasterAndData, bytes signature)[] calldata ops, address beneficiary)',
@@ -24,8 +25,8 @@ export const ERC4337_methods: Method[] = [
         return operations
       })
     },
-    'ERC-4337:EntryPoint0.6.0',
   ),
+  // ERC-4337:EntryPoint0.7.0
   defineMethod(
     parseAbiItem(
       'function handleOps((address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature)[] calldata ops, address beneficiary)',
@@ -46,8 +47,8 @@ export const ERC4337_methods: Method[] = [
         return operations
       })
     },
-    'ERC-4337:EntryPoint0.7.0',
   ),
+  // SmartAccount
   defineMethod(
     parseAbiItem('function executeBatch(address[] addresses, bytes[] inputs)'),
     ([addresses, inputs]) => {
@@ -60,15 +61,15 @@ export const ERC4337_methods: Method[] = [
         to: addresses[index],
       }))
     },
-    'SmartAccount',
   ),
+  // SmartAccount
   defineMethod(
     parseAbiItem('function execute(address,uint256,bytes)'),
     ([to, , calldata]) => {
       return [{ type: 'recursive', calldata, to }]
     },
-    'SmartAccount',
   ),
+  // SmartAccount
   defineMethod(
     parseAbiItem(
       'function executeBatch((address to, uint256 value, bytes data)[] calls)',
@@ -80,8 +81,8 @@ export const ERC4337_methods: Method[] = [
         to: call.to,
       }))
     },
-    'SmartAccount',
   ),
+  // SmartAccount
   defineMethod(
     parseAbiItem(
       'function executeBatch(address[] targets, uint256[] values, bytes[] inputs)',
@@ -93,8 +94,8 @@ export const ERC4337_methods: Method[] = [
         to: targets[index],
       }))
     },
-    'SmartAccount',
   ),
+  // SmartAccount
   defineMethod(
     parseAbiItem(
       'function executeBatch(address[] targets, uint256[] values, bytes[] inputs)',
@@ -106,8 +107,8 @@ export const ERC4337_methods: Method[] = [
         to: targets[index],
       }))
     },
-    'SmartAccount',
   ),
+  // SmartAccount
   defineMethod(
     parseAbiItem(
       'function executeBatch(address[] targets, uint256[] values, bytes[] inputs)',
@@ -119,8 +120,8 @@ export const ERC4337_methods: Method[] = [
         to: targets[index],
       }))
     },
-    'SmartAccount',
   ),
+  // SmartAccount
   defineMethod(
     parseAbiItem(
       'function execute((address target, uint256 value, bytes data) execution)',
@@ -134,8 +135,8 @@ export const ERC4337_methods: Method[] = [
         },
       ]
     },
-    'SmartAccount',
   ),
+  // SmartAccount
   defineMethod(
     parseAbiItem(
       'function executeBatch_y6U(address[] dest, uint256[] value, bytes[] func)',
@@ -147,15 +148,15 @@ export const ERC4337_methods: Method[] = [
         to: dest[index],
       }))
     },
-    'SmartAccount',
   ),
+  // SmartAccount
   defineMethod(
     parseAbiItem('function execute(bytes32 execMode, bytes executionCalldata)'),
     ([execMode, executionCalldata]) => {
       return decodeCalldata(execMode, executionCalldata)
     },
-    'SmartAccount',
   ),
+  // SmartAccount
   defineMethod(
     parseAbiItem(
       'function executeAndRevert(address to, uint256 value, bytes data, uint8 operation)',
@@ -169,8 +170,8 @@ export const ERC4337_methods: Method[] = [
         },
       ]
     },
-    'SmartAccount',
   ),
+  // SmartAccount
   defineMethod(
     parseAbiItem(
       'function execute(address to, uint256 value, bytes memory data, uint8 _operation)',
@@ -184,8 +185,8 @@ export const ERC4337_methods: Method[] = [
         },
       ]
     },
-    'SmartAccount',
   ),
+  // SmartAccount
   defineMethod(
     parseAbiItem(
       'function execTransactionFromEntrypoint(address to, uint256 value, bytes data)',
@@ -199,8 +200,8 @@ export const ERC4337_methods: Method[] = [
         },
       ]
     },
-    'SmartAccount',
   ),
+  // SmartAccount
   defineMethod(
     parseAbiItem('function execute_ncC(address to, uint256 value, bytes data)'),
     ([to, , data]) => {
@@ -212,7 +213,6 @@ export const ERC4337_methods: Method[] = [
         },
       ]
     },
-    'SmartAccount',
   ),
 ]
 

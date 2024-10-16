@@ -5,6 +5,7 @@ import { defineMethod } from '../defineMetod'
 import { SAFE_EXEC_TRANSACTION_SIGNATURE } from './const'
 
 export const SAFE_methods: Method[] = [
+  // Safe:MultiSendCallOnly1.3.0
   defineMethod(
     parseAbiItem('function multiSend(bytes memory transactions)'),
     ([transactions]) => {
@@ -18,15 +19,12 @@ export const SAFE_methods: Method[] = [
         return operations
       })
     },
-    'Safe:MultiSendCallOnly1.3.0',
   ),
-  defineMethod(
-    SAFE_EXEC_TRANSACTION_SIGNATURE,
-    ([to, , data]) => {
-      return [{ type: 'recursive', calldata: data, to }]
-    },
-    'Safe:Singleton1.3.0',
-  ),
+  // Safe:Singleton1.3.0
+  defineMethod(SAFE_EXEC_TRANSACTION_SIGNATURE, ([to, , data]) => {
+    return [{ type: 'recursive', calldata: data, to }]
+  }),
+  // Safe4337Module
   defineMethod(
     parseAbiItem(
       'function executeUserOp(address to, uint256 value, bytes data, uint8 operation)',
@@ -40,7 +38,6 @@ export const SAFE_methods: Method[] = [
         },
       ]
     },
-    'Safe4337Module',
   ),
 ]
 

@@ -14,11 +14,6 @@ export interface Analyzer {
   }): Promise<AnalyzedBlock>
 }
 
-export interface CountedOperation {
-  count: number
-  children: CountedOperation[]
-}
-
 export type Operation = StaticOperation | RecursiveOperation
 
 export interface StaticOperation {
@@ -32,9 +27,6 @@ export interface RecursiveOperation {
 }
 
 export interface Method {
-  name: string
-  contractName?: string
   selector: string
-  signature: string
   count(calldata: string): Operation[]
 }
