@@ -40,7 +40,7 @@ export function ActivityChart({ milestones, entries }: Props) {
     true,
   )
 
-  const { data: scalingFactor } = api.activity.scalingFactor.useQuery({
+  const { data: stats } = api.activity.chartStats.useQuery({
     filter: filters.isEmpty
       ? { type: 'all' }
       : {
@@ -65,7 +65,7 @@ export function ActivityChart({ milestones, entries }: Props) {
   const { columns, valuesStyle, chartRange, formatYAxisLabel } =
     useActivityChartRenderParams({
       milestones,
-      data: data,
+      data,
       showMainnet,
     })
 
@@ -82,7 +82,7 @@ export function ActivityChart({ milestones, entries }: Props) {
       useLogScale={scale === 'log'}
     >
       <section className="flex flex-col gap-4">
-        <ActivityChartHeader scalingFactor={scalingFactor} range={chartRange} />
+        <ActivityChartHeader stats={stats} range={chartRange} />
         <Chart />
         <ChartControlsWrapper>
           <div className="flex gap-2 md:gap-4">

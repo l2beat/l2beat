@@ -11,7 +11,7 @@ import {
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { sortStages } from '~/components/table/sorting/functions/stage-sorting'
-import { formatNumber } from '~/utils/number-format/format-number'
+import { formatTps } from '~/utils/number-format/format-tps'
 import { type ScalingSummaryTableRow } from '../../_utils/to-table-rows'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
@@ -89,7 +89,7 @@ export const scalingSummaryColumns = [
 
       return (
         <ValueWithPercentageChange change={data.change}>
-          {formatNumber(ctx.getValue())}
+          {formatTps(ctx.getValue())}
         </ValueWithPercentageChange>
       )
     },
