@@ -36,6 +36,11 @@ export const avail: DaLayer = {
   },
   technology: {
     description: `
+    ## Architecture
+
+    ![Avail architecture](/images/da-layer-technology/avail/architecture.png#center)
+
+
     ## Consensus
     Avail implements a Nominated Proof-of-Stake (NPoS) Sybil resistance mechanism, combined with the BABE/GRANDPA consensus protocol. 
     BABE handles block production by assigning block production slots according to validators' stake and using a Verifiable Random Function (VRF). 
