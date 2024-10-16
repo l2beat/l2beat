@@ -88,6 +88,7 @@ export function EditNetworkPage({
     defaultValues: {
       name: network?.name ?? '',
       logoUrl: network?.logoUrl ?? '',
+      type: network?.type === null ? selectNullValue : network?.type,
       chainId: network?.chainId?.toString() ?? '0',
       coingeckoId: network?.coingeckoId ?? '',
       axelarId: network?.axelarId ?? '',
@@ -117,7 +118,7 @@ export function EditNetworkPage({
     async (rawData: z.infer<typeof networkFormSchema>) => {
       const data = {
         name: rawData.name,
-        chainId: Number(rawData.chainId),
+        chainId: !!rawData.chainId ? Number(rawData.chainId) : null,
         type: rawData.type !== selectNullValue ? rawData.type : null,
         logoUrl: rawData.logoUrl !== '' ? rawData.logoUrl : null,
         coingeckoId: rawData.coingeckoId !== '' ? rawData.coingeckoId : null,
@@ -138,8 +139,11 @@ export function EditNetworkPage({
       const result = network
         ? await updateNetwork({ ...data, id: network.id })
         : await insertNetwork(data)
-      if (result?.data?.failure) {
-        toast.error(result.data.failure)
+
+      console.log(result)
+
+      if (!result?.data?.success) {
+        toast.error(result?.data?.failure ?? 'Unknown error')
       } else {
         router.replace('/networks')
       }

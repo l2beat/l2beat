@@ -8,7 +8,7 @@ export const insertNetworkSchema = z.object({
   name: z.string().min(3).max(191),
   logoUrl: z.string().url().nullable(),
   type: z.nativeEnum(NetworkType).nullable(),
-  chainId: z.number().int().positive(),
+  chainId: z.number().int().nullable(),
   coingeckoId: z.string().nullable(),
   axelarId: z.string().nullable(),
   axelarGatewayAddress: z.string().nullable(),
