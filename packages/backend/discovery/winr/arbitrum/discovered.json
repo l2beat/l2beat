@@ -1,8 +1,8 @@
 {
   "name": "winr",
   "chain": "arbitrum",
-  "blockNumber": 262718848,
-  "configHash": "0xa08e1c62015308e9fd1ebc52af6cd0ad3355733a5b7db2fc74befb4f598371f9",
+  "blockNumber": 264379343,
+  "configHash": "0x0377bb7afc533ee6f5d3b39b9380ca8b7de72733481f9c165f3d622b6c7bf2e8",
   "contracts": [
     {
       "name": "ChallengeManager",
@@ -88,12 +88,12 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 275,
+        "firstUnresolvedNode": 285,
         "inbox": "0x4FeBaEF286Ca477402dafCEeB17C64de481aFB42",
         "isERC20Enabled": false,
         "lastStakeBlock": 19879132,
-        "latestConfirmed": 274,
-        "latestNodeCreated": 285,
+        "latestConfirmed": 284,
+        "latestNodeCreated": 295,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xBA99217992620b76aae0D574c70bD313B30D3D1d",
@@ -221,7 +221,7 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "WinrMultisig",
+      "name": "ConduitMultisig2",
       "address": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -340,7 +340,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 6734,
+        "batchCount": 7234,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x1A48A9e82dDb9cd157a67493Cc5E246D0cDd8307"],
         "bridge": "0xF3f01622Ac969156760c32190995F9dC5b3eb7FA",
@@ -364,7 +364,7 @@
         "rollup": "0x2633ea91d15BeE85105C9b27E068f406F2F36a4a",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 926,
+        "totalDelayedMessagesRead": 989,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -566,12 +566,12 @@
           "0xe966442c0E8F28C48eF4F02BfF7a29876Dcd30CC"
         ],
         "allowedOutboxList": ["0xBA99217992620b76aae0D574c70bD313B30D3D1d"],
-        "delayedMessageCount": 926,
+        "delayedMessageCount": 989,
         "nativeToken": "0xD77B108d4f6cefaa0Cae9506A934e825BEccA46E",
         "rollup": "0x2633ea91d15BeE85105C9b27E068f406F2F36a4a",
         "sequencerInbox": "0x8AeDdE55Cb361e73a0B0c0cF2A5bB35E97a20456",
-        "sequencerMessageCount": 6734,
-        "sequencerReportedSubMessageCount": 15093715
+        "sequencerMessageCount": 7234,
+        "sequencerReportedSubMessageCount": 16617163
       },
       "derivedName": "ERC20Bridge"
     }

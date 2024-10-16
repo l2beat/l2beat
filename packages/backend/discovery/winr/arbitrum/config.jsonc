@@ -13,8 +13,7 @@
     "0xBA99217992620b76aae0D574c70bD313B30D3D1d": "Outbox",
     "0x4FeBaEF286Ca477402dafCEeB17C64de481aFB42": "Inbox",
     "0xc5d17f6e0025a23c0AAFf7832Cc531B3034602DA": "UpgradeExecutor",
-    "0xD77B108d4f6cefaa0Cae9506A934e825BEccA46E": "WINR token",
-    "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56": "WinrMultisig"
+    "0xD77B108d4f6cefaa0Cae9506A934e825BEccA46E": "WINR token"
   },
   "overrides": {
     "WINR token": {

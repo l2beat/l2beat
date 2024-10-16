@@ -48,7 +48,7 @@ export const popapex: Layer3 = orbitStackL3({
   },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
-      'ProofOfPlayMultisig',
+      'ConduitMultisig2',
       (() => {
         const discoveredAdminOwner = discovery.getAddressFromValue(
           'ProxyAdmin',
@@ -60,9 +60,8 @@ export const popapex: Layer3 = orbitStackL3({
           'UpgradeExecutor',
           'EXECUTOR_ROLE',
         ).members[0]
-        const discoveredRollupOwnerMultisig = discovery.getContract(
-          'ProofOfPlayMultisig',
-        ).address
+        const discoveredRollupOwnerMultisig =
+          discovery.getContract('ConduitMultisig2').address
         assert(
           discoveredAdminOwner === discoveredUpgradeExecutorAddy &&
             discoveredExecutor === discoveredRollupOwnerMultisig,

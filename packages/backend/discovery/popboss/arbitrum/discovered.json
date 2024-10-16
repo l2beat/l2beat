@@ -1,8 +1,8 @@
 {
   "name": "popboss",
   "chain": "arbitrum",
-  "blockNumber": 257934417,
-  "configHash": "0x36c6169e6c128ccb32a999df22bc1387bd90619538cb73b23f0610dd29ce35fd",
+  "blockNumber": 264379217,
+  "configHash": "0x68e9165a1e72235bd68e28615fb8fd5373060a620bc091465e24806a94bcae1a",
   "contracts": [
     {
       "name": "UpgradeExecutor",
@@ -121,12 +121,12 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 64,
+        "firstUnresolvedNode": 102,
         "inbox": "0xEe30EfcaF812d10e1EFE25E9458f76a39DAD3239",
         "isERC20Enabled": false,
         "lastStakeBlock": 20332772,
-        "latestConfirmed": 63,
-        "latestNodeCreated": 75,
+        "latestConfirmed": 101,
+        "latestNodeCreated": 112,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xa4270256B160C3Ebec2d6914a906c7EC38D8d072",
@@ -275,11 +275,11 @@
           "0x6e988B94C12194A925D7802FE75891364C312477"
         ],
         "allowedOutboxList": ["0xa4270256B160C3Ebec2d6914a906c7EC38D8d072"],
-        "delayedMessageCount": 1818,
+        "delayedMessageCount": 3102,
         "rollup": "0x330F8fEB25f3427cABA32446728C36ae67f2135b",
         "sequencerInbox": "0x6eE94AD8057Fd7Ba4d47bb6278a261c8a9FD4E3f",
-        "sequencerMessageCount": 1748,
-        "sequencerReportedSubMessageCount": 8813036
+        "sequencerMessageCount": 3004,
+        "sequencerReportedSubMessageCount": 14745087
       },
       "derivedName": "Bridge"
     },
@@ -351,7 +351,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 1748,
+        "batchCount": 3004,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x75EFAE926BcB72433C70fbfA76588F16338397De"],
         "bridge": "0x53D82686BC9827fEc03bcEe661B37b855A18EcA9",
@@ -375,7 +375,7 @@
         "rollup": "0x330F8fEB25f3427cABA32446728C36ae67f2135b",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 1817,
+        "totalDelayedMessagesRead": 3101,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -387,7 +387,7 @@
       "derivedName": "SequencerInbox"
     },
     {
-      "name": "ProofOfPlayMultisig",
+      "name": "ConduitMultisig2",
       "address": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
       "template": "GnosisSafe",
       "sourceHashes": [
