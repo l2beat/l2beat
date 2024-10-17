@@ -5,6 +5,7 @@ import {
   NoDaBridge,
 } from '../types'
 import { DaLinks } from '../types/DaLinks'
+import { DaRelayerFailureRisk } from '../types/DaRelayerFailureRisk'
 import { linkByDA } from '../utils/link-by-da'
 
 type TemplateSpecific = {
@@ -61,7 +62,7 @@ export function NO_BRIDGE(template: TemplateVars): NoDaBridge {
   const risks = {
     committeeSecurity: DaCommitteeSecurityRisk.NoBridge,
     upgradeability: DaUpgradeabilityRisk.NoBridge,
-    relayerFailure: 'noBridge',
+    relayerFailure: DaRelayerFailureRisk.NoBridge,
     ...template.risks,
   } satisfies DaBridgeRisks
 

@@ -1,26 +1,32 @@
-import { Sentiment } from '@l2beat/shared-pure'
+import { DaRiskViewOptions } from './DaRiskView'
 
 export const DaRelayerFailureRisk = {
-  selfPropose: {
-    name: 'Self propose',
+  SelfPropose: {
+    type: 'SelfPropose',
+    value: 'Self propose',
     sentiment: 'good',
   },
-  whitelist: {
-    name: 'Whitelist',
+  Whitelist: {
+    type: 'Whitelist',
+    value: 'Whitelist',
     sentiment: 'warning',
   },
-  governance: {
-    name: 'Governance',
+  Governance: {
+    type: 'Governance',
+    value: 'Governance',
     sentiment: 'warning',
   },
-  noMechanism: {
-    name: 'No mechanism',
+  NoMechanism: {
+    type: 'NoMechanism',
+    value: 'No mechanism',
     sentiment: 'bad',
   },
-  noBridge: {
-    name: 'No bridge',
+  NoBridge: {
+    type: 'NoBridge',
+    value: 'No bridge',
     sentiment: 'bad',
   },
-} as const satisfies Record<string, { name: string; sentiment: Sentiment }>
+} as const satisfies DaRiskViewOptions
 
-export type DaRelayerFailureRisk = keyof typeof DaRelayerFailureRisk
+export type DaRelayerFailureRisk =
+  (typeof DaRelayerFailureRisk)[keyof typeof DaRelayerFailureRisk]

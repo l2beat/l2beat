@@ -1,15 +1,12 @@
 import { Sentiment } from '@l2beat/shared-pure'
 import { DaRiskViewOptions } from './DaRiskView'
 
-export type DaCommitteeSecurityRisk = {
-  [key in keyof typeof DaCommitteeSecurityRisk]: (typeof DaCommitteeSecurityRisk)[key] extends (
-    // biome-ignore lint/suspicious/noExplicitAny: expected
-    ...args: any
-    // biome-ignore lint/suspicious/noExplicitAny: expected
-  ) => any
-    ? ReturnType<(typeof DaCommitteeSecurityRisk)[key]>
-    : (typeof DaCommitteeSecurityRisk)[key]
-}[keyof typeof DaCommitteeSecurityRisk]
+export type DaCommitteeSecurityRisk =
+  | ReturnType<typeof RobustAndDiverseCommittee>
+  | ReturnType<typeof LimitedCommitteeSecurity>
+  | ReturnType<typeof NoCommiteeSecurity>
+  | typeof NoBridge
+  | ReturnType<typeof Auto>
 
 const RobustAndDiverseCommittee = (value?: string) =>
   ({

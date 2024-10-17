@@ -5,6 +5,7 @@ import {
   DaUpgradeabilityRisk,
 } from '../../../../../types'
 import { CELESTIA_BLOBSTREAM } from '../template'
+import { DaRelayerFailureRisk } from '../../../../../types/DaRelayerFailureRisk'
 
 const discovery = new ProjectDiscovery('blobstream', 'base')
 
@@ -132,6 +133,6 @@ export const blobstreamBase = CELESTIA_BLOBSTREAM({
       'Celestia Validators',
     ),
     upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(0), // TIMELOCK_ROLE is 4/6 multisig
-    relayerFailure: 'noMechanism',
+    relayerFailure: DaRelayerFailureRisk.NoMechanism,
   },
 })

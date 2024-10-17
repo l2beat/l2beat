@@ -1,5 +1,6 @@
 import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../../../types'
 import { DaBridge, EnshrinedBridge } from '../../../types/DaBridge'
+import { DaRelayerFailureRisk } from '../../../types/DaRelayerFailureRisk'
 import { linkByDA } from '../../../utils/link-by-da'
 
 export const enshrinedBridge: EnshrinedBridge = {
@@ -36,6 +37,6 @@ export const enshrinedBridge: EnshrinedBridge = {
     ),
     upgradeability: DaUpgradeabilityRisk.Immutable,
     // we should add a note on the frontend that the specific rollup contracts could be upgradable and the security properties of each depend on the single rollup implementation
-    relayerFailure: 'selfPropose',
+    relayerFailure: DaRelayerFailureRisk.SelfPropose,
   },
 } satisfies DaBridge

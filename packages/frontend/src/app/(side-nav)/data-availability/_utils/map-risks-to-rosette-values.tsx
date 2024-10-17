@@ -10,10 +10,10 @@ export function mapRisksToRosetteValues(
 ): RosetteValue[] {
   const values: RosetteValue[] = [
     {
-      name: 'Exit window',
-      value: risks.exitWindow.value,
-      sentiment: risks.exitWindow.sentiment,
-      description: risks.exitWindow.description,
+      name: 'Upgradeability',
+      value: risks.upgradeability.value,
+      sentiment: risks.upgradeability.sentiment,
+      description: risks.upgradeability.description,
     },
     {
       name: 'Economic security',
@@ -22,10 +22,10 @@ export function mapRisksToRosetteValues(
       description: risks.economicSecurity.description,
     },
     {
-      name: 'Accessibility',
-      value: risks.accessibility.value,
-      sentiment: risks.accessibility.sentiment,
-      description: risks.accessibility.description,
+      name: 'Relayer failure',
+      value: risks.relayerFailure.value,
+      sentiment: risks.relayerFailure.sentiment,
+      description: risks.relayerFailure.description,
     },
     {
       name: 'Fraud detection',
@@ -34,10 +34,10 @@ export function mapRisksToRosetteValues(
       description: risks.fraudDetection.description,
     },
     {
-      name: 'Attestations',
-      value: risks.attestations.value,
-      sentiment: risks.attestations.sentiment,
-      description: risks.attestations.description,
+      name: 'Committee security',
+      value: risks.committeeSecurity.value,
+      sentiment: risks.committeeSecurity.sentiment,
+      description: risks.committeeSecurity.description,
     },
   ]
 

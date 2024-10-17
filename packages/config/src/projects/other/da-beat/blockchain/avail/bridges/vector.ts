@@ -4,6 +4,7 @@ import { ProjectDiscovery } from '../../../../../../discovery/ProjectDiscovery'
 import { DaBridge } from '../../../types/DaBridge'
 import { DaUpgradeabilityRisk } from '../../../types/DaUpgradeabilityRisk'
 import { DaCommitteeSecurityRisk } from '../../../types'
+import { DaRelayerFailureRisk } from '../../../types/DaRelayerFailureRisk'
 
 const discovery = new ProjectDiscovery('vector')
 
@@ -90,6 +91,6 @@ export const vector = {
     committeeSecurity:
       DaCommitteeSecurityRisk.RobustAndDiverseCommittee('Avail Validators'),
     upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
-    relayerFailure: 'noMechanism',
+    relayerFailure: DaRelayerFailureRisk.NoMechanism,
   },
 } satisfies DaBridge

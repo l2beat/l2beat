@@ -5,6 +5,7 @@ import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../../types'
 import { DaBridge } from '../../types/DaBridge'
 import { DacTransactionDataType } from '../../types/DacTransactionDataType'
 import { toUsedInProject } from '../../utils/to-used-in-project'
+import { DaRelayerFailureRisk } from '../../types/DaRelayerFailureRisk'
 
 const discovery = new ProjectDiscovery('mantle')
 
@@ -123,6 +124,6 @@ export const mantleDABridge = {
   risks: {
     committeeSecurity: DaCommitteeSecurityRisk.NoCommiteeSecurity(),
     upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
-    relayerFailure: 'noMechanism',
+    relayerFailure: DaRelayerFailureRisk.NoMechanism,
   },
 } satisfies DaBridge

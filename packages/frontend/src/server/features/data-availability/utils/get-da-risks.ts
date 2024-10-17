@@ -20,9 +20,9 @@ export function getDaRisks(
       economicSecurity,
     ),
     fraudDetection: daLayer.risks.fraudDetection,
-    attestations: daBridge.risks.attestations,
-    exitWindow: daBridge.risks.exitWindow,
-    accessibility: daBridge.risks.accessibility,
+    relayerFailure: daBridge.risks.relayerFailure,
+    upgradeability: daBridge.risks.upgradeability,
+    committeeSecurity: daBridge.risks.committeeSecurity,
   }
 }
 

@@ -11,6 +11,7 @@ import {
 } from '../types'
 import { DaLinks } from '../types/DaLinks'
 import { toUsedInProject } from '../utils/to-used-in-project'
+import { DaRelayerFailureRisk } from '../types/DaRelayerFailureRisk'
 
 type TemplateSpecific = {
   /** Project DAC is associated with */
@@ -101,7 +102,8 @@ export function DAC(template: TemplateVars): DacDaLayer {
       // TODO: make it required and remove the default
       upgradeability:
         template.risks?.upgradeability ?? DaUpgradeabilityRisk.Immutable,
-      relayerFailure: template.risks?.relayerFailure ?? 'noMechanism',
+      relayerFailure:
+        template.risks?.relayerFailure ?? DaRelayerFailureRisk.NoMechanism,
     },
   }
 
