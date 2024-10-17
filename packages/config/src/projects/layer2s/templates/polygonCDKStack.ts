@@ -55,7 +55,7 @@ export interface PolygonCDKStackConfig {
   discovery: ProjectDiscovery
   display: Omit<
     Layer2Display,
-    'provider' | 'category' | 'dataAvailabilityMode' | 'purposes'
+    'provider' | 'category' | 'purposes'
   >
   rpcUrl?: string
   transactionApi?: ScalingProjectTransactionApi
