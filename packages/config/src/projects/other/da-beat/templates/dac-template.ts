@@ -10,8 +10,8 @@ import {
   DacDaLayer,
 } from '../types'
 import { DaLinks } from '../types/DaLinks'
-import { toUsedInProject } from '../utils/to-used-in-project'
 import { DaRelayerFailureRisk } from '../types/DaRelayerFailureRisk'
+import { toUsedInProject } from '../utils/to-used-in-project'
 
 type TemplateSpecific = {
   /** Project DAC is associated with */

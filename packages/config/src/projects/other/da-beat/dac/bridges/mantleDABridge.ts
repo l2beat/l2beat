@@ -3,9 +3,9 @@ import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
 import { mantle } from '../../../../layer2s/mantle'
 import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../../types'
 import { DaBridge } from '../../types/DaBridge'
+import { DaRelayerFailureRisk } from '../../types/DaRelayerFailureRisk'
 import { DacTransactionDataType } from '../../types/DacTransactionDataType'
 import { toUsedInProject } from '../../utils/to-used-in-project'
-import { DaRelayerFailureRisk } from '../../types/DaRelayerFailureRisk'
 
 const discovery = new ProjectDiscovery('mantle')
 

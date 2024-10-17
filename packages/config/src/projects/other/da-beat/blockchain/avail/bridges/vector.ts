@@ -1,10 +1,10 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../../../../../discovery/ProjectDiscovery'
-import { DaBridge } from '../../../types/DaBridge'
-import { DaUpgradeabilityRisk } from '../../../types/DaUpgradeabilityRisk'
 import { DaCommitteeSecurityRisk } from '../../../types'
+import { DaBridge } from '../../../types/DaBridge'
 import { DaRelayerFailureRisk } from '../../../types/DaRelayerFailureRisk'
+import { DaUpgradeabilityRisk } from '../../../types/DaUpgradeabilityRisk'
 
 const discovery = new ProjectDiscovery('vector')
 

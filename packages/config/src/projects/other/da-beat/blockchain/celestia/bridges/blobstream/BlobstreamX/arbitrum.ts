@@ -4,8 +4,8 @@ import {
   DaCommitteeSecurityRisk,
   DaUpgradeabilityRisk,
 } from '../../../../../types'
-import { CELESTIA_BLOBSTREAM } from '../template'
 import { DaRelayerFailureRisk } from '../../../../../types/DaRelayerFailureRisk'
+import { CELESTIA_BLOBSTREAM } from '../template'
 
 const discovery = new ProjectDiscovery('blobstream', 'arbitrum')
 

@@ -1,9 +1,9 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../../../../discovery/ProjectDiscovery'
-import { DaUpgradeabilityRisk } from '../../../../../types/DaUpgradeabilityRisk'
-import { CELESTIA_BLOBSTREAM } from '../template'
 import { DaCommitteeSecurityRisk } from '../../../../../types'
 import { DaRelayerFailureRisk } from '../../../../../types/DaRelayerFailureRisk'
+import { DaUpgradeabilityRisk } from '../../../../../types/DaUpgradeabilityRisk'
+import { CELESTIA_BLOBSTREAM } from '../template'
 
 const discovery = new ProjectDiscovery('blobstream')
 

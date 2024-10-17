@@ -5,11 +5,11 @@ import {
 } from '../../../../common'
 import { DaCommitteeSecurityRisk } from './DaCommitteeSecurityRisk'
 import { DaLinks } from './DaLinks'
+import { DaRelayerFailureRisk } from './DaRelayerFailureRisk'
 import { DaTechnology } from './DaTechnology'
+import { DaUpgradeabilityRisk } from './DaUpgradeabilityRisk'
 import { DacTransactionDataType } from './DacTransactionDataType'
 import { UsedInProject } from './UsedInProject'
-import { DaUpgradeabilityRisk } from './DaUpgradeabilityRisk'
-import { DaRelayerFailureRisk } from './DaRelayerFailureRisk'
 
 export type DaBridge =
   | NoDaBridge
