@@ -124,7 +124,10 @@ function followThrough<T>(
 
   if (!followed) {
     result.push(resolved)
+  } else if (node.canActIndependently) {
+    result.push(structuredClone(resolved))
   }
+
   return result
 }
 
