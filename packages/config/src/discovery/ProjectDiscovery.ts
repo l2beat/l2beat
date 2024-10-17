@@ -967,7 +967,8 @@ export class ProjectDiscovery {
             ? {}
             : {
                 upgradableBy: upgraders,
-                upgradeDelay: minDelay === 0 ? 'No delay' : minDelay.toString(),
+                upgradeDelay:
+                  minDelay === 0 ? 'No delay' : formatSeconds(minDelay),
               }
 
         return this.getContractDetails(contract.address.toString(), {
