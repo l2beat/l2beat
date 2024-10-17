@@ -1,4 +1,5 @@
 import { providers } from 'ethers'
+import { StarknetGetBlockWithTxsResponseBodySchema } from '../../../../peripherals/starknet/schemas'
 
 export interface AnalyzedBlock {
   transactionsLength: number
@@ -6,12 +7,13 @@ export interface AnalyzedBlock {
 }
 
 export interface Analyzer {
-  analyzeBlock(rpcBlock: {
-    number: number
-    timestamp: number
-    hash: string
-    transactions: providers.TransactionResponse[]
-  }): AnalyzedBlock
+  analyzeBlock(
+    block: {
+      transactions:
+        | providers.TransactionResponse[]
+        | StarknetGetBlockWithTxsResponseBodySchema['result']['transactions']
+    },
+  ): AnalyzedBlock
 }
 
 export type Operation = StaticOperation | RecursiveOperation
