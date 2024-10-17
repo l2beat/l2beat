@@ -51,7 +51,7 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
      Once a proving request is received, the off-chain prover generates the proof and submits it to Blobstream contract. The Blobstream contract verifies the proof with the corresponding verifier contract and, if successful, stores the data commitment in storage. <br /> 
 
      Verifying a header range includes verifying tendermint consensus (header signatures are 2/3 of stake) and verifying the data commitment root.
-      By default, Blobstream on ${chainName} is updated by the Celestia operator at a regular cadence of ${updateInterval} hour.
+      By default, Blobstream on ${chainName} is updated by the Succinct operator at a regular cadence of ${updateInterval} hour.
     `,
   },
   contracts: {
