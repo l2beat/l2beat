@@ -21,6 +21,7 @@ import {
   EthereumAddress,
   TokenBridgedUsing,
   UnixTime,
+  formatSeconds,
   notUndefined,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
@@ -728,6 +729,18 @@ export class ProjectDiscovery {
     return result
   }
 
+  formatViaPath(path: ResolvedPermissionPath): string {
+    const name =
+      this.getContractByAddress(path.address)?.name ?? path.address.toString()
+
+    let result = name
+    if (path.delay) {
+      result += ` with ${formatSeconds(path.delay)} delay`
+    }
+
+    return result
+  }
+
   describeUltimatelyReceivedPermissions(
     contractOrEoa: ContractParameters | EoaParameters,
   ): string[] {
@@ -745,15 +758,7 @@ export class ProjectDiscovery {
     }
 
     const formatVia = (via: ResolvedPermissionPath[]) =>
-      ' (acting via ' +
-      via
-        .map(
-          (path) =>
-            this.getContractByAddress(path.address)?.name ??
-            path.address.toString(),
-        )
-        .join(', ') +
-      ')'
+      ` (acting via ${via.map((p) => this.formatViaPath(p)).join(', ')})`
 
     return Object.entries(
       groupBy(
