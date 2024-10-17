@@ -19,6 +19,7 @@ export async function getActivityLatestTps(projects: (Layer2 | Layer3)[]) {
   return getCachedActivityLatestTps(projects)
 }
 
+export type ActivityLatestTpsData = Awaited<ReturnType<typeof getCachedActivityLatestTps>>
 const getCachedActivityLatestTps = cache(
   async (projects: (Layer2 | Layer3)[]) => {
     const range = getFullySyncedActivityRange('2d')

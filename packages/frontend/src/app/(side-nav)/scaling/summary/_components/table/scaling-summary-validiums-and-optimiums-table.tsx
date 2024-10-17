@@ -4,7 +4,6 @@ import { getCoreRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { useScalingAssociatedTokensContext } from '~/app/(side-nav)/scaling/_components/scaling-associated-tokens-context'
 import { useScalingFilter } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
-import { ScalingTvlFilters } from '~/app/(side-nav)/scaling/_components/scaling-tvl-filters'
 import { BasicTable } from '~/components/table/basic-table'
 import { getStageSortedRowModel } from '~/components/table/sorting/get-stage-sorting-row-model'
 import { useTable } from '~/hooks/use-table'
@@ -54,9 +53,6 @@ export function ScalingSummaryValidiumsAndOptimiumsTable({ entries }: Props) {
   })
 
   return (
-    <div className="space-y-3 md:space-y-6">
-      <ScalingTvlFilters items={filteredEntries} />
-      <BasicTable table={table} />
-    </div>
+    <BasicTable table={table} />
   )
 }

@@ -17,12 +17,17 @@ import { HydrateClient, api } from '~/trpc/server'
 import { mapToRecategorisedEntries } from '~/utils/map-to-recategorised-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingAssociatedTokensContextProvider } from '../_components/scaling-associated-tokens-context'
-import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
+import { ScalingFilterContextProvider, useScalingFilter } from '../_components/scaling-filter-context'
 import { ChartTabs } from './_components/chart-tabs'
 import { OthersComingSoonNotice } from './_components/table/others-coming-soon-notice'
 import { ScalingSummaryRollupsTable } from './_components/table/scaling-summary-rollups-table'
 import { ScalingSummaryTable } from './_components/table/scaling-summary-table'
 import { ScalingSummaryValidiumsAndOptimiumsTable } from './_components/table/scaling-summary-validiums-and-optimiums-table'
+import { ScalingTvlFilters } from '../_components/scaling-tvl-filters'
+import { RollupsInfo } from './_components/rollups-info'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { useMemo } from 'react'
+import { ScalingSummaryTables } from './_components/tables'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -56,59 +61,24 @@ export default async function Page() {
   ])
   return (
     <HydrateClient>
+      <MainPageHeader>Summary</MainPageHeader>
+      <div className="grid grid-cols-2 gap-4 max-lg:hidden">
+        <MainPageCard>
+          <ScalingSummaryTvlChart unit={UNIT} timeRange={TIME_RANGE} />
+        </MainPageCard>
+        <MainPageCard>
+          <ScalingSummaryActivityChart timeRange={TIME_RANGE} />
+        </MainPageCard>
+      </div>
+      <ChartTabs className="lg:hidden" unit={UNIT} timeRange={TIME_RANGE} />
+      <HorizontalSeparator className='mb-3 mt-6' />
       <ScalingAssociatedTokensContextProvider>
-        <MainPageHeader>Summary</MainPageHeader>
-        <div className="grid grid-cols-2 gap-4 max-lg:hidden">
-          <MainPageCard>
-            <ScalingSummaryTvlChart unit={UNIT} timeRange={TIME_RANGE} />
-          </MainPageCard>
-          <MainPageCard>
-            <ScalingSummaryActivityChart timeRange={TIME_RANGE} />
-          </MainPageCard>
-        </div>
-        <ChartTabs className="lg:hidden" unit={UNIT} timeRange={TIME_RANGE} />
-        <Tables entries={entries} />
+        <ScalingFilterContextProvider>
+          <ScalingSummaryTables {...entries} />
+        </ScalingFilterContextProvider>
       </ScalingAssociatedTokensContextProvider>
     </HydrateClient>
   )
 }
 
-async function Tables({ entries }: { entries: ScalingSummaryEntry[] }) {
-  if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
-    const grouped = await mapToRecategorisedEntries(entries)
-    return (
-      <DirectoryTabs className="mt-6" defaultValue="rollups">
-        <DirectoryTabsList>
-          <DirectoryTabsTrigger value="rollups">Rollups</DirectoryTabsTrigger>
-          <DirectoryTabsTrigger value="validiums-and-optimiums">
-            Validiums & Optimiums
-          </DirectoryTabsTrigger>
-          <DirectoryTabsTrigger value="others">Others</DirectoryTabsTrigger>
-        </DirectoryTabsList>
-        <DirectoryTabsContent value="rollups">
-          <ScalingFilterContextProvider>
-            <ScalingSummaryRollupsTable entries={grouped.rollups} />
-          </ScalingFilterContextProvider>
-        </DirectoryTabsContent>
-        <DirectoryTabsContent value="validiums-and-optimiums">
-          <ScalingFilterContextProvider>
-            <ScalingSummaryValidiumsAndOptimiumsTable
-              entries={grouped.validiumsAndOptimiums}
-            />
-          </ScalingFilterContextProvider>
-        </DirectoryTabsContent>
-        <DirectoryTabsContent value="others">
-          <OthersComingSoonNotice />
-        </DirectoryTabsContent>
-      </DirectoryTabs>
-    )
-  }
 
-  return (
-    <ScalingFilterContextProvider>
-      <MainPageCard className="md:mt-6">
-        <ScalingSummaryTable entries={entries} />
-      </MainPageCard>
-    </ScalingFilterContextProvider>
-  )
-}

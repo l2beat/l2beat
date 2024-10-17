@@ -65,10 +65,10 @@
    Temporary solution until project page is redesigned to new colors.
   */
   body:has(.sidebar) [data-role="select-content"] {
-    @apply bg-surface-secondary;
+    @apply bg-surface-primary;
   }
   body:has(.sidebar) [data-role="select-content"] [role="option"] {
-    @apply focus:bg-surface-tertiary;
+    @apply focus:bg-surface-secondary;
   }
 }
 
