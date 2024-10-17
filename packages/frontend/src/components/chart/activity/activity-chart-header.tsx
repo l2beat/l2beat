@@ -46,7 +46,7 @@ export function ActivityChartHeader({ stats, range }: Props) {
             <ScalingFactorTooltip />
           </div>
         ) : (
-          <Skeleton className="h-6 w-16 md:w-44" />
+          <Skeleton className="h-5 w-16 md:h-6 md:w-44" />
         )}
       </div>
     </header>
