@@ -6,7 +6,6 @@ interface HttpClient2Options {
   maxRetries?: number
   initialRetryDelayMs?: number
   maxRetryDelayMs?: number
-  statusCodesToRetry?: number[]
   logger?: Logger
 }
 
@@ -15,7 +14,6 @@ const DEFAULT_HTTP_RETRY_STRATEGY = {
   initialRetryDelayMs: 1000,
   maxRetries: 5, // 1 2 4 8 16 = 31s
   maxRetryDelayMs: Infinity,
-  statusCodesToRetry: [408, 429, 500, 502, 503, 504],
 }
 
 export class HttpClient2 {
@@ -45,19 +43,11 @@ export class HttpClient2 {
           throw error
         }
 
-        const delay = Math.min(
-          this.$.initialRetryDelayMs * Math.pow(2, calls),
-          this.$.maxRetryDelayMs,
-        )
-        this.$.logger.warn('Failed to fetch, scheduling retry', {
-          url,
-          body: init?.body,
-          attempt: calls + 1,
-          delay,
-        })
+        const delay = this.calculateDelay(calls)
+        this.logAttempt(url, init, calls, delay)
         await new Promise((resolve) => setTimeout(resolve, delay))
-        calls++
       }
+      calls++
     }
   }
 
@@ -73,5 +63,26 @@ export class HttpClient2 {
     }
 
     return res.json()
+  }
+
+  private calculateDelay(calls: number) {
+    return Math.min(
+      this.$.initialRetryDelayMs * Math.pow(2, calls),
+      this.$.maxRetryDelayMs,
+    )
+  }
+
+  private logAttempt(
+    url: string,
+    init: RequestInit | undefined,
+    calls: number,
+    delay: number,
+  ) {
+    this.$.logger.warn('Failed to fetch, scheduling retry', {
+      url,
+      body: init?.body,
+      attempt: calls + 1,
+      delay,
+    })
   }
 }
