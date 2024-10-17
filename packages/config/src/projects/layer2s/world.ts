@@ -8,6 +8,7 @@ const discovery = new ProjectDiscovery('worldchain')
 
 export const world: Layer2 = opStackL2({
   badges: [Badge.RaaS.Alchemy], // not superchain
+  additionalPurposes: ['Identity'],
   display: {
     redWarning:
       'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
@@ -15,7 +16,6 @@ export const world: Layer2 = opStackL2({
     slug: 'world',
     description:
       'World Chain is an OP Stack Rollup built to scale Proof of Personhood, aiming to offer priority blockspace for users with a World ID.',
-    purposes: ['Identity', 'Universal'],
     links: {
       websites: ['https://worldcoin.org/world-chain'],
       apps: [
