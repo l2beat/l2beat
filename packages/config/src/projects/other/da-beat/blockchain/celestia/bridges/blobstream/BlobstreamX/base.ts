@@ -60,7 +60,7 @@ export const blobstreamBase = CELESTIA_BLOBSTREAM({
     risks: [
       {
         category: 'Funds can be lost if',
-        text: 'a dishonest majority of Celestia validators post incorrect or malicious data commitments to the DA bridge.',
+        text: 'the DA bridge accepts an incorrect or malicious data commitment provided by a dishonest majority of Celestia validators.',   
       },
     ],
   },
