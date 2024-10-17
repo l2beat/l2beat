@@ -6,7 +6,7 @@ import { DaLinks } from '../../../../types/DaLinks'
 
 type TemplateVars = Pick<
   OnChainDaBridge,
-  'chain' | 'contracts' | 'permissions' | 'usedIn' | 'technology' | 'risks'
+  'chain' | 'contracts' | 'permissions' | 'nativePermissions' | 'usedIn' | 'technology' | 'risks'
 > & {
   display: {
     links: DaLinks
@@ -47,6 +47,7 @@ export function CELESTIA_BLOBSTREAM(base: TemplateVars): OnChainDaBridge {
     contracts: base.contracts,
     technology: base.technology,
     permissions: base.permissions,
+    nativePermissions: base.nativePermissions,
     usedIn: base.usedIn,
   }
 }
