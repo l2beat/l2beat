@@ -62,10 +62,6 @@ export const blobstreamArbitrum = CELESTIA_BLOBSTREAM({
         category: 'Funds can be lost if',
         text: 'a dishonest majority of Celestia validators post incorrect or malicious data commitments to the DA bridge.',
       },
-      {
-        category: 'Funds can be frozen if',
-        text: 'the permissioned relayers are unable to submit DA commitments to the Vector contract.',
-      },
     ],
   },
   contracts: {
