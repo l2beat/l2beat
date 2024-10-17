@@ -5,9 +5,10 @@ import { cn } from '~/utils/cn'
 interface Props {
   value: number
   className?: string
+  textClassName?: string
 }
 
-export function PercentChange({ value, className }: Props) {
+export function PercentChange({ value, className, textClassName }: Props) {
   const isMore = value > 0
   const isLess = value < 0
 
@@ -30,6 +31,7 @@ export function PercentChange({ value, className }: Props) {
         className={cn(
           'relative inline-block w-[52px] pl-3.5 text-right text-xs',
           value === 0 && 'text-secondary',
+          textClassName,
         )}
       >
         {formatPercent(Math.abs(value))}

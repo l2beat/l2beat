@@ -6,6 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
 import { getTokensForProject } from '~/server/features/scaling/tvl/tokens/get-tokens-for-project'
+import { isTvlChartDataEmpty } from '~/server/features/utils/is-chart-data-empty'
 import { api } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
@@ -67,7 +68,7 @@ export async function getBridgeProjectDetails(
 
   const items: ProjectDetailsSection[] = []
 
-  if (!bridge.isUpcoming && tvlChartData.length > 0) {
+  if (!bridge.isUpcoming && !isTvlChartDataEmpty(tvlChartData)) {
     items.push({
       type: 'ChartSection',
       props: {
