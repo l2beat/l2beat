@@ -80,26 +80,24 @@ function Header({ stats }: { stats: ActivityChartStats | undefined }) {
         </CustomLink>
       </div>
       <div className="flex flex-col items-end">
-        <div className="flex flex-col">
-          {stats !== undefined ? (
-            <>
-              <div className="whitespace-nowrap text-right text-xl font-bold">
-                {formatTps(countToTps(stats.latestProjectsTxCount))} TPS
-              </div>
-              <div className="flex items-center gap-1">
-                <span className="whitespace-nowrap text-right text-xs text-secondary">
-                  Scaling factor: {stats.scalingFactor.toFixed(2)}x
-                </span>
-                <ScalingFactorTooltip className="size-3" />
-              </div>
-            </>
-          ) : (
-            <>
-              <Skeleton className="my-[5px] h-5 w-20 md:w-[243px]" />
-              <Skeleton className="h-4 w-[135px]" />
-            </>
-          )}
-        </div>
+        {stats !== undefined ? (
+          <>
+            <div className="whitespace-nowrap text-right text-xl font-bold">
+              {formatTps(countToTps(stats.latestProjectsTxCount))} TPS
+            </div>
+            <div className="flex items-center gap-1">
+              <span className="whitespace-nowrap text-right text-xs text-secondary">
+                Scaling factor: {stats.scalingFactor.toFixed(2)}x
+              </span>
+              <ScalingFactorTooltip className="size-3" />
+            </div>
+          </>
+        ) : (
+          <>
+            <Skeleton className="my-[5px] h-5 w-20 md:w-[243px]" />
+            <Skeleton className="my-0.5 h-4 w-[135px]" />
+          </>
+        )}
       </div>
     </div>
   )
