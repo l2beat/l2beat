@@ -401,9 +401,7 @@ export const optimism: Layer2 = {
         },
       ],
     },
-    operator: {
-      ...OPERATOR.CENTRALIZED_SEQUENCER,
-    },
+    operator: OPERATOR.CENTRALIZED_SEQUENCER,
     forceTransactions: {
       ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
       references: [
