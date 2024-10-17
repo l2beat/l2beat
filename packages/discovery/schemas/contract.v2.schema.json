@@ -98,7 +98,16 @@
       "properties": {
         "type": {
           "type": "string",
-          "enum": ["guard", "configure", "upgrade", "act"]
+          "enum": [
+            "propose",
+            "challenge",
+            "validate",
+            "sequence",
+            "guard",
+            "configure",
+            "upgrade",
+            "act"
+          ]
         },
         "delay": {
           "type": "integer",
