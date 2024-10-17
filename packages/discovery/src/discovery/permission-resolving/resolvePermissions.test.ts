@@ -1025,6 +1025,7 @@ function node(
     delay: 0,
     threshold: 1,
     edges: edges ?? [],
+    canActIndependently: false,
     ...options,
   }
 }

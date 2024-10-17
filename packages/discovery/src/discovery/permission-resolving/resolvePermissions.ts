@@ -29,6 +29,7 @@ export interface Node<T = EthereumAddress> {
   threshold: number
   delay: number
   edges: Edge<T>[]
+  canActIndependently: boolean
 }
 
 export interface Edge<T = EthereumAddress> {

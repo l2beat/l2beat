@@ -22,6 +22,7 @@ type AddressToMetaMap = { [address: string]: ContractMeta }
 // using `| undefined` for strong type safety,
 // making sure ever field of meta is always processed.
 export interface ContractMeta {
+  canActIndependently?: boolean
   displayName?: string
   descriptions?: string[]
   permissions?: PermissionConfiguration[]
@@ -41,6 +42,8 @@ export function mergeContractMeta(
     categories: mergeSets(a?.categories, b?.categories),
     types: mergeSets(a?.types, b?.types),
     severity: findHighestSeverity(a?.severity, b?.severity),
+    canActIndependently:
+      (a?.canActIndependently ?? false) || (b?.canActIndependently ?? false),
   }
   return isEmptyObject(result) ? undefined : result
 }
@@ -90,6 +93,7 @@ export function getSelfMeta(
   }
   const description = interpolateDescription(overrides?.description, analysis)
   return {
+    canActIndependently: overrides.canActIndependently,
     displayName: overrides.displayName ?? undefined,
     descriptions: [description],
     permissions: undefined,
