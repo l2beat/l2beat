@@ -1,16 +1,15 @@
 import { providers } from 'ethers'
 import { sum } from 'lodash'
+
 import {
-  ENTRY_POINT_ADDRESS_0_6_0,
-  ENTRY_POINT_ADDRESS_0_7_0,
-} from '../protocols/erc-4337/const'
-import { ERC4337_methods } from '../protocols/erc-4337/methods'
-import {
-  SAFE_EXEC_TRANSACTION_SELECTOR,
-  SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
-} from '../protocols/gnosisSafe/const'
-import { SAFE_methods } from '../protocols/gnosisSafe/methods'
-import type { AnalyzedBlock, Analyzer, Method, Operation } from '../types'
+  ERC4337_methods,
+  Method,
+  Operation,
+  SAFE_methods,
+  isErc4337,
+  isGnosisSafe,
+} from '@l2beat/shared'
+import type { AnalyzedBlock, Analyzer } from '../types'
 
 export class RpcUopsAnalyzer implements Analyzer {
   analyzeBlock(rpcBlock: {
@@ -28,13 +27,7 @@ export class RpcUopsAnalyzer implements Analyzer {
   mapTransaction(tx: providers.TransactionResponse): number {
     const methods = ERC4337_methods.concat(SAFE_methods)
 
-    const selector = tx.data.slice(0, 10)
-    if (
-      tx.to?.toLowerCase() === ENTRY_POINT_ADDRESS_0_6_0 ||
-      tx.to?.toLowerCase() === ENTRY_POINT_ADDRESS_0_7_0 ||
-      tx.to?.toLowerCase() === SAFE_MULTI_SEND_CALL_ONLY_1_3_0 ||
-      selector === SAFE_EXEC_TRANSACTION_SELECTOR
-    ) {
+    if (isErc4337(tx) || isGnosisSafe(tx)) {
       return this.countUserOperations(tx.data, methods)
     }
 
