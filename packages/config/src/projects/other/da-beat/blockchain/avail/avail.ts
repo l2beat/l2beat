@@ -82,7 +82,7 @@ export const avail: DaLayer = {
       {
         category: 'Funds can be lost if',
         text: 'a dishonest majority of Avail validators finalize an unavailable block, and the number of light nodes on the network is not enough to ensure block reconstruction.',
-      }
+      },
     ],
   },
   bridges: [
