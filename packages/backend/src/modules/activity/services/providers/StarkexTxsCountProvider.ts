@@ -1,7 +1,7 @@
+import { ActivityRecord } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 import { StarkexClient } from '../../../../peripherals/starkex/StarkexClient'
-import { ActivityRecordWithoutRatio } from '../../types'
 
 export class StarkexTxsCountProvider {
   constructor(
@@ -10,10 +10,7 @@ export class StarkexTxsCountProvider {
     private readonly productKeys: string[],
   ) {}
 
-  async getTxsCount(
-    from: number,
-    to: number,
-  ): Promise<ActivityRecordWithoutRatio[]> {
+  async getTxsCount(from: number, to: number): Promise<ActivityRecord[]> {
     const queries = range(from, to + 1).map(async (day) => {
       const productCounts = await Promise.all(
         this.productKeys.map(
