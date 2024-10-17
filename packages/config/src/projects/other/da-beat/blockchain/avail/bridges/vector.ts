@@ -86,7 +86,7 @@ export const vector = {
     risks: [
       {
         category: 'Funds can be lost if',
-        text: 'the DA bridge accepts an incorrect or malicious data commitment provided by a dishonest majority of Avail validators.',   
+        text: 'the DA bridge accepts an incorrect or malicious data commitment provided by a dishonest majority of Avail validators.',
       },
       {
         category: 'Funds can be frozen if',
