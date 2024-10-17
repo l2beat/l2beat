@@ -61,12 +61,8 @@ export const vector = {
     risks: [
       {
         category: 'Funds can be lost if',
-        text: 'the bridge contract receives a malicious code upgrade. There is no delay on code upgrades.',
-      },
-      {
-        category: 'Funds can be lost if',
-        text: 'a dishonest majority of Avail validators post incorrect or malicious data commitments.',
-      },
+        text: 'the bridge contract or its dependencies receive a malicious code upgrade. There is no delay on code upgrades.',
+      }
     ],
   },
   technology: {
@@ -83,6 +79,16 @@ export const vector = {
 
     By default, Vector on ${chainName} is updated by the Succinct operator at a cadence of approximately ${updateInterval} hours.
     `,
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: 'a dishonest majority of Avail validators post incorrect or malicious data commitments to the DA bridge.',
+      },
+      {
+        category: 'Funds can be frozen if',
+        text: 'the permissioned relayers are unable to submit DA commitments to the Vector contract.',
+      },
+    ]
   },
   permissions: [
     ...discovery.getMultisigPermission(
