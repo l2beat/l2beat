@@ -67,6 +67,5 @@ export const eigenDA: DaLayer = {
   risks: {
     economicSecurity: DaEconomicSecurityRisk.Unknown,
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
-    relayerFailure: 'noMechanism',
   },
 }

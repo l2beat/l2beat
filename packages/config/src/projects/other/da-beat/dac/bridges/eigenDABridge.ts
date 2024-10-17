@@ -214,5 +214,6 @@ export const eigenDAbridge = {
   risks: {
     committeeSecurity: DaCommitteeSecurityRisk.LimitedCommitteeSecurity(),
     upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(0),
+    relayerFailure: 'noMechanism',
   },
 } satisfies DaBridge

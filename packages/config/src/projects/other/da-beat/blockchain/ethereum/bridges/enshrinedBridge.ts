@@ -36,5 +36,6 @@ export const enshrinedBridge: EnshrinedBridge = {
     ),
     upgradeability: DaUpgradeabilityRisk.Immutable,
     // we should add a note on the frontend that the specific rollup contracts could be upgradable and the security properties of each depend on the single rollup implementation
+    relayerFailure: 'selfPropose',
   },
 } satisfies DaBridge

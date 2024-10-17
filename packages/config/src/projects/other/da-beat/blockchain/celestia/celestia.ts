@@ -115,7 +115,6 @@ export const celestia: DaLayer = {
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
     fraudDetection: DaFraudDetectionRisk.DasWithNoBlobsReconstruction(true),
-    relayerFailure: 'noMechanism',
   },
   economicSecurity: {
     type: 'Celestia',

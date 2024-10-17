@@ -101,6 +101,7 @@ export function DAC(template: TemplateVars): DacDaLayer {
       // TODO: make it required and remove the default
       upgradeability:
         template.risks?.upgradeability ?? DaUpgradeabilityRisk.Immutable,
+      relayerFailure: template.risks?.relayerFailure ?? 'noMechanism',
     },
   }
 
@@ -137,7 +138,6 @@ export function DAC(template: TemplateVars): DacDaLayer {
     usedIn,
     bridges: [dacBridge],
     risks: {
-      relayerFailure: template.risks?.relayerFailure ?? 'noMechanism',
       economicSecurity:
         template.risks?.economicSecurity ?? DaEconomicSecurityRisk.Unknown,
       fraudDetection:

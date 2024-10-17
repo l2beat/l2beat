@@ -123,5 +123,6 @@ export const mantleDABridge = {
   risks: {
     committeeSecurity: DaCommitteeSecurityRisk.NoCommiteeSecurity(),
     upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
+    relayerFailure: 'noMechanism',
   },
 } satisfies DaBridge

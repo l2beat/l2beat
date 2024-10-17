@@ -127,5 +127,6 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
       'Celestia Validators',
     ),
     upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(0), // TIMELOCK_ROLE is 4/6 multisig
+    relayerFailure: 'noMechanism',
   },
 })

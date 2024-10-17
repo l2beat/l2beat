@@ -61,6 +61,7 @@ export function NO_BRIDGE(template: TemplateVars): NoDaBridge {
   const risks = {
     committeeSecurity: DaCommitteeSecurityRisk.NoBridge,
     upgradeability: DaUpgradeabilityRisk.NoBridge,
+    relayerFailure: 'noBridge',
     ...template.risks,
   } satisfies DaBridgeRisks
 

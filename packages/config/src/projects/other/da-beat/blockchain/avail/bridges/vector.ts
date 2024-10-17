@@ -90,5 +90,6 @@ export const vector = {
     committeeSecurity:
       DaCommitteeSecurityRisk.RobustAndDiverseCommittee('Avail Validators'),
     upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
+    relayerFailure: 'noMechanism',
   },
 } satisfies DaBridge
