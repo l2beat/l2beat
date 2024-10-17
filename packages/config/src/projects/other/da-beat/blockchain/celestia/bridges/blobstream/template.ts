@@ -12,7 +12,12 @@ type TemplateRisks = Omit<DaBridgeRisks, 'accessibility'>
 
 type TemplateVars = Pick<
   OnChainDaBridge,
-  'chain' | 'contracts' | 'permissions' | 'nativePermissions' | 'usedIn' | 'technology'
+  | 'chain'
+  | 'contracts'
+  | 'permissions'
+  | 'nativePermissions'
+  | 'usedIn'
+  | 'technology'
 > & {
   risks: TemplateRisks
   display: {

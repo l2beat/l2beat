@@ -22,16 +22,26 @@ const baseMaxRangeDataCommitment = baseDiscovery.getContractValue<number>(
   'DATA_COMMITMENT_MAX',
 )
 
-const arbitrumMaxRangeDataCommitment = arbitrumDiscovery.getContractValue<number>(
+const arbitrumMaxRangeDataCommitment =
+  arbitrumDiscovery.getContractValue<number>(
+    'Blobstream',
+    'DATA_COMMITMENT_MAX',
+  )
+
+const relayers = ethereumDiscovery.getContractValue<string[]>(
   'Blobstream',
-  'DATA_COMMITMENT_MAX',
+  'relayers',
 )
 
-const relayers = ethereumDiscovery.getContractValue<string[]>('Blobstream', 'relayers')
+const arbitrumRelayers = arbitrumDiscovery.getContractValue<string[]>(
+  'Blobstream',
+  'relayers',
+)
 
-const arbitrumRelayers = arbitrumDiscovery.getContractValue<string[]>('Blobstream', 'relayers')
-
-const baseRelayers = baseDiscovery.getContractValue<string[]>('Blobstream', 'relayers')
+const baseRelayers = baseDiscovery.getContractValue<string[]>(
+  'Blobstream',
+  'relayers',
+)
 
 const SP1Verifier = ethereumDiscovery.getContractValue<string>(
   'SuccinctGatewaySP1',
@@ -152,7 +162,7 @@ export const SP1Blobstream = CELESTIA_BLOBSTREAM({
         baseDiscovery.getContractDetails('SuccinctGateway', {
           description: `Users can interact with this contract to request proofs on-chain, emitting a RequestCall event for off-chain provers to consume.`,
         }),
-      ]
+      ],
     },
     risks: [
       {
@@ -184,44 +194,44 @@ export const SP1Blobstream = CELESTIA_BLOBSTREAM({
     },
   ],
   nativePermissions: {
-      arbitrum: [
-        ...arbitrumDiscovery.getMultisigPermission(
-          'BlobstreamMultisig',
-          'This multisig is the admin of the Blobstream contract. It holds the power to change the contract state and upgrade the bridge.',
-        ),
-        ...arbitrumDiscovery.getMultisigPermission(
-          'SuccinctGatewaySP1Multisig',
-          'This multisig is the admin of the SuccinctGatewaySP1 contract. As the manager of router for proof verification, it holds the power to affect the liveness and safety of the bridge.',
-        ),
-        {
-          name: 'Relayers',
-          chain: 'arbitrum',
-          description: `List of prover (relayer) addresses that are allowed to call commitHeaderRange() to commit block ranges to the Blobstream contract.`,
-          accounts: arbitrumRelayers.map((relayer) => ({
-            address: EthereumAddress(relayer),
-            type: 'EOA',
-          })),
-        },
-      ],
-      base: [
-        ...baseDiscovery.getMultisigPermission(
-          'BlobstreamMultisig',
-          'This multisig is the admin of the Blobstream contract. It holds the power to change the contract state and upgrade the bridge.',
-        ),
-        ...baseDiscovery.getMultisigPermission(
-          'SuccinctGatewaySP1Multisig',
-          'This multisig is the admin of the SuccinctGatewaySP1 contract. As the manager of router for proof verification, it holds the power to affect the liveness and safety of the bridge.',
-        ),
-        {
-          name: 'Relayers',
-          chain: 'base',
-          description: `List of prover (relayer) addresses that are allowed to call commitHeaderRange() to commit block ranges to the Blobstream contract.`,
-          accounts: baseRelayers.map((relayer) => ({
-            address: EthereumAddress(relayer),
-            type: 'EOA',
-          })),
-        },
-      ]
+    arbitrum: [
+      ...arbitrumDiscovery.getMultisigPermission(
+        'BlobstreamMultisig',
+        'This multisig is the admin of the Blobstream contract. It holds the power to change the contract state and upgrade the bridge.',
+      ),
+      ...arbitrumDiscovery.getMultisigPermission(
+        'SuccinctGatewaySP1Multisig',
+        'This multisig is the admin of the SuccinctGatewaySP1 contract. As the manager of router for proof verification, it holds the power to affect the liveness and safety of the bridge.',
+      ),
+      {
+        name: 'Relayers',
+        chain: 'arbitrum',
+        description: `List of prover (relayer) addresses that are allowed to call commitHeaderRange() to commit block ranges to the Blobstream contract.`,
+        accounts: arbitrumRelayers.map((relayer) => ({
+          address: EthereumAddress(relayer),
+          type: 'EOA',
+        })),
+      },
+    ],
+    base: [
+      ...baseDiscovery.getMultisigPermission(
+        'BlobstreamMultisig',
+        'This multisig is the admin of the Blobstream contract. It holds the power to change the contract state and upgrade the bridge.',
+      ),
+      ...baseDiscovery.getMultisigPermission(
+        'SuccinctGatewaySP1Multisig',
+        'This multisig is the admin of the SuccinctGatewaySP1 contract. As the manager of router for proof verification, it holds the power to affect the liveness and safety of the bridge.',
+      ),
+      {
+        name: 'Relayers',
+        chain: 'base',
+        description: `List of prover (relayer) addresses that are allowed to call commitHeaderRange() to commit block ranges to the Blobstream contract.`,
+        accounts: baseRelayers.map((relayer) => ({
+          address: EthereumAddress(relayer),
+          type: 'EOA',
+        })),
+      },
+    ],
   },
   risks: {
     attestations: DaAttestationSecurityRisk.SigVerifiedZK(true),
