@@ -20,7 +20,6 @@ export function ChartLabels({ className }: Props) {
         className,
       )}
     >
-      <ChartLabel isLoading={isLoading} />
       {labels.map((label, i) => (
         <ChartLabel key={i} isLoading={isLoading}>
           {label}
