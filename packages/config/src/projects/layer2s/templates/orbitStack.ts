@@ -133,7 +133,7 @@ export interface OrbitStackConfigCommon {
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
   display: Omit<
     Layer3Display,
-    'provider' | 'category' | 'dataAvailabilityMode' | 'purposes'
+    'provider' | 'category' | 'purposes'
   > & {
     category?: Layer3Display['category']
   }
@@ -145,7 +145,7 @@ export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
   display: Omit<
     Layer2Display,
-    'provider' | 'category' | 'dataAvailabilityMode' | 'purposes'
+    'provider' | 'category' | 'purposes'
   > & {
     category?: Layer2Display['category']
   }

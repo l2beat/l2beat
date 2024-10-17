@@ -58,7 +58,7 @@ export interface ZkStackConfigCommon {
   }
   display: Omit<
     Layer2Display,
-    'provider' | 'category' | 'dataAvailabilityMode' | 'purposes'
+    'provider' | 'category' | 'purposes'
   >
   daProvider?: DAProvider
   upgradeability?: {

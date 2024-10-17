@@ -113,7 +113,7 @@ export interface OpStackConfigCommon {
 export interface OpStackConfigL2 extends OpStackConfigCommon {
   display: Omit<
     Layer2Display,
-    'provider' | 'category' | 'dataAvailabilityMode' | 'purposes'
+    'provider' | 'category' | 'purposes'
   > & {
     category?: Layer2Display['category']
   }
@@ -122,7 +122,7 @@ export interface OpStackConfigL2 extends OpStackConfigCommon {
 export interface OpStackConfigL3 extends OpStackConfigCommon {
   display: Omit<
     Layer3Display,
-    'provider' | 'category' | 'dataAvailabilityMode' | 'purposes'
+    'provider' | 'category' | 'purposes'
   > & {
     category?: Layer3Display['category']
   }

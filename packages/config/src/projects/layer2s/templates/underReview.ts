@@ -22,12 +22,12 @@ export interface UnderReviewConfigCommon {
 }
 
 export interface UnderReviewConfigL2 extends UnderReviewConfigCommon {
-  display: Omit<Layer2Display, 'dataAvailabilityMode'>
+  display: Layer2Display
   associatedTokens?: string[]
 }
 
 export interface UnderReviewConfigL3 extends UnderReviewConfigCommon {
-  display: Omit<Layer3Display, 'dataAvailabilityMode'>
+  display: Layer3Display
   hostChain: Layer3['hostChain']
   associatedTokens?: string[]
 }
@@ -91,6 +91,13 @@ export function underReviewL3(templateVars: UnderReviewConfigL3): Layer3 {
               defaultCallsPerMinute: 1500,
             }
           : undefined),
+    },
+    stage: {
+      stage:
+        templateVars.display.category === 'Optimistic Rollup' ||
+        templateVars.display.category === 'ZK Rollup'
+          ? 'UnderReview'
+          : 'NotApplicable',
     },
     riskView: UNDER_REVIEW_RISK_VIEW,
     stackedRiskView: UNDER_REVIEW_RISK_VIEW,

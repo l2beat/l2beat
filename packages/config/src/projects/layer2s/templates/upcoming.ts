@@ -8,14 +8,14 @@ import { type Layer2, type Layer2Display } from '../types'
 export interface UpcomingConfigL2 {
   id: string
   createdAt: UnixTime
-  display: Omit<Layer2Display, 'dataAvailabilityMode'>
+  display: Layer2Display
   badges?: BadgeId[]
 }
 
 export interface UpcomingConfigL3 {
   id: string
   createdAt: UnixTime
-  display: Omit<Layer3Display, 'dataAvailabilityMode'>
+  display: Layer3Display
   hostChain: Layer3['hostChain']
   badges?: BadgeId[]
 }
