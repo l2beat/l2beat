@@ -7,13 +7,11 @@ export interface AnalyzedBlock {
 }
 
 export interface Analyzer {
-  analyzeBlock(
-    block: {
-      transactions:
-        | providers.TransactionResponse[]
-        | StarknetGetBlockWithTxsResponseBodySchema['result']['transactions']
-    },
-  ): AnalyzedBlock
+  analyzeBlock(block: {
+    transactions:
+      | providers.TransactionResponse[]
+      | StarknetGetBlockWithTxsResponseBodySchema['result']['transactions']
+  }): AnalyzedBlock
 }
 
 export type Operation = StaticOperation | RecursiveOperation
