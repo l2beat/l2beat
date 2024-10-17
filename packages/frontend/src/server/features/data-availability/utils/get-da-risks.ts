@@ -51,18 +51,10 @@ export function getEconomicSecurity(
 }
 
 function adjustSentiment(totalValueSecured: number, slashableFunds: number) {
-  const RATIO_THRESHOLD = 0.25
-
-  const tvsAtThreshold = totalValueSecured * RATIO_THRESHOLD
-
-  if (slashableFunds < tvsAtThreshold) {
-    return 'bad'
-  }
-
-  if (slashableFunds >= tvsAtThreshold && slashableFunds <= totalValueSecured) {
-    return 'warning'
-  }
-
-  // slashableFunds >= tvsAtThreshold
-  return 'good'
+  // If economic security > total value secured -> we score green
+  if (slashableFunds > totalValueSecured) return 'good'
+  // If economic security > 1/3 of total value secured -> we score yellow
+  if (slashableFunds > totalValueSecured / 3) return 'warning'
+  // If economic security < 1/3 of total value secured -> we score red
+  return 'bad'
 }
