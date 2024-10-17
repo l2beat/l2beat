@@ -14,6 +14,7 @@ import {
 } from '../../common'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -62,6 +63,7 @@ export const fuel: Layer2 = {
       ],
     },
   },
+  badges: [Badge.VM.FuelVM, Badge.DA.EthereumBlobs],
   type: 'layer2',
   config: {
     escrows: [
