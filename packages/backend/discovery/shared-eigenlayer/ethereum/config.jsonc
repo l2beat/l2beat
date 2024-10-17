@@ -139,14 +139,14 @@
         }
       }
     },
-    "EigenLayer Timelock":{
+    "EigenLayer Timelock": {
       "fields": {
-          "admin":{
-            "target": {
-              "permissions": [{ "type": "act", "delay" : "{{delay}}" }]
-            },
+        "admin": {
+          "target": {
+            "permissions": [{ "type": "act", "delay": "{{delay}}" }]
           }
         }
+      }
     },
     "DepositContract": {
       "ignoreInWatchMode": ["get_deposit_count", "get_deposit_root"]
