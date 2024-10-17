@@ -17,7 +17,6 @@ const upgrades = {
   upgradeDelay: 'No delay',
 }
 
-
 const EigenTimelockUpgradeDelay = eigenDiscovery.getContractValue<number>(
   'EigenLayer Timelock',
   'delay',
