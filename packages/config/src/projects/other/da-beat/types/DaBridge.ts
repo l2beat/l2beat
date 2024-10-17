@@ -43,19 +43,17 @@ export type DacBridge = CommonDaBridge & {
   type: 'DAC'
   /** The chain the DAC attests data on. */
   chain: ChainId
-  /** Total number of members in the DAC. */
-  totalMembers: number
-  /** Minimum number of members required to sign and attest the data. */
-  requiredMembers: number
-  /** The type of data. */
-  transactionDataType: DacTransactionDataType
   /** Data about the DAC members. */
   members:
     | {
         type: 'public'
-        list: { name: string; href: string }[]
+        list: { external: boolean; name: string; href: string }[]
       }
-    | { type: 'unknown' }
+    | { type: 'unknown'; count: number }
+  /** Minimum number of members required to sign and attest the data. */
+  requiredMembers: number
+  /** The type of data. */
+  transactionDataType: DacTransactionDataType
   /** Data about related permissions - preferably from discovery. */
   permissions: ScalingProjectPermission[]
   /** Data about the contracts used in the bridge - preferably from discovery. */
