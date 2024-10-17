@@ -1,8 +1,11 @@
+import { assert } from '@l2beat/shared-pure'
+
 export function calculateTicks(
   ticks: number,
   values: number[],
   isLogScale: boolean,
 ) {
+  assert(ticks <= 5, 'Invalid tick count')
   return isLogScale
     ? calculateLogTicks(ticks, values)
     : calculateLinTicks(ticks, values)
@@ -13,9 +16,9 @@ function calculateLinTicks(ticks: number, values: number[]) {
   const max = Math.max(...values)
   if (min === max) {
     if (min === 0) {
-      return [0, 0, 0, 0, 0]
+      return [0, 0, 0, 0, 0].slice(0, ticks)
     }
-    return [0, min / 2, min, min * 1.5, min * 2]
+    return [0, min / 2, min, min * 1.5, min * 2].slice(0, ticks)
   }
 
   const baseRange = max - min
@@ -35,12 +38,12 @@ function calculateLinTicks(ticks: number, values: number[]) {
 function calculateLogTicks(ticks: number, values: number[]) {
   const nonZero = values.filter((x) => x > 0)
   if (nonZero.length === 0) {
-    return [1, 10, 100, 1000, 10000]
+    return [1, 10, 100, 1000, 10000].slice(0, ticks)
   }
   const min = Math.min(...nonZero)
   const max = Math.max(...nonZero)
   if (min === max) {
-    return [min / 100, min / 10, min, min * 10, min * 100]
+    return [min / 100, min / 10, min, min * 10, min * 100].slice(0, ticks)
   }
 
   const baseRange = max / min
