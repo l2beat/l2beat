@@ -12,7 +12,7 @@ export class HttpClient2 {
   /**
    * Sends request to the provided url with init params.
    * Use this method only when you expect server to return valid JSON.
-   * Provides retries, in most cases this will be DEFAULT_HTTP_RETRY_STRATEGY
+   * Provides retries, in most cases this will be RetryHandler.HTTP
    */
   async fetch(url: string, init?: RequestInit): Promise<unknown> {
     try {

@@ -144,15 +144,7 @@ function mockClient(deps: {
     http: deps.http,
     rateLimiter:
       deps.rateLimiter ?? new RateLimiter({ callsPerMinute: 100_000 }),
-    retryHandler:
-      deps.retryHandler ??
-      new RetryHandler({
-        timeoutMs: 1,
-        initialRetryDelayMs: 1,
-        maxRetries: 1,
-        maxRetryDelayMs: Infinity,
-        logger: Logger.SILENT,
-      }),
+    retryHandler: deps.retryHandler ?? RetryHandler.TEST,
     logger: Logger.SILENT,
   })
 }
