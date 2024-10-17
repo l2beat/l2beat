@@ -48,7 +48,7 @@ export function ScalingSummaryTvlChart({
           unit={unit}
           timeRange={timeRange}
         />
-        <Chart disableMilestones className="!h-[200px]" />
+        <Chart disableMilestones />
       </section>
     </ChartProvider>
   )

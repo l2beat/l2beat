@@ -20,7 +20,7 @@ export function Chart({ className, disableHovers, disableMilestones }: Props) {
   return (
     <div
       className={cn(
-        'relative mb-5 h-[160px] select-none xs:h-[200px] sm:h-[260px]',
+        'relative mb-5 h-[140px] select-none md:h-[180px] xl:h-[210px]',
         className,
       )}
       role="img"
