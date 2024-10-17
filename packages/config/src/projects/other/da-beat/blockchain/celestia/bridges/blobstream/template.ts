@@ -6,7 +6,12 @@ import { DaLinks } from '../../../../types/DaLinks'
 
 type TemplateVars = Pick<
   OnChainDaBridge,
-  'chain' | 'contracts' | 'permissions' | 'nativePermissions' | 'usedIn' | 'technology' | 'risks'
+  | 'chain'
+  | 'contracts'
+  | 'permissions'
+  | 'nativePermissions'
+  | 'usedIn'
+  | 'technology' | 'risks'
 > & {
   display: {
     links: DaLinks

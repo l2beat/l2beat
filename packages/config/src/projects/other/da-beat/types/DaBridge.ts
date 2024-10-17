@@ -32,7 +32,7 @@ export type OnChainDaBridge = CommonDaBridge & {
   chain: string
   /** Data about related permissions - preferably from discovery. */
   permissions: ScalingProjectPermission[]
-    /** Data about related permissions on chains other than Ethereum - preferably from discovery. */
+  /** Data about related permissions on chains other than Ethereum - preferably from discovery. */
   nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
   /** Dta about the validation type of the bridge */
   validation: {

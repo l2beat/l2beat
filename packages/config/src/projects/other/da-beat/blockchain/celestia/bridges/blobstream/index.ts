@@ -1,6 +1,3 @@
-
 import { SP1Blobstream } from './SP1Blobstream/SP1Blobstream'
 
-export const blobstream = [
-  SP1Blobstream,
-]
+export const blobstream = [SP1Blobstream]
