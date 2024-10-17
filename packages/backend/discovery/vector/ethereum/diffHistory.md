@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x26cb91e061010f3cae1cab764de11988dd1bfc88
+
+# Diff at Thu, 17 Oct 2024 11:37:36 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@fe31a2a15a0974a7184aa64dcbcb48891916f4f9 block: 20878383
+- current block number: 20985031
+
+## Description
+
+Gave name to Avail multisig.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20878383 (main branch discovery), not current.
+
+```diff
+    contract AvailMultisig (0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) {
+    +++ description: None
+      name:
+-        "GnosisSafe"
++        "AvailMultisig"
+    }
+```
+
 Generated with discovered.json: 0x0651314515f38c5fb0ead4c76f7c53e53bc1f243
 
 # Diff at Mon, 14 Oct 2024 10:57:46 GMT:

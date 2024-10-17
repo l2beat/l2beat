@@ -63,6 +63,10 @@ export const vector = {
         category: 'Funds can be lost if',
         text: 'the bridge contract or its dependencies receive a malicious code upgrade. There is no delay on code upgrades.',
       },
+      {
+        category: 'Funds can be frozen if',
+        text: 'the bridge contract is frozen by the Guardian (AvailMultisig).',
+      },
     ],
   },
   technology: {
@@ -82,7 +86,7 @@ export const vector = {
     risks: [
       {
         category: 'Funds can be lost if',
-        text: 'a dishonest majority of Avail validators post incorrect or malicious data commitments to the DA bridge.',
+        text: 'the DA bridge accepts an incorrect or malicious data commitment provided by a dishonest majority of Avail validators.',
       },
       {
         category: 'Funds can be frozen if',
