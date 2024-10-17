@@ -2,7 +2,10 @@ import { HttpClient } from '@l2beat/shared'
 import { assert, RateLimiter, UnixTime } from '@l2beat/shared-pure'
 
 import { getBlockNumberAtOrBefore } from '../getBlockNumberAtOrBefore'
-import { StarknetGetBlockResponseBodySchema } from './schemas'
+import {
+  StarknetGetBlockResponseBodySchema,
+  StarknetGetBlockWithTxsResponseBodySchema,
+} from './schemas'
 
 interface StarknetClientOpts {
   callsPerMinute?: number
@@ -71,6 +74,39 @@ export class StarknetClient {
     const json: unknown = JSON.parse(text)
 
     const { result: block } = StarknetGetBlockResponseBodySchema.parse(json)
+    return {
+      number: block.block_number,
+      timestamp: block.timestamp,
+      transactions: block.transactions,
+    }
+  }
+
+  async getBlockWithTransactions(blockNumber: number | 'latest') {
+    const params =
+      blockNumber === 'latest' ? ['latest'] : [{ block_number: blockNumber }]
+
+    const response = await this.httpClient.fetch(this.url, {
+      method: 'POST',
+      headers: {
+        ['Content-Type']: 'application/json',
+      },
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        method: 'starknet_getBlockWithTxs',
+        params,
+        id: Math.floor(Math.random() * 1000),
+      }),
+    })
+
+    assert(
+      response.ok,
+      `Starknet getBlockWithTxs request failed with status: ${response.status}`,
+    )
+    const text = await response.text()
+    const json: unknown = JSON.parse(text)
+
+    const { result: block } =
+      StarknetGetBlockWithTxsResponseBodySchema.parse(json)
     return {
       number: block.block_number,
       timestamp: block.timestamp,
