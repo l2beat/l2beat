@@ -2,7 +2,6 @@ import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { witness } from '../../../layer2s/witness'
 import { DAC } from '../templates/dac-template'
-import { DaAttestationSecurityRisk } from '../types'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('witness')
@@ -29,9 +28,6 @@ const members = discovery.getContractValue<string[]>(
 
 export const witnessDac = DAC({
   project: witness,
-  risks: {
-    attestations: DaAttestationSecurityRisk.SigVerified(true),
-  },
   bridge: {
     contracts: {
       addresses: [
@@ -78,10 +74,7 @@ export const witnessDac = DAC({
     ],
     chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignaturesDAC,
-    totalMembers: membersCountDAC,
+    membersCount: membersCountDAC,
     transactionDataType: DacTransactionDataType.TransactionData,
-    members: {
-      type: 'unknown',
-    },
   },
 })

@@ -62,5 +62,6 @@ export const mantleDA: DaLayer = {
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('MNT'),
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
+    relayerFailure: 'noMechanism',
   },
 }

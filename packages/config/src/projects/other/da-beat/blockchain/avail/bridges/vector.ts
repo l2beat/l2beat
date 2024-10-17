@@ -2,9 +2,9 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../../../../../discovery/ProjectDiscovery'
 import { DaAccessibilityRisk } from '../../../types/DaAccessibilityRisk'
-import { DaAttestationSecurityRisk } from '../../../types/DaAttestationSecurityRisk'
 import { DaBridge } from '../../../types/DaBridge'
-import { DaExitWindowRisk } from '../../../types/DaExitWindowRisk'
+import { DaUpgradeabilityRisk } from '../../../types/DaUpgradeabilityRisk'
+import { DaCommitteeSecurityRisk } from '../../../types'
 
 const discovery = new ProjectDiscovery('vector')
 
@@ -88,8 +88,9 @@ export const vector = {
   ],
   usedIn: [],
   risks: {
-    attestations: DaAttestationSecurityRisk.SigVerifiedZK(true),
+    committeeSecurity:
+      DaCommitteeSecurityRisk.RobustAndDiverseCommittee('Avail Validators'),
     accessibility: DaAccessibilityRisk.NotEnshrined,
-    exitWindow: DaExitWindowRisk.LowOrNoDelay(), // no delay
+    upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
   },
 } satisfies DaBridge

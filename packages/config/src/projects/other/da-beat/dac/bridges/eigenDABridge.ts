@@ -2,8 +2,8 @@ import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
 import {
   DaAccessibilityRisk,
-  DaAttestationSecurityRisk,
-  DaExitWindowRisk,
+  DaCommitteeSecurityRisk,
+  DaUpgradeabilityRisk,
 } from '../../types'
 import { DaBridge } from '../../types/DaBridge'
 import { DacTransactionDataType } from '../../types/DacTransactionDataType'
@@ -212,15 +212,12 @@ export const eigenDAbridge = {
   ],
   chain: ChainId.ETHEREUM,
   requiredMembers: 0, // currently 0 since threshold is not enforced
-  totalMembers: 400,
+  membersCount: 400,
   transactionDataType: DacTransactionDataType.TransactionData,
-  members: {
-    type: 'unknown',
-  },
   usedIn: toUsedInProject([]),
   risks: {
-    attestations: DaAttestationSecurityRisk.SigVerified(true),
+    committeeSecurity: DaCommitteeSecurityRisk.LimitedCommitteeSecurity(),
     accessibility: DaAccessibilityRisk.NotEnshrined,
-    exitWindow: DaExitWindowRisk.LowOrNoDelay(0),
+    upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(0),
   },
 } satisfies DaBridge

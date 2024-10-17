@@ -73,5 +73,6 @@ export const xterioDA: DaLayer = {
   risks: {
     economicSecurity: DaEconomicSecurityRisk.Unknown,
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
+    relayerFailure: 'noMechanism',
   },
 }

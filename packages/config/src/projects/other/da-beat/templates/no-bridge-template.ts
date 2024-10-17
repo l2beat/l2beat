@@ -1,8 +1,8 @@
 import {
   DaAccessibilityRisk,
-  DaAttestationSecurityRisk,
   DaBridgeRisks,
-  DaExitWindowRisk,
+  DaCommitteeSecurityRisk,
+  DaUpgradeabilityRisk,
   NoDaBridge,
 } from '../types'
 import { DaLinks } from '../types/DaLinks'
@@ -61,8 +61,8 @@ export function NO_BRIDGE(template: TemplateVars): NoDaBridge {
 
   const risks = {
     accessibility: DaAccessibilityRisk.NotEnshrined,
-    attestations: DaAttestationSecurityRisk.NoBridge,
-    exitWindow: DaExitWindowRisk.NoBridge,
+    committeeSecurity: DaCommitteeSecurityRisk.NoBridge,
+    upgradeability: DaUpgradeabilityRisk.NoBridge,
     ...template.risks,
   } satisfies DaBridgeRisks
 

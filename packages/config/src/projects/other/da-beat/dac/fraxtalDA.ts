@@ -52,5 +52,6 @@ export const fraxtalDA: DaLayer = {
   risks: {
     economicSecurity: DaEconomicSecurityRisk.Unknown,
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
+    relayerFailure: 'noBridge',
   },
 }

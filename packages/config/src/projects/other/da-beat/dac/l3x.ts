@@ -46,10 +46,7 @@ export const l3xDac = DAC({
     ],
     chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignatures,
-    totalMembers: membersCount,
+    membersCount: membersCount,
     transactionDataType: DacTransactionDataType.TransactionDataCompressed,
-    members: {
-      type: 'unknown',
-    },
   },
 })

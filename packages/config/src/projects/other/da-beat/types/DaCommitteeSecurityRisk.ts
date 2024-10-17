@@ -11,26 +11,26 @@ export type DaCommitteeSecurityRisk = {
     : (typeof DaCommitteeSecurityRisk)[key]
 }[keyof typeof DaCommitteeSecurityRisk]
 
-const RobustAndDiverseCommittee = (value: string) =>
+const RobustAndDiverseCommittee = (value?: string) =>
   ({
     type: 'RobustAndDiverseCommittee',
-    value,
+    value: value ?? 'Robust and Diverse Committee',
     sentiment: 'good',
     description: `The committee is robust and diverse.`,
   }) as const
 
-const LimitedCommitteeSecurity = (value: string) =>
+const LimitedCommitteeSecurity = (value?: string) =>
   ({
     type: 'LimitedCommitteeSecurity',
-    value,
+    value: value ?? 'Limited Committee Security',
     sentiment: 'warning',
     description: `The committee is limited and does not have the necessary diversity.`,
   }) as const
 
-const NoCommiteeSecurity = (value: string) =>
+const NoCommiteeSecurity = (value?: string) =>
   ({
     type: 'NoCommiteeSecurity',
-    value,
+    value: value ?? 'No Committee Security',
     sentiment: 'bad',
     description: `The committee is not secure and does not have the necessary diversity.`,
   }) as const

@@ -3,10 +3,10 @@ import { Layer2 } from '../../../layer2s'
 import { Layer3 } from '../../../layer3s'
 import {
   DaAccessibilityRisk,
-  DaAttestationSecurityRisk,
+  DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
-  DaExitWindowRisk,
   DaFraudDetectionRisk,
+  DaUpgradeabilityRisk,
   DacBridge,
   DacDaLayer,
 } from '../types'
@@ -37,11 +37,11 @@ type Optionals = {
   } & Pick<
     DacBridge,
     | 'chain'
-    | 'totalMembers'
+    | 'membersCount'
+    | 'knownMembers'
     | 'requiredMembers'
     | 'permissions'
     | 'contracts'
-    | 'members'
     | 'transactionDataType'
     | 'isUnderReview'
   >
@@ -74,7 +74,7 @@ export function DAC(template: TemplateVars): DacDaLayer {
     template.bridge.technology?.description ??
     `## Simple DA Bridge
     The DA bridge is a smart contract verifying a data availability claim from DAC Members via signature verification.
-    The bridge requires a ${template.bridge.requiredMembers}/${template.bridge.totalMembers} threshold of signatures to be met before the data commitment is accepted.
+    The bridge requires a ${template.bridge.requiredMembers}/${template.bridge.knownMembers} threshold of signatures to be met before the data commitment is accepted.
   `
 
   const bridgeDisplay: DacBridge['display'] = {
@@ -97,9 +97,11 @@ export function DAC(template: TemplateVars): DacDaLayer {
       risks: template.bridge.technology?.risks,
     },
     risks: {
-      attestations:
-        template.risks?.attestations ?? DaAttestationSecurityRisk.NotVerified,
-      exitWindow: template.risks?.exitWindow ?? DaExitWindowRisk.Immutable,
+      committeeSecurity:
+        template.risks?.committeeSecurity ?? DaCommitteeSecurityRisk.Auto(),
+      // TODO: make it required and remove the default
+      upgradeability:
+        template.risks?.upgradeability ?? DaUpgradeabilityRisk.Immutable,
       accessibility:
         template.risks?.accessibility ?? DaAccessibilityRisk.NotEnshrined,
     },
@@ -138,6 +140,7 @@ export function DAC(template: TemplateVars): DacDaLayer {
     usedIn,
     bridges: [dacBridge],
     risks: {
+      relayerFailure: template.risks?.relayerFailure ?? 'noMechanism',
       economicSecurity:
         template.risks?.economicSecurity ?? DaEconomicSecurityRisk.Unknown,
       fraudDetection:

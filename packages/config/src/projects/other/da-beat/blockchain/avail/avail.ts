@@ -102,6 +102,7 @@ export const avail: DaLayer = {
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
     fraudDetection: DaFraudDetectionRisk.DasWithNoBlobsReconstruction(true),
+    relayerFailure: 'noMechanism',
   },
   economicSecurity: {
     type: 'Avail',

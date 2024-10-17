@@ -3,8 +3,8 @@ import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
 import { mantle } from '../../../../layer2s/mantle'
 import {
   DaAccessibilityRisk,
-  DaAttestationSecurityRisk,
-  DaExitWindowRisk,
+  DaCommitteeSecurityRisk,
+  DaUpgradeabilityRisk,
 } from '../../types'
 import { DaBridge } from '../../types/DaBridge'
 import { DacTransactionDataType } from '../../types/DacTransactionDataType'
@@ -121,15 +121,12 @@ export const mantleDABridge = {
   ],
   chain: ChainId.ETHEREUM,
   transactionDataType: DacTransactionDataType.TransactionData,
-  members: {
-    type: 'unknown',
-  },
   requiredMembers: threshold,
-  totalMembers: committeeMembers,
+  membersCount: committeeMembers,
   usedIn: toUsedInProject([mantle]),
   risks: {
-    attestations: DaAttestationSecurityRisk.SigVerified(true),
+    committeeSecurity: DaCommitteeSecurityRisk.NoCommiteeSecurity(),
     accessibility: DaAccessibilityRisk.NotEnshrined,
-    exitWindow: DaExitWindowRisk.LowOrNoDelay(), // no delay
+    upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
   },
 } satisfies DaBridge

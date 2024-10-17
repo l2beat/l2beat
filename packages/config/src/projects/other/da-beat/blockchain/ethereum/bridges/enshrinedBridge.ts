@@ -1,5 +1,8 @@
-import { DaAccessibilityRisk, DaExitWindowRisk } from '../../../types'
-import { DaAttestationSecurityRisk } from '../../../types/DaAttestationSecurityRisk'
+import {
+  DaAccessibilityRisk,
+  DaCommitteeSecurityRisk,
+  DaUpgradeabilityRisk,
+} from '../../../types'
 import { DaBridge, EnshrinedBridge } from '../../../types/DaBridge'
 import { linkByDA } from '../../../utils/link-by-da'
 
@@ -33,8 +36,10 @@ export const enshrinedBridge: EnshrinedBridge = {
   }),
   risks: {
     accessibility: DaAccessibilityRisk.Enshrined,
-    attestations: DaAttestationSecurityRisk.Enshrined,
-    exitWindow: DaExitWindowRisk.Enshrined,
+    committeeSecurity: DaCommitteeSecurityRisk.RobustAndDiverseCommittee(
+      'Ethereum Validators',
+    ),
+    upgradeability: DaUpgradeabilityRisk.Immutable,
     // we should add a note on the frontend that the specific rollup contracts could be upgradable and the security properties of each depend on the single rollup implementation
   },
 } satisfies DaBridge
