@@ -1,5 +1,5 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 import { RetryHandler } from '../../tools/RetryHandler'
 import { HttpClient2 } from '../http/HttpClient2'
 import { RpcClient2 } from './RpcClient2'
@@ -106,42 +106,33 @@ describe(RpcClient2.name, () => {
     })
 
     it('retries on error', async () => {
-      let calls = 0
       const http = mockObject<HttpClient2>({
-        fetch: async () => {
-          if (calls === 0) {
-            calls++
-            throw new Error('a')
-          }
-          return mockResponse(1)
-        },
+        fetch: mockFn()
+          .rejectsWithOnce(new Error())
+          .resolvesToOnce(mockResponse(1)),
       })
 
       const rateLimiter = mockObject<RateLimiter>({
-        //@ts-ignore
-        call: async (fn) => await fn(),
+        call: async (fn) => fn(),
       })
 
       const retryHandler = mockObject<RetryHandler>({
-        //@ts-ignore
-        retry: async (fn) => {
-          await fn()
-        },
+        retry: async (fn) => fn(),
       })
 
       const rpc = mockClient({ http, rateLimiter, retryHandler })
       await rpc.query('rpc_method', [])
 
-      expect(http.fetch).toHaveBeenCalledTimes(1)
+      expect(http.fetch).toHaveBeenCalledTimes(2)
       expect(retryHandler.retry).toHaveBeenCalledTimes(1)
-      // expect(rateLimiter.call).toHaveBeenCalledTimes(2)
+      expect(rateLimiter.call).toHaveBeenCalledTimes(2)
     })
   })
 })
 
 function mockClient(deps: {
   url?: string
-  http: HttpClient2
+  http?: HttpClient2
   rateLimiter?: RateLimiter
   retryHandler?: RetryHandler
 }) {
@@ -157,7 +148,15 @@ function mockClient(deps: {
       }),
     rateLimiter:
       deps.rateLimiter ?? new RateLimiter({ callsPerMinute: 100_000 }),
-    retryHandler: deps.retryHandler ?? RetryHandler.DEFAULT(Logger.SILENT),
+    retryHandler:
+      deps.retryHandler ??
+      new RetryHandler({
+        timeoutMs: 10_000,
+        initialRetryDelayMs: 1000,
+        maxRetries: 0,
+        maxRetryDelayMs: Infinity,
+        logger: Logger.SILENT,
+      }),
     logger: Logger.SILENT,
   })
 }

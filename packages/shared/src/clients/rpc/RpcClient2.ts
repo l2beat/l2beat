@@ -52,9 +52,9 @@ export class RpcClient2 {
 
   async query(method: string, params: (string | number | boolean)[]) {
     try {
-      return this.$.rateLimiter.call(() => this._query(method, params))
+      return await this.$.rateLimiter.call(() => this._query(method, params))
     } catch {
-      return this.$.retryHandler.retry(() =>
+      return await this.$.retryHandler.retry(() =>
         this.$.rateLimiter.call(() => this._query(method, params)),
       )
     }
