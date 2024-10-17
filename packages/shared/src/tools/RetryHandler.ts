@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import { assert } from '@l2beat/shared-pure'
 
 interface Deps {
   timeoutMs: number
@@ -17,6 +18,7 @@ const DEFAULT_RETRY_STRATEGY = {
 
 export class RetryHandler {
   constructor(private readonly $: Deps) {
+    assert($.maxRetries > 0, 'Max retries cannot be zero')
     this.$.logger = this.$.logger.for(this)
   }
 

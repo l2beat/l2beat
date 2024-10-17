@@ -95,11 +95,14 @@ describe(RpcClient2.name, () => {
     })
 
     it('applies rate limiting', async () => {
+      const http = mockObject<HttpClient2>({
+        fetch: async () => mockResponse(100),
+      })
       const rateLimiter = mockObject<RateLimiter>({
         //@ts-ignore
         call: async () => {},
       })
-      const rpc = mockClient({ rateLimiter })
+      const rpc = mockClient({ http, rateLimiter })
       await rpc.query('rpc_method', [])
 
       expect(rateLimiter.call).toHaveBeenCalledTimes(1)
@@ -131,21 +134,14 @@ describe(RpcClient2.name, () => {
 })
 
 function mockClient(deps: {
+  http: HttpClient2
   url?: string
-  http?: HttpClient2
   rateLimiter?: RateLimiter
   retryHandler?: RetryHandler
 }) {
   return new RpcClient2({
     url: deps.url ?? 'API_URL',
-    http:
-      deps.http ??
-      new HttpClient2({
-        timeoutMs: 10_000,
-        initialRetryDelayMs: 1000,
-        maxRetries: 5, // 2 4 8 16 32 ~ 1min
-        maxRetryDelayMs: Infinity,
-      }),
+    http: deps.http,
     rateLimiter:
       deps.rateLimiter ?? new RateLimiter({ callsPerMinute: 100_000 }),
     retryHandler:
@@ -153,7 +149,7 @@ function mockClient(deps: {
       new RetryHandler({
         timeoutMs: 1,
         initialRetryDelayMs: 1,
-        maxRetries: 0,
+        maxRetries: 1,
         maxRetryDelayMs: Infinity,
         logger: Logger.SILENT,
       }),

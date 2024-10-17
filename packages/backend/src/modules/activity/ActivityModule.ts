@@ -97,7 +97,10 @@ function createActivityIndexers(
               })
             : new RpcClient2({
                 logger: logger.tag('zkfair'),
-                http: new HttpClient2({ logger: logger.tag('zkfair') }),
+                http: new HttpClient2({
+                  timeoutMs: 10_000,
+                  retryHandler: RetryHandler.DEFAULT(logger.tag('zkfair')),
+                }),
                 rateLimiter: new RateLimiter({
                   callsPerMinute: project.config.callsPerMinute,
                 }),

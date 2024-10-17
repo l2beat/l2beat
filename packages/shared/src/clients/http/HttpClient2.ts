@@ -1,32 +1,13 @@
-import { Logger } from '@l2beat/backend-tools'
 import fetch, { RequestInit } from 'node-fetch'
+import { RetryHandler } from '../../tools'
 
-interface HttpClient2Options {
-  timeoutMs?: number
-  maxRetries?: number
-  initialRetryDelayMs?: number
-  maxRetryDelayMs?: number
-  logger?: Logger
-}
-
-const DEFAULT_HTTP_RETRY_STRATEGY = {
-  timeoutMs: 10_000,
-  initialRetryDelayMs: 1000,
-  maxRetries: 5, // 2 4 8 16 32 ~ 1min
-  maxRetryDelayMs: Infinity,
+interface Deps {
+  timeoutMs: number
+  retryHandler: RetryHandler
 }
 
 export class HttpClient2 {
-  private readonly $: Required<HttpClient2Options>
-
-  constructor($: HttpClient2Options = {}) {
-    this.$ = {
-      logger: Logger.SILENT,
-      ...DEFAULT_HTTP_RETRY_STRATEGY,
-      ...$,
-    }
-    this.$.logger = this.$.logger.for(this)
-  }
+  constructor(private $: Deps) {}
 
   /**
    * Sends request to the provided url with init params.
@@ -34,20 +15,10 @@ export class HttpClient2 {
    * Provides retries, in most cases this will be DEFAULT_HTTP_RETRY_STRATEGY
    */
   async fetch(url: string, init?: RequestInit): Promise<unknown> {
-    let calls = 0
-    while (true) {
-      calls++
-      try {
-        return await this.fetchJson(url, init)
-      } catch (error) {
-        if (calls > this.$.maxRetries) {
-          throw error
-        }
-
-        const delay = this.calculateDelay(calls)
-        this.logAttempt(url, init, calls, delay)
-        await new Promise((resolve) => setTimeout(resolve, delay))
-      }
+    try {
+      return await this.fetchJson(url, init)
+    } catch (_) {
+      return await this.$.retryHandler.retry(() => this.fetchJson(url, init))
     }
   }
 
@@ -62,26 +33,5 @@ export class HttpClient2 {
     }
 
     return res.json()
-  }
-
-  private calculateDelay(calls: number) {
-    return Math.min(
-      this.$.initialRetryDelayMs * Math.pow(2, calls),
-      this.$.maxRetryDelayMs,
-    )
-  }
-
-  private logAttempt(
-    url: string,
-    init: RequestInit | undefined,
-    calls: number,
-    delay: number,
-  ) {
-    this.$.logger.warn('Failed to fetch, scheduling retry', {
-      url,
-      body: init?.body,
-      attempt: calls,
-      delay,
-    })
   }
 }
