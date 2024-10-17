@@ -1,23 +1,21 @@
-import { Logger } from '@l2beat/backend-tools'
-import { RateLimiter, UnixTime } from '@l2beat/shared-pure'
+import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import { UnixTime } from '@l2beat/shared-pure'
+import { RetryHandler } from '../../tools/RetryHandler'
 import { generateId } from '../../tools/generateId'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 import { HttpClient2 } from '../http/HttpClient2'
 import { Block, Quantity, RpcResponse } from './types'
 
 interface RpcClient2Deps {
-  http: HttpClient2
-  logger: Logger
   url: string
-  callsPerMinute?: number
+  http: HttpClient2
+  rateLimiter: RateLimiter
+  retryHandler: RetryHandler
+  logger: Logger
 }
 
 export class RpcClient2 {
   constructor(private readonly $: RpcClient2Deps) {
-    const rateLimiter = new RateLimiter({
-      callsPerMinute: this.$.callsPerMinute ?? 60,
-    })
-    this.query = rateLimiter.wrap(this.query.bind(this))
     this.$.logger = this.$.logger.for(this)
   }
 
@@ -53,6 +51,16 @@ export class RpcClient2 {
   }
 
   async query(method: string, params: (string | number | boolean)[]) {
+    try {
+      return this.$.rateLimiter.call(() => this._query(method, params))
+    } catch {
+      return this.$.retryHandler.retry(() =>
+        this.$.rateLimiter.call(() => this._query(method, params)),
+      )
+    }
+  }
+
+  async _query(method: string, params: (string | number | boolean)[]) {
     const response = await this.$.http.fetch(this.$.url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -67,6 +75,7 @@ export class RpcClient2 {
 
     // this parsing is needed for APIs which return 200 and error in the body
     const parsed = RpcResponse.safeParse(response)
+    // TODO: add per-provider parsing heuristics
     if (!parsed.success) {
       this.$.logger.error(JSON.stringify(response))
       throw new Error('Error during parsing of rpc response')

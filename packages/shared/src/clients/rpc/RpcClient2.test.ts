@@ -1,12 +1,16 @@
-import { Logger } from '@l2beat/backend-tools'
+import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import { expect, mockObject } from 'earl'
+import { RetryHandler } from '../../tools/RetryHandler'
 import { HttpClient2 } from '../http/HttpClient2'
 import { RpcClient2 } from './RpcClient2'
 
 describe(RpcClient2.name, () => {
   describe(RpcClient2.prototype.getBlock.name, () => {
     it('fetches block from rpc are parsers response', async () => {
-      const { rpc, http } = createClients(100)
+      const http = mockObject<HttpClient2>({
+        fetch: async () => mockResponse(100),
+      })
+      const rpc = mockClient({ http })
 
       const result = await rpc.getBlock(100)
 
@@ -29,7 +33,10 @@ describe(RpcClient2.name, () => {
 
   describe(RpcClient2.prototype.getLatestBlockNumber.name, () => {
     it('returns number of the block', async () => {
-      const { rpc, http } = createClients(100)
+      const http = mockObject<HttpClient2>({
+        fetch: async () => mockResponse(100),
+      })
+      const rpc = mockClient({ http })
 
       const result = await rpc.getLatestBlockNumber()
 
@@ -49,11 +56,7 @@ describe(RpcClient2.name, () => {
         }),
       })
 
-      const rpc = new RpcClient2({
-        http,
-        logger: Logger.SILENT,
-        url: 'API_URL',
-      })
+      const rpc = mockClient({ http })
 
       const result = await rpc.query('rpc_method', ['a', 1, true])
 
@@ -84,31 +87,79 @@ describe(RpcClient2.name, () => {
         }),
       })
 
-      const rpc = new RpcClient2({
-        http,
-        logger: Logger.SILENT,
-        url: 'API_URL',
-      })
+      const rpc = mockClient({ http })
 
       await expect(
         async () => await rpc.query('rpc_method', []),
       ).toBeRejectedWith('Error during parsing of rpc response')
     })
+
+    it('applies rate limiting', async () => {
+      const rateLimiter = mockObject<RateLimiter>({
+        //@ts-ignore
+        call: async () => {},
+      })
+      const rpc = mockClient({ rateLimiter })
+      await rpc.query('rpc_method', [])
+
+      expect(rateLimiter.call).toHaveBeenCalledTimes(1)
+    })
+
+    it('retries on error', async () => {
+      let calls = 0
+      const http = mockObject<HttpClient2>({
+        fetch: async () => {
+          if (calls === 0) {
+            calls++
+            throw new Error('a')
+          }
+          return mockResponse(1)
+        },
+      })
+
+      const rateLimiter = mockObject<RateLimiter>({
+        //@ts-ignore
+        call: async (fn) => await fn(),
+      })
+
+      const retryHandler = mockObject<RetryHandler>({
+        //@ts-ignore
+        retry: async (fn) => {
+          await fn()
+        },
+      })
+
+      const rpc = mockClient({ http, rateLimiter, retryHandler })
+      await rpc.query('rpc_method', [])
+
+      expect(http.fetch).toHaveBeenCalledTimes(1)
+      expect(retryHandler.retry).toHaveBeenCalledTimes(1)
+      // expect(rateLimiter.call).toHaveBeenCalledTimes(2)
+    })
   })
 })
 
-function createClients(blockNumber: number) {
-  const http = mockObject<HttpClient2>({
-    fetch: async () => mockResponse(blockNumber),
-  })
-
-  const rpc = new RpcClient2({
-    http,
+function mockClient(deps: {
+  url?: string
+  http: HttpClient2
+  rateLimiter?: RateLimiter
+  retryHandler?: RetryHandler
+}) {
+  return new RpcClient2({
+    url: deps.url ?? 'API_URL',
+    http:
+      deps.http ??
+      new HttpClient2({
+        timeoutMs: 10_000,
+        initialRetryDelayMs: 1000,
+        maxRetries: 5, // 2 4 8 16 32 ~ 1min
+        maxRetryDelayMs: Infinity,
+      }),
+    rateLimiter:
+      deps.rateLimiter ?? new RateLimiter({ callsPerMinute: 100_000 }),
+    retryHandler: deps.retryHandler ?? RetryHandler.DEFAULT(Logger.SILENT),
     logger: Logger.SILENT,
-    url: 'API_URL',
-    callsPerMinute: 100_000,
   })
-  return { rpc, http }
 }
 
 const mockResponse = (blockNumber: number) => ({

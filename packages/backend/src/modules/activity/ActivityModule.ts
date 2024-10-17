@@ -1,6 +1,7 @@
-import { Logger } from '@l2beat/backend-tools'
+import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import { BlockExplorerClient, HttpClient2, RpcClient2 } from '@l2beat/shared'
 import { assert, ProjectId } from '@l2beat/shared-pure'
+import { RetryHandler } from '@l2beat/shared/build/tools/RetryHandler'
 import { Config } from '../../config'
 import {
   BlockscoutChainConfig,
@@ -97,7 +98,10 @@ function createActivityIndexers(
             : new RpcClient2({
                 logger: logger.tag('zkfair'),
                 http: new HttpClient2({ logger: logger.tag('zkfair') }),
-                callsPerMinute: 10_000,
+                rateLimiter: new RateLimiter({
+                  callsPerMinute: project.config.callsPerMinute,
+                }),
+                retryHandler: RetryHandler.DEFAULT(logger.tag('zkfair')),
                 url: project.config.url,
               })
 
