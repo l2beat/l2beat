@@ -112,13 +112,13 @@ export function DaRiskTable({ items }: Props) {
                     </DaTableSubRowCell>
                     <DaTableSubRowCell href={href} lastRow={lastRow}>
                       <RiskCell
-                        risk={subRow.risks.attestations}
+                        risk={subRow.risks.committeeSecurity}
                         emptyMode="em-dash"
                       />
                     </DaTableSubRowCell>
                     <DaTableSubRowCell href={href} lastRow={lastRow}>
                       <RiskCell
-                        risk={subRow.risks.exitWindow}
+                        risk={subRow.risks.upgradeability}
                         emptyMode="em-dash"
                       />
                     </DaTableSubRowCell>
@@ -128,7 +128,7 @@ export function DaRiskTable({ items }: Props) {
                       lastRow={lastRow}
                     >
                       <RiskCell
-                        risk={subRow.risks.accessibility}
+                        risk={subRow.risks.relayerFailure}
                         emptyMode="em-dash"
                       />
                     </DaTableLastSubRowCell>

@@ -2,7 +2,6 @@ import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { zkfair } from '../../../layer2s/zkfair'
 import { DAC } from '../templates/dac-template'
-import { DaAttestationSecurityRisk } from '../types'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('zkfair')
@@ -29,9 +28,6 @@ const members = discovery.getContractValue<string[]>(
 
 export const zkfairDac = DAC({
   project: zkfair,
-  risks: {
-    attestations: DaAttestationSecurityRisk.SigVerified(true),
-  },
   bridge: {
     contracts: {
       addresses: [
@@ -62,10 +58,7 @@ export const zkfairDac = DAC({
     ],
     chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignaturesDAC,
-    totalMembers: membersCountDAC,
+    membersCount: membersCountDAC,
     transactionDataType: DacTransactionDataType.StateDiffs,
-    members: {
-      type: 'unknown',
-    },
   },
 })

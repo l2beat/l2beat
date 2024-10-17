@@ -39,11 +39,8 @@ export const apexDac = DAC({
   bridge: {
     chain: ChainId.ETHEREUM,
     requiredMembers: dacConfig.requiredSignatures,
-    totalMembers: dacConfig.membersCount,
+    membersCount: dacConfig.membersCount,
     transactionDataType: DacTransactionDataType.StateDiffs,
-    members: {
-      type: 'unknown',
-    },
     contracts: {
       addresses: [
         discovery.getContractDetails(

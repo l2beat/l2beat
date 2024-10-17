@@ -1,20 +1,13 @@
 import { assert } from '@l2beat/shared-pure'
 import capitalize from 'lodash/capitalize'
 import { chains } from '../../../../../../..'
-import {
-  DaAccessibilityRisk,
-  DaBridgeRisks,
-  OnChainDaBridge,
-} from '../../../../types'
+import { OnChainDaBridge } from '../../../../types'
 import { DaLinks } from '../../../../types/DaLinks'
-
-type TemplateRisks = Omit<DaBridgeRisks, 'accessibility'>
 
 type TemplateVars = Pick<
   OnChainDaBridge,
-  'chain' | 'contracts' | 'permissions' | 'usedIn' | 'technology'
+  'chain' | 'contracts' | 'permissions' | 'usedIn' | 'technology' | 'risks'
 > & {
-  risks: TemplateRisks
   display: {
     links: DaLinks
   }
@@ -44,16 +37,11 @@ export function CELESTIA_BLOBSTREAM(base: TemplateVars): OnChainDaBridge {
     proverSource: 'https://hackmd.io/@succinctlabs/HJE7XRrup',
   }
 
-  const risks = {
-    accessibility: DaAccessibilityRisk.NotEnshrined,
-    ...base.risks,
-  } satisfies DaBridgeRisks
-
   return {
     type: 'OnChainBridge',
     id,
     display,
-    risks,
+    risks: base.risks,
     chain: chain.name,
     validation: validation,
     contracts: base.contracts,

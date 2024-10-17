@@ -17,11 +17,11 @@ export function mapRisksToRosetteValues(
 ): RosetteValue[] {
   const values: RosetteValue[] = [
     {
-      name: 'Exit window',
-      value: risks.exitWindow.value,
-      sentiment: risks.exitWindow.sentiment,
-      description: risks.exitWindow.description,
-      warning: risks.exitWindow.warning,
+      name: 'Upgradeability',
+      value: risks.upgradeability.value,
+      sentiment: risks.upgradeability.sentiment,
+      description: risks.upgradeability.description,
+      warning: risks.upgradeability.warning,
     },
     {
       name: 'Economic security',
@@ -31,11 +31,11 @@ export function mapRisksToRosetteValues(
       warning: risks.economicSecurity.warning,
     },
     {
-      name: 'Accessibility',
-      value: risks.accessibility.value,
-      sentiment: risks.accessibility.sentiment,
-      description: risks.accessibility.description,
-      warning: risks.accessibility.warning,
+      name: 'Relayer failure',
+      value: risks.relayerFailure.value,
+      sentiment: risks.relayerFailure.sentiment,
+      description: risks.relayerFailure.description,
+      warning: risks.relayerFailure.warning,
     },
     {
       name: 'Fraud detection',
@@ -45,11 +45,11 @@ export function mapRisksToRosetteValues(
       warning: risks.fraudDetection.warning,
     },
     {
-      name: 'Attestations',
-      value: risks.attestations.value,
-      sentiment: risks.attestations.sentiment,
-      description: risks.attestations.description,
-      warning: risks.attestations.warning,
+      name: 'Committee security',
+      value: risks.committeeSecurity.value,
+      sentiment: risks.committeeSecurity.sentiment,
+      description: risks.committeeSecurity.description,
+      warning: risks.committeeSecurity.warning,
     },
   ]
 

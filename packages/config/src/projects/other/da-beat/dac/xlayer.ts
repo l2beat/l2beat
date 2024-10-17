@@ -74,10 +74,7 @@ export const xlayerDac = DAC({
     ],
     chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignaturesDAC,
-    totalMembers: membersCountDAC,
+    membersCount: membersCountDAC,
     transactionDataType: DacTransactionDataType.TransactionData,
-    members: {
-      type: 'unknown',
-    },
   },
 })
