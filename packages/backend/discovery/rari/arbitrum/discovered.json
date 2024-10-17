@@ -2,7 +2,7 @@
   "name": "rari",
   "chain": "arbitrum",
   "blockNumber": 262310038,
-  "configHash": "0x1cf58d49761799de47d9b462a4e07a947fdece9053ae61a6ce6225150a4e510f",
+  "configHash": "0xbf5bb11c1d0f7e7073deed0903f0d5c28c06f274493c3fe220affdbe05b601bb",
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -228,6 +228,11 @@
         {
           "permission": "upgrade",
           "target": "0x139C5A235632EDdad741ff380112B3161d31a21C",
+          "via": []
+        },
+        {
+          "permission": "validate",
+          "target": "0xeCebCfC101c3a1c4dB99902cE1Df914dCAd50a65",
           "via": []
         }
       ],
@@ -565,6 +570,11 @@
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
+          "permission": "sequence",
+          "target": "0x974533F82B7BADF54Fb91C15f07F3f095e35321C",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0x003e70B041abb993006C03E56c8515622a02928C",
           "via": []
@@ -687,7 +697,12 @@
     { "address": "0x90E43f5d772e50B01B3F9596f65AD5653467d010" },
     {
       "address": "0x974533F82B7BADF54Fb91C15f07F3f095e35321C",
-      "roles": ["Sequencer"]
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0xA436f1867adD490BF1530c636f2FB090758bB6B3"
+        }
+      ]
     },
     { "address": "0x9a2859B2a83148b8DE25d26643B5407555D219E1" },
     { "address": "0xaCB337daF123938A337B125f680C9A78F88e21E0" },
@@ -696,7 +711,12 @@
     { "address": "0xD61640d06dC7A61C46d9515680b4DDd2AC51E9A9" },
     {
       "address": "0xeCebCfC101c3a1c4dB99902cE1Df914dCAd50a65",
-      "roles": ["Validator"]
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "target": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89"
+        }
+      ]
     }
   ],
   "abis": {
@@ -1402,6 +1422,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
-    "orbitstack/RollupProxy": "0xdd22b1785ae5df34e829d0b04131559e112131325c3f223825d0fe61e675fb1a"
+    "orbitstack/RollupProxy": "0x8c92364349ca720f3e801d028dc260fdbc1a9cca4651ed19af6f16a250949729"
   }
 }

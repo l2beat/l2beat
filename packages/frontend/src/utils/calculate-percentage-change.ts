@@ -1,5 +1,5 @@
 export function calculatePercentageChange(now: number, then: number) {
-  if (now === then || then === 0) {
+  if (now === then || then === 0 || now < 0.01) {
     return 0
   }
   const change = now / then - 1

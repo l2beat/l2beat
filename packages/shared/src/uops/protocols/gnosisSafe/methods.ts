@@ -1,6 +1,6 @@
-import type { Method, Operation } from '@/types'
 import { ethers } from 'ethers'
 import { parseAbiItem } from 'viem'
+import { Method, Operation } from '../../types'
 import { defineMethod } from '../defineMetod'
 import { SAFE_EXEC_TRANSACTION_SIGNATURE } from './const'
 

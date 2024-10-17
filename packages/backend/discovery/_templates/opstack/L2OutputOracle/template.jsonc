@@ -17,22 +17,22 @@
   "fields": {
     "proposer": {
       "target": {
-        "role": "Proposer"
+        "permissions": [{ "type": "propose" }]
       }
     },
     "PROPOSER": {
       "target": {
-        "role": "Proposer"
+        "permissions": [{ "type": "propose" }]
       }
     },
     "challenger": {
       "target": {
-        "role": "Challenger"
+        "permissions": [{ "type": "challenge" }]
       }
     },
     "CHALLENGER": {
       "target": {
-        "role": "Challenger"
+        "permissions": [{ "type": "challenge" }]
       }
     },
     "deletedOutputs": {

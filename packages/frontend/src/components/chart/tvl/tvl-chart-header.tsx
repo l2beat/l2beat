@@ -28,7 +28,7 @@ export function TvlChartHeader({
     range === 'max' ? (
       INFINITY
     ) : change !== undefined ? (
-      <PercentChange value={change} />
+      <PercentChange value={change} textClassName="lg:w-[63px] lg:text-base" />
     ) : null
 
   return (

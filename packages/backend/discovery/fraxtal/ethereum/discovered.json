@@ -2,7 +2,7 @@
   "name": "fraxtal",
   "chain": "ethereum",
   "blockNumber": 20927364,
-  "configHash": "0xe04923fd0c02d55e0e5259b648cf39f8e019bd6cf6b2b4f8f0f0524d02af1275",
+  "configHash": "0x17662e00a56577154edd5e399244bca8a2ade2dd07a26042c6938b5862153cab",
   "contracts": [
     {
       "name": "OptimismMintablePermitERC20Factory",
@@ -172,6 +172,11 @@
           "via": []
         },
         {
+          "permission": "sequence",
+          "target": "0x6017f75108f251a488B045A7ce2a7C15b179d1f2",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
           "via": [
@@ -305,6 +310,11 @@
       ],
       "issuedPermissions": [
         {
+          "permission": "guard",
+          "target": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
           "via": [
@@ -422,6 +432,11 @@
       "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
         {
+          "permission": "guard",
+          "target": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
           "via": [
@@ -471,6 +486,16 @@
         "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
       ],
       "issuedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
@@ -834,8 +859,11 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "roles": ["Challenger", "Guardian"],
       "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
+        },
         {
           "permission": "configure",
           "target": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
@@ -846,6 +874,14 @@
           "target": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
           "description": "set and change address mappings.",
           "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
+        },
+        {
+          "permission": "guard",
+          "target": "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"
+        },
+        {
+          "permission": "guard",
+          "target": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4"
         },
         {
           "permission": "upgrade",
@@ -930,7 +966,12 @@
     { "address": "0x381e2495e683868F693AA5B1414F712f21d34b40" },
     {
       "address": "0x6017f75108f251a488B045A7ce2a7C15b179d1f2",
-      "roles": ["Sequencer"]
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
+        }
+      ]
     },
     { "address": "0x6933BCC3e96f1C4d2cb73Cb391d854b18Ab7A4F2" },
     { "address": "0x6e74053a3798e0fC9a9775F7995316b27f21c4D2" },
@@ -941,7 +982,12 @@
     { "address": "0xcbc616D595D38483e6AdC45C7E426f44bF230928" },
     {
       "address": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
-      "roles": ["Proposer"]
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "target": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
+        }
+      ]
     },
     { "address": "0xfF000000000000000000000000000000000420fC" }
   ],
@@ -1493,10 +1539,10 @@
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
-    "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
+    "opstack/L2OutputOracle": "0xfc8737561d85bab2fe5e39a7a02436a0cb0e7f96d7a7adc2ee3ea486b391c2fc",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
-    "opstack/OptimismPortal": "0x2a32f6874a8c0e85e685fa944143e7968d675fed43b46e7385411ad11f8a1a43",
-    "opstack/SuperchainConfigFake": "0x17951c3ed31f2fe002926d8927d2f05c9fd3502df1cad17c765d965c1e3f07a6",
-    "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
+    "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",
+    "opstack/SuperchainConfigFake": "0x53a7342e3ad0ea230608a115aa098bc297d88c30ea6560b549c25853b184cc7b",
+    "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"
   }
 }

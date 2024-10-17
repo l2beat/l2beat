@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x88d1d41cc68f702a7e3e3badcdd91cce0c63ee30
+
+# Diff at Wed, 16 Oct 2024 11:36:58 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a3d139b799cc0b28e5e912febb17464d4e5aef5d block: 20948097
+- current block number: 20948097
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20948097 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      issuedPermissions.5:
++        {"permission":"validate","target":"0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f","via":[]}
+      issuedPermissions.4:
++        {"permission":"validate","target":"0x9A6a3354Ea78572EDB7df8458911e1ceD733c224","via":[]}
+      issuedPermissions.3:
++        {"permission":"validate","target":"0x944eB0a2829A859959586b10D54229278534a696","via":[]}
+      issuedPermissions.2:
++        {"permission":"validate","target":"0x64Cf65036a76E3827e448cadbc53D31EefDCE04a","via":[]}
+      issuedPermissions.1:
++        {"permission":"validate","target":"0x2bfDA59220413DEd39dD0E443620b5277EcE6348","via":[]}
+    }
+```
+
+```diff
+    contract SequencerInbox (0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a) {
+    +++ description: None
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x74C717C01425eb475A5fC55d2A4a9045fC9800df","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "sequence"
+      issuedPermissions.0.target:
+-        "0x74C717C01425eb475A5fC55d2A4a9045fC9800df"
++        "0xe27f3f6db6824def1738b2aACe2672aC59046a39"
+    }
+```
+
 Generated with discovered.json: 0x8c48ccf731dd277fbf745171c42c8df88267f82b
 
 # Diff at Mon, 14 Oct 2024 10:52:04 GMT:

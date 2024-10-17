@@ -88,7 +88,7 @@ function BridgesChartHeader({
     range === 'max' ? (
       INFINITY
     ) : change ? (
-      <PercentChange value={change} />
+      <PercentChange value={change} textClassName="lg:w-[63px] lg:text-base" />
     ) : null
 
   return (

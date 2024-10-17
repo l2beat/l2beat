@@ -53,20 +53,14 @@ export function RiskCell({ risk, emptyMode = 'no-info' }: Props) {
         {risk.warning && (
           <RoundedWarningIcon
             className={cn(
-              'size-4 md:size-5',
+              'size-3.5 md:size-4',
               sentimentToFillColor(risk.warning.sentiment),
             )}
           />
         )}
       </TwoRowCell.First>
       {risk.secondLine && (
-        <TwoRowCell.Second
-          className={
-            '-mt-1 mb-1 text-xs text-secondary md:m-0 md:text-xs md:leading-none'
-          }
-        >
-          {risk.secondLine}
-        </TwoRowCell.Second>
+        <TwoRowCell.Second>{risk.secondLine}</TwoRowCell.Second>
       )}
     </TwoRowCell>
   )
@@ -74,7 +68,7 @@ export function RiskCell({ risk, emptyMode = 'no-info' }: Props) {
   if (risk.description) {
     return (
       <Tooltip>
-        <TooltipTrigger asChild>{trigger}</TooltipTrigger>
+        <TooltipTrigger>{trigger}</TooltipTrigger>
         <TooltipContent>
           {risk.warning && (
             <WarningBar

@@ -43,7 +43,7 @@ const getCachedActivityLatestTps = cache(
       }),
     )
   },
-  ['activityLatestTpsXDD'],
+  ['activityLatestTps'],
   {
     revalidate: UnixTime.HOUR,
   },

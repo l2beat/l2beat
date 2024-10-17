@@ -17,7 +17,7 @@ export const scalingActivityColumns = [
   columnHelper.accessor('name', {
     cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
     meta: {
-      headClassName: 'w-0',
+      headClassName: 'w-0 min-w-[154px]',
     },
   }),
   columnHelper.accessor('data.pastDayTps', {

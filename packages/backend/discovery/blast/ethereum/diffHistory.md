@@ -1,3 +1,85 @@
+Generated with discovered.json: 0x7787d9ad2ffa69e14bc342ce1e5dac187a0de81d
+
+# Diff at Wed, 16 Oct 2024 11:35:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a3d139b799cc0b28e5e912febb17464d4e5aef5d block: 20921743
+- current block number: 20921743
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20921743 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "guard"
+      issuedPermissions.0.target:
+-        "0x364289230b8cc7d9120eF962AF37ebCFe23cE883"
++        "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05"
+    }
+```
+
+```diff
+    contract BlastMultisig (0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05) {
+    +++ description: None
+      roles:
+-        ["Challenger","Guardian"]
+      receivedPermissions.2:
++        {"permission":"guard","target":"0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb"}
+      receivedPermissions.1:
++        {"permission":"configure","target":"0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."}
+      receivedPermissions.0.permission:
+-        "configure"
++        "challenge"
+      receivedPermissions.0.target:
+-        "0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9"
++        "0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76"
+      receivedPermissions.0.description:
+-        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+    }
+```
+
+```diff
+    contract SystemConfig (0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883","via":[]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "sequence"
+      issuedPermissions.1.target:
+-        "0x364289230b8cc7d9120eF962AF37ebCFe23cE883"
++        "0x415c8893D514F9BC5211d36eEDA4183226b84AA7"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0x364289230b8cc7d9120eF962AF37ebCFe23cE883","via":[]}
+      issuedPermissions.1:
++        {"permission":"propose","target":"0x082b616Ec99167B2FEdee053F07db6795D4dA821","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "challenge"
+      issuedPermissions.0.target:
+-        "0x364289230b8cc7d9120eF962AF37ebCFe23cE883"
++        "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05"
+    }
+```
+
 Generated with discovered.json: 0x41bdcabe0915cb0b2b769a7aa71a1d620238d40b
 
 # Diff at Mon, 14 Oct 2024 10:49:50 GMT:

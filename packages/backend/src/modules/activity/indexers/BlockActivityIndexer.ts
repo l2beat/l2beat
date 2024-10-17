@@ -2,7 +2,6 @@ import { ActivityRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
-import { ActivityRecordWithoutRatio } from '../types'
 import { ActivityIndexerDeps } from './types'
 
 export class BlockActivityIndexer extends ManagedChildIndexer {
@@ -44,7 +43,6 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
           timestamp: timestamp,
           count,
           uopsCount,
-          ratio: uopsCount ? parseFloat((uopsCount / count).toFixed(2)) : null,
           start: currentRecord ? Math.min(currentRecord.start, start) : start,
           end: currentRecord ? Math.max(currentRecord.end, end) : end,
         }
@@ -59,7 +57,7 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
   }
 
   async getDatabaseEntries(
-    activityRecords: ActivityRecordWithoutRatio[],
+    activityRecords: ActivityRecord[],
   ): Promise<Map<number, ActivityRecord>> {
     if (activityRecords.length === 0) return new Map()
 

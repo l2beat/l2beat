@@ -316,10 +316,7 @@ export function opStackCommon(
     },
     permissions:
       templateVars.discoveryDrivenData === true
-        ? [
-            ...templateVars.discovery.getDiscoveredRoles(),
-            ...templateVars.discovery.getDiscoveredPermissions(),
-          ]
+        ? templateVars.discovery.getDiscoveredPermissions()
         : [
             ...templateVars.discovery.getOpStackPermissions({
               batcherHash: 'Sequencer',
@@ -433,10 +430,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
       category:
         templateVars.display.category ??
         (daProvider !== undefined ? 'Optimium' : 'Optimistic Rollup'),
-      warning:
-        templateVars.display.warning === undefined
-          ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
-          : templateVars.display.warning,
+      warning: templateVars.display.warning,
       liveness:
         daProvider !== undefined
           ? undefined

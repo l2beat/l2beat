@@ -1495,10 +1495,6 @@
       "coingeckoId": "zkspace"
     },
     {
-      "symbol": "ZMT",
-      "address": "0xaa602dE53347579f86b996D2Add74bb6F79462b2"
-    },
-    {
       "symbol": "zunETH",
       "category": "ether",
       "address": "0xc2e660C62F72c2ad35AcE6DB78a616215E2F2222"

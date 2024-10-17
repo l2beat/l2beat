@@ -91,6 +91,11 @@
           "via": []
         },
         {
+          "permission": "sequence",
+          "target": "0xeC4Db0b5a1d70167034Da00e3D7Bc5B2CA05Fc77",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104",
           "via": [
@@ -203,6 +208,11 @@
       ],
       "issuedPermissions": [
         {
+          "permission": "guard",
+          "target": "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104",
           "via": [
@@ -247,8 +257,11 @@
         "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
       ],
       "proxyType": "gnosis safe",
-      "roles": ["Challenger", "Guardian"],
       "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0xCC61c26901E719B73273C1484e337cBAB84369EF"
+        },
         {
           "permission": "configure",
           "target": "0x31f09c4a4151EeBB1c0Ac10003bF3b06f4Aa5668",
@@ -259,6 +272,10 @@
           "permission": "configure",
           "target": "0x52c901666Cfc8AeE9b46A3b7C101688351529B37",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+        },
+        {
+          "permission": "guard",
+          "target": "0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E"
         },
         {
           "permission": "upgrade",
@@ -362,6 +379,16 @@
       ],
       "issuedPermissions": [
         {
+          "permission": "challenge",
+          "target": "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0x28750b59d304e6ce7d3866eF9a0DbFBCfaE56A6E",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104",
           "via": [
@@ -409,7 +436,12 @@
     { "address": "0x000000000000000000000000000000000000dEaD" },
     {
       "address": "0x28750b59d304e6ce7d3866eF9a0DbFBCfaE56A6E",
-      "roles": ["Proposer"]
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "target": "0xCC61c26901E719B73273C1484e337cBAB84369EF"
+        }
+      ]
     },
     { "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f" },
     { "address": "0x39f15b577F4F9eD6b819169Ac9fa0bE6eD857258" },
@@ -418,7 +450,12 @@
     { "address": "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4" },
     {
       "address": "0xeC4Db0b5a1d70167034Da00e3D7Bc5B2CA05Fc77",
-      "roles": ["Sequencer"]
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0x52c901666Cfc8AeE9b46A3b7C101688351529B37"
+        }
+      ]
     },
     { "address": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C" },
     { "address": "0xf64605AEe9402BC964f37Fd5d355F7420099bb6E" }
@@ -688,8 +725,8 @@
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
-    "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
-    "opstack/OptimismPortal": "0x2a32f6874a8c0e85e685fa944143e7968d675fed43b46e7385411ad11f8a1a43",
-    "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
+    "opstack/L2OutputOracle": "0xfc8737561d85bab2fe5e39a7a02436a0cb0e7f96d7a7adc2ee3ea486b391c2fc",
+    "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",
+    "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"
   }
 }

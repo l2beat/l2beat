@@ -41,6 +41,7 @@
     "0x2520C6b2C1FBE1813AB5c7c1018CDa39529e9FF2": "EIGEN Timelock",
     "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75": "bEIGEN token",
     "0xd6EC41E453C5E7dA5494f4d51A053Ab571712E6f": "bEIGEN Timelock",
+    "0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF": "EigenLayer Timelock",
     "0x0c431C66F4dE941d089625E5B423D00707977060": "PauserRegistry",
     "0x5e4c39ad7a3e881585e383db9827eb4811f6f647": "StrategyFactory",
     "0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9": "StrategiesBeacon",
@@ -134,6 +135,15 @@
         "accessControl": {
           "handler": {
             "type": "accessControl"
+          }
+        }
+      }
+    },
+    "EigenLayer Timelock": {
+      "fields": {
+        "admin": {
+          "target": {
+            "permissions": [{ "type": "act", "delay": "{{delay}}" }]
           }
         }
       }

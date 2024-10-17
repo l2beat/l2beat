@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x55441bd22c760a1a5a141e24edc4f9dadcc94c84
+
+# Diff at Thu, 17 Oct 2024 13:55:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b22da46ad96e1d0cb3e7d83e3293eb7b76990953 block: 20878347
+- current block number: 20985714
+
+## Description
+
+Optional Hashi module (see older diffs below) adds a new owner Multisig and a new target adapter on gnosischain.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract HashiOwnerMS (0x933d5CD392CDA19b481071a4aaf5Bc34324AB9a5)
+    +++ description: None
+```
+
+```diff
+    contract HashiManager (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9) {
+    +++ description: None
+      values.adapters.0:
+-        "0x0000000000000000000000000000000000000000"
++        "0x3A259A51D200d902AC25BE2005d95EADA6a1bfc5"
+      values.expectedAdaptersHash:
+-        "0x290decd9548b62a8d60345a988386fc84ba6bc95484008f6362f93160ef3e563"
++        "0x6b603f4a7f51661e39122b2cc2745ffbc56eca92e59f655d365cd5170d930c0a"
+      values.owner:
+-        "0x933d5CD392CDA19b481071a4aaf5Bc34324AB9a5"
++        "0x670a3e447F4DE92C012777Ac5591D81E12aD0957"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x670a3e447F4DE92C012777Ac5591D81E12aD0957)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol => .flat/Safe/Safe.sol}         | 685 ++++++++++++---------
+ .../Safe/SafeProxy.p.sol}                          |  10 +-
+ 2 files changed, 416 insertions(+), 279 deletions(-)
+```
+
 Generated with discovered.json: 0x868877ebf4194c312afb3c7cc6ea072a27f9b6d5
 
 # Diff at Mon, 14 Oct 2024 10:53:30 GMT:

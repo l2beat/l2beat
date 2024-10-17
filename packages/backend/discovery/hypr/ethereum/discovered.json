@@ -98,7 +98,16 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "roles": ["Challenger", "Guardian"],
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x3E4F4Eb77a9c1f88c0e1F5aDCc9d3521Ce157FdD"
+        },
+        {
+          "permission": "guard",
+          "target": "0xba1ac896F3b7cB273daE94bF9A6291A432e826c7"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1705511519,
       "values": {
@@ -177,6 +186,16 @@
         "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
       ],
       "issuedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x28fB4D0e436874F4107948E358df3C242De06788",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0xeF2169180a2eda91B695eA5e5C4f4547C013840c",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
@@ -401,6 +420,11 @@
       ],
       "issuedPermissions": [
         {
+          "permission": "guard",
+          "target": "0x28fB4D0e436874F4107948E358df3C242De06788",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
           "via": [
@@ -452,6 +476,11 @@
         {
           "permission": "configure",
           "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+          "via": []
+        },
+        {
+          "permission": "sequence",
+          "target": "0x994c288de8418c8D3c5a4D21A69f35bF9641781C",
           "via": []
         },
         {
@@ -548,13 +577,23 @@
     { "address": "0x7A28B193dab5566bB1781f131A1d15603F2577D8" },
     {
       "address": "0x994c288de8418c8D3c5a4D21A69f35bF9641781C",
-      "roles": ["Sequencer"]
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0xBB08cf90DEb93492b463f1Ee5DA9453e51643586"
+        }
+      ]
     },
     { "address": "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038" },
     { "address": "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4" },
     {
       "address": "0xeF2169180a2eda91B695eA5e5C4f4547C013840c",
-      "roles": ["Proposer"]
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "target": "0x3E4F4Eb77a9c1f88c0e1F5aDCc9d3521Ce157FdD"
+        }
+      ]
     },
     { "address": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C" },
     { "address": "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0" },
@@ -871,9 +910,9 @@
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
-    "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
+    "opstack/L2OutputOracle": "0xfc8737561d85bab2fe5e39a7a02436a0cb0e7f96d7a7adc2ee3ea486b391c2fc",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
-    "opstack/OptimismPortal": "0x2a32f6874a8c0e85e685fa944143e7968d675fed43b46e7385411ad11f8a1a43",
-    "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
+    "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",
+    "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"
   }
 }

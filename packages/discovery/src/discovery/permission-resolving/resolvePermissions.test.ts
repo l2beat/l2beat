@@ -1,10 +1,6 @@
 import { expect } from 'earl'
-import {
-  Edge,
-  Node,
-  Permission,
-  resolvePermissions,
-} from './resolvePermissions'
+import { Permission } from '../config/RawDiscoveryConfig'
+import { Edge, Node, resolvePermissions } from './resolvePermissions'
 
 describe(resolvePermissions.name, () => {
   it('op mainnet', () => {
