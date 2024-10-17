@@ -21,29 +21,27 @@ export class RetryHandler {
   }
 
   async retry<T>(fn: () => Promise<T>): Promise<T> {
-    let attempts = 0
+    let attempt = 1
+
+    const delay = Math.min(
+      this.$.initialRetryDelayMs * Math.pow(2, attempt),
+      this.$.maxRetryDelayMs,
+    )
+    this.$.logger.warn('Scheduling retry', {
+      attempt: attempt,
+      delay,
+      // TODO: log args
+    })
+    await new Promise((resolve) => setTimeout(resolve, delay))
 
     while (true) {
-      attempts++
       try {
         return await fn()
       } catch (error) {
-        if (attempts > this.$.maxRetries) {
+        attempt++
+        if (attempt > this.$.maxRetries) {
           throw error
         }
-
-        const delay = Math.min(
-          this.$.initialRetryDelayMs * Math.pow(2, attempts),
-          this.$.maxRetryDelayMs,
-        )
-
-        this.$.logger.warn('Retry attempt failed, retrying...', {
-          attempt: attempts,
-          delay,
-          // TODO: log args
-        })
-
-        await new Promise((resolve) => setTimeout(resolve, delay))
       }
     }
   }

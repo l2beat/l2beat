@@ -151,8 +151,8 @@ function mockClient(deps: {
     retryHandler:
       deps.retryHandler ??
       new RetryHandler({
-        timeoutMs: 10_000,
-        initialRetryDelayMs: 1000,
+        timeoutMs: 1,
+        initialRetryDelayMs: 1,
         maxRetries: 0,
         maxRetryDelayMs: Infinity,
         logger: Logger.SILENT,
