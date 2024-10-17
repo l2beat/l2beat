@@ -20,11 +20,7 @@ const meta = {
         sentiment: 'good',
         description:
           "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There is a 1d delay on this operation.",
-        warning: {
-          value: '1d',
-          sentiment: 'bad',
-          description: 'There is a 1d delay on this operation.',
-        },
+        warning: undefined,
       },
       {
         name: 'State validation',
@@ -50,7 +46,10 @@ const meta = {
           'Non-emergency upgrades are initiated on L2 and go through a 3d delay. Since there is a 1d delay to force a tx (forcing the inclusion in the following state update), users have only 2d to exit. \n' +
           '    \n' +
           '  If users post a tx after that time, they would only be able to self propose a state root 12d 17h after the last state root was proposed and then wait for the 6d 8h challenge window, while the upgrade would be confirmed just after the 6d 8h challenge window and the 3d L1 timelock.',
-        warning: undefined,
+        warning: {
+          value: 'The security council can upgrade with no delay',
+          sentiment: 'bad',
+        },
       },
       {
         name: 'Proposer failure',

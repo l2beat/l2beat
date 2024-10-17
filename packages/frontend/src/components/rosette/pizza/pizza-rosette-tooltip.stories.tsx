@@ -18,7 +18,10 @@ export const Default: Story = {
         sentiment: 'good',
         description:
           "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There is a 1d delay on this operation.",
-        warning: undefined,
+        warning: {
+          value: 'Some random sequencer failure warning',
+          sentiment: 'bad',
+        },
       },
       {
         name: 'State validation',

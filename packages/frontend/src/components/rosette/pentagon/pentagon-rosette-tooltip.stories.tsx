@@ -34,7 +34,10 @@ export const Default: Story = {
         sentiment: 'good',
         description:
           'All of the data needed for proof construction is published on Ethereum L1.',
-        warning: undefined,
+        warning: {
+          value: 'Some random data availability warning',
+          sentiment: 'warning',
+        },
       },
       {
         name: 'Exit window',
