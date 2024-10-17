@@ -52,7 +52,7 @@ export function ActivityChartHover(props: Props) {
       <div className="mt-2 flex w-full items-center justify-between gap-2">
         <div className="flex items-center gap-1">
           <span className="text-sm text-gray-700 dark:text-gray-50 ">
-            Tx count
+            Transaction count
           </span>
         </div>
       </div>
