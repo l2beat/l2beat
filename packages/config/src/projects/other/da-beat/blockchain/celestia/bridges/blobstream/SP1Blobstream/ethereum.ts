@@ -53,6 +53,16 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
      Verifying a header range includes verifying tendermint consensus (header signatures are 2/3 of stake) and verifying the data commitment root.
       By default, Blobstream on ${chainName} is updated by the Celestia operator at a regular cadence of ${updateInterval} hour.
     `,
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: 'a dishonest majority of Celestia validators post incorrect or malicious data commitments to the DA bridge.',
+      },
+      {
+        category: 'Funds can be frozen if',
+        text: 'the permissioned relayers are unable to submit DA commitments to the Vector contract.',
+      },
+    ],
   },
   contracts: {
     addresses: [
@@ -77,11 +87,11 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
     risks: [
       {
         category: 'Funds can be lost if',
-        text: 'the bridge contract receives a malicious code upgrade. There is no delay on code upgrades.',
+        text: 'the bridge contract or its dependencies receive a malicious code upgrade. There is no delay on code upgrades.',
       },
       {
-        category: 'Funds can be lost if',
-        text: 'a dishonest majority of Celestia validators post incorrect or malicious data commitments.',
+        category: 'Funds can be frozen if',
+        text: 'the bridge contract is frozen by the Guardian (BlobstreamMultisig).',
       },
     ],
   },

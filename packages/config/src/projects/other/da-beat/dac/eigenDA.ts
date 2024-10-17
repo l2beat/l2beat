@@ -62,6 +62,16 @@ export const eigenDA: DaLayer = {
     The EigenDARollupUtils.sol library's verifyBlob() function can then used by scaling solutions to verify that a data blob is included within a confirmed batch in the EigenDAServiceManager. 
 
   `,
+  risks: [
+    {
+      category: 'Funds can be lost if',
+      text: 'the disperser posts an invalid commitment and EigenDA operators do not make the data available for verification.',
+    },
+    {
+      category: 'Users can be censored if',
+      text: 'the disperser does not distribute data to EigenDA operators.',
+    },
+  ],
   },
   bridges: [
     NO_BRIDGE({
