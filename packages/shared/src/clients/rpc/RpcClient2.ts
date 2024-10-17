@@ -53,7 +53,7 @@ export class RpcClient2 {
   }
 
   async query(method: string, params: (string | number | boolean)[]) {
-    const blockResponse = await this.$.http.fetchJson(this.$.url, {
+    const response = await this.$.http.fetchJson(this.$.url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -66,11 +66,11 @@ export class RpcClient2 {
     })
 
     // this parsing is needed for APIs which return 200 and error in the body
-    const response = RpcResponse.safeParse(blockResponse)
-    if (!response.success) {
+    const parsed = RpcResponse.safeParse(response)
+    if (!parsed.success) {
       this.$.logger.error(JSON.stringify(response))
       throw new Error('Error during parsing of rpc response')
     }
-    return response.data.result
+    return parsed.data.result
   }
 }
