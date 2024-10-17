@@ -95,7 +95,6 @@ describe(BlockActivityIndexer.name, () => {
           timestamp: START,
           count: 12,
           uopsCount: 22,
-          ratio: 1.83,
           start: 0,
           end: 10,
         },
@@ -243,7 +242,6 @@ function activityRecord(
     timestamp,
     count,
     uopsCount,
-    ratio: uopsCount ? parseFloat((uopsCount / count).toFixed(2)) : null,
     start,
     end,
   }

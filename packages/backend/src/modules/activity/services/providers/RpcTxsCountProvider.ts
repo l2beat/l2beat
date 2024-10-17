@@ -30,12 +30,9 @@ export class RpcTxsCountProvider {
       const uopsCount =
         this.assessCount?.(uopsLength, blockNumber) ?? uopsLength
 
-      const ratio = uopsCount / txsCount
-
       return {
         txsCount,
         uopsCount,
-        ratio,
         timestamp,
         number: block.number,
       }
