@@ -31,7 +31,9 @@ export function ActivityChartHover(props: Props) {
           <span>{props.singleProject ? 'Project' : 'Projects'}</span>
         </div>
         <span className="whitespace-nowrap font-bold tabular-nums">
-          {formatTps(countToTps(props.count), { morePrecision: true })}
+          {formatTps(countToTps(props.count), {
+            morePrecision: !!props.singleProject,
+          })}
         </span>
       </div>
 
@@ -43,7 +45,7 @@ export function ActivityChartHover(props: Props) {
           </div>
           <span className="whitespace-nowrap font-bold tabular-nums">
             {formatTps(countToTps(props.ethereumCount), {
-              morePrecision: true,
+              morePrecision: !!props.singleProject,
             })}
           </span>
         </div>
