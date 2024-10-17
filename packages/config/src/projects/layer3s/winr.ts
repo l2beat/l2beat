@@ -1,21 +1,24 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { underReviewL3 } from '../layer2s/templates/underReview'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
+import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import { Layer3 } from '../layer3s'
 
-export const winr: Layer3 = underReviewL3({
-  hostChain: ProjectId('arbitrum'),
-  id: ProjectId('winr'),
+const discovery = new ProjectDiscovery('winr', 'arbitrum')
+
+export const winr: Layer3 = orbitStackL3({
+  discovery,
+  badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum, Badge.RaaS.Conduit],
+  additionalPurposes: ['Gaming'],
+  hostChain: ProjectId.ARBITRUM,
   display: {
-    category: 'Optimium',
-    provider: 'Arbitrum',
     name: 'WINR',
     slug: 'winr',
     description:
       'WINR is a Layer 3 on Arbitrum, based on the Orbit stack. It is focused on building a decentralized iGaming infrastructure.',
-    purposes: ['Gaming'],
     links: {
       websites: ['https://winr.games/'],
-      apps: [],
+      apps: ['https://just.bet/'],
       documentation: ['https://docs.winr.games/'],
       explorers: ['https://explorer.winr.games/'],
       repositories: [],
@@ -25,7 +28,14 @@ export const winr: Layer3 = underReviewL3({
   },
   rpcUrl: 'https://rpc.winr.games ',
   associatedTokens: ['WINR'],
-  escrows: [
+  nativeToken: 'WINR',
+  nonTemplatePermissions: [
+    ...discovery.getMultisigPermission(
+      'ConduitMultisig2',
+      'Can upgrade any system contract and potentially steal all funds.',
+    ),
+  ],
+  nonTemplateEscrows: [
     {
       chain: 'arbitrum',
       address: EthereumAddress('0xf3f01622ac969156760c32190995f9dc5b3eb7fa'), // ERC20Bridge
@@ -146,4 +156,7 @@ export const winr: Layer3 = underReviewL3({
       includeInTotal: false,
     },
   ],
+  bridge: discovery.getContract('Bridge'),
+  rollupProxy: discovery.getContract('RollupProxy'),
+  sequencerInbox: discovery.getContract('SequencerInbox'),
 })

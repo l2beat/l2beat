@@ -5,6 +5,7 @@ import { GithubIcon } from './github'
 import { InstagramIcon } from './instagram'
 import { LinkedInIcon } from './linkedin'
 import { MediumIcon } from './medium'
+import { MirrorIcon } from './mirror'
 import { RedditIcon } from './reddit'
 import { TelegramIcon } from './telegram'
 import { XIcon } from './x'
@@ -20,6 +21,7 @@ export type SocialIconType =
   | 'telegram'
   | 'x'
   | 'youtube'
+  | 'mirror'
 
 interface Props extends SVGAttributes<SVGElement> {
   product: SocialIconType
@@ -45,5 +47,7 @@ export function SocialIcon({ product, ...props }: Props): JSX.Element {
       return <XIcon {...props} />
     case 'youtube':
       return <YouTubeIcon {...props} />
+    case 'mirror':
+      return <MirrorIcon {...props} />
   }
 }

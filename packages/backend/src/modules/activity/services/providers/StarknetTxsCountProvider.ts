@@ -17,6 +17,7 @@ export class StarknetTxsCountProvider {
       return {
         txsCount: block.transactions.length,
         timestamp: new UnixTime(block.timestamp),
+        uopsCount: null,
         number: block.number,
       }
     })

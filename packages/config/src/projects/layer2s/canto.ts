@@ -15,10 +15,10 @@ export const canto: Layer2 = upcomingL2({
     provider: 'Polygon',
     links: {
       websites: ['https://canto.io'],
-      apps: [],
+      apps: ['https://app.canto.io/bridge'],
       documentation: ['https://docs.canto.io'],
-      explorers: [],
-      repositories: [],
+      explorers: ['https://tuber.build'],
+      repositories: ['https://github.com/Canto-Network'],
       socialMedia: [
         'https://twitter.com/CantoPublic',
         'https://discord.gg/canto',

@@ -4,7 +4,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { formatNumberWithCommas } from '~/utils/format-number'
+import { formatNumberWithCommas } from '~/utils/number-format/format-number'
 
 interface Props {
   amount: number

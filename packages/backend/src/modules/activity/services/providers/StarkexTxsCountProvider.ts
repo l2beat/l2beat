@@ -31,6 +31,7 @@ export class StarkexTxsCountProvider {
       projectId: this.projectId,
       timestamp: c.timestamp,
       count: c.count,
+      uopsCount: null,
       start: c.timestamp.toStartOf('day').toNumber(),
       end: c.timestamp.add(1, 'days').add(-1, 'seconds').toNumber(),
     }))

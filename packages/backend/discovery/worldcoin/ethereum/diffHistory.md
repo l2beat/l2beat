@@ -1,3 +1,93 @@
+Generated with discovered.json: 0x5bbd3c94b69fded49e2906cf815436af4c48c01a
+
+# Diff at Mon, 14 Oct 2024 10:57:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20922333
+- current block number: 20922333
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20922333 (main branch discovery), not current.
+
+```diff
+    contract DeleteIdentitiesVerifierLookupTable (0x39CcB3b670651a14da8b3835f42924f49C2C5986) {
+    +++ description: None
+      sourceHashes:
++        ["0x39eb56f7878719eefdfb5cc208bbd36b80989adf0ba642e7d2359973d08c8934"]
+    }
+```
+
+```diff
+    contract RegisterIdentitiesVerifierLookupTable (0x4055B6d4018e92e4d000865e61e87B57A4E5Ab49) {
+    +++ description: None
+      sourceHashes:
++        ["0x39eb56f7878719eefdfb5cc208bbd36b80989adf0ba642e7d2359973d08c8934"]
+    }
+```
+
+```diff
+    contract DeleteVerifierSize100 (0x43B68ccBa7FC726540768fD1537c3179283140ed) {
+    +++ description: None
+      sourceHashes:
++        ["0xc2565a490312be5d6a5b12bcb700c6fa795caab49384ab6d23343096134df95f"]
+    }
+```
+
+```diff
+    contract RegisterVerifierSize100 (0xb5f23A0c92F2f4aeE506FA3B1Cc2813820d13258) {
+    +++ description: None
+      sourceHashes:
++        ["0x7c8adbb6efe5b3350d779e102d5ae78fd639c4f8ceefafea77344463d5d8cc94"]
+    }
+```
+
+```diff
+    contract DeleteVerifierSize10 (0xCA7d6822b9c6913B1A1416cE30eF14c4e7f0bFb1) {
+    +++ description: None
+      sourceHashes:
++        ["0x82f68854d52503cd6c6f6ff3c97b47515d8e5b65abc2950508e18059dff0692f"]
+    }
+```
+
+```diff
+    contract SemaphoreVerifier (0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5) {
+    +++ description: None
+      sourceHashes:
++        ["0xb9149eadedcff671edd3913162a49203e7f35036cb983413e363562d5974f4b3"]
+    }
+```
+
+```diff
+    contract RegisterVerifierSize1200 (0xE44c83b9e1971A24EC698829297A0C4026B0CeF9) {
+    +++ description: None
+      sourceHashes:
++        ["0xbd34cc0d432d6d6834f925e6553abb9510b448b0eb25d2e40263813ad71f6f86"]
+    }
+```
+
+```diff
+    contract WorldIdIdentityManager2 (0xf7134CE138832c1456F2a91D64621eE90c2bddEa) {
+    +++ description: Does what it says: Manages identities for Worldcoin. The identityOperator can register or delete identities by submitting zk proofs.
+      sourceHashes:
++        ["0x3821412640509152c25bca5507532d7472607cede582ce50994edf3261f0ea9c","0xcac9e734a4cccc40bec37b5168f307cca5054c69434c136f131ee1ee0a6a555d"]
+    }
+```
+
+```diff
+    contract RegisterVerifierSize600 (0xFC1c26E964F791f81a33F49D91f79456891AA1c1) {
+    +++ description: None
+      sourceHashes:
++        ["0xca7e21152b6ce21c64fdb15e8d8e9ac03809d3f499f232454a62e8060acbc3b9"]
+    }
+```
+
 Generated with discovered.json: 0xc090690b6d65a34a13d7d0538b596ee5b61993d7
 
 # Diff at Tue, 08 Oct 2024 17:23:55 GMT:

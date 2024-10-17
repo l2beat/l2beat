@@ -1,3 +1,189 @@
+Generated with discovered.json: 0x26d61a94edbac9d6661db7a3d96c449bda3da0d7
+
+# Diff at Mon, 14 Oct 2024 10:55:49 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20777100
+- current block number: 20777100
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20777100 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0x015318c16AE443a20DE0A776dB06a59F0D279057) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract GnosisSafe (0x178D8Eb1A1fb81B5102808A83318Bb04C6a9fC6D) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract GnosisSafe (0x2A90830083C5Ca1f18d7AA7fCDC2998f93475384) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract EraChainAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
+      sourceHashes:
++        ["0x3423f941c413d4f07703ba62723b05600f2a33f8725e8d89a53194efb05f4086"]
+    }
+```
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
+      sourceHashes:
++        ["0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad","0x0d42e482e85877d75871eacd767228a9e735bb3e0478cb2b80235d6f428ba055"]
+    }
+```
+
+```diff
+    contract GenesisUpgrade (0x3dDD7ED2AeC0758310A4C6596522FCAeD108DdA2) {
+    +++ description: None
+      sourceHashes:
++        ["0xc9967ed702de956442f294c09e62b4c0a2c4c86707e081af1c4ae4b0119ac3fb"]
+    }
+```
+
+```diff
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: Can instantly upgrade all contracts and roles in the zksync Era contracts
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract GnosisSafe (0x538612F6eba6ff80FBD95D60dCDee16b8FfF2c0f) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract GnosisSafe (0x55c671BcE13120387Ded710A1d1b80C0e3d8E857) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract GnosisSafe (0x590926dBCDfD19627c3BbD2A6Eb96DeC7a3AbF69) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
+      sourceHashes:
++        ["0x5c435b3eaf489b61e623af2356a751079cfa87c079c12e5d93108d007d3b4c97"]
+    }
+```
+
+```diff
+    contract GnosisSafe (0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897) {
+    +++ description: None
+      sourceHashes:
++        ["0xe59fe71de493915d874d4d22b4637434d86b42759b4d5fd2dddf4f25cfdd1544"]
+    }
+```
+
+```diff
+    contract ZkFoundationMultisig (0xbC1653bd3829dfEc575AfC3816D4899cd103B51c) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract SecurityCouncil (0xBDFfCC71FE84020238F2990a6D2954e87355De0D) {
+    +++ description: None
+      sourceHashes:
++        ["0x153a01097ad00f13ce2cb9f0178a19858cb44dd75a40132d64d7fb1450cc0bf5"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
+    +++ description: None
+      sourceHashes:
++        ["0x04a556db1ea1a651e1174247090ad4c7105b455feab1a9672d5c4cd113b9ff0b"]
+    }
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: None
+      sourceHashes:
++        ["0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad","0x96877e17c5bb84aa94de97c0a9764405e673c26bbf2c649349984d825b326940"]
+    }
+```
+
+```diff
+    contract GnosisSafe (0xCe7a3dFcc35602155809920Ff65e093aa726f6cf) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract Guardians (0xD677e09324F8Bb3cC64F009973693f751c33A888) {
+    +++ description: None
+      sourceHashes:
++        ["0xe702d26fd65786b2e88bd0998f300af1fa11cd1a733a78e5da7ec0699a60e5ce"]
+    }
+```
+
+```diff
+    contract L1SharedBridge (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: None
+      sourceHashes:
++        ["0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad","0xee3958605e4357a1803d3eb2c6d0d455fdbcc9c550a55b801834030d2a39cef8"]
+    }
+```
+
+```diff
+    contract EmergencyUpgradeBoard (0xdEFd1eDEE3E8c5965216bd59C866f7f5307C9b29) {
+    +++ description: None
+      sourceHashes:
++        ["0x15445918f67256c3edb446079c491b396c922a20fb0dc931fa7aaa6095f19aa6"]
+    }
+```
+
 Generated with discovered.json: 0xd97b2cb4e179850b9ec5569ebc16941e345ce95c
 
 # Diff at Tue, 01 Oct 2024 10:55:13 GMT:

@@ -1,3 +1,85 @@
+Generated with discovered.json: 0x6d9d19c6a6b0a928aea4d4f9cd7f00c7dda9b372
+
+# Diff at Mon, 14 Oct 2024 10:54:33 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20089055
+- current block number: 20089055
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20089055 (main branch discovery), not current.
+
+```diff
+    contract TokenImplementation (0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6) {
+    +++ description: None
+      sourceHashes:
++        ["0xbc51a6f7503c2dccc97bd5b0fe777fa354d9c7f8a017bffcdb16119f293f0619"]
+    }
+```
+
+```diff
+    contract WormholeRelayer (0x27428DD2d3DD32A4D7f7C497eAaa23130d894911) {
+    +++ description: None
+      sourceHashes:
++        ["0xd3fe13cb32b323dcf9f1e5c9c334577136633345e2d376340b4cd18d44231968","0x54a3c2ca728fd6aafdaa31a7f0d44cffbdfaa544fba87e938e3447de88b9f006"]
+    }
+```
+
+```diff
+    contract TokenBridge (0x3ee18B2214AFF97000D974cf647E7C347E8fa585) {
+    +++ description: None
+      sourceHashes:
++        ["0x7576cd5bf86b934451cc67ed4b42d74b94ea9ecd6e990ec3dca27d9d339c35cd","0x06093cab28394b5790c0a8281474cd818235258958a294ecad796fb89e7d017c"]
+    }
+```
+
+```diff
+    contract NFTBridge (0x6FFd7EdE62328b3Af38FCD61461Bbfc52F5651fE) {
+    +++ description: None
+      sourceHashes:
++        ["0x5314b46db0c40bea82cf9911a6e5095ae83c56a23e45191a1768a647210cc2b6","0xe8f857d15277c4009dd17c5e936579a00645b4b99609769258bc629c3ea1821b"]
+    }
+```
+
+```diff
+    contract DeliveryProviderImplementation (0x7A0a53847776f7e94Cc35742971aCb2217b0Db81) {
+    +++ description: None
+      sourceHashes:
++        ["0xa69df53f9d2492a90cb9aeda1ddfd617ce00c5c63dfc2d2baa0413a87ffaf34c","0x8c018dd994ea0c4acd43c9628405cfd46ff5a65f234b1ea8c7e765983f49c6b3"]
+    }
+```
+
+```diff
+    contract WormholeCore (0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B) {
+    +++ description: None
+      sourceHashes:
++        ["0xbc0d1c916444d8aca6243193c89589feac3c1a53cef31ddc8516d094fc6d33bd","0xb51bdb80364d69b22f5cafd3aee42a605a60f5fc3116509bea8352fbfa04c532"]
+    }
+```
+
+```diff
+    contract CircleIntegration (0xAaDA05BD399372f0b0463744C09113c137636f6a) {
+    +++ description: None
+      sourceHashes:
++        ["0xf187201e5a871c786c5af625380fa89f1c530c0458b5b697b29219ed50cf0ea8","0xc5187968f2cb1166db32924199e148c88684177ee3c51e0b7ceb5905febb2bcd"]
+    }
+```
+
+```diff
+    contract NFTImplementation (0xEc4d807Cd33a48A7C8Cd73D09B41Aa5160B3a7fc) {
+    +++ description: None
+      sourceHashes:
++        ["0xbd754d5f19a23f887be96d26d6641438fa86acafaf29bb3828188cef3fd571e6"]
+    }
+```
+
 Generated with discovered.json: 0x5761ecd4e31ad63de2d327a5cfd3d99b1109591d
 
 # Diff at Tue, 01 Oct 2024 10:54:22 GMT:

@@ -1,5 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
+import { NUGGETS } from '../../common'
+
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -17,9 +19,6 @@ export const mantapacific: Layer2 = opStackL2({
     architectureImage: 'mantapacific',
     description:
       'Manta Pacific is an Optimium empowering EVM-native zero-knowledge (ZK) applications and general dapps.',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://pacific.manta.network/'],
       apps: ['https://pacific-bridge.manta.network/'],
@@ -86,4 +85,11 @@ export const mantapacific: Layer2 = opStackL2({
     },
   ],
   badges: [Badge.DA.Celestia, Badge.RaaS.Caldera],
+  knowledgeNuggets: [
+    {
+      title: 'Blobstream and Celestia Architecture',
+      url: 'https://www.youtube.com/watch?v=cn_fN6pkakQ',
+      thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
+    },
+  ],
 })

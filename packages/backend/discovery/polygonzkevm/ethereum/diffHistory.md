@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x562e2023bf3fbf6c0a4e5c6bd2870affb1bcf8af
+
+# Diff at Mon, 14 Oct 2024 10:54:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20878349
+- current block number: 20878349
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20878349 (main branch discovery), not current.
+
+```diff
+    contract daiBridge (0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98) {
+    +++ description: None
+      sourceHashes:
++        ["0x612fcbfe67b3a142750d4b383ec80c3df15e053a88579b6d54660253f4c19baa","0x608730e7656b64bd18a9a04f2b0024b9dc95d2145d3e6cde1f5d590f31f4fff4"]
+    }
+```
+
+```diff
+    contract PolygonZkEVMEtrog (0x519E42c24163192Dca44CD3fBDCEBF6be9130987) {
+    +++ description: None
+      sourceHashes:
++        ["0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4","0xf303702e52579ed796873f92868d2ebedd55360bf53043519e6061b19df3eb4b"]
+    }
+```
+
+```diff
+    contract usdcBridge (0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB) {
+    +++ description: None
+      sourceHashes:
++        ["0x74f36c1c292d2992d00c72ffd2ff8a4b8648a1c9058e63210c2742186a9daf50","0xefc52c461b0de070fb85381ef77033d1a68b13e59d2ca477477b766802ab1164"]
+    }
+```
+
+```diff
+    contract PolygonzkEVMVerifier (0xc521580cd8586Cc688A7430F9DcE0f6A803F2883) {
+    +++ description: None
+      sourceHashes:
++        ["0x1b9299553467d8c5557640b4aa02efa58c4fd2cec8e008db1a70ce0a1c5a131b"]
+    }
+```
+
+```diff
+    contract wstETHBridge (0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01) {
+    +++ description: None
+      sourceHashes:
++        ["0x612fcbfe67b3a142750d4b383ec80c3df15e053a88579b6d54660253f4c19baa","0x768cec78a852b6918281dca4675713010a4e764f5eb658f4f98c8ae258523e62"]
+    }
+```
+
+```diff
+    contract EscrowsAdmin (0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
 Generated with discovered.json: 0x917901b9460d0dd2a0523a068882d3b1aa9a7536
 
 # Diff at Wed, 02 Oct 2024 14:16:59 GMT:

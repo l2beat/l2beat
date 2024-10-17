@@ -24,6 +24,7 @@ import {
   ScalingProjectContract,
   ScalingProjectEscrow,
   ScalingProjectPermission,
+  ScalingProjectPurpose,
   ScalingProjectRiskView,
   ScalingProjectRiskViewEntry,
   ScalingProjectStateDerivation,
@@ -106,12 +107,13 @@ export interface OpStackConfigCommon {
   stage?: StageConfig
   badges?: BadgeId[]
   discoveryDrivenData?: boolean
+  additionalPurposes?: ScalingProjectPurpose[]
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
   display: Omit<
     Layer2Display,
-    'provider' | 'category' | 'dataAvailabilityMode'
+    'provider' | 'category' | 'dataAvailabilityMode' | 'purposes'
   > & {
     category?: Layer2Display['category']
   }
@@ -120,7 +122,7 @@ export interface OpStackConfigL2 extends OpStackConfigCommon {
 export interface OpStackConfigL3 extends OpStackConfigCommon {
   display: Omit<
     Layer3Display,
-    'provider' | 'category' | 'dataAvailabilityMode'
+    'provider' | 'category' | 'dataAvailabilityMode' | 'purposes'
   > & {
     category?: Layer3Display['category']
   }
@@ -314,10 +316,7 @@ export function opStackCommon(
     },
     permissions:
       templateVars.discoveryDrivenData === true
-        ? [
-            ...templateVars.discovery.getDiscoveredRoles(),
-            ...templateVars.discovery.getDiscoveredPermissions(),
-          ]
+        ? templateVars.discovery.getDiscoveredPermissions()
         : [
             ...templateVars.discovery.getOpStackPermissions({
               batcherHash: 'Sequencer',
@@ -424,6 +423,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     type: 'layer2',
     ...opStackCommon(templateVars),
     display: {
+      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       architectureImage,
       ...templateVars.display,
       provider: 'OP Stack',
@@ -787,6 +787,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     hostChain: templateVars.hostChain,
     display: {
       architectureImage,
+      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       ...templateVars.display,
       provider: 'OP Stack',
       category:
@@ -799,6 +800,43 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     },
     stackedRiskView: templateVars.stackedRiskView ?? getStackedRisks(),
     riskView,
+    stage:
+      templateVars.stage === undefined
+        ? daProvider !== undefined || templateVars.isNodeAvailable === undefined
+          ? {
+              stage: 'NotApplicable',
+            }
+          : getStage(
+              {
+                stage0: {
+                  callsItselfRollup: true,
+                  stateRootsPostedToL1: true,
+                  dataAvailabilityOnL1: true,
+                  rollupNodeSourceAvailable: templateVars.isNodeAvailable,
+                },
+                stage1: {
+                  stateVerificationOnL1: false,
+                  fraudProofSystemAtLeast5Outsiders: null,
+                  usersHave7DaysToExit: false,
+                  usersCanExitWithoutCooperation: false,
+                  securityCouncilProperlySetUp:
+                    templateVars.hasProperSecurityCouncil ?? null,
+                },
+                stage2: {
+                  proofSystemOverriddenOnlyInCaseOfABug: null,
+                  fraudProofSystemIsPermissionless: null,
+                  delayWith30DExitWindow: false,
+                },
+              },
+              {
+                rollupNodeLink:
+                  templateVars.isNodeAvailable === true
+                    ? (templateVars.nodeSourceLink ??
+                      'https://github.com/ethereum-optimism/optimism/tree/develop/op-node')
+                    : '',
+              },
+            )
+        : templateVars.stage,
     dataAvailability:
       daProvider !== undefined
         ? addSentimentToDataAvailability({

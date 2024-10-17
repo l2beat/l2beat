@@ -116,8 +116,6 @@ ETHEREUM_RPC_URL_FOR_TVL=https://another.rpc/mainnet
 
 The tvl feature is configured via the following environment variables:
 
-- `ERROR_ON_UNSYNCED_TVL` - Optional. Defaults to false
-
 **Feature flags:**
 
 - `tvl` - enables tvl feature

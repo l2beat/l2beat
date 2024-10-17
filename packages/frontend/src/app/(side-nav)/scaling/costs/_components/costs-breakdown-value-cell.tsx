@@ -1,8 +1,8 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { Badge } from '~/components/badge/badge'
+import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { Skeleton } from '~/components/core/skeleton'
 import { DetailedOnHover } from '~/components/detailed-on-hover'
-import { EM_DASH } from '~/consts/characters'
 import { formatCostValue } from '../_utils/format-cost-value'
 import { useCostsMetricContext } from './costs-metric-context'
 import { useCostsUnitContext } from './costs-unit-context'
@@ -21,10 +21,9 @@ export function CostsBreakdownValueCell({ data, type }: Props) {
     switch (data.reason) {
       case 'loading':
         return <Skeleton className="ml-auto h-6 w-20" />
-      case 'coming-soon':
       case 'no-per-tx-metric':
       case 'no-data':
-        return EM_DASH
+        return <NoDataBadge />
       default:
         assertUnreachable(data.reason)
     }

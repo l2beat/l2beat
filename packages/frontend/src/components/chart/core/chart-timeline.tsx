@@ -12,25 +12,26 @@ export function ChartTimeline() {
   const isClient = useIsClient()
   const loading = useChartLoading()
   const { columns } = useChartContext()
+  if (loading || !isClient || columns.length === 0) {
+    return null
+  }
 
   const range = getActualRange(columns)
 
   return (
     <div className="mt-2 w-full">
-      {!loading && isClient
-        ? columns.map((column, i) => {
-            const label = getTimelineLabel(column.data.timestamp, range)
-            if (!label) return null
-            return (
-              <TimelineLabel
-                key={column.data.timestamp}
-                x={i / (columns.length - 1)}
-              >
-                {label}
-              </TimelineLabel>
-            )
-          })
-        : null}
+      {columns.map((column, i) => {
+        const label = getTimelineLabel(column.data.timestamp, range)
+        if (!label) return null
+        return (
+          <TimelineLabel
+            key={column.data.timestamp}
+            x={i / (columns.length - 1)}
+          >
+            {label}
+          </TimelineLabel>
+        )
+      })}
     </div>
   )
 }
@@ -133,7 +134,7 @@ function get30dTimelineLabel(timestamp: number) {
 }
 
 function get90dTimelineLabel(timestamp: number) {
-  if (timestamp % (15 * UnixTime.DAY) !== 0) {
+  if ((timestamp + 3 * UnixTime.DAY) % (21 * UnixTime.DAY) !== 0) {
     return
   }
 

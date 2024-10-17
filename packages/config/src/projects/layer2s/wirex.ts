@@ -33,12 +33,12 @@ const upgradeability = {
 
 export const wirex: Layer2 = polygonCDKStack({
   badges: [Badge.DA.DAC, Badge.RaaS.Gateway],
+  additionalPurposes: ['Payments'],
   display: {
     name: 'Pay Chain',
     slug: 'wirex',
     description:
       'Pay Chain is a Validium built on the Polygon CDK stack. It is used as the infrastructure for the Wirex non-custodial debit cards.',
-    purposes: ['Payments'],
     links: {
       websites: ['https://wirexpaychain.com/'],
       apps: ['https://pay-chain-bridge.wirexpaychain.com/'],

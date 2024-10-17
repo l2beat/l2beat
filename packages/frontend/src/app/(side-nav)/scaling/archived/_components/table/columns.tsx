@@ -1,5 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { UpcomingBadge } from '~/components/badge/upcoming-badge'
+import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/pizza-rosette-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { TypeExplanationTooltip } from '~/components/table/cells/type-cell'
@@ -7,7 +7,7 @@ import { TypeCell } from '~/components/table/cells/type-cell'
 import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
 import { EM_DASH } from '~/consts/characters'
 import { type ScalingArchivedEntry } from '~/server/features/scaling/archived/get-scaling-archived-entries'
-import { formatCurrency } from '~/utils/format'
+import { formatTvlTableNumber } from '~/utils/number-format/format-tvl-number'
 
 const columnHelper = createColumnHelper<ScalingArchivedEntry>()
 
@@ -55,14 +55,12 @@ export const scalingArchivedColumns = [
     cell: (ctx) => {
       const value = ctx.getValue()
       if (value === undefined) {
-        return <UpcomingBadge />
+        return <NoDataBadge />
       }
 
       return (
         <span className="font-bold md:text-base">
-          {formatCurrency(value, 'usd', {
-            showLessThanMinimum: false,
-          })}
+          {formatTvlTableNumber(value)}
         </span>
       )
     },

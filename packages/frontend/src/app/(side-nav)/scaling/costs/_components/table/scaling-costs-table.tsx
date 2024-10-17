@@ -5,7 +5,6 @@ import { useScalingFilter } from '~/app/(side-nav)/scaling/_components/scaling-f
 import { ScalingFilters } from '~/app/(side-nav)/scaling/_components/scaling-filters'
 import { BasicTable } from '~/components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
-import { COSTS_UPCOMING_PROJECTS } from '~/server/features/scaling/costs/consts'
 import { type CostsTableData } from '~/server/features/scaling/costs/get-costs-table-data'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { type CostsUnit } from '~/server/features/scaling/costs/types'
@@ -100,9 +99,7 @@ function mapToTableEntry(
       ...entry,
       data: {
         type: 'not-available',
-        reason: COSTS_UPCOMING_PROJECTS.includes(entry.id)
-          ? 'coming-soon'
-          : 'no-data',
+        reason: 'no-data',
       },
     }
   }

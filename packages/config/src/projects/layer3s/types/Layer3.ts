@@ -17,6 +17,7 @@ import { ScalingProjectStateDerivation } from '../../../common/ScalingProjectSta
 import { ScalingProjectStateValidation } from '../../../common/ScalingProjectStateValidation'
 import { ScalingProjectTechnology } from '../../../common/ScalingProjectTechnology'
 import { type BadgeId } from '../../badges'
+import { StageConfig } from '../../layer2s'
 
 export interface Layer3 {
   type: 'layer3'
@@ -42,6 +43,8 @@ export interface Layer3 {
   riskView: ScalingProjectRiskView
   /** Stacked risk view values for this layer3 and it's base chain */
   stackedRiskView: ScalingProjectRiskView
+  /** Rollup stage */
+  stage?: StageConfig
   /** Data availability of scaling project */
   dataAvailability?: DataAvailabilityWithSentiment
   /** Deep dive into layer3 technology */

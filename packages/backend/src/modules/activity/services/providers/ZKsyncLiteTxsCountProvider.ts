@@ -17,6 +17,7 @@ export class ZKsyncLiteTxsCountProvider {
 
       return transactions.map((t) => ({
         txsCount: 1,
+        uopsCount: null,
         timestamp: t.createdAt,
         number: blockNumber,
       }))

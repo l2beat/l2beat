@@ -2,15 +2,6 @@ import { z } from 'zod'
 import { EthereumAddress } from './EthereumAddress'
 import { Hash256 } from './Hash256'
 
-export type StackRole = z.infer<typeof StackRole>
-export const StackRole = z.enum([
-  'Sequencer',
-  'Proposer',
-  'Challenger',
-  'Guardian',
-  'Validator',
-])
-
 export type StackCategory = z.infer<typeof StackCategory>
 export const StackCategory = z.enum([
   'Core',
@@ -39,7 +30,6 @@ export interface DiscoveryOutput {
   abis: Record<string, string[]>
   configHash: Hash256
   usedTemplates: Record<string, Hash256>
-  shapeFilesHash: Hash256
 }
 
 export interface DiscoveryCustomType {
@@ -52,7 +42,15 @@ export interface FieldMeta {
   severity?: ContractFieldSeverity
 }
 
-export type PermissionType = 'configure' | 'upgrade' | 'act'
+export type PermissionType =
+  | 'guard'
+  | 'challenge'
+  | 'propose'
+  | 'sequence'
+  | 'validate'
+  | 'configure'
+  | 'upgrade'
+  | 'act'
 
 export interface ResolvedPermissionPath {
   address: EthereumAddress
@@ -68,7 +66,6 @@ export interface ResolvedPermission {
 }
 
 export interface Meta {
-  roles?: StackRole[]
   issuedPermissions?: ResolvedPermission[]
   receivedPermissions?: ResolvedPermission[]
   directlyReceivedPermissions?: ResolvedPermission[]
@@ -88,6 +85,7 @@ export type ContractParameters = {
   descriptions?: string[]
   derivedName?: string
   template?: string
+  sourceHashes?: string[]
   unverified?: true
   sinceTimestamp?: number
   address: EthereumAddress

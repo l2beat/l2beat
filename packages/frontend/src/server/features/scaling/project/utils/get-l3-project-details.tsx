@@ -7,6 +7,10 @@ import {
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
 import { toRosetteTuple } from '~/components/rosette/individual/to-rosette-tuple'
 import { type RosetteValue } from '~/components/rosette/types'
+import {
+  isActivityChartDataEmpty,
+  isTvlChartDataEmpty,
+} from '~/server/features/utils/is-chart-data-empty'
 import { api } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
@@ -126,7 +130,7 @@ export async function getL3ProjectDetails({
         }
       : undefined
 
-  if (!project.isUpcoming && tvlChartData.length > 0) {
+  if (!project.isUpcoming && !isTvlChartDataEmpty(tvlChartData)) {
     items.push({
       type: 'ChartSection',
       props: {
@@ -140,7 +144,7 @@ export async function getL3ProjectDetails({
     })
   }
 
-  if (activityChartData.length > 0) {
+  if (!isActivityChartDataEmpty(activityChartData)) {
     items.push({
       type: 'ChartSection',
       props: {
@@ -233,6 +237,21 @@ export async function getL3ProjectDetails({
         warning: project.display.warning,
         redWarning: project.display.redWarning,
         isVerified,
+        isUnderReview: project.isUnderReview,
+      },
+    })
+  }
+
+  if (project.stage && project.stage.stage !== 'NotApplicable') {
+    items.push({
+      type: 'StageSection',
+      props: {
+        id: 'stage',
+        title: 'Rollup stage',
+        stageConfig: project.stage,
+        name: project.display.name,
+        icon: `/icons/${project.display.slug}.png`,
+        type: project.display.category,
         isUnderReview: project.isUnderReview,
       },
     })

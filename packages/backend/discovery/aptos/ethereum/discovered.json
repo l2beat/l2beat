@@ -7,6 +7,9 @@
     {
       "name": "TreasuryV2",
       "address": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
+      "sourceHashes": [
+        "0x8b908351f18fdaeaf600ae46ef1450c535f741fc95bb25acade77f8b59fdc168"
+      ],
       "sinceTimestamp": 1661529370,
       "values": {
         "$immutable": true,
@@ -21,6 +24,9 @@
     {
       "name": "UltraLightNodeV2",
       "address": "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
+      "sourceHashes": [
+        "0x38c85ab54f670eaa1fc2b351aee39913bc12e2b26c460ee31cf89d3f1f7d59b9"
+      ],
       "sinceTimestamp": 1661529280,
       "values": {
         "$immutable": true,
@@ -42,6 +48,9 @@
     {
       "name": "TokenBridge",
       "address": "0x50002CdFe7CCb0C41F519c6Eb0653158d11cd907",
+      "sourceHashes": [
+        "0xe59a44fb1b8121ccc17fa92e39fdd2b677d3ad575587692f8b1e4351878230d7"
+      ],
       "sinceTimestamp": 1666143827,
       "values": {
         "$immutable": true,
@@ -62,6 +71,9 @@
     {
       "name": "NonceContract",
       "address": "0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068",
+      "sourceHashes": [
+        "0x895867397d61409de8476975bae4d871fec1c289e52fe97b31872726808dae38"
+      ],
       "sinceTimestamp": 1661280206,
       "values": {
         "$immutable": true,
@@ -72,6 +84,10 @@
       "name": "Aptos Multisig",
       "address": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1647498793,
@@ -99,6 +115,9 @@
     {
       "name": "Endpoint",
       "address": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
+      "sourceHashes": [
+        "0x945c3299d0cf62b9ea7a77d6328295d54327299d6a153e1e7b48d85fa9b77215"
+      ],
       "sinceTimestamp": 1647316591,
       "values": {
         "$immutable": true,
@@ -120,6 +139,10 @@
       "name": "LayerZero Multisig",
       "address": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
       "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1648243585,
@@ -433,6 +456,5 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
-  },
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+  }
 }

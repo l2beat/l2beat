@@ -1,3 +1,405 @@
+Generated with discovered.json: 0x40c3483943613e4af97fe6dcd899d2a7b1c0eb6e
+
+# Diff at Wed, 16 Oct 2024 11:38:39 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a3d139b799cc0b28e5e912febb17464d4e5aef5d block: 20948093
+- current block number: 20948093
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20948093 (main branch discovery), not current.
+
+```diff
+    contract GuardianMultisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      roles:
+-        ["Guardian"]
+      directlyReceivedPermissions:
++        [{"permission":"guard","target":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C"}]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","delay":0}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "guard"
+      issuedPermissions.0.target:
+-        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
++        "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
+      issuedPermissions.0.via.0.address:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
+    }
+```
+
+```diff
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"guard","target":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"}]}]
+    }
+```
+
+Generated with discovered.json: 0xae6b4687219cee3c7a74a93c9852256bf06a4bd5
+
+# Diff at Mon, 14 Oct 2024 10:53:55 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20948093
+- current block number: 20948093
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20948093 (main branch discovery), not current.
+
+```diff
+    contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748) {
+    +++ description: used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+      sourceHashes:
++        ["0x998654cb64c7fc216505bdb3322b20e7d7c95704005228ad1f878bc631c4af8d"]
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (0x050ed6F6273c7D836a111E42153BC00D0380b87d) {
+    +++ description: None
+      sourceHashes:
++        ["0x6aa2de634fc13396d9ea0b7d9d0869633db9d2bfc5b834f530fdc61ab1184bf6"]
+    }
+```
+
+```diff
+    contract GuardianMultisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract L1DAITokenBridge (0x10E6593CDda8c58a1d0f14C5164B376352a55f2F) {
+    +++ description: None
+      sourceHashes:
++        ["0x4c5465ff113d9808b9b99013be373f52fcb90c8df71628dd658f0adbceff1366"]
+    }
+```
+
+```diff
+    contract MIPS (0x16e83cE5Ce29BF90AD9Da06D2fE6a15d5f344ce4) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      sourceHashes:
++        ["0x8144cb5736a5296d5afc2433b58a1fcb99f995c2836fd16aeca18eda86fb2f91"]
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (0x18DAc71c228D1C32c99489B7323d441E1175e443) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+      sourceHashes:
++        ["0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617","0x6ceb1548721dae770e84e1c1059e5415381a07285cd687fdb032aa2d320e1f20"]
+    }
+```
+
+```diff
+    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0xbbb92920a096eced30e3ce67bbc443f134b217e8847433fbb192ecb9fdddcbc2"]
+    }
+```
+
+```diff
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25) {
+    +++ description: None
+      sourceHashes:
++        ["0xe771f3d1c51456e08e2c93a904b12010870dc4fa79ee82e4bc90433557931f05"]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes:
++        ["0x6e4b297b822bdda2bb8bbf4dde360ee51379af5a0de55c0d726a2d7b68791bf7","0x1cc8a3b7de3d2c54c4706bb3f3015714d3b56647fc9fbfd6f8b068f5f63c1c25"]
+    }
+```
+
+```diff
+    contract GnosisSafe (0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract L1Escrow (0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65) {
+    +++ description: None
+      sourceHashes:
++        ["0xe3c0ee54209bc4a4d457bc5e251aff40a83fc784e37b8b90fd9158c6b0f29e5c"]
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      template:
+-        "opstack/ProxyAdmin"
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"]
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x5a7749f83b81B301cAb5f48EB8516B986DAef23D) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sourceHashes:
++        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44","0x482ec6e91304ac39a3fb4505634427bddfddee23b8e93a4f7f995ca5083ae3c3"]
+    }
+```
+
+```diff
+    contract SynthetixBridgeEscrow (0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f) {
+    +++ description: None
+      sourceHashes:
++        ["0x9fdc8650f5cfe4f5ce38accccf178614c6a57917867d6ee7fcc9c5a690ade600"]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x75505a97BD334E7BD3C476893285569C4136Fa0F) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0x4c5ac4e53576924cabbd2a471f368a541bc3f4b1f53fa41a389692fcc62f6176"]
+    }
+```
+
+```diff
+    contract wstETHEscrow (0x76943C0D61395d8F2edF9060e1533529cAe05dE6) {
+    +++ description: Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally.
+      sourceHashes:
++        ["0x698ae88793265d087e07a445b69bf16b450cdcf636b9073b86221936e912a135","0xee07202651af1cf311f14f1f29908dd5524a050efc650832b6ee88c9a9cf86fd"]
+    }
+```
+
+```diff
+    contract DelayedWETH_PermissionlessGames (0x82511d494B5C942BE57498a70Fdd7184Ee33B975) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      sourceHashes:
++        ["0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617","0xfff6f4cca21febd4323222e2ca87ec8b78edfdeeca942468fbf331e537815484"]
+    }
+```
+
+```diff
+    contract FoundationMultisig_1 (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      sourceHashes:
++        ["0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617","0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      sourceHashes:
++        ["0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd","0x1010ff7f40ab4d53e6d9996aefa04423dabe9d0e22fac2d02b330ed3aa2c5740"]
+    }
+```
+
+```diff
+    contract FoundationMultisig_2 (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      sourceHashes:
++        ["0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605","0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"]
+    }
+```
+
+```diff
+    contract PreimageOracle (0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277) {
+    +++ description: None
+      sourceHashes:
++        ["0xda65cfcdd58c88318ad76812d92be7f0d10716f389549846646b82ceecf47b2b"]
+    }
+```
+
+```diff
+    contract DelayedWETH_PermissionedGames (0x9F9b897e37de5052cD70Db6D08474550DDb07f39) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      sourceHashes:
++        ["0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617","0xfff6f4cca21febd4323222e2ca87ec8b78edfdeeca942468fbf331e537815484"]
+    }
+```
+
+```diff
+    contract FeesCollector (0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa) {
+    +++ description: None
+      sourceHashes:
++        ["0xa58ba822ad1db27a90c11078dd6ececa7d90a2f12794716b21e0ffaa038ff101"]
+    }
+```
+
+```diff
+    contract FaultDisputeGame (0xA6f3DFdbf4855a43c529bc42EDE96797252879af) {
+    +++ description: None
+      sourceHashes:
++        ["0x6a8cfd738d026b64f2e5aaaf5faac411dcdc8c0d8ef834587d82144340812a2c"]
+    }
+```
+
+```diff
+    contract OptimismPortal (0xbEb5Fc579115071764c7423A4f12eDde41f106Ed) {
+    +++ description: None
+      sourceHashes:
++        ["0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f","0x41be46bdb67af1b7af90e1bd70a1fcd31a3352282beb83b846a5189675c37ac1"]
+    }
+```
+
+```diff
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract DeputyGuardianModule (0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B) {
+    +++ description: allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.
+      sourceHashes:
++        ["0x9624d67fb3738cf1ce1e1f48e2cf433e9373345386943d12f1d751d6b8475cd6"]
+    }
+```
+
+```diff
+    contract AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      sourceHashes:
++        ["0xe5211497d15a7ea75577cf992ab6093dd0f6083f45c955f0136737810e44c205"]
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0xe5965Ab5962eDc7477C8520243A95517CD252fA9) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      sourceHashes:
++        ["0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617","0x7f307d6191215a72b6c24c01b3c2fc87c84f7fb346790132e58736caa2d1dd14"]
+    }
+```
+
+Generated with discovered.json: 0xa2d43aa280997cb9afa421b5ed3382e0c9b95f9a
+
+# Diff at Sat, 12 Oct 2024 07:40:30 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@86ddd4ba846ebcaec5953fa3bbd1a66f324e7175 block: 20935110
+- current block number: 20948093
+
+## Description
+
+New custom escrow for wstETH, supports rebasable wstETH on L2. Escrowed token is still wstETH.
+
+## Watched changes
+
+```diff
+    contract wstETHEscrow (0x76943C0D61395d8F2edF9060e1533529cAe05dE6) {
+    +++ description: Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally.
+      template:
+-        "lido/L1ERC20TokenBridge"
++        "lido/L1LidoTokensBridge"
+      descriptions.0:
+-        "Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally."
++        "Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally."
+      values.$implementation:
+-        "0x29C5c51A031165CE62F964966A6399b81165EFA4"
++        "0x168Cfea1Ad879d7032B3936eF3b0E90790b6B6D4"
+      values.$pastUpgrades.1:
++        ["2024-10-11T16:21:11.000Z",["0x168Cfea1Ad879d7032B3936eF3b0E90790b6B6D4"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.isDepositsEnabled:
+-        false
++        true
+      values.l1Token:
+-        "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
+      values.l2Token:
+-        "0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb"
+      values.messenger:
+-        "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1"
+      values.proxy__getImplementation:
+-        "0x29C5c51A031165CE62F964966A6399b81165EFA4"
++        "0x168Cfea1Ad879d7032B3936eF3b0E90790b6B6D4"
+      values.accesscontrol:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]},"0x4b43b36766bde12c5e9cbbc37d15f8d1f769f08f54720ab370faeb4ce893753a":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]},"0x63f736f21cb2943826cd50b191eb054ebbea670e4e962d0527611f830cd399d6":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","0x73b047fe6337183A454c5217241D780a932777bD"]},"0x9ab8816a3dc0b3849ec1ac00483f6ec815b07eee2fd766a353311c823ad59d0d":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]},"0x94a954c0bc99227eddbc0715a62a7e1056ed8784cd719c2303b685683908857c":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","0x73b047fe6337183A454c5217241D780a932777bD"]}}
+      values.ACCOUNTING_ORACLE:
++        "0x852deD011285fe67063a08005c71a85690503Cee"
+      values.GENESIS_TIME:
++        1606824023
+      values.getContractVersion:
++        2
+      values.L1_TOKEN_NON_REBASABLE:
++        "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
+      values.L1_TOKEN_REBASABLE:
++        "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
+      values.L2_TOKEN_NON_REBASABLE:
++        "0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb"
+      values.L2_TOKEN_REBASABLE:
++        "0x76A50b8c7349cCDDb7578c6627e79b5d99D24138"
+      values.MESSENGER:
++        "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1"
+      values.SECONDS_PER_SLOT:
++        12
+      values.TOKEN_RATE_DECIMALS:
++        27
+      values.WSTETH:
++        "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
+      derivedName:
+-        "L1ERC20TokenBridge"
++        "L1LidoTokensBridge"
+    }
+```
+
+## Source code changes
+
+```diff
+.../wstETHEscrow/L1LidoTokensBridge.sol}           | 1864 ++++++++++++--------
+ 1 file changed, 1082 insertions(+), 782 deletions(-)
+```
+
 Generated with discovered.json: 0x41f2c0b7c194a335bce74f0146ed7b8824b7db6f
 
 # Diff at Thu, 10 Oct 2024 12:08:56 GMT:

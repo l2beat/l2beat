@@ -1,6 +1,4 @@
-import { notUndefined } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
-import { formatNumberWithCommas } from '~/utils/format-number'
 import { type CanonicallyBridgedTokenEntry } from '../canonically-bridged-table'
 import { MultipleEscrowsCell } from '../cells/multiple-escrows-cell'
 import { TokenAddressCell } from '../cells/token-address-cell'
@@ -9,113 +7,114 @@ import { TokenCanonicalValueCell } from '../cells/token-canonical-value-cell'
 import { TokenNameCell } from '../cells/token-name-cell'
 
 const columnHelper = createColumnHelper<CanonicallyBridgedTokenEntry>()
-export const canonicallyBridgedColumns = [
-  columnHelper.display({
-    id: 'token',
-    header: 'Token',
-    cell: (ctx) => {
-      // Do not bloat table if parent row is expanded
-      const parentRow = ctx.row.getParentRow()
+export function getCanonicallyBridgedColumns(showSharedEscrowTooltip: boolean) {
+  return [
+    columnHelper.display({
+      id: 'token',
+      header: 'Token',
+      cell: (ctx) => {
+        // Do not bloat table if parent row is expanded
+        const parentRow = ctx.row.getParentRow()
 
-      if (parentRow?.getIsExpanded()) {
-        return null
-      }
+        if (parentRow?.getIsExpanded()) {
+          return null
+        }
 
-      return <TokenNameCell {...ctx.row.original} />
-    },
-  }),
-  columnHelper.display({
-    id: 'escrow',
-    header: 'Escrow',
-    cell: (ctx) => {
-      const value = ctx.row.original
-      const isExpended = ctx.row.getIsExpanded()
-      const toggleExpandedHandler = ctx.row.getToggleExpandedHandler()
+        return <TokenNameCell {...ctx.row.original} />
+      },
+    }),
+    columnHelper.display({
+      id: 'value',
+      header: 'Value',
+      meta: {
+        align: 'right',
+      },
+      cell: (ctx) => {
+        const isParentMultiEscrow = Boolean(
+          ctx.row.getParentRow()?.original.escrows.length ?? 0 > 1,
+        )
 
-      if (value.escrows.length > 1) {
+        const { usdValue } = ctx.row.original
+
         return (
-          <MultipleEscrowsCell
-            setIsExpanded={toggleExpandedHandler}
-            isExpanded={isExpended}
+          <TokenCanonicalValueCell
+            usdValue={usdValue}
+            isDescendant={isParentMultiEscrow}
           />
         )
-      }
+      },
+    }),
+    columnHelper.display({
+      id: 'amount',
+      header: 'Amount',
+      meta: {
+        align: 'right',
+        tooltip:
+          showSharedEscrowTooltip &&
+          'The amount of tokens locked in the escrow. Does not account for differences due to pending deposits and withdrawals.',
+      },
+      cell: (ctx) => {
+        const isParentMultiEscrow = Boolean(
+          ctx.row.getParentRow()?.original.escrows.length ?? 0 > 1,
+        )
 
-      return (
-        <TokenAddressCell
-          address={value.escrows[0]!.escrowAddress}
-          explorer={value.explorerUrl}
-        />
-      )
-    },
-  }),
-  columnHelper.display({
-    id: 'price',
-    header: 'Price',
-    meta: {
-      align: 'right',
-      tooltip: 'Prices are fetched from CoinGecko',
-    },
-    cell: (ctx) => {
-      // Do not bloat table if parent row is expanded
-      const parentRow = ctx.row.getParentRow()
+        const { amount, escrows } = ctx.row.original
 
-      if (parentRow?.getIsExpanded()) {
-        return null
-      }
+        const isPreminted = escrows.some((escrow) => escrow.isPreminted)
 
-      return (
-        <div className="pr-2 text-xs font-medium">
-          ${formatNumberWithCommas(Number(ctx.row.original.usdPrice))}
-        </div>
-      )
-    },
-  }),
-  columnHelper.display({
-    id: 'amount',
-    header: 'Amount',
-    meta: {
-      align: 'right',
-    },
-    cell: (ctx) => {
-      const isParentMultiEscrow = Boolean(
-        ctx.row.getParentRow()?.original.escrows.length ?? 0 > 1,
-      )
+        return (
+          <TokenCanonicalAmountCell
+            amount={amount}
+            isPreminted={isPreminted}
+            isDescendant={isParentMultiEscrow}
+          />
+        )
+      },
+    }),
+    columnHelper.display({
+      id: 'escrow',
+      header: 'Escrow',
+      meta: {
+        headClassName: 'md:pl-6',
+        cellClassName: 'md:pl-6',
+      },
+      cell: (ctx) => {
+        const value = ctx.row.original
+        const isExpended = ctx.row.getIsExpanded()
+        const toggleExpandedHandler = ctx.row.getToggleExpandedHandler()
 
-      const { amount, escrows } = ctx.row.original
+        if (value.escrows.length > 1) {
+          return (
+            <MultipleEscrowsCell
+              setIsExpanded={toggleExpandedHandler}
+              isExpanded={isExpended}
+            />
+          )
+        }
 
-      const isPreminted = escrows.some((escrow) => escrow.isPreminted)
-      const warnings = escrows.map((e) => e.warning).filter(notUndefined)
+        return (
+          <TokenAddressCell
+            address={value.escrows[0]!.escrowAddress}
+            explorer={value.explorerUrl}
+          />
+        )
+      },
+    }),
+    columnHelper.display({
+      id: 'contract',
+      header: 'Contract',
+      cell: (ctx) => {
+        const value = ctx.row.original
 
-      return (
-        <TokenCanonicalAmountCell
-          amount={amount}
-          isPreminted={isPreminted}
-          isDescendant={isParentMultiEscrow}
-          warnings={warnings}
-        />
-      )
-    },
-  }),
-  columnHelper.display({
-    id: 'value',
-    header: 'Value',
-    meta: {
-      align: 'right',
-    },
-    cell: (ctx) => {
-      const isParentMultiEscrow = Boolean(
-        ctx.row.getParentRow()?.original.escrows.length ?? 0 > 1,
-      )
-
-      const { usdValue } = ctx.row.original
-
-      return (
-        <TokenCanonicalValueCell
-          usdValue={usdValue}
-          isDescendant={isParentMultiEscrow}
-        />
-      )
-    },
-  }),
-]
+        return value.tokenAddress ? (
+          <TokenAddressCell
+            address={value.tokenAddress}
+            explorer={value.explorerUrl}
+          />
+        ) : (
+          '-'
+        )
+      },
+    }),
+  ]
+}

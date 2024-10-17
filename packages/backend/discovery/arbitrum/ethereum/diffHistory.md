@@ -1,3 +1,552 @@
+Generated with discovered.json: 0xcd0d99f1bb19f0703585101c12f42bcf5b0a8424
+
+# Diff at Wed, 16 Oct 2024 11:34:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a3d139b799cc0b28e5e912febb17464d4e5aef5d block: 20826339
+- current block number: 20826339
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20826339 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) {
+    +++ description: None
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD","via":[]}
+      issuedPermissions.1:
++        {"permission":"sequence","target":"0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "sequence"
+      issuedPermissions.0.target:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D"
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78) {
+    +++ description: None
+      roles:
+-        ["Validator"]
+      receivedPermissions:
++        [{"permission":"validate","target":"0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"}]
+    }
+```
+
+```diff
+    contract RollupProxy (0x5eF0D09d1E6204141B4d37530808eD19f60FBa35) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      issuedPermissions.14:
++        {"permission":"validate","target":"0xF8D3E1cF58386c92B27710C6a0D8A54c76BC6ab5","via":[]}
+      issuedPermissions.13:
++        {"permission":"validate","target":"0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b","via":[]}
+      issuedPermissions.12:
++        {"permission":"validate","target":"0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E","via":[]}
+      issuedPermissions.11:
++        {"permission":"validate","target":"0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d","via":[]}
+      issuedPermissions.10:
++        {"permission":"validate","target":"0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0","via":[]}
+      issuedPermissions.9:
++        {"permission":"validate","target":"0xAB1A39332e934300eBCc57B5f95cA90631a347FF","via":[]}
+      issuedPermissions.8:
++        {"permission":"validate","target":"0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5","via":[]}
+      issuedPermissions.7:
++        {"permission":"validate","target":"0x7CF3d537733F6Ba4183A833c9B021265716cE9d0","via":[]}
+      issuedPermissions.6:
++        {"permission":"validate","target":"0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398","via":[]}
+      issuedPermissions.5:
++        {"permission":"validate","target":"0x6Fb914de4653eC5592B7c15F4d9466Cbd03F2104","via":[]}
+      issuedPermissions.4:
++        {"permission":"validate","target":"0x610Aa279989F440820e14248BD3879B148717974","via":[]}
+      issuedPermissions.3:
++        {"permission":"validate","target":"0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78","via":[]}
+      issuedPermissions.2:
++        {"permission":"validate","target":"0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c","via":[]}
+      issuedPermissions.1:
++        {"permission":"validate","target":"0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4","via":[]}
+    }
+```
+
+```diff
+    contract Validator (0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398) {
+    +++ description: None
+      roles:
+-        ["Validator"]
+      receivedPermissions:
++        [{"permission":"validate","target":"0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"}]
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x7CF3d537733F6Ba4183A833c9B021265716cE9d0) {
+    +++ description: None
+      roles:
+-        ["Validator"]
+      receivedPermissions:
++        [{"permission":"validate","target":"0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"}]
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5) {
+    +++ description: None
+      roles:
+-        ["Validator"]
+      receivedPermissions:
++        [{"permission":"validate","target":"0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"}]
+    }
+```
+
+```diff
+    contract ValidatorWallet (0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0) {
+    +++ description: None
+      roles:
+-        ["Validator"]
+      receivedPermissions:
++        [{"permission":"validate","target":"0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"}]
+    }
+```
+
+```diff
+    contract ValidatorWallet (0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b) {
+    +++ description: None
+      roles:
+-        ["Validator"]
+      receivedPermissions:
++        [{"permission":"validate","target":"0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"}]
+    }
+```
+
+Generated with discovered.json: 0x43f2cc6e737c65f224882920fff4b091cded6ce3
+
+# Diff at Mon, 14 Oct 2024 10:49:27 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20826339
+- current block number: 20826339
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20826339 (main branch discovery), not current.
+
+```diff
+    contract Outbox (0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840) {
+    +++ description: None
+      sourceHashes:
++        ["0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67","0xc90d60d6db95e55c93637eee14d0d8f4034a14d5f50fc0e8561e389073c9816a"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x0ea6999172c1B4563695F76A52de73c848587b17) {
+    +++ description: None
+      sourceHashes:
++        ["0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"]
+    }
+```
+
+```diff
+    contract wstETHEscrow (0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a) {
+    +++ description: None
+      sourceHashes:
++        ["0x698ae88793265d087e07a445b69bf16b450cdcf636b9073b86221936e912a135","0xbd9ad3a060bba138bf31ab27d9c9a59159aeddab49620a728f0485165d7cb05d"]
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (0x14797f5432f699Cb4d4dB04DF599B74952d78d7b) {
+    +++ description: None
+      sourceHashes:
++        ["0xc8db6bf1c1522e439ab4b7d52970913a9d905bb60e32473199eb4ad572932bad"]
+    }
+```
+
+```diff
+    contract SequencerInbox (0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) {
+    +++ description: None
+      sourceHashes:
++        ["0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67","0x0bb7cd360bb26d8a487130df151eb05ce4afe4fd3452fcdbdd3cfa432e17cbb5"]
+    }
+```
+
+```diff
+    contract OneStepProverMath (0x2c785E954c376be0CEfF4a7Db92E053B0830F7c9) {
+    +++ description: None
+      sourceHashes:
++        ["0x3de1ddc210fe283d7298c5f06879df577c6a475329a206b1928c74d10db656d5"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x3f92814930f43c6a1C6B133E5945E7B3338F33a6) {
+    +++ description: None
+      sourceHashes:
++        ["0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"]
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      issuedPermissions.0.via.0:
++        {"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678","delay":0}
+      receivedPermissions.2:
++        {"permission":"upgrade","target":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","via":[{"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"}]}
+      receivedPermissions.1:
++        {"permission":"upgrade","target":"0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"}
+      receivedPermissions.0.target:
+-        "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.0.via:
++        [{"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"}]
+      sourceHashes:
++        ["0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d","0x17d2fa21e1bf7dff5e335a08bb2b6b996e34c00b1175c3711875720dde509401"]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x4561A4cDA2CB8a61ED023785bc1817fdf685dcb3) {
+    +++ description: None
+      sourceHashes:
++        ["0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"]
+    }
+```
+
+```diff
+    contract Inbox (0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f) {
+    +++ description: None
+      sourceHashes:
++        ["0x26f6b72513d780b4c7f3855e9b8c63f3ea90b9d15ce1cf38534887619daaa18b","0x6014bf86ee4c408054ad942b00365111c902b30d650ad8ed97b0cd56ca1d1e20"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x509E3CDc218d163DB9A03678107b72e00163b061) {
+    +++ description: None
+      sourceHashes:
++        ["0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"]
+    }
+```
+
+```diff
+    contract ArbitrumProxyAdmin (0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD) {
+    +++ description: None
+      sourceHashes:
++        ["0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"]
+    }
+```
+
+```diff
+    contract UpgradeExecutorAdmin (0x5613AF0474EB9c528A34701A5b1662E3C8FA0678) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"permission":"upgrade","target":"0xE6841D92B0C345144506576eC13ECf5103aC7f49"}]
+      template:
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"permission":"upgrade","target":"0xE6841D92B0C345144506576eC13ECf5103aC7f49"}]
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78) {
+    +++ description: None
+      sourceHashes:
++        ["0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67","0xdb71d504c2071bc4b28756ad1f12fb3faf0537767b5019cfa7912d4fc078e8a9"]
+    }
+```
+
+```diff
+    contract RollupEventInbox (0x57Bd336d579A51938619271a7Cc137a46D0501B1) {
+    +++ description: None
+      sourceHashes:
++        ["0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67","0xcb5aa9193bb40ce04bdf027377926cf735cd52ee9823923cb55fce302ad76513"]
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021) {
+    +++ description: None
+      sourceHashes:
++        ["0xdb71d504c2071bc4b28756ad1f12fb3faf0537767b5019cfa7912d4fc078e8a9"]
+    }
+```
+
+```diff
+    contract OneStepProverMemory (0x5C9F8663583Ad0A1c0009c871f8253DBF4767A18) {
+    +++ description: None
+      sourceHashes:
++        ["0x3955092d1dbd80f0910d7782a25da1e3da45533c7890928a1c6c63cbf5def5bf"]
+    }
+```
+
+```diff
+    contract RollupProxy (0x5eF0D09d1E6204141B4d37530808eD19f60FBa35) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      sourceHashes:
++        ["0x076bd7e6390d8972c7245bb0643be3afbae09a7f5813e5011fb86efe9b8f01a1","0xabf06072746c465404cbb92f513666e15a5409faccce7f76f4880a9b125b8a2e","0x714cd478f69088c5274871f1be4e27736aedacf59858caeb9dbea9e47d23d213"]
+    }
+```
+
+```diff
+    contract OutboxV0 (0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a) {
+    +++ description: None
+      sourceHashes:
++        ["0x26f6b72513d780b4c7f3855e9b8c63f3ea90b9d15ce1cf38534887619daaa18b","0x20497774f6f2ef1febbb63646e0eb3b2ed5190f6a53f178032f86d972f0ca99d"]
+    }
+```
+
+```diff
+    contract LPTL1Escrow (0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A) {
+    +++ description: None
+      sourceHashes:
++        ["0x4f07cd3e0e2a2e8245a865324089db39bdb6d4831707d7dcee18af0545c716c3"]
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef) {
+    +++ description: None
+      sourceHashes:
++        ["0x26f6b72513d780b4c7f3855e9b8c63f3ea90b9d15ce1cf38534887619daaa18b","0x265fc73d2eec7f0b459f92a25a37b145c8db22527232f08f3022d5cc18d6af9d"]
+    }
+```
+
+```diff
+    contract Validator (0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398) {
+    +++ description: None
+      sourceHashes:
++        ["0x26f6b72513d780b4c7f3855e9b8c63f3ea90b9d15ce1cf38534887619daaa18b","0x9aa2eeef4b673e98d9f83d6fde3f3adec875839409b6d1788fab21323992a11a"]
+    }
+```
+
+```diff
+    contract OutboxV1 (0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40) {
+    +++ description: None
+      sourceHashes:
++        ["0x26f6b72513d780b4c7f3855e9b8c63f3ea90b9d15ce1cf38534887619daaa18b","0x00ef6edf5319c5f35e60c03df0fb64df6d630fb23373f9a084d86a868812b4ed"]
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x7CF3d537733F6Ba4183A833c9B021265716cE9d0) {
+    +++ description: None
+      sourceHashes:
++        ["0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67","0xdb71d504c2071bc4b28756ad1f12fb3faf0537767b5019cfa7912d4fc078e8a9"]
+    }
+```
+
+```diff
+    contract Bridge (0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a) {
+    +++ description: None
+      sourceHashes:
++        ["0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67","0x5dbde25ce90571f7dd8e189ec68615bd76cab9ddb0ba7690b721e9e03c70b6ed"]
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5) {
+    +++ description: None
+      sourceHashes:
++        ["0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67","0xdb71d504c2071bc4b28756ad1f12fb3faf0537767b5019cfa7912d4fc078e8a9"]
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (0x8D78382913467Cd25374C75BA918b0A723Bc2544) {
+    +++ description: None
+      sourceHashes:
++        ["0x2e969e0e83aea53307795f6826413e39bb416a64bc6da18f3a339ffeef444d32"]
+    }
+```
+
+```diff
+    contract ValidatorWalletCreator (0x960953f7c69cd2BC2322Db9223A815C680ccc7ea) {
+    +++ description: None
+      sourceHashes:
++        ["0x4ef3473c840bed3b4c6258271a494794c1545f0d0f13c6a386d1e39e6180d67c"]
+    }
+```
+
+```diff
+    contract GatewaysAdmin (0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa) {
+    +++ description: None
+      sourceHashes:
++        ["0x579c6df39480618101e39d5b997df14c347d7f8a880df6cf0e1ae526771a0444"]
+    }
+```
+
+```diff
+    contract ValidatorUtils (0x9E40625F52829Cf04bC4839F186D621ee33b0E67) {
+    +++ description: None
+      sourceHashes:
++        ["0xd9b36ec321be937cc727b5bdb0afa0e1a0a28448ef1a202d4f181a01ce57bdc8"]
+    }
+```
+
+```diff
+    contract L1Escrow (0xA10c7CE4b876998858b1a9E12b10092229539400) {
+    +++ description: None
+      sourceHashes:
++        ["0x0169e3ff6f3a2faeac5a4c76b30fbf87198a211ee683a1b22d33db036f863ee8"]
+    }
+```
+
+```diff
+    contract OneStepProofEntry (0xa328BAF257A937b7934429a5d8458d98693C6FC7) {
+    +++ description: None
+      sourceHashes:
++        ["0x96f85480073b58d0e985cd6c68956f4a52f5ed8b2ce751b18868e2e830be3678"]
+    }
+```
+
+```diff
+    contract L1ERC20Gateway (0xa3A7B6F88361F48403514059F1F16C8E78d60EeC) {
+    +++ description: None
+      sourceHashes:
++        ["0x26f6b72513d780b4c7f3855e9b8c63f3ea90b9d15ce1cf38534887619daaa18b","0x019cdda76fc455f2628f7f7f87fae92c1264e1d2e32cd2d47e6494780c790c61"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xAb33350E0319466A81D2AE6DC5CdF2518123f766) {
+    +++ description: None
+      sourceHashes:
++        ["0x579c6df39480618101e39d5b997df14c347d7f8a880df6cf0e1ae526771a0444"]
+    }
+```
+
+```diff
+    contract ValidatorWallet (0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0) {
+    +++ description: None
+      sourceHashes:
++        ["0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67","0xdb71d504c2071bc4b28756ad1f12fb3faf0537767b5019cfa7912d4fc078e8a9"]
+    }
+```
+
+```diff
+    contract ValidatorOwnerMultisig (0xC234E41AE2cb00311956Aa7109fC801ae8c80941) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract OutboxEntry (0xc4940069140142236D4065b866018f7b2BeC77fD) {
+    +++ description: None
+      sourceHashes:
++        ["0xf27ca2839702248340daceb1e5c995144cb5ad3f636f7bc4057e20e142aeb2fe"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xCcadc6B174BEcf31a35b818373e90391971a1C0c) {
+    +++ description: None
+      sourceHashes:
++        ["0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"]
+    }
+```
+
+```diff
+    contract L1CustomGateway (0xcEe284F754E854890e311e3280b767F80797180d) {
+    +++ description: None
+      sourceHashes:
++        ["0x26f6b72513d780b4c7f3855e9b8c63f3ea90b9d15ce1cf38534887619daaa18b","0x60484a2ada75640a2144b3ecaae3bb7b51973a2494281beebf898308ffc35e90"]
+    }
+```
+
+```diff
+    contract OneStepProver0 (0xD0465e3356213869f1Fae38b3E67CBF4E873c5B6) {
+    +++ description: None
+      sourceHashes:
++        ["0x642d283934aef1189cf62e1bcd34a5081762b33fdd3ec8e823f304f874e48748"]
+    }
+```
+
+```diff
+    contract BatchPosterManagerMultisig (0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract L1DaiGateway (0xD3B5b60020504bc3489D6949d545893982BA3011) {
+    +++ description: None
+      sourceHashes:
++        ["0x2bfb3c9871d8a7db172d350d7b4678c49eb33a98483f71cb89d3d059a7322efb"]
+    }
+```
+
+```diff
+    contract Whitelist (0xD485e5c28AA4985b23f6DF13dA03caa766dcd459) {
+    +++ description: None
+      sourceHashes:
++        ["0x4016fd19b875c72082c2e4f25e6487143f8a6832ffa5cb3281aa08beb598d44e"]
+    }
+```
+
+```diff
+    contract ChallengeManager (0xe5896783a2F463446E1f624e64Aa6836BE4C6f58) {
+    +++ description: None
+      sourceHashes:
++        ["0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67","0x1a095768302d7d1c3d02375eaa3341833b4f1aaac707e1c608bce478c87cbf27"]
+    }
+```
+
+```diff
+    contract L1Timelock (0xE6841D92B0C345144506576eC13ECf5103aC7f49) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      issuedPermissions.0.via.0:
++        {"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678","delay":0}
+      sourceHashes:
++        ["0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d","0x2b1c83d005613e3b0fd4bc9ef90faf86e00bc099fd61088045e83ee3892c6f5e"]
+    }
+```
+
+```diff
+    contract SecurityCouncil (0xF06E95eF589D9c38af242a8AAee8375f14023F85) {
+    +++ description: None
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+```diff
+    contract ValidatorWallet (0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b) {
+    +++ description: None
+      sourceHashes:
++        ["0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67","0xdb71d504c2071bc4b28756ad1f12fb3faf0537767b5019cfa7912d4fc078e8a9"]
+    }
+```
+
 Generated with discovered.json: 0x8b70dea02e816aaad9841ee855b9df4dff5f7335
 
 # Diff at Tue, 01 Oct 2024 10:49:50 GMT:

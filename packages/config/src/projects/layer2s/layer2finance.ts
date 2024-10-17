@@ -14,9 +14,8 @@ export const layer2finance: Layer2 = {
       'Currently the TVL is calculated incorrectly, because it does not take assets locked in DeFi into account.',
     description:
       'Layer2.Finance aims to democratize access to DeFi protocols for everyone. Users can aggregate their DeFi usage and save on Ethereum fees.',
-    purposes: ['DeFi'],
+    purposes: ['Exchange'],
     category: 'Optimistic Rollup',
-
     links: {
       websites: ['https://layer2.finance/'],
       apps: ['https://app.l2.finance/'],

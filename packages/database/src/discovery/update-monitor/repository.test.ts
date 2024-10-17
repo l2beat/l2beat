@@ -49,7 +49,6 @@ describeDatabase(UpdateMonitorRepository.name, (db) => {
         eoas: [],
         abis: {},
         usedTemplates: {},
-        shapeFilesHash: Hash256.random(),
       },
       configHash: CONFIG_HASH,
     }
@@ -78,7 +77,6 @@ function record(params?: Partial<UpdateMonitorRecord>): UpdateMonitorRecord {
       eoas: [],
       abis: {},
       usedTemplates: {},
-      shapeFilesHash: Hash256.random(),
     },
     configHash: CONFIG_HASH,
     ...params,

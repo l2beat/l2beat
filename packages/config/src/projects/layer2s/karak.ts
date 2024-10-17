@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
+import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
@@ -14,10 +15,7 @@ export const karak: Layer2 = opStackL2({
   display: {
     name: 'Karak',
     slug: 'karak',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description: 'Karak is a general-purpose Optimium.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://karak.network/'],
       apps: ['https://karak.network/karak-xp/'],
@@ -48,6 +46,13 @@ export const karak: Layer2 = opStackL2({
       date: '2024-02-27T00:00:00Z',
       description: 'Karak Network is live on mainnet.',
       type: 'general',
+    },
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'Blobstream and Celestia Architecture',
+      url: 'https://www.youtube.com/watch?v=cn_fN6pkakQ',
+      thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
     },
   ],
 })

@@ -26,6 +26,7 @@ import {
   ScalingProjectContract,
   ScalingProjectEscrow,
   ScalingProjectPermission,
+  ScalingProjectPurpose,
   ScalingProjectRiskViewEntry,
   ScalingProjectStateDerivation,
   ScalingProjectStateValidation,
@@ -52,7 +53,10 @@ export interface DAProvider {
 export interface PolygonCDKStackConfig {
   daProvider?: DAProvider
   discovery: ProjectDiscovery
-  display: Omit<Layer2Display, 'provider' | 'category' | 'dataAvailabilityMode'>
+  display: Omit<
+    Layer2Display,
+    'provider' | 'category' | 'dataAvailabilityMode' | 'purposes'
+  >
   rpcUrl?: string
   transactionApi?: ScalingProjectTransactionApi
   chainConfig?: ChainConfig
@@ -71,6 +75,7 @@ export interface PolygonCDKStackConfig {
   stateValidation?: ScalingProjectStateValidation
   associatedTokens?: string[]
   badges?: BadgeId[]
+  additionalPurposes?: ScalingProjectPurpose[]
 }
 
 export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
@@ -145,6 +150,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     id: ProjectId(templateVars.discovery.projectName),
     display: {
       ...templateVars.display,
+      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       category:
         templateVars.daProvider !== undefined ? 'Validium' : 'ZK Rollup',
       provider: 'Polygon',
@@ -318,7 +324,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           }),
     riskView: {
       stateValidation: {
-        ...RISK_VIEW.STATE_ZKP_SN,
+        ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
         sources: [
           {
             contract: rollupManagerContract.name,

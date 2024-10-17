@@ -7,6 +7,9 @@
     {
       "name": "SplTokenSwap",
       "address": "0xeae57ce9cc1984F202e15e038B964bb8bdF7229a",
+      "sourceHashes": [
+        "0xa9306a9cf233bd50fb86a2e4aa8e1346513fe1efc80a25bf5706100e2f75b972"
+      ],
       "sinceTimestamp": 1599794859,
       "values": {
         "$immutable": true,
@@ -38,6 +41,5 @@
       "function withdrawEth(address recipient, uint256 amount, uint256 nonce, bytes signature)"
     ]
   },
-  "usedTemplates": {},
-  "shapeFilesHash": "0xc6100765734eeba5a3482d4bb107122eed77e44c15fcf190f32a9db05e696096"
+  "usedTemplates": {}
 }

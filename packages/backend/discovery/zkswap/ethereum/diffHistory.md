@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x1dc398d207e1b1d3310710e811c8e0fdc1c10dd3
+
+# Diff at Mon, 14 Oct 2024 10:58:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1afc77ff111ceb0970e7d09efcc7b2f376b0c281 block: 20311131
+- current block number: 20311131
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20311131 (main branch discovery), not current.
+
+```diff
+    contract Governance (0x02ecef526f806f06357659fFD14834fe82Ef4B04) {
+    +++ description: None
+      sourceHashes:
++        ["0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6","0xdefeaa4f5c4b5e82fe2f743a1c06665f15c301ff4d76a526669ac3fb869d5869"]
+    }
+```
+
+```diff
+    contract ZkSyncCommitBlock (0x2c543eBd91DAB7Be40eDB671D48CeDF35A75e157) {
+    +++ description: None
+      sourceHashes:
++        ["0x423fde4a6b6351d8f7f10a2e073dedc2c2250adb57d53e7cb226a30202e62863"]
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (0x714B2D10210f2A3a7AA614F949259C87613689aB) {
+    +++ description: None
+      sourceHashes:
++        ["0x1359a771e28c9c71730920ab6bee9509009c60908022ff865419a483f74f702b"]
+    }
+```
+
+```diff
+    contract ZkSync (0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad) {
+    +++ description: None
+      sourceHashes:
++        ["0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6","0x86daad8532338dd22b2ad525c7955746dab5c88fca7bbd2e1a7fc07f47b2c5e3"]
+    }
+```
+
 Generated with discovered.json: 0xa6acd0a48cb14d2675d11fff53d19842f0b19bf2
 
 # Diff at Tue, 01 Oct 2024 11:12:09 GMT:

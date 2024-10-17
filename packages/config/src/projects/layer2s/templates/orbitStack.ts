@@ -18,6 +18,7 @@ import {
   ScalingProjectContract,
   ScalingProjectEscrow,
   ScalingProjectPermission,
+  ScalingProjectPurpose,
   ScalingProjectRisk,
   ScalingProjectRiskView,
   ScalingProjectStateDerivation,
@@ -126,12 +127,13 @@ export interface OrbitStackConfigCommon {
   nonTemplateContractRisks?: ScalingProjectRisk[]
   nativeAddresses?: Record<string, ScalingProjectContract[]>
   nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
+  additionalPurposes?: ScalingProjectPurpose[]
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
   display: Omit<
     Layer3Display,
-    'provider' | 'category' | 'dataAvailabilityMode'
+    'provider' | 'category' | 'dataAvailabilityMode' | 'purposes'
   > & {
     category?: Layer3Display['category']
   }
@@ -143,7 +145,7 @@ export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
   display: Omit<
     Layer2Display,
-    'provider' | 'category' | 'dataAvailabilityMode'
+    'provider' | 'category' | 'dataAvailabilityMode' | 'purposes'
   > & {
     category?: Layer2Display['category']
   }
@@ -308,7 +310,7 @@ export function orbitStackCommon(
 
   const validators: ScalingProjectPermission = {
     name: 'Validators/Proposers',
-    accounts: templateVars.discovery.getPermissionsByRole('Validator'),
+    accounts: templateVars.discovery.getPermissionsByRole('validate'),
     description:
       'They can submit new state roots and challenge state roots. Some of the operators perform their duties through special purpose smart contracts.',
     chain: templateVars.discovery.chain,
@@ -321,7 +323,7 @@ export function orbitStackCommon(
 
   const sequencers: ScalingProjectPermission = {
     name: 'Sequencers',
-    accounts: templateVars.discovery.getPermissionsByRole('Sequencer'),
+    accounts: templateVars.discovery.getPermissionsByRole('sequence'),
     description: 'Central actors allowed to submit transaction batches to L1.',
     chain: templateVars.discovery.chain,
   }
@@ -623,6 +625,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     hostChain: templateVars.hostChain,
     display: {
       stateValidationImage: 'orbit',
+      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       ...templateVars.display,
       warning:
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
@@ -631,6 +634,38 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
         templateVars.display.category ??
         (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup'),
     },
+    stage:
+      templateVars.stage ??
+      (postsToExternalDA
+        ? {
+            stage: 'NotApplicable',
+          }
+        : getStage(
+            {
+              stage0: {
+                callsItselfRollup: true,
+                stateRootsPostedToL1: true,
+                dataAvailabilityOnL1: true,
+                rollupNodeSourceAvailable:
+                  templateVars.isNodeAvailable ?? 'UnderReview',
+              },
+              stage1: {
+                stateVerificationOnL1: true,
+                fraudProofSystemAtLeast5Outsiders: false,
+                usersHave7DaysToExit: false,
+                usersCanExitWithoutCooperation: true,
+                securityCouncilProperlySetUp: false,
+              },
+              stage2: {
+                proofSystemOverriddenOnlyInCaseOfABug: false,
+                fraudProofSystemIsPermissionless: false,
+                delayWith30DExitWindow: false,
+              },
+            },
+            {
+              rollupNodeLink: templateVars.nodeSourceLink,
+            },
+          )),
     dataAvailability: postsToExternalDA
       ? (() => {
           const DAC = templateVars.discovery.getContractValue<{
@@ -738,6 +773,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     ...orbitStackCommon(templateVars, ETHEREUM_EXPLORER_URL, 12),
     display: {
       stateValidationImage: 'orbit',
+      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       warning:
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
       ...templateVars.display,
