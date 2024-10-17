@@ -11,9 +11,7 @@ export interface ActivityRecord {
   end: number
 }
 
-export function toRecord(
-  row: Selectable<Omit<Activity, 'ratio'>>,
-): ActivityRecord {
+export function toRecord(row: Selectable<Activity>): ActivityRecord {
   return {
     projectId: ProjectId(row.projectId),
     timestamp: UnixTime.fromDate(row.timestamp),

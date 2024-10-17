@@ -3,10 +3,8 @@ import { BaseRepository } from '../BaseRepository'
 import { ActivityRecord, toRecord, toRow } from './entity'
 import { selectActivity } from './select'
 
-export type ActivityRecordWithoutRatio = Omit<ActivityRecord, 'ratio'>
-
 export class ActivityRepository extends BaseRepository {
-  async getAll(): Promise<ActivityRecordWithoutRatio[]> {
+  async getAll(): Promise<ActivityRecord[]> {
     const rows = await this.db
       .selectFrom('Activity')
       .select(selectActivity)
