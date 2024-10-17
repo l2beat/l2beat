@@ -1,4 +1,5 @@
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { Permission } from '../config/RawDiscoveryConfig'
 
 // NOTE(radomski): The entire permission network is modeled as a graph. The
 // graph contains nodes and edges. Nodes are contracts and edges are "actions"
@@ -22,17 +23,6 @@ import { assert, EthereumAddress } from '@l2beat/shared-pure'
 // these delays will start to drift apart. Current implementation does not say
 // what to do in a scenario when one members has a smaller delay than others
 // and such a case should be discussed.
-
-export const RolePermissionEntries = [
-  'challenge',
-  'guard',
-  'propose',
-  'sequence',
-  'validate',
-] as const
-export type RolePermission = (typeof RolePermissionEntries)[number]
-export type BasePermission = 'member' | 'act' | 'configure' | 'upgrade'
-export type Permission = BasePermission | RolePermission
 
 export interface Node<T = EthereumAddress> {
   address: T

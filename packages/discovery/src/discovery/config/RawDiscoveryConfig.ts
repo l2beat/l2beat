@@ -9,20 +9,33 @@ import * as z from 'zod'
 
 import { UserHandlerDefinition } from '../handlers/user'
 
+export const BasePermissionEntries = [
+  'member',
+  'act',
+  'configure',
+  'upgrade',
+] as const
+
+export const RolePermissionEntries = [
+  'challenge',
+  'guard',
+  'propose',
+  'sequence',
+  'validate',
+] as const
+
+export const Permission = z.enum([
+  ...RolePermissionEntries,
+  ...BasePermissionEntries,
+])
+export type Permission = z.infer<typeof Permission>
+
 export type RawPermissionConfiguration = z.infer<
   typeof RawPermissionConfiguration
 >
+
 export const RawPermissionConfiguration = z.object({
-  type: z.enum([
-    'guard',
-    'challenge',
-    'propose',
-    'sequence',
-    'validate',
-    'configure',
-    'upgrade',
-    'act',
-  ]),
+  type: Permission,
   delay: z.union([z.number(), z.string()]).default(0),
   description: z.string().optional(),
 })
