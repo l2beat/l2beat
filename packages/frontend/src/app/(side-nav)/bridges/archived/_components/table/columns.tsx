@@ -1,5 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { UpcomingBadge } from '~/components/badge/upcoming-badge'
+import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { NoInfoCell } from '~/components/table/cells/no-info-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { RiskCell } from '~/components/table/cells/risk-cell'
@@ -7,7 +7,7 @@ import { TypeCell } from '~/components/table/cells/type-cell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { sortSentiments } from '~/components/table/sorting/functions/sentiment-sorting'
 import { type BridgesArchivedEntry } from '~/server/features/bridges/get-bridges-archived-entries'
-import { formatCurrency } from '~/utils/format'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 
 const columnHelper = createColumnHelper<BridgesArchivedEntry>()
 
@@ -48,14 +48,12 @@ export const bridgesArchivedColumns = [
     cell: (ctx) => {
       const value = ctx.getValue()
       if (value === undefined) {
-        return <UpcomingBadge />
+        return <NoDataBadge />
       }
 
       return (
         <span className="text-xs font-bold md:text-base">
-          {formatCurrency(value, 'usd', {
-            showLessThanMinimum: false,
-          })}
+          {formatCurrency(value, 'usd')}
         </span>
       )
     },

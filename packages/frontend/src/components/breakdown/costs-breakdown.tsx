@@ -1,5 +1,4 @@
 import compact from 'lodash/compact'
-import React from 'react'
 
 import { Breakdown } from './breakdown'
 
@@ -30,5 +29,11 @@ export function CostsBreakdown(props: CostsBreakdownProps) {
     },
   ])
 
-  return <Breakdown className="h-[3px] w-[119px]" gap={1} values={groups} />
+  return (
+    <Breakdown
+      className="h-[3px] w-[119px] xl:w-[180px]"
+      gap={1}
+      values={groups}
+    />
+  )
 }

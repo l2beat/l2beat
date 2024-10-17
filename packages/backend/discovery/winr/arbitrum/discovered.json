@@ -1,8 +1,8 @@
 {
   "name": "winr",
   "chain": "arbitrum",
-  "blockNumber": 262718848,
-  "configHash": "0xa08e1c62015308e9fd1ebc52af6cd0ad3355733a5b7db2fc74befb4f598371f9",
+  "blockNumber": 264379343,
+  "configHash": "0x39fc3d9c3c66c2d68f150d0baf3d99b29206df97d4f5f5830ec31f83001a77e7",
   "contracts": [
     {
       "name": "ChallengeManager",
@@ -56,6 +56,11 @@
           "permission": "upgrade",
           "target": "0xc5d17f6e0025a23c0AAFf7832Cc531B3034602DA",
           "via": []
+        },
+        {
+          "permission": "validate",
+          "target": "0xA7bDF7f042C8DED17C0573657da4d920Df9a7d1e",
+          "via": []
         }
       ],
       "ignoreInWatchMode": [
@@ -88,12 +93,12 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 275,
+        "firstUnresolvedNode": 285,
         "inbox": "0x4FeBaEF286Ca477402dafCEeB17C64de481aFB42",
         "isERC20Enabled": false,
         "lastStakeBlock": 19879132,
-        "latestConfirmed": 274,
-        "latestNodeCreated": 285,
+        "latestConfirmed": 284,
+        "latestNodeCreated": 295,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xBA99217992620b76aae0D574c70bD313B30D3D1d",
@@ -221,7 +226,7 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "WinrMultisig",
+      "name": "ConduitMultisig2",
       "address": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -323,6 +328,11 @@
       "descriptions": ["State batches / commitments get posted here."],
       "issuedPermissions": [
         {
+          "permission": "sequence",
+          "target": "0x1A48A9e82dDb9cd157a67493Cc5E246D0cDd8307",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0x802c7B6585d20cb69524EF23fCbF919F671F808a",
           "via": []
@@ -340,7 +350,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 6734,
+        "batchCount": 7234,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x1A48A9e82dDb9cd157a67493Cc5E246D0cDd8307"],
         "bridge": "0xF3f01622Ac969156760c32190995F9dC5b3eb7FA",
@@ -364,7 +374,7 @@
         "rollup": "0x2633ea91d15BeE85105C9b27E068f406F2F36a4a",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 926,
+        "totalDelayedMessagesRead": 989,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -566,12 +576,12 @@
           "0xe966442c0E8F28C48eF4F02BfF7a29876Dcd30CC"
         ],
         "allowedOutboxList": ["0xBA99217992620b76aae0D574c70bD313B30D3D1d"],
-        "delayedMessageCount": 926,
+        "delayedMessageCount": 989,
         "nativeToken": "0xD77B108d4f6cefaa0Cae9506A934e825BEccA46E",
         "rollup": "0x2633ea91d15BeE85105C9b27E068f406F2F36a4a",
         "sequencerInbox": "0x8AeDdE55Cb361e73a0B0c0cF2A5bB35E97a20456",
-        "sequencerMessageCount": 6734,
-        "sequencerReportedSubMessageCount": 15093715
+        "sequencerMessageCount": 7234,
+        "sequencerReportedSubMessageCount": 16617163
       },
       "derivedName": "ERC20Bridge"
     }
@@ -580,7 +590,12 @@
     { "address": "0x0000000000000000000000000000000000000000" },
     {
       "address": "0x1A48A9e82dDb9cd157a67493Cc5E246D0cDd8307",
-      "roles": ["Sequencer"]
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0x8AeDdE55Cb361e73a0B0c0cF2A5bB35E97a20456"
+        }
+      ]
     },
     { "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f" },
     { "address": "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe" },
@@ -589,7 +604,12 @@
     { "address": "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4" },
     {
       "address": "0xA7bDF7f042C8DED17C0573657da4d920Df9a7d1e",
-      "roles": ["Validator"]
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "target": "0x2633ea91d15BeE85105C9b27E068f406F2F36a4a"
+        }
+      ]
     },
     { "address": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C" },
     { "address": "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0" },
@@ -1213,7 +1233,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
-    "orbitstack/RollupProxy": "0xdd22b1785ae5df34e829d0b04131559e112131325c3f223825d0fe61e675fb1a",
-    "orbitstack/SequencerInbox": "0x096f13a8297d3243cf02cbc39d065c1c6f37b23602fce0c63f3ff74d7d65b1ee"
+    "orbitstack/RollupProxy": "0x8c92364349ca720f3e801d028dc260fdbc1a9cca4651ed19af6f16a250949729",
+    "orbitstack/SequencerInbox": "0x914a19d66f742b381e9ac6579e688ae6a07cddcf5b144eb7528c121bc81eca28"
   }
 }

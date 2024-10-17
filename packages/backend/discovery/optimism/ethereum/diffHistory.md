@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x40c3483943613e4af97fe6dcd899d2a7b1c0eb6e
+
+# Diff at Wed, 16 Oct 2024 11:38:39 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a3d139b799cc0b28e5e912febb17464d4e5aef5d block: 20948093
+- current block number: 20948093
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20948093 (main branch discovery), not current.
+
+```diff
+    contract GuardianMultisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      roles:
+-        ["Guardian"]
+      directlyReceivedPermissions:
++        [{"permission":"guard","target":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C"}]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","delay":0}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "guard"
+      issuedPermissions.0.target:
+-        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
++        "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
+      issuedPermissions.0.via.0.address:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
+    }
+```
+
+```diff
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"guard","target":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"}]}]
+    }
+```
+
 Generated with discovered.json: 0xae6b4687219cee3c7a74a93c9852256bf06a4bd5
 
 # Diff at Mon, 14 Oct 2024 10:53:55 GMT:

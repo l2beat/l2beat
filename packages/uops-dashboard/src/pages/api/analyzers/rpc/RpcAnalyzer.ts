@@ -3,8 +3,6 @@ import type {
   Block,
   BlockRatio,
   CountedOperation,
-  Method,
-  Operation,
   StatResults,
   Transaction,
 } from '@/types'
@@ -15,16 +13,17 @@ import { EtherfaceClient } from '../../clients/signature/EtherfaceClient'
 import { FourByteClient } from '../../clients/signature/FourByteClient'
 import { OpenChainClient } from '../../clients/signature/OpenChainClient'
 import type { DB } from '../../db/db'
+
 import {
   ENTRY_POINT_ADDRESS_0_6_0,
   ENTRY_POINT_ADDRESS_0_7_0,
-} from '../../protocols/erc-4337/const'
-import { ERC4337_methods } from '../../protocols/erc-4337/methods'
-import {
+  ERC4337_methods,
+  Method,
+  Operation,
   SAFE_EXEC_TRANSACTION_SELECTOR,
   SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
-} from '../../protocols/gnosisSafe/const'
-import { SAFE_methods } from '../../protocols/gnosisSafe/methods'
+  SAFE_methods,
+} from '@l2beat/shared'
 import { generateId } from '../../utils/generateId'
 import { rankBlocks } from '../../utils/rankBlocks'
 import { traverseOperationTree } from '../../utils/traverseOperationTree'
@@ -251,7 +250,7 @@ export class RpcAnalyzer implements Analyzer {
           level,
           count: 1,
           methodSelector: selector,
-          contractAddress: operation.to,
+          contractAddress: operation.to ?? '',
           children: [],
         }
       }
@@ -271,7 +270,7 @@ export class RpcAnalyzer implements Analyzer {
         methodSelector: method.selector,
         methodSignature: method.signature,
         methodName: method.name,
-        contractAddress: operation.to,
+        contractAddress: operation.to ?? '',
         contractName: method.contractName,
         count,
         children,

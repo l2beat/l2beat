@@ -22,7 +22,7 @@ export function SortingArrows({
       className="group/sorting-arrows flex w-max cursor-pointer select-none items-end gap-1.5"
       onClick={onClick}
     >
-      <div className="mb-px flex flex-col items-end gap-0.5">
+      <div className="mb-px flex scale-90 flex-col items-end gap-0.5">
         <SortingArrowIcon
           width={10}
           height={6}

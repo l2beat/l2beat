@@ -1,7 +1,6 @@
-import { Database } from '@l2beat/database'
+import { ActivityRecord, Database } from '@l2beat/database'
 import { ProjectId } from '@l2beat/shared-pure'
 import { ManagedChildIndexerOptions } from '../../../tools/uif/ManagedChildIndexer'
-import { ActivityRecordWithoutRatio } from '../types'
 import { BlockActivityIndexer } from './BlockActivityIndexer'
 import { BlockTargetIndexer } from './BlockTargetIndexer'
 import { DayActivityIndexer } from './DayActivityIndexer'
@@ -17,7 +16,7 @@ export interface ActivityIndexerDeps
 }
 
 export interface TxsCountProvider {
-  getTxsCount(from: number, to: number): Promise<ActivityRecordWithoutRatio[]>
+  getTxsCount(from: number, to: number): Promise<ActivityRecord[]>
 }
 
 export interface DayActivityIndexerDeps extends ActivityIndexerDeps {

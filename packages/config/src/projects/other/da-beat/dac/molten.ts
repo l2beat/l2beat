@@ -28,7 +28,7 @@ export const moltenDac = DAC({
       // Members: DAC uses BLS sigs, not EOAs
       {
         name: 'Sequencers',
-        accounts: discovery.getPermissionsByRole('Sequencer'),
+        accounts: discovery.getPermissionsByRole('sequence'),
         description:
           'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
         chain: discovery.chain,

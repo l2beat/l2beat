@@ -6,10 +6,10 @@ import {
   getExpandedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { TokenTable } from '~/components/table/token-breakdown-table'
 import { type ProjectTvlBreakdown } from '~/server/features/scaling/tvl/breakdown/get-tvl-breakdown-for-project'
-import { canonicallyBridgedColumns } from './columns/canonically-bridged-columns'
+import { getCanonicallyBridgedColumns } from './columns/canonically-bridged-columns'
 import { sumTokensValue } from './sum-tokens-value'
 import { TableSum } from './table-sum'
 
@@ -25,11 +25,18 @@ export function CanonicallyBridgedTable(props: Props) {
 
   const [expanded, setExpanded] = useState<ExpandedState>({})
 
+  const columns = useMemo(() => {
+    const anySharedEscrow = props.tokens.some((e) =>
+      e.escrows.some((e) => e.isSharedEscrow),
+    )
+    return getCanonicallyBridgedColumns(anySharedEscrow)
+  }, [props.tokens])
+
   const table = useReactTable({
     enableSortingRemoval: false,
     sortDescFirst: true,
     data: props.tokens,
-    columns: canonicallyBridgedColumns,
+    columns,
     state: {
       expanded,
     },

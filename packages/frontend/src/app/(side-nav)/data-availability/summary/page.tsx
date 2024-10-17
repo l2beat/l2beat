@@ -6,7 +6,7 @@ import {
 } from '~/components/core/directory-tabs'
 import { getDaSummaryEntries } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { groupBySystem } from '../_utils/group-by-system'
-import { DaSummaryDacsTable } from './_components/table/da-summary-dacs-table'
+import { DaSummaryCustomSystemsTable } from './_components/table/da-summary-custom-systems-table'
 import { DaSummaryTable } from './_components/table/da-summary-table'
 
 export default async function Page() {
@@ -26,7 +26,7 @@ export default async function Page() {
             <DaSummaryTable items={publicSystems} />
           </DirectoryTabsContent>
           <DirectoryTabsContent value="custom">
-            <DaSummaryDacsTable items={customSystems} />
+            <DaSummaryCustomSystemsTable items={customSystems} />
           </DirectoryTabsContent>
         </DirectoryTabs>
       </div>

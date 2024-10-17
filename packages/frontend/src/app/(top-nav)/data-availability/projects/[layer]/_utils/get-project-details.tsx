@@ -10,6 +10,7 @@ import { getContractsSection } from '~/utils/project/contracts-and-permissions/g
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-risk'
 import { getDaProjectRiskSummarySection } from './get-da-project-risk-summary-section'
+import { getPermissionedEntities } from './get-permissioned-entities'
 interface Params {
   daLayer: DaLayer
   daBridge: DaBridge
@@ -129,6 +130,7 @@ export function getProjectDetails({
       type: 'PermissionsSection',
       props: {
         ...permissionsSection,
+        permissionedEntities: getPermissionedEntities(daBridge),
         id: 'permissions',
         title: 'DA Bridge permissions',
       },

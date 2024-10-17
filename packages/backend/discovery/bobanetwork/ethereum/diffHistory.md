@@ -1,3 +1,146 @@
+Generated with discovered.json: 0x75b7ed8df5922bcafb5540b9177153b3223507c5
+
+# Diff at Wed, 16 Oct 2024 11:35:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a3d139b799cc0b28e5e912febb17464d4e5aef5d block: 20919938
+- current block number: 20919938
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20919938 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0x56121a8612474C3eB65D69a3b871f284705b9bC4","via":[{"address":"0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc","delay":0}]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "sequence"
+      issuedPermissions.1.target:
+-        "0x56121a8612474C3eB65D69a3b871f284705b9bC4"
++        "0xe1B64045351B0B6e9821F19b39f81bc4711D2230"
+      issuedPermissions.1.via.0:
+-        {"address":"0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc","delay":0}
+    }
+```
+
+```diff
+    contract BobaMultisig (0x56121a8612474C3eB65D69a3b871f284705b9bC4) {
+    +++ description: None
+      roles:
+-        ["Challenger","Guardian"]
+      receivedPermissions.11:
++        {"permission":"upgrade","target":"0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00","description":"upgrading bridge implementation allows to access all funds and change every system component.","via":[{"address":"0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc"}]}
+      receivedPermissions.10:
++        {"permission":"upgrade","target":"0xbB7aD3f9CCbC94085b7F7B1D5258e59F5F068741","via":[{"address":"0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc"}]}
+      receivedPermissions.9:
++        {"permission":"upgrade","target":"0xA6Ad22bb0E73DEF40a24E510cFbc93807d8bf87e","via":[{"address":"0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc"}]}
+      receivedPermissions.8.target:
+-        "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00"
++        "0x996ffD627901f10C80A7d4B72A12316D2e77c076"
+      receivedPermissions.8.description:
+-        "upgrading bridge implementation allows to access all funds and change every system component."
+      receivedPermissions.7.target:
+-        "0xbB7aD3f9CCbC94085b7F7B1D5258e59F5F068741"
++        "0x7B02D13904D8e6E0f0Efaf756aB14Cb0FF21eE7e"
+      receivedPermissions.6.target:
+-        "0xA6Ad22bb0E73DEF40a24E510cFbc93807d8bf87e"
++        "0x4d898F66327Fa050131A17ed17a39EBeCC81f0c3"
+      receivedPermissions.5.target:
+-        "0x996ffD627901f10C80A7d4B72A12316D2e77c076"
++        "0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB"
+      receivedPermissions.4.permission:
+-        "upgrade"
++        "guard"
+      receivedPermissions.4.target:
+-        "0x7B02D13904D8e6E0f0Efaf756aB14Cb0FF21eE7e"
++        "0x996ffD627901f10C80A7d4B72A12316D2e77c076"
+      receivedPermissions.4.via:
+-        [{"address":"0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc"}]
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "guard"
+      receivedPermissions.3.target:
+-        "0x4d898F66327Fa050131A17ed17a39EBeCC81f0c3"
++        "0x7B02D13904D8e6E0f0Efaf756aB14Cb0FF21eE7e"
+      receivedPermissions.3.via:
+-        [{"address":"0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc"}]
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "configure"
+      receivedPermissions.2.target:
+-        "0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB"
++        "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089"
+      receivedPermissions.2.description:
++        "set and change address mappings."
+      receivedPermissions.1.target:
+-        "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089"
++        "0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB"
+      receivedPermissions.1.description:
+-        "set and change address mappings."
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      receivedPermissions.1.via:
+-        [{"address":"0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc"}]
+      receivedPermissions.0.permission:
+-        "configure"
++        "challenge"
+      receivedPermissions.0.target:
+-        "0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB"
++        "0xbB7aD3f9CCbC94085b7F7B1D5258e59F5F068741"
+      receivedPermissions.0.description:
+-        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+    }
+```
+
+```diff
+    contract OptimismPortal (0x7B02D13904D8e6E0f0Efaf756aB14Cb0FF21eE7e) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x56121a8612474C3eB65D69a3b871f284705b9bC4","via":[{"address":"0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc","delay":0}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "guard"
+      issuedPermissions.0.via.0:
+-        {"address":"0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc","delay":0}
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x996ffD627901f10C80A7d4B72A12316D2e77c076) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x56121a8612474C3eB65D69a3b871f284705b9bC4","via":[{"address":"0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc","delay":0}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "guard"
+      issuedPermissions.0.via.0:
+-        {"address":"0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc","delay":0}
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xbB7aD3f9CCbC94085b7F7B1D5258e59F5F068741) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0x56121a8612474C3eB65D69a3b871f284705b9bC4","via":[{"address":"0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc","delay":0}]}
+      issuedPermissions.1:
++        {"permission":"propose","target":"0xbfBAB4363034A930687B9320599a69DfBf1D21d0","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "challenge"
+      issuedPermissions.0.via.0:
+-        {"address":"0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc","delay":0}
+    }
+```
+
 Generated with discovered.json: 0xb298ccb30658a03330fa529c2264e7fd25bf4c7b
 
 # Diff at Mon, 14 Oct 2024 10:49:59 GMT:

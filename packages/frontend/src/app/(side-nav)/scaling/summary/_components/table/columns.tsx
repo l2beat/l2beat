@@ -1,18 +1,17 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { TotalCell } from '~/app/(side-nav)/scaling/summary/_components/table/total-cell'
-import { UpcomingBadge } from '~/components/badge/upcoming-badge'
+import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/pizza-rosette-cell'
-import { NumberCell } from '~/components/table/cells/number-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { StageCell } from '~/components/table/cells/stage/stage-cell'
 import {
   TypeCell,
   TypeExplanationTooltip,
 } from '~/components/table/cells/type-cell'
+import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns'
 import { sortStages } from '~/components/table/sorting/functions/stage-sorting'
-import { EM_DASH } from '~/consts/characters'
-import { formatNumber } from '~/utils/format-number'
+import { formatTps } from '~/utils/number-format/format-tps'
 import { type ScalingSummaryTableRow } from '../../_utils/to-table-rows'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
@@ -31,7 +30,7 @@ export const scalingSummaryColumns = [
     ),
     enableSorting: false,
     meta: {
-      headClassName: 'w-0',
+      align: 'center',
     },
   }),
   columnHelper.accessor('category', {
@@ -50,56 +49,48 @@ export const scalingSummaryColumns = [
       hash: 'stage',
     },
   }),
-  columnHelper.accessor('tvl', {
-    id: 'total',
-    header: 'Total value locked',
-    cell: (ctx) => {
-      const value = ctx.row.original.tvl
-      if (!value.breakdown) {
-        return <UpcomingBadge />
-      }
-
-      return (
-        <TotalCell
-          associatedTokenSymbols={value.associatedTokens}
-          tvlWarnings={value.warnings}
-          breakdown={value.breakdown}
-          change={value.change}
-        />
-      )
+  columnHelper.accessor(
+    (e) => {
+      return e.tvl?.breakdown?.total
     },
-    sortingFn: ({ original: a }, { original: b }) => {
-      const aTvl = a.tvl.breakdown?.total ?? 0
-      const bTvl = b.tvl.breakdown?.total ?? 0
+    {
+      id: 'total',
+      header: 'Total value locked',
+      cell: (ctx) => {
+        const value = ctx.row.original.tvl
+        if (value.breakdown?.total === undefined) {
+          return <NoDataBadge />
+        }
 
-      if (aTvl === bTvl) {
-        return b.name.localeCompare(a.name)
-      }
-
-      return aTvl - bTvl
+        return (
+          <TotalCell
+            associatedTokenSymbols={value.associatedTokens}
+            tvlWarnings={value.warnings}
+            breakdown={value.breakdown}
+            change={value.change}
+          />
+        )
+      },
+      sortUndefined: 'last',
+      meta: {
+        align: 'right',
+        tooltip:
+          'Total Value Locked is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens.',
+      },
     },
-    meta: {
-      align: 'right',
-      tooltip:
-        'Total Value Locked is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens.',
-    },
-  }),
+  ),
   columnHelper.accessor('activity.pastDayTps', {
     header: 'Past day TPS',
     cell: (ctx) => {
       const data = ctx.row.original.activity
       if (!data) {
-        return EM_DASH
+        return <NoDataBadge />
       }
+
       return (
-        <div className="flex items-center">
-          <NumberCell className="font-bold">
-            {formatNumber(ctx.getValue())}
-          </NumberCell>
-          <NumberCell signed className="ml-1 font-medium">
-            {data.change}
-          </NumberCell>
-        </div>
+        <ValueWithPercentageChange change={data.change}>
+          {formatTps(ctx.getValue())}
+        </ValueWithPercentageChange>
       )
     },
     sortUndefined: 'last',

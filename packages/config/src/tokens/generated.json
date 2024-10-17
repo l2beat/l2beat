@@ -4805,20 +4805,6 @@
       "supply": "zero"
     },
     {
-      "name": "Zipmex Token",
-      "coingeckoId": "zipmex-token",
-      "address": "0xaa602dE53347579f86b996D2Add74bb6F79462b2",
-      "symbol": "ZMT",
-      "decimals": 18,
-      "deploymentTimestamp": 1576744001,
-      "coingeckoListingTimestamp": 1612396800,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/13866/large/ZMT_Token.png?1696513611",
-      "chainId": 1,
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
       "name": "zkLend Token",
       "coingeckoId": "zklend-2",
       "address": "0xb2606492712D311be8f41d940AFE8CE742A52D44",

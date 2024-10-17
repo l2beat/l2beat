@@ -7,6 +7,10 @@ import {
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
 import { toRosetteTuple } from '~/components/rosette/individual/to-rosette-tuple'
 import { type RosetteValue } from '~/components/rosette/types'
+import {
+  isActivityChartDataEmpty,
+  isTvlChartDataEmpty,
+} from '~/server/features/utils/is-chart-data-empty'
 import { api } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
@@ -126,7 +130,7 @@ export async function getL3ProjectDetails({
         }
       : undefined
 
-  if (!project.isUpcoming && tvlChartData.length > 0) {
+  if (!project.isUpcoming && !isTvlChartDataEmpty(tvlChartData)) {
     items.push({
       type: 'ChartSection',
       props: {
@@ -140,7 +144,7 @@ export async function getL3ProjectDetails({
     })
   }
 
-  if (activityChartData.length > 0) {
+  if (!isActivityChartDataEmpty(activityChartData)) {
     items.push({
       type: 'ChartSection',
       props: {

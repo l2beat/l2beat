@@ -2,7 +2,7 @@
   "name": "real",
   "chain": "ethereum",
   "blockNumber": 20941805,
-  "configHash": "0x1e689ea14e63d7fe49e821c441dd0b4613865dac6f6f4d71b18746a5545dc7ed",
+  "configHash": "0x9ba3a09edc7dfa6c0e5d00b9702e7cd781715123534bc3d2f71fd19d2f927171",
   "contracts": [
     {
       "name": "OneStepProofEntry",
@@ -218,6 +218,11 @@
       "proxyType": "EIP1967 proxy",
       "descriptions": ["State batches / commitments get posted here."],
       "issuedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0x0e00df1afC8574762Ac4C4D8E5D1a19bD6A8Fa2E",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0xB032ff02cd6425e4b816137207AA8560932180f1",
@@ -568,6 +573,11 @@
           "permission": "upgrade",
           "target": "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a",
           "via": []
+        },
+        {
+          "permission": "validate",
+          "target": "0x4b8Fbc3006F256dd470B070d6c70fAb413Fceb62",
+          "via": []
         }
       ],
       "ignoreInWatchMode": [
@@ -884,14 +894,24 @@
     { "address": "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e" },
     {
       "address": "0x0e00df1afC8574762Ac4C4D8E5D1a19bD6A8Fa2E",
-      "roles": ["Sequencer"]
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0"
+        }
+      ]
     },
     { "address": "0x240B5E0746eda8cBc137Fc67210532a1D2B5b82A" },
     { "address": "0x28bB9385A588EF4747264D19B9A9F1603591680c" },
     { "address": "0x326FFa9E3836577C6C46b0aA5A5b223FB4a4067c" },
     {
       "address": "0x4b8Fbc3006F256dd470B070d6c70fAb413Fceb62",
-      "roles": ["Validator"]
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "target": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a"
+        }
+      ]
     },
     { "address": "0x547D0F472309e4239b296D01e03bEDc101241a26" },
     { "address": "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d" },
@@ -1886,7 +1906,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
-    "orbitstack/RollupProxy": "0xdd22b1785ae5df34e829d0b04131559e112131325c3f223825d0fe61e675fb1a",
-    "orbitstack/SequencerInbox": "0x096f13a8297d3243cf02cbc39d065c1c6f37b23602fce0c63f3ff74d7d65b1ee"
+    "orbitstack/RollupProxy": "0x8c92364349ca720f3e801d028dc260fdbc1a9cca4651ed19af6f16a250949729",
+    "orbitstack/SequencerInbox": "0x914a19d66f742b381e9ac6579e688ae6a07cddcf5b144eb7528c121bc81eca28"
   }
 }

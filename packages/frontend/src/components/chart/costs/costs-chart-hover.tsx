@@ -17,7 +17,6 @@ export function CostsChartHover({
   data,
   unit,
 }: { data: CostsChartPointData; unit: CostsUnit }) {
-  const showLessThanZero = data.total !== 0
   return (
     <div>
       <div className="mb-1 whitespace-nowrap">
@@ -28,7 +27,7 @@ export function CostsChartHover({
       <div className="flex w-full items-center justify-between gap-2">
         <span className="text-sm text-gray-700 dark:text-gray-50">Total</span>
         <span className="whitespace-nowrap font-bold tabular-nums">
-          {formatCostValue(data.total, unit, 'total', showLessThanZero)}
+          {formatCostValue(data.total, unit, 'total')}
         </span>
       </div>
       <HorizontalSeparator className="my-1" />
@@ -40,7 +39,7 @@ export function CostsChartHover({
           </span>
         </div>
         <span className="whitespace-nowrap font-bold tabular-nums">
-          {formatCostValue(data.calldata, unit, 'total', showLessThanZero)}
+          {formatCostValue(data.calldata, unit, 'total')}
         </span>
       </div>
       {data.blobs ? (
@@ -52,7 +51,7 @@ export function CostsChartHover({
             </span>
           </div>
           <span className="whitespace-nowrap font-bold tabular-nums">
-            {formatCostValue(data.blobs, unit, 'total', showLessThanZero)}
+            {formatCostValue(data.blobs, unit, 'total')}
           </span>
         </div>
       ) : null}
@@ -64,7 +63,7 @@ export function CostsChartHover({
           </span>
         </div>
         <span className="whitespace-nowrap font-bold tabular-nums">
-          {formatCostValue(data.compute, unit, 'total', showLessThanZero)}
+          {formatCostValue(data.compute, unit, 'total')}
         </span>
       </div>
       <div className="flex w-full items-center justify-between gap-2">
@@ -75,7 +74,7 @@ export function CostsChartHover({
           </span>
         </div>
         <span className="whitespace-nowrap font-bold tabular-nums">
-          {formatCostValue(data.overhead, unit, 'total', showLessThanZero)}
+          {formatCostValue(data.overhead, unit, 'total')}
         </span>
       </div>
     </div>

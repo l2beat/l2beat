@@ -22,16 +22,24 @@ const UNIT = 'usd'
 export default async function Page() {
   const entries = await getScalingSummaryEntries()
 
-  await api.tvl.chart.prefetch({
-    range: TIME_RANGE,
-    excludeAssociatedTokens: false,
-    filter: { type: 'layer2' },
-  })
-
-  await api.activity.chart.prefetch({
-    range: TIME_RANGE,
-    filter: { type: 'all' },
-  })
+  await Promise.all([
+    api.tvl.chart.prefetch({
+      range: TIME_RANGE,
+      excludeAssociatedTokens: false,
+      filter: { type: 'layer2' },
+    }),
+    api.tvl.total.prefetch({
+      excludeAssociatedTokens: false,
+      filter: { type: 'layer2' },
+    }),
+    api.activity.chart.prefetch({
+      range: TIME_RANGE,
+      filter: { type: 'all' },
+    }),
+    api.activity.chartStats.prefetch({
+      filter: { type: 'all' },
+    }),
+  ])
   return (
     <HydrateClient>
       <ScalingFilterContextProvider>
