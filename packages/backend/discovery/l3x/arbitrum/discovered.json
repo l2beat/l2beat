@@ -2,7 +2,7 @@
   "name": "l3x",
   "chain": "arbitrum",
   "blockNumber": 258882110,
-  "configHash": "0x4b90fa44adba316ec836df0d531b4e8873ce8ccf2f31caaaf9993d0d7f6fc4bd",
+  "configHash": "0xe10ba53baef68b1616584210960995f5dd4d6903f28b5c175512805a9636d038",
   "contracts": [
     {
       "name": "Outbox",
@@ -407,6 +407,11 @@
           "permission": "upgrade",
           "target": "0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3",
           "via": []
+        },
+        {
+          "permission": "validate",
+          "target": "0xfc48f0786b3fA7353F63Acc40973857554A51cA2",
+          "via": []
         }
       ],
       "ignoreInWatchMode": [
@@ -516,6 +521,11 @@
       "proxyType": "EIP1967 proxy",
       "descriptions": ["State batches / commitments get posted here."],
       "issuedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0xd987004738Ae33732ecf68613b1b7aFd1df7C11c",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0x29994207C5AeDc83F27c5dc16E468f328832d42d",
@@ -627,11 +637,21 @@
     { "address": "0xcEF5F518d69F0DAf71b8Daa27B570FC48eE51bC8" },
     {
       "address": "0xd987004738Ae33732ecf68613b1b7aFd1df7C11c",
-      "roles": ["Sequencer"]
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0xB9450b512Fd3454e9C1a2593C5DF9E71344b5653"
+        }
+      ]
     },
     {
       "address": "0xfc48f0786b3fA7353F63Acc40973857554A51cA2",
-      "roles": ["Validator"]
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "target": "0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e"
+        }
+      ]
     }
   ],
   "abis": {
@@ -1268,7 +1288,7 @@
     ]
   },
   "usedTemplates": {
-    "orbitstack/RollupProxy": "0xdd22b1785ae5df34e829d0b04131559e112131325c3f223825d0fe61e675fb1a",
-    "orbitstack/SequencerInbox": "0x096f13a8297d3243cf02cbc39d065c1c6f37b23602fce0c63f3ff74d7d65b1ee"
+    "orbitstack/RollupProxy": "0x8c92364349ca720f3e801d028dc260fdbc1a9cca4651ed19af6f16a250949729",
+    "orbitstack/SequencerInbox": "0x914a19d66f742b381e9ac6579e688ae6a07cddcf5b144eb7528c121bc81eca28"
   }
 }

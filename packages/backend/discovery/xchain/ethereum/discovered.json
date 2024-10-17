@@ -2,7 +2,7 @@
   "name": "xchain",
   "chain": "ethereum",
   "blockNumber": 20977673,
-  "configHash": "0xc35a6b2df32b922d7fb15f43e41f903b9b6e8bbb81e020adcc802f8a12f94e93",
+  "configHash": "0x879159ba48edbf54c464d0214c0ec11647e16ed09c028a76c50818b8f1760a01",
   "contracts": [
     {
       "name": "Outbox",
@@ -217,6 +217,11 @@
       "proxyType": "EIP1967 proxy",
       "descriptions": ["State batches / commitments get posted here."],
       "issuedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0x74978411BbBCbC466e79fb855DAe981997100deB",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0x22010F5C4c106dfBaffec780196d2F691860Ff62",
@@ -486,6 +491,11 @@
           "permission": "upgrade",
           "target": "0x20195677a6De5f0f7dF4e21cE48F0D24e5477110",
           "via": []
+        },
+        {
+          "permission": "validate",
+          "target": "0x115B6563C9237B1Ff6f9E2B2a825B210ECDE021e",
+          "via": []
         }
       ],
       "ignoreInWatchMode": [
@@ -589,13 +599,23 @@
     { "address": "0x0000000000000000000000000000000000000000" },
     {
       "address": "0x115B6563C9237B1Ff6f9E2B2a825B210ECDE021e",
-      "roles": ["Validator"]
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "target": "0xeb61c3FA03544021cf76412eFb9D0Ce7D8c0290d"
+        }
+      ]
     },
     { "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f" },
     { "address": "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe" },
     {
       "address": "0x74978411BbBCbC466e79fb855DAe981997100deB",
-      "roles": ["Sequencer"]
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0x47861E0419BE83d0175818a09221B6DF2EFD7793"
+        }
+      ]
     },
     { "address": "0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341" },
     { "address": "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038" },
@@ -1226,7 +1246,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
-    "orbitstack/RollupProxy": "0xdd22b1785ae5df34e829d0b04131559e112131325c3f223825d0fe61e675fb1a",
-    "orbitstack/SequencerInbox": "0x096f13a8297d3243cf02cbc39d065c1c6f37b23602fce0c63f3ff74d7d65b1ee"
+    "orbitstack/RollupProxy": "0x8c92364349ca720f3e801d028dc260fdbc1a9cca4651ed19af6f16a250949729",
+    "orbitstack/SequencerInbox": "0x914a19d66f742b381e9ac6579e688ae6a07cddcf5b144eb7528c121bc81eca28"
   }
 }

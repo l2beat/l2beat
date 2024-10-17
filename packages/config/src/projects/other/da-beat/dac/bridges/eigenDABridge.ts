@@ -1,4 +1,4 @@
-import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, formatSeconds } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
 import {
   DaAccessibilityRisk,
@@ -15,6 +15,21 @@ const eigenDiscovery = new ProjectDiscovery('shared-eigenlayer')
 const upgrades = {
   upgradableBy: ['EigenDAProxyAdmin'],
   upgradeDelay: 'No delay',
+}
+
+const eigenLayerUpgrades = {
+  upgradableBy: ['EigenLayerProxyAdmin'],
+  upgradeDelay: 'No delay',
+}
+
+const EIGENUpgradeDelay = eigenDiscovery.getContractValue<number>(
+  'EIGEN Timelock',
+  'getMinDelay',
+)
+
+const EIGENUpgrades = {
+  upgradableBy: ['EIGEN Timelock'],
+  upgradeDelay: `${formatSeconds(EIGENUpgradeDelay)} delay.`,
 }
 
 const quorumThresholds = discovery.getContractValue<string>(
@@ -88,12 +103,6 @@ export const eigenDAbridge = {
         ...upgrades,
       },
       {
-        ...eigenDiscovery.getContractDetails('PauserRegistry', {
-          description:
-            'Defines and stores pauser and unpauser roles for EigenLayer contracts and the EigenDAServiceManager.',
-        }),
-      },
-      {
         ...discovery.getContractDetails('StakeRegistry', {
           description:
             'The StakeRegistry contract keeps track of the total stake of each operator.',
@@ -114,19 +123,59 @@ export const eigenDAbridge = {
         }),
         ...upgrades,
       },
+      {
+        ...eigenDiscovery.getContractDetails('PauserRegistry', {
+          description:
+            'Defines and stores pauser and unpauser roles for EigenLayer contracts and the EigenDAServiceManager.',
+        }),
+      },
+      {
+        ...eigenDiscovery.getContractDetails('DelegationManager', {
+          description: `The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.`,
+        }),
+        ...eigenLayerUpgrades,
+      },
+      {
+        ...eigenDiscovery.getContractDetails('StrategyManager', {
+          description:
+            'The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.',
+        }),
+        ...eigenLayerUpgrades,
+      },
+      {
+        ...discovery.getContractDetails('EigenStrategy', {
+          description: `The EigenStrategy contract is responsible for managing the bEIGEN token strategy, representing the stake for the second EigenDA quorum.`,
+        }),
+        ...eigenLayerUpgrades,
+      },
+      {
+        ...eigenDiscovery.getContractDetails('EIGEN token', {
+          description: `The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults).
+              EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.`,
+        }),
+        ...EIGENUpgrades,
+      },
     ],
     risks: [
       {
         category: 'Funds can be lost if',
-        text: 'the bridge contract or any of its EigenLayer dependencies receives a malicious code upgrade. There is no delay on code upgrades.',
+        text: 'the bridge (EigenDAServiceManager) contract receives a malicious code upgrade. There is no delay on code upgrades.',
       },
       {
         category: 'Funds can be lost if',
-        text: 'the disperser posts an invalid commitment and EigenDA operators do not make the data available for verification.',
+        text: 'EigenLayer core contracts (DelegationManager, StrategyManager) receive a malicious code upgrade. There is no delay on code upgrades.',
+      },
+      {
+        category: 'Funds can be lost if',
+        text: `EigenLayer EIGEN token contract receives a malicious code upgrade. There is a ${formatSeconds(EIGENUpgradeDelay)} delay on code upgrades.`,
       },
       {
         category: 'Funds can be lost if',
         text: 'the churn approver or ejectors act maliciously and eject EigenDA operators from a quorum without cause.',
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'the disperser posts an invalid commitment and EigenDA operators do not make the data available for verification.',
       },
       {
         category: 'Users can be censored if',
@@ -135,14 +184,18 @@ export const eigenDAbridge = {
     ],
   },
   technology: {
-    description: `## DA Bridge
+    description: `
+    ## Architecture
+
+    ![EigenDA architecture once stored](/images/da-bridge-technology/eigenda/architecture1.png#center)
+
     The EigenDAServiceManager acts as a DA bridge smart contract verifying data availability claims from operators via signature verification.
     The checkSignature function checks that the signature of all signers plus non-signers is equal to the registered quorum aggregated public key from the BLS registry. The quorum aggregated public key gets updated every time an operator is registered.
     The bridge requires a threshold of signatures to be met before the data commitment is accepted. 
     To verify the threshold is met, the function takes the total stake at the reference block for the quorum from the StakeRegistry, and it subtracts the stake of non signers to get the signed stake.
     Finally, it checks that the signed stake over the total stake is more than the required stake threshold.
 
-    ![EigenDA once stored](/images/da-layer-technology/eigenda/oncestored.png#center)
+    ![EigenDA bridge architecture](/images/da-bridge-technology/eigenda/architecture2.png#center)
 
     Although thresholds are not enforced by the confirmBatch method, current quorum thresholds are set to ${quorum1Threshold}% of registered stake for the ETH quorum and ${quorum2Threshold}% for the EIGEN token quorum. The quorum thresholds are set on the EigenDAServiceManager contract and can be changed by the contract owner.
     There is a maximum of ${operatorSetParamsQuorum1[0]} operators that can register for the ETH quorum and ${operatorSetParamsQuorum2[0]} for the EIGEN token quorum. Once the cap is reached, new operators must have 10% more weight than the lowest-weighted operator to join the active set. Entering the quorum is subject to the approval of the churn approver. Operators can be ejected from a quorum by the ejectors without delay should they violate the Service Legal Agreement (SLA).
@@ -167,14 +220,6 @@ export const eigenDAbridge = {
         },
       ],
     },
-    ...eigenDiscovery.getMultisigPermission(
-      'EigenLayerExecutorMultisig',
-      'The proxy contract authorized to unpause the EigenDAServiceManager contract and upgrade core contracts through the EigenDAProxyAdmin contract.',
-    ),
-    ...eigenDiscovery.getMultisigPermission(
-      'EigenLayerOperationsMultisig',
-      'This multisig is the owner of the EigenDAServiceManager contract. It holds the power to change the contract state and upgrade the bridge.',
-    ),
     {
       name: 'BatchConfirmers',
       description: `The list of addresses authorized to confirm the availability of blobs batches to the DA bridge.`,
@@ -209,6 +254,35 @@ export const eigenDAbridge = {
         type: 'EOA',
       })),
     },
+    {
+      name: 'EigenLayerProxyAdmin',
+      description: `The contract authorized to upgrade the core EigenLayer contracts.`,
+      accounts: [
+        {
+          address: eigenDiscovery.getContract('EigenLayerProxyAdmin').address,
+          type: 'Contract',
+        },
+      ],
+      participants: [
+        {
+          address: EthereumAddress(
+            eigenDiscovery.getContractValue<string>(
+              'EigenLayerProxyAdmin',
+              'owner',
+            ),
+          ),
+          type: 'MultiSig',
+        },
+      ],
+    },
+    ...eigenDiscovery.getMultisigPermission(
+      'EigenLayerExecutorMultisig',
+      'The proxy contract authorized to unpause the EigenDAServiceManager contract and upgrade core contracts through the EigenDAProxyAdmin contract.',
+    ),
+    ...eigenDiscovery.getMultisigPermission(
+      'EigenLayerOperationsMultisig',
+      'This multisig is the owner of the EigenDAServiceManager contract. It holds the power to change the contract state and upgrade the bridge.',
+    ),
   ],
   chain: ChainId.ETHEREUM,
   requiredMembers: 0, // currently 0 since threshold is not enforced

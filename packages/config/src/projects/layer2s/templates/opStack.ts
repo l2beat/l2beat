@@ -316,10 +316,7 @@ export function opStackCommon(
     },
     permissions:
       templateVars.discoveryDrivenData === true
-        ? [
-            ...templateVars.discovery.getDiscoveredRoles(),
-            ...templateVars.discovery.getDiscoveredPermissions(),
-          ]
+        ? templateVars.discovery.getDiscoveredPermissions()
         : [
             ...templateVars.discovery.getOpStackPermissions({
               batcherHash: 'Sequencer',

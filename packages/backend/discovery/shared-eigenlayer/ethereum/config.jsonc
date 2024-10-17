@@ -8,6 +8,8 @@
     "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
   ],
   "names": {
+    "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444": "EigenLayerProxyAdmin",
+    "0xB8915E195121f2B5D989Ec5727fd47a5259F1CEC": "EIGENProxyAdmin",
     "0x858646372CC42E1A627fcE94aa7A7033e7CF075A": "StrategyManager",
     "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A": "DelegationManager",
     "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd": "Slasher",
@@ -63,6 +65,16 @@
           "severity": "MEDIUM"
         }
       }
+    },
+    "EIGENProxyAdmin": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      },
+      "description": "ProxyAdmin owner of the timelock contract owning the EIGEN token contract."
     },
     "RewardsCoordinator": {
       "description": "Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.",
