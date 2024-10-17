@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import fetch, { RequestInit, Response } from 'node-fetch'
+import fetch, { RequestInit } from 'node-fetch'
 
 interface HttpClient2Options {
   timeoutMs?: number
@@ -30,58 +30,48 @@ export class HttpClient2 {
     this.$.logger = this.$.logger.for(this)
   }
 
-  async fetchJson(url: string, init?: RequestInit): Promise<unknown> {
+  /**
+   * Sends request to the provided url with init params.
+   * Use this method only when you expect server to return valid JSON.
+   * Provides retries, in most cases this will be DEFAULT_HTTP_RETRY_STRATEGY
+   */
+  async fetch(url: string, init?: RequestInit): Promise<unknown> {
     let calls = 0
     while (true) {
       try {
-        const res = await fetch(url, {
-          ...init,
-          timeout: this.$.timeoutMs,
-        })
-        const { success, shouldRetry } = this.assertStatus(calls, res)
-
-        if (success) {
-          return res.json()
-        }
-
-        if (!shouldRetry) {
-          const body = await res.text()
-          throw new Error(`HTTP error: ${res.status} ${res.statusText} ${body}`)
-        }
+        return await this.fetchJson(url, init)
       } catch (error) {
-        if (!this.shouldRetryFetch(calls)) {
+        if (calls >= this.$.maxRetries) {
           throw error
         }
+
+        const delay = Math.min(
+          this.$.initialRetryDelayMs * Math.pow(2, calls),
+          this.$.maxRetryDelayMs,
+        )
+        this.$.logger.warn('Failed to fetch, scheduling retry', {
+          url,
+          body: init?.body,
+          attempt: calls + 1,
+          delay,
+        })
+        await new Promise((resolve) => setTimeout(resolve, delay))
+        calls++
       }
-
-      const delay = Math.min(
-        this.$.initialRetryDelayMs * Math.pow(2, calls),
-        this.$.maxRetryDelayMs,
-      )
-      this.$.logger.warn('Failed to fetch, scheduling retry...', {
-        url,
-        body: init?.body,
-        attempt: calls + 1,
-        delay,
-      })
-      await new Promise((resolve) => setTimeout(resolve, delay))
-      calls++
     }
   }
 
-  private assertStatus(calls: number, res: Response) {
-    if (res.ok) {
-      return { success: true }
+  private async fetchJson(url: string, init?: RequestInit) {
+    const res = await fetch(url, {
+      ...init,
+      timeout: this.$.timeoutMs,
+    })
+
+    if (!res.ok) {
+      const body = await res.text().catch(() => '')
+      throw new Error(`HTTP error: ${res.status} ${res.statusText} ${body}`)
     }
 
-    const shouldRetry =
-      this.shouldRetryFetch(calls) &&
-      this.$.statusCodesToRetry.includes(res.status)
-
-    return { success: false, shouldRetry }
-  }
-
-  private shouldRetryFetch(calls: number): boolean {
-    return calls < this.$.maxRetries
+    return res.json()
   }
 }

@@ -53,7 +53,7 @@ export class RpcClient2 {
   }
 
   async query(method: string, params: (string | number | boolean)[]) {
-    const response = await this.$.http.fetchJson(this.$.url, {
+    const response = await this.$.http.fetch(this.$.url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
