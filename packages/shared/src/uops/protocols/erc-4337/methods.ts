@@ -1,6 +1,6 @@
-import type { Method, Operation } from '@/types'
 import { ethers } from 'ethers'
 import { decodeAbiParameters, parseAbiItem, parseAbiParameters } from 'viem'
+import { Method, Operation } from '../../types'
 import { defineMethod } from '../defineMetod'
 
 export const ERC4337_methods: Method[] = [

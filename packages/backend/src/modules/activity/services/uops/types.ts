@@ -13,20 +13,3 @@ export interface Analyzer {
     transactions: providers.TransactionResponse[]
   }): AnalyzedBlock
 }
-
-export type Operation = StaticOperation | RecursiveOperation
-
-export interface StaticOperation {
-  type: 'static'
-  count: number
-}
-
-export interface RecursiveOperation {
-  type: 'recursive'
-  calldata: string
-}
-
-export interface Method {
-  selector: string
-  count(calldata: string): Operation[]
-}

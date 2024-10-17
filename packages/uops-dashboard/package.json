@@ -13,7 +13,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@types/uuid": "^10.0.0",
+    "@l2beat/shared": "*",
     "ethers": "^5.7.2",
     "flowbite-react": "^0.10.1",
     "next": "14.2.6",
@@ -24,6 +24,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/uuid": "^10.0.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
