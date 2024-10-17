@@ -8,7 +8,7 @@ Generated with discovered.json: 0x1412d4eba59364fa6bdb3fee3836b2fbbf23c152
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Added target permission to eigen timelock.
 
 ## Config/verification related changes
 
