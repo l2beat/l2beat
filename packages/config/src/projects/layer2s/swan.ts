@@ -7,12 +7,12 @@ const discovery = new ProjectDiscovery('swan')
 
 export const swan: Layer2 = opStackL2({
   discovery,
+  additionalPurposes: ['AI', 'Storage'],
   display: {
     name: 'Swan Chain',
     slug: 'swan',
     description:
       'Swan Chain is an OP Stack L2 providing comprehensive AI infrastructure on the blockchain.',
-    purposes: ['AI', 'Storage'],
     links: {
       websites: ['https://swanchain.io/'],
       apps: ['https://bridge.swanchain.io/'],

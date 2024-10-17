@@ -11,6 +11,7 @@ describe(RpcClient.name, () => {
       const provider = mockObject<providers.Provider>({
         call: mockFn(),
         getBlock: mockFn(),
+        getBlockWithTransactions: mockFn(),
         getBlockNumber: mockFn(),
         getBalance: mockFn(),
         getLogs: mockFn()
@@ -51,6 +52,7 @@ describe(RpcClient.name, () => {
       const provider = mockObject<providers.Provider>({
         call: mockFn(),
         getBlock: mockFn(),
+        getBlockWithTransactions: mockFn(),
         getBlockNumber: mockFn(),
         getBalance: mockFn(),
         getLogs: mockFn()
@@ -91,6 +93,7 @@ describe(RpcClient.name, () => {
       const provider = mockObject<providers.Provider>({
         call: mockFn(),
         getBlock: mockFn(),
+        getBlockWithTransactions: mockFn(),
         getBlockNumber: mockFn(),
         getBalance: mockFn(),
         getLogs: mockFn().throwsOnce(new Error('Log response size exceeded')),

@@ -6,6 +6,27 @@ const nextConfig = {
   images: {
     domains: ['assets.coingecko.com', 'coin-images.coingecko.com'],
   },
+  async headers() {
+    return [
+      {
+        source: '/api/scaling/:path*',
+        headers: [
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: '*',
+          },
+          {
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET, POST, PUT, DELETE, OPTIONS',
+          },
+          {
+            key: 'Access-Control-Allow-Headers',
+            value: 'Content-Type, Authorization',
+          },
+        ],
+      },
+    ]
+  },
   // biome-ignore lint/suspicious/useAwait: rewrites must be async
   async redirects() {
     return [

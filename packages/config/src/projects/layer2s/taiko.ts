@@ -265,7 +265,7 @@ export const taiko: Layer2 = {
         },
         {
           text: 'TaikoL1.sol - Etherscan source code, liveness bond',
-          href: 'https://etherscan.io/address/0xBA1d90BCfA74163bFE09e8eF609b346507D83231#code',
+          href: 'https://etherscan.io/address/0xf0E6d34937701622cA887a75c150cC23d4FFDf2F#code',
         },
       ],
       risks: [
@@ -291,7 +291,7 @@ export const taiko: Layer2 = {
       references: [
         {
           text: 'TaikoL1.sol - Etherscan source code, proposeBlock function',
-          href: 'https://etherscan.io/address/0xBA1d90BCfA74163bFE09e8eF609b346507D83231#code',
+          href: 'https://etherscan.io/address/0xf0E6d34937701622cA887a75c150cC23d4FFDf2F#code',
         },
       ],
       risks: [],
@@ -383,8 +383,7 @@ export const taiko: Layer2 = {
     ),
     {
       name: 'GuardianProvers',
-      description:
-        'Guardians can prove blocks on the highest tier. Guardians are selected by the TaikoAdmin multisig.',
+      description: `Guardians can prove blocks on the highest tier. Guardians are selected by the TaikoAdmin multisig. Acts as a ${GuardianProverMinSigners}/${NumGuardiansProver} multisig.`,
       accounts: discovery.getPermissionedAccounts(
         'GuardianProver',
         'guardians',
@@ -392,8 +391,7 @@ export const taiko: Layer2 = {
     },
     {
       name: 'GuardianMinorityProver',
-      description:
-        'Minority guardians can prove blocks on the second highest tier. Guardians are selected by the TaikoAdmin multisig.',
+      description: `Minority guardians can prove blocks on the second highest tier. Guardians are selected by the TaikoAdmin multisig. Acts as a ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} multisig.`,
       accounts: discovery.getPermissionedAccounts(
         'GuardianMinorityProver',
         'guardians',

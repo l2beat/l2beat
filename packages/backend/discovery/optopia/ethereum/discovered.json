@@ -263,6 +263,11 @@
       ],
       "issuedPermissions": [
         {
+          "permission": "guard",
+          "target": "0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0x2C73A1610EE822a8C2C21eddd455e725A3334c8C",
           "via": [
@@ -333,6 +338,11 @@
       "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
         {
+          "permission": "guard",
+          "target": "0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0x2C73A1610EE822a8C2C21eddd455e725A3334c8C",
           "via": [
@@ -377,6 +387,11 @@
         {
           "permission": "configure",
           "target": "0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
+          "via": []
+        },
+        {
+          "permission": "sequence",
+          "target": "0x3D0Bf26E60a689a7Da5EA3ddAD7371F27f7671a5",
           "via": []
         },
         {
@@ -537,6 +552,16 @@
       ],
       "issuedPermissions": [
         {
+          "permission": "challenge",
+          "target": "0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0x33397410000A219fa5a476c5B51032B367C77e78",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0x2C73A1610EE822a8C2C21eddd455e725A3334c8C",
           "via": [
@@ -589,22 +614,43 @@
     { "address": "0x000000000000000000000000000000000000dEaD" },
     {
       "address": "0x33397410000A219fa5a476c5B51032B367C77e78",
-      "roles": ["Proposer"]
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "target": "0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5"
+        }
+      ]
     },
     {
       "address": "0x3D0Bf26E60a689a7Da5EA3ddAD7371F27f7671a5",
-      "roles": ["Sequencer"]
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0x94118F86eE37Fa4Fdb266CDab1e55B8F0D6959D9"
+        }
+      ]
     },
     { "address": "0x91901DF65F086A3330D1C95796d66a1cF941E1B1" },
     { "address": "0xb6130283Ed292E3f42465617d6d8FFd61F615462" },
     {
       "address": "0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
-      "roles": ["Challenger", "Guardian"],
       "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5"
+        },
         {
           "permission": "configure",
           "target": "0x94118F86eE37Fa4Fdb266CDab1e55B8F0D6959D9",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+        },
+        {
+          "permission": "guard",
+          "target": "0x39A90926306E11497EC5FE1C459910258B620edD"
+        },
+        {
+          "permission": "guard",
+          "target": "0x5e8d351FD046Aa0b3DDA24096751996C0c397C61"
         }
       ]
     },
@@ -969,9 +1015,9 @@
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
-    "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
-    "opstack/OptimismPortal": "0x2a32f6874a8c0e85e685fa944143e7968d675fed43b46e7385411ad11f8a1a43",
-    "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
-    "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
+    "opstack/L2OutputOracle": "0xfc8737561d85bab2fe5e39a7a02436a0cb0e7f96d7a7adc2ee3ea486b391c2fc",
+    "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",
+    "opstack/SuperchainConfig": "0x76190197170f60e32f3e466ca757cb0bde1055ea134384678dd0911e7a5338ef",
+    "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"
   }
 }

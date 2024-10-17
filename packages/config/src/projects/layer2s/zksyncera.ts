@@ -73,7 +73,6 @@ export const zksyncera: Layer2 = zkStackL2({
     slug: 'zksync-era',
     description:
       'ZKsync Era is a general-purpose ZK Rollup with full EVM compatibility.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://zksync.io/', 'https://zksync.dappradar.com/'],
       apps: ['https://portal.zksync.io/bridge/'],

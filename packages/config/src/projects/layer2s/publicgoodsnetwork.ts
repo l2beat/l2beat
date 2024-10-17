@@ -17,10 +17,8 @@ export const publicgoodsnetwork: Layer2 = opStackL2({
     shortName: 'PGN',
     slug: 'publicgoodsnetwork',
     architectureImage: 'publicgoodsnetwork',
-
     description:
       'Public Goods Network is an OP stack chain focused on funding public goods.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://publicgoods.network/'],
       apps: ['https://bridge.publicgoods.network/'],

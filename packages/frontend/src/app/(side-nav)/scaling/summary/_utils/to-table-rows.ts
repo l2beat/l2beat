@@ -12,16 +12,21 @@ export function toTableRows({
       ...project,
       tvl: {
         ...project.tvl,
+        warnings: excludeAssociatedTokens
+          ? project.tvl.associatedTokensExcludedWarnings
+          : project.tvl.warnings,
+        change: excludeAssociatedTokens
+          ? project.tvl.associatedTokensExcludedChange
+          : project.tvl.change,
         breakdown: project?.tvl.breakdown
           ? {
-              ...project?.tvl.breakdown,
+              ...project.tvl.breakdown,
               total: excludeAssociatedTokens
-                ? project?.tvl.breakdown.total -
-                  project?.tvl.breakdown.associated
-                : project?.tvl.breakdown.total,
+                ? project.tvl.breakdown.total - project.tvl.breakdown.associated
+                : project.tvl.breakdown.total,
               associated: excludeAssociatedTokens
                 ? 0
-                : project?.tvl.breakdown.associated,
+                : project.tvl.breakdown.associated,
             }
           : undefined,
       },

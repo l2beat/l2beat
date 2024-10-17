@@ -12,6 +12,7 @@ export const avail: DaLayer = {
   id: 'avail',
   type: 'DaLayer',
   kind: 'PublicBlockchain',
+  systemCategory: 'public',
   display: {
     name: 'Avail',
     slug: 'avail',
@@ -35,6 +36,11 @@ export const avail: DaLayer = {
   },
   technology: {
     description: `
+    ## Architecture
+
+    ![Avail architecture](/images/da-layer-technology/avail/architecture.png#center)
+
+
     ## Consensus
     Avail implements a Nominated Proof-of-Stake (NPoS) Sybil resistance mechanism, combined with the BABE/GRANDPA consensus protocol. 
     BABE handles block production by assigning block production slots according to validators' stake and using a Verifiable Random Function (VRF). 
@@ -68,6 +74,16 @@ export const avail: DaLayer = {
     App-specific data can be reconstructed by app clients, which request and assemble missing cells from the network to complete the data reconstruction process.
 
     `,
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: `a dishonest majority of Avail validators finalize an unavailable block, and there aren't light nodes on the network verifying data availability, or they fail at social signaling unavailable data.`,
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'a dishonest majority of Avail validators finalize an unavailable block, and the number of light nodes on the network is not enough to ensure block reconstruction.',
+      },
+    ],
   },
   bridges: [
     NO_BRIDGE({
@@ -97,7 +113,7 @@ export const avail: DaLayer = {
     erasureCodingScheme: DasErasureCodingScheme.TwoDReedSolomon,
     erasureCodingProof: DasErasureCodingProof.ValidityProofs,
   },
-  pruningWindow: 0, // unknown
+  pruningWindow: 0, // does not prune
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
     fraudDetection: DaFraudDetectionRisk.DasWithNoBlobsReconstruction(true),

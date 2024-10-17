@@ -64,8 +64,6 @@ export const mantle: Layer2 = opStackL2({
     architectureImage: 'mantle',
     description:
       'Mantle is an under development EVM compatible Optimium, based on the OP Stack.',
-
-    purposes: ['Universal'],
     links: {
       websites: ['https://mantle.xyz/'],
       apps: ['https://bridge.mantle.xyz'],

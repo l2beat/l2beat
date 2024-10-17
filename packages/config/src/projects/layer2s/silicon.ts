@@ -37,7 +37,6 @@ export const silicon: Layer2 = polygonCDKStack({
     slug: 'silicon',
     description:
       'Silicon is a Validium built on the Polygon CDK Stack, aiming to become the social network of the future.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://silicon.network/'],
       apps: ['https://bridge.silicon.network/'],

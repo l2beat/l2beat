@@ -1,3 +1,81 @@
+Generated with discovered.json: 0x7358aef9e88e3cccff43c1f38521d068cd4fb412
+
+# Diff at Wed, 16 Oct 2024 11:36:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a3d139b799cc0b28e5e912febb17464d4e5aef5d block: 20914127
+- current block number: 20914127
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20914127 (main branch discovery), not current.
+
+```diff
+    contract HyprMultisig (0x28fB4D0e436874F4107948E358df3C242De06788) {
+    +++ description: None
+      roles:
+-        ["Challenger","Guardian"]
+      receivedPermissions:
++        [{"permission":"challenge","target":"0x3E4F4Eb77a9c1f88c0e1F5aDCc9d3521Ce157FdD"},{"permission":"guard","target":"0xba1ac896F3b7cB273daE94bF9A6291A432e826c7"}]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x3E4F4Eb77a9c1f88c0e1F5aDCc9d3521Ce157FdD) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0x20D697b63d7747cF78C94ad9ee75C1436781E27E","delay":0}]}
+      issuedPermissions.1:
++        {"permission":"propose","target":"0xeF2169180a2eda91B695eA5e5C4f4547C013840c","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "challenge"
+      issuedPermissions.0.target:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x28fB4D0e436874F4107948E358df3C242De06788"
+      issuedPermissions.0.via.0:
+-        {"address":"0x20D697b63d7747cF78C94ad9ee75C1436781E27E","delay":0}
+    }
+```
+
+```diff
+    contract OptimismPortal (0xba1ac896F3b7cB273daE94bF9A6291A432e826c7) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0x20D697b63d7747cF78C94ad9ee75C1436781E27E","delay":0}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "guard"
+      issuedPermissions.0.target:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x28fB4D0e436874F4107948E358df3C242De06788"
+      issuedPermissions.0.via.0:
+-        {"address":"0x20D697b63d7747cF78C94ad9ee75C1436781E27E","delay":0}
+    }
+```
+
+```diff
+    contract SystemConfig (0xBB08cf90DEb93492b463f1Ee5DA9453e51643586) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0x20D697b63d7747cF78C94ad9ee75C1436781E27E","delay":0}]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "sequence"
+      issuedPermissions.1.target:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x994c288de8418c8D3c5a4D21A69f35bF9641781C"
+      issuedPermissions.1.via.0:
+-        {"address":"0x20D697b63d7747cF78C94ad9ee75C1436781E27E","delay":0}
+    }
+```
+
 Generated with discovered.json: 0x045f988e453cc37315ffd77eb1471bf6cb78e009
 
 # Diff at Mon, 14 Oct 2024 10:51:38 GMT:

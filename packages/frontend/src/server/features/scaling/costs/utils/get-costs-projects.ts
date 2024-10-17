@@ -1,6 +1,5 @@
 import { type Layer2, layer2s } from '@l2beat/config'
 import { z } from 'zod'
-import { COSTS_UPCOMING_PROJECTS } from '../consts'
 
 export const CostsProjectsFilter = z.discriminatedUnion('type', [
   z.object({
@@ -20,8 +19,7 @@ export function getCostsProjects(
   return layer2s.filter(
     (p) =>
       condition(p) &&
-      (p.config.trackedTxs !== undefined ||
-        COSTS_UPCOMING_PROJECTS.includes(p.id.toString())) &&
+      p.config.trackedTxs !== undefined &&
       !p.isArchived &&
       !p.isUpcoming &&
       (p.display.category === 'Optimistic Rollup' ||

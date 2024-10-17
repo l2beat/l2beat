@@ -1,20 +1,19 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-
-import { subtractOne } from '../../common/assessCount'
+import { EthereumAddress } from '@l2beat/shared-pure'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { underReviewL2 } from './templates/underReview'
+import { orbitStackL2 } from './templates/orbitStack'
 import { Layer2 } from './types'
 
-export const alienx: Layer2 = underReviewL2({
-  id: 'alienx',
+const discovery = new ProjectDiscovery('alienx')
+
+export const alienx: Layer2 = orbitStackL2({
+  additionalPurposes: ['Gaming', 'AI', 'NFT'],
+  badges: [Badge.RaaS.Caldera, Badge.DA.DAC],
   display: {
     name: 'AlienX',
     slug: 'alienx',
-    category: 'Optimium',
-    provider: 'Arbitrum',
     description:
       'AlienX is an Orbit stack Optimium on Ethereum focused on Gaming, AI and NFTs.',
-    purposes: ['AI', 'Gaming', 'NFT'],
     links: {
       websites: ['https://alienxchain.io/'],
       apps: ['https://bridge.alienxchain.io/', 'https://alienswap.xyz/'],
@@ -30,27 +29,32 @@ export const alienx: Layer2 = underReviewL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  // rpcUrl: 'https://rpc.alienxchain.io/http',
-  transactionApi: {
-    type: 'rpc',
-    startBlock: 1,
-    defaultUrl: 'https://rpc.alienxchain.io/http',
-    defaultCallsPerMinute: 1500,
-    assessCount: subtractOne,
-  },
-  badges: [Badge.VM.EVM, Badge.Stack.Orbit, Badge.RaaS.Caldera],
-  escrows: [
-    {
-      address: EthereumAddress('0x69aB55146Bc52A0b31F74dBDc527b8B7e9c7C27c'),
-      sinceTimestamp: new UnixTime(1717630139),
-      tokens: ['ETH'],
-      chain: 'ethereum',
-    },
-    {
+  nonTemplateEscrows: [
+    discovery.getEscrowDetails({
       address: EthereumAddress('0x5625d2a46fc582b3e6dE5288D9C5690B20EBdb8D'),
-      sinceTimestamp: new UnixTime(1717630163),
       tokens: '*',
-      chain: 'ethereum',
+      description:
+        'DApp Contract storing bounties fundsMain entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
+    }),
+  ],
+  rpcUrl: 'https://rpc.alienxchain.io/http',
+  discovery,
+  bridge: discovery.getContract('Bridge'),
+  rollupProxy: discovery.getContract('RollupProxy'),
+  sequencerInbox: discovery.getContract('SequencerInbox'),
+  nonTemplatePermissions: [
+    ...discovery.getMultisigPermission(
+      'AlienXMultisig',
+      'Can upgrade the smart contract system (via UpgradeExecutor) at any time and gain access to all funds.',
+    ),
+  ],
+  milestones: [
+    {
+      name: 'Mainnet launch',
+      link: 'https://medium.com/@ALIENXchain/alienx-mainnet-launch-join-the-genesis-voyage-and-claim-your-passcard-for-aix-airdrop-9bdf6a2a0472',
+      date: '2024-06-24T00:00:00Z',
+      description: 'AlienX launches their public mainnet.',
+      type: 'general',
     },
   ],
 })

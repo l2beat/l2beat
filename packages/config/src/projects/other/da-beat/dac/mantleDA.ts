@@ -27,6 +27,7 @@ export const mantleDA: DaLayer = {
   id: 'dac',
   type: 'DaLayer',
   kind: 'DAC',
+  systemCategory: 'custom',
   display: {
     name: 'Mantle DA',
     slug: 'mantle',

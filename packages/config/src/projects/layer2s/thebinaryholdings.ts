@@ -13,10 +13,8 @@ export const thebinaryholdings: Layer2 = opStackL2({
     name: 'The Binary Holdings',
     slug: 'thebinaryholdings',
     shortName: 'Binary',
-
     description:
       'The Binary Holdings is a web3 infrastructure that integrates into telecommunication and banking apps to increase user engagement, retention, and ARPU (Average Revenue Per User) - while rewarding users for their engagement. It uses its own token (BNRY) for gas.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://thebinaryholdings.com/'],
       apps: [],
@@ -45,5 +43,5 @@ export const thebinaryholdings: Layer2 = opStackL2({
   milestones: [],
   usesBlobs: true,
   discoveryDrivenData: true,
-  nonTemplateOptimismPortalEscrowTokens: [], // should add BNRY but the coingecko page doesn't report the ethereum address
+  nonTemplateOptimismPortalEscrowTokens: ['BNRY'],
 })

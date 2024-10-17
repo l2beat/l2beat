@@ -9,13 +9,12 @@ const discovery = new ProjectDiscovery('polynomial')
 export const polynomial: Layer2 = opStackL2({
   discovery,
   badges: [Badge.RaaS.Conduit],
+  additionalPurposes: ['Exchange'],
   display: {
     name: 'Polynomial',
     slug: 'polynomial',
-
     description:
       'Polynomial Chain is a derivatives chain that addresses liquidity fragmentation with a unified liquidity layer, enabling innovative derivatives.',
-    purposes: ['DeFi'],
     links: {
       websites: ['https://polynomial.fi/'],
       apps: [],

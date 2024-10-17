@@ -12,6 +12,7 @@ export const celestia: DaLayer = {
   id: 'celestia',
   type: 'DaLayer',
   kind: 'PublicBlockchain',
+  systemCategory: 'public',
   display: {
     name: 'Celestia',
     slug: 'celestia',
@@ -32,6 +33,10 @@ export const celestia: DaLayer = {
   },
   technology: {
     description: `
+    ## Architecture
+    
+    ![Celestia architecture](/images/da-layer-technology/celestia/architecture.png#center)
+
     ## Consensus
     Celestia uses CometBTF, the canonical implementation of Tendermint consensus protocol. The consensus protocol is fork-free by construction under an honest majority of stake assumption.
     Celestia achieves finality at each block, with an average time between blocks of 12 seconds.

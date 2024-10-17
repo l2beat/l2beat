@@ -1,4 +1,4 @@
-import { formatNumberWithCommas } from '~/utils/format-number'
+import { formatNumberWithCommas } from '~/utils/number-format/format-number'
 
 interface TableSumProps {
   amount: number

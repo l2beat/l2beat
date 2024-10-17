@@ -23,6 +23,11 @@
           "via": []
         },
         {
+          "permission": "sequence",
+          "target": "0xe1B64045351B0B6e9821F19b39f81bc4711D2230",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0x56121a8612474C3eB65D69a3b871f284705b9bC4",
           "via": [
@@ -141,8 +146,11 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "roles": ["Challenger", "Guardian"],
       "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0xbB7aD3f9CCbC94085b7F7B1D5258e59F5F068741"
+        },
         {
           "permission": "configure",
           "target": "0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB",
@@ -153,6 +161,14 @@
           "target": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
           "description": "set and change address mappings.",
           "via": [{ "address": "0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc" }]
+        },
+        {
+          "permission": "guard",
+          "target": "0x7B02D13904D8e6E0f0Efaf756aB14Cb0FF21eE7e"
+        },
+        {
+          "permission": "guard",
+          "target": "0x996ffD627901f10C80A7d4B72A12316D2e77c076"
         },
         {
           "permission": "upgrade",
@@ -344,6 +360,11 @@
       ],
       "issuedPermissions": [
         {
+          "permission": "guard",
+          "target": "0x56121a8612474C3eB65D69a3b871f284705b9bC4",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0x56121a8612474C3eB65D69a3b871f284705b9bC4",
           "via": [
@@ -427,6 +448,11 @@
       ],
       "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
+        {
+          "permission": "guard",
+          "target": "0x56121a8612474C3eB65D69a3b871f284705b9bC4",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0x56121a8612474C3eB65D69a3b871f284705b9bC4",
@@ -521,6 +547,16 @@
         "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
       ],
       "issuedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x56121a8612474C3eB65D69a3b871f284705b9bC4",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0xbfBAB4363034A930687B9320599a69DfBf1D21d0",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0x56121a8612474C3eB65D69a3b871f284705b9bC4",
@@ -628,12 +664,22 @@
     { "address": "0x796dF5BaB196b84FFf10F65ac0f914E4b10DEaCd" },
     {
       "address": "0xbfBAB4363034A930687B9320599a69DfBf1D21d0",
-      "roles": ["Proposer"]
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "target": "0xbB7aD3f9CCbC94085b7F7B1D5258e59F5F068741"
+        }
+      ]
     },
     { "address": "0xCCDEbe62f7378D5A931970A847cdf1EcFfc71C63" },
     {
       "address": "0xe1B64045351B0B6e9821F19b39f81bc4711D2230",
-      "roles": ["Sequencer"]
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB"
+        }
+      ]
     },
     { "address": "0xfFF0000000000000000000000000000000000288" }
   ],
@@ -1009,10 +1055,10 @@
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
-    "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
+    "opstack/L2OutputOracle": "0xfc8737561d85bab2fe5e39a7a02436a0cb0e7f96d7a7adc2ee3ea486b391c2fc",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
-    "opstack/OptimismPortal": "0x2a32f6874a8c0e85e685fa944143e7968d675fed43b46e7385411ad11f8a1a43",
-    "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
-    "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
+    "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",
+    "opstack/SuperchainConfig": "0x76190197170f60e32f3e466ca757cb0bde1055ea134384678dd0911e7a5338ef",
+    "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"
   }
 }

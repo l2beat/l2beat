@@ -13,11 +13,10 @@ export const mode: Layer2 = opStackL2({
   badges: [Badge.Infra.Superchain, Badge.RaaS.Conduit],
   display: {
     name: 'Mode Network',
+    shortName: 'Mode',
     slug: 'mode',
-
     description:
       'Mode is an OP stack Optimistic Rollup building the AIFi economy. Their mission is to scale DeFi to billions of users through onchain agents and AI powered financial applications to build a more open, efficient, and inclusive financial future.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://mode.network/'],
       apps: ['https://app.mode.network/'],

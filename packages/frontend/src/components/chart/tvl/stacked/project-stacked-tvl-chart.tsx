@@ -12,7 +12,7 @@ import {
 } from '~/server/features/scaling/tvl/tokens/get-tokens-for-project'
 import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
-import { formatCurrency } from '~/utils/format'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 import { ChartControlsWrapper } from '../../core/chart-controls-wrapper'
 import { ProjectChartTimeRange } from '../../core/chart-time-range'
 import { type ChartUnit } from '../../types'
@@ -112,9 +112,7 @@ function DefaultChart({
     <ChartProvider
       columns={columns}
       valuesStyle={valuesStyle}
-      formatYAxisLabel={(value: number) =>
-        formatCurrency(value, unit, { showLessThanMinimum: false })
-      }
+      formatYAxisLabel={(value: number) => formatCurrency(value, unit)}
       range={timeRange}
       isLoading={isLoading}
       renderHoverContents={(data) => (

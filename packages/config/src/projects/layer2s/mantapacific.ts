@@ -19,8 +19,6 @@ export const mantapacific: Layer2 = opStackL2({
     architectureImage: 'mantapacific',
     description:
       'Manta Pacific is an Optimium empowering EVM-native zero-knowledge (ZK) applications and general dapps.',
-
-    purposes: ['Universal'],
     links: {
       websites: ['https://pacific.manta.network/'],
       apps: ['https://pacific-bridge.manta.network/'],

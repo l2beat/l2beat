@@ -8,6 +8,7 @@ export const near: DaLayer = {
   id: 'near',
   type: 'DaLayer',
   kind: 'PublicBlockchain',
+  systemCategory: 'public',
   display: {
     name: 'NEAR DA',
     slug: 'near',

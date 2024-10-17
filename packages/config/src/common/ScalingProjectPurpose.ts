@@ -1,11 +1,9 @@
 export type ScalingProjectPurpose =
   | 'AI'
-  | 'AMM'
   | 'Auctions'
   | 'Betting'
   | 'Bitcoin DApps'
   | 'Bug bounty'
-  | 'DeFi'
   | 'Exchange'
   | 'Gaming'
   | 'Identity'

@@ -15,6 +15,7 @@ export class DegateTxsCountProvider {
       const block = await this.degateClient.getBlock(blockNumber)
       return {
         txsCount: block.transactions,
+        uopsCount: null,
         timestamp: block.createdAt,
         number: block.blockId,
       }

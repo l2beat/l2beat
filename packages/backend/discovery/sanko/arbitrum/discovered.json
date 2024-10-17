@@ -2,7 +2,7 @@
   "name": "sanko",
   "chain": "arbitrum",
   "blockNumber": 262322423,
-  "configHash": "0x82618ed17d174a78ff00d6a31ce69a28b4ad157cc36bc5876eac9c6183c3dc00",
+  "configHash": "0xe5456bb1d58867111a67587dfe8d440c7a42878850a950b5773d79e42ee36e10",
   "contracts": [
     {
       "name": "ValidatorWalletCreator",
@@ -105,6 +105,11 @@
       "proxyType": "EIP1967 proxy",
       "descriptions": ["State batches / commitments get posted here."],
       "issuedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0x2f4dDaD3aB0AC4225fd8023EE07d04e2A758017a",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0xd18b1C6376633000c85541F7c15c591Ffe5f9556",
@@ -467,6 +472,11 @@
           "permission": "upgrade",
           "target": "0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276",
           "via": []
+        },
+        {
+          "permission": "validate",
+          "target": "0x795aA8E945b571c57b12E7b5B77De10A88a1FADe",
+          "via": []
         }
       ],
       "ignoreInWatchMode": [
@@ -727,7 +737,12 @@
     { "address": "0x201598e7F51dD57FF41a1743aBd5892EaFED97a0" },
     {
       "address": "0x2f4dDaD3aB0AC4225fd8023EE07d04e2A758017a",
-      "roles": ["Sequencer"]
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0x24B68936C13A414cd91437aE7AA730321B9ff159"
+        }
+      ]
     },
     { "address": "0x356000Cec4fC967f8FC372381D983426760A0391" },
     { "address": "0x45931634c4496e9cdc3d0cCA700A387d581b6009" },
@@ -735,7 +750,12 @@
     { "address": "0x505421b85ae7F906e8807bf59ee3Da62e894CDC3" },
     {
       "address": "0x795aA8E945b571c57b12E7b5B77De10A88a1FADe",
-      "roles": ["Validator"]
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "target": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4"
+        }
+      ]
     },
     { "address": "0x82Ef0CBb725852D7CC30ADeA95415e23B8f433E3" },
     { "address": "0xAf574BbE2139e39F560C4db1A118E1245aC0983d" },
@@ -1490,7 +1510,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
-    "orbitstack/RollupProxy": "0xdd22b1785ae5df34e829d0b04131559e112131325c3f223825d0fe61e675fb1a",
-    "orbitstack/SequencerInbox": "0x096f13a8297d3243cf02cbc39d065c1c6f37b23602fce0c63f3ff74d7d65b1ee"
+    "orbitstack/RollupProxy": "0x8c92364349ca720f3e801d028dc260fdbc1a9cca4651ed19af6f16a250949729",
+    "orbitstack/SequencerInbox": "0x914a19d66f742b381e9ac6579e688ae6a07cddcf5b144eb7528c121bc81eca28"
   }
 }

@@ -12,10 +12,8 @@ export const base: Layer2 = opStackL2({
   display: {
     name: 'Base',
     slug: 'base',
-
     description:
       'Base is an Optimistic Rollup built with the OP Stack. It offers a low-cost and builder-friendly way for anyone, anywhere, to build onchain.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://base.org/'],
       apps: ['https://bridge.base.org/'],

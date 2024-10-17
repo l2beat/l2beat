@@ -41,6 +41,10 @@ export function ValueLockedBreakdownTooltipContent({
   native,
   tvlWarnings,
 }: ValueLockedBreakdownTooltipContentProps) {
+  const total = canonical + external + native
+  if (total === 0) {
+    return 'No tokens'
+  }
   const values = [
     {
       title: 'Canonical',
@@ -58,7 +62,6 @@ export function ValueLockedBreakdownTooltipContent({
       className: 'bg-pink-100 dark:bg-pink-100',
     },
   ]
-  const total = canonical + external + native
   return (
     <div className="space-y-2">
       <div>
