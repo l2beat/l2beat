@@ -1,8 +1,8 @@
 import { AssessCount } from '@l2beat/config'
+import { ActivityRecord } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
-import { ActivityRecordWithoutRatio } from '../../types'
 import { aggregatePerDay } from '../../utils/aggregatePerDay'
 import { RpcUopsAnalyzer } from '../uops/analyzers/RpcUopsAnalyzer'
 
@@ -14,10 +14,7 @@ export class RpcTxsCountProvider {
     private readonly assessCount?: AssessCount,
   ) {}
 
-  async getTxsCount(
-    from: number,
-    to: number,
-  ): Promise<ActivityRecordWithoutRatio[]> {
+  async getTxsCount(from: number, to: number): Promise<ActivityRecord[]> {
     const queries = range(from, to + 1).map(async (blockNumber) => {
       const block = await this.rpcClient.getBlockWithTransactions(blockNumber)
       const { transactionsLength, uopsLength } =
