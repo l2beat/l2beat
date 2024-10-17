@@ -4,7 +4,7 @@ import {
   ScalingProjectPermission,
 } from '../../../../common'
 import { DaAccessibilityRisk } from './DaAccessibilityRisk'
-import { DaAttestationSecurityRisk } from './DaAttestationSecurityRisk'
+import { DaCommitteeSecurityRisk } from './DaCommitteeSecurityRisk'
 import { DaLinks } from './DaLinks'
 import { DaTechnology } from './DaTechnology'
 import { DacTransactionDataType } from './DacTransactionDataType'
@@ -93,7 +93,7 @@ interface DaBridgeDisplay {
 
 export type DaBridgeRisks = {
   /** Attestation - TBD. */
-  attestations: DaAttestationSecurityRisk
+  committeeSecurity: DaCommitteeSecurityRisk
   /** Upgradeability - TBD. @unit seconds. */
   upgradeability: DaUpgradeabilityRisk
   /** Accessibility - TBD. */
