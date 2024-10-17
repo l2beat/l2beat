@@ -1,8 +1,8 @@
 {
   "name": "fuel",
   "chain": "ethereum",
-  "blockNumber": 20977128,
-  "configHash": "0x18888028a3b95090e9bffc97a70edd6a2a331606d816027612141ecbb8d294ee",
+  "blockNumber": 20984946,
+  "configHash": "0x60ea42eac56c9fd435415a2bc9a407bfa0023017304900b095707afd8cde92f0",
   "contracts": [
     {
       "name": "FuelMultisig",
@@ -123,6 +123,7 @@
           "via": []
         }
       ],
+      "ignoreInWatchMode": ["getNextOutgoingMessageNonce", "totalDeposited"],
       "sinceTimestamp": 1724767871,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
@@ -175,7 +176,7 @@
         "FUEL_BASE_ASSET_DECIMALS": 9,
         "fuelBaseAssetDecimals": 9,
         "fuelChainStateContract": "0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130",
-        "getNextOutgoingMessageNonce": 423,
+        "getNextOutgoingMessageNonce": 14879,
         "limitAmount": "10000000000000000000",
         "MAX_MESSAGE_DATA_SIZE": 65536,
         "paused": false,
@@ -184,7 +185,7 @@
         "RATE_LIMIT_DURATION": 604800,
         "rateLimitEnabled": true,
         "SET_RATE_LIMITER_ROLE": "0x7e5b1c957d4df4bad29cdaceffe50f28f282a0d5096601b958917550d4b2e016",
-        "totalDeposited": "68767803203000000000",
+        "totalDeposited": "2758381348498000000000",
         "withdrawalsPaused": false
       },
       "derivedName": "FuelMessagePortalV3"
