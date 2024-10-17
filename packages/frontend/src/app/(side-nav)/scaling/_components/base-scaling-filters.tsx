@@ -30,20 +30,17 @@ export function BaseScalingFilters({
   const stackOptions = uniq(items.map((item) => item.provider))
     .map((value) => ({
       label: value ?? 'No stack',
-      value: value ?? 'No stack' as const,
+      value: value ?? ('No stack' as const),
     }))
-    .sort(
-      (a, b) => {
-        if (a.value === 'No stack') {
-          return -1
-        }
-        if (b.value === 'No stack') {
-          return 1
-        }
-        return a.label.localeCompare(b.label)
-      },
-    )
-
+    .sort((a, b) => {
+      if (a.value === 'No stack') {
+        return -1
+      }
+      if (b.value === 'No stack') {
+        return 1
+      }
+      return a.label.localeCompare(b.label)
+    })
 
   const stageOptions = uniq(
     compact(
