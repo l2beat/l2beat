@@ -4,11 +4,13 @@ import { range } from 'lodash'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import { ActivityRecordWithoutRatio } from '../../types'
 import { aggregatePerDay } from '../../utils/aggregatePerDay'
+import { RpcUopsAnalyzer } from '../uops/analyzers/RpcUopsAnalyzer'
 
 export class RpcTxsCountProvider {
   constructor(
     private readonly rpcClient: RpcClient,
     private readonly projectId: ProjectId,
+    private readonly uopsAnalyzer: RpcUopsAnalyzer,
     private readonly assessCount?: AssessCount,
   ) {}
 
@@ -17,15 +19,21 @@ export class RpcTxsCountProvider {
     to: number,
   ): Promise<ActivityRecordWithoutRatio[]> {
     const queries = range(from, to + 1).map(async (blockNumber) => {
-      const block = await this.rpcClient.getBlock(blockNumber)
+      const block = await this.rpcClient.getBlockWithTransactions(blockNumber)
+      const { transactionsLength, uopsLength } =
+        this.uopsAnalyzer.analyzeBlock(block)
       const timestamp = new UnixTime(block.timestamp)
 
+      const txsCount =
+        this.assessCount?.(transactionsLength, blockNumber) ??
+        transactionsLength
+      const uopsCount =
+        this.assessCount?.(uopsLength, blockNumber) ?? uopsLength
+
       return {
-        txsCount:
-          this.assessCount?.(block.transactions.length, blockNumber) ??
-          block.transactions.length,
+        txsCount,
+        uopsCount,
         timestamp,
-        uopsCount: null,
         number: block.number,
       }
     })

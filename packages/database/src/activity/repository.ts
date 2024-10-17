@@ -3,8 +3,10 @@ import { BaseRepository } from '../BaseRepository'
 import { ActivityRecord, toRecord, toRow } from './entity'
 import { selectActivity } from './select'
 
+export type ActivityRecordWithoutRatio = Omit<ActivityRecord, 'ratio'>
+
 export class ActivityRepository extends BaseRepository {
-  async getAll(): Promise<ActivityRecord[]> {
+  async getAll(): Promise<ActivityRecordWithoutRatio[]> {
     const rows = await this.db
       .selectFrom('Activity')
       .select(selectActivity)
@@ -24,7 +26,6 @@ export class ActivityRepository extends BaseRepository {
           cb.columns(['timestamp', 'projectId']).doUpdateSet((eb) => ({
             count: eb.ref('excluded.count'),
             uopsCount: eb.ref('excluded.uopsCount'),
-            ratio: eb.ref('excluded.ratio'),
             start: eb.ref('excluded.start'),
             end: eb.ref('excluded.end'),
           })),
@@ -123,10 +124,7 @@ export class ActivityRepository extends BaseRepository {
     projectIds: ProjectId[],
     timeRange: [UnixTime, UnixTime],
   ): Promise<
-    Omit<
-      ActivityRecord,
-      'timestamp' | 'start' | 'end' | 'uopsCount' | 'ratio'
-    >[]
+    Omit<ActivityRecord, 'timestamp' | 'start' | 'end' | 'uopsCount'>[]
   > {
     const [from, to] = timeRange
     const rows = await this.db
@@ -193,10 +191,7 @@ export class ActivityRepository extends BaseRepository {
   async getProjectsAggregatedDailyCount(
     projectIds: ProjectId[],
   ): Promise<
-    Omit<
-      ActivityRecord,
-      'projectId' | 'start' | 'end' | 'uopsCount' | 'ratio'
-    >[]
+    Omit<ActivityRecord, 'projectId' | 'start' | 'end' | 'uopsCount'>[]
   > {
     if (projectIds.length === 0) return []
 
