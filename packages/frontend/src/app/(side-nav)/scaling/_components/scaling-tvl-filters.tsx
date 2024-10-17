@@ -42,11 +42,7 @@ export function ScalingTvlFilters({ items, className }: Props) {
         className,
       )}
     >
-      <BaseScalingFilters
-        items={items}
-        additionalFilters={hostChainFilter}
-        showRollupsOnly
-      />
+      <BaseScalingFilters items={items} additionalFilters={hostChainFilter} />
       <Checkbox
         id="exclude-associated-tokens"
         checked={excludeAssociatedTokens}

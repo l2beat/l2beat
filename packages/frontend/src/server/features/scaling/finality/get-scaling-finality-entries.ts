@@ -4,7 +4,7 @@ import { getImplementationChangeReport } from '../../implementation-change-repor
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
-import { orderByTvl } from '../tvl/utils/order-by-tvl'
+import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
 import { getFinality } from './get-finality'
 import { type FinalityData, type FinalityProjectData } from './schema'
 import {
@@ -39,7 +39,7 @@ export async function getScalingFinalityEntries() {
     })
     .filter(notUndefined)
 
-  return orderByTvl(entries, tvl)
+  return orderByStageAndTvl(entries, tvl)
 }
 
 function getFinalityData(

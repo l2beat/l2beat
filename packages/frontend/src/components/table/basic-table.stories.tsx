@@ -7,7 +7,7 @@ import {
 import { useTable } from '~/hooks/use-table'
 import { BasicTable } from './basic-table'
 import { ProjectNameCell } from './cells/project-name-cell'
-import { getCommonProjectColumns } from './common-project-columns'
+import { getCommonProjectColumns } from './utils/common-project-columns'
 
 interface StorybookEntry {
   slug: string
