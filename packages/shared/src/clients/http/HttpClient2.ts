@@ -12,7 +12,7 @@ interface HttpClient2Options {
 const DEFAULT_HTTP_RETRY_STRATEGY = {
   timeoutMs: 10_000,
   initialRetryDelayMs: 1000,
-  maxRetries: 5, // 1 2 4 8 16 = 31s
+  maxRetries: 4, // 2 4 8 16 = 30s
   maxRetryDelayMs: Infinity,
 }
 
@@ -36,10 +36,11 @@ export class HttpClient2 {
   async fetch(url: string, init?: RequestInit): Promise<unknown> {
     let calls = 0
     while (true) {
+      calls++
       try {
         return await this.fetchJson(url, init)
       } catch (error) {
-        if (calls >= this.$.maxRetries) {
+        if (calls > this.$.maxRetries) {
           throw error
         }
 
@@ -47,7 +48,6 @@ export class HttpClient2 {
         this.logAttempt(url, init, calls, delay)
         await new Promise((resolve) => setTimeout(resolve, delay))
       }
-      calls++
     }
   }
 
@@ -81,7 +81,7 @@ export class HttpClient2 {
     this.$.logger.warn('Failed to fetch, scheduling retry', {
       url,
       body: init?.body,
-      attempt: calls + 1,
+      attempt: calls,
       delay,
     })
   }
