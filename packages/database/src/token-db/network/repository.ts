@@ -111,6 +111,36 @@ export class NetworkRepository extends BaseRepository {
     return row
   }
 
+  async findByIdWithConfigs(id: string): Promise<
+    | (NetworkRecord & {
+        explorers: NetworkExplorerRecord[]
+        rpcs: NetworkRpcRecord[]
+      })
+    | undefined
+  > {
+    const network = await this.findById(id)
+    if (!network) return undefined
+
+    const [explorers, rpcs] = await Promise.all([
+      this.db
+        .selectFrom('NetworkExplorer')
+        .select(selectNetworkExplorer)
+        .where('NetworkExplorer.networkId', '=', id)
+        .execute(),
+      this.db
+        .selectFrom('NetworkRpc')
+        .select(selectNetworkRpc)
+        .where('NetworkRpc.networkId', '=', id)
+        .execute(),
+    ])
+
+    return {
+      ...network,
+      explorers,
+      rpcs,
+    }
+  }
+
   async findByChainId(chainId: number): Promise<NetworkRecord | undefined> {
     const row = await this.db
       .selectFrom('Network')
@@ -129,6 +159,15 @@ export class NetworkRepository extends BaseRepository {
       .limit(1)
       .executeTakeFirst()
     return row
+  }
+
+  async insert(network: UpsertableNetworkRecord): Promise<{ id: string }> {
+    const row = upsertableToRow(network)
+    return await this.db
+      .insertInto('Network')
+      .values(row)
+      .returning('id')
+      .executeTakeFirstOrThrow()
   }
 
   async upsert(network: UpsertableNetworkRecord): Promise<{ id: string }> {
@@ -163,6 +202,14 @@ export class NetworkRepository extends BaseRepository {
     return networks.length
   }
 
+  async update(id: string, record: UpsertableNetworkRecord): Promise<void> {
+    await this.db
+      .updateTable('Network')
+      .set(record)
+      .where('id', '=', id)
+      .execute()
+  }
+
   async updateByCoingeckoId(
     coingeckoId: string,
     record: UpsertableNetworkRecord,
@@ -173,6 +220,10 @@ export class NetworkRepository extends BaseRepository {
       .set(row)
       .where('coingeckoId', '=', coingeckoId)
       .execute()
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.db.deleteFrom('Network').where('id', '=', id).execute()
   }
 
   async deleteAll(): Promise<bigint> {

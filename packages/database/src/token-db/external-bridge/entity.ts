@@ -6,15 +6,16 @@ import { ExternalBridge } from '../../kysely/generated/types'
 export interface ExternalBridgeRecord {
   id: string
   name: string
-  type: ExternalBridgeType
+  managedBy: string | null
+  type: ExternalBridgeType | null
   updatedAt: Date
   createdAt: Date
 }
 
 export type UpsertableExternalBridgeRecord = Omit<
   ExternalBridgeRecord,
-  'id' | 'createdAt' | 'updatedAt'
->
+  'id' | 'createdAt' | 'updatedAt' | 'managedBy'
+> & { managedBy?: string | null }
 
 export function upsertableToRecord(
   record: UpsertableExternalBridgeRecord,

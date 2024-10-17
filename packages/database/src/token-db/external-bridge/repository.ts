@@ -15,6 +15,35 @@ export class ExternalBridgeRepository extends BaseRepository {
     return rows
   }
 
+  async findById(id: string): Promise<ExternalBridgeRecord | null> {
+    const row = await this.db
+      .selectFrom('ExternalBridge')
+      .select(selectExternalBridge)
+      .where('ExternalBridge.id', '=', id)
+      .executeTakeFirst()
+    return row ?? null
+  }
+
+  async insert(
+    record: UpsertableExternalBridgeRecord,
+  ): Promise<{ id: string }> {
+    const row = upsertableToRecord(record)
+    const result = await this.db
+      .insertInto('ExternalBridge')
+      .values(row)
+      .returning('id')
+      .executeTakeFirstOrThrow()
+    return result
+  }
+
+  async update(id: string, record: UpsertableExternalBridgeRecord) {
+    await this.db
+      .updateTable('ExternalBridge')
+      .set(record)
+      .where('id', '=', id)
+      .execute()
+  }
+
   async upsert(
     record: UpsertableExternalBridgeRecord,
   ): Promise<{ id: string }> {
@@ -35,5 +64,9 @@ export class ExternalBridgeRepository extends BaseRepository {
         .where('ExternalBridge.type', '=', record.type)
         .executeTakeFirstOrThrow())
     )
+  }
+
+  async delete(id: string) {
+    await this.db.deleteFrom('ExternalBridge').where('id', '=', id).execute()
   }
 }

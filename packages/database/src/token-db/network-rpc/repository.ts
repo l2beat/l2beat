@@ -7,8 +7,17 @@ export class NetworkRpcRepository extends BaseRepository {
 
     const rows = records.map(upsertableToRow)
     await this.batch(rows, 100, async (batch) => {
+      console.log(this.db.insertInto('NetworkRpc').values(batch).compile())
       await this.db.insertInto('NetworkRpc').values(batch).execute()
     })
     return records.length
+  }
+
+  async deleteManyByNetworkId(networkId: string): Promise<bigint> {
+    const res = await this.db
+      .deleteFrom('NetworkRpc')
+      .where('networkId', '=', networkId)
+      .executeTakeFirstOrThrow()
+    return res.numDeletedRows
   }
 }
