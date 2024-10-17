@@ -2,7 +2,7 @@ import { type Milestone } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { useCallback, useMemo } from 'react'
 import { type ProjectToken } from '~/server/features/scaling/tvl/tokens/get-tokens-for-project'
-import { formatCurrency } from '~/utils/format'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 import { type SeriesStyle } from '../../core/styles'
 import { getChartRange } from '../../core/utils/get-chart-range-from-columns'
 import { mapMilestones } from '../../core/utils/map-milestones'
@@ -32,9 +32,7 @@ export function useTokenChartRenderParams({
 
   const formatYAxisLabel = useCallback(
     (value: number) =>
-      formatCurrency(value, unit === 'usd' ? 'usd' : token.symbol, {
-        showLessThanMinimum: false,
-      }),
+      formatCurrency(value, unit === 'usd' ? 'usd' : token.symbol),
     [token.symbol, unit],
   )
 

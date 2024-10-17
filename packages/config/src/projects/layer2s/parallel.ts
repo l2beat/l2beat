@@ -17,7 +17,6 @@ export const parallel: Layer2 = orbitStackL2({
       'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     description:
       'Parallel is an Ethereum L2 solution utilizing Arbitrum Nitro technology.',
-    purposes: ['Universal', 'DeFi'],
     links: {
       websites: ['https://parallel.fi'],
       apps: ['https://parallel.fi/airdrop'],

@@ -61,7 +61,7 @@ export const canvasconnect: Layer2 = {
       'Canvas Connect is currently open only to whitelisted institutional clients.',
     description:
       'Canvas Connect is a Layer 2 solution based on StarkEx technology, specifically designed to provide centralized investment and trading services to financial institutions.',
-    purposes: ['Privacy', 'DeFi'],
+    purposes: ['Privacy', 'Exchange'],
     provider: 'StarkEx',
     category: 'Validium',
     links: {

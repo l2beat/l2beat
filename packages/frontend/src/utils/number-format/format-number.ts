@@ -6,8 +6,13 @@ const HAIR_SPACE = '\u200a'
 
 export function formatNumber(value: number, decimals = 2): string {
   const minimum = Math.pow(10, -decimals)
-  if (value === 0 || (value < minimum && value > -minimum)) {
-    return '0.' + '0'.repeat(decimals)
+
+  if (value > 0 && value < minimum) {
+    return `<${minimum}`
+  }
+
+  if (value < 0 && value > -minimum) {
+    return `>-${minimum}`
   }
 
   if (value < 0) {

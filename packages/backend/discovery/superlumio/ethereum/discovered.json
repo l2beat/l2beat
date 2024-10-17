@@ -13,8 +13,11 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "roles": ["Challenger", "Guardian"],
       "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0xffB004874CbBF8692B5f397B602f4B8a630aeD59"
+        },
         {
           "permission": "configure",
           "target": "0x9cF613c19371eFf26c94c0d4F62197d2C0ab60bc",
@@ -25,6 +28,10 @@
           "permission": "configure",
           "target": "0xFb252d6199AEfeE6938a1c57213AAd96ecD2650c",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+        },
+        {
+          "permission": "guard",
+          "target": "0x9C93982cb4861311179aE216d1B7fD61232DE1f0"
         },
         {
           "permission": "upgrade",
@@ -188,6 +195,11 @@
         "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
       ],
       "issuedPermissions": [
+        {
+          "permission": "guard",
+          "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
@@ -396,6 +408,11 @@
           "via": []
         },
         {
+          "permission": "sequence",
+          "target": "0x5c53f2fF1030C7fbC0616fD5B8fC6bE97aa27e00",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
           "via": [
@@ -463,6 +480,16 @@
       ],
       "issuedPermissions": [
         {
+          "permission": "challenge",
+          "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0xb6E2Eee22b684f6AAb2083097F7E874994bA930e",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
           "via": [
@@ -513,14 +540,24 @@
     { "address": "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe" },
     {
       "address": "0x5c53f2fF1030C7fbC0616fD5B8fC6bE97aa27e00",
-      "roles": ["Sequencer"]
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0xFb252d6199AEfeE6938a1c57213AAd96ecD2650c"
+        }
+      ]
     },
     { "address": "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038" },
     { "address": "0xA12Cf34001e553dc254D131105364351f5174d75" },
     { "address": "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4" },
     {
       "address": "0xb6E2Eee22b684f6AAb2083097F7E874994bA930e",
-      "roles": ["Proposer"]
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "target": "0xffB004874CbBF8692B5f397B602f4B8a630aeD59"
+        }
+      ]
     },
     { "address": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C" },
     { "address": "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0" },
@@ -834,9 +871,9 @@
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
-    "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
+    "opstack/L2OutputOracle": "0xfc8737561d85bab2fe5e39a7a02436a0cb0e7f96d7a7adc2ee3ea486b391c2fc",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
-    "opstack/OptimismPortal": "0x2a32f6874a8c0e85e685fa944143e7968d675fed43b46e7385411ad11f8a1a43",
-    "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
+    "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",
+    "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"
   }
 }

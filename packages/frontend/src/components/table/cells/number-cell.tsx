@@ -5,7 +5,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { cn } from '~/utils/cn'
 import { PercentChange } from '../../percent-change'
 
 export interface NumberCellProps {
@@ -16,19 +15,19 @@ export interface NumberCellProps {
 }
 
 export function NumberCell(props: NumberCellProps) {
-  const className = cn('text-xs md:text-base', props.className)
-
   if (props.signed && typeof props.children === 'number') {
-    return <PercentChange value={props.children} className={className} />
+    return <PercentChange value={props.children} className={props.className} />
   }
 
   if (props.tooltip)
     return (
       <Tooltip>
-        <TooltipTrigger className={className}>{props.children}</TooltipTrigger>
+        <TooltipTrigger className={props.className}>
+          {props.children}
+        </TooltipTrigger>
         <TooltipContent>{props.tooltip}</TooltipContent>
       </Tooltip>
     )
 
-  return <div className={className}>{props.children}</div>
+  return <div className={props.className}>{props.children}</div>
 }

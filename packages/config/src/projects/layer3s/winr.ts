@@ -8,14 +8,14 @@ const discovery = new ProjectDiscovery('winr', 'arbitrum')
 
 export const winr: Layer3 = orbitStackL3({
   discovery,
-  badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum],
+  badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum, Badge.RaaS.Conduit],
+  additionalPurposes: ['Gaming'],
   hostChain: ProjectId.ARBITRUM,
   display: {
     name: 'WINR',
     slug: 'winr',
     description:
       'WINR is a Layer 3 on Arbitrum, based on the Orbit stack. It is focused on building a decentralized iGaming infrastructure.',
-    purposes: ['Gaming'],
     links: {
       websites: ['https://winr.games/'],
       apps: ['https://just.bet/'],
@@ -31,7 +31,7 @@ export const winr: Layer3 = orbitStackL3({
   nativeToken: 'WINR',
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
-      'WinrMultisig',
+      'ConduitMultisig2',
       'Can upgrade any system contract and potentially steal all funds.',
     ),
   ],

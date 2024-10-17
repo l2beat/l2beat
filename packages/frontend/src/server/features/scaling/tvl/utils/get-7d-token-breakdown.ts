@@ -5,6 +5,7 @@ import {
   unstable_noStore as noStore,
 } from 'next/cache'
 import { env } from '~/env'
+import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
 import { getTokenBreakdown } from './get-token-breakdown'
 import { type TvlProject, getTvlProjects } from './get-tvl-projects'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
@@ -49,7 +50,14 @@ export const getCached7dTokenBreakdown = cache(
               stablecoin: breakdown.stablecoin / 100,
               associated: breakdown.associated / 100,
             },
-            change: (breakdown.total - oldBreakdown.total) / breakdown.total,
+            change: calculatePercentageChange(
+              breakdown.total,
+              oldBreakdown.total,
+            ),
+            associatedTokensExcludedChange: calculatePercentageChange(
+              breakdown.total - breakdown.associated,
+              oldBreakdown.total - oldBreakdown.associated,
+            ),
           },
         ]
       }),
@@ -84,6 +92,7 @@ function getMock7dTokenBreakdown(): LatestTvl {
             stablecoin: 15,
             associated: 5,
           },
+          associatedTokensExcludedChange: Math.random(),
           change: Math.random(),
         },
       ]),

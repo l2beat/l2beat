@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x80bf54d7a3a1527ae5c1ddaca77fa7451578a154
+
+# Diff at Wed, 16 Oct 2024 11:34:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a3d139b799cc0b28e5e912febb17464d4e5aef5d block: 20942700
+- current block number: 20942700
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20942700 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x1CA12290D954CFe022323b6A6Df92113ed6b1C98) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      issuedPermissions.1:
++        {"permission":"validate","target":"0x2b2566944f8ff8a256b39C6A36900991EC1fF3c6","via":[]}
+    }
+```
+
+```diff
+    contract SequencerInbox (0xF75206c49c1694594E3e69252E519434f1579876) {
+    +++ description: State batches / commitments get posted here.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x80622fe04c5e1c3fbb3A9c62996dB27B53E9F77b","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "sequence"
+      issuedPermissions.0.target:
+-        "0x80622fe04c5e1c3fbb3A9c62996dB27B53E9F77b"
++        "0xbc35c3fBd56318Bf360086f50576233Dc93AFF20"
+    }
+```
+
 Generated with discovered.json: 0xf04be7855c62a3e6fdba3c76f89aa37616419125
 
 # Diff at Mon, 14 Oct 2024 10:49:02 GMT:

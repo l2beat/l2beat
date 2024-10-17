@@ -15,7 +15,6 @@ export const deri = orbitStackL3({
     slug: 'deri',
     description:
       'Deri is an Ethereum Layer-3 that leverages Arbitrum Nitro to enable efficient cross-chain futures, options, and derivatives.',
-    purposes: ['DeFi'],
     links: {
       websites: ['https://deri.io/'],
       apps: [],

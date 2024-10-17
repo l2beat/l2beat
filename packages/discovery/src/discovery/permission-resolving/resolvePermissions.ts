@@ -1,4 +1,5 @@
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { Permission } from '../config/RawDiscoveryConfig'
 
 // NOTE(radomski): The entire permission network is modeled as a graph. The
 // graph contains nodes and edges. Nodes are contracts and edges are "actions"
@@ -22,8 +23,6 @@ import { assert, EthereumAddress } from '@l2beat/shared-pure'
 // these delays will start to drift apart. Current implementation does not say
 // what to do in a scenario when one members has a smaller delay than others
 // and such a case should be discussed.
-
-export type Permission = 'member' | 'act' | 'configure' | 'upgrade'
 
 export interface Node<T = EthereumAddress> {
   address: T
@@ -56,7 +55,7 @@ export function resolvePermissions<T>(
   const result: ResolvedPermission<T>[] = []
   for (const node of graph) {
     const seedingEdges = node.edges.filter(
-      (e) => e.permission === 'configure' || e.permission === 'upgrade',
+      (e) => e.permission !== 'member' && e.permission !== 'act',
     )
     for (const edge of seedingEdges) {
       const toNode = getNode(edge.toNode, graph)

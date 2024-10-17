@@ -10,7 +10,7 @@ export const payy: Layer2 = upcomingL2({
     slug: 'payy',
     description:
       'Payy is an app-specific zk-rollup enabling privacy and scalability for payments and DeFi.',
-    purposes: ['Payments', 'DeFi'],
+    purposes: ['Payments'],
     category: 'ZK Rollup',
     links: {
       websites: ['https://payy.network/'],

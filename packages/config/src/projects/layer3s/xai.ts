@@ -31,12 +31,12 @@ export const xai: Layer3 = orbitStackL3({
   discovery,
   hostChain: ProjectId('arbitrum'),
   badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum],
+  additionalPurposes: ['Gaming'],
   display: {
     name: 'Xai',
     slug: 'xai',
     description:
       'Xai is an Ethereum Layer-3 that leverages Arbitrum AnyTrust to enable open trade in the next generation of video games.',
-    purposes: ['Gaming'],
     links: {
       websites: ['https://xai.games/'],
       apps: [],

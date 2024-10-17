@@ -6,7 +6,7 @@ describe(formatNumber.name, () => {
   describe('default decimals', () => {
     const cases = [
       { value: 0, expected: '0.00' },
-      { value: 0.009, expected: '0.00', negativeExpected: '0.00' },
+      { value: 0.009, expected: '<0.01', negativeExpected: '>-0.01' },
       { value: 0.01, expected: '0.01' },
       { value: 0.19, expected: '0.19' },
       { value: 0.99, expected: '0.99' },
