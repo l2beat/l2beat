@@ -17,11 +17,11 @@ describe(HttpClient2.name, () => {
 
     it('throws error with context', async () => {
       const http = new HttpClient2({ maxRetries: 0 })
-      nock('https://api').get('/').reply(404, { message: 'info' })
+      nock('https://api').get('/').reply(404)
 
       await expect(
         async () => await http.fetch('https://api'),
-      ).toBeRejectedWith('HTTP error: 404 Not Found {"message":"info"}')
+      ).toBeRejectedWith('HTTP error: 404 Not Found')
     })
 
     it('supports custom timeout', async function () {

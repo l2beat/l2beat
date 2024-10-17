@@ -58,8 +58,7 @@ export class HttpClient2 {
     })
 
     if (!res.ok) {
-      const body = await res.text().catch(() => '')
-      throw new Error(`HTTP error: ${res.status} ${res.statusText} ${body}`)
+      throw new Error(`HTTP error: ${res.status} ${res.statusText}`)
     }
 
     return res.json()
