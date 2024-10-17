@@ -17,22 +17,22 @@
   "fields": {
     "proposer": {
       "target": {
-        "permissions": [{ "type": "propose", "delay": 0 }]
+        "permissions": [{ "type": "propose" }]
       }
     },
     "PROPOSER": {
       "target": {
-        "permissions": [{ "type": "propose", "delay": 0 }]
+        "permissions": [{ "type": "propose" }]
       }
     },
     "challenger": {
       "target": {
-        "permissions": [{ "type": "challenge", "delay": 0 }]
+        "permissions": [{ "type": "challenge" }]
       }
     },
     "CHALLENGER": {
       "target": {
-        "permissions": [{ "type": "challenge", "delay": 0 }]
+        "permissions": [{ "type": "challenge" }]
       }
     },
     "deletedOutputs": {

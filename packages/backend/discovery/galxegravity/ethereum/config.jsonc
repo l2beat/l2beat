@@ -80,7 +80,7 @@
         },
         "batchPosters": {
           "target": {
-            "permissions": [{ "type": "sequence", "delay": 0 }]
+            "permissions": [{ "type": "sequence" }]
           },
           "handler": {
             "type": "arbitrumActors",

@@ -5,7 +5,7 @@
   "fields": {
     "guardian": {
       "target": {
-        "permissions": [{ "type": "guard", "delay": 0 }]
+        "permissions": [{ "type": "guard" }]
       }
     }
   }
