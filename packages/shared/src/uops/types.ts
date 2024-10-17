@@ -2,7 +2,7 @@ export type Operation = StaticOperation | RecursiveOperation
 
 export interface StaticOperation {
   type: 'static'
-  name: string
+  name?: string
   count: number
 }
 
@@ -13,10 +13,10 @@ export interface RecursiveOperation {
 }
 
 export interface Method {
-  name: string
+  name?: string
   contractName?: string
   selector: string
-  signature: string
+  signature?: string
   count(calldata: string): Operation[]
 }
 

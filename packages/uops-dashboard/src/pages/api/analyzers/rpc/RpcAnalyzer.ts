@@ -14,10 +14,6 @@ import { FourByteClient } from '../../clients/signature/FourByteClient'
 import { OpenChainClient } from '../../clients/signature/OpenChainClient'
 import type { DB } from '../../db/db'
 
-import { generateId } from '../../utils/generateId'
-import { rankBlocks } from '../../utils/rankBlocks'
-import { traverseOperationTree } from '../../utils/traverseOperationTree'
-import type { Analyzer } from '../analyzer'
 import {
   ENTRY_POINT_ADDRESS_0_6_0,
   ENTRY_POINT_ADDRESS_0_7_0,
@@ -25,9 +21,13 @@ import {
   Method,
   Operation,
   SAFE_EXEC_TRANSACTION_SELECTOR,
-  SAFE_methods,
   SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
+  SAFE_methods,
 } from '@l2beat/shared'
+import { generateId } from '../../utils/generateId'
+import { rankBlocks } from '../../utils/rankBlocks'
+import { traverseOperationTree } from '../../utils/traverseOperationTree'
+import type { Analyzer } from '../analyzer'
 
 export class RpcAnalyzer implements Analyzer {
   private readonly provider: providers.Provider

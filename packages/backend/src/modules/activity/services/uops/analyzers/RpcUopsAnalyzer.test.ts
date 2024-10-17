@@ -1,3 +1,7 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
+import { expect, mockFn, mockObject } from 'earl'
+import { providers } from 'ethers'
+import { RpcUopsAnalyzer } from './RpcUopsAnalyzer'
 import {
   ENTRY_POINT_ADDRESS_0_6_0,
   ENTRY_POINT_ADDRESS_0_7_0,
@@ -5,10 +9,6 @@ import {
   SAFE_EXEC_TRANSACTION_SELECTOR,
   SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
 } from '@l2beat/shared'
-import { EthereumAddress } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
-import { providers } from 'ethers'
-import { RpcUopsAnalyzer } from './RpcUopsAnalyzer'
 
 describe(RpcUopsAnalyzer.name, () => {
   describe(RpcUopsAnalyzer.prototype.analyzeBlock.name, () => {
