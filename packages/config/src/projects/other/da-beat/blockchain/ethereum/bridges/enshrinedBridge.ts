@@ -1,8 +1,4 @@
-import {
-  DaAccessibilityRisk,
-  DaCommitteeSecurityRisk,
-  DaUpgradeabilityRisk,
-} from '../../../types'
+import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../../../types'
 import { DaBridge, EnshrinedBridge } from '../../../types/DaBridge'
 import { linkByDA } from '../../../utils/link-by-da'
 
@@ -35,7 +31,6 @@ export const enshrinedBridge: EnshrinedBridge = {
     bridge: (bridge) => bridge === 'Enshrined',
   }),
   risks: {
-    accessibility: DaAccessibilityRisk.Enshrined,
     committeeSecurity: DaCommitteeSecurityRisk.RobustAndDiverseCommittee(
       'Ethereum Validators',
     ),

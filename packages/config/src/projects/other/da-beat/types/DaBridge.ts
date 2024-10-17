@@ -3,13 +3,13 @@ import {
   ScalingProjectContracts,
   ScalingProjectPermission,
 } from '../../../../common'
-import { DaAccessibilityRisk } from './DaAccessibilityRisk'
 import { DaCommitteeSecurityRisk } from './DaCommitteeSecurityRisk'
 import { DaLinks } from './DaLinks'
 import { DaTechnology } from './DaTechnology'
 import { DacTransactionDataType } from './DacTransactionDataType'
 import { UsedInProject } from './UsedInProject'
 import { DaUpgradeabilityRisk } from './DaUpgradeabilityRisk'
+import { DaRelayerFailureRisk } from './DaRelayerFailureRisk'
 
 export type DaBridge =
   | NoDaBridge
@@ -91,6 +91,6 @@ export type DaBridgeRisks = {
   committeeSecurity: DaCommitteeSecurityRisk
   /** Upgradeability - TBD. @unit seconds. */
   upgradeability: DaUpgradeabilityRisk
-  /** Accessibility - TBD. */
-  accessibility: DaAccessibilityRisk
+  /** Relayer failure - TBD. */
+  relayerFailure: DaRelayerFailureRisk
 }

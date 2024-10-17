@@ -1,7 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../../../../../discovery/ProjectDiscovery'
-import { DaAccessibilityRisk } from '../../../types/DaAccessibilityRisk'
 import { DaBridge } from '../../../types/DaBridge'
 import { DaUpgradeabilityRisk } from '../../../types/DaUpgradeabilityRisk'
 import { DaCommitteeSecurityRisk } from '../../../types'
@@ -90,7 +89,6 @@ export const vector = {
   risks: {
     committeeSecurity:
       DaCommitteeSecurityRisk.RobustAndDiverseCommittee('Avail Validators'),
-    accessibility: DaAccessibilityRisk.NotEnshrined,
     upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
   },
 } satisfies DaBridge

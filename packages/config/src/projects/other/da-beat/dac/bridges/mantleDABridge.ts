@@ -1,11 +1,7 @@
 import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
 import { mantle } from '../../../../layer2s/mantle'
-import {
-  DaAccessibilityRisk,
-  DaCommitteeSecurityRisk,
-  DaUpgradeabilityRisk,
-} from '../../types'
+import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../../types'
 import { DaBridge } from '../../types/DaBridge'
 import { DacTransactionDataType } from '../../types/DacTransactionDataType'
 import { toUsedInProject } from '../../utils/to-used-in-project'
@@ -126,7 +122,6 @@ export const mantleDABridge = {
   usedIn: toUsedInProject([mantle]),
   risks: {
     committeeSecurity: DaCommitteeSecurityRisk.NoCommiteeSecurity(),
-    accessibility: DaAccessibilityRisk.NotEnshrined,
     upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
   },
 } satisfies DaBridge

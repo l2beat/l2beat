@@ -9,7 +9,6 @@ import { DaEconomicSecurity } from './DaEconomicSecurity'
 import { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
 import { DaLinks } from './DaLinks'
-import { DaRelayerFailureRisk } from './DaRelayerFailureRisk'
 import { DaTechnology } from './DaTechnology'
 import { DataAvailabilitySampling } from './DataAvailabilitySampling'
 import { UsedInProject } from './UsedInProject'
@@ -57,7 +56,6 @@ export type CommonDaLayer = {
 export type DaLayerRisks = {
   economicSecurity: DaEconomicSecurityRisk
   fraudDetection: DaFraudDetectionRisk
-  relayerFailure: DaRelayerFailureRisk
 }
 
 interface DaLayerDisplay {

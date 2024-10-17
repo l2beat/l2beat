@@ -2,7 +2,6 @@ import { merge } from 'lodash'
 import { Layer2 } from '../../../layer2s'
 import { Layer3 } from '../../../layer3s'
 import {
-  DaAccessibilityRisk,
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
   DaFraudDetectionRisk,
@@ -102,8 +101,6 @@ export function DAC(template: TemplateVars): DacDaLayer {
       // TODO: make it required and remove the default
       upgradeability:
         template.risks?.upgradeability ?? DaUpgradeabilityRisk.Immutable,
-      accessibility:
-        template.risks?.accessibility ?? DaAccessibilityRisk.NotEnshrined,
     },
   }
 

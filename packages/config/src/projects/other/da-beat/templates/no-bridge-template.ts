@@ -1,5 +1,4 @@
 import {
-  DaAccessibilityRisk,
   DaBridgeRisks,
   DaCommitteeSecurityRisk,
   DaUpgradeabilityRisk,
@@ -60,7 +59,6 @@ export function NO_BRIDGE(template: TemplateVars): NoDaBridge {
   }
 
   const risks = {
-    accessibility: DaAccessibilityRisk.NotEnshrined,
     committeeSecurity: DaCommitteeSecurityRisk.NoBridge,
     upgradeability: DaUpgradeabilityRisk.NoBridge,
     ...template.risks,

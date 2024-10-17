@@ -1,10 +1,6 @@
 import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
-import {
-  DaAccessibilityRisk,
-  DaCommitteeSecurityRisk,
-  DaUpgradeabilityRisk,
-} from '../../types'
+import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../../types'
 import { DaBridge } from '../../types/DaBridge'
 import { DacTransactionDataType } from '../../types/DacTransactionDataType'
 import { toUsedInProject } from '../../utils/to-used-in-project'
@@ -217,7 +213,6 @@ export const eigenDAbridge = {
   usedIn: toUsedInProject([]),
   risks: {
     committeeSecurity: DaCommitteeSecurityRisk.LimitedCommitteeSecurity(),
-    accessibility: DaAccessibilityRisk.NotEnshrined,
     upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(0),
   },
 } satisfies DaBridge
