@@ -159,4 +159,15 @@ describe('layer3s', () => {
       }
     }
   })
+
+  describe('other category projects have proposer and challenger', () => {
+    for (const layer3 of layer3s) {
+      if (layer3.display.category === 'Other') {
+        it(layer3.display.name, () => {
+          expect(layer3.display.proposer).not.toEqual(undefined)
+          expect(layer3.display.challenger).not.toEqual(undefined)
+        })
+      }
+    }
+  })
 })

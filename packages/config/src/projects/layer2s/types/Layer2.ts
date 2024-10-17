@@ -75,7 +75,7 @@ export interface Layer2 {
   discoveryDrivenData?: boolean
 }
 
-export interface Layer2Display extends ScalingProjectDisplay {
+export type Layer2Display = ScalingProjectDisplay & {
   /** Technology provider */
   provider?: Layer2Provider
   /** Tooltip contents for liveness tab for given project */

@@ -22,12 +22,12 @@ export interface UnderReviewConfigCommon {
 }
 
 export interface UnderReviewConfigL2 extends UnderReviewConfigCommon {
-  display: Omit<Layer2Display, 'dataAvailabilityMode'>
+  display: Layer2Display
   associatedTokens?: string[]
 }
 
 export interface UnderReviewConfigL3 extends UnderReviewConfigCommon {
-  display: Omit<Layer3Display, 'dataAvailabilityMode'>
+  display: Layer3Display
   hostChain: Layer3['hostChain']
   associatedTokens?: string[]
 }
@@ -37,9 +37,7 @@ export function underReviewL2(templateVars: UnderReviewConfigL2): Layer2 {
     isUnderReview: true,
     type: 'layer2',
     id: ProjectId(templateVars.id),
-    display: {
-      ...templateVars.display,
-    },
+    display: templateVars.display,
     stage: {
       stage:
         templateVars.display.category === 'Optimistic Rollup' ||
