@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "State batches / commitments get posted here.",
+  "displayName": "SequencerInbox",
+  "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
   "ignoreMethods": ["inboxAccs"],
   "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
   "fields": {
@@ -12,9 +13,18 @@
         "type": "arbitrumSequencerVersion"
       }
     },
-    "dacKeyset": {
+    "batchPosters": {
+      "target": {
+        "permissions": [
+          {
+            "type": "sequence",
+            "description": "can submit transaction batches or commitments to the SequencerInbox contract on the hostchain."
+          }
+        ]
+      },
       "handler": {
-        "type": "arbitrumDACKeyset"
+        "type": "arbitrumActors",
+        "actorType": "batchPoster"
       }
     },
     // when this changes, it means the sequencers have changed
@@ -29,13 +39,9 @@
         ]
       }
     },
-    "batchPosters": {
-      "target": {
-        "role": "Sequencer"
-      },
+    "dacKeyset": {
       "handler": {
-        "type": "arbitrumActors",
-        "actorType": "batchPoster"
+        "type": "arbitrumDACKeyset"
       }
     },
     "keySetUpdates": {
