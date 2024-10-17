@@ -12,7 +12,7 @@ interface HttpClient2Options {
 const DEFAULT_HTTP_RETRY_STRATEGY = {
   timeoutMs: 10_000,
   initialRetryDelayMs: 1000,
-  maxRetries: 4, // 2 4 8 16 = 30s
+  maxRetries: 5, // 2 4 8 16 32 ~ 1min
   maxRetryDelayMs: Infinity,
 }
 
