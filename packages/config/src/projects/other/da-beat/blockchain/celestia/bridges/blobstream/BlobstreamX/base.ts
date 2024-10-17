@@ -97,7 +97,7 @@ export const blobstreamBase = CELESTIA_BLOBSTREAM({
       {
         category: 'Funds can be lost if',
         text: 'the bridge contract or its dependencies receive a malicious code upgrade. There is no delay on code upgrades.',
-      }
+      },
     ],
   },
   permissions: [
