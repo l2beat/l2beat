@@ -43,13 +43,10 @@ export type DacBridge = CommonDaBridge & {
   type: 'DAC'
   /** The chain the DAC attests data on. */
   chain: ChainId
+  /**  Total members count.  */
+  membersCount: number
   /** Data about the DAC members. */
-  members:
-    | {
-        type: 'public'
-        list: { external: boolean; name: string; href: string }[]
-      }
-    | { type: 'unknown'; count: number }
+  knownMembers?: { external: boolean; name: string; href: string }[]
   /** Minimum number of members required to sign and attest the data. */
   requiredMembers: number
   /** The type of data. */

@@ -22,11 +22,8 @@ export const committeeSecurityRisk: DaBeatProjectProcessor = (layer) => {
           ...bridge.risks,
           committeeSecurity: DaCommitteeSecurityRisk.Auto({
             resolved: {
-              value: `${bridge.requiredMembers}/${bridge.members.type === 'unknown' ? bridge.members.count : bridge.members.list.length}`,
-              sentiment: getDacSentiment({
-                members: bridge.members,
-                requiredMembers: bridge.requiredMembers,
-              }),
+              value: `${bridge.requiredMembers}/${bridge.membersCount}`,
+              sentiment: getDacSentiment(bridge),
               description: 'TODO',
             },
           }),
@@ -37,24 +34,24 @@ export const committeeSecurityRisk: DaBeatProjectProcessor = (layer) => {
 }
 
 function getDacSentiment(config?: {
-  members: DacBridge['members']
+  membersCount: number
+  knownMembers?: DacBridge['knownMembers']
   requiredMembers: number
 }) {
-  if (!config || config.members.type === 'unknown') return 'bad'
+  if (!config || !config.knownMembers) return 'bad'
 
-  const assumedHonestMembers =
-    config.members.list.length - config.requiredMembers + 1
+  const assumedHonestMembers = config.membersCount - config.requiredMembers + 1
 
   // If less than 6 members or more than 1/3 of members need to be honest, the sentiment is bad
   if (
-    config.members.list.length < 6 ||
-    assumedHonestMembers / config.members.list.length > 1 / 3
+    config.knownMembers.length < 6 ||
+    assumedHonestMembers / config.knownMembers.length > 1 / 3
   ) {
     return 'bad'
   }
 
   // If less than 5 members are external, the sentiment is bad
-  if (config.members.list.filter((member) => member.external).length < 5) {
+  if (config.knownMembers.filter((member) => member.external).length < 5) {
     return 'bad'
   }
 
