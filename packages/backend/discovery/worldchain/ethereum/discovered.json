@@ -1,8 +1,8 @@
 {
   "name": "worldchain",
   "chain": "ethereum",
-  "blockNumber": 20970561,
-  "configHash": "0x47642483b0e76bbf95d9b9e5359b4db14f7b40e614823acd2c7c68d26828da4f",
+  "blockNumber": 20986974,
+  "configHash": "0xd9e8a4bf7695647472a58433bf0bbd7a8d8cc6cd794cf1ec2ce42075c902b2bd",
   "contracts": [
     {
       "name": "L1OpUSDCBridgeAdapter",
@@ -68,6 +68,16 @@
       ],
       "issuedPermissions": [
         {
+          "permission": "challenge",
+          "target": "0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0x2307278fC8aB0005974A6DeD2FA6d1187333a223",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d",
           "via": [
@@ -106,10 +116,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 4825800,
-        "latestOutputIndex": 2680,
-        "nextBlockNumber": 4827600,
-        "nextOutputIndex": 2681,
+        "latestBlockNumber": 4924800,
+        "latestOutputIndex": 2735,
+        "nextBlockNumber": 4926600,
+        "nextOutputIndex": 2736,
         "proposer": "0x2307278fC8aB0005974A6DeD2FA6d1187333a223",
         "PROPOSER": "0x2307278fC8aB0005974A6DeD2FA6d1187333a223",
         "startingBlockNumber": 0,
@@ -265,6 +275,11 @@
           "via": []
         },
         {
+          "permission": "sequence",
+          "target": "0xdBBE3D8c2d2b22A2611c5A94A9a12C2fCD49Eb29",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d",
           "via": [
@@ -397,6 +412,11 @@
       "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
         {
+          "permission": "guard",
+          "target": "0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d",
           "via": [
@@ -474,6 +494,11 @@
       ],
       "issuedPermissions": [
         {
+          "permission": "guard",
+          "target": "0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d",
           "via": [
@@ -505,8 +530,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 1301449,
-          "prevBlockNum": 20970526
+          "prevBoughtGas": 491310,
+          "prevBlockNum": 20986971
         },
         "paused": false,
         "superchainConfig": "0xa231f8be37e583f276f93dF516D88a043bfe47E3",
@@ -591,7 +616,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621904",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622717",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -617,7 +642,12 @@
     { "address": "0x2270d6eC8E760daA317DD978cFB98C8f144B1f3A" },
     {
       "address": "0x2307278fC8aB0005974A6DeD2FA6d1187333a223",
-      "roles": ["Proposer"]
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "target": "0x19A6d1E9034596196295CF148509796978343c5D"
+        }
+      ]
     },
     {
       "address": "0x28fAb3A5b69711cc64B09240d2694d9F0f07eBf6",
@@ -630,8 +660,11 @@
     },
     {
       "address": "0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d",
-      "roles": ["Challenger", "Guardian"],
       "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x19A6d1E9034596196295CF148509796978343c5D"
+        },
         {
           "permission": "configure",
           "target": "0x5891090d5085679714cb0e62f74950a3c19146a8",
@@ -645,6 +678,14 @@
           "permission": "configure",
           "target": "0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+        },
+        {
+          "permission": "guard",
+          "target": "0xa231f8be37e583f276f93dF516D88a043bfe47E3"
+        },
+        {
+          "permission": "guard",
+          "target": "0xd5ec14a83B7d95BE1E2Ac12523e2dEE12Cbeea6C"
         },
         {
           "permission": "upgrade",
@@ -707,7 +748,12 @@
     },
     {
       "address": "0xdBBE3D8c2d2b22A2611c5A94A9a12C2fCD49Eb29",
-      "roles": ["Sequencer"]
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A"
+        }
+      ]
     },
     { "address": "0xff00000000000000000000000000000000000480" }
   ],
@@ -1165,10 +1211,10 @@
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
-    "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
+    "opstack/L2OutputOracle": "0xfc8737561d85bab2fe5e39a7a02436a0cb0e7f96d7a7adc2ee3ea486b391c2fc",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
-    "opstack/OptimismPortal": "0x2a32f6874a8c0e85e685fa944143e7968d675fed43b46e7385411ad11f8a1a43",
-    "opstack/SuperchainConfigFake": "0x17951c3ed31f2fe002926d8927d2f05c9fd3502df1cad17c765d965c1e3f07a6",
-    "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
+    "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",
+    "opstack/SuperchainConfigFake": "0x53a7342e3ad0ea230608a115aa098bc297d88c30ea6560b549c25853b184cc7b",
+    "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"
   }
 }
