@@ -26,7 +26,7 @@ export function CELESTIA_BLOBSTREAM(base: TemplateVars): OnChainDaBridge {
     `Cannot template CELESTIA_BLOBSTREAM - chain ${base.chain} not found among known chains`,
   )
 
-  const id = `blobstream-${chain.name}`
+  const id = `blobstream`
   const display = {
     name: `Blobstream on ${capitalize(chain.name)}`,
     slug: id,
