@@ -5,6 +5,7 @@ import {
 import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { cn } from '~/utils/cn'
+import { sentimentToFillColor } from '~/utils/sentiment'
 import { UnderReviewBadge } from '../../badge/under-review-badge'
 import {
   Tooltip,
@@ -15,7 +16,6 @@ import { SentimentText } from '../../sentiment-text'
 import { WarningBar } from '../../warning-bar'
 import { NoInfoCell } from './no-info-cell'
 import { TwoRowCell } from './two-row-cell'
-import { sentimentToFillColor } from '~/utils/sentiment'
 
 interface Risk {
   value: string
@@ -54,16 +54,13 @@ export function RiskCell({ risk, emptyMode = 'no-info' }: Props) {
           <RoundedWarningIcon
             className={cn(
               'size-3.5 md:size-4',
-              sentimentToFillColor(risk.warning.sentiment)
+              sentimentToFillColor(risk.warning.sentiment),
             )}
           />
         )}
       </TwoRowCell.First>
       {risk.secondLine && (
-        <TwoRowCell.Second
-        >
-          {risk.secondLine}
-        </TwoRowCell.Second>
+        <TwoRowCell.Second>{risk.secondLine}</TwoRowCell.Second>
       )}
     </TwoRowCell>
   )
