@@ -74,7 +74,7 @@ export function RiskCell({ risk, emptyMode = 'no-info' }: Props) {
   if (risk.description) {
     return (
       <Tooltip>
-        <TooltipTrigger asChild>{trigger}</TooltipTrigger>
+        <TooltipTrigger>{trigger}</TooltipTrigger>
         <TooltipContent>
           {risk.warning && (
             <WarningBar
