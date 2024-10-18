@@ -3647,12 +3647,6 @@
   ],
   "scroll": [
     {
-      "symbol": "NURI",
-      "address": "0xAAAE8378809bb8815c08D3C59Eb0c7D1529aD769",
-      "source": "native",
-      "supply": "totalSupply" // CG does not have circulating but seems fully liquid
-    },
-    {
       "symbol": "SolvBTC",
       "address": "0x3Ba89d490AB1C0c9CC2313385b30710e838370a4",
       "supply": "totalSupply",

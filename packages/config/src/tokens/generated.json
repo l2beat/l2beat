@@ -9216,20 +9216,6 @@
       }
     },
     {
-      "name": "NURI Token",
-      "coingeckoId": "nuri-exchange",
-      "address": "0xAAAE8378809bb8815c08D3C59Eb0c7D1529aD769",
-      "symbol": "NURI",
-      "decimals": 18,
-      "deploymentTimestamp": 1708049272,
-      "coingeckoListingTimestamp": 1719187200,
-      "category": "other",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/38831/large/nuri_discord.png?1723623524",
-      "chainId": 534352,
-      "source": "native",
-      "supply": "totalSupply"
-    },
-    {
       "name": "Staked USDe",
       "coingeckoId": "ethena-staked-usde",
       "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",

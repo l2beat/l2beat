@@ -1,5 +1,12 @@
 {
   "$schema": "../../../../discovery/schemas/contract.v2.schema.json",
   "ignoreInWatchMode": ["nonce"],
-  "ignoreMethods": ["getThreshold", "getOwners"]
+  "ignoreMethods": ["getThreshold", "getOwners"],
+  "fields": {
+    "GnosisSafe_modules": {
+      "target": {
+        "permissions": [{ "type": "act" }]
+      }
+    }
+  }
 }

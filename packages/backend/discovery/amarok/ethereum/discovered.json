@@ -87,6 +87,12 @@
         "0xcecd27c998c8fd83d7532693da2bdff346a1dbedbaab4744f21d2bcf1986e9de"
       ],
       "proxyType": "gnosis safe zodiac module",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625"
+        }
+      ],
       "sinceTimestamp": 1693752671,
       "values": {
         "$immutable": false,
@@ -2753,6 +2759,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
   }
 }

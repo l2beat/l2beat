@@ -481,13 +481,16 @@ export const PROPOSER_SELF_PROPOSE_ROOTS: ScalingProjectRiskViewEntry = {
 export function EXIT_WINDOW(
   upgradeDelay: number,
   exitDelay: number,
-  upgradeDelay2?: number,
-  existsBlocklist: boolean = false,
+  options: {
+    upgradeDelay2?: number
+    existsBlocklist?: boolean
+    multisig?: { threshold: number; count: number }
+  } = {},
 ): ScalingProjectRiskViewEntry {
   let window: number = upgradeDelay - exitDelay
   const windowText = window <= 0 ? 'None' : formatSeconds(window)
-  if (upgradeDelay2 !== undefined) {
-    const window2: number = upgradeDelay2 - exitDelay
+  if (options.upgradeDelay2 !== undefined) {
+    const window2: number = options.upgradeDelay2 - exitDelay
     const windowString2 = window2 <= 0 ? 'None' : formatSeconds(window2)
     if (windowText !== windowString2) {
       window = Math.min(window, window2)
@@ -511,13 +514,16 @@ export function EXIT_WINDOW(
         )} delay before a regular upgrade is applied${instantlyUpgradable}, and withdrawals can take up to ${formatSeconds(
           exitDelay,
         )} to be processed.`) +
-    (existsBlocklist
+    (options.existsBlocklist
       ? ' Users can be explicitly censored from withdrawing (Blocklist on L1).'
       : '')
 
   return {
     value: windowText,
     description: description,
+    secondLine: options.multisig
+      ? `${options.multisig.threshold}/${options.multisig.count} Multisig`
+      : undefined,
     sentiment,
     definingMetric: window,
   }
