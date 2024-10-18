@@ -1,3 +1,4 @@
+import { ScalingProjectTechnologyChoice } from '../../../../common'
 import { DataAvailabilityLayer as ScalingDaLayerOption } from '../../../../common'
 import {
   DacBridge,
@@ -56,6 +57,8 @@ export type CommonDaLayer = {
   usedIn: UsedInProject[]
   /** Risks associated with the data availability layer. */
   risks: DaLayerRisks
+  /** Other considerations */
+  otherConsiderations?: ScalingProjectTechnologyChoice[]
 }
 
 export type DaLayerRisks = {
