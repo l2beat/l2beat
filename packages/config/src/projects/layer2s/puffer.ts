@@ -21,7 +21,7 @@ export const puffer: Layer2 = upcomingL2({
       socialMedia: [
         'https://x.com/puffer_unifi',
         'https://discord.com/invite/pufferfi',
-        'https://medium.com/@puffer.fi',
+        'https://medium.com/puffer-fi',
       ],
     },
   },
