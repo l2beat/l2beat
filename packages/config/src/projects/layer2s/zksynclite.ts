@@ -188,7 +188,9 @@ export const zksynclite: Layer2 = {
       ],
     },
     exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay, 0),
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay, {
+        upgradeDelay2: 0,
+      }),
       sentiment: 'warning',
       description: `Users have ${formatSeconds(
         upgradeDelay - forcedWithdrawalDelay,

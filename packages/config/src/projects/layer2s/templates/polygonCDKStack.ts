@@ -118,7 +118,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     ...RISK_VIEW.EXIT_WINDOW(
       upgradeDelay,
       trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
-      0,
+      { upgradeDelay2: 0 },
     ),
     description: `Even though there is a ${upgradeDelayString} Timelock for upgrades, forced transactions are disabled. Even if they were to be enabled, user withdrawals can be censored up to ${formatSeconds(
       trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
