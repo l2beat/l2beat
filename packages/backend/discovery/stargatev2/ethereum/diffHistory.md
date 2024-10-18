@@ -1,3 +1,67 @@
+Generated with discovered.json: 0x4815715b5451877d64fdbff7933f942e74d40816
+
+# Diff at Fri, 18 Oct 2024 11:01:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@0295165a89d86b7450439f24f100d1baa74381fc block: 20340229
+- current block number: 20340229
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20340229 (main branch discovery), not current.
+
+```diff
+    contract Stargate Verifier (0x8FafAE7Dd957044088b3d0F67359C327c6200d18) {
+    +++ description: None
+      unverified:
+-        true
+      values.allowlistSize:
++        0
+      values.DEFAULT_ADMIN_ROLE:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.defaultMultiplierBps:
++        12000
+      values.paused:
++        false
+      values.priceFeed:
++        "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113"
+      values.quorum:
++        1
+      values.signerSize:
++        1
+      values.vid:
++        101
+      values.workerFeeLib:
++        "0xd0ab8512CF4907bD94CDb5fE7d0C324E666c4006"
+      sourceHashes:
++        ["0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract  (0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xd0ab8512CF4907bD94CDb5fE7d0C324E666c4006)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x814d12129d0fc192efca6b68d1d0490e105b370b
 
 # Diff at Mon, 14 Oct 2024 10:56:18 GMT:

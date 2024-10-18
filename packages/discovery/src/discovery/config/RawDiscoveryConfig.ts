@@ -77,6 +77,7 @@ export const DiscoveryCustomType = z
 export type DiscoveryContract = z.infer<typeof DiscoveryContract>
 export const DiscoveryContract = z.object({
   extends: z.optional(z.string()),
+  canActIndependently: z.boolean().optional(),
   ignoreDiscovery: z.optional(z.boolean()),
   proxyType: z.optional(ManualProxyType),
   displayName: z.string().optional(),

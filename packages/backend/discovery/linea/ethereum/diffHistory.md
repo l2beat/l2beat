@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x5f40de8e0cb83216d42503be0c8d068da862a1db
+
+# Diff at Fri, 18 Oct 2024 10:56:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@0295165a89d86b7450439f24f100d1baa74381fc block: 20934247
+- current block number: 20934247
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20934247 (main branch discovery), not current.
+
+```diff
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]
+    }
+```
+
 Generated with discovered.json: 0x88c0a18d920ef566720eea6c23276ed64b5884f5
 
 # Diff at Mon, 14 Oct 2024 10:52:28 GMT:

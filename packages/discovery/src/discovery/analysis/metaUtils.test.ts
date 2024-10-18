@@ -66,6 +66,7 @@ describe('metaUtils', () => {
       expect(result).toEqual({
         displayName: 'ContractA',
         descriptions: ['description 1', 'description 2', 'description 3'],
+        canActIndependently: false,
         permissions: [
           {
             type: 'configure',
@@ -223,6 +224,7 @@ describe('metaUtils', () => {
 
       expect(result).toEqual({
         '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
+          canActIndependently: false,
           displayName: undefined,
           descriptions: undefined,
           permissions: [
@@ -240,6 +242,7 @@ describe('metaUtils', () => {
           types: new Set(['CODE_CHANGE']),
         },
         '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
+          canActIndependently: false,
           displayName: undefined,
           categories: new Set(['Core', 'Gateways&Escrows']),
           descriptions: undefined,
@@ -263,6 +266,7 @@ describe('metaUtils', () => {
           types: new Set(['EXTERNAL', 'L2']),
         },
         '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
+          canActIndependently: false,
           displayName: undefined,
           categories: new Set(['Core', 'Gateways&Escrows']),
           descriptions: undefined,
@@ -383,6 +387,7 @@ describe('metaUtils', () => {
       expect(result).toEqual({
         // merged:
         '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
+          canActIndependently: false,
           displayName: undefined,
           descriptions: ['Important contract', 'Very important contract'],
           permissions: [
@@ -402,6 +407,7 @@ describe('metaUtils', () => {
           severity: 'MEDIUM',
         },
         '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
+          canActIndependently: false,
           displayName: undefined,
           descriptions: ['The resource config of the contract'],
           permissions: [
@@ -421,6 +427,7 @@ describe('metaUtils', () => {
           severity: 'HIGH',
         },
         '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
+          canActIndependently: false,
           displayName: undefined,
           descriptions: ['The resource config of the contract'],
           permissions: [

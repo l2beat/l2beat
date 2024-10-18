@@ -1,3 +1,34 @@
+Generated with discovered.json: 0xe9ed5a88909da1153b8e56ed2c5a4d6cdfb8052d
+
+# Diff at Fri, 18 Oct 2024 11:03:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@0295165a89d86b7450439f24f100d1baa74381fc block: 264777898
+- current block number: 264777898
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 264777898 (main branch discovery), not current.
+
+```diff
+    contract L2UpgradeExecutor (0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) {
+    +++ description: None
+      directlyReceivedPermissions.2:
++        {"permission":"act","target":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      directlyReceivedPermissions.1:
++        {"permission":"act","target":"0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"}
+      directlyReceivedPermissions.0.target:
+-        "0xdb216562328215E010F819B5aBe947bad4ca961e"
++        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
+    }
+```
+
 Generated with discovered.json: 0xb016dee600b5b0b34d789a434312cbd165d812af
 
 # Diff at Thu, 17 Oct 2024 14:09:14 GMT:
