@@ -724,6 +724,7 @@ export class ProjectDiscovery {
       result.push({
         ...roleDescriptions[role],
         accounts,
+        fromRole: true,
       })
     }
     return result
