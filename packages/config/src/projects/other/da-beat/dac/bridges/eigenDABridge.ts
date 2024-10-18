@@ -23,8 +23,8 @@ const EigenTimelockUpgradeDelay = eigenDiscovery.getContractValue<number>(
 )
 
 const eigenLayerUpgrades = {
-  upgradableBy: ['EigenLayerCommunityMutlisig', 'EigenLayerOperationsMultisig'],
-  upgradeDelay: `${formatSeconds(EigenTimelockUpgradeDelay)} delay via EigenLayerOperationsMultisig, no delay via EigenLayerCommunityMutlisig.`,
+  upgradableBy: ['EigenLayerCommunityMultisig', 'EigenLayerOperationsMultisig'],
+  upgradeDelay: `${formatSeconds(EigenTimelockUpgradeDelay)} delay via EigenLayerOperationsMultisig, no delay via EigenLayerCommunityMultisig.`,
 }
 
 const EIGENUpgradeDelay = eigenDiscovery.getContractValue<number>(
@@ -289,7 +289,7 @@ export const eigenDAbridge = {
       'This multisig is the owner of the EigenDAServiceManager contract. It holds the power to change the contract state and upgrade the bridge.',
     ),
     ...eigenDiscovery.getMultisigPermission(
-      'EigenLayerCommunityMutlisig',
+      'EigenLayerCommunityMultisig',
       'This multisig is one of the owners of EigenLayerExecutorMultisig and can upgrade EigenLayer core contracts without delay.',
     ),
   ],
