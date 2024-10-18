@@ -17,10 +17,7 @@ export class StarknetUopsAnalyzer implements Analyzer {
     }
   }
 
-  private getOperationsCount(
-    tx: StarknetTransaction,
-    blockNumber: number,
-  ): number {
+  getOperationsCount(tx: StarknetTransaction, blockNumber: number): number {
     // Starknet has different execute signatures over time:
     //	- up to block 2999 it's a single-call only, calldata is pointing directly to a contract so we count it as 1
     //	- since block 3000 up to 299 999 it's a multi-call with signature  __execute__(call_array_len, call_array, calldata_len, calldata, nonce)
