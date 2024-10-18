@@ -3,6 +3,9 @@ import { ProjectDiscovery } from '../../../../../../../../discovery/ProjectDisco
 import { DaAttestationSecurityRisk } from '../../../../../types/DaAttestationSecurityRisk'
 import { DaExitWindowRisk } from '../../../../../types/DaExitWindowRisk'
 import { CELESTIA_BLOBSTREAM } from '../template'
+import { DaCommitteeSecurityRisk } from '../../../../../types/DaCommitteeSecurityRisk'
+import { DaUpgradeabilityRisk } from '../../../../../types/DaUpgradeabilityRisk'
+import { DaRelayerFailureRisk } from '../../../../../types/DaRelayerFailureRisk'
 
 const ethereumDiscovery = new ProjectDiscovery('blobstream')
 const arbitrumDiscovery = new ProjectDiscovery('blobstream', 'arbitrum')
@@ -234,7 +237,10 @@ export const SP1Blobstream = CELESTIA_BLOBSTREAM({
     ],
   },
   risks: {
-    attestations: DaAttestationSecurityRisk.SigVerifiedZK(true),
-    exitWindow: DaExitWindowRisk.LowOrNoDelay(0), // TIMELOCK_ROLE is 4/6 multisig
+    committeeSecurity: DaCommitteeSecurityRisk.RobustAndDiverseCommittee(
+      'Celestia Validators',
+    ),
+    upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(0), // TIMELOCK_ROLE is 4/6 multisig
+    relayerFailure: DaRelayerFailureRisk.NoMechanism,
   },
 })
