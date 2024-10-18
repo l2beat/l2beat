@@ -179,7 +179,7 @@ export function opStackCommon(
         ?.stateCorrectness ?? {
         name: 'Fraud proofs are not enabled',
         description:
-          'OP Stack projects can use the OP fault proof system, already being deployed on some. This project though is not using fault proofs yet and it is relying on the honesty of the permissioned Proposer and Challengers to ensure state correctness. The smart contract system permits invalid state roots.',
+          'OP Stack projects can use the OP fault proof system, already being deployed on some. This project though is not using fault proofs yet and is relying on the honesty of the permissioned Proposer and Challengers to ensure state correctness. The smart contract system permits invalid state roots.',
         risks: [
           {
             category: 'Funds can be stolen if',
