@@ -12,7 +12,7 @@ export const kontos: Layer2 = underReviewL2({
     category: 'ZK Rollup',
     links: {
       websites: ['https://kontos.io/'],
-      apps: [],
+      apps: ['https://wallet.kontos.io/'],
       documentation: ['https://docs.kontos.io/'],
       explorers: ['https://explorer.kontos.io/'],
       repositories: ['https://twitter.com/kontosio'],
