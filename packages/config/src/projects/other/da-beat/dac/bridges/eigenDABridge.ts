@@ -295,7 +295,7 @@ export const eigenDAbridge = {
     eigenDiscovery.contractAsPermissioned(
       eigenDiscovery.getContract('EigenLayer Timelock'),
       'The timelock contract for upgrading EigenLayer core contracts via EigenLayerOperationsMultisig.',
-    )
+    ),
   ],
   chain: ChainId.ETHEREUM,
   requiredMembers: 0, // currently 0 since threshold is not enforced
