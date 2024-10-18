@@ -16,9 +16,6 @@ import { getLatestPriceForConfigurations } from './get-latest-price-for-configur
 import { recordToSortedBreakdown } from './record-to-sorted-breakdown'
 import { type BreakdownRecord, type CanonicalAssetBreakdownData } from './types'
 
-const SHARED_ESCROW_WARNING =
-  'Does not account for differences in locked value due to pending deposits and withdrawals.'
-
 export function getTvlBreakdown(configMapping: ConfigMapping) {
   return async function (projectId: ProjectId, target?: UnixTime) {
     const targetTimestamp =
@@ -70,7 +67,7 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
       switch (config.source) {
         case 'canonical': {
           const address = getTokenAddress(config)
-          const isSharedEscrowFlag = isSharedEscrow(config)
+          const isSharedEscrow = getIsSharedEscrow(config)
           assert(
             config.type !== 'totalSupply' &&
               config.type !== 'circulatingSupply',
@@ -85,7 +82,7 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
               usdValue: valueAsNumber,
               escrowAddress: config.escrowAddress,
               ...(config.type === 'preminted' ? { isPreminted: true } : {}),
-              warning: isSharedEscrowFlag ? SHARED_ESCROW_WARNING : undefined,
+              isSharedEscrow,
             })
           } else {
             breakdown.canonical.set(priceConfig.assetId, {
@@ -101,9 +98,7 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
                   usdValue: valueAsNumber,
                   escrowAddress: config.escrowAddress,
                   ...(config.type === 'preminted' ? { isPreminted: true } : {}),
-                  warning: isSharedEscrowFlag
-                    ? SHARED_ESCROW_WARNING
-                    : undefined,
+                  isSharedEscrow,
                 },
               ],
             })
@@ -153,7 +148,7 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
   }
 }
 
-function isSharedEscrow(config: AmountConfigEntry) {
+function getIsSharedEscrow(config: AmountConfigEntry) {
   switch (config.type) {
     case 'aggLayerL2Token':
     case 'aggLayerNativeEtherPreminted':

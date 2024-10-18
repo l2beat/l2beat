@@ -5,8 +5,11 @@ import {
 } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
-import { PermissionConfiguration } from '../config/RawDiscoveryConfig'
-import { Permission, ResolvedPermission } from './resolvePermissions'
+import {
+  Permission,
+  PermissionConfiguration,
+} from '../config/RawDiscoveryConfig'
+import { ResolvedPermission } from './resolvePermissions'
 
 export function transformToIssued(
   forAddress: EthereumAddress,

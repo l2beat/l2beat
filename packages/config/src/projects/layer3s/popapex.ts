@@ -10,6 +10,7 @@ const discovery = new ProjectDiscovery('popapex', 'arbitrum')
 
 export const popapex: Layer3 = orbitStackL3({
   badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum, Badge.RaaS.Conduit],
+  additionalPurposes: ['Gaming'],
   discovery,
   hostChain: ProjectId('arbitrum'),
   bridge: discovery.getContract('Bridge'),
@@ -21,7 +22,6 @@ export const popapex: Layer3 = orbitStackL3({
     slug: 'popapex',
     description:
       'Proof of Play Apex is a gaming-focused L3 settling on Arbitrum using the Orbit Stack and AnyTrust DA.',
-    purposes: ['Gaming', 'NFT'],
     links: {
       websites: ['https://proofofplay.com/'],
       apps: [
@@ -48,7 +48,7 @@ export const popapex: Layer3 = orbitStackL3({
   },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
-      'ProofOfPlayMultisig',
+      'ConduitMultisig2',
       (() => {
         const discoveredAdminOwner = discovery.getAddressFromValue(
           'ProxyAdmin',
@@ -60,9 +60,8 @@ export const popapex: Layer3 = orbitStackL3({
           'UpgradeExecutor',
           'EXECUTOR_ROLE',
         ).members[0]
-        const discoveredRollupOwnerMultisig = discovery.getContract(
-          'ProofOfPlayMultisig',
-        ).address
+        const discoveredRollupOwnerMultisig =
+          discovery.getContract('ConduitMultisig2').address
         assert(
           discoveredAdminOwner === discoveredUpgradeExecutorAddy &&
             discoveredExecutor === discoveredRollupOwnerMultisig,

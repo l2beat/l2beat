@@ -51,11 +51,8 @@ export const fraxtal: Layer2 = opStackL2({
   display: {
     name: 'Fraxtal',
     slug: 'fraxtal',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
       'Fraxtal is an EVM equivalent Optimium utilizing the OP stack as its smart contract platform and execution environment.',
-    purposes: ['Universal', 'DeFi'],
     links: {
       websites: ['https://frax.com/'],
       apps: ['https://app.frax.finance/'],

@@ -1,4 +1,5 @@
 import { ScalingProjectTechnologyChoice } from '../../../../common'
+import { DataAvailabilityLayer as ScalingDaLayerOption } from '../../../../common'
 import {
   DacBridge,
   EnshrinedBridge,
@@ -38,6 +39,12 @@ export type CommonDaLayer = {
   type: 'DaLayer'
   /** Unique identifier of the data availability layer. */
   id: string
+  /** Classification layers will be split based on */
+  systemCategory: 'public' | 'custom'
+  /** Whether given solution has challenge mechanism in place */
+  hasChallengeMechanism?: boolean
+  /** Fallback */
+  fallback?: ScalingDaLayerOption
   /** Display information for the data availability layer. */
   display: DaLayerDisplay
   /** Is the DA layer upcoming? */

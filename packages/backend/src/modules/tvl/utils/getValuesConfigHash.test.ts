@@ -31,8 +31,8 @@ describe(getValuesConfigHash.name, () => {
       mockAmount(),
     ]
 
-    const hash = getValuesConfigHash(amountConfigs, priceConfigs)
-    const hash2 = getValuesConfigHash(reorderedAmountConfigs, priceConfigs)
+    const hash = getValuesConfigHash(amountConfigs, priceConfigs, 1)
+    const hash2 = getValuesConfigHash(reorderedAmountConfigs, priceConfigs, 1)
 
     expect(hash).toEqual(hash2)
   })

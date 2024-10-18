@@ -19,6 +19,11 @@
       "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
         {
+          "permission": "guard",
+          "target": "0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40",
           "via": [
@@ -145,6 +150,16 @@
         "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
       ],
       "issuedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x864A02Ca4a40616f8995709D1B26CDe588709043",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0xC16EAEDaB78E033B555c9eF3C326c07B49F21907",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40",
@@ -287,6 +302,11 @@
         "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
       ],
       "issuedPermissions": [
+        {
+          "permission": "guard",
+          "target": "0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40",
@@ -443,6 +463,11 @@
           "via": []
         },
         {
+          "permission": "sequence",
+          "target": "0xDeC273BF31AD79ad00D619c52662f724176A12Fb",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40",
           "via": [
@@ -568,15 +593,24 @@
     { "address": "0x4C61Be5626D1Fb101324f0F41542Da30C0aDa4D4" },
     {
       "address": "0x864A02Ca4a40616f8995709D1B26CDe588709043",
-      "roles": ["Challenger"]
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x2297eB8DC91f532C91c57b3fb33C06b782e9594A"
+        }
+      ]
     },
     {
       "address": "0xC16EAEDaB78E033B555c9eF3C326c07B49F21907",
-      "roles": ["Proposer"]
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "target": "0x2297eB8DC91f532C91c57b3fb33C06b782e9594A"
+        }
+      ]
     },
     {
       "address": "0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40",
-      "roles": ["Guardian"],
       "receivedPermissions": [
         {
           "permission": "configure",
@@ -591,6 +625,14 @@
           "permission": "configure",
           "target": "0xae809d42f861A6381b0DFCf7216556e95362a7a8",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+        },
+        {
+          "permission": "guard",
+          "target": "0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c"
+        },
+        {
+          "permission": "guard",
+          "target": "0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054"
         },
         {
           "permission": "upgrade",
@@ -653,7 +695,12 @@
     },
     {
       "address": "0xDeC273BF31AD79ad00D619c52662f724176A12Fb",
-      "roles": ["Sequencer"]
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0xae809d42f861A6381b0DFCf7216556e95362a7a8"
+        }
+      ]
     },
     { "address": "0xfF00000000000000000000000000000000056026" }
   ],
@@ -1028,10 +1075,10 @@
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
-    "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
+    "opstack/L2OutputOracle": "0xfc8737561d85bab2fe5e39a7a02436a0cb0e7f96d7a7adc2ee3ea486b391c2fc",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
-    "opstack/OptimismPortal": "0x2a32f6874a8c0e85e685fa944143e7968d675fed43b46e7385411ad11f8a1a43",
-    "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
-    "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
+    "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",
+    "opstack/SuperchainConfig": "0x76190197170f60e32f3e466ca757cb0bde1055ea134384678dd0911e7a5338ef",
+    "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"
   }
 }

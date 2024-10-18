@@ -10,6 +10,7 @@ export const playblock: Layer3 = orbitStackL3({
   discovery,
   hostChain: ProjectId('nova'),
   badges: [Badge.DA.DAC, Badge.L3ParentChain.Nova, Badge.RaaS.Gelato],
+  additionalPurposes: ['Gaming'],
   display: {
     redWarning:
       'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
@@ -17,7 +18,6 @@ export const playblock: Layer3 = orbitStackL3({
     slug: 'playblock',
     description:
       'PlayBlock is an Orbit stack Layer 3 on Arbitrum Nova. It is built by the team behind Playnance, and is focused on gasless gaming and gambling.',
-    purposes: ['Gaming'],
     links: {
       websites: ['https://playnance.com/'],
       apps: [],

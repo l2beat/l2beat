@@ -51,6 +51,10 @@ type Optionals = {
   warning?: DacBridge['display']['warning']
   /** Optional red warning, defaults to undefined */
   redWarning?: DacBridge['display']['redWarning']
+  /** Optional challenge mechanism, defaults to undefined */
+  hasChallengeMechanism?: DacDaLayer['hasChallengeMechanism']
+  /** Optional fallback, defaults to undefined */
+  fallback?: DacDaLayer['fallback']
 }
 
 type TemplateVars = Optionals & TemplateSpecific
@@ -132,6 +136,9 @@ export function DAC(template: TemplateVars): DacDaLayer {
     id: `${template.project.display.slug}-dac-layer`,
     kind: 'DAC',
     type: 'DaLayer',
+    systemCategory: 'custom',
+    fallback: template.fallback,
+    hasChallengeMechanism: template.hasChallengeMechanism,
     display: layerDisplay,
     technology: {
       description: layerTechnology,

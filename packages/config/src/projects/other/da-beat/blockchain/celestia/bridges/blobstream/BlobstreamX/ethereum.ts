@@ -61,6 +61,12 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
     By default, BlobstreamX on Ethereum is updated by the Celestia operator at a regular cadence of 4 hours.
 
     `,
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: 'the DA bridge accepts an incorrect or malicious data commitment provided by a dishonest majority of Celestia validators.',
+      },
+    ],
   },
   contracts: {
     addresses: [
@@ -88,11 +94,7 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
     risks: [
       {
         category: 'Funds can be lost if',
-        text: 'the bridge contract receives a malicious code upgrade. There is no delay on code upgrades.',
-      },
-      {
-        category: 'Funds can be lost if',
-        text: 'a dishonest majority of Celestia validators post incorrect or malicious data commitments.',
+        text: 'the bridge contract or its dependencies receive a malicious code upgrade. There is no delay on code upgrades.',
       },
     ],
   },

@@ -16,7 +16,6 @@ export const bobanetwork: Layer2 = opStackL2({
     slug: 'bobanetwork',
     description:
       'Boba is an OP stack Optimistic Rollup built by the Enya team as core contributors to the Boba Foundation.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://boba.network'],
       apps: [],

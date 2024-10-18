@@ -23,6 +23,7 @@ export class ActivityRepository extends BaseRepository {
         .onConflict((cb) =>
           cb.columns(['timestamp', 'projectId']).doUpdateSet((eb) => ({
             count: eb.ref('excluded.count'),
+            uopsCount: eb.ref('excluded.uopsCount'),
             start: eb.ref('excluded.start'),
             end: eb.ref('excluded.end'),
           })),
@@ -120,7 +121,9 @@ export class ActivityRepository extends BaseRepository {
   async getSummedCountForProjectsAndTimeRange(
     projectIds: ProjectId[],
     timeRange: [UnixTime, UnixTime],
-  ): Promise<Omit<ActivityRecord, 'timestamp' | 'start' | 'end'>[]> {
+  ): Promise<
+    Omit<ActivityRecord, 'timestamp' | 'start' | 'end' | 'uopsCount'>[]
+  > {
     const [from, to] = timeRange
     const rows = await this.db
       .selectFrom('Activity')
@@ -185,7 +188,9 @@ export class ActivityRepository extends BaseRepository {
 
   async getProjectsAggregatedDailyCount(
     projectIds: ProjectId[],
-  ): Promise<Omit<ActivityRecord, 'projectId' | 'start' | 'end'>[]> {
+  ): Promise<
+    Omit<ActivityRecord, 'projectId' | 'start' | 'end' | 'uopsCount'>[]
+  > {
     if (projectIds.length === 0) return []
 
     const rows = await this.db

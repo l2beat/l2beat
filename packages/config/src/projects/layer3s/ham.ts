@@ -10,12 +10,12 @@ export const ham: Layer3 = opStackL3({
   discovery,
   hostChain: ProjectId('base'),
   badges: [Badge.L3ParentChain.Base],
+  additionalPurposes: ['Social'],
   display: {
     name: 'Ham',
     slug: 'ham',
     description:
       'Ham Chain is an OP stack Optimium L3 on Base enabling Tips and SocialFi on the Farcaster social network.',
-    purposes: ['Social', 'Payments'],
     links: {
       websites: ['https://ham.fun/'],
       apps: [

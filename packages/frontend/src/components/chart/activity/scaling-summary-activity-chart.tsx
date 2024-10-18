@@ -4,10 +4,14 @@ import Link from 'next/link'
 import { Skeleton } from '~/components/core/skeleton'
 import { CustomLink } from '~/components/link/custom-link'
 import { ChevronIcon } from '~/icons/chevron'
+import { type ActivityChartStats } from '~/server/features/scaling/activity/get-activity-chart-stats'
+import { countToTps } from '~/server/features/scaling/activity/utils/count-to-tps'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/react'
+import { formatTps } from '~/utils/number-format/format-tps'
 import { Chart } from '../core/chart'
 import { ChartProvider } from '../core/chart-provider'
+import { ScalingFactorTooltip } from './activity-chart-header'
 import { ActivityChartHover } from './activity-chart-hover'
 import { useActivityChartRenderParams } from './use-activity-chart-render-params'
 
@@ -18,7 +22,7 @@ interface Props {
 }
 
 export function ScalingSummaryActivityChart({ timeRange }: Props) {
-  const { data: scalingFactor } = api.activity.scalingFactor.useQuery({
+  const { data: stats } = api.activity.chartStats.useQuery({
     filter: { type: 'all' },
   })
   const { data, isLoading } = api.activity.chart.useQuery({
@@ -28,7 +32,7 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
 
   const { columns, valuesStyle, formatYAxisLabel } =
     useActivityChartRenderParams({
-      data: data,
+      data,
       milestones: [],
       showMainnet: SHOW_MAINNET,
     })
@@ -45,14 +49,14 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
       )}
     >
       <section className="flex flex-col gap-4">
-        <Header scalingFactor={scalingFactor} />
+        <Header stats={stats} />
         <Chart disableMilestones />
       </section>
     </ChartProvider>
   )
 }
 
-function Header({ scalingFactor }: { scalingFactor: number | undefined }) {
+function Header({ stats }: { stats: ActivityChartStats | undefined }) {
   return (
     <div className="flex items-start justify-between">
       <div>
@@ -76,23 +80,24 @@ function Header({ scalingFactor }: { scalingFactor: number | undefined }) {
         </CustomLink>
       </div>
       <div className="flex flex-col items-end">
-        <div className="flex items-baseline gap-1">
-          {scalingFactor !== undefined ? (
-            <>
-              <span className="whitespace-nowrap text-right text-base font-bold">
-                Scaling factor:{' '}
+        {stats !== undefined ? (
+          <>
+            <div className="whitespace-nowrap text-right text-xl font-bold">
+              {formatTps(countToTps(stats.latestProjectsTxCount))} TPS
+            </div>
+            <div className="flex items-center gap-1">
+              <span className="whitespace-nowrap text-right text-xs text-secondary">
+                Scaling factor: {stats.scalingFactor.toFixed(2)}x
               </span>
-              <div className="whitespace-nowrap text-right text-xl font-bold">
-                {scalingFactor.toFixed(2)}x
-              </div>
-            </>
-          ) : (
+              <ScalingFactorTooltip className="size-3" />
+            </div>
+          </>
+        ) : (
+          <>
             <Skeleton className="my-[5px] h-5 w-20 md:w-[243px]" />
-          )}
-        </div>
-        <span className="whitespace-nowrap text-right text-xs leading-[1.15] text-secondary">
-          Observed over the last 7 days
-        </span>
+            <Skeleton className="my-0.5 h-4 w-[135px]" />
+          </>
+        )}
       </div>
     </div>
   )

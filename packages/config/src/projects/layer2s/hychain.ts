@@ -7,12 +7,12 @@ const discovery = new ProjectDiscovery('hychain', 'ethereum')
 
 export const hychain: Layer2 = orbitStackL2({
   badges: [Badge.DA.DAC, Badge.RaaS.Caldera],
+  additionalPurposes: ['Gaming'],
   display: {
     name: 'HYCHAIN',
     slug: 'hychain',
     description:
       'HYCHAIN is a gaming-focused Orbit stack Optimium that was created to eliminate onboarding and technical challenges for web3 games aiming for widespread adoption.',
-    purposes: ['Gaming', 'NFT'],
     links: {
       websites: ['https://hychain.com'],
       apps: ['https://bridge.hychain.com'],
