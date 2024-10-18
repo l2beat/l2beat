@@ -3,6 +3,7 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { BasicTable } from '~/components/table/basic-table'
 import { RollupsTable } from '~/components/table/rollups-table'
+import { getStageSortedRowModel } from '~/components/table/sorting/get-stage-sorting-row-model'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
 import { scalingRiskColumns } from './columns'
@@ -15,7 +16,7 @@ export function ScalingRiskTable({
     data: entries,
     columns: scalingRiskColumns,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
+    getSortedRowModel: rollups ? getStageSortedRowModel() : getSortedRowModel(),
     manualFiltering: true,
     initialState: {
       sorting: [

@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 import { useScalingFilter } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
 import { BasicTable } from '~/components/table/basic-table'
 import { RollupsTable } from '~/components/table/rollups-table'
+import { getStageSortedRowModel } from '~/components/table/sorting/get-stage-sorting-row-model'
 import { useTable } from '~/hooks/use-table'
 import { type CostsTableData } from '~/server/features/scaling/costs/get-costs-table-data'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
@@ -46,7 +47,7 @@ export function ScalingCostsTable(props: Props) {
     data: tableEntries,
     columns: scalingCostsColumns,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
+    getSortedRowModel: props.rollups ? getStageSortedRowModel() : getSortedRowModel(),
     manualFiltering: true,
     initialState: {
       sorting: [

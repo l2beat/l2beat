@@ -65,9 +65,17 @@
    Temporary solution until project page is redesigned to new colors.
   */
   body:has(.sidebar) [data-role="select-content"] {
-    @apply bg-surface-primary;
+    @apply bg-surface-secondary;
   }
   body:has(.sidebar) [data-role="select-content"] [role="option"] {
+    @apply focus:bg-surface-tertiary;
+  }
+  body:has(.sidebar.main-page-card) [data-role="select-content"] {
+    @apply bg-surface-primary;
+  }
+  body:has(.sidebar.main-page-card)
+    [data-role="select-content"]
+    [role="option"] {
     @apply focus:bg-surface-secondary;
   }
 }
