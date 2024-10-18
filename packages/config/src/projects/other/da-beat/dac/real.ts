@@ -1,8 +1,8 @@
 import { ChainId } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { real } from '../../../layer2s/real'
-import { DAC } from '../templates/dac-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
+import { AnytrustDAC } from '../templates/anytrust-template'
 
 const discovery = new ProjectDiscovery('real')
 
@@ -12,7 +12,7 @@ const dac = discovery.getContractValue<{
 }>('SequencerInbox', 'dacKeyset')
 const { membersCount, requiredSignatures } = dac
 
-export const realDac = DAC({
+export const realDac = AnytrustDAC({
   project: real,
   bridge: {
     contracts: {
