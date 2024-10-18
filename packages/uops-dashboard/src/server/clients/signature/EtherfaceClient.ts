@@ -23,6 +23,10 @@ const SourcesResponse = z.object({
 const API_URL = 'https://api.etherface.io/v1'
 
 export class EtherfaceClient implements SignatureClient {
+  getName(): string {
+    return 'Etherface'
+  }
+
   async getSignature(selector: string): Promise<string> {
     const url = `${API_URL}/signatures/hash/function/${selector}/1`
 
