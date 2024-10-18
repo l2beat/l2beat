@@ -1,14 +1,13 @@
 import { SUPPORTED_CHAINS } from '@/chains'
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { ApiError, Block, UserOperationsApiRequest } from '@/types'
+import type { ApiError, CountedBlock, UserOperationsApiRequest } from '@/types'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { loadDb, saveDb } from './db/db'
-import { ChainService } from './services/ChainService'
+import { loadDb, saveDb } from '../../server/db/db'
+import { ChainService } from '../../server/services/ChainService'
 
 // biome-ignore lint/style/noDefaultExport: api handler
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Block | ApiError>,
+  res: NextApiResponse<CountedBlock | ApiError>,
 ) {
   console.log(`Received request: ${req.method} ${req.url}`)
   console.log(req.body)

@@ -1,11 +1,11 @@
 import type { Chain } from '@/chains'
-import type { CountedOperation, Transaction } from '@/types'
+import type { CountedOperation, CountedTransaction } from '@/types'
 import { useState } from 'react'
 
 export function TransactionDetails({
   tx,
   chain,
-}: { tx: Transaction; chain: Chain }) {
+}: { tx: CountedTransaction; chain: Chain }) {
   const [modal, setModal] = useState(false)
 
   function printOperation(op: CountedOperation): JSX.Element {

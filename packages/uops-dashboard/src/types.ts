@@ -20,7 +20,22 @@ export type ApiError = {
   code?: number
 }
 
+export type Block = {
+  number: number
+  timestamp: number
+  hash: string
+  status?: string
+  transactions: Transaction[]
+}
+
 export type Transaction = {
+  hash: string
+  data: string | string[]
+  type?: string
+  to?: string
+}
+
+export type CountedTransaction = {
   type: string
   hash: string
   operationsCount: number
@@ -29,12 +44,12 @@ export type Transaction = {
   includesUnknown?: boolean
 }
 
-export type Block = {
+export type CountedBlock = {
   number: number
   timestamp: number
   hash: string
-  status: string
-  transactions: Transaction[]
+  status?: string
+  transactions: CountedTransaction[]
 }
 
 export type BlockRatio = {
@@ -44,7 +59,7 @@ export type BlockRatio = {
   includesUnknown?: boolean
 }
 
-export type BlockWithChain = Block & { chain: Chain }
+export type BlockWithChain = CountedBlock & { chain: Chain }
 
 export interface CountedOperation {
   id: string
@@ -52,7 +67,7 @@ export interface CountedOperation {
   methodSelector: string
   methodSignature?: string
   methodName?: string
-  contractAddress: string
+  contractAddress?: string
   contractName?: string
   count: number
   children: CountedOperation[]

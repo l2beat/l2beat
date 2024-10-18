@@ -5,7 +5,7 @@ import { StatsForm } from '@/components/statsForm'
 import type { StatsWithChain } from '@/types'
 import { Flowbite } from 'flowbite-react'
 import { useState } from 'react'
-import { rankBlocks } from '../api/utils/rankBlocks'
+import { rankBlocks } from '../../utils/rankBlocks'
 
 export default function StatsPage() {
   const [stats, setStats] = useState<StatsWithChain>()

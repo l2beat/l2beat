@@ -1,5 +1,5 @@
 import type { Chain } from '@/chains'
-import type { Transaction } from '@/types'
+import type { CountedTransaction } from '@/types'
 import { BatchIcon } from './icons/batchIcon'
 import { UnknownIcon } from './icons/unknownIcon'
 import { TransactionDetails } from './transactionDetails'
@@ -7,8 +7,11 @@ import { TransactionDetails } from './transactionDetails'
 export function TransactionList({
   txs,
   chain,
-}: { txs: Transaction[]; chain: Chain }) {
-  function sortTransactions(a: Transaction, b: Transaction): number {
+}: { txs: CountedTransaction[]; chain: Chain }) {
+  function sortTransactions(
+    a: CountedTransaction,
+    b: CountedTransaction,
+  ): number {
     if (a.operationsCount !== b.operationsCount) {
       // sort by operations count
       return b.operationsCount - a.operationsCount
