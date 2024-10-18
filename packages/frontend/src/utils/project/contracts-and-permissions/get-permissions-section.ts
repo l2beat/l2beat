@@ -1,10 +1,10 @@
 import {
-  ScalingProjectPermissionedAccount,
   type Bridge,
   type DaLayer,
   type Layer2,
   type Layer3,
   type ScalingProjectPermission,
+  type ScalingProjectPermissionedAccount,
   type ScalingProjectReference,
 } from '@l2beat/config'
 import {
@@ -13,6 +13,7 @@ import {
   notUndefined,
 } from '@l2beat/shared-pure'
 import { concat } from 'lodash'
+import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { type PermissionsSectionProps } from '~/components/projects/sections/permissions/permissions-section'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
@@ -25,7 +26,6 @@ import { type ProjectSectionProps } from '../../../components/projects/sections/
 import { getChain } from './get-chain'
 import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
-import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 
 type ProjectParams = {
   id: string
