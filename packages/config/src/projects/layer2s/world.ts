@@ -10,8 +10,6 @@ export const world: Layer2 = opStackL2({
   badges: [Badge.RaaS.Alchemy], // not superchain
   additionalPurposes: ['Identity'],
   display: {
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     name: 'World Chain',
     slug: 'world',
     description:
