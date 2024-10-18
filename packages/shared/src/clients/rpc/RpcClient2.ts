@@ -23,7 +23,7 @@ export class RpcClient2 {
   async getBlock(blockNumber: number | 'latest') {
     const method = 'eth_getBlockByNumber'
     const encodedNumber =
-      blockNumber === 'latest' ? 'latest' : Quantity.encode(blockNumber)
+      blockNumber === 'latest' ? 'latest' : Quantity.encode(BigInt(blockNumber))
     const blockResponse = await this.query(method, [encodedNumber, false])
 
     const block = Block.safeParse(blockResponse)

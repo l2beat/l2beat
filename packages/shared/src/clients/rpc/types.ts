@@ -13,17 +13,17 @@ export const Quantity = {
     if (res.startsWith('0x0') && res.length !== 3) {
       throw new Error('No leading zeroes allowed')
     }
-    return parseInt(res, 16)
-  }, z.number().int()),
+    return BigInt(res)
+  }, z.bigint()),
 
-  encode: (n: number) => `0x${n.toString(16)}`,
+  encode: (n: bigint) => `0x${n.toString(16)}`,
 }
 
 export type Block = z.infer<typeof Block>
 export const Block = z.object({
   // TODO: add support for including txs body
   transactions: z.array(z.string()),
-  timestamp: Quantity.decode,
+  timestamp: Quantity.decode.transform((n) => Number(n)),
   hash: z.string(),
-  number: Quantity.decode,
+  number: Quantity.decode.transform((n) => Number(n)),
 })
