@@ -206,7 +206,7 @@ export async function getL2ProjectDetails({
       rosetteType: 'pizza',
       rosetteValues,
       warning: project.display.warning,
-      redWarning: project.display.redWarning,
+      redWarning: undefined, //project.display.redWarning,
       isVerified,
       isUnderReview: project.isUnderReview,
     },

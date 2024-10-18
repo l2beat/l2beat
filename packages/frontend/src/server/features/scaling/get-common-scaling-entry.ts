@@ -67,7 +67,7 @@ export function getCommonScalingEntry(
     warning: project.display.warning,
     headerWarning: project.display.headerWarning,
     showProjectUnderReview: isAnySectionUnderReview(project),
-    redWarning: project.display.redWarning,
+    redWarning: undefined, //project.display.redWarning,
     purposes: project.display.purposes,
     badges:
       project.badges?.map((badge) => ({
