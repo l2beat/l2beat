@@ -3007,6 +3007,19 @@
   ],
   "linea": [
     {
+      "symbol": "inETH",
+      "address": "0x5A7a183B6B44Dc4EC2E3d2eF43F98C5152b1d76d",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Inception Bridge (xERC-20)"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "M-BTC",
       "address": "0xe4D584ae9b753e549cAE66200A6475d2f00705f7",
       "coingeckoId": "merlin-s-seal-btc",

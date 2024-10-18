@@ -8454,6 +8454,27 @@
       }
     },
     {
+      "name": "InceptionLRT restaked ETH",
+      "coingeckoId": "genesislrt-restaked-eth",
+      "address": "0x5A7a183B6B44Dc4EC2E3d2eF43F98C5152b1d76d",
+      "symbol": "inETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1714467441,
+      "coingeckoListingTimestamp": 1713657600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34127/large/inETH.png?1715036464",
+      "chainId": 59144,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Inception Bridge (xERC-20)"
+          }
+        ]
+      }
+    },
+    {
       "name": "KelpDao Restaked ETH",
       "coingeckoId": "kelp-dao-restaked-eth",
       "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
