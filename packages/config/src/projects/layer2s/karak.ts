@@ -15,10 +15,7 @@ export const karak: Layer2 = opStackL2({
   display: {
     name: 'Karak',
     slug: 'karak',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description: 'Karak is a general-purpose Optimium.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://karak.network/'],
       apps: ['https://karak.network/karak-xp/'],

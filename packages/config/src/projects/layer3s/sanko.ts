@@ -9,13 +9,13 @@ const discovery = new ProjectDiscovery('sanko', 'arbitrum')
 export const sanko: Layer3 = orbitStackL3({
   discovery,
   badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum, Badge.RaaS.Caldera],
+  additionalPurposes: ['Gaming', 'Social'],
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Sanko',
     slug: 'sanko',
     description:
       'Sanko is an NFT and gaming-focused Orbit stack L3 on Arbitrum with AnyTrust DA and DMT as its native token, created by Sanko GameCorp.',
-    purposes: ['Gaming', 'NFT', 'Social'],
     links: {
       websites: ['https://sanko.xyz/'],
       apps: ['https://sanko.xyz/bridge', 'https://swap.sanko.xyz'],

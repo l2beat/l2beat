@@ -11,7 +11,7 @@ export const alphadune: Layer3 = upcomingL3({
     slug: 'alphadune',
     description:
       'AlphaDune is an upcoming Layer 3 on Arbitrum, built on the Orbit stack. It is a loyalty-driven network for GameFi and GambleFi.',
-    purposes: ['Gaming', 'DeFi'],
+    purposes: ['Universal', 'Gaming'],
     category: 'Optimium',
     provider: 'Arbitrum',
     links: {

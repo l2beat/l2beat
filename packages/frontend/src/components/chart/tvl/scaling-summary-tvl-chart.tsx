@@ -9,7 +9,7 @@ import { PercentChange } from '~/components/percent-change'
 import { ChevronIcon } from '~/icons/chevron'
 import type { TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
-import { formatCurrency } from '~/utils/format'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 import { useChartLoading } from '../core/chart-loading-context'
 import type { ChartUnit } from '../types'
 import { TvlChartHover } from './tvl-chart-hover'
@@ -91,15 +91,13 @@ function Header({ total, unit, change, timeRange }: Props) {
           {value === undefined ? (
             <Skeleton className="my-[5px] h-5 w-32" />
           ) : (
-            formatCurrency(value, unit, {
-              showLessThanMinimum: false,
-            })
+            formatCurrency(value, unit)
           )}
         </div>
         {loading ? (
           <Skeleton className="my-px h-3.5 w-40" />
         ) : (
-          <p className="whitespace-nowrap text-right text-xs leading-[1.15]">
+          <p className="whitespace-nowrap text-right text-xs">
             <PercentChange value={change} />
             <span className="text-secondary"> / {timeRange}</span>
           </p>

@@ -1,3 +1,131 @@
+Generated with discovered.json: 0xcd0d99f1bb19f0703585101c12f42bcf5b0a8424
+
+# Diff at Wed, 16 Oct 2024 11:34:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a3d139b799cc0b28e5e912febb17464d4e5aef5d block: 20826339
+- current block number: 20826339
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20826339 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) {
+    +++ description: None
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD","via":[]}
+      issuedPermissions.1:
++        {"permission":"sequence","target":"0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "sequence"
+      issuedPermissions.0.target:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D"
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78) {
+    +++ description: None
+      roles:
+-        ["Validator"]
+      receivedPermissions:
++        [{"permission":"validate","target":"0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"}]
+    }
+```
+
+```diff
+    contract RollupProxy (0x5eF0D09d1E6204141B4d37530808eD19f60FBa35) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      issuedPermissions.14:
++        {"permission":"validate","target":"0xF8D3E1cF58386c92B27710C6a0D8A54c76BC6ab5","via":[]}
+      issuedPermissions.13:
++        {"permission":"validate","target":"0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b","via":[]}
+      issuedPermissions.12:
++        {"permission":"validate","target":"0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E","via":[]}
+      issuedPermissions.11:
++        {"permission":"validate","target":"0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d","via":[]}
+      issuedPermissions.10:
++        {"permission":"validate","target":"0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0","via":[]}
+      issuedPermissions.9:
++        {"permission":"validate","target":"0xAB1A39332e934300eBCc57B5f95cA90631a347FF","via":[]}
+      issuedPermissions.8:
++        {"permission":"validate","target":"0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5","via":[]}
+      issuedPermissions.7:
++        {"permission":"validate","target":"0x7CF3d537733F6Ba4183A833c9B021265716cE9d0","via":[]}
+      issuedPermissions.6:
++        {"permission":"validate","target":"0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398","via":[]}
+      issuedPermissions.5:
++        {"permission":"validate","target":"0x6Fb914de4653eC5592B7c15F4d9466Cbd03F2104","via":[]}
+      issuedPermissions.4:
++        {"permission":"validate","target":"0x610Aa279989F440820e14248BD3879B148717974","via":[]}
+      issuedPermissions.3:
++        {"permission":"validate","target":"0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78","via":[]}
+      issuedPermissions.2:
++        {"permission":"validate","target":"0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c","via":[]}
+      issuedPermissions.1:
++        {"permission":"validate","target":"0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4","via":[]}
+    }
+```
+
+```diff
+    contract Validator (0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398) {
+    +++ description: None
+      roles:
+-        ["Validator"]
+      receivedPermissions:
++        [{"permission":"validate","target":"0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"}]
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x7CF3d537733F6Ba4183A833c9B021265716cE9d0) {
+    +++ description: None
+      roles:
+-        ["Validator"]
+      receivedPermissions:
++        [{"permission":"validate","target":"0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"}]
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5) {
+    +++ description: None
+      roles:
+-        ["Validator"]
+      receivedPermissions:
++        [{"permission":"validate","target":"0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"}]
+    }
+```
+
+```diff
+    contract ValidatorWallet (0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0) {
+    +++ description: None
+      roles:
+-        ["Validator"]
+      receivedPermissions:
++        [{"permission":"validate","target":"0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"}]
+    }
+```
+
+```diff
+    contract ValidatorWallet (0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b) {
+    +++ description: None
+      roles:
+-        ["Validator"]
+      receivedPermissions:
++        [{"permission":"validate","target":"0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"}]
+    }
+```
+
 Generated with discovered.json: 0x43f2cc6e737c65f224882920fff4b091cded6ce3
 
 # Diff at Mon, 14 Oct 2024 10:49:27 GMT:

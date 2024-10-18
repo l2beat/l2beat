@@ -5,7 +5,7 @@ export function getYAxis(
   values: number[],
   isLogScale: boolean,
   format: (value: number) => string,
-  labelCount = 2,
+  labelCount = 3,
 ) {
   if (values.length === 0) {
     return {
@@ -13,8 +13,8 @@ export function getYAxis(
       getY: () => -1,
     }
   }
-  const ticks = calculateTicks(labelCount + 1, values, isLogScale)
-  const labels = ticks.slice(1).map(format)
+  const ticks = calculateTicks(labelCount, values, isLogScale)
+  const labels = ticks.map(format)
   const min = ticks[0]
   const max = ticks[ticks.length - 1]
   assert(min !== undefined && max !== undefined, 'No min or max')

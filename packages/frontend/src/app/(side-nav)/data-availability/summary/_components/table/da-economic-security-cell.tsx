@@ -1,7 +1,7 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { EM_DASH } from '~/consts/characters'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
-import { formatCurrency } from '~/utils/format'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 
 export function DaEconomicSecurityCell({
   value,
@@ -10,9 +10,7 @@ export function DaEconomicSecurityCell({
 
   switch (value.status) {
     case 'Synced':
-      return formatCurrency(value.economicSecurity, 'usd', {
-        showLessThanMinimum: false,
-      })
+      return formatCurrency(value.economicSecurity, 'usd')
     case 'StakeNotSynced':
       return 'Stake not synced'
     case 'CurrentPriceNotSynced':

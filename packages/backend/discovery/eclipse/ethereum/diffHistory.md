@@ -1,3 +1,34 @@
+Generated with discovered.json: 0x4c0a285dfc39b599e7f7209d54fc83afa3fb4c46
+
+# Diff at Thu, 17 Oct 2024 13:35:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b22da46ad96e1d0cb3e7d83e3293eb7b76990953 block: 20775895
+- current block number: 20985614
+
+## Description
+
+To harden security in the context of recent Multisig hacks, Eclipse chose to add another signer to their multisig. In a sudden clouding of their minds, they forgot to raise the threshold and ended up weakening security instead.
+
+## Watched changes
+
+```diff
+    contract AuthorityMultisig (0x4720342419C1D316B948690d12C86D5b485C64E0) {
+    +++ description: None
+      values.$members.2:
++        "0xAFa49B46301BaaD9152dD5aF0C05245B0FA58695"
+      values.$members.1:
+-        "0xAFa49B46301BaaD9152dD5aF0C05245B0FA58695"
++        "0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA"
+      values.$members.0:
+-        "0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA"
++        "0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2"
+      values.multisigThreshold:
+-        "1 of 2 (50%)"
++        "1 of 3 (33%)"
+    }
+```
+
 Generated with discovered.json: 0xf0532b82c3340aba55c87da64f0eaec24fe4c45b
 
 # Diff at Mon, 14 Oct 2024 10:50:41 GMT:

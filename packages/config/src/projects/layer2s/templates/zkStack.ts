@@ -21,6 +21,7 @@ import {
   ScalingProjectContract,
   ScalingProjectEscrow,
   ScalingProjectPermission,
+  ScalingProjectPurpose,
   ScalingProjectRiskViewEntry,
   ScalingProjectTechnologyChoice,
   ScalingProjectTransactionApi,
@@ -55,7 +56,10 @@ export interface ZkStackConfigCommon {
     added: string
     removed: string
   }
-  display: Omit<Layer2Display, 'provider' | 'category' | 'dataAvailabilityMode'>
+  display: Omit<
+    Layer2Display,
+    'provider' | 'category' | 'dataAvailabilityMode' | 'purposes'
+  >
   daProvider?: DAProvider
   upgradeability?: {
     upgradableBy: string[] | undefined
@@ -86,6 +90,7 @@ export interface ZkStackConfigCommon {
   stage?: StageConfig
   badges?: BadgeId[]
   useDiscoveryMetaOnly?: boolean
+  additionalPurposes?: ScalingProjectPurpose[]
 }
 
 export type Upgradeability = {
@@ -265,6 +270,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     id: ProjectId(templateVars.discovery.projectName),
     badges: templateVars.badges ?? [],
     display: {
+      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       upgradesAndGovernanceImage: 'zk-stack',
       ...templateVars.display,
       provider: 'ZK Stack',

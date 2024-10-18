@@ -78,7 +78,6 @@ export const astarzkevm: Layer2 = polygonCDKStack({
     slug: 'astarzkevm',
     description:
       "Astar zkEVM is a Validium that leverages Polygon's CDK and zero-knowledge cryptography to enable off-chain transactions while maintaining EVM equivalence.",
-    purposes: ['Universal'],
     links: {
       websites: ['https://astar.network/blog/astar-evolution-phase-1-56'],
       apps: [],

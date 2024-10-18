@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x1fa717823fa2813a4ffb26bf28ce9e04c8d508b7
+
+# Diff at Wed, 16 Oct 2024 09:51:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b6ff61526cf3d704839d0155008ae72cc9070de8 block: 20691264
+- current block number: 20977341
+
+## Description
+
+Signer change.
+
+## Watched changes
+
+```diff
+    contract OwnerMultisig (0xD2C37fC6fD89563187f3679304975655e448D192) {
+    +++ description: None
+      values.$members.3:
+-        "0xB3669C058ddF26171Fd131D80C801AaEeb1519b8"
++        "0xA28A84676E3Cec39e6F1D06CD0EEF6cAAa2F7f7b"
+    }
+```
+
 Generated with discovered.json: 0xe59c199d16c2b67bda5e774e36a718e4b7ed8028
 
 # Diff at Mon, 14 Oct 2024 10:51:43 GMT:

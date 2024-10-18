@@ -24,6 +24,7 @@ import {
   ScalingProjectContract,
   ScalingProjectEscrow,
   ScalingProjectPermission,
+  ScalingProjectPurpose,
   ScalingProjectRiskView,
   ScalingProjectRiskViewEntry,
   ScalingProjectStateDerivation,
@@ -106,12 +107,13 @@ export interface OpStackConfigCommon {
   stage?: StageConfig
   badges?: BadgeId[]
   discoveryDrivenData?: boolean
+  additionalPurposes?: ScalingProjectPurpose[]
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
   display: Omit<
     Layer2Display,
-    'provider' | 'category' | 'dataAvailabilityMode'
+    'provider' | 'category' | 'dataAvailabilityMode' | 'purposes'
   > & {
     category?: Layer2Display['category']
   }
@@ -120,7 +122,7 @@ export interface OpStackConfigL2 extends OpStackConfigCommon {
 export interface OpStackConfigL3 extends OpStackConfigCommon {
   display: Omit<
     Layer3Display,
-    'provider' | 'category' | 'dataAvailabilityMode'
+    'provider' | 'category' | 'dataAvailabilityMode' | 'purposes'
   > & {
     category?: Layer3Display['category']
   }
@@ -314,10 +316,7 @@ export function opStackCommon(
     },
     permissions:
       templateVars.discoveryDrivenData === true
-        ? [
-            ...templateVars.discovery.getDiscoveredRoles(),
-            ...templateVars.discovery.getDiscoveredPermissions(),
-          ]
+        ? templateVars.discovery.getDiscoveredPermissions()
         : [
             ...templateVars.discovery.getOpStackPermissions({
               batcherHash: 'Sequencer',
@@ -424,16 +423,14 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     type: 'layer2',
     ...opStackCommon(templateVars),
     display: {
+      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       architectureImage,
       ...templateVars.display,
       provider: 'OP Stack',
       category:
         templateVars.display.category ??
         (daProvider !== undefined ? 'Optimium' : 'Optimistic Rollup'),
-      warning:
-        templateVars.display.warning === undefined
-          ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
-          : templateVars.display.warning,
+      warning: templateVars.display.warning,
       liveness:
         daProvider !== undefined
           ? undefined
@@ -787,6 +784,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     hostChain: templateVars.hostChain,
     display: {
       architectureImage,
+      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       ...templateVars.display,
       provider: 'OP Stack',
       category:

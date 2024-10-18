@@ -8,6 +8,7 @@ const discovery = new ProjectDiscovery('alephzero')
 export const alephzero: Layer2 = orbitStackL2({
   discovery,
   badges: [Badge.DA.DAC, Badge.RaaS.Gelato],
+  additionalPurposes: ['Privacy'],
   display: {
     redWarning:
       'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
@@ -15,7 +16,6 @@ export const alephzero: Layer2 = orbitStackL2({
     slug: 'aleph-zero',
     description:
       'Aleph Zero is an Optimium on Ethereum, built on the Orbit stack. It aims to offer seamless interoperability with the Aleph Zero Layer 1 and a suite of developer tools for building privacy-enhancing dapps.',
-    purposes: ['Privacy', 'Universal'],
     links: {
       websites: ['https://alephzero.org/'],
       apps: ['https://bridge.gelato.network/bridge/aleph-zero-evm'],

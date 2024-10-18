@@ -10,16 +10,19 @@ export const unichain: Layer2 = upcomingL2({
     slug: 'unichain',
     description:
       'Unichain, a faster, cheaper L2 designed to be the home for DeFi and the home for multichain liquidity.',
-    purposes: ['Universal', 'DeFi'],
+    purposes: ['Universal', 'Exchange'],
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
     links: {
       websites: ['https://unichain.org/'],
-      apps: [],
+      apps: ['https://unichain.org/bridge'],
       documentation: ['https://docs.unichain.org/docs'],
-      explorers: [],
+      explorers: ['https://unichain-sepolia.blockscout.com/'],
       repositories: [],
-      socialMedia: ['https://x.com/unichain'],
+      socialMedia: [
+        'https://x.com/unichain',
+        'https://discord.com/invite/uniswap',
+      ],
     },
   },
 })

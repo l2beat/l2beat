@@ -18,6 +18,16 @@
       ],
       "issuedPermissions": [
         {
+          "permission": "challenge",
+          "target": "0x4b1A788B20bb85eb19f8e9B69B8a584e7fA29fe5",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0x853bDfF715eFeDc280C16241dD30A6d651f90aCa",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0x3c46C05c2eba8eDd0B0f0C8B1D2fBf9fc53ea01E",
           "via": [
@@ -259,6 +269,11 @@
           "via": []
         },
         {
+          "permission": "sequence",
+          "target": "0xA76E31D8471D569EfDd3D95d1b11Ce6710f4533F",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0x3c46C05c2eba8eDd0B0f0C8B1D2fBf9fc53ea01E",
           "via": [
@@ -325,6 +340,11 @@
         "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
       ],
       "issuedPermissions": [
+        {
+          "permission": "guard",
+          "target": "0x4b1A788B20bb85eb19f8e9B69B8a584e7fA29fe5",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0x3c46C05c2eba8eDd0B0f0C8B1D2fBf9fc53ea01E",
@@ -408,23 +428,40 @@
     { "address": "0x35Aee2b2aa6ACB13C3a38a58AEb069C163734FaD" },
     {
       "address": "0x4b1A788B20bb85eb19f8e9B69B8a584e7fA29fe5",
-      "roles": ["Challenger", "Guardian"],
       "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x30c789674ad3B458886BBC9abf42EEe19EA05C1D"
+        },
         {
           "permission": "configure",
           "target": "0x895E00269A05848F3c9889EfA677D02fF7351a5D",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+        },
+        {
+          "permission": "guard",
+          "target": "0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622"
         }
       ]
     },
     {
       "address": "0x853bDfF715eFeDc280C16241dD30A6d651f90aCa",
-      "roles": ["Proposer"]
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "target": "0x30c789674ad3B458886BBC9abf42EEe19EA05C1D"
+        }
+      ]
     },
     { "address": "0x92124ee0e7238992E5E7F34f9FBBCD71931ABC6D" },
     {
       "address": "0xA76E31D8471D569EfDd3D95d1b11Ce6710f4533F",
-      "roles": ["Sequencer"]
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0x895E00269A05848F3c9889EfA677D02fF7351a5D"
+        }
+      ]
     },
     { "address": "0xAEbA8e2307A22B6824a9a7a39f8b016C357Cd1Fe" },
     { "address": "0xB44948Ff3E8a4d3Ac32A376B4b3209AdC7620770" },
@@ -695,8 +732,8 @@
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
-    "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
-    "opstack/OptimismPortal": "0x2a32f6874a8c0e85e685fa944143e7968d675fed43b46e7385411ad11f8a1a43",
-    "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
+    "opstack/L2OutputOracle": "0xfc8737561d85bab2fe5e39a7a02436a0cb0e7f96d7a7adc2ee3ea486b391c2fc",
+    "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",
+    "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"
   }
 }

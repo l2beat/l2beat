@@ -2,7 +2,7 @@ import { Square } from '~/components/square'
 import { type ProjectToken } from '~/server/features/scaling/tvl/tokens/get-tokens-for-project'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
-import { formatCurrencyExactValue } from '~/utils/format'
+import { formatCurrencyExactValue } from '~/utils/number-format/format-currency'
 import { type ChartUnit } from '../../types'
 
 interface Props {

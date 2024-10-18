@@ -7,6 +7,7 @@ import { DaAccessibilityRisk } from './DaAccessibilityRisk'
 import { DaAttestationSecurityRisk } from './DaAttestationSecurityRisk'
 import { DaExitWindowRisk } from './DaExitWindowRisk'
 import { DaLinks } from './DaLinks'
+import { DaTechnology } from './DaTechnology'
 import { DacTransactionDataType } from './DacTransactionDataType'
 import { UsedInProject } from './UsedInProject'
 
@@ -67,8 +68,8 @@ type CommonDaBridge = {
   display: DaBridgeDisplay
   /** Is the DA bridge under review? */
   isUnderReview?: boolean
-  /** The technology used by the data availability bridge. [MARKDOWN] */
-  technology: string
+  /** Description of technology used by the data availability bridge. */
+  technology: DaTechnology
   /** List of projects given bridge is being used in. */
   usedIn: UsedInProject[]
   /** Risks related to given data availability bridge. */

@@ -37,7 +37,8 @@ const upgradeExecutorUpgradeability = {
 export const arbitrumNovaDac = DAC({
   project: nova,
   layer: {
-    technology: `
+    technology: {
+      description: `
     ## Architecture
     ![Nova architecture](/images/da-layer-technology/nova/architecture.png#center)
 
@@ -59,6 +60,7 @@ export const arbitrumNovaDac = DAC({
     If the DACert is valid, it provides a proof that the corresponding data is available from honest committee members.
 
     `,
+    },
   },
   bridge: {
     chain: ChainId.ETHEREUM,
@@ -94,7 +96,8 @@ export const arbitrumNovaDac = DAC({
         },
       ],
     },
-    technology: `
+    technology: {
+      description: `
     ## DA Bridge Architecture
     ![Nova bridge architecture](/images/da-bridge-technology/nova/architecture.png#center)
 
@@ -103,11 +106,12 @@ export const arbitrumNovaDac = DAC({
     The DA commitment consists of Data Availability Certificate (DACert), including a hash of the data block, an expiration time, and a proof that the required threshold of Committee members have signed off on the data.
     The sequencer distributes the data and collects signatures from Committee members offchain. Only the DACert is posted by the sequencer to the L1 chain inbox (the DA bridge), achieving L2 transaction ordering finality in a single onchain transaction.
     `,
+    },
     permissions: [
       // Members: DAC uses BLS sigs, not EOAs
       {
         name: 'Sequencers',
-        accounts: discovery.getPermissionsByRole('Sequencer'),
+        accounts: discovery.getPermissionsByRole('sequence'),
         description:
           'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
         chain: discovery.chain,
@@ -150,4 +154,5 @@ export const arbitrumNovaDac = DAC({
       risks: [],
     },
   },
+  fallback: 'Ethereum (calldata)',
 })

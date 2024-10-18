@@ -100,7 +100,7 @@ export const zklinknova: Layer3 = {
     slug: 'zklinknova',
     description:
       'zkLink Nova is a Layer 3 zkEVM Validium network leveraging ZK Stack that allows for scattered assets across Ethereum Layer 2s to be aggregated for interoperable trade and transactions.',
-    purposes: ['Universal'],
+    purposes: ['Universal', 'Interoperability'],
     category: 'Validium',
     provider: 'zkLink Nexus',
     links: {

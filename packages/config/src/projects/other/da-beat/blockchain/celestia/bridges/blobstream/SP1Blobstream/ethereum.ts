@@ -36,7 +36,14 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
       socialMedia: [],
     },
   },
-  technology: `
+
+  technology: {
+    description: `
+
+    ## Architecture
+      
+    ![Celestia blobstream architecture](/images/da-bridge-technology/celestia/blobstream/architecture.png#center)
+    
      The Blobstream bridge is a data availability bridge that facilitates data availability commitments to be bridged between Celestia and ${chainName}.
      The Blobstream bridge is composed of three main components: the **Blobstream** contract, the **Succinct Gateway** contracts, and the **Verifier** contracts.  <br /> 
      By default, Blobstream operates asynchronously, handling requests in a fulfillment-based manner. First, zero-knowledge proofs of Celestia block ranges are requested for proving. Requests can be submitted either off-chain through the Succinct API, or onchain through the requestCall() method of the Succinct Gateway smart contract.
@@ -44,8 +51,19 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
      Once a proving request is received, the off-chain prover generates the proof and submits it to Blobstream contract. The Blobstream contract verifies the proof with the corresponding verifier contract and, if successful, stores the data commitment in storage. <br /> 
 
      Verifying a header range includes verifying tendermint consensus (header signatures are 2/3 of stake) and verifying the data commitment root.
-      By default, Blobstream on ${chainName} is updated by the Celestia operator at a regular cadence of ${updateInterval} hour.
+      By default, Blobstream on ${chainName} is updated by the Succinct operator at a regular cadence of ${updateInterval} hour.
     `,
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: 'the DA bridge accepts an incorrect or malicious data commitment provided by a dishonest majority of Celestia validators.',
+      },
+      {
+        category: 'Funds can be frozen if',
+        text: 'the permissioned relayers are unable to submit DA commitments to the Blobstream contract.',
+      },
+    ],
+  },
   contracts: {
     addresses: [
       discovery.getContractDetails('Blobstream', {
@@ -69,11 +87,11 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
     risks: [
       {
         category: 'Funds can be lost if',
-        text: 'the bridge contract receives a malicious code upgrade. There is no delay on code upgrades.',
+        text: 'the bridge contract or its dependencies receive a malicious code upgrade. There is no delay on code upgrades.',
       },
       {
-        category: 'Funds can be lost if',
-        text: 'a dishonest majority of Celestia validators post incorrect or malicious data commitments.',
+        category: 'Funds can be frozen if',
+        text: 'the bridge contract is frozen by the Guardian (BlobstreamMultisig).',
       },
     ],
   },

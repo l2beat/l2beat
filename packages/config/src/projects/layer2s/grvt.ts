@@ -10,7 +10,7 @@ export const grvt: Layer2 = upcomingL2({
     slug: 'grvt',
     description:
       'Gravity (GRVT) is a hybrid crypto derivatives exchange, providing a centralized exchange-like experience while being decentralized, featuring self-custodial funds and wallets.',
-    purposes: ['DeFi'],
+    purposes: ['Universal'],
     category: 'Validium',
     provider: 'ZK Stack',
     links: {

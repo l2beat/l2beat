@@ -7,6 +7,7 @@ const discovery = new ProjectDiscovery('everclear')
 
 export const everclear: Layer2 = orbitStackL2({
   badges: [Badge.RaaS.Gelato, Badge.DA.DAC],
+  additionalPurposes: ['Interoperability'],
   display: {
     name: 'Everclear Hub',
     slug: 'everclear',
@@ -14,7 +15,6 @@ export const everclear: Layer2 = orbitStackL2({
       'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     description:
       'Everclear Hub is an AnyTrust Optimium on Ethereum, built on the Orbit stack. It is used as a liquidity hub (clearing layer) to solve the liquidity fragmentation between modular scaling solutions.',
-    purposes: ['Interoperability'],
     links: {
       websites: ['https://everclear.org'],
       apps: ['https://bridge.gelato.network/bridge/everclear-mainnet'],
