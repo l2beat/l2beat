@@ -1,7 +1,10 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../../../../discovery/ProjectDiscovery'
-import { DaExitWindowRisk } from '../../../../../types'
-import { DaAttestationSecurityRisk } from '../../../../../types/DaAttestationSecurityRisk'
+import {
+  DaCommitteeSecurityRisk,
+  DaUpgradeabilityRisk,
+} from '../../../../../types'
+import { DaRelayerFailureRisk } from '../../../../../types/DaRelayerFailureRisk'
 import { CELESTIA_BLOBSTREAM } from '../template'
 
 const discovery = new ProjectDiscovery('blobstream', 'arbitrum')
@@ -128,7 +131,10 @@ export const blobstreamArbitrum = CELESTIA_BLOBSTREAM({
     // no project integrates it for state validation
   ],
   risks: {
-    attestations: DaAttestationSecurityRisk.SigVerifiedZK(true),
-    exitWindow: DaExitWindowRisk.LowOrNoDelay(0), // TIMELOCK_ROLE is 4/6 multisig
+    committeeSecurity: DaCommitteeSecurityRisk.RobustAndDiverseCommittee(
+      'Celestia Validators',
+    ),
+    upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(0), // TIMELOCK_ROLE is 4/6 multisig
+    relayerFailure: DaRelayerFailureRisk.NoMechanism,
   },
 })

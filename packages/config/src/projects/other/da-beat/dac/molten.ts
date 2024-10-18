@@ -45,10 +45,7 @@ export const moltenDac = DAC({
     ],
     chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignatures,
-    totalMembers: membersCount,
+    membersCount: membersCount,
     transactionDataType: DacTransactionDataType.TransactionDataCompressed,
-    members: {
-      type: 'unknown',
-    },
   },
 })

@@ -4,11 +4,11 @@ import {
   ScalingProjectPermission,
   ScalingProjectTechnologyChoice,
 } from '../../../../common'
-import { DaAccessibilityRisk } from './DaAccessibilityRisk'
-import { DaAttestationSecurityRisk } from './DaAttestationSecurityRisk'
-import { DaExitWindowRisk } from './DaExitWindowRisk'
+import { DaCommitteeSecurityRisk } from './DaCommitteeSecurityRisk'
 import { DaLinks } from './DaLinks'
+import { DaRelayerFailureRisk } from './DaRelayerFailureRisk'
 import { DaTechnology } from './DaTechnology'
+import { DaUpgradeabilityRisk } from './DaUpgradeabilityRisk'
 import { DacTransactionDataType } from './DacTransactionDataType'
 import { UsedInProject } from './UsedInProject'
 
@@ -44,19 +44,14 @@ export type DacBridge = CommonDaBridge & {
   type: 'DAC'
   /** The chain the DAC attests data on. */
   chain: ChainId
-  /** Total number of members in the DAC. */
-  totalMembers: number
+  /**  Total members count.  */
+  membersCount: number
+  /** Data about the DAC members. */
+  knownMembers?: { external: boolean; name: string; href: string }[]
   /** Minimum number of members required to sign and attest the data. */
   requiredMembers: number
   /** The type of data. */
   transactionDataType: DacTransactionDataType
-  /** Data about the DAC members. */
-  members:
-    | {
-        type: 'public'
-        list: { name: string; href: string }[]
-      }
-    | { type: 'unknown' }
   /** Data about related permissions - preferably from discovery. */
   permissions: ScalingProjectPermission[]
   /** Data about the contracts used in the bridge - preferably from discovery. */
@@ -96,9 +91,9 @@ interface DaBridgeDisplay {
 
 export type DaBridgeRisks = {
   /** Attestation - TBD. */
-  attestations: DaAttestationSecurityRisk
-  /** Exit window - TBD. @unit seconds. */
-  exitWindow: DaExitWindowRisk
-  /** Accessibility - TBD. */
-  accessibility: DaAccessibilityRisk
+  committeeSecurity: DaCommitteeSecurityRisk
+  /** Upgradeability - TBD. @unit seconds. */
+  upgradeability: DaUpgradeabilityRisk
+  /** Relayer failure - TBD. */
+  relayerFailure: DaRelayerFailureRisk
 }

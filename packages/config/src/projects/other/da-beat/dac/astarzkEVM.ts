@@ -2,7 +2,6 @@ import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { astarzkevm } from '../../../layer2s/astarzkevm'
 import { DAC } from '../templates/dac-template'
-import { DaAttestationSecurityRisk } from '../types'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('astarzkevm')
@@ -46,11 +45,8 @@ export const astarZkEvmDac = DAC({
     ],
     chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignaturesDAC,
-    totalMembers: membersCountDAC,
+    membersCount: membersCountDAC,
     transactionDataType: DacTransactionDataType.TransactionData,
-    members: {
-      type: 'unknown',
-    },
     contracts: {
       addresses: [
         discovery.getContractDetails('AstarValidium', {
@@ -64,8 +60,5 @@ export const astarZkEvmDac = DAC({
       ],
       risks: [],
     },
-  },
-  risks: {
-    attestations: DaAttestationSecurityRisk.SigVerified(true),
   },
 })
