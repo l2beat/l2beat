@@ -9,7 +9,7 @@ export const puffer: Layer2 = upcomingL2({
     name: 'Puffer UniFi',
     slug: 'puffer',
     description:
-      'UniFi by Puffer restaking team is a based rollup that plans to include in-built native yields and allows for instant withdrawals of assets to Ethereum.',
+      'UniFi by the Puffer team is their planned flagship based rollup using the Puffer AVS for preconfirmations to explore better UX, security and native yield for users.',
     purposes: ['Universal', 'Restaking'],
     category: 'ZK Rollup',
     links: {
