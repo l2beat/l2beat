@@ -14,6 +14,7 @@ import { groupByMainCategories } from '~/utils/group-by-main-categories'
 import { useScalingUpcomingFilter } from '../../_components/scaling-filter-context'
 import { ScalingUpcomingAndArchivedFilters } from '../../_components/scaling-upcoming-and-archived-filters'
 import { ScalingUpcomingTable } from './table/scaling-upcoming-table'
+import { Suspense } from 'react'
 
 export function ScalingUpcomingTables({
   entries,
@@ -30,23 +31,25 @@ export function ScalingUpcomingTables({
         <ScalingUpcomingAndArchivedFilters
           items={[...filteredRollups, ...filteredValidiumsAndOptimiums]}
         />
-        <DirectoryTabs defaultValue="rollups" className="mt-6">
-          <DirectoryTabsList>
-            <DirectoryTabsTrigger value="rollups">
-              Rollups <CountBadge>{filteredRollups.length}</CountBadge>
-            </DirectoryTabsTrigger>
-            <DirectoryTabsTrigger value="validiums-and-optimiums">
-              Validiums & Optimiums{' '}
-              <CountBadge>{filteredValidiumsAndOptimiums.length}</CountBadge>
-            </DirectoryTabsTrigger>
-          </DirectoryTabsList>
-          <DirectoryTabsContent value="rollups">
-            <ScalingUpcomingTable entries={filteredRollups} />
-          </DirectoryTabsContent>
-          <DirectoryTabsContent value="validiums-and-optimiums">
-            <ScalingUpcomingTable entries={filteredValidiumsAndOptimiums} />
-          </DirectoryTabsContent>
-        </DirectoryTabs>
+        <Suspense>
+          <DirectoryTabs defaultValue="rollups" className="mt-6">
+            <DirectoryTabsList>
+              <DirectoryTabsTrigger value="rollups">
+                Rollups <CountBadge>{filteredRollups.length}</CountBadge>
+              </DirectoryTabsTrigger>
+              <DirectoryTabsTrigger value="validiums-and-optimiums">
+                Validiums & Optimiums{' '}
+                <CountBadge>{filteredValidiumsAndOptimiums.length}</CountBadge>
+              </DirectoryTabsTrigger>
+            </DirectoryTabsList>
+            <DirectoryTabsContent value="rollups">
+              <ScalingUpcomingTable entries={filteredRollups} />
+            </DirectoryTabsContent>
+            <DirectoryTabsContent value="validiums-and-optimiums">
+              <ScalingUpcomingTable entries={filteredValidiumsAndOptimiums} />
+            </DirectoryTabsContent>
+          </DirectoryTabs>
+        </Suspense>
       </>
     )
   }
