@@ -1,0 +1,76 @@
+// aztecconnect riskView didn't change 1
+
+{
+  dataAvailability: {
+    definingMetric: Infinity
+    description: "All of the data needed for proof construction is published on Ethereum L1."
+    sentiment: "good"
+    sources: [
+      {
+        contract: "RollupProcessorV3"
+        references: [
+          "https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L686"
+        ]
+      }
+    ]
+    value: "Onchain"
+  }
+  destinationToken: {
+    description: "ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain."
+    sentiment: "good"
+    value: "Native & Canonical"
+  }
+  exitWindow: {
+    definingMetric: Infinity
+    description: "Users can exit funds at any time because contracts are not upgradeable."
+    sentiment: "good"
+    value: "∞"
+  }
+  proposerFailure: {
+    description: "If the Proposer fails, users can leverage the source available prover to submit proofs to the L1 bridge."
+    sentiment: "good"
+    value: "Self propose"
+  }
+  sequencerFailure: {
+    definingMetric: undefined
+    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. Proposing new blocks requires creating ZK proofs."
+    sentiment: "good"
+    sources: [
+      {
+        contract: "RollupProcessorV3"
+        references: [
+          "https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L697"
+        ]
+      }
+    ]
+    value: "Self sequence"
+  }
+  stateValidation: {
+    definingMetric: Infinity
+    description: "SNARKs are zero knowledge proofs that ensure state correctness, but require trusted setup."
+    sentiment: "good"
+    sources: [
+      {
+        contract: "RollupProcessorV3"
+        references: [
+          "https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L706"
+          "https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L1041"
+          "https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L1054"
+          "https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L1135"
+        ]
+      }
+      {
+        contract: "Verifier28x32"
+        references: [
+          "https://etherscan.io/address/0xb7baA1420f88b7758E341c93463426A2b7651CFB#code#F3#L150"
+        ]
+      }
+    ]
+    value: "ZK proofs (SN)"
+  }
+  validatedBy: {
+    description: "Smart contracts on Ethereum validate all bridge transfers."
+    sentiment: "good"
+    value: "Ethereum"
+  }
+}
