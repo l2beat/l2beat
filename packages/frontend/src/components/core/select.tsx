@@ -23,7 +23,7 @@ const SelectTrigger = React.forwardRef<
     className={cn(
       'group/trigger flex min-h-8 select-none items-center justify-between gap-1.5 whitespace-nowrap rounded-lg px-3 py-1 shadow-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
       'bg-gray-200 text-sm font-medium leading-none data-[state=open]:hover:bg-gray-400 dark:bg-zinc-700 dark:data-[state=open]:hover:bg-slate-600',
-      'sidebar:!bg-surface-primary sidebar:main-page-card:!bg-surface-secondary sidebar:data-[state=open]:hover:!bg-surface-secondary sidebar:main-page-card:data-[state=open]:hover:!bg-surface-tertiary',
+      'sidebar:!bg-surface-primary sidebar:data-[state=open]:hover:!bg-surface-secondary sidebar:main-page-card:!bg-surface-secondary sidebar:main-page-card:data-[state=open]:hover:!bg-surface-tertiary',
       'transition-colors',
       className,
     )}
@@ -83,7 +83,7 @@ const SelectContent = React.forwardRef<
       className={cn(
         'relative z-50 max-h-96 min-w-32 overflow-hidden rounded-lg bg-gray-200 shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-zinc-700',
         position === 'popper' &&
-        'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
+          'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
         className,
       )}
       position={position}
@@ -94,7 +94,7 @@ const SelectContent = React.forwardRef<
         className={cn(
           'p-1',
           position === 'popper' &&
-          'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]',
+            'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]',
         )}
       >
         {children}

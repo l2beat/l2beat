@@ -45,8 +45,9 @@ function SelectedValue<T extends string>({
   return (
     <button
       onClick={() => onValueChange(undefined)}
-      className={cn('flex h-8 cursor-pointer select-none items-center justify-center gap-1.5 whitespace-pre rounded-lg px-2.5 text-sm font-medium text-brand outline-none transition-colors',
-        'sidebar:bg-surface-primary sidebar:main-page-card:bg-surface-secondary sidebar:hover:bg-surface-tertiary'
+      className={cn(
+        'flex h-8 cursor-pointer select-none items-center justify-center gap-1.5 whitespace-pre rounded-lg px-2.5 text-sm font-medium text-brand outline-none transition-colors',
+        'sidebar:bg-surface-primary sidebar:hover:bg-surface-tertiary sidebar:main-page-card:bg-surface-secondary',
       )}
     >
       <span>{option.label}</span>

@@ -47,7 +47,9 @@ export function ScalingCostsTable(props: Props) {
     data: tableEntries,
     columns: scalingCostsColumns,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: props.rollups ? getStageSortedRowModel() : getSortedRowModel(),
+    getSortedRowModel: props.rollups
+      ? getStageSortedRowModel()
+      : getSortedRowModel(),
     manualFiltering: true,
     initialState: {
       sorting: [
