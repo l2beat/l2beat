@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xae3b6b1f5f238114f1442c4ea5f5a45c0d425742
+Generated with discovered.json: 0xc9f700cf5c0d3da23ed2de3e43c5b3b6d29ed074
 
-# Diff at Fri, 18 Oct 2024 10:57:23 GMT:
+# Diff at Fri, 18 Oct 2024 11:34:52 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@0295165a89d86b7450439f24f100d1baa74381fc block: 20914057
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8bd58d38d84243da335cc86dc9fccafce6e4a0a9 block: 20914057
 - current block number: 20914057
 
 ## Description
@@ -19,6 +19,8 @@ discovery. Values are for block 20914057 (main branch discovery), not current.
 ```diff
     contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748) {
     +++ description: used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+      receivedPermissions:
++        [{"permission":"guard","target":"0x3F37aBdE2C6b5B2ed6F8045787Df1ED1E3753956","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"}]},{"permission":"guard","target":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"}]}]
       directlyReceivedPermissions:
 +        [{"permission":"act","target":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"}]
     }
@@ -44,24 +46,12 @@ discovery. Values are for block 20914057 (main branch discovery), not current.
 +        "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"
       issuedPermissions.0.target:
 -        "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
-+        "0x847B5c174615B1B7fDF770882256e2D3E95b9D92"
-      issuedPermissions.0.via.2:
-+        {"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2","delay":0}
++        "0x0454092516c9A4d636d3CAfA1e82161376C8a748"
       issuedPermissions.0.via.1:
-+        {"address":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03","delay":0}
++        {"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2","delay":0}
       issuedPermissions.0.via.0.address:
 -        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
-+        "0x0454092516c9A4d636d3CAfA1e82161376C8a748"
-    }
-```
-
-```diff
-    contract FoundationMultisig_1 (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
-    +++ description: None
-      receivedPermissions:
-+        [{"permission":"guard","target":"0x3F37aBdE2C6b5B2ed6F8045787Df1ED1E3753956","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"},{"address":"0x0454092516c9A4d636d3CAfA1e82161376C8a748"}]},{"permission":"guard","target":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"},{"address":"0x0454092516c9A4d636d3CAfA1e82161376C8a748"}]}]
-      directlyReceivedPermissions:
-+        [{"permission":"act","target":"0x0454092516c9A4d636d3CAfA1e82161376C8a748"}]
++        "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
     }
 ```
 
@@ -85,14 +75,12 @@ discovery. Values are for block 20914057 (main branch discovery), not current.
 +        "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"
       issuedPermissions.0.target:
 -        "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
-+        "0x847B5c174615B1B7fDF770882256e2D3E95b9D92"
-      issuedPermissions.0.via.2:
-+        {"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2","delay":0}
++        "0x0454092516c9A4d636d3CAfA1e82161376C8a748"
       issuedPermissions.0.via.1:
-+        {"address":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03","delay":0}
++        {"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2","delay":0}
       issuedPermissions.0.via.0.address:
 -        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
-+        "0x0454092516c9A4d636d3CAfA1e82161376C8a748"
++        "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
     }
 ```
 

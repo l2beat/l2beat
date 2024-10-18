@@ -9,8 +9,7 @@
     },
     "fallbackOwner": {
       "target": {
-        "description": "Fallback Owner of {{ $.address }} - takes ownership of {{ safe }} if the number of members falls below {{ minOwners }}.",
-        "permissions": [{ "type": "act" }]
+        "description": "Fallback Owner of {{ $.address }} - takes ownership of {{ safe }} if the number of members falls below {{ minOwners }}."
       }
     },
     "livenessGuard": {

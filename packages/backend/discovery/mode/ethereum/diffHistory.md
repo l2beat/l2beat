@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xd342297c0416900debb2d2cffa25b21725d84f7f
+Generated with discovered.json: 0xd113402b09acdc56661695ad0555b96fe9c0e88d
 
-# Diff at Fri, 18 Oct 2024 10:57:36 GMT:
+# Diff at Fri, 18 Oct 2024 11:29:19 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@0295165a89d86b7450439f24f100d1baa74381fc block: 20927606
-- current block number: 20927606
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8bd58d38d84243da335cc86dc9fccafce6e4a0a9 block: 20927606
+- current block number: 20992152
 
 ## Description
 
@@ -19,18 +19,10 @@ discovery. Values are for block 20927606 (main branch discovery), not current.
 ```diff
     contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748) {
     +++ description: used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+      receivedPermissions:
++        [{"permission":"guard","target":"0x8B34b14c7c7123459Cf3076b8Cb929BE097d0C07","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"}]},{"permission":"guard","target":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"}]}]
       directlyReceivedPermissions:
 +        [{"permission":"act","target":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"}]
-    }
-```
-
-```diff
-    contract FoundationMultisig_1 (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
-    +++ description: None
-      receivedPermissions:
-+        [{"permission":"guard","target":"0x8B34b14c7c7123459Cf3076b8Cb929BE097d0C07","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"},{"address":"0x0454092516c9A4d636d3CAfA1e82161376C8a748"}]},{"permission":"guard","target":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"},{"address":"0x0454092516c9A4d636d3CAfA1e82161376C8a748"}]}]
-      directlyReceivedPermissions:
-+        [{"permission":"act","target":"0x0454092516c9A4d636d3CAfA1e82161376C8a748"}]
     }
 ```
 
@@ -54,14 +46,12 @@ discovery. Values are for block 20927606 (main branch discovery), not current.
 +        "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"
       issuedPermissions.0.target:
 -        "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
-+        "0x847B5c174615B1B7fDF770882256e2D3E95b9D92"
-      issuedPermissions.0.via.2:
-+        {"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2","delay":0}
++        "0x0454092516c9A4d636d3CAfA1e82161376C8a748"
       issuedPermissions.0.via.1:
-+        {"address":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03","delay":0}
++        {"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2","delay":0}
       issuedPermissions.0.via.0.address:
 -        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
-+        "0x0454092516c9A4d636d3CAfA1e82161376C8a748"
++        "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
     }
 ```
 
@@ -85,14 +75,12 @@ discovery. Values are for block 20927606 (main branch discovery), not current.
 +        "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"
       issuedPermissions.0.target:
 -        "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
-+        "0x847B5c174615B1B7fDF770882256e2D3E95b9D92"
-      issuedPermissions.0.via.2:
-+        {"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2","delay":0}
++        "0x0454092516c9A4d636d3CAfA1e82161376C8a748"
       issuedPermissions.0.via.1:
-+        {"address":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03","delay":0}
++        {"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2","delay":0}
       issuedPermissions.0.via.0.address:
 -        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
-+        "0x0454092516c9A4d636d3CAfA1e82161376C8a748"
++        "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
     }
 ```
 
