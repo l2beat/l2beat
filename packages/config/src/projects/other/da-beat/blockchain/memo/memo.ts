@@ -35,6 +35,9 @@ export const memo: DaLayer = {
   technology: {
     description: `
     ## Architecture
+
+    ![Meeda architecture](/images/da-layer-technology/meeda/architecture.png#center)
+
     Meeda's architecture consists of several components. 
     Storage Nodes store blob data and generate data availability commitments, with node deployment available to all users. 
     Light Nodes are responsible for challenging storage nodes through onchain verification, and their deployment is also open to all users. 

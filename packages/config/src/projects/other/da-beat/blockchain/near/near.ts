@@ -44,6 +44,9 @@ export const near: DaLayer = {
   },
   technology: {
     description: `
+  ## Architecture
+
+  ![Near architecture](/images/da-layer-technology/near/architecture.png#center)
 
   ## Near Nightshade
 
