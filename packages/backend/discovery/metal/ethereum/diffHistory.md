@@ -1,3 +1,119 @@
+Generated with discovered.json: 0xae3b6b1f5f238114f1442c4ea5f5a45c0d425742
+
+# Diff at Fri, 18 Oct 2024 10:57:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@0295165a89d86b7450439f24f100d1baa74381fc block: 20914057
+- current block number: 20914057
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20914057 (main branch discovery), not current.
+
+```diff
+    contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748) {
+    +++ description: used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"}]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x3F37aBdE2C6b5B2ed6F8045787Df1ED1E3753956) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions.3:
++        {"permission":"upgrade","target":"0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A","via":[{"address":"0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99","delay":0}]}
+      issuedPermissions.2:
++        {"permission":"guard","target":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2","delay":0}]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "guard"
+      issuedPermissions.1.target:
+-        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
++        "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
+      issuedPermissions.1.via.1:
++        {"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2","delay":0}
+      issuedPermissions.1.via.0.address:
+-        "0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"
++        "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"
+      issuedPermissions.0.target:
+-        "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
++        "0x847B5c174615B1B7fDF770882256e2D3E95b9D92"
+      issuedPermissions.0.via.2:
++        {"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2","delay":0}
+      issuedPermissions.0.via.1:
++        {"address":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03","delay":0}
+      issuedPermissions.0.via.0.address:
+-        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
++        "0x0454092516c9A4d636d3CAfA1e82161376C8a748"
+    }
+```
+
+```diff
+    contract FoundationMultisig_1 (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"guard","target":"0x3F37aBdE2C6b5B2ed6F8045787Df1ED1E3753956","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"},{"address":"0x0454092516c9A4d636d3CAfA1e82161376C8a748"}]},{"permission":"guard","target":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"},{"address":"0x0454092516c9A4d636d3CAfA1e82161376C8a748"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x0454092516c9A4d636d3CAfA1e82161376C8a748"}]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions.3:
++        {"permission":"upgrade","target":"0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","delay":0}]}
+      issuedPermissions.2:
++        {"permission":"guard","target":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2","delay":0}]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "guard"
+      issuedPermissions.1.target:
+-        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
++        "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
+      issuedPermissions.1.via.1:
++        {"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2","delay":0}
+      issuedPermissions.1.via.0.address:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"
+      issuedPermissions.0.target:
+-        "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
++        "0x847B5c174615B1B7fDF770882256e2D3E95b9D92"
+      issuedPermissions.0.via.2:
++        {"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2","delay":0}
+      issuedPermissions.0.via.1:
++        {"address":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03","delay":0}
+      issuedPermissions.0.via.0.address:
+-        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
++        "0x0454092516c9A4d636d3CAfA1e82161376C8a748"
+    }
+```
+
+```diff
+    contract FoundationMultisig_2 (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"guard","target":"0x3F37aBdE2C6b5B2ed6F8045787Df1ED1E3753956","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"}]},{"permission":"guard","target":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"}]
+    }
+```
+
+```diff
+    contract DeputyGuardianModule (0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B) {
+    +++ description: allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"}]
+    }
+```
+
 Generated with discovered.json: 0x72e9ea9ba15795100f421da389bf3a3a7b1a5713
 
 # Diff at Wed, 16 Oct 2024 11:37:52 GMT:

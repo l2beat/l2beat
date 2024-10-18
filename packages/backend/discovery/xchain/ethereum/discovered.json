@@ -1245,7 +1245,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "orbitstack/RollupProxy": "0x8c92364349ca720f3e801d028dc260fdbc1a9cca4651ed19af6f16a250949729",
     "orbitstack/SequencerInbox": "0x914a19d66f742b381e9ac6579e688ae6a07cddcf5b144eb7528c121bc81eca28"
   }
