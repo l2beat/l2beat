@@ -61,17 +61,21 @@ export class RpcClient2 {
   }
 
   async _query(method: string, params: (string | number | boolean)[]) {
-    const response = await this.$.http.fetch(this.$.url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        method,
-        params,
-        id: generateId(),
-        jsonrpc: '2.0',
-      }),
-      redirect: 'follow',
-    })
+    const response = await this.$.http.fetch(
+      this.$.url,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          method,
+          params,
+          id: generateId(),
+          jsonrpc: '2.0',
+        }),
+        redirect: 'follow',
+      },
+      5_000, // Most RPCs respond in ~2s during regular conditions
+    )
 
     // this parsing is needed for APIs which return 200 and error in the body
     const parsed = RpcResponse.safeParse(response)

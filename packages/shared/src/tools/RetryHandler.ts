@@ -17,7 +17,7 @@ export class RetryHandler {
   }
 
   async retry<T>(fn: () => Promise<T>): Promise<T> {
-    let attempt = 1
+    let attempt = 0
 
     while (true) {
       const delay = Math.min(
@@ -25,9 +25,8 @@ export class RetryHandler {
         this.$.maxRetryDelayMs,
       )
       this.$.logger.warn('Scheduling retry', {
-        attempt: attempt,
+        attempt: attempt + 1,
         delay,
-        // TODO: log args
       })
       await new Promise((resolve) => setTimeout(resolve, delay))
 
@@ -42,19 +41,19 @@ export class RetryHandler {
     }
   }
 
-  static HTTP = (logger: Logger) =>
+  static RELIABLE_API = (logger: Logger) =>
     new RetryHandler({
       logger,
       initialRetryDelayMs: 1000,
-      maxRetries: 5, // 2 4 8 16 32 ~ 1min
+      maxRetries: 3, // 1 2 4
       maxRetryDelayMs: Infinity,
     })
 
-  static RPC = (logger: Logger) =>
+  static UNRELIABLE_API = (logger: Logger) =>
     new RetryHandler({
       logger,
       initialRetryDelayMs: 5000,
-      maxRetries: 3, // 10 20 40 ~ 1min
+      maxRetries: 4, // 5 10 20 40
       maxRetryDelayMs: Infinity,
     })
 

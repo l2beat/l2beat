@@ -1,7 +1,11 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
-import { BlockExplorerClient, HttpClient2, RpcClient2 } from '@l2beat/shared'
+import {
+  BlockExplorerClient,
+  HttpClient2,
+  RetryHandler,
+  RpcClient2,
+} from '@l2beat/shared'
 import { assert, ProjectId } from '@l2beat/shared-pure'
-import { RetryHandler } from '@l2beat/shared/build/tools/RetryHandler'
 import { Config } from '../../config'
 import {
   BlockscoutChainConfig,
@@ -14,6 +18,7 @@ import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { StarkexClient } from '../../peripherals/starkex/StarkexClient'
 import { StarknetClient } from '../../peripherals/starknet/StarknetClient'
 import { ZksyncLiteClient } from '../../peripherals/zksynclite/ZksyncLiteClient'
+import { BlockProvider } from '../../providers/BlockProvider'
 import { Clock } from '../../tools/Clock'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import { ApplicationModule } from '../ApplicationModule'
@@ -88,28 +93,10 @@ function createActivityIndexers(
   activityConfig.projects.forEach((project) => {
     switch (project.config.type) {
       case 'rpc': {
-        const rpcClient =
+        const { rpcClient, txsCountProvider } =
           project.id !== ProjectId('zkfair')
-            ? peripherals.getClient(RpcClient, {
-                url: project.config.url,
-                callsPerMinute: project.config.callsPerMinute,
-                chain: project.id,
-              })
-            : new RpcClient2({
-                logger: logger.tag('zkfair'),
-                http: HttpClient2.RPC_BLOCK,
-                rateLimiter: new RateLimiter({
-                  callsPerMinute: project.config.callsPerMinute,
-                }),
-                retryHandler: RetryHandler.RPC(logger.tag('zkfair')),
-                url: project.config.url,
-              })
-
-        const txsCountProvider = new RpcTxsCountProvider(
-          rpcClient,
-          project.id,
-          project.config.assessCount,
-        )
+            ? createProviderForRpc(peripherals, project)
+            : createProviderForZkFair(project, logger)
 
         const [blockTargetIndexer, activityIndexer] = createBlockBasedIndexers(
           clock,
@@ -241,6 +228,70 @@ function createActivityIndexers(
     }
   })
   return indexers
+}
+
+function createProviderForRpc(
+  peripherals: Peripherals,
+  project: {
+    id: ProjectId
+    config: ActivityTransactionConfig
+    blockExplorerConfig:
+      | EtherscanChainConfig
+      | BlockscoutChainConfig
+      | undefined
+  },
+) {
+  assert(project.config.type === 'rpc')
+
+  const rpcClient = peripherals.getClient(RpcClient, {
+    url: project.config.url,
+    callsPerMinute: project.config.callsPerMinute,
+    chain: project.id,
+  })
+
+  const txsCountProvider = new RpcTxsCountProvider(
+    rpcClient,
+    project.id,
+    project.config.assessCount,
+  )
+  return { rpcClient, txsCountProvider }
+}
+
+function createProviderForZkFair(
+  project: {
+    id: ProjectId
+    config: ActivityTransactionConfig
+    blockExplorerConfig:
+      | EtherscanChainConfig
+      | BlockscoutChainConfig
+      | undefined
+  },
+  _logger: Logger,
+) {
+  assert(project.config.type === 'rpc')
+  assert(project.id === ProjectId('zkfair'))
+
+  const logger = _logger.tag(project.id)
+
+  const rpcClient = new RpcClient2({
+    logger,
+    http: new HttpClient2(),
+    rateLimiter: new RateLimiter({
+      callsPerMinute: project.config.callsPerMinute,
+    }),
+    retryHandler: RetryHandler.UNRELIABLE_API(logger),
+    url: project.config.url,
+  })
+
+  const blockProvider = new BlockProvider([rpcClient])
+
+  const txsCountProvider = new RpcTxsCountProvider(
+    blockProvider,
+    project.id,
+    project.config.assessCount,
+  )
+
+  return { rpcClient, txsCountProvider }
 }
 
 function createBlockBasedIndexers(
