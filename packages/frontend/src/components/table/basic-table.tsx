@@ -28,7 +28,7 @@ import {
 } from './utils/row-type'
 
 export interface BasicTableEntry {
-  id: ProjectId
+  id: ProjectId | string
   slug: string
   isVerified?: boolean
   redWarning?: string | undefined

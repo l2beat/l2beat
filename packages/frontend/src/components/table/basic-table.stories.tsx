@@ -1,3 +1,4 @@
+import { ProjectId } from '@l2beat/shared-pure'
 import { type StoryObj } from '@storybook/react'
 import {
   createColumnHelper,
@@ -10,6 +11,7 @@ import { ProjectNameCell } from './cells/project-name-cell'
 import { getCommonProjectColumns } from './utils/common-project-columns'
 
 interface StorybookEntry {
+  id: ProjectId
   slug: string
   isVerified?: boolean
   redWarning?: string | undefined
@@ -58,6 +60,7 @@ const basicTableColumns = [
 
 const basicTableData: StorybookEntry[] = [
   {
+    id: ProjectId('arbitrum'),
     slug: 'arbitrum',
     name: 'Arbitrum One',
     data: {
@@ -66,6 +69,7 @@ const basicTableData: StorybookEntry[] = [
     },
   },
   {
+    id: ProjectId('optimism'),
     slug: 'optimism',
     name: 'Optimism',
     data: {
@@ -74,6 +78,7 @@ const basicTableData: StorybookEntry[] = [
     },
   },
   {
+    id: ProjectId('base'),
     slug: 'base',
     name: 'Base',
     redWarning: 'Some red warning',
@@ -83,6 +88,7 @@ const basicTableData: StorybookEntry[] = [
     },
   },
   {
+    id: ProjectId('zksync-era'),
     slug: 'zksync-era',
     name: 'zkSync Era',
     showProjectUnderReview: true,
@@ -92,6 +98,7 @@ const basicTableData: StorybookEntry[] = [
     },
   },
   {
+    id: ProjectId('starknet'),
     slug: 'starknet',
     name: 'Starknet',
     isVerified: false,
@@ -101,6 +108,7 @@ const basicTableData: StorybookEntry[] = [
     },
   },
   {
+    id: ProjectId('scroll'),
     slug: 'scroll',
     name: 'Scroll',
     data: {
@@ -109,6 +117,7 @@ const basicTableData: StorybookEntry[] = [
     },
   },
   {
+    id: ProjectId('linea'),
     slug: 'linea',
     name: 'Linea',
     hasImplementationChanged: true,
@@ -118,6 +127,7 @@ const basicTableData: StorybookEntry[] = [
     },
   },
   {
+    id: ProjectId('metis'),
     slug: 'metis',
     name: 'Metis',
     data: {
