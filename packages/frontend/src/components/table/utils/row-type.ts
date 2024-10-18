@@ -29,7 +29,7 @@ export function getRowType(
 export function getRowTypeClassNames(rowType: RowType) {
   switch (rowType) {
     case 'ethereum':
-      return 'bg-blue-400 hover:bg-blue-400 border-b border-b-blue-600 dark:bg-blue-900 dark:border-b-blue-500 dark:hover:bg-blue-900'
+      return 'bg-blue-400 hover:bg-blue-400 dark:bg-blue-900 dark:hover:bg-blue-900'
     case 'unverified':
       return 'bg-red-100/70 dark:bg-red-900/70 hover:bg-red-100/90 dark:hover:bg-red-900/90'
     case 'under-review':
@@ -42,7 +42,7 @@ export function getRowTypeClassNames(rowType: RowType) {
 export function getRowTypeClassNamesWithoutOpacity(rowType: RowType | null) {
   switch (rowType) {
     case 'ethereum':
-      return 'bg-blue-400 group-hover/row:bg-blue-400 dark:bg-blue-900 dark:border-b-blue-500 dark:group-hover/row:bg-blue-900'
+      return 'bg-blue-400 group-hover/row:bg-blue-400 dark:bg-blue-900 dark:group-hover/row:bg-blue-900'
     case 'unverified':
       return 'bg-[#FEE4E4] dark:bg-[#391617] group-hover/row:bg-[#FDDDDD] dark:group-hover/row:bg-[#401213]'
     case 'under-review':

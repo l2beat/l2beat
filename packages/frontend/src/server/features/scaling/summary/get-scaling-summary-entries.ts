@@ -1,16 +1,23 @@
-import { Layer2, layer2s, Layer3, layer3s } from '@l2beat/config'
+import { Layer2, Layer3, layer2s, layer3s } from '@l2beat/config'
 import { compact } from 'lodash'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
+import { projects } from '~/app/(top-nav)/zk-catalog/_utils/projects'
+import { env } from '~/env'
+import { groupByMainCategories } from '~/utils/group-by-main-categories'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
-import { ActivityLatestTpsData, getActivityLatestTps } from '../activity/get-activity-latest-tps'
+import {
+  ActivityLatestTpsData,
+  getActivityLatestTps,
+} from '../activity/get-activity-latest-tps'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
-import { get7dTokenBreakdown, LatestTvl } from '../tvl/utils/get-7d-token-breakdown'
+import {
+  LatestTvl,
+  get7dTokenBreakdown,
+} from '../tvl/utils/get-7d-token-breakdown'
 import { getAssociatedTokenWarning } from '../tvl/utils/get-associated-token-warning'
 import { orderByTvl } from '../tvl/utils/order-by-tvl'
-import { env } from '~/env'
-import { mapToRecategorisedEntries } from '~/utils/map-to-recategorised-entries'
-import { projects } from '~/app/(top-nav)/zk-catalog/_utils/projects'
+import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
 
 export type ScalingSummaryEntry = Awaited<
   ReturnType<typeof getScalingSummaryEntry>
@@ -39,7 +46,13 @@ export async function getScalingSummaryEntries() {
     const latestTvl = tvl.projects[project.id.toString()]
     const activity = projectsActivity[project.id.toString()]
 
-    return getScalingSummaryEntry(project, isVerified, hasImplementationChanged, latestTvl, activity)
+    return getScalingSummaryEntry(
+      project,
+      isVerified,
+      hasImplementationChanged,
+      latestTvl,
+      activity,
+    )
   })
 
   // Use data we already pulled instead of fetching it again
@@ -50,17 +63,24 @@ export async function getScalingSummaryEntries() {
   if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
     return {
       type: 'recategorised' as const,
-      entries: mapToRecategorisedEntries(entries, remappedForOrdering)
+      entries: groupByMainCategories(
+        orderByStageAndTvl(entries, remappedForOrdering),
+      ),
     }
   }
-  
+
   return {
-    entries: orderByTvl(entries, remappedForOrdering)
+    entries: orderByTvl(entries, remappedForOrdering),
   }
 }
 
-
-function getScalingSummaryEntry(project: Layer2 | Layer3, isVerified: boolean, hasImplementationChanged: boolean, latestTvl: LatestTvl['projects'][string] | undefined, activity: ActivityLatestTpsData[string] | undefined ){
+function getScalingSummaryEntry(
+  project: Layer2 | Layer3,
+  isVerified: boolean,
+  hasImplementationChanged: boolean,
+  latestTvl: LatestTvl['projects'][string] | undefined,
+  activity: ActivityLatestTpsData[string] | undefined,
+) {
   const associatedTokenWarning =
     latestTvl && latestTvl.breakdown.total > 0
       ? getAssociatedTokenWarning({
@@ -70,9 +90,7 @@ function getScalingSummaryEntry(project: Layer2 | Layer3, isVerified: boolean, h
           associatedTokens: project.config.associatedTokens ?? [],
         })
       : undefined
-  const associatedTokensExcludedWarnings = compact([
-    project.display.tvlWarning,
-  ])
+  const associatedTokensExcludedWarnings = compact([project.display.tvlWarning])
 
   const common = {
     entryType: 'scaling' as const,
@@ -84,8 +102,7 @@ function getScalingSummaryEntry(project: Layer2 | Layer3, isVerified: boolean, h
     tvl: {
       breakdown: latestTvl?.breakdown,
       change: latestTvl?.change,
-      associatedTokensExcludedChange:
-        latestTvl?.associatedTokensExcludedChange,
+      associatedTokensExcludedChange: latestTvl?.associatedTokensExcludedChange,
       associatedTokens: project.config.associatedTokens ?? [],
       warnings: compact([
         ...associatedTokensExcludedWarnings,
@@ -115,9 +132,7 @@ function getScalingSummaryEntry(project: Layer2 | Layer3, isVerified: boolean, h
     .find((p) => p.id === project.hostChain)
 
   const projectRisks = getL2Risks(project.riskView)
-  const baseLayerRisks = baseLayer
-    ? getL2Risks(baseLayer.riskView)
-    : undefined
+  const baseLayerRisks = baseLayer ? getL2Risks(baseLayer.riskView) : undefined
   const stackedRisks =
     project.type === 'layer3' ? project.stackedRiskView : undefined
   // L3

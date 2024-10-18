@@ -1,11 +1,9 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
-import { env } from 'process'
 import { ScalingCostsChart } from '~/components/chart/costs/scaling-costs-chart'
 import { MainPageCard } from '~/components/main-page-card'
 import { MainPageHeader } from '~/components/main-page-header'
 import {
-  type ScalingCostsEntry,
-  getScalingCostsEntries,
+  getScalingCostsEntries
 } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
@@ -14,8 +12,7 @@ import { ScalingFilterContextProvider } from '../_components/scaling-filter-cont
 import { CostsMetricContextProvider } from './_components/costs-metric-context'
 import { CostsTimeRangeContextProvider } from './_components/costs-time-range-context'
 import { CostsUnitContextProvider } from './_components/costs-unit-context'
-import { ScalingCostsRollupsTable } from './_components/table/scaling-costs-rollups-table'
-import { ScalingCostsTable } from './_components/table/scaling-costs-table'
+import { ScalingCostsTables } from './_components/scaling-costs-tables'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -38,24 +35,15 @@ export default async function Page() {
               <MainPageHeader>Onchain costs</MainPageHeader>
               <MainPageCard>
                 <ScalingCostsChart
-                  entries={entries}
+                  entries={entries.type === 'recategorised' ? entries.entries.rollups : entries.entries}
                   milestones={HOMEPAGE_MILESTONES}
                 />
               </MainPageCard>
-              <MainPageCard className="md:mt-6">
-                <Table entries={entries} />
-              </MainPageCard>
+              <ScalingCostsTables {...entries} />
             </CostsMetricContextProvider>
           </CostsUnitContextProvider>
         </CostsTimeRangeContextProvider>
       </ScalingFilterContextProvider>
     </HydrateClient>
   )
-}
-
-async function Table({ entries }: { entries: ScalingCostsEntry[] }) {
-  if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
-    return <ScalingCostsRollupsTable entries={entries} />
-  }
-  return <ScalingCostsTable entries={entries} />
 }

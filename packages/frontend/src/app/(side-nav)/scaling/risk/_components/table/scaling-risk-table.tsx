@@ -1,24 +1,15 @@
 'use client'
 
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { useMemo } from 'react'
-import { useScalingFilter } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
 import { BasicTable } from '~/components/table/basic-table'
+import { RollupsTable } from '~/components/table/rollups-table'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
-import { ScalingFilters } from '../../../_components/scaling-filters'
 import { scalingRiskColumns } from './columns'
 
-export function ScalingRiskTable({ entries }: { entries: ScalingRiskEntry[] }) {
-  const includeFilters = useScalingFilter()
-
-  const filteredEntries = useMemo(
-    () => entries.filter((item) => includeFilters(item)),
-    [entries, includeFilters],
-  )
-
+export function ScalingRiskTable({ entries, rollups }: { entries: ScalingRiskEntry[], rollups?: boolean }) {
   const table = useTable({
-    data: filteredEntries,
+    data: entries,
     columns: scalingRiskColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -36,10 +27,5 @@ export function ScalingRiskTable({ entries }: { entries: ScalingRiskEntry[] }) {
     },
   })
 
-  return (
-    <div className="space-y-3 md:space-y-6">
-      <ScalingFilters items={filteredEntries} />
-      <BasicTable table={table} />
-    </div>
-  )
+  return rollups ? <RollupsTable table={table} /> : <BasicTable table={table} />
 }

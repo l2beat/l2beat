@@ -43,9 +43,9 @@ export function ActivityChart({ milestones, entries }: Props) {
   const filter = filters.isEmpty
     ? { type: 'all' as const }
     : {
-        type: 'projects' as const,
-        projectIds: entries.filter(includeFilter).map((project) => project.id),
-      }
+      type: 'projects' as const,
+      projectIds: entries.filter(includeFilter).map((project) => project.id),
+    }
 
   const { data: stats } = api.activity.chartStats.useQuery({
     filter,

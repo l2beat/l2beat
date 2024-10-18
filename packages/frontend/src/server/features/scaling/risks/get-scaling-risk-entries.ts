@@ -1,9 +1,12 @@
 import { type Layer2, layer2s } from '@l2beat/config'
+import { env } from '~/env'
+import { groupByMainCategories } from '~/utils/group-by-main-categories'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
 import { orderByTvl } from '../tvl/utils/order-by-tvl'
+import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
 
 export type ScalingRiskEntries = Awaited<
   ReturnType<typeof getScalingRiskEntries>
@@ -26,7 +29,14 @@ export async function getScalingRiskEntries() {
     ),
   )
 
-  return orderByTvl(entries, tvl)
+  if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
+    return {
+      type: 'recategorised' as const,
+      entries: groupByMainCategories(orderByStageAndTvl(entries, tvl)),
+    }
+  }
+
+  return { entries: orderByTvl(entries, tvl) }
 }
 
 export type ScalingRiskEntry = ReturnType<typeof getScalingRiskEntry>

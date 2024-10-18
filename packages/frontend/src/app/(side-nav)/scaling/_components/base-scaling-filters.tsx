@@ -11,12 +11,14 @@ interface Props {
   items: CommonScalingEntry[]
   showRollupsOnly?: boolean
   additionalFilters?: React.ReactNode
+  className?: string
 }
 
 export function BaseScalingFilters({
   items,
   showRollupsOnly,
   additionalFilters,
+  className,
 }: Props) {
   const filter = useScalingFilterValues()
   const typeOptions = uniq(items.map((item) => item.category))
@@ -73,7 +75,7 @@ export function BaseScalingFilters({
     }))
 
   return (
-    <OverflowWrapper childrenClassName="-m-1 [&>*]:m-1">
+    <OverflowWrapper childrenClassName="-m-1 [&>*]:m-1" className={className}>
       <div className="flex flex-row space-x-1">
         {showRollupsOnly && (
           <Checkbox

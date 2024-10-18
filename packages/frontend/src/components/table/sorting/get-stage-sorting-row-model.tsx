@@ -1,4 +1,5 @@
-import { type StageConfig } from '@l2beat/config'
+import { type StageConfig } from '@l2beat/config';
+import { ProjectId } from '@l2beat/shared-pure';
 import {
   type Row,
   type RowModel,
@@ -6,10 +7,10 @@ import {
   type Table,
   getMemoOptions,
   memo,
-} from '@tanstack/react-table'
+} from '@tanstack/react-table';
 
 export function getStageSortedRowModel<
-  TData extends { stage: StageConfig },
+  TData extends { id: ProjectId; stage: StageConfig },
 >(): (table: Table<TData>) => () => RowModel<TData> {
   return (table) =>
     memo(
@@ -54,6 +55,10 @@ export function getStageSortedRowModel<
           const sortedData = rows.map((row) => ({ ...row }))
 
           sortedData.sort((rowA, rowB) => {
+            // Always keep Ethereum on top
+            if (rowA.original.id === ProjectId.ETHEREUM) return -1
+            if (rowB.original.id === ProjectId.ETHEREUM) return 1
+
             // First, prioritize Stage 2 and Stage 1, then Stage 0, then the rest
             const stageA = rowA.original.stage.stage
             const stageB = rowB.original.stage.stage

@@ -58,7 +58,7 @@ const DirectoryTabsTrigger = React.forwardRef<
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
-      'flex h-8 shrink-0 items-center justify-center rounded-t-md max-md:px-6 md:h-10 md:min-w-60 md:rounded-t-xl',
+      'flex h-8 shrink-0 items-center justify-center gap-1.5 rounded-t-md max-md:px-6 md:h-10 md:min-w-60 md:rounded-t-xl',
       'whitespace-nowrap text-xs font-bold md:text-sm',
       'ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2',
       'data-[state=inactive]:bg-surface-tertiary dark:data-[state=inactive]:bg-gradient-to-t dark:data-[state=inactive]:from-[#2A2C33]  dark:data-[state=inactive]:to-[#1F2025]',
@@ -79,7 +79,7 @@ const DirectoryTabsContent = React.forwardRef<
   <TabsPrimitive.Content
     ref={ref}
     className={cn(
-      'rounded-xl rounded-tl-none bg-surface-primary px-5 py-6 max-md:rounded-tr-none',
+      'rounded-xl rounded-tl-none bg-surface-primary px-5 pb-6 pt-3 max-md:rounded-tr-none',
       'ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2',
       className,
     )}

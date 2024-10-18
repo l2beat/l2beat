@@ -1,28 +1,20 @@
 'use client'
 
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { useMemo } from 'react'
-import { useScalingFilter } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
 import { BasicTable } from '~/components/table/basic-table'
+import { RollupsTable } from '~/components/table/rollups-table'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
-import { ScalingDaFilters } from '../scaling-da-filters'
 import { columns } from './columns'
 
 export interface Props {
   entries: ScalingDataAvailabilityEntry[]
+  rollups?: boolean
 }
 
-export function ScalingDataAvailabilityTable({ entries }: Props) {
-  const includeFilters = useScalingFilter()
-
-  const projects = useMemo(
-    () => entries.filter((item) => includeFilters(item)),
-    [entries, includeFilters],
-  )
-
+export function ScalingDataAvailabilityTable({ entries, rollups }: Props) {
   const table = useTable({
-    data: projects,
+    data: entries,
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -40,10 +32,5 @@ export function ScalingDataAvailabilityTable({ entries }: Props) {
     },
   })
 
-  return (
-    <section className="space-y-3 md:space-y-6">
-      <ScalingDaFilters items={projects} />
-      <BasicTable table={table} />
-    </section>
-  )
+  return rollups ? <RollupsTable table={table} /> : <BasicTable table={table} />
 }

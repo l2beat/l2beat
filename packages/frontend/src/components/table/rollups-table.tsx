@@ -1,4 +1,5 @@
 import { type StageConfig } from '@l2beat/config'
+import { ProjectId } from '@l2beat/shared-pure'
 import React from 'react'
 import { cn } from '~/utils/cn'
 import {
@@ -13,27 +14,25 @@ interface BasicEntry extends BasicTableEntry {
 }
 
 export function RollupsTable<T extends BasicEntry>(props: BasicTableProps<T>) {
-  const stageTwoAndOne = props.table
-    .getRowModel()
-    .rows.filter(
-      (row) =>
-        row.original.stage.stage === 'Stage 2' ||
-        row.original.stage.stage === 'Stage 1',
-    )
-  const stageZero = props.table
-    .getRowModel()
-    .rows.filter((row) => row.original.stage.stage === 'Stage 0')
-  const rest = props.table
-    .getRowModel()
-    .rows.filter(
-      (row) =>
-        row.original.stage.stage !== 'Stage 2' &&
-        row.original.stage.stage !== 'Stage 1' &&
-        row.original.stage.stage !== 'Stage 0',
-    )
+  const rows = props.table.getRowModel().rows
+  const ethereumEntry = rows.find(p => p.original.id === ProjectId.ETHEREUM)
+  const stageTwoAndOne = rows.filter(
+    (row) =>
+      row.original.stage.stage === 'Stage 2' ||
+      row.original.stage.stage === 'Stage 1',
+  )
+  const stageZero = rows.filter((row) => row.original.stage.stage === 'Stage 0')
+  const rest = rows.filter(
+    (row) =>
+      row.original.stage.stage !== 'Stage 2' &&
+      row.original.stage.stage !== 'Stage 1' &&
+      row.original.stage.stage !== 'Stage 0' &&
+      row.original.id !== ProjectId.ETHEREUM,
+  )
 
   return (
     <BasicTable {...props}>
+      {ethereumEntry && <BasicTableRow row={ethereumEntry} {...props} />}
       {stageTwoAndOne.length !== 0 && (
         <RowDivider>Stage 2 & 1 projects</RowDivider>
       )}
