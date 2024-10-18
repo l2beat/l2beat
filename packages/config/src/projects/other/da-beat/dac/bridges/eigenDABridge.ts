@@ -17,9 +17,14 @@ const upgrades = {
   upgradeDelay: 'No delay',
 }
 
+const EigenTimelockUpgradeDelay = eigenDiscovery.getContractValue<number>(
+  'EigenLayer Timelock',
+  'delay',
+)
+
 const eigenLayerUpgrades = {
-  upgradableBy: ['EigenLayerProxyAdmin'],
-  upgradeDelay: 'No delay',
+  upgradableBy: ['EigenLayerCommunityMultisig', 'EigenLayerOperationsMultisig'],
+  upgradeDelay: `${formatSeconds(EigenTimelockUpgradeDelay)} delay via EigenLayerOperationsMultisig, no delay via EigenLayerCommunityMultisig.`,
 }
 
 const EIGENUpgradeDelay = eigenDiscovery.getContractValue<number>(
@@ -284,6 +289,14 @@ export const eigenDAbridge = {
     ...eigenDiscovery.getMultisigPermission(
       'EigenLayerOperationsMultisig',
       'This multisig is the owner of the EigenDAServiceManager contract. It holds the power to change the contract state and upgrade the bridge.',
+    ),
+    ...eigenDiscovery.getMultisigPermission(
+      'EigenLayerCommunityMultisig',
+      'This multisig is one of the owners of EigenLayerExecutorMultisig and can upgrade EigenLayer core contracts without delay.',
+    ),
+    eigenDiscovery.contractAsPermissioned(
+      eigenDiscovery.getContract('EigenLayer Timelock'),
+      'The timelock contract for upgrading EigenLayer core contracts via EigenLayerOperationsMultisig.',
     ),
   ],
   chain: ChainId.ETHEREUM,
