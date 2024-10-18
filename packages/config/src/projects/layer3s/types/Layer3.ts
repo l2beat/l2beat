@@ -74,7 +74,7 @@ export interface Layer3Config extends ScalingProjectConfig {
   transactionApi?: ScalingProjectTransactionApi
 }
 
-export interface Layer3Display extends ScalingProjectDisplay {
+export type Layer3Display = ScalingProjectDisplay & {
   /** Technology provider */
   provider?: Layer3Provider
 }
