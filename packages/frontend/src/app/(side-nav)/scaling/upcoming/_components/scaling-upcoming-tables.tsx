@@ -1,5 +1,6 @@
 'use client'
 
+import { Suspense } from 'react'
 import { CountBadge } from '~/components/badge/count-badge'
 import {
   DirectoryTabs,
@@ -14,7 +15,6 @@ import { groupByMainCategories } from '~/utils/group-by-main-categories'
 import { useScalingUpcomingFilter } from '../../_components/scaling-filter-context'
 import { ScalingUpcomingAndArchivedFilters } from '../../_components/scaling-upcoming-and-archived-filters'
 import { ScalingUpcomingTable } from './table/scaling-upcoming-table'
-import { Suspense } from 'react'
 
 export function ScalingUpcomingTables({
   entries,
