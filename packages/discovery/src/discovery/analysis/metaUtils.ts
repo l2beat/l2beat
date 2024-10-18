@@ -261,7 +261,7 @@ export function findHighestSeverity(
 function isEmptyObject(obj: object): boolean {
   return (
     Object.keys(obj).length === 0 ||
-    Object.values(obj).every((value) => value === undefined)
+    Object.values(obj).every((value) => value === undefined || value === false)
   )
 }
 
