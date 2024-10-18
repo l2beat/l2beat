@@ -11,7 +11,8 @@ type TemplateVars = Pick<
   | 'permissions'
   | 'nativePermissions'
   | 'usedIn'
-  | 'technology' | 'risks'
+  | 'technology'
+  | 'risks'
 > & {
   display: {
     links: DaLinks

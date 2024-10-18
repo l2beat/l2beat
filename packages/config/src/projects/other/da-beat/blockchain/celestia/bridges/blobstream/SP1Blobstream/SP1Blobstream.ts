@@ -1,11 +1,9 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../../../../discovery/ProjectDiscovery'
-import { DaAttestationSecurityRisk } from '../../../../../types/DaAttestationSecurityRisk'
-import { DaExitWindowRisk } from '../../../../../types/DaExitWindowRisk'
-import { CELESTIA_BLOBSTREAM } from '../template'
 import { DaCommitteeSecurityRisk } from '../../../../../types/DaCommitteeSecurityRisk'
-import { DaUpgradeabilityRisk } from '../../../../../types/DaUpgradeabilityRisk'
 import { DaRelayerFailureRisk } from '../../../../../types/DaRelayerFailureRisk'
+import { DaUpgradeabilityRisk } from '../../../../../types/DaUpgradeabilityRisk'
+import { CELESTIA_BLOBSTREAM } from '../template'
 
 const ethereumDiscovery = new ProjectDiscovery('blobstream')
 const arbitrumDiscovery = new ProjectDiscovery('blobstream', 'arbitrum')
