@@ -13,4 +13,12 @@ export class NetworkExplorerRepository extends BaseRepository {
     })
     return records.length
   }
+
+  async deleteManyByNetworkId(networkId: string): Promise<bigint> {
+    const res = await this.db
+      .deleteFrom('NetworkExplorer')
+      .where('networkId', '=', networkId)
+      .executeTakeFirstOrThrow()
+    return res.numDeletedRows
+  }
 }
