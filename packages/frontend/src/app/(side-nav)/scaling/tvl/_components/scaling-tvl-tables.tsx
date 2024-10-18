@@ -11,18 +11,17 @@ import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-
 import { type groupByMainCategories } from '~/utils/group-by-main-categories'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingTvlFilters } from '../../_components/scaling-tvl-filters'
-import { OthersComingSoonNotice } from '../../summary/_components/table/others-coming-soon-notice'
 import { ScalingTvlTable } from './table/scaling-tvl-table'
 
 type Props =
   | {
-      type?: never
-      entries: ScalingTvlEntry[]
-    }
+    type?: never
+    entries: ScalingTvlEntry[]
+  }
   | {
-      type: 'recategorised'
-      entries: ReturnType<typeof groupByMainCategories<ScalingTvlEntry>>
-    }
+    type: 'recategorised'
+    entries: ReturnType<typeof groupByMainCategories<ScalingTvlEntry>>
+  }
 
 export function ScalingTvlTables(props: Props) {
   const includeFilters = useScalingFilter()
@@ -53,16 +52,12 @@ export function ScalingTvlTables(props: Props) {
                 {filteredEntries.validiumsAndOptimiums.length}
               </CountBadge>
             </DirectoryTabsTrigger>
-            <DirectoryTabsTrigger value="others">Others</DirectoryTabsTrigger>
           </DirectoryTabsList>
           <DirectoryTabsContent value="rollups">
             <ScalingTvlTable entries={filteredEntries.rollups} rollups />
           </DirectoryTabsContent>
           <DirectoryTabsContent value="validiums-and-optimiums">
             <ScalingTvlTable entries={filteredEntries.validiumsAndOptimiums} />
-          </DirectoryTabsContent>
-          <DirectoryTabsContent value="others">
-            <OthersComingSoonNotice />
           </DirectoryTabsContent>
         </DirectoryTabs>
       </>
