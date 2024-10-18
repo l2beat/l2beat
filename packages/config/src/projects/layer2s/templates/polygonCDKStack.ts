@@ -53,10 +53,7 @@ export interface DAProvider {
 export interface PolygonCDKStackConfig {
   daProvider?: DAProvider
   discovery: ProjectDiscovery
-  display: Omit<
-    Layer2Display,
-    'provider' | 'category' | 'purposes'
-  >
+  display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
   rpcUrl?: string
   transactionApi?: ScalingProjectTransactionApi
   chainConfig?: ChainConfig

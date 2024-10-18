@@ -56,10 +56,7 @@ export interface ZkStackConfigCommon {
     added: string
     removed: string
   }
-  display: Omit<
-    Layer2Display,
-    'provider' | 'category' | 'purposes'
-  >
+  display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
   daProvider?: DAProvider
   upgradeability?: {
     upgradableBy: string[] | undefined
