@@ -43,5 +43,4 @@ export function ScalingLivenessTable({ entries, rollups }: Props) {
   })
 
   return rollups ? <RollupsTable table={table} /> : <BasicTable table={table} />
-
 }

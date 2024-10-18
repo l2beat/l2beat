@@ -29,7 +29,5 @@ export function ScalingUpcomingTable({ entries }: Props) {
       },
     },
   })
-  return (
-    <BasicTable table={upcomingTable} insideMainPageCard />
-  )
+  return <BasicTable table={upcomingTable} insideMainPageCard />
 }

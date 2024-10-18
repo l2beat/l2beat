@@ -8,9 +8,9 @@ import {
   TypeCell,
   TypeExplanationTooltip,
 } from '~/components/table/cells/type-cell'
+import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { sortStages } from '~/components/table/sorting/functions/stage-sorting'
 import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
-import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { formatTps } from '~/utils/number-format/format-tps'
 import { type ScalingSummaryTableRow } from '../../_utils/to-table-rows'
 

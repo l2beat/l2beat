@@ -1,7 +1,5 @@
 import { MainPageHeader } from '~/components/main-page-header'
-import {
-  getScalingArchivedEntries
-} from '~/server/features/scaling/archived/get-scaling-archived-entries'
+import { getScalingArchivedEntries } from '~/server/features/scaling/archived/get-scaling-archived-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
 import { ScalingArchivedTables } from './_components/scaling-archived-tables'
@@ -23,5 +21,3 @@ export default async function Page() {
     </>
   )
 }
-
-

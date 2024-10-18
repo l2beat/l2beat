@@ -1,4 +1,4 @@
-import { assert, ProjectId } from '@l2beat/shared-pure'
+import { assert, type ProjectId } from '@l2beat/shared-pure'
 import {
   type Column,
   type Header,
@@ -86,10 +86,10 @@ export function BasicTable<T extends BasicTableEntry>(
                       className={cn(
                         'font-medium tracking-[-0.13px] text-primary',
                         !header.isPlaceholder &&
-                        !!header.column.columnDef.header &&
-                        'rounded-t-lg px-6 pt-4',
+                          !!header.column.columnDef.header &&
+                          'rounded-t-lg px-6 pt-4',
                         header.column.getIsPinned() &&
-                        getRowTypeClassNamesWithoutOpacity(null),
+                          getRowTypeClassNamesWithoutOpacity(null),
                       )}
                       style={getCommonPinningStyles(header.column)}
                     >
@@ -120,14 +120,14 @@ export function BasicTable<T extends BasicTableEntry>(
                       groupParams.isFirstInGroup && 'pl-6',
                       groupParams.isLastInGroup && 'pr-6',
                       !groupParams.headerTitle &&
-                      groupParams.isFirstInGroup &&
-                      'rounded-tl-lg',
+                        groupParams.isFirstInGroup &&
+                        'rounded-tl-lg',
                       !groupParams.headerTitle &&
-                      groupParams.isLastInGroup &&
-                      'rounded-tr-lg',
+                        groupParams.isLastInGroup &&
+                        'rounded-tr-lg',
                     ],
                     header.column.getIsPinned() &&
-                    getRowTypeClassNamesWithoutOpacity(null),
+                      getRowTypeClassNamesWithoutOpacity(null),
                     header.column.columnDef.meta?.headClassName,
                   )}
                   align={header.column.columnDef.meta?.align}
@@ -192,8 +192,8 @@ export function BasicTableRow<T extends BasicTableEntry>({
         className={cn(
           getRowTypeClassNames(rowType),
           row.getIsExpanded() &&
-          props.renderSubComponent?.({ row }) &&
-          '!border-none',
+            props.renderSubComponent?.({ row }) &&
+            '!border-none',
           className,
         )}
       >
@@ -209,7 +209,7 @@ export function BasicTableRow<T extends BasicTableEntry>({
                 align={meta?.align}
                 className={cn(
                   cell.column.getIsPinned() &&
-                  getRowTypeClassNamesWithoutOpacity(rowType),
+                    getRowTypeClassNamesWithoutOpacity(rowType),
                   groupParams?.isFirstInGroup && 'pl-6',
                   groupParams?.isLastInGroup && '!pr-6',
                   cell.column.getCanSort() && meta?.align === undefined
@@ -275,7 +275,7 @@ function RowFiller<T, V>(props: { headers: Header<T, V>[] }) {
             'h-4',
             !header.isPlaceholder && 'rounded-b-lg',
             header.column.getIsPinned() &&
-            getRowTypeClassNamesWithoutOpacity(null),
+              getRowTypeClassNamesWithoutOpacity(null),
           )}
           style={getCommonPinningStyles(header.column)}
         />
@@ -286,12 +286,12 @@ function RowFiller<T, V>(props: { headers: Header<T, V>[] }) {
 
 type ColumnFillerProps =
   | {
-    as: 'th' | 'colgroup'
-  }
+      as: 'th' | 'colgroup'
+    }
   | {
-    as: 'td'
-    href: string | undefined
-  }
+      as: 'td'
+      href: string | undefined
+    }
 
 export function BasicTableColumnFiller(props: ColumnFillerProps) {
   if (props.as === 'td') {

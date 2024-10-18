@@ -42,14 +42,19 @@ export async function getScalingLivenessEntries() {
         return undefined
       }
 
-      return getScalingLivenessEntry(project, hasImplementationChanged, isVerified, projectLiveness)
+      return getScalingLivenessEntry(
+        project,
+        hasImplementationChanged,
+        isVerified,
+        projectLiveness,
+      )
     })
     .filter(notUndefined)
 
   if (env.NEXT_PUBLIC_FEATURE_FLAG_RECATEGORISATION) {
     return {
       type: 'recategorised' as const,
-      entries: groupByMainCategories(orderByStageAndTvl(entries, tvl))
+      entries: groupByMainCategories(orderByStageAndTvl(entries, tvl)),
     }
   }
 
@@ -59,7 +64,12 @@ export async function getScalingLivenessEntries() {
 export type ScalingLivenessEntry = Awaited<
   ReturnType<typeof getScalingLivenessEntry>
 >
-function getScalingLivenessEntry(project: Layer2, hasImplementationChanged: boolean, isVerified: boolean, liveness: LivenessProject) {
+function getScalingLivenessEntry(
+  project: Layer2,
+  hasImplementationChanged: boolean,
+  isVerified: boolean,
+  liveness: LivenessProject,
+) {
   return {
     ...getCommonScalingEntry({
       project,
@@ -73,9 +83,6 @@ function getScalingLivenessEntry(project: Layer2, hasImplementationChanged: bool
     dataAvailabilityMode: project.dataAvailability?.mode,
   }
 }
-
-
-
 
 function getLivenessData(liveness: LivenessProject, project: Layer2) {
   if (!liveness) return undefined

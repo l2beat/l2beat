@@ -1,6 +1,11 @@
 'use client'
 
-import { RowModel, Table, getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import {
+  type RowModel,
+  type Table,
+  getCoreRowModel,
+  getSortedRowModel,
+} from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { useScalingFilter } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
 import { BasicTable } from '~/components/table/basic-table'
@@ -12,10 +17,16 @@ import { scalingActivityColumns } from './columns'
 interface Props {
   entries: ScalingActivityEntry[]
   rollups?: boolean
-  customSortedRowModel?: (table: Table<ScalingActivityEntry>) => () => RowModel<ScalingActivityEntry>
+  customSortedRowModel?: (
+    table: Table<ScalingActivityEntry>,
+  ) => () => RowModel<ScalingActivityEntry>
 }
 
-export function ScalingActivityTable({ entries, rollups, customSortedRowModel }: Props) {
+export function ScalingActivityTable({
+  entries,
+  rollups,
+  customSortedRowModel,
+}: Props) {
   const filter = useScalingFilter()
 
   const filteredEntries = useMemo(

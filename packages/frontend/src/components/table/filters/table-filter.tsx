@@ -83,7 +83,7 @@ function TableFilterSelect<T extends string>({
       }}
       disabled={options.length === 0}
     >
-      <SelectTrigger >
+      <SelectTrigger>
         <SelectValue placeholder={title} />
       </SelectTrigger>
       <SelectContent className="flex flex-col" align="start">

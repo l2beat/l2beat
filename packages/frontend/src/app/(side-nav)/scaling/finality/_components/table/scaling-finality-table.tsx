@@ -10,7 +10,7 @@ import { scalingFinalityColumns } from './columns'
 export function ScalingFinalityTable({
   entries,
   rollups,
-}: { entries: ScalingFinalityEntry[], rollups?: boolean }) {
+}: { entries: ScalingFinalityEntry[]; rollups?: boolean }) {
   const table = useTable({
     data: entries,
     columns: scalingFinalityColumns,

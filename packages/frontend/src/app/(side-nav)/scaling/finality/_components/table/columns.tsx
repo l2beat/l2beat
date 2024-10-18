@@ -12,16 +12,16 @@ import { FinalityDurationCell } from './finality-duration-cell'
 
 const sortFinality =
   (key: 'timeToInclusion' | 'stateUpdateDelay') =>
-    (a: Row<ScalingFinalityEntry>, b: Row<ScalingFinalityEntry>) => {
-      const aVal = a.original.data?.[key]?.averageInSeconds
-      const bVal = b.original.data?.[key]?.averageInSeconds
+  (a: Row<ScalingFinalityEntry>, b: Row<ScalingFinalityEntry>) => {
+    const aVal = a.original.data?.[key]?.averageInSeconds
+    const bVal = b.original.data?.[key]?.averageInSeconds
 
-      if (!aVal || !bVal) {
-        return -1
-      }
-
-      return aVal - bVal
+    if (!aVal || !bVal) {
+      return -1
     }
+
+    return aVal - bVal
+  }
 const columnHelper = createColumnHelper<ScalingFinalityEntry>()
 
 export const scalingFinalityColumns = [
@@ -103,8 +103,8 @@ export const scalingFinalityColumns = [
       const period = ctx.getValue()
       const value = period
         ? formatSeconds(period, {
-          fullUnit: false,
-        })
+            fullUnit: false,
+          })
         : 'None'
 
       return <span className="w-[25px]">{value}</span>

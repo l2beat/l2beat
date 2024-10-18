@@ -1,7 +1,5 @@
 import { MainPageHeader } from '~/components/main-page-header'
-import {
-  getScalingLivenessEntries
-} from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
+import { getScalingLivenessEntries } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
 import { LivenessTimeRangeContextProvider } from './_components/liveness-time-range-context'
@@ -29,5 +27,3 @@ export default async function Page() {
     </ScalingFilterContextProvider>
   )
 }
-
-

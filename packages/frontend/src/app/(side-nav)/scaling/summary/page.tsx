@@ -3,9 +3,7 @@ import { ScalingSummaryTvlChart } from '~/components/chart/tvl/scaling-summary-t
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { MainPageCard } from '~/components/main-page-card'
 import { MainPageHeader } from '~/components/main-page-header'
-import {
-  getScalingSummaryEntries
-} from '~/server/features/scaling/summary/get-scaling-summary-entries'
+import { getScalingSummaryEntries } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingAssociatedTokensContextProvider } from '../_components/scaling-associated-tokens-context'
@@ -55,7 +53,7 @@ export default async function Page() {
         </MainPageCard>
       </div>
       <ChartTabs className="lg:hidden" unit={UNIT} timeRange={TIME_RANGE} />
-      <HorizontalSeparator className='mb-3 mt-6' />
+      <HorizontalSeparator className="mb-3 mt-6" />
       <ScalingAssociatedTokensContextProvider>
         <ScalingFilterContextProvider>
           <ScalingSummaryTables {...entries} />
@@ -64,5 +62,3 @@ export default async function Page() {
     </HydrateClient>
   )
 }
-
-

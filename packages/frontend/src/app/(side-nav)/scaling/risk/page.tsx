@@ -1,9 +1,7 @@
 import { getDefaultMetadata } from '~/utils/metadata'
 
 import { MainPageHeader } from '~/components/main-page-header'
-import {
-  getScalingRiskEntries
-} from '~/server/features/scaling/risks/get-scaling-risk-entries'
+import { getScalingRiskEntries } from '~/server/features/scaling/risks/get-scaling-risk-entries'
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
 import { ScalingRiskTables } from './_components/scaling-risk-tables'
 

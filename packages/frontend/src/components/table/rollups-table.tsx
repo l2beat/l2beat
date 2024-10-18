@@ -15,7 +15,7 @@ interface BasicEntry extends BasicTableEntry {
 
 export function RollupsTable<T extends BasicEntry>(props: BasicTableProps<T>) {
   const rows = props.table.getRowModel().rows
-  const ethereumEntry = rows.find(p => p.original.id === ProjectId.ETHEREUM)
+  const ethereumEntry = rows.find((p) => p.original.id === ProjectId.ETHEREUM)
   const stageTwoAndOne = rows.filter(
     (row) =>
       row.original.stage.stage === 'Stage 2' ||

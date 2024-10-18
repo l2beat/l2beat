@@ -52,7 +52,5 @@ export function ScalingSummaryValidiumsAndOptimiumsTable({ entries }: Props) {
     },
   })
 
-  return (
-    <BasicTable table={table} />
-  )
+  return <BasicTable table={table} />
 }

@@ -35,7 +35,14 @@ export default async function Page() {
         <ActivityTimeRangeContextProvider>
           <MainPageHeader>Activity</MainPageHeader>
           <MainPageCard>
-            <ActivityChart milestones={HOMEPAGE_MILESTONES} entries={entries.type === 'recategorised' ? entries.entries.rollups : entries.entries} />
+            <ActivityChart
+              milestones={HOMEPAGE_MILESTONES}
+              entries={
+                entries.type === 'recategorised'
+                  ? entries.entries.rollups
+                  : entries.entries
+              }
+            />
           </MainPageCard>
           <ScalingActivityTables {...entries} />
         </ActivityTimeRangeContextProvider>

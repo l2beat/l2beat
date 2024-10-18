@@ -23,9 +23,9 @@ interface Props {
 }
 
 export function ScalingCostsTable(props: Props) {
-  const { range, } = useCostsTimeRangeContext()
+  const { range } = useCostsTimeRangeContext()
   const { unit } = useCostsUnitContext()
-  const { metric, } = useCostsMetricContext()
+  const { metric } = useCostsMetricContext()
   const includeFilters = useScalingFilter()
 
   const { data } = api.costs.table.useQuery({ range })
@@ -61,9 +61,11 @@ export function ScalingCostsTable(props: Props) {
     },
   })
 
-
-
-  return props.rollups ? <RollupsTable table={table} /> : <BasicTable table={table} />
+  return props.rollups ? (
+    <RollupsTable table={table} />
+  ) : (
+    <BasicTable table={table} />
+  )
 }
 
 function mapToTableEntry(

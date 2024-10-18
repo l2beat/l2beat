@@ -47,5 +47,9 @@ export function ScalingTvlTable({ entries, rollups }: Props) {
     },
   })
 
-  return rollups ? <RollupsTable table={table} /> : <BasicTable table={table} insideMainPageCard />
+  return rollups ? (
+    <RollupsTable table={table} />
+  ) : (
+    <BasicTable table={table} insideMainPageCard />
+  )
 }

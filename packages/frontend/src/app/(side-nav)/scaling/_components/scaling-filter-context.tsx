@@ -109,14 +109,14 @@ export function useScalingFilter() {
           : undefined,
         scalingFilters.purpose !== undefined
           ? entry.purposes?.some(
-            (purpose) => purpose === scalingFilters.purpose,
-          )
+              (purpose) => purpose === scalingFilters.purpose,
+            )
           : undefined,
         scalingFilters.hostChain !== undefined
           ? scalingFilters.hostChain === 'Ethereum'
             ? entry.type === 'layer2'
             : entry.type === 'layer3' &&
-            entry.hostChain === scalingFilters.hostChain
+              entry.hostChain === scalingFilters.hostChain
           : undefined,
         scalingFilters.daLayer !== undefined
           ? entry.entryType === 'data-availability'
@@ -126,8 +126,8 @@ export function useScalingFilter() {
         // Badges
         scalingFilters.badgeRaaS
           ? entry.badges?.some(
-            (badge) => badge.badge === scalingFilters.badgeRaaS,
-          )
+              (badge) => badge.badge === scalingFilters.badgeRaaS,
+            )
           : undefined,
       ].filter(notUndefined)
       return checks.length === 0 || checks.every(Boolean)

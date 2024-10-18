@@ -1,5 +1,5 @@
-import { type StageConfig } from '@l2beat/config';
-import { ProjectId } from '@l2beat/shared-pure';
+import { type StageConfig } from '@l2beat/config'
+import { ProjectId } from '@l2beat/shared-pure'
 import {
   type Row,
   type RowModel,
@@ -7,7 +7,7 @@ import {
   type Table,
   getMemoOptions,
   memo,
-} from '@tanstack/react-table';
+} from '@tanstack/react-table'
 
 export function getStageSortedRowModel<
   TData extends { id: ProjectId; stage: StageConfig },

@@ -1,4 +1,4 @@
-import { Layer2, Layer3, layer2s, layer3s } from '@l2beat/config'
+import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
 import { compact } from 'lodash'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
 import { projects } from '~/app/(top-nav)/zk-catalog/_utils/projects'
@@ -7,12 +7,12 @@ import { groupByMainCategories } from '~/utils/group-by-main-categories'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import {
-  ActivityLatestTpsData,
+  type ActivityLatestTpsData,
   getActivityLatestTps,
 } from '../activity/get-activity-latest-tps'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import {
-  LatestTvl,
+  type LatestTvl,
   get7dTokenBreakdown,
 } from '../tvl/utils/get-7d-token-breakdown'
 import { getAssociatedTokenWarning } from '../tvl/utils/get-associated-token-warning'

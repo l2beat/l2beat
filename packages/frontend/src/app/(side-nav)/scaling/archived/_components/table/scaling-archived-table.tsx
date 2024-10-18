@@ -11,7 +11,6 @@ interface Props {
 }
 
 export function ScalingArchivedTable({ entries }: Props) {
-
   const archivedTable = useTable({
     data: entries,
     columns: scalingArchivedColumns,

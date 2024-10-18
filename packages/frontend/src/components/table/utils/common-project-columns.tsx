@@ -19,7 +19,15 @@ export function getCommonProjectColumns<T extends BaseProject>(
   return [
     columnHelper.accessor((_, index) => index + 1, {
       header: '#',
-      cell: (ctx) => <IndexCell>{opts?.activity ? ctx.row.index === 0 ? EM_DASH : ctx.row.index : ctx.row.index + 1}</IndexCell>,
+      cell: (ctx) => (
+        <IndexCell>
+          {opts?.activity
+            ? ctx.row.index === 0
+              ? EM_DASH
+              : ctx.row.index
+            : ctx.row.index + 1}
+        </IndexCell>
+      ),
       meta: {
         headClassName: 'w-0',
       },
