@@ -56,7 +56,7 @@
   }
 
   body:has(.sidebar) {
-    @apply bg-surface-primary md:bg-background;
+    @apply bg-background;
   }
 
   /* 
@@ -69,6 +69,14 @@
   }
   body:has(.sidebar) [data-role="select-content"] [role="option"] {
     @apply focus:bg-surface-tertiary;
+  }
+  body:has(.sidebar.main-page-card) [data-role="select-content"] {
+    @apply bg-surface-primary;
+  }
+  body:has(.sidebar.main-page-card)
+    [data-role="select-content"]
+    [role="option"] {
+    @apply focus:bg-surface-secondary;
   }
 }
 

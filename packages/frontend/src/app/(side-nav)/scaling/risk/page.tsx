@@ -1,10 +1,9 @@
 import { getDefaultMetadata } from '~/utils/metadata'
 
-import { MainPageCard } from '~/components/main-page-card'
 import { MainPageHeader } from '~/components/main-page-header'
 import { getScalingRiskEntries } from '~/server/features/scaling/risks/get-scaling-risk-entries'
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
-import { ScalingRiskTable } from './_components/table/scaling-risk-table'
+import { ScalingRiskTables } from './_components/scaling-risk-tables'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -16,11 +15,11 @@ export default async function Page() {
   const entries = await getScalingRiskEntries()
 
   return (
-    <ScalingFilterContextProvider>
+    <>
       <MainPageHeader>Risk Analysis</MainPageHeader>
-      <MainPageCard>
-        <ScalingRiskTable entries={entries} />
-      </MainPageCard>
-    </ScalingFilterContextProvider>
+      <ScalingFilterContextProvider>
+        <ScalingRiskTables {...entries} />
+      </ScalingFilterContextProvider>
+    </>
   )
 }

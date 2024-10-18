@@ -6,8 +6,8 @@ import {
   TypeCell,
   TypeExplanationTooltip,
 } from '~/components/table/cells/type-cell'
-import { getCommonProjectColumns } from '~/components/table/common-project-columns'
-import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/types'
+import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns'
+import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/get-scaling-finality-entries'
 import { FinalityDurationCell } from './finality-duration-cell'
 
 const sortFinality =

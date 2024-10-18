@@ -4,6 +4,11 @@ import { getTvlChartData } from '~/server/features/scaling/tvl/get-tvl-chart-dat
 
 export async function GET() {
   const entries = await getScalingSummaryEntries()
+  const items =
+    entries.type === 'recategorised'
+      ? [...entries.entries.rollups, ...entries.entries.validiumsAndOptimiums]
+      : entries.entries
+
   const data = await getTvlChartData({
     range: '30d',
     excludeAssociatedTokens: false,
@@ -23,7 +28,7 @@ export async function GET() {
         ]),
       },
       projects: Object.fromEntries(
-        entries.map((entry) => {
+        items.map((entry) => {
           return [
             entry.id,
             {

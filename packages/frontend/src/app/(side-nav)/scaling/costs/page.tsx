@@ -10,7 +10,7 @@ import { ScalingFilterContextProvider } from '../_components/scaling-filter-cont
 import { CostsMetricContextProvider } from './_components/costs-metric-context'
 import { CostsTimeRangeContextProvider } from './_components/costs-time-range-context'
 import { CostsUnitContextProvider } from './_components/costs-unit-context'
-import { ScalingCostsTable } from './_components/table/scaling-costs-table'
+import { ScalingCostsTables } from './_components/scaling-costs-tables'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -33,13 +33,15 @@ export default async function Page() {
               <MainPageHeader>Onchain costs</MainPageHeader>
               <MainPageCard>
                 <ScalingCostsChart
-                  entries={entries}
+                  entries={
+                    entries.type === 'recategorised'
+                      ? entries.entries.rollups
+                      : entries.entries
+                  }
                   milestones={HOMEPAGE_MILESTONES}
                 />
               </MainPageCard>
-              <MainPageCard className="md:mt-6">
-                <ScalingCostsTable entries={entries} />
-              </MainPageCard>
+              <ScalingCostsTables {...entries} />
             </CostsMetricContextProvider>
           </CostsUnitContextProvider>
         </CostsTimeRangeContextProvider>

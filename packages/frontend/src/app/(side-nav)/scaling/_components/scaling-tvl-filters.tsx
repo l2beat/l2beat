@@ -1,3 +1,5 @@
+'use client'
+
 import { uniq } from 'lodash'
 import { Checkbox } from '~/components/core/checkbox'
 import { TableFilter } from '~/components/table/filters/table-filter'
@@ -42,11 +44,7 @@ export function ScalingTvlFilters({ items, className }: Props) {
         className,
       )}
     >
-      <BaseScalingFilters
-        items={items}
-        additionalFilters={hostChainFilter}
-        showRollupsOnly
-      />
+      <BaseScalingFilters items={items} additionalFilters={hostChainFilter} />
       <Checkbox
         id="exclude-associated-tokens"
         checked={excludeAssociatedTokens}

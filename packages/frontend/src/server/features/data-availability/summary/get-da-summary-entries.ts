@@ -42,6 +42,7 @@ export async function getDaSummaryEntries() {
         const tvs = getSumFor(daBridge.usedIn.map((project) => project.id))
 
         return {
+          id: getDaProjectKey(daLayer, daBridge),
           slug: daLayer.display.slug,
           name: daLayer.display.name,
           href: `/data-availability/projects/${daLayer.display.slug}/${daBridge.display.slug}`,
@@ -66,19 +67,21 @@ export async function getDaSummaryEntries() {
         }
       })
 
+      const firstBridge = daBridges[0]
       if (daBridges.length === 0) {
         return []
-      } else if (daBridges.length === 1 && daBridges[0]) {
+      } else if (daBridges.length === 1 && firstBridge) {
         return daBridges
       }
 
-      assert(daBridges[0], 'Expected at least one bridge')
+      assert(firstBridge, 'Expected at least one bridge')
 
       return [
         {
+          id: firstBridge.id,
           slug: daLayer.display.slug,
           name: daLayer.display.name,
-          href: daBridges[0]?.href,
+          href: firstBridge.href,
           daBridge: 'multiple' as const,
           layerType: kindToType(daLayer.kind),
           kind: daLayer.kind,
@@ -89,7 +92,7 @@ export async function getDaSummaryEntries() {
           isVerified: true,
           warning: undefined,
           redWarning: undefined,
-          economicSecurity: daBridges[0].economicSecurity,
+          economicSecurity: firstBridge.economicSecurity,
           usedIn: daLayer.usedIn,
           risks: {
             economicSecurity: daLayer.risks.economicSecurity,

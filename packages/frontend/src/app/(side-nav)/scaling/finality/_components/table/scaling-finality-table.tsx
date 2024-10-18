@@ -1,29 +1,22 @@
 'use client'
 
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { useMemo } from 'react'
-import { BaseScalingFilters } from '~/app/(side-nav)/scaling/_components/base-scaling-filters'
-import { useScalingFilter } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
 import { BasicTable } from '~/components/table/basic-table'
+import { RollupsTable } from '~/components/table/rollups-table'
+import { getStageSortedRowModel } from '~/components/table/sorting/get-stage-sorting-row-model'
 import { useTable } from '~/hooks/use-table'
-import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/types'
+import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/get-scaling-finality-entries'
 import { scalingFinalityColumns } from './columns'
 
 export function ScalingFinalityTable({
-  projects,
-}: { projects: ScalingFinalityEntry[] }) {
-  const includeFilters = useScalingFilter()
-
-  const filteredProjects = useMemo(
-    () => projects.filter((item) => includeFilters(item)),
-    [projects, includeFilters],
-  )
-
+  entries,
+  rollups,
+}: { entries: ScalingFinalityEntry[]; rollups?: boolean }) {
   const table = useTable({
-    data: filteredProjects,
+    data: entries,
     columns: scalingFinalityColumns,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
+    getSortedRowModel: rollups ? getStageSortedRowModel() : getSortedRowModel(),
     manualFiltering: true,
     initialState: {
       sorting: [
@@ -38,10 +31,5 @@ export function ScalingFinalityTable({
     },
   })
 
-  return (
-    <div className="space-y-3 md:space-y-6">
-      <BaseScalingFilters items={filteredProjects} />
-      <BasicTable table={table} />
-    </div>
-  )
+  return rollups ? <RollupsTable table={table} /> : <BasicTable table={table} />
 }
