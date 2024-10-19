@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xe090f9a24a0d1e75044c61472210a93dbe843519
+
+# Diff at Sat, 19 Oct 2024 06:28:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@493c96785a6a32c6417182bb9548d3a990297dbe block: 20934247
+- current block number: 20997821
+
+## Description
+
+The two operator addresses are changed, which will be reflected in the permissions section.
+Context: Team also helpfully notified us in advance on telegram.
+
+## Watched changes
+
+```diff
+    contract zkEVM (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: None
+      values.accessControl.OPERATOR_ROLE.members.1:
+-        "0xa9268341831eFa4937537bc3e9EB36DbecE83C7e"
++        "0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754"
+      values.accessControl.OPERATOR_ROLE.members.0:
+-        "0x9228624C3185FCBcf24c1c9dB76D8Bef5f5DAd64"
++        "0x46d2F319fd42165D4318F099E143dEA8124E9E3e"
+    }
+```
+
 Generated with discovered.json: 0x5f40de8e0cb83216d42503be0c8d068da862a1db
 
 # Diff at Fri, 18 Oct 2024 10:56:54 GMT:

@@ -1,3 +1,40 @@
+Generated with discovered.json: 0xf6bf5966c73218d06e07d411dec3c09220a1b4b8
+
+# Diff at Sat, 19 Oct 2024 06:18:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@493c96785a6a32c6417182bb9548d3a990297dbe block: 20985614
+- current block number: 20997772
+
+## Description
+
+Threshold of the AuthorityMultisig raised to 2. As long as there are no withdrawals, the AuthorityMultisig is essentially a pauser only since upgrades do not change the withdrawals and can only affect a 'virtual' state on the L2 (from ethereum persepective).
+
+## Watched changes
+
+```diff
+    contract AuthorityMultisig (0x4720342419C1D316B948690d12C86D5b485C64E0) {
+    +++ description: None
+      values.$members.3:
++        "0xAFa49B46301BaaD9152dD5aF0C05245B0FA58695"
+      values.$members.2:
+-        "0xAFa49B46301BaaD9152dD5aF0C05245B0FA58695"
++        "0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA"
+      values.$members.1:
+-        "0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA"
++        "0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2"
+      values.$members.0:
+-        "0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2"
++        "0x950815d0e585095B06111CD101440fb1E95AB2a5"
+      values.$threshold:
+-        1
++        2
+      values.multisigThreshold:
+-        "1 of 3 (33%)"
++        "2 of 4 (50%)"
+    }
+```
+
 Generated with discovered.json: 0xe3c8d8ce06ef1dfa7a4de366c021479d22d5de92
 
 # Diff at Thu, 17 Oct 2024 13:35:06 GMT:
