@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 20997978,
-  "configHash": "0xf41f5585c77adf0b930ba1fa5720083a61fe1cdf8f4a27045c4e098c8348e149",
+  "blockNumber": 20998125,
+  "configHash": "0x43f1a2fc754c375d28166fa477c2c5a18364a7d82999782611e96a8c2f14d983",
   "contracts": [
     {
       "name": "GnosisSafe",
@@ -79,6 +79,7 @@
     {
       "name": "EraChainAdminProxy",
       "address": "0x2cf3bD6a9056b39999F3883955E183F655345063",
+      "template": "shared-zk-stack/ChainAdmin",
       "sourceHashes": [
         "0x3423f941c413d4f07703ba62723b05600f2a33f8725e8d89a53194efb05f4086"
       ],
@@ -626,6 +627,7 @@
     {
       "name": "ChainAdmin",
       "address": "0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3",
+      "template": "shared-zk-stack/ChainAdmin",
       "sourceHashes": [
         "0xefb240f5e06f5ffb38c7e98e9738ecf10381c49716281a3da9d5a1d17438eb4c"
       ],
@@ -634,11 +636,13 @@
         "$immutable": true,
         "owner": "0x5e6C5551C1b0626e9061fD4Daca6DA866Fd405aC",
         "pendingOwner": "0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9",
-        "protocolVersionToUpgradeTimestamp": [0, 0, 0, 0, 0],
-        "tokenMultiplierSetter": "0x0000000000000000000000000000000000000000"
+        "tokenMultiplierSetter": "0x0000000000000000000000000000000000000000",
+        "upgradeTimestamps": []
       },
-      "errors": {
-        "protocolVersionToUpgradeTimestamp": "Too many values. Update configuration to explore fully"
+      "fieldMeta": {
+        "upgradeTimestamps": {
+          "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
+        }
       }
     },
     {
@@ -773,6 +777,7 @@
     {
       "name": "ChainAdmin",
       "address": "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3",
+      "template": "shared-zk-stack/ChainAdmin",
       "sourceHashes": [
         "0xefb240f5e06f5ffb38c7e98e9738ecf10381c49716281a3da9d5a1d17438eb4c"
       ],
@@ -781,11 +786,13 @@
         "$immutable": true,
         "owner": "0x5e6C5551C1b0626e9061fD4Daca6DA866Fd405aC",
         "pendingOwner": "0xe4644b6d106A18062344c0A853666bc0B8f052d1",
-        "protocolVersionToUpgradeTimestamp": [0, 0, 0, 0, 0],
-        "tokenMultiplierSetter": "0xe14828E4405239dD331F194F1B7883eeD73bCBF3"
+        "tokenMultiplierSetter": "0xe14828E4405239dD331F194F1B7883eeD73bCBF3",
+        "upgradeTimestamps": []
       },
-      "errors": {
-        "protocolVersionToUpgradeTimestamp": "Too many values. Update configuration to explore fully"
+      "fieldMeta": {
+        "upgradeTimestamps": {
+          "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
+        }
       }
     },
     {
@@ -1411,6 +1418,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
+    "shared-zk-stack/ChainAdmin": "0xa36468d83d1747402043ad56e8297c53596d5ea03f59d8d8a73c19d08db830ce"
   }
 }

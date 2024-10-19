@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x57582e233b1821496e7cee09e67a233f193b43e1
+Generated with discovered.json: 0x32eed5a1b6eaf7441ca6eafe6f85ee2e932531ab
 
-# Diff at Sat, 19 Oct 2024 06:59:46 GMT:
+# Diff at Sat, 19 Oct 2024 07:29:48 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@493c96785a6a32c6417182bb9548d3a990297dbe block: 20777100
-- current block number: 20997978
+- current block number: 20998125
 
 ## Description
 
@@ -84,6 +84,20 @@ Will add them underreview/full on monday ;)
  .../Safe.sol                                       | 1088 ++++++++++++++++++++
  .../SafeProxy.p.sol                                |   37 +
  8 files changed, 3819 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20777100 (main branch discovery), not current.
+
+```diff
+    contract EraChainAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
+      template:
++        "shared-zk-stack/ChainAdmin"
+    }
 ```
 
 Generated with discovered.json: 0x4919b628b23d822b85c121a07aa57e64591cfdb8

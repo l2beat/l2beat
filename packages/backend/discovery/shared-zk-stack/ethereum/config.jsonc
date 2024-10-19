@@ -92,19 +92,6 @@
       },
       "ignoreRelatives": ["ZKSYNC_ERA"]
     },
-    "EraChainAdminProxy": {
-      "ignoreMethods": ["protocolVersionToUpgradeTimestamp"],
-      "fields": {
-        "upgradeTimestamps": {
-          "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)",
-          "handler": {
-            "type": "stateFromEvent",
-            "event": "UpdateUpgradeTimestamp",
-            "returnParams": ["_protocolVersion", "_upgradeTimestamp"]
-          }
-        }
-      }
-    },
     "BridgeHub": {
       "ignoreMethods": ["baseToken", "stateTransitionManager"],
       "ignoreRelatives": ["zksyncEraDiamond"],
