@@ -1,7 +1,7 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "blockNumber": 20997784,
+  "blockNumber": 20997821,
   "configHash": "0x311143ae4848e97520f64a30bb9922830c881232fba2b4ba5205492f3e5e951e",
   "contracts": [
     {
@@ -127,7 +127,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "balance": 29253539660092,
+        "balance": 29385792891677,
         "messageService": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
         "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
         "paused": false,
@@ -294,7 +294,7 @@
         "currentFinalizedState": "0xa8389a99496601b2d873885f518aa1713afcd6129924eac6a9dbcb70f0a7fd36",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "5687212723813957668",
+        "currentPeriodAmountInWei": "5777212723813957668",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "GENERAL_PAUSE_TYPE": 1,
         "generalPause": false,
