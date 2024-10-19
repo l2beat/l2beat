@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x6d36103492d2f52e6253b8f9e2d07b73b4c8b5e5
+
+# Diff at Sat, 19 Oct 2024 06:15:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@493c96785a6a32c6417182bb9548d3a990297dbe block: 20934032
+- current block number: 20997757
+
+## Description
+
+Minor upgrade of the WorldChain Adapter to support their custom USDC escrow.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract WorldChain_Adapter (0x8eBebfc894047bEE213A561b8792fCa71241731f)
+    +++ description: None
+```
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.480:
+-        "0x8eBebfc894047bEE213A561b8792fCa71241731f"
++        "0xA8399e221a583A57F54Abb5bA22f31b5D6C09f32"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract WorldChain_Adapter (0xA8399e221a583A57F54Abb5bA22f31b5D6C09f32)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../WorldChain_Adapter.sol                         | 25 +++++++++++++---------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
+```
+
 Generated with discovered.json: 0xd7ff53370050b4046ea7e36258229abf1541932b
 
 # Diff at Fri, 18 Oct 2024 10:53:31 GMT:
