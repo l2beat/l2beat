@@ -1,3 +1,89 @@
+Generated with discovered.json: 0xb13f1ab625a6510ae527803637d6c9bf2c63b6cc
+
+# Diff at Wed, 16 Oct 2024 11:37:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a3d139b799cc0b28e5e912febb17464d4e5aef5d block: 20914730
+- current block number: 20914730
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20914730 (main branch discovery), not current.
+
+```diff
+    contract SuperchainConfig (0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40","via":[{"address":"0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501","delay":0},{"address":"0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f","delay":0}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "guard"
+      issuedPermissions.0.via.1:
+-        {"address":"0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f","delay":0}
+      issuedPermissions.0.via.0:
+-        {"address":"0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501","delay":0}
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x2297eB8DC91f532C91c57b3fb33C06b782e9594A) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40","via":[{"address":"0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501","delay":0},{"address":"0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f","delay":0}]}
+      issuedPermissions.1:
++        {"permission":"propose","target":"0xC16EAEDaB78E033B555c9eF3C326c07B49F21907","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "challenge"
+      issuedPermissions.0.target:
+-        "0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40"
++        "0x864A02Ca4a40616f8995709D1B26CDe588709043"
+      issuedPermissions.0.via.1:
+-        {"address":"0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f","delay":0}
+      issuedPermissions.0.via.0:
+-        {"address":"0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501","delay":0}
+    }
+```
+
+```diff
+    contract OptimismPortal (0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40","via":[{"address":"0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501","delay":0},{"address":"0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f","delay":0}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "guard"
+      issuedPermissions.0.via.1:
+-        {"address":"0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f","delay":0}
+      issuedPermissions.0.via.0:
+-        {"address":"0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501","delay":0}
+    }
+```
+
+```diff
+    contract SystemConfig (0xae809d42f861A6381b0DFCf7216556e95362a7a8) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40","via":[{"address":"0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501","delay":0},{"address":"0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f","delay":0}]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "sequence"
+      issuedPermissions.1.target:
+-        "0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40"
++        "0xDeC273BF31AD79ad00D619c52662f724176A12Fb"
+      issuedPermissions.1.via.1:
+-        {"address":"0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f","delay":0}
+      issuedPermissions.1.via.0:
+-        {"address":"0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501","delay":0}
+    }
+```
+
 Generated with discovered.json: 0xc646e87e5215cdbb4b58221feb5f68dfec2a0af1
 
 # Diff at Mon, 14 Oct 2024 10:52:13 GMT:

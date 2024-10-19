@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "chain": "arbitrum",
-  "blockNumber": 256572673,
+  "blockNumber": 264777898,
   "configHash": "0x7ce82aed984bee2ddba4926b8b4b3729e64a78877c09ef4b2fad92e173bfe2c4",
   "contracts": [
     {
@@ -46,7 +46,7 @@
         "beaconProxyFactory": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 25525,
+        "exitNum": 26252,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "derivedName": "L2ERC20Gateway"
@@ -224,7 +224,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": ["0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"],
         "multisigThreshold": "9 of 12 (75%)",
-        "nonce": 2,
+        "nonce": 3,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -516,7 +516,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": ["0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"],
         "multisigThreshold": "9 of 12 (75%)",
-        "nonce": 6,
+        "nonce": 7,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -644,7 +644,7 @@
         ],
         "$upgradeCount": 1,
         "counterpartGateway": "0xbbcE8aA77782F13D4202a230d978F361B011dB27",
-        "exitNum": 1962,
+        "exitNum": 1974,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "derivedName": "L2ReverseCustomGateway"
@@ -712,6 +712,14 @@
         }
       ],
       "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
+        },
+        {
+          "permission": "act",
+          "target": "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"
+        },
         {
           "permission": "act",
           "target": "0xdb216562328215E010F819B5aBe947bad4ca961e"
@@ -796,8 +804,8 @@
           "0x5DD2205C3aac13E592F0a3D85188c948D1781df1",
           "0x5a09A94eE8198D3c474d723337aa58023810022C",
           "0x475816ca2a31D601B4e336f5c2418A67978aBf09",
-          "0xA821c8c245d1F3A257e3B0DEC99268cA05144422",
-          "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75"
+          "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75",
+          "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
         ],
         "getFirstCohort": [
           "0x3Bd8e2AC65ad6f0F094BA6766cBd9484AB49eF23",
@@ -812,8 +820,8 @@
           "0x5DD2205C3aac13E592F0a3D85188c948D1781df1",
           "0x5a09A94eE8198D3c474d723337aa58023810022C",
           "0x475816ca2a31D601B4e336f5c2418A67978aBf09",
-          "0xA821c8c245d1F3A257e3B0DEC99268cA05144422",
-          "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75"
+          "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75",
+          "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
         ],
         "l2CoreGovTimelock": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
         "MAX_SECURITY_COUNCILS": 500,
@@ -846,7 +854,7 @@
           ]
         ],
         "securityCouncilsLength": 4,
-        "updateNonce": 6
+        "updateNonce": 7
       },
       "fieldMeta": {
         "getBothCohorts": {
@@ -1008,6 +1016,7 @@
     { "address": "0x6142f1C8bBF02E6A6bd074E8d564c9A5420a0676" },
     { "address": "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75" },
     { "address": "0x8F10e3413586c4a8DCfcE19D009872b19e9cd8E3" },
+    { "address": "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC" },
     { "address": "0xa723C008e76E379c55599D2E4d93879BeaFDa79C" },
     { "address": "0xA821c8c245d1F3A257e3B0DEC99268cA05144422" },
     { "address": "0xb07dc9103328A51128bC6Cc1049d1137035f5E28" },
@@ -1723,6 +1732,6 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
   }
 }

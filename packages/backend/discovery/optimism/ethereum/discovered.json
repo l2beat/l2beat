@@ -14,6 +14,22 @@
       "descriptions": [
         "used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig"
       ],
+      "receivedPermissions": [
+        {
+          "permission": "guard",
+          "target": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "via": [
+            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
+            { "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
+        }
+      ],
       "sinceTimestamp": 1717149791,
       "values": {
         "$immutable": true,
@@ -89,7 +105,12 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "roles": ["Guardian"],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "guard",
+          "target": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1716902219,
       "values": {
@@ -901,6 +922,44 @@
       "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
         {
+          "permission": "guard",
+          "target": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+          "via": [
+            {
+              "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
+              "delay": 0
+            },
+            {
+              "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "guard",
+          "target": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
+          "via": [
+            {
+              "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
+              "delay": 0
+            },
+            {
+              "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "guard",
+          "target": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
+          "via": [
+            {
+              "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
+              "delay": 0
+            }
+          ]
+        },
+        {
           "permission": "upgrade",
           "target": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
           "via": [
@@ -993,6 +1052,22 @@
         "0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "guard",
+          "target": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "via": [
+            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
+            { "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1610850364,
       "values": {
@@ -1240,6 +1315,13 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "guard",
+          "target": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "via": [{ "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }]
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420419,
       "values": {
@@ -1279,6 +1361,12 @@
       ],
       "descriptions": [
         "allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe."
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
+        }
       ],
       "sinceTimestamp": 1724111315,
       "values": {
@@ -2347,8 +2435,8 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
-    "gnosisSafeModules/DeputyGuardianModule": "0xd3930cda89001876a722ed430ea8ed07e4823c83ed910e621744eccab9becba1",
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
+    "gnosisSafeModules/DeputyGuardianModule": "0x0cc34179bb0493633cd2618454587cf0cced70e01678f49c9633c6ffcf5af9e9",
     "gnosisSafeModules/LivenessModule": "0x93a18dea68cf1d0abddfc33adec077c82356344dd7b49ae5542b16ca9319bb91",
     "lido/L1LidoTokensBridge": "0x866030d4f677c30fdec28900c3b26212997d0271bdb90eb1f37b9b4db45241aa",
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
@@ -2360,6 +2448,6 @@
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
     "opstack/MIPS": "0x2c304ef99a23cb31331231c111188b04a54bacddeaac088b13abd2c81ff74217",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
-    "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837"
+    "opstack/SuperchainConfig": "0x76190197170f60e32f3e466ca757cb0bde1055ea134384678dd0911e7a5338ef"
   }
 }

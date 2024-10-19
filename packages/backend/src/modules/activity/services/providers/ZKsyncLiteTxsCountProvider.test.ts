@@ -23,8 +23,15 @@ describe(ZKsyncLiteTxsCountProvider.name, () => {
       const result = await txsCountProvider.getTxsCount(1, 3)
 
       expect(result).toEqual([
-        activityRecord('a', START.toStartOf('day'), 3, 1, 2),
-        activityRecord('a', START.add(2, 'days').toStartOf('day'), 5, 3, 3),
+        activityRecord('a', START.toStartOf('day'), 3, null, 1, 2),
+        activityRecord(
+          'a',
+          START.add(2, 'days').toStartOf('day'),
+          5,
+          null,
+          3,
+          3,
+        ),
       ])
       expect(client.getTransactionsInBlock).toHaveBeenCalledTimes(3)
     })

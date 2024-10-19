@@ -216,6 +216,11 @@
       "address": "0xF17e65822b568B3903685a7c9F496CF7656Cc6C2"
     },
     {
+      "symbol": "BNRY",
+      "address": "0x04E9D7e336f79Cdab911b06133D3Ca2Cd0721ce3",
+      "coingeckoId": "binary-holdings"
+    },
+    {
       "symbol": "BIT",
       "address": "0x1A4b46696b2bB4794Eb3D4c26f1c55F9170fa4C5"
     },
@@ -600,7 +605,8 @@
     },
     {
       "symbol": "GPT",
-      "address": "0xCdb4A8742ed7D0259b51E3454C46C9D6C48d5e88"
+      "address": "0xCdb4A8742ed7D0259b51E3454C46C9D6C48d5e88",
+      "deploymentTimestamp": 1716807971
     },
     {
       "symbol": "GRT",
@@ -1454,10 +1460,6 @@
       "coingeckoId": "zkspace"
     },
     {
-      "symbol": "ZMT",
-      "address": "0xaa602dE53347579f86b996D2Add74bb6F79462b2"
-    },
-    {
       "symbol": "zunETH",
       "category": "ether",
       "address": "0xc2e660C62F72c2ad35AcE6DB78a616215E2F2222"
@@ -1526,6 +1528,31 @@
     }
   ],
   "arbitrum": [
+    {
+      "symbol": "STAR",
+      "address": "0xB299751B088336E165dA313c33e3195B8c6663A6",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "CATCH",
+      "address": "0xbC4c97Fb9befaa8B41448e1dFcC5236dA543217F",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+
+    {
+      "symbol": "NRN",
+      "address": "0xdadeca1167fe47499e53Eb50F261103630974905",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "G3",
+      "address": "0xc24A365A870821EB83Fd216c9596eDD89479d8d7",
+      "source": "native", // native on arb, ITS type 0 on other chains
+      "supply": "circulatingSupply"
+    },
     {
       "symbol": "EGP",
       "address": "0x7E7a7C916c19a45769f6BDAF91087f93c6C12F78",
@@ -2485,6 +2512,13 @@
   ],
   "base": [
     {
+      "symbol": "EURC",
+      "address": "0x60a3E35Cc302bFA44Cb288Bc5a4F316Fdb1adb42",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "symbol": "cbBTC",
       "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
       "source": "native",
@@ -2973,6 +3007,75 @@
   ],
   "linea": [
     {
+      "symbol": "inETH",
+      "address": "0x5A7a183B6B44Dc4EC2E3d2eF43F98C5152b1d76d",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Inception Bridge (xERC-20)"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "M-BTC",
+      "address": "0xe4D584ae9b753e549cAE66200A6475d2f00705f7",
+      "coingeckoId": "merlin-s-seal-btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "BBTC",
+      "address": "0x93C12084dCFC08c759ad96B94234D9C39705689f",
+      "coingeckoId": "bouncebit-btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "SolvBTC.m",
+      "address": "0x5FFcE65A40f6d3de5332766ffF6A28BF491C868c",
+      "coingeckoId": "solv-btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "SolvBTC.b",
+      "address": "0x96155858A02c410c3C814BB32Fdc413b3241b62E",
+      "coingeckoId": "solv-btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "wBTC",
       "address": "0x3aAB2285ddcDdaD8edf438C1bAB47e1a9D05a9b4",
       "coingeckoId": "wrapped-bitcoin",
@@ -3161,7 +3264,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Free Bridge"
+            "name": "Free.tech Bridge (Meson)"
           }
         ]
       }
@@ -3460,7 +3563,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Free Bridge"
+            "name": "Free.tech Bridge (Meson)"
           }
         ]
       }
@@ -3551,7 +3654,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Free Bridge"
+            "name": "Free.tech Bridge (Meson)"
           }
         ]
       },
@@ -3996,7 +4099,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Free Bridge"
+            "name": "Free.tech Bridge (Meson)"
           }
         ]
       },
@@ -4010,7 +4113,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Free Bridge"
+            "name": "Free.tech Bridge (Meson)"
           }
         ]
       },

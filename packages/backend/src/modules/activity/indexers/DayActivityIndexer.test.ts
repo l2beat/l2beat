@@ -92,11 +92,17 @@ describe(DayActivityIndexer.name, () => {
   })
 })
 
-function activityRecord(projectId: string, timestamp: UnixTime, count: number) {
+function activityRecord(
+  projectId: string,
+  timestamp: UnixTime,
+  count: number,
+  uopsCount: number | null = null,
+): any {
   return {
     projectId: ProjectId(projectId),
     timestamp,
     count,
+    uopsCount,
     start: timestamp.toStartOf('day').toNumber(),
     end: timestamp.toEndOf('day').add(-1, 'seconds').toNumber(),
   }

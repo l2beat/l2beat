@@ -60,6 +60,11 @@ export class RpcClient {
     return await this.provider.getBlock(blockNumber)
   }
 
+  async getBlockWithTransactions(blockNumber: number) {
+    // eth_getBlockByNumber with transactions
+    return await this.provider.getBlockWithTransactions(blockNumber)
+  }
+
   async getTransaction(txHash: string) {
     // eth_getTransactionByHash
     return await this.provider.getTransaction(txHash)

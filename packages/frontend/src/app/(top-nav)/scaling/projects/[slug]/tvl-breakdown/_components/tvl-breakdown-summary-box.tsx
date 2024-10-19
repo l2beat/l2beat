@@ -3,10 +3,10 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { PercentChange } from '~/components/percent-change'
+import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { InfoIcon } from '~/icons/info'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/format'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 
 type ValueWithChange = {
   value: number
@@ -100,19 +100,15 @@ function StatsItem(props: StatsItemProps) {
           <TooltipContent>{props.tooltip}</TooltipContent>
         </Tooltip>
       </div>
-      <div className="flex items-center gap-1">
-        <span
-          className={cn(
-            'font-bold text-primary md:text-lg',
-            props.big ? 'text-lg' : 'text-base',
-          )}
-        >
-          {formatCurrency(props.value, 'usd')}
-        </span>
-        <div className="ml-1 text-xs font-medium md:text-base">
-          <PercentChange value={props.change} />
-        </div>
-      </div>
+      <ValueWithPercentageChange
+        change={props.change}
+        className={cn(
+          'font-bold text-primary md:text-lg',
+          props.big ? 'text-lg' : 'text-base',
+        )}
+      >
+        {formatCurrency(props.value, 'usd')}
+      </ValueWithPercentageChange>
     </div>
   )
 }

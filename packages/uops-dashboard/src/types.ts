@@ -58,28 +58,6 @@ export interface CountedOperation {
   children: CountedOperation[]
 }
 
-export type Operation = StaticOperation | RecursiveOperation
-
-export interface StaticOperation {
-  type: 'static'
-  name: string
-  count: number
-}
-
-export interface RecursiveOperation {
-  type: 'recursive'
-  calldata: string
-  to: string
-}
-
-export interface Method {
-  name: string
-  contractName?: string
-  selector: string
-  signature: string
-  count(calldata: string): Operation[]
-}
-
 export type StatParams = {
   startBlock: number
   endBlock: number

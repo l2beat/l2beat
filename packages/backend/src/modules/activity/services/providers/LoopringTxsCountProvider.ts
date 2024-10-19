@@ -15,6 +15,7 @@ export class LoopringTxsCountProvider {
       const block = await this.loopringClient.getBlock(blockNumber)
       return {
         txsCount: block.transactions,
+        uopsCount: null,
         timestamp: block.createdAt,
         number: block.blockId,
       }

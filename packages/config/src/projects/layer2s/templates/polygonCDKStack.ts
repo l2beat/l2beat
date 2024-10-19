@@ -26,6 +26,7 @@ import {
   ScalingProjectContract,
   ScalingProjectEscrow,
   ScalingProjectPermission,
+  ScalingProjectPurpose,
   ScalingProjectRiskViewEntry,
   ScalingProjectStateDerivation,
   ScalingProjectStateValidation,
@@ -52,7 +53,7 @@ export interface DAProvider {
 export interface PolygonCDKStackConfig {
   daProvider?: DAProvider
   discovery: ProjectDiscovery
-  display: Omit<Layer2Display, 'provider' | 'category' | 'dataAvailabilityMode'>
+  display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
   rpcUrl?: string
   transactionApi?: ScalingProjectTransactionApi
   chainConfig?: ChainConfig
@@ -71,6 +72,7 @@ export interface PolygonCDKStackConfig {
   stateValidation?: ScalingProjectStateValidation
   associatedTokens?: string[]
   badges?: BadgeId[]
+  additionalPurposes?: ScalingProjectPurpose[]
 }
 
 export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
@@ -116,7 +118,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     ...RISK_VIEW.EXIT_WINDOW(
       upgradeDelay,
       trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
-      0,
+      { upgradeDelay2: 0 },
     ),
     description: `Even though there is a ${upgradeDelayString} Timelock for upgrades, forced transactions are disabled. Even if they were to be enabled, user withdrawals can be censored up to ${formatSeconds(
       trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
@@ -145,6 +147,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     id: ProjectId(templateVars.discovery.projectName),
     display: {
       ...templateVars.display,
+      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       category:
         templateVars.daProvider !== undefined ? 'Validium' : 'ZK Rollup',
       provider: 'Polygon',

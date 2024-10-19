@@ -1,6 +1,6 @@
 'use client'
 
-import { formatNumberWithCommas } from '~/utils/format-number'
+import { formatNumberWithCommas } from '~/utils/number-format/format-number'
 import { Card } from '../../_components/card'
 import { Breakdown } from './breakdown'
 import { useReport } from './report-context'

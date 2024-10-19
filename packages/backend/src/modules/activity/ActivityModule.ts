@@ -32,6 +32,8 @@ import { RpcTxsCountProvider } from './services/providers/RpcTxsCountProvider'
 import { StarkexTxsCountProvider } from './services/providers/StarkexTxsCountProvider'
 import { StarknetTxsCountProvider } from './services/providers/StarknetTxsCountProvider'
 import { ZKsyncLiteTxsCountProvider } from './services/providers/ZKsyncLiteTxsCountProvider'
+import { RpcUopsAnalyzer } from './services/uops/analyzers/RpcUopsAnalyzer'
+import { StarknetUopsAnalyzer } from './services/uops/analyzers/StarknetUopsAnalyzer'
 import { getBatchSizeFromCallsPerMinute } from './utils/getBatchSizeFromCallsPerMinute'
 
 export function createActivityModule(
@@ -92,9 +94,11 @@ function createActivityIndexers(
           callsPerMinute: project.config.callsPerMinute,
           chain: project.id,
         })
+        const rpcUopsAnalyzer = new RpcUopsAnalyzer()
         const txsCountProvider = new RpcTxsCountProvider(
           rpcClient,
           project.id,
+          rpcUopsAnalyzer,
           project.config.assessCount,
         )
 
@@ -139,9 +143,11 @@ function createActivityIndexers(
           url: project.config.url,
           callsPerMinute: project.config.callsPerMinute,
         })
+        const starknetUopsAnalyzer = new StarknetUopsAnalyzer()
         const txsCountProvider = new StarknetTxsCountProvider(
           starknetClient,
           project.id,
+          starknetUopsAnalyzer,
         )
 
         const [blockTargetIndexer, activityIndexer] = createBlockBasedIndexers(

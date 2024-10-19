@@ -65,37 +65,40 @@ export const arbitrumNovaDac = DAC({
   bridge: {
     chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignatures,
-    totalMembers: membersCount,
+    membersCount: membersCount,
     transactionDataType: DacTransactionDataType.TransactionDataCompressed,
-    members: {
-      type: 'public',
-      list: [
-        {
-          name: 'ConsenSys Software Inc.',
-          href: 'https://docs.arbitrum.foundation/state-of-progressive-decentralization#data-availability-committee-members',
-        },
-        {
-          name: 'QuickNode, Inc.',
-          href: 'https://docs.arbitrum.foundation/state-of-progressive-decentralization#data-availability-committee-members',
-        },
-        {
-          name: 'P2P.org',
-          href: 'https://docs.arbitrum.foundation/state-of-progressive-decentralization#data-availability-committee-members',
-        },
-        {
-          name: 'Google Cloud',
-          href: 'https://docs.arbitrum.foundation/state-of-progressive-decentralization#data-availability-committee-members',
-        },
-        {
-          name: 'Offchain Labs, Inc.',
-          href: 'https://docs.arbitrum.foundation/state-of-progressive-decentralization#data-availability-committee-members',
-        },
-        {
-          name: 'Opensea Innovation Labs Private Limited',
-          href: 'https://docs.arbitrum.foundation/state-of-progressive-decentralization#data-availability-committee-members',
-        },
-      ],
-    },
+    knownMembers: [
+      {
+        external: true,
+        name: 'ConsenSys Software Inc.',
+        href: 'https://docs.arbitrum.foundation/state-of-progressive-decentralization#data-availability-committee-members',
+      },
+      {
+        external: true,
+        name: 'QuickNode, Inc.',
+        href: 'https://docs.arbitrum.foundation/state-of-progressive-decentralization#data-availability-committee-members',
+      },
+      {
+        external: true,
+        name: 'P2P.org',
+        href: 'https://docs.arbitrum.foundation/state-of-progressive-decentralization#data-availability-committee-members',
+      },
+      {
+        external: true,
+        name: 'Google Cloud',
+        href: 'https://docs.arbitrum.foundation/state-of-progressive-decentralization#data-availability-committee-members',
+      },
+      {
+        external: false,
+        name: 'Offchain Labs, Inc.',
+        href: 'https://docs.arbitrum.foundation/state-of-progressive-decentralization#data-availability-committee-members',
+      },
+      {
+        external: true,
+        name: 'Opensea Innovation Labs Private Limited',
+        href: 'https://docs.arbitrum.foundation/state-of-progressive-decentralization#data-availability-committee-members',
+      },
+    ],
     technology: {
       description: `
     ## DA Bridge Architecture
@@ -111,7 +114,7 @@ export const arbitrumNovaDac = DAC({
       // Members: DAC uses BLS sigs, not EOAs
       {
         name: 'Sequencers',
-        accounts: discovery.getPermissionsByRole('Sequencer'),
+        accounts: discovery.getPermissionsByRole('sequence'),
         description:
           'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
         chain: discovery.chain,
@@ -154,4 +157,5 @@ export const arbitrumNovaDac = DAC({
       risks: [],
     },
   },
+  fallback: 'Ethereum (calldata)',
 })

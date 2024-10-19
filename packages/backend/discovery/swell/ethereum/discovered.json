@@ -1,7 +1,7 @@
 {
   "name": "swell",
   "chain": "ethereum",
-  "blockNumber": 20964349,
+  "blockNumber": 20985756,
   "configHash": "0x52551afa863392acac030901399e7a754e6c8b61f6dbbc2db141fc89c0029e83",
   "contracts": [
     {
@@ -26,7 +26,6 @@
           "0xd08b294dBD8Bc760c57AbdEC26515Da626511B40",
           "0xD8DbDb15e91596c50A72E77d95dbC866ebdA8238",
           "0x284C633962F2386590E934c4fBD2D3EafA0944A3",
-          "0x042d200e5375204F022570361f3913b245488091",
           "0x66Ed79Ee4865c1cb4574b42d467C7Fee28bB4D59",
           "0x5b27b9279251904AaF2127463eeFf91E0037F725"
         ],
@@ -34,8 +33,8 @@
         "domainSeparator": "0x7ef947a4d0f9db951b663aca329bc6fdd6e078a18fd7d4bc7e89a1c40b0c5724",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 249,
+        "multisigThreshold": "4 of 6 (67%)",
+        "nonce": 251,
         "VERSION": "1.3.0"
       },
       "fieldMeta": {
@@ -98,7 +97,6 @@
   ],
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x042d200e5375204F022570361f3913b245488091" },
     { "address": "0x284C633962F2386590E934c4fBD2D3EafA0944A3" },
     { "address": "0x5b27b9279251904AaF2127463eeFf91E0037F725" },
     { "address": "0x66Ed79Ee4865c1cb4574b42d467C7Fee28bB4D59" },
@@ -227,6 +225,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
   }
 }

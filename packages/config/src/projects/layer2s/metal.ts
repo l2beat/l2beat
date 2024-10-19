@@ -16,7 +16,6 @@ export const metal: Layer2 = opStackL2({
     slug: 'metal',
     description:
       'Metal L2 is a general-purpose OP stack rollup by Metallicus focused on banking and compliance.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://metall2.com/'],
       apps: [

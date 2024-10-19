@@ -60,7 +60,7 @@ export const zksynclite: Layer2 = {
     slug: 'zksync-lite',
     description:
       'ZKsync Lite (formerly ZKsync) is a ZK Rollup platform that supports payments, token swaps and NFT minting.',
-    purposes: ['Payments'],
+    purposes: ['Payments', 'Exchange', 'NFT'],
     provider: 'ZKsync Lite',
     category: 'ZK Rollup',
 
@@ -188,7 +188,9 @@ export const zksynclite: Layer2 = {
       ],
     },
     exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay, 0),
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay, {
+        upgradeDelay2: 0,
+      }),
       sentiment: 'warning',
       description: `Users have ${formatSeconds(
         upgradeDelay - forcedWithdrawalDelay,

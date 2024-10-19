@@ -2,7 +2,7 @@
   "name": "base",
   "chain": "ethereum",
   "blockNumber": 20941326,
-  "configHash": "0xe46088b8a34a06f4d38288a4dfac15fea2d77390a56bbcac099882d6f94647bc",
+  "configHash": "0x7acb92ced89f1c2a39c7a1e56917c9376c96a738d3ef971070c3830654a1b663",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -13,6 +13,30 @@
       ],
       "descriptions": [
         "used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig"
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "guard",
+          "target": "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e",
+          "via": [
+            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
+            { "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03" }
+          ]
+        },
+        {
+          "permission": "guard",
+          "target": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "via": [
+            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
+            { "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
+        }
       ],
       "sinceTimestamp": 1717149791,
       "values": {
@@ -131,7 +155,16 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "roles": ["Guardian"],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "guard",
+          "target": "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e"
+        },
+        {
+          "permission": "guard",
+          "target": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1716902219,
       "values": {
@@ -158,6 +191,11 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x56315b90c40730925ec5485cf004d835058518A0",
+          "via": [{ "address": "0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824" }]
+        },
         {
           "permission": "configure",
           "target": "0x73a79Fab69143498Ed3712e519A88a918e1f4072",
@@ -294,6 +332,44 @@
       ],
       "issuedPermissions": [
         {
+          "permission": "guard",
+          "target": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+          "via": [
+            {
+              "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
+              "delay": 0
+            },
+            {
+              "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "guard",
+          "target": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
+          "via": [
+            {
+              "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
+              "delay": 0
+            },
+            {
+              "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "guard",
+          "target": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
+          "via": [
+            {
+              "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
+              "delay": 0
+            }
+          ]
+        },
+        {
           "permission": "upgrade",
           "target": "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
           "via": [
@@ -381,6 +457,31 @@
         "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
       ],
       "issuedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x14536667Cd30e52C0b458BaACcB9faDA7046E056",
+          "via": [
+            {
+              "address": "0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "challenge",
+          "target": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
+          "via": [
+            {
+              "address": "0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "propose",
+          "target": "0x642229f238fb9dE03374Be34B0eD8D9De80752c5",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
@@ -550,7 +651,12 @@
       "sourceHashes": [
         "0xb454745206bc5cace3c49dc78acf2be6af8602f7cf48f15a340a0ce854317389"
       ],
-      "roles": ["Challenger"],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x56315b90c40730925ec5485cf004d835058518A0"
+        }
+      ],
       "sinceTimestamp": 1689917711,
       "values": {
         "$immutable": true,
@@ -575,6 +681,11 @@
         {
           "permission": "configure",
           "target": "0x14536667Cd30e52C0b458BaACcB9faDA7046E056",
+          "via": []
+        },
+        {
+          "permission": "sequence",
+          "target": "0x5050F69a9786F081509234F1a7F4684b5E5b76C9",
           "via": []
         },
         {
@@ -862,6 +973,44 @@
       "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
         {
+          "permission": "guard",
+          "target": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+          "via": [
+            {
+              "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
+              "delay": 0
+            },
+            {
+              "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "guard",
+          "target": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
+          "via": [
+            {
+              "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
+              "delay": 0
+            },
+            {
+              "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "guard",
+          "target": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
+          "via": [
+            {
+              "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
+              "delay": 0
+            }
+          ]
+        },
+        {
           "permission": "upgrade",
           "target": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
           "via": [
@@ -939,10 +1088,37 @@
         "0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x56315b90c40730925ec5485cf004d835058518A0",
+          "via": [{ "address": "0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824" }]
+        },
+        {
+          "permission": "guard",
+          "target": "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e",
+          "via": [
+            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
+            { "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B" }
+          ]
+        },
+        {
+          "permission": "guard",
+          "target": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "via": [
+            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
+            { "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B" }
+          ]
+        }
+      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
           "target": "0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824"
+        },
+        {
+          "permission": "act",
+          "target": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -1049,6 +1225,18 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "guard",
+          "target": "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e",
+          "via": [{ "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }]
+        },
+        {
+          "permission": "guard",
+          "target": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "via": [{ "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }]
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420419,
       "values": {
@@ -1088,6 +1276,12 @@
       ],
       "descriptions": [
         "allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe."
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
+        }
       ],
       "sinceTimestamp": 1724111315,
       "values": {
@@ -1144,7 +1338,12 @@
     { "address": "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15" },
     {
       "address": "0x5050F69a9786F081509234F1a7F4684b5E5b76C9",
-      "roles": ["Sequencer"]
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0x73a79Fab69143498Ed3712e519A88a918e1f4072"
+        }
+      ]
     },
     { "address": "0x51aCb8e1205De850D1b512584FeE9C29C3813dDa" },
     { "address": "0x5468985B560D966dEDEa2DAF493f5756101137DC" },
@@ -1153,7 +1352,12 @@
     { "address": "0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865" },
     {
       "address": "0x642229f238fb9dE03374Be34B0eD8D9De80752c5",
-      "roles": ["Proposer"]
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "target": "0x56315b90c40730925ec5485cf004d835058518A0"
+        }
+      ]
     },
     { "address": "0x6CD3850756b7894774Ab715D136F9dD02837De50" },
     { "address": "0x73565876170a336Fa02fDe34EeD03E3121f70bA6" },
@@ -1765,18 +1969,18 @@
   "usedTemplates": {
     "base/Challenger1of2": "0x32d554b8ce1f170230fd5d4467fd9f63b541d9e40d61f24b04ee0df7e7b3a05d",
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
-    "gnosisSafeModules/DeputyGuardianModule": "0xd3930cda89001876a722ed430ea8ed07e4823c83ed910e621744eccab9becba1",
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
+    "gnosisSafeModules/DeputyGuardianModule": "0x0cc34179bb0493633cd2618454587cf0cced70e01678f49c9633c6ffcf5af9e9",
     "gnosisSafeModules/LivenessModule": "0x93a18dea68cf1d0abddfc33adec077c82356344dd7b49ae5542b16ca9319bb91",
     "lido/L1ERC20TokenBridge": "0xa297506a5551518c3ed10a3817c661bc02da5794e2745084217d9c8f6c440482",
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
-    "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
+    "opstack/L2OutputOracle": "0xfc8737561d85bab2fe5e39a7a02436a0cb0e7f96d7a7adc2ee3ea486b391c2fc",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
-    "opstack/OptimismPortal": "0x2a32f6874a8c0e85e685fa944143e7968d675fed43b46e7385411ad11f8a1a43",
-    "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
-    "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
+    "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",
+    "opstack/SuperchainConfig": "0x76190197170f60e32f3e466ca757cb0bde1055ea134384678dd0911e7a5338ef",
+    "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"
   }
 }

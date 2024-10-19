@@ -1,8 +1,8 @@
 {
   "name": "xai",
   "chain": "arbitrum",
-  "blockNumber": 257934975,
-  "configHash": "0x080307e0f4a47cf961d913101713b8d01c22d29dbbaa58163b576c9fd66006ca",
+  "blockNumber": 264372912,
+  "configHash": "0x53c6409a2f95958e57e410d493f80d514967abf85660897d084c48b66bcfc587",
   "contracts": [
     {
       "name": "GnosisSafeAdminMember",
@@ -28,7 +28,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 11,
+        "nonce": 12,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -336,7 +336,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 6,
+        "nonce": 7,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -491,12 +491,12 @@
           "0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8"
         ],
         "allowedOutboxList": ["0x1E400568AD4840dbE50FB32f306B842e9ddeF726"],
-        "delayedMessageCount": 89611,
+        "delayedMessageCount": 90244,
         "nativeToken": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66",
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerInbox": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-        "sequencerMessageCount": 89179,
-        "sequencerReportedSubMessageCount": 42268706
+        "sequencerMessageCount": 97200,
+        "sequencerReportedSubMessageCount": 48593503
       },
       "derivedName": "ERC20Bridge"
     },
@@ -563,6 +563,11 @@
       "descriptions": ["State batches / commitments get posted here."],
       "issuedPermissions": [
         {
+          "permission": "sequence",
+          "target": "0x7F68dba68E72a250004812fe04F1123Fca89aBa9",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
           "via": []
@@ -584,20 +589,18 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 89179,
+        "batchCount": 97200,
         "batchPosterManager": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871",
         "batchPosters": ["0x7F68dba68E72a250004812fe04F1123Fca89aBa9"],
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
         "BROTLI_MESSAGE_HEADER_FLAG": "0x00",
         "dacKeyset": {
-          "requiredSignatures": 8,
-          "membersCount": 9,
+          "requiredSignatures": 5,
+          "membersCount": 7,
           "blsSignatures": [
             "YAaEnUny7I1Stgrqdkdn5ob8omB9Id5dh2xtP87ifNORqK2gdi8NLU9Lw4PAXlg/pwPcmuYrAp8OZOPAw02Z5NOUhTKS+udcc7iSEST/tJ6CI1KeH2jXoToqA5FADD4hrwt7qHtu0RK56+zb3voUzyGnjt838DQH0UZSAMmsEZq8k/KCZPeej6IP03lSQOPxSQAAzbxLd3GZKk0V9tYEF9HCHxHjyJHHN7whXqovNDOE/vcw87RZzBlBeP9fOQ8HKRdEvB70DjshSupH/QeU5Znd034y+4NGiMvaCIkoZGb0/tZxHFc9yxp2Uy2HpaVVDxMmZYLSAsWIdsfkAMHKLmQ2ZtqW8Khd9M/uXOaEqTSu6yjJyizIDyXbA3FUuoW8uQ==",
             "YBnmxAj50xHWx74c8TEJQ4hMxDc8au4r/8ZjDdm9VZZeVz30yudFDkKd5gzt/bnDkxL/fS3uO/uyV5IK/x5g53D7ZBMcrVJF3UMriIitIvf/jriRsnCi1TSZVG+RpGoMNAAji+ipTEVV5YnQPi/AVGQIGwmoEzhA/giQH7evlxzC1Q876MQqHTwwfIrX63UZ5hPEs84OyTq5gHvR71UYbI7TEzHRNi3RJTfgsidx8Q1v2jndA5HfYUq2pxmmPPkIoxHSK+Syt24Fe9q/6dIMN76BXMDpbXu1+r0QdQMPLEfSWm/aquMI6sN1ljaa958XThaluC1z+iqrR9b5e8LoEq1OliZf2qCHnv9MFX51KCF42zEQiz493XQrf0HUJIfCag==",
-            "YA1wn7+Q7YfmWm4B63iIDrEzquUCqvuQAXCeq+e5pzVb4AQp2pOUkboz4+GIhKB4rQ77pOEK7RQVDl52V7CYEMtO5koML9h9OOU9o8rQzKCZlN0uuh97hLmn3uClp9i9BBgu5d9ptNNVjuX6CGWNw23GfyxIhx/uYKO+Lngpekmnc/gvNQ7iZmFT3pOd7cnkDwKVYCO0K4AdCiK/n92I4J2ZLN/dPU9cb56BorMRCQ9LWIy4069ZXcZsU+z1RR/KkAb74lp6FvZsqImmkQjoKv03XiuGU6syNkO5lOmX5vLX/+ttSjvWYo5yuNOBEams/A+6Aaqr8AaiVoytLAYidWkn9c4JkPTXh3Vhj//1fiuUD93NfpvZVFxOmNphqqHLaQ==",
             "YAKvb8hRiZPIAext4QCk7ngBMmDVkAcQoAqc/BSXtU7/gUDohCF6RI29uc5OlOXIIhifqDOAe+RIDnUrkMJuXKM3f+21bngw9rgjuSoGfaXfqLffFlR3eIQs0QY0XQeG0RKYArEpJ/D/hOt7YPOddAXGn62x4ryWuyqt5mkyyWzfGrncElFsqT6Ni+hAjwjDOABlbMG6rvSrm6uyznjdL233pYO0DTe8S95wgYOcGLP8xSDHlN341schNnHTQyJAcxddkM3BEocKI7ymH9PNp12Ax5Y5SVZEXKkLFAECOwihaMjjH0brzYxdGbaPEEAgDQQbx8bvW09h5AnTEXPrz6oYWFRep/drK92rK9LtDM8NgnjzMLv+AeSd93X1DmZPpA==",
-            "YAuqwKcqcyPp5E3tp9vVoeBVx6gURQyV0XhwNaooWS2k/2VWHtrUuZdDdBiBRMq62Qf6cKtlqn5aGTqIq0jZJRbEcd0dkmlHLcrFJ96+/8FHu4jGabROamNoQxG5xcDpiwHi3WmI1pUaZVumUUXo+P+av0gKxemR2OSyKIOM8ERfQAWzZkDUw+dvo7Ga4PIsIwcyJ9rTjeq4S7fyD6qym9tEK2vOyhAAab7s9qC9TFnGbFkeSI/NY3tOrmhEqee0qwRz7eCR5Uf2sZBpYEGHAHadBFhoGPJCpQyBFu673o4kEWgMMKE7t9S4KR/Dgji2RAsI+xUaz3Wdvwfeoa/SAPdCd4j6PoqTuD/b74KiL9TqHtEQgk//j25bZK2778n5yA==",
             "YAX5RGkb2ssH+fb3F+MTg0p+7jF3Le5BT8W/hIR7iSsgHvN2l435zpiSVuqOZNaIaQ/wyuGPur4m2hoiJ1d0J+r/VvbEYQGFCxPe6oi5JzIuAb/QlRA9lT+B1Rup8HKhcAAnSGaIowju3bSosv0LG04H0NlZOSRdJSFOIBA3WyfiK1867Nju+ZqfWF/TLUvR4AnIz2uNkZ7TzuIiA6mQnDHvpKSKsAUvhhAovG8Y8TI0iC1W/LSX1G9VVqFBeI2k1gDX3vzit2yN2PjskBfh5+N6bsIRSECZPRXBqskekNytvRlFveesFOwpXOmiyRPmFAwaYLtsQtSVjz94Ev5rabPQim7x1y9s6AEtV/Q/ggRU7/lTha1SVmMCRdYWWu3Igg==",
             "YBWhdxIOTQsrGcRQF8bHAEauHwl6F64farjSibsWDNPgplumU8MFRPn6X0jtBBMR1hH/aXso0ftQEI0edQVEB5dJkB4gymdhxq6hFCbYZpxsb8Ipr4lJe05WNmJRX1VeTRIu9WaeVLZlm+RMtvSuzbXXKJyNUnSZ420JaMKyR8Wt9M05nFZ832+eqer4eOtKDBX6gPBzdbUG+WRYdQlvFMkH/Nwo7LyKlHx231VIXKEIeuYXBmMxdtd0++QT7wi7PRN1XLjxGC8osyHYh3rksjBjG6urtgt4b/tVWyNevNaHT5YuO5MBPMMoQFgUqeV6dQiU3v2aXCwnnInTCjEvNbI5PUdwOosJi8JcdY7N1Vpm9jn8Gm89pCdwc8avTGWU5A==",
             "YA+ljLY01rxIncmXWl8bIZduwLObm0LKJIjzdyXjzH5FLN4Y+sUF2zjvF07aUPHOyADiV0y/+ztNO/iTpKLCVUzPzRHTtsukZaE3SUY+IIYU6NvUYdMXfhcKnHH3VU+iVRaSfiK2hw7OCfsge8AQcucdNlgaHSrdvlDmzAIx7jsemsLh8ov5dpywIVkWWZGY6wIwVh2/zUWBMZ4O3V3OYWppRttXZr2ukmwIDU5hQ4qtKRKemHaHSgb18QTuUsowMhkLwx2eW5hMOIYyzLV+NyUTyaQhkD0EtYISRBhHM7RinbP9LQWbLm0dnueZ9O3AkwnbH8w6/h3jkshPZx8hqJ6QH33SwbML1KIvOTEFvgBs7dnj9gbcfMq+17Bu3/YkWw==",
@@ -609,14 +612,14 @@
         "DATA_BLOB_HEADER_FLAG": "0x50",
         "HEADER_LENGTH": 40,
         "isUsingFeeToken": true,
-        "keySetUpdates": 5,
+        "keySetUpdates": 6,
         "maxDataSize": 104857,
         "maxTimeVariation": [5760, 96, 86400, 3600],
         "reader4844": "0x0000000000000000000000000000000000000000",
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 89611,
+        "totalDelayedMessagesRead": 90244,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -801,7 +804,7 @@
         "referralDiscountPercentage": 5,
         "referralRewardPercentage": 15,
         "symbol": "SNL",
-        "totalSupply": 35178
+        "totalSupply": 35179
       },
       "derivedName": "NodeLicense5"
     },
@@ -822,6 +825,11 @@
         {
           "permission": "upgrade",
           "target": "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F",
+          "via": []
+        },
+        {
+          "permission": "validate",
+          "target": "0x25EA41f0bDa921a0eBf48291961B1F10b59BC6b8",
           "via": []
         }
       ],
@@ -855,12 +863,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 6038,
+        "firstUnresolvedNode": 6484,
         "inbox": "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
         "isERC20Enabled": false,
         "lastStakeBlock": 18944658,
-        "latestConfirmed": 6037,
-        "latestNodeCreated": 6189,
+        "latestConfirmed": 6483,
+        "latestNodeCreated": 6636,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x1E400568AD4840dbE50FB32f306B842e9ddeF726",
@@ -1011,7 +1019,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "deployerAddress": "0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD",
         "esXaiAddress": "0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c",
-        "getPoolsCount": 259,
+        "getPoolsCount": 261,
         "nodeLicenseAddress": "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66",
         "refereeAddress": "0xfD41041180571C5D371BEA3D9550E55653671198",
         "stakingEnabled": true,
@@ -1066,7 +1074,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 54,
+        "nonce": 56,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -1139,7 +1147,7 @@
           "35673515981735159817351",
           "625000000000000000000000000"
         ],
-        "challengeCounter": 6930,
+        "challengeCounter": 7376,
         "CHALLENGER_ROLE": "0xe752add323323eb13e36c71ee508dfd16d74e9e4c4fd78786ba97989e5e13818",
         "challengerPublicKey": "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -1173,7 +1181,12 @@
     { "address": "0x1f097F3f928415cD28e1B2cC6f0F3960f4fCa6fc" },
     {
       "address": "0x25EA41f0bDa921a0eBf48291961B1F10b59BC6b8",
-      "roles": ["Validator"]
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "target": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336"
+        }
+      ]
     },
     { "address": "0x2B95cdD1adD34461Fe737800c0D5A68d556B51b4" },
     { "address": "0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341" },
@@ -1215,7 +1228,12 @@
     },
     {
       "address": "0x7F68dba68E72a250004812fe04F1123Fca89aBa9",
-      "roles": ["Sequencer"]
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1"
+        }
+      ]
     },
     { "address": "0x7f910C718bAF6698FBF9b56e047ECd52d157bAD6" },
     { "address": "0x807daF80b03Fd3C2709FFe0AeBEED617BC0a347c" },
@@ -2369,8 +2387,8 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
-    "orbitstack/RollupProxy": "0xdd22b1785ae5df34e829d0b04131559e112131325c3f223825d0fe61e675fb1a",
-    "orbitstack/SequencerInbox": "0x096f13a8297d3243cf02cbc39d065c1c6f37b23602fce0c63f3ff74d7d65b1ee"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
+    "orbitstack/RollupProxy": "0x8c92364349ca720f3e801d028dc260fdbc1a9cca4651ed19af6f16a250949729",
+    "orbitstack/SequencerInbox": "0x914a19d66f742b381e9ac6579e688ae6a07cddcf5b144eb7528c121bc81eca28"
   }
 }

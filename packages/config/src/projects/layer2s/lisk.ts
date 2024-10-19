@@ -16,7 +16,6 @@ export const lisk: Layer2 = opStackL2({
     slug: 'lisk',
     description:
       'Lisk is an OP stack rollup on Ethereum that migrated from the L1 blockchain of the same name.',
-    purposes: ['Universal'],
     links: {
       websites: ['https://lisk.com/'],
       apps: ['https://bridge.lisk.com/bridge/lisk', 'https://portal.lisk.com/'],

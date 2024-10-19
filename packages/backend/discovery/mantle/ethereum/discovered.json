@@ -198,7 +198,16 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "roles": ["Challenger", "Guardian"],
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
+        },
+        {
+          "permission": "guard",
+          "target": "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1686902471,
       "values": {
@@ -236,6 +245,16 @@
         "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
       ],
       "issuedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0x6667961f5e9C98A76a48767522150889703Ed77D",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
@@ -344,6 +363,11 @@
         {
           "permission": "configure",
           "target": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
+          "via": []
+        },
+        {
+          "permission": "sequence",
+          "target": "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749",
           "via": []
         },
         {
@@ -1027,6 +1051,11 @@
       ],
       "issuedPermissions": [
         {
+          "permission": "guard",
+          "target": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
           "via": [
@@ -1287,7 +1316,12 @@
     { "address": "0x2288226d687c01B7332c2A99A0C5A4a112c63f1e" },
     {
       "address": "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749",
-      "roles": ["Sequencer"]
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
+        }
+      ]
     },
     { "address": "0x3000BE80ad204D327990eB403654aCd1Eaa8eCeb" },
     { "address": "0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8" },
@@ -1299,7 +1333,12 @@
     { "address": "0x630E93130809c4acE55249229Ee6B043b929A9Ad" },
     {
       "address": "0x6667961f5e9C98A76a48767522150889703Ed77D",
-      "roles": ["Proposer"]
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "target": "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
+        }
+      ]
     },
     { "address": "0x6cc5A6F5a9E4757790e4068Aa9757226Cb854B64" },
     { "address": "0x717c3DC6Df69c316d6Ac593077BC84Cc86f214A4" },
@@ -2210,12 +2249,12 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
-    "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
-    "opstack/OptimismPortal": "0x2a32f6874a8c0e85e685fa944143e7968d675fed43b46e7385411ad11f8a1a43",
-    "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
+    "opstack/L2OutputOracle": "0xfc8737561d85bab2fe5e39a7a02436a0cb0e7f96d7a7adc2ee3ea486b391c2fc",
+    "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",
+    "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"
   }
 }

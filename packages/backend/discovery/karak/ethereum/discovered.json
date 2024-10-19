@@ -18,6 +18,16 @@
       ],
       "issuedPermissions": [
         {
+          "permission": "challenge",
+          "target": "0x28A227d4faF0f4f75897438E24C43EF1CDABb920",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0x4179f43f3b994e97090557363b09F403138a729e",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0x28A227d4faF0f4f75897438E24C43EF1CDABb920",
           "via": [
@@ -121,8 +131,11 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "roles": ["Challenger", "Guardian"],
       "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x0a23342520Aa8Ca963c4201801F4D3E95e731637"
+        },
         {
           "permission": "configure",
           "target": "0x622333688CC1878C7ff4205c89bDe051798788A7",
@@ -133,6 +146,10 @@
           "target": "0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9",
           "description": "set and change address mappings.",
           "via": [{ "address": "0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C" }]
+        },
+        {
+          "permission": "guard",
+          "target": "0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73"
         },
         {
           "permission": "upgrade",
@@ -210,6 +227,11 @@
         {
           "permission": "configure",
           "target": "0x28A227d4faF0f4f75897438E24C43EF1CDABb920",
+          "via": []
+        },
+        {
+          "permission": "sequence",
+          "target": "0x84BdFb21ed7C8B332a42bFD595744a84F3101e4E",
           "via": []
         },
         {
@@ -423,6 +445,11 @@
       ],
       "issuedPermissions": [
         {
+          "permission": "guard",
+          "target": "0x28A227d4faF0f4f75897438E24C43EF1CDABb920",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "target": "0x28A227d4faF0f4f75897438E24C43EF1CDABb920",
           "via": [
@@ -537,12 +564,22 @@
     { "address": "0x2964E7dE071467217f642AEe0f5A3a2b8c3193A6" },
     {
       "address": "0x4179f43f3b994e97090557363b09F403138a729e",
-      "roles": ["Proposer"]
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "target": "0x0a23342520Aa8Ca963c4201801F4D3E95e731637"
+        }
+      ]
     },
     { "address": "0x7E973c8f8aCDb71E4e00A19631739FFBF9748Cd0" },
     {
       "address": "0x84BdFb21ed7C8B332a42bFD595744a84F3101e4E",
-      "roles": ["Sequencer"]
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0x622333688CC1878C7ff4205c89bDe051798788A7"
+        }
+      ]
     },
     { "address": "0x988378eD49F538104fDBaC1A0ac2Edf9890EA4f2" },
     { "address": "0xAb86E21e9BFA559B93ca6f783362BFf5504f2cac" },
@@ -885,14 +922,14 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x7c91cbcf32ab13db3161a1e3d8e2eea263bba09e1793d4b374b7a0f4d2db953d",
-    "opstack/L2OutputOracle": "0x3115dc811ed6d817de9e32e09c4d7eb9434085e53936b3a2b3733e2041ca263a",
+    "opstack/L2OutputOracle": "0xfc8737561d85bab2fe5e39a7a02436a0cb0e7f96d7a7adc2ee3ea486b391c2fc",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
-    "opstack/OptimismPortal": "0x2a32f6874a8c0e85e685fa944143e7968d675fed43b46e7385411ad11f8a1a43",
-    "opstack/SystemConfig": "0xedb92005be29d18621e732d782e8e09ebf4ea0041e57d9426e8a40bd45edc5c7"
+    "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",
+    "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"
   }
 }

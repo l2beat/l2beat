@@ -12,13 +12,13 @@ export const degen: Layer3 = orbitStackL3({
   hostChain: ProjectId('base'),
   discovery,
   badges: [Badge.DA.DAC, Badge.L3ParentChain.Base, Badge.RaaS.Conduit],
+  additionalPurposes: ['Social'],
   nativeToken: 'DEGEN',
   display: {
     name: 'Degen Chain',
     slug: 'degen',
     description:
       'Degen Chain is an ultra-low-cost L3 for the Degen community built with Arbitrum Orbit, Base for settlement, and AnyTrust for data availability. DEGEN is the native gas token.',
-    purposes: ['Social', 'DeFi', 'Universal'],
     links: {
       websites: ['https://syndicate.io/blog/degen-chain'],
       apps: ['https://bridge.degen.tips/', 'https://degen.tips/'],

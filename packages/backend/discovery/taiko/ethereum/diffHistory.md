@@ -1,3 +1,44 @@
+Generated with discovered.json: 0x4b43cc2a7f3a15e72a8d81383920862dccbbfc29
+
+# Diff at Wed, 16 Oct 2024 09:19:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7921b2195836f60cdebc96df7164e01c8921b991 block: 20367491
+- current block number: 20977175
+
+## Description
+
+Upgrade of the TaikoL1Contract implementation with a [bug fix](https://github.com/taikoxyz/taiko-mono/pull/18254) in a check ('sametransition') of the proving library.
+
+## Watched changes
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      sourceHashes.1:
+-        "0xf13ac7cd2ef8d7b72cab625effe80906f11db83cf2a688e85a19d515da43f06f"
++        "0xa2bfa567075799db54daaa89afafea79e42c73c36c23112c79926407116d0765"
+      values.$implementation:
+-        "0xBA1d90BCfA74163bFE09e8eF609b346507D83231"
++        "0xf0E6d34937701622cA887a75c150cC23d4FFDf2F"
+      values.$pastUpgrades.12:
++        ["2024-10-16T07:55:23.000Z",["0xf0E6d34937701622cA887a75c150cC23d4FFDf2F"]]
+      values.$upgradeCount:
+-        12
++        13
+      values.impl:
+-        "0xBA1d90BCfA74163bFE09e8eF609b346507D83231"
++        "0xf0E6d34937701622cA887a75c150cC23d4FFDf2F"
+    }
+```
+
+## Source code changes
+
+```diff
+.../TaikoL1Contract/MainnetTaikoL1.sol             | 37 ++++++++++++----------
+ 1 file changed, 21 insertions(+), 16 deletions(-)
+```
+
 Generated with discovered.json: 0x62bbf8ea8ccf69d33116a4be61f87ed5c169c163
 
 # Diff at Mon, 14 Oct 2024 10:56:48 GMT:

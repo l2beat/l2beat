@@ -3,18 +3,39 @@ import {
   ContractValueType,
   ManualProxyType,
   StackCategory,
-  StackRole,
 } from '@l2beat/discovery-types'
 import { EthereumAddress, stringAs } from '@l2beat/shared-pure'
 import * as z from 'zod'
 
 import { UserHandlerDefinition } from '../handlers/user'
 
+export const BasePermissionEntries = [
+  'member',
+  'act',
+  'configure',
+  'upgrade',
+] as const
+
+export const RolePermissionEntries = [
+  'challenge',
+  'guard',
+  'propose',
+  'sequence',
+  'validate',
+] as const
+
+export const Permission = z.enum([
+  ...RolePermissionEntries,
+  ...BasePermissionEntries,
+])
+export type Permission = z.infer<typeof Permission>
+
 export type RawPermissionConfiguration = z.infer<
   typeof RawPermissionConfiguration
 >
+
 export const RawPermissionConfiguration = z.object({
-  type: z.enum(['configure', 'upgrade', 'act']),
+  type: Permission,
   delay: z.union([z.number(), z.string()]).default(0),
   description: z.string().optional(),
 })
@@ -33,7 +54,6 @@ export const DiscoveryContractField = z.object({
   target: z
     .object({
       template: z.string().optional(),
-      role: z.union([StackRole, z.array(StackRole)]).optional(),
       category: z.union([StackCategory, z.array(StackCategory)]).optional(),
       permissions: z.array(RawPermissionConfiguration).optional(),
     })
@@ -57,6 +77,7 @@ export const DiscoveryCustomType = z
 export type DiscoveryContract = z.infer<typeof DiscoveryContract>
 export const DiscoveryContract = z.object({
   extends: z.optional(z.string()),
+  canActIndependently: z.boolean().optional(),
   ignoreDiscovery: z.optional(z.boolean()),
   proxyType: z.optional(ManualProxyType),
   displayName: z.string().optional(),

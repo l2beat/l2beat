@@ -44,7 +44,7 @@
     },
     "validators": {
       "target": {
-        "role": "Validator"
+        "permissions": [{ "type": "validate" }]
       },
       "handler": {
         "type": "arbitrumActors",

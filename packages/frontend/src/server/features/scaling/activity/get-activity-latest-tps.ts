@@ -7,6 +7,7 @@ import {
 } from 'next/cache'
 import { env } from '~/env'
 import { db } from '~/server/database'
+import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import { getLastDayTps } from './utils/get-last-day-tps'
 
@@ -32,13 +33,11 @@ const getCachedActivityLatestTps = cache(
       Object.entries(grouped).map(([projectId, records]) => {
         const pastDayTps = getLastDayTps(records)
         const previousDayTps = getLastDayTps(records, 1)
-
-        const change = pastDayTps / previousDayTps - 1
         return [
           projectId,
           {
             pastDayTps,
-            change,
+            change: calculatePercentageChange(pastDayTps, previousDayTps),
           },
         ]
       }),

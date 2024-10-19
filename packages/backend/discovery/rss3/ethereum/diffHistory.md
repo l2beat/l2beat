@@ -1,3 +1,87 @@
+Generated with discovered.json: 0x9ba0b6958ebb935a7f2670e2f637c4439babd018
+
+# Diff at Wed, 16 Oct 2024 11:39:47 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a3d139b799cc0b28e5e912febb17464d4e5aef5d block: 20920298
+- current block number: 20920298
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20920298 (main branch discovery), not current.
+
+```diff
+    contract SuperchainConfig (0x3e5FaB39eD4eFB4fc29A5201059AE819f2f0418A) {
+    +++ description: This is NOT the shared SuperchainConfig of the OP stack Superchain. This SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x8AC80fa0993D95C9d6B8Cb494E561E6731038941","via":[{"address":"0x1075B29e5F7a911128C77F3989702E150C988904","delay":0}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "guard"
+      issuedPermissions.0.target:
+-        "0x8AC80fa0993D95C9d6B8Cb494E561E6731038941"
++        "0x7ef00577fAAa44D0491970D6516eB7b90EC3c80E"
+      issuedPermissions.0.via.0:
+-        {"address":"0x1075B29e5F7a911128C77F3989702E150C988904","delay":0}
+    }
+```
+
+```diff
+    contract OptimismPortal (0x6A12432491bbbE8d3babf75F759766774C778Db4) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x8AC80fa0993D95C9d6B8Cb494E561E6731038941","via":[{"address":"0x1075B29e5F7a911128C77F3989702E150C988904","delay":0}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "guard"
+      issuedPermissions.0.target:
+-        "0x8AC80fa0993D95C9d6B8Cb494E561E6731038941"
++        "0x7ef00577fAAa44D0491970D6516eB7b90EC3c80E"
+      issuedPermissions.0.via.0:
+-        {"address":"0x1075B29e5F7a911128C77F3989702E150C988904","delay":0}
+    }
+```
+
+```diff
+    contract SystemConfig (0x80e73D6BfC73c567032304C3891a06c2d9954d09) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0x8AC80fa0993D95C9d6B8Cb494E561E6731038941","via":[{"address":"0x1075B29e5F7a911128C77F3989702E150C988904","delay":0}]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "sequence"
+      issuedPermissions.1.target:
+-        "0x8AC80fa0993D95C9d6B8Cb494E561E6731038941"
++        "0x0244f7204b9c554306053Cc557e14D6Cbd40a33C"
+      issuedPermissions.1.via.0:
+-        {"address":"0x1075B29e5F7a911128C77F3989702E150C988904","delay":0}
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xE6f24d2C32B3109B18ed33cF08eFb490b1e09C10) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0x8AC80fa0993D95C9d6B8Cb494E561E6731038941","via":[{"address":"0x1075B29e5F7a911128C77F3989702E150C988904","delay":0}]}
+      issuedPermissions.1:
++        {"permission":"propose","target":"0x0016b6bacD56a0D1DaFdA52d06B7eFe65AA0816a","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "challenge"
+      issuedPermissions.0.target:
+-        "0x8AC80fa0993D95C9d6B8Cb494E561E6731038941"
++        "0xB5C248B428f9b2D8E8a03eE016760145b84098a9"
+      issuedPermissions.0.via.0:
+-        {"address":"0x1075B29e5F7a911128C77F3989702E150C988904","delay":0}
+    }
+```
+
 Generated with discovered.json: 0x2c5c1082ea8c786c9d5cdac41ae41e85883ae102
 
 # Diff at Mon, 14 Oct 2024 10:55:12 GMT:

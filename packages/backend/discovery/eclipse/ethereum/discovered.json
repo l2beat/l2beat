@@ -1,7 +1,7 @@
 {
   "name": "eclipse",
   "chain": "ethereum",
-  "blockNumber": 20775895,
+  "blockNumber": 20997772,
   "configHash": "0x47f63439da6b399312c0e54a5ddf19c780f316833ebd19f0ffe82e23c73ea170",
   "contracts": [
     {
@@ -46,15 +46,17 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x950815d0e585095B06111CD101440fb1E95AB2a5",
+          "0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2",
           "0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA",
           "0xAFa49B46301BaaD9152dD5aF0C05245B0FA58695"
         ],
-        "$threshold": 1,
+        "$threshold": 2,
         "domainSeparator": "0x4fc4aca3db1cad217783537dbcbcb1d69e3377e64c4890ff913a3639c94b9386",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 3,
+        "multisigThreshold": "2 of 4 (50%)",
+        "nonce": 6,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -239,7 +241,9 @@
     },
     { "address": "0x3392fd462d9710Fbf3A5703818b9920C119DC080" },
     { "address": "0x45894CeBad0a1298D44aF2B528490693E58B322E" },
+    { "address": "0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2" },
     { "address": "0x825e868F5561352bC875E0C9D08d32e94F915E6b" },
+    { "address": "0x950815d0e585095B06111CD101440fb1E95AB2a5" },
     { "address": "0xAFa49B46301BaaD9152dD5aF0C05245B0FA58695" },
     { "address": "0xd0615B1D3F24f691153C076d45104eEd3eF8cDb5" },
     { "address": "0xDecF20b9213f5d7f16196420377d37ef5f8F9686" },
@@ -450,6 +454,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
   }
 }

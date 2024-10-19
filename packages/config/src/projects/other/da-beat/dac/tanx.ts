@@ -3,7 +3,6 @@ import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { getCommittee } from '../../../../discovery/starkware'
 import { tanx } from '../../../layer2s/tanx'
 import { DAC } from '../templates/dac-template'
-import { DaAttestationSecurityRisk } from '../types'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('brine')
@@ -11,9 +10,6 @@ const committee = getCommittee(discovery)
 
 export const tanxDac = DAC({
   project: tanx,
-  risks: {
-    attestations: DaAttestationSecurityRisk.SigVerified(true),
-  },
   bridge: {
     contracts: {
       addresses: [
@@ -36,10 +32,7 @@ export const tanxDac = DAC({
     ],
     chain: ChainId.ETHEREUM,
     requiredMembers: committee.minSigners,
-    totalMembers: committee.accounts.length,
+    membersCount: committee.accounts.length,
     transactionDataType: DacTransactionDataType.StateDiffs,
-    members: {
-      type: 'unknown',
-    },
   },
 })

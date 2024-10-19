@@ -25,6 +25,7 @@ export const redstoneDA: DaLayer = {
   id: 'redstone-da',
   type: 'DaLayer',
   kind: 'DAC',
+  systemCategory: 'custom',
   display: {
     name: 'RedstoneDA',
     slug: 'redstone',
@@ -42,6 +43,7 @@ export const redstoneDA: DaLayer = {
       ],
     },
   },
+  hasChallengeMechanism: true,
   technology: {
     description: `
     ## Data Availability Challenges

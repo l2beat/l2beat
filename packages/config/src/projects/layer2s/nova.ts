@@ -100,7 +100,6 @@ export const nova: Layer2 = orbitStackL2({
     slug: 'nova',
     description:
       'Arbitrum Nova is an AnyTrust Optimium, differing from Arbitrum One by not posting transaction data onchain.',
-    purposes: ['Universal'],
     links: {
       websites: [
         'https://nova.arbitrum.io/',

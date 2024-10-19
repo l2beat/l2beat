@@ -1,3 +1,73 @@
+Generated with discovered.json: 0xe9ed5a88909da1153b8e56ed2c5a4d6cdfb8052d
+
+# Diff at Fri, 18 Oct 2024 11:03:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@0295165a89d86b7450439f24f100d1baa74381fc block: 264777898
+- current block number: 264777898
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 264777898 (main branch discovery), not current.
+
+```diff
+    contract L2UpgradeExecutor (0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) {
+    +++ description: None
+      directlyReceivedPermissions.2:
++        {"permission":"act","target":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      directlyReceivedPermissions.1:
++        {"permission":"act","target":"0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"}
+      directlyReceivedPermissions.0.target:
+-        "0xdb216562328215E010F819B5aBe947bad4ca961e"
++        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
+    }
+```
+
+Generated with discovered.json: 0xb016dee600b5b0b34d789a434312cbd165d812af
+
+# Diff at Thu, 17 Oct 2024 14:09:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b22da46ad96e1d0cb3e7d83e3293eb7b76990953 block: 256572673
+- current block number: 264777898
+
+## Description
+
+Schedule an update to the address of the current OpenZeppelin signer in the Arbitrum SC.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncilManager (0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) {
+    +++ description: None
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: MEDIUM
+      values.getBothCohorts.11:
+-        "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75"
++        "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: MEDIUM
+      values.getBothCohorts.10:
+-        "0xA821c8c245d1F3A257e3B0DEC99268cA05144422"
++        "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75"
+      values.getSecondCohort.5:
+-        "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75"
++        "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
+      values.getSecondCohort.4:
+-        "0xA821c8c245d1F3A257e3B0DEC99268cA05144422"
++        "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75"
+      values.updateNonce:
+-        6
++        7
+    }
+```
+
 Generated with discovered.json: 0x1b2580f6912a3df8d492b1fa2643003a158ade4e
 
 # Diff at Mon, 14 Oct 2024 10:58:31 GMT:
