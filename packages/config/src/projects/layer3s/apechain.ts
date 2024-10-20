@@ -16,11 +16,15 @@ export const apechain: Layer3 = upcomingL3({
     provider: 'Arbitrum',
     links: {
       websites: ['https://apechain.com/'],
-      apps: [],
+      apps: ['https://apechain.com/portal'],
       documentation: ['https://docs.apechain.com/'],
-      explorers: [],
+      explorers: ['https://apescan.io/'],
       repositories: [],
-      socialMedia: ['https://twitter.com/apecoin'],
+      socialMedia: [
+        'https://twitter.com/apecoin',
+        'https://discord.gg/apecoindao',
+        'https://t.me/apechainofficial',
+      ],
     },
   },
 })
